@@ -1,0 +1,2687 @@
+{
+  "run": "E2_split_s0",
+  "global_step": 6000,
+  "parameters_updated": false,
+  "train_only": true,
+  "road_evidence": "road_evidence_r5",
+  "occlusion": "full scene alpha*T; all static/other actors retained",
+  "domains": [
+    "own known body",
+    "other known body",
+    "actual LiDAR depth AND road surface pixel",
+    "total full-scene visible alpha"
+  ],
+  "thresholds": {
+    "min_frames": 3,
+    "min_road_mass": 0.5,
+    "road_ratio": 0.8,
+    "max_body_ratio": 0.05
+  },
+  "unknown_policy": "zero visibility or no certified semantic support stays unknown; NOT background",
+  "scope": "7 admitted actors only classified; all scene occluders included; road pixels sparse and conservative",
+  "actors": [
+    {
+      "actor": 5,
+      "gaussians": 40745,
+      "road_dominant": 124,
+      "mixed": 216,
+      "evidence": [
+        112715.09593505,
+        337.74225066429557,
+        862.424365179767,
+        123345.08465176015
+      ]
+    },
+    {
+      "actor": 6,
+      "gaussians": 17946,
+      "road_dominant": 0,
+      "mixed": 187,
+      "evidence": [
+        21956.294856571672,
+        15934.278585622786,
+        315.0705530813099,
+        43023.731258478314
+      ]
+    },
+    {
+      "actor": 12,
+      "gaussians": 10498,
+      "road_dominant": 140,
+      "mixed": 58,
+      "evidence": [
+        3237.9385794689983,
+        10533.409822049864,
+        498.6742833663533,
+        32142.167468646025
+      ]
+    },
+    {
+      "actor": 18,
+      "gaussians": 7958,
+      "road_dominant": 4,
+      "mixed": 29,
+      "evidence": [
+        10955.758753304139,
+        157.31463564702753,
+        43.055958383725624,
+        13211.297595865974
+      ]
+    },
+    {
+      "actor": 25,
+      "gaussians": 11974,
+      "road_dominant": 2,
+      "mixed": 9,
+      "evidence": [
+        82056.41932345578,
+        1655.0716670949648,
+        44.41661431300935,
+        85151.24285382459
+      ]
+    },
+    {
+      "actor": 26,
+      "gaussians": 34538,
+      "road_dominant": 7,
+      "mixed": 245,
+      "evidence": [
+        106289.41786554687,
+        767.3757061320657,
+        470.03746657232625,
+        114359.78089298887
+      ]
+    },
+    {
+      "actor": 37,
+      "gaussians": 46911,
+      "road_dominant": 359,
+      "mixed": 1623,
+      "evidence": [
+        95389.26454323907,
+        4450.209374420089,
+        3556.8233707130876,
+        525694.9544639188
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "frame_id": "0008089",
+      "split": "train",
+      "road_pixels": 7015,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 1186.022216796875,
+          "other_body": 8.310038566589355,
+          "measured_road": 28.03826332092285,
+          "visible": 1425.06689453125
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1061.6103515625,
+          "measured_road": 20.60818099975586,
+          "visible": 1212.79541015625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 411.28509521484375,
+          "measured_road": 11.6465482711792,
+          "visible": 778.599853515625
+        },
+        {
+          "actor": 18,
+          "own_body": 58.915321350097656,
+          "other_body": 5.25033101439476e-08,
+          "measured_road": 0.0,
+          "visible": 74.70600128173828
+        },
+        {
+          "actor": 25,
+          "own_body": 2045.375732421875,
+          "other_body": 36.559688568115234,
+          "measured_road": 1.3405060768127441,
+          "visible": 2109.392578125
+        },
+        {
+          "actor": 26,
+          "own_body": 245.80552673339844,
+          "other_body": 24.806434631347656,
+          "measured_road": 0.0005916517693549395,
+          "visible": 311.12847900390625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 140.5563201904297,
+          "measured_road": 88.46258544921875,
+          "visible": 15084.017578125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008090",
+      "split": "train",
+      "road_pixels": 6862,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 1279.7298583984375,
+          "other_body": 8.214869499206543,
+          "measured_road": 23.29375457763672,
+          "visible": 1565.512451171875
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1064.112060546875,
+          "measured_road": 21.336448669433594,
+          "visible": 1212.0406494140625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 420.67083740234375,
+          "measured_road": 12.17324447631836,
+          "visible": 773.2862548828125
+        },
+        {
+          "actor": 18,
+          "own_body": 61.270484924316406,
+          "other_body": 2.6775524020195007e-08,
+          "measured_road": 0.0,
+          "visible": 80.09606170654297
+        },
+        {
+          "actor": 25,
+          "own_body": 2057.675048828125,
+          "other_body": 31.71541976928711,
+          "measured_road": 1.558128833770752,
+          "visible": 2109.5224609375
+        },
+        {
+          "actor": 26,
+          "own_body": 248.8704833984375,
+          "other_body": 25.390798568725586,
+          "measured_road": 0.5714074373245239,
+          "visible": 318.01617431640625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 136.07022094726562,
+          "measured_road": 91.08148193359375,
+          "visible": 15083.96875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008091",
+      "split": "train",
+      "road_pixels": 7008,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 1438.238525390625,
+          "other_body": 6.087646484375,
+          "measured_road": 39.63792419433594,
+          "visible": 1718.66162109375
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1064.4544677734375,
+          "measured_road": 16.321121215820312,
+          "visible": 1211.43115234375
+        },
+        {
+          "actor": 12,
+          "own_body": 407.038330078125,
+          "other_body": 11.856120109558105,
+          "measured_road": 7.800273895263672,
+          "visible": 742.8517456054688
+        },
+        {
+          "actor": 18,
+          "own_body": 66.82984924316406,
+          "other_body": 1.300359144806862e-07,
+          "measured_road": 0.0,
+          "visible": 86.29722595214844
+        },
+        {
+          "actor": 25,
+          "own_body": 2058.549560546875,
+          "other_body": 31.59070587158203,
+          "measured_road": 1.5338577032089233,
+          "visible": 2109.828125
+        },
+        {
+          "actor": 26,
+          "own_body": 263.10089111328125,
+          "other_body": 26.082901000976562,
+          "measured_road": 0.023090224713087082,
+          "visible": 322.46014404296875
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 134.67088317871094,
+          "measured_road": 99.59162902832031,
+          "visible": 15075.1064453125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008092",
+      "split": "train",
+      "road_pixels": 6770,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 1588.9580078125,
+          "other_body": 11.897339820861816,
+          "measured_road": 45.603065490722656,
+          "visible": 1904.7451171875
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1072.9210205078125,
+          "measured_road": 15.138208389282227,
+          "visible": 1210.52734375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 17.390769958496094,
+          "measured_road": 8.394608497619629,
+          "visible": 685.482666015625
+        },
+        {
+          "actor": 18,
+          "own_body": 71.45355224609375,
+          "other_body": 5.6694261729717255e-08,
+          "measured_road": 0.0,
+          "visible": 93.13737487792969
+        },
+        {
+          "actor": 25,
+          "own_body": 2055.427734375,
+          "other_body": 0.0005291285342536867,
+          "measured_road": 1.2388983964920044,
+          "visible": 2109.427490234375
+        },
+        {
+          "actor": 26,
+          "own_body": 269.9666748046875,
+          "other_body": 22.655494689941406,
+          "measured_road": 0.18021632730960846,
+          "visible": 328.7974853515625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 139.5508270263672,
+          "measured_road": 91.57060241699219,
+          "visible": 15082.787109375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008093",
+      "split": "train",
+      "road_pixels": 6852,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 1805.25830078125,
+          "other_body": 8.2152099609375,
+          "measured_road": 47.413124084472656,
+          "visible": 2115.017578125
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1080.85400390625,
+          "measured_road": 13.980085372924805,
+          "visible": 1218.134765625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 12.830475807189941,
+          "measured_road": 9.950750350952148,
+          "visible": 597.1510009765625
+        },
+        {
+          "actor": 18,
+          "own_body": 75.78024291992188,
+          "other_body": 8.591450750827789e-08,
+          "measured_road": 0.0,
+          "visible": 98.24324035644531
+        },
+        {
+          "actor": 25,
+          "own_body": 2052.522216796875,
+          "other_body": 0.00034615863114595413,
+          "measured_road": 1.447143793106079,
+          "visible": 2109.38818359375
+        },
+        {
+          "actor": 26,
+          "own_body": 297.08013916015625,
+          "other_body": 27.507003784179688,
+          "measured_road": 2.5337769985198975,
+          "visible": 356.52130126953125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 139.77587890625,
+          "measured_road": 106.80979919433594,
+          "visible": 15082.1015625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008094",
+      "split": "train",
+      "road_pixels": 6587,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 2022.2845458984375,
+          "other_body": 10.196310043334961,
+          "measured_road": 42.06756591796875,
+          "visible": 2353.5126953125
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1083.6068115234375,
+          "measured_road": 11.944659233093262,
+          "visible": 1224.8211669921875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 9.177450180053711,
+          "measured_road": 11.052556991577148,
+          "visible": 496.64105224609375
+        },
+        {
+          "actor": 18,
+          "own_body": 80.1632308959961,
+          "other_body": 1.9217259250581264e-07,
+          "measured_road": 0.0,
+          "visible": 102.75001525878906
+        },
+        {
+          "actor": 25,
+          "own_body": 2041.5228271484375,
+          "other_body": 3.483236074447632,
+          "measured_road": 2.168084144592285,
+          "visible": 2106.10107421875
+        },
+        {
+          "actor": 26,
+          "own_body": 300.9771728515625,
+          "other_body": 30.74247932434082,
+          "measured_road": 5.29518985748291,
+          "visible": 368.95037841796875
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 145.0785369873047,
+          "measured_road": 98.45234680175781,
+          "visible": 15090.49609375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008095",
+      "split": "train",
+      "road_pixels": 6944,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 2258.259765625,
+          "other_body": 9.06828498840332,
+          "measured_road": 52.89938735961914,
+          "visible": 2642.37353515625
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1090.7047119140625,
+          "measured_road": 14.894241333007812,
+          "visible": 1233.0126953125
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 9.126209259033203,
+          "measured_road": 9.113245010375977,
+          "visible": 433.7862854003906
+        },
+        {
+          "actor": 18,
+          "own_body": 83.72807312011719,
+          "other_body": 9.045470505952835e-08,
+          "measured_road": 0.0,
+          "visible": 107.55586242675781
+        },
+        {
+          "actor": 25,
+          "own_body": 2001.934326171875,
+          "other_body": 1.9880375862121582,
+          "measured_road": 0.9292629957199097,
+          "visible": 2059.350830078125
+        },
+        {
+          "actor": 26,
+          "own_body": 314.611328125,
+          "other_body": 29.290122985839844,
+          "measured_road": 0.05790632218122482,
+          "visible": 376.758056640625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 139.70510864257812,
+          "measured_road": 103.79763793945312,
+          "visible": 15088.18359375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008096",
+      "split": "train",
+      "road_pixels": 6746,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 2627.194091796875,
+          "other_body": 15.555431365966797,
+          "measured_road": 45.666385650634766,
+          "visible": 2984.64501953125
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1097.9853515625,
+          "measured_road": 14.506582260131836,
+          "visible": 1236.096923828125
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 6.84338903427124,
+          "measured_road": 10.352872848510742,
+          "visible": 406.9738464355469
+        },
+        {
+          "actor": 18,
+          "own_body": 90.98963165283203,
+          "other_body": 6.996560841798782e-08,
+          "measured_road": 0.0,
+          "visible": 117.96155548095703
+        },
+        {
+          "actor": 25,
+          "own_body": 1932.1859130859375,
+          "other_body": 1.3798154592514038,
+          "measured_road": 0.8256199359893799,
+          "visible": 1972.1142578125
+        },
+        {
+          "actor": 26,
+          "own_body": 323.197265625,
+          "other_body": 26.424882888793945,
+          "measured_road": 0.8133666515350342,
+          "visible": 387.53582763671875
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 140.53057861328125,
+          "measured_road": 86.34213256835938,
+          "visible": 15098.169921875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008097",
+      "split": "train",
+      "road_pixels": 6804,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 2985.9013671875,
+          "other_body": 13.7601318359375,
+          "measured_road": 37.982017517089844,
+          "visible": 3368.79150390625
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1099.859130859375,
+          "measured_road": 13.174461364746094,
+          "visible": 1241.9627685546875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 2.908761501312256,
+          "measured_road": 6.3904266357421875,
+          "visible": 409.4433898925781
+        },
+        {
+          "actor": 18,
+          "own_body": 98.41671752929688,
+          "other_body": 1.1047814041376114e-07,
+          "measured_road": 0.0,
+          "visible": 127.91194915771484
+        },
+        {
+          "actor": 25,
+          "own_body": 1808.271240234375,
+          "other_body": 6.133145332336426,
+          "measured_road": 1.0273619890213013,
+          "visible": 1847.01806640625
+        },
+        {
+          "actor": 26,
+          "own_body": 352.16229248046875,
+          "other_body": 26.278484344482422,
+          "measured_road": 5.14006233215332,
+          "visible": 418.0753173828125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 134.02023315429688,
+          "measured_road": 95.07991027832031,
+          "visible": 15088.8466796875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008098",
+      "split": "train",
+      "road_pixels": 6515,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 3412.409912109375,
+          "other_body": 15.622156143188477,
+          "measured_road": 21.879196166992188,
+          "visible": 3845.209716796875
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1066.311279296875,
+          "measured_road": 13.025538444519043,
+          "visible": 1231.685546875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 3.622025489807129,
+          "measured_road": 9.06484603881836,
+          "visible": 426.1916198730469
+        },
+        {
+          "actor": 18,
+          "own_body": 107.16152954101562,
+          "other_body": 1.202861312776804e-07,
+          "measured_road": 0.0,
+          "visible": 134.1964569091797
+        },
+        {
+          "actor": 25,
+          "own_body": 1637.0244140625,
+          "other_body": 9.06338119506836,
+          "measured_road": 0.5766997337341309,
+          "visible": 1683.96533203125
+        },
+        {
+          "actor": 26,
+          "own_body": 366.348876953125,
+          "other_body": 30.536287307739258,
+          "measured_road": 1.1245207786560059,
+          "visible": 433.3685302734375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 131.97511291503906,
+          "measured_road": 98.20326232910156,
+          "visible": 15089.0849609375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008099",
+      "split": "train",
+      "road_pixels": 6646,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 3943.580078125,
+          "other_body": 32.990203857421875,
+          "measured_road": 16.774051666259766,
+          "visible": 4401.8310546875
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1101.28564453125,
+          "measured_road": 11.162860870361328,
+          "visible": 1219.05859375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 1.7978599071502686,
+          "measured_road": 7.710272789001465,
+          "visible": 439.5657958984375
+        },
+        {
+          "actor": 18,
+          "own_body": 107.04349517822266,
+          "other_body": 6.542541086673737e-08,
+          "measured_road": 0.0,
+          "visible": 140.19102478027344
+        },
+        {
+          "actor": 25,
+          "own_body": 1473.955322265625,
+          "other_body": 15.870603561401367,
+          "measured_road": 1.9271589517593384,
+          "visible": 1545.02294921875
+        },
+        {
+          "actor": 26,
+          "own_body": 390.8922119140625,
+          "other_body": 20.6861515045166,
+          "measured_road": 3.1804590225219727,
+          "visible": 450.1059265136719
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 133.41416931152344,
+          "measured_road": 109.15717315673828,
+          "visible": 15059.5908203125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008100",
+      "split": "train",
+      "road_pixels": 6616,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 4559.0478515625,
+          "other_body": 45.32917022705078,
+          "measured_road": 20.4935302734375,
+          "visible": 5084.376953125
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1060.0833740234375,
+          "measured_road": 12.278298377990723,
+          "visible": 1206.3780517578125
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 2.442059278488159,
+          "measured_road": 7.800485610961914,
+          "visible": 454.414306640625
+        },
+        {
+          "actor": 18,
+          "own_body": 110.23672485351562,
+          "other_body": 4.704634193331003e-08,
+          "measured_road": 0.0,
+          "visible": 146.34832763671875
+        },
+        {
+          "actor": 25,
+          "own_body": 1323.648681640625,
+          "other_body": 19.020679473876953,
+          "measured_road": 0.4414479434490204,
+          "visible": 1386.6490478515625
+        },
+        {
+          "actor": 26,
+          "own_body": 407.8880920410156,
+          "other_body": 23.51764678955078,
+          "measured_road": 4.289740562438965,
+          "visible": 470.369384765625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 129.35934448242188,
+          "measured_road": 101.42713928222656,
+          "visible": 15046.21484375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008102",
+      "split": "train",
+      "road_pixels": 6607,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 6336.90380859375,
+          "other_body": 37.577911376953125,
+          "measured_road": 75.31571197509766,
+          "visible": 7154.12109375
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1050.5926513671875,
+          "measured_road": 10.605597496032715,
+          "visible": 1205.038818359375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 83.30661010742188,
+          "measured_road": 6.063218116760254,
+          "visible": 577.0537109375
+        },
+        {
+          "actor": 18,
+          "own_body": 122.99974060058594,
+          "other_body": 5.2386894822120667e-08,
+          "measured_road": 0.0,
+          "visible": 158.1370086669922
+        },
+        {
+          "actor": 25,
+          "own_body": 917.7095947265625,
+          "other_body": 26.045543670654297,
+          "measured_road": 0.8071600198745728,
+          "visible": 994.0875244140625
+        },
+        {
+          "actor": 26,
+          "own_body": 455.91748046875,
+          "other_body": 20.857093811035156,
+          "measured_road": 3.2954413890838623,
+          "visible": 530.7523193359375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 123.20407104492188,
+          "measured_road": 91.2857894897461,
+          "visible": 15003.306640625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008103",
+      "split": "train",
+      "road_pixels": 6237,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 7662.1962890625,
+          "other_body": 62.994834899902344,
+          "measured_road": 56.53269958496094,
+          "visible": 8705.4013671875
+        },
+        {
+          "actor": 6,
+          "own_body": 0.0,
+          "other_body": 1058.745849609375,
+          "measured_road": 11.221210479736328,
+          "visible": 1205.5693359375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 353.4957275390625,
+          "measured_road": 9.796183586120605,
+          "visible": 684.4812622070312
+        },
+        {
+          "actor": 18,
+          "own_body": 135.72357177734375,
+          "other_body": 1.0343501344323158e-07,
+          "measured_road": 0.0,
+          "visible": 172.56175231933594
+        },
+        {
+          "actor": 25,
+          "own_body": 802.3643798828125,
+          "other_body": 45.84013366699219,
+          "measured_road": 0.5016013383865356,
+          "visible": 878.6787719726562
+        },
+        {
+          "actor": 26,
+          "own_body": 477.96533203125,
+          "other_body": 27.30093765258789,
+          "measured_road": 2.6254782676696777,
+          "visible": 558.390869140625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 115.60067749023438,
+          "measured_road": 90.95124053955078,
+          "visible": 14980.58203125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008104",
+      "split": "train",
+      "road_pixels": 5966,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 9387.373046875,
+          "other_body": 30.4649715423584,
+          "measured_road": 73.12696838378906,
+          "visible": 10561.91015625
+        },
+        {
+          "actor": 6,
+          "own_body": 1061.1510009765625,
+          "other_body": 0.4242100119590759,
+          "measured_road": 8.960315704345703,
+          "visible": 1207.6142578125
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 421.16241455078125,
+          "measured_road": 10.831500053405762,
+          "visible": 760.093994140625
+        },
+        {
+          "actor": 18,
+          "own_body": 141.0691680908203,
+          "other_body": 1.0647636372596025e-07,
+          "measured_road": 0.0,
+          "visible": 177.47848510742188
+        },
+        {
+          "actor": 25,
+          "own_body": 837.9603271484375,
+          "other_body": 91.40109252929688,
+          "measured_road": 0.20193380117416382,
+          "visible": 954.8265380859375
+        },
+        {
+          "actor": 26,
+          "own_body": 510.6725769042969,
+          "other_body": 19.553913116455078,
+          "measured_road": 8.172802925109863,
+          "visible": 589.72119140625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 117.7838134765625,
+          "measured_road": 90.3079605102539,
+          "visible": 14960.0849609375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008105",
+      "split": "train",
+      "road_pixels": 6076,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 10421.75390625,
+          "other_body": 7.0248870849609375,
+          "measured_road": 81.26243591308594,
+          "visible": 11493.78125
+        },
+        {
+          "actor": 6,
+          "own_body": 1072.1171875,
+          "other_body": 0.6216980218887329,
+          "measured_road": 10.20278549194336,
+          "visible": 1210.093994140625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 439.24151611328125,
+          "measured_road": 9.07345962524414,
+          "visible": 774.731201171875
+        },
+        {
+          "actor": 18,
+          "own_body": 146.81356811523438,
+          "other_body": 0.007125134579837322,
+          "measured_road": 0.0,
+          "visible": 183.29421997070312
+        },
+        {
+          "actor": 25,
+          "own_body": 1013.7416381835938,
+          "other_body": 145.98629760742188,
+          "measured_road": 1.6325409412384033,
+          "visible": 1173.8046875
+        },
+        {
+          "actor": 26,
+          "own_body": 559.3392333984375,
+          "other_body": 15.290491104125977,
+          "measured_road": 5.151836395263672,
+          "visible": 624.5740966796875
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 117.72480773925781,
+          "measured_road": 92.46429443359375,
+          "visible": 14937.5849609375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008106",
+      "split": "train",
+      "road_pixels": 6018,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 10966.85546875,
+          "other_body": 7.591034889221191,
+          "measured_road": 58.05671691894531,
+          "visible": 11954.0595703125
+        },
+        {
+          "actor": 6,
+          "own_body": 1061.1756591796875,
+          "other_body": 0.819008469581604,
+          "measured_road": 9.053693771362305,
+          "visible": 1210.31005859375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 440.77203369140625,
+          "measured_road": 10.345479965209961,
+          "visible": 786.26171875
+        },
+        {
+          "actor": 18,
+          "own_body": 152.38487243652344,
+          "other_body": 1.3747194316238165e-07,
+          "measured_road": 0.0,
+          "visible": 187.31016540527344
+        },
+        {
+          "actor": 25,
+          "own_body": 1283.6844482421875,
+          "other_body": 71.70564270019531,
+          "measured_road": 0.48811784386634827,
+          "visible": 1391.214599609375
+        },
+        {
+          "actor": 26,
+          "own_body": 594.1631469726562,
+          "other_body": 15.027475357055664,
+          "measured_road": 6.364116668701172,
+          "visible": 660.0714721679688
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 114.08381652832031,
+          "measured_road": 106.7193832397461,
+          "visible": 14914.900390625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008107",
+      "split": "train",
+      "road_pixels": 6029,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 11053.501953125,
+          "other_body": 6.636648178100586,
+          "measured_road": 30.47486686706543,
+          "visible": 11489.634765625
+        },
+        {
+          "actor": 6,
+          "own_body": 1040.1142578125,
+          "other_body": 0.9281174540519714,
+          "measured_road": 8.968965530395508,
+          "visible": 1203.6904296875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 440.5535888671875,
+          "measured_road": 12.517314910888672,
+          "visible": 788.9512939453125
+        },
+        {
+          "actor": 18,
+          "own_body": 159.11856079101562,
+          "other_body": 1.9729486666619778e-07,
+          "measured_road": 0.0,
+          "visible": 193.5855255126953
+        },
+        {
+          "actor": 25,
+          "own_body": 1594.296142578125,
+          "other_body": 54.38640213012695,
+          "measured_road": 0.9875978231430054,
+          "visible": 1670.2733154296875
+        },
+        {
+          "actor": 26,
+          "own_body": 625.963623046875,
+          "other_body": 12.002279281616211,
+          "measured_road": 6.762691974639893,
+          "visible": 699.81005859375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 105.0755386352539,
+          "measured_road": 106.55355072021484,
+          "visible": 14818.4912109375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008108",
+      "split": "train",
+      "road_pixels": 5980,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 9504.6494140625,
+          "other_body": 0.04755757004022598,
+          "measured_road": 28.744712829589844,
+          "visible": 9790.0009765625
+        },
+        {
+          "actor": 6,
+          "own_body": 1026.1279296875,
+          "other_body": 1.4924840927124023,
+          "measured_road": 10.232200622558594,
+          "visible": 1194.08984375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 437.57073974609375,
+          "measured_road": 11.090655326843262,
+          "visible": 790.5819091796875
+        },
+        {
+          "actor": 18,
+          "own_body": 165.1812744140625,
+          "other_body": 3.944805939681828e-07,
+          "measured_road": 0.0,
+          "visible": 199.3883056640625
+        },
+        {
+          "actor": 25,
+          "own_body": 1853.23583984375,
+          "other_body": 76.1021957397461,
+          "measured_road": 0.6223194599151611,
+          "visible": 1949.84619140625
+        },
+        {
+          "actor": 26,
+          "own_body": 676.6883544921875,
+          "other_body": 6.54796028137207,
+          "measured_road": 6.948052883148193,
+          "visible": 743.96435546875
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 101.03472137451172,
+          "measured_road": 110.42552185058594,
+          "visible": 14717.333984375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008109",
+      "split": "train",
+      "road_pixels": 6049,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 7980.9599609375,
+          "other_body": 0.1570373773574829,
+          "measured_road": 19.006654739379883,
+          "visible": 8305.2177734375
+        },
+        {
+          "actor": 6,
+          "own_body": 1000.6992797851562,
+          "other_body": 2.6923117637634277,
+          "measured_road": 8.409334182739258,
+          "visible": 1175.876708984375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 438.7868347167969,
+          "measured_road": 11.00560188293457,
+          "visible": 792.0017700195312
+        },
+        {
+          "actor": 18,
+          "own_body": 173.63009643554688,
+          "other_body": 5.349575076252222e-07,
+          "measured_road": 0.0,
+          "visible": 208.23602294921875
+        },
+        {
+          "actor": 25,
+          "own_body": 2046.785400390625,
+          "other_body": 34.64598846435547,
+          "measured_road": 1.3334782123565674,
+          "visible": 2109.216552734375
+        },
+        {
+          "actor": 26,
+          "own_body": 704.7657470703125,
+          "other_body": 4.69809627532959,
+          "measured_road": 9.056197166442871,
+          "visible": 784.4375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 102.35617065429688,
+          "measured_road": 99.24049377441406,
+          "visible": 14447.44140625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008110",
+      "split": "train",
+      "road_pixels": 6370,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 6286.5556640625,
+          "other_body": 0.00032082886900752783,
+          "measured_road": 6.39617395401001,
+          "visible": 6370.943359375
+        },
+        {
+          "actor": 6,
+          "own_body": 977.6971435546875,
+          "other_body": 3.0426547527313232,
+          "measured_road": 11.461463928222656,
+          "visible": 1148.272216796875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 441.84283447265625,
+          "measured_road": 7.120233058929443,
+          "visible": 793.3300170898438
+        },
+        {
+          "actor": 18,
+          "own_body": 176.33029174804688,
+          "other_body": 3.1435047276318073e-07,
+          "measured_road": 0.0,
+          "visible": 213.98020935058594
+        },
+        {
+          "actor": 25,
+          "own_body": 2054.980224609375,
+          "other_body": 33.398799896240234,
+          "measured_road": 0.5204616189002991,
+          "visible": 2109.35595703125
+        },
+        {
+          "actor": 26,
+          "own_body": 780.414306640625,
+          "other_body": 3.726167678833008,
+          "measured_road": 6.82175350189209,
+          "visible": 841.611328125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 99.17123413085938,
+          "measured_road": 98.12725830078125,
+          "visible": 14142.634765625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008111",
+      "split": "train",
+      "road_pixels": 6849,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 3398.46533203125,
+          "other_body": 0.0002210556122008711,
+          "measured_road": 8.74514102935791,
+          "visible": 3461.296875
+        },
+        {
+          "actor": 6,
+          "own_body": 965.0589599609375,
+          "other_body": 3.2242491245269775,
+          "measured_road": 9.319928169250488,
+          "visible": 1118.61865234375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 447.2126159667969,
+          "measured_road": 10.285137176513672,
+          "visible": 794.992919921875
+        },
+        {
+          "actor": 18,
+          "own_body": 188.34170532226562,
+          "other_body": 5.902547854930162e-07,
+          "measured_road": 0.0,
+          "visible": 227.66542053222656
+        },
+        {
+          "actor": 25,
+          "own_body": 2052.764892578125,
+          "other_body": 35.680355072021484,
+          "measured_road": 1.1485302448272705,
+          "visible": 2109.527587890625
+        },
+        {
+          "actor": 26,
+          "own_body": 834.37744140625,
+          "other_body": 3.446876049041748,
+          "measured_road": 10.779032707214355,
+          "visible": 909.12939453125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 97.71054077148438,
+          "measured_road": 99.94973754882812,
+          "visible": 13820.189453125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008112",
+      "split": "train",
+      "road_pixels": 7326,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 608.9952392578125,
+          "other_body": 3.327450394863263e-05,
+          "measured_road": 3.0140092372894287,
+          "visible": 648.9727783203125
+        },
+        {
+          "actor": 6,
+          "own_body": 936.3582763671875,
+          "other_body": 3.7251200675964355,
+          "measured_road": 8.299782752990723,
+          "visible": 1089.0087890625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 449.943603515625,
+          "measured_road": 10.832427978515625,
+          "visible": 795.839599609375
+        },
+        {
+          "actor": 18,
+          "own_body": 189.9791717529297,
+          "other_body": 6.194168236106634e-07,
+          "measured_road": 0.00024321116507053375,
+          "visible": 234.30960083007812
+        },
+        {
+          "actor": 25,
+          "own_body": 2052.404052734375,
+          "other_body": 36.58382034301758,
+          "measured_road": 0.9852858781814575,
+          "visible": 2109.04150390625
+        },
+        {
+          "actor": 26,
+          "own_body": 899.2716674804688,
+          "other_body": 3.408775806427002,
+          "measured_road": 8.200851440429688,
+          "visible": 973.1975708007812
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 92.65078735351562,
+          "measured_road": 92.97752380371094,
+          "visible": 13486.0009765625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008114",
+      "split": "train",
+      "road_pixels": 7158,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 879.0081787109375,
+          "other_body": 54.31220245361328,
+          "measured_road": 4.947789192199707,
+          "visible": 1024.02490234375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 524.4776000976562,
+          "measured_road": 10.977188110351562,
+          "visible": 798.5636596679688
+        },
+        {
+          "actor": 18,
+          "own_body": 204.60975646972656,
+          "other_body": 3.7436257116496563e-07,
+          "measured_road": 0.0,
+          "visible": 243.72271728515625
+        },
+        {
+          "actor": 25,
+          "own_body": 2055.138671875,
+          "other_body": 33.00279235839844,
+          "measured_road": 1.3126335144042969,
+          "visible": 2110.9814453125
+        },
+        {
+          "actor": 26,
+          "own_body": 1055.5810546875,
+          "other_body": 0.004750764463096857,
+          "measured_road": 7.429260730743408,
+          "visible": 1131.16943359375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 87.51902770996094,
+          "measured_road": 97.50930786132812,
+          "visible": 12475.6484375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008115",
+      "split": "train",
+      "road_pixels": 7002,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 868.59912109375,
+          "other_body": 48.76795959472656,
+          "measured_road": 5.501758098602295,
+          "visible": 991.8734741210938
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 522.3807373046875,
+          "measured_road": 11.065614700317383,
+          "visible": 799.9302368164062
+        },
+        {
+          "actor": 18,
+          "own_body": 216.59347534179688,
+          "other_body": 2.731831045821309e-07,
+          "measured_road": 1.5085290215210989e-05,
+          "visible": 250.82261657714844
+        },
+        {
+          "actor": 25,
+          "own_body": 2053.4208984375,
+          "other_body": 37.7800178527832,
+          "measured_road": 1.4372607469558716,
+          "visible": 2110.76806640625
+        },
+        {
+          "actor": 26,
+          "own_body": 1146.3387451171875,
+          "other_body": 1.6339209079742432,
+          "measured_road": 6.381259918212891,
+          "visible": 1224.210693359375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 85.19596099853516,
+          "measured_road": 98.82267761230469,
+          "visible": 12028.310546875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008116",
+      "split": "train",
+      "road_pixels": 7337,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 837.8824462890625,
+          "other_body": 1.977188229560852,
+          "measured_road": 3.956480026245117,
+          "visible": 961.2066040039062
+        },
+        {
+          "actor": 12,
+          "own_body": 429.52423095703125,
+          "other_body": 85.44640350341797,
+          "measured_road": 11.101202964782715,
+          "visible": 801.3121337890625
+        },
+        {
+          "actor": 18,
+          "own_body": 224.18002319335938,
+          "other_body": 2.958810806274414,
+          "measured_road": 5.093519212095998e-05,
+          "visible": 261.0296936035156
+        },
+        {
+          "actor": 25,
+          "own_body": 2056.407470703125,
+          "other_body": 38.32840347290039,
+          "measured_road": 1.399687647819519,
+          "visible": 2110.99658203125
+        },
+        {
+          "actor": 26,
+          "own_body": 1246.4140625,
+          "other_body": 24.862104415893555,
+          "measured_road": 7.0723347663879395,
+          "visible": 1327.0615234375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 78.2134780883789,
+          "measured_road": 105.2864761352539,
+          "visible": 11626.759765625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008117",
+      "split": "train",
+      "road_pixels": 7237,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 799.9337158203125,
+          "other_body": 1.9676710367202759,
+          "measured_road": 3.537541627883911,
+          "visible": 929.6441650390625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 436.95257568359375,
+          "measured_road": 11.67696475982666,
+          "visible": 802.662109375
+        },
+        {
+          "actor": 18,
+          "own_body": 228.82373046875,
+          "other_body": 6.692280294373631e-07,
+          "measured_road": 0.015916923061013222,
+          "visible": 271.27886962890625
+        },
+        {
+          "actor": 25,
+          "own_body": 2056.66064453125,
+          "other_body": 35.954620361328125,
+          "measured_road": 0.855749249458313,
+          "visible": 2111.598388671875
+        },
+        {
+          "actor": 26,
+          "own_body": 1361.078369140625,
+          "other_body": 4.752808308694512e-06,
+          "measured_road": 11.985197067260742,
+          "visible": 1440.171630859375
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 74.35660552978516,
+          "measured_road": 103.3563232421875,
+          "visible": 11180.38671875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008118",
+      "split": "train",
+      "road_pixels": 7281,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 766.859130859375,
+          "other_body": 1.8325366973876953,
+          "measured_road": 4.351650238037109,
+          "visible": 897.51318359375
+        },
+        {
+          "actor": 12,
+          "own_body": 439.1482849121094,
+          "other_body": 10.352951049804688,
+          "measured_road": 11.764467239379883,
+          "visible": 793.0946044921875
+        },
+        {
+          "actor": 18,
+          "own_body": 234.58291625976562,
+          "other_body": 5.409965524449944e-07,
+          "measured_road": 0.039171140640974045,
+          "visible": 281.4329528808594
+        },
+        {
+          "actor": 25,
+          "own_body": 2062.103515625,
+          "other_body": 32.00653076171875,
+          "measured_road": 0.9113909006118774,
+          "visible": 2112.14404296875
+        },
+        {
+          "actor": 26,
+          "own_body": 1488.8408203125,
+          "other_body": 0.006684359163045883,
+          "measured_road": 5.890203475952148,
+          "visible": 1560.603515625
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 69.45687103271484,
+          "measured_road": 106.10238647460938,
+          "visible": 10734.8544921875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008119",
+      "split": "train",
+      "road_pixels": 6995,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 729.3731689453125,
+          "other_body": 4.502833366394043,
+          "measured_road": 0.47826796770095825,
+          "visible": 865.768798828125
+        },
+        {
+          "actor": 12,
+          "own_body": 426.498779296875,
+          "other_body": 16.321218490600586,
+          "measured_road": 14.963685989379883,
+          "visible": 761.0652465820312
+        },
+        {
+          "actor": 18,
+          "own_body": 237.89956665039062,
+          "other_body": 0.38584423065185547,
+          "measured_road": 0.0,
+          "visible": 287.8401184082031
+        },
+        {
+          "actor": 25,
+          "own_body": 2065.626708984375,
+          "other_body": 30.292512893676758,
+          "measured_road": 0.1425558626651764,
+          "visible": 2112.681640625
+        },
+        {
+          "actor": 26,
+          "own_body": 1628.501708984375,
+          "other_body": 6.5101318359375,
+          "measured_road": 3.2643489837646484,
+          "visible": 1703.7149658203125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 69.13814544677734,
+          "measured_road": 106.94017028808594,
+          "visible": 10259.990234375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008120",
+      "split": "train",
+      "road_pixels": 6470,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 707.3143920898438,
+          "other_body": 44.044410705566406,
+          "measured_road": 4.571966171264648,
+          "visible": 827.8653564453125
+        },
+        {
+          "actor": 12,
+          "own_body": 382.8117370605469,
+          "other_body": 12.201496124267578,
+          "measured_road": 14.19456672668457,
+          "visible": 707.3466796875
+        },
+        {
+          "actor": 18,
+          "own_body": 244.32537841796875,
+          "other_body": 2.0987894535064697,
+          "measured_road": 0.0,
+          "visible": 293.13494873046875
+        },
+        {
+          "actor": 25,
+          "own_body": 2063.99365234375,
+          "other_body": 34.63345718383789,
+          "measured_road": 0.21831122040748596,
+          "visible": 2115.97802734375
+        },
+        {
+          "actor": 26,
+          "own_body": 1786.9520263671875,
+          "other_body": 10.135285377502441,
+          "measured_road": 3.6004977226257324,
+          "visible": 1872.764892578125
+        },
+        {
+          "actor": 37,
+          "own_body": 0.0,
+          "other_body": 66.56666564941406,
+          "measured_road": 83.63395690917969,
+          "visible": 9675.482421875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008121",
+      "split": "train",
+      "road_pixels": 6366,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 676.1834716796875,
+          "other_body": 80.26956176757812,
+          "measured_road": 0.11056169867515564,
+          "visible": 792.3890380859375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 12.3101806640625,
+          "measured_road": 14.501370429992676,
+          "visible": 630.8551025390625
+        },
+        {
+          "actor": 18,
+          "own_body": 251.63729858398438,
+          "other_body": 3.2237071990966797,
+          "measured_road": 0.0,
+          "visible": 302.96356201171875
+        },
+        {
+          "actor": 25,
+          "own_body": 2064.052734375,
+          "other_body": 0.0010718557750806212,
+          "measured_road": 0.17122957110404968,
+          "visible": 2121.68603515625
+        },
+        {
+          "actor": 26,
+          "own_body": 1957.9410400390625,
+          "other_body": 0.3308304250240326,
+          "measured_road": 15.099405288696289,
+          "visible": 2059.061767578125
+        },
+        {
+          "actor": 37,
+          "own_body": 8377.3779296875,
+          "other_body": 68.48905944824219,
+          "measured_road": 42.22050857543945,
+          "visible": 9164.53515625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008122",
+      "split": "train",
+      "road_pixels": 6214,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 643.8646240234375,
+          "other_body": 80.80290222167969,
+          "measured_road": 0.08784852921962738,
+          "visible": 759.572021484375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 45.356849670410156,
+          "measured_road": 7.588740348815918,
+          "visible": 551.41796875
+        },
+        {
+          "actor": 18,
+          "own_body": 254.02996826171875,
+          "other_body": 3.0290043354034424,
+          "measured_road": 0.0,
+          "visible": 310.68060302734375
+        },
+        {
+          "actor": 25,
+          "own_body": 2060.2216796875,
+          "other_body": 0.1323588341474533,
+          "measured_road": 1.6434061527252197,
+          "visible": 2126.84716796875
+        },
+        {
+          "actor": 26,
+          "own_body": 2141.73046875,
+          "other_body": 18.06066131591797,
+          "measured_road": 12.841931343078613,
+          "visible": 2263.4912109375
+        },
+        {
+          "actor": 37,
+          "own_body": 7941.92138671875,
+          "other_body": 71.17247009277344,
+          "measured_road": 49.05934524536133,
+          "visible": 8732.41796875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008123",
+      "split": "train",
+      "road_pixels": 6424,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 619.74853515625,
+          "other_body": 45.28351974487305,
+          "measured_road": 0.5378317832946777,
+          "visible": 739.293701171875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 22.12515640258789,
+          "measured_road": 17.746219635009766,
+          "visible": 503.81988525390625
+        },
+        {
+          "actor": 18,
+          "own_body": 279.77587890625,
+          "other_body": 3.713434934616089,
+          "measured_road": 0.4668433666229248,
+          "visible": 343.8714294433594
+        },
+        {
+          "actor": 25,
+          "own_body": 2046.720458984375,
+          "other_body": 3.871259927749634,
+          "measured_road": 0.7056655287742615,
+          "visible": 2103.57958984375
+        },
+        {
+          "actor": 26,
+          "own_body": 2398.632080078125,
+          "other_body": 5.2675018310546875,
+          "measured_road": 13.02285385131836,
+          "visible": 2514.1591796875
+        },
+        {
+          "actor": 37,
+          "own_body": 7537.2392578125,
+          "other_body": 65.48097229003906,
+          "measured_road": 56.27571487426758,
+          "visible": 8417.1513671875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008124",
+      "split": "train",
+      "road_pixels": 6726,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 582.4757080078125,
+          "other_body": 42.53240966796875,
+          "measured_road": 0.048551082611083984,
+          "visible": 704.2235107421875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 27.571475982666016,
+          "measured_road": 12.728622436523438,
+          "visible": 481.58123779296875
+        },
+        {
+          "actor": 18,
+          "own_body": 285.106201171875,
+          "other_body": 4.338600158691406,
+          "measured_road": 1.5671941041946411,
+          "visible": 356.43023681640625
+        },
+        {
+          "actor": 25,
+          "own_body": 2008.8846435546875,
+          "other_body": 8.514678955078125,
+          "measured_road": 0.7578480243682861,
+          "visible": 2053.775146484375
+        },
+        {
+          "actor": 26,
+          "own_body": 2650.700439453125,
+          "other_body": 6.245469093322754,
+          "measured_road": 18.265918731689453,
+          "visible": 2816.91748046875
+        },
+        {
+          "actor": 37,
+          "own_body": 7179.701171875,
+          "other_body": 68.70519256591797,
+          "measured_road": 47.73960876464844,
+          "visible": 7971.53125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008126",
+      "split": "train",
+      "road_pixels": 7255,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 523.344970703125,
+          "other_body": 47.676719665527344,
+          "measured_road": 0.4457147419452667,
+          "visible": 637.859375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 48.69545364379883,
+          "measured_road": 7.0768513679504395,
+          "visible": 499.2318115234375
+        },
+        {
+          "actor": 18,
+          "own_body": 326.38385009765625,
+          "other_body": 5.724457740783691,
+          "measured_road": 2.900277614593506,
+          "visible": 395.4033203125
+        },
+        {
+          "actor": 25,
+          "own_body": 1783.128662109375,
+          "other_body": 24.06989860534668,
+          "measured_road": 1.183367371559143,
+          "visible": 1847.3760986328125
+        },
+        {
+          "actor": 26,
+          "own_body": 3412.719482421875,
+          "other_body": 18.194290161132812,
+          "measured_road": 7.319818019866943,
+          "visible": 3655.594970703125
+        },
+        {
+          "actor": 37,
+          "own_body": 6569.95703125,
+          "other_body": 66.57437133789062,
+          "measured_road": 53.055091857910156,
+          "visible": 7286.181640625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008127",
+      "split": "train",
+      "road_pixels": 7495,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 497.48724365234375,
+          "other_body": 76.92097473144531,
+          "measured_road": 0.17179621756076813,
+          "visible": 607.59130859375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 27.87809181213379,
+          "measured_road": 11.742103576660156,
+          "visible": 517.4722900390625
+        },
+        {
+          "actor": 18,
+          "own_body": 337.602783203125,
+          "other_body": 7.227748394012451,
+          "measured_road": 7.871901988983154,
+          "visible": 416.09332275390625
+        },
+        {
+          "actor": 25,
+          "own_body": 1664.908203125,
+          "other_body": 28.469757080078125,
+          "measured_road": 1.0302884578704834,
+          "visible": 1725.641357421875
+        },
+        {
+          "actor": 26,
+          "own_body": 3943.09130859375,
+          "other_body": 17.622404098510742,
+          "measured_road": 6.304497241973877,
+          "visible": 4207.7685546875
+        },
+        {
+          "actor": 37,
+          "own_body": 6289.84765625,
+          "other_body": 67.81819152832031,
+          "measured_road": 43.387298583984375,
+          "visible": 7019.39501953125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008128",
+      "split": "train",
+      "road_pixels": 7259,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 458.81536865234375,
+          "other_body": 40.447261810302734,
+          "measured_road": 0.2696904242038727,
+          "visible": 572.0970458984375
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 63.53877258300781,
+          "measured_road": 13.987724304199219,
+          "visible": 549.972900390625
+        },
+        {
+          "actor": 18,
+          "own_body": 352.238525390625,
+          "other_body": 8.494961738586426,
+          "measured_road": 3.594684600830078,
+          "visible": 434.4217224121094
+        },
+        {
+          "actor": 25,
+          "own_body": 1531.4735107421875,
+          "other_body": 38.30778503417969,
+          "measured_road": 1.7033300399780273,
+          "visible": 1602.1463623046875
+        },
+        {
+          "actor": 26,
+          "own_body": 4513.6005859375,
+          "other_body": 23.67239761352539,
+          "measured_road": 15.35952377319336,
+          "visible": 4899.3134765625
+        },
+        {
+          "actor": 37,
+          "own_body": 6025.32080078125,
+          "other_body": 70.45722961425781,
+          "measured_road": 47.517112731933594,
+          "visible": 6704.21533203125
+        }
+      ]
+    },
+    {
+      "frame_id": "0008129",
+      "split": "train",
+      "road_pixels": 6803,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 435.49517822265625,
+          "other_body": 31.844623565673828,
+          "measured_road": 0.2733050584793091,
+          "visible": 536.5211791992188
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 94.83792114257812,
+          "measured_road": 8.370689392089844,
+          "visible": 619.6771240234375
+        },
+        {
+          "actor": 18,
+          "own_body": 381.49017333984375,
+          "other_body": 9.785202980041504,
+          "measured_road": 1.2215874195098877,
+          "visible": 454.40142822265625
+        },
+        {
+          "actor": 25,
+          "own_body": 1370.703125,
+          "other_body": 45.556087493896484,
+          "measured_road": 2.522538185119629,
+          "visible": 1448.926513671875
+        },
+        {
+          "actor": 26,
+          "own_body": 5247.58251953125,
+          "other_body": 30.800628662109375,
+          "measured_road": 14.812623977661133,
+          "visible": 5773.83935546875
+        },
+        {
+          "actor": 37,
+          "own_body": 5816.0693359375,
+          "other_body": 75.37873840332031,
+          "measured_road": 41.06126403808594,
+          "visible": 6437.10400390625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008130",
+      "split": "train",
+      "road_pixels": 6762,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 398.1328125,
+          "other_body": 41.1993408203125,
+          "measured_road": 0.11122850328683853,
+          "visible": 504.670166015625
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 393.9835205078125,
+          "measured_road": 10.744048118591309,
+          "visible": 730.520751953125
+        },
+        {
+          "actor": 18,
+          "own_body": 405.5820617675781,
+          "other_body": 10.0646333694458,
+          "measured_road": 2.84497332572937,
+          "visible": 479.5257263183594
+        },
+        {
+          "actor": 25,
+          "own_body": 1190.873046875,
+          "other_body": 58.63187026977539,
+          "measured_road": 0.29139190912246704,
+          "visible": 1260.20947265625
+        },
+        {
+          "actor": 26,
+          "own_body": 6385.30078125,
+          "other_body": 35.322235107421875,
+          "measured_road": 40.299095153808594,
+          "visible": 6884.83837890625
+        },
+        {
+          "actor": 37,
+          "own_body": 5666.408203125,
+          "other_body": 69.58836364746094,
+          "measured_road": 30.039207458496094,
+          "visible": 6189.279296875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008131",
+      "split": "train",
+      "road_pixels": 6163,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 380.8236389160156,
+          "other_body": 30.55352210998535,
+          "measured_road": 0.0,
+          "visible": 476.7873840332031
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 474.7430725097656,
+          "measured_road": 10.045147895812988,
+          "visible": 844.8912353515625
+        },
+        {
+          "actor": 18,
+          "own_body": 427.64459228515625,
+          "other_body": 9.596227645874023,
+          "measured_road": 2.3501148223876953,
+          "visible": 506.541259765625
+        },
+        {
+          "actor": 25,
+          "own_body": 1094.3489990234375,
+          "other_body": 51.668495178222656,
+          "measured_road": 0.9983698725700378,
+          "visible": 1179.31005859375
+        },
+        {
+          "actor": 26,
+          "own_body": 7616.6611328125,
+          "other_body": 49.99114227294922,
+          "measured_road": 28.935314178466797,
+          "visible": 8453.7392578125
+        },
+        {
+          "actor": 37,
+          "own_body": 5426.6728515625,
+          "other_body": 75.2432632446289,
+          "measured_road": 34.49314880371094,
+          "visible": 6007.37109375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008132",
+      "split": "train",
+      "road_pixels": 6311,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 339.4302673339844,
+          "other_body": 27.506746292114258,
+          "measured_road": 0.3970426321029663,
+          "visible": 448.8891906738281
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 520.808349609375,
+          "measured_road": 11.105180740356445,
+          "visible": 896.1256103515625
+        },
+        {
+          "actor": 18,
+          "own_body": 457.63531494140625,
+          "other_body": 9.3945951461792,
+          "measured_road": 4.43197774887085,
+          "visible": 536.19921875
+        },
+        {
+          "actor": 25,
+          "own_body": 1214.7435302734375,
+          "other_body": 98.69477844238281,
+          "measured_road": 0.05155029892921448,
+          "visible": 1322.0048828125
+        },
+        {
+          "actor": 26,
+          "own_body": 9305.7109375,
+          "other_body": 31.013330459594727,
+          "measured_road": 37.248435974121094,
+          "visible": 10117.2333984375
+        },
+        {
+          "actor": 37,
+          "own_body": 5230.6982421875,
+          "other_body": 75.3339614868164,
+          "measured_road": 46.26556396484375,
+          "visible": 5890.3623046875
+        }
+      ]
+    },
+    {
+      "frame_id": "0008133",
+      "split": "train",
+      "road_pixels": 6477,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 351.5660400390625,
+          "other_body": 21.21432876586914,
+          "measured_road": 0.07155618816614151,
+          "visible": 439.2831726074219
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 543.3179931640625,
+          "measured_road": 14.003402709960938,
+          "visible": 929.008056640625
+        },
+        {
+          "actor": 18,
+          "own_body": 488.8690490722656,
+          "other_body": 14.391938209533691,
+          "measured_road": 4.227100849151611,
+          "visible": 570.7429809570312
+        },
+        {
+          "actor": 25,
+          "own_body": 1540.085205078125,
+          "other_body": 56.48194122314453,
+          "measured_road": 0.07350392639636993,
+          "visible": 1607.5274658203125
+        },
+        {
+          "actor": 26,
+          "own_body": 9741.208984375,
+          "other_body": 33.32310104370117,
+          "measured_road": 45.686798095703125,
+          "visible": 10625.703125
+        },
+        {
+          "actor": 37,
+          "own_body": 4984.12939453125,
+          "other_body": 73.941650390625,
+          "measured_road": 47.467010498046875,
+          "visible": 5659.43896484375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008134",
+      "split": "train",
+      "road_pixels": 6399,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 340.01837158203125,
+          "other_body": 23.615612030029297,
+          "measured_road": 0.04048806056380272,
+          "visible": 428.8690185546875
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 551.4371337890625,
+          "measured_road": 14.076615333557129,
+          "visible": 952.080810546875
+        },
+        {
+          "actor": 18,
+          "own_body": 521.4326171875,
+          "other_body": 12.496978759765625,
+          "measured_road": 1.653487205505371,
+          "visible": 612.039306640625
+        },
+        {
+          "actor": 25,
+          "own_body": 1877.9407958984375,
+          "other_body": 76.13736724853516,
+          "measured_road": 0.12496183812618256,
+          "visible": 1973.385498046875
+        },
+        {
+          "actor": 26,
+          "own_body": 9590.076171875,
+          "other_body": 8.451699256896973,
+          "measured_road": 25.21271514892578,
+          "visible": 9996.5087890625
+        },
+        {
+          "actor": 37,
+          "own_body": 4807.39013671875,
+          "other_body": 73.4805908203125,
+          "measured_road": 24.37657928466797,
+          "visible": 5477.6162109375
+        }
+      ]
+    },
+    {
+      "frame_id": "0008135",
+      "split": "train",
+      "road_pixels": 6348,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 338.1015625,
+          "other_body": 30.66720199584961,
+          "measured_road": 0.0,
+          "visible": 422.3050537109375
+        },
+        {
+          "actor": 12,
+          "own_body": 568.04052734375,
+          "other_body": 99.50715637207031,
+          "measured_road": 12.907529830932617,
+          "visible": 973.0015869140625
+        },
+        {
+          "actor": 18,
+          "own_body": 557.937744140625,
+          "other_body": 13.033575057983398,
+          "measured_road": 3.2509214878082275,
+          "visible": 658.6198120117188
+        },
+        {
+          "actor": 25,
+          "own_body": 2191.000732421875,
+          "other_body": 72.73348999023438,
+          "measured_road": 0.5199075937271118,
+          "visible": 2297.486083984375
+        },
+        {
+          "actor": 26,
+          "own_body": 7787.8857421875,
+          "other_body": 0.005397961940616369,
+          "measured_road": 16.47521209716797,
+          "visible": 8030.2021484375
+        },
+        {
+          "actor": 37,
+          "own_body": 4677.89697265625,
+          "other_body": 59.33850860595703,
+          "measured_road": 23.153831481933594,
+          "visible": 5317.275390625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008136",
+      "split": "train",
+      "road_pixels": 6692,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 328.4454040527344,
+          "other_body": 35.31116485595703,
+          "measured_road": 0.05352010577917099,
+          "visible": 416.6881408691406
+        },
+        {
+          "actor": 12,
+          "own_body": 0.0,
+          "other_body": 594.4755859375,
+          "measured_road": 12.558927536010742,
+          "visible": 996.0468139648438
+        },
+        {
+          "actor": 18,
+          "own_body": 605.6842041015625,
+          "other_body": 15.716157913208008,
+          "measured_road": 3.2668673992156982,
+          "visible": 710.1370239257812
+        },
+        {
+          "actor": 25,
+          "own_body": 2480.218017578125,
+          "other_body": 17.22954559326172,
+          "measured_road": 1.0134801864624023,
+          "visible": 2520.51953125
+        },
+        {
+          "actor": 26,
+          "own_body": 5878.521484375,
+          "other_body": 0.1428563892841339,
+          "measured_road": 9.464669227600098,
+          "visible": 6068.4150390625
+        },
+        {
+          "actor": 37,
+          "own_body": 4503.2822265625,
+          "other_body": 57.240379333496094,
+          "measured_road": 8.408086776733398,
+          "visible": 5182.515625
+        }
+      ]
+    },
+    {
+      "frame_id": "0008137",
+      "split": "train",
+      "road_pixels": 7006,
+      "actors": [
+        {
+          "actor": 5,
+          "own_body": 0.0,
+          "other_body": 0.0,
+          "measured_road": 0.0,
+          "visible": 0.0
+        },
+        {
+          "actor": 6,
+          "own_body": 312.89166259765625,
+          "other_body": 50.93107604980469,
+          "measured_road": 0.0,
+          "visible": 412.66741943359375
+        },
+        {
+          "actor": 12,
+          "own_body": 584.8765869140625,
+          "other_body": 100.85051727294922,
+          "measured_road": 13.336069107055664,
+          "visible": 1019.7822265625
+        },
+        {
+          "actor": 18,
+          "own_body": 668.1328125,
+          "other_body": 21.632835388183594,
+          "measured_road": 3.352628707885742,
+          "visible": 768.6229858398438
+        },
+        {
+          "actor": 25,
+          "own_body": 2525.743896484375,
+          "other_body": 23.99108123779297,
+          "measured_road": 1.1049884557724,
+          "visible": 2578.019775390625
+        },
+        {
+          "actor": 26,
+          "own_body": 3103.90771484375,
+          "other_body": 0.00012133007840020582,
+          "measured_road": 20.676971435546875,
+          "visible": 3275.55126953125
+        },
+        {
+          "actor": 37,
+          "own_body": 4355.3525390625,
+          "other_body": 50.41631317138672,
+          "measured_road": 11.674224853515625,
+          "visible": 5060.0107421875
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 29.24040638562292
+}

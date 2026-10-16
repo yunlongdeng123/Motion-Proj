@@ -46,24 +46,28 @@ def instance_body_loss(error,frame):
     return instance_domain_mean(value,frame.masks,frame.mask_known)
 
 
-def mask_terms(package, frame, balanced=False):
+def mask_terms(package, frame, balanced=False, outside_fullscene_visibility=False):
     raw, visible = package["raw_actor_alpha"], package["visible_labels"]
     target = frame.masks.to(raw.dtype)
     known = frame.mask_known[None, None].expand_as(raw)
+    # Full image exterior domain remains intact. Full-scene transmittance avoids
+    # declaring genuinely occluded Actor Gaussians background. Raw alpha is still
+    # exported for asset diagnostics and the interior occupancy constraint.
+    outer=visible if outside_fullscene_visibility else raw
     if balanced:
         inside=instance_domain_mean((raw-1).square(),frame.masks,frame.mask_known)
         # 每个已知实例的完整车外域都在；求和避免大量空实例将约束稀释。
-        outside=instance_domain_mean(raw.square(),~frame.masks,frame.mask_known,'sum')
+        outside=instance_domain_mean(outer.square(),~frame.masks,frame.mask_known,'sum')
     else:
         inside = masked_mean((raw-1).square(), known & frame.masks)
-        outside = masked_mean(raw.square(), known & ~frame.masks)
+        outside = masked_mean(outer.square(), known & ~frame.masks)
     identity = masked_mean((visible-target).square(), known)
     return inside, outside, identity
 
 
 def geometry_and_reference_terms(model, package, frame, config, stage):
     geo, normal, residual = model.field.regularizers(stage)
-    inside, outside, identity = mask_terms(package, frame,config.instance_balanced_supervision)
+    inside, outside, identity = mask_terms(package, frame,config.instance_balanced_supervision,config.outside_fullscene_visibility)
     observed = frame.depth > 0
     # 相机 Z，逆深度；不给无 LiDAR 的像素伪深度监督。
     pred = package["depth"].clamp_min(.1).reciprocal()

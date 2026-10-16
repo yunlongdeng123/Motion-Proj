@@ -1,15 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-17（Asia/Singapore）。当前最高优先级是动态分支清理：道路板片、残影、异常几何与车身保真。任务 `WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017 / E1_balanced_s0`；用户禁止subagent。只对相机和同帧真实LiDAR证据清楚的7辆做delete：新5、6、12、18、25、26、37，旧0/1/2分别对应5/26/18。
+更新：2026-10-17（Asia/Singapore）。最高优先⑥动态资产混入道路（P1归属／边界），解决后①道路细节②车辆关联阴影④车身外观；禁止subagent。用户授权自主调研、实验、自检，完成全部工作并保存推送、确认GPU及相关任务退出后才关闭AutoDL。暂时空闲不能关机。
 
-E0从原始测量初始化、未加载旧18k或GN11。5000步同7帧body误差均下降，但动态银车a37带道路板片，白车a18仍破碎（0.1421→0.0924），不能进入材质。原E0@5000已保存且停止。冻结逐点诊断a37远离已知车体区域85.17%动态贡献来自框底15cm内种子；原外部梯度因全局多实例归一化弱化，完整外域没有被删除。底部点归属也可能有问题，未确认由单项机制完全解释。
+任务WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017。E0@5000和E1归一化短对照@6000均未通过资产干净度；后者车外残片变弱，但部分车身误差增加。原始测量初始化谱系不读取GN11或旧18k。已做全场景alpha*T的46训练帧逐点审计，补齐旧OBB guard空缺区域的真实LiDAR道路表面正证据。62跨边界父点拆为124保留子点；完整43身份复审后，426道路点锚定实际世界LiDAR测量，混合/未知保留，不做车底高度裁剪。详细[归属组件及证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_ownership_r6/)。
 
-E1使用明确R4实例平衡配置，从保存的5k模型/Adam/RNG继续1000步到global6000，只改变已登记的mask归一化/外部权重与车身采样，不改原数据/旧检查点。21CPU检查通过。当前控制器E1_repair1000_controller.json，日志E1_repair1000.log，源implementation_r4，active_experiment.json供监控读取。6000步必须对照E1_preview_006000、diagnostic_006000_r4与父5k证据；检查外泄贡献、车身和背景。修复不足则查真实LiDAR底部归属，不盲加步数。动态分支完整49帧与7车delete未验收前不进入材质/阴影。[修复组件与记录](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_gpu_r4/) · [源码](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/)。
+E2_ownership_s0使用implementation_r6、data_r3_ownership，保留原图/mask/轨迹，仅增加认证训练道路像素。完整外部域监督改为全场景可见贡献，以保护被遮挡真实车体；内域仍raw alpha，未知403对无mask梯度；数值权重与变更均显式登记。25CPU检查通过，未代表画质通过。当前只从global6000优化1000步至7000后停，控制器E2_geometry_controller.json，日志E2_geometry.log，active_experiment.json可读。到7000根代理检查同7帧、完整49帧65流动态/编辑与归属残留，再决定后续，不能直接进入材质。
 
-主预算45k包含父5k，当前修复不增加总步数，不自动排七臂。b-c-15每10分钟检查PID、日志、阶段和数值，不重复启动、不关闭GPU，别人任务优先。初始11.29h测速不含增密、教师/I-O/评价；按实际阶段更新ETA。
+delete准入仅7个索引5、6、12、18、25、26、37，须同时清楚RGB与同帧真实LiDAR；不能扩至43。旧三0/1/2对应5/26/18，连续同轴±1m平移及15/30度旋转；另四如无旧资产仅旧场景外观参考。动态独立RGB/rawalpha、全场景动态可见RGB/alpha、逐Actor及编辑动态视频必须交付。静态分支单独渲染仅诊断。
 
-输入49帧/46训练，318083真实LiDAR种子、43轨迹、8263跨帧道路伪参考。旧三车147对完整mask内外齐全，辅助403/2107对未知只排除mask损失，仍用RGB/LiDAR；两条无训练LiDAR轨迹不造资产。道路候选不是语义GT，无独立无影或反事实编辑GT。旧四辆新增Actor如无旧独立资产仅作旧场景外观参考。
+主预算45k包含已用6000；其余几何/材质/联合分阶段，消融接口保留但不自动排七臂。b-c-15先10分钟，稳定后30/60分钟，查PID/日志/数值与阶段，不重复启动，其他GPU任务优先。仍需正式完整视频、旧共同相机/GT只读配对渲染、阴影阶段和最终报告。相机协议r2已CPU核验：旧native-0.125像素、新RGB实际Lanczos与旧CV2均差2.4097/255；原生结果保留。
 
-49帧物理相机CPU核对一致，旧native投影-0.125像素、GT缩放差2.4097/255；共同相机/GT/显示线性域的只读GPU重渲染尚未执行。新RGB实际为Lanczos，camera_pairing_audit_r2修正r1误写bilinear的文字，不改已测像素。旧原生结果保留。
-
-最终交付仍需65条49帧编辑/静动态分支视频、逐帧指标和raw106–108/大角度案例。旧18k[结果](v82/DRIVINGEDITOR_SHADOW_SEQUENCE_20261016.md)保留，不把工程检查当画质通过。人工verdict=null、problem_solved=null。其他工作见[EXPERIMENTS](EXPERIMENTS.md)。failure_ledger_refs=[V82-F01]，failure_ledger_delta=none；原dirty用户工作保留。
+人工verdict=null，problem_solved=null；无独立无影或反事实编辑GT，不伪造。failure_ledger_refs=[V82-F01]、failure_ledger_delta=none。原dirty用户工作与所有历史失败证据保留。[实验索引](EXPERIMENTS.md)。

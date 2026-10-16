@@ -110,6 +110,14 @@ CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 python -m unittest discover -s tests -p 
 
 ## 外部依据
 
+归属修复另提供 `shadow_rebuild.ownership` 与 `shadow_rebuild.boundary`：以全场景alpha*T特征反传累计逐高斯body/真实LiDAR道路正证据，遮挡与未知不自动判背景。跨边界主轴由实际多视角mask交点确定，至少3帧一致才分解；两侧用截断高斯矩保留，复审后才可将道路候选锚定到实际测量世界点。未认证混合点不整点转归属。此过程不是车底高度裁剪，也不是普通梯度增密。
+
+`outside_fullscene_visibility=false`保留旧raw-alpha外部监督重放；显式R6修复为true时，外部域仍是每个已知实例完整图像的mask外部，监督值改为全场景可见alpha*T贡献。mask内仍用未乘GT的独立raw alpha，未知mask无梯度；raw alpha也继续完整输出。此变化避免强迫被其他物体遮住的真实车体变背景，必须与归属/拆分干预一起登记，不能称单因素因果消融。边界split与道路reanchor分开接口，训练与几何阶段诊断独立。
+
+- [Gaussian Grouping论文](https://arxiv.org/html/2312.00732v2)及[官方身份特征实现](https://github.com/lkeab/gaussian-grouping/blob/main/scene/gaussian_model.py)：借鉴逐高斯身份和多视图一致性；这里使用贡献证据，不声称复现其16维身份分类网络。
+- [SAGD论文](https://arxiv.org/html/2401.17857v4)：借鉴投影轮廓交点定位跨边界高斯。本实现保留两子点并重新优化，区别于丢弃外侧部分的原分解策略。
+- [UnIRe论文](https://arxiv.org/html/2504.00763v2)：借鉴跨时刻LiDAR关联；复用实际轨迹与道路表面证据，未移植其场景流网络或按高度移除地面步骤。
+
 - [LumiMotion论文](https://arxiv.org/html/2604.10994v1)与[官方训练脚本](https://github.com/joaxkal/LumiMotion/blob/main/bash_scripts/enerf-actor1.sh)：借鉴几何先行、后续材质光照及持续重建约束；不复制其动态形变系统。
 - [IRGS官方代码](https://github.com/fudan-zvg/IRGS)与[几何学习率默认值](https://github.com/fudan-zvg/IRGS/blob/main/arguments/__init__.py)：借鉴适于光照的表面与第二阶段冻结；没有声称复现其完整光线传输。
 - [Gaussian Shadow Casting论文](https://arxiv.org/html/2401.06116v1)：借鉴各向异性密度射线解析积分；这里直接绑定同一Actor高斯，不另设随RGB任意变形的遮挡代理。

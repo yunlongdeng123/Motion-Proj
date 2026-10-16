@@ -46,6 +46,7 @@ class Config:
     use_body_teacher: bool = True
     shadows: bool = True
     instance_balanced_supervision: bool = False
+    outside_fullscene_visibility: bool = False
     caster: str = "actor_geometry"
     sun_samples: int = 5
     sun_angular_radius_degrees: float = .53
@@ -69,8 +70,8 @@ class Config:
     weights: LossWeights = field(default_factory=LossWeights)
 
     def validate(self):
-        if type(self.instance_balanced_supervision) is not bool:
-            raise ValueError('instance_balanced_supervision必须为布尔值')
+        if type(self.instance_balanced_supervision) is not bool or type(self.outside_fullscene_visibility) is not bool:
+            raise ValueError('instance supervision flags必须为布尔值')
         if self.schema != "instance_surface_shadow_v3" or self.caster != "actor_geometry":
             raise ValueError("此重建分支仅接受原始测量初始化和直接 Actor 高斯遮挡体")
         positive = ("threads", "geometry_steps", "material_steps", "joint_steps", "ray_chunk",
