@@ -17,7 +17,10 @@ def gaussian_ray_integral(origins, directions, means, covariances, amplitude, lo
     rho(x)=amplitude*exp(-.5*(x-mu)^T inv(Sigma) (x-mu))。
     使用 erfc 避免正尾部 erf 相减消失；无射线离散采样误差。
     """
-    precision = torch.linalg.inv(covariances)
+    return _precision_integral(origins,directions,means,torch.linalg.inv(covariances),amplitude,lower,upper)
+
+
+def _precision_integral(origins,directions,means,precision,amplitude,lower=0.,upper=None):
     difference = origins[:, None]-means[None]
     a = torch.einsum("ri,gij,rj->rg", directions, precision, directions).clamp_min(1e-12)
     b = torch.einsum("ri,gij,rgj->rg", directions, precision, difference)
@@ -45,7 +48,7 @@ def _ray_aabb(origins, directions, low, high):
     return (far >= near) & ~invalid
 
 
-def geometry_transmittance(origins, directions, geometry, ray_chunk=256, gaussian_chunk=512, cull=True):
+def dense_geometry_transmittance(origins, directions, geometry, ray_chunk=256, gaussian_chunk=512, cull=True):
     mask = geometry["owner"] >= 0
     if not bool(mask.any()):
         return origins[:, 0]*0+1
@@ -76,6 +79,47 @@ def geometry_transmittance(origins, directions, geometry, ray_chunk=256, gaussia
             tau = tau.index_add(0, ids, contribution)
         values.append(torch.exp(-tau.clamp_max(80)))
     return torch.cat(values) if values else origins.new_empty(0)
+
+
+def geometry_transmittance(origins,directions,geometry,ray_chunk=256,gaussian_chunk=512,cull=True):
+    """先按真实Actor粗筛射线，再沿其高斯块积分；同一帧复用精度矩阵。"""
+    if not cull:
+        return dense_geometry_transmittance(origins,directions,geometry,ray_chunk,gaussian_chunk,False)
+    groups=getattr(geometry,'shadow_groups',None)
+    if groups is None:
+        groups=[]
+        owner=geometry['owner'];selected=owner>=0
+        if selected.any():
+            means=geometry['xyz'][selected];cov=geometry['cov'][selected];owners=owner[selected]
+            precision=torch.linalg.inv(cov)
+            sigma=geometry['minimum_scale'][selected] if 'minimum_scale' in geometry else torch.linalg.eigvalsh(cov).amin(-1).clamp_min(1e-10).sqrt()
+            opacity=geometry['opacity'][selected,0].clamp(1e-6,1-1e-6)
+            amplitude=-torch.log1p(-opacity)/(math.sqrt(2*math.pi)*sigma)
+            radius=6*torch.diagonal(cov.detach(),dim1=-2,dim2=-1).sqrt()
+            for actor in owners.unique().tolist():
+                ids=(owners==actor).nonzero().flatten()
+                lo=means[ids].detach()-radius[ids];hi=means[ids].detach()+radius[ids]
+                groups.append((means[ids],precision[ids],amplitude[ids],lo,hi))
+        if hasattr(geometry,'__dict__'):geometry.shadow_groups=groups
+    tau=origins[:,0]*0
+    for means,precision,amplitude,lo,hi in groups:
+        hit=_ray_aabb(origins.detach(),directions.detach(),lo.amin(0),hi.amax(0))
+        actor_rays=hit.nonzero().flatten()
+        for r0 in range(0,len(actor_rays),ray_chunk):
+            rays=actor_rays[r0:r0+ray_chunk];o=origins[rays];d=directions[rays]
+            subtotal=o[:,0]*0
+            for g0 in range(0,len(means),gaussian_chunk):
+                mask=_ray_aabb(o.detach(),d.detach(),lo[g0:g0+gaussian_chunk].amin(0),hi[g0:g0+gaussian_chunk].amax(0))
+                active=mask.nonzero().flatten()
+                if not len(active):continue
+                args=(o[active],d[active],means[g0:g0+gaussian_chunk],precision[g0:g0+gaussian_chunk],amplitude[g0:g0+gaussian_chunk])
+                def integrate(oo,dd,mm,pp,aa):return _precision_integral(oo,dd,mm,pp,aa).sum(-1)
+                if torch.is_grad_enabled() and len(active)*len(args[2])>16384 and any(a.requires_grad for a in args):
+                    contribution=checkpoint(integrate,*args,use_reentrant=False)
+                else:contribution=integrate(*args)
+                subtotal=subtotal.index_add(0,active,contribution)
+            tau=tau.index_add(0,rays,subtotal)
+    return torch.exp(-tau.clamp_max(80))
 
 
 class SunAmbient(nn.Module):

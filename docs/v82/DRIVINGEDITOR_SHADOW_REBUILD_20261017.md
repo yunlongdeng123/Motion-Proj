@@ -29,7 +29,7 @@ raw101/113/125从新分支种子、道路参考与训练帧采样排除；历史
 
 7个入口：full、no_shadow、no_clean_road、no_body_teacher、frozen_joint_geometry、hard_sun、opacity_stage2。no_clean_road同时去除亮参考初始化、损失和刷新，避免消融泄漏先验。每臂同数据划分/初始几何/seed、独立配置与输出；先完整方法，再按结果选择必要消融。
 
-评价输出全49帧原位/关影/删目标/删全部/平移/±30°/覆盖率/固定相机8流，记录body/road/identity真实分母，无样本为null；回看raw106–108与大角度车身，不能仅凭平均误差接受。
+评价通过相机+同帧真实LiDAR准入表选择目标；逐车删除只涵盖证据清楚的Actor。全动态保留独立RGB/raw alpha和全场景alpha*T可见RGB/alpha；每辆保留独立/可见alpha、删除后剩余动态。旧三车另有同轴±1m、±15°/±30°连续编辑与编辑动态RGB。7个目标、3个运动目标共65流×49帧；背景-only为分支诊断，不算其他轨迹delete通过。回看raw106–108与大角度车身，不能仅凭平均误差接受。具体准入、实测CUDA/梯度/测速与输入缺口见[GPU记录](../autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_gpu_r3/)，执行状态仍只见RESEARCH_STATUS。
 
 ## 一手依据
 

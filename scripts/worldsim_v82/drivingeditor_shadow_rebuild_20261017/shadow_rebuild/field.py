@@ -4,6 +4,11 @@ from torch import nn
 from .math3d import covariance, logit, normalize, quaternion_matrix, rotation_z, srgb_to_linear
 
 
+class EvaluatedGeometry(dict):
+    """当前帧的张量表；阴影加速缓存只活在该次evaluate，不进入checkpoint。"""
+    pass
+
+
 class GaussianField(nn.Module):
     point_parameters = ("xyz", "log_scales", "quaternion", "opacity_logit", "appearance_logit", "albedo_logit", "view_coeff")
 
@@ -81,6 +86,11 @@ class GaussianField(nn.Module):
                 keep[mask] = False
                 continue
             r, t = poses[actor, :3, :3], poses[actor, :3, 3]
+            if "rotation_matrix" in edit:
+                er = torch.as_tensor(edit["rotation_matrix"], device=r.device, dtype=r.dtype)
+                if er.shape != (3, 3) or not torch.allclose(er.T@er, torch.eye(3,device=r.device), atol=1e-4) or not torch.isclose(torch.linalg.det(er),er.new_tensor(1.),atol=1e-4):
+                    raise ValueError('编辑旋转必须为proper 3x3 rotation')
+                r = er@r
             if "yaw" in edit:
                 r = rotation_z(edit["yaw"], device=r.device, dtype=r.dtype) @ r
             if "translation" in edit:
@@ -93,10 +103,10 @@ class GaussianField(nn.Module):
         direction = normalize((rotation.transpose(-1, -2) @ (camera_center-xyz)[..., None]).squeeze(-1))
         # 只允许 Actor 有小幅、无时间输入的视角残差。道路材质没有 SH。
         residual = .08*torch.tanh(torch.einsum("nij,ni->nj", self.view_coeff, direction))*(self.owner >= 0)[:, None]
-        return dict(xyz=xyz[keep], cov=cov[keep], normal=normal[keep], opacity=self.opacity_logit.sigmoid()[keep],
+        return EvaluatedGeometry(xyz=xyz[keep], cov=cov[keep], normal=normal[keep], opacity=self.opacity_logit.sigmoid()[keep],
                     appearance=(self.appearance_logit.sigmoid()+residual).clamp(0, 1)[keep],
                     albedo=self.albedo_logit.sigmoid()[keep], view_residual=residual[keep], owner=self.owner[keep],
-                    road=self.road[keep], rows=torch.arange(n, device=xyz.device)[keep])
+                    road=self.road[keep], rows=torch.arange(n, device=xyz.device)[keep],minimum_scale=self.scales.amin(-1)[keep])
 
     @torch.no_grad()
     def split(self, indices, optimizer):

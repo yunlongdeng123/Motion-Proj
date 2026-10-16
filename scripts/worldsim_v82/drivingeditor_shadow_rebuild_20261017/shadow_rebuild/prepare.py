@@ -111,6 +111,50 @@ def box_pose(label, world_from_vehicle):
     return world_from_vehicle@pose, np.array([b["length"], b["width"], b["height"]])
 
 
+def box_in_frustum(pose, size, camera_pose, k, shape):
+    corners=np.array([[x,y,z] for x in (-.5,.5) for y in (-.5,.5) for z in (-.5,.5)])*(size+.6)
+    camera=transform(transform(corners,pose),np.linalg.inv(camera_pose))
+    x,y,z=camera.T;h,w=shape
+    planes=np.stack((z-.01,k[0,0]*x+(k[0,2]+1)*z,-k[0,0]*x+(w-k[0,2])*z,
+                     k[1,1]*y+(k[1,2]+1)*z,-k[1,1]*y+(h-k[1,2])*z),-1)
+    return not (planes < 0).all(0).any()
+
+
+def associate_segments(seg, masks, known, actors, actor_boxes, world, owner, visible, ij, k, camera_pose):
+    """只关联现有分割像素；3D框不生成、不填补或扩大body mask。"""
+    if seg.ndim==3:
+        seg=seg[:,:,0].astype(np.int64)+256*seg[:,:,1].astype(np.int64)+65536*seg[:,:,2].astype(np.int64)
+    ids,index=np.unique(seg,return_inverse=True);index=index.reshape(seg.shape)
+    area=np.bincount(index.ravel(),minlength=len(ids));occupied=masks.any(-1)
+    occupied_mass=np.bincount(index[occupied],minlength=len(ids))/np.maximum(area,1)
+    proposals=[];notes=[]
+    for actor,(pose,size) in actor_boxes.items():
+        if known[actor]:continue
+        if not box_in_frustum(pose,size,camera_pose,k,seg.shape):
+            known[actor]=True;notes.append(dict(actor=actors[actor],method='outside_3D_frustum_certificate',pixels=0));continue
+        corners=np.array([[x,y,z] for x in (-.5,.5) for y in (-.5,.5) for z in (-.5,.5)])*size
+        pix,_,good=project(transform(corners,pose),k,camera_pose,seg.shape)
+        if not good.any():continue
+        lo=np.maximum(pix[good].min(0)-1,0);hi=np.minimum(pix[good].max(0)+1,[seg.shape[1]-1,seg.shape[0]-1])
+        bbox=np.zeros(seg.shape,bool);bbox[lo[1]:hi[1]+1,lo[0]:hi[0]+1]=True
+        overlap=np.bincount(index[bbox],minlength=len(ids));inside=overlap/np.maximum(area,1)
+        iou=overlap/np.maximum(area+bbox.sum()-overlap,1)
+        hits=visible[owner[visible]==actor]
+        counts=np.bincount(index[ij[hits,1],ij[hits,0]],minlength=len(ids)) if len(hits) else np.zeros(len(ids))
+        good=(ids!=0)&(area>=4)&(inside>.8)&(iou>.15)&(occupied_mass==0)&(counts>=1)
+        for label in np.flatnonzero(good):
+            proposals.append((float(iou[label]),actor,int(label),float(inside[label]),int(counts[label])))
+    used=set()
+    for score,actor,label,inside,hits in sorted(proposals,reverse=True):
+        if known[actor] or label in used:continue
+        mask=index==label
+        if (mask&masks.any(-1)).any():continue
+        masks[...,actor]=mask;known[actor]=True;used.add(label)
+        notes.append(dict(actor=actors[actor],method='cached_segment_identity_association',segment_id=int(ids[label]),
+                          pixels=int(mask.sum()),IoU=score,segment_inside_box=inside,real_visible_LiDAR_hits=hits))
+    return notes
+
+
 def build(args):
     scene, output = Path(args.scene), Path(args.output)
     if output.exists():
@@ -141,6 +185,7 @@ def build(args):
     rgb_gathered = {i: [] for i in gathered}
     frames = []
     unknown = []
+    associations=[]
     world_origin = np.loadtxt(scene/"pose"/(rows[0]["id"]+".txt"))[:3, 3].copy()
     # 所有输入身份核对后创建输出；异常保留 partial 以便定位，不自动删除。
     output.mkdir(parents=True)
@@ -168,6 +213,7 @@ def build(args):
         owner = np.full(len(lidar), -1, np.int32)
         covered = np.zeros(len(lidar), np.int32)
         all_boxes = []
+        actor_boxes={}
         for label in audit["laser_labels"]:
             pose, size = box_pose(label, world_from_vehicle)
             local = transform(world, np.linalg.inv(pose))
@@ -177,6 +223,7 @@ def build(args):
                 actor = actor_index[label["id"]]
                 poses[frame_index, actor], valid[frame_index, actor] = pose, True
                 owner[inside] = actor
+                actor_boxes[actor]=(pose,size)
             else:
                 owner[inside] = -2
             all_boxes.append((pose, size))
@@ -196,6 +243,12 @@ def build(args):
                 if bool(original["mask_known"][frame_index, j]):
                     masks[..., a] = labels == j+1
                     known[a] = True
+        if getattr(args,'associate_cached_segments',False):
+            path=scene/'mask/mask_0/Annotations'/(fid+'.png')
+            if not path.is_file():raise FileNotFoundError('真实缓存DEVA分割缺失: '+str(path))
+            seg=np.asarray(Image.open(path).resize((w,h),Image.Resampling.NEAREST))
+            associations.append(dict(frame_id=fid,associations=associate_segments(seg,masks,known,actors,actor_boxes,
+                                world,owner,visible,ij,k,camera_pose)))
         if not known.all():
             unknown.append(dict(frame_id=fid, actors=[actors[i] for i in np.flatnonzero(~known)]))
         # 所有真实框用于去除点归属歧义和 road reference 的遮挡保护，不生成 body mask。
@@ -223,6 +276,20 @@ def build(args):
         depth[~np.isfinite(depth)] = 0
         # road 像素标签在全局静态 surface 建成后赋值；临时字段只在 CPU 内存。
         frames.append((frame, rgb, masks, known, depth.astype(np.float32), guard))
+    excluded=[]
+    empty=[a for a in range(len(actors)) if not sum(len(v) for v in gathered[a])]
+    if empty:
+        if not getattr(args,'allow_unseeded_input_gaps',False):
+            raise ValueError('这些真实标注没有训练帧LiDAR，不能造资产: '+str([actors[a] for a in empty]))
+        excluded=[dict(raw_track_id=actors[a],reason='no train LiDAR; no asset fabricated; excluded from edit claims') for a in empty]
+        keep=[a for a in range(len(actors)) if a not in empty]
+        mapping={old:new for new,old in enumerate(keep)}
+        gathered={-1:gathered[-1],**{mapping[a]:gathered[a] for a in keep}}
+        rgb_gathered={-1:rgb_gathered[-1],**{mapping[a]:rgb_gathered[a] for a in keep}}
+        actors=[actors[a] for a in keep];poses=poses[:,keep];valid=valid[:,keep]
+        frames=[(f,r,m[...,keep],kn[keep],d,g) for f,r,m,kn,d,g in frames]
+    unknown=[dict(frame_id=f['frame_id'],actors=[actors[a] for a in np.flatnonzero(~kn)])
+             for f,_,_,kn,_,_ in frames if not kn.all()]
     fields = []
     offset = 0
     for a in gathered:
@@ -281,6 +348,7 @@ def build(args):
                         road_geometry="nonplanar local PCA surface Gaussians; no fixed plane",
                         test_geometry_or_RGB_used_to_build_seed=False, original_files_modified=False,
                         partial_mask_pairs=unknown, reference_valid_points=int((confidence > 0).sum()),
+                        excluded_unseeded_tracks=excluded,cached_mask_association=associations,
                         full_mask_supervision_ready=not bool(unknown), human_verdict=None)
     write(output/"manifest.json", manifest_out)
     print(json.dumps(dict(status="CPU_PREPARED_INPUT_AUDIT_REQUIRED", output=str(output), gaussians=len(seed["xyz"]),
@@ -298,6 +366,8 @@ def main():
     parser.add_argument("--actor-voxel", type=float, default=.04)
     parser.add_argument("--max-depth", type=float, default=80)
     parser.add_argument("--test-raw", type=int, nargs="+", default=[101, 113, 125])
+    parser.add_argument('--associate-cached-segments',action='store_true')
+    parser.add_argument('--allow-unseeded-input-gaps',action='store_true',help='明确登记缺LiDAR轨迹，不造资产且不对其宣称编辑完成')
     args = parser.parse_args()
     if args.downsample < 1 or min(args.static_voxel, args.actor_voxel, args.max_depth) <= 0:
         raise ValueError("预处理尺寸无效")

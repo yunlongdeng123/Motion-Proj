@@ -1,0 +1,56 @@
+{
+  "inputs": {
+    "status": "CPU_INPUTS_CHECKED_GPU_NOT_STARTED",
+    "frames": 49,
+    "actors": 43,
+    "gaussians": 318083,
+    "road_gaussians": 25117,
+    "reference_points": 8263,
+    "train_frames": 46,
+    "test_frames": 3,
+    "mask_known_pairs": 1704,
+    "mask_total_pairs": 2107,
+    "learned_checkpoint_used": false,
+    "estimated_GPU_hours": null,
+    "real_GPU_ABI_checked": false,
+    "planned_steps": {
+      "geometry": 30000,
+      "material": 10000,
+      "joint": 5000
+    },
+    "reference_scope": "train-frame reprojection pseudo-reference; not independent clean GT"
+  },
+  "ABI": {
+    "status": "GPU_ABI_GRADIENTS_PASSED",
+    "mean_abs_error": 0.00013322987069841474,
+    "device": "NVIDIA GeForce RTX 4080 SUPER",
+    "feature_capacity_requested": 10
+  },
+  "stages": [
+    {
+      "stage": "geometry",
+      "seconds_per_update_median": 0.27714014425873756,
+      "seconds_per_update_max": 0.3348292326554656,
+      "estimated_stage_hours": 2.3095012021561465,
+      "max_memory_allocated_bytes": 1496926720,
+      "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+    },
+    {
+      "stage": "material",
+      "seconds_per_update_median": 2.1352856755256653,
+      "seconds_per_update_max": 3.0479932380840182,
+      "estimated_stage_hours": 5.931349098682404,
+      "max_memory_allocated_bytes": 1601829888,
+      "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+    },
+    {
+      "stage": "joint",
+      "seconds_per_update_median": 2.1955296956002712,
+      "seconds_per_update_max": 3.806933921761811,
+      "estimated_stage_hours": 3.0493467994448213,
+      "max_memory_allocated_bytes": 1786283520,
+      "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+    }
+  ],
+  "quality_validated": false
+}

@@ -25,7 +25,7 @@ flowchart LR
 | 材质/阴影，拟定10k步 | 道路逐高斯 albedo、太阳方向/角半径/强度、环境光比例、Actor/canonical外观 | 默认几何和opacity固定；阴影只读同一 Actor 几何 | 整图均匀像素 RGB、随机patch SSIM、车身分层 RGB、canonical重建与教师、同一组深度/实例/道路约束 |
 | 联合，拟定5k步 | 材质、canonical外观、光照及受约束几何/opacity | 几何相对上一阶段最多2cm，尺度log±.12、opacity logit±.3；学习率×.1；不增密 | 持续保留上述重建/车身/实例/深度/跨时刻约束 |
 
-这些步数是初始预算，未经真实吞吐测量，不是承诺的收敛步数或总时长。
+这些步数是初始预算，不是承诺的收敛步数；实测吞吐和执行状态另见 `docs/RESEARCH_STATUS.md` 与对应实验记录。
 
 道路为局部 PCA 定向的薄各向异性3D高斯，具有独立颜色和opacity，不是固定平面。第一阶段把道路的跨时刻稳定颜色作为 canonical 外观目标；带车影的道路像素不直接推动几何/本色。第二、三阶段主RGB覆盖整幅图的均匀像素，patch用于SSIM；不使用历史人工修复ROI。视角残差仅给Actor，幅度±0.08线性RGB且无时间输入。
 
@@ -54,13 +54,13 @@ python run.py preflight --data /path/to/new/v3_data \
   --config configs/scene0008.json --output /path/to/new/full_run
 ```
 
-`annotations`必须来自真实完整laser_labels，不能由渲染或框推断造标签；`reviewed-instances`只读`instances.npz`中的frame/track/mask_known和`instance_masks/*.png`。导出器为所有原始车辆轨迹建立Actor，训练帧LiDAR源点按当帧真实框分离；重叠歧义点与其他类别动态点不进入静态层。Actor缺少训练帧真实LiDAR则停止，不用OBB补成车辆。所有坐标以第一帧原始ego位置重置原点，单位保持米；不使用旧模型归一化。
+`annotations`必须来自真实完整laser_labels，不能由渲染或框推断造标签；`reviewed-instances`只读`instances.npz`中的frame/track/mask_known和`instance_masks/*.png`。导出器为原始车辆轨迹建立Actor，训练帧LiDAR源点按当帧真实框分离；重叠歧义点与其他类别动态点不进入静态层。Actor缺少训练帧真实LiDAR默认停止；显式 `--allow-unseeded-input-gaps` 可登记并排除该轨迹，不用OBB补成车辆或宣称已重建。`--associate-cached-segments` 只把已存在的真实缓存分割与三维实例对应，记录包含率/IoU/可见LiDAR证据；未对应且无法认证在视锥外的标签仍未知，不由投影框造body mask。所有坐标以第一帧原始ego位置重置原点，单位保持米；不使用旧模型归一化。
 
 点的初始颜色来自同帧深度可见RGB；没有可见颜色的点仅用0.5作为初始化先验，不把该值作为训练标签。单相机未见的车辆背面/道路不能由代码验证自动认证为真实恢复。
 
 初始 ground 是LiDAR局部低表面/法线候选，**不是人工语义道路真值**，仍需实际覆盖审计。只对真实深度一致、车体保护外、训练帧可见的同一道路点收集RGB；要求亮簇多次重复，拒绝一次亮异常；完全未见或支持不足的点没有伪参考。始终在阴影里的道路仍有不可辨识性。缺少GT时不声称恢复了真实干净颜色。原始raw101/113/125只用于新分支测试，种子/参考不读其RGB或LiDAR；这些时刻过去被旧实验用过，不能称整个研究过程未见过的最终测试集。
 
-## GPU启动后依次执行，当前没有运行
+## GPU执行顺序
 
 ```bash
 # 先实际ABI/梯度与各阶段测速，不直接排45k长作业
@@ -79,14 +79,18 @@ python run.py train --data /path/to/new/v3_data \
 
 python run.py evaluate --data /path/to/new/v3_data \
   --checkpoint /path/to/new/full_run/joint_final.pt \
-  --track-id 3S_GJHyCGGK4ypFPVKOOqA --output /path/to/new/eval49 --execute
+  --actor-evidence /path/to/reviewed/actor_evidence.json \
+  --comparison-protocol /path/to/reviewed/comparison_protocol.json \
+  --output /path/to/new/eval49 --execute
 ```
 
-上述raw_track_id来自已保存的黑车诊断记录；也可用`--target`指定新manifest实例索引，不能沿用旧actor0假定。正式场景主渲染只接受已审计DrivingEditor四输出feature rasterizer；GPU probe验证13个含负值通道跨批共享合成、CPU参考投影与反传。不兼容即停止，无隐式内核替换、CPU大场景fallback或自动续跑。
+评价必须提供相机与LiDAR联合证据准入表，默认只编辑 `eligible_track_ids`；可重复 `--track-id` 或用 `--target` 指定其中的子集，不能沿用旧actor0假定，更不能把所有有LiDAR的轨迹都作为delete对象。缺监督时训练/评价的 `--allow-partial-masks` 必须显式指定，输入缺口保留在记录中。正式场景主渲染只接受已审计DrivingEditor四输出feature rasterizer；GPU probe验证13个含负值通道跨批共享合成、CPU参考投影与反传。不兼容即停止，无隐式内核替换或CPU大场景fallback。
 
 Stage1增密及结束时，会按新点位置重新投影真实训练RGB/深度，刷新道路参考；不把父点颜色作为子点永久纹理。Stage1→Stage2→Stage3保存独立final、latest、Adam、RNG、教师、增密后点表与输入契约。每50步更新progress/metrics，原子保存。`progress.py`只读、不会开机或启动worker；进度文件不等于进程存活证明。测速只反映初始点数，还需给增密、教师、I/O和完整视频留预算。
 
-评价导出8条逐帧流：原位、关影、删目标、删全部、连续平移、连续±30°旋转、覆盖率、固定相机删全部；同时保留实际body/road/identity分母、无有效样本为null。没有反事实GT就不伪造编辑质量指标，人工verdict始终由用户填写。
+评价导出原位/关影/准入车辆一起删除、静态背景、覆盖率、阴影差异、固定相机静态分支，以及全动态独立RGB/raw alpha、全场景动态可见RGB/alpha与彩色实例贡献。每个准入Actor有逐车delete、删除后剩余动态分支、独立RGB/raw alpha、可见alpha；协议指定的旧三Actor另有连续±1m、±15°/±30°旋转和对应动态RGB。7个准入目标、其中3个连续运动目标共65流×49帧。背景单独渲染是分支诊断，不算其他Actor的delete编辑。分层不乘GT mask。没有反事实GT就不伪造编辑质量指标，人工verdict始终由用户填写；无真实可见证据的帧不能算编辑成功。
+
+遮挡加速按当前帧Actor聚合AABB先筛射线，复用精度矩阵，随后进行同一解析积分；缓存只存在于当前 `evaluate()` 结果，checkpoint不保存。`tracer_probe.py` 可在真实种子上比较密集版/加速版遮挡值与几何、opacity、光照梯度，不能把一致性通过当作画质通过。
 
 ## 消融
 

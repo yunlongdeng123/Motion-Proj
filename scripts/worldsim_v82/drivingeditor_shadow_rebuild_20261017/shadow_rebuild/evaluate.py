@@ -108,8 +108,11 @@ def main():
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--output", required=True)
     selection = parser.add_mutually_exclusive_group()
-    selection.add_argument("--target", type=int, default=0)
-    selection.add_argument("--track-id", help="优先使用真实 raw track ID，避免新旧 Actor 排序不同")
+    selection.add_argument("--target", type=int)
+    selection.add_argument("--track-id", action='append', help="可重复指定，按真实track ID匹配旧实验")
+    parser.add_argument('--comparison-protocol')
+    parser.add_argument('--allow-partial-masks',action='store_true')
+    parser.add_argument('--actor-evidence',help='真实相机+LiDAR联合准入表，禁止按有LiDAR全选')
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
     if not args.execute:
@@ -122,7 +125,7 @@ def main():
     from .config import LossWeights
     raw["weights"] = LossWeights(**raw["weights"])
     config = Config(**raw).validate()
-    dataset = Dataset(args.data, "cuda")
+    dataset = Dataset(args.data, "cuda",args.allow_partial_masks)
     if checkpoint.get("input_contract") != dataset.manifest:
         raise ValueError("评价数据与 checkpoint 的实例/相机契约不符")
     model = SceneModel(seed_from_state(checkpoint["state"]), config).cuda()
@@ -130,10 +133,19 @@ def main():
     model.requires_grad_(False)
     from .gpu_probe import probe
     probe(config)
-    target = dataset.actor_ids.index(args.track_id) if args.track_id else args.target
-    if not 0 <= target < len(dataset.actor_ids):
-        raise ValueError("编辑目标越出当前真实实例表")
-    evaluate(model, dataset, args.output, target=target)
+    if not args.actor_evidence:raise ValueError('删除评价需要相机+LiDAR联合证据准入表')
+    evidence=json.loads(Path(args.actor_evidence).read_text())
+    eligible=evidence['eligible_track_ids']
+    if args.track_id:targets=[dataset.actor_ids.index(track) for track in args.track_id]
+    elif args.target is not None:targets=[args.target]
+    else:
+        targets=[dataset.actor_ids.index(track) for track in eligible]
+    if any(dataset.actor_ids[a] not in eligible for a in targets):
+        raise ValueError('目标不满足清晰相机+真实LiDAR准入，不能按有LiDAR强行编辑')
+    protocol=json.loads(Path(args.comparison_protocol).read_text()) if args.comparison_protocol else {}
+    protocol['actor_evidence_source']=args.actor_evidence
+    from .multi_evaluate import evaluate_many
+    evaluate_many(model,dataset,args.output,targets,protocol=protocol)
 
 
 if __name__ == "__main__":

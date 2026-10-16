@@ -1,0 +1,67 @@
+{
+  "gaussians": 318083,
+  "static_gaussians": 85940,
+  "actor_gaussians": 232143,
+  "ground": 25117,
+  "reference": 8263,
+  "all_actors": 43,
+  "primary_actors": [
+    {
+      "legacy_actor_index": 0,
+      "raw_track_id": "3S_GJHyCGGK4ypFPVKOOqA",
+      "new_actor_index": 5,
+      "known_frames": 49,
+      "mask_pixels": 121128
+    },
+    {
+      "legacy_actor_index": 1,
+      "raw_track_id": "mSiVqee7l7dfkt8HQhXZZw",
+      "new_actor_index": 26,
+      "known_frames": 49,
+      "mask_pixels": 116261
+    },
+    {
+      "legacy_actor_index": 2,
+      "raw_track_id": "Umybpe6eOenVBgQ_zgdVtw",
+      "new_actor_index": 18,
+      "known_frames": 49,
+      "mask_pixels": 13107
+    }
+  ],
+  "known_pairs": 1704,
+  "total_pairs": 2107,
+  "auxiliary_unknown_pairs": 403,
+  "excluded_unseeded_tracks": [
+    {
+      "raw_track_id": "D3GphUFDr7c2MtjHqQ7qiw",
+      "reason": "no train LiDAR; no asset fabricated; excluded from edit claims"
+    },
+    {
+      "raw_track_id": "EdoK7xZdX3kp49t5tvMSFQ",
+      "reason": "no train LiDAR; no asset fabricated; excluded from edit claims"
+    }
+  ],
+  "target_indices": [
+    1,
+    5,
+    6,
+    9,
+    12,
+    16,
+    18,
+    19,
+    20,
+    24,
+    25,
+    26,
+    28,
+    30,
+    36,
+    37,
+    39,
+    41,
+    42
+  ],
+  "mask_policy": "primary three complete in/out body supervision; auxiliary unknown pairs explicitly excluded from masks, still RGB/LiDAR supervised",
+  "human_verdict": null
+}

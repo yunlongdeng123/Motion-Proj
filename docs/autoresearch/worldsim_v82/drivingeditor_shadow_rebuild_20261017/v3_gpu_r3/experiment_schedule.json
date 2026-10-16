@@ -1,0 +1,208 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
+  "run_id": "E0_full_s0",
+  "updated_at": "2026-10-17T02:14:41.564573+08:00",
+  "no_subagents": true,
+  "input": {
+    "frames": 49,
+    "train": 46,
+    "test": 3,
+    "gaussians": 318083,
+    "actors": 43,
+    "road": 25117,
+    "reference": 8263,
+    "known_mask_pairs": 1704,
+    "total_mask_pairs": 2107,
+    "auxiliary_unknown_mask_pairs": 403,
+    "excluded_unseeded_tracks": [
+      {
+        "raw_track_id": "D3GphUFDr7c2MtjHqQ7qiw",
+        "reason": "no train LiDAR; no asset fabricated; excluded from edit claims"
+      },
+      {
+        "raw_track_id": "EdoK7xZdX3kp49t5tvMSFQ",
+        "reason": "no train LiDAR; no asset fabricated; excluded from edit claims"
+      }
+    ]
+  },
+  "stages": [
+    {
+      "id": "P0",
+      "name": "真实输入审计",
+      "status": "complete"
+    },
+    {
+      "id": "P1",
+      "name": "实际CUDA ABI/反传与加速等价",
+      "status": "passed"
+    },
+    {
+      "id": "P2",
+      "name": "R2/R3各阶段20步测速",
+      "status": "complete",
+      "initial_seed_training_hours": 11.290197100283372
+    },
+    {
+      "id": "E0",
+      "name": "30k几何+10k材质+5k联合",
+      "status": "running_1000_step_visual_gate",
+      "global_step": 100
+    },
+    {
+      "id": "V0",
+      "name": "7准入Actor逐车49帧删除与动态分支",
+      "status": "queued_after_training"
+    },
+    {
+      "id": "A0",
+      "name": "消融按主方法结果选择",
+      "status": "not_queued"
+    }
+  ],
+  "eligible_delete_actors": [
+    {
+      "actor_index": 5,
+      "raw_track_id": "3S_GJHyCGGK4ypFPVKOOqA",
+      "preview_frame": "0008107",
+      "joint_evidence_frames": 23,
+      "body_pixels": 11367,
+      "visible_lidar_hits": 1851,
+      "unique_lidar_pixels": 1819,
+      "preview": "a05_0008107.png"
+    },
+    {
+      "actor_index": 6,
+      "raw_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+      "preview_frame": "0008105",
+      "joint_evidence_frames": 34,
+      "body_pixels": 1201,
+      "visible_lidar_hits": 277,
+      "unique_lidar_pixels": 277,
+      "preview": "a06_0008105.png"
+    },
+    {
+      "actor_index": 12,
+      "raw_track_id": "N9OW_5E8bZx169_RpDjlXA",
+      "preview_frame": "0008137",
+      "joint_evidence_frames": 7,
+      "body_pixels": 637,
+      "visible_lidar_hits": 166,
+      "unique_lidar_pixels": 166,
+      "preview": "a12_0008137.png"
+    },
+    {
+      "actor_index": 18,
+      "raw_track_id": "Umybpe6eOenVBgQ_zgdVtw",
+      "preview_frame": "0008137",
+      "joint_evidence_frames": 19,
+      "body_pixels": 750,
+      "visible_lidar_hits": 188,
+      "unique_lidar_pixels": 188,
+      "preview": "a18_0008137.png"
+    },
+    {
+      "actor_index": 25,
+      "raw_track_id": "jLQDAXyHa8zXMNmHn6cWBA",
+      "preview_frame": "0008137",
+      "joint_evidence_frames": 49,
+      "body_pixels": 2744,
+      "visible_lidar_hits": 383,
+      "unique_lidar_pixels": 383,
+      "preview": "a25_0008137.png"
+    },
+    {
+      "actor_index": 26,
+      "raw_track_id": "mSiVqee7l7dfkt8HQhXZZw",
+      "preview_frame": "0008133",
+      "joint_evidence_frames": 49,
+      "body_pixels": 10088,
+      "visible_lidar_hits": 1283,
+      "unique_lidar_pixels": 1268,
+      "preview": "a26_0008133.png"
+    },
+    {
+      "actor_index": 37,
+      "raw_track_id": "vBOasuXpjI7h7d-X_VEQdA",
+      "preview_frame": "0008121",
+      "joint_evidence_frames": 17,
+      "body_pixels": 8767,
+      "visible_lidar_hits": 1560,
+      "unique_lidar_pixels": 1539,
+      "preview": "a37_0008121.png"
+    }
+  ],
+  "deletion_scope": "Only repeated clear camera evidence with same-frame real LiDAR. Never all43 just because seeded.",
+  "edit_matrix": {
+    "deletion": [
+      5,
+      6,
+      12,
+      18,
+      25,
+      26,
+      37
+    ],
+    "legacy_motion_actor_indices": [
+      5,
+      26,
+      18
+    ],
+    "frames": 49,
+    "motion": [
+      "±1m continuous translation",
+      "±15degree rotation",
+      "±30degree rotation"
+    ],
+    "paired_axes": "comparison_protocol.json",
+    "streams": 65,
+    "PNGs": 3185,
+    "static_branch": "background-only diagnostic, not an all-track editing test"
+  },
+  "dynamic_deliverables": [
+    "all isolated RGB/raw alpha",
+    "all full-scene visible RGB/alpha and instance contribution",
+    "each admitted Actor isolated RGB/raw alpha/visible alpha",
+    "remaining dynamic after each deletion",
+    "edited dynamic RGB for old three motion cases"
+  ],
+  "mask_policy": "primary three147 complete pairs; unknown auxiliary403 excluded from mask losses, never treated as background; RGB/LiDAR remain",
+  "timing": {
+    "initial_seed_stages": [
+      {
+        "stage": "geometry",
+        "seconds_per_update_median": 0.27714014425873756,
+        "seconds_per_update_max": 0.3348292326554656,
+        "estimated_stage_hours": 2.3095012021561465,
+        "max_memory_allocated_bytes": 1496926720,
+        "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+      },
+      {
+        "stage": "material",
+        "seconds_per_update_median": 2.1352856755256653,
+        "seconds_per_update_max": 3.0479932380840182,
+        "estimated_stage_hours": 5.931349098682404,
+        "max_memory_allocated_bytes": 1601829888,
+        "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+      },
+      {
+        "stage": "joint",
+        "seconds_per_update_median": 2.1955296956002712,
+        "seconds_per_update_max": 3.806933921761811,
+        "estimated_stage_hours": 3.0493467994448213,
+        "max_memory_allocated_bytes": 1786283520,
+        "caveat": "initial seed only; densification, teacher, I/O and full49 editing evaluation add cost"
+      }
+    ],
+    "initial_seed_training_hours": 11.290197100283372,
+    "extras": "densification, reference refresh, Stage1teacher, I/O, full49frame evaluation; update ETA with actual stage logs"
+  },
+  "observation": {
+    "interval_minutes": 10,
+    "automation": "b-c-15",
+    "first_gate_updates": 1000,
+    "require_root_visual_review": true,
+    "notify": "meaningful changes only"
+  },
+  "comparison_limit": "old three have independent instance assets; additional four may only have old-scene appearance reference. Audit camera intrinsic before pixelwise cross-model claims.",
+  "human_verdict": null
+}

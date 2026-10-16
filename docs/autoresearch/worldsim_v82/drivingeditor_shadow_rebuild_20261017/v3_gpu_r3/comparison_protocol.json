@@ -1,0 +1,64 @@
+{
+  "schema": "multi_actor_legacy_pairing_v1",
+  "scene": "scene0008_089_137",
+  "frames": 49,
+  "raw_window": [
+    89,
+    137
+  ],
+  "primary_actors": [
+    {
+      "legacy_actor_index": 0,
+      "raw_track_id": "3S_GJHyCGGK4ypFPVKOOqA"
+    },
+    {
+      "legacy_actor_index": 1,
+      "raw_track_id": "mSiVqee7l7dfkt8HQhXZZw"
+    },
+    {
+      "legacy_actor_index": 2,
+      "raw_track_id": "Umybpe6eOenVBgQ_zgdVtw"
+    }
+  ],
+  "translation_axis_world": [
+    0.9987749571616118,
+    0.04686172141126164,
+    -0.015892262683262916
+  ],
+  "translation_amplitude_m": 1,
+  "rotation_axis_world": [
+    0.014106435274101799,
+    0.03819596889287182,
+    0.9991706943481642
+  ],
+  "yaw_amplitudes_degrees": [
+    15,
+    30
+  ],
+  "temporal_path": "sin(2*pi*i/48)",
+  "fixed_camera_index": 12,
+  "camera_intrinsics": "actual raw P0 resized with pixel-center convention; check old/new projection contracts before pixelwise comparisons",
+  "old_baselines": {
+    "original": "rigid_runs/scene0008_089_137/full30k/checkpoint_030000.pt",
+    "previous": "shadow_sequence_20261016_v2/unselected_clean_v1/final.pt"
+  },
+  "dynamic_views": [
+    "isolated RGB on black",
+    "isolated raw alpha",
+    "full-scene visible RGB",
+    "full-scene visible alpha",
+    "per-actor isolated RGB/alpha and visible alpha"
+  ],
+  "human_verdict": null,
+  "eligible_delete_actor_indices": [
+    5,
+    6,
+    12,
+    18,
+    25,
+    26,
+    37
+  ],
+  "actor_evidence": "actor_evidence_r2/actor_evidence.json",
+  "deletion_scope": "only clearly visible camera+LiDAR supported actors; not every LiDAR-seeded track"
+}

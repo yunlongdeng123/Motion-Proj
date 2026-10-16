@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--steps", type=int, default=20)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument('--allow-partial-masks',action='store_true')
     args = parser.parse_args()
     if not args.execute:
         print(json.dumps(dict(status="GPU_BENCHMARK_NOT_STARTED", planned_stages=["geometry", "material", "joint"])))
@@ -27,7 +28,7 @@ def main():
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
     config = Config.load(args.config)
-    dataset = Dataset(args.data, "cpu")
+    dataset = Dataset(args.data, "cpu",args.allow_partial_masks)
     from .train import preflight
     inputs = preflight(dataset, config)
     abi = probe(config)
@@ -49,8 +50,10 @@ def main():
             loss.backward()
             optimizer.step()
             torch.cuda.synchronize()
+            duration = time.perf_counter()-started
             if i >= 2:
-                times.append(time.perf_counter()-started)
+                times.append(duration)
+            write(output/'progress.json',dict(stage=stage,step=i+1,steps=args.steps,seconds_per_update=duration))
         ordered = sorted(times)
         median = ordered[len(ordered)//2]
         reports.append(dict(stage=stage, seconds_per_update_median=median, seconds_per_update_max=max(times),

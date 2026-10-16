@@ -108,7 +108,8 @@ def render_buffers(camera, geometry, actor_count, backend="reference", max_featu
     channels = torch.cat((torch.ones_like(z), z, geometry["xyz"], geometry["normal"], geometry["albedo"],
                           geometry["appearance"], geometry["view_residual"], road, labels,
                           geometry["xyz"]*road, geometry["normal"]*road,
-                          geometry["albedo"]*road, geometry["appearance"]*road), -1)
+                          geometry["albedo"]*road, geometry["appearance"]*road,
+                          geometry["appearance"]*(geometry["owner"] >= 0)[:, None]), -1)
 
     def raster(g, value):
         if backend == "reference":
@@ -129,7 +130,7 @@ def render_buffers(camera, geometry, actor_count, backend="reference", max_featu
     package.update(road_alpha=raw[..., 17], road_position=raw[..., base:base+3]/road_denom,
                    road_normal=normalize(raw[..., base+3:base+6]/road_denom),
                    road_albedo=raw[..., base+6:base+9]/road_denom,
-                   road_appearance=raw[..., base+9:base+12])
+                   road_appearance=raw[..., base+9:base+12], dynamic_visible_rgb=raw[..., base+12:base+15])
     if isolated:
         individual = []
         for actor in range(actor_count):

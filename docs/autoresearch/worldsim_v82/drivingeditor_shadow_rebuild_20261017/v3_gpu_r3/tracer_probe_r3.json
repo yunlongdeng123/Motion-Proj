@@ -1,0 +1,48 @@
+{
+  "status": "PASSED",
+  "value_max_absolute_error": 2.384185791015625e-07,
+  "gradient_checks": {
+    "field.xyz": {
+      "max_absolute_error": 0.00018596649169921875,
+      "reference_max": 7.5904645919799805
+    },
+    "field.log_scales": {
+      "max_absolute_error": 0.002480866154655814,
+      "reference_max": 0.7634367346763611
+    },
+    "field.quaternion": {
+      "max_absolute_error": 0.004107087850570679,
+      "reference_max": 0.6314566731452942
+    },
+    "field.opacity_logit": {
+      "max_absolute_error": 4.470348358154297e-08,
+      "reference_max": 0.20458248257637024
+    },
+    "light.azimuth": {
+      "max_absolute_error": 0.0002446174621582031,
+      "reference_max": 6.124593734741211
+    },
+    "light.elevation_logit": {
+      "max_absolute_error": 0.000667572021484375,
+      "reference_max": 46.31669616699219
+    }
+  },
+  "methods": [
+    {
+      "method": "dense",
+      "milliseconds": 1505.16943359375,
+      "rays": 56,
+      "shadowed_rays": 24,
+      "unsaturated_shadow_rays": 16
+    },
+    {
+      "method": "actor_broadphase",
+      "milliseconds": 250.51852416992188,
+      "rays": 56,
+      "shadowed_rays": 24,
+      "unsaturated_shadow_rays": 16
+    }
+  ],
+  "quality_validated": false,
+  "scope": "real seed geometry; same analytic half-ray integral, detached six-sigma culling"
+}

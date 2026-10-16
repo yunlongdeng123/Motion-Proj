@@ -108,6 +108,42 @@ class InputContract(unittest.TestCase):
 
 
 class Evaluation(unittest.TestCase):
+    def test_multi_actor_dynamic_branches_and_each_actor_edit_matrix(self):
+        from shadow_rebuild.multi_evaluate import evaluate_many,stream_table
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);config=create(root/'fixture')
+            seed=dict(np.load(root/'fixture/seed.npz'));n=len(seed['xyz']);body=seed['owner']==0
+            for key,value in list(seed.items()):
+                extra=value[body].copy()
+                if key=='owner':extra[:]=1
+                if key=='neighbor':extra=np.arange(n,n+body.sum())
+                seed[key]=np.concatenate((value,extra))
+            np.savez_compressed(root/'fixture/seed.npz',**seed)
+            trajectory=dict(np.load(root/'fixture/trajectory.npz'))
+            second=trajectory['poses'].copy();second[:,:,0,3]+=.7
+            trajectory['poses']=np.concatenate((trajectory['poses'],second),axis=1)
+            trajectory['valid']=np.repeat(trajectory['valid'],2,axis=1)
+            np.savez_compressed(root/'fixture/trajectory.npz',**trajectory)
+            path=root/'fixture/manifest.json';manifest=json.loads(path.read_text());manifest['actor_ids'].append('synthetic_auxiliary')
+            path.write_text(json.dumps(manifest))
+            for row in manifest['frames']:
+                path=root/'fixture'/row['supervision'];sup=dict(np.load(path))
+                sup['masks']=np.concatenate((sup['masks'],np.zeros_like(sup['masks'])),axis=-1)
+                sup['mask_known']=np.array([True,False])
+                np.savez_compressed(path,**sup)
+            dataset=Dataset(root/'fixture',synthetic=True,allow_partial_masks=True)
+            model=SceneModel(dataset.seed,config)
+            rows=evaluate_many(model,dataset,root/'eval',[0,1],backend='reference',videos=False)
+            self.assertEqual(len(rows),5)
+            self.assertEqual(len(list((root/'eval').rglob('*.png'))),len(stream_table([0,1]))*5)
+            for actor in (0,1):
+                for case in ('delete','translate','yaw15','yaw30','isolated_rgb','isolated_alpha','visible_alpha'):
+                    self.assertEqual(len(list((root/f'eval/actors/a{actor:02d}'/case).glob('*.png'))),5)
+            table=json.loads((root/'eval/actor_table.json').read_text())
+            self.assertEqual([a['raw_track_id'] for a in table['actors']],list(dataset.actor_ids))
+            self.assertTrue((root/'eval/dynamic/visible_rgb/f000.png').is_file())
+            self.assertTrue((root/'eval/dynamic/isolated_rgb/f000.png').is_file())
+
     def test_continuous_edit_streams_delete_identity_fixed_camera_and_denominators(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

@@ -1,11 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-17（Asia/Singapore）。当前任务为 `WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017 / v3_code_cpu`：按用户要求，从原始测量重建适于光照分解的实例场景，优先解决道路细节、阴影轮廓与车身质量。[组件图与协议](v82/DRIVINGEDITOR_SHADOW_REBUILD_20261017.md) · [源码/命令](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/) · [CPU证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_code_cpu/cpu_validation.json)。
+更新：2026-10-17（Asia/Singapore）。当前任务 `WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017 / E0_full_s0`。用户已开GPU并授权实验，仍禁止subagent。最新范围收紧为相机清楚可见且同帧真实LiDAR支持充分的7个Actor：新5、6、12、18、25、26、37；旧0/1/2分别对应新5/26/18，不按所有43个LiDAR轨迹做delete。
 
-三阶段训练、非平面表面/逐点材质、同Actor几何可微遮光、车身/完整mask保护、7个消融入口和49帧编辑评价均已写入。17项CPU检查与21文件语法通过；5帧合成夹具完成30次梯度更新和连续编辑。道路接收属性与Actor贡献共用全场景alpha*T，Actor自身正常明暗/反射保留在新训练外观中。真实场景GPU训练0步，实际远端输入、CUDA ABI、吞吐/显存与49帧画质未验证；不把合成检查记为真实道路恢复。
+真实49帧输入导出与实际CUDA ABI/反传已通过；318083高斯、43轨迹、8263跨帧道路伪参考。旧三Actor147对完整mask内外监督齐全；辅助403/2107对mask未知，显式allow-partial-masks排除其mask损失，仍用RGB/LiDAR；两条无训练LiDAR轨迹不构建资产。18项CPU检查通过。工程检查与相机/LiDAR准入、组件图、计时记录见[GPU记录](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_gpu_r3/)。[源码与命令](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/) · [方法组织与历史CPU检查](v82/DRIVINGEDITOR_SHADOW_REBUILD_20261017.md)。
 
-当前停点：等待用户打开GPU后，先解析/审计实际原始RGB/LiDAR/完整laser_labels及所有Actor的真实mask映射，再执行CUDA内核/梯度检查和分阶段测速，之后决定30k/10k/5k初始预算与检查间隔。本轮未SSH、未上传远端、未启动GPU/训练/后台控制器。上轮关机记录保持，心跳`b-c-15`继续PAUSED。用户禁止subagent。
+E0已在AutoDL的shadow_rebuild_20261017_v3/E0_full_s0启动，从原始测量初始化，不继承GN11。先执行1000步几何并保存七辆证据帧的GT、canonical、静态/动态RGB及raw alpha，代理看图后从同配置latest继续。初始30k/10k/5k测速约11.29h，不含增密、教师、I/O、参考刷新和连续评价；阶段完成后更新ETA。b-c-15心跳ACTIVE，每10分钟核对PID、日志、数值与阶段，不重复启动，不关闭GPU。
 
-新分支不读取GN11或旧局部道路/五盒体。当前ground为LiDAR几何候选，完整mask映射可能有缺口；默认预检会拒绝未知标签。仅有训练跨时刻伪道路参考，无独立无影/反事实GT，未见表面与单视频光照分解仍有限制；完整间接传输/车辆BRDF不在该实现内。人工verdict=null，真实problem是否解决未判定。
+后续完整49帧评价只对准入7辆逐车删除。旧三辆按真实track ID与旧实验配对同轴±1m、±15°/±30°连续编辑；新增四辆若无旧独立资产只对照场景外观。65流包括全动态独立RGB/raw alpha、全场景动态可见RGB/alpha、每辆独立/可见alpha、删除后剩余动态与运动编辑动态RGB。静态分支单独输出只作诊断，不是其他不可见车辆delete成功。实际相机主点契约核对后才能报跨模型逐像素指标。
 
-上一轮真实18k局部微调与统一HTML结果仍完整保留：[历史记录](v82/DRIVINGEDITOR_SHADOW_SEQUENCE_20261016.md)。其raw106–108范围外黑片、±30°旧资产破面和原位阴影样本加权误差未改善仍是后续必须回看的案例。其他项目由[EXPERIMENTS](EXPERIMENTS.md)定位，不从历史记录恢复任务。`failure_ledger_refs=[V82-F01]`，本次`failure_ledger_delta=none`；原有dirty改动保持。
+画质、完整视频和当前problem是否解决尚未判定，人工verdict=null。道路候选非人工语义GT，跨帧参考非无影GT，始终遮挡表面与单视频光照仍有不可辨识性；没有完整间接光或车身BRDF。主预算45k，消融只保留接口，不自动无限追加。继续回看旧raw106–108范围外黑片、±30°资产破面和原位阴影加权误差未改善，[历史记录](v82/DRIVINGEDITOR_SHADOW_SEQUENCE_20261016.md)不覆盖。
+
+其他项目由[EXPERIMENTS](EXPERIMENTS.md)定位。`failure_ledger_refs=[V82-F01]`，`failure_ledger_delta=none`；当前为工程与输入检查，没有新增科学否定。原dirty工作保持。
