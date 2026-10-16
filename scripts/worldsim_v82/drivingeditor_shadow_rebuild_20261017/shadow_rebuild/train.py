@@ -116,18 +116,21 @@ def seed_from_state(state):
 def preflight(dataset, config):
     if len(dataset.seed["xyz"]) > config.max_gaussians:
         raise ValueError("初始点数超过显式容量预算；调整体素/预算后重新审计，不能静默截去场景")
-    known = 0
+    known = 0;certified_road=0
     for i in range(len(dataset.rows)):
         frame = dataset.frame(i)
         known += int(frame.mask_known.sum())
+        certified_road+=int(frame.road_certified.sum()) if frame.road_certified is not None else 0
     refs = int((dataset.seed["reference_confidence"] > 0).sum())
     if config.use_clean_road and refs < 1:
         raise ValueError("没有跨时刻可信干净道路参考；full 臂不能静默变成 no_clean_road 消融")
+    if config.weights.road_identity>0 and certified_road==0:raise ValueError('road identity enabled without actual positive road certificates')
     return dict(status="CPU_INPUTS_CHECKED_GPU_NOT_STARTED", frames=len(dataset.rows), actors=len(dataset.actor_ids),
                 gaussians=len(dataset.seed["xyz"]), road_gaussians=int(dataset.seed["road"].sum()),
                 reference_points=int((dataset.seed["reference_confidence"] > 0).sum()),
                 train_frames=len(dataset.train_indices), test_frames=len(dataset.test_indices),
                 mask_known_pairs=known,
+                certified_road_pixels=certified_road,
                 mask_total_pairs=len(dataset.rows)*len(dataset.actor_ids), learned_checkpoint_used=False,
                 estimated_GPU_hours=None, real_GPU_ABI_checked=False,
                 planned_steps=dict(geometry=config.geometry_steps, material=config.material_steps, joint=config.joint_steps),

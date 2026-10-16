@@ -86,5 +86,9 @@ def geometry_and_reference_terms(model, package, frame, config, stage):
         irradiance = ambient+(1-ambient)*(road_n*model.light.direction()).sum(-1).clamp_min(0)[:, None]
         unshadowed = field.albedo_logit.sigmoid()*irradiance
         clean = masked_mean((unshadowed-srgb_to_linear(field.reference_rgb)).abs(), weight)
-    return dict(depth=depth, mask_inside=inside, mask_outside=outside, visible_instance=identity,
+    # Independent positive road certificate, NOT the complement of missing Actor masks.
+    # The original complete known-mask exterior term above remains unchanged.
+    certified=getattr(frame,'road_certified',None)
+    road_identity=package['visible_labels'].sum()*0 if certified is None else masked_mean(package['visible_labels'].sum(-1).square(),certified)
+    return dict(depth=depth, mask_inside=inside, mask_outside=outside, visible_instance=identity,road_identity=road_identity,
                 clean_road=clean, geometry=geo, normal=normal, view_residual=residual)

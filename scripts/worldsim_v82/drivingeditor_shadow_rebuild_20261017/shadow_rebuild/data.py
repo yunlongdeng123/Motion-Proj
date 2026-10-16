@@ -52,6 +52,7 @@ class Frame:
     depth: torch.Tensor
     poses: torch.Tensor
     valid: torch.Tensor
+    road_certified: torch.Tensor = None
 
 
 class Dataset:
@@ -97,6 +98,7 @@ class Dataset:
         h, w = image.shape[:2]
         with np.load(self.root/row["supervision"], allow_pickle=False) as sup:
             a = {key: sup[key] for key in ("masks", "mask_known", "road", "depth")}
+            a['road_certified']=sup['road_certified'] if 'road_certified' in sup.files else np.zeros((h,w),bool)
         k = len(self.actor_ids)
         if a["masks"].shape != (h, w, k) or a["mask_known"].shape != (k,) or a["road"].shape != (h, w) or a["depth"].shape != (h, w):
             raise ValueError(f"监督尺寸不符: {row['frame_id']}")
@@ -106,13 +108,17 @@ class Dataset:
             raise ValueError("真实可见实例标签/道路重叠")
         if not np.isfinite(a["depth"]).all() or (a["depth"] < 0).any():
             raise ValueError("稀疏深度必须为非负有限相机 Z")
+        if a['road_certified'].shape!=(h,w) or a['road_certified'].dtype!=bool:
+            raise ValueError('certified road must be explicit HW bool')
+        if np.any(a['road_certified']&(~a['road'] | (a['depth']<=0) | a['masks'].any(-1))):
+            raise ValueError('certified road requires actual depth, road support and no known body overlap')
         if not self.allow_partial_masks and not a["mask_known"].all():
             raise ValueError(f"{row['frame_id']}: 真实逐实例 body mask 未齐全；不能将未知零标签当背景")
         t = lambda x, dtype=None: torch.as_tensor(x, dtype=dtype, device=self.device)
         camera = Camera(row["intrinsic"], row["world_from_camera"], h, w, self.device)
         return Frame(row["frame_id"], index, row["split"], camera, srgb_to_linear(t(image)),
                      t(a["masks"]), t(a["mask_known"]), t(a["road"]), t(a["depth"], torch.float32),
-                     t(self.poses[index], torch.float32), t(self.valid[index]))
+                     t(self.poses[index], torch.float32), t(self.valid[index]),t(a['road_certified']))
 
 
 def clean_reference(samples, valid, min_views=3, min_bright_views=2):

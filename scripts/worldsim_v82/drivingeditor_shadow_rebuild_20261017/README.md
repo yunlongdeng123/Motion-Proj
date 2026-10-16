@@ -110,6 +110,8 @@ CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 python -m unittest discover -s tests -p 
 
 ## 外部依据
 
+R8另外支持 `Frame.road_certified`（默认全零）和 `weights.road_identity`（默认0，历史重放不变）。启用臂显式设0.5：在独立、真实训练LiDAR道路正证据像素上，对所有Actor的全场景可见alpha之和做域内均值MSE→0。它不使用未知实例mask的补集；非认证未知像素没有新增标签，原完整已知mask内外损失保持。证据须有多时刻世界道路支持、实际点邻域平面法线、车体3D接触保护和真实深度，不能与已有body标签重叠。缺正证据却启用会预检失败。数据新版本保留原RGB/masks/known/road/depth/seed/trajectory，只增加认证字段并显式记录谱系。道路静态覆盖先只读检查，再受界优化，逐帧核对轮胎／车身与孔洞。
+
 归属修复另提供 `shadow_rebuild.ownership` 与 `shadow_rebuild.boundary`：以全场景alpha*T特征反传累计逐高斯body/真实LiDAR道路正证据，遮挡与未知不自动判背景。跨边界主轴由实际多视角mask交点确定，至少3帧一致才分解；两侧用截断高斯矩保留，复审后才可将道路候选锚定到实际测量世界点。未认证混合点不整点转归属。此过程不是车底高度裁剪，也不是普通梯度增密。
 
 `outside_fullscene_visibility=false`保留旧raw-alpha外部监督重放；显式R6修复为true时，外部域仍是每个已知实例完整图像的mask外部，监督值改为全场景可见alpha*T贡献。mask内仍用未乘GT的独立raw alpha，未知mask无梯度；raw alpha也继续完整输出。此变化避免强迫被其他物体遮住的真实车体变背景，必须与归属/拆分干预一起登记，不能称单因素因果消融。边界split与道路reanchor分开接口，训练与几何阶段诊断独立。

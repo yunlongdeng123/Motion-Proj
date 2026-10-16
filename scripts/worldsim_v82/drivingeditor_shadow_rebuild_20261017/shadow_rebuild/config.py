@@ -19,6 +19,7 @@ class LossWeights:
     geometry: float = .02
     normal: float = .02
     view_residual: float = .01
+    road_identity: float = 0.0
 
 
 @dataclass
