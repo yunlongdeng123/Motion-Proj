@@ -1,0 +1,151 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
+  "run_id": "backend_restore_r15",
+  "latest_authorization": "User explicitly requested correction, selfcheck, then restart new training",
+  "created_at": "2026-10-17T09:10:38.858858+08:00",
+  "implementation": "implementation_r15_train_v3",
+  "no_subagents": true,
+  "planned_updates": {
+    "geometry": 30000,
+    "material": 10000,
+    "joint": 5000,
+    "total": 45000
+  },
+  "historical_used_updates_range": [
+    25049,
+    25196
+  ],
+  "initial_static": 608434,
+  "initial_Actor": 163387,
+  "learned_checkpoint_used": false,
+  "inputs": "same frozen regional SAM3/DEVA pixel-valid masks, same IDSplat Actor seeds/GT, dense BUILD raw static, no QUERY or random box seeds",
+  "inherited": [
+    "SH degree3 and original evaluator",
+    "6x1024x1024 EnvLight axes and native nvdiffrast",
+    "original compose_hybrid_loss/11x11SSIM/full global-static-dynamic-sky RGB",
+    "original sparse inverse-depth and decay, explicit physical->old normalized units",
+    "original100*equal-instance full-HW visible mask plus pixel-valid extension",
+    "original local_box_boundary weight1 with physical units",
+    "spatial screen-gradient clone/split/prune, opacity reset, exponential xyz LR and SH activation",
+    "actual SGCMController and guarded lineage, static subset row/Adam adapter"
+  ],
+  "intentional_differences": [
+    "raw initialization instead of trained GN11 weights",
+    "all43 rigid IDs; only7 evidence-qualified delete tests",
+    "no static temporal motion/lifetime variability; velocity/NPS identically zero",
+    "road intrinsic albedo+pose/geometry light transmittance replaces free road SH shadow encoding",
+    "continuous ownership and measured owner/split/pool evidence",
+    "full valid inside/outside and balanced body protection added to old visible mask",
+    "physical shadow visibility grids16/8/4 for train only; full RGB/SH/cube stay full resolution and final ray integration is per pixel",
+    "G stage road albedo and low-dimensional light remain learnable to explain all road RGB instead of masking it; M freezes geometry",
+    "2cm constrained geometry joint refinement, finite gradient checks and clip10"
+  ],
+  "root_gates": [
+    3000,
+    9000,
+    30000,
+    40000
+  ],
+  "previews": [
+    1000,
+    3000,
+    9000,
+    30000,
+    40000,
+    45000
+  ],
+  "opacity_reset_warning": "3k preview is immediately after native opacity reset; inspect subsequent4k and rawalpha before interpreting transparency",
+  "root_review_path": "D/root_review_XXXXXX.json requires continue_registered_training true; no user reconfirmation",
+  "evaluation": {
+    "frames": 49,
+    "streams": 65,
+    "delete": [
+      5,
+      6,
+      12,
+      18,
+      25,
+      26,
+      37
+    ],
+    "legacy_map": {
+      "0": 5,
+      "1": 26,
+      "2": 18
+    },
+    "no_old_independent_asset": [
+      6,
+      12,
+      25,
+      37
+    ],
+    "required": "all independent/visible dynamic RGB/rawalpha, perActor/visible/delete-dynamic, old3 same-axis +/-1m and15/30continuous edits; shadow pose/caster/off/fixed-state counterfactuals"
+  },
+  "selfcheck": {
+    "CPU": 22,
+    "actual_GPU": "ACTUAL_PRODUCTION_CAPACITY_GRADIENTS_AND_RESTORE_PASSED",
+    "zero_extra_probe_SGD": true,
+    "main_step1_restore": {
+      "status": "FIRST_MAIN_UPDATE_AND_ACTUAL_NONEMPTY_ADAM_RESTORE_PASSED",
+      "actual_main_updates": 1,
+      "replayed_updates": 0,
+      "extra_probe_SGD": 0,
+      "render_max_error": 0.0,
+      "model_bitwise_equal": true,
+      "Adam_moments_bitwise_equal": true,
+      "checkpoint": "main/latest.pt",
+      "implementation": "implementation_r15_train_v2",
+      "at": 1792198476.7060146
+    }
+  },
+  "GPU_policy": "campaign/gpu_slot.lock per1k chunk; others priority; envs/drivingeditor unchanged",
+  "shutdown": "only after full45k+49/root review/report/source published and all owned/otherGPU/queue tasks idle",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "actual_problem_solved": null,
+  "failure_ledger_refs": [
+    "V82-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "engineering_early_topology": {
+    "status": "EARLY_GENERIC_DENSIFY_SCHEDULE_REPAIR",
+    "last_logged": 200,
+    "executed_failed_range": [
+      200,
+      249
+    ],
+    "adopted_checkpoint": 1,
+    "adopted_bootstrap_update_already_counted": true,
+    "replayed_tail_updates_will_be_charged_separately": true,
+    "model_Adam_RNG_unchanged": true,
+    "owned_remaining": [],
+    "GPU_shutdown": false
+  },
+  "schedule_recovery": {
+    "status": "FIRST_MAIN_UPDATE_AND_ACTUAL_NONEMPTY_ADAM_RESTORE_PASSED",
+    "actual_main_updates": 2,
+    "adopted_step1_without_early_topology": true,
+    "discarded_extra_updates_range": [
+      199,
+      248
+    ],
+    "extra_probe_SGD": 0,
+    "render_max_error": 0.0,
+    "model_bitwise_equal": true,
+    "Adam_moments_bitwise_equal": true,
+    "checkpoint": "main/latest.pt",
+    "implementation": "implementation_r15_train_v3",
+    "at": 1792199069.6331406
+  },
+  "generic_densification_schedule": {
+    "from_iter": 500,
+    "strict_after_start": true,
+    "interval": 100,
+    "until_iter": 15000,
+    "strict_before_end": true,
+    "first": 600,
+    "last": 14900,
+    "SGCM_offset": 50
+  },
+  "GPU_component_proof_scope": "Core model/forward/SGCM matched byte-for-byte to train_v2 GPU proof; train_v3 only corrects topology timing; separate actual step2 nonempty Adam/model restore passed"
+}

@@ -1,0 +1,112 @@
+{
+  "status": "ACTUAL_PRODUCTION_CAPACITY_GRADIENTS_AND_RESTORE_PASSED",
+  "steps": 0,
+  "ABI": {
+    "status": "GPU_ABI_GRADIENTS_PASSED",
+    "mean_abs_error": 0.00013322987069841474,
+    "device": "NVIDIA GeForce RTX 4080 SUPER",
+    "feature_capacity_requested": 10
+  },
+  "cube_old_new_max_error": 0.0,
+  "stages": [
+    {
+      "stage": "geometry",
+      "seconds_forward_backward": 2.1904801363125443,
+      "peak_GiB": 3.4584431648254395,
+      "loss": 2.0119380950927734,
+      "gradient_norms": {
+        "field.xyz": 0.017412003129720688,
+        "field.log_scales": 0.0017341582570225,
+        "field.quaternion": 0.0025664258282631636,
+        "field.opacity_logit": 0.002319010440260172,
+        "field.albedo_logit": 0.0005282478523440659,
+        "field.features_dc": 0.0020602107979357243,
+        "field.features_rest": 0.007979161106050014,
+        "light.azimuth": 0.0005146897747181356,
+        "light.elevation_logit": 0.015585002489387989,
+        "light.ambient_logit": 0.004182973876595497,
+        "light.radius_logit": 3.841343243493611e-07,
+        "light.strength_logit": 2.9171490041335346e-06,
+        "environment.base": 0.033952660858631134
+      },
+      "no_reference_road_points_with_RGB_gradient": 124596,
+      "SGD_updates": 0
+    },
+    {
+      "stage": "material",
+      "seconds_forward_backward": 1.3248452357947826,
+      "peak_GiB": 2.8914713859558105,
+      "loss": 1.7412965297698975,
+      "gradient_norms": {
+        "field.opacity_logit": 0.00208926759660244,
+        "field.albedo_logit": 0.0004523271636571735,
+        "field.features_dc": 0.002071969909593463,
+        "field.features_rest": 0.00802470464259386,
+        "light.azimuth": 0.000544485985301435,
+        "light.elevation_logit": 0.01570463739335537,
+        "light.ambient_logit": 0.0042241415940225124,
+        "light.radius_logit": 3.710307083792941e-08,
+        "light.strength_logit": 1.437845980944985e-06,
+        "environment.base": 0.03632665425539017
+      },
+      "no_reference_road_points_with_RGB_gradient": null,
+      "SGD_updates": 0
+    },
+    {
+      "stage": "joint",
+      "seconds_forward_backward": 2.106856497004628,
+      "peak_GiB": 3.4695444107055664,
+      "loss": 1.6030993461608887,
+      "gradient_norms": {
+        "field.xyz": 0.006002403795719147,
+        "field.log_scales": 0.0019233868224546313,
+        "field.quaternion": 0.002407530089840293,
+        "field.opacity_logit": 0.0019394522532820702,
+        "field.albedo_logit": 0.00032714538974687457,
+        "field.features_dc": 0.0020690704695880413,
+        "field.features_rest": 0.008013475686311722,
+        "light.azimuth": 0.0006557173328474164,
+        "light.elevation_logit": 0.015892600640654564,
+        "light.ambient_logit": 0.004273943603038788,
+        "light.radius_logit": 1.0990593324322617e-07,
+        "light.strength_logit": 6.417442932615813e-07,
+        "environment.base": 0.019965840503573418
+      },
+      "no_reference_road_points_with_RGB_gradient": null,
+      "SGD_updates": 0
+    }
+  ],
+  "SGCM": {
+    "iteration": 550,
+    "inside_region": 73362,
+    "pruned": 233,
+    "cloned": 1,
+    "split_parents": 16,
+    "candidate_clone": 1,
+    "candidate_split": 16,
+    "points_before": 608434,
+    "points_after": 608218,
+    "dr_m": 0.5,
+    "dr_model": 0.5,
+    "addition_guard_enabled": true,
+    "geometric_candidate_clone": 1,
+    "geometric_candidate_split": 16,
+    "excluded_clone_training_view_support": 0,
+    "excluded_split_training_view_support": 0,
+    "excluded_split_child_training_view_support": 0,
+    "excluded_cloned_lineage": 0,
+    "training_view_count": 46,
+    "excluded_duplicate_lineage_in_step": 0
+  },
+  "Actor_unchanged_by_static_SGCM": true,
+  "checkpoint_model_optimizer_loaded": true,
+  "production_static_seeds": 608434,
+  "full_RGB_all_stages": true,
+  "legacy_SH3": true,
+  "cube_shape": [
+    6,
+    1024,
+    1024,
+    3
+  ]
+}
