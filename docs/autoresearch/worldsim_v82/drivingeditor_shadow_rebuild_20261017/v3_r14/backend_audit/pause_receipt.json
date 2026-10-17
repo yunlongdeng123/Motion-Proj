@@ -1,0 +1,28 @@
+{
+  "status": "PAUSED_BY_USER_BACKEND_BASELINE_AUDIT",
+  "at": "2026-10-17T00:20:33.605920+00:00",
+  "user_request": "Stop current R14; audit simplifications versus old30k and30k+18k before any further training.",
+  "checkpoint_step": 5000,
+  "checkpoint_sha256": "01affea31778f9548be812ffbdf1fed72779b4d4c64bf122ee7b6542f08db2a5",
+  "last_logged_step": 5350,
+  "logged_updates_not_in_checkpoint": 350,
+  "stopped_processes": [
+    {
+      "pid": 3605,
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/full_controller_resume_r1.py "
+    },
+    {
+      "pid": 4792,
+      "cmd": "flock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r14_final/shadow_rebuild_v3/run.py train --data /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/idsplat_frontend/data_IDSplat --config /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/config.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/main --execute --allow-partial-masks --max-updates 1000 --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/main/latest.pt "
+    },
+    {
+      "pid": 4793,
+      "cmd": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r14_final/shadow_rebuild_v3/run.py train --data /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/idsplat_frontend/data_IDSplat --config /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/config.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/main --execute --allow-partial-masks --max-updates 1000 --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/main/latest.pt "
+    }
+  ],
+  "remaining_live": [],
+  "checkpoint_optimizer_rng_preserved": true,
+  "GPU_shutdown": false,
+  "automatic_resume_authorized": false,
+  "automation_status": "PAUSED"
+}
