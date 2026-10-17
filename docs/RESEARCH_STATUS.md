@@ -1,13 +1,11 @@
 # 当前研究状态
 
-更新：2026-10-17T09:10:39.043881+08:00。最新用户要求修正后自查并重启训练。当前run `backend_restore_r15`，代码 `implementation_r15_train_v3`；controller.py PID8244，train PID变化，须核对cmdline。旧B/C、R14不恢复。禁止subagent/新chat。[R15组件、继承差异与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/README.md)，[实验索引](EXPERIMENTS.md)。
+更新：2026-10-17T20:08:25+08:00。用户最新要求暂停R15训练、保留checkpoint，查明慢速与a6/a37分层问题并推送v82。**训练保持暂停，禁止自动续训或关机。** 无subagent/新chat。[诊断与严重性表](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/README.md)、[HTML及分层图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/report.html)、[实验索引](EXPERIMENTS.md)。
 
-真实训练最近记录150/45000，G30000/M10000/J5000；每1000步释放GPU锁，他人优先，共享环境不改。原始静态608434+Actor163387，不读GN11学习权重；恢复SH3、1024立方环境图、原hybrid全图/静态/动态/天空RGB、100倍可见mask、OBB软边界、原优化调度/拓扑与guarded SGCM。道路无影参考59423/184019=32.29%，其余有RGB合成监督，阴影由实际编辑后高斯几何/位姿/光照计算。
+run `backend_restore_r15`：controller8244、flock49808、train51627已核实身份后退出。最后日志4100，完整可恢复点4000；独立保留在服务器 `backend_restore_r15/paused_checkpoint_004000_20261017/checkpoint.pt`，模型/13组非空Adam状态/RNG已读回。4000后未落盘部分不冒称已保存。main/latest、pre_owner3000及历史输入/失败保留。相关心跳b-c-15原本PAUSED；D/PAUSE_REQUESTED.json和execution_policy禁止续训，controller增加启动暂停保护并实际验证未启动子worker。旧controller仍有初始step2断言，恢复前需要另行处理入口，不可盲重开。
 
-22 CPU和真实三阶段GPU自查通过；原EnvLight输出maxerror0，抽检124596无干净参考道路有颜色梯度。step1及调度修复后step2的非空Adam/模型/重渲染实际恢复通过。首段提前增密错误已保留200..249实际更新证据，从尚未增密的step1恢复，额外199..248已耗另记；历史成本25049..25196。核心模型前向未改；新调度首600末14900，与SGCM offset50不重叠。
+生产后端 `implementation_r15_train_v3` 的表示、loss、配置和CUDA ABI未改。新增诊断副本参数更新0，计时用lr=0 Adam。同步单帧4k前后向19.92s，关阴影1.68s；Python/Torch阴影循环有大量内核提交/同步，分块、重计算、5方向与Actor增密放大开销。FP32协方差/求逆失稳且阴影明显依赖chunk，FP64参考复现错误；a6/a37关阴影删除后静态车形残影仍在，3k审计split/owner转移均0，同表面深度竞争不覆盖大部分锚帧。完整49分层/46训练贡献/6锚帧反事实已完成，质量未通过。详细数值仅进入专门报告，不重复堆叠账本。
 
-初始前后向约25h，增密/teacher/Adam/审计/IO/49编辑另计，真实ETA须按metrics更新。心跳b-c-15每10min，稳定再30/60；只阶段/失败/异常需操作通知。1k预览；3k/9k/30k/40k根代理必须看预览/证据并放行，不能仅平均误差或alpha下降称⑥成功。3k是opacity reset节点，需结合4k。完整49x65动态/7车delete及旧三连续编辑/阴影反事实尚未完成，当前质量未验收。
+45k及最终49×65编辑未完成。本次明确暂停取代此前连续训完与交付后关机安排。下一步先修阴影数值及积分调度，再分别验证资产碎片/静态外观/审计时机；用户未授权恢复训练。报告里的提速候选没有应用，不能宣称修复完成。
 
-正式delete仅5/6/12/18/25/26/37，旧0/1/2->5/26/18；另外4无旧独立资产，仅历史场景外观。静态无时间自由度、待定不是背景，GT固定、QUERY为已看过开发集。完整训练/49复核/报告源码交付且所有本任务、其他GPU及锁队列空闲后才按授权AutoDL关机；暂时空闲不关。
-
-human_verdict=null，problem_solved=null，failure_ledger_refs=[V82-F01]，failure_ledger_delta=none。原始输入、旧模型、历史失败和用户dirty工作保留。
+human_verdict=null，problem_solved=null，failure_ledger_refs=[V82-F01,V82-F05,V82-F06]，failure_ledger_delta=[V82-F05,V82-F06]。原始BUILD、固定GT、冻结mask、已见开发QUERY边界、旧模型及原用户dirty工作保留。未关机。

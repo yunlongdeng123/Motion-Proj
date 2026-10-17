@@ -48,3 +48,5 @@
 | [V82-F02](entries/V82-F02.md) | CUDA 初始化与后台 fork 采样同时出现启动停滞 |
 | [V82-F03](entries/V82-F03.md) | 未核对可选进程API导致分割队列提前退出 |
 | [V82-F04](entries/V82-F04.md) | 评价入口的GT与SSIM设备不一致 |
+| [V82-F05](entries/V82-F05.md) | R15逐块高斯阴影调度过碎且FP32求逆使遮挡依赖分块 |
+| [V82-F06](entries/V82-F06.md) | opacity reset后审计与有限候选使R15归属修正空转 |

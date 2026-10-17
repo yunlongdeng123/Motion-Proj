@@ -12,6 +12,14 @@ def command(script,*args,gpu=False):
     subprocess.run(cmd,cwd=R,env=env,check=True)
 def audit(step,run,out):
     command(D/'ownership_audit_r14.py','--run',Path(run).relative_to(R),'--step',step,'--output',Path(out).relative_to(R),'--implementation','implementation_r15_train_v3','--data','backend_restore_r15/data','--all-identities','--certified-road',gpu=True)
+# 人类明确暂停优先于旧连续训练授权；在任何自查、GPU 查询和子进程前退出。
+pause_marker=D/'PAUSE_REQUESTED.json'
+if pause_marker.exists():
+    paused=json.loads(pause_marker.read_text())
+    state('PAUSED_BY_USER',checkpoint=paused.get('checkpoint'),global_step=paused.get('global_step'),
+          resume_training_authorized=False,shutdown_authorized=False)
+    print('R15 remains paused by the latest human request; no worker launched.',flush=True)
+    raise SystemExit(0)
 try:
     proof=json.loads((D/'GPU_selfcheck.json').read_text());assert proof['status']=='ACTUAL_PRODUCTION_CAPACITY_GRADIENTS_AND_RESTORE_PASSED' and proof['steps']==0
     first=json.loads((D/'schedule_recovery_verified.json').read_text());assert first['actual_main_updates']==2 and first['Adam_moments_bitwise_equal']

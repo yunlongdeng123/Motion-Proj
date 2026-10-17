@@ -1,0 +1,89 @@
+{
+  "checkpoint_step": 4000,
+  "frame": "0008107",
+  "active_receiver_rays": 317,
+  "sun_samples": 5,
+  "production_SGD_updates": 0,
+  "production_source_modified": false,
+  "variants": {
+    "chunk512_seconds": 4.6696526343002915,
+    "chunk2048_seconds": 1.7733368165791035,
+    "batched_same_5_sun_seconds": 1.765781208872795,
+    "chunk_max_abs_visibility_delta": 1.0,
+    "chunk_mean_abs_visibility_delta": 0.013197044841945171,
+    "batched_max_abs_visibility_delta": 0.008578777313232422
+  },
+  "selected_ray_references": {
+    "indices": [
+      79,
+      209,
+      50,
+      49,
+      283
+    ],
+    "chunk512": [
+      1.0,
+      0.9996825456619263,
+      1.0,
+      1.0,
+      0.9603899121284485
+    ],
+    "chunk2048": [
+      1.8048514720778033e-35,
+      1.8048514720778033e-35,
+      0.17629224061965942,
+      0.34083056449890137,
+      0.6212355494499207
+    ],
+    "dense_FP64_physical_covariance": [
+      1.0,
+      0.9996824889437879,
+      0.9999999999948814,
+      0.9999999984458485,
+      1.0
+    ],
+    "dense_FP64_using_original_FP32_inverse": [
+      1.804851387845415e-35,
+      1.804851387845415e-35,
+      1.804851387845415e-35,
+      1.804851387845415e-35,
+      1.804851387845415e-35
+    ],
+    "reference_seconds": 0.13934751227498055,
+    "FP32_inverse_reference_seconds": 0.12817652989178896,
+    "scope": "Five highest chunk-difference road-grid rays, five sun samples, all valid Actor Gaussians; no AABB culling. Physical reference reconstructs covariance in FP64 from saved quaternion/scales and fixed pose."
+  },
+  "conditioning": {
+    "valid_actor_gaussians": 976304,
+    "physical_condition_gt_1e6": 11043,
+    "physical_condition_gt_1e7": 544,
+    "physical_condition_p99": 1107818.7368796528,
+    "physical_condition_max": 237699507.0522674,
+    "rounded_FP32_covariance_not_positive_definite": 11,
+    "FP32_inverse_symmetric_part_not_positive_definite": 8,
+    "note": "Eigenvalue checks run in FP64 on the actual rounded FP32 covariance/inverse; physical condition comes from saved principal scales."
+  },
+  "stable_residual_FP32": {
+    "chunk512_seconds": 4.51803704444319,
+    "chunk2048_seconds": 1.2293469635769725,
+    "finite": false,
+    "nonfinite_receiver_count_512": 58,
+    "nonfinite_receiver_count_2048": 66,
+    "max_chunk_delta": null,
+    "selected_chunk512": [
+      1.0,
+      0.9996824264526367,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "selected_chunk2048": [
+      null,
+      null,
+      1.0,
+      1.0,
+      null
+    ]
+  },
+  "status": "COMPLETE_TRAINING_REMAINS_PAUSED"
+}

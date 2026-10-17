@@ -10,7 +10,7 @@
 | V7.5 工程与能力边界 | [V75-F01 输入绑定](research_failures/entries/V75-F01.md)、[V75-F02 DriveEditor 分母与接口](research_failures/entries/V75-F02.md)；[r9 收尾证据](autoresearch/worldsim_v75/downstream_bench/r9-closeout/README.md) |
 | V7.6 对象资产质量、复现与数据适配 | [V76-F03 当前HUGSIM/VAD-GS资产不足以支撑高保真编辑](research_failures/entries/V76-F03.md)、[V76-F01 COLMAP track视图错绑](research_failures/entries/V76-F01.md)、[V76-F02 SAM遮挡身份错绑](research_failures/entries/V76-F02.md)；[收口证据](v76/CLOSEOUT.md) |
 | V7.7 对象资产适配 | [V77-F01 框内点集不等于完整可编辑对象](research_failures/entries/V77-F01.md)、[V77-F02 成熟补景与单图GLB拼接未达两场景高保真](research_failures/entries/V77-F02.md)；[24对象与三时刻控制](v77/P0_RESULTS.md)、[显式资产POC](v77/EXPLICIT_POC.md) |
-| V8.2 DrivingEditor 监督域与运行工程 | [V82-F01 opacity监督域](research_failures/entries/V82-F01.md)；[V82-F02 CUDA初始化/采样](research_failures/entries/V82-F02.md)；[V82-F03 排队工具API兼容](research_failures/entries/V82-F03.md)；[完整监督默认](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md) |
+| V8.2 DrivingEditor 监督域与运行工程 | [V82-F01 opacity监督域](research_failures/entries/V82-F01.md)；[V82-F02 CUDA初始化/采样](research_failures/entries/V82-F02.md)；[V82-F03 排队工具API兼容](research_failures/entries/V82-F03.md)；[V82-F05 阴影性能/数值](research_failures/entries/V82-F05.md)；[V82-F06 归属审计覆盖](research_failures/entries/V82-F06.md)；[完整监督默认](v82/DRIVINGEDITOR_OPACITY_DEFAULTS.md) |
 | 已排除的解释与仍开放的问题 | [累计研究边界](research_failures/BOUNDARIES.md) |
 | 原始过程和原文完整性 | [历史分片说明](research_failures/migration.json)、[本次恢复核对](archive/2026-09/v74-0920/FAILURE_AUDIT.json) |
 | 怎么新增或修订 | [维护规范](research_failures/README.md) |

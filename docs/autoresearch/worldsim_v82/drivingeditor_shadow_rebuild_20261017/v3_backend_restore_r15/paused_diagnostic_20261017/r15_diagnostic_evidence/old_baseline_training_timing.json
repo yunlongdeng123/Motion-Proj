@@ -1,0 +1,55 @@
+{
+  "checked_at_singapore": "2026-10-17T19:48:34.761311+08:00",
+  "scene": "scene0008_089_137",
+  "scope": "Sum of recorded process wall times; includes per-process initialization, checkpoints and in-run evaluations; excludes input preparation, queueing, manual review and gaps between runs.",
+  "runs": [
+    {
+      "stage": "GN11_from_scratch_30000",
+      "actual_updates": 30000,
+      "source_summary": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/memory_summary.json",
+      "source_config": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/effective_config.json",
+      "status": "complete",
+      "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+      "started_utc": "2026-10-16T02:05:50.211211+08:00",
+      "process_wall_seconds": 5479.284533249214,
+      "process_wall_minutes": 91.32140888748691,
+      "training_phase_inclusive_seconds": 5457.8931764429435,
+      "training_phase_exclusive_seconds": 5111.404624281451,
+      "start_checkpoint": null,
+      "configured_iterations": 30000
+    },
+    {
+      "stage": "rigid_initial_3000",
+      "actual_updates": 3000,
+      "source_summary": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/pilot_3000/memory_summary.json",
+      "source_config": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/pilot_3000/effective_config.json",
+      "status": "complete",
+      "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+      "started_utc": "2026-10-16T04:26:02.82888+08:00",
+      "process_wall_seconds": 533.3197433436289,
+      "process_wall_minutes": 8.888662389060482,
+      "training_phase_inclusive_seconds": 517.4577331682667,
+      "training_phase_exclusive_seconds": 498.9607290700078,
+      "initial_background_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/chkpnt30000.pth",
+      "resume_checkpoint": null
+    },
+    {
+      "stage": "rigid_resume_3001_to_30000",
+      "actual_updates": 27000,
+      "source_summary": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/full30k/memory_summary.json",
+      "source_config": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/full30k/effective_config.json",
+      "status": "complete",
+      "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+      "started_utc": "2026-10-16T06:47:55.684446+08:00",
+      "process_wall_seconds": 4875.316556454636,
+      "process_wall_minutes": 81.25527594091061,
+      "training_phase_inclusive_seconds": 4863.521406165324,
+      "training_phase_exclusive_seconds": 4842.241819915362,
+      "initial_background_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/chkpnt30000.pth",
+      "resume_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/pilot_3000/checkpoint_003000.pt"
+    }
+  ],
+  "total_process_wall_seconds": 10887.92083304748,
+  "total_process_wall_minutes": 181.465347217458,
+  "total_training_phase_inclusive_seconds": 10838.872315776534
+}

@@ -1,0 +1,95 @@
+{
+  "run_id": "WS-V82-R15-PAUSED-DIAGNOSIS-20261017",
+  "updated_singapore": "2026-10-17T20:06:48+08:00",
+  "production_SGD_updates": 0,
+  "checkpoint_step": 4000,
+  "last_logged_step": 4100,
+  "causes": [
+    {
+      "severity": "P0",
+      "category": "数值正确性",
+      "cause": "FP32世界协方差及其显式求逆失稳",
+      "evidence": "raw107的976,304个有效Actor高斯中，11个实际FP32协方差已非正定，8个逆矩阵对称部分非正定；最大物理条件数2.38e+08。仅chunk512→2048就使部分透射率从1变为约1.8e-35，FP64参考约1。",
+      "next_step": "先改为保留正定性的因子化/局部坐标积分，配FP64参考、分块不变性与梯度检查；仅增大chunk或追加clamp不合格。"
+    },
+    {
+      "severity": "P0",
+      "category": "性能主因",
+      "cause": "Python/Torch逐Actor、射线块、高斯块的小算子循环",
+      "evidence": "同帧F+B 19.92s，关阴影1.68s，差额91.6%。单次无梯度完整前向记录380,987次cudaLaunchKernel，7,551次nonzero及13,640次cudaStreamSynchronize；阴影前向5.54/6.12s。",
+      "next_step": "批处理太阳方向与候选对，缓存每帧/每块边界，避免Python读取GPU条件；建立融合积分/反传内核。算子计数来自额外profiling，不拿profiling墙钟当训练吞吐。"
+    },
+    {
+      "severity": "P1",
+      "category": "反传开销",
+      "cause": "对许多小积分块使用activation checkpoint",
+      "evidence": "1290次checkpoint使积分调用5715→7005，射线×高斯对3818万→6757万。禁用后F+B 16.82s，峰值约11.94GiB；原配置约19.92s、8.85–8.98GiB。",
+      "next_step": "依据块大小和实际显存选择checkpoint，融合反传；当前只做副本诊断，未应用该变更。"
+    },
+    {
+      "severity": "P1",
+      "category": "重复工作",
+      "cause": "5个太阳方向串行重复调度和粗筛",
+      "evidence": "5→1太阳样本时F+B约5.00s；同样5方向批处理的可见性前向4.67→1.77s，但最大透射率差0.00858。",
+      "next_step": "保留5方向覆盖，先修数值，再验证批处理等价；减到1方向改变了软阴影模型，不能当无损提速。"
+    },
+    {
+      "severity": "P1",
+      "category": "规模放大",
+      "cause": "增密使Actor数量和阴影候选对急增",
+      "evidence": "Actor种子163,387→1,038,133（6.35倍）；总点771,821→2,068,305。a6由3453→123800（35.9倍）。训练相邻日志区间中位数从前1k约2.21s/步增至3k–4k约15.66s/步。",
+      "next_step": "检查增密收益、空间组织和真实可见支持；先使用有效加速结构，不以删车底、截断点数或隐藏坏例代替修复。"
+    },
+    {
+      "severity": "P1",
+      "category": "主相机工作量",
+      "cause": "76通道被容量10的ABI拆为8次整景光栅",
+      "evidence": "单次无梯度前向：整景8通道批次合计0.276s；加43路独立alpha和2路分支，共46函数调用、51底层通道pass。反传也要经过这些分支。",
+      "next_step": "复用几何预处理/排序/分箱，评估融合多通道输出；不可把config容量直接写大而突破现有CUDA ABI。"
+    },
+    {
+      "severity": "P2",
+      "category": "独立分支",
+      "cause": "每步43实例独立alpha和2个孤立分支",
+      "evidence": "无梯度独立alpha共0.125s，静/动态分支共0.039s。它们服务完整实例监督和竞争约束，有明确用途，但当前逐路提交有额外成本。",
+      "next_step": "批量渲染/共享预处理，保持完整内外域与未知标签语义。不能为提速删掉监督。"
+    },
+    {
+      "severity": "P2",
+      "category": "CPU与输入",
+      "cause": "逐步重新解码、验证、传输冻结监督；重复不变工作",
+      "evidence": "本次frame构造/传输0.127s，旧诊断0.165s；每步还读legacy配置并把mask送CPU计算boundary_distance，即使本表示的NPS特征恒为0。",
+      "next_step": "缓存冻结Frame/有效域、距离图、配置与相机；profile后再做异步搬运。该量级不足以解释十几秒的主差距。"
+    },
+    {
+      "severity": "P2",
+      "category": "周期成本",
+      "cause": "增密/SGCM、归属审计、保存与GPU锁等待",
+      "evidence": "3k两轮全46帧归属审计约148.0+147.3s，split约6.6s、owner约45.5s；约5.8分钟，另有保存/锁等待。它们不会出现在每帧F+B中。",
+      "next_step": "单列周期与排队成本，按同worker相邻区间算吞吐。当前证据不支持把每步16s归因于这些间歇工作。"
+    },
+    {
+      "severity": "P2",
+      "category": "已排除主因",
+      "cause": "Adam、梯度裁剪及天空采样不是主要瓶颈",
+      "evidence": "零学习率副本Adam计时0.033s，梯度裁剪0.035s，屏幕梯度积累0.001s；场景几何求值约0.048s，天空采样0.0013s（无梯度）。",
+      "next_step": "这些局部计时用于排除主因；父子模块耗时不可相加。无证据需要先更换GPU或增加CPU线程。"
+    }
+  ],
+  "benchmark": {
+    "baseline_F_B_seconds": 19.920296129770577,
+    "shadow_off_F_B_seconds": 1.6772128129377961,
+    "shadow_increment_fraction": 0.9158038212880166
+  },
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F05",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": [
+    "V82-F05",
+    "V82-F06"
+  ],
+  "human_verdict": null,
+  "problem_solved": null
+}

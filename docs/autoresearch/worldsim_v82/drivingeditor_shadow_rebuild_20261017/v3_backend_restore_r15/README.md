@@ -1,5 +1,7 @@
 # R15：继承重建能力后的新训练
 
+后续冻结快照及性能/数值/分层诊断：[4k诊断报告](paused_diagnostic_20261017/README.md)。以下为启动时的历史协议；最新执行授权与是否续训只见仓库 `docs/RESEARCH_STATUS.md`。
+
 ![R15实际组件图](architecture.svg)
 
 用户要求修正R14后先自查，再重启新训练。新run backend_restore_r15，R14不恢复。原始BUILD测量608434静态+163387 Actor，共771821。相同SAM3/DEVA区域融合、pixel-valid、IDSplat Actor种子、GT与待定池保留；没有加载GN11/18k学习参数，没有重分割或造LiDAR/mask。
