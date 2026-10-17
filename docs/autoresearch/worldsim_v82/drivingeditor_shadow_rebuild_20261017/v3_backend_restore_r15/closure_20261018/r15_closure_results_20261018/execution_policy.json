@@ -1,0 +1,3920 @@
+{
+  "at": "2026-10-18T04:24:20.398153+08:00",
+  "latest_human_instruction": "GPU opened; continue bounded R15 closure; shutdown AutoDL when no tasks remain; report progress",
+  "original_45k_resume_allowed": false,
+  "bounded_experiments_allowed": true,
+  "shutdown_authorized": true,
+  "shutdown_condition": "save all results/code, verify no GPU or CPU worker/controller remains, then shutdown",
+  "subagents_allowed": false,
+  "gpu_budget_minutes_cap": 180,
+  "stage_minutes_caps": [
+    60,
+    45,
+    75
+  ],
+  "triton_available": true,
+  "shutdown_path": "/usr/bin/shutdown",
+  "inputs": {
+    "body_bank_a06.npz": {
+      "xyz": [
+        5887,
+        3
+      ],
+      "rgb": [
+        5887,
+        3
+      ],
+      "source_frame": [
+        5887
+      ],
+      "source_raw_row": [
+        5887
+      ],
+      "source_world": [
+        5887,
+        3
+      ],
+      "source_candidate_owner": [
+        5887
+      ]
+    },
+    "body_bank_a37.npz": {
+      "xyz": [
+        74464,
+        3
+      ],
+      "rgb": [
+        74464,
+        3
+      ],
+      "source_frame": [
+        74464
+      ],
+      "source_raw_row": [
+        74464
+      ],
+      "source_world": [
+        74464,
+        3
+      ],
+      "source_candidate_owner": [
+        74464
+      ]
+    },
+    "source_candidate_evidence_a06.npz": {
+      "xyz": [
+        11303,
+        3
+      ],
+      "rgb": [
+        11303,
+        3
+      ],
+      "source_frame": [
+        11303
+      ],
+      "source_raw_row": [
+        11303
+      ],
+      "source_world": [
+        11303,
+        3
+      ],
+      "source_candidate_owner": [
+        11303
+      ],
+      "identity_probability": [
+        11303,
+        3
+      ],
+      "identity_evidence_status": [
+        11303
+      ],
+      "semantic_repeat": [
+        11303
+      ],
+      "road_positive": [
+        11303
+      ],
+      "motion_body": [
+        11303
+      ],
+      "motion_static": [
+        11303
+      ]
+    },
+    "source_candidate_evidence_a37.npz": {
+      "xyz": [
+        89133,
+        3
+      ],
+      "rgb": [
+        89133,
+        3
+      ],
+      "source_frame": [
+        89133
+      ],
+      "source_raw_row": [
+        89133
+      ],
+      "source_world": [
+        89133,
+        3
+      ],
+      "source_candidate_owner": [
+        89133
+      ],
+      "identity_probability": [
+        89133,
+        3
+      ],
+      "identity_evidence_status": [
+        89133
+      ],
+      "semantic_repeat": [
+        89133
+      ],
+      "road_positive": [
+        89133
+      ],
+      "motion_body": [
+        89133
+      ],
+      "motion_static": [
+        89133
+      ]
+    },
+    "actual_world_road_support.npz": {
+      "xyz": [
+        14589,
+        3
+      ],
+      "source_frame": [
+        14589
+      ],
+      "source_raw_row": [
+        14589
+      ],
+      "support_frames": [
+        14589
+      ]
+    },
+    "gates/003000/owner/owner.json": {
+      "status": "C_ONCE_ONLY_EVIDENCE_INTERVENTION_COMPLETE_REQUIRES49FRAME_GATE",
+      "global_step": 3000,
+      "training_updates": 0,
+      "old_Gaussians": 1992840,
+      "new_Gaussians": 1993299,
+      "Actor_to_static": 0,
+      "static_to_Actor": 0,
+      "unknown_measured_body_admitted": 459,
+      "unknown_pool_retained": 128195,
+      "probability": "independent Dirichlet evidence scores, not calibrated truth and not opacity",
+      "existing_opacity_unchanged": true,
+      "existing_opacity_scope": "relative to after-split checkpoint; mixed split itself redistributes optical density between retained children",
+      "all_inputs_BUILD_only": true,
+      "QUERY_used_for_selection": false,
+      "development_QUERY_already_seen": true,
+      "fresh_independent_test": false,
+      "body_preservation_not_yet_accepted": true,
+      "actors": [
+        {
+          "actor": 5,
+          "unknown_candidates": 85335,
+          "repeated_body_parents": 12211,
+          "admitted": 19
+        },
+        {
+          "actor": 6,
+          "unknown_candidates": 5426,
+          "repeated_body_parents": 3426,
+          "admitted": 188
+        },
+        {
+          "actor": 12,
+          "unknown_candidates": 9992,
+          "repeated_body_parents": 557,
+          "admitted": 39
+        },
+        {
+          "actor": 18,
+          "unknown_candidates": 355,
+          "repeated_body_parents": 471,
+          "admitted": 26
+        },
+        {
+          "actor": 25,
+          "unknown_candidates": 2274,
+          "repeated_body_parents": 6915,
+          "admitted": 38
+        },
+        {
+          "actor": 26,
+          "unknown_candidates": 10532,
+          "repeated_body_parents": 14511,
+          "admitted": 35
+        },
+        {
+          "actor": 37,
+          "unknown_candidates": 14740,
+          "repeated_body_parents": 36364,
+          "admitted": 114
+        }
+      ],
+      "road_provenance": [],
+      "static_to_Actor_provenance": [],
+      "pool_admission_provenance": [
+        {
+          "pool_row": 13108,
+          "owner": 5,
+          "source_frame": 21,
+          "source_raw_row": 159178,
+          "repeated_body_parent": 603720,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 13326,
+          "owner": 5,
+          "source_frame": 21,
+          "source_raw_row": 179961,
+          "repeated_body_parent": 603810,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 387,
+          "owner": 5,
+          "source_frame": 5,
+          "source_raw_row": 178004,
+          "repeated_body_parent": 1364866,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 9962,
+          "owner": 5,
+          "source_frame": 20,
+          "source_raw_row": 178067,
+          "repeated_body_parent": 603808,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 814,
+          "owner": 5,
+          "source_frame": 10,
+          "source_raw_row": 105759,
+          "repeated_body_parent": 604200,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 2697,
+          "owner": 5,
+          "source_frame": 16,
+          "source_raw_row": 154623,
+          "repeated_body_parent": 753870,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 129,
+          "owner": 5,
+          "source_frame": 2,
+          "source_raw_row": 89872,
+          "repeated_body_parent": 604859,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 5167,
+          "owner": 5,
+          "source_frame": 18,
+          "source_raw_row": 158264,
+          "repeated_body_parent": 811553,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 130,
+          "owner": 5,
+          "source_frame": 2,
+          "source_raw_row": 89873,
+          "repeated_body_parent": 604859,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 141,
+          "owner": 5,
+          "source_frame": 2,
+          "source_raw_row": 89887,
+          "repeated_body_parent": 739480,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 143,
+          "owner": 5,
+          "source_frame": 2,
+          "source_raw_row": 89889,
+          "repeated_body_parent": 753870,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 847,
+          "owner": 5,
+          "source_frame": 10,
+          "source_raw_row": 110742,
+          "repeated_body_parent": 733173,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 850,
+          "owner": 5,
+          "source_frame": 10,
+          "source_raw_row": 110748,
+          "repeated_body_parent": 733176,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 845,
+          "owner": 5,
+          "source_frame": 10,
+          "source_raw_row": 110739,
+          "repeated_body_parent": 608073,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 846,
+          "owner": 5,
+          "source_frame": 10,
+          "source_raw_row": 110741,
+          "repeated_body_parent": 608073,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 1018,
+          "owner": 5,
+          "source_frame": 11,
+          "source_raw_row": 112237,
+          "repeated_body_parent": 608551,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 635,
+          "owner": 5,
+          "source_frame": 8,
+          "source_raw_row": 107503,
+          "repeated_body_parent": 609388,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 636,
+          "owner": 5,
+          "source_frame": 8,
+          "source_raw_row": 107504,
+          "repeated_body_parent": 609799,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 637,
+          "owner": 5,
+          "source_frame": 8,
+          "source_raw_row": 107506,
+          "repeated_body_parent": 609875,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89080,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182158,
+          "repeated_body_parent": 612257,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89568,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 183776,
+          "repeated_body_parent": 612529,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90705,
+          "owner": 6,
+          "source_frame": 47,
+          "source_raw_row": 77821,
+          "repeated_body_parent": 612416,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90255,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 85128,
+          "repeated_body_parent": 612327,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89010,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 88092,
+          "repeated_body_parent": 775725,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89006,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 88087,
+          "repeated_body_parent": 612277,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88410,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 90528,
+          "repeated_body_parent": 612277,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87817,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 89938,
+          "repeated_body_parent": 612368,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89571,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 183779,
+          "repeated_body_parent": 612498,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89447,
+          "owner": 6,
+          "source_frame": 15,
+          "source_raw_row": 178069,
+          "repeated_body_parent": 612381,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89074,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182151,
+          "repeated_body_parent": 612378,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90707,
+          "owner": 6,
+          "source_frame": 47,
+          "source_raw_row": 77826,
+          "repeated_body_parent": 612532,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90494,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80377,
+          "repeated_body_parent": 612532,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89445,
+          "owner": 6,
+          "source_frame": 15,
+          "source_raw_row": 178067,
+          "repeated_body_parent": 612297,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89072,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182148,
+          "repeated_body_parent": 612510,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90717,
+          "owner": 6,
+          "source_frame": 47,
+          "source_raw_row": 179694,
+          "repeated_body_parent": 612532,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90078,
+          "owner": 6,
+          "source_frame": 30,
+          "source_raw_row": 84837,
+          "repeated_body_parent": 612405,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90336,
+          "owner": 6,
+          "source_frame": 37,
+          "source_raw_row": 179687,
+          "repeated_body_parent": 612557,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89437,
+          "owner": 6,
+          "source_frame": 15,
+          "source_raw_row": 178057,
+          "repeated_body_parent": 733233,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89853,
+          "owner": 6,
+          "source_frame": 23,
+          "source_raw_row": 181657,
+          "repeated_body_parent": 612572,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90501,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80388,
+          "repeated_body_parent": 612434,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90496,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80382,
+          "repeated_body_parent": 612269,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90236,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 82607,
+          "repeated_body_parent": 612256,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89448,
+          "owner": 6,
+          "source_frame": 15,
+          "source_raw_row": 178071,
+          "repeated_body_parent": 612498,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90342,
+          "owner": 6,
+          "source_frame": 37,
+          "source_raw_row": 179694,
+          "repeated_body_parent": 612490,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90681,
+          "owner": 6,
+          "source_frame": 46,
+          "source_raw_row": 77467,
+          "repeated_body_parent": 612498,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89076,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182153,
+          "repeated_body_parent": 612217,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90653,
+          "owner": 6,
+          "source_frame": 45,
+          "source_raw_row": 77731,
+          "repeated_body_parent": 612297,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90411,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 79889,
+          "repeated_body_parent": 612646,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87849,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 180153,
+          "repeated_body_parent": 1308588,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90229,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 82598,
+          "repeated_body_parent": 612527,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90573,
+          "owner": 6,
+          "source_frame": 43,
+          "source_raw_row": 178611,
+          "repeated_body_parent": 612421,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90490,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80371,
+          "repeated_body_parent": 612739,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89565,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 183772,
+          "repeated_body_parent": 612680,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89063,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182137,
+          "repeated_body_parent": 612565,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90676,
+          "owner": 6,
+          "source_frame": 46,
+          "source_raw_row": 77457,
+          "repeated_body_parent": 612558,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89563,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 183769,
+          "repeated_body_parent": 612569,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90135,
+          "owner": 6,
+          "source_frame": 32,
+          "source_raw_row": 85229,
+          "repeated_body_parent": 612780,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90072,
+          "owner": 6,
+          "source_frame": 30,
+          "source_raw_row": 84829,
+          "repeated_body_parent": 733299,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89060,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182133,
+          "repeated_body_parent": 612567,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90134,
+          "owner": 6,
+          "source_frame": 32,
+          "source_raw_row": 85228,
+          "repeated_body_parent": 612569,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89560,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 183766,
+          "repeated_body_parent": 612569,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89952,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 176851,
+          "repeated_body_parent": 612317,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90239,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 82613,
+          "repeated_body_parent": 612441,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90740,
+          "owner": 6,
+          "source_frame": 48,
+          "source_raw_row": 75243,
+          "repeated_body_parent": 1089230,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90608,
+          "owner": 6,
+          "source_frame": 44,
+          "source_raw_row": 77591,
+          "repeated_body_parent": 612498,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88442,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 180819,
+          "repeated_body_parent": 612518,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88439,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 180816,
+          "repeated_body_parent": 612400,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89724,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 179359,
+          "repeated_body_parent": 612660,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89934,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 176828,
+          "repeated_body_parent": 612400,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90491,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80372,
+          "repeated_body_parent": 612739,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89722,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 179357,
+          "repeated_body_parent": 612675,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89061,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 182134,
+          "repeated_body_parent": 612561,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87840,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 180142,
+          "repeated_body_parent": 757499,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89926,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 86801,
+          "repeated_body_parent": 612689,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89717,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 179351,
+          "repeated_body_parent": 612780,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89716,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 89572,
+          "repeated_body_parent": 612689,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90133,
+          "owner": 6,
+          "source_frame": 32,
+          "source_raw_row": 85227,
+          "repeated_body_parent": 733299,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90748,
+          "owner": 6,
+          "source_frame": 48,
+          "source_raw_row": 77719,
+          "repeated_body_parent": 612317,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89743,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 179383,
+          "repeated_body_parent": 1248506,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89741,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 179381,
+          "repeated_body_parent": 612317,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90413,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 79898,
+          "repeated_body_parent": 1980427,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90564,
+          "owner": 6,
+          "source_frame": 43,
+          "source_raw_row": 77592,
+          "repeated_body_parent": 1980433,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88978,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 85544,
+          "repeated_body_parent": 612770,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90408,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 79886,
+          "repeated_body_parent": 612670,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90557,
+          "owner": 6,
+          "source_frame": 43,
+          "source_raw_row": 77576,
+          "repeated_body_parent": 612677,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90731,
+          "owner": 6,
+          "source_frame": 48,
+          "source_raw_row": 75226,
+          "repeated_body_parent": 733238,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90689,
+          "owner": 6,
+          "source_frame": 46,
+          "source_raw_row": 77479,
+          "repeated_body_parent": 612786,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90504,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80392,
+          "repeated_body_parent": 1248506,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89953,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 176852,
+          "repeated_body_parent": 612431,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90565,
+          "owner": 6,
+          "source_frame": 43,
+          "source_raw_row": 77593,
+          "repeated_body_parent": 612714,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90407,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 79884,
+          "repeated_body_parent": 612677,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90600,
+          "owner": 6,
+          "source_frame": 44,
+          "source_raw_row": 77581,
+          "repeated_body_parent": 612677,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90487,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 80367,
+          "repeated_body_parent": 612806,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90405,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 79882,
+          "repeated_body_parent": 612776,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90222,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 82589,
+          "repeated_body_parent": 612780,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88938,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83106,
+          "repeated_body_parent": 612640,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88927,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83092,
+          "repeated_body_parent": 742335,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88941,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83111,
+          "repeated_body_parent": 612498,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88933,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83099,
+          "repeated_body_parent": 612729,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88926,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83091,
+          "repeated_body_parent": 612802,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87766,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 87337,
+          "repeated_body_parent": 733432,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87866,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 180174,
+          "repeated_body_parent": 612818,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88924,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83088,
+          "repeated_body_parent": 742523,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87203,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 87656,
+          "repeated_body_parent": 612904,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87802,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 89912,
+          "repeated_body_parent": 612842,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87797,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 87377,
+          "repeated_body_parent": 612881,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87750,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 84743,
+          "repeated_body_parent": 739856,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87740,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 84731,
+          "repeated_body_parent": 612979,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90553,
+          "owner": 6,
+          "source_frame": 43,
+          "source_raw_row": 77571,
+          "repeated_body_parent": 612905,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89023,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 90673,
+          "repeated_body_parent": 612873,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87732,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 84721,
+          "repeated_body_parent": 612929,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87731,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 84719,
+          "repeated_body_parent": 612930,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86625,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 87943,
+          "repeated_body_parent": 612903,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90071,
+          "owner": 6,
+          "source_frame": 30,
+          "source_raw_row": 84826,
+          "repeated_body_parent": 612844,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86662,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 90431,
+          "repeated_body_parent": 612935,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87188,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 85099,
+          "repeated_body_parent": 612955,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87178,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 85087,
+          "repeated_body_parent": 612979,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87235,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 87696,
+          "repeated_body_parent": 612969,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86657,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 87984,
+          "repeated_body_parent": 612970,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87192,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 85104,
+          "repeated_body_parent": 733537,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88951,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 83123,
+          "repeated_body_parent": 612879,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89535,
+          "owner": 6,
+          "source_frame": 17,
+          "source_raw_row": 92026,
+          "repeated_body_parent": 612907,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87760,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 84756,
+          "repeated_body_parent": 612947,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87174,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 85082,
+          "repeated_body_parent": 613003,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86600,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85341,
+          "repeated_body_parent": 613087,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87703,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 82239,
+          "repeated_body_parent": 613090,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90330,
+          "owner": 6,
+          "source_frame": 37,
+          "source_raw_row": 80063,
+          "repeated_body_parent": 612985,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89022,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 90672,
+          "repeated_body_parent": 612934,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87800,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 89909,
+          "repeated_body_parent": 613119,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89414,
+          "owner": 6,
+          "source_frame": 15,
+          "source_raw_row": 89799,
+          "repeated_body_parent": 612985,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87239,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 90252,
+          "repeated_body_parent": 613119,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88889,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 77964,
+          "repeated_body_parent": 613080,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87701,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 82237,
+          "repeated_body_parent": 613090,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86661,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 90429,
+          "repeated_body_parent": 613051,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88306,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 82907,
+          "repeated_body_parent": 613140,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86564,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 80397,
+          "repeated_body_parent": 613234,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87668,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77356,
+          "repeated_body_parent": 613156,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88913,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 80514,
+          "repeated_body_parent": 613207,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88903,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 80502,
+          "repeated_body_parent": 613218,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87706,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 82243,
+          "repeated_body_parent": 739971,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87135,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 80174,
+          "repeated_body_parent": 613228,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87718,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 82259,
+          "repeated_body_parent": 613287,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86602,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85343,
+          "repeated_body_parent": 613216,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88901,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 80499,
+          "repeated_body_parent": 613216,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88880,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 77953,
+          "repeated_body_parent": 613221,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87655,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77339,
+          "repeated_body_parent": 776111,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86613,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85357,
+          "repeated_body_parent": 613202,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87656,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77341,
+          "repeated_body_parent": 753446,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87104,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 77588,
+          "repeated_body_parent": 613358,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87687,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 79922,
+          "repeated_body_parent": 739991,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88220,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 73284,
+          "repeated_body_parent": 758104,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86617,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85362,
+          "repeated_body_parent": 613363,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88223,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 73288,
+          "repeated_body_parent": 613343,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88212,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 73274,
+          "repeated_body_parent": 733724,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88833,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 72997,
+          "repeated_body_parent": 613379,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87102,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 77586,
+          "repeated_body_parent": 613395,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87647,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 75076,
+          "repeated_body_parent": 613339,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88816,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 70431,
+          "repeated_body_parent": 733700,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87624,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 72632,
+          "repeated_body_parent": 733698,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87623,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 72631,
+          "repeated_body_parent": 733642,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86530,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 77861,
+          "repeated_body_parent": 613377,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87095,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 75176,
+          "repeated_body_parent": 613420,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87134,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 80173,
+          "repeated_body_parent": 613401,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87618,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 72624,
+          "repeated_body_parent": 733741,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90392,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 62942,
+          "repeated_body_parent": 613426,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87054,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 72709,
+          "repeated_body_parent": 733750,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88255,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 78006,
+          "repeated_body_parent": 613408,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86485,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 73141,
+          "repeated_body_parent": 733750,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89908,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 62676,
+          "repeated_body_parent": 613410,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89901,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 62667,
+          "repeated_body_parent": 613428,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88253,
+          "owner": 6,
+          "source_frame": 10,
+          "source_raw_row": 78003,
+          "repeated_body_parent": 613443,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88911,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 80512,
+          "repeated_body_parent": 613487,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87665,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77352,
+          "repeated_body_parent": 613486,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86612,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85356,
+          "repeated_body_parent": 613492,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89466,
+          "owner": 6,
+          "source_frame": 16,
+          "source_raw_row": 81522,
+          "repeated_body_parent": 613556,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 87666,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77353,
+          "repeated_body_parent": 613501,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88868,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 75578,
+          "repeated_body_parent": 613511,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88869,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 75579,
+          "repeated_body_parent": 613576,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88866,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 75576,
+          "repeated_body_parent": 613537,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86695,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 180022,
+          "repeated_body_parent": 613514,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88862,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 75571,
+          "repeated_body_parent": 613524,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87113,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 77599,
+          "repeated_body_parent": 613575,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87270,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 180694,
+          "repeated_body_parent": 613563,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87662,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 77348,
+          "repeated_body_parent": 613540,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86541,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 77877,
+          "repeated_body_parent": 613562,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89920,
+          "owner": 6,
+          "source_frame": 26,
+          "source_raw_row": 69519,
+          "repeated_body_parent": 613583,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 86606,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 85348,
+          "repeated_body_parent": 613598,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88782,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 67939,
+          "repeated_body_parent": 613585,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88831,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 72994,
+          "repeated_body_parent": 613605,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 89712,
+          "owner": 6,
+          "source_frame": 21,
+          "source_raw_row": 67302,
+          "repeated_body_parent": 613605,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87677,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 79909,
+          "repeated_body_parent": 613619,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90473,
+          "owner": 6,
+          "source_frame": 41,
+          "source_raw_row": 63302,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87015,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 70121,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90213,
+          "owner": 6,
+          "source_frame": 34,
+          "source_raw_row": 65723,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87641,
+          "owner": 6,
+          "source_frame": 8,
+          "source_raw_row": 75058,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87121,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 80156,
+          "repeated_body_parent": 613610,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86575,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 82764,
+          "repeated_body_parent": 613619,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90391,
+          "owner": 6,
+          "source_frame": 39,
+          "source_raw_row": 62921,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87071,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 75143,
+          "repeated_body_parent": 613615,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86529,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 77859,
+          "repeated_body_parent": 613602,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 90091,
+          "owner": 6,
+          "source_frame": 31,
+          "source_raw_row": 69852,
+          "repeated_body_parent": 613621,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 90127,
+          "owner": 6,
+          "source_frame": 32,
+          "source_raw_row": 70314,
+          "repeated_body_parent": 613622,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 88893,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 80489,
+          "repeated_body_parent": 613656,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87117,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 80151,
+          "repeated_body_parent": 613662,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 86544,
+          "owner": 6,
+          "source_frame": 4,
+          "source_raw_row": 80371,
+          "repeated_body_parent": 613662,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 88876,
+          "owner": 6,
+          "source_frame": 13,
+          "source_raw_row": 77948,
+          "repeated_body_parent": 613671,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 87119,
+          "owner": 6,
+          "source_frame": 6,
+          "source_raw_row": 80153,
+          "repeated_body_parent": 613676,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 100717,
+          "owner": 12,
+          "source_frame": 48,
+          "source_raw_row": 80182,
+          "repeated_body_parent": 740072,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100705,
+          "owner": 12,
+          "source_frame": 48,
+          "source_raw_row": 70209,
+          "repeated_body_parent": 743452,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100702,
+          "owner": 12,
+          "source_frame": 48,
+          "source_raw_row": 67839,
+          "repeated_body_parent": 733939,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97045,
+          "owner": 12,
+          "source_frame": 29,
+          "source_raw_row": 70184,
+          "repeated_body_parent": 733935,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97384,
+          "owner": 12,
+          "source_frame": 31,
+          "source_raw_row": 67526,
+          "repeated_body_parent": 733935,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100695,
+          "owner": 12,
+          "source_frame": 48,
+          "source_raw_row": 63119,
+          "repeated_body_parent": 740078,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97218,
+          "owner": 12,
+          "source_frame": 30,
+          "source_raw_row": 69937,
+          "repeated_body_parent": 630344,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91656,
+          "owner": 12,
+          "source_frame": 3,
+          "source_raw_row": 69659,
+          "repeated_body_parent": 740082,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100716,
+          "owner": 12,
+          "source_frame": 48,
+          "source_raw_row": 80181,
+          "repeated_body_parent": 740082,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97052,
+          "owner": 12,
+          "source_frame": 29,
+          "source_raw_row": 75119,
+          "repeated_body_parent": 775345,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97543,
+          "owner": 12,
+          "source_frame": 32,
+          "source_raw_row": 51181,
+          "repeated_body_parent": 630382,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97391,
+          "owner": 12,
+          "source_frame": 31,
+          "source_raw_row": 72182,
+          "repeated_body_parent": 630353,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97387,
+          "owner": 12,
+          "source_frame": 31,
+          "source_raw_row": 69786,
+          "repeated_body_parent": 630353,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91660,
+          "owner": 12,
+          "source_frame": 3,
+          "source_raw_row": 74614,
+          "repeated_body_parent": 630349,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97056,
+          "owner": 12,
+          "source_frame": 29,
+          "source_raw_row": 77461,
+          "repeated_body_parent": 630386,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97383,
+          "owner": 12,
+          "source_frame": 31,
+          "source_raw_row": 67524,
+          "repeated_body_parent": 777387,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100214,
+          "owner": 12,
+          "source_frame": 46,
+          "source_raw_row": 72457,
+          "repeated_body_parent": 734029,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97221,
+          "owner": 12,
+          "source_frame": 30,
+          "source_raw_row": 72458,
+          "repeated_body_parent": 734029,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91466,
+          "owner": 12,
+          "source_frame": 2,
+          "source_raw_row": 65582,
+          "repeated_body_parent": 743594,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 96575,
+          "owner": 12,
+          "source_frame": 27,
+          "source_raw_row": 77723,
+          "repeated_body_parent": 630395,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 96568,
+          "owner": 12,
+          "source_frame": 27,
+          "source_raw_row": 73077,
+          "repeated_body_parent": 630395,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91652,
+          "owner": 12,
+          "source_frame": 3,
+          "source_raw_row": 67286,
+          "repeated_body_parent": 755311,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97225,
+          "owner": 12,
+          "source_frame": 30,
+          "source_raw_row": 77283,
+          "repeated_body_parent": 630401,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91471,
+          "owner": 12,
+          "source_frame": 2,
+          "source_raw_row": 72617,
+          "repeated_body_parent": 630392,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91655,
+          "owner": 12,
+          "source_frame": 3,
+          "source_raw_row": 69658,
+          "repeated_body_parent": 630391,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97048,
+          "owner": 12,
+          "source_frame": 29,
+          "source_raw_row": 72659,
+          "repeated_body_parent": 630396,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97390,
+          "owner": 12,
+          "source_frame": 31,
+          "source_raw_row": 72181,
+          "repeated_body_parent": 755313,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97235,
+          "owner": 12,
+          "source_frame": 30,
+          "source_raw_row": 82233,
+          "repeated_body_parent": 740108,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97051,
+          "owner": 12,
+          "source_frame": 29,
+          "source_raw_row": 75118,
+          "repeated_body_parent": 630406,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 96585,
+          "owner": 12,
+          "source_frame": 27,
+          "source_raw_row": 82594,
+          "repeated_body_parent": 630412,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91465,
+          "owner": 12,
+          "source_frame": 2,
+          "source_raw_row": 65581,
+          "repeated_body_parent": 630440,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97736,
+          "owner": 12,
+          "source_frame": 33,
+          "source_raw_row": 63426,
+          "repeated_body_parent": 630440,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100217,
+          "owner": 12,
+          "source_frame": 46,
+          "source_raw_row": 74929,
+          "repeated_body_parent": 630415,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91659,
+          "owner": 12,
+          "source_frame": 3,
+          "source_raw_row": 74613,
+          "repeated_body_parent": 630415,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97220,
+          "owner": 12,
+          "source_frame": 30,
+          "source_raw_row": 72457,
+          "repeated_body_parent": 630428,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 96574,
+          "owner": 12,
+          "source_frame": 27,
+          "source_raw_row": 77721,
+          "repeated_body_parent": 630415,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91470,
+          "owner": 12,
+          "source_frame": 2,
+          "source_raw_row": 72616,
+          "repeated_body_parent": 630442,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 91475,
+          "owner": 12,
+          "source_frame": 2,
+          "source_raw_row": 77436,
+          "repeated_body_parent": 630450,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 97880,
+          "owner": 12,
+          "source_frame": 34,
+          "source_raw_row": 70223,
+          "repeated_body_parent": 979471,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100972,
+          "owner": 18,
+          "source_frame": 44,
+          "source_raw_row": 77557,
+          "repeated_body_parent": 656013,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100883,
+          "owner": 18,
+          "source_frame": 40,
+          "source_raw_row": 70363,
+          "repeated_body_parent": 656011,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100878,
+          "owner": 18,
+          "source_frame": 40,
+          "source_raw_row": 60833,
+          "repeated_body_parent": 754116,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100831,
+          "owner": 18,
+          "source_frame": 37,
+          "source_raw_row": 70248,
+          "repeated_body_parent": 656017,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100924,
+          "owner": 18,
+          "source_frame": 42,
+          "source_raw_row": 60993,
+          "repeated_body_parent": 755542,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100777,
+          "owner": 18,
+          "source_frame": 30,
+          "source_raw_row": 53444,
+          "repeated_body_parent": 656019,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101085,
+          "owner": 18,
+          "source_frame": 48,
+          "source_raw_row": 65558,
+          "repeated_body_parent": 656022,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101089,
+          "owner": 18,
+          "source_frame": 48,
+          "source_raw_row": 67861,
+          "repeated_body_parent": 740386,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101050,
+          "owner": 18,
+          "source_frame": 47,
+          "source_raw_row": 63337,
+          "repeated_body_parent": 656019,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101021,
+          "owner": 18,
+          "source_frame": 46,
+          "source_raw_row": 80009,
+          "repeated_body_parent": 1363345,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101056,
+          "owner": 18,
+          "source_frame": 47,
+          "source_raw_row": 68029,
+          "repeated_body_parent": 656023,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100788,
+          "owner": 18,
+          "source_frame": 32,
+          "source_raw_row": 55968,
+          "repeated_body_parent": 734515,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101055,
+          "owner": 18,
+          "source_frame": 47,
+          "source_raw_row": 68028,
+          "repeated_body_parent": 775389,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100908,
+          "owner": 18,
+          "source_frame": 41,
+          "source_raw_row": 70373,
+          "repeated_body_parent": 656027,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100928,
+          "owner": 18,
+          "source_frame": 42,
+          "source_raw_row": 75341,
+          "repeated_body_parent": 656025,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100950,
+          "owner": 18,
+          "source_frame": 43,
+          "source_raw_row": 74969,
+          "repeated_body_parent": 656015,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100854,
+          "owner": 18,
+          "source_frame": 38,
+          "source_raw_row": 75226,
+          "repeated_body_parent": 656044,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101023,
+          "owner": 18,
+          "source_frame": 46,
+          "source_raw_row": 82456,
+          "repeated_body_parent": 656043,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101025,
+          "owner": 18,
+          "source_frame": 46,
+          "source_raw_row": 82458,
+          "repeated_body_parent": 656043,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100914,
+          "owner": 18,
+          "source_frame": 41,
+          "source_raw_row": 77742,
+          "repeated_body_parent": 656043,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100868,
+          "owner": 18,
+          "source_frame": 39,
+          "source_raw_row": 69988,
+          "repeated_body_parent": 734587,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100884,
+          "owner": 18,
+          "source_frame": 40,
+          "source_raw_row": 72773,
+          "repeated_body_parent": 656058,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101037,
+          "owner": 18,
+          "source_frame": 46,
+          "source_raw_row": 82474,
+          "repeated_body_parent": 656065,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 100765,
+          "owner": 18,
+          "source_frame": 25,
+          "source_raw_row": 64674,
+          "repeated_body_parent": 1141861,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100840,
+          "owner": 18,
+          "source_frame": 37,
+          "source_raw_row": 75042,
+          "repeated_body_parent": 656067,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 100836,
+          "owner": 18,
+          "source_frame": 37,
+          "source_raw_row": 75037,
+          "repeated_body_parent": 656097,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102489,
+          "owner": 25,
+          "source_frame": 30,
+          "source_raw_row": 60553,
+          "repeated_body_parent": 677344,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102427,
+          "owner": 25,
+          "source_frame": 29,
+          "source_raw_row": 60672,
+          "repeated_body_parent": 677511,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103380,
+          "owner": 25,
+          "source_frame": 48,
+          "source_raw_row": 179916,
+          "repeated_body_parent": 1143489,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103308,
+          "owner": 25,
+          "source_frame": 47,
+          "source_raw_row": 180226,
+          "repeated_body_parent": 677450,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102978,
+          "owner": 25,
+          "source_frame": 41,
+          "source_raw_row": 72811,
+          "repeated_body_parent": 766506,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102976,
+          "owner": 25,
+          "source_frame": 41,
+          "source_raw_row": 67922,
+          "repeated_body_parent": 736151,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103241,
+          "owner": 25,
+          "source_frame": 47,
+          "source_raw_row": 72896,
+          "repeated_body_parent": 677744,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102676,
+          "owner": 25,
+          "source_frame": 33,
+          "source_raw_row": 61029,
+          "repeated_body_parent": 677902,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102369,
+          "owner": 25,
+          "source_frame": 28,
+          "source_raw_row": 74332,
+          "repeated_body_parent": 677741,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103112,
+          "owner": 25,
+          "source_frame": 45,
+          "source_raw_row": 80194,
+          "repeated_body_parent": 677871,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102617,
+          "owner": 25,
+          "source_frame": 32,
+          "source_raw_row": 82586,
+          "repeated_body_parent": 677927,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103087,
+          "owner": 25,
+          "source_frame": 44,
+          "source_raw_row": 84944,
+          "repeated_body_parent": 677943,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101349,
+          "owner": 25,
+          "source_frame": 4,
+          "source_raw_row": 80287,
+          "repeated_body_parent": 677974,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102612,
+          "owner": 25,
+          "source_frame": 32,
+          "source_raw_row": 51156,
+          "repeated_body_parent": 678138,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103167,
+          "owner": 25,
+          "source_frame": 46,
+          "source_raw_row": 74916,
+          "repeated_body_parent": 678046,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102128,
+          "owner": 25,
+          "source_frame": 23,
+          "source_raw_row": 53427,
+          "repeated_body_parent": 678192,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101899,
+          "owner": 25,
+          "source_frame": 19,
+          "source_raw_row": 71612,
+          "repeated_body_parent": 678145,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103164,
+          "owner": 25,
+          "source_frame": 46,
+          "source_raw_row": 65311,
+          "repeated_body_parent": 678134,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101524,
+          "owner": 25,
+          "source_frame": 7,
+          "source_raw_row": 77233,
+          "repeated_body_parent": 678196,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103240,
+          "owner": 25,
+          "source_frame": 47,
+          "source_raw_row": 70403,
+          "repeated_body_parent": 678049,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102954,
+          "owner": 25,
+          "source_frame": 40,
+          "source_raw_row": 67896,
+          "repeated_body_parent": 740745,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102953,
+          "owner": 25,
+          "source_frame": 40,
+          "source_raw_row": 53623,
+          "repeated_body_parent": 678306,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103311,
+          "owner": 25,
+          "source_frame": 48,
+          "source_raw_row": 58413,
+          "repeated_body_parent": 678302,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103078,
+          "owner": 25,
+          "source_frame": 44,
+          "source_raw_row": 79976,
+          "repeated_body_parent": 753587,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102743,
+          "owner": 25,
+          "source_frame": 34,
+          "source_raw_row": 56048,
+          "repeated_body_parent": 678305,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101346,
+          "owner": 25,
+          "source_frame": 4,
+          "source_raw_row": 53842,
+          "repeated_body_parent": 740751,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101167,
+          "owner": 25,
+          "source_frame": 1,
+          "source_raw_row": 52923,
+          "repeated_body_parent": 678305,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102675,
+          "owner": 25,
+          "source_frame": 33,
+          "source_raw_row": 56261,
+          "repeated_body_parent": 678305,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102066,
+          "owner": 25,
+          "source_frame": 22,
+          "source_raw_row": 57632,
+          "repeated_body_parent": 678326,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102303,
+          "owner": 25,
+          "source_frame": 27,
+          "source_raw_row": 56189,
+          "repeated_body_parent": 740751,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102901,
+          "owner": 25,
+          "source_frame": 38,
+          "source_raw_row": 67899,
+          "repeated_body_parent": 678322,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103165,
+          "owner": 25,
+          "source_frame": 46,
+          "source_raw_row": 69957,
+          "repeated_body_parent": 810701,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101229,
+          "owner": 25,
+          "source_frame": 2,
+          "source_raw_row": 55817,
+          "repeated_body_parent": 678371,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103024,
+          "owner": 25,
+          "source_frame": 43,
+          "source_raw_row": 65436,
+          "repeated_body_parent": 678359,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101411,
+          "owner": 25,
+          "source_frame": 5,
+          "source_raw_row": 62336,
+          "repeated_body_parent": 678402,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102590,
+          "owner": 25,
+          "source_frame": 31,
+          "source_raw_row": 92129,
+          "repeated_body_parent": 678499,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 101641,
+          "owner": 25,
+          "source_frame": 10,
+          "source_raw_row": 90366,
+          "repeated_body_parent": 678499,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 102977,
+          "owner": 25,
+          "source_frame": 41,
+          "source_raw_row": 70311,
+          "repeated_body_parent": 679036,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 107226,
+          "owner": 26,
+          "source_frame": 46,
+          "source_raw_row": 102304,
+          "repeated_body_parent": 681268,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103830,
+          "owner": 26,
+          "source_frame": 34,
+          "source_raw_row": 87664,
+          "repeated_body_parent": 681273,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 103714,
+          "owner": 26,
+          "source_frame": 30,
+          "source_raw_row": 69946,
+          "repeated_body_parent": 681425,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103551,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 57633,
+          "repeated_body_parent": 681705,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103750,
+          "owner": 26,
+          "source_frame": 32,
+          "source_raw_row": 95387,
+          "repeated_body_parent": 681799,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103751,
+          "owner": 26,
+          "source_frame": 32,
+          "source_raw_row": 95388,
+          "repeated_body_parent": 681928,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103749,
+          "owner": 26,
+          "source_frame": 32,
+          "source_raw_row": 95386,
+          "repeated_body_parent": 681818,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103644,
+          "owner": 26,
+          "source_frame": 26,
+          "source_raw_row": 60323,
+          "repeated_body_parent": 682317,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103537,
+          "owner": 26,
+          "source_frame": 18,
+          "source_raw_row": 78899,
+          "repeated_body_parent": 682246,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103535,
+          "owner": 26,
+          "source_frame": 18,
+          "source_raw_row": 59029,
+          "repeated_body_parent": 682689,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 105195,
+          "owner": 26,
+          "source_frame": 43,
+          "source_raw_row": 179306,
+          "repeated_body_parent": 681950,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103479,
+          "owner": 26,
+          "source_frame": 14,
+          "source_raw_row": 55522,
+          "repeated_body_parent": 682383,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103721,
+          "owner": 26,
+          "source_frame": 30,
+          "source_raw_row": 92461,
+          "repeated_body_parent": 683137,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103722,
+          "owner": 26,
+          "source_frame": 30,
+          "source_raw_row": 92462,
+          "repeated_body_parent": 683137,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103422,
+          "owner": 26,
+          "source_frame": 6,
+          "source_raw_row": 70096,
+          "repeated_body_parent": 736516,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103736,
+          "owner": 26,
+          "source_frame": 31,
+          "source_raw_row": 94702,
+          "repeated_body_parent": 683507,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103737,
+          "owner": 26,
+          "source_frame": 31,
+          "source_raw_row": 94703,
+          "repeated_body_parent": 683542,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103421,
+          "owner": 26,
+          "source_frame": 6,
+          "source_raw_row": 70094,
+          "repeated_body_parent": 684151,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103471,
+          "owner": 26,
+          "source_frame": 13,
+          "source_raw_row": 75531,
+          "repeated_body_parent": 683653,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103472,
+          "owner": 26,
+          "source_frame": 13,
+          "source_raw_row": 75533,
+          "repeated_body_parent": 683653,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103458,
+          "owner": 26,
+          "source_frame": 10,
+          "source_raw_row": 73244,
+          "repeated_body_parent": 683593,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103423,
+          "owner": 26,
+          "source_frame": 6,
+          "source_raw_row": 70097,
+          "repeated_body_parent": 683244,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103473,
+          "owner": 26,
+          "source_frame": 13,
+          "source_raw_row": 75534,
+          "repeated_body_parent": 683735,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103474,
+          "owner": 26,
+          "source_frame": 13,
+          "source_raw_row": 75536,
+          "repeated_body_parent": 683736,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103558,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 79069,
+          "repeated_body_parent": 683881,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103559,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 79071,
+          "repeated_body_parent": 683736,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103556,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 79061,
+          "repeated_body_parent": 683920,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103519,
+          "owner": 26,
+          "source_frame": 17,
+          "source_raw_row": 79144,
+          "repeated_body_parent": 683696,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103554,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 79056,
+          "repeated_body_parent": 683960,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103620,
+          "owner": 26,
+          "source_frame": 23,
+          "source_raw_row": 85493,
+          "repeated_body_parent": 683878,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103557,
+          "owner": 26,
+          "source_frame": 19,
+          "source_raw_row": 79064,
+          "repeated_body_parent": 683920,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103591,
+          "owner": 26,
+          "source_frame": 22,
+          "source_raw_row": 82009,
+          "repeated_body_parent": 684111,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103520,
+          "owner": 26,
+          "source_frame": 17,
+          "source_raw_row": 79146,
+          "repeated_body_parent": 684116,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103590,
+          "owner": 26,
+          "source_frame": 22,
+          "source_raw_row": 82007,
+          "repeated_body_parent": 684197,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 103470,
+          "owner": 26,
+          "source_frame": 13,
+          "source_raw_row": 75526,
+          "repeated_body_parent": 684025,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125935,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 132262,
+          "repeated_body_parent": 1987269,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125963,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 132297,
+          "repeated_body_parent": 1142166,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125962,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 132296,
+          "repeated_body_parent": 1142166,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 128197,
+          "owner": 37,
+          "source_frame": 47,
+          "source_raw_row": 102932,
+          "repeated_body_parent": 717513,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125167,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 110001,
+          "repeated_body_parent": 718060,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127287,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 132411,
+          "repeated_body_parent": 979369,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123522,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 143671,
+          "repeated_body_parent": 1306948,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125264,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 137339,
+          "repeated_body_parent": 718728,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127241,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 132353,
+          "repeated_body_parent": 718791,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123467,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 143602,
+          "repeated_body_parent": 718874,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127239,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 132351,
+          "repeated_body_parent": 718607,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127237,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 132348,
+          "repeated_body_parent": 979366,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120767,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147822,
+          "repeated_body_parent": 719312,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 121643,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 146128,
+          "repeated_body_parent": 1306971,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 124691,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 155176,
+          "repeated_body_parent": 718783,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125215,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 137271,
+          "repeated_body_parent": 718783,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120766,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147821,
+          "repeated_body_parent": 719312,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122587,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 145838,
+          "repeated_body_parent": 979371,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120765,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147819,
+          "repeated_body_parent": 719312,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120764,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147818,
+          "repeated_body_parent": 719312,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120761,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147814,
+          "repeated_body_parent": 979369,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122580,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 145829,
+          "repeated_body_parent": 1306984,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 121585,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 146056,
+          "repeated_body_parent": 718868,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120698,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147736,
+          "repeated_body_parent": 718954,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122525,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 145761,
+          "repeated_body_parent": 718868,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 121582,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 146052,
+          "repeated_body_parent": 718872,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120695,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147732,
+          "repeated_body_parent": 718799,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120900,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 152314,
+          "repeated_body_parent": 1035346,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122583,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 145833,
+          "repeated_body_parent": 1035332,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122576,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 145824,
+          "repeated_body_parent": 1306958,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120701,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147739,
+          "repeated_body_parent": 718868,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 124688,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 155113,
+          "repeated_body_parent": 1473726,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120699,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 147737,
+          "repeated_body_parent": 718868,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125975,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 134683,
+          "repeated_body_parent": 1473742,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125536,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 164191,
+          "repeated_body_parent": 1907025,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 121515,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 143884,
+          "repeated_body_parent": 1907025,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123392,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 141408,
+          "repeated_body_parent": 720134,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 119360,
+          "owner": 37,
+          "source_frame": 20,
+          "source_raw_row": 162281,
+          "repeated_body_parent": 720018,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124278,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 139331,
+          "repeated_body_parent": 720134,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127155,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 87361,
+          "repeated_body_parent": 720273,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 121883,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 161819,
+          "repeated_body_parent": 1147478,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125898,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 89857,
+          "repeated_body_parent": 720267,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120183,
+          "owner": 37,
+          "source_frame": 23,
+          "source_raw_row": 166363,
+          "repeated_body_parent": 720509,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127706,
+          "owner": 37,
+          "source_frame": 45,
+          "source_raw_row": 82738,
+          "repeated_body_parent": 720062,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125893,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 79891,
+          "repeated_body_parent": 720101,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 118530,
+          "owner": 37,
+          "source_frame": 17,
+          "source_raw_row": 158921,
+          "repeated_body_parent": 720503,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 120622,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 143388,
+          "repeated_body_parent": 720509,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123777,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 154134,
+          "repeated_body_parent": 1417830,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127142,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 77584,
+          "repeated_body_parent": 720218,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 126598,
+          "owner": 37,
+          "source_frame": 41,
+          "source_raw_row": 130531,
+          "repeated_body_parent": 1904450,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122336,
+          "owner": 37,
+          "source_frame": 29,
+          "source_raw_row": 154387,
+          "repeated_body_parent": 720526,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 122440,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 141642,
+          "repeated_body_parent": 720509,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 119030,
+          "owner": 37,
+          "source_frame": 19,
+          "source_raw_row": 153888,
+          "repeated_body_parent": 720387,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 122909,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 163759,
+          "repeated_body_parent": 720628,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124267,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 137251,
+          "repeated_body_parent": 721044,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123375,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 137237,
+          "repeated_body_parent": 1651475,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 122326,
+          "owner": 37,
+          "source_frame": 29,
+          "source_raw_row": 154257,
+          "repeated_body_parent": 720665,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 120614,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 141187,
+          "repeated_body_parent": 720509,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 128426,
+          "owner": 37,
+          "source_frame": 47,
+          "source_raw_row": 155051,
+          "repeated_body_parent": 720824,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 116668,
+          "owner": 37,
+          "source_frame": 9,
+          "source_raw_row": 154054,
+          "repeated_body_parent": 720777,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 121490,
+          "owner": 37,
+          "source_frame": 28,
+          "source_raw_row": 140082,
+          "repeated_body_parent": 1651482,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 115520,
+          "owner": 37,
+          "source_frame": 5,
+          "source_raw_row": 153259,
+          "repeated_body_parent": 720777,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 128178,
+          "owner": 37,
+          "source_frame": 46,
+          "source_raw_row": 154219,
+          "repeated_body_parent": 721024,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 120573,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 89328,
+          "repeated_body_parent": 720825,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 122428,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 139397,
+          "repeated_body_parent": 721411,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 123806,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 163611,
+          "repeated_body_parent": 721473,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119279,
+          "owner": 37,
+          "source_frame": 20,
+          "source_raw_row": 152676,
+          "repeated_body_parent": 721783,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124242,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 85123,
+          "repeated_body_parent": 721221,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 117999,
+          "owner": 37,
+          "source_frame": 15,
+          "source_raw_row": 153207,
+          "repeated_body_parent": 721135,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119027,
+          "owner": 37,
+          "source_frame": 19,
+          "source_raw_row": 153819,
+          "repeated_body_parent": 721135,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119026,
+          "owner": 37,
+          "source_frame": 19,
+          "source_raw_row": 153818,
+          "repeated_body_parent": 722134,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124243,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 85124,
+          "repeated_body_parent": 721221,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127941,
+          "owner": 37,
+          "source_frame": 45,
+          "source_raw_row": 154623,
+          "repeated_body_parent": 1089137,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 122393,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 87379,
+          "repeated_body_parent": 722074,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 124259,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 135032,
+          "repeated_body_parent": 721908,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120887,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 152182,
+          "repeated_body_parent": 722134,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 118779,
+          "owner": 37,
+          "source_frame": 18,
+          "source_raw_row": 158429,
+          "repeated_body_parent": 721571,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119421,
+          "owner": 37,
+          "source_frame": 21,
+          "source_raw_row": 89597,
+          "repeated_body_parent": 721253,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 119432,
+          "owner": 37,
+          "source_frame": 21,
+          "source_raw_row": 92063,
+          "repeated_body_parent": 722221,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120566,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 89277,
+          "repeated_body_parent": 721894,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120559,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 86824,
+          "repeated_body_parent": 721961,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 120551,
+          "owner": 37,
+          "source_frame": 26,
+          "source_raw_row": 86814,
+          "repeated_body_parent": 721725,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 116104,
+          "owner": 37,
+          "source_frame": 7,
+          "source_raw_row": 154514,
+          "repeated_body_parent": 722225,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 114068,
+          "owner": 37,
+          "source_frame": 0,
+          "source_raw_row": 155326,
+          "repeated_body_parent": 722332,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125520,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 154797,
+          "repeated_body_parent": 1980470,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119539,
+          "owner": 37,
+          "source_frame": 21,
+          "source_raw_row": 154587,
+          "repeated_body_parent": 722266,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 120211,
+          "owner": 37,
+          "source_frame": 23,
+          "source_raw_row": 182239,
+          "repeated_body_parent": 722306,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 119397,
+          "owner": 37,
+          "source_frame": 20,
+          "source_raw_row": 177972,
+          "repeated_body_parent": 722353,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124706,
+          "owner": 37,
+          "source_frame": 34,
+          "source_raw_row": 164404,
+          "repeated_body_parent": 722332,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 119398,
+          "owner": 37,
+          "source_frame": 20,
+          "source_raw_row": 177973,
+          "repeated_body_parent": 722353,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 124203,
+          "owner": 37,
+          "source_frame": 33,
+          "source_raw_row": 155278,
+          "repeated_body_parent": 722421,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125116,
+          "owner": 37,
+          "source_frame": 35,
+          "source_raw_row": 154782,
+          "repeated_body_parent": 722373,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125114,
+          "owner": 37,
+          "source_frame": 35,
+          "source_raw_row": 154208,
+          "repeated_body_parent": 722290,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 118596,
+          "owner": 37,
+          "source_frame": 17,
+          "source_raw_row": 168146,
+          "repeated_body_parent": 722458,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127124,
+          "owner": 37,
+          "source_frame": 42,
+          "source_raw_row": 154961,
+          "repeated_body_parent": 722370,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 123362,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 100462,
+          "repeated_body_parent": 722341,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127691,
+          "owner": 37,
+          "source_frame": 44,
+          "source_raw_row": 154021,
+          "repeated_body_parent": 722624,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127425,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 154142,
+          "repeated_body_parent": 722752,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127424,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 154141,
+          "repeated_body_parent": 722771,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 127125,
+          "owner": 37,
+          "source_frame": 42,
+          "source_raw_row": 154962,
+          "repeated_body_parent": 722752,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 122416,
+          "owner": 37,
+          "source_frame": 30,
+          "source_raw_row": 100004,
+          "repeated_body_parent": 722327,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125909,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 97324,
+          "repeated_body_parent": 722849,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127692,
+          "owner": 37,
+          "source_frame": 44,
+          "source_raw_row": 154023,
+          "repeated_body_parent": 722811,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 118424,
+          "owner": 37,
+          "source_frame": 17,
+          "source_raw_row": 107341,
+          "repeated_body_parent": 722779,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 125901,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 92326,
+          "repeated_body_parent": 722712,
+          "reason": "independent3Dmotion+semantic neighbor+visible raw depth+repeated parent"
+        },
+        {
+          "pool_row": 127426,
+          "owner": 37,
+          "source_frame": 43,
+          "source_raw_row": 154143,
+          "repeated_body_parent": 722811,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 123775,
+          "owner": 37,
+          "source_frame": 32,
+          "source_raw_row": 154132,
+          "repeated_body_parent": 722811,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 126554,
+          "owner": 37,
+          "source_frame": 40,
+          "source_raw_row": 154729,
+          "repeated_body_parent": 722811,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 126231,
+          "owner": 37,
+          "source_frame": 39,
+          "source_raw_row": 154311,
+          "repeated_body_parent": 722811,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125866,
+          "owner": 37,
+          "source_frame": 38,
+          "source_raw_row": 154864,
+          "repeated_body_parent": 722552,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 116745,
+          "owner": 37,
+          "source_frame": 9,
+          "source_raw_row": 163176,
+          "repeated_body_parent": 722876,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125546,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 180476,
+          "repeated_body_parent": 722872,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 128177,
+          "owner": 37,
+          "source_frame": 46,
+          "source_raw_row": 154156,
+          "repeated_body_parent": 722872,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        },
+        {
+          "pool_row": 125547,
+          "owner": 37,
+          "source_frame": 37,
+          "source_raw_row": 180478,
+          "repeated_body_parent": 722875,
+          "reason": "actual source body+depth+repeated rendered3Dparent"
+        }
+      ],
+      "reference": {
+        "refreshed": false,
+        "reason": "no road owner changes"
+      },
+      "seconds": 45.459581970237195
+    },
+    "gates/003000/split/split.json": {
+      "parents": 0,
+      "children": 0,
+      "parent_checkpoint": "main/pre_owner_003000.pt",
+      "global_step": 3000,
+      "training_updates": 0,
+      "once_only": true,
+      "measured_boundary_provenance": [],
+      "no_owner_change_before_reaudit": true,
+      "no_height_crop": true,
+      "seconds": 6.566948821768165
+    }
+  }
+}

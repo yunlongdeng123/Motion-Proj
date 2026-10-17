@@ -1,0 +1,80 @@
+{
+  "task_id": "WS-V82-R15-CLOSURE-20261017",
+  "run_id": "R15-C00-CPU",
+  "status": "PASS",
+  "gpu_used": false,
+  "training_updates": 0,
+  "production_code_modified": false,
+  "python": "3.9.25",
+  "torch": "2.2.2+cu118",
+  "threads": 2,
+  "tests": 8,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 0.6454656729474664,
+  "details": {
+    "reset_counterexample": {
+      "interpretation": "synthetic sensitivity, not a real before-reset render",
+      "before_road_candidates": 1,
+      "before_mixed": 1,
+      "low_contribution_candidates": 0
+    },
+    "competition_counterexample": {
+      "near_gap_m": 0.1,
+      "far_gap_m": 3.7,
+      "far_loss_and_static_alpha_gradient": 0,
+      "interpretation": "same-surface regularizer cannot supervise a distant static appearance ghost"
+    },
+    "gradcheck": {
+      "dtype": "float64",
+      "eps": 1e-06,
+      "atol": 2e-06,
+      "rtol": 0.0002,
+      "parameters": [
+        "origin",
+        "direction",
+        "mean",
+        "quaternion",
+        "log_scale",
+        "opacity_logit"
+      ]
+    },
+    "partition_invariance": {
+      "gaussian_chunks": [
+        1,
+        7,
+        16,
+        47
+      ],
+      "max_absolute_T_error": 1.1102230246251565e-16,
+      "sun_groups": 5,
+      "rays_per_group": 3,
+      "permutation_and_gradient_checks": true
+    },
+    "quadrature": {
+      "cases": 24,
+      "max_absolute_tau_error": 6.661338147750939e-16
+    },
+    "high_condition": {
+      "physical_covariance_condition": 10000000000.0,
+      "absolute_tau_error": 6.8512235884554684e-09,
+      "tau": 7737.809138187971
+    },
+    "high_condition_transmittance": {
+      "covariance_condition": 10000000000.0,
+      "clear_and_blocked_T": [
+        0.9999999999999887,
+        0.40842581000813294
+      ],
+      "max_absolute_T_error": 9.14601727686204e-13
+    }
+  },
+  "scope": "CPU synthetic references and production gate semantics only; not real scene repair acceptance",
+  "failure_ledger_refs": [
+    "V82-F05",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "problem_solved": null
+}
