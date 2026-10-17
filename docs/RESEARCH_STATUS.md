@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-17T20:08:25+08:00。用户最新要求暂停R15训练、保留checkpoint，查明慢速与a6/a37分层问题并推送v82。**训练保持暂停，禁止自动续训或关机。** 无subagent/新chat。[诊断与严重性表](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/README.md)、[HTML及分层图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/report.html)、[实验索引](EXPERIMENTS.md)。
+更新：2026-10-17T20:14:36+08:00。用户最新要求暂停R15训练、保留checkpoint，查明慢速与a6/a37分层问题并推送v82。**训练保持暂停，禁止自动续训或关机。** 无subagent/新chat。[诊断与严重性表](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/README.md)、[HTML及分层图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/report.html)、[实验索引](EXPERIMENTS.md)。
 
 run `backend_restore_r15`：controller8244、flock49808、train51627已核实身份后退出。最后日志4100，完整可恢复点4000；独立保留在服务器 `backend_restore_r15/paused_checkpoint_004000_20261017/checkpoint.pt`，模型/13组非空Adam状态/RNG已读回。4000后未落盘部分不冒称已保存。main/latest、pre_owner3000及历史输入/失败保留。相关心跳b-c-15原本PAUSED；D/PAUSE_REQUESTED.json和execution_policy禁止续训，controller增加启动暂停保护并实际验证未启动子worker。旧controller仍有初始step2断言，恢复前需要另行处理入口，不可盲重开。
 

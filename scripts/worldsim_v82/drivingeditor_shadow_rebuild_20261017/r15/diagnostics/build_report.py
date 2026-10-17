@@ -18,6 +18,12 @@ p=json.loads((E/'performance.json').read_text())
 a=json.loads((E/'actors/actors.json').read_text())
 n=json.loads((E/'shadow_precision.json').read_text())
 pause=json.loads((E/'pause_receipt.json').read_text())
+r6=next(r for r in a['records'] if r['actor']==6 and r['raw']==105)
+r37=next(r for r in a['records'] if r['actor']==37 and r['raw']==121)
+g6_depth=r6['static_dynamic_depth_delta_inside_median'];g37_depth=r37['static_dynamic_depth_delta_inside_median']
+g6_reject=100*r6['gate_rejected_fraction_inside'];g37_reject=100*r37['gate_rejected_fraction_inside']
+g6_median=100*statistics.median(r['gate_rejected_fraction_inside'] for r in a['records'] if r['actor']==6 and r['gate_rejected_fraction_inside'] is not None)
+g37_median=100*statistics.median(r['gate_rejected_fraction_inside'] for r in a['records'] if r['actor']==37 and r['gate_rejected_fraction_inside'] is not None)
 now=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds')
 def average(case):return statistics.mean(r['forward_backward_seconds'] for r in p['cases'] if r['case']==case and 'forward_backward_seconds' in r)
 base=average('baseline');off=average('shadow_off');one=average('sun_samples_1');chunk=average('gaussian_chunk_2048');nocp=average('checkpoint_disabled')
@@ -70,7 +76,7 @@ doc_intro=f'''# R15暂停诊断：阴影性能、数值与a6/a37分层
 |---|---|---|
 '''
 for sev,cat,cause,evidence,step in causes:doc_intro+=f'| {sev} | {cause} | {evidence} {step} |\n'
-doc_intro+='''
+doc_intro+=f'''
 各行存在父子关系，不能把其时间或加速比相加。完整计时在performance.json；profiling的算子计数与未插桩吞吐分别记录。当前没有应用“减太阳样本”“改大chunk”“关阴影”等改变输出的方案。
 
 ## 阴影数值错误
@@ -87,7 +93,7 @@ doc_intro+='''
 
 ![a37锚帧分层](r15_diagnostic_evidence/a37_raw121_components.png)
 
-现有竞争门控只在静动态深度差<0.45m时工作。a6锚帧中位深度差15.19m、门控拒绝100%；a37为3.71m、拒绝98.67%。道路/远处静态表面上的车形外观没有被“同表面占用竞争”覆盖。不能把正确静态道路点全部转成Actor来消除图像残影。
+现有竞争门控只在静动态深度差<0.45m时工作。a6锚帧中位深度差{g6_depth:.2f}m、门控拒绝{g6_reject:.2f}%；a37为{g37_depth:.2f}m、拒绝{g37_reject:.2f}%。道路/远处静态表面上的车形外观没有被“同表面占用竞争”覆盖。不能把正确静态道路点全部转成Actor来消除图像残影。
 
 3k审计紧接opacity reset：最大单点opacity约0.01。a6/a37没有任何点达到既定重复道路正证据；实际split=0、Actor→static=0、static→Actor=0，仅从待定真实测量池加入459点（a6 188、a37 114）。4k时静态点中source_candidate_owner为a6/a37的数量都为0，当前静态转Actor规则没有这两个目标的候选入口。该限制不能靠多跑相同审计自动消除；9k审计也与3000步reset间隔重合。
 
@@ -124,7 +130,7 @@ html_report=f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><m
 <h2>a6、a37：残影来源与归属约束缺口</h2><p>删除明确移除该owner全部高斯。关阴影后残影仍在，静态层单独渲染也保留对应车形；a6还包含其他Actor的贡献。a37锚帧的删除阴影开关在原车身区的线性RGB MAE仅0.000045，而残影很明显，主要来源已定位到静态层。覆盖率不等于道路恢复正确。</p>{table(['锚帧','原车身像素','删除后静态可见α均值','其他Actor可见α均值','静/动态深度差中位数','竞争门控拒绝率','删除阴影开关MAE'],actor_rows)}
 <figure><img src="r15_diagnostic_evidence/a06_raw105_components.png" alt="a6同帧GT、全场景、独立资产、alpha、删除、关闭阴影、静态层与竞争门控"><figcaption>a6 raw105：独立资产的下部碎片明显；删除后的残留在静态及其他Actor分支中仍可见。</figcaption></figure>
 <figure><img src="r15_diagnostic_evidence/a37_raw121_components.png" alt="a37同帧GT、全场景、独立资产、alpha、删除、关闭阴影、静态层与竞争门控"><figcaption>a37 raw121：静态层单独、关闭阴影仍有车形重影，不能当成真实投射阴影。</figcaption></figure>
-<p>竞争约束的深度差上限是0.45m；a6锚帧的15.19m、a37的3.71m均超出范围。全49帧门控拒绝率中位数分别100%和99.40%。这类位于后方表面的外观重影没有被“同表面占用竞争”覆盖；把所有静态道路点直接转成Actor会引入新的错误。</p><p>3k审计紧接3000步opacity reset，最大单点α仅约0.01。两车没有任何点通过重复道路正证据门槛，真实split=0、Actor→static=0、static→Actor=0；仅新增459个真实测量池点（a6 188、a37 114）。4k的静态点中，source_candidate_owner为a6/a37的数量又都为0，现有静态转Actor规则对这两车没有候选入口。9k也与reset间隔重合。应调整有效审计时机并核查候选覆盖，而非把“审计脚本跑过”当成已经修正。</p><p>a6点数3453→123800，a37 10349→83130；中心越出软OBB分别29834、14573。软框约束只管中心，不保证高斯支撑干净。a6锚帧的已知车外raw alpha&gt;0.05支撑1479像素，a37为3049像素，其中也可能包含合理遮挡支撑，不能全部判道路。保留完整mask内外监督、未知域及真实测量，不按高度切轮胎/底盘。</p>
+<p>竞争约束的深度差上限是0.45m；a6锚帧的{g6_depth:.2f}m、a37的{g37_depth:.2f}m均超出范围。全49帧门控拒绝率中位数分别{g6_median:.2f}%和{g37_median:.2f}%。这类位于后方表面的外观重影没有被“同表面占用竞争”覆盖；把所有静态道路点直接转成Actor会引入新的错误。</p><p>3k审计紧接3000步opacity reset，最大单点α仅约0.01。两车没有任何点通过重复道路正证据门槛，真实split=0、Actor→static=0、static→Actor=0；仅新增459个真实测量池点（a6 188、a37 114）。4k的静态点中，source_candidate_owner为a6/a37的数量又都为0，现有静态转Actor规则对这两车没有候选入口。9k也与reset间隔重合。应调整有效审计时机并核查候选覆盖，而非把“审计脚本跑过”当成已经修正。</p><p>a6点数3453→123800，a37 10349→83130；中心越出软OBB分别29834、14573。软框约束只管中心，不保证高斯支撑干净。a6锚帧的已知车外raw alpha&gt;0.05支撑1479像素，a37为3049像素，其中也可能包含合理遮挡支撑，不能全部判道路。保留完整mask内外监督、未知域及真实测量，不按高度切轮胎/底盘。</p>
 <details><summary>其他四个固定锚帧</summary>{''.join('<figure><img src="r15_diagnostic_evidence/'+x['folder']+'_components.png" alt="'+x['folder']+'分层反事实"><figcaption>'+x['folder']+'</figcaption></figure>' for x in a['anchors'] if x['folder'] not in ['a06_raw105','a37_raw121'])}</details>
 <h2>下一步修复顺序与验证边界</h2><p>先修阴影数值并通过FP64/分块不变性/梯度测试；再把太阳与候选对批处理、缩减小checkpoint开销并复用光栅预处理；归属侧分别处理Actor碎片、静态外观残影和reset后的审计时机。每项先做固定检查点的可审查对照，再决定是否恢复训练。本次只诊断与发布代码，没有继续训练或宣称质量修复。</p><p>已覆盖逐步数据、几何、主光栅、阴影、反传、优化器、周期审计及锁等待的证据。后续material/joint实际训练未发生；此前当前点数的零更新探测约21.3/43.6s前后向，只能作风险提示。最终逐像素阴影成本未验收。FP64参考只验证一帧5个最大分块差异点；49帧分层包含已见开发QUERY，没有配对干净道路GT，不能据覆盖率证明补景正确。</p>
 <h2>原始证据与一手参考</h2><p><a href="r15_diagnostic_evidence/performance.json">同步计时与算子计数</a> · <a href="r15_diagnostic_evidence/cpu_profile.txt">CPU调用剖析</a> · <a href="r15_diagnostic_evidence/shadow_precision.json">分块与FP64参考</a> · <a href="r15_diagnostic_evidence/actors/actors.json">98条逐车逐帧记录</a> · <a href="r15_diagnostic_evidence/pause_receipt.json">暂停/检查点凭据</a> · <a href="r15_diagnostic_evidence/old_baseline_training_timing.json">旧版从头训练时间</a> · <a href="r15_diagnostic_evidence/severity_table.json">严重性表JSON</a></p><p>实测代码：tracing.py的geometry_transmittance/_precision_integral、SunAmbient.visibility；raster.py的render_buffers/cuda_raster；model.py的train_image；competition.py；train.py中reset后保存再进入3k审计；owner_003000.py的来源候选与道路门槛。生产源保留，诊断源码随v82提交。</p><p class="muted">机制参考：<a href="https://docs.pytorch.org/tutorials/recipes/recipes/tuning_guide.html#avoid-unnecessary-cpu-gpu-synchronization">PyTorch同步与小算子调度</a>、<a href="https://docs.pytorch.org/docs/stable/checkpoint.html">checkpoint重计算</a>、<a href="https://docs.pytorch.org/docs/2.1/notes/numerical_accuracy.html#extremal-values-in-linalg">病态矩阵数值限制</a>。本案结论来自实际代码与测量，引用不代替实测。failure refs：V82-F01 / F05 / F06；human_verdict=null，problem_solved=null。</p></body></html>'''

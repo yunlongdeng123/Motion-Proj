@@ -1,6 +1,6 @@
 # R15暂停诊断：阴影性能、数值与a6/a37分层
 
-更新时间：2026-10-17T20:06:48+08:00。task/run：`WS-V82-R15-PAUSED-DIAGNOSIS-20261017`。完整[HTML报告](report.html)，[实测严重性表](r15_diagnostic_evidence/severity_table.json)。当前执行授权只见仓库 `docs/RESEARCH_STATUS.md`。
+更新时间：2026-10-17T20:14:35+08:00。task/run：`WS-V82-R15-PAUSED-DIAGNOSIS-20261017`。完整[HTML报告](report.html)，[实测严重性表](r15_diagnostic_evidence/severity_table.json)。当前执行授权只见仓库 `docs/RESEARCH_STATUS.md`。
 
 ![输入、静态与43Actor、主光栅、阴影积分和诊断输出](r15_diagnostic_evidence/architecture.svg)
 
@@ -39,7 +39,7 @@
 
 ![a37锚帧分层](r15_diagnostic_evidence/a37_raw121_components.png)
 
-现有竞争门控只在静动态深度差<0.45m时工作。a6锚帧中位深度差15.19m、门控拒绝100%；a37为3.71m、拒绝98.67%。道路/远处静态表面上的车形外观没有被“同表面占用竞争”覆盖。不能把正确静态道路点全部转成Actor来消除图像残影。
+现有竞争门控只在静动态深度差<0.45m时工作。a6锚帧中位深度差15.35m、门控拒绝100.00%；a37为3.70m、拒绝98.66%。道路/远处静态表面上的车形外观没有被“同表面占用竞争”覆盖。不能把正确静态道路点全部转成Actor来消除图像残影。
 
 3k审计紧接opacity reset：最大单点opacity约0.01。a6/a37没有任何点达到既定重复道路正证据；实际split=0、Actor→static=0、static→Actor=0，仅从待定真实测量池加入459点（a6 188、a37 114）。4k时静态点中source_candidate_owner为a6/a37的数量都为0，当前静态转Actor规则没有这两个目标的候选入口。该限制不能靠多跑相同审计自动消除；9k审计也与3000步reset间隔重合。
 

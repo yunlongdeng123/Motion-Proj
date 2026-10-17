@@ -83,6 +83,14 @@ def main():
             static_g = subset(g, g['owner'] < 0)
             sp = buffers(frame.camera, static_g, len(data.actor_ids), p['sky'])
             static_off = model.train_image(sp,static_g)
+            # 与competition_terms严格同口径：比较全静态/全动态孤立分支，
+            # 不能用单个目标Actor深度替代全动态深度。
+            dynamic = g['owner'] >= 0
+            all_z = (g['xyz'] @ frame.camera.view[:3,:3].T + frame.camera.view[:3,3])[:,2:3]
+            dynamic_moment = cuda_raster(frame.camera,g['xyz'][dynamic],g['cov'][dynamic],g['opacity'][dynamic],torch.cat((torch.ones_like(all_z),all_z),-1)[dynamic],10)
+            dynamic_depth = dynamic_moment[...,1]/dynamic_moment[...,0].clamp_min(1e-6)
+            branch_delta = (sp['depth']-dynamic_depth).abs()
+            branch_match = torch.exp(-.5*(branch_delta/cfg.ownership_depth_tolerance_m).square())*(branch_delta<3*cfg.ownership_depth_tolerance_m)*(sp['alpha']>1e-4)*(dynamic_moment[...,0]>1e-4)
             valid = pixel_valid(frame)
             for actor in TARGETS:
                 body = frame.masks[...,actor] & valid[...,actor]
@@ -97,8 +105,8 @@ def main():
                 aa = isolated[...,0]
                 actor_depth = isolated[...,4]/aa.clamp_min(1e-6)
                 static_visible = (dp['alpha']-dp['visible_labels'].sum(-1)).clamp_min(0)
-                delta = (sp['depth']-actor_depth).abs()
-                matched = torch.exp(-.5*(delta/cfg.ownership_depth_tolerance_m).square())*(delta<3*cfg.ownership_depth_tolerance_m)
+                target_delta = (sp['depth']-actor_depth).abs()
+                delta, matched = branch_delta, branch_match
                 record = dict(actor=actor, raw=raw_frame, split=frame.split, body_pixels=int(body.sum()),
                     isolated_alpha_inside_mean=mean(aa,body), isolated_alpha_exterior_mean=mean(aa,exterior),
                     isolated_alpha_exterior_mass=float(aa[exterior].sum()),
@@ -109,6 +117,8 @@ def main():
                     delete_other_actor_visible_alpha_inside_mean=mean(dp['visible_labels'].sum(-1),body),
                     static_only_alpha_inside_mean=mean(sp['alpha'],body),
                     static_dynamic_depth_delta_inside_median=float(delta[body].median()) if bool(body.any()) else None,
+                    isolated_target_static_depth_delta_inside_median=float(target_delta[body].median()) if bool(body.any()) else None,
+                    gate_definition='exact full static isolated depth vs full dynamic isolated depth, with both alpha thresholds; same as competition_terms',
                     static_dynamic_competition_gate_inside_mean=mean(matched,body),
                     gate_rejected_fraction_inside=mean((delta>=3*cfg.ownership_depth_tolerance_m).float(),body),
                     known_exterior_definition='frozen pixel-valid complement; isolated exterior can include legitimate occluded support; not all classified as road')
