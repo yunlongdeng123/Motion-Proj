@@ -1,0 +1,87 @@
+{
+  "task_id": "WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017",
+  "run_id": "ownership_rebuild_r14",
+  "created_at": "2026-10-17T07:34:23.828331+08:00",
+  "user_correction": "Finish trained IDSplat frontend experiment and edits before shutdown; input/a12 proxy is diagnostic, not a stop rule",
+  "priorities": [
+    "repair symmetric regional SAM3/DEVA fusion and pixelwise mask validity",
+    "IDSplat mask/depth/DBSCAN seeds; independent real motion; staged actual owner and supported mixed splits",
+    "continuous depth-aware 3DGS branch occupancy and alpha*T contribution constraints",
+    "geometry/pose/light-driven road attenuation and clean-road/material/body optimization"
+  ],
+  "stages": {
+    "geometry": 13000,
+    "material": 7000,
+    "joint": 2400,
+    "total": 22400
+  },
+  "historical_updates_range": [
+    19500,
+    19549
+  ],
+  "max_combined_updates_before_engineering": 41949,
+  "supervision": {
+    "pixel_mask_valid": "HWK; overlap and unsupported disagreement unknown, never foreground/background label",
+    "source_priority": "neither source privileged; same actual visible non-road LiDAR/component checks",
+    "full_exterior": "entire valid outside-mask domain remains supervised; unknown only omitted where declared"
+  },
+  "ownership": {
+    "continuous": "each train update, warmup500, separate depth-composited static/dynamic alpha and surface depths plus main-scene alpha*T; evidence-directed gradients protect supported branch",
+    "depth_gate_m": 0.15,
+    "no_NeRF_density_ratio": true,
+    "no_whole_pixel_entropy": true,
+    "owner_reassessment_steps": [
+      3000,
+      9000
+    ],
+    "split": "repeated >=3frame actual body/road contribution and separable3D surface, preserve both children then reaudit",
+    "actual_owner": "independent real motion/positive world road + body protection; coordinate geometry provenance and Adam synchronized; unresolved is not background"
+  },
+  "shadow": {
+    "formula": "C=C0*(1-rho(x, edited Actor geometry/pose, L))",
+    "rho": "analytic Gaussian light transmittance; shared camera/solar xyz covariance opacity; no time embedding or free black texture",
+    "receiver": "visible static road surface, not fixed repair plane",
+    "light": "shared learned sun/ambient/softness/strength; no temporal lighting model",
+    "actor_self_shading": "canonical appearance, not a complete intrinsic decomposition"
+  },
+  "masks": "reuse saved native SAM3 train46 and3 isolated QUERY; remap using BUILD LiDAR without DEVA-IoU hard gate; rebuild regional bundle",
+  "GT": "fixed Waymo trajectories; independent DINOv3/RANSAC compares only",
+  "evaluation": {
+    "frames": 49,
+    "eligible": [
+      5,
+      6,
+      12,
+      18,
+      25,
+      26,
+      37
+    ],
+    "legacy_map": {
+      "0": 5,
+      "1": 26,
+      "2": 18
+    },
+    "outputs": "65 observed/static/shadow/independent+visible dynamic/7delete and old3continuous same-axis translation15/30 streams",
+    "shadow_tests": [
+      "same time with changed car pose",
+      "different time but fixed pose/camera/light",
+      "delete Actor removes its caster",
+      "shadow off keeps material/geometry",
+      "fixed-camera no-shadow static stability"
+    ],
+    "old18k_comparison": "quality floor/historical appearance, not equal initialization or matched budget causal evidence",
+    "QUERY": "previously inspected development query, not new blind test"
+  },
+  "safety": {
+    "no_subagents": true,
+    "no_old_BC_resume": true,
+    "immutable_code": "implementation_r14_final",
+    "GPU_lock": "campaign/gpu_slot.lock",
+    "other_tasks_priority": true,
+    "shared_environment_unchanged": true
+  },
+  "shutdown": "Only after actual22400 training, required49frame evaluation, root review, report+source saved/pushed, all owned workers and other GPU/queue tasks idle. No shutdown because input gate or one Actor proxy fails. Engineering failures retained/repaired and surfaced; never fabricate completion.",
+  "human_verdict": null,
+  "actual_problem_solved": null
+}

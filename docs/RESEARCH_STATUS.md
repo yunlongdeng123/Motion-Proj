@@ -1,13 +1,13 @@
 # 当前研究状态
 
-更新：2026-10-17（Asia/Singapore）。用户禁止subagent/新chat。DrivingEditor⑥车辆资产混入道路仍未验收；①②④未开始。最新run为idsplat_frontend_r13。[点集、架构、真实对应与边界](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_idsplat_frontend_r13/README.md)，[实验索引](EXPERIMENTS.md)。
+更新：2026-10-17T08:11:37.477766+08:00。用户禁止subagent/新chat；已明确授权跑完本轮训练与编辑再关机。最新run `ownership_rebuild_r14`，不是已结束的R13。旧B/C不恢复。[R14实现、组件图与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_r14/README.md)，[实验索引](EXPERIMENTS.md)。
 
-用户已停止B/C。A3000完整49x65输出与旧GN11+18k视觉对照已交付：A的背景/道路细节与白车有明显回退，仍带道路，不是改进模型。B已3000、视频导出被用户停止，1500/3000检查点完整；C0。旧控制器与后代已退出，不恢复旧E6/SAM2或B/C队列。
+区域SAM3/DEVA对称融合和pixel mask_valid已冻结；IDSplat适配前端由相同原始测量生成，GT固定，DINOv3/RANSAC只独立验证。实际CUDA/梯度探测通过，主计划G13000/M7000/J2400总22400；本快照已记录3300更新，控制器full_controller_resume_r1.py PID3605运行，须核对实际cmdline避免PID复用和重复启动。训练immutable implementation_r14_final，共享环境不动，GPU锁每1000步释放且他人优先。历史19500..19549成本另记。
 
-最后一次IDSplat前端+infra先验点集：同原始BUILD/同冻结共同SAM3或显式DEVA回退mask/固定GT/同implementation_r12。实际mask提升+深度+DBSCAN保护细部，DINOv3对46张真实训练图提特征并做56规划配对，47得官方RANSAC变换、9对应不足。DINO只独立对照，不覆盖GT。其他36Actor/静态种子、全49RGB/监督和GT均核验不变。
+3k状态函数参数冲突已保存失败证据并修复；同一检查点模型/Adam/RNG/输入恢复，重复SGD0。46训练帧全43身份贡献审计已完成两轮，split0/owner迁移0/接纳真实待定车体234，其余128420未知保留。7车预览已由根代理看图：a18白车失真、背景道路模糊、a37删除浅色缺口仍在，质量不接受；不把接纳数量、低MAE或单帧当⑥成功。继续注册完整实验，不能再因输入或a12代理提前关机。
 
-道路误入代理a5 1874→2、a26 483→8、a37 3835→165，6车保体达标；a12 body95.59%→75.98%、下部89.47%→60.53%，7车门槛未通过。主要缺口在共同mask提升，DBSCAN次要；a12没有正道路冲突返回。代理不是手工归属真值、真影比例或编辑成功率；已有QUERY用于开发，非新盲测。全部7车点图由本代理检查。没有据QUERY调参，也没有新训练/新编辑视频。
+持续深度门控分支占用/主alpha×T约束每步启用；3k/9k分阶段真实owner审计；阴影由编辑后的共享车辆高斯几何与场景光照计算。正式delete仍只7车5/6/12/18/25/26/37，旧0/1/2→5/26/18；最终49帧65流与阴影位姿反事实未完成。原GN11/v2/18k只读，仅历史质量参考，不称公平预算因果对照。
 
-本轮新增场景更新0，历史累计19500..19549（包含弃用成本）；不为耗完预算继续。已停止继续训练，代码与真实结果推送3986935；中文HTML/点集接口/待定来源已存本地统一入口。核对所有任务和锁等待退出、其他GPU空闲、cron/at无待执行任务后，已执行AutoDL平台关机命令，随后SSH关闭且一次有界探测仍关闭；命令无返回码、平台控制台状态未另核验，详见该run/shutdown_receipt.json。心跳b-c-15已暂停，未获用户继续指令不自动恢复。
+完整mask显示修复已交付49×7逐车图、二值/有效/未知、真实LiDAR与原NPZ，并接本地统一入口；冻结监督没有改变。该工程显示核查不代表mask语义通过。最终完成全部训练、49帧复核、中文组件图报告/视频和源码发布后，核实所有控制器/训练/数据/评价/锁排队与其他GPU任务空闲才关机、暂停b-c-15。当前10分钟心跳，稳定后30/60；不变安静。
 
-delete范围仍仅5/6/12/18/25/26/37，旧0/1/2→5/26/18；其余4无旧独立资产只能外观对照。原GN11/v2/18k、原始数据、历史失败与检查点保留，用户dirty工作不动。human_verdict=null，problem_solved=false；failure_ledger_refs=[V82-F01]，本轮failure_ledger_delta=none。当前结论是最后前端的全车保体门槛未过，不是IDSplat整体无效或后端训练已验证失败。
+task_id=WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017；human_verdict=null，problem_solved=null，failure_ledger_refs=[V82-F01]，failure_ledger_delta=none。用户原dirty工作、原始数据、历史检查点与失败证据保留。

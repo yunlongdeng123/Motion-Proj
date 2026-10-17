@@ -1,0 +1,60 @@
+{
+  "ABI": {
+    "status": "GPU_ABI_GRADIENTS_PASSED",
+    "mean_abs_error": 0.00013322987069841474,
+    "device": "NVIDIA GeForce RTX 4080 SUPER",
+    "feature_capacity_requested": 10
+  },
+  "scene_training_updates": 0,
+  "stages": {
+    "geometry": {
+      "median_forward_backward_seconds": 0.25252894638106227,
+      "gradient_nonzero_parameters": [
+        "sky_logit",
+        "field.xyz",
+        "field.log_scales",
+        "field.quaternion",
+        "field.opacity_logit",
+        "field.appearance_logit",
+        "field.view_coeff"
+      ],
+      "peak_allocated_bytes": 1390128128
+    },
+    "material": {
+      "median_forward_backward_seconds": 1.5207305974327028,
+      "gradient_nonzero_parameters": [
+        "sky_logit",
+        "field.opacity_logit",
+        "field.appearance_logit",
+        "field.albedo_logit",
+        "field.view_coeff",
+        "light.azimuth",
+        "light.elevation_logit",
+        "light.ambient_logit",
+        "light.radius_logit",
+        "light.strength_logit"
+      ],
+      "peak_allocated_bytes": 1390128128
+    },
+    "joint": {
+      "median_forward_backward_seconds": 2.1394179863855243,
+      "gradient_nonzero_parameters": [
+        "sky_logit",
+        "field.xyz",
+        "field.log_scales",
+        "field.quaternion",
+        "field.opacity_logit",
+        "field.appearance_logit",
+        "field.albedo_logit",
+        "field.view_coeff",
+        "light.azimuth",
+        "light.elevation_logit",
+        "light.ambient_logit",
+        "light.radius_logit",
+        "light.strength_logit"
+      ],
+      "peak_allocated_bytes": 1515064832
+    }
+  },
+  "estimated_training_hours_no_IO_or_densify": 5.295164903418885
+}
