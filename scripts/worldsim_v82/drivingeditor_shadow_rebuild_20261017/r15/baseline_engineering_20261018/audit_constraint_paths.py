@@ -10,6 +10,9 @@ def main():
     native = (W / 'source/gn11_train.py').read_text(encoding='utf-8')
     upstream = (W / 'upstream/train.py').read_text(encoding='utf-8')
     renderer = (W / 'source/renderer.py').read_text(encoding='utf-8')
+    scene_source = (W / 'source/native_scene_init.py').read_text(encoding='utf-8')
+    sampler_source = (W / 'source/native_camera_sampler.py').read_text(encoding='utf-8')
+    cfg = json.loads((W / 'matched_metadata/reference_GN11.json').read_text())
     calls = [n.func.attr if isinstance(n.func, ast.Attribute) else n.func.id if isinstance(n.func, ast.Name) else ''
              for n in ast.walk(ast.parse(train)) if isinstance(n, ast.Call)]
     assert not set(calls) & {'densify_and_prune', 'clone_points', 'prune_points', 'accumulate_densification_stats'}
@@ -18,6 +21,11 @@ def main():
     assert '"dynamic_alpha": render_pkg["dynamic_alpha"]' in native
     assert 'loss_convergence_to_one * 100' in upstream
     assert 'package["dynamic_alpha_raw"] = package["dynamic_alpha"]' in renderer
+    assert 'self.cameras_extent = scene_info.nerf_normalization["radius"]' in scene_source
+    assert 'self.gaussians.create_from_pcd(scene_info.static_point_cloud, 1)' in scene_source
+    assert 'self.stack.pop(self.python.randrange(len(self.stack)))' in sampler_source
+    assert 'if step % 1000 == 0: instances.oneupSHdegree()' in train
+    assert cfg['sh_increase_interval'] == 2000
     terms = [
         dict(item='full-scene RGB', GN11='active .8 L1+.2 DSSIM', adapter='same formula and all-scene domain', classification='inherited', gradient='pending actual component receipt'),
         dict(item='isolated dynamic RGB', GN11='5× photometric on binary union, environment fill during training', adapter='same isolated dynamic branch times union, weight5', classification='inherited intended call path', gradient='pending actual component receipt'),
@@ -27,6 +35,9 @@ def main():
         dict(item='static duration / velocity / NPS', GN11='compose_hybrid_loss with combined-alpha legacy maps and static-alpha NPS features', adapter='same composer, denominator conventions and current native static velocity', classification='active source path, gradients not yet certified', limitation='a nonzero configured NPS does not certify static edit cleanliness'),
         dict(item='LiDAR / sky / smoothness / combined-opacity entropy', GN11='original composer and decay', adapter='same composer and native functions', classification='inherited intended formulas', gradient='pending actual component receipt'),
         dict(item='native clone/split, opacity and big-point pruning', GN11='densification_and_optimization actually invoked; static/dynamic thresholds and lifetime split rules', adapter='no topology call in actual train loop; buffer/core methods alone are insufficient', classification='unresolved fidelity gap blocks full-native claim', next='close or explicitly bound representation-specific adaptation before formal instance phase'),
+        dict(item='actual pruning schedule and world-scale domain', GN11='from>500 every100 and before15000 while below point limit; screen/world large-point predicates enabled after3000; dynamic screen cutoff10px vs static20px', adapter='not invoked at any step', classification='native guarantee is schedule-limited, not a permanent geometry bound', world_scale='big_point_threshold * scene.cameras_extent * contracted_scale_factor(base_world_xyz); do not replace scene extent by spatial_lr_scale, which is initialized to1 in this source', rigid_adaptation_requirement='compute contracted distance from transformed world center, never local actor coordinates; local covariance splitting must preserve owner/lineage and Adam'),
+        dict(item='SH degree schedule', GN11='reference sh_increase_interval=2000; active native loop reads it', adapter='hardcoded1000', classification='explicit schedule adaptation to resolve for formal fidelity; shared by old3/old5 so not by itself the added-ID degradation explanation'),
+        dict(item='camera sampling', GN11='actual CameraSampler samples49 without replacement per epoch; separate sampling RNG and saved stack', adapter='random.Random(seed).randrange each update, with replacement; saved sampler state', classification='explicit sampling adaptation; same old3/old5 stream, not by itself the3-to5 regression cause', restore_requirement='parity of current adapter is not proof of native sampler equivalence'),
         dict(item='static LR', GN11='native scheduler', adapter='new-objective static Adam reset; xyz/t rescheduled and then multiplied .1', classification='intentional adapter policy; claimed10× bug retracted', proof='cpu_policy_audit.json actual caller4nodes passed'),
         dict(item='environment', GN11='original native optimizer active until configured cutoff', adapter='preserve_joint_background_v2 freezes environment parameters and skips optimizer', classification='intentional stage policy', restore='full environment/Adam/RNG proof pending new audit'),
         dict(item='GT rigid poses and local OBB boundary', GN11='native dynamic PVG representation', adapter='fixed genuine track transform, no pose refinement; soft local boundary weight1', classification='intentional representation adaptation', units='normalized squared coordinates; scale .1 implies .01×m², not mislabeled meters'),
@@ -37,7 +48,7 @@ def main():
         first_four_pilot_body_metric_actual_domain='full_scene_visible_union_alpha',
         five_raw_body_original_restoration_claim_retracted=True,
         raw_body_correction='isolated_body_implementation/train.py separate, leaves all old source/checkpoints untouched',
-        terms=terms, source_hashes={n:hashlib.sha256((W/'source'/n).read_bytes()).hexdigest() for n in ['train.py','renderer.py','hybrid30k_losses.py','runtime.py','rigid_model.py','gn11_train.py']},
+        terms=terms, source_hashes={n:hashlib.sha256((W/'source'/n).read_bytes()).hexdigest() for n in ['train.py','renderer.py','hybrid30k_losses.py','runtime.py','rigid_model.py','gn11_train.py','native_scene_init.py','native_camera_sampler.py']},
         human_verdict=None, all_engineering_problems_excluded=False, parameter_updates=0)
     (W / 'constraint_paths.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8')
     print(receipt['status'])

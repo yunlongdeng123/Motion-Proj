@@ -47,6 +47,10 @@ def main():
         '已完成4×300步诊断；实际调用复核发现five_raw_body仍用全场景可见union alpha，只恢复了100权重，撤回“恢复原孤立body”的描述，前四臂opacity日志均不能当孤立body指标。旧臂与检查点保留，另排真正使用package.dynamic_alpha的five_raw_body_isolated 300步。')
     paragraph=paragraph.replace('新五身份GN11 30K已经实际启动，',
         '新五身份GN11 30K已经实际启动，最近原生状态已超过10K；两阶段实际坐标变换差0、时间差1.11e-16且49帧身份/二值union一致。后续controller18165已排队等待当前GN11释放GPU，再顺序执行纠正300步、两臂损失梯度与完整恢复/下一更新检查、五臂全49帧独立/删除渲染；不并发抢卡、正式实例更新仍0。')
+    live=json.loads((W/'live_GN11_status.json').read_text(encoding='utf-8'))
+    paragraph=paragraph.replace('最近原生状态已超过10K',f"最近原生状态快照为{live.get('iteration','未知')}/30000")
+    paragraph=paragraph.replace('不并发抢卡、正式实例更新仍0。',
+        '后续零更新controller27418再追踪GN11/旧3/旧5三锚帧a6/a37的真实静态alphaT与RGB贡献，并核对原生静态RGB梯度。不并发抢卡、正式实例更新仍0。')
     if marker not in text:text=text.replace(intro,intro+'\n\n'+paragraph.strip(),1)
     else:text=re.sub(re.escape(marker)+r'.*?human_verdict=null。',paragraph.strip(),text,count=1,flags=re.S)
     text=text.replace('全部有限GPU队列结束，尚需保存推送、空闲核验及授权关机。','该轮R15队列已结束；当前新增基线工程重跑仍在执行，不能据旧队列状态关机。')
@@ -70,6 +74,10 @@ def main():
     p=P/'docs/research_failures/entries/V82-F06.md';text=p.read_text(encoding='utf-8')
     if '## 2026-10-18：body控制域更正与两阶段实测绑定' not in text:
         p.write_text(text+note,encoding='utf-8')
+    p=P/'docs/research_failures/entries/V82-F06.md';text=p.read_text(encoding='utf-8')
+    if '## 2026-10-18：静态参数同行复核与只读贡献追踪' not in text:
+        text+='''\n\n## 2026-10-18：静态参数同行复核与只读贡献追踪\n\nCPU只读复核确认三套静态点数915840且保留全部原点，结合实际固定拓扑调用，支持从原GN11逐行追踪到旧3/旧5。固定选择GN11在raw128中心位于a6/a37真实框内的494/12827行作为空间诊断区域；旧5最大轴sigma中位数为.138/.051米，低于原GN11的.238/.113米，并非整体尺度同时爆炸；但单行最大尺度比可到28.03/7.52倍。空间区域不代表owner，框外大支撑也可能覆盖像素，远处契约化大点不能仅按绝对sigma判坏点；这些CPU统计不等于条带实际贡献证明。\n\n已登记零更新controller27418，等待GN11及工程复核队列后执行原GN11/旧3/旧5在107/128/137的真实原生alphaT颜色伴随追踪：逐点贡献和需分别与实际alpha、未截断RGB求和配平，另核对原生/适配静态RGB参数梯度。三模型三帧、a6/a37车身及下部矩形区域，零训练更新、零归属改动、无干净道路GT，完成后实际看点/图再判断原因。\n\n原生剪枝实际受500—15000步、100步间隔及点数上限门控，大点判据在3000后启用。世界尺度必须用scene.cameras_extent和基础世界中心的契约化距离；本源代码将spatial_lr_scale初始化为1，不能混作相机extent。另记录GN11 SH升阶2000 vs实例1000、相机无放回 vs有放回的适配差异；旧3/旧5共享这些设置，不能单独用它们解释新增身份退化。所有源文件hash与原字节归档保留，GPU待执行不冒称通过。human_verdict=null。\n\n[静态参数表与有限追踪队列](../../autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html)。\n'''
+        p.write_text(text,encoding='utf-8')
     paths.append('docs/research_failures/entries/V82-F06.md')
     (W/'publish_paths.json').write_text(json.dumps(sorted(set(paths)),indent=2),encoding='utf-8')
     print('Scoped new baseline evidence files:',len(set(paths)))

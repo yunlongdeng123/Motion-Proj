@@ -11,7 +11,7 @@ def get(rel,target,required=True):
 def main():
     for n in ['queue_status.json','full_queue_status.json','stage_input_audit.json','matched5_input_receipt.json','experiment_contract.json','channel_gate.json','prior_trace_receipt.json']:
         get(n,W/n)
-    for n in ['review_queue_status.json','isolated_control_contract.json','stage_binding_receipt.json']:
+    for n in ['review_queue_status.json','isolated_control_contract.json','stage_binding_receipt.json','attribution_queue_status.json','static_growth_receipt.json']:
         get(n,W/n,False)
     live='/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/status.json'
     subprocess.run(['scp','-q','wm-vgpu-1011:'+live,str(W/'live_GN11_status.json')],capture_output=True,text=True,check=True)

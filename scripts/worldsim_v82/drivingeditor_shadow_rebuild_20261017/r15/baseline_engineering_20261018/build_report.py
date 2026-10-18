@@ -6,7 +6,7 @@ def read(n):
     p=W/n;return json.loads(p.read_text(encoding='utf-8')) if p.exists() else None
 def main():
     O.mkdir(parents=True,exist_ok=True)
-    for n in ['channel_gate.json','cpu_policy_audit.json','stage_input_audit.json','matched5_input_receipt.json','experiment_contract.json','prior_trace_receipt.json','queue_status.json','full_queue_status.json','pilot_results.json','source_manifest.json','review_queue_status.json','isolated_control_contract.json','stage_binding_receipt.json','constraint_paths.json','live_GN11_status.json','review_CPU_binding_receipt.json']:
+    for n in ['channel_gate.json','cpu_policy_audit.json','stage_input_audit.json','matched5_input_receipt.json','experiment_contract.json','prior_trace_receipt.json','queue_status.json','full_queue_status.json','pilot_results.json','source_manifest.json','review_queue_status.json','isolated_control_contract.json','stage_binding_receipt.json','constraint_paths.json','live_GN11_status.json','review_CPU_binding_receipt.json','static_growth_receipt.json','attribution_queue_status.json']:
         if (W/n).exists():shutil.copy2(W/n,O/n)
     shutil.copytree(W/'prior_trace',O/'prior_trace',dirs_exist_ok=True,ignore=shutil.ignore_patterns('loader'))
     shutil.copy2(W/'static_provenance_raw128.png',O/'static_provenance_raw128.png')
@@ -20,6 +20,8 @@ def main():
       ('继承性阻塞','原 raw-body α 约束被替换','原生 DrivingEditor 与 GN11有100×孤立动态body α整图MSE；刚体适配中权重设0，换为100×可见ID α均值，遮挡语义不同。','单独恢复原项做短实验；明确是恢复原约束，不能把添加新损失与修工程混写。'),
       ('已纠正短测定义','先前body控制臂接线仍是可见union','实际five_raw_body只恢复了权重100，state仍指向dynamic_visible_alpha。此前“恢复孤立body”的描述无效；前四臂记录的opacity项都是可见union MSE。','旧臂及检查点保留，改列为可见union控制；另排five_raw_body_isolated 300步，只换成renderer真实孤立dynamic_alpha并登记状态域。'),
       ('继承性阻塞','固定拓扑与原增密/剪枝不同','刚体适配固定点拓扑；配置里存在原增密和大点剪枝参数，不代表实例阶段实际调用。a6旧5最大σ约3.29米。','逐项列出原方法、GN11及刚体适配的实际调用/梯度/生效阶段；未闭合前不得称完整原生方法。'),
+      ('继承性核对','原生剪枝也有阶段边界','原配置>500起每100步且<15000调用，点数上限也参与门控；大点判据在3000后启用。契约化世界尺度要用scene.cameras_extent及世界中心，不能用初始化为1的spatial_lr_scale或Actor局部中心代替。','恢复调用必须保留实际调度与坐标语义；不能把“原方法有剪枝”扩大成全程保证没有大点。'),
+      ('显式适配差异','SH升阶与相机采样','GN11读取2000步SH升阶，实例写死1000；GN11每49帧无放回采样，实例每步有放回随机。旧3/旧5共享这些设置。','纳入正式配置取舍；这些差异本身不能解释3→5的新增退化，也不能混称GPU通道错误。'),
       ('比较混杂','身份均值从3变5','100×mean_K导致每身份系数100/3→100/5，降低40%。这不是通道索引算错。','单独测试五身份100×5/3，保持其余损失不变。'),
       ('本次排除','第二批身份通道串线或断梯度','实际CUDA：五身份2批/5批、换序、单ID参考及union通过；真实107/128/137前向一致，128逐ID梯度通过。','保留原始receipt；合成五身份均有非零opacity梯度，真实128的a5不可见零梯度明确保留。'),
       ('本次排除','静态渲染适配数值错误','49帧原生静态renderer与适配器最大RGB差约2.4e-7。raw128恶化确实出现在旧5参数中。','检查无额外GT mask乘图；保留native/GN11/旧3/旧5逐帧原尺寸图。'),
@@ -69,11 +71,28 @@ def main():
     live_section+='<p>后续队列：<code>'+html.escape(review.get('state','未登记'))+'</code>。等当前GN11释放GPU后，顺序完成纠正孤立body 300步、两臂真实损失梯度及恢复检查、五臂全49帧分支/独立资产/逐身份删除。恢复检查只在独立审计副本执行共6次更新，不计入训练、不回写检查点。正式新实例更新仍为0。</p>'
     live_section+='<p>实际两阶段坐标变换最大差0、时间最大差1.11×10⁻¹⁶，49帧身份与二值union一致。框软损失在归一化坐标的平方域计算，.1尺度使数值为米平方的.01倍；这是损失尺度说明，不能单凭此认定坐标转换错误。</p>'
     live_section+='<p><a href="stage_binding_receipt.json">实际GN11与实例绑定</a> · <a href="constraint_paths.json">逐项原约束／适配调用矩阵</a> · <a href="isolated_control_contract.json">body控制更正合同</a> · <a href="review_queue_status.json">后续有限队列</a> · <a href="live_GN11_status.json">原生GN11状态快照</a> · <a href="review_CPU_binding_receipt.json">审计更新代码CPU绑定检查（未代表GPU通过）</a></p></section>'
+    growth=read('static_growth_receipt.json')
+    if growth:
+        parameters=growth['static_parameters']
+        growth_rows=''
+        for actor in [6,37]:
+            key='a%d_initial_OBB_region'%actor
+            count=parameters['GN11'][key]['sigma_max_axis_m']['count']
+            values=[f'a{actor} 初始空间区域',str(count)]
+            values += [format(parameters[m][key]['sigma_max_axis_m']['median'],'.3f') for m in ['GN11','old3','old5']]
+            values += [format(parameters[m]['same_row_changes_from_GN11'][key]['max_axis_sigma_ratio']['maximum'],'.2f') for m in ['old3','old5']]
+            growth_rows+='<tr>'+''.join('<td>'+html.escape(v)+'</td>' for v in values)+'</tr>'
+        attribution=read('attribution_queue_status.json') or {}
+        live_section+='<section><h2>静态点同一参数行追踪：不是所有点一起变大</h2><p>三套静态点数均为915840，保留全部原点、无拓扑重排的实际合同支持逐行比较。以GN11 raw128时中心落在a6/a37真实框内的静态点固定选择空间区域，追踪同一批参数到旧3和旧5。此处不是Actor资产归属，也未覆盖全部跨框支撑。</p>'
+        live_section+='<table><tr><th>固定诊断区域</th><th>静态点数</th><th>GN11 σ中位/m</th><th>旧3 σ中位/m</th><th>旧5 σ中位/m</th><th>旧3单点最大尺度比</th><th>旧5单点最大尺度比</th></tr>'+growth_rows+'</table>'
+        live_section+='<p>σ为最大轴尺度；比值相对同一GN11原始参数行。多数区域点缩小与少数点极端放大可以同时发生，不能把蓝白条带简单归为整体尺度爆炸，也不能据中心位于车框就把道路点转成车。全场景尺度还受距离契约化影响，大σ不自动等于坏点。</p>'
+        live_section+='<p>只读真实贡献追踪队列：<code>'+html.escape(attribution.get('state','待登记'))+'</code>。将在已登记工程复核之后，核对GN11/旧3/旧5在raw107、128、137的a6/a37车身与下部区域：用原生rasterizer的颜色梯度得到逐Gaussian αT，并与实际alpha和未截断RGB求和配平；另核对原生静态RGB参数梯度。全部零训练更新，结果尚未用于宣称原因或质量通过。</p>'
+        live_section+='<p><a href="static_growth_receipt.json">完整CPU静态参数统计</a> · <a href="attribution_queue_status.json">零更新贡献追踪状态</a></p></section>'
     doc=doc.replace('<section><h2>正式比较前的验收门槛</h2>',live_section+'<section><h2>正式比较前的验收门槛</h2>')
     doc=doc.replace('<section><h2>正式比较前的验收门槛</h2>',measured+'<section><h2>正式比较前的验收门槛</h2>')
     (O/'index.html').write_text(doc,encoding='utf-8')
     status=dict(at=now,old5_accepted_as_clean_baseline=False,new_protocol='matched-five-ID GN11 30K then verified five-instance 30K',
-        old5_engineering_cleared=False,channel_gate=g['status'],native_static_gate=trace['status'],stage_input_audit=inp['status'],pilot=q,full_queue=full,review_queue=review,live_GN11=live.get('iteration'),isolated_body_restoration_claim_for_original_control_retracted=True,human_verdict=None)
+        old5_engineering_cleared=False,channel_gate=g['status'],native_static_gate=trace['status'],stage_input_audit=inp['status'],pilot=q,full_queue=full,review_queue=review,attribution_queue=read('attribution_queue_status.json'),live_GN11=live.get('iteration'),isolated_body_restoration_claim_for_original_control_retracted=True,human_verdict=None)
     (O/'status.json').write_text(json.dumps(status,indent=2),encoding='utf-8')
     banner='<p id="baseline-engineering-warning" style="background:#5d3314;color:#fff1db;padding:16px;border:1px solid #e6a45b;border-radius:8px">旧GN11＋五实例结果尚未通过工程与编辑质量验收。已发现GN11与实例阶段的身份集合不一致；本页保留历史真实输出。<a style="color:#fff" href="../baseline_engineering_20261018/index.html">查看重新安排的工程验收与两阶段重跑</a>。</p>'
     for p in [O.parent/'identity_comparison_20261018/index.html',O.parent/'identity_comparison_20261018/sync_player.html']:

@@ -63,6 +63,27 @@
       "next": "close or explicitly bound representation-specific adaptation before formal instance phase"
     },
     {
+      "item": "actual pruning schedule and world-scale domain",
+      "GN11": "from>500 every100 and before15000 while below point limit; screen/world large-point predicates enabled after3000; dynamic screen cutoff10px vs static20px",
+      "adapter": "not invoked at any step",
+      "classification": "native guarantee is schedule-limited, not a permanent geometry bound",
+      "world_scale": "big_point_threshold * scene.cameras_extent * contracted_scale_factor(base_world_xyz); do not replace scene extent by spatial_lr_scale, which is initialized to1 in this source",
+      "rigid_adaptation_requirement": "compute contracted distance from transformed world center, never local actor coordinates; local covariance splitting must preserve owner/lineage and Adam"
+    },
+    {
+      "item": "SH degree schedule",
+      "GN11": "reference sh_increase_interval=2000; active native loop reads it",
+      "adapter": "hardcoded1000",
+      "classification": "explicit schedule adaptation to resolve for formal fidelity; shared by old3/old5 so not by itself the added-ID degradation explanation"
+    },
+    {
+      "item": "camera sampling",
+      "GN11": "actual CameraSampler samples49 without replacement per epoch; separate sampling RNG and saved stack",
+      "adapter": "random.Random(seed).randrange each update, with replacement; saved sampler state",
+      "classification": "explicit sampling adaptation; same old3/old5 stream, not by itself the3-to5 regression cause",
+      "restore_requirement": "parity of current adapter is not proof of native sampler equivalence"
+    },
+    {
       "item": "static LR",
       "GN11": "native scheduler",
       "adapter": "new-objective static Adam reset; xyz/t rescheduled and then multiplied .1",
@@ -97,7 +118,9 @@
     "hybrid30k_losses.py": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837",
     "runtime.py": "62a47fb77e9e11fee20b14d3579215fd683d84ae1b41c59281dcf78dcd39306b",
     "rigid_model.py": "3c7dff6e551154402f9f112480147b53c1f16930faedd1e98336b463cb759413",
-    "gn11_train.py": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce"
+    "gn11_train.py": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce",
+    "native_scene_init.py": "e39d4482e0a128c10be88a1be2f8795de3c566a3853543d5c88d42db517cb72c",
+    "native_camera_sampler.py": "6731b2b81813f9da1589ae9cd61cd66713a32b604e07ab89663c3fa1e69f3c95"
   },
   "human_verdict": null,
   "all_engineering_problems_excluded": false,
