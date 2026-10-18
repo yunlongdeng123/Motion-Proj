@@ -22,6 +22,9 @@ B运行器补入首更新前六个5K节点的磁盘预估，保存时再按剩�
 
 已将新五身份GN11第一阶段30K的真实49帧完整原图/合成/动态/静态/α及删除动态集合视频加入报告，7路480×320、10fps、全I帧逐一验证；主入口嵌入同步播放器，默认raw128。实际全49静态复核仍有车形与亮白/彩色条带，不能认定干净背景，原因仍需区分监督盲区与剩余实现问题，当前A第二阶段和B继续授权训练。
 
+
+新增道路观测审计：当前49帧中，raw128自车道a6/a37背后的有效平面路面查询缺曝光100%/78.54%，左侧近处a26为0.07%；原始199帧存在窗外候选，未加入训练。该证据提高数据观测不足的解释优先级，不能把近似曝光当GT或因果百分比。详见[完整报告](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/road_observability_20261019/index.html)。A/B继续原方案，human_verdict=null。
+
 五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
 
 旧GN11 30K＋五实例30K已完成，a5/a26/a18/a6/a37都有真实独立owner，全49帧245身份帧的独立RGB、alpha、全景可见alpha与删除完成。历史旧3的147身份帧与原冻结R15的245身份帧也已完成，总637身份帧；本地全PNG矩阵及31视频交付，Git保存视频、固定锚帧和完整三值支撑证据。[旧基线完成对照与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html) · [旧5/原R15三维中心与真实支撑](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。

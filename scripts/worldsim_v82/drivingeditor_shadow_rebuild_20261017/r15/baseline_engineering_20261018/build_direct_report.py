@@ -46,5 +46,7 @@ def main():
   page=page.replace('<section><h2>A中断原因与恢复</h2>','<section><h2>并行切换：没有丢步</h2><p>A利用既有抢占保存机制，完整保存第1,999步后切换共享准入；实际GPU逐项核对模型、Adam、RNG和采样器，再从第2,000步继续。没有重放、没有重开30K。B仅将原等待队列改为同预算并行执行，掩码、点数上限、损失和学习率不改。</p><p><a href="parallel_capacity_receipt.json">显存实测与预算</a> · <a href="parallel_A_runtime_restore.json">A实际GPU续训核对</a></p></section><section><h2>A中断原因与恢复</h2>')
  if read('direct_initial_checkpoint_receipt.json').get('status')=='PASSED_ACTUAL_INSTANCE_STEP1_COMPLETE_CHECKPOINT_CPU_AUDIT':
   page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p>第一阶段30K已实际完成，五实例30K已自动启动，首步完整checkpoint已保存并CPU只读检查。背景和环境来自新30K，静态初始化保留1,988,336点、删除0点；没有加载旧训练车辆或R15参数。该检查属于同一30K训练预算，没有额外消融更新。<a href="direct_initial_checkpoint_receipt.json">实际首步检查点与有效策略</a>。</p><p>最终视频会在发布前核对49帧、480×320完整画面、10fps和全部I帧；中断的编码文件保留后重新生成，不直接当成已完成媒体。<a href="video_encoding_CPU_receipt.json">编码恢复CPU合成检查</a>不是真实模型渲染结果。</p>')
+ if (O/'road_observability_20261019/index.html').exists():
+  page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1><p><a href="road_observability_20261019/index.html">新增：左右车道道路观测、LiDAR支撑与原始199帧核查</a></p>')
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()

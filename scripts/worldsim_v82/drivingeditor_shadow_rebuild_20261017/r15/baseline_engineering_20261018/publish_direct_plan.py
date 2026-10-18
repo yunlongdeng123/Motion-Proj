@@ -25,10 +25,14 @@ def main():
    if n=='results.html':dest.write_text(dest.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
  if (O/'branch_videos').exists():
   for src in (O/'branch_videos').glob('gn11five_*.mp4'):cp(src,D/'branch_videos'/src.name)
+ if (O/'road_observability_20261019').exists():
+  for src in (O/'road_observability_20261019').rglob('*'):
+   if src.is_file():cp(src,D/'road_observability_20261019'/src.relative_to(O/'road_observability_20261019'))
  code=['apply_direct_plan.py','formal_support.py','rigid_spatial_topology.py','test_rigid_spatial_topology.py','build_direct_implementation.py','direct_cpu_gate.py','run_direct_30k30k.py','evaluate_direct.py','start_direct_plan.py','audit_all_vehicle_coverage.py','infer_all_vehicles_native.py','run_all_vehicle_preparation.py','start_all_vehicle_preparation.py','run_all_vehicle30k_queue.py','evaluate_all_vehicle_stage1.py','start_all_vehicle_queue.py','prepare_fullframe_report.py','fullframe_player_template.html','build_direct_report.py','build_direct_player.py','validate_direct_artifacts.py','publish_direct_plan.py',
  'review_all_vehicle_association.py','infer_vehicle_geometric_prompts.py','start_vehicle_geometric_prompts.py','infer_vehicle_instance_prompts.py','start_vehicle_instance_prompts.py','audit_vehicle_instance_masks.py','audit_full_segment_vehicle_measurements.py','infer_vehicle_camera_prompts.py','start_vehicle_camera_prompts.py','assemble_camera_vehicle_candidates.py','audit_zero_seed_sources.py',
  'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  code+=['check_player_identity_controls.js']
+ code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)
  archive=W/'direct_implementation.zip'
@@ -60,6 +64,8 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
  if (W/'parallel_cutover_receipt.json').exists():
   paragraph=re.sub(r'intersection_input_passed已保存，B controller52417.*?当前独占排队。','intersection_input_passed已通过；用户最新要求现显存足够即并行。实测与A并存的额外13GiB分配成功，A/B分配器预算16/13GiB加2GiB余量，总31GiB小于Torch实际31.475GiB。未来峰值仍需监测。原等待B52417在0更新时取消；新共享GPU守护controller79622持全局锁，A79624、B79625均已真实训练。A在1999步完整保存后从2000继续，模型/Adam/RNG/采样器实际GPU逐项相等，无丢步或重放。',paragraph,flags=re.S)
   paragraph+='\n已将新五身份GN11第一阶段30K的真实49帧完整原图/合成/动态/静态/α及删除动态集合视频加入报告，7路480×320、10fps、全I帧逐一验证；主入口嵌入同步播放器，默认raw128。实际全49静态复核仍有车形与亮白/彩色条带，不能认定干净背景，原因仍需区分监督盲区与剩余实现问题，当前A第二阶段和B继续授权训练。\n'
+ if (O/'road_observability_20261019/index.html').exists():
+  paragraph+='\n新增只读道路可观测性核查：49帧跨度4.800秒，自车仅移动2.04m，34帧距初始位置不足0.1m；左侧对向车辆移动约40—45m。raw128车身轮廓背后的有效平面路面查询，a26始终无曝光机会0.07%、a6为100%、a37为78.54%；是几何近似机会而非干净道路GT。原199帧只读3D框检查发现更多窗外候选，未加入训练；已有曝光部分仍有误差，不能把全部问题等同于身份错分或纯补全。A/B输入和预算未改。详见[左右车道观测与原始序列核查](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/road_observability_20261019/index.html)。\n'
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')
