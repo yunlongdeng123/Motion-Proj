@@ -28,12 +28,16 @@ def main():
  if (O/'road_observability_20261019').exists():
   for src in (O/'road_observability_20261019').rglob('*'):
    if src.is_file():cp(src,D/'road_observability_20261019'/src.relative_to(O/'road_observability_20261019'))
+ if (O/'gn11_static_duplicate_20261019').exists():
+  for src in (O/'gn11_static_duplicate_20261019').rglob('*'):
+   if src.is_file():cp(src,D/'gn11_static_duplicate_20261019'/src.relative_to(O/'gn11_static_duplicate_20261019'))
  code=['apply_direct_plan.py','formal_support.py','rigid_spatial_topology.py','test_rigid_spatial_topology.py','build_direct_implementation.py','direct_cpu_gate.py','run_direct_30k30k.py','evaluate_direct.py','start_direct_plan.py','audit_all_vehicle_coverage.py','infer_all_vehicles_native.py','run_all_vehicle_preparation.py','start_all_vehicle_preparation.py','run_all_vehicle30k_queue.py','evaluate_all_vehicle_stage1.py','start_all_vehicle_queue.py','prepare_fullframe_report.py','fullframe_player_template.html','build_direct_report.py','build_direct_player.py','validate_direct_artifacts.py','publish_direct_plan.py',
  'review_all_vehicle_association.py','infer_vehicle_geometric_prompts.py','start_vehicle_geometric_prompts.py','infer_vehicle_instance_prompts.py','start_vehicle_instance_prompts.py','audit_vehicle_instance_masks.py','audit_full_segment_vehicle_measurements.py','infer_vehicle_camera_prompts.py','start_vehicle_camera_prompts.py','assemble_camera_vehicle_candidates.py','audit_zero_seed_sources.py',
  'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  code+=['check_player_identity_controls.js']
  code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
  code+=['audit_parallel_5k_durability.py']
+ code+=['audit_gn11_static_duplicate.py','audit_gn11_static_motion_features.py','build_gn11_static_duplicate_report.py','validate_gn11_static_duplicate.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)
  archive=W/'direct_implementation.zip'
@@ -69,6 +73,8 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
   paragraph+='\n新增只读道路可观测性核查：49帧跨度4.800秒，自车仅移动2.04m，34帧距初始位置不足0.1m；左侧对向车辆移动约40—45m。raw128车身轮廓背后的有效平面路面查询，a26始终无曝光机会0.07%、a6为100%、a37为78.54%；是几何近似机会而非干净道路GT。原199帧只读3D框检查发现更多窗外候选，未加入训练；已有曝光部分仍有误差，不能把全部问题等同于身份错分或纯补全。A/B输入和预算未改。详见[左右车道观测与原始序列核查](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/road_observability_20261019/index.html)。\n'
  if (O/'parallel_5k_durability_receipt.json').exists():
   paragraph+='\nA/B首个5K完整检查点均已实际CPU只读核验：A单文件3162838956B，91项模型/Adam张量有限、严格续训合同及5K采样/RNG通过；B四组件与完成事件相符，Adam/RNG/SGCM/5K采样状态通过，49视图零更新评估已完成。未进行5K GPU恢复或增加更新。存储预测按真实未保存5K节点、A整体临时文件及实际导出节奏修正，不再重复计已完成A第一阶段、缺失历史step1和B已保存5K，未来仍逐次核对并保留全部资产。\n'
+ if (O/'gn11_static_duplicate_20261019/receipt.json').exists():
+  paragraph+='\nraw129静态车形进一步核查：两车真实动态mask已接入，未发现静态/动态视频混用；但静态body直接RGB输出梯度为0，动态α不对静态排车，原生静态仍使用时间位移和时间显隐。实际1195277个静态点49时间中心跨度>0.1m，而衰减后正则速度特征<1e-6。相关getter与归档上游AST一致，是继承的表示/约束漏洞；道路缺观测不能替代分离正确性证明，不能再称主体已彻底分离。全局计数不等于标注车形的Gaussian贡献归因；B也共享此路径，当前原配置和预算未改，无新消融。详见[实际参数、梯度和完整画面](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/gn11_static_duplicate_20261019/index.html)。\n'
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')

@@ -1,0 +1,53 @@
+{
+  "status": "COMPLETE_CPU_EXACT_NATIVE_STATIC_MOTION_FEATURE_AUDIT",
+  "step": 30000,
+  "rows": 1988336,
+  "cycle_T": 0.2,
+  "velocity_decay": 1.0,
+  "raw_base_velocity_model": {
+    "mean": 0.7656949069908753,
+    "median": 0.5945586562156677,
+    "p95": 2.1195372343063354,
+    "p99": 3.3026136517524662,
+    "max": 6.683122634887695
+  },
+  "regularized_get_inst_velocity_model": {
+    "mean": 0.00378135189911301,
+    "median": 0.0,
+    "p95": 0.0019262128043919802,
+    "p99": 0.11811327263712845,
+    "max": 2.3322947025299072
+  },
+  "damping": {
+    "mean": 0.1522917997412145,
+    "median": 1.9320007837207355e-26,
+    "p95": 0.46088963747024536,
+    "p99": 0.980708086490631,
+    "max": 0.9957653284072876
+  },
+  "feature_velocity_below_1e_6_fraction": 0.8944594860076904,
+  "actual_sampled_center_span_m": {
+    "mean": 0.47869935857144263,
+    "median": 0.3721829205751419,
+    "p95": 1.3244745135307312,
+    "p99": 2.0610161185264584,
+    "max": 4.252104759216309
+  },
+  "rows_center_span_over_0p1m_and_feature_velocity_below_1e_6": 1195277,
+  "native_existing_fixed_pose_time_change": {
+    "max_static_RGB_MAE": 0.03256423771381378,
+    "max_static_RGB_abs_change": 0.9392091631889343,
+    "source": "Already completed native30K fixed-camera49-timestamp render; no new GPU work"
+  },
+  "expressions": {
+    "position": "xyz + raw_velocity*sin((timestamp-t)*2pi/T)/(2pi/T)",
+    "regularized_feature": "raw_velocity*exp(-exp(log_temporal_width)/T/2*velocity_decay)"
+  },
+  "caveats": [
+    "Velocities are model-coordinate per model-time quantities, not physical m/s.",
+    "Global counts do not attribute the marked car-shaped pixels to particular Gaussians.",
+    "The damped-feature/raw-position formulas are inherited native behavior; this is a confirmed constraint/representation mismatch, not evidence of a newly introduced source edit."
+  ],
+  "GPU_used": false,
+  "training_updates": 0
+}

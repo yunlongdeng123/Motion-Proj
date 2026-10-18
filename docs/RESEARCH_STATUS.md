@@ -27,6 +27,18 @@ B运行器补入首更新前六个5K节点的磁盘预估，保存时再按剩�
 
 A/B首个5K完整检查点均已保存并CPU只读核验：A单文件3,162,838,956B，91项模型/Adam张量有限，严格续训合同、采样及RNG有效；B静态/动态/环境/训练状态四组件与complete事件一致，Adam/RNG/SGCM及5K采样有效，49视图评估完成。没有5K GPU恢复或额外训练更新。最近报告快照A5700、B8400，均正常并行，原输入和预算不改。存储预测修正旧节奏重复计数：A已完成第一阶段未来开销归零，不补造恢复run历史step1，B已保存5K不再计未来节点；A按单文件临时checkpoint和最终导出实际计数。18:18UTC空闲59.13GB，以配置上限加10%点数余量估剩余54.42GB，余4.72GB；按当时实际点数余18.63GB。仅预测、非严格点数上界，不删资产，后续每节点继续核对。
 
+用户指出raw129新五身份GN11第一阶段静态仍有a6/a37。实际CPU只读复核49帧canonical mask解码和保存的30K mask与五身份标签并集逐像素一致；raw129两车动态alpha均值0.989055/0.994077，动态body RGB误差3.62/1.96（255域）。原生静态renderer与上游归档字节一致，已实际解码主播放器第40帧并与raw129原生静态PNG核对，RGB均误差2.51/255，非动态/静态混用。标签一致不代表SAM mask是像素GT。
+
+实际loss函数在保存的真实FP32图和mask上CPU autograd：body区域静态RGB输出梯度严格0；动态alpha损失与独立static alpha无计算连接。独立静态alpha近1也可能是正常道路，不能通过压空2D静态alpha来“修”干净街景。尚未归因每个车形像素的Gaussian贡献/深度。
+
+更关键的是原生静态表示仍用raw_velocity做SHM位置变化、时间高斯显隐，速度正则和NPS却读取经temporal_width指数衰减的feature velocity。实际1988336静态点中1195277点49时间采样中心跨度>0.1m且feature norm<1e-6；全场景跨度中位0.372m、95分位1.324m、最大4.252m。速度阈值为模型单位/模型时间，不是m/s；全局计数不等于车体owner。已保存的固定相机49时间检查显示静态RGB随时间变，现只用CPU导出完整49帧视频，无新GPU渲染。相关3getter AST与固定上游560d57c3一致，是继承的表示/约束漏洞，非本轮源码公式误改。
+
+初始化0.1m动态种子去重重放：实际149072动态种子、585943初始静态；raw129同时满足真实3D框与body mask的a6/a37测量点135/1215，仅0/3个在初始静态有1mm邻居。五锚帧仅0—3个，不支持大量原车测量点原封漏入静态是主因，不能据此证明所有初始化正确。
+
+修订上一轮“动态已承担主体、主要是道路没恢复”的结论：道路观测数据仍成立，但不能由此证明车体已彻底分离。没有因果消融，不对观测不足与静态重复解释强行排主次。当前静态车形对干净街景目标不通过。B同样继承这些路径，扩大20身份不自动解决。A/B按用户原授权预算继续，未改在训模型/损失、未增加训练臂/消融；原45K暂停。human_verdict=null。
+
+[raw129实际梯度、源码与完整画面](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/gn11_static_duplicate_20261019/index.html)。
+
 五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
 
 旧GN11 30K＋五实例30K已完成，a5/a26/a18/a6/a37都有真实独立owner，全49帧245身份帧的独立RGB、alpha、全景可见alpha与删除完成。历史旧3的147身份帧与原冻结R15的245身份帧也已完成，总637身份帧；本地全PNG矩阵及31视频交付，Git保存视频、固定锚帧和完整三值支撑证据。[旧基线完成对照与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html) · [旧5/原R15三维中心与真实支撑](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。
