@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-18T12:43:29.423679+00:00",
+  "status": "PASSED_ACTUAL_CALLER_REAPPLIES_SCALE",
+  "retracted_initial_claim": "isolated scheduler method was tested without actual archived caller; not a demonstrated old5 defect",
+  "actual_caller_lines": [
+    176,
+    183
+  ],
+  "tests": [
+    {
+      "step": 1,
+      "actual": {
+        "xyz": 5e-05,
+        "t": 0.0001,
+        "f_dc": 0.00025
+      },
+      "passed": true
+    },
+    {
+      "step": 100,
+      "actual": {
+        "xyz": 9.900990099009902e-07,
+        "t": 1.9801980198019803e-06,
+        "f_dc": 0.00025
+      },
+      "passed": true
+    },
+    {
+      "step": 300,
+      "actual": {
+        "xyz": 3.322259136212625e-07,
+        "t": 6.64451827242525e-07,
+        "f_dc": 0.00025
+      },
+      "passed": true
+    },
+    {
+      "step": 30000,
+      "actual": {
+        "xyz": 3.333222225925803e-09,
+        "t": 6.666444451851606e-09,
+        "f_dc": 0.00025
+      },
+      "passed": true
+    }
+  ],
+  "parameter_updates": 0,
+  "normalization_confounds": {
+    "old3_each_ID_effective_weight": 33.333333333333336,
+    "old5_each_ID_effective_weight": 20.0,
+    "old5_over_old3": 0.6
+  }
+}

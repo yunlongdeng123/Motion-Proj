@@ -1,0 +1,188 @@
+{
+  "status": "PREPARED_NOT_TRAINED",
+  "at": "2026-10-18T12:46:03.760621+00:00",
+  "variants": [
+    {
+      "name": "three_replay",
+      "identities": 3,
+      "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_specs/scene0008_089_137.json",
+      "raw_body_weight": 0.0,
+      "ID_weight": 100.0,
+      "role": "historical three-ID reproduction"
+    },
+    {
+      "name": "five_replay",
+      "identities": 5,
+      "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/identity_completion_20261018/spec5.json",
+      "raw_body_weight": 0.0,
+      "ID_weight": 100.0,
+      "role": "historical five-ID reproduction"
+    },
+    {
+      "name": "five_raw_body",
+      "identities": 5,
+      "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/identity_completion_20261018/spec5.json",
+      "raw_body_weight": 100.0,
+      "ID_weight": 100.0,
+      "role": "restore inherited isolated raw-body opacity constraint only"
+    },
+    {
+      "name": "five_ID_weight",
+      "identities": 5,
+      "spec": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/identity_completion_20261018/spec5.json",
+      "raw_body_weight": 0.0,
+      "ID_weight": 166.66666666666666,
+      "role": "keep per-ID coefficient equal to historical three-ID arm only"
+    }
+  ],
+  "updates_each": 300,
+  "maximum_total_pilot_updates": 1200,
+  "LR_horizon": 30000,
+  "initialization": "same GN11 30000 static/environment and original raw-LiDAR seeds; no trained instances, no R15 weights",
+  "seed": 0,
+  "all_49_frames": true,
+  "physical_shadows": false,
+  "pose_refinement": false,
+  "topology": "same fixed historical topology",
+  "R15_parameter_updates": 0,
+  "full_30000_training_state": "BLOCKED_UNTIL_ENGINEERING_AND_PILOT_REVIEW",
+  "raw_body_term_source": "https://github.com/WangXu-xxx/DrivingEditor/blob/560d57c3825ed2bdbc6a6602e0011ad51e8da60e/train.py#L441-L450",
+  "pending_fidelity_items": [
+    "fixed-topology adapter versus native densification/pruning",
+    "actual loss-gradient and optimizer/RNG restore receipts",
+    "original GN11 prior static artifact provenance"
+  ],
+  "historical_source_hashes": {
+    "__init__.py": {
+      "sha256": "c79b26ebdce714e1b5b1ba042272ce6ecaa619c54b3bb30b47e5fb6cd449cc13",
+      "mtime_ns": 1791890472000000000
+    },
+    "associate_silver_actor.py": {
+      "sha256": "cd8437d2798af32e912dee44153ecd3f2711b81e083298ce5caf76c4520576a3",
+      "mtime_ns": 1791890472000000000
+    },
+    "build_edit_contacts.py": {
+      "sha256": "d318810082bef042ab362bd28af4fd49684718a9eb1a7b2911c6fc5808cfce88",
+      "mtime_ns": 1791906137000000000
+    },
+    "check_full_restore.py": {
+      "sha256": "b6d041143cacea73f3b810c748a18a67b091a1a2c0cc7df4aa1891e08077fc45",
+      "mtime_ns": 1792056145536061638
+    },
+    "check_gmc_prepared.py": {
+      "sha256": "18ca31b529690c409e74973cf46f7d1c27d0a3ab3459c8914ad41396e2dc71e5",
+      "mtime_ns": 1791891337000000000
+    },
+    "collect_edit_summary.py": {
+      "sha256": "4e69d2b8f36190c95cbe38f0bd53bf743bf6064ed279e93de98ab30545e9c3b8",
+      "mtime_ns": 1791905797000000000
+    },
+    "collect_partial_preview.py": {
+      "sha256": "b8e953fe7c7b526a24d745c649962afc00d3279bdb9f3af5b444737ead4f2632",
+      "mtime_ns": 1791915136000000000
+    },
+    "data.py": {
+      "sha256": "d4a54d639881b6130bdc70e4921c6f1d5d5e543020a43d6bee0e313af1459f9b",
+      "mtime_ns": 1792081825393553281
+    },
+    "evaluate_scene.py": {
+      "sha256": "8bbc232e076d8b91ac5746429a6c72f7e234311e95cb36fc6908d5b369b68577",
+      "mtime_ns": 1792080834484428543
+    },
+    "launch_fixed30k.py": {
+      "sha256": "825301337ae608270daf3503f0a299a3592ac83e903e992d37171c642f4703d3",
+      "mtime_ns": 1791906608000000000
+    },
+    "losses.py": {
+      "sha256": "e5b2c9c7a8c8802df9067c2d301b12e5fdea141ff6f712b951448209b2ef5903",
+      "mtime_ns": 1791890472000000000
+    },
+    "package_full30k_assets.py": {
+      "sha256": "d12bc8775a0ae40290726af527444c39430aa70334cbab338140cb97f38fdca4",
+      "mtime_ns": 1791946131000000000
+    },
+    "package_transport_light.py": {
+      "sha256": "ef476ca10505f5dca2f7c4dd33bd0750e2d5386db75d50fc03f7a91921404feb",
+      "mtime_ns": 1791948004000000000
+    },
+    "prepare_instances.py": {
+      "sha256": "645d155621f9a963dfcb7eae1bd8a02bf604ba62285b0933cc143054c5580afd",
+      "mtime_ns": 1791890473000000000
+    },
+    "prepare_runtime.py": {
+      "sha256": "af2b8504e9f174e9d5b90d719dcefbe55612f0529a4b1224e8cb245cf5b5fabd",
+      "mtime_ns": 1791891048000000000
+    },
+    "priority.py": {
+      "sha256": "ff638675eb609e77690014c6fd3341c53a0d9e741da9678286127535c4882c31",
+      "mtime_ns": 1791890473000000000
+    },
+    "queue_edit_smoke.py": {
+      "sha256": "9638cf421131e42389aec9375a452e6f67e695a6a6f57dfde453d4f0df8f6fef",
+      "mtime_ns": 1791905427000000000
+    },
+    "queue_gmc.py": {
+      "sha256": "2154e4de724d8bc3285fc46e15f63ed94ad6c508d0f9b2c6580d6a81d89bbe93",
+      "mtime_ns": 1791891666000000000
+    },
+    "queue_post30k.py": {
+      "sha256": "078bbae71473bb8ad6306d46e8847e6469ca9a3e981e8c2d19d2dcfb430fe7a8",
+      "mtime_ns": 1791913470000000000
+    },
+    "queue_post30k_r2.py": {
+      "sha256": "8e2eb1fcdf4a5e9c6804fd478ff97e7bd3cdec7da131ce7dd8c1ec501a74fba5",
+      "mtime_ns": 1791914003000000000
+    },
+    "queue_post30k_r3.py": {
+      "sha256": "940a4be7905b6c70cb3ffed6683806aaddd4de4099db1bb1b4d52f4c7d708a4c",
+      "mtime_ns": 1791945887000000000
+    },
+    "render_edits.py": {
+      "sha256": "03f77f21b875fd55c07b043f51f7bad1b5d59b6e95c277b1ed6e268bf85a3923",
+      "mtime_ns": 1791945887000000000
+    },
+    "renderer.py": {
+      "sha256": "3020dad8c20e9cdb5e2cd0daebc489dbdf04bb27f88e0187ab15eb87df9d544c",
+      "mtime_ns": 1791890474000000000
+    },
+    "repair_probe.py": {
+      "sha256": "ebbd12cc6fca647ea10b540fef936b0bb04b38732d4b355337501ef8f1229c27",
+      "mtime_ns": 1792055877513056500
+    },
+    "restore_contract.py": {
+      "sha256": "4719e5af9499d058ab98a7aa0a808367e1fc4c7a174d7a3642b9f905945a4773",
+      "mtime_ns": 1791906138000000000
+    },
+    "rigid_model.py": {
+      "sha256": "3c7dff6e551154402f9f112480147b53c1f16930faedd1e98336b463cb759413",
+      "mtime_ns": 1791906138000000000
+    },
+    "run_cuda_contract.py": {
+      "sha256": "14610fd9514bc9e67e1a6f0eb9815227771bc4325dde1bd57a159b069f95e0f8",
+      "mtime_ns": 1791905564000000000
+    },
+    "runtime.py": {
+      "sha256": "62a47fb77e9e11fee20b14d3579215fd683d84ae1b41c59281dcf78dcd39306b",
+      "mtime_ns": 1792058693600183807
+    },
+    "start_queue.py": {
+      "sha256": "8b0848aa0b9020f66a9083d41def6fe8c0dd640dedb8957fdc143f4bba925428",
+      "mtime_ns": 1791891667000000000
+    },
+    "test_background_repair.py": {
+      "sha256": "773175281726062ab104378b3752a5b4997946a5c1b918b981f17117a6333108",
+      "mtime_ns": 1792058693832191971
+    },
+    "train.py": {
+      "sha256": "05c015aefce8240a1a399e91a447e880cfe6974e9ef04afda54ffe2c175e743d",
+      "mtime_ns": 1792055877515064000
+    },
+    "training_policy.py": {
+      "sha256": "faad4b1c189f60f25c344fe3753871fb8339c3ed53b9a7e552367aed9b610378",
+      "mtime_ns": 1791906138000000000
+    }
+  },
+  "pilot_train_sha256": "d7d214e5a9a7bc46aad7782961998cf7c40a87794ee2fd1ce1296372433b1cb0",
+  "human_verdict": null,
+  "algorithm_quality_accepted": false
+}

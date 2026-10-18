@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-18T20:57:11+08:00",
+  "old5_accepted_as_clean_baseline": false,
+  "new_protocol": "matched-five-ID GN11 30K then verified five-instance 30K",
+  "old5_engineering_cleared": false,
+  "channel_gate": "PASSED",
+  "native_static_gate": "PASSED_NATIVE_ADAPTER_RGB",
+  "stage_input_audit": "CONFIRMED_STAGE_IDENTITY_SET_MISMATCH",
+  "pilot": {
+    "state": "PILOTS_COMPLETE_AWAITING_LOSS_RESTORE_AND_QUALITY_REVIEW",
+    "at": "2026-10-18T12:54:12.576990+00:00",
+    "completed": [
+      "three_replay",
+      "five_replay",
+      "five_raw_body",
+      "five_ID_weight"
+    ],
+    "pilot_updates": 1200,
+    "full30k_started": false
+  },
+  "full_queue": {
+    "state": "MATCHED_FIVE_GN11_30K_RUNNING",
+    "at": "2026-10-18T12:54:29.664438+00:00",
+    "pid": 5153,
+    "command": [
+      "/root/autodl-tmp/envs/drivingeditor/bin/python",
+      "-B",
+      "-u",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup/run_scene_gn11.py",
+      "--verify-paired-steps",
+      "--scene-spec",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/scene_spec.json",
+      "--readiness-file",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+      "--reference-config",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/reference_GN11.json",
+      "--source-repository",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/frozen_repository",
+      "--matrix-tools-dir",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+      "--campaign-root",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018",
+      "--gate-file",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/GN11_reference_acceptance_authorization.json",
+      "--run"
+    ],
+    "run_root": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018",
+    "new_GN11_maximum_updates": 30000,
+    "new_instance_updates": 0
+  },
+  "human_verdict": null
+}
