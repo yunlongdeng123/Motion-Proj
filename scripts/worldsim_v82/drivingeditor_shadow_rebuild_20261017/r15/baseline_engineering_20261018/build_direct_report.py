@@ -48,5 +48,7 @@ def main():
   page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p>第一阶段30K已实际完成，五实例30K已自动启动，首步完整checkpoint已保存并CPU只读检查。背景和环境来自新30K，静态初始化保留1,988,336点、删除0点；没有加载旧训练车辆或R15参数。该检查属于同一30K训练预算，没有额外消融更新。<a href="direct_initial_checkpoint_receipt.json">实际首步检查点与有效策略</a>。</p><p>最终视频会在发布前核对49帧、480×320完整画面、10fps和全部I帧；中断的编码文件保留后重新生成，不直接当成已完成媒体。<a href="video_encoding_CPU_receipt.json">编码恢复CPU合成检查</a>不是真实模型渲染结果。</p>')
  if (O/'road_observability_20261019/index.html').exists():
   page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1><p><a href="road_observability_20261019/index.html">新增：左右车道道路观测、LiDAR支撑与原始199帧核查</a></p>')
+ if read('parallel_5k_durability_receipt.json').get('status')=='PASSED_ACTUAL_PARALLEL_A_B_5K_DURABILITY_CPU_READONLY':
+  page=page.replace('<section><h2>B的20身份输入已对齐</h2>','<section><h2>A／B首个5K完整检查点已核验</h2><p>A的5K单文件checkpoint为3,162,838,956字节，91项模型／Adam张量有限，严格续训合同和5K采样状态通过；B静态、动态、环境、训练状态四组件与完成事件相符，Adam／RNG／SGCM／5K采样状态通过，49视图零更新评估完成。本次仅CPU只读检查，没有GPU恢复或额外训练更新。</p><p><a href="parallel_5k_durability_receipt.json">5K实际落盘核验</a> · <a href="remaining_disk_forecast.json">按剩余保存节点更新的存储预测</a>。预测计入A整体临时checkpoint、B每节点评估及最终导出；它不是未来点数绝对上界，后续继续核对。</p></section><section><h2>B的20身份输入已对齐</h2>')
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()

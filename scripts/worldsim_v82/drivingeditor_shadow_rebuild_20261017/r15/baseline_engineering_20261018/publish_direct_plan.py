@@ -19,7 +19,7 @@ def main():
   paths.append(rel.as_posix())
  for n in ['live_direct_instance_status.json','live_B_native_status.json','direct_initial_checkpoint_receipt.json','video_encoding_CPU_receipt.json']:
   if (O/n).exists():cp(O/n,D/n)
- for n in ['results.html','results_status.json','player_controls_validation.json','parallel_cutover_receipt.json','parallel_capacity_receipt.json','parallel_A_runtime_restore.json','direct_active_run.json']:
+ for n in ['results.html','results_status.json','player_controls_validation.json','parallel_cutover_receipt.json','parallel_capacity_receipt.json','parallel_A_runtime_restore.json','direct_active_run.json','parallel_5k_durability_receipt.json','remaining_disk_forecast.json']:
   if (O/n).exists():
    dest=cp(O/n,D/n)
    if n=='results.html':dest.write_text(dest.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
@@ -33,6 +33,7 @@ def main():
  'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  code+=['check_player_identity_controls.js']
  code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
+ code+=['audit_parallel_5k_durability.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)
  archive=W/'direct_implementation.zip'
@@ -66,6 +67,8 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
   paragraph+='\n已将新五身份GN11第一阶段30K的真实49帧完整原图/合成/动态/静态/α及删除动态集合视频加入报告，7路480×320、10fps、全I帧逐一验证；主入口嵌入同步播放器，默认raw128。实际全49静态复核仍有车形与亮白/彩色条带，不能认定干净背景，原因仍需区分监督盲区与剩余实现问题，当前A第二阶段和B继续授权训练。\n'
  if (O/'road_observability_20261019/index.html').exists():
   paragraph+='\n新增只读道路可观测性核查：49帧跨度4.800秒，自车仅移动2.04m，34帧距初始位置不足0.1m；左侧对向车辆移动约40—45m。raw128车身轮廓背后的有效平面路面查询，a26始终无曝光机会0.07%、a6为100%、a37为78.54%；是几何近似机会而非干净道路GT。原199帧只读3D框检查发现更多窗外候选，未加入训练；已有曝光部分仍有误差，不能把全部问题等同于身份错分或纯补全。A/B输入和预算未改。详见[左右车道观测与原始序列核查](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/road_observability_20261019/index.html)。\n'
+ if (O/'parallel_5k_durability_receipt.json').exists():
+  paragraph+='\nA/B首个5K完整检查点均已实际CPU只读核验：A单文件3162838956B，91项模型/Adam张量有限、严格续训合同及5K采样/RNG通过；B四组件与完成事件相符，Adam/RNG/SGCM/5K采样状态通过，49视图零更新评估已完成。未进行5K GPU恢复或增加更新。存储预测按真实未保存5K节点、A整体临时文件及实际导出节奏修正，不再重复计已完成A第一阶段、缺失历史step1和B已保存5K，未来仍逐次核对并保留全部资产。\n'
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')

@@ -25,6 +25,8 @@ B运行器补入首更新前六个5K节点的磁盘预估，保存时再按剩�
 
 新增道路观测审计：当前49帧中，raw128自车道a6/a37背后的有效平面路面查询缺曝光100%/78.54%，左侧近处a26为0.07%；原始199帧存在窗外候选，未加入训练。该证据提高数据观测不足的解释优先级，不能把近似曝光当GT或因果百分比。详见[完整报告](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/road_observability_20261019/index.html)。A/B继续原方案，human_verdict=null。
 
+A/B首个5K完整检查点均已保存并CPU只读核验：A单文件3,162,838,956B，91项模型/Adam张量有限，严格续训合同、采样及RNG有效；B静态/动态/环境/训练状态四组件与complete事件一致，Adam/RNG/SGCM及5K采样有效，49视图评估完成。没有5K GPU恢复或额外训练更新。最近报告快照A5700、B8400，均正常并行，原输入和预算不改。存储预测修正旧节奏重复计数：A已完成第一阶段未来开销归零，不补造恢复run历史step1，B已保存5K不再计未来节点；A按单文件临时checkpoint和最终导出实际计数。18:18UTC空闲59.13GB，以配置上限加10%点数余量估剩余54.42GB，余4.72GB；按当时实际点数余18.63GB。仅预测、非严格点数上界，不删资产，后续每节点继续核对。
+
 五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
 
 旧GN11 30K＋五实例30K已完成，a5/a26/a18/a6/a37都有真实独立owner，全49帧245身份帧的独立RGB、alpha、全景可见alpha与删除完成。历史旧3的147身份帧与原冻结R15的245身份帧也已完成，总637身份帧；本地全PNG矩阵及31视频交付，Git保存视频、固定锚帧和完整三值支撑证据。[旧基线完成对照与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html) · [旧5/原R15三维中心与真实支撑](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。
