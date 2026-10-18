@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-18T12:55:50.167494+00:00",
+  "at": "2026-10-18T13:40:11.678008+00:00",
   "arms": [
     {
       "arm": "three_replay",
@@ -28,7 +28,9 @@
         "NPS_loss": 0.005100168287754059,
         "background_joint_optimization": true,
         "steps_per_second": 4.059490926909033
-      }
+      },
+      "opacity_metric_domain": "full_scene_visible_union_alpha",
+      "note": null
     },
     {
       "arm": "five_replay",
@@ -57,7 +59,9 @@
         "NPS_loss": 5.531463623046875,
         "background_joint_optimization": true,
         "steps_per_second": 3.8007900271973116
-      }
+      },
+      "opacity_metric_domain": "full_scene_visible_union_alpha",
+      "note": null
     },
     {
       "arm": "five_raw_body",
@@ -86,7 +90,9 @@
         "NPS_loss": 6.79942512512207,
         "background_joint_optimization": true,
         "steps_per_second": 3.815532156960149
-      }
+      },
+      "opacity_metric_domain": "full_scene_visible_union_alpha",
+      "note": "five_raw_body was initially mislabelled as isolated restoration; it only adds visible-union MSE"
     },
     {
       "arm": "five_ID_weight",
@@ -115,8 +121,10 @@
         "NPS_loss": 6.0498857498168945,
         "background_joint_optimization": true,
         "steps_per_second": 3.7840776617034546
-      }
+      },
+      "opacity_metric_domain": "full_scene_visible_union_alpha",
+      "note": null
     }
   ],
-  "scope": "300-step diagnostics only, no asset quality acceptance; full49 pilot edit renders and restore audit remain pending"
+  "scope": "300-step diagnostics only, no asset quality acceptance; first four opacity metrics are visible-union MSE, not isolated-body MSE; actual full49/restore status is separate"
 }

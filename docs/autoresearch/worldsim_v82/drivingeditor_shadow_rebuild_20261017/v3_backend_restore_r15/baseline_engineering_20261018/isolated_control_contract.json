@@ -1,0 +1,19 @@
+{
+  "status": "PREPARED_CORRECTED_ISOLATED_CONTROL_NOT_YET_TRAINED",
+  "old_control": "five_raw_body",
+  "old_control_actual_domain": "full_scene_visible_union_alpha",
+  "old_control_invalid_claim": "restored native isolated body alpha",
+  "preserved_all_old_pilot_checkpoints": true,
+  "corrected_control": "five_raw_body_isolated",
+  "maximum_new_pilot_updates": 300,
+  "corrected_domain": "isolated_all_instances_raw_union_body_opacity",
+  "raw_body_weight": 100.0,
+  "identity_weight": 100.0,
+  "source_sha256": "d7d214e5a9a7bc46aad7782961998cf7c40a87794ee2fd1ce1296372433b1cb0",
+  "corrected_sha256": "33cf32605697bb6acef6fb27fff9e310d91da20facf2a28e54adb93749036c5b",
+  "changed_algorithm_tensor": "state.dynamic_alpha: package.dynamic_visible_alpha -> package.dynamic_alpha",
+  "metadata_change": "record the actual domain in training_policy",
+  "other_training_behavior_unchanged": true,
+  "original_GN11_training_affected": false,
+  "human_verdict": null
+}

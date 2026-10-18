@@ -11,18 +11,24 @@ def get(rel,target,required=True):
 def main():
     for n in ['queue_status.json','full_queue_status.json','stage_input_audit.json','matched5_input_receipt.json','experiment_contract.json','channel_gate.json','prior_trace_receipt.json']:
         get(n,W/n)
+    for n in ['review_queue_status.json','isolated_control_contract.json','stage_binding_receipt.json']:
+        get(n,W/n,False)
+    live='/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/status.json'
+    subprocess.run(['scp','-q','wm-vgpu-1011:'+live,str(W/'live_GN11_status.json')],capture_output=True,text=True,check=True)
     for n in ['scene_spec.json','CPU_readiness.json','reference_GN11.json']:
         get('full5_pipeline/metadata/scene0008_089_137/'+n,W/'matched_metadata'/n)
     results=[]
-    for arm in ['three_replay','five_replay','five_raw_body','five_ID_weight']:
+    for arm in ['three_replay','five_replay','five_raw_body','five_ID_weight','five_raw_body_isolated']:
         d=W/'pilots'/arm
         if not get('pilots/'+arm+'/status.json',d/'status.json',False):continue
         get('pilots/'+arm+'/steps.jsonl',d/'steps.jsonl',False)
         get('pilots/'+arm+'/effective_config.json',d/'effective_config.json',False)
         get('pilots/'+arm+'/repair_probes/step_000300/metrics.json',d/'probe300.json',False)
         metrics=[json.loads(x) for x in (d/'steps.jsonl').read_text().splitlines()] if (d/'steps.jsonl').exists() else []
-        results.append(dict(arm=arm,status=json.loads((d/'status.json').read_text()),last_metric=metrics[-1] if metrics else None))
+        results.append(dict(arm=arm,status=json.loads((d/'status.json').read_text()),last_metric=metrics[-1] if metrics else None,
+            opacity_metric_domain='isolated_all_instances_raw_union_body_opacity' if arm=='five_raw_body_isolated' else 'full_scene_visible_union_alpha',
+            note='five_raw_body was initially mislabelled as isolated restoration; it only adds visible-union MSE' if arm=='five_raw_body' else None))
     (W/'pilot_results.json').write_text(json.dumps(dict(at=datetime.datetime.now(datetime.timezone.utc).isoformat(),arms=results,
-        scope='300-step diagnostics only, no asset quality acceptance; full49 pilot edit renders and restore audit remain pending'),indent=2),encoding='utf-8')
+        scope='300-step diagnostics only, no asset quality acceptance; first four opacity metrics are visible-union MSE, not isolated-body MSE; actual full49/restore status is separate'),indent=2),encoding='utf-8')
     print(json.dumps(dict(pilot=json.loads((W/'queue_status.json').read_text())['state'],full=json.loads((W/'full_queue_status.json').read_text())['state'],collected_arms=len(results))))
 if __name__=='__main__':main()

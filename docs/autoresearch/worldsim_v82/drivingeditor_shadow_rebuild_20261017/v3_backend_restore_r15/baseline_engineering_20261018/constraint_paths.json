@@ -1,0 +1,105 @@
+{
+  "status": "STATIC_CALL_PATHS_AUDITED_GPU_COMPONENT_GRADIENTS_PENDING",
+  "topology_call_absent_in_actual_adapter": true,
+  "first_four_pilot_body_metric_actual_domain": "full_scene_visible_union_alpha",
+  "five_raw_body_original_restoration_claim_retracted": true,
+  "raw_body_correction": "isolated_body_implementation/train.py separate, leaves all old source/checkpoints untouched",
+  "terms": [
+    {
+      "item": "full-scene RGB",
+      "GN11": "active .8 L1+.2 DSSIM",
+      "adapter": "same formula and all-scene domain",
+      "classification": "inherited",
+      "gradient": "pending actual component receipt"
+    },
+    {
+      "item": "isolated dynamic RGB",
+      "GN11": "5\u00d7 photometric on binary union, environment fill during training",
+      "adapter": "same isolated dynamic branch times union, weight5",
+      "classification": "inherited intended call path",
+      "gradient": "pending actual component receipt"
+    },
+    {
+      "item": "static RGB",
+      "GN11": "photometric on observed complement of the selected binary union",
+      "adapter": "same formula; old GN11 had only3 while five-stage had5",
+      "classification": "confirmed stage-input confound; matched5 fixes domain consistency",
+      "limitation": "hidden region still has no paired clean road target"
+    },
+    {
+      "item": "isolated raw dynamic body alpha",
+      "GN11": "100\u00d7 full HxW MSE(isolated raw alpha, binary union)",
+      "upstream": "100\u00d7 MSE in active lambda_opacity_entropy branch",
+      "adapter": "weight0 and state points to visible union",
+      "classification": "constraint replacement, not equivalent inheritance",
+      "correction": "separate five_raw_body_isolated uses package.dynamic_alpha; awaiting GPU"
+    },
+    {
+      "item": "visible ID alpha",
+      "GN11": "not a native per-ID term",
+      "adapter": "100\u00d7 mean of K known per-ID full HxW MSE; whole scene depth sorting",
+      "classification": "intentional rigid identity adaptation",
+      "normalization": "3\u21925 makes each coefficient100/3\u2192100/5; separate166.6667 control"
+    },
+    {
+      "item": "static duration / velocity / NPS",
+      "GN11": "compose_hybrid_loss with combined-alpha legacy maps and static-alpha NPS features",
+      "adapter": "same composer, denominator conventions and current native static velocity",
+      "classification": "active source path, gradients not yet certified",
+      "limitation": "a nonzero configured NPS does not certify static edit cleanliness"
+    },
+    {
+      "item": "LiDAR / sky / smoothness / combined-opacity entropy",
+      "GN11": "original composer and decay",
+      "adapter": "same composer and native functions",
+      "classification": "inherited intended formulas",
+      "gradient": "pending actual component receipt"
+    },
+    {
+      "item": "native clone/split, opacity and big-point pruning",
+      "GN11": "densification_and_optimization actually invoked; static/dynamic thresholds and lifetime split rules",
+      "adapter": "no topology call in actual train loop; buffer/core methods alone are insufficient",
+      "classification": "unresolved fidelity gap blocks full-native claim",
+      "next": "close or explicitly bound representation-specific adaptation before formal instance phase"
+    },
+    {
+      "item": "static LR",
+      "GN11": "native scheduler",
+      "adapter": "new-objective static Adam reset; xyz/t rescheduled and then multiplied .1",
+      "classification": "intentional adapter policy; claimed10\u00d7 bug retracted",
+      "proof": "cpu_policy_audit.json actual caller4nodes passed"
+    },
+    {
+      "item": "environment",
+      "GN11": "original native optimizer active until configured cutoff",
+      "adapter": "preserve_joint_background_v2 freezes environment parameters and skips optimizer",
+      "classification": "intentional stage policy",
+      "restore": "full environment/Adam/RNG proof pending new audit"
+    },
+    {
+      "item": "GT rigid poses and local OBB boundary",
+      "GN11": "native dynamic PVG representation",
+      "adapter": "fixed genuine track transform, no pose refinement; soft local boundary weight1",
+      "classification": "intentional representation adaptation",
+      "units": "normalized squared coordinates; scale .1 implies .01\u00d7m\u00b2, not mislabeled meters"
+    },
+    {
+      "item": "restore",
+      "GN11": "native model/Adam/RNG/paired sampler/SGCM checkpoint",
+      "adapter": "model+static/instance Adam+environment+sampler+all RNG; actual golden verifier",
+      "classification": "full runtime checks scheduled",
+      "next": "actual unmodified update-body continuous vs checkpoint-restored next update; isolated disposable copies only"
+    }
+  ],
+  "source_hashes": {
+    "train.py": "05c015aefce8240a1a399e91a447e880cfe6974e9ef04afda54ffe2c175e743d",
+    "renderer.py": "3020dad8c20e9cdb5e2cd0daebc489dbdf04bb27f88e0187ab15eb87df9d544c",
+    "hybrid30k_losses.py": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837",
+    "runtime.py": "62a47fb77e9e11fee20b14d3579215fd683d84ae1b41c59281dcf78dcd39306b",
+    "rigid_model.py": "3c7dff6e551154402f9f112480147b53c1f16930faedd1e98336b463cb759413",
+    "gn11_train.py": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce"
+  },
+  "human_verdict": null,
+  "all_engineering_problems_excluded": false,
+  "parameter_updates": 0
+}
