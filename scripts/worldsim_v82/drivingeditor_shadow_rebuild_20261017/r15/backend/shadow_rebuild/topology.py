@@ -33,6 +33,9 @@ def remap(field,rowmap,optimizer,new_start):
 def densify_prune(field,optimizer,step):
     c=field.config;n=len(field.xyz);score=field.screen_gradient_accum/field.screen_gradient_count.clamp_min(1)
     selected=score>=c.topology_grad_threshold
+    if c.repair_actor_geometry:
+        from .repair_geometry import select_actor_growth
+        selected=select_actor_growth(field,selected,score)
     ids=selected.nonzero().flatten();budget=max(0,c.max_gaussians-n)
     if len(ids)>budget:
         ids=ids[score[ids].topk(budget).indices];selected.zero_();selected[ids]=True
@@ -50,6 +53,9 @@ def densify_prune(field,optimizer,step):
         offset=(q[split_ids].repeat_interleave(2,0)@offset[...,None]).squeeze(-1)
         field.xyz[first:]=xyz[split_ids].repeat_interleave(2,0)+offset;field.log_scales[first:]=(sigma/(.8*2)).log()
         field.seed_xyz[first:]=field.xyz[first:];field.anchor_xyz[first:]=field.xyz[first:]
+    if c.repair_actor_geometry:
+        from .repair_geometry import project_actor_constraints
+        project_actor_constraints(field,optimizer)
     field.screen_gradient_accum.zero_();field.screen_gradient_count.zero_();field.max_radii.zero_()
     return dict(before=n,after=len(field.xyz),cloned=len(clone_ids),split_parents=len(split_ids),pruned=int(prune.sum()),capacity=c.max_gaussians)
 

@@ -20,11 +20,24 @@ class GaussianField(EvidenceField):
         self.register_buffer('max_radii',torch.zeros(len(rgb)))
         self.register_buffer('sgcm_lineage',torch.arange(len(rgb),dtype=torch.long))
         self.register_buffer('sgcm_clone_blocked',torch.zeros(len(rgb),dtype=torch.bool))
+        if config.repair_actor_geometry:
+            # Inherited unchanged through EVERY topology operation. Only an
+            # independently certified owner transfer may rebase this coordinate.
+            self.register_buffer('geometry_origin',self.xyz.detach().clone())
+            self.register_buffer('geometry_origin_sigma',self.scales.detach().amax(-1))
+            self.register_buffer('actor_seed_counts',torch.bincount(self.owner[self.owner>=0])[None])
+            self.register_buffer('identity_initial_status',getattr(self,'identity_evidence_status',torch.full((len(rgb),),-1,dtype=torch.long)).clone())
         if config.box_half_sizes_path:
             import json
             from pathlib import Path
             half=json.loads(Path(config.box_half_sizes_path).read_text())['half_sizes_m']
             self.register_buffer('actor_box_half',torch.tensor(half,dtype=torch.float32))
+    @torch.no_grad()
+    def project_constraints(self,stage,optimizer=None):
+        super().project_constraints(stage)
+        if self.config.repair_actor_geometry:
+            from .repair_geometry import project_actor_constraints
+            project_actor_constraints(self,optimizer)
     def __getattr__(self,name):
         # Compatibility is read-only, computed from native SH DC; no extra RGB parameter.
         if name=='appearance_logit' and 'features_dc' in self.__dict__.get('_parameters',{}):

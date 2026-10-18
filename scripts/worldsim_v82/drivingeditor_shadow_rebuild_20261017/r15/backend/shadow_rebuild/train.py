@@ -253,7 +253,7 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
             score = model.field.xyz.grad.detach().norm(dim=-1) if model.field.xyz.grad is not None else None
             model.field.accumulate_screen_gradients(package)
             optimizer.step()
-            model.field.project_constraints(stage)
+            model.field.project_constraints(stage,optimizer)
             if stage=='geometry' and sgcm is not None and sgcm.due(local):
                 from .sgcm_adapter import refine
                 write(output/'sgcm_latest.json',refine(sgcm,model.field,optimizer,package,local))
@@ -266,6 +266,12 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
                 if config.use_clean_road and local % 500 == 0:
                     from .references import refresh
                     write(output/"reference_refresh.json",refresh(model.field,dataset))
+            if config.repair_actor_geometry:
+                model.field.project_constraints(stage,optimizer)
+            if stage=="geometry" and config.repair_evidence_audit:
+                from .evidence_audit import audit_due,run_evidence_audit
+                if audit_due(config,local):
+                    run_evidence_audit(model,dataset,optimizer,local,output/'ownership'/f'{local:06d}')
             if stage=="geometry" and local<config.densify_until and local%config.opacity_reset_interval==0:
                 from .topology import reset_opacity
                 reset_opacity(model.field,optimizer)
@@ -281,6 +287,9 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
                                 total_steps=sum(v for _, v in stages), loss=float(loss.detach()),
                                 terms={k: float(v.detach()) for k, v in terms.items()}, frame_id=frame.frame_id,
                                 gaussians=len(model.field.xyz), elapsed_seconds=time.monotonic()-start_time)
+                if config.repair_actor_geometry:
+                    from .repair_geometry import geometry_receipt
+                    progress['actor_geometry']=geometry_receipt(model.field)
                 write(output/"progress.json", progress)
                 with (output/"metrics.jsonl").open("a", encoding="utf-8") as log:
                     log.write(json.dumps(progress, ensure_ascii=False, allow_nan=False)+"\n")
@@ -289,6 +298,8 @@ def run(dataset, config, output, device="cpu", backend="reference", resume=None,
                 checkpoint = capture(model, optimizer, stage, local, step, generator, teacher)
                 checkpoint["input_contract"] = dataset.manifest
                 save(output/"latest.pt", checkpoint)
+                if config.repair_actor_geometry:
+                    save(output/f'checkpoint_{step:06d}.pt',checkpoint)
                 if local == count:
                     save(output/(stage+"_final.pt"), checkpoint)
             if max_updates and step-start_step >= max_updates:

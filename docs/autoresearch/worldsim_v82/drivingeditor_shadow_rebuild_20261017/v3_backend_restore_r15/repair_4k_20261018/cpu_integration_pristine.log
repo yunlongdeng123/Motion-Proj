@@ -1,0 +1,69 @@
+test_ray_integral_gradcheck (test_system.CoreMath) ... ok
+test_reference_requires_repeated_bright_observations (test_system.CoreMath) ... ok
+test_rotated_ray_integral_against_scipy_quadrature (test_system.CoreMath) ... ok
+test_balanced_body_loss_gives_small_and_large_actors_equal_weight (test_system.Integration) ... ok
+test_balanced_outer_gradient_not_diluted_by_empty_instances (test_system.Integration) ... ok
+test_broad_phase_matches_full_integral (test_system.Integration) ... ok
+test_declared_supervision_fork_preserves_resume_and_rejects_other_changes (test_system.Integration) ... ERROR
+test_full_three_stage_and_resume_after_densification (test_system.Integration) ... ERROR
+test_geometry_and_shadow_share_edited_actor (test_system.Integration) ... ok
+test_masks_outside_and_unknown_have_distinct_gradients (test_system.Integration) ... ok
+test_no_clean_road_ablation_does_not_inherit_bright_reference_initialization (test_system.Integration) ... FAIL
+test_no_cuda_initialized (test_system.Integration) ... ok
+test_road_receiver_uses_road_conditioned_geometry_and_preserves_actor_radiance (test_system.Integration) ... ok
+test_shadow_sun_direction_and_shape_gradients_finite (test_system.Integration) ... ok
+test_stage2_freezes_geometry_but_trains_material_and_light (test_system.Integration) ... ERROR
+test_stage3_position_bound_and_static_no_time (test_system.Integration) ... ok
+
+======================================================================
+ERROR: test_declared_supervision_fork_preserves_resume_and_rejects_other_changes (test_system.Integration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/tests/test_system.py", line 199, in test_declared_supervision_fork_preserves_resume_and_rejects_other_changes
+    run(self.dataset,self.config,self.root/'fork_parent',max_updates=2)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/shadow_rebuild/train.py", line 248, in run
+    loss, terms, package = objective(model, frame, len(dataset.actor_ids), backend, stage, generator, teacher,step)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/shadow_rebuild/objective.py", line 24, in objective
+    static=p['static_isolated_rgb']-p['static_isolated_road_rgb']*p['rho_image']+(1-p['static_isolated_alpha'])[...,None]*p['sky']
+KeyError: 'static_isolated_rgb'
+
+======================================================================
+ERROR: test_full_three_stage_and_resume_after_densification (test_system.Integration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/tests/test_system.py", line 181, in test_full_three_stage_and_resume_after_densification
+    full, done = run(self.dataset, self.config, self.root/"full")
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/shadow_rebuild/train.py", line 248, in run
+    loss, terms, package = objective(model, frame, len(dataset.actor_ids), backend, stage, generator, teacher,step)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/shadow_rebuild/objective.py", line 24, in objective
+    static=p['static_isolated_rgb']-p['static_isolated_road_rgb']*p['rho_image']+(1-p['static_isolated_alpha'])[...,None]*p['sky']
+KeyError: 'static_isolated_rgb'
+
+======================================================================
+ERROR: test_stage2_freezes_geometry_but_trains_material_and_light (test_system.Integration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/tests/test_system.py", line 146, in test_stage2_freezes_geometry_but_trains_material_and_light
+    loss, _, _ = objective(model, frame, 1, "reference", "material", torch.Generator().manual_seed(0))
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/shadow_rebuild/objective.py", line 24, in objective
+    static=p['static_isolated_rgb']-p['static_isolated_road_rgb']*p['rho_image']+(1-p['static_isolated_alpha'])[...,None]*p['sky']
+KeyError: 'static_isolated_rgb'
+
+======================================================================
+FAIL: test_no_clean_road_ablation_does_not_inherit_bright_reference_initialization (test_system.Integration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/implementation_r15_train_v3/shadow_rebuild_v3/tests/test_system.py", line 221, in test_no_clean_road_ablation_does_not_inherit_bright_reference_initialization
+    torch.testing.assert_close(ablated.field.appearance_logit.sigmoid(), expected.clamp(.01, .99))
+  File "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/testing/_comparison.py", line 1520, in assert_close
+    raise error_metas[0].to_error(msg)
+AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 99 / 99 (100.0%)
+Greatest absolute difference: 0.20806826651096344 at index (0, 2) (up to 1e-05 allowed)
+Greatest relative difference: 3.6068782806396484 at index (0, 0) (up to 1.3e-06 allowed)
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.408s
+
+FAILED (failures=1, errors=3)

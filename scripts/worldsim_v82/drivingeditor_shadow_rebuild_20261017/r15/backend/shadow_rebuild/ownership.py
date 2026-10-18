@@ -102,6 +102,7 @@ def reanchor_road(field,indices,measured_xyz,measured_quaternion,optimizer):
     if not len(indices):return
     if measured_xyz.shape!=(len(indices),3) or measured_quaternion.shape!=(len(indices),4):raise ValueError('measured anchor shape mismatch')
     field.xyz[indices]=measured_xyz;field.quaternion[indices]=measured_quaternion
+    if hasattr(field,'geometry_origin'):field.geometry_origin[indices]=measured_xyz
     field.owner[indices]=-1;field.road[indices]=True;field.view_coeff[indices]=0;field.features_rest[indices]=0
     field.reference_confidence[indices]=0;field.reference_rgb[indices]=0
     for key,value in [('seed_xyz',field.xyz),('anchor_xyz',field.xyz),('anchor_log_scales',field.log_scales),

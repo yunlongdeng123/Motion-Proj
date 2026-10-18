@@ -23,6 +23,9 @@ class SceneModel(ShadowBuffers):
         return srgb_to_linear(self.environment(ray).clamp_min(0))
     def buffers(self,frame,actor_count,backend,edits=None,isolated=True):
         g=self.field.evaluate(frame.poses,frame.valid,frame.camera.center,edits)
+        if self.config.shadow_integrator=='factor_fp64':
+            from .factor_shadow import factors_for_geometry
+            g.shadow_factors=factors_for_geometry(self,frame,g,edits)
         ambient=self.light.ambient_logit.sigmoid();cosine=(g['normal']*self.light.direction()).sum(-1).clamp_min(0)
         c0=g['albedo']*(ambient+(1-ambient)*cosine[:,None])
         g['appearance']=torch.where(g['road'][:,None],c0,g['appearance'])

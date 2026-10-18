@@ -59,6 +59,17 @@ class Config:
     shape_lr: float = .005
     light_lr: float = .002
     joint_lr_scale: float = .1
+    # Opt-in repaired R15; old checkpoint/config replay keeps its exact schema.
+    repair_actor_geometry: bool = False
+    actor_drift_bound_m: float = .25
+    actor_box_margin_m: float = .10
+    actor_scale_growth_limit: float = 1.5
+    actor_max_growth: float = 4.0
+    repair_evidence_audit: bool = False
+    ownership_audit_first: int = 1500
+    ownership_audit_interval: int = 1000
+    ownership_measurement_root: str = ""
+    shadow_integrator: str = "legacy_covariance"
     geometry_bound_m: float = 1000.0
     joint_bound_m: float = .02
     scale_min_m: float = .00001
@@ -100,6 +111,19 @@ class Config:
     weights: LossWeights = field(default_factory=LossWeights)
 
     def validate(self):
+        if type(self.repair_actor_geometry) is not bool or type(self.repair_evidence_audit) is not bool:
+            raise ValueError('repair switches must be explicit bools')
+        if self.shadow_integrator not in ('legacy_covariance','factor_fp64'):
+            raise ValueError('unknown shadow integrator')
+        if self.repair_actor_geometry and (self.actor_drift_bound_m<=0 or self.actor_scale_growth_limit<1 or self.actor_max_growth<1 or not 0<self.densify_fraction<=1):
+            raise ValueError('invalid actor geometry budget')
+        if self.repair_evidence_audit:
+            if not self.repair_actor_geometry or not self.ownership_measurement_root:
+                raise ValueError('evidence audit requires explicit geometry/provenance contract')
+            if self.ownership_audit_first<1 or self.ownership_audit_interval<1:
+                raise ValueError('invalid evidence schedule')
+            if any(s%self.opacity_reset_interval==0 for s in range(self.ownership_audit_first,self.geometry_steps+1,self.ownership_audit_interval)):
+                raise ValueError('ownership audit must not coincide with opacity reset')
         if self.backend!="legacy_sh3_envlight" or self.sh_degree!=3:
             raise ValueError("R15 requires restored third-order SH backend")
         if self.env_map_res!=1024 and not self.fixture_small_environment:

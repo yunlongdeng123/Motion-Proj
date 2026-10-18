@@ -19,7 +19,7 @@ def evidence_probability(body_repeat,static_positive,tracked_actor,tracked_stati
     return evidence/evidence.sum(-1,keepdims=True)
 
 @torch.no_grad()
-def reassign_rigid_owner(field,rows,new_owner,source_world_from_local,target_world_from_local,optimizer=None):
+def reassign_rigid_owner(field,rows,new_owner,source_world_from_local,target_world_from_local,optimizer=None,rebuild_neighbors=True):
     """Change actual rigid owner while preserving world geometry at an evidence anchor.
 
     This does not certify ownership: caller must supply independent repeated
@@ -35,7 +35,7 @@ def reassign_rigid_owner(field,rows,new_owner,source_world_from_local,target_wor
         if p.shape!=(4,4) or not torch.allclose(p[3],p.new_tensor([0,0,0,1]),atol=1e-5) or not torch.allclose(p[:3,:3].T@p[:3,:3],torch.eye(3,device=p.device),atol=1e-4) or not torch.isclose(torch.linalg.det(p[:3,:3]),p.new_tensor(1.),atol=1e-4):raise ValueError('actual rigid poses required')
         return p
     src=pose(source_world_from_local);dst=pose(target_world_from_local);rotation=dst[:3,:3].T@src[:3,:3];translation=dst[:3,:3].T@(src[:3,3]-dst[:3,3])
-    for key in ['xyz','seed_xyz','anchor_xyz']:getattr(field,key)[rows]=getattr(field,key)[rows]@rotation.T+translation
+    for key in (['xyz','seed_xyz','anchor_xyz']+(['geometry_origin'] if hasattr(field,'geometry_origin') else [])):getattr(field,key)[rows]=getattr(field,key)[rows]@rotation.T+translation
     from scipy.spatial.transform import Rotation
     for key in ['quaternion','anchor_quaternion']:
         old=quaternion_matrix(getattr(field,key)[rows]);matrix=rotation[None]@old
@@ -49,6 +49,7 @@ def reassign_rigid_owner(field,rows,new_owner,source_world_from_local,target_wor
             for key,value in state.items():
                 if torch.is_tensor(value) and value.ndim and len(value)==len(field.xyz):value[rows]=0
     # Rebuild same-owner neighborhoods; never keep cross-owner normal links.
+    if not rebuild_neighbors:return
     from scipy.spatial import cKDTree
     owner=field.owner.cpu().numpy();points=field.xyz.detach().cpu().numpy()
     for actor in np.unique(owner):

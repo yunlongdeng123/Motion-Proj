@@ -144,6 +144,13 @@ class SunAmbient(nn.Module):
         radius = torch.deg2rad(5*self.radius_logit.sigmoid())
         directions = disk_directions(self.direction(), radius, self.config.sun_samples)
         origins = position+normal*self.config.ray_bias_m
+        if self.config.shadow_integrator=='factor_fp64':
+            from .factor_shadow import transmittance
+            count=len(origins)
+            value=transmittance(origins.repeat(len(directions),1),
+                directions[:,None,:].expand(len(directions),count,3).reshape(-1,3),
+                geometry.shadow_factors,dtype=torch.float64)
+            return value.reshape(len(directions),count).mean(0)
         samples = [geometry_transmittance(origins, d.expand_as(origins), geometry,
                     self.config.ray_chunk, self.config.gaussian_chunk) for d in directions]
         return torch.stack(samples).mean(0)
