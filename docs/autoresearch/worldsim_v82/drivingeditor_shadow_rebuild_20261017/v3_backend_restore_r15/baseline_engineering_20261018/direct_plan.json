@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-19T06:47:50+08:00",
+  "updated_at": "2026-10-19T07:21:20+08:00",
   "experiment_A": {
     "target": "matched five GN1130K + fresh instances30K",
     "GN11_step": 30000,
@@ -18,21 +18,21 @@
     "interstage_ablations": false,
     "native_status": "complete",
     "instance_status": {
-      "step": 20000,
-      "frame": "0008099",
-      "loss": 0.22901950776576996,
-      "instance_mask_loss": 0.00015835832164157182,
-      "raw_isolated_body_MSE": 0.0009843518491834402,
+      "step": 20400,
+      "frame": "0008134",
+      "loss": 0.27321839332580566,
+      "instance_mask_loss": 0.00020108437456656247,
+      "raw_isolated_body_MSE": 0.001039139344356954,
       "known_instances": 5,
-      "box_boundary": 0.0004952168674208224,
+      "box_boundary": 0.000493642408400774,
       "pose_prior": 0.0,
       "instance_points": 1000253,
       "background_points": 2617982,
       "instance_optimizer_gradients_finite": true,
-      "static_rgb_loss": 0.010105393826961517,
-      "NPS_loss": 0.03461536020040512,
+      "static_rgb_loss": 0.020374780520796776,
+      "NPS_loss": 0.0354008749127388,
       "background_joint_optimization": true,
-      "steps_per_second": 0.9287430268589273,
+      "steps_per_second": 0.9359014869802169,
       "state": "running"
     }
   },
@@ -312,15 +312,113 @@
     "synchronized": true,
     "B_delete_scope": "all20 selected actors, not all visible vehicles",
     "phase": {
-      "code": "training",
-      "label": "正式训练尚未全部完成，已有模型视频与输入证据可查看",
+      "code": "storage_wait",
+      "label": "A等待宿主机存储写入，进度停滞；B训练已完成，最终评估未全部执行",
       "complete": false
     },
     "completed_media_models": [
       "gn11five"
     ],
     "primary_model": "gn11five",
-    "quality_approval_implied_by_completion": false
+    "quality_approval_implied_by_completion": false,
+    "runtime_io_health": {
+      "at": "2026-10-18T23:20:33.292178+00:00",
+      "hostname": "autodl-container-396445a2a1-1984c713",
+      "status": "BLOCKED_HOST_STORAGE_WRITE_WAIT",
+      "A_reported_status": {
+        "step": 20400,
+        "frame": "0008134",
+        "loss": 0.27321839332580566,
+        "instance_mask_loss": 0.00020108437456656247,
+        "raw_isolated_body_MSE": 0.001039139344356954,
+        "known_instances": 5,
+        "box_boundary": 0.000493642408400774,
+        "pose_prior": 0.0,
+        "instance_points": 1000253,
+        "background_points": 2617982,
+        "instance_optimizer_gradients_finite": true,
+        "static_rgb_loss": 0.020374780520796776,
+        "NPS_loss": 0.0354008749127388,
+        "background_joint_optimization": true,
+        "steps_per_second": 0.9359014869802169,
+        "state": "running"
+      },
+      "A_status_mtime_utc": "2026-10-18T22:51:24.043031+00:00",
+      "A_status_age_seconds": 1749.249147,
+      "A_worker": {
+        "pid": 79624,
+        "status": [
+          "Name:\tpython",
+          "Umask:\t0022",
+          "State:\tD (disk sleep)",
+          "Tgid:\t79624",
+          "Ngid:\t341908",
+          "Pid:\t79624",
+          "PPid:\t79622",
+          "TracerPid:\t0",
+          "Uid:\t0\t0\t0\t0",
+          "Gid:\t0\t0\t0\t0",
+          "FDSize:\t64",
+          "Groups:\t0 "
+        ],
+        "wchan": "md_write_start.part.0",
+        "io": "rchar: 8251157912\nwchar: 12418085129\nsyscr: 4554102\nsyscw: 401677\nread_bytes: 0\nwrite_bytes: 12429975552\ncancelled_write_bytes: 4096\n",
+        "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_A_native_shared.py --spec /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_spec.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k_parallel_resume --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k/checkpoint_001999_priority_yield.pt --iterations 30000 --seed 0 --joint-background --checkpoint-steps 1 5000 10000 15000 20000 25000 30000 --run "
+      },
+      "guardian": {
+        "pid": 79622,
+        "status": [
+          "Name:\tpython",
+          "Umask:\t0022",
+          "State:\tS (sleeping)",
+          "Tgid:\t79622",
+          "Ngid:\t0",
+          "Pid:\t79622",
+          "PPid:\t1",
+          "TracerPid:\t0",
+          "Uid:\t0\t0\t0\t0",
+          "Gid:\t0\t0\t0\t0",
+          "FDSize:\t64",
+          "Groups:\t0 "
+        ],
+        "wchan": "do_select",
+        "io": "rchar: 170003432\nwchar: 1041357\nsyscr: 21208\nsyscw: 314\nread_bytes: 0\nwrite_bytes: 1413120\ncancelled_write_bytes: 12288\n",
+        "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_parallel_campaign.py "
+      },
+      "B_worker": {
+        "pid": 79625,
+        "status": [
+          "Name:\tpython",
+          "State:\tZ (zombie)",
+          "Tgid:\t79625",
+          "Ngid:\t342016",
+          "Pid:\t79625",
+          "PPid:\t79622",
+          "TracerPid:\t0",
+          "Uid:\t0\t0\t0\t0",
+          "Gid:\t0\t0\t0\t0",
+          "FDSize:\t0",
+          "Groups:\t0 ",
+          "NStgid:\t79625"
+        ],
+        "wchan": "0",
+        "io": "rchar: 166201747989\nwchar: 17287864038\nsyscr: 4057944\nsyscw: 2006708\nread_bytes: 180224\nwrite_bytes: 17347547136\ncancelled_write_bytes: 69632\n",
+        "cmdline": ""
+      },
+      "mdstat": "Personalities : [raid6] [raid5] [raid4] [linear] [multipath] [raid0] [raid1] [raid10] \nmd0 : active raid5 nvme3n1[1] nvme2n1[3] nvme1n1[0]\n      15002667008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]\n      [==================>..]  check = 93.0% (6976402060/7501333504) finish=3893581.3min speed=2K/sec\n      bitmap: 9/56 pages [36KB], 65536KB chunk\n\nunused devices: <none>\n",
+      "array_state": "write-pending",
+      "sync_completed": "13952795904 / 15002667008",
+      "sync_speed": "2",
+      "degraded": "0",
+      "io_pressure": "some avg10=27.22 avg60=33.02 avg300=36.68 total=10526451968\nfull avg10=27.21 avg60=32.75 avg300=36.33 total=10342762836\n",
+      "interpretation": "Main A thread waits in the host md write path; hardware failure and provider maintenance cause not established.",
+      "training_updates": 0,
+      "remote_mutations": 0,
+      "A_process_preserved": true,
+      "shutdown_performed": false,
+      "checkpoint_replay_started": false,
+      "gpu_csv": "15104, 17128, 0"
+    }
   },
   "human_verdict": null
 }

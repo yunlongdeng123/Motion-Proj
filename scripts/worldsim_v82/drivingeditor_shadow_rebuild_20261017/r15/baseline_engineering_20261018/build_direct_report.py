@@ -25,6 +25,15 @@ def report_phase(queue,instance,b_native,a_receipt,b_receipt,models):
  if state!='PARALLEL_A_B_FULL49_COMPLETE_AWAITING_REPORT_GIT':
   return dict(code='coordinator_pending',label='结果素材已到齐，等待核对最终队列状态',complete=False)
  return dict(code='results_ready',label='两项训练与最终49帧删除评估已完成；质量结论以实际画面复核为准',complete=True)
+def runtime_io_phase(phase,health,instance,now=None):
+ """An active process with a recent storage wait is not healthy progress."""
+ if phase.get('code')!='training' or health.get('status')!='BLOCKED_HOST_STORAGE_WRITE_WAIT' or instance.get('state')=='complete':return phase
+ now=now or datetime.datetime.now(datetime.timezone.utc)
+ observed=datetime.datetime.fromisoformat(health['at'])
+ if not 0<=(now-observed).total_seconds()<3600:return phase
+ if instance.get('step',0)>health.get('A_reported_status',{}).get('step',0):return phase
+ return dict(code='storage_wait',label='A等待宿主机存储写入，进度停滞；B训练已完成，最终评估未全部执行',complete=False)
+
 def main():
  now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  live=read('live_GN11_recovery_status.json');queue=read('A_recovery_queue_status.json');gate=read('intersection_input_passed.json');r=read('lidar_camera_intersection_input_receipt.json')
@@ -34,6 +43,7 @@ def main():
  result_status=json.loads((O/'results_status.json').read_text()) if (O/'results_status.json').exists() else {}
  models=result_status.get('completed_models',[])
  phase=report_phase(queue,inst,b_live,read('direct_full49/receipt.json'),read('all_vehicle_full49/receipt.json'),models)
+ io_health=read('runtime_io_health.json');phase=runtime_io_phase(phase,io_health,inst)
  primary='matched5' if 'matched5' in models else 'allvehicles' if 'allvehicles' in models else 'gn11five'
  a_progress=f'GN11 {step}/30000（{html.escape(live.get("status","待读取"))}）'
  if inst:a_progress+=f'<br>实例 {inst.get("step","待读取")}/30000（{html.escape(inst.get("state","待读取"))}）'
@@ -44,6 +54,7 @@ def main():
  plan['experiment_A'].update(native_status=live.get('status'),instance_status=inst)
  plan['experiment_B'].update(native_status=b_live,queue_status=b_queue)
  plan['report'].update(phase=phase,completed_media_models=models,primary_model=primary,quality_approval_implied_by_completion=False)
+ if io_health:plan['report']['runtime_io_health']=io_health
  if parallel:plan['experiment_B']['resource_policy']='authorized concurrent A/B with guarded shared GPU admission; exact A1999 continuation, no replay'
  (W/'direct_plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf-8')
  for n in ['direct_plan.json','direct_CPU_gate.json','direct_plan_cancellation_receipt.json','A_recovery_queue_status.json','live_GN11_recovery_status.json','live_direct_instance_status.json','live_B_native_status.json','GN11_resume_GPU_receipt.json','GN11_resume_sequence_receipt.json','GN11_recovery_audit.json','GN11_timing_fix_GPU_receipt.json','native_runner_timing_GPU_receipt.json','native_cadence_CPU_receipt.json','A_replay_authorization.json','intersection_input_passed.json','intersection_input_review_receipt.json','lidar_camera_intersection_input_receipt.json','lidar_camera_intersection_selection.json','GN11_25k_durability_receipt.json','video_encoding_CPU_receipt.json','direct_initial_checkpoint_receipt.json','parallel_cutover_receipt.json','parallel_capacity_receipt.json','parallel_A_runtime_restore.json','direct_active_run.json']:
@@ -95,5 +106,8 @@ def main():
    page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p><a href="final_quality_review.json">实际完整画面质量复核记录</a>。训练和评估完成，不等同于质量通过；具体残留按实际记录说明。</p>')
   else:
    page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p><b>最终素材已到齐，逐帧质量复核尚待完成。</b>当前没有据训练完成宣布分离或道路恢复通过。</p>')
+ if phase['code']=='storage_wait':
+  notice=f'''<section><h2>存储写入等待：A进度暂时停滞</h2><p>只读检查时间：{html.escape(io_health['at'])}。A最近状态为{io_health['A_reported_status']['step']:,}步，文件最后更新于{html.escape(io_health['A_status_mtime_utc'])}；主线程为D状态，等待<code>md_write_start</code>，宿主机md0为<code>{html.escape(io_health['array_state'])}</code>。GPU采样（已用MiB／空闲MiB／利用率%）：{html.escape(io_health.get('gpu_csv','未取得'))}。B原生30K与随检查点49视图评估已完成，最终删除评估仍待执行。</p><p>这份证据确认磁盘写入路径等待；具体硬件故障或平台维护原因尚未查明。A进程和内存状态保留，20K完整检查点已核验，没有杀进程、重启、重新训练或执行关机。需要AutoDL平台排查宿主机存储；原完成时间估计暂时失效。当前磁盘容量预测仍是此前成功读取的历史值，未冒称本轮刷新。</p><p><a href="runtime_io_health.json">实际proc/sysfs证据与检查时间</a>。只检查状态，不向远端写文件；后续若同一进程恢复并推进，将更新此状态。</p></section>'''
+  page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>'+notice,1)
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()
