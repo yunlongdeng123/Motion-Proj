@@ -16,10 +16,13 @@ for directory in Path('/proc').iterdir():
     except OSError:continue
     if not args or b'python' not in args[0]:continue
     # Stock dashboard services do not train, render, or dispatch campaign work.
-    if any(x in cmd for x in ['/bin/tensorboard ','/bin/jupyter-lab ','pylance','pyright']):continue
+    if any(x in cmd for x in ['/bin/tensorboard ','/bin/jupyter-lab ',
+        '/tensorboard_data_server/bin/server --logdir=/root/tf-logs','pylance','pyright']):continue
     workers.append(dict(pid=int(directory.name),command=cmd))
 free=subprocess.run(['flock','-n',str(ROOT.parent/'gpu_slot.lock'),'true']).returncode==0
 files=[D/'paused_checkpoint_004000_20261017/checkpoint.pt',D/'main/latest.pt',T/'train5/checkpoint_030000.pt']
+files += [ROOT/'runs/scene0008_089_137_hybrid_30000_seed0_GN11/chkpnt30000.pth',
+    ROOT/'rigid_runs/scene0008_089_137/full30k/checkpoint_030000.pt']
 files += [Q/'train'/f'checkpoint_{s:06d}.pt' for s in [1000,2000,3000,4000]]+[Q/'train/latest.pt']
 checkpoints={str(p):dict(bytes=p.stat().st_size,mtime_ns=p.stat().st_mtime_ns) for p in files}
 for model in ['old5','r15','repair4k']:
