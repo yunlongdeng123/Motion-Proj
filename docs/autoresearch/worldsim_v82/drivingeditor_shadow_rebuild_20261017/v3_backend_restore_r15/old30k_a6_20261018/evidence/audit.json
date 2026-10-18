@@ -1,0 +1,3326 @@
+{
+  "schema": "old30k_fragment_frozen_audit_v1",
+  "started": "2026-10-18T15:55:35.550151",
+  "old_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/full30k/checkpoint_030000.pt",
+    "size": 1080103084,
+    "mtime_ns": 1792109345838403229
+  },
+  "old_actual_step": 30000,
+  "old_spec": {
+    "schema": "drivingeditor_rigid_scene_spec_v1",
+    "scene_id": "scene0008_089_137",
+    "source_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_source/scene0008_089_137",
+    "source_scene": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137",
+    "prepared": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_prepared/scene0008_089_137",
+    "reference_config": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/training_configs/scene0008_089_137_GN11.json",
+    "background_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/chkpnt30000.pth",
+    "environment_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/env_light_chkpnt30000.pth",
+    "matrix_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+    "stage": "preserve_complete_GN11_background_joint_repair",
+    "box_and_track_roles": "explicit_training_priors",
+    "test_views": "same49_training_reconstruction_no_heldout",
+    "nonrigid_targets": "unsupported_first_version",
+    "human_quality_verdict": null,
+    "StreetCrafter_priority": true,
+    "scope": "Only screenshot-boxed genuine moving actors; parked vehicles retain original static branch",
+    "background_repair": {
+      "schema": "preserve_joint_background_v2",
+      "initialization": "preserve_all_GN11_static_Gaussians",
+      "freeze_environment": true,
+      "expected_initial_points": 915840,
+      "learning_rate_scale": 0.1,
+      "optimizer_initialization": "reset_static_Adam_for_new_objective_preserve_on_resume",
+      "foreground_background_separation": "joint_visible_per_ID_masks_and_observed_complement_RGB",
+      "topology": "fixed_no_box_pruning_no_new_SGCM_clones"
+    }
+  },
+  "r15_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/backend_restore_r15/paused_checkpoint_004000_20261017/checkpoint.pt",
+    "size": 2183183181,
+    "mtime_ns": 1792234477240123573
+  },
+  "mapping": [
+    {
+      "old_index": 0,
+      "track_id": "3S_GJHyCGGK4ypFPVKOOqA",
+      "r15_actor": 5
+    },
+    {
+      "old_index": 1,
+      "track_id": "mSiVqee7l7dfkt8HQhXZZw",
+      "r15_actor": 26
+    },
+    {
+      "old_index": 2,
+      "track_id": "Umybpe6eOenVBgQ_zgdVtw",
+      "r15_actor": 18
+    }
+  ],
+  "a6_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+  "a6_old_independent_asset_exists": false,
+  "a37_old_independent_asset_exists": false,
+  "a6_old_branch": "static_PVG",
+  "parameter_updates": 0,
+  "admission": {
+    "status": "GPU_ADMISSION_AVAILABLE",
+    "allowed": true,
+    "streetcrafter_processes": [],
+    "other_compute_processes": [],
+    "query_error": null,
+    "policy": "StreetCrafter preparation/training/inference has priority; no kill, no shared environment changes"
+  },
+  "background_exclusion": {
+    "criterion": "preserve_all_GN11_static_Gaussians_no_center_box_deletion",
+    "removed_points": 0,
+    "remaining_points": 915840,
+    "background_joint_optimization": true,
+    "shadow_or_Gaussian_extent_cleanup_verified": false
+  },
+  "old_records": [
+    {
+      "raw": 89,
+      "actor": 5,
+      "body_pixels": 1227,
+      "alpha_mass_exterior": 208.06893920898438,
+      "exterior_alpha_pixels_gt_005": 403,
+      "inside_alpha_mean": 0.9982390403747559
+    },
+    {
+      "raw": 89,
+      "actor": 26,
+      "body_pixels": 276,
+      "alpha_mass_exterior": 88.38574981689453,
+      "exterior_alpha_pixels_gt_005": 146,
+      "inside_alpha_mean": 0.9998636841773987
+    },
+    {
+      "raw": 89,
+      "actor": 18,
+      "body_pixels": 95,
+      "alpha_mass_exterior": 58.567604064941406,
+      "exterior_alpha_pixels_gt_005": 77,
+      "inside_alpha_mean": 0.8819345235824585
+    },
+    {
+      "raw": 90,
+      "actor": 5,
+      "body_pixels": 1316,
+      "alpha_mass_exterior": 243.66387939453125,
+      "exterior_alpha_pixels_gt_005": 437,
+      "inside_alpha_mean": 0.998706579208374
+    },
+    {
+      "raw": 90,
+      "actor": 26,
+      "body_pixels": 288,
+      "alpha_mass_exterior": 90.26976776123047,
+      "exterior_alpha_pixels_gt_005": 148,
+      "inside_alpha_mean": 0.9994267225265503
+    },
+    {
+      "raw": 90,
+      "actor": 18,
+      "body_pixels": 94,
+      "alpha_mass_exterior": 58.184261322021484,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.9172275066375732
+    },
+    {
+      "raw": 91,
+      "actor": 5,
+      "body_pixels": 1470,
+      "alpha_mass_exterior": 229.85333251953125,
+      "exterior_alpha_pixels_gt_005": 442,
+      "inside_alpha_mean": 0.9981862902641296
+    },
+    {
+      "raw": 91,
+      "actor": 26,
+      "body_pixels": 307,
+      "alpha_mass_exterior": 83.07839965820312,
+      "exterior_alpha_pixels_gt_005": 145,
+      "inside_alpha_mean": 0.9996534585952759
+    },
+    {
+      "raw": 91,
+      "actor": 18,
+      "body_pixels": 98,
+      "alpha_mass_exterior": 56.10052490234375,
+      "exterior_alpha_pixels_gt_005": 76,
+      "inside_alpha_mean": 0.9399861693382263
+    },
+    {
+      "raw": 92,
+      "actor": 5,
+      "body_pixels": 1618,
+      "alpha_mass_exterior": 250.6493682861328,
+      "exterior_alpha_pixels_gt_005": 456,
+      "inside_alpha_mean": 0.9962384700775146
+    },
+    {
+      "raw": 92,
+      "actor": 26,
+      "body_pixels": 322,
+      "alpha_mass_exterior": 81.10833740234375,
+      "exterior_alpha_pixels_gt_005": 141,
+      "inside_alpha_mean": 0.9992799162864685
+    },
+    {
+      "raw": 92,
+      "actor": 18,
+      "body_pixels": 100,
+      "alpha_mass_exterior": 55.40493392944336,
+      "exterior_alpha_pixels_gt_005": 75,
+      "inside_alpha_mean": 0.9604611992835999
+    },
+    {
+      "raw": 93,
+      "actor": 5,
+      "body_pixels": 1829,
+      "alpha_mass_exterior": 234.72921752929688,
+      "exterior_alpha_pixels_gt_005": 452,
+      "inside_alpha_mean": 0.9958098530769348
+    },
+    {
+      "raw": 93,
+      "actor": 26,
+      "body_pixels": 338,
+      "alpha_mass_exterior": 79.75828552246094,
+      "exterior_alpha_pixels_gt_005": 148,
+      "inside_alpha_mean": 0.9972285032272339
+    },
+    {
+      "raw": 93,
+      "actor": 18,
+      "body_pixels": 103,
+      "alpha_mass_exterior": 54.31354904174805,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.9615041613578796
+    },
+    {
+      "raw": 94,
+      "actor": 5,
+      "body_pixels": 2052,
+      "alpha_mass_exterior": 238.68605041503906,
+      "exterior_alpha_pixels_gt_005": 464,
+      "inside_alpha_mean": 0.9947245121002197
+    },
+    {
+      "raw": 94,
+      "actor": 26,
+      "body_pixels": 347,
+      "alpha_mass_exterior": 86.12725067138672,
+      "exterior_alpha_pixels_gt_005": 147,
+      "inside_alpha_mean": 0.998195230960846
+    },
+    {
+      "raw": 94,
+      "actor": 18,
+      "body_pixels": 108,
+      "alpha_mass_exterior": 51.7578010559082,
+      "exterior_alpha_pixels_gt_005": 77,
+      "inside_alpha_mean": 0.972407877445221
+    },
+    {
+      "raw": 95,
+      "actor": 5,
+      "body_pixels": 2276,
+      "alpha_mass_exterior": 270.1194763183594,
+      "exterior_alpha_pixels_gt_005": 517,
+      "inside_alpha_mean": 0.9972636103630066
+    },
+    {
+      "raw": 95,
+      "actor": 26,
+      "body_pixels": 373,
+      "alpha_mass_exterior": 77.10840606689453,
+      "exterior_alpha_pixels_gt_005": 150,
+      "inside_alpha_mean": 0.9980342388153076
+    },
+    {
+      "raw": 95,
+      "actor": 18,
+      "body_pixels": 112,
+      "alpha_mass_exterior": 48.49320602416992,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.9856228828430176
+    },
+    {
+      "raw": 96,
+      "actor": 5,
+      "body_pixels": 2647,
+      "alpha_mass_exterior": 224.61148071289062,
+      "exterior_alpha_pixels_gt_005": 479,
+      "inside_alpha_mean": 0.9945496916770935
+    },
+    {
+      "raw": 96,
+      "actor": 26,
+      "body_pixels": 394,
+      "alpha_mass_exterior": 77.86858367919922,
+      "exterior_alpha_pixels_gt_005": 141,
+      "inside_alpha_mean": 0.9894824028015137
+    },
+    {
+      "raw": 96,
+      "actor": 18,
+      "body_pixels": 117,
+      "alpha_mass_exterior": 47.94144821166992,
+      "exterior_alpha_pixels_gt_005": 82,
+      "inside_alpha_mean": 0.9831976294517517
+    },
+    {
+      "raw": 97,
+      "actor": 5,
+      "body_pixels": 3010,
+      "alpha_mass_exterior": 220.6797332763672,
+      "exterior_alpha_pixels_gt_005": 510,
+      "inside_alpha_mean": 0.9960987567901611
+    },
+    {
+      "raw": 97,
+      "actor": 26,
+      "body_pixels": 419,
+      "alpha_mass_exterior": 70.97969055175781,
+      "exterior_alpha_pixels_gt_005": 138,
+      "inside_alpha_mean": 0.9913836121559143
+    },
+    {
+      "raw": 97,
+      "actor": 18,
+      "body_pixels": 122,
+      "alpha_mass_exterior": 49.21113967895508,
+      "exterior_alpha_pixels_gt_005": 72,
+      "inside_alpha_mean": 0.9784528613090515
+    },
+    {
+      "raw": 98,
+      "actor": 5,
+      "body_pixels": 3460,
+      "alpha_mass_exterior": 224.2633056640625,
+      "exterior_alpha_pixels_gt_005": 516,
+      "inside_alpha_mean": 0.9920394420623779
+    },
+    {
+      "raw": 98,
+      "actor": 26,
+      "body_pixels": 445,
+      "alpha_mass_exterior": 68.54574584960938,
+      "exterior_alpha_pixels_gt_005": 133,
+      "inside_alpha_mean": 0.9854451417922974
+    },
+    {
+      "raw": 98,
+      "actor": 18,
+      "body_pixels": 136,
+      "alpha_mass_exterior": 38.647003173828125,
+      "exterior_alpha_pixels_gt_005": 62,
+      "inside_alpha_mean": 0.9734298586845398
+    },
+    {
+      "raw": 99,
+      "actor": 5,
+      "body_pixels": 4021,
+      "alpha_mass_exterior": 205.59593200683594,
+      "exterior_alpha_pixels_gt_005": 524,
+      "inside_alpha_mean": 0.990895688533783
+    },
+    {
+      "raw": 99,
+      "actor": 26,
+      "body_pixels": 484,
+      "alpha_mass_exterior": 54.66776657104492,
+      "exterior_alpha_pixels_gt_005": 117,
+      "inside_alpha_mean": 0.979451596736908
+    },
+    {
+      "raw": 99,
+      "actor": 18,
+      "body_pixels": 131,
+      "alpha_mass_exterior": 46.87937927246094,
+      "exterior_alpha_pixels_gt_005": 79,
+      "inside_alpha_mean": 0.9692110419273376
+    },
+    {
+      "raw": 100,
+      "actor": 5,
+      "body_pixels": 4684,
+      "alpha_mass_exterior": 229.81793212890625,
+      "exterior_alpha_pixels_gt_005": 578,
+      "inside_alpha_mean": 0.9889033436775208
+    },
+    {
+      "raw": 100,
+      "actor": 26,
+      "body_pixels": 504,
+      "alpha_mass_exterior": 56.2027702331543,
+      "exterior_alpha_pixels_gt_005": 122,
+      "inside_alpha_mean": 0.9788024425506592
+    },
+    {
+      "raw": 100,
+      "actor": 18,
+      "body_pixels": 132,
+      "alpha_mass_exterior": 49.185272216796875,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.983347475528717
+    },
+    {
+      "raw": 101,
+      "actor": 5,
+      "body_pixels": 5502,
+      "alpha_mass_exterior": 253.57240295410156,
+      "exterior_alpha_pixels_gt_005": 680,
+      "inside_alpha_mean": 0.9903388023376465
+    },
+    {
+      "raw": 101,
+      "actor": 26,
+      "body_pixels": 523,
+      "alpha_mass_exterior": 64.11302185058594,
+      "exterior_alpha_pixels_gt_005": 139,
+      "inside_alpha_mean": 0.9772471785545349
+    },
+    {
+      "raw": 101,
+      "actor": 18,
+      "body_pixels": 142,
+      "alpha_mass_exterior": 43.53085708618164,
+      "exterior_alpha_pixels_gt_005": 74,
+      "inside_alpha_mean": 0.9810681343078613
+    },
+    {
+      "raw": 102,
+      "actor": 5,
+      "body_pixels": 6502,
+      "alpha_mass_exterior": 334.3128662109375,
+      "exterior_alpha_pixels_gt_005": 857,
+      "inside_alpha_mean": 0.9911601543426514
+    },
+    {
+      "raw": 102,
+      "actor": 26,
+      "body_pixels": 556,
+      "alpha_mass_exterior": 62.01825714111328,
+      "exterior_alpha_pixels_gt_005": 130,
+      "inside_alpha_mean": 0.9707167744636536
+    },
+    {
+      "raw": 102,
+      "actor": 18,
+      "body_pixels": 150,
+      "alpha_mass_exterior": 42.25596618652344,
+      "exterior_alpha_pixels_gt_005": 70,
+      "inside_alpha_mean": 0.9735233783721924
+    },
+    {
+      "raw": 103,
+      "actor": 5,
+      "body_pixels": 7840,
+      "alpha_mass_exterior": 335.08477783203125,
+      "exterior_alpha_pixels_gt_005": 936,
+      "inside_alpha_mean": 0.9914413094520569
+    },
+    {
+      "raw": 103,
+      "actor": 26,
+      "body_pixels": 581,
+      "alpha_mass_exterior": 68.99713134765625,
+      "exterior_alpha_pixels_gt_005": 133,
+      "inside_alpha_mean": 0.9659123420715332
+    },
+    {
+      "raw": 103,
+      "actor": 18,
+      "body_pixels": 153,
+      "alpha_mass_exterior": 41.48829650878906,
+      "exterior_alpha_pixels_gt_005": 75,
+      "inside_alpha_mean": 0.9787247776985168
+    },
+    {
+      "raw": 104,
+      "actor": 5,
+      "body_pixels": 9659,
+      "alpha_mass_exterior": 298.1408386230469,
+      "exterior_alpha_pixels_gt_005": 788,
+      "inside_alpha_mean": 0.9870809316635132
+    },
+    {
+      "raw": 104,
+      "actor": 26,
+      "body_pixels": 618,
+      "alpha_mass_exterior": 71.23648834228516,
+      "exterior_alpha_pixels_gt_005": 133,
+      "inside_alpha_mean": 0.9551688432693481
+    },
+    {
+      "raw": 104,
+      "actor": 18,
+      "body_pixels": 164,
+      "alpha_mass_exterior": 39.32769775390625,
+      "exterior_alpha_pixels_gt_005": 72,
+      "inside_alpha_mean": 0.9616323113441467
+    },
+    {
+      "raw": 105,
+      "actor": 5,
+      "body_pixels": 10773,
+      "alpha_mass_exterior": 139.04263305664062,
+      "exterior_alpha_pixels_gt_005": 522,
+      "inside_alpha_mean": 0.9855943918228149
+    },
+    {
+      "raw": 105,
+      "actor": 26,
+      "body_pixels": 671,
+      "alpha_mass_exterior": 60.64179229736328,
+      "exterior_alpha_pixels_gt_005": 125,
+      "inside_alpha_mean": 0.943037211894989
+    },
+    {
+      "raw": 105,
+      "actor": 18,
+      "body_pixels": 166,
+      "alpha_mass_exterior": 39.48600387573242,
+      "exterior_alpha_pixels_gt_005": 73,
+      "inside_alpha_mean": 0.9817110300064087
+    },
+    {
+      "raw": 106,
+      "actor": 5,
+      "body_pixels": 11291,
+      "alpha_mass_exterior": 157.36276245117188,
+      "exterior_alpha_pixels_gt_005": 599,
+      "inside_alpha_mean": 0.993472158908844
+    },
+    {
+      "raw": 106,
+      "actor": 26,
+      "body_pixels": 706,
+      "alpha_mass_exterior": 61.300559997558594,
+      "exterior_alpha_pixels_gt_005": 125,
+      "inside_alpha_mean": 0.9443953037261963
+    },
+    {
+      "raw": 106,
+      "actor": 18,
+      "body_pixels": 173,
+      "alpha_mass_exterior": 40.19810485839844,
+      "exterior_alpha_pixels_gt_005": 72,
+      "inside_alpha_mean": 0.9703141450881958
+    },
+    {
+      "raw": 107,
+      "actor": 5,
+      "body_pixels": 11367,
+      "alpha_mass_exterior": 151.4607696533203,
+      "exterior_alpha_pixels_gt_005": 528,
+      "inside_alpha_mean": 0.9906108379364014
+    },
+    {
+      "raw": 107,
+      "actor": 26,
+      "body_pixels": 737,
+      "alpha_mass_exterior": 72.74183654785156,
+      "exterior_alpha_pixels_gt_005": 142,
+      "inside_alpha_mean": 0.9435454607009888
+    },
+    {
+      "raw": 107,
+      "actor": 18,
+      "body_pixels": 178,
+      "alpha_mass_exterior": 38.73601531982422,
+      "exterior_alpha_pixels_gt_005": 79,
+      "inside_alpha_mean": 0.9740154147148132
+    },
+    {
+      "raw": 108,
+      "actor": 5,
+      "body_pixels": 9900,
+      "alpha_mass_exterior": 145.95401000976562,
+      "exterior_alpha_pixels_gt_005": 361,
+      "inside_alpha_mean": 0.9838758111000061
+    },
+    {
+      "raw": 108,
+      "actor": 26,
+      "body_pixels": 776,
+      "alpha_mass_exterior": 66.6100845336914,
+      "exterior_alpha_pixels_gt_005": 148,
+      "inside_alpha_mean": 0.9595906138420105
+    },
+    {
+      "raw": 108,
+      "actor": 18,
+      "body_pixels": 184,
+      "alpha_mass_exterior": 39.0246467590332,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.9724777340888977
+    },
+    {
+      "raw": 109,
+      "actor": 5,
+      "body_pixels": 8178,
+      "alpha_mass_exterior": 139.78407287597656,
+      "exterior_alpha_pixels_gt_005": 491,
+      "inside_alpha_mean": 0.9930381178855896
+    },
+    {
+      "raw": 109,
+      "actor": 26,
+      "body_pixels": 793,
+      "alpha_mass_exterior": 90.61787414550781,
+      "exterior_alpha_pixels_gt_005": 178,
+      "inside_alpha_mean": 0.9688532948493958
+    },
+    {
+      "raw": 109,
+      "actor": 18,
+      "body_pixels": 190,
+      "alpha_mass_exterior": 39.50316619873047,
+      "exterior_alpha_pixels_gt_005": 76,
+      "inside_alpha_mean": 0.9749473333358765
+    },
+    {
+      "raw": 110,
+      "actor": 5,
+      "body_pixels": 6418,
+      "alpha_mass_exterior": 71.24333953857422,
+      "exterior_alpha_pixels_gt_005": 325,
+      "inside_alpha_mean": 0.9932970404624939
+    },
+    {
+      "raw": 110,
+      "actor": 26,
+      "body_pixels": 871,
+      "alpha_mass_exterior": 65.2044906616211,
+      "exterior_alpha_pixels_gt_005": 155,
+      "inside_alpha_mean": 0.9694302678108215
+    },
+    {
+      "raw": 110,
+      "actor": 18,
+      "body_pixels": 195,
+      "alpha_mass_exterior": 41.66453170776367,
+      "exterior_alpha_pixels_gt_005": 75,
+      "inside_alpha_mean": 0.9775059819221497
+    },
+    {
+      "raw": 111,
+      "actor": 5,
+      "body_pixels": 3451,
+      "alpha_mass_exterior": 65.02088928222656,
+      "exterior_alpha_pixels_gt_005": 281,
+      "inside_alpha_mean": 0.9943061470985413
+    },
+    {
+      "raw": 111,
+      "actor": 26,
+      "body_pixels": 915,
+      "alpha_mass_exterior": 72.16436004638672,
+      "exterior_alpha_pixels_gt_005": 181,
+      "inside_alpha_mean": 0.9776507616043091
+    },
+    {
+      "raw": 111,
+      "actor": 18,
+      "body_pixels": 201,
+      "alpha_mass_exterior": 39.36455154418945,
+      "exterior_alpha_pixels_gt_005": 81,
+      "inside_alpha_mean": 0.9799361228942871
+    },
+    {
+      "raw": 112,
+      "actor": 5,
+      "body_pixels": 637,
+      "alpha_mass_exterior": 19.231645584106445,
+      "exterior_alpha_pixels_gt_005": 89,
+      "inside_alpha_mean": 0.9806475639343262
+    },
+    {
+      "raw": 112,
+      "actor": 26,
+      "body_pixels": 977,
+      "alpha_mass_exterior": 68.37049102783203,
+      "exterior_alpha_pixels_gt_005": 185,
+      "inside_alpha_mean": 0.9826961159706116
+    },
+    {
+      "raw": 112,
+      "actor": 18,
+      "body_pixels": 200,
+      "alpha_mass_exterior": 47.096519470214844,
+      "exterior_alpha_pixels_gt_005": 87,
+      "inside_alpha_mean": 0.9833671450614929
+    },
+    {
+      "raw": 113,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 113,
+      "actor": 26,
+      "body_pixels": 1028,
+      "alpha_mass_exterior": 83.43159484863281,
+      "exterior_alpha_pixels_gt_005": 209,
+      "inside_alpha_mean": 0.9885329604148865
+    },
+    {
+      "raw": 113,
+      "actor": 18,
+      "body_pixels": 216,
+      "alpha_mass_exterior": 41.03513717651367,
+      "exterior_alpha_pixels_gt_005": 80,
+      "inside_alpha_mean": 0.9768502116203308
+    },
+    {
+      "raw": 114,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 114,
+      "actor": 26,
+      "body_pixels": 1145,
+      "alpha_mass_exterior": 63.8406982421875,
+      "exterior_alpha_pixels_gt_005": 170,
+      "inside_alpha_mean": 0.9717245101928711
+    },
+    {
+      "raw": 114,
+      "actor": 18,
+      "body_pixels": 217,
+      "alpha_mass_exterior": 49.824398040771484,
+      "exterior_alpha_pixels_gt_005": 87,
+      "inside_alpha_mean": 0.96958988904953
+    },
+    {
+      "raw": 115,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 115,
+      "actor": 26,
+      "body_pixels": 1240,
+      "alpha_mass_exterior": 60.26460647583008,
+      "exterior_alpha_pixels_gt_005": 186,
+      "inside_alpha_mean": 0.9689328670501709
+    },
+    {
+      "raw": 115,
+      "actor": 18,
+      "body_pixels": 230,
+      "alpha_mass_exterior": 47.4859504699707,
+      "exterior_alpha_pixels_gt_005": 86,
+      "inside_alpha_mean": 0.9618663787841797
+    },
+    {
+      "raw": 116,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 116,
+      "actor": 26,
+      "body_pixels": 1318,
+      "alpha_mass_exterior": 66.94317626953125,
+      "exterior_alpha_pixels_gt_005": 206,
+      "inside_alpha_mean": 0.9808677434921265
+    },
+    {
+      "raw": 116,
+      "actor": 18,
+      "body_pixels": 237,
+      "alpha_mass_exterior": 53.02934265136719,
+      "exterior_alpha_pixels_gt_005": 90,
+      "inside_alpha_mean": 0.9509430527687073
+    },
+    {
+      "raw": 117,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 117,
+      "actor": 26,
+      "body_pixels": 1462,
+      "alpha_mass_exterior": 57.56452178955078,
+      "exterior_alpha_pixels_gt_005": 179,
+      "inside_alpha_mean": 0.9662555456161499
+    },
+    {
+      "raw": 117,
+      "actor": 18,
+      "body_pixels": 241,
+      "alpha_mass_exterior": 56.42980194091797,
+      "exterior_alpha_pixels_gt_005": 97,
+      "inside_alpha_mean": 0.9512950778007507
+    },
+    {
+      "raw": 118,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 118,
+      "actor": 26,
+      "body_pixels": 1590,
+      "alpha_mass_exterior": 51.94442367553711,
+      "exterior_alpha_pixels_gt_005": 198,
+      "inside_alpha_mean": 0.9672846794128418
+    },
+    {
+      "raw": 118,
+      "actor": 18,
+      "body_pixels": 249,
+      "alpha_mass_exterior": 61.38039779663086,
+      "exterior_alpha_pixels_gt_005": 96,
+      "inside_alpha_mean": 0.94716477394104
+    },
+    {
+      "raw": 119,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 119,
+      "actor": 26,
+      "body_pixels": 1715,
+      "alpha_mass_exterior": 66.73316955566406,
+      "exterior_alpha_pixels_gt_005": 235,
+      "inside_alpha_mean": 0.9678051471710205
+    },
+    {
+      "raw": 119,
+      "actor": 18,
+      "body_pixels": 259,
+      "alpha_mass_exterior": 57.542110443115234,
+      "exterior_alpha_pixels_gt_005": 99,
+      "inside_alpha_mean": 0.9602183699607849
+    },
+    {
+      "raw": 120,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 120,
+      "actor": 26,
+      "body_pixels": 1880,
+      "alpha_mass_exterior": 67.56490325927734,
+      "exterior_alpha_pixels_gt_005": 241,
+      "inside_alpha_mean": 0.9650006294250488
+    },
+    {
+      "raw": 120,
+      "actor": 18,
+      "body_pixels": 272,
+      "alpha_mass_exterior": 58.132625579833984,
+      "exterior_alpha_pixels_gt_005": 99,
+      "inside_alpha_mean": 0.9623138308525085
+    },
+    {
+      "raw": 121,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 121,
+      "actor": 26,
+      "body_pixels": 2038,
+      "alpha_mass_exterior": 89.91455078125,
+      "exterior_alpha_pixels_gt_005": 286,
+      "inside_alpha_mean": 0.9688138365745544
+    },
+    {
+      "raw": 121,
+      "actor": 18,
+      "body_pixels": 288,
+      "alpha_mass_exterior": 51.73269271850586,
+      "exterior_alpha_pixels_gt_005": 101,
+      "inside_alpha_mean": 0.9702637195587158
+    },
+    {
+      "raw": 122,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 122,
+      "actor": 26,
+      "body_pixels": 2185,
+      "alpha_mass_exterior": 117.61048889160156,
+      "exterior_alpha_pixels_gt_005": 403,
+      "inside_alpha_mean": 0.987256646156311
+    },
+    {
+      "raw": 122,
+      "actor": 18,
+      "body_pixels": 293,
+      "alpha_mass_exterior": 57.298057556152344,
+      "exterior_alpha_pixels_gt_005": 104,
+      "inside_alpha_mean": 0.9766606092453003
+    },
+    {
+      "raw": 123,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 123,
+      "actor": 26,
+      "body_pixels": 2470,
+      "alpha_mass_exterior": 107.27178955078125,
+      "exterior_alpha_pixels_gt_005": 404,
+      "inside_alpha_mean": 0.9790440201759338
+    },
+    {
+      "raw": 123,
+      "actor": 18,
+      "body_pixels": 305,
+      "alpha_mass_exterior": 59.3399772644043,
+      "exterior_alpha_pixels_gt_005": 113,
+      "inside_alpha_mean": 0.9813446402549744
+    },
+    {
+      "raw": 124,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 124,
+      "actor": 26,
+      "body_pixels": 2734,
+      "alpha_mass_exterior": 152.37393188476562,
+      "exterior_alpha_pixels_gt_005": 502,
+      "inside_alpha_mean": 0.9777650237083435
+    },
+    {
+      "raw": 124,
+      "actor": 18,
+      "body_pixels": 314,
+      "alpha_mass_exterior": 64.27527618408203,
+      "exterior_alpha_pixels_gt_005": 122,
+      "inside_alpha_mean": 0.9851123094558716
+    },
+    {
+      "raw": 125,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 125,
+      "actor": 26,
+      "body_pixels": 3089,
+      "alpha_mass_exterior": 160.0309295654297,
+      "exterior_alpha_pixels_gt_005": 586,
+      "inside_alpha_mean": 0.9800466895103455
+    },
+    {
+      "raw": 125,
+      "actor": 18,
+      "body_pixels": 338,
+      "alpha_mass_exterior": 56.572975158691406,
+      "exterior_alpha_pixels_gt_005": 108,
+      "inside_alpha_mean": 0.9767293930053711
+    },
+    {
+      "raw": 126,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 126,
+      "actor": 26,
+      "body_pixels": 3497,
+      "alpha_mass_exterior": 198.04417419433594,
+      "exterior_alpha_pixels_gt_005": 697,
+      "inside_alpha_mean": 0.9803983569145203
+    },
+    {
+      "raw": 126,
+      "actor": 18,
+      "body_pixels": 362,
+      "alpha_mass_exterior": 54.36913299560547,
+      "exterior_alpha_pixels_gt_005": 108,
+      "inside_alpha_mean": 0.9726153016090393
+    },
+    {
+      "raw": 127,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 127,
+      "actor": 26,
+      "body_pixels": 4045,
+      "alpha_mass_exterior": 208.67703247070312,
+      "exterior_alpha_pixels_gt_005": 824,
+      "inside_alpha_mean": 0.9794691205024719
+    },
+    {
+      "raw": 127,
+      "actor": 18,
+      "body_pixels": 372,
+      "alpha_mass_exterior": 57.475215911865234,
+      "exterior_alpha_pixels_gt_005": 121,
+      "inside_alpha_mean": 0.9865232706069946
+    },
+    {
+      "raw": 128,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 128,
+      "actor": 26,
+      "body_pixels": 4619,
+      "alpha_mass_exterior": 310.3583679199219,
+      "exterior_alpha_pixels_gt_005": 1074,
+      "inside_alpha_mean": 0.9838207364082336
+    },
+    {
+      "raw": 128,
+      "actor": 18,
+      "body_pixels": 394,
+      "alpha_mass_exterior": 57.69340896606445,
+      "exterior_alpha_pixels_gt_005": 129,
+      "inside_alpha_mean": 0.9883113503456116
+    },
+    {
+      "raw": 129,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 129,
+      "actor": 26,
+      "body_pixels": 5405,
+      "alpha_mass_exterior": 420.1965026855469,
+      "exterior_alpha_pixels_gt_005": 1368,
+      "inside_alpha_mean": 0.9824836850166321
+    },
+    {
+      "raw": 129,
+      "actor": 18,
+      "body_pixels": 428,
+      "alpha_mass_exterior": 48.09700393676758,
+      "exterior_alpha_pixels_gt_005": 126,
+      "inside_alpha_mean": 0.9815313220024109
+    },
+    {
+      "raw": 130,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 130,
+      "actor": 26,
+      "body_pixels": 6571,
+      "alpha_mass_exterior": 350.258056640625,
+      "exterior_alpha_pixels_gt_005": 1578,
+      "inside_alpha_mean": 0.9851469397544861
+    },
+    {
+      "raw": 130,
+      "actor": 18,
+      "body_pixels": 455,
+      "alpha_mass_exterior": 47.737091064453125,
+      "exterior_alpha_pixels_gt_005": 118,
+      "inside_alpha_mean": 0.9791340231895447
+    },
+    {
+      "raw": 131,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 131,
+      "actor": 26,
+      "body_pixels": 7828,
+      "alpha_mass_exterior": 527.130859375,
+      "exterior_alpha_pixels_gt_005": 2063,
+      "inside_alpha_mean": 0.9911066889762878
+    },
+    {
+      "raw": 131,
+      "actor": 18,
+      "body_pixels": 482,
+      "alpha_mass_exterior": 48.1292839050293,
+      "exterior_alpha_pixels_gt_005": 127,
+      "inside_alpha_mean": 0.9821707010269165
+    },
+    {
+      "raw": 132,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 132,
+      "actor": 26,
+      "body_pixels": 9624,
+      "alpha_mass_exterior": 398.354736328125,
+      "exterior_alpha_pixels_gt_005": 1762,
+      "inside_alpha_mean": 0.9871677160263062
+    },
+    {
+      "raw": 132,
+      "actor": 18,
+      "body_pixels": 518,
+      "alpha_mass_exterior": 47.933204650878906,
+      "exterior_alpha_pixels_gt_005": 125,
+      "inside_alpha_mean": 0.9788118600845337
+    },
+    {
+      "raw": 133,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 133,
+      "actor": 26,
+      "body_pixels": 10088,
+      "alpha_mass_exterior": 468.8285827636719,
+      "exterior_alpha_pixels_gt_005": 1883,
+      "inside_alpha_mean": 0.9886864423751831
+    },
+    {
+      "raw": 133,
+      "actor": 18,
+      "body_pixels": 553,
+      "alpha_mass_exterior": 48.482845306396484,
+      "exterior_alpha_pixels_gt_005": 125,
+      "inside_alpha_mean": 0.9773087501525879
+    },
+    {
+      "raw": 134,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 134,
+      "actor": 26,
+      "body_pixels": 9988,
+      "alpha_mass_exterior": 325.2418518066406,
+      "exterior_alpha_pixels_gt_005": 1464,
+      "inside_alpha_mean": 0.9840940833091736
+    },
+    {
+      "raw": 134,
+      "actor": 18,
+      "body_pixels": 587,
+      "alpha_mass_exterior": 53.15102767944336,
+      "exterior_alpha_pixels_gt_005": 138,
+      "inside_alpha_mean": 0.9795264601707458
+    },
+    {
+      "raw": 135,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 135,
+      "actor": 26,
+      "body_pixels": 8252,
+      "alpha_mass_exterior": 254.10693359375,
+      "exterior_alpha_pixels_gt_005": 997,
+      "inside_alpha_mean": 0.968289852142334
+    },
+    {
+      "raw": 135,
+      "actor": 18,
+      "body_pixels": 624,
+      "alpha_mass_exterior": 58.45394515991211,
+      "exterior_alpha_pixels_gt_005": 154,
+      "inside_alpha_mean": 0.9832879304885864
+    },
+    {
+      "raw": 136,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 136,
+      "actor": 26,
+      "body_pixels": 6098,
+      "alpha_mass_exterior": 265.2878723144531,
+      "exterior_alpha_pixels_gt_005": 979,
+      "inside_alpha_mean": 0.9784553647041321
+    },
+    {
+      "raw": 136,
+      "actor": 18,
+      "body_pixels": 679,
+      "alpha_mass_exterior": 57.66233444213867,
+      "exterior_alpha_pixels_gt_005": 169,
+      "inside_alpha_mean": 0.9788616895675659
+    },
+    {
+      "raw": 137,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 137,
+      "actor": 26,
+      "body_pixels": 3131,
+      "alpha_mass_exterior": 320.78179931640625,
+      "exterior_alpha_pixels_gt_005": 1044,
+      "inside_alpha_mean": 0.9892311096191406
+    },
+    {
+      "raw": 137,
+      "actor": 18,
+      "body_pixels": 750,
+      "alpha_mass_exterior": 52.02828598022461,
+      "exterior_alpha_pixels_gt_005": 149,
+      "inside_alpha_mean": 0.9719824194908142
+    }
+  ],
+  "r15_records": [
+    {
+      "raw": 89,
+      "actor": 5,
+      "body_pixels": 1253,
+      "alpha_mass_exterior": 215.14659118652344,
+      "exterior_alpha_pixels_gt_005": 510,
+      "inside_alpha_mean": 0.9936119914054871
+    },
+    {
+      "raw": 89,
+      "actor": 6,
+      "body_pixels": 20,
+      "alpha_mass_exterior": 959.9293212890625,
+      "exterior_alpha_pixels_gt_005": 2249,
+      "inside_alpha_mean": 0.9693228006362915
+    },
+    {
+      "raw": 89,
+      "actor": 18,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 75.27656555175781,
+      "exterior_alpha_pixels_gt_005": 112,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 89,
+      "actor": 26,
+      "body_pixels": 270,
+      "alpha_mass_exterior": 82.17916870117188,
+      "exterior_alpha_pixels_gt_005": 155,
+      "inside_alpha_mean": 0.999567985534668
+    },
+    {
+      "raw": 89,
+      "actor": 37,
+      "body_pixels": 14683,
+      "alpha_mass_exterior": 312.0024108886719,
+      "exterior_alpha_pixels_gt_005": 769,
+      "inside_alpha_mean": 0.9455481171607971
+    },
+    {
+      "raw": 90,
+      "actor": 5,
+      "body_pixels": 1360,
+      "alpha_mass_exterior": 241.05032348632812,
+      "exterior_alpha_pixels_gt_005": 555,
+      "inside_alpha_mean": 0.9923542737960815
+    },
+    {
+      "raw": 90,
+      "actor": 6,
+      "body_pixels": 22,
+      "alpha_mass_exterior": 961.8069458007812,
+      "exterior_alpha_pixels_gt_005": 2254,
+      "inside_alpha_mean": 0.9919750094413757
+    },
+    {
+      "raw": 90,
+      "actor": 18,
+      "body_pixels": 98,
+      "alpha_mass_exterior": 69.11532592773438,
+      "exterior_alpha_pixels_gt_005": 109,
+      "inside_alpha_mean": 0.9523580074310303
+    },
+    {
+      "raw": 90,
+      "actor": 26,
+      "body_pixels": 279,
+      "alpha_mass_exterior": 114.13092041015625,
+      "exterior_alpha_pixels_gt_005": 229,
+      "inside_alpha_mean": 0.998699426651001
+    },
+    {
+      "raw": 90,
+      "actor": 37,
+      "body_pixels": 14831,
+      "alpha_mass_exterior": 174.1798858642578,
+      "exterior_alpha_pixels_gt_005": 628,
+      "inside_alpha_mean": 0.9459353685379028
+    },
+    {
+      "raw": 91,
+      "actor": 5,
+      "body_pixels": 1515,
+      "alpha_mass_exterior": 228.96437072753906,
+      "exterior_alpha_pixels_gt_005": 555,
+      "inside_alpha_mean": 0.9916400909423828
+    },
+    {
+      "raw": 91,
+      "actor": 6,
+      "body_pixels": 23,
+      "alpha_mass_exterior": 962.4188232421875,
+      "exterior_alpha_pixels_gt_005": 2254,
+      "inside_alpha_mean": 0.9915632605552673
+    },
+    {
+      "raw": 91,
+      "actor": 18,
+      "body_pixels": 106,
+      "alpha_mass_exterior": 65.65945434570312,
+      "exterior_alpha_pixels_gt_005": 103,
+      "inside_alpha_mean": 0.9598745703697205
+    },
+    {
+      "raw": 91,
+      "actor": 26,
+      "body_pixels": 299,
+      "alpha_mass_exterior": 107.94268035888672,
+      "exterior_alpha_pixels_gt_005": 228,
+      "inside_alpha_mean": 0.9994708895683289
+    },
+    {
+      "raw": 91,
+      "actor": 37,
+      "body_pixels": 14831,
+      "alpha_mass_exterior": 162.5814208984375,
+      "exterior_alpha_pixels_gt_005": 615,
+      "inside_alpha_mean": 0.9457573294639587
+    },
+    {
+      "raw": 92,
+      "actor": 5,
+      "body_pixels": 1680,
+      "alpha_mass_exterior": 226.12130737304688,
+      "exterior_alpha_pixels_gt_005": 576,
+      "inside_alpha_mean": 0.9889243245124817
+    },
+    {
+      "raw": 92,
+      "actor": 6,
+      "body_pixels": 21,
+      "alpha_mass_exterior": 950.6991577148438,
+      "exterior_alpha_pixels_gt_005": 2225,
+      "inside_alpha_mean": 0.9953597187995911
+    },
+    {
+      "raw": 92,
+      "actor": 18,
+      "body_pixels": 105,
+      "alpha_mass_exterior": 67.22268676757812,
+      "exterior_alpha_pixels_gt_005": 101,
+      "inside_alpha_mean": 0.9667519927024841
+    },
+    {
+      "raw": 92,
+      "actor": 26,
+      "body_pixels": 311,
+      "alpha_mass_exterior": 106.39213562011719,
+      "exterior_alpha_pixels_gt_005": 226,
+      "inside_alpha_mean": 0.999427318572998
+    },
+    {
+      "raw": 92,
+      "actor": 37,
+      "body_pixels": 14835,
+      "alpha_mass_exterior": 163.86184692382812,
+      "exterior_alpha_pixels_gt_005": 613,
+      "inside_alpha_mean": 0.9459067583084106
+    },
+    {
+      "raw": 93,
+      "actor": 5,
+      "body_pixels": 1881,
+      "alpha_mass_exterior": 206.075927734375,
+      "exterior_alpha_pixels_gt_005": 562,
+      "inside_alpha_mean": 0.987714946269989
+    },
+    {
+      "raw": 93,
+      "actor": 6,
+      "body_pixels": 25,
+      "alpha_mass_exterior": 916.8712158203125,
+      "exterior_alpha_pixels_gt_005": 2182,
+      "inside_alpha_mean": 0.9968418478965759
+    },
+    {
+      "raw": 93,
+      "actor": 18,
+      "body_pixels": 116,
+      "alpha_mass_exterior": 61.043792724609375,
+      "exterior_alpha_pixels_gt_005": 99,
+      "inside_alpha_mean": 0.9720125198364258
+    },
+    {
+      "raw": 93,
+      "actor": 26,
+      "body_pixels": 329,
+      "alpha_mass_exterior": 102.86955261230469,
+      "exterior_alpha_pixels_gt_005": 228,
+      "inside_alpha_mean": 0.99933922290802
+    },
+    {
+      "raw": 93,
+      "actor": 37,
+      "body_pixels": 14857,
+      "alpha_mass_exterior": 148.92294311523438,
+      "exterior_alpha_pixels_gt_005": 585,
+      "inside_alpha_mean": 0.9452566504478455
+    },
+    {
+      "raw": 94,
+      "actor": 5,
+      "body_pixels": 2089,
+      "alpha_mass_exterior": 235.93865966796875,
+      "exterior_alpha_pixels_gt_005": 615,
+      "inside_alpha_mean": 0.9849225282669067
+    },
+    {
+      "raw": 94,
+      "actor": 6,
+      "body_pixels": 31,
+      "alpha_mass_exterior": 884.8041381835938,
+      "exterior_alpha_pixels_gt_005": 2133,
+      "inside_alpha_mean": 0.9928600192070007
+    },
+    {
+      "raw": 94,
+      "actor": 18,
+      "body_pixels": 116,
+      "alpha_mass_exterior": 56.89112091064453,
+      "exterior_alpha_pixels_gt_005": 97,
+      "inside_alpha_mean": 0.9926912784576416
+    },
+    {
+      "raw": 94,
+      "actor": 26,
+      "body_pixels": 329,
+      "alpha_mass_exterior": 107.1867446899414,
+      "exterior_alpha_pixels_gt_005": 238,
+      "inside_alpha_mean": 0.9992718696594238
+    },
+    {
+      "raw": 94,
+      "actor": 37,
+      "body_pixels": 14856,
+      "alpha_mass_exterior": 150.48133850097656,
+      "exterior_alpha_pixels_gt_005": 589,
+      "inside_alpha_mean": 0.9454914927482605
+    },
+    {
+      "raw": 95,
+      "actor": 5,
+      "body_pixels": 2346,
+      "alpha_mass_exterior": 238.1728973388672,
+      "exterior_alpha_pixels_gt_005": 663,
+      "inside_alpha_mean": 0.9857819080352783
+    },
+    {
+      "raw": 95,
+      "actor": 6,
+      "body_pixels": 43,
+      "alpha_mass_exterior": 822.59716796875,
+      "exterior_alpha_pixels_gt_005": 2043,
+      "inside_alpha_mean": 0.985198438167572
+    },
+    {
+      "raw": 95,
+      "actor": 18,
+      "body_pixels": 123,
+      "alpha_mass_exterior": 59.833980560302734,
+      "exterior_alpha_pixels_gt_005": 95,
+      "inside_alpha_mean": 0.9976693987846375
+    },
+    {
+      "raw": 95,
+      "actor": 26,
+      "body_pixels": 357,
+      "alpha_mass_exterior": 93.59402465820312,
+      "exterior_alpha_pixels_gt_005": 218,
+      "inside_alpha_mean": 0.9991954565048218
+    },
+    {
+      "raw": 95,
+      "actor": 37,
+      "body_pixels": 14841,
+      "alpha_mass_exterior": 159.1302490234375,
+      "exterior_alpha_pixels_gt_005": 623,
+      "inside_alpha_mean": 0.9457584619522095
+    },
+    {
+      "raw": 96,
+      "actor": 5,
+      "body_pixels": 2699,
+      "alpha_mass_exterior": 209.83079528808594,
+      "exterior_alpha_pixels_gt_005": 650,
+      "inside_alpha_mean": 0.9783045053482056
+    },
+    {
+      "raw": 96,
+      "actor": 6,
+      "body_pixels": 42,
+      "alpha_mass_exterior": 776.5363159179688,
+      "exterior_alpha_pixels_gt_005": 1965,
+      "inside_alpha_mean": 0.991908848285675
+    },
+    {
+      "raw": 96,
+      "actor": 18,
+      "body_pixels": 128,
+      "alpha_mass_exterior": 58.58940505981445,
+      "exterior_alpha_pixels_gt_005": 100,
+      "inside_alpha_mean": 0.9902639389038086
+    },
+    {
+      "raw": 96,
+      "actor": 26,
+      "body_pixels": 376,
+      "alpha_mass_exterior": 106.90692138671875,
+      "exterior_alpha_pixels_gt_005": 242,
+      "inside_alpha_mean": 0.9976749420166016
+    },
+    {
+      "raw": 96,
+      "actor": 37,
+      "body_pixels": 14843,
+      "alpha_mass_exterior": 168.80169677734375,
+      "exterior_alpha_pixels_gt_005": 633,
+      "inside_alpha_mean": 0.9460017085075378
+    },
+    {
+      "raw": 97,
+      "actor": 5,
+      "body_pixels": 3056,
+      "alpha_mass_exterior": 216.27249145507812,
+      "exterior_alpha_pixels_gt_005": 705,
+      "inside_alpha_mean": 0.9780794382095337
+    },
+    {
+      "raw": 97,
+      "actor": 6,
+      "body_pixels": 36,
+      "alpha_mass_exterior": 741.212890625,
+      "exterior_alpha_pixels_gt_005": 1907,
+      "inside_alpha_mean": 0.9894154667854309
+    },
+    {
+      "raw": 97,
+      "actor": 18,
+      "body_pixels": 128,
+      "alpha_mass_exterior": 62.99722671508789,
+      "exterior_alpha_pixels_gt_005": 103,
+      "inside_alpha_mean": 0.9958006143569946
+    },
+    {
+      "raw": 97,
+      "actor": 26,
+      "body_pixels": 399,
+      "alpha_mass_exterior": 103.17799377441406,
+      "exterior_alpha_pixels_gt_005": 245,
+      "inside_alpha_mean": 0.999049723148346
+    },
+    {
+      "raw": 97,
+      "actor": 37,
+      "body_pixels": 14851,
+      "alpha_mass_exterior": 158.9840087890625,
+      "exterior_alpha_pixels_gt_005": 620,
+      "inside_alpha_mean": 0.9457977414131165
+    },
+    {
+      "raw": 98,
+      "actor": 5,
+      "body_pixels": 3503,
+      "alpha_mass_exterior": 230.3790740966797,
+      "exterior_alpha_pixels_gt_005": 751,
+      "inside_alpha_mean": 0.9710569381713867
+    },
+    {
+      "raw": 98,
+      "actor": 6,
+      "body_pixels": 36,
+      "alpha_mass_exterior": 733.5863647460938,
+      "exterior_alpha_pixels_gt_005": 1994,
+      "inside_alpha_mean": 0.9864309430122375
+    },
+    {
+      "raw": 98,
+      "actor": 18,
+      "body_pixels": 137,
+      "alpha_mass_exterior": 58.71154022216797,
+      "exterior_alpha_pixels_gt_005": 98,
+      "inside_alpha_mean": 0.9932279586791992
+    },
+    {
+      "raw": 98,
+      "actor": 26,
+      "body_pixels": 422,
+      "alpha_mass_exterior": 88.88032531738281,
+      "exterior_alpha_pixels_gt_005": 225,
+      "inside_alpha_mean": 0.9987205862998962
+    },
+    {
+      "raw": 98,
+      "actor": 37,
+      "body_pixels": 14857,
+      "alpha_mass_exterior": 158.29644775390625,
+      "exterior_alpha_pixels_gt_005": 620,
+      "inside_alpha_mean": 0.9458173513412476
+    },
+    {
+      "raw": 99,
+      "actor": 5,
+      "body_pixels": 4062,
+      "alpha_mass_exterior": 226.95364379882812,
+      "exterior_alpha_pixels_gt_005": 795,
+      "inside_alpha_mean": 0.9668645262718201
+    },
+    {
+      "raw": 99,
+      "actor": 6,
+      "body_pixels": 29,
+      "alpha_mass_exterior": 672.0057983398438,
+      "exterior_alpha_pixels_gt_005": 1778,
+      "inside_alpha_mean": 0.9804331064224243
+    },
+    {
+      "raw": 99,
+      "actor": 18,
+      "body_pixels": 139,
+      "alpha_mass_exterior": 58.74907684326172,
+      "exterior_alpha_pixels_gt_005": 97,
+      "inside_alpha_mean": 0.9892550706863403
+    },
+    {
+      "raw": 99,
+      "actor": 26,
+      "body_pixels": 448,
+      "alpha_mass_exterior": 92.08930969238281,
+      "exterior_alpha_pixels_gt_005": 222,
+      "inside_alpha_mean": 0.9981638193130493
+    },
+    {
+      "raw": 99,
+      "actor": 37,
+      "body_pixels": 14841,
+      "alpha_mass_exterior": 147.7338409423828,
+      "exterior_alpha_pixels_gt_005": 597,
+      "inside_alpha_mean": 0.9453684091567993
+    },
+    {
+      "raw": 100,
+      "actor": 5,
+      "body_pixels": 4698,
+      "alpha_mass_exterior": 272.1258544921875,
+      "exterior_alpha_pixels_gt_005": 907,
+      "inside_alpha_mean": 0.9645648002624512
+    },
+    {
+      "raw": 100,
+      "actor": 6,
+      "body_pixels": 26,
+      "alpha_mass_exterior": 664.8816528320312,
+      "exterior_alpha_pixels_gt_005": 1850,
+      "inside_alpha_mean": 0.9842317700386047
+    },
+    {
+      "raw": 100,
+      "actor": 18,
+      "body_pixels": 149,
+      "alpha_mass_exterior": 61.068809509277344,
+      "exterior_alpha_pixels_gt_005": 99,
+      "inside_alpha_mean": 0.9912770986557007
+    },
+    {
+      "raw": 100,
+      "actor": 26,
+      "body_pixels": 455,
+      "alpha_mass_exterior": 82.19819641113281,
+      "exterior_alpha_pixels_gt_005": 205,
+      "inside_alpha_mean": 0.9985054135322571
+    },
+    {
+      "raw": 100,
+      "actor": 37,
+      "body_pixels": 14846,
+      "alpha_mass_exterior": 155.2465362548828,
+      "exterior_alpha_pixels_gt_005": 603,
+      "inside_alpha_mean": 0.9449180960655212
+    },
+    {
+      "raw": 101,
+      "actor": 5,
+      "body_pixels": 5497,
+      "alpha_mass_exterior": 346.1259460449219,
+      "exterior_alpha_pixels_gt_005": 1065,
+      "inside_alpha_mean": 0.9600638747215271
+    },
+    {
+      "raw": 101,
+      "actor": 6,
+      "body_pixels": 18,
+      "alpha_mass_exterior": 625.5769653320312,
+      "exterior_alpha_pixels_gt_005": 1782,
+      "inside_alpha_mean": 0.9885593056678772
+    },
+    {
+      "raw": 101,
+      "actor": 18,
+      "body_pixels": 150,
+      "alpha_mass_exterior": 71.7281723022461,
+      "exterior_alpha_pixels_gt_005": 125,
+      "inside_alpha_mean": 0.9840500950813293
+    },
+    {
+      "raw": 101,
+      "actor": 26,
+      "body_pixels": 473,
+      "alpha_mass_exterior": 93.70620727539062,
+      "exterior_alpha_pixels_gt_005": 234,
+      "inside_alpha_mean": 0.998454749584198
+    },
+    {
+      "raw": 101,
+      "actor": 37,
+      "body_pixels": 14699,
+      "alpha_mass_exterior": 279.21075439453125,
+      "exterior_alpha_pixels_gt_005": 739,
+      "inside_alpha_mean": 0.9448601603507996
+    },
+    {
+      "raw": 102,
+      "actor": 5,
+      "body_pixels": 6531,
+      "alpha_mass_exterior": 421.66021728515625,
+      "exterior_alpha_pixels_gt_005": 1300,
+      "inside_alpha_mean": 0.9576816558837891
+    },
+    {
+      "raw": 102,
+      "actor": 6,
+      "body_pixels": 28,
+      "alpha_mass_exterior": 582.216064453125,
+      "exterior_alpha_pixels_gt_005": 1695,
+      "inside_alpha_mean": 0.9818044304847717
+    },
+    {
+      "raw": 102,
+      "actor": 18,
+      "body_pixels": 162,
+      "alpha_mass_exterior": 56.34035873413086,
+      "exterior_alpha_pixels_gt_005": 94,
+      "inside_alpha_mean": 0.9832752346992493
+    },
+    {
+      "raw": 102,
+      "actor": 26,
+      "body_pixels": 505,
+      "alpha_mass_exterior": 91.79342651367188,
+      "exterior_alpha_pixels_gt_005": 232,
+      "inside_alpha_mean": 0.997831404209137
+    },
+    {
+      "raw": 102,
+      "actor": 37,
+      "body_pixels": 14809,
+      "alpha_mass_exterior": 163.46981811523438,
+      "exterior_alpha_pixels_gt_005": 615,
+      "inside_alpha_mean": 0.9446812868118286
+    },
+    {
+      "raw": 103,
+      "actor": 5,
+      "body_pixels": 7882,
+      "alpha_mass_exterior": 484.75299072265625,
+      "exterior_alpha_pixels_gt_005": 1584,
+      "inside_alpha_mean": 0.9526739120483398
+    },
+    {
+      "raw": 103,
+      "actor": 6,
+      "body_pixels": 36,
+      "alpha_mass_exterior": 555.0406494140625,
+      "exterior_alpha_pixels_gt_005": 1704,
+      "inside_alpha_mean": 0.9573963284492493
+    },
+    {
+      "raw": 103,
+      "actor": 18,
+      "body_pixels": 171,
+      "alpha_mass_exterior": 51.32875061035156,
+      "exterior_alpha_pixels_gt_005": 90,
+      "inside_alpha_mean": 0.992116391658783
+    },
+    {
+      "raw": 103,
+      "actor": 26,
+      "body_pixels": 522,
+      "alpha_mass_exterior": 119.77742767333984,
+      "exterior_alpha_pixels_gt_005": 288,
+      "inside_alpha_mean": 0.997979998588562
+    },
+    {
+      "raw": 103,
+      "actor": 37,
+      "body_pixels": 14795,
+      "alpha_mass_exterior": 167.8011016845703,
+      "exterior_alpha_pixels_gt_005": 618,
+      "inside_alpha_mean": 0.9447439908981323
+    },
+    {
+      "raw": 104,
+      "actor": 5,
+      "body_pixels": 9663,
+      "alpha_mass_exterior": 541.22021484375,
+      "exterior_alpha_pixels_gt_005": 1579,
+      "inside_alpha_mean": 0.9434329867362976
+    },
+    {
+      "raw": 104,
+      "actor": 6,
+      "body_pixels": 1208,
+      "alpha_mass_exterior": 499.7496032714844,
+      "exterior_alpha_pixels_gt_005": 1602,
+      "inside_alpha_mean": 0.9474635124206543
+    },
+    {
+      "raw": 104,
+      "actor": 18,
+      "body_pixels": 172,
+      "alpha_mass_exterior": 49.83053970336914,
+      "exterior_alpha_pixels_gt_005": 87,
+      "inside_alpha_mean": 0.9933075904846191
+    },
+    {
+      "raw": 104,
+      "actor": 26,
+      "body_pixels": 558,
+      "alpha_mass_exterior": 114.94990539550781,
+      "exterior_alpha_pixels_gt_005": 284,
+      "inside_alpha_mean": 0.9954575896263123
+    },
+    {
+      "raw": 104,
+      "actor": 37,
+      "body_pixels": 14782,
+      "alpha_mass_exterior": 196.60504150390625,
+      "exterior_alpha_pixels_gt_005": 766,
+      "inside_alpha_mean": 0.9449923038482666
+    },
+    {
+      "raw": 105,
+      "actor": 5,
+      "body_pixels": 10818,
+      "alpha_mass_exterior": 376.8209533691406,
+      "exterior_alpha_pixels_gt_005": 1280,
+      "inside_alpha_mean": 0.9297190308570862
+    },
+    {
+      "raw": 105,
+      "actor": 6,
+      "body_pixels": 1210,
+      "alpha_mass_exterior": 429.20697021484375,
+      "exterior_alpha_pixels_gt_005": 1479,
+      "inside_alpha_mean": 0.951012909412384
+    },
+    {
+      "raw": 105,
+      "actor": 18,
+      "body_pixels": 191,
+      "alpha_mass_exterior": 51.27553939819336,
+      "exterior_alpha_pixels_gt_005": 93,
+      "inside_alpha_mean": 0.9871712923049927
+    },
+    {
+      "raw": 105,
+      "actor": 26,
+      "body_pixels": 587,
+      "alpha_mass_exterior": 121.10472106933594,
+      "exterior_alpha_pixels_gt_005": 304,
+      "inside_alpha_mean": 0.9953884482383728
+    },
+    {
+      "raw": 105,
+      "actor": 37,
+      "body_pixels": 14724,
+      "alpha_mass_exterior": 225.7004852294922,
+      "exterior_alpha_pixels_gt_005": 805,
+      "inside_alpha_mean": 0.9458603858947754
+    },
+    {
+      "raw": 106,
+      "actor": 5,
+      "body_pixels": 11333,
+      "alpha_mass_exterior": 462.2010803222656,
+      "exterior_alpha_pixels_gt_005": 1558,
+      "inside_alpha_mean": 0.922271728515625
+    },
+    {
+      "raw": 106,
+      "actor": 6,
+      "body_pixels": 1203,
+      "alpha_mass_exterior": 381.0511169433594,
+      "exterior_alpha_pixels_gt_005": 1391,
+      "inside_alpha_mean": 0.9543411731719971
+    },
+    {
+      "raw": 106,
+      "actor": 18,
+      "body_pixels": 194,
+      "alpha_mass_exterior": 55.020328521728516,
+      "exterior_alpha_pixels_gt_005": 94,
+      "inside_alpha_mean": 0.9737820029258728
+    },
+    {
+      "raw": 106,
+      "actor": 26,
+      "body_pixels": 640,
+      "alpha_mass_exterior": 93.58858489990234,
+      "exterior_alpha_pixels_gt_005": 242,
+      "inside_alpha_mean": 0.9955368041992188
+    },
+    {
+      "raw": 106,
+      "actor": 37,
+      "body_pixels": 14675,
+      "alpha_mass_exterior": 234.85487365722656,
+      "exterior_alpha_pixels_gt_005": 832,
+      "inside_alpha_mean": 0.9468188881874084
+    },
+    {
+      "raw": 107,
+      "actor": 5,
+      "body_pixels": 11426,
+      "alpha_mass_exterior": 486.6282958984375,
+      "exterior_alpha_pixels_gt_005": 1526,
+      "inside_alpha_mean": 0.9116883873939514
+    },
+    {
+      "raw": 107,
+      "actor": 6,
+      "body_pixels": 1217,
+      "alpha_mass_exterior": 338.3517150878906,
+      "exterior_alpha_pixels_gt_005": 1301,
+      "inside_alpha_mean": 0.9566237330436707
+    },
+    {
+      "raw": 107,
+      "actor": 18,
+      "body_pixels": 199,
+      "alpha_mass_exterior": 53.371734619140625,
+      "exterior_alpha_pixels_gt_005": 94,
+      "inside_alpha_mean": 0.988541305065155
+    },
+    {
+      "raw": 107,
+      "actor": 26,
+      "body_pixels": 680,
+      "alpha_mass_exterior": 99.25285339355469,
+      "exterior_alpha_pixels_gt_005": 246,
+      "inside_alpha_mean": 0.9888501763343811
+    },
+    {
+      "raw": 107,
+      "actor": 37,
+      "body_pixels": 14576,
+      "alpha_mass_exterior": 261.4715576171875,
+      "exterior_alpha_pixels_gt_005": 851,
+      "inside_alpha_mean": 0.9469748139381409
+    },
+    {
+      "raw": 108,
+      "actor": 5,
+      "body_pixels": 9894,
+      "alpha_mass_exterior": 570.4598999023438,
+      "exterior_alpha_pixels_gt_005": 1513,
+      "inside_alpha_mean": 0.8909986615180969
+    },
+    {
+      "raw": 108,
+      "actor": 6,
+      "body_pixels": 1200,
+      "alpha_mass_exterior": 306.0382080078125,
+      "exterior_alpha_pixels_gt_005": 1246,
+      "inside_alpha_mean": 0.9594175219535828
+    },
+    {
+      "raw": 108,
+      "actor": 18,
+      "body_pixels": 197,
+      "alpha_mass_exterior": 60.73011016845703,
+      "exterior_alpha_pixels_gt_005": 107,
+      "inside_alpha_mean": 0.9906992316246033
+    },
+    {
+      "raw": 108,
+      "actor": 26,
+      "body_pixels": 733,
+      "alpha_mass_exterior": 118.1462173461914,
+      "exterior_alpha_pixels_gt_005": 305,
+      "inside_alpha_mean": 0.9854040145874023
+    },
+    {
+      "raw": 108,
+      "actor": 37,
+      "body_pixels": 14532,
+      "alpha_mass_exterior": 258.03729248046875,
+      "exterior_alpha_pixels_gt_005": 853,
+      "inside_alpha_mean": 0.9473345875740051
+    },
+    {
+      "raw": 109,
+      "actor": 5,
+      "body_pixels": 8274,
+      "alpha_mass_exterior": 508.01312255859375,
+      "exterior_alpha_pixels_gt_005": 1238,
+      "inside_alpha_mean": 0.9083575010299683
+    },
+    {
+      "raw": 109,
+      "actor": 6,
+      "body_pixels": 1172,
+      "alpha_mass_exterior": 287.3877868652344,
+      "exterior_alpha_pixels_gt_005": 1192,
+      "inside_alpha_mean": 0.9599480032920837
+    },
+    {
+      "raw": 109,
+      "actor": 18,
+      "body_pixels": 211,
+      "alpha_mass_exterior": 53.68785858154297,
+      "exterior_alpha_pixels_gt_005": 99,
+      "inside_alpha_mean": 0.9906178116798401
+    },
+    {
+      "raw": 109,
+      "actor": 26,
+      "body_pixels": 756,
+      "alpha_mass_exterior": 137.74549865722656,
+      "exterior_alpha_pixels_gt_005": 342,
+      "inside_alpha_mean": 0.9925280213356018
+    },
+    {
+      "raw": 109,
+      "actor": 37,
+      "body_pixels": 14452,
+      "alpha_mass_exterior": 233.2858123779297,
+      "exterior_alpha_pixels_gt_005": 811,
+      "inside_alpha_mean": 0.9466765522956848
+    },
+    {
+      "raw": 110,
+      "actor": 5,
+      "body_pixels": 6389,
+      "alpha_mass_exterior": 209.82144165039062,
+      "exterior_alpha_pixels_gt_005": 654,
+      "inside_alpha_mean": 0.9224585890769958
+    },
+    {
+      "raw": 110,
+      "actor": 6,
+      "body_pixels": 1148,
+      "alpha_mass_exterior": 272.3297119140625,
+      "exterior_alpha_pixels_gt_005": 1142,
+      "inside_alpha_mean": 0.9590486288070679
+    },
+    {
+      "raw": 110,
+      "actor": 18,
+      "body_pixels": 213,
+      "alpha_mass_exterior": 60.37314224243164,
+      "exterior_alpha_pixels_gt_005": 106,
+      "inside_alpha_mean": 0.9953464865684509
+    },
+    {
+      "raw": 110,
+      "actor": 26,
+      "body_pixels": 822,
+      "alpha_mass_exterior": 129.0974884033203,
+      "exterior_alpha_pixels_gt_005": 345,
+      "inside_alpha_mean": 0.9903369545936584
+    },
+    {
+      "raw": 110,
+      "actor": 37,
+      "body_pixels": 14299,
+      "alpha_mass_exterior": 265.08160400390625,
+      "exterior_alpha_pixels_gt_005": 835,
+      "inside_alpha_mean": 0.9453396201133728
+    },
+    {
+      "raw": 111,
+      "actor": 5,
+      "body_pixels": 3407,
+      "alpha_mass_exterior": 200.6884307861328,
+      "exterior_alpha_pixels_gt_005": 634,
+      "inside_alpha_mean": 0.9187613129615784
+    },
+    {
+      "raw": 111,
+      "actor": 6,
+      "body_pixels": 1125,
+      "alpha_mass_exterior": 242.8515625,
+      "exterior_alpha_pixels_gt_005": 1075,
+      "inside_alpha_mean": 0.9619702696800232
+    },
+    {
+      "raw": 111,
+      "actor": 18,
+      "body_pixels": 222,
+      "alpha_mass_exterior": 57.65394592285156,
+      "exterior_alpha_pixels_gt_005": 107,
+      "inside_alpha_mean": 0.9939440488815308
+    },
+    {
+      "raw": 111,
+      "actor": 26,
+      "body_pixels": 875,
+      "alpha_mass_exterior": 119.80724334716797,
+      "exterior_alpha_pixels_gt_005": 325,
+      "inside_alpha_mean": 0.9906145334243774
+    },
+    {
+      "raw": 111,
+      "actor": 37,
+      "body_pixels": 14051,
+      "alpha_mass_exterior": 357.295654296875,
+      "exterior_alpha_pixels_gt_005": 973,
+      "inside_alpha_mean": 0.9446090459823608
+    },
+    {
+      "raw": 112,
+      "actor": 5,
+      "body_pixels": 609,
+      "alpha_mass_exterior": 159.57945251464844,
+      "exterior_alpha_pixels_gt_005": 536,
+      "inside_alpha_mean": 0.9545095562934875
+    },
+    {
+      "raw": 112,
+      "actor": 6,
+      "body_pixels": 1101,
+      "alpha_mass_exterior": 226.89022827148438,
+      "exterior_alpha_pixels_gt_005": 1020,
+      "inside_alpha_mean": 0.9606746435165405
+    },
+    {
+      "raw": 112,
+      "actor": 18,
+      "body_pixels": 228,
+      "alpha_mass_exterior": 58.479618072509766,
+      "exterior_alpha_pixels_gt_005": 105,
+      "inside_alpha_mean": 0.9965347647666931
+    },
+    {
+      "raw": 112,
+      "actor": 26,
+      "body_pixels": 927,
+      "alpha_mass_exterior": 124.97783660888672,
+      "exterior_alpha_pixels_gt_005": 359,
+      "inside_alpha_mean": 0.9915800094604492
+    },
+    {
+      "raw": 112,
+      "actor": 37,
+      "body_pixels": 13651,
+      "alpha_mass_exterior": 552.8433227539062,
+      "exterior_alpha_pixels_gt_005": 1240,
+      "inside_alpha_mean": 0.9449994564056396
+    },
+    {
+      "raw": 113,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.4098258912563324,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 113,
+      "actor": 6,
+      "body_pixels": 1054,
+      "alpha_mass_exterior": 244.29087829589844,
+      "exterior_alpha_pixels_gt_005": 1021,
+      "inside_alpha_mean": 0.9641849398612976
+    },
+    {
+      "raw": 113,
+      "actor": 18,
+      "body_pixels": 222,
+      "alpha_mass_exterior": 91.40380096435547,
+      "exterior_alpha_pixels_gt_005": 171,
+      "inside_alpha_mean": 0.995985746383667
+    },
+    {
+      "raw": 113,
+      "actor": 26,
+      "body_pixels": 996,
+      "alpha_mass_exterior": 129.28021240234375,
+      "exterior_alpha_pixels_gt_005": 374,
+      "inside_alpha_mean": 0.9926358461380005
+    },
+    {
+      "raw": 113,
+      "actor": 37,
+      "body_pixels": 12844,
+      "alpha_mass_exterior": 992.2916870117188,
+      "exterior_alpha_pixels_gt_005": 1795,
+      "inside_alpha_mean": 0.9449025988578796
+    },
+    {
+      "raw": 114,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 114,
+      "actor": 6,
+      "body_pixels": 1035,
+      "alpha_mass_exterior": 207.6398162841797,
+      "exterior_alpha_pixels_gt_005": 946,
+      "inside_alpha_mean": 0.9581907391548157
+    },
+    {
+      "raw": 114,
+      "actor": 18,
+      "body_pixels": 243,
+      "alpha_mass_exterior": 61.909820556640625,
+      "exterior_alpha_pixels_gt_005": 114,
+      "inside_alpha_mean": 0.9977376461029053
+    },
+    {
+      "raw": 114,
+      "actor": 26,
+      "body_pixels": 1104,
+      "alpha_mass_exterior": 95.48114013671875,
+      "exterior_alpha_pixels_gt_005": 336,
+      "inside_alpha_mean": 0.9873008131980896
+    },
+    {
+      "raw": 114,
+      "actor": 37,
+      "body_pixels": 12650,
+      "alpha_mass_exterior": 884.8049926757812,
+      "exterior_alpha_pixels_gt_005": 1779,
+      "inside_alpha_mean": 0.9428282380104065
+    },
+    {
+      "raw": 115,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 115,
+      "actor": 6,
+      "body_pixels": 998,
+      "alpha_mass_exterior": 198.64938354492188,
+      "exterior_alpha_pixels_gt_005": 891,
+      "inside_alpha_mean": 0.9604607820510864
+    },
+    {
+      "raw": 115,
+      "actor": 18,
+      "body_pixels": 254,
+      "alpha_mass_exterior": 63.97264099121094,
+      "exterior_alpha_pixels_gt_005": 116,
+      "inside_alpha_mean": 0.9958335757255554
+    },
+    {
+      "raw": 115,
+      "actor": 26,
+      "body_pixels": 1186,
+      "alpha_mass_exterior": 103.49287414550781,
+      "exterior_alpha_pixels_gt_005": 336,
+      "inside_alpha_mean": 0.9885780811309814
+    },
+    {
+      "raw": 115,
+      "actor": 37,
+      "body_pixels": 12196,
+      "alpha_mass_exterior": 1025.2078857421875,
+      "exterior_alpha_pixels_gt_005": 2030,
+      "inside_alpha_mean": 0.9408897757530212
+    },
+    {
+      "raw": 116,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 116,
+      "actor": 6,
+      "body_pixels": 985,
+      "alpha_mass_exterior": 199.5863037109375,
+      "exterior_alpha_pixels_gt_005": 887,
+      "inside_alpha_mean": 0.9565904140472412
+    },
+    {
+      "raw": 116,
+      "actor": 18,
+      "body_pixels": 260,
+      "alpha_mass_exterior": 74.77975463867188,
+      "exterior_alpha_pixels_gt_005": 123,
+      "inside_alpha_mean": 0.9912452101707458
+    },
+    {
+      "raw": 116,
+      "actor": 26,
+      "body_pixels": 1263,
+      "alpha_mass_exterior": 131.75433349609375,
+      "exterior_alpha_pixels_gt_005": 414,
+      "inside_alpha_mean": 0.9887121915817261
+    },
+    {
+      "raw": 116,
+      "actor": 37,
+      "body_pixels": 11634,
+      "alpha_mass_exterior": 1225.13427734375,
+      "exterior_alpha_pixels_gt_005": 2359,
+      "inside_alpha_mean": 0.9402230381965637
+    },
+    {
+      "raw": 117,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 117,
+      "actor": 6,
+      "body_pixels": 945,
+      "alpha_mass_exterior": 202.5426025390625,
+      "exterior_alpha_pixels_gt_005": 886,
+      "inside_alpha_mean": 0.9626979827880859
+    },
+    {
+      "raw": 117,
+      "actor": 18,
+      "body_pixels": 272,
+      "alpha_mass_exterior": 75.16986083984375,
+      "exterior_alpha_pixels_gt_005": 134,
+      "inside_alpha_mean": 0.9831780791282654
+    },
+    {
+      "raw": 117,
+      "actor": 26,
+      "body_pixels": 1380,
+      "alpha_mass_exterior": 137.79330444335938,
+      "exterior_alpha_pixels_gt_005": 437,
+      "inside_alpha_mean": 0.98563551902771
+    },
+    {
+      "raw": 117,
+      "actor": 37,
+      "body_pixels": 11162,
+      "alpha_mass_exterior": 1267.0576171875,
+      "exterior_alpha_pixels_gt_005": 2540,
+      "inside_alpha_mean": 0.9379464983940125
+    },
+    {
+      "raw": 118,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 118,
+      "actor": 6,
+      "body_pixels": 904,
+      "alpha_mass_exterior": 217.45436096191406,
+      "exterior_alpha_pixels_gt_005": 886,
+      "inside_alpha_mean": 0.9561817646026611
+    },
+    {
+      "raw": 118,
+      "actor": 18,
+      "body_pixels": 272,
+      "alpha_mass_exterior": 86.7253646850586,
+      "exterior_alpha_pixels_gt_005": 144,
+      "inside_alpha_mean": 0.9962192177772522
+    },
+    {
+      "raw": 118,
+      "actor": 26,
+      "body_pixels": 1510,
+      "alpha_mass_exterior": 143.81930541992188,
+      "exterior_alpha_pixels_gt_005": 457,
+      "inside_alpha_mean": 0.9832937121391296
+    },
+    {
+      "raw": 118,
+      "actor": 37,
+      "body_pixels": 10627,
+      "alpha_mass_exterior": 1376.629638671875,
+      "exterior_alpha_pixels_gt_005": 2788,
+      "inside_alpha_mean": 0.9354609847068787
+    },
+    {
+      "raw": 119,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 119,
+      "actor": 6,
+      "body_pixels": 878,
+      "alpha_mass_exterior": 184.65533447265625,
+      "exterior_alpha_pixels_gt_005": 793,
+      "inside_alpha_mean": 0.9557749032974243
+    },
+    {
+      "raw": 119,
+      "actor": 18,
+      "body_pixels": 292,
+      "alpha_mass_exterior": 71.15423583984375,
+      "exterior_alpha_pixels_gt_005": 129,
+      "inside_alpha_mean": 0.9942467212677002
+    },
+    {
+      "raw": 119,
+      "actor": 26,
+      "body_pixels": 1651,
+      "alpha_mass_exterior": 156.36563110351562,
+      "exterior_alpha_pixels_gt_005": 502,
+      "inside_alpha_mean": 0.9820316433906555
+    },
+    {
+      "raw": 119,
+      "actor": 37,
+      "body_pixels": 10141,
+      "alpha_mass_exterior": 1470.1522216796875,
+      "exterior_alpha_pixels_gt_005": 2963,
+      "inside_alpha_mean": 0.931561291217804
+    },
+    {
+      "raw": 120,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 120,
+      "actor": 6,
+      "body_pixels": 830,
+      "alpha_mass_exterior": 184.17999267578125,
+      "exterior_alpha_pixels_gt_005": 766,
+      "inside_alpha_mean": 0.9615033268928528
+    },
+    {
+      "raw": 120,
+      "actor": 18,
+      "body_pixels": 294,
+      "alpha_mass_exterior": 78.82119750976562,
+      "exterior_alpha_pixels_gt_005": 140,
+      "inside_alpha_mean": 0.9962888956069946
+    },
+    {
+      "raw": 120,
+      "actor": 26,
+      "body_pixels": 1819,
+      "alpha_mass_exterior": 173.16964721679688,
+      "exterior_alpha_pixels_gt_005": 524,
+      "inside_alpha_mean": 0.9761903882026672
+    },
+    {
+      "raw": 120,
+      "actor": 37,
+      "body_pixels": 9653,
+      "alpha_mass_exterior": 1410.7279052734375,
+      "exterior_alpha_pixels_gt_005": 3081,
+      "inside_alpha_mean": 0.9346446394920349
+    },
+    {
+      "raw": 121,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 121,
+      "actor": 6,
+      "body_pixels": 776,
+      "alpha_mass_exterior": 167.75442504882812,
+      "exterior_alpha_pixels_gt_005": 717,
+      "inside_alpha_mean": 0.9708338379859924
+    },
+    {
+      "raw": 121,
+      "actor": 18,
+      "body_pixels": 320,
+      "alpha_mass_exterior": 80.43364715576172,
+      "exterior_alpha_pixels_gt_005": 145,
+      "inside_alpha_mean": 0.9950332641601562
+    },
+    {
+      "raw": 121,
+      "actor": 26,
+      "body_pixels": 1993,
+      "alpha_mass_exterior": 196.58880615234375,
+      "exterior_alpha_pixels_gt_005": 557,
+      "inside_alpha_mean": 0.9727106094360352
+    },
+    {
+      "raw": 121,
+      "actor": 37,
+      "body_pixels": 9281,
+      "alpha_mass_exterior": 1348.91796875,
+      "exterior_alpha_pixels_gt_005": 3049,
+      "inside_alpha_mean": 0.9292091727256775
+    },
+    {
+      "raw": 122,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 122,
+      "actor": 6,
+      "body_pixels": 733,
+      "alpha_mass_exterior": 195.09397888183594,
+      "exterior_alpha_pixels_gt_005": 751,
+      "inside_alpha_mean": 0.9734423756599426
+    },
+    {
+      "raw": 122,
+      "actor": 18,
+      "body_pixels": 335,
+      "alpha_mass_exterior": 84.15350341796875,
+      "exterior_alpha_pixels_gt_005": 153,
+      "inside_alpha_mean": 0.994756817817688
+    },
+    {
+      "raw": 122,
+      "actor": 26,
+      "body_pixels": 2170,
+      "alpha_mass_exterior": 232.32847595214844,
+      "exterior_alpha_pixels_gt_005": 639,
+      "inside_alpha_mean": 0.9750936031341553
+    },
+    {
+      "raw": 122,
+      "actor": 37,
+      "body_pixels": 8844,
+      "alpha_mass_exterior": 1368.33984375,
+      "exterior_alpha_pixels_gt_005": 3168,
+      "inside_alpha_mean": 0.9324339032173157
+    },
+    {
+      "raw": 123,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 123,
+      "actor": 6,
+      "body_pixels": 709,
+      "alpha_mass_exterior": 193.11190795898438,
+      "exterior_alpha_pixels_gt_005": 751,
+      "inside_alpha_mean": 0.9770167469978333
+    },
+    {
+      "raw": 123,
+      "actor": 18,
+      "body_pixels": 352,
+      "alpha_mass_exterior": 79.3405532836914,
+      "exterior_alpha_pixels_gt_005": 149,
+      "inside_alpha_mean": 0.9944312572479248
+    },
+    {
+      "raw": 123,
+      "actor": 26,
+      "body_pixels": 2438,
+      "alpha_mass_exterior": 239.30178833007812,
+      "exterior_alpha_pixels_gt_005": 673,
+      "inside_alpha_mean": 0.9706530570983887
+    },
+    {
+      "raw": 123,
+      "actor": 37,
+      "body_pixels": 8395,
+      "alpha_mass_exterior": 1566.8243408203125,
+      "exterior_alpha_pixels_gt_005": 3363,
+      "inside_alpha_mean": 0.9286196827888489
+    },
+    {
+      "raw": 124,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 124,
+      "actor": 6,
+      "body_pixels": 690,
+      "alpha_mass_exterior": 171.38717651367188,
+      "exterior_alpha_pixels_gt_005": 674,
+      "inside_alpha_mean": 0.9751633405685425
+    },
+    {
+      "raw": 124,
+      "actor": 18,
+      "body_pixels": 368,
+      "alpha_mass_exterior": 82.71141052246094,
+      "exterior_alpha_pixels_gt_005": 149,
+      "inside_alpha_mean": 0.9903417229652405
+    },
+    {
+      "raw": 124,
+      "actor": 26,
+      "body_pixels": 2690,
+      "alpha_mass_exterior": 328.7143859863281,
+      "exterior_alpha_pixels_gt_005": 799,
+      "inside_alpha_mean": 0.9651082158088684
+    },
+    {
+      "raw": 124,
+      "actor": 37,
+      "body_pixels": 8037,
+      "alpha_mass_exterior": 1483.42431640625,
+      "exterior_alpha_pixels_gt_005": 3384,
+      "inside_alpha_mean": 0.9329168796539307
+    },
+    {
+      "raw": 125,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 125,
+      "actor": 6,
+      "body_pixels": 624,
+      "alpha_mass_exterior": 205.5721893310547,
+      "exterior_alpha_pixels_gt_005": 715,
+      "inside_alpha_mean": 0.9814477562904358
+    },
+    {
+      "raw": 125,
+      "actor": 18,
+      "body_pixels": 359,
+      "alpha_mass_exterior": 127.59334564208984,
+      "exterior_alpha_pixels_gt_005": 233,
+      "inside_alpha_mean": 0.9950622320175171
+    },
+    {
+      "raw": 125,
+      "actor": 26,
+      "body_pixels": 3041,
+      "alpha_mass_exterior": 376.2472229003906,
+      "exterior_alpha_pixels_gt_005": 916,
+      "inside_alpha_mean": 0.9628410339355469
+    },
+    {
+      "raw": 125,
+      "actor": 37,
+      "body_pixels": 7457,
+      "alpha_mass_exterior": 1698.6544189453125,
+      "exterior_alpha_pixels_gt_005": 3651,
+      "inside_alpha_mean": 0.9316427111625671
+    },
+    {
+      "raw": 126,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 126,
+      "actor": 6,
+      "body_pixels": 617,
+      "alpha_mass_exterior": 178.9374542236328,
+      "exterior_alpha_pixels_gt_005": 672,
+      "inside_alpha_mean": 0.9795496463775635
+    },
+    {
+      "raw": 126,
+      "actor": 18,
+      "body_pixels": 415,
+      "alpha_mass_exterior": 79.702392578125,
+      "exterior_alpha_pixels_gt_005": 154,
+      "inside_alpha_mean": 0.9901610016822815
+    },
+    {
+      "raw": 126,
+      "actor": 26,
+      "body_pixels": 3478,
+      "alpha_mass_exterior": 445.5464782714844,
+      "exterior_alpha_pixels_gt_005": 1071,
+      "inside_alpha_mean": 0.9558103680610657
+    },
+    {
+      "raw": 126,
+      "actor": 37,
+      "body_pixels": 7336,
+      "alpha_mass_exterior": 1453.1629638671875,
+      "exterior_alpha_pixels_gt_005": 3389,
+      "inside_alpha_mean": 0.9361250996589661
+    },
+    {
+      "raw": 127,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 127,
+      "actor": 6,
+      "body_pixels": 586,
+      "alpha_mass_exterior": 165.0514678955078,
+      "exterior_alpha_pixels_gt_005": 620,
+      "inside_alpha_mean": 0.9801358580589294
+    },
+    {
+      "raw": 127,
+      "actor": 18,
+      "body_pixels": 423,
+      "alpha_mass_exterior": 88.75373077392578,
+      "exterior_alpha_pixels_gt_005": 192,
+      "inside_alpha_mean": 0.9925364255905151
+    },
+    {
+      "raw": 127,
+      "actor": 26,
+      "body_pixels": 4028,
+      "alpha_mass_exterior": 520.0328369140625,
+      "exterior_alpha_pixels_gt_005": 1251,
+      "inside_alpha_mean": 0.9477866291999817
+    },
+    {
+      "raw": 127,
+      "actor": 37,
+      "body_pixels": 7024,
+      "alpha_mass_exterior": 1439.2808837890625,
+      "exterior_alpha_pixels_gt_005": 3393,
+      "inside_alpha_mean": 0.9383580684661865
+    },
+    {
+      "raw": 128,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 128,
+      "actor": 6,
+      "body_pixels": 571,
+      "alpha_mass_exterior": 180.06871032714844,
+      "exterior_alpha_pixels_gt_005": 637,
+      "inside_alpha_mean": 0.9745861887931824
+    },
+    {
+      "raw": 128,
+      "actor": 18,
+      "body_pixels": 453,
+      "alpha_mass_exterior": 88.08130645751953,
+      "exterior_alpha_pixels_gt_005": 200,
+      "inside_alpha_mean": 0.9914131760597229
+    },
+    {
+      "raw": 128,
+      "actor": 26,
+      "body_pixels": 4581,
+      "alpha_mass_exterior": 700.0526123046875,
+      "exterior_alpha_pixels_gt_005": 1589,
+      "inside_alpha_mean": 0.9479669332504272
+    },
+    {
+      "raw": 128,
+      "actor": 37,
+      "body_pixels": 6690,
+      "alpha_mass_exterior": 1395.28076171875,
+      "exterior_alpha_pixels_gt_005": 3324,
+      "inside_alpha_mean": 0.9408751726150513
+    },
+    {
+      "raw": 129,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 129,
+      "actor": 6,
+      "body_pixels": 558,
+      "alpha_mass_exterior": 175.62818908691406,
+      "exterior_alpha_pixels_gt_005": 620,
+      "inside_alpha_mean": 0.9719818830490112
+    },
+    {
+      "raw": 129,
+      "actor": 18,
+      "body_pixels": 489,
+      "alpha_mass_exterior": 91.23045349121094,
+      "exterior_alpha_pixels_gt_005": 213,
+      "inside_alpha_mean": 0.98241126537323
+    },
+    {
+      "raw": 129,
+      "actor": 26,
+      "body_pixels": 5366,
+      "alpha_mass_exterior": 939.436767578125,
+      "exterior_alpha_pixels_gt_005": 2047,
+      "inside_alpha_mean": 0.9383147358894348
+    },
+    {
+      "raw": 129,
+      "actor": 37,
+      "body_pixels": 6451,
+      "alpha_mass_exterior": 1323.8492431640625,
+      "exterior_alpha_pixels_gt_005": 3201,
+      "inside_alpha_mean": 0.9416548013687134
+    },
+    {
+      "raw": 130,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 130,
+      "actor": 6,
+      "body_pixels": 506,
+      "alpha_mass_exterior": 183.69436645507812,
+      "exterior_alpha_pixels_gt_005": 620,
+      "inside_alpha_mean": 0.9787191152572632
+    },
+    {
+      "raw": 130,
+      "actor": 18,
+      "body_pixels": 515,
+      "alpha_mass_exterior": 117.37147521972656,
+      "exterior_alpha_pixels_gt_005": 251,
+      "inside_alpha_mean": 0.9815093278884888
+    },
+    {
+      "raw": 130,
+      "actor": 26,
+      "body_pixels": 6524,
+      "alpha_mass_exterior": 1030.7147216796875,
+      "exterior_alpha_pixels_gt_005": 2450,
+      "inside_alpha_mean": 0.9342287182807922
+    },
+    {
+      "raw": 130,
+      "actor": 37,
+      "body_pixels": 6220,
+      "alpha_mass_exterior": 1288.2047119140625,
+      "exterior_alpha_pixels_gt_005": 3109,
+      "inside_alpha_mean": 0.9409749507904053
+    },
+    {
+      "raw": 131,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 131,
+      "actor": 6,
+      "body_pixels": 505,
+      "alpha_mass_exterior": 168.00555419921875,
+      "exterior_alpha_pixels_gt_005": 558,
+      "inside_alpha_mean": 0.9762388467788696
+    },
+    {
+      "raw": 131,
+      "actor": 18,
+      "body_pixels": 532,
+      "alpha_mass_exterior": 110.68843841552734,
+      "exterior_alpha_pixels_gt_005": 238,
+      "inside_alpha_mean": 0.9836533665657043
+    },
+    {
+      "raw": 131,
+      "actor": 26,
+      "body_pixels": 7844,
+      "alpha_mass_exterior": 1439.1197509765625,
+      "exterior_alpha_pixels_gt_005": 3300,
+      "inside_alpha_mean": 0.9244358539581299
+    },
+    {
+      "raw": 131,
+      "actor": 37,
+      "body_pixels": 5971,
+      "alpha_mass_exterior": 1275.6904296875,
+      "exterior_alpha_pixels_gt_005": 3066,
+      "inside_alpha_mean": 0.9429090619087219
+    },
+    {
+      "raw": 132,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 132,
+      "actor": 6,
+      "body_pixels": 489,
+      "alpha_mass_exterior": 171.36131286621094,
+      "exterior_alpha_pixels_gt_005": 569,
+      "inside_alpha_mean": 0.9683993458747864
+    },
+    {
+      "raw": 132,
+      "actor": 18,
+      "body_pixels": 574,
+      "alpha_mass_exterior": 118.7890396118164,
+      "exterior_alpha_pixels_gt_005": 267,
+      "inside_alpha_mean": 0.9793703556060791
+    },
+    {
+      "raw": 132,
+      "actor": 26,
+      "body_pixels": 9611,
+      "alpha_mass_exterior": 1172.6820068359375,
+      "exterior_alpha_pixels_gt_005": 2599,
+      "inside_alpha_mean": 0.9124807715415955
+    },
+    {
+      "raw": 132,
+      "actor": 37,
+      "body_pixels": 5737,
+      "alpha_mass_exterior": 1276.281494140625,
+      "exterior_alpha_pixels_gt_005": 3023,
+      "inside_alpha_mean": 0.9445378184318542
+    },
+    {
+      "raw": 133,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 133,
+      "actor": 6,
+      "body_pixels": 491,
+      "alpha_mass_exterior": 169.79490661621094,
+      "exterior_alpha_pixels_gt_005": 554,
+      "inside_alpha_mean": 0.9676228165626526
+    },
+    {
+      "raw": 133,
+      "actor": 18,
+      "body_pixels": 607,
+      "alpha_mass_exterior": 94.0552978515625,
+      "exterior_alpha_pixels_gt_005": 221,
+      "inside_alpha_mean": 0.9776677489280701
+    },
+    {
+      "raw": 133,
+      "actor": 26,
+      "body_pixels": 10177,
+      "alpha_mass_exterior": 982.9091796875,
+      "exterior_alpha_pixels_gt_005": 2207,
+      "inside_alpha_mean": 0.8862903714179993
+    },
+    {
+      "raw": 133,
+      "actor": 37,
+      "body_pixels": 5540,
+      "alpha_mass_exterior": 1229.8714599609375,
+      "exterior_alpha_pixels_gt_005": 2913,
+      "inside_alpha_mean": 0.9431986212730408
+    },
+    {
+      "raw": 134,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 134,
+      "actor": 6,
+      "body_pixels": 479,
+      "alpha_mass_exterior": 158.8874053955078,
+      "exterior_alpha_pixels_gt_005": 519,
+      "inside_alpha_mean": 0.9749079346656799
+    },
+    {
+      "raw": 134,
+      "actor": 18,
+      "body_pixels": 647,
+      "alpha_mass_exterior": 122.05348205566406,
+      "exterior_alpha_pixels_gt_005": 280,
+      "inside_alpha_mean": 0.9780630469322205
+    },
+    {
+      "raw": 134,
+      "actor": 26,
+      "body_pixels": 9997,
+      "alpha_mass_exterior": 618.2024536132812,
+      "exterior_alpha_pixels_gt_005": 1392,
+      "inside_alpha_mean": 0.8628562092781067
+    },
+    {
+      "raw": 134,
+      "actor": 37,
+      "body_pixels": 5307,
+      "alpha_mass_exterior": 1237.3111572265625,
+      "exterior_alpha_pixels_gt_005": 2864,
+      "inside_alpha_mean": 0.9433222413063049
+    },
+    {
+      "raw": 135,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 135,
+      "actor": 6,
+      "body_pixels": 448,
+      "alpha_mass_exterior": 152.0452117919922,
+      "exterior_alpha_pixels_gt_005": 508,
+      "inside_alpha_mean": 0.9769104719161987
+    },
+    {
+      "raw": 135,
+      "actor": 18,
+      "body_pixels": 678,
+      "alpha_mass_exterior": 139.98301696777344,
+      "exterior_alpha_pixels_gt_005": 305,
+      "inside_alpha_mean": 0.9780099391937256
+    },
+    {
+      "raw": 135,
+      "actor": 26,
+      "body_pixels": 8227,
+      "alpha_mass_exterior": 564.2974853515625,
+      "exterior_alpha_pixels_gt_005": 1184,
+      "inside_alpha_mean": 0.8016258478164673
+    },
+    {
+      "raw": 135,
+      "actor": 37,
+      "body_pixels": 5105,
+      "alpha_mass_exterior": 1235.7293701171875,
+      "exterior_alpha_pixels_gt_005": 2800,
+      "inside_alpha_mean": 0.9418911933898926
+    },
+    {
+      "raw": 136,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 136,
+      "actor": 6,
+      "body_pixels": 436,
+      "alpha_mass_exterior": 161.5620574951172,
+      "exterior_alpha_pixels_gt_005": 520,
+      "inside_alpha_mean": 0.9706732034683228
+    },
+    {
+      "raw": 136,
+      "actor": 18,
+      "body_pixels": 761,
+      "alpha_mass_exterior": 103.87616729736328,
+      "exterior_alpha_pixels_gt_005": 258,
+      "inside_alpha_mean": 0.9641311764717102
+    },
+    {
+      "raw": 136,
+      "actor": 26,
+      "body_pixels": 6069,
+      "alpha_mass_exterior": 421.9366455078125,
+      "exterior_alpha_pixels_gt_005": 835,
+      "inside_alpha_mean": 0.8021339774131775
+    },
+    {
+      "raw": 136,
+      "actor": 37,
+      "body_pixels": 4935,
+      "alpha_mass_exterior": 1238.428466796875,
+      "exterior_alpha_pixels_gt_005": 2745,
+      "inside_alpha_mean": 0.9397105574607849
+    },
+    {
+      "raw": 137,
+      "actor": 5,
+      "body_pixels": 0,
+      "alpha_mass_exterior": 0.0,
+      "exterior_alpha_pixels_gt_005": 0,
+      "inside_alpha_mean": null
+    },
+    {
+      "raw": 137,
+      "actor": 6,
+      "body_pixels": 419,
+      "alpha_mass_exterior": 151.1792755126953,
+      "exterior_alpha_pixels_gt_005": 483,
+      "inside_alpha_mean": 0.9671977758407593
+    },
+    {
+      "raw": 137,
+      "actor": 18,
+      "body_pixels": 826,
+      "alpha_mass_exterior": 141.54579162597656,
+      "exterior_alpha_pixels_gt_005": 327,
+      "inside_alpha_mean": 0.9594753384590149
+    },
+    {
+      "raw": 137,
+      "actor": 26,
+      "body_pixels": 3093,
+      "alpha_mass_exterior": 275.6151123046875,
+      "exterior_alpha_pixels_gt_005": 773,
+      "inside_alpha_mean": 0.8228556513786316
+    },
+    {
+      "raw": 137,
+      "actor": 37,
+      "body_pixels": 4780,
+      "alpha_mass_exterior": 1257.3575439453125,
+      "exterior_alpha_pixels_gt_005": 2719,
+      "inside_alpha_mean": 0.9346181750297546
+    }
+  ],
+  "limits": [
+    "same49 reconstruction views; no clean edited GT",
+    "isolated raw alpha outside visible body may include valid occluded surfaces",
+    "a6/a37 have no old independent instance; no fictitious OBB asset extraction"
+  ],
+  "old_geometry": [
+    {
+      "old_index": 0,
+      "r15_actor": 5,
+      "points": 138158,
+      "seed_points": 138158,
+      "centers_outside_median_box": 2662,
+      "box_half_physical_m": [
+        2.138549327850342,
+        1.0045733451843262,
+        0.8550000190734863
+      ],
+      "max_scale_p95_physical_m": 0.12039661407470703
+    },
+    {
+      "old_index": 1,
+      "r15_actor": 26,
+      "points": 29455,
+      "seed_points": 29455,
+      "centers_outside_median_box": 662,
+      "box_half_physical_m": [
+        2.0412871837615967,
+        1.0242408514022827,
+        0.9000000357627869
+      ],
+      "max_scale_p95_physical_m": 0.19972047209739685
+    },
+    {
+      "old_index": 2,
+      "r15_actor": 18,
+      "points": 3220,
+      "seed_points": 3220,
+      "centers_outside_median_box": 1071,
+      "box_half_physical_m": [
+        2.044586181640625,
+        1.037238597869873,
+        0.8700000047683716
+      ],
+      "max_scale_p95_physical_m": 0.3967106342315674
+    }
+  ],
+  "r15_geometry": {
+    "5": {
+      "points": 53434,
+      "seed_points": 9867
+    },
+    "6": {
+      "points": 123800,
+      "seed_points": 3453
+    },
+    "18": {
+      "points": 125207,
+      "seed_points": 1864
+    },
+    "26": {
+      "points": 80553,
+      "seed_points": 8168
+    },
+    "37": {
+      "points": 83130,
+      "seed_points": 10349
+    }
+  },
+  "trajectory_displacement_m": {
+    "5": 39.75559997558594,
+    "6": 15.966462135314941,
+    "18": 45.11149978637695,
+    "26": 42.092132568359375,
+    "37": 6.853173732757568
+  },
+  "status": "FROZEN_RENDER_COMPLETE_REVIEW_PENDING",
+  "frames": 49,
+  "seconds": 92.66922067757696,
+  "checkpoint_files_unchanged": true,
+  "original_R15_pause_marker_preserved": true,
+  "camera_contract": {
+    "neg_fov": true,
+    "exact_production_renderer_parity": [
+      {
+        "raw": 105,
+        "actor": 5,
+        "max_rgb_error": 0.0,
+        "max_alpha_error": 0.0
+      },
+      {
+        "raw": 105,
+        "actor": 26,
+        "max_rgb_error": 0.0,
+        "max_alpha_error": 0.0
+      },
+      {
+        "raw": 105,
+        "actor": 18,
+        "max_rgb_error": 0.0,
+        "max_alpha_error": 0.0
+      }
+    ],
+    "original_baseline_full_png_max_byte_error_all49": 0,
+    "original_baseline_full_png_bitwise_equal_frames": 49,
+    "provisional_positive_tangent_isolated_exports_replaced_before_review": true
+  }
+}
