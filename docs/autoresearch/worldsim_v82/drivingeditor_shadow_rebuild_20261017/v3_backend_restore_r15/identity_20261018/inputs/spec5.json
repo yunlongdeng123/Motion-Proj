@@ -1,0 +1,38 @@
+{
+  "schema": "drivingeditor_rigid_scene_spec_v1",
+  "scene_id": "scene0008_089_137",
+  "source_repository": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_source/scene0008_089_137",
+  "source_scene": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137",
+  "prepared": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/identity_completion_20261018/prepared5",
+  "reference_config": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/training_configs/scene0008_089_137_GN11.json",
+  "background_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/chkpnt30000.pth",
+  "environment_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/runs/scene0008_089_137_hybrid_30000_seed0_GN11/env_light_chkpnt30000.pth",
+  "matrix_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/hybrid30k_20261012/tools",
+  "stage": "old_method_owner5_30k",
+  "box_and_track_roles": "explicit_training_priors",
+  "test_views": "same49_training_reconstruction_no_heldout",
+  "nonrigid_targets": "unsupported_first_version",
+  "human_quality_verdict": null,
+  "StreetCrafter_priority": true,
+  "scope": "same physical a5,a26,a18,a6,a37; parked/moving track roles unchanged",
+  "background_repair": {
+    "schema": "preserve_joint_background_v2",
+    "initialization": "preserve_all_GN11_static_Gaussians",
+    "freeze_environment": true,
+    "expected_initial_points": 915840,
+    "learning_rate_scale": 0.1,
+    "optimizer_initialization": "reset_static_Adam_for_new_objective_preserve_on_resume",
+    "foreground_background_separation": "joint_visible_per_ID_masks_and_observed_complement_RGB",
+    "topology": "fixed_no_box_pruning_no_new_SGCM_clones"
+  },
+  "baseline_extension": {
+    "task_id": "WS-V82-R15-IDENTITY-COMPARISON-20261018",
+    "old_3_ID_baseline_preserved": true,
+    "background": "same existing GN11 30000; never load R15 or old learned instance weights",
+    "changed_inputs": [
+      "selected identities 3 to 5",
+      "two actual full-mask sequences"
+    ],
+    "not_identical_to_historical_3_ID_baseline": true
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "status": "CPU_DATA_CONTRACT_PASSED_GPU_NOT_RUN",
+  "checks": [
+    "three old IDs preserved; new IDs map to4/5",
+    "one unknown negative pixel blocks full-image baseline training",
+    "explicitly known empty observation remains distinguishable from missing mask",
+    "unknown empty observation is not zero-target supervision",
+    "old/new overlap has no arbitrary identity winner",
+    "invalid positive pixels rejected"
+  ],
+  "python_AST": [
+    "compare_mask_inputs.py",
+    "export_native_masks.py",
+    "extract_tristate.py",
+    "identity_common.py",
+    "inspect_tristate.py",
+    "packed_shadow.py",
+    "pack_metadata.py",
+    "prepare_owner5.py",
+    "project_tristate.py",
+    "render_identity_matrix.py",
+    "run_after_queue.py",
+    "run_remaining_stages.py",
+    "trace_boundary_origins.py",
+    "train_owner5.py"
+  ],
+  "remote_input_coverage_checked_by_this_CPU_script": false,
+  "CUDA_renderer_tested_by_this_CPU_script": false,
+  "intended_training_roles": {
+    "GN11": "existing30000",
+    "old_five_instances": "fresh30000_same_old_method",
+    "R15": "frozen4000_no_updates"
+  }
+}

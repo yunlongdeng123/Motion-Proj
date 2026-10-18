@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-R15-IDENTITY-COMPARISON-20261018 / owner5与tristate | 历史旧3、R15冻结身份渲染完成；补齐旧5训练进行中；三值谱系不变与a6监督覆盖缺口，GPU支撑投影待队列 | [三值交互、组件与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)、[执行范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/status.json) |
 | WS-V82-R15-OLD30K-A6-20261018 / old30k_a6 | 同一a6：旧基线49帧精确重放、3D入口及三锚帧alpha*T贡献；旧非局部表示不等于干净资产 | [a6直接对照、组件与范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/old30k_a6_20261018/report.html) |
 | WS-V82-R15-CLOSURE-20261018 / r15_closure_20261018 | R15数值/速度通过；a6实测3D证据不足；a37稀疏外观控制无区域残影收益，停止长训 | [组件图、范围与真实结果](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/closure_20261018/report.html) |
 | WS-V82-DRIVINGEDITOR-SHADOW-REBUILD-20261017 / backend_restore_r15 | 恢复后端后4k冻结诊断：阴影调度/FP32分块依赖，49帧a6/a37分层与3k空转归属审计；完整45k未完成 | [R15组件与历史证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/README.md) · [暂停诊断与严重性表](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/README.md) |

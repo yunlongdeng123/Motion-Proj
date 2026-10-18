@@ -1,0 +1,2285 @@
+{
+  "task_id": "WS-V82-R15-IDENTITY-COMPARISON-20261018",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/backend_restore_r15/paused_checkpoint_004000_20261017/checkpoint.pt",
+    "size": 2183183181,
+    "mtime_ns": 1792234477240123573
+  },
+  "checkpoint_step": 4000,
+  "raw_status_encoding": {
+    "0": "unknown evidence",
+    "1": "definite Actor evidence",
+    "2": "definite static evidence"
+  },
+  "display_encoding": {
+    "0": "raw status 2: definite static evidence",
+    "1": "raw status 1: definite Actor evidence",
+    "U": "raw status 0: unknown evidence"
+  },
+  "identity_probability_channels": [
+    "static",
+    "Actor",
+    "unknown"
+  ],
+  "identity_status_and_probability": "registered buffers; not Adam parameters; explicit audit interventions only",
+  "initial_count": 771821,
+  "current_count": 2068305,
+  "initial_status_counts": {
+    "0": 123484,
+    "1": 39903,
+    "2": 608434
+  },
+  "current_status_counts": {
+    "0": 463520,
+    "1": 574613,
+    "2": 1030172
+  },
+  "initial_unknown_hard_owner": {
+    "0": 2,
+    "1": 150,
+    "2": 3203,
+    "3": 15251,
+    "4": 755,
+    "7": 4589,
+    "8": 8681,
+    "9": 89,
+    "10": 132,
+    "11": 3360,
+    "13": 981,
+    "14": 784,
+    "15": 14013,
+    "16": 1655,
+    "17": 8882,
+    "19": 2021,
+    "20": 793,
+    "21": 880,
+    "22": 8546,
+    "23": 10486,
+    "24": 825,
+    "27": 7050,
+    "28": 473,
+    "29": 2000,
+    "30": 106,
+    "31": 1213,
+    "32": 731,
+    "33": 1043,
+    "34": 3252,
+    "35": 11761,
+    "36": 488,
+    "38": 7464,
+    "39": 156,
+    "40": 1510,
+    "41": 84,
+    "42": 75
+  },
+  "current_unknown_hard_owner": {
+    "0": 2,
+    "1": 6552,
+    "2": 3203,
+    "3": 15251,
+    "4": 755,
+    "7": 4589,
+    "8": 8681,
+    "9": 24828,
+    "10": 61827,
+    "11": 3360,
+    "13": 981,
+    "14": 784,
+    "15": 14013,
+    "16": 61856,
+    "17": 8882,
+    "19": 78334,
+    "20": 61990,
+    "21": 880,
+    "22": 8546,
+    "23": 10486,
+    "24": 21679,
+    "27": 7050,
+    "28": 2296,
+    "29": 2000,
+    "30": 7722,
+    "31": 1213,
+    "32": 731,
+    "33": 1043,
+    "34": 3252,
+    "35": 11761,
+    "36": 5953,
+    "38": 7464,
+    "39": 9406,
+    "40": 1510,
+    "41": 812,
+    "42": 3828
+  },
+  "lineage": {
+    "method": "sgcm_lineage checked against (source_frame,source_raw_row,source_candidate_owner)",
+    "matched_current_rows": 2067112,
+    "new_lineage_current_rows": 1193,
+    "in_range_source_key_mismatches": 0,
+    "initial_to_current_status_matrix": [
+      [
+        463520,
+        0,
+        0
+      ],
+      [
+        0,
+        573420,
+        0
+      ],
+      [
+        0,
+        0,
+        1030172
+      ]
+    ],
+    "matrix_axis_order_raw": [
+      0,
+      1,
+      2
+    ],
+    "matched_owner_changed_current_rows": 0,
+    "matched_probability_changed_current_rows": 0,
+    "matched_unique_surviving_seed_parents": 630793,
+    "status_parent_groups": [
+      {
+        "initial_status": 2,
+        "initial_parents": 608434,
+        "surviving_initial_parents": 484495,
+        "no_surviving_descendant": 123939,
+        "current_descendant_rows": 1030172
+      },
+      {
+        "initial_status": 1,
+        "initial_parents": 39903,
+        "surviving_initial_parents": 24139,
+        "no_surviving_descendant": 15764,
+        "current_descendant_rows": 573420
+      },
+      {
+        "initial_status": 0,
+        "initial_parents": 123484,
+        "surviving_initial_parents": 122159,
+        "no_surviving_descendant": 1325,
+        "current_descendant_rows": 463520
+      }
+    ],
+    "new_lineage_status_counts": {
+      "1": 1193
+    },
+    "new_lineage_unique_parents": 268,
+    "caution": "matrix counts current descendants, not unique point transitions; pruning is not relabelling"
+  },
+  "actors": [
+    {
+      "stage": "init",
+      "actor": 5,
+      "count": 9867,
+      "status_counts": {
+        "1": 9867
+      },
+      "half_box_m": [
+        2.138549453389861,
+        1.0045733473723861,
+        0.8550000000000182
+      ],
+      "centers_outside_box": 4,
+      "three_sigma_axis_bound_crosses_box": 397,
+      "max_principal_sigma_m": {
+        "min": 0.022700946778059006,
+        "p50": 0.03912802413105965,
+        "p90": 0.05593848973512649,
+        "p95": 0.05999999865889549,
+        "p99": 0.05999999865889549,
+        "max": 0.05999999865889549
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry"
+    },
+    {
+      "stage": "init",
+      "actor": 26,
+      "count": 8168,
+      "status_counts": {
+        "1": 8168
+      },
+      "half_box_m": [
+        2.041287270942652,
+        1.024240851786904,
+        0.8999999999999773
+      ],
+      "centers_outside_box": 12,
+      "three_sigma_axis_bound_crosses_box": 462,
+      "max_principal_sigma_m": {
+        "min": 0.0224998127669096,
+        "p50": 0.0412723533809185,
+        "p90": 0.05999999865889549,
+        "p95": 0.05999999865889549,
+        "p99": 0.05999999865889549,
+        "max": 0.05999999865889549
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry"
+    },
+    {
+      "stage": "init",
+      "actor": 18,
+      "count": 1864,
+      "status_counts": {
+        "1": 1864
+      },
+      "half_box_m": [
+        2.0445860961401765,
+        1.0372385403453426,
+        0.8700000000000045
+      ],
+      "centers_outside_box": 2,
+      "three_sigma_axis_bound_crosses_box": 211,
+      "max_principal_sigma_m": {
+        "min": 0.030992507934570312,
+        "p50": 0.05396006815135479,
+        "p90": 0.05999999865889549,
+        "p95": 0.05999999865889549,
+        "p99": 0.05999999865889549,
+        "max": 0.05999999865889549
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry"
+    },
+    {
+      "stage": "init",
+      "actor": 6,
+      "count": 3453,
+      "status_counts": {
+        "1": 3453
+      },
+      "half_box_m": [
+        2.167020850179366,
+        1.038768405932935,
+        0.7200000000000273
+      ],
+      "centers_outside_box": 36,
+      "three_sigma_axis_bound_crosses_box": 270,
+      "max_principal_sigma_m": {
+        "min": 0.024601563811302185,
+        "p50": 0.03809820115566254,
+        "p90": 0.05999999865889549,
+        "p95": 0.05999999865889549,
+        "p99": 0.05999999865889549,
+        "max": 0.05999999865889549
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry"
+    },
+    {
+      "stage": "init",
+      "actor": 37,
+      "count": 10349,
+      "status_counts": {
+        "1": 10349
+      },
+      "half_box_m": [
+        2.0693411075180803,
+        0.9896897394781146,
+        0.8949999999999818
+      ],
+      "centers_outside_box": 64,
+      "three_sigma_axis_bound_crosses_box": 767,
+      "max_principal_sigma_m": {
+        "min": 0.019999999552965164,
+        "p50": 0.034376684576272964,
+        "p90": 0.05192353203892708,
+        "p95": 0.05999999865889549,
+        "p99": 0.05999999865889549,
+        "max": 0.05999999865889549
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry"
+    },
+    {
+      "stage": "4k",
+      "actor": 5,
+      "count": 53434,
+      "status_counts": {
+        "1": 53434
+      },
+      "half_box_m": [
+        2.138549453389861,
+        1.0045733473723861,
+        0.8550000000000182
+      ],
+      "centers_outside_box": 2257,
+      "three_sigma_axis_bound_crosses_box": 3937,
+      "max_principal_sigma_m": {
+        "min": 0.0009717241628095508,
+        "p50": 0.014082342386245728,
+        "p90": 0.04832353107631209,
+        "p95": 0.06304418109357357,
+        "p99": 0.08754619605839244,
+        "max": 0.1670607626438141
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry",
+      "matched_seed_descendants": 53426,
+      "new_lineage_rows": 8,
+      "unique_initial_parents": 3887,
+      "distance_to_original_seed_m": {
+        "min": 0.0012175363954156637,
+        "p50": 0.22131991386413574,
+        "p90": 0.6370655000209808,
+        "p95": 0.8248583525419235,
+        "p99": 1.5596512854099274,
+        "max": 4.419713973999023
+      },
+      "sigma_ratio_to_original_seed": {
+        "min": 0.020897531881928444,
+        "p50": 0.3179926574230194,
+        "p90": 1.1564329862594604,
+        "p95": 1.5840739905834198,
+        "p99": 2.278999090194702,
+        "max": 4.218825340270996
+      }
+    },
+    {
+      "stage": "4k",
+      "actor": 26,
+      "count": 80553,
+      "status_counts": {
+        "1": 80553
+      },
+      "half_box_m": [
+        2.041287270942652,
+        1.024240851786904,
+        0.8999999999999773
+      ],
+      "centers_outside_box": 5515,
+      "three_sigma_axis_bound_crosses_box": 7110,
+      "max_principal_sigma_m": {
+        "min": 9.243583917850628e-05,
+        "p50": 0.011233017779886723,
+        "p90": 0.037486593425273905,
+        "p95": 0.05575563013553618,
+        "p99": 0.08198444753885267,
+        "max": 0.17386993765830994
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry",
+      "matched_seed_descendants": 80470,
+      "new_lineage_rows": 83,
+      "unique_initial_parents": 4413,
+      "distance_to_original_seed_m": {
+        "min": 0.0031794928945600986,
+        "p50": 0.28031496703624725,
+        "p90": 0.6587642908096314,
+        "p95": 0.8497122019529344,
+        "p99": 1.4256142377853394,
+        "max": 2.9307949542999268
+      },
+      "sigma_ratio_to_original_seed": {
+        "min": 0.0015959249576553702,
+        "p50": 0.2481132224202156,
+        "p90": 0.8254824757575994,
+        "p95": 1.2886028885841376,
+        "p99": 1.988312854766845,
+        "max": 5.0848259925842285
+      }
+    },
+    {
+      "stage": "4k",
+      "actor": 18,
+      "count": 125207,
+      "status_counts": {
+        "1": 125207
+      },
+      "half_box_m": [
+        2.0445860961401765,
+        1.0372385403453426,
+        0.8700000000000045
+      ],
+      "centers_outside_box": 58150,
+      "three_sigma_axis_bound_crosses_box": 61102,
+      "max_principal_sigma_m": {
+        "min": 0.0003435304097365588,
+        "p50": 0.009630304761230946,
+        "p90": 0.021151132136583328,
+        "p95": 0.03774357363581657,
+        "p99": 0.09945689663291017,
+        "max": 0.1904892474412918
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry",
+      "matched_seed_descendants": 125186,
+      "new_lineage_rows": 21,
+      "unique_initial_parents": 1705,
+      "distance_to_original_seed_m": {
+        "min": 0.0026185226161032915,
+        "p50": 0.5236983895301819,
+        "p90": 0.9376092851161957,
+        "p95": 1.12503981590271,
+        "p99": 1.3158570408821102,
+        "max": 1.8049869537353516
+      },
+      "sigma_ratio_to_original_seed": {
+        "min": 0.0074214027263224125,
+        "p50": 0.18202325701713562,
+        "p90": 0.4208763688802719,
+        "p95": 0.7216501384973526,
+        "p99": 1.8998248696327196,
+        "max": 4.670023441314697
+      }
+    },
+    {
+      "stage": "4k",
+      "actor": 6,
+      "count": 123800,
+      "status_counts": {
+        "1": 123800
+      },
+      "half_box_m": [
+        2.167020850179366,
+        1.038768405932935,
+        0.7200000000000273
+      ],
+      "centers_outside_box": 29834,
+      "three_sigma_axis_bound_crosses_box": 36597,
+      "max_principal_sigma_m": {
+        "min": 0.0002831675810739398,
+        "p50": 0.009377744980156422,
+        "p90": 0.018596095778048046,
+        "p95": 0.03455388043075787,
+        "p99": 0.09350641272962068,
+        "max": 0.18621709942817688
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry",
+      "matched_seed_descendants": 123347,
+      "new_lineage_rows": 453,
+      "unique_initial_parents": 3320,
+      "distance_to_original_seed_m": {
+        "min": 0.0036071387585252523,
+        "p50": 0.28566911816596985,
+        "p90": 0.5801351428031923,
+        "p95": 0.6749256670475006,
+        "p99": 0.9387813794612879,
+        "max": 1.7738662958145142
+      },
+      "sigma_ratio_to_original_seed": {
+        "min": 0.008367970585823059,
+        "p50": 0.23581644892692566,
+        "p90": 0.507739269733429,
+        "p95": 0.8741112411022182,
+        "p99": 2.367404174804686,
+        "max": 5.736764430999756
+      }
+    },
+    {
+      "stage": "4k",
+      "actor": 37,
+      "count": 83130,
+      "status_counts": {
+        "1": 83130
+      },
+      "half_box_m": [
+        2.0693411075180803,
+        0.9896897394781146,
+        0.8949999999999818
+      ],
+      "centers_outside_box": 14573,
+      "three_sigma_axis_bound_crosses_box": 16322,
+      "max_principal_sigma_m": {
+        "min": 0.0002708675747271627,
+        "p50": 0.012659796047955751,
+        "p90": 0.039795564487576505,
+        "p95": 0.054528871551156065,
+        "p99": 0.07742620758712301,
+        "max": 0.18484006822109222
+      },
+      "caveat": "3sigma axis bounds / OBB crossing are diagnostics, not proof of road geometry",
+      "matched_seed_descendants": 83036,
+      "new_lineage_rows": 94,
+      "unique_initial_parents": 6114,
+      "distance_to_original_seed_m": {
+        "min": 0.00171272037550807,
+        "p50": 0.21023549884557724,
+        "p90": 0.5807821154594421,
+        "p95": 0.7126082330942154,
+        "p99": 1.1057891130447375,
+        "max": 1.9543284177780151
+      },
+      "sigma_ratio_to_original_seed": {
+        "min": 0.008181000128388405,
+        "p50": 0.3446030616760254,
+        "p90": 1.0749432444572449,
+        "p95": 1.5398265719413757,
+        "p99": 2.2488136291503884,
+        "max": 4.577272891998291
+      }
+    }
+  ],
+  "pixel_masks": [
+    {
+      "frame_id": "0008089",
+      "actor": 5,
+      "negative": 150155,
+      "positive": 1253,
+      "unknown": 2192
+    },
+    {
+      "frame_id": "0008089",
+      "actor": 26,
+      "negative": 151138,
+      "positive": 270,
+      "unknown": 2192
+    },
+    {
+      "frame_id": "0008089",
+      "actor": 18,
+      "negative": 151408,
+      "positive": 0,
+      "unknown": 2192
+    },
+    {
+      "frame_id": "0008089",
+      "actor": 6,
+      "negative": 151388,
+      "positive": 20,
+      "unknown": 2192
+    },
+    {
+      "frame_id": "0008089",
+      "actor": 37,
+      "negative": 136725,
+      "positive": 14683,
+      "unknown": 2192
+    },
+    {
+      "frame_id": "0008090",
+      "actor": 5,
+      "negative": 150142,
+      "positive": 1360,
+      "unknown": 2098
+    },
+    {
+      "frame_id": "0008090",
+      "actor": 26,
+      "negative": 151223,
+      "positive": 279,
+      "unknown": 2098
+    },
+    {
+      "frame_id": "0008090",
+      "actor": 18,
+      "negative": 151404,
+      "positive": 98,
+      "unknown": 2098
+    },
+    {
+      "frame_id": "0008090",
+      "actor": 6,
+      "negative": 151480,
+      "positive": 22,
+      "unknown": 2098
+    },
+    {
+      "frame_id": "0008090",
+      "actor": 37,
+      "negative": 136671,
+      "positive": 14831,
+      "unknown": 2098
+    },
+    {
+      "frame_id": "0008091",
+      "actor": 5,
+      "negative": 150446,
+      "positive": 1515,
+      "unknown": 1639
+    },
+    {
+      "frame_id": "0008091",
+      "actor": 26,
+      "negative": 151662,
+      "positive": 299,
+      "unknown": 1639
+    },
+    {
+      "frame_id": "0008091",
+      "actor": 18,
+      "negative": 151855,
+      "positive": 106,
+      "unknown": 1639
+    },
+    {
+      "frame_id": "0008091",
+      "actor": 6,
+      "negative": 151938,
+      "positive": 23,
+      "unknown": 1639
+    },
+    {
+      "frame_id": "0008091",
+      "actor": 37,
+      "negative": 137130,
+      "positive": 14831,
+      "unknown": 1639
+    },
+    {
+      "frame_id": "0008092",
+      "actor": 5,
+      "negative": 150162,
+      "positive": 1680,
+      "unknown": 1758
+    },
+    {
+      "frame_id": "0008092",
+      "actor": 26,
+      "negative": 151531,
+      "positive": 311,
+      "unknown": 1758
+    },
+    {
+      "frame_id": "0008092",
+      "actor": 18,
+      "negative": 151737,
+      "positive": 105,
+      "unknown": 1758
+    },
+    {
+      "frame_id": "0008092",
+      "actor": 6,
+      "negative": 151821,
+      "positive": 21,
+      "unknown": 1758
+    },
+    {
+      "frame_id": "0008092",
+      "actor": 37,
+      "negative": 137007,
+      "positive": 14835,
+      "unknown": 1758
+    },
+    {
+      "frame_id": "0008093",
+      "actor": 5,
+      "negative": 149816,
+      "positive": 1881,
+      "unknown": 1903
+    },
+    {
+      "frame_id": "0008093",
+      "actor": 26,
+      "negative": 151368,
+      "positive": 329,
+      "unknown": 1903
+    },
+    {
+      "frame_id": "0008093",
+      "actor": 18,
+      "negative": 151581,
+      "positive": 116,
+      "unknown": 1903
+    },
+    {
+      "frame_id": "0008093",
+      "actor": 6,
+      "negative": 151672,
+      "positive": 25,
+      "unknown": 1903
+    },
+    {
+      "frame_id": "0008093",
+      "actor": 37,
+      "negative": 136840,
+      "positive": 14857,
+      "unknown": 1903
+    },
+    {
+      "frame_id": "0008094",
+      "actor": 5,
+      "negative": 149737,
+      "positive": 2089,
+      "unknown": 1774
+    },
+    {
+      "frame_id": "0008094",
+      "actor": 26,
+      "negative": 151497,
+      "positive": 329,
+      "unknown": 1774
+    },
+    {
+      "frame_id": "0008094",
+      "actor": 18,
+      "negative": 151710,
+      "positive": 116,
+      "unknown": 1774
+    },
+    {
+      "frame_id": "0008094",
+      "actor": 6,
+      "negative": 151795,
+      "positive": 31,
+      "unknown": 1774
+    },
+    {
+      "frame_id": "0008094",
+      "actor": 37,
+      "negative": 136970,
+      "positive": 14856,
+      "unknown": 1774
+    },
+    {
+      "frame_id": "0008095",
+      "actor": 5,
+      "negative": 149541,
+      "positive": 2346,
+      "unknown": 1713
+    },
+    {
+      "frame_id": "0008095",
+      "actor": 26,
+      "negative": 151530,
+      "positive": 357,
+      "unknown": 1713
+    },
+    {
+      "frame_id": "0008095",
+      "actor": 18,
+      "negative": 151764,
+      "positive": 123,
+      "unknown": 1713
+    },
+    {
+      "frame_id": "0008095",
+      "actor": 6,
+      "negative": 151844,
+      "positive": 43,
+      "unknown": 1713
+    },
+    {
+      "frame_id": "0008095",
+      "actor": 37,
+      "negative": 137046,
+      "positive": 14841,
+      "unknown": 1713
+    },
+    {
+      "frame_id": "0008096",
+      "actor": 5,
+      "negative": 149203,
+      "positive": 2699,
+      "unknown": 1698
+    },
+    {
+      "frame_id": "0008096",
+      "actor": 26,
+      "negative": 151526,
+      "positive": 376,
+      "unknown": 1698
+    },
+    {
+      "frame_id": "0008096",
+      "actor": 18,
+      "negative": 151774,
+      "positive": 128,
+      "unknown": 1698
+    },
+    {
+      "frame_id": "0008096",
+      "actor": 6,
+      "negative": 151860,
+      "positive": 42,
+      "unknown": 1698
+    },
+    {
+      "frame_id": "0008096",
+      "actor": 37,
+      "negative": 137059,
+      "positive": 14843,
+      "unknown": 1698
+    },
+    {
+      "frame_id": "0008097",
+      "actor": 5,
+      "negative": 148764,
+      "positive": 3056,
+      "unknown": 1780
+    },
+    {
+      "frame_id": "0008097",
+      "actor": 26,
+      "negative": 151421,
+      "positive": 399,
+      "unknown": 1780
+    },
+    {
+      "frame_id": "0008097",
+      "actor": 18,
+      "negative": 151692,
+      "positive": 128,
+      "unknown": 1780
+    },
+    {
+      "frame_id": "0008097",
+      "actor": 6,
+      "negative": 151784,
+      "positive": 36,
+      "unknown": 1780
+    },
+    {
+      "frame_id": "0008097",
+      "actor": 37,
+      "negative": 136969,
+      "positive": 14851,
+      "unknown": 1780
+    },
+    {
+      "frame_id": "0008098",
+      "actor": 5,
+      "negative": 148173,
+      "positive": 3503,
+      "unknown": 1924
+    },
+    {
+      "frame_id": "0008098",
+      "actor": 26,
+      "negative": 151254,
+      "positive": 422,
+      "unknown": 1924
+    },
+    {
+      "frame_id": "0008098",
+      "actor": 18,
+      "negative": 151539,
+      "positive": 137,
+      "unknown": 1924
+    },
+    {
+      "frame_id": "0008098",
+      "actor": 6,
+      "negative": 151640,
+      "positive": 36,
+      "unknown": 1924
+    },
+    {
+      "frame_id": "0008098",
+      "actor": 37,
+      "negative": 136819,
+      "positive": 14857,
+      "unknown": 1924
+    },
+    {
+      "frame_id": "0008099",
+      "actor": 5,
+      "negative": 147581,
+      "positive": 4062,
+      "unknown": 1957
+    },
+    {
+      "frame_id": "0008099",
+      "actor": 26,
+      "negative": 151195,
+      "positive": 448,
+      "unknown": 1957
+    },
+    {
+      "frame_id": "0008099",
+      "actor": 18,
+      "negative": 151504,
+      "positive": 139,
+      "unknown": 1957
+    },
+    {
+      "frame_id": "0008099",
+      "actor": 6,
+      "negative": 151614,
+      "positive": 29,
+      "unknown": 1957
+    },
+    {
+      "frame_id": "0008099",
+      "actor": 37,
+      "negative": 136802,
+      "positive": 14841,
+      "unknown": 1957
+    },
+    {
+      "frame_id": "0008100",
+      "actor": 5,
+      "negative": 147040,
+      "positive": 4698,
+      "unknown": 1862
+    },
+    {
+      "frame_id": "0008100",
+      "actor": 26,
+      "negative": 151283,
+      "positive": 455,
+      "unknown": 1862
+    },
+    {
+      "frame_id": "0008100",
+      "actor": 18,
+      "negative": 151589,
+      "positive": 149,
+      "unknown": 1862
+    },
+    {
+      "frame_id": "0008100",
+      "actor": 6,
+      "negative": 151712,
+      "positive": 26,
+      "unknown": 1862
+    },
+    {
+      "frame_id": "0008100",
+      "actor": 37,
+      "negative": 136892,
+      "positive": 14846,
+      "unknown": 1862
+    },
+    {
+      "frame_id": "0008101",
+      "actor": 5,
+      "negative": 146411,
+      "positive": 5497,
+      "unknown": 1692
+    },
+    {
+      "frame_id": "0008101",
+      "actor": 26,
+      "negative": 151435,
+      "positive": 473,
+      "unknown": 1692
+    },
+    {
+      "frame_id": "0008101",
+      "actor": 18,
+      "negative": 151758,
+      "positive": 150,
+      "unknown": 1692
+    },
+    {
+      "frame_id": "0008101",
+      "actor": 6,
+      "negative": 151890,
+      "positive": 18,
+      "unknown": 1692
+    },
+    {
+      "frame_id": "0008101",
+      "actor": 37,
+      "negative": 137209,
+      "positive": 14699,
+      "unknown": 1692
+    },
+    {
+      "frame_id": "0008102",
+      "actor": 5,
+      "negative": 145315,
+      "positive": 6531,
+      "unknown": 1754
+    },
+    {
+      "frame_id": "0008102",
+      "actor": 26,
+      "negative": 151341,
+      "positive": 505,
+      "unknown": 1754
+    },
+    {
+      "frame_id": "0008102",
+      "actor": 18,
+      "negative": 151684,
+      "positive": 162,
+      "unknown": 1754
+    },
+    {
+      "frame_id": "0008102",
+      "actor": 6,
+      "negative": 151818,
+      "positive": 28,
+      "unknown": 1754
+    },
+    {
+      "frame_id": "0008102",
+      "actor": 37,
+      "negative": 137037,
+      "positive": 14809,
+      "unknown": 1754
+    },
+    {
+      "frame_id": "0008103",
+      "actor": 5,
+      "negative": 143887,
+      "positive": 7882,
+      "unknown": 1831
+    },
+    {
+      "frame_id": "0008103",
+      "actor": 26,
+      "negative": 151247,
+      "positive": 522,
+      "unknown": 1831
+    },
+    {
+      "frame_id": "0008103",
+      "actor": 18,
+      "negative": 151598,
+      "positive": 171,
+      "unknown": 1831
+    },
+    {
+      "frame_id": "0008103",
+      "actor": 6,
+      "negative": 151733,
+      "positive": 36,
+      "unknown": 1831
+    },
+    {
+      "frame_id": "0008103",
+      "actor": 37,
+      "negative": 136974,
+      "positive": 14795,
+      "unknown": 1831
+    },
+    {
+      "frame_id": "0008104",
+      "actor": 5,
+      "negative": 143029,
+      "positive": 9663,
+      "unknown": 908
+    },
+    {
+      "frame_id": "0008104",
+      "actor": 26,
+      "negative": 152134,
+      "positive": 558,
+      "unknown": 908
+    },
+    {
+      "frame_id": "0008104",
+      "actor": 18,
+      "negative": 152520,
+      "positive": 172,
+      "unknown": 908
+    },
+    {
+      "frame_id": "0008104",
+      "actor": 6,
+      "negative": 151484,
+      "positive": 1208,
+      "unknown": 908
+    },
+    {
+      "frame_id": "0008104",
+      "actor": 37,
+      "negative": 137910,
+      "positive": 14782,
+      "unknown": 908
+    },
+    {
+      "frame_id": "0008105",
+      "actor": 5,
+      "negative": 141714,
+      "positive": 10818,
+      "unknown": 1068
+    },
+    {
+      "frame_id": "0008105",
+      "actor": 26,
+      "negative": 151945,
+      "positive": 587,
+      "unknown": 1068
+    },
+    {
+      "frame_id": "0008105",
+      "actor": 18,
+      "negative": 152341,
+      "positive": 191,
+      "unknown": 1068
+    },
+    {
+      "frame_id": "0008105",
+      "actor": 6,
+      "negative": 151322,
+      "positive": 1210,
+      "unknown": 1068
+    },
+    {
+      "frame_id": "0008105",
+      "actor": 37,
+      "negative": 137808,
+      "positive": 14724,
+      "unknown": 1068
+    },
+    {
+      "frame_id": "0008106",
+      "actor": 5,
+      "negative": 141058,
+      "positive": 11333,
+      "unknown": 1209
+    },
+    {
+      "frame_id": "0008106",
+      "actor": 26,
+      "negative": 151751,
+      "positive": 640,
+      "unknown": 1209
+    },
+    {
+      "frame_id": "0008106",
+      "actor": 18,
+      "negative": 152197,
+      "positive": 194,
+      "unknown": 1209
+    },
+    {
+      "frame_id": "0008106",
+      "actor": 6,
+      "negative": 151188,
+      "positive": 1203,
+      "unknown": 1209
+    },
+    {
+      "frame_id": "0008106",
+      "actor": 37,
+      "negative": 137716,
+      "positive": 14675,
+      "unknown": 1209
+    },
+    {
+      "frame_id": "0008107",
+      "actor": 5,
+      "negative": 141048,
+      "positive": 11426,
+      "unknown": 1126
+    },
+    {
+      "frame_id": "0008107",
+      "actor": 26,
+      "negative": 151794,
+      "positive": 680,
+      "unknown": 1126
+    },
+    {
+      "frame_id": "0008107",
+      "actor": 18,
+      "negative": 152275,
+      "positive": 199,
+      "unknown": 1126
+    },
+    {
+      "frame_id": "0008107",
+      "actor": 6,
+      "negative": 151257,
+      "positive": 1217,
+      "unknown": 1126
+    },
+    {
+      "frame_id": "0008107",
+      "actor": 37,
+      "negative": 137898,
+      "positive": 14576,
+      "unknown": 1126
+    },
+    {
+      "frame_id": "0008108",
+      "actor": 5,
+      "negative": 142805,
+      "positive": 9894,
+      "unknown": 901
+    },
+    {
+      "frame_id": "0008108",
+      "actor": 26,
+      "negative": 151966,
+      "positive": 733,
+      "unknown": 901
+    },
+    {
+      "frame_id": "0008108",
+      "actor": 18,
+      "negative": 152502,
+      "positive": 197,
+      "unknown": 901
+    },
+    {
+      "frame_id": "0008108",
+      "actor": 6,
+      "negative": 151499,
+      "positive": 1200,
+      "unknown": 901
+    },
+    {
+      "frame_id": "0008108",
+      "actor": 37,
+      "negative": 138167,
+      "positive": 14532,
+      "unknown": 901
+    },
+    {
+      "frame_id": "0008109",
+      "actor": 5,
+      "negative": 144367,
+      "positive": 8274,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008109",
+      "actor": 26,
+      "negative": 151885,
+      "positive": 756,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008109",
+      "actor": 18,
+      "negative": 152430,
+      "positive": 211,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008109",
+      "actor": 6,
+      "negative": 151469,
+      "positive": 1172,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008109",
+      "actor": 37,
+      "negative": 138189,
+      "positive": 14452,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008110",
+      "actor": 5,
+      "negative": 146252,
+      "positive": 6389,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008110",
+      "actor": 26,
+      "negative": 151819,
+      "positive": 822,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008110",
+      "actor": 18,
+      "negative": 152428,
+      "positive": 213,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008110",
+      "actor": 6,
+      "negative": 151493,
+      "positive": 1148,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008110",
+      "actor": 37,
+      "negative": 138342,
+      "positive": 14299,
+      "unknown": 959
+    },
+    {
+      "frame_id": "0008111",
+      "actor": 5,
+      "negative": 149226,
+      "positive": 3407,
+      "unknown": 967
+    },
+    {
+      "frame_id": "0008111",
+      "actor": 26,
+      "negative": 151758,
+      "positive": 875,
+      "unknown": 967
+    },
+    {
+      "frame_id": "0008111",
+      "actor": 18,
+      "negative": 152411,
+      "positive": 222,
+      "unknown": 967
+    },
+    {
+      "frame_id": "0008111",
+      "actor": 6,
+      "negative": 151508,
+      "positive": 1125,
+      "unknown": 967
+    },
+    {
+      "frame_id": "0008111",
+      "actor": 37,
+      "negative": 138582,
+      "positive": 14051,
+      "unknown": 967
+    },
+    {
+      "frame_id": "0008112",
+      "actor": 5,
+      "negative": 152088,
+      "positive": 609,
+      "unknown": 903
+    },
+    {
+      "frame_id": "0008112",
+      "actor": 26,
+      "negative": 151770,
+      "positive": 927,
+      "unknown": 903
+    },
+    {
+      "frame_id": "0008112",
+      "actor": 18,
+      "negative": 152469,
+      "positive": 228,
+      "unknown": 903
+    },
+    {
+      "frame_id": "0008112",
+      "actor": 6,
+      "negative": 151596,
+      "positive": 1101,
+      "unknown": 903
+    },
+    {
+      "frame_id": "0008112",
+      "actor": 37,
+      "negative": 139046,
+      "positive": 13651,
+      "unknown": 903
+    },
+    {
+      "frame_id": "0008113",
+      "actor": 5,
+      "negative": 152792,
+      "positive": 0,
+      "unknown": 808
+    },
+    {
+      "frame_id": "0008113",
+      "actor": 26,
+      "negative": 151796,
+      "positive": 996,
+      "unknown": 808
+    },
+    {
+      "frame_id": "0008113",
+      "actor": 18,
+      "negative": 152570,
+      "positive": 222,
+      "unknown": 808
+    },
+    {
+      "frame_id": "0008113",
+      "actor": 6,
+      "negative": 151738,
+      "positive": 1054,
+      "unknown": 808
+    },
+    {
+      "frame_id": "0008113",
+      "actor": 37,
+      "negative": 139948,
+      "positive": 12844,
+      "unknown": 808
+    },
+    {
+      "frame_id": "0008114",
+      "actor": 5,
+      "negative": 152554,
+      "positive": 0,
+      "unknown": 1046
+    },
+    {
+      "frame_id": "0008114",
+      "actor": 26,
+      "negative": 151450,
+      "positive": 1104,
+      "unknown": 1046
+    },
+    {
+      "frame_id": "0008114",
+      "actor": 18,
+      "negative": 152311,
+      "positive": 243,
+      "unknown": 1046
+    },
+    {
+      "frame_id": "0008114",
+      "actor": 6,
+      "negative": 151519,
+      "positive": 1035,
+      "unknown": 1046
+    },
+    {
+      "frame_id": "0008114",
+      "actor": 37,
+      "negative": 139904,
+      "positive": 12650,
+      "unknown": 1046
+    },
+    {
+      "frame_id": "0008115",
+      "actor": 5,
+      "negative": 152468,
+      "positive": 0,
+      "unknown": 1132
+    },
+    {
+      "frame_id": "0008115",
+      "actor": 26,
+      "negative": 151282,
+      "positive": 1186,
+      "unknown": 1132
+    },
+    {
+      "frame_id": "0008115",
+      "actor": 18,
+      "negative": 152214,
+      "positive": 254,
+      "unknown": 1132
+    },
+    {
+      "frame_id": "0008115",
+      "actor": 6,
+      "negative": 151470,
+      "positive": 998,
+      "unknown": 1132
+    },
+    {
+      "frame_id": "0008115",
+      "actor": 37,
+      "negative": 140272,
+      "positive": 12196,
+      "unknown": 1132
+    },
+    {
+      "frame_id": "0008116",
+      "actor": 5,
+      "negative": 153255,
+      "positive": 0,
+      "unknown": 345
+    },
+    {
+      "frame_id": "0008116",
+      "actor": 26,
+      "negative": 151992,
+      "positive": 1263,
+      "unknown": 345
+    },
+    {
+      "frame_id": "0008116",
+      "actor": 18,
+      "negative": 152995,
+      "positive": 260,
+      "unknown": 345
+    },
+    {
+      "frame_id": "0008116",
+      "actor": 6,
+      "negative": 152270,
+      "positive": 985,
+      "unknown": 345
+    },
+    {
+      "frame_id": "0008116",
+      "actor": 37,
+      "negative": 141621,
+      "positive": 11634,
+      "unknown": 345
+    },
+    {
+      "frame_id": "0008117",
+      "actor": 5,
+      "negative": 152801,
+      "positive": 0,
+      "unknown": 799
+    },
+    {
+      "frame_id": "0008117",
+      "actor": 26,
+      "negative": 151421,
+      "positive": 1380,
+      "unknown": 799
+    },
+    {
+      "frame_id": "0008117",
+      "actor": 18,
+      "negative": 152529,
+      "positive": 272,
+      "unknown": 799
+    },
+    {
+      "frame_id": "0008117",
+      "actor": 6,
+      "negative": 151856,
+      "positive": 945,
+      "unknown": 799
+    },
+    {
+      "frame_id": "0008117",
+      "actor": 37,
+      "negative": 141639,
+      "positive": 11162,
+      "unknown": 799
+    },
+    {
+      "frame_id": "0008118",
+      "actor": 5,
+      "negative": 153330,
+      "positive": 0,
+      "unknown": 270
+    },
+    {
+      "frame_id": "0008118",
+      "actor": 26,
+      "negative": 151820,
+      "positive": 1510,
+      "unknown": 270
+    },
+    {
+      "frame_id": "0008118",
+      "actor": 18,
+      "negative": 153058,
+      "positive": 272,
+      "unknown": 270
+    },
+    {
+      "frame_id": "0008118",
+      "actor": 6,
+      "negative": 152426,
+      "positive": 904,
+      "unknown": 270
+    },
+    {
+      "frame_id": "0008118",
+      "actor": 37,
+      "negative": 142703,
+      "positive": 10627,
+      "unknown": 270
+    },
+    {
+      "frame_id": "0008119",
+      "actor": 5,
+      "negative": 153184,
+      "positive": 0,
+      "unknown": 416
+    },
+    {
+      "frame_id": "0008119",
+      "actor": 26,
+      "negative": 151533,
+      "positive": 1651,
+      "unknown": 416
+    },
+    {
+      "frame_id": "0008119",
+      "actor": 18,
+      "negative": 152892,
+      "positive": 292,
+      "unknown": 416
+    },
+    {
+      "frame_id": "0008119",
+      "actor": 6,
+      "negative": 152306,
+      "positive": 878,
+      "unknown": 416
+    },
+    {
+      "frame_id": "0008119",
+      "actor": 37,
+      "negative": 143043,
+      "positive": 10141,
+      "unknown": 416
+    },
+    {
+      "frame_id": "0008120",
+      "actor": 5,
+      "negative": 153132,
+      "positive": 0,
+      "unknown": 468
+    },
+    {
+      "frame_id": "0008120",
+      "actor": 26,
+      "negative": 151313,
+      "positive": 1819,
+      "unknown": 468
+    },
+    {
+      "frame_id": "0008120",
+      "actor": 18,
+      "negative": 152838,
+      "positive": 294,
+      "unknown": 468
+    },
+    {
+      "frame_id": "0008120",
+      "actor": 6,
+      "negative": 152302,
+      "positive": 830,
+      "unknown": 468
+    },
+    {
+      "frame_id": "0008120",
+      "actor": 37,
+      "negative": 143479,
+      "positive": 9653,
+      "unknown": 468
+    },
+    {
+      "frame_id": "0008121",
+      "actor": 5,
+      "negative": 153093,
+      "positive": 0,
+      "unknown": 507
+    },
+    {
+      "frame_id": "0008121",
+      "actor": 26,
+      "negative": 151100,
+      "positive": 1993,
+      "unknown": 507
+    },
+    {
+      "frame_id": "0008121",
+      "actor": 18,
+      "negative": 152773,
+      "positive": 320,
+      "unknown": 507
+    },
+    {
+      "frame_id": "0008121",
+      "actor": 6,
+      "negative": 152317,
+      "positive": 776,
+      "unknown": 507
+    },
+    {
+      "frame_id": "0008121",
+      "actor": 37,
+      "negative": 143812,
+      "positive": 9281,
+      "unknown": 507
+    },
+    {
+      "frame_id": "0008122",
+      "actor": 5,
+      "negative": 153095,
+      "positive": 0,
+      "unknown": 505
+    },
+    {
+      "frame_id": "0008122",
+      "actor": 26,
+      "negative": 150925,
+      "positive": 2170,
+      "unknown": 505
+    },
+    {
+      "frame_id": "0008122",
+      "actor": 18,
+      "negative": 152760,
+      "positive": 335,
+      "unknown": 505
+    },
+    {
+      "frame_id": "0008122",
+      "actor": 6,
+      "negative": 152362,
+      "positive": 733,
+      "unknown": 505
+    },
+    {
+      "frame_id": "0008122",
+      "actor": 37,
+      "negative": 144251,
+      "positive": 8844,
+      "unknown": 505
+    },
+    {
+      "frame_id": "0008123",
+      "actor": 5,
+      "negative": 153227,
+      "positive": 0,
+      "unknown": 373
+    },
+    {
+      "frame_id": "0008123",
+      "actor": 26,
+      "negative": 150789,
+      "positive": 2438,
+      "unknown": 373
+    },
+    {
+      "frame_id": "0008123",
+      "actor": 18,
+      "negative": 152875,
+      "positive": 352,
+      "unknown": 373
+    },
+    {
+      "frame_id": "0008123",
+      "actor": 6,
+      "negative": 152518,
+      "positive": 709,
+      "unknown": 373
+    },
+    {
+      "frame_id": "0008123",
+      "actor": 37,
+      "negative": 144832,
+      "positive": 8395,
+      "unknown": 373
+    },
+    {
+      "frame_id": "0008124",
+      "actor": 5,
+      "negative": 153128,
+      "positive": 0,
+      "unknown": 472
+    },
+    {
+      "frame_id": "0008124",
+      "actor": 26,
+      "negative": 150438,
+      "positive": 2690,
+      "unknown": 472
+    },
+    {
+      "frame_id": "0008124",
+      "actor": 18,
+      "negative": 152760,
+      "positive": 368,
+      "unknown": 472
+    },
+    {
+      "frame_id": "0008124",
+      "actor": 6,
+      "negative": 152438,
+      "positive": 690,
+      "unknown": 472
+    },
+    {
+      "frame_id": "0008124",
+      "actor": 37,
+      "negative": 145091,
+      "positive": 8037,
+      "unknown": 472
+    },
+    {
+      "frame_id": "0008125",
+      "actor": 5,
+      "negative": 153228,
+      "positive": 0,
+      "unknown": 372
+    },
+    {
+      "frame_id": "0008125",
+      "actor": 26,
+      "negative": 150187,
+      "positive": 3041,
+      "unknown": 372
+    },
+    {
+      "frame_id": "0008125",
+      "actor": 18,
+      "negative": 152869,
+      "positive": 359,
+      "unknown": 372
+    },
+    {
+      "frame_id": "0008125",
+      "actor": 6,
+      "negative": 152604,
+      "positive": 624,
+      "unknown": 372
+    },
+    {
+      "frame_id": "0008125",
+      "actor": 37,
+      "negative": 145771,
+      "positive": 7457,
+      "unknown": 372
+    },
+    {
+      "frame_id": "0008126",
+      "actor": 5,
+      "negative": 153207,
+      "positive": 0,
+      "unknown": 393
+    },
+    {
+      "frame_id": "0008126",
+      "actor": 26,
+      "negative": 149729,
+      "positive": 3478,
+      "unknown": 393
+    },
+    {
+      "frame_id": "0008126",
+      "actor": 18,
+      "negative": 152792,
+      "positive": 415,
+      "unknown": 393
+    },
+    {
+      "frame_id": "0008126",
+      "actor": 6,
+      "negative": 152590,
+      "positive": 617,
+      "unknown": 393
+    },
+    {
+      "frame_id": "0008126",
+      "actor": 37,
+      "negative": 145871,
+      "positive": 7336,
+      "unknown": 393
+    },
+    {
+      "frame_id": "0008127",
+      "actor": 5,
+      "negative": 153031,
+      "positive": 0,
+      "unknown": 569
+    },
+    {
+      "frame_id": "0008127",
+      "actor": 26,
+      "negative": 149003,
+      "positive": 4028,
+      "unknown": 569
+    },
+    {
+      "frame_id": "0008127",
+      "actor": 18,
+      "negative": 152608,
+      "positive": 423,
+      "unknown": 569
+    },
+    {
+      "frame_id": "0008127",
+      "actor": 6,
+      "negative": 152445,
+      "positive": 586,
+      "unknown": 569
+    },
+    {
+      "frame_id": "0008127",
+      "actor": 37,
+      "negative": 146007,
+      "positive": 7024,
+      "unknown": 569
+    },
+    {
+      "frame_id": "0008128",
+      "actor": 5,
+      "negative": 153085,
+      "positive": 0,
+      "unknown": 515
+    },
+    {
+      "frame_id": "0008128",
+      "actor": 26,
+      "negative": 148504,
+      "positive": 4581,
+      "unknown": 515
+    },
+    {
+      "frame_id": "0008128",
+      "actor": 18,
+      "negative": 152632,
+      "positive": 453,
+      "unknown": 515
+    },
+    {
+      "frame_id": "0008128",
+      "actor": 6,
+      "negative": 152514,
+      "positive": 571,
+      "unknown": 515
+    },
+    {
+      "frame_id": "0008128",
+      "actor": 37,
+      "negative": 146395,
+      "positive": 6690,
+      "unknown": 515
+    },
+    {
+      "frame_id": "0008129",
+      "actor": 5,
+      "negative": 153252,
+      "positive": 0,
+      "unknown": 348
+    },
+    {
+      "frame_id": "0008129",
+      "actor": 26,
+      "negative": 147886,
+      "positive": 5366,
+      "unknown": 348
+    },
+    {
+      "frame_id": "0008129",
+      "actor": 18,
+      "negative": 152763,
+      "positive": 489,
+      "unknown": 348
+    },
+    {
+      "frame_id": "0008129",
+      "actor": 6,
+      "negative": 152694,
+      "positive": 558,
+      "unknown": 348
+    },
+    {
+      "frame_id": "0008129",
+      "actor": 37,
+      "negative": 146801,
+      "positive": 6451,
+      "unknown": 348
+    },
+    {
+      "frame_id": "0008130",
+      "actor": 5,
+      "negative": 152874,
+      "positive": 0,
+      "unknown": 726
+    },
+    {
+      "frame_id": "0008130",
+      "actor": 26,
+      "negative": 146350,
+      "positive": 6524,
+      "unknown": 726
+    },
+    {
+      "frame_id": "0008130",
+      "actor": 18,
+      "negative": 152359,
+      "positive": 515,
+      "unknown": 726
+    },
+    {
+      "frame_id": "0008130",
+      "actor": 6,
+      "negative": 152368,
+      "positive": 506,
+      "unknown": 726
+    },
+    {
+      "frame_id": "0008130",
+      "actor": 37,
+      "negative": 146654,
+      "positive": 6220,
+      "unknown": 726
+    },
+    {
+      "frame_id": "0008131",
+      "actor": 5,
+      "negative": 152780,
+      "positive": 0,
+      "unknown": 820
+    },
+    {
+      "frame_id": "0008131",
+      "actor": 26,
+      "negative": 144936,
+      "positive": 7844,
+      "unknown": 820
+    },
+    {
+      "frame_id": "0008131",
+      "actor": 18,
+      "negative": 152248,
+      "positive": 532,
+      "unknown": 820
+    },
+    {
+      "frame_id": "0008131",
+      "actor": 6,
+      "negative": 152275,
+      "positive": 505,
+      "unknown": 820
+    },
+    {
+      "frame_id": "0008131",
+      "actor": 37,
+      "negative": 146809,
+      "positive": 5971,
+      "unknown": 820
+    },
+    {
+      "frame_id": "0008132",
+      "actor": 5,
+      "negative": 152555,
+      "positive": 0,
+      "unknown": 1045
+    },
+    {
+      "frame_id": "0008132",
+      "actor": 26,
+      "negative": 142944,
+      "positive": 9611,
+      "unknown": 1045
+    },
+    {
+      "frame_id": "0008132",
+      "actor": 18,
+      "negative": 151981,
+      "positive": 574,
+      "unknown": 1045
+    },
+    {
+      "frame_id": "0008132",
+      "actor": 6,
+      "negative": 152066,
+      "positive": 489,
+      "unknown": 1045
+    },
+    {
+      "frame_id": "0008132",
+      "actor": 37,
+      "negative": 146818,
+      "positive": 5737,
+      "unknown": 1045
+    },
+    {
+      "frame_id": "0008133",
+      "actor": 5,
+      "negative": 152701,
+      "positive": 0,
+      "unknown": 899
+    },
+    {
+      "frame_id": "0008133",
+      "actor": 26,
+      "negative": 142524,
+      "positive": 10177,
+      "unknown": 899
+    },
+    {
+      "frame_id": "0008133",
+      "actor": 18,
+      "negative": 152094,
+      "positive": 607,
+      "unknown": 899
+    },
+    {
+      "frame_id": "0008133",
+      "actor": 6,
+      "negative": 152210,
+      "positive": 491,
+      "unknown": 899
+    },
+    {
+      "frame_id": "0008133",
+      "actor": 37,
+      "negative": 147161,
+      "positive": 5540,
+      "unknown": 899
+    },
+    {
+      "frame_id": "0008134",
+      "actor": 5,
+      "negative": 152564,
+      "positive": 0,
+      "unknown": 1036
+    },
+    {
+      "frame_id": "0008134",
+      "actor": 26,
+      "negative": 142567,
+      "positive": 9997,
+      "unknown": 1036
+    },
+    {
+      "frame_id": "0008134",
+      "actor": 18,
+      "negative": 151917,
+      "positive": 647,
+      "unknown": 1036
+    },
+    {
+      "frame_id": "0008134",
+      "actor": 6,
+      "negative": 152085,
+      "positive": 479,
+      "unknown": 1036
+    },
+    {
+      "frame_id": "0008134",
+      "actor": 37,
+      "negative": 147257,
+      "positive": 5307,
+      "unknown": 1036
+    },
+    {
+      "frame_id": "0008135",
+      "actor": 5,
+      "negative": 153199,
+      "positive": 0,
+      "unknown": 401
+    },
+    {
+      "frame_id": "0008135",
+      "actor": 26,
+      "negative": 144972,
+      "positive": 8227,
+      "unknown": 401
+    },
+    {
+      "frame_id": "0008135",
+      "actor": 18,
+      "negative": 152521,
+      "positive": 678,
+      "unknown": 401
+    },
+    {
+      "frame_id": "0008135",
+      "actor": 6,
+      "negative": 152751,
+      "positive": 448,
+      "unknown": 401
+    },
+    {
+      "frame_id": "0008135",
+      "actor": 37,
+      "negative": 148094,
+      "positive": 5105,
+      "unknown": 401
+    },
+    {
+      "frame_id": "0008136",
+      "actor": 5,
+      "negative": 152667,
+      "positive": 0,
+      "unknown": 933
+    },
+    {
+      "frame_id": "0008136",
+      "actor": 26,
+      "negative": 146598,
+      "positive": 6069,
+      "unknown": 933
+    },
+    {
+      "frame_id": "0008136",
+      "actor": 18,
+      "negative": 151906,
+      "positive": 761,
+      "unknown": 933
+    },
+    {
+      "frame_id": "0008136",
+      "actor": 6,
+      "negative": 152231,
+      "positive": 436,
+      "unknown": 933
+    },
+    {
+      "frame_id": "0008136",
+      "actor": 37,
+      "negative": 147732,
+      "positive": 4935,
+      "unknown": 933
+    },
+    {
+      "frame_id": "0008137",
+      "actor": 5,
+      "negative": 153267,
+      "positive": 0,
+      "unknown": 333
+    },
+    {
+      "frame_id": "0008137",
+      "actor": 26,
+      "negative": 150174,
+      "positive": 3093,
+      "unknown": 333
+    },
+    {
+      "frame_id": "0008137",
+      "actor": 18,
+      "negative": 152441,
+      "positive": 826,
+      "unknown": 333
+    },
+    {
+      "frame_id": "0008137",
+      "actor": 6,
+      "negative": 152848,
+      "positive": 419,
+      "unknown": 333
+    },
+    {
+      "frame_id": "0008137",
+      "actor": 37,
+      "negative": 148487,
+      "positive": 4780,
+      "unknown": 333
+    }
+  ],
+  "external_pools": [
+    {
+      "name": "initial measured pool",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/ownership_rebuild_r14/uncertain_candidate_pool.npz",
+      "count": 128654,
+      "status_counts": {
+        "0": 128654
+      },
+      "candidate_owner_counts": {
+        "5": 85335,
+        "6": 5426,
+        "12": 9992,
+        "18": 355,
+        "25": 2274,
+        "26": 10532,
+        "37": 14740
+      },
+      "rendered_Gaussian": false
+    },
+    {
+      "name": "post3k retained measured pool",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_rebuild_20261017_v3/backend_restore_r15/gates/003000/owner/unresolved_candidate_pool.npz",
+      "count": 128195,
+      "status_counts": {
+        "0": 128195
+      },
+      "candidate_owner_counts": {
+        "5": 85316,
+        "6": 5238,
+        "12": 9953,
+        "18": 329,
+        "25": 2236,
+        "26": 10497,
+        "37": 14626
+      },
+      "rendered_Gaussian": false
+    }
+  ],
+  "human_verdict": null,
+  "limitations": [
+    "Evidence scores are not owner ground truth.",
+    "A known-Actor fragment can arise from a bad seed or later geometry/scale growth.",
+    "Centers do not visualize full Gaussian support; use the raster panels for support/occlusion."
+  ],
+  "optimizer_group_names": [
+    "field.xyz",
+    "field.log_scales",
+    "field.quaternion",
+    "field.opacity_logit",
+    "field.albedo_logit",
+    "field.features_dc",
+    "field.features_rest",
+    "light.azimuth",
+    "light.elevation_logit",
+    "light.ambient_logit",
+    "light.radius_logit",
+    "light.strength_logit",
+    "environment.base"
+  ]
+}
