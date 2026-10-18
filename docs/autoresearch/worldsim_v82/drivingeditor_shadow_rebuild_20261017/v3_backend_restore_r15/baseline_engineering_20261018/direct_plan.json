@@ -1,19 +1,38 @@
 {
-  "updated_at": "2026-10-19T00:32:43+08:00",
+  "updated_at": "2026-10-19T01:11:48+08:00",
   "experiment_A": {
     "target": "matched five GN1130K + fresh instances30K",
-    "GN11_step": 26000,
+    "GN11_step": 30000,
     "recovery_queue": {
-      "state": "GN11_RESUME20K_TO30K",
+      "state": "DIRECT_INSTANCE30K_AND_FULL49",
       "pid": 52748,
-      "at": "2026-10-18T15:44:45.551330+00:00",
+      "at": "2026-10-18T17:04:10.151802+00:00",
       "extra_replay_budget": 5846,
       "checkpoint_interval": 5000
     },
     "resume_checkpoint": 20000,
     "authorized_extra_replay_updates": 5846,
     "checkpoint_interval": 5000,
-    "interstage_ablations": false
+    "interstage_ablations": false,
+    "native_status": "complete",
+    "instance_status": {
+      "step": 800,
+      "frame": "0008104",
+      "loss": 0.5169757604598999,
+      "instance_mask_loss": 0.0008375085890293121,
+      "raw_isolated_body_MSE": 0.002441573888063431,
+      "known_instances": 5,
+      "box_boundary": 4.5172686213845736e-07,
+      "pose_prior": 0.0,
+      "instance_points": 356380,
+      "background_points": 2015366,
+      "instance_optimizer_gradients_finite": true,
+      "static_rgb_loss": 0.019179146736860275,
+      "NPS_loss": 0.09662142395973206,
+      "background_joint_optimization": true,
+      "steps_per_second": 1.9460668962033587,
+      "state": "running"
+    }
   },
   "experiment_B": {
     "target": "LiDAR and FRONT camera intersection20; firststage30K only",
@@ -45,7 +64,16 @@
     "full_RGB_retained": true,
     "excluded_camera_only_tracks": 13,
     "all_scene_vehicle_coverage_claimed": false,
-    "resource_policy": "exclusive queue after entire A chain; concurrent training capacity not established"
+    "resource_policy": "exclusive queue after entire A chain; concurrent training capacity not established",
+    "native_status": {},
+    "queue_status": {
+      "state": "WAITING_FOR_FULL_VEHICLE_COVERAGE_AND_INITIALIZATION",
+      "pid": 52417,
+      "at": "2026-10-18T17:11:47.958099+00:00",
+      "training_updates": 0,
+      "second_stage_updates": 0,
+      "user_authorization_received": true
+    }
   },
   "report": {
     "full_frame": true,

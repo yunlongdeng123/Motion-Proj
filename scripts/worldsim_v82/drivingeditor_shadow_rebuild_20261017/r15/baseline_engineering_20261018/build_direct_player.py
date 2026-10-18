@@ -1,9 +1,31 @@
 """Publish actual final full49 results in the user's shared-timeline template."""
 from pathlib import Path
-import json,re,sys,shutil
+import json,re,sys,shutil,subprocess,uuid
 W=Path(__file__).parent;O=W.parents[1]/'outputs/baseline_engineering_20261018'
 I=W.parent/'identity_completion';sys.path.insert(0,str(I));from build_sync_player import encode
 ACTORS=[6,37,5,26,18]
+
+def video_contract(path):
+ probe=shutil.which('ffprobe')
+ if not probe:raise FileNotFoundError('ffprobe')
+ r=subprocess.run([probe,'-v','error','-select_streams','v:0','-count_frames','-show_frames','-show_entries','stream=width,height,nb_read_frames,r_frame_rate:frame=key_frame,pict_type','-of','json',str(path)],capture_output=True,text=True,check=True)
+ data=json.loads(r.stdout);s=data['streams'][0]
+ assert (s['width'],s['height'])==(480,320) and int(s['nb_read_frames'])==49 and s['r_frame_rate']=='10/1',(path,s)
+ assert len(data['frames'])==49 and all(f['key_frame']==1 and f['pict_type']=='I' for f in data['frames']),path
+ return s
+
+def encode_complete(source,filename,target):
+ # Interrupted encodes stay recoverable, but are never reused as final media.
+ if target.exists():
+  try:video_contract(target);return
+  except (subprocess.CalledProcessError,AssertionError,KeyError,ValueError):
+   target.rename(target.with_name(target.stem+'.incomplete_'+uuid.uuid4().hex[:8]+'.mp4'))
+ pending=target.with_name(target.stem+'.encoding.mp4')
+ if pending.exists():
+  try:video_contract(pending);pending.replace(target);return
+  except (subprocess.CalledProcessError,AssertionError,KeyError,ValueError):
+   pending.rename(pending.with_name(pending.stem+'.incomplete_'+uuid.uuid4().hex[:8]+'.mp4'))
+ encode(source,filename,pending);video_contract(pending);pending.replace(target)
 def main():
  original=(O.parent/'identity_comparison_20261018/index.html').read_text(encoding='utf-8')
  data=json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>',original,re.S).group(1))
@@ -18,10 +40,14 @@ def main():
   receipt=src/'receipt.json'
   if not receipt.exists():continue
   r=json.loads(receipt.read_text(encoding='utf-8'));assert r['frames']==49 and r['parameter_updates']==0
-  m=dict(label=label,ready=True,base={},actors={},all_vehicle_stage1=allvehicles)
+  if not allvehicles:
+   assert set(r['actors'])==set(ACTORS) and len(r['records'])==245
+   assert {(x['frame_id'],x['actor']) for x in r['records']}=={(f'0008{f:03d}',a) for f in range(89,138) for a in ACTORS}
+  else:assert len(r['records'])==49
+  m=dict(label=label,ready=True,base={},actors={},all_vehicle_stage1=allvehicles,physical_sun_integral=False)
   def add(key,file,actor=None):
    dst=videos/(model+'_'+(f'a{actor:02d}_' if actor is not None else '')+key+'.mp4')
-   encode(src,file,dst)
+   encode_complete(src,file,dst)
    (m['base'] if actor is None else m['actors'].setdefault(str(actor),{}))[key]='branch_videos/'+dst.name
   for k,f in [('observed','gt.png'),('full','full.png'),('dynamic','dynamic.png'),('dynamic_alpha','dynamic_alpha.png'),('static','static.png'),('static_alpha','static_alpha.png'),('delete_all','delete_all.png')]:add(k,f)
   if not allvehicles:

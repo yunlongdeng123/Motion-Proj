@@ -14,6 +14,14 @@ def main():
   for i,code in enumerate(re.findall(r'<script>(.*?)</script>',s,re.S)):
    f=W/f'direct_validation_{js}.js';f.write_text(code,encoding='utf-8')
    subprocess.run(['node','--check',str(f)],check=True,capture_output=True);js+=1
+ template=(W/'fullframe_player_template.html').read_text(encoding='utf-8')
+ tree=ast.parse((W/'build_direct_player.py').read_text(encoding='utf-8'))
+ inject=next(n.value.value for n in ast.walk(tree) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='inject' for t in n.targets))
+ template=template.replace(' const stat=alpha?b.static_alpha:',inject)
+ code=re.findall(r'<script>(.*?)</script>',template,re.S)[0]
+ f=W/'final_player_template_check.js';f.write_text(code,encoding='utf-8')
+ subprocess.run(['node','--check',str(f)],check=True,capture_output=True)
+ js+=1
  ET.parse(O/'direct_architecture.svg')
  im=Image.open(O/'all_vehicle_raw128.png');assert im.size==(960,320);im.verify()
  for raw in range(89,138):

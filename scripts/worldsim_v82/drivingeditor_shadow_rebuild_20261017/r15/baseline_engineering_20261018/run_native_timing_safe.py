@@ -1,7 +1,7 @@
-"""Native runner with only CUDA event completion-safe elapsed-time queries.
+"""Native runner with safe CUDA timing and authorized5K durability cadence.
 
-Keep all prepared source/config bytes and training mechanisms intact. Install
-the timing subclass only when binding the actual model in this process.
+Keep prepared source and optimization mechanisms intact. Runtime checkpoint
+cadence and its disk admission follow the user's explicit5K save request.
 """
 from pathlib import Path
 import sys,importlib.util
@@ -20,6 +20,10 @@ def bind(training,cfg,ready):
  original_training=training.training
  def train_with_cadence(args):
   args.checkpoint_iterations=schedule;args.save_iterations=schedule
+  # Check all six nodes before consuming B's first training update; checking
+  # only at5K could otherwise lose the entire unsaved initial segment.
+  admission=require_disk_space(output,disk_forecast(cfg,remaining_nodes=len(schedule)))
+  (output/'disk_admission_full5k_cadence.json').write_text(json.dumps(admission,indent=2))
   return original_training(args)
  training.training=train_with_cadence
  from utils import paper_checkpoint

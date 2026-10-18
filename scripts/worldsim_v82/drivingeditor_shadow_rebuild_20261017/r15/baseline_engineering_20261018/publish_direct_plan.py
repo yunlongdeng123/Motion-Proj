@@ -17,9 +17,11 @@ def main():
   with Image.open(src) as im:
    assert im.size==(1920,2560);im.resize((960,1280),Image.Resampling.LANCZOS).save(dest,quality=84)
   paths.append(rel.as_posix())
+ for n in ['live_direct_instance_status.json','live_B_native_status.json','direct_initial_checkpoint_receipt.json','video_encoding_CPU_receipt.json']:
+  if (O/n).exists():cp(O/n,D/n)
  code=['apply_direct_plan.py','formal_support.py','rigid_spatial_topology.py','test_rigid_spatial_topology.py','build_direct_implementation.py','direct_cpu_gate.py','run_direct_30k30k.py','evaluate_direct.py','start_direct_plan.py','audit_all_vehicle_coverage.py','infer_all_vehicles_native.py','run_all_vehicle_preparation.py','start_all_vehicle_preparation.py','run_all_vehicle30k_queue.py','evaluate_all_vehicle_stage1.py','start_all_vehicle_queue.py','prepare_fullframe_report.py','fullframe_player_template.html','build_direct_report.py','build_direct_player.py','validate_direct_artifacts.py','publish_direct_plan.py',
  'review_all_vehicle_association.py','infer_vehicle_geometric_prompts.py','start_vehicle_geometric_prompts.py','infer_vehicle_instance_prompts.py','start_vehicle_instance_prompts.py','audit_vehicle_instance_masks.py','audit_full_segment_vehicle_measurements.py','infer_vehicle_camera_prompts.py','start_vehicle_camera_prompts.py','assemble_camera_vehicle_candidates.py','audit_zero_seed_sources.py',
- 'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py']
+ 'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  for n in code:cp(W/n,S/n)
  archive=W/'direct_implementation.zip'
  with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
@@ -31,6 +33,7 @@ def main():
   p.write_text(p.read_text(encoding='utf-8').replace('../r15_repair_4k_20261018/','../repair_4k_20261018/'),encoding='utf-8')
  cp(W.parent/'identity_completion/sync_player_template.html',S.parent/'identity_completion_20261018/sync_player_template.html')
  live=json.loads((W/'live_GN11_recovery_status.json').read_text());step=live['iteration']
+ inst=json.loads((W/'live_direct_instance_status.json').read_text()) if (W/'live_direct_instance_status.json').exists() else {}
  paragraph=f'''用户当前授权：A完成两阶段身份一致的五身份fresh GN11 30K＋新实例30K，两个30K之间不做消融、不在1K等质量批准。B已按最新用户要求改为LiDAR与FRONT相机共同命中的20身份，只跑原生第一阶段30K；不再追补13条相机独有远车。两项实验均保留完整49帧RGB，最终视频、显示、导出全部完整画面，无ROI或局部放大。B仅验收“删除全部纳入车辆”，排除身份可留作静态RGB上下文，不能称全景无车。failure_ledger_refs=[V82-F06]；无subagent、新聊天、R16/R17，原45K暂停，历史资产保留，human_verdict=null。
 
 A原GN11在25847前后向后、优化器更新前读取未完成CUDA事件的耗时而中断，已更新25846；最近完整状态20K，丢失5846步。用户明确授权这次必要重放，并要求后续每5K保存。计时读前同步结束事件的修复通过20次真实GPU检查；新controller52748从20K完整模型/Adam/RNG/采样器/SGCM状态恢复，实际GPU张量与状态逐项相等，前100次重放的帧、时间偏移、学习率一致，未声称CUDA逐位确定性。当前恢复后{step}/30000；只改保存节奏和计时同步，不改目标或优化器。新run后缀GN11_resume20k。原失败5153/6099/39526不可重复启动。
@@ -44,6 +47,8 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
 [当前实验、计时修复与恢复证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) · [完整49帧20身份输入复核](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/intersection_inputs.html)。全部A+B训练/评估、会启动工作的controller、下载、报告与Git交付完成才按授权关机；automation-2每30分钟跟进，无变化保持安静。
 '''
  paragraph=paragraph.replace('取消的中间消融/贡献追踪不恢复；','新增25K完整检查点已实际落盘，静态/动态/环境/训练状态四组件与完成事件相符，Adam张量有限，RNG/采样器/SGCM/5K配置及严格续训合同CPU只读检查通过，49视图评估完成。此处未对25K做GPU恢复或增加训练更新。\n\n取消的中间消融/贡献追踪不恢复；')
+ if inst:
+  paragraph+=f'''\nA第一阶段GN11实际complete30K；同预算fresh实例30K已自动启动，当前{inst.get('step')}/30000（{inst.get('state')}）。首步完整checkpoint2028722412B已保存，严格续训字段/策略、91项模型Adam tensor有限性、RNG/49相机采样状态已CPU只读检查；未对首步做GPU恢复或额外训练。实际静态初始化1988336点全保留，按框删除0点；新30K背景/环境、同五身份、新鲜测量种子绑定已检查。\n\nB运行器补入首更新前六个5K节点的磁盘预估，保存时再按剩余节点检查；不是等到第一5K才发现不能保存。实际wrapper CPU fixture通过，未占训练GPU。最终播放器补全A全部删除入口、A/B不同集合标识，以及原生模型不具备物理阴影开关的提示。媒体编码先写临时文件，核对49完整帧/10fps/all-I后发布；CPU合成验证通过，不冒充真实模型质量。\n'''
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')
@@ -58,6 +63,7 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
 [恢复、准入和完整画面证据](../../autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html)。历史错误结论及撤回原文保留；不新增failure ID。
 '''
  evidence+='\n首个新增25K完整四组件、Adam有限性、RNG/采样器/SGCM和严格续训合同已CPU只读核对，49视图评估完成；未进行25K GPU恢复或新增更新。实际凭据随报告保存。\n'
+ if inst:evidence+=f'\n第一阶段已实际完成30K，fresh实例训练当前{inst.get("step")}/30000；首步完整检查点已保存并CPU核对，背景按框删除0点。同预算直接训练，无中间消融；质量仍待完整49帧评估。\n'
  if heading not in text:text+='\n\n'+heading+'\n\n'+evidence
  else:text=re.sub(re.escape(heading)+r'\n.*?(?=\n## |\Z)',lambda m:heading+'\n\n'+evidence,text,flags=re.S)
  p.write_text(text,encoding='utf-8')

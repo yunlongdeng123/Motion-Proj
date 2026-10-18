@@ -14,8 +14,10 @@ def main():
     checkpoint.save_components=lambda path,iteration,models:calls.append(('save',iteration))
     utils=types.ModuleType('utils');utils.paper_checkpoint=checkpoint
     contracts=types.ModuleType('contracts')
-    contracts.disk_forecast=lambda cfg,actual_counts,remaining_nodes:(actual_counts,remaining_nodes)
-    contracts.require_disk_space=lambda path,forecast:calls.append(('forecast',forecast))
+    contracts.disk_forecast=lambda cfg,actual_counts=None,remaining_nodes=3:(actual_counts,remaining_nodes)
+    def require_space(path,forecast):
+        calls.append(('forecast',forecast));return dict(status='fixture_disk_pass',remaining_nodes=forecast[1])
+    contracts.require_disk_space=require_space
     sys.modules['utils']=utils;sys.modules['contracts']=contracts
     env=dict(Path=Path,original_binding=lambda *args:calls.append('native_bind'))
     exec(compile(ast.Module(body=[func],type_ignores=[]),'run_native_timing_safe.py','exec'),env)
@@ -35,9 +37,10 @@ def main():
         models={k:types.SimpleNamespace(get_xyz=[1,2,3]) for k in ['static','dynamic']}
         for step in schedule:checkpoint.save_components(td,step,models)
         forecasts=[v[1][1] for v in calls if isinstance(v,tuple) and v[0]=='forecast']
-        assert forecasts==[6,5,4,3,2,1]
+        assert forecasts==[6,6,5,4,3,2,1]
     receipt=dict(status='PASSED_ACTUAL_WRAPPER_CPU_DURABILITY_CADENCE',checkpoint_iterations=schedule,
-        save_iterations=schedule,test_iterations=[10000,20000,30000],remaining_disk_forecast_nodes=forecasts,
+        save_iterations=schedule,test_iterations=[10000,20000,30000],pretraining_disk_admission_nodes=forecasts[0],
+        remaining_disk_forecast_nodes=forecasts[1:],
         event_order=['end.synchronize','elapsed_time'],actual_native_evaluation_nodes_due_to_checkpoint_policy=schedule,
         training_updates=0,GPU_training_verified=False,
         wrapper_sha256=hashlib.sha256(code.encode()).hexdigest())

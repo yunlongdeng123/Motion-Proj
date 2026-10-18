@@ -1,5 +1,5 @@
 {
-  "status": "training",
+  "status": "complete",
   "arm": "GN11",
   "iterations": 30000,
   "pid": 52749,
@@ -8,16 +8,16 @@
   "GPU_memory_bytes": 33796456448,
   "checkpoint_scope": "model+Adam+RNG+paired sampler+SGCM lineage",
   "evaluation_scope": "49 all-observed training views; not independent test",
-  "iteration": 26000,
-  "wall_seconds": 2855.348431294784,
-  "loss": 0.13007649779319763,
-  "psnr": 36.66541290283203,
+  "iteration": 30000,
+  "wall_seconds": 4761.846165037714,
+  "loss": 0.18890723586082458,
+  "psnr": 34.52344512939453,
   "static_points": 1988336.0,
   "speed_window": {
-    "first_iteration": 25901,
-    "last_iteration": 26000,
-    "wall_seconds": 44.94446572382003,
-    "wall_iterations_per_second": 2.2249680442190947,
+    "first_iteration": 29901,
+    "last_iteration": 30000,
+    "wall_seconds": 51.50145656242967,
+    "wall_iterations_per_second": 1.9416926563772188,
     "includes_initialization": false,
     "includes_evaluation": false
   },
@@ -30,34 +30,34 @@
     "pid": 52749,
     "torch_device": "0",
     "nvidia_device": "0",
-    "iteration": 26000,
+    "iteration": 30000,
     "expected_iterations": 30000,
-    "wall_seconds": 2855.3416964784265,
+    "wall_seconds": 4761.838813176379,
     "phase_stack": [
       "training"
     ],
     "pytorch": {
       "peak_allocated_bytes": 8293036544,
       "peak_reserved_bytes": 8831107072,
-      "current_allocated_bytes": 3082768384,
-      "current_reserved_bytes": 3661627392
+      "current_allocated_bytes": 17039360,
+      "current_reserved_bytes": 6813646848
     },
     "nvidia_smi": {
       "device_uuid": "GPU-4ddc547b-dbef-1ff0-dfd5-697ee1225012",
       "device_index": 0,
       "device_name": "NVIDIA GeForce RTX 4080 SUPER",
       "device_total_bytes": 34351349760,
-      "current_process_used_bytes": 4030726144,
-      "current_device_used_bytes": 4041211904,
+      "current_process_used_bytes": 7182745600,
+      "current_device_used_bytes": 7193231360,
       "process_peak_used_bytes": 9187622912,
       "device_peak_used_bytes": 9198108672
     },
     "sampling": {
       "interval_seconds": 1.0,
-      "samples": 2856,
+      "samples": 4762,
       "samples_with_errors": 0,
-      "valid_device_samples": 2856,
-      "valid_pid_present_samples": 2842,
+      "valid_device_samples": 4762,
+      "valid_pid_present_samples": 4748,
       "phase_boundary_samples": 2,
       "sampled_peaks_are_lower_bounds": true,
       "query_timeout_seconds": 2.0,
@@ -79,63 +79,74 @@
         "current_reserved_bytes": 2816475136
       },
       "checkpoint": {
-        "count": 3,
+        "count": 6,
         "failed_count": 0,
-        "wall_seconds": 6.871484329923987,
-        "wall_seconds_exclusive": 6.871484329923987,
-        "sample_count": 6,
-        "peak_allocated_bytes": 3084758528,
+        "wall_seconds": 13.875648383051157,
+        "wall_seconds_exclusive": 13.875648383051157,
+        "sample_count": 13,
+        "peak_allocated_bytes": 3086921216,
         "peak_reserved_bytes": 6977224704,
-        "process_peak_used_bytes": 4020240384,
-        "device_peak_used_bytes": 4030726144,
-        "current_allocated_bytes": 3082768384,
-        "current_reserved_bytes": 6977224704
+        "process_peak_used_bytes": 4037017600,
+        "device_peak_used_bytes": 4047503360,
+        "current_allocated_bytes": 3084931072,
+        "current_reserved_bytes": 6813646848
       },
       "static_time_eval": {
-        "count": 1,
+        "count": 2,
         "failed_count": 0,
-        "wall_seconds": 12.088718008249998,
-        "wall_seconds_exclusive": 12.088718008249998,
-        "sample_count": 12,
+        "wall_seconds": 24.09357108362019,
+        "wall_seconds_exclusive": 24.09357108362019,
+        "sample_count": 24,
         "peak_allocated_bytes": 6480080896,
         "peak_reserved_bytes": 6977224704,
         "process_peak_used_bytes": 7346323456,
         "device_peak_used_bytes": 7356809216,
-        "current_allocated_bytes": 3162288640,
-        "current_reserved_bytes": 6977224704
+        "current_allocated_bytes": 3164451328,
+        "current_reserved_bytes": 6813646848
       },
       "photo_eval": {
-        "count": 1,
+        "count": 2,
         "failed_count": 0,
-        "wall_seconds": 111.24234941322356,
-        "wall_seconds_exclusive": 99.15363140497357,
-        "sample_count": 110,
+        "wall_seconds": 219.4133159238845,
+        "wall_seconds_exclusive": 195.31974484026432,
+        "sample_count": 218,
         "peak_allocated_bytes": 6480080896,
         "peak_reserved_bytes": 6998196224,
         "process_peak_used_bytes": 7367294976,
         "device_peak_used_bytes": 7377780736,
-        "current_allocated_bytes": 3082768384,
-        "current_reserved_bytes": 6977224704
+        "current_allocated_bytes": 3084931072,
+        "current_reserved_bytes": 6813646848
+      },
+      "gradient_diagnostics": {
+        "count": 3,
+        "failed_count": 0,
+        "wall_seconds": 0.046519676223397255,
+        "wall_seconds_exclusive": 0.046519676223397255,
+        "sample_count": 0,
+        "peak_allocated_bytes": 7315374080,
+        "peak_reserved_bytes": 8143241216,
+        "current_allocated_bytes": 7302176768,
+        "current_reserved_bytes": 8143241216
       },
       "training": {
         "count": 0,
         "failed_count": 0,
-        "wall_seconds": 2836.7712075039744,
-        "wall_seconds_exclusive": 2718.657373760827,
-        "sample_count": 2835,
+        "wall_seconds": 4743.268324201927,
+        "wall_seconds_exclusive": 4509.9328402187675,
+        "sample_count": 4741,
         "active_count": 1,
         "peak_allocated_bytes": 8293036544,
         "peak_reserved_bytes": 8831107072,
         "process_peak_used_bytes": 9187622912,
         "device_peak_used_bytes": 9198108672,
-        "current_allocated_bytes": 3082768384,
-        "current_reserved_bytes": 3661627392
+        "current_allocated_bytes": 17039360,
+        "current_reserved_bytes": 6813646848
       }
     },
     "phase_attribution": {
       "pytorch_peak_scope": "inclusive_of_children_and_live_entry_allocations",
       "nvidia_boundary_samples": "overall_only_when_any_phase_boundary_crossed_during_queries",
-      "torch_peak_resets": 12,
+      "torch_peak_resets": 28,
       "torch_reset_errors": 0,
       "requires_exclusive_ownership_of_torch_peak_resets": true,
       "wall_time_scope": "host_elapsed; parent_inclusive; exclusive_subtracts_child_wall"
@@ -156,13 +167,14 @@
     "recent_errors": [],
     "extra": {
       "static_points": 1988336.0,
-      "iter_forward_backward_ms": 327.5741882324219,
-      "iteration": 6000,
+      "iter_forward_backward_ms": 350.80438232421875,
+      "iteration": 10000,
       "render_static_points": 1988336,
       "render_dynamic_points": 1019835,
       "render_width": 480,
-      "render_height": 320
+      "render_height": 320,
+      "arm_complete": true
     }
   },
-  "iter_forward_backward_ms": 327.5741882324219
+  "iter_forward_backward_ms": 350.80438232421875
 }
