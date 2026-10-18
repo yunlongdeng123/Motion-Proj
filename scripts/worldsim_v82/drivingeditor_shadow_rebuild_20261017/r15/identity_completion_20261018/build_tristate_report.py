@@ -101,6 +101,7 @@ const actor=document.getElementById('actor'),frame=document.getElementById('fram
     # Replace longer keys first; token substitution must not replace inside inserted JSON.
     import re
     html=re.sub('|'.join(map(re.escape,sorted(replaces,key=len,reverse=True))),lambda m:replaces[m.group()],html)
+    html=html.replace('<h1>','<p class="note"><a href="../index.html"><strong>主要检查入口：五身份动态／静态／Delete 同步视频，可播放及逐帧拖动</strong></a>。本页保留为三维证据补充。</p><h1>',1)
     (out/'index.html').write_text(html,encoding='utf-8')
     (out/'build_status.json').write_text(json.dumps(dict(cpu_audit_complete=True,GPU_projection_complete=projection,report_bytes=len(html.encode('utf-8'))),indent=2),encoding='utf-8')
     print(out/'index.html')

@@ -55,10 +55,23 @@ def main():
                     maximum_sigma_quantile=torch.quantile(state['field.log_scales'][take].exp().max(-1).values,torch.tensor([.5,.95,.99,1.])).tolist()))
             stats[label]=records
         write(Q/'geometry_comparison.json',stats)
+        del saved,old,data
+        import gc
+        gc.collect();torch.cuda.empty_cache()
+        from render_branches import execute
+        write(TASK/'branch_queue_status.json',dict(state='RUNNING',phase='repair4k_branches'))
+        execute('repair4k',already_locked=True)
     except BaseException as e:
         write(out/'failure.json',dict(error=repr(e),assets_preserved=True));raise
     finally:slot.close()
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    import subprocess
+    for name in ['old5','r15']:
+        write(TASK/'branch_queue_status.json',dict(state='RUNNING',phase=name+'_branches'))
+        subprocess.run([sys.executable,str(TASK/'code/render_branches.py'),'--model',name],check=True)
+    write(TASK/'branch_queue_status.json',dict(state='RUNNING',phase='repair4k_identity_matrix'))
+    main()
+    write(TASK/'branch_queue_status.json',dict(state='ALL_BRANCHES_COMPLETE_AWAITING_PLAYER_DELIVERY',models=['old5','r15','repair4k']))
 '''
 (W/'evaluate_repair.py').write_text(header+s+tail,encoding='utf-8')
