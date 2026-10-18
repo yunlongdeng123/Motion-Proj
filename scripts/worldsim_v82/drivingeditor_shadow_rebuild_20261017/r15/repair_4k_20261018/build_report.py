@@ -39,5 +39,18 @@ page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="view
 <p>额外运行旧 CPU reference 集成套件：12/16 通过，4 项失败；在未改动的原 R15 源码上复现相同 4 项失败（3 项缺 reference 静态分支输出，1 项旧外观初始化断言）。这些未计为通过，也未改动无关历史测试。真实训练入口需由队列中的 GPU 自检验收。</p>
 <p><a href="config.json">完整配置</a> · <a href="experiment_contract.json">实验合同</a> · <a href="input_preflight.json">真实输入预检</a> · <a href="cpu_tests.log">26 项测试</a> · <a href="cpu_integration.log">旧套件记录</a> · <a href="cpu_integration_pristine.log">原版复现记录</a> · <a href="queue_status.json">排队快照</a></p>
 <p><small>页面为本次登记快照，不是实时状态。GPU 自检通过后才启动 4K；新旧全部任务、结果保存和 GitHub v82 推送完成后，按用户授权关闭 AutoDL。human_verdict 未填写。</small></p></main></html>'''
+if (W/'smoke_receipt.json').is_file():
+    smoke=json.loads((W/'smoke_receipt.json').read_text(encoding='utf-8-sig'))
+    progress=json.loads((W/'live_progress.json').read_text(encoding='utf-8-sig')) if (W/'live_progress.json').is_file() else {}
+    shutil.copy2(W/'smoke_receipt.json',O/'smoke_receipt.json')
+    if progress:shutil.copy2(W/'live_progress.json',O/'live_progress.json')
+    status.update(actual_gpu_smoke=smoke['status'],new_training_updates=progress.get('global_step',0),old5_baseline='complete 30000; 49-frame render complete')
+    (O/'status.json').write_text(json.dumps(status,indent=2,ensure_ascii=False),encoding='utf-8')
+    page=page.replace('当前：代码已实现；26 项针对性 CPU 测试通过；真实输入预检通过。新 4K 尚未开始。',f"当前：真实 GPU 自检通过，新 4K 正在训练；最近读取第 {progress.get('global_step',0):,} / 4,000 步。")
+    page=page.replace('远端控制器 PID 20154 已排队：旧五身份 30K → 旧五身份渲染 → 冻结三值投影 → 修复 GPU 自检 → 从头 4K → 49 帧逐身份评估。任何新阶段失败都保留资产并停止后续。','旧五身份 30K、旧五身份渲染、冻结三值投影与修复 GPU 自检均已完成。控制器 PID 20154 正在从头训练 4K，随后自动执行五身份 49 帧独立／删除评估。')
+    page=page.replace('真实 GPU 自检尚在队列。','真实 GPU 自检已经通过。')
+    page=page.replace('真实 GPU 自检尚在队列','真实 GPU 自检已经通过')
+    page=page.replace('真实训练入口需由队列中的 GPU 自检验收。','真实 GPU 自检已完成 2 步训练、46 帧完整归属审计、分块一致性与严格恢复检查，smoke 模型未用于 4K 初始化。<a href="smoke_receipt.json">GPU 记录</a>。')
+    page=page.replace('GPU 自检通过后才启动 4K；','新 4K 已启动；')
 (O/'index.html').write_text(page,encoding='utf-8')
 print(O.resolve())

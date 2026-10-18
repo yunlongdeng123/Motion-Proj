@@ -42,6 +42,17 @@ def main():
     for model,label in [('old3','历史旧 3 身份 30K'),('old5','补齐旧 5 身份 30K'),('r15','冻结 R15 4K')]:
         r=ready.get(model);status=f"完成：49 × {len(r['actors'])} 身份／帧，参数更新 0" if r else '训练／渲染进行中，未展示未完成结果'
         rows+=f'<tr><td>{label}</td><td>{status}</td><td>{"、".join("a"+str(x) for x in r["actors"]) if r else "a5、a26、a18、a6、a37（待完成）"}</td></tr>'
+    geometry_html=''
+    geometry_path=a.input.parent/'tristate/old5_geometry/geometry.json'
+    if 'old5' in ready and geometry_path.is_file():
+        geo=json.loads(geometry_path.read_text(encoding='utf-8'));gr=''
+        for actor in [6,37,5,26,18]:
+            o=next(r for r in geo['actors'] if r['actor']==actor);r=next(r for r in geo['R15_frozen4k_geometry'] if r['actor']==actor)
+            no=o['centers_outside_common_box_with_tolerance'];nr=r['centers_outside_common_box_with_tolerance']
+            gr+=f"<tr><td>a{actor}</td><td>{o['old_owner_index']} ↔ {actor}</td><td>{o['initial_points']:,} → {o['final_points']:,}</td><td>{r['points']:,}</td><td>{no:,} / {o['final_points']:,} ({no/o['final_points']:.2%})</td><td>{nr:,} / {r['points']:,} ({nr/r['points']:.2%})</td></tr>"
+        geometry_html='<h2>真实身份与几何对照</h2><table><tr><th>同一车辆</th><th>旧5 owner ↔ R15 owner</th><th>旧5 初始 → 30K 点数</th><th>原 R15 4K 点数</th><th>旧5 框外中心</th><th>原 R15 框外中心</th></tr>'+gr+'</table><p class="small">两版均以同一物理米坐标、同一 train46 中位真实车框统计，使用 0.00001m 容差避免归一化/FP32 的边界舍入被计为物理越界。精确无容差与旧原生框统计也保存在凭据中。旧版固定拓扑；两版初始化和训练长度不同，点数、框外比例均不是道路污染或资产质量真值。<a href="tristate/old5_geometry/geometry.json">全量统计与归属映射</a> · <a href="tristate/index.html">旋转查看旧5与原R15的Gaussian中心</a></p>'
+        if all((out/f'a{actor:02d}_completed_old5_review.png').is_file() for actor in [6,37]):
+            geometry_html+='<h2>同一 a6／a37：旧版也有资产外溢和删除残影</h2><p>下图固定 raw105／113／121，所有模型使用同一输入掩码确定局部展示窗口。旧5的 a6 独立 RGB／alpha 中可见连续的大面积下部支撑和亮白、蓝色条带；原 R15 的下部表现为零散碎片。a37 删除后两版都未留下干净道路，旧5有明亮车形残留，原 R15 关阴影后仍有较暗车形。这里是三个固定锚帧的工程观察，不给全49帧人工质量评分。</p><p>例如旧5的 a6 仅约3.73%中心越出共同车框，但其最大主轴σ达到约3.29m；少数大尺度点也能产生明显外溢。框外率低不能证明独立资产更干净。旧5是新增两个真实owner后的基线扩展，不能倒推历史旧3检查点已具备同样可分离归属。</p>'+''.join(f'<figure><a href="a{actor:02d}_completed_old5_review.png"><img src="a{actor:02d}_completed_old5_review.png" alt="a{actor}旧5与原R15同帧独立、alpha及删除对照"></a><figcaption>a{actor}：依次为观测RGB、旧5独立、原R15独立、旧5 alpha、原R15 alpha、旧5删除、原R15关阴影删除。点击放大；完整原帧和全49帧视频见下方。</figcaption></figure>' for actor in [6,37])
     page='''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>旧30K＋30K与R15：五身份对照</title><style>STYLES</style>
 <h1>旧 GN11 30K＋实例 30K，与 R15 4K 的五身份对照</h1>
 <p>按同一真实身份核对 a6、a37、a5、a26、a18。<a href="tristate/index.html">进入 0／1／unknown 交互可视化与谱系审计</a>。</p>
@@ -49,6 +60,7 @@ def main():
 ARCH
 <table><tr><th>模型</th><th>实际状态</th><th>可按真实身份独立／删除</th></tr>STATUS</table>
 <h2>训练与输入范围</h2><p>新增五身份沿用旧版 100×完整可见实例 mask MSE、框约束、固定拓扑、固定姿态和 seed=0。背景与实例共同优化（background lr scale=0.1），环境冻结。a5／a26／a18 的初始位置和 RGB 与旧种子逐位一致；a6／a37 使用经 49 帧身份核对的原生完整 SAM 提议。R15 的融合三值掩码保持原样；两版的输入覆盖差异必须结合三值页面解释。未重新训练 GN11，未加载 R15 或旧实例已学习权重作为新增实例种子。</p>
+GEOMETRY_TABLE
 <h2>逐身份、逐帧检查</h2><label>身份 <select id="actor"><option value="6">a6</option><option value="37">a37</option><option value="5">a5</option><option value="26">a26</option><option value="18">a18</option></select></label><label>原始帧 <select id="frame"></select></label><button id="prev">上一帧</button><button id="next">下一帧</button>
 <p class="small">每行从左到右：完整场景、仅该 owner 的 RGB、独立 alpha、全景中可见 alpha*T、删除该 owner。所有图片都是原始整帧输出，没有乘 GT mask 或按高度裁剪。点击图可查看原分辨率。旧版使用原生 SH 输出域，R15 线性 RGB 转 sRGB 显示；跨实现外观差异不单独作为质量评分。</p><div id="matrix"></div><div id="off"></div>
 <h2>49 帧视频</h2><p class="small">固定 10 fps，原始 raw89—137，循环播放。视频只压缩 PNG 预览；FP32 原始渲染结果保留在远端任务目录。</p><div id="videos" class="videogrid"></div>
@@ -56,9 +68,13 @@ ARCH
 <script id="ready" type="application/json">@@READY@@</script><script>const READY=JSON.parse(document.getElementById('ready').textContent),actors=document.getElementById('actor'),frames=document.getElementById('frame'),names={old3:'历史旧3身份30K',old5:'补齐旧5身份30K',r15:'冻结R15 4K'};for(let n=89;n<=137;n++){let o=document.createElement('option');o.value='0008'+String(n).padStart(3,'0');o.textContent=n;frames.append(o)}frames.value='0008113';function panel(url,label){return `<div class="panel"><a href="${url}"><img loading="lazy" src="${url}" alt="${label}"></a><p>${label}</p></div>`}function update(){let a=Number(actors.value),aa='a'+String(a).padStart(2,'0'),fid=frames.value,html='';for(const model of ['old3','old5','r15']){let r=READY[model];html+=`<h3>${names[model]}</h3>`;if(!r){html+='<div class="note">完整30K训练与渲染尚未结束。</div>';continue}let b=`assets/${model}/${fid}/`;if(!r.actors.includes(a)){html+=`<div class="row">${panel(b+'full.png','原全景')}${panel(b+'static.png','原静态/PVG：包含此车外观')}<div class="panel na">没有该身份的独立 owner。独立RGB、alpha、删除：不适用。</div></div>`;continue}html+='<div class="row">'+[['full.png','完整场景'],[aa+'_isolated.png','仅真实 owner 的 RGB'],[aa+'_alpha.png','独立 alpha'],[aa+'_visible.png','全景可见 alpha*T'],[aa+'_delete.png','删除该 owner']].map(([f,l])=>panel(b+f,l)).join('')+'</div>'}document.getElementById('matrix').innerHTML=html;document.getElementById('off').innerHTML=READY.r15?'<h3>R15：删除并关闭物理阴影</h3><div class="row">'+panel(`assets/r15/${fid}/${aa}_delete_no_shadow.png`,'删除目标后，关闭阴影')+'</div>':'';let v='';for(const model of ['old3','old5','r15'])if(READY[model]&&READY[model].actors.includes(a))for(const mode of ['isolated','delete']){let src=`videos/${model}_${aa}_${mode}.mp4`;if(AVAILABLE_VIDEOS.includes(src))v+=`<figure><video controls loop muted preload="metadata" src="${src}"></video><figcaption>${names[model]} · ${mode==='isolated'?'独立身份':'删除身份'}</figcaption></figure>`}document.getElementById('videos').innerHTML=v||'<p>PNG 已保存，视频尚未组装。</p>'}actors.onchange=frames.onchange=update;document.getElementById('prev').onclick=()=>{frames.selectedIndex=Math.max(0,frames.selectedIndex-1);update()};document.getElementById('next').onclick=()=>{frames.selectedIndex=Math.min(48,frames.selectedIndex+1);update()};document.getElementById('receipts').innerHTML=Object.keys(READY).map(m=>`<a href="assets/${m}/render_receipt.json">${names[m]} 渲染凭据</a>`).join(' · ');const AVAILABLE_VIDEOS=@@VIDEOS@@;update();</script></html>'''
     compact={k:{'actors':v['actors'],'frames':v['frames']} for k,v in ready.items()}
     videos=['videos/'+f.name for f in (out/'videos').glob('*.mp4')] if (out/'videos').exists() else []
-    replacements={'STYLES':styles,'ARCH':arch,'STATUS':rows,'@@READY@@':json.dumps(compact),'@@VIDEOS@@':json.dumps(videos)}
+    replacements={'STYLES':styles,'ARCH':arch,'STATUS':rows,'GEOMETRY_TABLE':geometry_html,'@@READY@@':json.dumps(compact),'@@VIDEOS@@':json.dumps(videos)}
     import re
     page=re.sub('|'.join(map(re.escape,replacements)),lambda m:replacements[m.group()],page)
+    page=page.replace("for(const mode of ['isolated','delete'])", "for(const mode of ['isolated','delete',...(model==='r15'?['delete_no_shadow']:[])])")
+    page=page.replace("mode==='isolated'?'独立身份':'删除身份'", "mode==='isolated'?'独立身份':mode==='delete_no_shadow'?'删除身份并关闭阴影':'删除身份'")
+    if 'old5' in ready:
+        page=page.replace('<h1>','<div class="note"><strong>已更新：补齐旧五身份实例 30K 已完成。</strong> 三版独立／删除图共 637 个身份帧，五辆车均可直接核对。新增修复 R15 的 4K 已通过 GPU 自检并开始训练，本页比较的是原冻结 R15 4K。</div><h1>',1)
     (out/'index.html').write_text(page,encoding='utf-8')
     (out/'completion_status.json').write_text(json.dumps(dict(task_id='WS-V82-R15-IDENTITY-COMPARISON-20261018',models_completed=list(ready),
         old5_30k_complete='old5' in ready,render_cases={m:len(r['records']) for m,r in ready.items()},

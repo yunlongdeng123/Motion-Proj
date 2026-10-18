@@ -10,12 +10,15 @@ def main():
     read=lambda name:json.loads((src/name).read_text(encoding='utf-8'))
     audit=read('evidence_audit.json');data=read('viewer_data.json');masks=read('mask_comparison/comparison.json')
     boundary=read('boundary_origins.json')
+    old5=(src/'old5_geometry/viewer_panels.json').is_file()
+    if old5:
+        data['panels'].extend(read('old5_geometry/viewer_panels.json')['panels'])
     for panel in data['panels']:
         obj=panel['points'];a=np.frombuffer(base64.b64decode(obj['data']),dtype='<f4').reshape(-1,12)
         limit=6000 if panel['scope']=='all' else 4000 if panel['scope'].endswith('context') else 8000
         if len(a)>limit:a=a[np.linspace(0,len(a)-1,limit).astype(int)]
         panel['points']=dict(rows=len(a),stride=12,data=base64.b64encode(a.tobytes()).decode())
-    for folder in ['pixels','mask_comparison','projection']:
+    for folder in ['pixels','mask_comparison','projection','old5_geometry']:
         if (src/folder).exists():shutil.copytree(src/folder,out/folder,dirs_exist_ok=True)
     for name in ['evidence_audit.json','boundary_origins.json','cpu_complete.json']:
         if (src/name).exists():shutil.copy2(src/name,out/name)
@@ -80,6 +83,17 @@ const actor=document.getElementById('actor'),frame=document.getElementById('fram
     html=html.replace("frame.value='0008113';function updateImages()","frame.value='0008089';function updateImages()")
     html=html.replace("items=[['pixels/'+id+'_'+aa+'.png','R15 原像素监督：0 / 1 / unknown']]",
         "items=['6','37'].includes(a)?[['mask_comparison/'+id+'_'+aa+'_rgb_crop.png','原图：共同局部窗口'],['mask_comparison/'+id+'_'+aa+'_state_crop.png','同窗口 R15 三值监督'],['mask_comparison/'+id+'_'+aa+'_native_crop.png','同窗口原生 SAM 二值提议']]:[];items.push(['pixels/'+id+'_'+aa+'.png','R15 原像素监督：0 / 1 / unknown'])")
+    if old5:
+        html=html.replace('<h2>交互查看初始化与 4K 的 Gaussian 中心</h2>',
+            '<h2>交互查看旧5基线与 R15 的 Gaussian 中心</h2><p><a href="../index.html">返回完整49帧独立／删除对照</a> · <a href="old5_geometry/geometry.json">旧5全量几何与归属映射</a>。新增旧5的归一化坐标已按实际比例还原为物理米，并使用同一真实车框。<strong>旧版没有三值证据或概率；旧5的绿色仅表示属于当前硬 owner，点击时概率 -1 表示不存在，不能解释成确定车辆证据。</strong></p><div class="tools"><label>左右对比 <select id="pair"><option value="old5" selected>旧5最终30K / 原R15 4K</option><option value="r15">R15初始化 / 原R15 4K</option></select></label></div>')
+        html=html.replace("let yaw=-.65", "const pair=document.getElementById('pair');pair.onchange=()=>{zoom=1;panx=pany=0;selectPanels()};let yaw=-.65")
+        html=html.replace("let scope=scopes.value;if(pool.checked", "let scope=scopes.value;let oldPair=pair.value==='old5';context.disabled=pool.disabled=oldPair;scopes.querySelector('option[value=all]').disabled=oldPair;if(oldPair){context.checked=pool.checked=false;if(scope==='all'){scopes.value=scope='a6'}}if(pool.checked")
+        html=html.replace("let stages=pool.checked?['pool_init','pool_3k']:['init','4k'];", "let stages=oldPair?['old5','4k']:pool.checked?['pool_init','pool_3k']:['init','4k'];")
+        html=html.replace('状态原码计数 ${JSON.stringify(p.counts)}','${p.stage===\'old5\'?\'硬owner计数（无三值证据）\':\'状态原码计数\'} ${JSON.stringify(p.counts)}')
+        html=html.replace('概率顺序 static / Actor / unknown。', '概率顺序 static / Actor / unknown。旧5左图的绿色/状态1仅是owner显示，概率-1表示旧模型不存在此参数。')
+        html=html.replace('全量状态、谱系、优化器与逐帧计数</a>', '原R15全量状态、谱系、优化器与逐帧计数</a>')
+    if old5:
+        html=html.replace('无参数更新，无新训练阶段，无自动归属修复。工程诊断，human_verdict=null；', '本页仅只读旧5与原R15检查点，没有修改这些模型。新修复4K已另行启动，见<a href="../../r15_repair_4k_20261018/index.html">新实验状态</a>。工程诊断，human_verdict=null；')
     replaces={'ARCH':arch,'GEOMETRY':table,'MASKTABLE':masktable,'@@VIEWER@@':json.dumps(data,separators=(',',':')),
         '@@AUDIT@@':json.dumps(audit,separators=(',',':')),'@@INPUTMASKS@@':json.dumps(masks,separators=(',',':')),
         'HASPROJECTION':'true' if projection else 'false',

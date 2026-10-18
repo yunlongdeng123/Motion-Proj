@@ -1,13 +1,15 @@
 # 当前研究状态
 
-更新：2026-10-18。当前 task=WS-V82-R15-REPAIR-4K-20261018，保留 WS-V82-R15-IDENTITY-COMPARISON-20261018 后续；failure_ledger_refs=[V82-F06]，failure_ledger_delta=none。用户最新授权：修复 R15 并从相同原始测量重新进行有界 4K。无 subagent，无 R16/R17；原暂停 45K 不恢复。[组件、修复与实验合同](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/index.html)。
+更新：2026-10-18。当前 task=WS-V82-R15-REPAIR-4K-20261018，并交付 WS-V82-R15-IDENTITY-COMPARISON-20261018 已完成结果；failure_ledger_refs=[V82-F06]，failure_ledger_delta=none。无subagent、R16/R17；原45K暂停保留。
 
-修复入口已实现：Actor 不可重置来源锚点、累计0.25m位移、真实框+0.10m容许域（保留初始异常种子的包络）、相对初始σ上限1.5倍；每次Actor增密2%、总增密容量4倍；当前全场景正/已知负/实测道路贡献审计，撤销被反证的确定状态，充分重复实测3D才改owner；旧source tag不再拦截候选，真实道路和过大支撑否决整点转车；审计在1500/2500/3500，避开3000 opacity reset。已验证FP64因子阴影接入模型和恢复入口。
+旧GN11 30K＋五实例30K已完成，a5/a26/a18/a6/a37都有真实独立owner，全49帧245身份帧的独立RGB、alpha、全景可见alpha与删除完成。历史旧3的147身份帧与原冻结R15的245身份帧也已完成，总637身份帧；本地全PNG矩阵及31视频交付，Git保存视频、固定锚帧和完整三值支撑证据。[旧基线完成对照与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html) · [旧5/原R15三维中心与真实支撑](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。
 
-26项针对性CPU测试通过，真实49帧/43Actor/771821种子输入预检通过。旧CPU reference集成套件12/16通过，其余4项在未改动R15上相同复现；真实GPU自检尚未运行，不冒称全套通过。新远端队列PID20154等待旧5训练、旧5渲染和冻结三值投影完成，再按GPU自检→从头4000步→49帧五身份评估顺序运行。原30K学习率时间表、原三值mask与loss保留；旧459点池补入不重放，协议差异已登记。旧5最近读取14400/30000，仍非最终基线。
+以同一真实车框、物理米坐标及1e-5m容差，旧5/原R15的框外中心：a6 3.73%/24.09%，a37 6.35%/17.53%，a5 1.97%/4.22%，a26 2.45%/6.85%，a18 34.97%/46.44%。旧5无增密且初始化不同；a6最大σ约3.29m，在raw105/113/121可见大面积下部支撑、亮白/蓝色条带。a37两版删除均残留车形；旧5不是干净资产真值，框外率低也不能证明资产干净。旧5没有三值证据/概率，绿色只表示硬owner。原始历史旧3检查点仍只有三个owner，不能把新5归属倒推到它。
 
-待验证：新旧同一a5/a6/a18/a26/a37的框外率、源点漂移、点数、三值状态、owner实际转移、车体保留、独立/删除RGB与alpha。a6原始碎片及a37静态外观残影未获得质量通过结论；a37道路上车形不授权把道路点全转Actor。组合修复不能归因到单项。所有49帧属于同一重建窗口，无独立编辑GT，human_verdict=null，problem_solved=null。
+R15修复真实GPU自检已通过：2步训练、实际阴影分块差0、严格恢复、46帧完整当前证据审计；smoke模型未用于正式初始化。控制器PID20154已自动开始从相同原测量/原三值mask重新训练4000步，最近读取1250/4000，尚无修复后质量结论。[修复组件、合同与GPU记录](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/index.html)。
 
-历史旧3和R15冻结4K身份渲染已完成；旧5完整30K、冻结三值投影后续仍在同一工作范围。[既有三值交互与谱系](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。原GN11 30K、历史旧3和R15 4K检查点全部保留，用户其他dirty文件不变。
+修复使用Actor不可重置来源锚点、累计0.25m、真实框+0.10m容许域（保留初始异常包络）、σ增长1.5倍、2%每次/4倍总增密预算；当前证据审计在1500/2500/3500，source-tag不挡候选，反证撤销确定状态，重复真实3D才改owner，真实道路/大支撑可否决整点转车。FP64因子阴影接入模型/恢复。原30K学习率、loss、SGCM、容量保留，外部池不重放旧459点补入。组合修复不能归因单项，需检查保体、a6碎片与a37外观残影。26项CPU针对测试通过；4项旧reference失败在原版相同复现，已披露。
 
-GPU保持运行以完成已授权的新旧任务。必须新修复4K及评估、旧对照、冻结投影、报告保存和v82推送均完成，并确认所有worker和会启动任务的controller结束，才按本次授权关闭AutoDL。旧队列完成不是关机条件。
+下一步等待新4K三次归属审计和训练完成，执行五身份全49帧独立/删除评估，再交付新旧图、视频、三值与保体/残影。原GN11、旧3、旧5、原R15检查点和原始输入均保留，用户其他dirty不动。同一重建窗口，无独立编辑GT，human_verdict=null，problem_solved=null。
+
+GPU仍用于新4K；旧两队列完成不是关机条件。新训练/评估、报告保存及v82推送全部完成，确认所有worker和会启动任务的controller结束后，按用户授权关闭AutoDL并记录SSH关闭观察。
