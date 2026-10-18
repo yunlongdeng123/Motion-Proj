@@ -1,10 +1,14 @@
 # 当前研究状态
 
-更新：2026-10-18。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018；用户要求撤出旧五实例干净基线结论，先排工程再比较算法。failure_ledger_refs=[V82-F06]，不新建failureID、R16/R17，无subagent；原45K暂停保留。
+更新：2026-10-18。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018；无subagent，两个正式实验直接执行。
 
-用户最新授权下已重新安排完整五身份GN11 30K＋五实例30K，旧结果保留为历史诊断而非合格基线。确认原GN11动态集合只有a5/a26/a18；a6/a37共45418/555950个五身份正像素在原canonical动态mask中覆盖均0，两车直到实例阶段才退出静态RGB监督。raw128原始/GN11/旧3/旧5同帧链路确认旧5蓝白条带显著恶化；49帧native静态renderer与适配器最大RGB差约2.4e-7。实际CUDA第二批通道、单ID、换序及梯度通过。较早本地快照导致的学习率10倍断言已撤回，实际归档调用路径会补乘0.1。
+用户最新要求：直接完成两阶段身份一致的五身份 GN11 30K＋新实例30K，取消两阶段之间的消融；额外补齐所有可见车辆（含停驶车辆）的掩码、真实初始化和统一身份表后，自动跑第一阶段30K。完整RGB保留，车辆由动态分支重建。本轮全车辆实验不跑第二阶段；最终同时检查逐ID删除和删除全部车辆后的完整静态街景。所有视频及显示使用完整画面，无ROI裁剪。failure_ledger_refs=[V82-F06]，不增加R16/R17，原45K暂停，历史资产保留。
 
-原raw动态body α100在刚体适配中被0权重及可见ID α替代，遮挡语义不等价；固定拓扑也不能称完整继承原增密/剪枝。已完成4×300步诊断；实际调用复核发现five_raw_body仍用全场景可见union alpha，只恢复了100权重，撤回“恢复原孤立body”的描述，前四臂opacity日志均不能当孤立body指标。旧臂与检查点保留，另排真正使用package.dynamic_alpha的five_raw_body_isolated 300步。五身份一致的独立原始测量输入已完成实际49相机、.1米尺度及SGCM CPU检查；新五身份GN11 30K已经实际启动，最近原生状态快照为16000/30000；两阶段实际坐标变换差0、时间差1.11e-16且49帧身份/二值union一致。后续controller18165已排队等待当前GN11释放GPU，再顺序执行纠正300步、两臂损失梯度与完整恢复/下一更新检查、五臂全49帧独立/删除渲染；后续零更新controller27418再追踪GN11/旧3/旧5三锚帧a6/a37的真实静态alphaT与RGB贡献，并核对原生静态RGB梯度。不并发抢卡、正式实例更新仍0。独立run为campaign/r15_baseline_owner5_20261018，完成后核对原约束、实际损失梯度、Adam/RNG恢复及编辑表现再启动fresh五实例30K。原GN11/旧3/旧5/原R15/修复R15检查点和原始输入不改，不因旧队列complete提前关机。[本轮组件图、逐帧溯源与固定协议](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html)。human_verdict=null。
+五身份GN11实际继续训练，最近快照22100/30000。等待中的中间消融controller18165及贡献追踪27418已核对无子进程后取消，未消费新增训练步数；旧4×300保留，原five_raw_body误标更正继续有效。direct controller39526已登记：等待当前GN11真正30000后绑定实际背景/环境及静态点数，直接fresh五实例30000，然后实际完整49帧分支、独立资产、逐ID与全部删除。没有1K质量停等或新的中间对照。第二阶段恢复孤立raw-body alpha100，同时保留visible-ID100，按2000步SH/49相机无放回采样，并接入原生静态及保身份刚体空间clone/split/prune。空间参考9项和epoch sampler完整恢复/未来150次序列通过CPU；GPU训练仍待执行。刚体不采用PVG时间split，SGCM沿用第一阶段结果；原生append重置屏幕半径历史的次序被忠实保留，不冒称有效的持续屏幕大点约束。
+
+全车辆输入CPU清查49帧共45条车辆轨迹，其中20条在本相机有投影LiDAR，32条按中位速度<0.5m/s计停驶，这些统计不代表45辆均可见。现有R15的43身份不能等于完整覆盖。已用原始1920×1280完整49帧运行原生SAM3 vehicle预测，推理峰值11.2704GiB，在14GiB自身分配器上限与核实主进程下并行完成；未改旧mask。低分辨率旧缓存和新全分辨率提议仍有远处车辆关联/覆盖缺口，不能把未知当背景。all-vehicle30K controller41828已登记，等待all_vehicle_ready.json的实际覆盖/初始化/同一身份集验收，然后自动30K和完整49帧删除全部车辆评估。输入准备及峰值准入通过才并行，未证明显存足够时排队；未观测遮挡区域没有新补全算法，不声称自动恢复。
+
+[双实验组件、当前状态和完整画面说明](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html)。human_verdict=null。全部两项实验、评估、报告及Git交付完成后才按授权关机，automation-2每30分钟跟进。
 
 五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
 
