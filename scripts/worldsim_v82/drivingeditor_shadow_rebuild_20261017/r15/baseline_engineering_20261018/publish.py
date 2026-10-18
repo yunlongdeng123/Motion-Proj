@@ -55,7 +55,7 @@ def main():
     paths.append('docs/EXPERIMENTS.md')
     p=P/'docs/research_failures/entries/V82-F06.md';text=p.read_text(encoding='utf-8')
     if '旧五身份基线重新进行工程验收' not in text:
-        text+='\n\n## 2026-10-18：旧五身份基线重新进行工程验收\n\n'+paragraph.strip()+'\n\nGN11与实例阶段新增两车的前景域不一致是实际输入合同变化，不能据此判原算法固有局限。原raw-body α和visible-ID α的替换也不是等价监督，固定拓扑与原生增密/剪枝须单独登记。原有完整49帧真实视频保留并加未验收标记；新的同帧GN11/旧3/旧5图用于追溯退化阶段，不是干净道路GT。学习率初始误判及撤回已记录，后续只绑定实际训练归档源码。\n'
+        text+='\n\n## 2026-10-18：旧五身份基线重新进行工程验收\n\n'+paragraph.strip().replace('(autoresearch/','(../../autoresearch/')+'\n\nGN11与实例阶段新增两车的前景域不一致是实际输入合同变化，不能据此判原算法固有局限。原raw-body α和visible-ID α的替换也不是等价监督，固定拓扑与原生增密/剪枝须单独登记。原有完整49帧真实视频保留并加未验收标记；新的同帧GN11/旧3/旧5图用于追溯退化阶段，不是干净道路GT。学习率初始误判及撤回已记录，后续只绑定实际训练归档源码。\n'
         p.write_text(text,encoding='utf-8')
     paths.append('docs/research_failures/entries/V82-F06.md')
     (W/'publish_paths.json').write_text(json.dumps(sorted(set(paths)),indent=2),encoding='utf-8')
