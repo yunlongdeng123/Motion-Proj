@@ -1,5 +1,5 @@
 R15 same-track a6 baseline inspection, 2026-10-18
-Task: WS-V82-R15-OLD30K-A6-20261018. failure_ledger_refs: V82-F05. No new failure ID.
+Task: WS-V82-R15-OLD30K-A6-20261018. failure_ledger_refs: V82-F06. No new failure ID.
 Uses original GN11 30k + rigid30k checkpoint, not later18k repair. Frozen inference only.
 Old three owner IDs map to R15 a5/a26/a18; a6 has no old independent owner.
 run_a6_direct: compare same physical a6 across49views, three documented OBB selections,

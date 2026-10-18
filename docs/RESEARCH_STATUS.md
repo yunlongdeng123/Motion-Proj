@@ -1,11 +1,11 @@
 # 当前研究状态
 
-更新：2026-10-18T04:35:55+08:00。用户已开GPU，授权持续推进有限R15收敛实验，全部任务结束后AutoDL关机。GPU实验已完成；原45K训练仍暂停，4k完整checkpoint、Adam/RNG、原输入和暂停标记保留。本轮无subagent／新chat／R16／R17。[收口实验与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/closure_20261018/report.html)、[原诊断](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/paused_diagnostic_20261017/README.md)。
+更新：2026-10-18。同一a6的旧GN11 30K＋实例30K冻结核对已完成：原生49帧逐像素匹配旧基线，另做49帧真实轨迹框几何选择、固定raw105/113/137精确贡献及共同物理视角。检查点与暂停标记保留，参数更新0，无subagent。[同一a6的图、组件和数值](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/old30k_a6_20261018/report.html)。
 
-最小阴影修复为`r15/closure_20261018/packed_shadow.py`内存适配器，在原环境完成登记的数值、梯度和6帧吞吐验收。原生产训练目录、默认入口、loss、配置和CUDA ABI未改；后续使用必须显式install到模型副本。数值过门不等于4k重建质量优于旧GN11 30k＋实例30k。
+旧版a6由静态/PVG分支表达，没有独立owner6。旧观测图更自然，但其a6车身像素依赖非局部高斯；旧贡献集独立渲染出现明显拉伸和外溢。贡献集包含真实背景，不能当作车辆归属真值；没有证明旧版有同一批、同样归属的车底碎片，也没有把旧版的局限当成R15质量通过。
 
-a6扩展独立世界道路入口后仍无重复3D正证据，不执行拆分／转移；a37稀疏外观强控制的局部参考误差下降，但未解决区域车形残影。整模型多臂短训与组合的前提不满足，已跳过，未恢复长训。49帧是本次局部控制的前后比较，非最终49×65编辑验收。后期joint成本与覆盖缺口仍未解决，按预定停止条件收口。
+R15最小阴影修复仍是显式install的内存适配器，登记范围内数值/梯度/速度通过；生产训练入口、loss、配置、CUDA ABI及原checkpoint未改。[此前有限收口实验](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/closure_20261018/report.html)。a6车底外延与a37区域静态残影未解决；道路证据不足，不执行归属迁移或按高度裁底。原45K保持暂停，不新增R16/R17。
 
-2026-10-18 04:37（新加坡时间）已在保存推送且GPU／worker／controller空闲后执行AutoDL自带关机入口，命令返回0；随后SSH连接被服务器关闭。[关机receipt](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/closure_20261018/r15_closure_results_20261018/shutdown_status.json)记录实测边界。原训练仍暂停，不根据历史控制器授权自动重开。
+本次全部GPU渲染/审计完成、原始输出保存下载、代码数值push后，于2026-10-18 16:04（新加坡时间）执行AutoDL关机；命令返回0，随后SSH关闭。未检查云计费控制台。没有GPU、worker或controller待执行。[关机前检查与观察记录](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/old30k_a6_20261018/shutdown.json)。不根据历史控制器自动重开。
 
-human_verdict=null，problem_solved=null，failure_ledger_refs=[V82-F01,V82-F05,V82-F06]，failure_ledger_delta=更新既有F05/F06；不新增编号。BUILD46为唯一证据/拟合来源，已见QUERY3仅固定报告，非独立新测试。用户其他checkout的dirty文件保留。
+human_verdict=null，problem_solved=null。最新task=WS-V82-R15-OLD30K-A6-20261018，failure_ledger_refs=[V82-F06]，failure_ledger_delta=none（追加既有F06的基线证据）。49帧为同窗口重建视角，三锚帧为固定坏例诊断，不冒称独立测试或配对编辑真值。用户其他checkout的dirty文件保留。
