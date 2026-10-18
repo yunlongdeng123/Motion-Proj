@@ -14,7 +14,7 @@ def main():
   return x
  data=prefix(data);videos=O/'branch_videos';videos.mkdir(exist_ok=True)
  ready=[]
- for model,label,src,allvehicles in [('matched5','新五身份：GN11 30K＋实例 30K',W/'direct_full49',False),('allvehicles','全车辆：第一阶段30K（含停驶车辆）',W/'all_vehicle_full49',True)]:
+ for model,label,src,allvehicles in [('matched5','新五身份：GN11 30K＋实例 30K',W/'direct_full49',False),('allvehicles','LiDAR∩相机20身份：第一阶段30K',W/'all_vehicle_full49',True)]:
   receipt=src/'receipt.json'
   if not receipt.exists():continue
   r=json.loads(receipt.read_text(encoding='utf-8'));assert r['frames']==49 and r['parameter_updates']==0
@@ -33,9 +33,9 @@ def main():
  s=s.replace('<title>五身份动态／静态／Delete 同步视频</title>','<title>新30K实验：完整画面同步视频</title>')
  needle=" const stat=alpha?b.static_alpha:"
  assert needle in s
- inject=""" if(m.all_vehicle_stage1){section.querySelector('.chips').textContent='全部可见车辆 · 仅第一阶段30K';
- tile(grid,name,'观测完整RGB',b.observed);tile(grid,name,'重建完整场景',b.full);tile(grid,name,'全部车辆动态分支'+(alpha?' alpha':''),alpha?b.dynamic_alpha:b.dynamic);
- tile(grid,name,'静态街景'+(alpha?' alpha':''),alpha?b.static_alpha:b.static);tile(grid,name,'删除全部车辆 · 完整画面',b.delete_all,true);continue;}
+ inject=""" if(m.all_vehicle_stage1){section.querySelector('.chips').textContent='LiDAR∩相机20身份 · 仅第一阶段30K · 其余车辆为RGB上下文';
+ tile(grid,name,'观测完整RGB',b.observed);tile(grid,name,'重建完整场景',b.full);tile(grid,name,'全部纳入车辆动态分支'+(alpha?' alpha':''),alpha?b.dynamic_alpha:b.dynamic);
+ tile(grid,name,'静态街景'+(alpha?' alpha':''),alpha?b.static_alpha:b.static);tile(grid,name,'删除全部纳入车辆 · 完整画面',b.delete_all,true);continue;}
  const stat=alpha?b.static_alpha:"""
  s=s.replace(needle,inject)
  s=s.replace('<a href="diagnostics.html">统计、固定锚帧与来源说明</a> · <a href="tristate/index.html">补充：Gaussian 中心与三值证据</a>',

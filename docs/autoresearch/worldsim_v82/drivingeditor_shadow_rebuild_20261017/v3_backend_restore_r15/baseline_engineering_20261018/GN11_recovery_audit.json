@@ -1,0 +1,44 @@
+{
+  "status": "CPU_FULL_20K_BUNDLE_RECOVERY_VALIDATED_GPU_RESTORE_PENDING",
+  "failed_forward_step": 25847,
+  "completed_optimizer_updates_before_failure": 25846,
+  "durable_checkpoint_step": 20000,
+  "lost_uncheckpointed_updates": 5846,
+  "logical_target_step": 30000,
+  "logical_remaining_from_durable_checkpoint": 10000,
+  "unused_original_execution_budget": 4154,
+  "extra_replay_updates_required": 5846,
+  "components": [
+    {
+      "file": "chkpnt20000.pth",
+      "step": 20000,
+      "optimizer_states": 9,
+      "optimizer_groups": 9,
+      "Adam_tensors_finite": true
+    },
+    {
+      "file": "dynamic_chkpnt20000.pth",
+      "step": 20000,
+      "optimizer_states": 9,
+      "optimizer_groups": 9,
+      "Adam_tensors_finite": true
+    },
+    {
+      "file": "env_light_chkpnt20000.pth",
+      "step": 20000,
+      "optimizer_states": 1,
+      "optimizer_groups": 1,
+      "Adam_tensors_finite": true
+    }
+  ],
+  "python_numpy_torch_saved_RNG_valid": true,
+  "cuda_rng_count": 1,
+  "hybrid_sampler_steps": 20000,
+  "SGCM_state_present": true,
+  "strict_configuration_unchanged_except_allowed_resume_paths": true,
+  "proposed_new_output": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k",
+  "restoration_GPU_verified": false,
+  "training_restarted": false,
+  "reason": "event elapsed_time read before recorded end event completion; synchronization fix is prepared; no optimizer update at failed step",
+  "human_verdict": null
+}

@@ -1,14 +1,18 @@
 # 当前研究状态
 
-更新：2026-10-18。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018；无subagent，两个正式实验直接执行。
+更新：2026-10-18。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。
 
-用户最新要求：直接完成两阶段身份一致的五身份 GN11 30K＋新实例30K，取消两阶段之间的消融；额外补齐所有可见车辆（含停驶车辆）的掩码、真实初始化和统一身份表后，自动跑第一阶段30K。完整RGB保留，车辆由动态分支重建。本轮全车辆实验不跑第二阶段；最终同时检查逐ID删除和删除全部车辆后的完整静态街景。所有视频及显示使用完整画面，无ROI裁剪。failure_ledger_refs=[V82-F06]，不增加R16/R17，原45K暂停，历史资产保留。
+用户当前授权：A完成两阶段身份一致的五身份fresh GN11 30K＋新实例30K，两个30K之间不做消融、不在1K等质量批准。B已按最新用户要求改为LiDAR与FRONT相机共同命中的20身份，只跑原生第一阶段30K；不再追补13条相机独有远车。两项实验均保留完整49帧RGB，最终视频、显示、导出全部完整画面，无ROI或局部放大。B仅验收“删除全部纳入车辆”，排除身份可留作静态RGB上下文，不能称全景无车。failure_ledger_refs=[V82-F06]；无subagent、新聊天、R16/R17，原45K暂停，历史资产保留，human_verdict=null。
 
-五身份GN11实际继续训练，最近快照22100/30000。等待中的中间消融controller18165及贡献追踪27418已核对无子进程后取消，未消费新增训练步数；旧4×300保留，原five_raw_body误标更正继续有效。direct controller39526已登记：等待当前GN11真正30000后绑定实际背景/环境及静态点数，直接fresh五实例30000，然后实际完整49帧分支、独立资产、逐ID与全部删除。没有1K质量停等或新的中间对照。第二阶段恢复孤立raw-body alpha100，同时保留visible-ID100，按2000步SH/49相机无放回采样，并接入原生静态及保身份刚体空间clone/split/prune。空间参考9项和epoch sampler完整恢复/未来150次序列通过CPU；GPU训练仍待执行。刚体不采用PVG时间split，SGCM沿用第一阶段结果；原生append重置屏幕半径历史的次序被忠实保留，不冒称有效的持续屏幕大点约束。
+A原GN11在25847前后向后、优化器更新前读取未完成CUDA事件的耗时而中断，已更新25846；最近完整状态20K，丢失5846步。用户明确授权这次必要重放，并要求后续每5K保存。计时读前同步结束事件的修复通过20次真实GPU检查；新controller52748从20K完整模型/Adam/RNG/采样器/SGCM状态恢复，实际GPU张量与状态逐项相等，前100次重放的帧、时间偏移、学习率一致，未声称CUDA逐位确定性。当前恢复后21400/30000；只改保存节奏和计时同步，不改目标或优化器。新run后缀GN11_resume20k。原失败5153/6099/39526不可重复启动。
 
-全车辆输入CPU清查49帧共45条车辆轨迹，其中20条在本相机有投影LiDAR，32条按中位速度<0.5m/s计停驶，这些统计不代表45辆均可见。现有R15的43身份不能等于完整覆盖。已用原始1920×1280完整49帧运行原生SAM3 vehicle预测，推理峰值11.2704GiB，在14GiB自身分配器上限与核实主进程下并行完成；未改旧mask。低分辨率旧缓存和新全分辨率提议仍有远处车辆关联/覆盖缺口，不能把未知当背景。all-vehicle30K controller41828已登记，等待all_vehicle_ready.json的实际覆盖/初始化/同一身份集验收，然后自动30K和完整49帧删除全部车辆评估。输入准备及峰值准入通过才并行，未证明显存足够时排队；未观测遮挡区域没有新补全算法，不声称自动恢复。
+恢复GN11到逻辑30K后自动绑定实际最终背景、环境和点数，fresh五实例30K、完整49帧动态/静态/独立资产/逐ID与全部删除。第二阶段孤立raw-body100＋visible-ID100，SH2000、49相机无放回采样、原生静态与保身份刚体空间拓扑已登记。GT刚体无PVG时间split，第二阶段不新增SGCM；原生append重置屏幕半径次序保留，不冒称持续screen大点保证。新实例保存1/5K/10K/15K/20K/25K/30K；B完整模型/Adam/RNG/采样状态每5K保存。原生test_iterations仍10K/20K/30K，但保留的每checkpoint评估开关会在新增5K节点附带49视图零更新评估，不是中间消融。历史未保存的5K/15K不补造。配置、实际args及剩余磁盘节点计数已检查。
 
-[双实验组件、当前状态和完整画面说明](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html)。human_verdict=null。全部两项实验、评估、报告及Git交付完成后才按授权关机，automation-2每30分钟跟进。
+B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a39/a41/a42。49帧、20个真实非零LiDAR先验、身份清单和980项逐身份原生掩码已核对；实际CPU相机/.1米尺度通过，全部49完整画面已复核并另看raw128。部分真实相机矩形提示原生分割已披露，未填矩形为body，未按GT框逐点裁造，未用额外观察帧。原2×2像素/.5m筛选、聚类和整帧几何QA保留。a41只有19个种子点，输入准入不代表像素或资产质量通过。intersection_input_passed已保存，B controller52417仍0更新；A整条训练及评估完成后再释放all_vehicle_ready，避免阶段交接抢GPU。尚未证明两套完整训练可同时容纳，当前独占排队。
+
+取消的中间消融/贡献追踪不恢复；five_raw_body短测域误标及学习率10倍错误初判撤回继续保留。已有修复R15 4K质量仍未通过，a6白带和a37静态车形不因输入门槛或框外率下降而视为解决。未观测道路不加生成补全。
+
+[当前实验、计时修复与恢复证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) · [完整49帧20身份输入复核](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/intersection_inputs.html)。全部A+B训练/评估、会启动工作的controller、下载、报告与Git交付完成才按授权关机；automation-2每30分钟跟进，无变化保持安静。
 
 五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
 

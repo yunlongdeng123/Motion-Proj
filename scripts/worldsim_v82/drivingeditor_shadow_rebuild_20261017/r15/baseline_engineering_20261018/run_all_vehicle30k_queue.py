@@ -19,17 +19,25 @@ def stage(name,cmd):
  env['LD_LIBRARY_PATH']='/usr/local/cuda-11.8/lib64:/root/autodl-tmp/envs/drivingeditor/lib:'+env.get('LD_LIBRARY_PATH','')
  with (E/('all_vehicle30k_'+name+'.log')).open('x') as f:subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
 def main():
- with (E/'all_vehicle30k_started.json').open('x') as f:json.dump(dict(pid=os.getpid(),maximum_updates=30000,second_stage_updates=0),f)
+ marker=E/'all_vehicle30k_started.json'
+ if marker.exists():
+  revision=read(E/'B_scope_revision_cancellation_receipt.json');old=read(marker)
+  assert revision['old_controller']==old['pid'] and revision['training_updates']==0
+  assert not Path('/proc/'+str(old['pid'])).exists() and not NEW.exists()
+  with (E/'intersection30k_controller_registered.json').open('x') as f:json.dump(dict(pid=os.getpid(),same_registered_budget=30000,training_updates_before_revision=0,old_controller=old['pid'],scope='LIDAR_AND_CAMERA_INTERSECTION_ONLY'),f)
+ else:
+  with marker.open('x') as f:json.dump(dict(pid=os.getpid(),maximum_updates=30000,second_stage_updates=0),f)
  start=time.monotonic();ready=E/'all_vehicle_ready.json'
  while not ready.exists():
   if time.monotonic()-start>24*3600:raise TimeoutError('coverage preparation wait24h exceeded; no GPU used')
   state('WAITING_FOR_FULL_VEHICLE_COVERAGE_AND_INITIALIZATION',training_updates=0,second_stage_updates=0,user_authorization_received=True)
   time.sleep(30)
  gate=read(ready)
- assert gate['status']=='PASSED_FULL_VEHICLE_INPUT_BINDING'
- for k in ['same_identity_set_for_initialization_masks_and_future_stage2','all49_full_RGB_retained','visible_vehicle_coverage_reviewed','all_visible_vehicles_have_real_initialization','unknown_not_used_as_background']:
+ assert gate['status']=='PASSED_LIDAR_CAMERA_INTERSECTION_INPUT_BINDING'
+ assert gate['scope']=='LIDAR_AND_CAMERA_INTERSECTION_ONLY' and gate['all_scene_vehicle_coverage_claimed'] is False
+ for k in ['same_identity_set_for_initialization_masks_and_future_stage2','all49_full_RGB_retained','selected_lidar_camera_coverage_reviewed','all_selected_actors_have_real_initialization','excluded_camera_only_actors_disclosed_as_context']:
   assert gate[k] is True,k
- assert gate['frames']==49 and gate['unresolved_visible_vehicles']==[]
+ assert gate['frames']==49 and gate['unresolved_selected_vehicles']==[] and len(gate['selected_actor_ids'])==20
  M=E/'all_vehicle_pipeline/metadata'/SID
  cmd=[sys.executable,'-B','-u',str(TOOLS/'run_scene_gn11.py'),'--verify-paired-steps','--scene-spec',str(M/'scene_spec.json'),'--readiness-file',str(M/'CPU_readiness.json'),'--reference-config',str(M/'reference_GN11.json'),'--source-repository',str(BASE/'campaign/followup_scene_prep_20261013/frozen_repository'),'--matrix-tools-dir',str(BASE/'campaign/hybrid30k_20261012/tools'),'--campaign-root',str(NEW),'--gate-file',str(M.parent/'GN11_reference_acceptance_authorization.json')]
  assert not NEW.exists(),'existing run requires used-step/checkpoint audit'
@@ -43,7 +51,7 @@ def main():
    launcher=Path(admission['audited_launcher']);assert launcher.is_file() and launcher.parent==E
    traincmd=cmd.copy();traincmd[3]=str(launcher);break
   if p['allowed']:
-   traincmd=cmd;break
+   traincmd=cmd.copy();traincmd[3]=str(E/'run_native_timing_safe.py');break
   state('WAITING_FOR_MEMORY_ADMISSION_OR_EXCLUSIVE_GPU',training_updates=0,other_compute_processes=p['other_compute_processes'])
   if time.monotonic()-start>24*3600:raise TimeoutError('GPU admission wait exceeded')
   time.sleep(30)

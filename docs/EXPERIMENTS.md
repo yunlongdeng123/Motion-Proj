@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V82-R15-BASELINE-ENGINEERING-20261018 | 五身份直接GN11 30K＋实例30K；另补全可见车辆输入后第一阶段30K；完整画面同步删除验收；中间消融取消 | [当前实验安排](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) |
+| WS-V82-R15-BASELINE-ENGINEERING-20261018 | 五身份GN11 30K＋实例30K；LiDAR相机交集20身份一阶段30K；每5K保存、完整画面删除验收 | [当前实验与实际证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) |
 | WS-V82-R15-REPAIR-4K-20261018 / r15_repair4k_seed0 | 同原始输入4K及五身份49帧实际评估完成；累计几何预算、三次归属审计、FP64阴影；同步视频第三模型 | [组件与合同](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/index.html) |
 | WS-V82-R15-IDENTITY-COMPARISON-20261018 / owner5与tristate | 旧5完整30K；五身份49帧动态/静态/delete共用时间轴，五段合成总览MP4；三维中心与三值支撑为补充 | [旧5完整对照与视频](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)、[三值交互](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)、[执行范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/status.json) |
 | WS-V82-R15-OLD30K-A6-20261018 / old30k_a6 | 同一a6：旧基线49帧精确重放、3D入口及三锚帧alpha*T贡献；旧非局部表示不等于干净资产 | [a6直接对照、组件与范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/old30k_a6_20261018/report.html) |
