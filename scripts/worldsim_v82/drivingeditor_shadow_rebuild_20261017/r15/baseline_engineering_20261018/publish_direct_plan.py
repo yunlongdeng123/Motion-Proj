@@ -8,6 +8,23 @@ S=Path('scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/baseline_
 def long(p):return Path('\\\\?\\'+str(p.resolve())) if os.name=='nt' else p
 def cp(src,rel):
  dest=long(P/rel);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dest);paths.append(rel.as_posix());return dest
+
+def referenced_current_media():
+ page=(O/'results.html').read_text(encoding='utf-8')
+ match=re.search(r'<script type="application/json" id="data">(.*?)</script>',page,re.S)
+ assert match,'actual player data missing'
+ found=set()
+ def walk(x):
+  if isinstance(x,dict):
+   for v in x.values():walk(v)
+  elif isinstance(x,list):
+   for v in x:walk(v)
+  elif isinstance(x,str) and x.startswith('branch_videos/'):
+   assert re.fullmatch(r'branch_videos/(?:gn11five|matched5|allvehicles)_[A-Za-z0-9_]+\.mp4',x),x
+   assert (O/x).is_file(),x
+   found.add(x)
+ walk(json.loads(match.group(1)))
+ return sorted(found)
 def main():
  for n in ['index.html','intersection_inputs.html','engineering_history_before_direct_plan.html','direct_architecture.svg','direct_plan.json','direct_CPU_gate.json','direct_plan_cancellation_receipt.json','direct_validation.json','A_recovery_queue_status.json','live_GN11_recovery_status.json','GN11_resume_GPU_receipt.json','GN11_resume_sequence_receipt.json','GN11_recovery_audit.json','GN11_timing_fix_GPU_receipt.json','native_runner_timing_GPU_receipt.json','native_cadence_CPU_receipt.json','A_replay_authorization.json','intersection_input_passed.json','intersection_input_review_receipt.json','lidar_camera_intersection_input_receipt.json','lidar_camera_intersection_selection.json','GN11_25k_durability_receipt.json']:
   p=cp(O/n,D/n)
@@ -25,7 +42,8 @@ def main():
    if n=='results.html':dest.write_text(dest.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
  for src in O.glob('parallel_[AB]_*_durability_receipt.json'):cp(src,D/src.name)
  if (O/'branch_videos').exists():
-  for src in (O/'branch_videos').glob('gn11five_*.mp4'):cp(src,D/'branch_videos'/src.name)
+  # Only actual player references; include finalA/B and exclude interrupted encodes.
+  for rel in referenced_current_media():cp(O/rel,D/rel)
  if (O/'road_observability_20261019').exists():
   for src in (O/'road_observability_20261019').rglob('*'):
    if src.is_file():cp(src,D/'road_observability_20261019'/src.relative_to(O/'road_observability_20261019'))

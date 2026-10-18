@@ -56,6 +56,7 @@ def main():
     for k,f in [('isolated','isolated'),('isolated_alpha','alpha'),('delete','delete'),('dynamic_delete','dynamic_delete'),('dynamic_delete_alpha','dynamic_delete_alpha')]:add(k,f'a{a:02d}_{f}.png',a)
   data['models'][model]=m;ready.append(model)
  assert ready,'no actual final result; preserve existing report'
+ data['initial_model']='matched5' if 'matched5' in ready else 'allvehicles' if 'allvehicles' in ready else 'gn11five'
  s=(W/'fullframe_player_template.html').read_text(encoding='utf-8')
  s=s.replace('<title>五身份动态／静态／Delete 同步视频</title>','<title>新30K实验：完整画面同步视频</title>')
  needle=" const stat=alpha?b.static_alpha:"
@@ -68,6 +69,7 @@ def main():
  s=s.replace('let frame=113,entries=', 'let frame=128,entries=')
  s=s.replace("const available=Object.keys(DATA.models),choices=[", "const available=Object.keys(DATA.models),choices=[['gn11five','新五身份GN11第一阶段30K'],['gn11five,old5','新GN11第一阶段 与 历史旧5两阶段（阶段不同）'],")
  s=s.replace('...available.map(n=>[n,DATA.models[n].label])',"...available.filter(n=>n!=='gn11five').map(n=>[n,DATA.models[n].label])")
+ s=s.replace('function activeModels(){',"$('models').value=DATA.initial_model;\nfunction activeModels(){",1)
  s=s.replace('<a href="diagnostics.html">统计、固定锚帧与来源说明</a> · <a href="tristate/index.html">补充：Gaussian 中心与三值证据</a>',
   '<a href="index.html">实验状态与输入说明</a> · <a href="../identity_comparison_20261018/tristate/index.html">历史归属证据</a>')
  s=s.replace('@@DATA@@',json.dumps(data,ensure_ascii=False,separators=(',',':')))

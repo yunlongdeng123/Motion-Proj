@@ -14,11 +14,14 @@ def finite(x):
 def rng(s):
  random.Random().setstate(s['python_rng']);np.random.RandomState().set_state(s['numpy_rng']);torch.Generator().set_state(s['torch_rng'])
  assert len(s['cuda_rng'])==1 and all(isinstance(x,torch.Tensor) and x.numel()>0 for x in s['cuda_rng'])
+def display(r):
+ detail=r['details']
+ print(json.dumps({k:r[k] for k in ['status','at','model','step','components','GPU_used','actual_GPU_restore_verified','training_updates']}|dict(sampler_steps=detail['sampler_steps'],strict_resume_contract_checked='strict_resume_contract' in detail,complete_evaluation_frames=detail.get('complete_evaluation_frames'))))
 def main():
  p=argparse.ArgumentParser();p.add_argument('--model',choices=['A','B'],required=True);p.add_argument('--step',type=int,required=True);a=p.parse_args();assert a.step in range(5000,30001,5000)
  out=E/f'parallel_{a.model}_{a.step:06d}_durability_receipt.json'
  if out.exists():
-  r=read(out);assert r['model']==a.model and r['step']==a.step;print(json.dumps(r));return
+  r=read(out);assert r['model']==a.model and r['step']==a.step;display(r);return
  before={};components=[]
  def snapshot(p):before[str(p)]=(p.stat().st_size,p.stat().st_mtime_ns)
  if a.model=='A':
@@ -47,5 +50,5 @@ def main():
  for p,v in before.items():assert (Path(p).stat().st_size,Path(p).stat().st_mtime_ns)==v
  result=dict(status='PASSED_ACTUAL_NAMED_PARALLEL_CHECKPOINT_CPU_READONLY',at=datetime.datetime.now(datetime.timezone.utc).isoformat(),model=a.model,step=a.step,run=str(d),components=components,
   RNG_present_and_CPU_states_parse=True,details=details,GPU_used=False,actual_GPU_restore_verified=False,training_updates=0,checkpoint_bytes_and_mtimes_preserved=True,human_verdict=None)
- out.write_text(json.dumps(result,indent=2));print(json.dumps(result))
+ out.write_text(json.dumps(result,indent=2));display(result)
 if __name__=='__main__':main()
