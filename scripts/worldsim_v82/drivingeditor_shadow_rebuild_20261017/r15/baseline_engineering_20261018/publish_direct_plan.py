@@ -56,6 +56,7 @@ def main():
  code+=['check_player_identity_controls.js']
  code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
  code+=['audit_parallel_5k_durability.py','audit_parallel_checkpoint_node.py']
+ code+=['check_report_phase_contract.py']
  code+=['audit_gn11_static_duplicate.py','audit_gn11_static_motion_features.py','build_gn11_static_duplicate_report.py','validate_gn11_static_duplicate.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)
@@ -94,6 +95,11 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
   paragraph+='\nA/B首个5K完整检查点均已实际CPU只读核验：A单文件3162838956B，91项模型/Adam张量有限、严格续训合同及5K采样/RNG通过；B四组件与完成事件相符，Adam/RNG/SGCM/5K采样状态通过，49视图零更新评估已完成。未进行5K GPU恢复或增加更新。存储预测按真实未保存5K节点、A整体临时文件及实际导出节奏修正，不再重复计已完成A第一阶段、缺失历史step1和B已保存5K，未来仍逐次核对并保留全部资产。\n'
  if (O/'gn11_static_duplicate_20261019/receipt.json').exists():
   paragraph+='\nraw129静态车形进一步核查：两车真实动态mask已接入，未发现静态/动态视频混用；但静态body直接RGB输出梯度为0，动态α不对静态排车，原生静态仍使用时间位移和时间显隐。实际1195277个静态点49时间中心跨度>0.1m，而衰减后正则速度特征<1e-6。相关getter与归档上游AST一致，是继承的表示/约束漏洞；道路缺观测不能替代分离正确性证明，不能再称主体已彻底分离。全局计数不等于标注车形的Gaussian贡献归因；B也共享此路径，当前原配置和预算未改，无新消融。详见[实际参数、梯度和完整画面](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/gn11_static_duplicate_20261019/index.html)。\n'
+ phase=json.loads((O/'direct_plan.json').read_text(encoding='utf-8')).get('report',{}).get('phase',{})
+ if phase.get('complete'):
+  paragraph=paragraph.replace('同预算fresh实例30K已自动启动，当前30000/30000（complete）','同预算fresh实例30K已完成30000/30000')
+  paragraph=paragraph.replace('当前A第二阶段和B继续授权训练。','A第二阶段和B均已完成训练与最终49帧删除评估。')
+  paragraph+='\n两项正式训练和最终49帧评估均有真实完成状态、逐帧凭据及已发布视频；质量是否通过仍以实际完整画面复核为准，不由训练完成状态代替。\n'
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')
