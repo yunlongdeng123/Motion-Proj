@@ -8,16 +8,16 @@
   "GPU_memory_bytes": 33796456448,
   "checkpoint_scope": "model+Adam+RNG+paired sampler+SGCM lineage",
   "evaluation_scope": "49 all-observed training views; not independent test",
-  "iteration": 21400,
-  "wall_seconds": 655.864505905658,
-  "loss": 0.15239794552326202,
-  "psnr": 34.856285095214844,
+  "iteration": 26000,
+  "wall_seconds": 2855.348431294784,
+  "loss": 0.13007649779319763,
+  "psnr": 36.66541290283203,
   "static_points": 1988336.0,
   "speed_window": {
-    "first_iteration": 21301,
-    "last_iteration": 21400,
-    "wall_seconds": 45.27030713297427,
-    "wall_iterations_per_second": 2.20895342517262,
+    "first_iteration": 25901,
+    "last_iteration": 26000,
+    "wall_seconds": 44.94446572382003,
+    "wall_iterations_per_second": 2.2249680442190947,
     "includes_initialization": false,
     "includes_evaluation": false
   },
@@ -30,9 +30,9 @@
     "pid": 52749,
     "torch_device": "0",
     "nvidia_device": "0",
-    "iteration": 21400,
+    "iteration": 26000,
     "expected_iterations": 30000,
-    "wall_seconds": 655.8581293458119,
+    "wall_seconds": 2855.3416964784265,
     "phase_stack": [
       "training"
     ],
@@ -40,25 +40,25 @@
       "peak_allocated_bytes": 8293036544,
       "peak_reserved_bytes": 8831107072,
       "current_allocated_bytes": 3082768384,
-      "current_reserved_bytes": 3684696064
+      "current_reserved_bytes": 3661627392
     },
     "nvidia_smi": {
       "device_uuid": "GPU-4ddc547b-dbef-1ff0-dfd5-697ee1225012",
       "device_index": 0,
       "device_name": "NVIDIA GeForce RTX 4080 SUPER",
       "device_total_bytes": 34351349760,
-      "current_process_used_bytes": 8726249472,
-      "current_device_used_bytes": 8904507392,
+      "current_process_used_bytes": 4030726144,
+      "current_device_used_bytes": 4041211904,
       "process_peak_used_bytes": 9187622912,
       "device_peak_used_bytes": 9198108672
     },
     "sampling": {
       "interval_seconds": 1.0,
-      "samples": 656,
+      "samples": 2856,
       "samples_with_errors": 0,
-      "valid_device_samples": 656,
-      "valid_pid_present_samples": 642,
-      "phase_boundary_samples": 0,
+      "valid_device_samples": 2856,
+      "valid_pid_present_samples": 2842,
+      "phase_boundary_samples": 2,
       "sampled_peaks_are_lower_bounds": true,
       "query_timeout_seconds": 2.0,
       "nvidia_smi_executable": "/usr/bin/nvidia-smi",
@@ -78,25 +78,64 @@
         "current_allocated_bytes": 2755894784,
         "current_reserved_bytes": 2816475136
       },
+      "checkpoint": {
+        "count": 3,
+        "failed_count": 0,
+        "wall_seconds": 6.871484329923987,
+        "wall_seconds_exclusive": 6.871484329923987,
+        "sample_count": 6,
+        "peak_allocated_bytes": 3084758528,
+        "peak_reserved_bytes": 6977224704,
+        "process_peak_used_bytes": 4020240384,
+        "device_peak_used_bytes": 4030726144,
+        "current_allocated_bytes": 3082768384,
+        "current_reserved_bytes": 6977224704
+      },
+      "static_time_eval": {
+        "count": 1,
+        "failed_count": 0,
+        "wall_seconds": 12.088718008249998,
+        "wall_seconds_exclusive": 12.088718008249998,
+        "sample_count": 12,
+        "peak_allocated_bytes": 6480080896,
+        "peak_reserved_bytes": 6977224704,
+        "process_peak_used_bytes": 7346323456,
+        "device_peak_used_bytes": 7356809216,
+        "current_allocated_bytes": 3162288640,
+        "current_reserved_bytes": 6977224704
+      },
+      "photo_eval": {
+        "count": 1,
+        "failed_count": 0,
+        "wall_seconds": 111.24234941322356,
+        "wall_seconds_exclusive": 99.15363140497357,
+        "sample_count": 110,
+        "peak_allocated_bytes": 6480080896,
+        "peak_reserved_bytes": 6998196224,
+        "process_peak_used_bytes": 7367294976,
+        "device_peak_used_bytes": 7377780736,
+        "current_allocated_bytes": 3082768384,
+        "current_reserved_bytes": 6977224704
+      },
       "training": {
         "count": 0,
         "failed_count": 0,
-        "wall_seconds": 637.2876403713599,
-        "wall_seconds_exclusive": 637.2876403713599,
-        "sample_count": 637,
+        "wall_seconds": 2836.7712075039744,
+        "wall_seconds_exclusive": 2718.657373760827,
+        "sample_count": 2835,
         "active_count": 1,
         "peak_allocated_bytes": 8293036544,
         "peak_reserved_bytes": 8831107072,
         "process_peak_used_bytes": 9187622912,
         "device_peak_used_bytes": 9198108672,
         "current_allocated_bytes": 3082768384,
-        "current_reserved_bytes": 3684696064
+        "current_reserved_bytes": 3661627392
       }
     },
     "phase_attribution": {
       "pytorch_peak_scope": "inclusive_of_children_and_live_entry_allocations",
       "nvidia_boundary_samples": "overall_only_when_any_phase_boundary_crossed_during_queries",
-      "torch_peak_resets": 2,
+      "torch_peak_resets": 12,
       "torch_reset_errors": 0,
       "requires_exclusive_ownership_of_torch_peak_resets": true,
       "wall_time_scope": "host_elapsed; parent_inclusive; exclusive_subtracts_child_wall"
@@ -117,13 +156,13 @@
     "recent_errors": [],
     "extra": {
       "static_points": 1988336.0,
-      "iter_forward_backward_ms": 297.02471923828125,
-      "iteration": 1400,
+      "iter_forward_backward_ms": 327.5741882324219,
+      "iteration": 6000,
       "render_static_points": 1988336,
       "render_dynamic_points": 1019835,
       "render_width": 480,
       "render_height": 320
     }
   },
-  "iter_forward_backward_ms": 297.02471923828125
+  "iter_forward_backward_ms": 327.5741882324219
 }

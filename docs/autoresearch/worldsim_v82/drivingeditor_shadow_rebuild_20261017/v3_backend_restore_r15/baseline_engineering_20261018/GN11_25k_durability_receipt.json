@@ -1,0 +1,48 @@
+{
+  "status": "PASSED_COMPLETE_25K_DURABILITY_READONLY",
+  "at": "2026-10-18T16:31:44.782601+00:00",
+  "step": 25000,
+  "components": [
+    {
+      "component": "static",
+      "bytes": 1576763928,
+      "optimizer_groups": 9,
+      "optimizer_states": 9,
+      "Adam_tensors_finite": true
+    },
+    {
+      "component": "dynamic",
+      "bytes": 799562974,
+      "optimizer_groups": 9,
+      "optimizer_states": 9,
+      "Adam_tensors_finite": true
+    },
+    {
+      "component": "environment",
+      "bytes": 226494608,
+      "optimizer_groups": 1,
+      "optimizer_states": 1,
+      "Adam_tensors_finite": true
+    }
+  ],
+  "training_state_bytes": 47768,
+  "all_four_components_match_complete_event": true,
+  "Python_NumPy_Torch_rng_valid": true,
+  "cuda_rng_count": 1,
+  "hybrid_sampler_steps": 25000,
+  "SGCM_state_present": true,
+  "checkpoint_iterations": [
+    5000,
+    10000,
+    15000,
+    20000,
+    25000,
+    30000
+  ],
+  "strict_native_resume_configuration_valid": true,
+  "evaluation_frames": 49,
+  "actual_GPU_restore_at25K_verified": false,
+  "boundary": "Saved-state CPU validation only. Running training was not restored or modified.",
+  "training_updates": 0,
+  "human_verdict": null
+}
