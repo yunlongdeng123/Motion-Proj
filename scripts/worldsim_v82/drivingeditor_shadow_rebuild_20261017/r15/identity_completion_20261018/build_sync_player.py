@@ -63,6 +63,9 @@ def main():
         best_frame={k:89+int(np.argmax(v)) for k,v in visible.items()},first=89,last=137,fps=10,actors=ACTORS)
     template=Path(__file__).with_name('sync_player_template.html').read_text(encoding='utf-8')
     page=template.replace('@@DATA@@',json.dumps(data,separators=(',',':'),ensure_ascii=False))
+    if 'repair4k' in models and models['repair4k']['ready']:
+        page=page.replace('<a href="tristate/index.html">补充：Gaussian 中心与三值证据</a>',
+            '<a href="../r15_repair_4k_20261018/tristate/index.html">修复4K：三维归属对照</a> · <a href="tristate/index.html">历史旧5／原R15三维证据</a>')
     required_ready=all(n in models and models[n]['ready'] for n in ['old5','r15'])
     (OUT/('sync_player.html' if required_ready else 'sync_player.preview.html')).write_text(page,encoding='utf-8')
     # Preserve the report as a supplementary page; the useful video interface is primary.

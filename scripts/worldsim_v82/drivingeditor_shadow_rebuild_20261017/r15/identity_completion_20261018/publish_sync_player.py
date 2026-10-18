@@ -19,6 +19,7 @@ diag=long(P/D/'diagnostics.html')
 if not diag.exists():cp(P/D/'baseline_complete.html',D/'diagnostics.html')
 for name in ['index.html','sync_player.html','baseline_complete.html']:
     cp(O/'sync_player.html',D/name)
+    file=long(P/D/name);file.write_text(file.read_text(encoding='utf-8').replace('../r15_repair_4k_20261018/','../repair_4k_20261018/'),encoding='utf-8')
 for name in ['player_status.json','player_validation.json']:
     cp(O/name,D/name)
 for folder in ['branch_videos','sync_exports']:

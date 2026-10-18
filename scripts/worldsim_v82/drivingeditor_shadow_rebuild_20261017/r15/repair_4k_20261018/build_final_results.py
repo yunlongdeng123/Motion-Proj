@@ -57,7 +57,7 @@ for actor in [6,37,5,26,18]:
     sheet.save(O/f'a{actor:02d}_raw{raw}.png')
 block=f'''<section id="final-results"><h2>实际 4K 结果：工程边界与质量分开检查</h2>
 <p class="notice"><b>相同原始初始化的 4,000 步、三次归属审计、五身份全 49 帧独立／删除以及动态／静态分支均已完成。</b>原长训仍暂停。以下数值证明几何边界和审计通路实际生效，尚不等于资产质量通过。</p>
-<p><a href="../identity_comparison_20261018/index.html">打开五身份同步视频，模型选择“原R15 与 修复R15”或“三版对照”</a>。一条时间轴检查全部49帧；三维中心不再作为主要验收方式。</p>
+<p><a href="../identity_comparison_20261018/index.html">打开五身份同步视频，模型选择“原R15 与 修复R15”或“三版对照”</a> · <a href="tristate/index.html">原4K／修复4K三维归属对照</a>。一条时间轴检查全部49帧；三维中心不再作为主要验收方式。</p>
 <div style="overflow-x:auto"><table><tr><th>身份</th><th>原4K → 修复4K点数</th><th>相对原始种子增长</th><th>真实框外中心率</th><th>修复框+0.1m外点数</th><th>容许域外 / 漂移超限 / 最大累计位移</th><th>最大σ(m)</th><th>内部unknown</th><th>同一正域可见α均值</th></tr>{rows}</table></div>
 <p>真实框外与容许域外是两项统计：初始已越框种子保留原包络，所以真实框外率不必为零。可见α使用三版相同的R15正像素域（49帧像素加权，PNG量化）；它是保体诊断，不是独立GT或编辑质量分数。<a href="body_retention.json">完整三版保体统计</a> · <a href="evidence/geometry_comparison.json">全量几何统计</a>。</p>
 <h2>归属审计确实执行了什么</h2><table><tr><th>步数</th><th>帧</th><th>实际owner变化</th><th>状态转移矩阵（行旧、列新；U/Actor/Static）</th><th>审计耗时</th></tr>{auditrows}</table>
