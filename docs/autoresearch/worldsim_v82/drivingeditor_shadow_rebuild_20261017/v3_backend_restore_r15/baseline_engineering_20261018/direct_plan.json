@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-19T02:43:53+08:00",
+  "updated_at": "2026-10-19T02:49:01+08:00",
   "experiment_A": {
     "target": "matched five GN1130K + fresh instances30K",
     "GN11_step": 30000,
@@ -18,21 +18,21 @@
     "interstage_ablations": false,
     "native_status": "complete",
     "instance_status": {
-      "step": 7200,
-      "frame": "0008103",
-      "loss": 0.4033782184123993,
-      "instance_mask_loss": 0.0006967535009607673,
-      "raw_isolated_body_MSE": 0.0016369783552363515,
+      "step": 7500,
+      "frame": "0008117",
+      "loss": 0.30404898524284363,
+      "instance_mask_loss": 0.0003310999309178442,
+      "raw_isolated_body_MSE": 0.00118776666931808,
       "known_instances": 5,
-      "box_boundary": 0.0005685234209522605,
+      "box_boundary": 0.000566252158023417,
       "pose_prior": 0.0,
       "instance_points": 1000253,
-      "background_points": 2775128,
+      "background_points": 2773812,
       "instance_optimizer_gradients_finite": true,
-      "static_rgb_loss": 0.019794778898358345,
-      "NPS_loss": 0.12526042759418488,
+      "static_rgb_loss": 0.020921098068356514,
+      "NPS_loss": 0.018618684262037277,
       "background_joint_optimization": true,
-      "steps_per_second": 1.10312499052459,
+      "steps_per_second": 1.089665570747073,
       "state": "running"
     }
   },
@@ -77,16 +77,16 @@
       "GPU_memory_bytes": 33796456448,
       "checkpoint_scope": "model+Adam+RNG+paired sampler+SGCM lineage",
       "evaluation_scope": "49 all-observed training views; not independent test",
-      "iteration": 10800,
-      "wall_seconds": 4778.033719211817,
-      "loss": 0.3682880699634552,
-      "psnr": 29.99274253845215,
-      "static_points": 1567383.0,
+      "iteration": 11200,
+      "wall_seconds": 5037.195525643416,
+      "loss": 0.2596642076969147,
+      "psnr": 33.27061080932617,
+      "static_points": 1610737.0,
       "speed_window": {
-        "first_iteration": 10701,
-        "last_iteration": 10800,
-        "wall_seconds": 64.19369510933757,
-        "wall_iterations_per_second": 1.557785384213754,
+        "first_iteration": 11101,
+        "last_iteration": 11200,
+        "wall_seconds": 65.48466587718576,
+        "wall_iterations_per_second": 1.5270750588778532,
         "includes_initialization": false,
         "includes_evaluation": false
       },
@@ -99,34 +99,34 @@
         "pid": 79625,
         "torch_device": "0",
         "nvidia_device": "0",
-        "iteration": 10800,
+        "iteration": 11200,
         "expected_iterations": 30000,
-        "wall_seconds": 4778.026178332977,
+        "wall_seconds": 5037.187965040095,
         "phase_stack": [
           "training"
         ],
         "pytorch": {
-          "peak_allocated_bytes": 9059070976,
-          "peak_reserved_bytes": 9426698240,
-          "current_allocated_bytes": 4474530816,
-          "current_reserved_bytes": 6092226560
+          "peak_allocated_bytes": 9167299072,
+          "peak_reserved_bytes": 9594470400,
+          "current_allocated_bytes": 4535187968,
+          "current_reserved_bytes": 6280970240
         },
         "nvidia_smi": {
           "device_uuid": "GPU-4ddc547b-dbef-1ff0-dfd5-697ee1225012",
           "device_index": 0,
           "device_name": "NVIDIA GeForce RTX 4080 SUPER",
           "device_total_bytes": 34351349760,
-          "current_process_used_bytes": 9732882432,
-          "current_device_used_bytes": 25743589376,
-          "process_peak_used_bytes": 9795796992,
-          "device_peak_used_bytes": 25764560896
+          "current_process_used_bytes": 6650068992,
+          "current_device_used_bytes": 22576889856,
+          "process_peak_used_bytes": 9963569152,
+          "device_peak_used_bytes": 25911361536
         },
         "sampling": {
           "interval_seconds": 1.0,
-          "samples": 4778,
+          "samples": 5038,
           "samples_with_errors": 0,
-          "valid_device_samples": 4778,
-          "valid_pid_present_samples": 4778,
+          "valid_device_samples": 5038,
+          "valid_pid_present_samples": 5038,
           "phase_boundary_samples": 3,
           "sampled_peaks_are_lower_bounds": true,
           "query_timeout_seconds": 2.0,
@@ -200,16 +200,16 @@
           "training": {
             "count": 0,
             "failed_count": 0,
-            "wall_seconds": 4760.237768188119,
-            "wall_seconds_exclusive": 4522.009806804359,
-            "sample_count": 4757,
+            "wall_seconds": 5019.399554895237,
+            "wall_seconds_exclusive": 4781.171593511477,
+            "sample_count": 5017,
             "active_count": 1,
-            "peak_allocated_bytes": 9059070976,
-            "peak_reserved_bytes": 9426698240,
-            "process_peak_used_bytes": 9795796992,
-            "device_peak_used_bytes": 25764560896,
-            "current_allocated_bytes": 4474530816,
-            "current_reserved_bytes": 6092226560
+            "peak_allocated_bytes": 9167299072,
+            "peak_reserved_bytes": 9594470400,
+            "process_peak_used_bytes": 9963569152,
+            "device_peak_used_bytes": 25911361536,
+            "current_allocated_bytes": 4535187968,
+            "current_reserved_bytes": 6280970240
           }
         },
         "phase_attribution": {
@@ -226,7 +226,7 @@
           "reference_capacity_bytes": 25769803776,
           "headroom_bytes": 2147483648,
           "preliminary_budget_bytes": 23622320128,
-          "observed_lower_bound_bytes": 25764560896,
+          "observed_lower_bound_bytes": 25911361536,
           "device_samples_include_other_processes": true,
           "four_arms_30000_iterations_all_phases_required": true,
           "target_3090_validation_required": true,
@@ -235,16 +235,16 @@
         "error_count": 0,
         "recent_errors": [],
         "extra": {
-          "static_points": 1567383.0,
-          "iter_forward_backward_ms": 488.2874450683594,
-          "iteration": 10800,
-          "render_static_points": 1567383,
+          "static_points": 1610737.0,
+          "iter_forward_backward_ms": 462.333251953125,
+          "iteration": 11200,
+          "render_static_points": 1610737,
           "render_dynamic_points": 1016732,
           "render_width": 480,
           "render_height": 320
         }
       },
-      "iter_forward_backward_ms": 488.2874450683594
+      "iter_forward_backward_ms": 462.333251953125
     },
     "queue_status": {
       "state": "PARALLEL_B_NATIVE30K_RUNNING",

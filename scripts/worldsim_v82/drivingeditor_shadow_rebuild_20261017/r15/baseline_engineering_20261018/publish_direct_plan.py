@@ -23,6 +23,7 @@ def main():
   if (O/n).exists():
    dest=cp(O/n,D/n)
    if n=='results.html':dest.write_text(dest.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
+ for src in O.glob('parallel_[AB]_*_durability_receipt.json'):cp(src,D/src.name)
  if (O/'branch_videos').exists():
   for src in (O/'branch_videos').glob('gn11five_*.mp4'):cp(src,D/'branch_videos'/src.name)
  if (O/'road_observability_20261019').exists():
@@ -36,7 +37,7 @@ def main():
  'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  code+=['check_player_identity_controls.js']
  code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
- code+=['audit_parallel_5k_durability.py']
+ code+=['audit_parallel_5k_durability.py','audit_parallel_checkpoint_node.py']
  code+=['audit_gn11_static_duplicate.py','audit_gn11_static_motion_features.py','build_gn11_static_duplicate_report.py','validate_gn11_static_duplicate.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)

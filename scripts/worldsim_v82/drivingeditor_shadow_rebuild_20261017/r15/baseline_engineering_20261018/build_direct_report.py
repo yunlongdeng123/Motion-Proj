@@ -52,5 +52,13 @@ def main():
   page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1><section><p><b>raw129静态车形复核：</b>a6/a37确已进入动态mask；静态分支仍允许时间运动，衰减后的正则速度与实际位置运动不一致。道路缺观测不能豁免重复车辆解释。<a href="gn11_static_duplicate_20261019/index.html">完整画面、实际梯度与固定相机时间视频</a>。</p></section>')
  if read('parallel_5k_durability_receipt.json').get('status')=='PASSED_ACTUAL_PARALLEL_A_B_5K_DURABILITY_CPU_READONLY':
   page=page.replace('<section><h2>B的20身份输入已对齐</h2>','<section><h2>A／B首个5K完整检查点已核验</h2><p>A的5K单文件checkpoint为3,162,838,956字节，91项模型／Adam张量有限，严格续训合同和5K采样状态通过；B静态、动态、环境、训练状态四组件与完成事件相符，Adam／RNG／SGCM／5K采样状态通过，49视图零更新评估完成。本次仅CPU只读检查，没有GPU恢复或额外训练更新。</p><p><a href="parallel_5k_durability_receipt.json">5K实际落盘核验</a> · <a href="remaining_disk_forecast.json">按剩余保存节点更新的存储预测</a>。预测计入A整体临时checkpoint、B每节点评估及最终导出；它不是未来点数绝对上界，后续继续核对。</p></section><section><h2>B的20身份输入已对齐</h2>')
+ node_rows=[]
+ for p in sorted(W.glob('parallel_[AB]_*_durability_receipt.json')):
+  receipt=json.loads(p.read_text(encoding='utf-8'))
+  if receipt.get('status')!='PASSED_ACTUAL_NAMED_PARALLEL_CHECKPOINT_CPU_READONLY':continue
+  shutil.copy2(p,O/p.name)
+  node_rows.append(f'<tr><td>{receipt["model"]}</td><td>{receipt["step"]:,}</td><td>模型／Adam有限、RNG／采样状态完整；CPU只读</td><td><a href="{p.name}">实际节点凭据</a></td></tr>')
+ if node_rows:
+  page=page.replace('<section><h2>B的20身份输入已对齐</h2>','<section><h2>后续5K保存节点</h2><table><tr><th>实验</th><th>步数</th><th>检查结果</th><th>记录</th></tr>'+''.join(node_rows)+'</table><p>按明确模型和步数核查实际已落盘节点，不把旧5K凭据冒充10K或更后节点。未执行GPU恢复、训练更新或质量通过判定。</p></section><section><h2>B的20身份输入已对齐</h2>')
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()
