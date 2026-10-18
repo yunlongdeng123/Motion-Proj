@@ -20,9 +20,13 @@ def main():
   cp(O/n,D/n)
   if n=='results.html':
    p=target(D/n);p.write_text(p.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
- for n in ['audit_parallel_checkpoint_node.py','build_direct_report.py','build_direct_player.py','publish_direct_plan.py','publish_checkpoint_milestone.py']:cp(W/n,S/n)
+ for n in ['audit_parallel_checkpoint_node.py','build_direct_report.py','build_direct_player.py','publish_direct_plan.py','publish_checkpoint_milestone.py','package_final_full49.py']:cp(W/n,S/n)
  a=json.loads((O/'live_direct_instance_status.json').read_text());b=json.loads((O/'live_B_native_status.json').read_text());disk=json.loads((O/'remaining_disk_forecast.json').read_text())
  line=f'''实际{args.model} {args.step:,}完整保存节点已CPU只读核验，凭据{name}。所有模型/Adam张量有限，CPU RNG可解析、CUDA RNG存在，采样状态={args.step}；B节点另核对SGCM和49视图评估complete。没有GPU恢复或额外训练更新，不代表资产质量通过。最新报告快照A{a['step']}/30000、B{b['iteration']}/30000，均正常并行；guardian79622和共享准入未变。剩余存储预测空闲{disk['current_free_bytes']/1e9:.2f}GB，按配置cap加10%拓扑余量估需{disk['estimated_remaining_required_bytes']/1e9:.2f}GB、余{disk['estimated_headroom_bytes']/1e9:.2f}GB；非严格点数上界，历史资产全部保留。raw129静态车形的表示/约束漏洞诊断继续有效，A/B未改目标，最终完整画面质量仍待评估。'''
+ if b.get('status')=='complete' and a.get('state')!='complete':
+  line=line.replace('均正常并行；','B原生训练与随检查点的49视图评估已完成，A继续训练，最终删除评估仍待执行；')
+ elif b.get('status')=='complete' and a.get('state')=='complete':
+  line=line.replace('均正常并行；','两项训练均已完成，最终交付状态另按实际队列和49帧结果判断；')
  verified=[]
  for p in sorted(O.glob('parallel_[AB]_*_durability_receipt.json')):
   receipt=json.loads(p.read_text());verified.append(f'{receipt["model"]}{receipt["step"]//1000}K')
