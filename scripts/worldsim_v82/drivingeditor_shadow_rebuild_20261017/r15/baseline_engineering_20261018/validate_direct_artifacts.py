@@ -31,6 +31,7 @@ def main():
   data=json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>',result_page,re.S).group(1))
   model=data['models']['gn11five'];assert model['all_vehicle_stage1'] and len(model['base'])==7
   for rel in model['base'].values():video_contract(O/rel);media+=1
+  subprocess.run(['node',str(W/'check_player_identity_controls.js')],check=True,capture_output=True)
  im=Image.open(O/'all_vehicle_raw128.png');assert im.size==(960,320);im.verify()
  for raw in range(89,138):
   with Image.open(O/'intersection_input_frames'/f'0008{raw:03d}.jpg') as im:
@@ -53,6 +54,6 @@ for(let n=0;n<49;n++){show(n);assert.equal(elements.frame.src,FRAMES[n].src);}
  for p in W.glob('*.py'):ast.parse(p.read_text(encoding='utf-8-sig'))
  result=dict(status='PASSED_FILE_MEDIA_JS_AND_SOURCE_CHECKS',links=links,JS_syntax_checked=js,full_frame_display=True,
   ROI_crop_controls_removed=True,input_full_frame_panels=49,input_timeline_DOM_fixture_passed=True,actual_30K_videos_verified=media,
-  actual_browser_UI_verified=False,reason='file URL browser safety restriction respected',human_verdict=None)
+  identity_controls_DOM_fixture_passed=True,actual_browser_UI_verified=False,reason='file URL browser safety restriction respected',human_verdict=None)
  (O/'direct_validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result))
 if __name__=='__main__':main()

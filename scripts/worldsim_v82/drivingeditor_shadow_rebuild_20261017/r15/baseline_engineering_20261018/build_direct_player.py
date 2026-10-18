@@ -68,8 +68,6 @@ def main():
  s=s.replace('let frame=113,entries=', 'let frame=128,entries=')
  s=s.replace("const available=Object.keys(DATA.models),choices=[", "const available=Object.keys(DATA.models),choices=[['gn11five','新五身份GN11第一阶段30K'],['gn11five,old5','新GN11第一阶段 与 历史旧5两阶段（阶段不同）'],")
  s=s.replace('...available.map(n=>[n,DATA.models[n].label])',"...available.filter(n=>n!=='gn11five').map(n=>[n,DATA.models[n].label])")
- s=s.replace("if(DATA.visible_input_pixels){","if(activeModels().every(n=>DATA.models[n].all_vehicle_stage1)){$('visibility').textContent='第一阶段显示整个动态集合；本页没有逐身份资产或逐身份删除。';return;}if(DATA.visible_input_pixels){")
- s=s.replace("const actor=$('actor').value,shadow=","const stage1Only=activeModels().every(n=>DATA.models[n].all_vehicle_stage1);for(const id of ['actor','asset','best'])$(id).disabled=stage1Only;const actor=$('actor').value,shadow=")
  s=s.replace('<a href="diagnostics.html">统计、固定锚帧与来源说明</a> · <a href="tristate/index.html">补充：Gaussian 中心与三值证据</a>',
   '<a href="index.html">实验状态与输入说明</a> · <a href="../identity_comparison_20261018/tristate/index.html">历史归属证据</a>')
  s=s.replace('@@DATA@@',json.dumps(data,ensure_ascii=False,separators=(',',':')))
