@@ -9,10 +9,14 @@ names = ['A_recovery_queue_status.json', 'GN11_resume_GPU_receipt.json',
          'intersection_input_passed.json', 'intersection_input_review_receipt.json',
          'GN11_25k_durability_receipt.json','direct_queue_status.json']
 out = {n: json.loads((E/n).read_text()) for n in names if (E/n).exists()}
+if (E/'parallel_queue_status.json').exists():
+    out['A_recovery_queue_status.json']=json.loads((E/'parallel_queue_status.json').read_text())
+    out['current_A_queue_source']='parallel_queue_status.json'
 run = NEW/'runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k'
 if (run/'status.json').exists():
     out['live_GN11_recovery_status.json'] = json.loads((run/'status.json').read_text())
-for path,name in [(E/'direct_instance30k/status.json','live_direct_instance_status.json'),
+active=Path(json.loads((E/'direct_active_run.json').read_text())['output']) if (E/'direct_active_run.json').exists() else E/'direct_instance30k'
+for path,name in [(active/'status.json','live_direct_instance_status.json'),
                   (E/'direct_full49/progress.json','live_direct_full49_progress.json'),
                   (NEW.parent/'r15_baseline_allvehicles_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/status.json','live_B_native_status.json')]:
     if path.exists():out[name]=json.loads(path.read_text())

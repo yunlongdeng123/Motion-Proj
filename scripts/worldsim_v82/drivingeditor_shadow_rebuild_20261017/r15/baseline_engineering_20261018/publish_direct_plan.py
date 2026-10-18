@@ -19,10 +19,17 @@ def main():
   paths.append(rel.as_posix())
  for n in ['live_direct_instance_status.json','live_B_native_status.json','direct_initial_checkpoint_receipt.json','video_encoding_CPU_receipt.json']:
   if (O/n).exists():cp(O/n,D/n)
+ for n in ['results.html','results_status.json','parallel_cutover_receipt.json','parallel_capacity_receipt.json','parallel_A_runtime_restore.json','direct_active_run.json']:
+  if (O/n).exists():
+   dest=cp(O/n,D/n)
+   if n=='results.html':dest.write_text(dest.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
+ if (O/'branch_videos').exists():
+  for src in (O/'branch_videos').glob('gn11five_*.mp4'):cp(src,D/'branch_videos'/src.name)
  code=['apply_direct_plan.py','formal_support.py','rigid_spatial_topology.py','test_rigid_spatial_topology.py','build_direct_implementation.py','direct_cpu_gate.py','run_direct_30k30k.py','evaluate_direct.py','start_direct_plan.py','audit_all_vehicle_coverage.py','infer_all_vehicles_native.py','run_all_vehicle_preparation.py','start_all_vehicle_preparation.py','run_all_vehicle30k_queue.py','evaluate_all_vehicle_stage1.py','start_all_vehicle_queue.py','prepare_fullframe_report.py','fullframe_player_template.html','build_direct_report.py','build_direct_player.py','validate_direct_artifacts.py','publish_direct_plan.py',
  'review_all_vehicle_association.py','infer_vehicle_geometric_prompts.py','start_vehicle_geometric_prompts.py','infer_vehicle_instance_prompts.py','start_vehicle_instance_prompts.py','audit_vehicle_instance_masks.py','audit_full_segment_vehicle_measurements.py','infer_vehicle_camera_prompts.py','start_vehicle_camera_prompts.py','assemble_camera_vehicle_candidates.py','audit_zero_seed_sources.py',
  'prepare_lidar_camera_intersection.py','finalize_intersection_cpu_metadata.py','render_intersection_input_review.py','close_intersection_input_review.py','build_intersection_input_page.py','restart_intersection_queue.py','run_native_timing_safe.py','check_native_cadence_wrapper.py','audit_gn11_recovery.py','gn11_train_timing_safe.py','check_cuda_event_timing.py','resume_gn11_worker.py','direct_after_recovery.py','run_A_recovery_pipeline.py','start_A_recovery.py','collect_recovery_progress.py','audit_remaining_disk.py','audit_25k_checkpoint.py','audit_direct_initial_checkpoint.py','check_final_video_encoding.py']
  for n in code:cp(W/n,S/n)
+ for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)
  archive=W/'direct_implementation.zip'
  with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
   for p in (W/'direct_implementation').glob('*.py'):z.write(p,p.name)
@@ -49,6 +56,9 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
  paragraph=paragraph.replace('取消的中间消融/贡献追踪不恢复；','新增25K完整检查点已实际落盘，静态/动态/环境/训练状态四组件与完成事件相符，Adam张量有限，RNG/采样器/SGCM/5K配置及严格续训合同CPU只读检查通过，49视图评估完成。此处未对25K做GPU恢复或增加训练更新。\n\n取消的中间消融/贡献追踪不恢复；')
  if inst:
   paragraph+=f'''\nA第一阶段GN11实际complete30K；同预算fresh实例30K已自动启动，当前{inst.get('step')}/30000（{inst.get('state')}）。首步完整checkpoint2028722412B已保存，严格续训字段/策略、91项模型Adam tensor有限性、RNG/49相机采样状态已CPU只读检查；未对首步做GPU恢复或额外训练。实际静态初始化1988336点全保留，按框删除0点；新30K背景/环境、同五身份、新鲜测量种子绑定已检查。\n\nB运行器补入首更新前六个5K节点的磁盘预估，保存时再按剩余节点检查；不是等到第一5K才发现不能保存。实际wrapper CPU fixture通过，未占训练GPU。最终播放器补全A全部删除入口、A/B不同集合标识，以及原生模型不具备物理阴影开关的提示。媒体编码先写临时文件，核对49完整帧/10fps/all-I后发布；CPU合成验证通过，不冒充真实模型质量。\n'''
+ if (W/'parallel_cutover_receipt.json').exists():
+  paragraph=re.sub(r'intersection_input_passed已保存，B controller52417.*?当前独占排队。','intersection_input_passed已通过；用户最新要求现显存足够即并行。实测与A并存的额外13GiB分配成功，A/B分配器预算16/13GiB加2GiB余量，总31GiB小于Torch实际31.475GiB。未来峰值仍需监测。原等待B52417在0更新时取消；新共享GPU守护controller79622持全局锁，A79624、B79625均已真实训练。A在1999步完整保存后从2000继续，模型/Adam/RNG/采样器实际GPU逐项相等，无丢步或重放。',paragraph,flags=re.S)
+  paragraph+='\n已将新五身份GN11第一阶段30K的真实49帧完整原图/合成/动态/静态/α及删除动态集合视频加入报告，7路480×320、10fps、全I帧逐一验证；主入口嵌入同步播放器，默认raw128。实际全49静态复核仍有车形与亮白/彩色条带，不能认定干净背景，原因仍需区分监督盲区与剩余实现问题，当前A第二阶段和B继续授权训练。\n'
  p=P/'docs/RESEARCH_STATUS.md';text=p.read_text(encoding='utf-8');end=text.index('五身份分支同步视频已交付：')
  updated=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat(timespec='seconds')
  p.write_text('# 当前研究状态\n\n更新：'+updated+'。当前 task=WS-V82-R15-BASELINE-ENGINEERING-20261018。\n\n'+paragraph+'\n'+text[end:],encoding='utf-8');paths.append('docs/RESEARCH_STATUS.md')
@@ -64,6 +74,7 @@ B的20身份为a1/a5/a6/a9/a10/a12/a16/a18/a19/a20/a24/a25/a26/a28/a30/a36/a37/a
 '''
  evidence+='\n首个新增25K完整四组件、Adam有限性、RNG/采样器/SGCM和严格续训合同已CPU只读核对，49视图评估完成；未进行25K GPU恢复或新增更新。实际凭据随报告保存。\n'
  if inst:evidence+=f'\n第一阶段已实际完成30K，fresh实例训练当前{inst.get("step")}/30000；首步完整检查点已保存并CPU核对，背景按框删除0点。同预算直接训练，无中间消融；质量仍待完整49帧评估。\n'
+ if (W/'parallel_cutover_receipt.json').exists():evidence+='\n用户要求现显存够即并行：13GiB额外分配实测成功，A利用完整1999步抢占保存从2000精确GPU恢复，B原0更新等待队列改同预算并行，两者实际运行。新GN11第一阶段30K已交付7路真实49帧全画面同步视频，全49静态复核仍见车形和亮色条带，特别raw128；未将其判为干净背景，也不据此定性原算法固有限制。\n'
  if heading not in text:text+='\n\n'+heading+'\n\n'+evidence
  else:text=re.sub(re.escape(heading)+r'\n.*?(?=\n## |\Z)',lambda m:heading+'\n\n'+evidence,text,flags=re.S)
  p.write_text(text,encoding='utf-8')

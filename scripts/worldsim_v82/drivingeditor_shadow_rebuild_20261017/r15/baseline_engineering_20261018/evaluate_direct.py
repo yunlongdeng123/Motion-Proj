@@ -14,7 +14,9 @@ def main():
   from renderer import render
   from formal_support import EpochSampler,restore_flags
   from restore_contract import verify_runtime_restore
-  ck=E/'direct_instance30k/checkpoint_030000.pt';out=E/'direct_full49'
+  registry=E/'direct_active_run.json'
+  active=Path(json.loads(registry.read_text())['output']) if registry.exists() else E/'direct_instance30k'
+  ck=active/'checkpoint_030000.pt';out=E/'direct_full49'
   assert not out.exists();out.mkdir()
   before=(ck.stat().st_size,ck.stat().st_mtime_ns)
   saved=torch.load(ck,map_location='cuda',weights_only=False)

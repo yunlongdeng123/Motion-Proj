@@ -15,7 +15,7 @@ def main():
  b=disk_forecast(bcfg,remaining_nodes=6)
  # Rigid checkpoint schema has no PVG t/velocity parameters. Use actual latest
  # point counts when available, with all unsaved durability nodes accounted.
- D=E/'direct_instance30k';row={}
+ D=Path(json.loads((E/'direct_active_run.json').read_text())['output']) if (E/'direct_active_run.json').exists() else E/'direct_instance30k';row={}
  if (D/'steps.jsonl').exists():
   with (D/'steps.jsonl').open('rb') as f:
    f.seek(max(0,(D/'steps.jsonl').stat().st_size-4096));tail=f.read().splitlines()

@@ -11,6 +11,7 @@ def main():
  live=read('live_GN11_recovery_status.json');queue=read('A_recovery_queue_status.json');gate=read('intersection_input_passed.json');r=read('lidar_camera_intersection_input_receipt.json')
  step=live.get('iteration','待读取');ids=gate.get('selected_actor_ids',[]);durable=read('GN11_25k_durability_receipt.json')
  inst=read('live_direct_instance_status.json');b_live=read('live_B_native_status.json');b_queue=read('all_vehicle_train_queue_status.json')
+ parallel=read('parallel_cutover_receipt.json')
  a_progress=f'GN11 {step}/30000（{html.escape(live.get("status","待读取"))}）'
  if inst:a_progress+=f'<br>实例 {inst.get("step","待读取")}/30000（{html.escape(inst.get("state","待读取"))}）'
  b_progress='49帧输入合同和完整画面复核通过<br>训练更新0；等A全链路释放GPU'
@@ -19,8 +20,9 @@ def main():
  plan=dict(updated_at=now,experiment_A=dict(target='matched five GN1130K + fresh instances30K',GN11_step=step,recovery_queue=queue,resume_checkpoint=20000,authorized_extra_replay_updates=5846,checkpoint_interval=5000,interstage_ablations=False),experiment_B=dict(target='LiDAR and FRONT camera intersection20; firststage30K only',scope=gate.get('scope'),selected_actor_ids=ids,input_contract=gate.get('status'),second_stage_updates=0,full_RGB_retained=True,excluded_camera_only_tracks=13,all_scene_vehicle_coverage_claimed=False,resource_policy='exclusive queue after entire A chain; concurrent training capacity not established'),report=dict(full_frame=True,ROI=False,frame_ids=list(range(89,138)),synchronized=True,B_delete_scope='all20 selected actors, not all visible vehicles'),human_verdict=None)
  plan['experiment_A'].update(native_status=live.get('status'),instance_status=inst)
  plan['experiment_B'].update(native_status=b_live,queue_status=b_queue)
+ if parallel:plan['experiment_B']['resource_policy']='authorized concurrent A/B with guarded shared GPU admission; exact A1999 continuation, no replay'
  (W/'direct_plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf-8')
- for n in ['direct_plan.json','direct_CPU_gate.json','direct_plan_cancellation_receipt.json','A_recovery_queue_status.json','live_GN11_recovery_status.json','live_direct_instance_status.json','live_B_native_status.json','GN11_resume_GPU_receipt.json','GN11_resume_sequence_receipt.json','GN11_recovery_audit.json','GN11_timing_fix_GPU_receipt.json','native_runner_timing_GPU_receipt.json','native_cadence_CPU_receipt.json','A_replay_authorization.json','intersection_input_passed.json','intersection_input_review_receipt.json','lidar_camera_intersection_input_receipt.json','lidar_camera_intersection_selection.json','GN11_25k_durability_receipt.json','video_encoding_CPU_receipt.json','direct_initial_checkpoint_receipt.json']:
+ for n in ['direct_plan.json','direct_CPU_gate.json','direct_plan_cancellation_receipt.json','A_recovery_queue_status.json','live_GN11_recovery_status.json','live_direct_instance_status.json','live_B_native_status.json','GN11_resume_GPU_receipt.json','GN11_resume_sequence_receipt.json','GN11_recovery_audit.json','GN11_timing_fix_GPU_receipt.json','native_runner_timing_GPU_receipt.json','native_cadence_CPU_receipt.json','A_replay_authorization.json','intersection_input_passed.json','intersection_input_review_receipt.json','lidar_camera_intersection_input_receipt.json','lidar_camera_intersection_selection.json','GN11_25k_durability_receipt.json','video_encoding_CPU_receipt.json','direct_initial_checkpoint_receipt.json','parallel_cutover_receipt.json','parallel_capacity_receipt.json','parallel_A_runtime_restore.json','direct_active_run.json']:
   data=read(n)
   if data:
    src=W/n if (W/n).exists() else W/'intersection_collected'/n
@@ -38,6 +40,10 @@ def main():
   page=page.replace('<section><h2>B的20身份输入已对齐</h2>','<section><h2>25K新增完整检查点已验证</h2><p>静态、动态、环境、training_state四组件均与完成事件的文件大小一致；Adam张量有限，随机数、25K采样器状态、SGCM和5K保存配置完整，严格原生续训配置检查通过。该节点的49视图评估已完成。核对为CPU只读，没有恢复运行中的模型或增加训练更新。</p><p><a href="GN11_25k_durability_receipt.json">25K实际落盘凭据</a></p></section><section><h2>B的20身份输入已对齐</h2>')
  if (O/'results.html').exists() and (O/'results_status.json').exists():
   page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p><a href="results.html">打开已完成模型的完整画面同步视频</a></p>')
+  page=page.replace('<img src="direct_architecture.svg"', '<section><h2>新五身份 GN11 第一阶段30K：完整画面视频</h2><p><a href="results.html">全屏打开同步播放器</a>。默认raw128，可播放或逐帧拖动原图、完整场景、动态集合、静态分支和删除全部五身份。全49帧，未截取ROI。</p><p>实际raw128静态分支仍有车形与亮白／彩色条带；这一阶段尚不能作为干净背景。实例30K与B仍在训练，原因不能据此定性为原算法固有限制。</p><iframe src="results.html" title="GN11 30K完整画面同步视频" style="width:100%;height:1120px;border:1px solid #38566d"></iframe></section><img src="direct_architecture.svg"',1)
+ if parallel:
+  page=page.replace('当前未证实两套完整训练可同时容纳，采用独占排队。','两项训练已实际并行。额外13GiB分配实测通过；A/B分配器预算分别16/13GiB，另留2GiB余量，后续随增密继续监测。')
+  page=page.replace('<section><h2>A中断原因与恢复</h2>','<section><h2>并行切换：没有丢步</h2><p>A利用既有抢占保存机制，完整保存第1,999步后切换共享准入；实际GPU逐项核对模型、Adam、RNG和采样器，再从第2,000步继续。没有重放、没有重开30K。B仅将原等待队列改为同预算并行执行，掩码、点数上限、损失和学习率不改。</p><p><a href="parallel_capacity_receipt.json">显存实测与预算</a> · <a href="parallel_A_runtime_restore.json">A实际GPU续训核对</a></p></section><section><h2>A中断原因与恢复</h2>')
  if read('direct_initial_checkpoint_receipt.json').get('status')=='PASSED_ACTUAL_INSTANCE_STEP1_COMPLETE_CHECKPOINT_CPU_AUDIT':
   page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p>第一阶段30K已实际完成，五实例30K已自动启动，首步完整checkpoint已保存并CPU只读检查。背景和环境来自新30K，静态初始化保留1,988,336点、删除0点；没有加载旧训练车辆或R15参数。该检查属于同一30K训练预算，没有额外消融更新。<a href="direct_initial_checkpoint_receipt.json">实际首步检查点与有效策略</a>。</p><p>最终视频会在发布前核对49帧、480×320完整画面、10fps和全部I帧；中断的编码文件保留后重新生成，不直接当成已完成媒体。<a href="video_encoding_CPU_receipt.json">编码恢复CPU合成检查</a>不是真实模型渲染结果。</p>')
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
