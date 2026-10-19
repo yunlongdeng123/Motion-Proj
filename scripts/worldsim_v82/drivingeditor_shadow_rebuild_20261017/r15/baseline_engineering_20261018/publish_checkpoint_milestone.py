@@ -16,6 +16,8 @@ def main():
    p=target(D/n);p.write_text(p.read_text(encoding='utf-8').replace('../identity_comparison_20261018/','../identity_20261018/'),encoding='utf-8')
  for src in O.glob('parallel_[AB]_*_durability_receipt.json'):
   receipt=json.loads(src.read_text());assert receipt['status']=='PASSED_ACTUAL_NAMED_PARALLEL_CHECKPOINT_CPU_READONLY';cp(src,D/src.name)
+ for n in ['runtime_io_health.json','runtime_io_recovery_receipt.json']:
+  if (O/n).exists():cp(O/n,D/n)
  for n in ['results.html','results_status.json','player_controls_validation.json']:
   cp(O/n,D/n)
   if n=='results.html':
