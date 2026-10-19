@@ -2,11 +2,11 @@
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
   "state": "FRESH_30K_TRAINING_IN_PROGRESS",
-  "updated_utc": "2026-10-19T09:13:10.314864+00:00",
+  "updated_utc": "2026-10-19T09:37:17.936619+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
-  "updates_executed": 5100,
+  "updates_executed": 13300,
   "second_stage_updates": 0,
   "actual_GPU_gate_passed": true,
   "actors": [
@@ -69,7 +69,7 @@
   ],
   "human_verdict": null,
   "input_roles": {
-    "RGB_masks_initialization": "same original A49 inputs, runtime binding pending",
+    "RGB_masks_initialization": "same original A49 inputs and seed0 protocol verified; no old initial GPU tensor snapshot available",
     "LiDAR_poses_calibration": "world-road geometry and measured visibility support",
     "dataset_3D_boxes": "selected vehicle volume exclusion and all-object occlusion",
     "donor_RGB": "user approved unannotated raw89 different-position asphalt prior",
@@ -78,26 +78,33 @@
   "resources": {
     "host": "wm-vgpu-1011",
     "GPU_count_planned": 1,
-    "GPU_memory_admission_pending": true,
-    "disk_admission_pending": true
+    "GPU_memory_admission_pending": false,
+    "disk_admission_pending": false,
+    "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+    "disk_free_bytes_at_snapshot": 78043635712
   },
   "failure_ledger_refs": [
     "V82-F06"
   ],
-  "failure_ledger_delta": "candidate_and_CPU_evidence_only_no_new_scientific_verdict",
+  "failure_ledger_delta": "CPU_durability_through_10000_no_new_scientific_verdict",
   "report": "index.html",
   "code": "candidate_source.zip",
   "worker_pid": 2145,
   "optimizer_step_counts": {
-    "static": 5100,
-    "dynamic": 5100,
-    "environment": 5100
+    "static": 13300,
+    "dynamic": 13300,
+    "environment": 13300
   },
   "latest_confirmed_checkpoint_steps": [
-    5000
+    5000,
+    10000
   ],
   "real_inputs_bound": true,
   "road_model_anchor_roles_separately_verified": true,
   "monitor_automation": "automation-2 ACTIVE every30minutes",
-  "quality_accepted": false
+  "quality_accepted": false,
+  "audited_checkpoint_steps": [
+    5000,
+    10000
+  ]
 }

@@ -70,8 +70,20 @@ def enrich(text,W,O):
     donor_html=''
     if donor:
         donor_html=f'<h3>供体实际来源核查</h3><p>深度与颜色检查候选：左{donor["depth_and_color_candidates"][0]:,} / 右{donor["depth_and_color_candidates"][1]:,}；再经高度场支撑核验，保留左{donor["retained_donor_samples"][0]:,} / 右{donor["retained_donor_samples"][1]:,}个供体样本。5,119个先验query使用了{donor["unique_used_donor_samples"]:,}个不同供体样本。独立CPU重建的供体索引、类别与RGB全部匹配冻结目标，RGB最大差{donor["reconstructed_RGB_max_abs"]}，没有修改训练输入。</p><figure><img src="actual_donor_support.png" alt="raw89完整画面，青色是经实际几何支撑检查保留的供体像素"><figcaption>青色为实际几何合格供体；取色仍使用未画框原图。先验来源于不同世界位置，不计入真实恢复。</figcaption></figure>'
-    if (O/'checkpoint_005000_audit.json').exists():
-        donor_html+='<h3>首个5K完整节点已核验</h3><p>静态475,740,851B、动态303,471,134B、环境226,494,608B、训练状态50,008B；模型与Adam张量有限，RNG / SGCM / sampler5000与原生49评估完整。该检查为CPU只读，没有做节点GPU恢复或增加优化更新，不代表图像质量通过。<a href="checkpoint_005000_audit.json">实际5K核验凭据</a>。</p>'
+    nodes=[]
+    for path in sorted(O.glob('checkpoint_*_audit.json')):
+        audit=json.loads(path.read_text(encoding='utf-8'))
+        n=int(audit['step'])
+        if (audit['status']!='PASSED_CPU_NODE_DURABILITY' or
+            audit['sampler_steps']!=n or n not in range(5000,30001,5000) or
+            not all(audit[k] for k in ['SGCM_present','RNG_present','native49_present']) or
+            audit['GPU_restore_performed'] or audit['training_updates']!=0):
+            raise RuntimeError('invalid named checkpoint receipt '+path.name)
+        names=[f'chkpnt{n}.pth',f'dynamic_chkpnt{n}.pth',f'env_light_chkpnt{n}.pth',f'training_state{n}.pth']
+        sizes=' / '.join(f'{audit["files"][name]["bytes"]:,}' for name in names)
+        nodes.append(f'<tr><td>{n:,}</td><td>{sizes}</td><td>sampler {n:,} / RNG / SGCM / 原生49齐全</td><td><a href="{path.name}">CPU核验凭据</a></td></tr>')
+    if nodes:
+        donor_html+='<h3>实际完整保存节点</h3><table><thead><tr><th>步数</th><th>静态 / 动态 / 环境 / 训练状态（B）</th><th>续训状态与原生评估</th><th>证据</th></tr></thead><tbody>'+''.join(nodes)+'</tbody></table><p>每个列出的节点均有独立CPU只读凭据，模型与Adam张量有限。没有做节点GPU恢复或增加优化更新，不代表图像质量通过。</p>'
     if (O/'initialization_protocol_binding.json').exists():
         donor_html+='<p>同输入与seed协议进一步核对：实际前100步选帧、时间扰动、动态学习率和静态XYZ学习率与原版逐项一致；静态时间参数按本版方法关闭。旧版没有逐位初始GPU参数快照，因此不把协议一致夸大成已完成旧初始张量逐位对照。<a href="initialization_protocol_binding.json">协议核对凭据</a>。</p>'
     section=f'''<h2>已完成的真实世界道路查询</h2><p>原始query共15,869个车身像素射线样本，其中15,625个有有效道路交点。模型坐标锚帧raw99与地面拟合坐标锚帧raw89是不同角色，均已绑定核验。</p>

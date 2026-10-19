@@ -1,31 +1,31 @@
 {
-  "collected_utc": "2026-10-19T09:13:10.314864+00:00",
+  "collected_utc": "2026-10-19T09:37:17.936619+00:00",
   "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
   "status": {
     "status": "training",
     "mode": "train",
     "pid": 2145,
     "parent_pid": 1,
-    "iteration": 5100,
+    "iteration": 13300,
     "logical_budget": 30000,
     "second_stage_updates": 0,
     "started_utc": "2026-10-19T09:00:10.073024+00:00",
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
     "quality_accepted": false,
-    "wall_seconds": 768.7757468456402,
-    "loss": 0.453731894493103,
-    "psnr": 27.77922821044922,
-    "static_points": 633049,
-    "dynamic_points": 408955,
+    "wall_seconds": 2221.028289027512,
+    "loss": 0.13436834514141083,
+    "psnr": 30.434951782226562,
+    "static_points": 744292,
+    "dynamic_points": 1003745,
     "optimizer_step_counts": {
-      "static": 5100,
-      "dynamic": 5100,
-      "environment": 5100
+      "static": 13300,
+      "dynamic": 13300,
+      "environment": 13300
     },
-    "cuda_allocated_bytes": 2320846848,
-    "cuda_reserved_bytes": 3674210304,
-    "cuda_peak_allocated_bytes": 3719700480,
-    "updated_utc": "2026-10-19T09:12:58.849374+00:00"
+    "cuda_allocated_bytes": 2826099200,
+    "cuda_reserved_bytes": 4791992320,
+    "cuda_peak_allocated_bytes": 5253299712,
+    "updated_utc": "2026-10-19T09:37:11.101870+00:00"
   },
   "launch": {
     "status": "AUTHORIZED_FRESH_30K_WORKER_LAUNCHED",
@@ -100,17 +100,45 @@
     "state": "State:\tS (sleeping)",
     "starttime_ticks": 838741102
   },
-  "disk_free_bytes": 80184532992,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 4056 MiB, 28176 MiB, 50 %",
-  "gpu_processes": "2145, /root/autodl-tmp/envs/drivingeditor/bin/python, 4434 MiB",
+  "disk_free_bytes": 78043635712,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 5902 MiB, 26330 MiB, 65 %",
+  "gpu_processes": "2145, /root/autodl-tmp/envs/drivingeditor/bin/python, 5278 MiB",
   "md0": {
     "array_state": "active",
     "degraded": "0",
     "sync_action": "idle"
   },
   "published_checkpoint_steps": [
-    5000
+    5000,
+    10000
   ],
-  "audited_steps": [],
-  "log_last_4000_bytes": "       | 5157/30000 [12:41<57:23,  7.22it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5158/30000 [12:41<55:34,  7.45it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5159/30000 [12:41<54:55,  7.54it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5159/30000 [12:41<54:55,  7.54it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5160/30000 [12:41<54:26,  7.61it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5161/30000 [12:41<54:12,  7.64it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5162/30000 [12:42<54:59,  7.53it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5163/30000 [12:42<54:45,  7.56it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5164/30000 [12:42<55:13,  7.50it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5165/30000 [12:42<55:05,  7.51it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5166/30000 [12:42<55:54,  7.40it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5167/30000 [12:42<55:32,  7.45it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5168/30000 [12:42<55:19,  7.48it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5169/30000 [12:43<54:21,  7.61it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5169/30000 [12:43<54:21,  7.61it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5170/30000 [12:43<54:21,  7.61it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5171/30000 [12:43<54:51,  7.54it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5172/30000 [12:43<54:49,  7.55it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5173/30000 [12:43<54:37,  7.58it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5174/30000 [12:43<54:53,  7.54it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5175/30000 [12:43<55:01,  7.52it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5176/30000 [12:43<55:38,  7.44it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5177/30000 [12:44<56:35,  7.31it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5178/30000 [12:44<56:15,  7.35it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5179/30000 [12:44<56:06,  7.37it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5179/30000 [12:44<56:06,  7.37it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5180/30000 [12:44<56:11,  7.36it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5181/30000 [12:44<54:28,  7.59it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5182/30000 [12:44<54:09,  7.64it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5183/30000 [12:44<54:59,  7.52it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5184/30000 [12:45<54:47,  7.55it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5185/30000 [12:45<54:51,  7.54it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]"
+  "audited_steps": [
+    5000,
+    10000
+  ],
+  "v2_last_logged_objectives": {
+    "step": 13300,
+    "frame": "0008098",
+    "ownership_volume_raw": 0.01001762319356203,
+    "ownership_volume_weight": 0.1,
+    "road": {
+      "observed_rgb": 0.002039769198745489,
+      "prior_rgb": 0.003235540585592389,
+      "observed_depth": 0.0027335272170603275,
+      "prior_depth": 0.005661332048475742
+    },
+    "road_weights": {
+      "observed_rgb": 1.0,
+      "prior_rgb": 0.1,
+      "observed_depth": 0.1,
+      "prior_depth": 0.01
+    },
+    "road_total": 0.002693289192393422,
+    "road_optimizer_steps": 0,
+    "road_updates_dynamic": false,
+    "road_updates_environment": false
+  },
+  "v2_logged_terms_finite": true,
+  "v2_log_scope": "pre-backward diagnostics; exact completed updates come from status optimizer counters",
+  "log_last_4000_bytes": ", scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13314/30000 [36:48<47:54,  5.81it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13315/30000 [36:48<48:26,  5.74it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13316/30000 [36:48<48:17,  5.76it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13317/30000 [36:48<48:20,  5.75it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13318/30000 [36:49<48:29,  5.73it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13319/30000 [36:49<48:08,  5.77it/s, loss=0.17499, l1=0.01683, psnr=28.96555, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13319/30000 [36:49<48:08,  5.77it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13320/30000 [36:49<48:07,  5.78it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13321/30000 [36:49<48:14,  5.76it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13322/30000 [36:49<48:12,  5.77it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13323/30000 [36:49<48:16,  5.76it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13324/30000 [36:50<48:14,  5.76it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13325/30000 [36:50<47:55,  5.80it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13326/30000 [36:50<48:10,  5.77it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13327/30000 [36:50<48:12,  5.76it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13328/30000 [36:50<48:47,  5.70it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13329/30000 [36:50<48:39,  5.71it/s, loss=0.20964, l1=0.02164, psnr=26.56885, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13329/30000 [36:51<48:39,  5.71it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13330/30000 [36:51<49:23,  5.63it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13331/30000 [36:51<49:24,  5.62it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13332/30000 [36:51<48:58,  5.67it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13333/30000 [36:51<49:03,  5.66it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13334/30000 [36:51<48:27,  5.73it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13335/30000 [36:52<48:23,  5.74it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13336/30000 [36:52<47:17,  5.87it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13337/30000 [36:52<47:11,  5.88it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13338/30000 [36:52<47:28,  5.85it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13339/30000 [36:52<47:32,  5.84it/s, loss=0.22966, l1=0.01994, psnr=27.65442, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13339/30000 [36:52<47:32,  5.84it/s, loss=0.26210, l1=0.02406, psnr=25.73258, scale=4]\rTraining progress:  44%|\u2588\u2588\u2588\u2588\u258d     | 13340/30000 [36:52<47:19,  5.87it/s, loss=0.26210, l1=0.02406, psnr=25.73258, scale=4]"
 }
