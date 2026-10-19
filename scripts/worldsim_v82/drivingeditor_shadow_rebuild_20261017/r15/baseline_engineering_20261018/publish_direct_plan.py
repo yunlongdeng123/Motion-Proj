@@ -57,8 +57,9 @@ def main():
  code+=['audit_road_observability.py','audit_road_silhouette_and_source.py','build_road_observability_report.py','validate_road_observability.py']
  code+=['audit_parallel_5k_durability.py','audit_parallel_checkpoint_node.py']
  code+=['check_report_phase_contract.py']
- code+=['package_final_full49.py','collect_runtime_io_health.py']
+ code+=['package_final_full49.py','collect_runtime_io_health.py','record_io_recovery.py']
  if (O/'runtime_io_health.json').exists():cp(O/'runtime_io_health.json',D/'runtime_io_health.json')
+ if (O/'runtime_io_recovery_receipt.json').exists():cp(O/'runtime_io_recovery_receipt.json',D/'runtime_io_recovery_receipt.json')
  code+=['audit_gn11_static_duplicate.py','audit_gn11_static_motion_features.py','build_gn11_static_duplicate_report.py','validate_gn11_static_duplicate.py']
  for n in code:cp(W/n,S/n)
  for n in ['export_GN11_stage1_existing.py','probe_parallel_capacity_and_yield.py','shared_gpu_policy.py','run_A_native_shared.py','run_B_native_shared.py','run_parallel_campaign.py','start_parallel_campaign.py']:cp(W/n,S/n)

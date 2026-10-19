@@ -109,5 +109,9 @@ def main():
  if phase['code']=='storage_wait':
   notice=f'''<section><h2>存储写入等待：A进度暂时停滞</h2><p>只读检查时间：{html.escape(io_health['at'])}。A最近状态为{io_health['A_reported_status']['step']:,}步，文件最后更新于{html.escape(io_health['A_status_mtime_utc'])}；主线程为D状态，等待<code>md_write_start</code>，宿主机md0为<code>{html.escape(io_health['array_state'])}</code>。GPU采样（已用MiB／空闲MiB／利用率%）：{html.escape(io_health.get('gpu_csv','未取得'))}。B原生30K与随检查点49视图评估已完成，最终删除评估仍待执行。</p><p>这份证据确认磁盘写入路径等待；具体硬件故障或平台维护原因尚未查明。A进程和内存状态保留，20K完整检查点已核验，没有杀进程、重启、重新训练或执行关机。需要AutoDL平台排查宿主机存储；原完成时间估计暂时失效。当前磁盘容量预测仍是此前成功读取的历史值，未冒称本轮刷新。</p><p><a href="runtime_io_health.json">实际proc/sysfs证据与检查时间</a>。只检查状态，不向远端写文件；后续若同一进程恢复并推进，将更新此状态。</p></section>'''
   page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>'+notice,1)
+ elif read('runtime_io_recovery_receipt.json').get('status')=='OBSERVED_STORAGE_RECOVERY_WITH_CONTINUED_A_PROCESS':
+  recovered=read('runtime_io_recovery_receipt.json');shutil.copy2(W/'runtime_io_recovery_receipt.json',O/'runtime_io_recovery_receipt.json')
+  notice=f'''<section><h2>存储等待已解除：原进程恢复推进</h2><p>最后一次确认受阻：{html.escape(recovered['last_confirmed_blocked_at'])}；首次确认恢复：{html.escape(recovered['first_confirmed_recovered_at'])}。A同一PID79624由20,400推进到{recovered['first_recovered_A_step']:,}步，md0恢复active，GPU重新执行计算。没有重启或重放；实际平台恢复时刻和根因未获确认。先前阻塞的磁盘预测任务已返回，新容量预测另外重新执行，未把旧结果当当前值。</p><p><a href="runtime_io_recovery_receipt.json">实际恢复前后记录</a> · <a href="runtime_io_health.json">最近只读状态</a>。此凭据仅记录存储恢复；当前训练、评估与关机阶段以本页状态为准，质量结论另按完整画面复核。</p></section>'''
+  page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>'+notice,1)
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()

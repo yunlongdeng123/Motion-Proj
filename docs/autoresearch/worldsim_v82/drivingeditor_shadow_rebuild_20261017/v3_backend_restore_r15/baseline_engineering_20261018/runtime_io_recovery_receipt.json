@@ -1,0 +1,353 @@
+{
+  "status": "OBSERVED_STORAGE_RECOVERY_WITH_CONTINUED_A_PROCESS",
+  "recorded_at": "2026-10-19T02:48:00.907040+00:00",
+  "last_confirmed_blocked_at": "2026-10-19T02:15:11.948466+00:00",
+  "first_confirmed_recovered_at": "2026-10-19T02:45:06.849789+00:00",
+  "exact_platform_recovery_time_known": false,
+  "last_blocked_A_step": 20400,
+  "first_recovered_A_step": 21800,
+  "original_A_pid": 79624,
+  "same_pid_and_command_observed": true,
+  "original_guardian_pid": 79622,
+  "first_recovered_GPU_csv": "15104, 17128, 98",
+  "platform_root_cause_known": false,
+  "agent_restart_performed": false,
+  "agent_replay_updates": 0,
+  "agent_training_updates": 0,
+  "blocked_forecast_helper": {
+    "pid": 252862,
+    "observed_absent_after_recovery": true,
+    "original_command_exit_code": 0,
+    "old_forecast_timestamp": "2026-10-18T23:15:34.556411+00:00",
+    "old_result_not_treated_as_current": true
+  },
+  "refreshed_forecast": {
+    "status": "READONLY_COMBINED_REMAINING_DISK_FORECAST",
+    "at": "2026-10-19T02:45:53.274694+00:00",
+    "current_free_bytes": 34649014272,
+    "estimated_remaining_required_bytes": 16829591358,
+    "estimated_headroom_bytes": 17819422914,
+    "fits_this_forecast": true,
+    "A_native_remaining": {
+      "remaining_nodes": 0,
+      "required_free_bytes": 0,
+      "reason": "complete; no future native saves/evaluations pending"
+    },
+    "A_instance_estimate": {
+      "required_free_bytes": 13559934885,
+      "forecast_bundle_bytes": 3706843977,
+      "remaining_nodes": 2,
+      "checkpoint_bytes": 7413687954,
+      "evaluation_and_viewer_bytes": 1083801600,
+      "logs_bytes": 122880000,
+      "atomic_component_temporary_bytes": 3706843977,
+      "forecast_headroom_bytes": 1232721354,
+      "point_counts_basis": "actual current Gaussian counts before save",
+      "static_points_forecast": 3300001,
+      "dynamic_points_forecast": 1100000,
+      "static_bytes_per_point": 793,
+      "dynamic_bytes_per_point": 784,
+      "boundary": "forecast only; recheck before start/save; no deletion or machine change",
+      "remaining_save_steps": [
+        25000,
+        30000
+      ]
+    },
+    "B_native_remaining": {
+      "required_free_bytes": 3269656473,
+      "forecast_bundle_bytes": 3706843977,
+      "remaining_nodes": 0,
+      "checkpoint_bytes": 0,
+      "evaluation_and_viewer_bytes": 0,
+      "logs_bytes": 122880000,
+      "atomic_component_temporary_bytes": 2616900793,
+      "forecast_headroom_bytes": 273978080,
+      "point_counts_basis": "actual current Gaussian counts before save",
+      "static_points_forecast": 3300001,
+      "dynamic_points_forecast": 1100000,
+      "static_bytes_per_point": 793,
+      "dynamic_bytes_per_point": 784,
+      "boundary": "forecast only; recheck before start/save; no deletion or machine change",
+      "additional_final_png_and_transfer_allowance_bytes": 255897600,
+      "remaining_save_steps": []
+    },
+    "current_counts_required_bytes": 13663977303,
+    "current_counts_headroom_bytes": 20985036969,
+    "current_counts_A": {
+      "required_free_bytes": 11517093925,
+      "forecast_bundle_bytes": 3087801262,
+      "remaining_nodes": 2,
+      "checkpoint_bytes": 6175602524,
+      "evaluation_and_viewer_bytes": 1083801600,
+      "logs_bytes": 122880000,
+      "atomic_component_temporary_bytes": 3087801262,
+      "forecast_headroom_bytes": 1047008539,
+      "point_counts_basis": "actual current Gaussian counts before save",
+      "static_points_forecast": 2617982,
+      "dynamic_points_forecast": 1000253,
+      "static_bytes_per_point": 793,
+      "dynamic_bytes_per_point": 784,
+      "boundary": "forecast only; recheck before start/save; no deletion or machine change",
+      "remaining_save_steps": [
+        25000,
+        30000
+      ]
+    },
+    "current_counts_B": {
+      "required_free_bytes": 2146883378,
+      "forecast_bundle_bytes": 2620859052,
+      "remaining_nodes": 0,
+      "checkpoint_bytes": 0,
+      "evaluation_and_viewer_bytes": 0,
+      "logs_bytes": 122880000,
+      "atomic_component_temporary_bytes": 1596197980,
+      "forecast_headroom_bytes": 171907798,
+      "point_counts_basis": "actual current Gaussian counts before save",
+      "static_points_forecast": 2012860,
+      "dynamic_points_forecast": 1016732,
+      "static_bytes_per_point": 793,
+      "dynamic_bytes_per_point": 784,
+      "boundary": "forecast only; recheck before start/save; no deletion or machine change",
+      "additional_final_png_and_transfer_allowance_bytes": 255897600,
+      "remaining_save_steps": []
+    },
+    "instance_durable_steps": [
+      5000,
+      10000,
+      15000,
+      20000
+    ],
+    "instance_latest_logged_counts": [
+      2617982,
+      1000253
+    ],
+    "B_durable_steps": [
+      5000,
+      10000,
+      15000,
+      20000,
+      25000,
+      30000
+    ],
+    "B_latest_logged_counts": [
+      2012860,
+      1016732
+    ],
+    "configured_caps_with10percent_overshoot": {
+      "A": [
+        3300001,
+        1100000
+      ],
+      "B": [
+        3300001,
+        1100000
+      ]
+    },
+    "due_unpersisted_nodes": {
+      "A": [],
+      "B": []
+    },
+    "corrections": "Completed A native requires0 future nodes; resumed A does not recreate step1; B5K already saved; A checkpoints do not each trigger native49 FP32 export. Full monolithic A temporary save included.",
+    "limitations": "Forecast only; configured point caps have generic-topology overshoot and are not strict maxima. Recheck actual counts and remaining nodes at saves. All assets preserved.",
+    "training_updates": 0
+  },
+  "B_complete_step": 30000,
+  "final_A_B_delete_evaluations_complete": false,
+  "shutdown_performed": false,
+  "human_verdict": null,
+  "last_blocked_sample": {
+    "at": "2026-10-19T02:15:11.948466+00:00",
+    "hostname": "autodl-container-396445a2a1-1984c713",
+    "status": "BLOCKED_HOST_STORAGE_WRITE_WAIT",
+    "A_reported_status": {
+      "step": 20400,
+      "frame": "0008134",
+      "loss": 0.27321839332580566,
+      "instance_mask_loss": 0.00020108437456656247,
+      "raw_isolated_body_MSE": 0.001039139344356954,
+      "known_instances": 5,
+      "box_boundary": 0.000493642408400774,
+      "pose_prior": 0.0,
+      "instance_points": 1000253,
+      "background_points": 2617982,
+      "instance_optimizer_gradients_finite": true,
+      "static_rgb_loss": 0.020374780520796776,
+      "NPS_loss": 0.0354008749127388,
+      "background_joint_optimization": true,
+      "steps_per_second": 0.9359014869802169,
+      "state": "running"
+    },
+    "A_status_mtime_utc": "2026-10-18T22:51:24.043031+00:00",
+    "A_status_age_seconds": 12227.905435,
+    "A_worker": {
+      "pid": 79624,
+      "status": [
+        "Name:\tpython",
+        "Umask:\t0022",
+        "State:\tD (disk sleep)",
+        "Tgid:\t79624",
+        "Ngid:\t341908",
+        "Pid:\t79624",
+        "PPid:\t79622",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t64",
+        "Groups:\t0 "
+      ],
+      "wchan": "md_write_start.part.0",
+      "io": "rchar: 9562856046\nwchar: 12426920855\nsyscr: 6649902\nsyscw: 558862\nread_bytes: 0\nwrite_bytes: 12436819968\ncancelled_write_bytes: 4096\n",
+      "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_A_native_shared.py --spec /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_spec.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k_parallel_resume --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k/checkpoint_001999_priority_yield.pt --iterations 30000 --seed 0 --joint-background --checkpoint-steps 1 5000 10000 15000 20000 25000 30000 --run "
+    },
+    "guardian": {
+      "pid": 79622,
+      "status": [
+        "Name:\tpython",
+        "Umask:\t0022",
+        "State:\tS (sleeping)",
+        "Tgid:\t79622",
+        "Ngid:\t0",
+        "Pid:\t79622",
+        "PPid:\t1",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t64",
+        "Groups:\t0 "
+      ],
+      "wchan": "do_select",
+      "io": "rchar: 170003432\nwchar: 1041357\nsyscr: 21208\nsyscw: 314\nread_bytes: 0\nwrite_bytes: 1413120\ncancelled_write_bytes: 12288\n",
+      "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_parallel_campaign.py "
+    },
+    "B_worker": {
+      "pid": 79625,
+      "status": [
+        "Name:\tpython",
+        "State:\tZ (zombie)",
+        "Tgid:\t79625",
+        "Ngid:\t342016",
+        "Pid:\t79625",
+        "PPid:\t79622",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t0",
+        "Groups:\t0 ",
+        "NStgid:\t79625"
+      ],
+      "wchan": "0",
+      "io": "rchar: 166201747989\nwchar: 17287864038\nsyscr: 4057944\nsyscw: 2006708\nread_bytes: 180224\nwrite_bytes: 17347547136\ncancelled_write_bytes: 69632\n",
+      "cmdline": ""
+    },
+    "mdstat": "Personalities : [raid6] [raid5] [raid4] [linear] [multipath] [raid0] [raid1] [raid10] \nmd0 : active raid5 nvme3n1[1] nvme2n1[3] nvme1n1[0]\n      15002667008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]\n      [==================>..]  check = 93.0% (6976402060/7501333504) finish=26189122.0min speed=0K/sec\n      bitmap: 9/56 pages [36KB], 65536KB chunk\n\nunused devices: <none>\n",
+    "array_state": "write-pending",
+    "sync_completed": "13952795904 / 15002667008",
+    "sync_speed": "0",
+    "degraded": "0",
+    "io_pressure": "some avg10=67.59 avg60=67.23 avg300=56.11 total=14813339155\nfull avg10=67.05 avg60=66.50 avg300=55.56 total=14579366885\n",
+    "interpretation": "Main A thread waits in the host md write path; hardware failure and provider maintenance cause not established.",
+    "training_updates": 0,
+    "remote_mutations": 0,
+    "A_process_preserved": true,
+    "shutdown_performed": false,
+    "checkpoint_replay_started": false,
+    "gpu_csv": "15104, 17128, 0"
+  },
+  "first_recovered_sample": {
+    "at": "2026-10-19T02:45:06.849789+00:00",
+    "hostname": "autodl-container-396445a2a1-1984c713",
+    "status": "NO_PERSISTENT_MD_WRITE_WAIT_OBSERVED",
+    "A_reported_status": {
+      "step": 21800,
+      "frame": "0008136",
+      "loss": 0.3071786165237427,
+      "instance_mask_loss": 0.00021468174236360937,
+      "raw_isolated_body_MSE": 0.0013242579298093915,
+      "known_instances": 5,
+      "box_boundary": 0.0004886382957920432,
+      "pose_prior": 0.0,
+      "instance_points": 1000253,
+      "background_points": 2617982,
+      "instance_optimizer_gradients_finite": true,
+      "static_rgb_loss": 0.021916158497333527,
+      "NPS_loss": 0.01722336933016777,
+      "background_joint_optimization": true,
+      "steps_per_second": 0.5878876593141558,
+      "state": "running"
+    },
+    "A_status_mtime_utc": "2026-10-19T02:45:03.513532+00:00",
+    "A_status_age_seconds": 3.336257,
+    "A_worker": {
+      "pid": 79624,
+      "status": [
+        "Name:\tpython",
+        "Umask:\t0022",
+        "State:\tR (running)",
+        "Tgid:\t79624",
+        "Ngid:\t341908",
+        "Pid:\t79624",
+        "PPid:\t79622",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t64",
+        "Groups:\t0 "
+      ],
+      "wchan": "0",
+      "io": "rchar: 9806982108\nwchar: 12428456306\nsyscr: 7021939\nsyscw: 585929\nread_bytes: 0\nwrite_bytes: 12438589440\ncancelled_write_bytes: 4096\n",
+      "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_A_native_shared.py --spec /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_spec.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k_parallel_resume --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k/checkpoint_001999_priority_yield.pt --iterations 30000 --seed 0 --joint-background --checkpoint-steps 1 5000 10000 15000 20000 25000 30000 --run "
+    },
+    "guardian": {
+      "pid": 79622,
+      "status": [
+        "Name:\tpython",
+        "Umask:\t0022",
+        "State:\tS (sleeping)",
+        "Tgid:\t79622",
+        "Ngid:\t0",
+        "Pid:\t79622",
+        "PPid:\t1",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t64",
+        "Groups:\t0 "
+      ],
+      "wchan": "do_select",
+      "io": "rchar: 170003432\nwchar: 1041357\nsyscr: 21208\nsyscw: 314\nread_bytes: 0\nwrite_bytes: 1413120\ncancelled_write_bytes: 12288\n",
+      "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_parallel_campaign.py "
+    },
+    "B_worker": {
+      "pid": 79625,
+      "status": [
+        "Name:\tpython",
+        "State:\tZ (zombie)",
+        "Tgid:\t79625",
+        "Ngid:\t342016",
+        "Pid:\t79625",
+        "PPid:\t79622",
+        "TracerPid:\t0",
+        "Uid:\t0\t0\t0\t0",
+        "Gid:\t0\t0\t0\t0",
+        "FDSize:\t0",
+        "Groups:\t0 ",
+        "NStgid:\t79625"
+      ],
+      "wchan": "0",
+      "io": "rchar: 166201747989\nwchar: 17287864038\nsyscr: 4057944\nsyscw: 2006708\nread_bytes: 180224\nwrite_bytes: 17347547136\ncancelled_write_bytes: 69632\n",
+      "cmdline": ""
+    },
+    "mdstat": "Personalities : [raid6] [raid5] [raid4] [linear] [multipath] [raid0] [raid1] [raid10] \nmd0 : active raid5 nvme3n1[1] nvme2n1[3] nvme1n1[0]\n      15002667008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]\n      bitmap: 16/56 pages [64KB], 65536KB chunk\n\nunused devices: <none>\n",
+    "array_state": "active",
+    "sync_completed": "none",
+    "sync_speed": "none",
+    "degraded": "0",
+    "io_pressure": "some avg10=0.00 avg60=0.00 avg300=2.56 total=15409209234\nfull avg10=0.00 avg60=0.00 avg300=2.54 total=15171955730\n",
+    "training_updates": 0,
+    "remote_mutations": 0,
+    "A_process_preserved": true,
+    "shutdown_performed": false,
+    "checkpoint_replay_started": false,
+    "gpu_csv": "15104, 17128, 98"
+  }
+}

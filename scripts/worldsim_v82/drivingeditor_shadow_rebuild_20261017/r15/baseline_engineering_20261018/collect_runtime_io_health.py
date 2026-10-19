@@ -22,8 +22,8 @@ receipt=dict(at=now.isoformat(),hostname=os.uname().nodename,status='BLOCKED_HOS
  A_reported_status=a,A_status_mtime_utc=mtime.isoformat(),A_status_age_seconds=(now-mtime).total_seconds(),
  A_worker=worker,guardian=proc(79622),B_worker=proc(79625),mdstat=text('/proc/mdstat'),array_state=text('/sys/block/md0/md/array_state').strip(),
  sync_completed=text('/sys/block/md0/md/sync_completed').strip(),sync_speed=text('/sys/block/md0/md/sync_speed').strip(),degraded=text('/sys/block/md0/md/degraded').strip(),io_pressure=text('/proc/pressure/io'),
- interpretation='Main A thread waits in the host md write path; hardware failure and provider maintenance cause not established.',
- training_updates=0,remote_mutations=0,A_process_preserved=True,shutdown_performed=False,checkpoint_replay_started=False)
+ interpretation=('Main A thread waits in the host md write path; hardware failure and provider maintenance cause not established.' if blocked else 'No persistent md write wait observed in this sample; confirm actual step advancement separately.'),
+ training_updates=0,remote_mutations=0,A_process_preserved=Path('/proc/79624').exists(),shutdown_performed=False,checkpoint_replay_started=False)
 try:receipt['gpu_csv']=subprocess.check_output(['nvidia-smi','--query-gpu=memory.used,memory.free,utilization.gpu','--format=csv,noheader,nounits'],text=True,timeout=10).strip()
 except Exception as e:receipt['gpu_error']=str(e)
 print(json.dumps(receipt))
