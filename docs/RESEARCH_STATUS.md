@@ -1,22 +1,26 @@
 # 当前研究状态
 
-更新：2026-10-19T12:13:52.599247+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。原生随保存的49评估完成，但四组最终独立零更新49与实际视觉质量均未交付，human_verdict=null。
+更新：2026-10-19T12:31:30.072277+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。原生随保存的49评估完成，但四组最终独立零更新49与实际视觉质量均未交付，human_verdict=null。
 
 已完成训练：完整版30K、real_only 30K；仅表示训练及随节点原生评估结束，最终独立零更新49和质量对照仍待交付。
 
-当前实际在训：prior_only PID5503 22900/30000（training）；ownership_only PID8215 3000/30000（training）。待执行：无。实际static/dynamic更新计数与各自进度一致；controller4120继续限制总并发最多2（gate也占槽）。以各自status解释实际阶段，不把静态队列名或guardian存活当训练推进；不得重复启动或恢复旧A/B队列。
+当前实际在训：prior_only PID5503 27300/30000（training）；ownership_only PID8215 7400/30000（training）。待执行：无。实际static/dynamic更新计数与各自进度一致；controller4120继续限制总并发最多2（gate也占槽）。以各自status解释实际阶段，不把静态队列名或guardian存活当训练推进；不得重复启动或恢复旧A/B队列。
 
-保存证据：完整版5/10/15/20/25/30K六节点此前均CPU只读通过，不重复核验。各消融独立已审节点：real_only 5K/10K/15K/20K/25K/30K；prior_only 5K/10K/15K/20K；ownership_only 尚无已审节点。模型/Adam有限，RNG/SGCM/sampler和各自原生49齐全；CPU核验无GPU恢复或新增更新，不代表视觉质量通过，不能跨模型混用凭据。
+保存证据：完整版5/10/15/20/25/30K六节点此前均CPU只读通过，不重复核验。各消融独立已审节点：real_only 5K/10K/15K/20K/25K/30K；prior_only 5K/10K/15K/20K/25K；ownership_only 5K。模型/Adam有限，RNG/SGCM/sampler和各自原生49齐全；CPU核验无GPU恢复或新增更新，不代表视觉质量通过，不能跨模型混用凭据。
 
 严格范围：四组各fresh第一阶段30K、同原A五身份a6/a37/a5/a26/a18、原49帧与输入初始化协议、seed0，第二阶段0。消融保持归属修复，分别关闭真实、先验或全部道路目标；输入query/provenance/目标不改，UNKNOWN无道路监督。未修改已加载训练源码，未新增重放。全部四组训练、节点核验、最终零更新49、下载、完整画面对照与Git完成后才按授权关机；当前不能启动GPU评估或关机。
 
-资源采样：NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 7639 MiB, 24593 MiB, 99 %；md0 clean/degraded0/syncidle。磁盘空49.672GB，剩余资产估30.803GB（含8GB余量，点数预测不是严格上界）。controller登记状态AUTHORIZED_ABLATIONS_RUNNING_MAX_TWO_TRAINING_INCLUDING_MAIN；全部训练退出并释放GPU锁前不得启动最终评估，全部对照交付前不关机。automation-2 ACTIVE每30分钟，普通无变化安静。
+资源采样：NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 10551 MiB, 21681 MiB, 97 %；md0 clean/degraded0/syncidle。磁盘空46.139GB，剩余资产估25.892GB（含8GB余量，点数预测不是严格上界）。controller登记状态AUTHORIZED_ABLATIONS_RUNNING_MAX_TWO_TRAINING_INCLUDING_MAIN；全部训练退出并释放GPU锁前不得启动最终评估，全部对照交付前不关机。automation-2 ACTIVE每30分钟，普通无变化安静。
 
 真实输入/CUDA准入完成：相机模型锚帧raw99与SGCM地面平面锚帧raw89分别绑定，平面坐标往返、全部49相机内参/世界变换通过。当前input_bundle_002与gate_002按manifest/hash绑定；固定相机时间-0.48/0.48静态RGB最大差0，梯度组static6/dynamic9/environment1均有限，静态时间梯度无，零更新检查三个优化器实数计数均0。早期锚帧工程诊断仅零更新，未进入训练。
 
 道路query为raw89的a6/a37车身遮挡射线，总15869像素样本，有效道路交点15625。a6：总1149，晚段/全49真实确认均0、供体先验245、未知904；a37：总14720，晚段131–137确认4765、全49确认7787、供体4874、未知2059。晚段包含在全49内；这些是像素射线样本，不是世界面积/干净GT或最终质量。左右供体按用户坐标去标线后，实际几何合格左4249/右1605；5119个先验query使用770个供体样本，独立CPU重建与冻结供体索引及RGB逐项相等，最大RGB差0，未改训练目标。
 
 [完整版状态、组件和保存证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [四组实际队列与独立节点](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html)。全部为训练重建视图与工程/保存证据，质量复核尚未完成。failure_ledger_refs=[V82-F06]，不新增失败ID或效果结论。
+
+
+
+已发布视频：完整版与real_only各30K的原图、完整重建、静态、动态四通道，8个完整480×320/49帧/10fps全I帧视频，支持同步播放、逐帧定位、切换通道与速度。[完整同步对比](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native30k_compare.html)。来自已有原生节点通道，本轮远端只读PNG、不下载checkpoint/NPZ、不新增GPU或训练更新；独立删车/alpha评估和四组最终质量结论仍待完成。
 
 ## 已完成的原A/B基线与历史证据
 

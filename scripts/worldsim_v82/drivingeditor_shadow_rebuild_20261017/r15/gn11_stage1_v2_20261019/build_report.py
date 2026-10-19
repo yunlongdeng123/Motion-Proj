@@ -121,11 +121,13 @@ html=html.replace('COUNT_LEFT',str(counts[0])).replace('COUNT_RIGHT',str(counts[
 if (W/'runtime_progress.json').exists() and (W/'actual_input_bundle.json').exists():
     from enrich_runtime_report import enrich
     html=enrich(html,W,O)
+if (O/'native30k_compare.html').exists():
+    html=html.replace('<h2>模块与数据流</h2>','<p class="status"><a href="native30k_compare.html"><strong>观看已完成两组30K的完整同步视频对比</strong></a><br>完整版与仅跨帧；完整49帧、原图/重建/静态/动态四通道，同步播放和逐帧定位。</p><h2>模块与数据流</h2>')
 (O/'index.html').write_text(html,encoding='utf-8')
 with zipfile.ZipFile(O/'candidate_source.zip','w',zipfile.ZIP_DEFLATED) as z:
     z.write(W.parent/'baseline_engineering_20261018/source/LICENSE_gaussian_splatting.md','upstream_original/LICENSE_gaussian_splatting.md')
     for p in sorted(W.iterdir()):
-        if p.suffix=='.py' or p.name in {'config.json','cpu_test_receipt.json','candidate_manifest.json','evaluation_contract.json'}:z.write(p,p.name)
+        if p.suffix=='.py' or p.name in {'config.json','cpu_test_receipt.json','candidate_manifest.json','evaluation_contract.json','native30k_compare_template.html','check_native30k_player.js'}:z.write(p,p.name)
     for p in sorted((W/'candidate').rglob('*')):
         if p.is_file() and '__pycache__' not in p.parts:z.write(p,p.relative_to(W).as_posix())
 print(json.dumps(dict(output=str(O/'index.html'),candidate_pixels=counts,CPU_tests=test['tests'],runtime_snapshot=(W/'runtime_progress.json').exists())))

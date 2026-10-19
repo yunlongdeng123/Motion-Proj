@@ -2,7 +2,7 @@
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
   "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
-  "updated_utc": "2026-10-19T12:13:52.599247+00:00",
+  "updated_utc": "2026-10-19T12:31:30.072277+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
@@ -81,7 +81,7 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 49672028160
+    "disk_free_bytes_at_snapshot": 46138822656
   },
   "failure_ledger_refs": [
     "V82-F06"
@@ -153,11 +153,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 22900,
+      "updates_executed": 27300,
       "actual_optimizer_step_counts": {
-        "static": 22900,
-        "dynamic": 22900,
-        "environment": 22900
+        "static": 27300,
+        "dynamic": 27300,
+        "environment": 27300
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -171,7 +171,8 @@
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000
       ]
     },
     "ownership_only": {
@@ -179,11 +180,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 3000,
+      "updates_executed": 7400,
       "actual_optimizer_step_counts": {
-        "static": 3000,
-        "dynamic": 3000,
-        "environment": 3000
+        "static": 7400,
+        "dynamic": 7400,
+        "environment": 7400
       },
       "actual_zero_update_gate_passed": false,
       "road_weights": {
@@ -193,9 +194,27 @@
         "prior_depth": 0.0
       },
       "worker_pid": 8215,
-      "audited_checkpoint_steps": []
+      "audited_checkpoint_steps": [
+        5000
+      ]
     }
   },
   "main_worker_exited": true,
-  "final_zero_update49_pending": true
+  "final_zero_update49_pending": true,
+  "native30k_video_comparison": {
+    "status": "READY_NATIVE_CHECKPOINT_CHANNELS",
+    "page": "native30k_compare.html",
+    "arms": [
+      "full",
+      "real_only"
+    ],
+    "videos": 8,
+    "frames_each": 49,
+    "full_frame_wh": [
+      480,
+      320
+    ],
+    "independent_delete_evaluation_completed": false,
+    "quality_accepted": false
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "collected_utc": "2026-10-19T12:13:52.599247+00:00",
+  "collected_utc": "2026-10-19T12:31:30.072277+00:00",
   "main": {
     "status": "complete",
     "mode": "train",
@@ -559,7 +559,7 @@
       "free_bytes": 75851489280,
       "required_bytes": 71415546128.0
     },
-    "updated_utc": "2026-10-19T12:13:48.361141+00:00",
+    "updated_utc": "2026-10-19T12:31:29.714020+00:00",
     "pending_arms": []
   },
   "controller_launch": {
@@ -823,26 +823,26 @@
         "mode": "train",
         "pid": 5503,
         "parent_pid": 4120,
-        "iteration": 22900,
+        "iteration": 27300,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T10:40:56.412665+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 5569.283322283998,
-        "loss": 0.1357191950082779,
-        "psnr": 28.56216812133789,
+        "wall_seconds": 6613.522033941001,
+        "loss": 0.17859560251235962,
+        "psnr": 27.775917053222656,
         "static_points": 714852,
         "dynamic_points": 1034415,
         "optimizer_step_counts": {
-          "static": 22900,
-          "dynamic": 22900,
-          "environment": 22900
+          "static": 27300,
+          "dynamic": 27300,
+          "environment": 27300
         },
-        "cuda_allocated_bytes": 2146436608,
-        "cuda_reserved_bytes": 3737124864,
+        "cuda_allocated_bytes": 2147161600,
+        "cuda_reserved_bytes": 3720347648,
         "cuda_peak_allocated_bytes": 5368541184,
-        "updated_utc": "2026-10-19T12:13:45.696588+00:00"
+        "updated_utc": "2026-10-19T12:31:09.935271+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -962,13 +962,15 @@
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000
       ],
       "audited_steps": [
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -1020,26 +1022,26 @@
         "mode": "train",
         "pid": 8215,
         "parent_pid": 4120,
-        "iteration": 3000,
+        "iteration": 7400,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T12:04:29.265135+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 556.5185007285327,
-        "loss": 1.0983102321624756,
-        "psnr": 23.31534194946289,
-        "static_points": 610836,
-        "dynamic_points": 164373,
+        "wall_seconds": 1620.718250386417,
+        "loss": 0.5236173868179321,
+        "psnr": 27.689769744873047,
+        "static_points": 682342,
+        "dynamic_points": 718758,
         "optimizer_step_counts": {
-          "static": 3000,
-          "dynamic": 3000,
-          "environment": 3000
+          "static": 7400,
+          "dynamic": 7400,
+          "environment": 7400
         },
-        "cuda_allocated_bytes": 1950752768,
-        "cuda_reserved_bytes": 3080716288,
-        "cuda_peak_allocated_bytes": 3108590080,
-        "updated_utc": "2026-10-19T12:13:45.784201+00:00"
+        "cuda_allocated_bytes": 2801538048,
+        "cuda_reserved_bytes": 4632608768,
+        "cuda_peak_allocated_bytes": 4569298432,
+        "updated_utc": "2026-10-19T12:31:29.983985+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -1155,8 +1157,12 @@
         "target_updates": 0,
         "automatic_restart": false
       },
-      "published_steps": [],
-      "audited_steps": [],
+      "published_steps": [
+        5000
+      ],
+      "audited_steps": [
+        5000
+      ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
         "variant": "ownership_only",
@@ -1217,7 +1223,7 @@
       "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/gate_001/gpu_gate_receipt.json",
       "starttime_ticks": 839345893,
       "parent_pid": 4120,
-      "state": "S"
+      "state": "R"
     },
     "8146": null,
     "8215": {
@@ -1227,10 +1233,10 @@
       "state": "S"
     }
   },
-  "disk_required_estimate_bytes": 30803082016.0,
-  "disk_free_bytes": 49672028160,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 7639 MiB, 24593 MiB, 99 %",
-  "gpu_processes": "5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 5300 MiB\n8215, /root/autodl-tmp/envs/drivingeditor/bin/python, 3676 MiB",
+  "disk_required_estimate_bytes": 25891541008.0,
+  "disk_free_bytes": 46138822656,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 10551 MiB, 21681 MiB, 97 %",
+  "gpu_processes": "5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 5246 MiB\n8215, /root/autodl-tmp/envs/drivingeditor/bin/python, 5288 MiB",
   "md0": {
     "array_state": "clean",
     "degraded": "0",

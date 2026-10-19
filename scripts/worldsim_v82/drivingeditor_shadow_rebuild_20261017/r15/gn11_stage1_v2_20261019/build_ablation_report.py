@@ -64,7 +64,9 @@ def main():
         if path.exists():protocols.append(f'<a href="{path.name}">{names[name]}</a>')
     if protocols:
         doc=doc.replace('<h2>资源和证据</h2>','<p>已实际核对以下消融的前100条日志，选帧、时间扰动和日志记录的静态/动态各参数组学习率与当前完整版逐项一致：'+' · '.join(protocols)+'。环境学习率不在这份日志中；这不是旧初始GPU参数逐位比较，日志条数也不替代实际完成更新计数。</p><h2>资源和证据</h2>')
-        (O/'index.html').write_text(doc,encoding='utf-8')
+    if (O.parent/'native30k_compare.html').exists():
+        doc=doc.replace('<h2>比较结构</h2>','<p class="state"><a href="../native30k_compare.html"><strong>观看已完成两组30K的完整同步视频对比</strong></a><br>完整版与仅跨帧，四通道、完整49帧，可同步播放、切换通道与逐帧定位。</p><h2>比较结构</h2>')
+    (O/'index.html').write_text(doc,encoding='utf-8')
     print(json.dumps(dict(report=str(O/'index.html'),arms=contract['arms'],quality_accepted=False)))
 
 if __name__=='__main__':main()
