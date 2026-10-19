@@ -1,5 +1,5 @@
 {
-  "collected_utc": "2026-10-19T11:44:15.981840+00:00",
+  "collected_utc": "2026-10-19T12:13:52.599247+00:00",
   "main": {
     "status": "complete",
     "mode": "train",
@@ -432,7 +432,7 @@
           "--gpu-gate",
           "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001/gpu_gate_receipt.json"
         ],
-        "returncode": null
+        "returncode": 0
       },
       "5434": {
         "arm": "prior_only",
@@ -489,6 +489,62 @@
           "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/gate_001/gpu_gate_receipt.json"
         ],
         "returncode": null
+      },
+      "8146": {
+        "arm": "ownership_only",
+        "mode": "gate",
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "gate"
+        ],
+        "returncode": 0
+      },
+      "8215": {
+        "arm": "ownership_only",
+        "mode": "train",
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/run30k",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "train",
+          "--gpu-gate",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001/gpu_gate_receipt.json"
+        ],
+        "returncode": null
       }
     },
     "arm_queue": [
@@ -503,10 +559,8 @@
       "free_bytes": 75851489280,
       "required_bytes": 71415546128.0
     },
-    "updated_utc": "2026-10-19T11:44:11.243479+00:00",
-    "pending_arms": [
-      "ownership_only"
-    ]
+    "updated_utc": "2026-10-19T12:13:48.361141+00:00",
+    "pending_arms": []
   },
   "controller_launch": {
     "status": "AUTHORIZED_THREE_ABLATION_CONTROLLER_LAUNCHED",
@@ -564,30 +618,30 @@
   "arms": {
     "real_only": {
       "status": {
-        "status": "training",
+        "status": "complete",
         "mode": "train",
         "pid": 4194,
         "parent_pid": 4120,
-        "iteration": 25600,
+        "iteration": 30000,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T09:59:00.746251+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 6308.984323125333,
-        "loss": 0.15407247841358185,
-        "psnr": 26.600265502929688,
+        "wall_seconds": 7498.466587018222,
+        "loss": 0.2448711395263672,
+        "psnr": 26.010211944580078,
         "static_points": 711166,
         "dynamic_points": 1051540,
         "optimizer_step_counts": {
-          "static": 25600,
-          "dynamic": 25600,
-          "environment": 25600
+          "static": 30000,
+          "dynamic": 30000,
+          "environment": 30000
         },
-        "cuda_allocated_bytes": 2157063680,
-        "cuda_reserved_bytes": 4372561920,
+        "cuda_allocated_bytes": 2004873216,
+        "cuda_reserved_bytes": 3978297344,
         "cuda_peak_allocated_bytes": 5404356608,
-        "updated_utc": "2026-10-19T11:44:09.731203+00:00"
+        "updated_utc": "2026-10-19T12:02:16.988167+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -708,14 +762,16 @@
         10000,
         15000,
         20000,
-        25000
+        25000,
+        30000
       ],
       "audited_steps": [
         5000,
         10000,
         15000,
         20000,
-        25000
+        25000,
+        30000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -767,26 +823,26 @@
         "mode": "train",
         "pid": 5503,
         "parent_pid": 4120,
-        "iteration": 15500,
+        "iteration": 22900,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T10:40:56.412665+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 3785.7799970116466,
-        "loss": 0.27353933453559875,
-        "psnr": 25.34928321838379,
+        "wall_seconds": 5569.283322283998,
+        "loss": 0.1357191950082779,
+        "psnr": 28.56216812133789,
         "static_points": 714852,
         "dynamic_points": 1034415,
         "optimizer_step_counts": {
-          "static": 15500,
-          "dynamic": 15500,
-          "environment": 15500
+          "static": 22900,
+          "dynamic": 22900,
+          "environment": 22900
         },
-        "cuda_allocated_bytes": 2149110784,
-        "cuda_reserved_bytes": 3869245440,
+        "cuda_allocated_bytes": 2146436608,
+        "cuda_reserved_bytes": 3737124864,
         "cuda_peak_allocated_bytes": 5368541184,
-        "updated_utc": "2026-10-19T11:44:02.193293+00:00"
+        "updated_utc": "2026-10-19T12:13:45.696588+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -905,12 +961,14 @@
       "published_steps": [
         5000,
         10000,
-        15000
+        15000,
+        20000
       ],
       "audited_steps": [
         5000,
         10000,
-        15000
+        15000,
+        20000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -957,11 +1015,146 @@
       }
     },
     "ownership_only": {
-      "status": null,
-      "gate": null,
-      "gate_status": null,
-      "train_launch": null,
-      "gate_launch": null,
+      "status": {
+        "status": "training",
+        "mode": "train",
+        "pid": 8215,
+        "parent_pid": 4120,
+        "iteration": 3000,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-19T12:04:29.265135+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "wall_seconds": 556.5185007285327,
+        "loss": 1.0983102321624756,
+        "psnr": 23.31534194946289,
+        "static_points": 610836,
+        "dynamic_points": 164373,
+        "optimizer_step_counts": {
+          "static": 3000,
+          "dynamic": 3000,
+          "environment": 3000
+        },
+        "cuda_allocated_bytes": 1950752768,
+        "cuda_reserved_bytes": 3080716288,
+        "cuda_peak_allocated_bytes": 3108590080,
+        "updated_utc": "2026-10-19T12:13:45.784201+00:00"
+      },
+      "gate": {
+        "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
+        "optimizer_updates": 0,
+        "manifest_sha256": "3f8dc3548c371770c9cb7e9f7259db42f87fe8d4f075b647dfeb46c14824e1d2",
+        "bundle_sha256": "e20de33c44e9e404f447f695802de4f51b6267b4bf2d93485e14a6716239b5fb",
+        "baseline_config_sha256": "d129bfc0e73030f1f024da8f10cdaf069f861cdd3dd5091a98df0f171b0543b3",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "actual_checks": {
+          "static_fixed_camera_max_RGB_delta": 0.0,
+          "static_times_tested": [
+            -0.48,
+            0.48
+          ],
+          "gate_raw_frame": 89,
+          "ablation_variant": "ownership_only",
+          "actual_road_weights": {
+            "observed_rgb": 0.0,
+            "prior_rgb": 0.0,
+            "observed_depth": 0.0,
+            "prior_depth": 0.0
+          },
+          "finite_gradient_parameter_groups": [
+            6,
+            9,
+            1
+          ],
+          "optimizer_updates": 0,
+          "optimizer_step_counts": {
+            "static": 0,
+            "dynamic": 0,
+            "environment": 0
+          },
+          "static_temporal_gradients_absent": true
+        },
+        "same_fresh_seed_required_for_training": true,
+        "quality_verified": false
+      },
+      "gate_status": {
+        "status": "zero_update_gate_passed",
+        "mode": "gate",
+        "pid": 8146,
+        "parent_pid": 4120,
+        "iteration": 0,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-19T12:04:08.470640+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "optimizer_step_counts": {
+          "static": 0,
+          "dynamic": 0,
+          "environment": 0
+        }
+      },
+      "train_launch": {
+        "pid": 8215,
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/run30k",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "train",
+          "--gpu-gate",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001/gpu_gate_receipt.json"
+        ],
+        "mode": "train",
+        "started_utc": "2026-10-19T12:04:22.657059+00:00",
+        "target_updates": 30000,
+        "automatic_restart": false
+      },
+      "gate_launch": {
+        "pid": 8146,
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "gate"
+        ],
+        "mode": "gate",
+        "started_utc": "2026-10-19T12:04:02.627470+00:00",
+        "target_updates": 0,
+        "automatic_restart": false
+      },
       "published_steps": [],
       "audited_steps": [],
       "manifest": {
@@ -1018,26 +1211,28 @@
   "processes": {
     "2145": null,
     "4125": null,
-    "4194": {
-      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001/gpu_gate_receipt.json",
-      "starttime_ticks": 839094166,
-      "parent_pid": 4120,
-      "state": "S"
-    },
+    "4194": null,
     "5434": null,
     "5503": {
       "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/gate_001/gpu_gate_receipt.json",
       "starttime_ticks": 839345893,
       "parent_pid": 4120,
-      "state": "R"
+      "state": "S"
+    },
+    "8146": null,
+    "8215": {
+      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001/gpu_gate_receipt.json",
+      "starttime_ticks": 839847016,
+      "parent_pid": 4120,
+      "state": "S"
     }
   },
-  "disk_required_estimate_bytes": 34148639088.0,
-  "disk_free_bytes": 53902012416,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 10223 MiB, 22009 MiB, 98 %",
-  "gpu_processes": "4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 4996 MiB\n5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 4722 MiB",
+  "disk_required_estimate_bytes": 30803082016.0,
+  "disk_free_bytes": 49672028160,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 7639 MiB, 24593 MiB, 99 %",
+  "gpu_processes": "5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 5300 MiB\n8215, /root/autodl-tmp/envs/drivingeditor/bin/python, 3676 MiB",
   "md0": {
-    "array_state": "active",
+    "array_state": "clean",
     "degraded": "0",
     "sync_action": "idle"
   }

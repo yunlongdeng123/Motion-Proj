@@ -63,7 +63,7 @@ def main():
         path=O/(name+'_protocol_receipt.json')
         if path.exists():protocols.append(f'<a href="{path.name}">{names[name]}</a>')
     if protocols:
-        doc=doc.replace('<h2>资源和证据</h2>','<p>已实际核对以下消融的前100步，选帧、时间扰动和全部优化器学习率与当前完整版逐项一致：'+' · '.join(protocols)+'。这不是旧初始GPU参数逐位比较。</p><h2>资源和证据</h2>')
+        doc=doc.replace('<h2>资源和证据</h2>','<p>已实际核对以下消融的前100条日志，选帧、时间扰动和日志记录的静态/动态各参数组学习率与当前完整版逐项一致：'+' · '.join(protocols)+'。环境学习率不在这份日志中；这不是旧初始GPU参数逐位比较，日志条数也不替代实际完成更新计数。</p><h2>资源和证据</h2>')
         (O/'index.html').write_text(doc,encoding='utf-8')
     print(json.dumps(dict(report=str(O/'index.html'),arms=contract['arms'],quality_accepted=False)))
 

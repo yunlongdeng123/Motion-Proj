@@ -40,12 +40,16 @@ def publish(requested):
         sizes='/'.join(str(q['files'][n]['bytes'])+'B' for n in filenames)
         evidence.append(f'{arm}真实{step}完整native节点：四组件（静态/动态/环境/训练状态）{sizes}；模型与Adam有限，RNG/SGCM/sampler{step}及原生49齐全。[独立凭据](../../{DOC.relative_to("docs").as_posix()}/ablations/{name})。')
         newfiles.append(name)
-    active=[];queued=[]
+    active=[];queued=[];completed=['完整版30K']
     for name,a in r['arms'].items():
         s=a['status']
         if s:
             if any(s['optimizer_step_counts'][m]!=s['iteration'] for m in ['static','dynamic']):raise RuntimeError('actual update counts differ')
-            if s['status']!='complete':active.append(f'{name} PID{s["pid"]} {s["iteration"]}/30000（{s["status"]}）')
+            if s['status']=='complete':
+                if s['iteration']!=30000 or any(s['optimizer_step_counts'][m]!=30000 for m in ['static','dynamic','environment']):
+                    raise RuntimeError('complete training requires actual 30K counters')
+                completed.append(name+' 30K')
+            else:active.append(f'{name} PID{s["pid"]} {s["iteration"]}/30000（{s["status"]}）')
         else:queued.append(name)
     live='；'.join(active) or '无在训消融'
     queue='、'.join(queued) or '无'
@@ -53,8 +57,12 @@ def publish(requested):
     marker='## 已完成的原A/B基线与历史证据';current,history=s.split(marker,1)
     current=re.sub(r'更新：[^。]+。',f'更新：{r["collected_utc"]}。',current,count=1)
     paragraphs=current.split('\n\n')
+    finished='、'.join(completed)+'；仅表示训练及随节点原生评估结束，最终独立零更新49和质量对照仍待交付。'
+    if not any(p.startswith('已完成训练：') for p in paragraphs):paragraphs.insert(2,'已完成训练：'+finished)
     for i,p in enumerate(paragraphs):
-        if p.startswith('当前实际在训：'):
+        if p.startswith('已完成训练：'):
+            paragraphs[i]='已完成训练：'+finished
+        elif p.startswith('当前实际在训：'):
             paragraphs[i]=f'当前实际在训：{live}。待执行：{queue}。实际static/dynamic更新计数与各自进度一致；controller4120继续限制总并发最多2（gate也占槽）。以各自status解释实际阶段，不把静态队列名或guardian存活当训练推进；不得重复启动或恢复旧A/B队列。'
         elif p.startswith('保存证据：'):
             audited='；'.join(name+' '+('/'.join(str(n//1000)+'K' for n in a['audited_steps']) or '尚无已审节点') for name,a in r['arms'].items())
@@ -71,14 +79,25 @@ def publish(requested):
             actual_optimizer_step_counts=status.get('optimizer_step_counts'),audited_checkpoint_steps=a['audited_steps'],
             worker_pid=(a['train_launch'] or {}).get('pid'))
     write(O/'task_record.json',json.dumps(record,indent=2,ensure_ascii=False))
-    entry='\n\n'+heading+'\n\n'+f'采样{r["collected_utc"]}：{live}；排队{queue}。同一已授权进程持续推进，未改训练目标、源码、输入或预算，没有重放/重启。\n\n'+'\n\n'.join(evidence)+'\n\n以上均CPU只读，无节点GPU恢复或新增训练更新，不能因保存完整或低loss宣称质量通过。完整版仍complete30K，四组最终独立zero-update49与全画面质量对照待全部训练结束后执行；当前不关机。human_verdict=null；failure_ledger_delta=named_ablation_CPU_nodes_no_quality_verdict。\n'
+    protocol_files=[];protocol_evidence=[]
+    for arm,a in r['arms'].items():
+        name=arm+'_protocol_receipt.json';p=O/'ablations'/name
+        if not p.exists():continue
+        protocol=read(p)
+        if protocol['variant']!=arm or protocol['first_steps']!=100 or not protocol['frame_and_time_equal'] or not protocol['all_optimizer_learning_rates_equal'] or protocol['training_updates']!=0:
+            raise RuntimeError('invalid actual first100 protocol receipt')
+        protocol_files.append(name)
+        gate=a['gate'];checks=gate['actual_checks']
+        protocol_evidence.append(f'{arm}实际train启动{a["train_launch"]["started_utc"]}，PID{a["train_launch"]["pid"]}；CUDA准入0更新、固定相机静态时间RGB差{checks["static_fixed_camera_max_RGB_delta"]}、有限梯度组{checks["finite_gradient_parameter_groups"]}，实际道路权重{checks["actual_road_weights"]}。前100条日志的选帧/时间扰动和已记录静态、动态学习率与完整版相同；环境学习率不在这份日志中，不能据此声称全部优化器实测或旧初始张量逐位相同。[协议凭据](../../{DOC.relative_to("docs").as_posix()}/ablations/{name})。')
+    entry='\n\n'+heading+'\n\n'+f'采样{r["collected_utc"]}：{live}；排队{queue}。已完成训练：{finished} 未改训练目标、源码、输入或预算，没有重放/重启。\n\n'+'\n\n'.join(evidence)+'\n\n'+'\n\n'.join(protocol_evidence)+'\n\n以上均CPU只读，无节点GPU恢复或新增训练更新，不能因保存完整或低loss宣称质量通过。四组最终独立zero-update49与全画面质量对照待全部训练结束后执行；当前不关机。human_verdict=null；failure_ledger_delta=named_ablation_CPU_nodes_no_quality_verdict。\n'
     write(currentfile,'\n\n'.join(paragraphs)+marker+history);write(card,old+entry)
     paths=['docs/RESEARCH_STATUS.md','docs/research_failures/entries/V82-F06.md']
     for name in ['index.html','runtime_progress.json','local_delivery_checks.json','task_record.json','candidate_source.zip']:
         rel=DOC/name;copy(O/name,REPO/rel);paths.append(rel.as_posix())
-    for name in ['index.html','runtime.json','local_delivery_checks.json',*newfiles]:
+    for name in ['index.html','runtime.json','local_delivery_checks.json',*newfiles,*protocol_files]:
         rel=DOC/'ablations'/name;copy(O/'ablations'/name,REPO/rel);paths.append(rel.as_posix())
-    rel=CODE/'publish_ablation_nodes.py';copy(W/'publish_ablation_nodes.py',REPO/rel);paths.append(rel.as_posix())
+    for name in ['publish_ablation_nodes.py','verify_ablation_protocol.py','build_ablation_report.py']:
+        rel=CODE/name;copy(W/name,REPO/rel);paths.append(rel.as_posix())
     key='_'.join(f'{arm}_{step:06d}' for arm,step in nodes)
     (W/f'publish_nodes_{key}_paths.json').write_text(json.dumps(paths,indent=2),encoding='utf-8')
     print(json.dumps(dict(paths=len(paths),nodes=nodes,active=live,queued=queue)))

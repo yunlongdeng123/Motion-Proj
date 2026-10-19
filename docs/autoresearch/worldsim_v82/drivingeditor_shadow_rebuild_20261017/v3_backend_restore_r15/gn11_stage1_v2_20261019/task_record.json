@@ -2,7 +2,7 @@
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
   "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
-  "updated_utc": "2026-10-19T11:44:15.981840+00:00",
+  "updated_utc": "2026-10-19T12:13:52.599247+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
@@ -81,7 +81,7 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 53902012416
+    "disk_free_bytes_at_snapshot": 49672028160
   },
   "failure_ledger_refs": [
     "V82-F06"
@@ -124,12 +124,12 @@
       "updates_authorized": 30000,
       "seed": 0,
       "second_stage_updates": 0,
-      "status": "training",
-      "updates_executed": 25600,
+      "status": "complete",
+      "updates_executed": 30000,
       "actual_optimizer_step_counts": {
-        "static": 25600,
-        "dynamic": 25600,
-        "environment": 25600
+        "static": 30000,
+        "dynamic": 30000,
+        "environment": 30000
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -144,7 +144,8 @@
         10000,
         15000,
         20000,
-        25000
+        25000,
+        30000
       ]
     },
     "prior_only": {
@@ -152,11 +153,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 15500,
+      "updates_executed": 22900,
       "actual_optimizer_step_counts": {
-        "static": 15500,
-        "dynamic": 15500,
-        "environment": 15500
+        "static": 22900,
+        "dynamic": 22900,
+        "environment": 22900
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -169,16 +170,21 @@
       "audited_checkpoint_steps": [
         5000,
         10000,
-        15000
+        15000,
+        20000
       ]
     },
     "ownership_only": {
       "updates_authorized": 30000,
       "seed": 0,
       "second_stage_updates": 0,
-      "status": "queued",
-      "updates_executed": 0,
-      "actual_optimizer_step_counts": null,
+      "status": "training",
+      "updates_executed": 3000,
+      "actual_optimizer_step_counts": {
+        "static": 3000,
+        "dynamic": 3000,
+        "environment": 3000
+      },
       "actual_zero_update_gate_passed": false,
       "road_weights": {
         "observed_rgb": 0.0,
@@ -186,7 +192,7 @@
         "observed_depth": 0.0,
         "prior_depth": 0.0
       },
-      "worker_pid": null,
+      "worker_pid": 8215,
       "audited_checkpoint_steps": []
     }
   },
