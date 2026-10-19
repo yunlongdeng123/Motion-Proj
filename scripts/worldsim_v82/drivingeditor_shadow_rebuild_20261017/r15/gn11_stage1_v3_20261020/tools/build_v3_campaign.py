@@ -1,0 +1,156 @@
+"""从已冻结 v2 engine 构建隔离的 GN11 v3 campaign；不启动 GPU。"""
+
+from pathlib import Path
+import argparse
+import datetime
+import json
+import shutil
+
+
+METHOD_VERSION = "GN11_STAGE1_V3_20261020"
+
+
+def read(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def write(path, value):
+    Path(path).write_text(
+        json.dumps(value, indent=2, allow_nan=False), encoding="utf-8"
+    )
+
+
+def copy_overlay(overlay, engine):
+    copied = []
+    for source in sorted(overlay.rglob("*")):
+        if not source.is_file() or "__pycache__" in source.parts:
+            continue
+        relative = source.relative_to(overlay)
+        destination = engine / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
+        copied.append(str(relative))
+    return copied
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--campaign", type=Path, required=True)
+    parser.add_argument("--source-engine", type=Path, required=True)
+    parser.add_argument("--overlay", type=Path, required=True)
+    parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--runner", type=Path, required=True)
+    parser.add_argument("--controller", type=Path, required=True)
+    parser.add_argument("--tests", type=Path, required=True)
+    parser.add_argument("--readme", type=Path, required=True)
+    parser.add_argument("--architecture", type=Path, required=True)
+    parser.add_argument("--evaluation-contract", type=Path, required=True)
+    parser.add_argument("--approval-template", type=Path, required=True)
+    arguments = parser.parse_args()
+    plan = read(arguments.plan)
+    if plan.get("method_version") != METHOD_VERSION:
+        raise RuntimeError("wrong v3 plan")
+    if arguments.campaign.exists():
+        raise FileExistsError("campaign already exists; never overwrite prepared or trained work")
+    for required in (
+        arguments.source_engine / "train.py",
+        arguments.source_engine / "gaussian_renderer" / "__init__.py",
+        arguments.source_engine / "utils" / "v2_road_objective.py",
+        arguments.overlay / "train.py",
+        arguments.overlay / "utils" / "v3_runtime_context.py",
+    ):
+        if not required.is_file():
+            raise FileNotFoundError(required)
+
+    arguments.campaign.mkdir(parents=True)
+    engine = arguments.campaign / "engine"
+    shutil.copytree(
+        arguments.source_engine,
+        engine,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+    )
+    copied = copy_overlay(arguments.overlay, engine)
+    shutil.copy2(arguments.plan, arguments.campaign / "plan.json")
+    shutil.copy2(arguments.runner, arguments.campaign / "run_v3_arm.py")
+    shutil.copy2(arguments.controller, arguments.campaign / "run_v3_four_arms.py")
+    shutil.copy2(arguments.readme, arguments.campaign / "README.md")
+    shutil.copy2(arguments.architecture, arguments.campaign / "architecture.svg")
+    shutil.copy2(
+        arguments.evaluation_contract,
+        arguments.campaign / "evaluation_contract.json",
+    )
+    shutil.copy2(
+        arguments.approval_template,
+        arguments.campaign / "GPU_APPROVAL_REQUIRED.json",
+    )
+    shutil.copytree(
+        arguments.tests,
+        arguments.campaign / "tests",
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+    )
+
+    arms_root = arguments.campaign / "arms"
+    arms_root.mkdir()
+    for arm in plan["arm_order"]:
+        arm_root = arms_root / arm
+        arm_root.mkdir()
+        write(
+            arm_root / "READY.json",
+            {
+                "status": "READY_FOR_REVIEW_GPU_NOT_AUTHORIZED",
+                "method_version": METHOD_VERSION,
+                "arm": arm,
+                "road_weights": plan["arms"][arm]["road_weights"],
+                "fresh_updates_planned": 30000,
+                "updates_executed": 0,
+                "gate_executed": False,
+                "training_started": False,
+                "quality_accepted": False,
+                "human_verdict": None,
+            },
+        )
+
+    free_bytes = shutil.disk_usage(arguments.campaign).free
+    required_free_bytes = int(plan["minimum_campaign_free_bytes"])
+    storage_ready = free_bytes >= required_free_bytes
+    receipt = {
+        "status": "DEPLOYED_CPU_ONLY_GPU_NOT_AUTHORIZED",
+        "method_version": METHOD_VERSION,
+        "campaign": str(arguments.campaign),
+        "source_engine": str(arguments.source_engine),
+        "overlay_source": str(arguments.overlay),
+        "overlay_files": copied,
+        "arms": list(plan["arm_order"]),
+        "training_updates": 0,
+        "GPU_used": False,
+        "controller_started": False,
+        "free_bytes_at_deployment": free_bytes,
+        "required_free_bytes_before_four_arm_controller": required_free_bytes,
+        "storage_ready_for_four_arms": storage_ready,
+        "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    write(arguments.campaign / "deployment_receipt.json", receipt)
+    write(
+        arguments.campaign / "status.json",
+        {
+            "status": (
+                "WAITING_USER_REVIEW_AND_GPU_APPROVAL"
+                if storage_ready
+                else "WAITING_USER_REVIEW_GPU_APPROVAL_AND_STORAGE"
+            ),
+            "method_version": METHOD_VERSION,
+            "training_updates": 0,
+            "GPU_used": False,
+            "active_workers": [],
+            "free_bytes_at_deployment": free_bytes,
+            "required_free_bytes_before_four_arm_controller": required_free_bytes,
+            "storage_ready_for_four_arms": storage_ready,
+            "quality_accepted": False,
+            "human_verdict": None,
+        },
+    )
+    print(json.dumps(receipt, indent=2, allow_nan=False))
+
+
+if __name__ == "__main__":
+    main()

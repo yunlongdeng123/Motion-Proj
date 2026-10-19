@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title{font:700 28px Arial,"Microsoft YaHei",sans-serif;fill:#0f172a}
+      .h{font:700 18px Arial,"Microsoft YaHei",sans-serif;fill:#0f172a}
+      .t{font:15px Arial,"Microsoft YaHei",sans-serif;fill:#334155}
+      .s{font:13px Arial,"Microsoft YaHei",sans-serif;fill:#475569}
+      .box{rx:16;ry:16;stroke-width:2}
+      .line{stroke:#334155;stroke-width:2.4;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1400" height="760" fill="#f8fafc"/>
+  <text x="700" y="44" text-anchor="middle" class="title">GN11 Stage-1 v3：真实合成监督、泄漏控制与分支增密</text>
+
+  <rect class="box" x="40" y="100" width="235" height="155" fill="#e0f2fe" stroke="#0284c7"/>
+  <text x="158" y="132" text-anchor="middle" class="h">固定输入</text>
+  <text x="62" y="165" class="t">• 五身份 a6/a37/a5/a26/a18</text>
+  <text x="62" y="192" class="t">• raw89–137 / 49 帧 / seed 0</text>
+  <text x="62" y="219" class="t">• RGB、mask、LiDAR、道路来源</text>
+
+  <rect class="box" x="355" y="82" width="300" height="105" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="505" y="115" text-anchor="middle" class="h">真实联合渲染</text>
+  <text x="505" y="145" text-anchor="middle" class="t">Static + Dynamic + EnvMap → I_joint</text>
+  <text x="505" y="169" text-anchor="middle" class="s">前向不按真值 mask 裁剪</text>
+
+  <rect class="box" x="355" y="220" width="300" height="105" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="505" y="253" text-anchor="middle" class="h">独立静态渲染</text>
+  <text x="505" y="283" text-anchor="middle" class="t">RGB / alpha / depth / screen-grad</text>
+  <text x="505" y="307" text-anchor="middle" class="s">道路目标 + 车前遮挡顺序</text>
+
+  <rect class="box" x="355" y="358" width="300" height="105" fill="#ffedd5" stroke="#ea580c"/>
+  <text x="505" y="391" text-anchor="middle" class="h">独立动态渲染</text>
+  <text x="505" y="421" text-anchor="middle" class="t">raw premultiplied RGB / alpha</text>
+  <text x="505" y="445" text-anchor="middle" class="s">EnvMap 混入前检查身份泄漏</text>
+
+  <path class="line" d="M275 165 L345 135"/>
+  <path class="line" d="M275 180 L345 270"/>
+  <path class="line" d="M275 195 L345 408"/>
+
+  <rect class="box" x="740" y="70" width="310" height="125" fill="#f5f3ff" stroke="#7c3aed"/>
+  <text x="895" y="103" text-anchor="middle" class="h">车身联合 RGB + 梯度路由</text>
+  <text x="762" y="134" class="t">动态：全部参数</text>
+  <text x="762" y="159" class="t">静态：几何/尺度/旋转/opacity</text>
+  <text x="762" y="183" class="s">排除静态 SH 颜色与 EnvMap</text>
+
+  <rect class="box" x="740" y="220" width="310" height="105" fill="#f0fdf4" stroke="#16a34a"/>
+  <text x="895" y="253" text-anchor="middle" class="h">静态几何纠错</text>
+  <text x="762" y="283" class="t">LiDAR 深度顺序 + 原 v2 体积排斥</text>
+  <text x="762" y="307" class="s">宽 splat 投影侵入也可收到信号</text>
+
+  <rect class="box" x="740" y="358" width="310" height="105" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="895" y="391" text-anchor="middle" class="h">动态泄漏约束</text>
+  <text x="762" y="421" class="t">严格 mask 外：mean + top-1%</text>
+  <text x="762" y="445" class="s">颜色项 + 低 alpha / 高颜色比值项</text>
+
+  <path class="line" d="M655 135 L730 135"/>
+  <path class="line" d="M655 272 L730 272"/>
+  <path class="line" d="M655 410 L730 410"/>
+
+  <rect class="box" x="740" y="515" width="310" height="120" fill="#fef9c3" stroke="#ca8a04"/>
+  <text x="895" y="548" text-anchor="middle" class="h">分支感知增密</text>
+  <text x="762" y="579" class="t">逐 Gaussian：max(branch, joint)</text>
+  <text x="762" y="604" class="t">每视图 denom 只 +1</text>
+  <text x="762" y="626" class="s">原点数上限、调度和 SGCM 不变</text>
+
+  <path class="line" d="M895 195 L895 210"/>
+  <path class="line" d="M895 325 L895 348"/>
+  <path class="line" d="M895 463 L895 505"/>
+
+  <rect class="box" x="1130" y="180" width="230" height="285" fill="#f1f5f9" stroke="#475569"/>
+  <text x="1245" y="215" text-anchor="middle" class="h">四臂 fresh 30K</text>
+  <rect x="1160" y="240" width="170" height="40" rx="10" fill="#c7d2fe"/><text x="1245" y="266" text-anchor="middle" class="t">full</text>
+  <rect x="1160" y="293" width="170" height="40" rx="10" fill="#bbf7d0"/><text x="1245" y="319" text-anchor="middle" class="t">real_only</text>
+  <rect x="1160" y="346" width="170" height="40" rx="10" fill="#fed7aa"/><text x="1245" y="372" text-anchor="middle" class="t">prior_only</text>
+  <rect x="1160" y="399" width="170" height="40" rx="10" fill="#e2e8f0"/><text x="1245" y="425" text-anchor="middle" class="t">ownership_only</text>
+
+  <path class="line" d="M1050 575 C1110 575 1090 325 1120 325"/>
+
+  <rect class="box" x="1085" y="540" width="275" height="125" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="1222" y="574" text-anchor="middle" class="h">固定区域评价</text>
+  <text x="1108" y="605" class="t">联合 / 静态 / 原始动态 / alpha / depth</text>
+  <text x="1108" y="631" class="t">真实区 / 供体区 / 未知区 / 区外</text>
+  <text x="1108" y="654" class="s">训练完成 ≠ 人审质量通过</text>
+  <path class="line" d="M1245 465 L1240 530"/>
+</svg>

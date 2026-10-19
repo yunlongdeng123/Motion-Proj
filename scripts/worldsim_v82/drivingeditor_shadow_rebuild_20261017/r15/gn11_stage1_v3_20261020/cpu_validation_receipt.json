@@ -1,0 +1,40 @@
+{
+  "status": "CPU_VALIDATED_DEPLOYED_GPU_NOT_AUTHORIZED",
+  "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "validated_utc_plus_08": "2026-10-20T00:48:03+08:00",
+  "git_branch": "research/worldsim-v8.2-drivingeditor-v3",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
+  "source_engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine",
+  "checks": {
+    "python_compile": "passed",
+    "cpu_unit_tests": {"passed": 6, "failed": 0},
+    "runtime_plan_policy_equality": "passed",
+    "four_arm_road_weights_equality": "passed",
+    "four_arm_real_input_cpu_preflight": "passed",
+    "dynamic_opacity_weight_source_contract": "passed",
+    "controller_rejects_without_explicit_flag": "passed",
+    "controller_rejects_without_GPU_APPROVAL_json": "passed",
+    "training_processes_active_after_validation": 0,
+    "GPU_device_nodes_present": false
+  },
+  "deployment": {
+    "four_arm_directories_prepared": true,
+    "controller_started": false,
+    "GPU_used": false,
+    "training_updates": 0,
+    "free_bytes": 31948443648,
+    "required_free_bytes_before_controller": 70000000000,
+    "storage_ready": false
+  },
+  "pending": [
+    "user code review",
+    "at least 70000000000 free bytes on the campaign filesystem",
+    "explicit user GPU authorization",
+    "per-arm real CUDA zero-update forward/backward gate",
+    "four fresh 30K runs",
+    "fixed-region full49 numeric and human evaluation"
+  ],
+  "quality_accepted": false,
+  "human_verdict": null
+}

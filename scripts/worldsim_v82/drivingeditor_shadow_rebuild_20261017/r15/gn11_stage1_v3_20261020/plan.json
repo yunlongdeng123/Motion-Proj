@@ -1,0 +1,82 @@
+{
+  "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "basis": {
+    "five_identity_v1": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "five_identity_v2": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine",
+    "v2_reviewed_branch": "research/worldsim-v8.2-drivingeditor-debug"
+  },
+  "python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+  "baseline_config": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+  "readiness": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+  "binding_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+  "gpu_lock": "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
+  "actors": [6, 37, 5, 26, 18],
+  "raw_frames": [89, 137],
+  "frame_count": 49,
+  "seed": 0,
+  "iterations_each": 30000,
+  "second_stage_updates": 0,
+  "checkpoint_steps": [5000, 10000, 15000, 20000, 25000, 30000],
+  "arm_order": ["full", "real_only", "prior_only", "ownership_only"],
+  "arms": {
+    "full": {
+      "road_weights": {"observed_rgb": 1.0, "prior_rgb": 0.1, "observed_depth": 0.1, "prior_depth": 0.01}
+    },
+    "real_only": {
+      "road_weights": {"observed_rgb": 1.0, "prior_rgb": 0.0, "observed_depth": 0.1, "prior_depth": 0.0}
+    },
+    "prior_only": {
+      "road_weights": {"observed_rgb": 0.0, "prior_rgb": 0.1, "observed_depth": 0.0, "prior_depth": 0.01}
+    },
+    "ownership_only": {
+      "road_weights": {"observed_rgb": 0.0, "prior_rgb": 0.0, "observed_depth": 0.0, "prior_depth": 0.0}
+    }
+  },
+  "common_v3_policy": {
+    "body_joint_rgb_weight": 1.0,
+    "static_front_occlusion_weight": 0.1,
+    "static_front_depth_margin_ratio": 0.01,
+    "static_front_temperature_ratio": 0.01,
+    "dynamic_color_leak_weight": 1.0,
+    "dynamic_color_ratio_weight": 0.1,
+    "dynamic_boundary_ignore_px": 2,
+    "dynamic_leak_top_fraction": 0.01,
+    "dynamic_leak_top_weight": 0.1,
+    "dynamic_radiance_ratio_cap": 4.0,
+    "dynamic_ratio_slack": 0.00392156862745098,
+    "densification_fusion": "per_gaussian_max_branch_vs_joint_single_count"
+  },
+  "invariants": {
+    "true_joint_forward_is_unmodified": true,
+    "body_joint_static_color_gradient": false,
+    "body_joint_static_geometry_opacity_gradient": true,
+    "body_joint_all_dynamic_gradient": true,
+    "body_joint_environment_gradient": false,
+    "road_dynamic_direct_gradient": false,
+    "road_environment_direct_gradient": false,
+    "full_raw_dynamic_opacity_mse_weight": 100.0,
+    "full_raw_dynamic_opacity_mse_is_unconditional_in_v3_hybrid": true,
+    "raster_background_is_black": true,
+    "display_color_clamp_added": false,
+    "point_caps_and_native_schedule_changed": false
+  },
+  "evaluation_regions": [
+    "body_joint_composite",
+    "measured_body_depth_static_front_occlusion",
+    "strict_dynamic_mask_outside_excluding_2px_boundary",
+    "observed_same_world_road_support",
+    "different_position_donor_prior_support",
+    "unknown_no_target_region",
+    "outside_query_region"
+  ],
+  "minimum_gpu_memory_bytes": 12884901888,
+  "minimum_campaign_free_bytes": 70000000000,
+  "max_concurrent_training": 1,
+  "automatic_restart": false,
+  "GPU_authorized_at_preparation": false,
+  "training_updates_executed": 0,
+  "human_verdict": null
+}

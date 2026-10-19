@@ -1,34 +1,16 @@
 # 当前研究状态
 
-更新：2026-10-19T14:37:09.577336+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。四组原生49视频已交付；full/real_only独立七通道已完成，prior_only/ownership_only独立渲染待GPU，完整视觉质量复核待完成，human_verdict=null。
+更新：2026-10-20T00:48:03+08:00。task=WS-V82-R15-GN11-STAGE1-V3-20261020。五身份 GN11 Stage-1 v3 已完成代码、四臂协议、架构图、CPU 测试和远端 campaign 部署；GPU 未授权、控制器未启动、训练更新 0、human_verdict=null。
 
-已完成训练：完整版、real_only、prior_only、ownership_only各fresh第一阶段30000、第二阶段0。训练及原生49节点输出齐全；独立zero-update49已完成full和real_only，prior_only/ownership_only待GPU，不能称四组最终独立评估完成。
+v3 共同修复四条机制：在真实联合前向上恢复车身最终合成 RGB，并把梯度路由到全部动态参数和静态几何/opacity，排除静态 SH 颜色与 EnvMap；用车身有效 LiDAR 深度处罚非法静态前遮挡，同时保留 v2 的三维中心体积排斥；对 EnvMap 混入前的独立动态预乘颜色增加严格掩码外 mean+top-1% 与低 alpha/高颜色比值约束；显式返回静态/动态分支屏幕梯度，与联合统计逐 Gaussian 取 max 且每视图只计一次。完整动态 mask alpha MSE 权重 100 无条件保留，不增加显示阶段颜色截断。
 
-当前实际在训：无。四组static/dynamic/environment实际optimizer.step各30000，全部24个5K节点CPU只读审计完成。训练控制器已在独立评估前退出并释放锁；当前用户已切换无卡开机，旧PID仅为历史记录，不启动训练、恢复或GPU导出。
+四组均为 a6/a37/a5/a26/a18、raw89–137 共49帧、seed0、fresh 第一阶段30K、第二阶段0、5K间隔六节点；共同使用上述 v3 修复，只改变道路来源权重：full、real_only、prior_only、ownership_only。固定单路顺序执行，每组先做真实 CUDA 前向/反向零更新 gate；失败保留现场，不自动重试或覆盖。
 
-保存证据：完整版5/10/15/20/25/30K六节点此前均CPU只读通过，不重复核验。各消融独立已审节点：real_only 5K/10K/15K/20K/25K/30K；prior_only 5K/10K/15K/20K/25K/30K；ownership_only 5K/10K/15K/20K/25K/30K。模型/Adam有限，RNG/SGCM/sampler和各自原生49齐全；CPU核验无GPU恢复或新增更新，不代表视觉质量通过，不能跨模型混用凭据。
+CPU 验证：Python 编译通过；6项张量/路由/增密测试通过；运行时政策与四臂计划逐项一致；完整动态 alpha 权重已绑定配置且不再依赖通用 entropy 开关；控制器在缺显式执行开关或缺 `GPU_APPROVAL.json` 时均实际拒绝。验证后无 v3 训练进程，无 `/dev/nvidia*`，campaign 状态为 `WAITING_USER_REVIEW_GPU_APPROVAL_AND_STORAGE`。
 
-严格范围：四组各fresh第一阶段30K、同原A五身份a6/a37/a5/a26/a18、原49帧与输入初始化协议、seed0，第二阶段0。消融保持归属修复，分别关闭真实、先验或全部道路目标；输入query/provenance/目标不改，UNKNOWN无道路监督。未修改已加载训练源码，未新增重放。全部四组训练、节点核验、最终零更新49、下载、完整画面对照与Git完成后才按授权关机；当前不能启动GPU评估或关机。
+资源准入：v2 四组实际产物约48.25GB；当前同盘可用31,948,443,648B，v3 四臂控制器要求启动前至少70,000,000,000B。当前尚差约38.05GB，因此即使误加执行参数也不能进入四臂训练；不删除任何既有实验，待用户审核、补足存储并明确开放GPU后再创建独立审批文件。
 
-资源采样：2026-10-19T14:05:22.517069+00:00，无/dev/nvidia设备节点，nvidia-smi权限拒绝；md0 clean/degraded0/syncidle，磁盘空33.237GB。无卡状态继续CPU只读导出，不尝试新GPU任务。独立评估与完整质量报告仍待完成，当前不关机；automation-2保持ACTIVE，普通无变化安静。
-
-真实输入/CUDA准入完成：相机模型锚帧raw99与SGCM地面平面锚帧raw89分别绑定，平面坐标往返、全部49相机内参/世界变换通过。当前input_bundle_002与gate_002按manifest/hash绑定；固定相机时间-0.48/0.48静态RGB最大差0，梯度组static6/dynamic9/environment1均有限，静态时间梯度无，零更新检查三个优化器实数计数均0。早期锚帧工程诊断仅零更新，未进入训练。
-
-道路query为raw89的a6/a37车身遮挡射线，总15869像素样本，有效道路交点15625。a6：总1149，晚段/全49真实确认均0、供体先验245、未知904；a37：总14720，晚段131–137确认4765、全49确认7787、供体4874、未知2059。晚段包含在全49内；这些是像素射线样本，不是世界面积/干净GT或最终质量。左右供体按用户坐标去标线后，实际几何合格左4249/右1605；5119个先验query使用770个供体样本，独立CPU重建与冻结供体索引及RGB逐项相等，最大RGB差0，未改训练目标。
-
-[完整版状态、组件和保存证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [四组实际队列与独立节点](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html)。全部为训练重建视图与工程/保存证据，质量复核尚未完成。failure_ledger_refs=[V82-F06]，不新增失败ID或效果结论。
-
-
-
-已发布视频：完整版与real_only各30K的原图、完整重建、静态、动态四通道，8个完整480×320/49帧/10fps全I帧视频，支持同步播放、逐帧定位、切换通道与速度。[完整同步对比](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native30k_compare.html)。来自已有原生节点通道，本轮远端只读PNG、不下载checkpoint/NPZ、不新增GPU或训练更新；该旧页面仅为原生四通道；最新两组独立七通道与其余待GPU范围见本轮无卡导出记录。
-
-本轮无卡导出：[四组30K完整同步视频与原生A对照](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native30k_four_compare.html)，统一使用四组各自原生节点的gt/composite/static/dynamic完整49帧；[已完成独立渲染的两组七通道](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/independent_pair_compare.html)，包含真实独立delete_all及alpha。新增22视频、复用12视频，均480×320/49帧/10fps全I帧；全部34视频1666帧实际解码、对应源PNG顺序/编码误差和JS控制fixture通过，非浏览器UI。保留原两组视频页。
-
-实际静态全49复核：四组共196张完整静态PNG已查看。完整版仍有矩形道路纹理、暗条与接缝；real_only有黄白亮块/蓝边，prior_only有黑块，ownership_only仍有黑色车状轮廓。均不判干净静态通过；动态/完整重建/alpha/道路来源区域与阴影的全量质量对照仍未完成。[实际观看范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native_static_review.json)。human_verdict=null。
-
-
-
-AI review package delivered: four ablations plus native five-ID GN11 stage1 30K baseline, 70,643,843 bytes (70.64MB), SHA256 d7c337e6768a12faf096e752081398d5ac1fcc60240e5d6bd7adbc9d710acfc0. Exact core sources/configs/diffs pushed and remote verified at c5ce9610a59d1e59ac1fd69723917ec12ab12f40. ZIP contains offline compare pages, full49 videos, frozen road evidence/targets, licenses and review prompts; excludes weights/full logs/compiled binaries. Two independent renders remain pending GPU; no new training or GPU use during packaging.
+[v3 方法、组件图、四臂与限制](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) · [固定计划](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/plan.json) · [CPU 部署凭据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/cpu_validation_receipt.json)。failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=none；本轮不新增失败ID，不宣称GPU、30K或质量结果。
 
 ## 已完成的原A/B基线与历史证据
 
