@@ -2,7 +2,7 @@
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
   "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
-  "updated_utc": "2026-10-19T12:44:27.270110+00:00",
+  "updated_utc": "2026-10-19T13:19:53.499789+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
@@ -81,7 +81,7 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 41994178560
+    "disk_free_bytes_at_snapshot": 37699682304
   },
   "failure_ledger_refs": [
     "V82-F06"
@@ -181,11 +181,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 10100,
+      "updates_executed": 20400,
       "actual_optimizer_step_counts": {
-        "static": 10100,
-        "dynamic": 10100,
-        "environment": 10100
+        "static": 20400,
+        "dynamic": 20400,
+        "environment": 20400
       },
       "actual_zero_update_gate_passed": false,
       "road_weights": {
@@ -197,7 +197,9 @@
       "worker_pid": 8215,
       "audited_checkpoint_steps": [
         5000,
-        10000
+        10000,
+        15000,
+        20000
       ]
     }
   },
