@@ -1,5 +1,5 @@
 {
-  "collected_utc": "2026-10-19T11:12:24.637802+00:00",
+  "collected_utc": "2026-10-19T11:44:15.981840+00:00",
   "main": {
     "status": "complete",
     "mode": "train",
@@ -503,7 +503,7 @@
       "free_bytes": 75851489280,
       "required_bytes": 71415546128.0
     },
-    "updated_utc": "2026-10-19T11:12:23.938846+00:00",
+    "updated_utc": "2026-10-19T11:44:11.243479+00:00",
     "pending_arms": [
       "ownership_only"
     ]
@@ -568,26 +568,26 @@
         "mode": "train",
         "pid": 4194,
         "parent_pid": 4120,
-        "iteration": 18700,
+        "iteration": 25600,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T09:59:00.746251+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 4401.602964838967,
-        "loss": 0.23592883348464966,
-        "psnr": 25.908641815185547,
+        "wall_seconds": 6308.984323125333,
+        "loss": 0.15407247841358185,
+        "psnr": 26.600265502929688,
         "static_points": 711166,
         "dynamic_points": 1051540,
         "optimizer_step_counts": {
-          "static": 18700,
-          "dynamic": 18700,
-          "environment": 18700
+          "static": 25600,
+          "dynamic": 25600,
+          "environment": 25600
         },
-        "cuda_allocated_bytes": 2155969024,
-        "cuda_reserved_bytes": 3521118208,
+        "cuda_allocated_bytes": 2157063680,
+        "cuda_reserved_bytes": 4372561920,
         "cuda_peak_allocated_bytes": 5404356608,
-        "updated_utc": "2026-10-19T11:12:22.349840+00:00"
+        "updated_utc": "2026-10-19T11:44:09.731203+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -706,12 +706,16 @@
       "published_steps": [
         5000,
         10000,
-        15000
+        15000,
+        20000,
+        25000
       ],
       "audited_steps": [
         5000,
         10000,
-        15000
+        15000,
+        20000,
+        25000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -763,26 +767,26 @@
         "mode": "train",
         "pid": 5503,
         "parent_pid": 4120,
-        "iteration": 8700,
+        "iteration": 15500,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T10:40:56.412665+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 1864.9162326455116,
-        "loss": 0.346842497587204,
-        "psnr": 26.815975189208984,
-        "static_points": 668774,
+        "wall_seconds": 3785.7799970116466,
+        "loss": 0.27353933453559875,
+        "psnr": 25.34928321838379,
+        "static_points": 714852,
         "dynamic_points": 1034415,
         "optimizer_step_counts": {
-          "static": 8700,
-          "dynamic": 8700,
-          "environment": 8700
+          "static": 15500,
+          "dynamic": 15500,
+          "environment": 15500
         },
-        "cuda_allocated_bytes": 2709249024,
-        "cuda_reserved_bytes": 4613734400,
+        "cuda_allocated_bytes": 2149110784,
+        "cuda_reserved_bytes": 3869245440,
         "cuda_peak_allocated_bytes": 5368541184,
-        "updated_utc": "2026-10-19T11:12:01.329473+00:00"
+        "updated_utc": "2026-10-19T11:44:02.193293+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -899,10 +903,14 @@
         "automatic_restart": false
       },
       "published_steps": [
-        5000
+        5000,
+        10000,
+        15000
       ],
       "audited_steps": [
-        5000
+        5000,
+        10000,
+        15000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -1024,10 +1032,10 @@
       "state": "R"
     }
   },
-  "disk_required_estimate_bytes": 48732048192.0,
-  "disk_free_bytes": 62219091968,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 8353 MiB, 23879 MiB, 62 %",
-  "gpu_processes": "4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 4874 MiB\n5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 4490 MiB",
+  "disk_required_estimate_bytes": 34148639088.0,
+  "disk_free_bytes": 53902012416,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 10223 MiB, 22009 MiB, 98 %",
+  "gpu_processes": "4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 4996 MiB\n5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 4722 MiB",
   "md0": {
     "array_state": "active",
     "degraded": "0",
