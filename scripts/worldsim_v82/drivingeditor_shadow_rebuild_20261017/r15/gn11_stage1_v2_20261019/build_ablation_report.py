@@ -66,6 +66,14 @@ def main():
         doc=doc.replace('<h2>资源和证据</h2>','<p>已实际核对以下消融的前100条日志，选帧、时间扰动和日志记录的静态/动态各参数组学习率与当前完整版逐项一致：'+' · '.join(protocols)+'。环境学习率不在这份日志中；这不是旧初始GPU参数逐位比较，日志条数也不替代实际完成更新计数。</p><h2>资源和证据</h2>')
     if (O.parent/'native30k_compare.html').exists():
         doc=doc.replace('<h2>比较结构</h2>','<p class="state"><a href="../native30k_compare.html"><strong>观看已完成两组30K的完整同步视频对比</strong></a><br>完整版与仅跨帧，四通道、完整49帧，可同步播放、切换通道与逐帧定位。</p><h2>比较结构</h2>')
+    from cpu_delivery_banner import banner
+    doc=doc.replace('<h2>比较结构</h2>',banner(O.parent,'../')+'<h2>比较结构</h2>')
+    if all((a['status'] or {}).get('status')=='complete' for a in runtime['arms'].values()):
+        doc=doc.replace(f'控制器PID{runtime["registry"]["controller_pid"]}，并发上限为两路，原主实验和gate均计入上限。',
+          '四组训练均已结束；表中PID为历史训练记录，不能当成当前活进程。')
+        doc=doc.replace('完整效果对照尚未完成，human_verdict=null。','原生四通道视频已交付，两组独立七通道已交付；其余独立渲染与完整质量复核待完成，human_verdict=null。')
+        doc=doc.replace('30K后输出各组49帧full / dynamic / static / delete_all / alpha零更新评估，并实际观看：',
+          '最终独立评估计划覆盖四组49帧full / dynamic / static / delete_all / alpha；实际完成范围见顶部，质量复核关注：')
     (O/'index.html').write_text(doc,encoding='utf-8')
     print(json.dumps(dict(report=str(O/'index.html'),arms=contract['arms'],quality_accepted=False)))
 

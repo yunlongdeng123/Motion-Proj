@@ -14,7 +14,7 @@ def main(campaign):
     if status['optimizer_step_counts']['static']!=30000 or status['optimizer_step_counts']['dynamic']!=30000:
         raise RuntimeError('actual update counts not30K')
     if out.exists():raise FileExistsError('preserve existing complete/partial evaluation before retry')
-    lock=(C.parent/'gpu_slot.lock').open('a+')
+    lock=Path('/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock').open('a+')
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     apps=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name','--format=csv,noheader'],text=True).strip()
     if apps:raise RuntimeError('GPU already occupied: '+apps)
@@ -36,17 +36,28 @@ def main(campaign):
     e=EnvLight(resolution=args.env_map_res).cuda();models=dict(static=s,dynamic=d,environment=e)
     names=dict(static='chkpnt30000.pth',dynamic='dynamic_chkpnt30000.pth',environment='env_light_chkpnt30000.pth')
     originals={n:dict(bytes=(run/n).stat().st_size,mtime_ns=(run/n).stat().st_mtime_ns) for n in [*names.values(),'training_state30000.pth']}
-    def equal(a,b):
-        if torch.is_tensor(a):return torch.is_tensor(b) and torch.equal(a,b)
+    native_state_device_normalizations=[]
+    def equal(a,b,path=()):
+        if torch.is_tensor(a):
+            if not torch.is_tensor(b) or a.shape!=b.shape or a.dtype!=b.dtype:return False
+            if a.device!=b.device:
+                # Native non-capturable Adam places scalar step counters on CPU.
+                # All model tensors and Adam moments must retain their CUDA placement.
+                scalar_step=bool(path and path[-1]=='step' and a.numel()==1)
+                lineage_metadata=bool(len(path)>1 and path[-2]=='sgcm_lineage_v1' and path[-1] in ['lineage_ids','clone_blocked'])
+                if not scalar_step and not lineage_metadata:return False
+                native_state_device_normalizations.append(dict(path='.'.join(map(str,path)),loaded_device=str(a.device),captured_device=str(b.device),
+                    reason='native_Adam_scalar_step_placement' if scalar_step else 'native_SGCM_capture_CPU_metadata'))
+            return torch.equal(a.detach().cpu(),b.detach().cpu())
         if isinstance(a,np.ndarray):return isinstance(b,np.ndarray) and np.array_equal(a,b)
-        if isinstance(a,dict):return isinstance(b,dict) and set(a)==set(b) and all(equal(a[k],b[k]) for k in a)
-        if isinstance(a,(list,tuple)):return type(a)==type(b) and len(a)==len(b) and all(equal(x,y) for x,y in zip(a,b))
+        if isinstance(a,dict):return isinstance(b,dict) and set(a)==set(b) and all(equal(a[k],b[k],path+(k,)) for k in a)
+        if isinstance(a,(list,tuple)):return type(a)==type(b) and len(a)==len(b) and all(equal(x,y,path+(i,)) for i,(x,y) in enumerate(zip(a,b)))
         return type(a)==type(b) and a==b
     for name,model in models.items():
         state,step=torch.load(run/names[name],map_location='cuda',weights_only=False)
         if step!=30000:raise RuntimeError('wrong model step')
         model.restore(state,args)
-        if not equal(state,model.capture()):raise RuntimeError('actual model/Adam restore differs: '+name)
+        if not equal(state,model.capture(),(name,)):raise RuntimeError('actual model/Adam restore differs: '+name)
         del state
     scene.hybrid_sampler=CameraSampler(args.seed,scene.getTrainCameras())
     sgcm=create_sgcm_controller(args.source_path,args,training_views=scene.getTrainCameras(),gaussians=s)
@@ -59,7 +70,8 @@ def main(campaign):
     def forbidden(*a,**k):raise RuntimeError('evaluation attempted optimizer update')
     for m in models.values():m.optimizer.step=forbidden
     write(out/'restore_receipt.json',dict(status='PASSED_ACTUAL_30K_MODEL_ADAM_RNG_SAMPLER_SGCM_RESTORE',
-        source_run=str(run),parameter_updates=0,endpoint_training_continuation_authorized=False))
+        source_run=str(run),parameter_updates=0,endpoint_training_continuation_authorized=False,
+        model_and_Adam_values_exact=True,native_state_device_normalizations=native_state_device_normalizations))
     def png(path,t):
         value=t.detach().clamp(0,1).cpu();value=value.permute(1,2,0) if value.shape[0]==3 else value[0]
         Image.fromarray(np.rint(value.numpy()*255).astype(np.uint8)).save(path)

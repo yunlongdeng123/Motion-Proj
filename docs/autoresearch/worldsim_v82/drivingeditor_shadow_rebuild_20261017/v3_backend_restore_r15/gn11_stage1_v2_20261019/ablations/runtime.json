@@ -1,5 +1,5 @@
 {
-  "collected_utc": "2026-10-19T13:19:53.499789+00:00",
+  "collected_utc": "2026-10-19T14:05:22.517069+00:00",
   "main": {
     "status": "complete",
     "mode": "train",
@@ -27,7 +27,7 @@
     "updated_utc": "2026-10-19T10:38:44.364935+00:00"
   },
   "registry": {
-    "status": "AUTHORIZED_ABLATIONS_RUNNING_MAX_TWO_TRAINING_INCLUDING_MAIN",
+    "status": "THREE_ABLATIONS_TRAINING_COMPLETE_AWAITING_ZERO_UPDATE49_AND_REPORT",
     "controller_pid": 4120,
     "controller_starttime_ticks": 839092087,
     "main_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
@@ -544,7 +544,7 @@
           "--gpu-gate",
           "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001/gpu_gate_receipt.json"
         ],
-        "returncode": null
+        "returncode": 0
       }
     },
     "arm_queue": [
@@ -559,7 +559,7 @@
       "free_bytes": 75851489280,
       "required_bytes": 71415546128.0
     },
-    "updated_utc": "2026-10-19T13:19:53.351315+00:00",
+    "updated_utc": "2026-10-19T13:51:40.059095+00:00",
     "pending_arms": []
   },
   "controller_launch": {
@@ -1020,30 +1020,30 @@
     },
     "ownership_only": {
       "status": {
-        "status": "training",
+        "status": "complete",
         "mode": "train",
         "pid": 8215,
         "parent_pid": 4120,
-        "iteration": 20400,
+        "iteration": 30000,
         "logical_budget": 30000,
         "second_stage_updates": 0,
         "started_utc": "2026-10-19T12:04:29.265135+00:00",
         "GPU": "NVIDIA GeForce RTX 4080 SUPER",
         "quality_accepted": false,
-        "wall_seconds": 4524.228391891345,
-        "loss": 0.24831749498844147,
-        "psnr": 26.87497901916504,
+        "wall_seconds": 6429.947585016489,
+        "loss": 0.21243393421173096,
+        "psnr": 28.642807006835938,
         "static_points": 770474,
         "dynamic_points": 1070255,
         "optimizer_step_counts": {
-          "static": 20400,
-          "dynamic": 20400,
-          "environment": 20400
+          "static": 30000,
+          "dynamic": 30000,
+          "environment": 30000
         },
-        "cuda_allocated_bytes": 2229677056,
-        "cuda_reserved_bytes": 3978297344,
+        "cuda_allocated_bytes": 2072913920,
+        "cuda_reserved_bytes": 4148166656,
         "cuda_peak_allocated_bytes": 5514693120,
-        "updated_utc": "2026-10-19T13:19:53.073091+00:00"
+        "updated_utc": "2026-10-19T13:49:56.938184+00:00"
       },
       "gate": {
         "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
@@ -1163,13 +1163,17 @@
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000,
+        30000
       ],
       "audited_steps": [
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000,
+        30000
       ],
       "manifest": {
         "status": "ISOLATED_ROAD_SOURCE_ABLATION",
@@ -1216,12 +1220,7 @@
       }
     }
   },
-  "controller_process": {
-    "command": "/usr/bin/python3 /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_road_ablation_group.py --campaign /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
-    "starttime_ticks": 839092087,
-    "parent_pid": 1,
-    "state": "S"
-  },
+  "controller_process": null,
   "processes": {
     "2145": null,
     "4125": null,
@@ -1229,20 +1228,19 @@
     "5434": null,
     "5503": null,
     "8146": null,
-    "8215": {
-      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/gate_001/gpu_gate_receipt.json",
-      "starttime_ticks": 839847016,
-      "parent_pid": 4120,
-      "state": "S"
-    }
+    "8215": null
   },
-  "disk_required_estimate_bytes": 11474476192.0,
-  "disk_free_bytes": 37699682304,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 4154 MiB, 28078 MiB, 71 %",
-  "gpu_processes": "8215, /root/autodl-tmp/envs/drivingeditor/bin/python, 4968 MiB",
+  "disk_required_estimate_bytes": 8000000000.0,
+  "disk_free_bytes": 33237209088,
+  "compute_device_nodes": [],
+  "boot_id": "81f72984-0729-4646-82aa-ae9f1494dd76",
+  "gpu_query_error": "[Errno 13] Permission denied: 'nvidia-smi'",
+  "gpu": "NO_GPU_DEVICE_NODES",
+  "gpu_processes": null,
   "md0": {
     "array_state": "clean",
     "degraded": "0",
     "sync_action": "idle"
-  }
+  },
+  "controller_log_last4000": ""
 }

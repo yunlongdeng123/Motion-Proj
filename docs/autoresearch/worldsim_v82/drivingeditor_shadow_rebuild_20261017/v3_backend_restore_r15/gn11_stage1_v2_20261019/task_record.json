@@ -1,8 +1,8 @@
 {
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
-  "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
-  "updated_utc": "2026-10-19T13:19:53.499789+00:00",
+  "state": "FOUR_TRAININGS_COMPLETE_CPU_DELIVERY_READY_TWO_INDEPENDENT_RENDERS_PENDING_GPU",
+  "updated_utc": "2026-10-19T14:11:37.911250+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
@@ -81,7 +81,7 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 37699682304
+    "disk_free_bytes_at_snapshot": 33237209088
   },
   "failure_ledger_refs": [
     "V82-F06"
@@ -180,12 +180,12 @@
       "updates_authorized": 30000,
       "seed": 0,
       "second_stage_updates": 0,
-      "status": "training",
-      "updates_executed": 20400,
+      "status": "complete",
+      "updates_executed": 30000,
       "actual_optimizer_step_counts": {
-        "static": 20400,
-        "dynamic": 20400,
-        "environment": 20400
+        "static": 30000,
+        "dynamic": 30000,
+        "environment": 30000
       },
       "actual_zero_update_gate_passed": false,
       "road_weights": {
@@ -199,7 +199,9 @@
         5000,
         10000,
         15000,
-        20000
+        20000,
+        25000,
+        30000
       ]
     }
   },
@@ -220,5 +222,72 @@
     ],
     "independent_delete_evaluation_completed": false,
     "quality_accepted": false
+  },
+  "cpu_export_delivery": {
+    "native_four_page": "native30k_four_compare.html",
+    "independent_two_page": "independent_pair_compare.html",
+    "new_videos": 22,
+    "reused_videos": 12,
+    "decoded_frames": 1666,
+    "training_updates": 0,
+    "GPU_used": false,
+    "independent_pending": [
+      "prior_only",
+      "ownership_only"
+    ]
+  },
+  "independent_export_status": {
+    "status": "FOUR_TRAININGS_COMPLETE_CPU_DELIVERY_READY_TWO_INDEPENDENT_RENDERS_PENDING_GPU",
+    "updated_utc": "2026-10-19T14:11:37.911250+00:00",
+    "all_four_actual_optimizer_counts": 30000,
+    "all_24_checkpoints_CPU_audited": true,
+    "current_device_state": "NO_GPU_DEVICE_NODES",
+    "independent_completed": {
+      "full": {
+        "completed_utc": "2026-10-19T13:57:23.115215+00:00",
+        "frames": 49,
+        "PNG_count": 343,
+        "parameter_updates": 0,
+        "source_checkpoints_unchanged": true,
+        "actual_model_Adam_RNG_sampler_SGCM_restore": true
+      },
+      "real_only": {
+        "completed_utc": "2026-10-19T13:59:16.697913+00:00",
+        "frames": 49,
+        "PNG_count": 343,
+        "parameter_updates": 0,
+        "source_checkpoints_unchanged": true,
+        "actual_model_Adam_RNG_sampler_SGCM_restore": true
+      }
+    },
+    "independent_pending": {
+      "prior_only": "SSH disconnected during user no-GPU reboot; partial 0PNG, no completion/restore receipt; preserved",
+      "ownership_only": "not started; no independent result"
+    },
+    "first_full_attempt": "stopped on CUDA/CPU comparison of native SGCM lineage metadata; no optimizer update; diagnostic directory preserved",
+    "exporter_fix": "exact value/shape/dtype comparison normalizes only native SGCM CPU-captured metadata device; no value tolerance or tensor dropped",
+    "exporter_actual_GPU_validation": [
+      "full actual success",
+      "real_only actual success"
+    ],
+    "native_state_device_normalizations": [
+      {
+        "path": "static.14.sgcm_lineage_v1.lineage_ids",
+        "loaded_device": "cuda:0",
+        "captured_device": "cpu",
+        "reason": "native_SGCM_capture_CPU_metadata"
+      },
+      {
+        "path": "static.14.sgcm_lineage_v1.clone_blocked",
+        "loaded_device": "cuda:0",
+        "captured_device": "cpu",
+        "reason": "native_SGCM_capture_CPU_metadata"
+      }
+    ],
+    "no_training_restart_or_replay": true,
+    "source_checkpoints_modified": false,
+    "CPU_only_export_GPU_used": false,
+    "quality_accepted": false,
+    "human_verdict": null
   }
 }

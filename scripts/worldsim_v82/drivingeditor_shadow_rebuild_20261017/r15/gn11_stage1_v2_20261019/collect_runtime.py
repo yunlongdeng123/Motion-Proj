@@ -21,8 +21,16 @@ if pid:
       state=next(l for l in p.joinpath('status').read_text().splitlines() if l.startswith('State:')),
       starttime_ticks=int(p.joinpath('stat').read_text().rsplit(')',1)[1].split()[19]))
 r['disk_free_bytes']=shutil.disk_usage(C).free
-r['gpu']=subprocess.check_output(['nvidia-smi','--query-gpu=name,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader'],text=True,timeout=8).strip()
-r['gpu_processes']=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,used_memory','--format=csv,noheader'],text=True,timeout=8).strip()
+r['compute_device_nodes']=[str(p) for p in Path('/dev').glob('nvidia*')]
+r['boot_id']=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+try:
+ r['gpu']=subprocess.check_output(['nvidia-smi','--query-gpu=name,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader'],text=True,timeout=8,stderr=subprocess.STDOUT).strip()
+ r['gpu_processes']=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,used_memory','--format=csv,noheader'],text=True,timeout=8,stderr=subprocess.STDOUT).strip()
+except (OSError,subprocess.SubprocessError) as e:
+ r['gpu_query_error']=str(e);r['gpu']='NO_GPU_DEVICE_NODES' if not r['compute_device_nodes'] else 'GPU_QUERY_UNAVAILABLE'
+ r['gpu_processes']=None
+if r.get('process',{}).get('exists'):
+ r['process']['matches_training_command']='run_candidate.py' in r['process'].get('command','')
 r['md0']={}
 for key in ['array_state','degraded','sync_action']:
  try:r['md0'][key]=(Path('/sys/block/md0/md')/key).read_text().strip()

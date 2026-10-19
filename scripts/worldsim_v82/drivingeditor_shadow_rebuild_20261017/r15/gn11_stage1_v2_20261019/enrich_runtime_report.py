@@ -15,10 +15,10 @@ def enrich(text,W,O):
     status=runtime['status'];step=int(status.get('iteration',0));phase=status.get('status','unknown')
     started=datetime.datetime.fromisoformat(status['started_utc']).astimezone(datetime.timezone(datetime.timedelta(hours=8)))
     header=f'新版第一阶段已启动：{step:,}/30,000；状态 {html.escape(phase)}。'
-    if phase=='complete':header='第一阶段30K训练完成；最终零更新49帧交付与实际质量复核待完成。'
+    if phase=='complete':header='第一阶段30K训练完成；独立评估和视频的实际完成范围见下方，质量未通过验收。'
     if 'failed' in phase:header='当前运行出现失败，已保留证据；没有自动重启或重放。'
     a='<strong>本地候选代码与 CPU 检查完成；尚未开始新版训练。</strong><br>\nAutoDL 待用户开机。真实 LiDAR / 相机输入绑定、CUDA 零更新前后向检查和完整 30K 训练均待执行。下方是输入与供体预览，不是修复后的渲染结果。'
-    b=f'<strong>{header}</strong><br>启动：{started:%Y-%m-%d %H:%M:%S} 新加坡时间；PID {status["pid"]}。真实49帧输入和CUDA零更新检查已通过，固定相机跨时间静态RGB最大差为0。<br>采样UTC：{html.escape(runtime["collected_utc"])}；页面中的道路图是查询来源证据，训练效果尚未验收。'
+    b=f'<strong>{header}</strong><br>历史启动：{started:%Y-%m-%d %H:%M:%S} 新加坡时间；历史训练PID {status["pid"]}。真实49帧输入和CUDA零更新检查已通过，固定相机跨时间静态RGB最大差为0。<br>采样UTC：{html.escape(runtime["collected_utc"])}；设备状态：{html.escape(runtime["gpu"])}。页面中的道路图是查询来源证据，训练效果尚未验收。'
     if a not in text:raise RuntimeError('report phase anchor changed')
     text=text.replace(a,b)
     text=text.replace('当前没有得到真实 raw89 查询曝光比例。','真实查询结果见下方分身份表；仅表示当前严格检查确认的观测，不是隐藏道路真值或最终重建质量。')

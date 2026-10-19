@@ -32,8 +32,13 @@ if r['registry']:
     r['disk_required_estimate_bytes']=collective_storage_required(g)
 import shutil
 r['disk_free_bytes']=shutil.disk_usage(C).free
-r['gpu']=subprocess.check_output(['nvidia-smi','--query-gpu=name,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader'],text=True).strip()
-r['gpu_processes']=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,used_memory','--format=csv,noheader'],text=True).strip()
+r['compute_device_nodes']=[str(p) for p in Path('/dev').glob('nvidia*')]
+r['boot_id']=Path('/proc/sys/kernel/random/boot_id').read_text().strip()
+try:
+ r['gpu']=subprocess.check_output(['nvidia-smi','--query-gpu=name,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader'],text=True,timeout=8,stderr=subprocess.STDOUT).strip()
+ r['gpu_processes']=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,used_memory','--format=csv,noheader'],text=True,timeout=8,stderr=subprocess.STDOUT).strip()
+except (OSError,subprocess.SubprocessError) as e:
+ r['gpu_query_error']=str(e);r['gpu']='NO_GPU_DEVICE_NODES' if not r['compute_device_nodes'] else 'GPU_QUERY_UNAVAILABLE';r['gpu_processes']=None
 r['md0']={n:(Path('/sys/block/md0/md')/n).read_text().strip() for n in ['array_state','degraded','sync_action']}
 if r['controller_process'] is None or (r['registry'] and 'FAILED' in r['registry']['status']):r['controller_log_last4000']=tail(g/'controller.log')
 print(json.dumps(r))
