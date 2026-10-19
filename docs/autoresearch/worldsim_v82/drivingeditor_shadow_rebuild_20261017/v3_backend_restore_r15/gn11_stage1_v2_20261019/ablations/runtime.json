@@ -1,0 +1,832 @@
+{
+  "collected_utc": "2026-10-19T10:01:05.146809+00:00",
+  "main": {
+    "status": "training",
+    "mode": "train",
+    "pid": 2145,
+    "parent_pid": 1,
+    "iteration": 20200,
+    "logical_budget": 30000,
+    "second_stage_updates": 0,
+    "started_utc": "2026-10-19T09:00:10.073024+00:00",
+    "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+    "quality_accepted": false,
+    "wall_seconds": 3651.342094603926,
+    "loss": 0.13866522908210754,
+    "psnr": 28.717288970947266,
+    "static_points": 755994,
+    "dynamic_points": 1003745,
+    "optimizer_step_counts": {
+      "static": 20200,
+      "dynamic": 20200,
+      "environment": 20200
+    },
+    "cuda_allocated_bytes": 2154621440,
+    "cuda_reserved_bytes": 3818913792,
+    "cuda_peak_allocated_bytes": 5253299712,
+    "updated_utc": "2026-10-19T10:01:00.917190+00:00"
+  },
+  "registry": {
+    "status": "AUTHORIZED_ABLATIONS_RUNNING_MAX_TWO_TRAINING_INCLUDING_MAIN",
+    "controller_pid": 4120,
+    "controller_starttime_ticks": 839092087,
+    "main_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
+    "main_pid": 2145,
+    "main_starttime_ticks": 838741102,
+    "baseline_config": {
+      "test_iterations": [
+        10000,
+        20000,
+        30000
+      ],
+      "save_iterations": [
+        10000,
+        20000,
+        30000
+      ],
+      "checkpoint_iterations": [
+        10000,
+        20000,
+        30000
+      ],
+      "exhaust_test": false,
+      "test_interval": 5000,
+      "render_static": false,
+      "vis_step": 100,
+      "start_checkpoint": null,
+      "seed": 0,
+      "sh_degree": 3,
+      "scene_type": "Waymo",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+      "start_frame": 89,
+      "end_frame": 137,
+      "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11",
+      "resolution_scales": [
+        4
+      ],
+      "resolution": -1,
+      "white_background": false,
+      "data_device": "cuda",
+      "eval": false,
+      "debug_cuda": false,
+      "cam_num": 4,
+      "t_init": 0.1,
+      "cycle": 0.2,
+      "velocity_decay": 1.0,
+      "random_init_point": 0,
+      "dynamic_random_init_point": 0,
+      "fix_radius": 0.0,
+      "time_duration": [
+        -0.5,
+        0.5
+      ],
+      "num_pts": 600000,
+      "frame_interval": 0.02,
+      "testhold": 4,
+      "env_map_res": 1024,
+      "separate_scaling_t": 0.2,
+      "neg_fov": true,
+      "convert_SHs_python": false,
+      "compute_cov3D_python": false,
+      "debug": false,
+      "depth_blend_mode": 0,
+      "env_optimize_until": 1000000000,
+      "env_optimize_from": 0,
+      "iterations": 30000,
+      "position_lr_init": 0.00016,
+      "position_lr_final": 1.6e-06,
+      "position_lr_delay_mult": 0.01,
+      "t_lr_init": 0.0008,
+      "position_lr_max_steps": 30000,
+      "feature_lr": 0.0025,
+      "opacity_lr": 0.005,
+      "scaling_lr": 0.005,
+      "scaling_t_lr": 0.002,
+      "velocity_lr": 0.001,
+      "rotation_lr": 0.001,
+      "envmap_lr": 0.01,
+      "time_split_frac": 0.5,
+      "percent_dense": 0.01,
+      "thresh_opa_prune": 0.005,
+      "densification_interval": 100,
+      "opacity_reset_interval": 3000,
+      "densify_from_iter": 500,
+      "densify_until_iter": 15000,
+      "densify_grad_threshold": 0.00017,
+      "densify_grad_t_threshold": 0.002,
+      "densify_until_num_points": 3000000,
+      "dynamic_densify_until_num_points": 1000000,
+      "sh_increase_interval": 2000,
+      "scale_increase_interval": 5000,
+      "prune_big_point": 1,
+      "size_threshold": 20,
+      "big_point_threshold": 0.1,
+      "t_grad": true,
+      "no_time_split": true,
+      "contract": true,
+      "lambda_dssim": 0.2,
+      "lambda_opa": 0.0,
+      "lambda_sky_opa": 0.05,
+      "lambda_opacity_entropy": 0.05,
+      "static_lambda_opacity_entropy": 0.05,
+      "lambda_inv_depth": 0.1,
+      "lambda_self_supervision": 0.5,
+      "lambda_t_reg": 0.1,
+      "lambda_v_reg": 0.01,
+      "lambda_lidar": 0.1,
+      "lidar_decay": 1.0,
+      "lambda_v_smooth": 0.1,
+      "fisheye_cam_num": 2,
+      "long_cam_num": 1,
+      "is_fisheye": false,
+      "long_focus": true,
+      "initialization": false,
+      "pos_shift": false,
+      "pos_rotation": false,
+      "reg3d_interval": 10,
+      "reg3d_k": 5,
+      "reg3d_lambda_val": 2,
+      "reg3d_max_points": 100000,
+      "reg3d_sample_size": 1000,
+      "is_training": true,
+      "require_boundingbox": false,
+      "nuscenes": false,
+      "paper_eval_train_each_checkpoint": true,
+      "including_dynamic": true,
+      "adding": false,
+      "dynamic_densify_until_iter": 15000,
+      "paper_method": true,
+      "paper_lambda_sky": 0.05,
+      "paper_lambda_nps": 0.01,
+      "paper_lambda_depth": 0.1,
+      "paper_weight_provenance": "2024 active weights retained; Eq7=.05, Eq16=.1, NPS=.01 are declared unverified author coefficients",
+      "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+      "paper_opacity_domain": "full raw-alpha MSE against binary Md; coefficient100 inherited control",
+      "paper_sgcm_enabled": true,
+      "sgcm_dr_m": 0.5,
+      "sgcm_interval": 100,
+      "sgcm_offset": 50,
+      "sgcm_start": 500,
+      "sgcm_end": 15000,
+      "sgcm_max_new_points": 10000,
+      "sgcm_split_radius_px": 20,
+      "sgcm_ground_margin_m": 3.0,
+      "sgcm_ground_cell_m": 0.5,
+      "sgcm_plane_inlier_m": 0.15,
+      "sgcm_ground_min_cells": 30,
+      "sgcm_ground_min_fraction": 0.35,
+      "sgcm_ground_max_tilt_deg": 20,
+      "sgcm_ground_max_rmse_m": 0.1,
+      "hybrid_method": true,
+      "hybrid_nps_enabled": true,
+      "sgcm_guard_enabled": true,
+      "hybrid_lambda_dynamic_rgb": 5.0,
+      "hybrid_lambda_sky_rgb": 5.0,
+      "hybrid_lambda_static_rgb": 1.0,
+      "hybrid_lambda_dynamic_opacity": 100.0,
+      "hybrid_time_reg_eps": 1e-08,
+      "hybrid_gradient_nodes": [
+        1,
+        1000,
+        10000,
+        15000,
+        20000,
+        30000
+      ],
+      "hybrid_opacity_reset_policy": "densification_only",
+      "hybrid_arm": "GN11",
+      "followup_scene_spec": {
+        "scene_id": "scene0008_089_137",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+        "frame_ids": [
+          "0008089",
+          "0008090",
+          "0008091",
+          "0008092",
+          "0008093",
+          "0008094",
+          "0008095",
+          "0008096",
+          "0008097",
+          "0008098",
+          "0008099",
+          "0008100",
+          "0008101",
+          "0008102",
+          "0008103",
+          "0008104",
+          "0008105",
+          "0008106",
+          "0008107",
+          "0008108",
+          "0008109",
+          "0008110",
+          "0008111",
+          "0008112",
+          "0008113",
+          "0008114",
+          "0008115",
+          "0008116",
+          "0008117",
+          "0008118",
+          "0008119",
+          "0008120",
+          "0008121",
+          "0008122",
+          "0008123",
+          "0008124",
+          "0008125",
+          "0008126",
+          "0008127",
+          "0008128",
+          "0008129",
+          "0008130",
+          "0008131",
+          "0008132",
+          "0008133",
+          "0008134",
+          "0008135",
+          "0008136",
+          "0008137"
+        ],
+        "camera_directory": "image_0",
+        "frame_ids_with_camera": [
+          "image_0/0008089",
+          "image_0/0008090",
+          "image_0/0008091",
+          "image_0/0008092",
+          "image_0/0008093",
+          "image_0/0008094",
+          "image_0/0008095",
+          "image_0/0008096",
+          "image_0/0008097",
+          "image_0/0008098",
+          "image_0/0008099",
+          "image_0/0008100",
+          "image_0/0008101",
+          "image_0/0008102",
+          "image_0/0008103",
+          "image_0/0008104",
+          "image_0/0008105",
+          "image_0/0008106",
+          "image_0/0008107",
+          "image_0/0008108",
+          "image_0/0008109",
+          "image_0/0008110",
+          "image_0/0008111",
+          "image_0/0008112",
+          "image_0/0008113",
+          "image_0/0008114",
+          "image_0/0008115",
+          "image_0/0008116",
+          "image_0/0008117",
+          "image_0/0008118",
+          "image_0/0008119",
+          "image_0/0008120",
+          "image_0/0008121",
+          "image_0/0008122",
+          "image_0/0008123",
+          "image_0/0008124",
+          "image_0/0008125",
+          "image_0/0008126",
+          "image_0/0008127",
+          "image_0/0008128",
+          "image_0/0008129",
+          "image_0/0008130",
+          "image_0/0008131",
+          "image_0/0008132",
+          "image_0/0008133",
+          "image_0/0008134",
+          "image_0/0008135",
+          "image_0/0008136",
+          "image_0/0008137"
+        ],
+        "raw_frame_range": [
+          89,
+          137
+        ],
+        "model_timestamps": [
+          -0.48,
+          -0.45999999999999996,
+          -0.44,
+          -0.42,
+          -0.39999999999999997,
+          -0.38,
+          -0.36,
+          -0.33999999999999997,
+          -0.31999999999999995,
+          -0.29999999999999993,
+          -0.28,
+          -0.26,
+          -0.24,
+          -0.21999999999999997,
+          -0.2,
+          -0.18,
+          -0.15999999999999998,
+          -0.13999999999999996,
+          -0.11999999999999994,
+          -0.10000000000000003,
+          -0.08000000000000002,
+          -0.06,
+          -0.040000000000000036,
+          -0.020000000000000018,
+          0.0,
+          0.020000000000000018,
+          0.040000000000000036,
+          0.05999999999999994,
+          0.07999999999999996,
+          0.09999999999999998,
+          0.12,
+          0.14,
+          0.16000000000000003,
+          0.18000000000000005,
+          0.20000000000000007,
+          0.22000000000000008,
+          0.2400000000000001,
+          0.2599999999999999,
+          0.2799999999999999,
+          0.29999999999999993,
+          0.31999999999999995,
+          0.33999999999999997,
+          0.36,
+          0.38,
+          0.3999999999999999,
+          0.41999999999999993,
+          0.43999999999999995,
+          0.45999999999999996,
+          0.48
+        ],
+        "original_wh": [
+          1920,
+          1280
+        ],
+        "render_wh": [
+          480,
+          320
+        ],
+        "anchor_frame": "0008099",
+        "anchor_index": 10,
+        "anchor_timestamp": -0.28,
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_0.ply",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_1.ply",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_2.ply",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply"
+        ]
+      },
+      "followup_static_anchor_frame": "0008099"
+    },
+    "children": {
+      "4125": {
+        "arm": "real_only",
+        "mode": "gate",
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "gate"
+        ],
+        "returncode": 0
+      },
+      "4194": {
+        "arm": "real_only",
+        "mode": "train",
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/run30k",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "train",
+          "--gpu-gate",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001/gpu_gate_receipt.json"
+        ],
+        "returncode": null
+      }
+    },
+    "arm_queue": [
+      "real_only",
+      "prior_only",
+      "ownership_only"
+    ],
+    "max_concurrent_training": 2,
+    "automatic_restart": false,
+    "started_utc": "2026-10-19T09:58:33.597574+00:00",
+    "storage_admission": {
+      "free_bytes": 75851489280,
+      "required_bytes": 71415546128.0
+    },
+    "updated_utc": "2026-10-19T10:01:04.309425+00:00",
+    "pending_arms": [
+      "prior_only",
+      "ownership_only"
+    ]
+  },
+  "controller_launch": {
+    "status": "AUTHORIZED_THREE_ABLATION_CONTROLLER_LAUNCHED",
+    "pid": 4120,
+    "command": [
+      "/usr/bin/python3",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_road_ablation_group.py",
+      "--campaign",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019"
+    ],
+    "started_utc": "2026-10-19T09:58:33.371454+00:00",
+    "max_concurrent_training_including_main": 2,
+    "target_updates_each": 30000,
+    "automatic_restart": false
+  },
+  "deployment": {
+    "status": "THREE_ISOLATED_ARMS_INSTALLED_NOT_YET_STARTED",
+    "arms": {
+      "real_only": {
+        "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine",
+        "road_weights": {
+          "observed_rgb": 1.0,
+          "prior_rgb": 0.0,
+          "observed_depth": 0.1,
+          "prior_depth": 0.0
+        },
+        "trained_updates": 0
+      },
+      "prior_only": {
+        "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/engine",
+        "road_weights": {
+          "observed_rgb": 0.0,
+          "prior_rgb": 0.1,
+          "observed_depth": 0.0,
+          "prior_depth": 0.01
+        },
+        "trained_updates": 0
+      },
+      "ownership_only": {
+        "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/engine",
+        "road_weights": {
+          "observed_rgb": 0.0,
+          "prior_rgb": 0.0,
+          "observed_depth": 0.0,
+          "prior_depth": 0.0
+        },
+        "trained_updates": 0
+      }
+    },
+    "main_source_unchanged": true,
+    "max_concurrent_training_including_main": 2,
+    "archive_sha256": "3314b84a24e8fb8c2e00da5c4ba4a4133935f61432c4672fe949da02057ae076",
+    "installed_utc": "2026-10-19T09:58:16.520870+00:00"
+  },
+  "arms": {
+    "real_only": {
+      "status": {
+        "status": "training",
+        "mode": "train",
+        "pid": 4194,
+        "parent_pid": 4120,
+        "iteration": 700,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-19T09:59:00.746251+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "wall_seconds": 110.22905577532947,
+        "loss": 2.3191192150115967,
+        "psnr": 21.38117218017578,
+        "static_points": 580480,
+        "dynamic_points": 148786,
+        "optimizer_step_counts": {
+          "static": 700,
+          "dynamic": 700,
+          "environment": 700
+        },
+        "cuda_allocated_bytes": 1750553600,
+        "cuda_reserved_bytes": 2810183680,
+        "cuda_peak_allocated_bytes": 2746192384,
+        "updated_utc": "2026-10-19T10:00:50.975860+00:00"
+      },
+      "gate": {
+        "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
+        "optimizer_updates": 0,
+        "manifest_sha256": "9ba6ba56024cf8658c8cc51718cd6b61304be613e37efd3bf9751e7f6d6dc73e",
+        "bundle_sha256": "e20de33c44e9e404f447f695802de4f51b6267b4bf2d93485e14a6716239b5fb",
+        "baseline_config_sha256": "d129bfc0e73030f1f024da8f10cdaf069f861cdd3dd5091a98df0f171b0543b3",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "actual_checks": {
+          "static_fixed_camera_max_RGB_delta": 0.0,
+          "static_times_tested": [
+            -0.48,
+            0.48
+          ],
+          "gate_raw_frame": 89,
+          "ablation_variant": "real_only",
+          "actual_road_weights": {
+            "observed_rgb": 1.0,
+            "prior_rgb": 0.0,
+            "observed_depth": 0.1,
+            "prior_depth": 0.0
+          },
+          "finite_gradient_parameter_groups": [
+            6,
+            9,
+            1
+          ],
+          "optimizer_updates": 0,
+          "optimizer_step_counts": {
+            "static": 0,
+            "dynamic": 0,
+            "environment": 0
+          },
+          "static_temporal_gradients_absent": true
+        },
+        "same_fresh_seed_required_for_training": true,
+        "quality_verified": false
+      },
+      "gate_status": {
+        "status": "zero_update_gate_passed",
+        "mode": "gate",
+        "pid": 4125,
+        "parent_pid": 4120,
+        "iteration": 0,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-19T09:58:40.150476+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "optimizer_step_counts": {
+          "static": 0,
+          "dynamic": 0,
+          "environment": 0
+        }
+      },
+      "train_launch": {
+        "pid": 4194,
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/run30k",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "train",
+          "--gpu-gate",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001/gpu_gate_receipt.json"
+        ],
+        "mode": "train",
+        "started_utc": "2026-10-19T09:58:54.157369+00:00",
+        "target_updates": 30000,
+        "automatic_restart": false
+      },
+      "gate_launch": {
+        "pid": 4125,
+        "command": [
+          "/root/autodl-tmp/envs/drivingeditor/bin/python",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py",
+          "--engine",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine",
+          "--output",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001",
+          "--bundle",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+          "--baseline-config",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+          "--readiness",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+          "--manifest",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json",
+          "--binding-tools",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+          "--gpu-lock",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+          "--mode",
+          "gate"
+        ],
+        "mode": "gate",
+        "started_utc": "2026-10-19T09:58:33.613278+00:00",
+        "target_updates": 0,
+        "automatic_restart": false
+      },
+      "published_steps": [],
+      "audited_steps": [],
+      "manifest": {
+        "status": "ISOLATED_ROAD_SOURCE_ABLATION",
+        "variant": "real_only",
+        "files": {
+          "LICENSE_gaussian_splatting.md": {
+            "candidate_sha256": "66a11a08568642dc1d4e9867b528955d3340bdaac3b5cd3c5accfbe767c1addd"
+          },
+          "train.py": {
+            "candidate_sha256": "0b6b7b3ceba98ce4cca210609e85215d910949fbe930d68701c5823a13cfc416"
+          },
+          "gaussian_renderer/__init__.py": {
+            "candidate_sha256": "747d2dfc2d790edafe3f5f7519fa03a7c1bafb209781fe0b25a375b2cc523f4a"
+          },
+          "scene/gaussian_model.py": {
+            "candidate_sha256": "5c50734d303c5fd34e1538e086e0740609400e63667b2e3b4866540482dccdae"
+          },
+          "utils/v2_road_objective.py": {
+            "candidate_sha256": "bd8a9d94412826c07031859e29764b34226296bfcc56d6e0a73b28eda3af94a8"
+          },
+          "utils/v2_runtime_context.py": {
+            "candidate_sha256": "fcda4556051d27a7917f748a13be73e3bafdca0b6fdd4a30d56598565c7ec488"
+          },
+          "utils/v2_static_partition.py": {
+            "candidate_sha256": "d52d44eea7dd356f3a7f49d95ff3f47111ac983ad3fe1d7755d033eaafb28d20"
+          }
+        },
+        "logical_budget": 30000,
+        "seed": 0,
+        "second_stage_updates": 0,
+        "road_weights": {
+          "observed_rgb": 1.0,
+          "prior_rgb": 0.0,
+          "observed_depth": 0.1,
+          "prior_depth": 0.0
+        },
+        "input_bundle": "input_bundle_002",
+        "provenance_changed": false,
+        "query_coverage_changed": false,
+        "ownership_fix_identical_to_full": true,
+        "native_dynamic_methods_identical_to_full": true,
+        "training_started": false,
+        "GPU_gate_passed": false
+      }
+    },
+    "prior_only": {
+      "status": null,
+      "gate": null,
+      "gate_status": null,
+      "train_launch": null,
+      "gate_launch": null,
+      "published_steps": [],
+      "audited_steps": [],
+      "manifest": {
+        "status": "ISOLATED_ROAD_SOURCE_ABLATION",
+        "variant": "prior_only",
+        "files": {
+          "LICENSE_gaussian_splatting.md": {
+            "candidate_sha256": "66a11a08568642dc1d4e9867b528955d3340bdaac3b5cd3c5accfbe767c1addd"
+          },
+          "train.py": {
+            "candidate_sha256": "0b6b7b3ceba98ce4cca210609e85215d910949fbe930d68701c5823a13cfc416"
+          },
+          "gaussian_renderer/__init__.py": {
+            "candidate_sha256": "747d2dfc2d790edafe3f5f7519fa03a7c1bafb209781fe0b25a375b2cc523f4a"
+          },
+          "scene/gaussian_model.py": {
+            "candidate_sha256": "5c50734d303c5fd34e1538e086e0740609400e63667b2e3b4866540482dccdae"
+          },
+          "utils/v2_road_objective.py": {
+            "candidate_sha256": "bd8a9d94412826c07031859e29764b34226296bfcc56d6e0a73b28eda3af94a8"
+          },
+          "utils/v2_runtime_context.py": {
+            "candidate_sha256": "272d4ed5b69580297613b7269866a51d924ca0e25e053ecfd117895cb4cec7a9"
+          },
+          "utils/v2_static_partition.py": {
+            "candidate_sha256": "d52d44eea7dd356f3a7f49d95ff3f47111ac983ad3fe1d7755d033eaafb28d20"
+          }
+        },
+        "logical_budget": 30000,
+        "seed": 0,
+        "second_stage_updates": 0,
+        "road_weights": {
+          "observed_rgb": 0.0,
+          "prior_rgb": 0.1,
+          "observed_depth": 0.0,
+          "prior_depth": 0.01
+        },
+        "input_bundle": "input_bundle_002",
+        "provenance_changed": false,
+        "query_coverage_changed": false,
+        "ownership_fix_identical_to_full": true,
+        "native_dynamic_methods_identical_to_full": true,
+        "training_started": false,
+        "GPU_gate_passed": false
+      }
+    },
+    "ownership_only": {
+      "status": null,
+      "gate": null,
+      "gate_status": null,
+      "train_launch": null,
+      "gate_launch": null,
+      "published_steps": [],
+      "audited_steps": [],
+      "manifest": {
+        "status": "ISOLATED_ROAD_SOURCE_ABLATION",
+        "variant": "ownership_only",
+        "files": {
+          "LICENSE_gaussian_splatting.md": {
+            "candidate_sha256": "66a11a08568642dc1d4e9867b528955d3340bdaac3b5cd3c5accfbe767c1addd"
+          },
+          "train.py": {
+            "candidate_sha256": "0b6b7b3ceba98ce4cca210609e85215d910949fbe930d68701c5823a13cfc416"
+          },
+          "gaussian_renderer/__init__.py": {
+            "candidate_sha256": "747d2dfc2d790edafe3f5f7519fa03a7c1bafb209781fe0b25a375b2cc523f4a"
+          },
+          "scene/gaussian_model.py": {
+            "candidate_sha256": "5c50734d303c5fd34e1538e086e0740609400e63667b2e3b4866540482dccdae"
+          },
+          "utils/v2_road_objective.py": {
+            "candidate_sha256": "bd8a9d94412826c07031859e29764b34226296bfcc56d6e0a73b28eda3af94a8"
+          },
+          "utils/v2_runtime_context.py": {
+            "candidate_sha256": "86a20390afd6f404ebdf692c752b95dd33e51c688eba960b2a4173a1d16fd56c"
+          },
+          "utils/v2_static_partition.py": {
+            "candidate_sha256": "d52d44eea7dd356f3a7f49d95ff3f47111ac983ad3fe1d7755d033eaafb28d20"
+          }
+        },
+        "logical_budget": 30000,
+        "seed": 0,
+        "second_stage_updates": 0,
+        "road_weights": {
+          "observed_rgb": 0.0,
+          "prior_rgb": 0.0,
+          "observed_depth": 0.0,
+          "prior_depth": 0.0
+        },
+        "input_bundle": "input_bundle_002",
+        "provenance_changed": false,
+        "query_coverage_changed": false,
+        "ownership_fix_identical_to_full": true,
+        "native_dynamic_methods_identical_to_full": true,
+        "training_started": false,
+        "GPU_gate_passed": false
+      }
+    }
+  },
+  "controller_process": {
+    "command": "/usr/bin/python3 /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_road_ablation_group.py --campaign /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
+    "starttime_ticks": 839092087,
+    "parent_pid": 1,
+    "state": "S"
+  },
+  "processes": {
+    "2145": {
+      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/run_candidate.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/gate_002/gpu_gate_receipt.json",
+      "starttime_ticks": 838741102,
+      "parent_pid": 1,
+      "state": "R"
+    },
+    "4125": null,
+    "4194": {
+      "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/source_bundle/run_ablation.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/gate_001/gpu_gate_receipt.json",
+      "starttime_ticks": 839094166,
+      "parent_pid": 4120,
+      "state": "R"
+    }
+  },
+  "disk_required_estimate_bytes": 69747030752.0,
+  "disk_free_bytes": 73780781056,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 8383 MiB, 23849 MiB, 96 %",
+  "gpu_processes": "2145, /root/autodl-tmp/envs/drivingeditor/bin/python, 5328 MiB\n4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 3246 MiB",
+  "md0": {
+    "array_state": "clean",
+    "degraded": "0",
+    "sync_action": "idle"
+  }
+}

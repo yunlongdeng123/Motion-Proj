@@ -1,0 +1,42 @@
+{
+  "status": "PASSED_CPU_ABLATION_SOURCE_AND_SLOT_CONTRACTS",
+  "arms": [
+    {
+      "variant": "real_only",
+      "actual_source_weights": {
+        "observed_rgb": 1.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.1,
+        "prior_depth": 0.0
+      },
+      "disabled_source_and_unknown_road_gradients_zero": true,
+      "unchanged_ownership_and_renderer": true
+    },
+    {
+      "variant": "prior_only",
+      "actual_source_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.1,
+        "observed_depth": 0.0,
+        "prior_depth": 0.01
+      },
+      "disabled_source_and_unknown_road_gradients_zero": true,
+      "unchanged_ownership_and_renderer": true
+    },
+    {
+      "variant": "ownership_only",
+      "actual_source_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.0,
+        "prior_depth": 0.0
+      },
+      "disabled_source_and_unknown_road_gradients_zero": true,
+      "unchanged_ownership_and_renderer": true
+    }
+  ],
+  "max_concurrent_training_including_main": 2,
+  "queue_slot_cases": 4,
+  "CUDA_checked": false,
+  "quality_accepted": false
+}

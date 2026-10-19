@@ -94,4 +94,6 @@ def enrich(text,W,O):
 <p><a href="actual_road_summary.json">分身份统计与分母</a> · <a href="actual_road_query_evidence.npz">完整世界点、来源UV与可见性证据NPZ（约10MB，无模型）</a> · <a href="actual_gpu_gate_receipt.json">真实CUDA零更新凭据</a> · <a href="runtime_progress.json">当前运行采样</a> · <a href="actual_donor_provenance.json">冻结供体来源核查</a> · <a href="calibration_binding_receipt.json">全49相机内参核对</a></p>'''
     text=text.replace('<h2>参考工作与实际迁移范围</h2>',section+'<h2>参考工作与实际迁移范围</h2>')
     js='''<script>document.querySelectorAll('button[data-query-frame]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('queryFrame').src=b.dataset.queryFrame;document.getElementById('queryCaption').textContent=b.textContent==='raw89'?'raw89：绿=其他帧确认的同世界位置观测；紫=供体先验；红=未知。非训练结果。':'后续帧：绿=本帧参与融合；蓝=其他帧确认；紫=供体先验；红=未知。投影在遮挡物上不算曝光。';document.querySelectorAll('button[data-query-frame]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));</script>'''
+    if (O/'ablations/index.html').exists():
+        text=text.replace('<h2>模块与数据流</h2>','<p><a href="ablations/index.html">查看用户新增的三组30K消融与实际排队状态</a>：仅归属、归属＋真实曝光、归属＋供体先验；最多两路并发，主实验继续。</p><h2>模块与数据流</h2>')
     return text.replace('</html>',js+'</html>').replace('>配置</a>','>冻结方法配置</a>')

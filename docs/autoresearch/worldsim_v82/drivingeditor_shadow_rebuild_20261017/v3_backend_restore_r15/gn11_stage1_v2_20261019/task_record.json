@@ -1,12 +1,12 @@
 {
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
-  "state": "FRESH_30K_TRAINING_IN_PROGRESS",
-  "updated_utc": "2026-10-19T09:37:17.936619+00:00",
+  "state": "FRESH_30K_MAIN_WITH_THREE_AUTHORIZED_ABLATIONS",
+  "updated_utc": "2026-10-19T10:03:30.952559+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
-  "updates_executed": 13300,
+  "updates_executed": 20900,
   "second_stage_updates": 0,
   "actual_GPU_gate_passed": true,
   "actors": [
@@ -81,23 +81,25 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 78043635712
+    "disk_free_bytes_at_snapshot": 73750433792
   },
   "failure_ledger_refs": [
     "V82-F06"
   ],
-  "failure_ledger_delta": "CPU_durability_through_10000_no_new_scientific_verdict",
+  "failure_ledger_delta": "CPU_durability_through_20000_no_new_scientific_verdict",
   "report": "index.html",
   "code": "candidate_source.zip",
   "worker_pid": 2145,
   "optimizer_step_counts": {
-    "static": 13300,
-    "dynamic": 13300,
-    "environment": 13300
+    "static": 20900,
+    "dynamic": 20900,
+    "environment": 20900
   },
   "latest_confirmed_checkpoint_steps": [
     5000,
-    10000
+    10000,
+    15000,
+    20000
   ],
   "real_inputs_bound": true,
   "road_model_anchor_roles_separately_verified": true,
@@ -105,6 +107,63 @@
   "quality_accepted": false,
   "audited_checkpoint_steps": [
     5000,
-    10000
-  ]
+    10000,
+    15000,
+    20000
+  ],
+  "ablation_group_task": "WS-V82-R15-GN11-STAGE1-V2-ROAD-ABLATIONS-20261019",
+  "additional_authorized_fresh_updates": 90000,
+  "max_concurrent_training_including_main": 2,
+  "ablation_controller_pid": 4120,
+  "ablation_runs": {
+    "real_only": {
+      "updates_authorized": 30000,
+      "seed": 0,
+      "second_stage_updates": 0,
+      "status": "training",
+      "updates_executed": 700,
+      "actual_optimizer_step_counts": {
+        "static": 700,
+        "dynamic": 700,
+        "environment": 700
+      },
+      "actual_zero_update_gate_passed": true,
+      "road_weights": {
+        "observed_rgb": 1.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.1,
+        "prior_depth": 0.0
+      }
+    },
+    "prior_only": {
+      "updates_authorized": 30000,
+      "seed": 0,
+      "second_stage_updates": 0,
+      "status": "queued",
+      "updates_executed": 0,
+      "actual_optimizer_step_counts": null,
+      "actual_zero_update_gate_passed": false,
+      "road_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.1,
+        "observed_depth": 0.0,
+        "prior_depth": 0.01
+      }
+    },
+    "ownership_only": {
+      "updates_authorized": 30000,
+      "seed": 0,
+      "second_stage_updates": 0,
+      "status": "queued",
+      "updates_executed": 0,
+      "actual_optimizer_step_counts": null,
+      "actual_zero_update_gate_passed": false,
+      "road_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.0,
+        "prior_depth": 0.0
+      }
+    }
+  }
 }

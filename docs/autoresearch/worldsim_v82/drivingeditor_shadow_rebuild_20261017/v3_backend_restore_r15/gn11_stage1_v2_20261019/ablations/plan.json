@@ -1,0 +1,46 @@
+{
+  "task": "WS-V82-R15-GN11-STAGE1-V2-ROAD-ABLATIONS-20261019",
+  "arms": {
+    "real_only": {
+      "observed_rgb": 1.0,
+      "prior_rgb": 0.0,
+      "observed_depth": 0.1,
+      "prior_depth": 0.0
+    },
+    "prior_only": {
+      "observed_rgb": 0.0,
+      "prior_rgb": 0.1,
+      "observed_depth": 0.0,
+      "prior_depth": 0.01
+    },
+    "ownership_only": {
+      "observed_rgb": 0.0,
+      "prior_rgb": 0.0,
+      "observed_depth": 0.0,
+      "prior_depth": 0.0
+    }
+  },
+  "iterations_each": 30000,
+  "second_stage_updates": 0,
+  "seed": 0,
+  "shared_ownership_fix": true,
+  "changed_factor": "road source objective weights only",
+  "interpretation": "2x2 road-source factorial with common ownership repair; ownership-only arm additionally compared with actual original native A nodes",
+  "GPU_memory_GiB": {
+    "per_ablation": 10,
+    "main_allowance": 8,
+    "margin": 2
+  },
+  "max_concurrent_training_including_main": 2,
+  "checkpoint_steps": [
+    5000,
+    10000,
+    15000,
+    20000,
+    25000,
+    30000
+  ],
+  "automatic_restart": false,
+  "main_engine_modified": false,
+  "human_verdict": null
+}
