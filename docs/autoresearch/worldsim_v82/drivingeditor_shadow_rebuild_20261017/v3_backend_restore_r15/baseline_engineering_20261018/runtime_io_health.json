@@ -1,27 +1,27 @@
 {
-  "at": "2026-10-19T03:45:08.602395+00:00",
+  "at": "2026-10-19T04:15:18.661646+00:00",
   "hostname": "autodl-container-396445a2a1-1984c713",
   "status": "NO_PERSISTENT_MD_WRITE_WAIT_OBSERVED",
   "A_reported_status": {
-    "step": 27000,
-    "frame": "0008106",
-    "loss": 0.26549020409584045,
-    "instance_mask_loss": 0.0002112038928316906,
-    "raw_isolated_body_MSE": 0.001292525208555162,
+    "step": 29700,
+    "frame": "0008135",
+    "loss": 0.27070775628089905,
+    "instance_mask_loss": 0.00020282319746911526,
+    "raw_isolated_body_MSE": 0.001123527530580759,
     "known_instances": 5,
-    "box_boundary": 0.00047659355914220214,
+    "box_boundary": 0.00047341850586235523,
     "pose_prior": 0.0,
     "instance_points": 1000253,
     "background_points": 2617982,
     "instance_optimizer_gradients_finite": true,
-    "static_rgb_loss": 0.009839847683906555,
-    "NPS_loss": 0.06394856423139572,
+    "static_rgb_loss": 0.01727956160902977,
+    "NPS_loss": 0.030957527458667755,
     "background_joint_optimization": true,
-    "steps_per_second": 0.6715313360276368,
+    "steps_per_second": 0.7090852219811667,
     "state": "running"
   },
-  "A_status_mtime_utc": "2026-10-19T03:44:11.741704+00:00",
-  "A_status_age_seconds": 56.860691,
+  "A_status_mtime_utc": "2026-10-19T04:14:47.735307+00:00",
+  "A_status_age_seconds": 30.926339,
   "A_worker": {
     "pid": 79624,
     "status": [
@@ -39,7 +39,7 @@
       "Groups:\t0 "
     ],
     "wchan": "0",
-    "io": "rchar: 10330482414\nwchar: 15479938952\nsyscr: 7790664\nsyscw: 640522\nread_bytes: 0\nwrite_bytes: 15492550656\ncancelled_write_bytes: 4096\n",
+    "io": "rchar: 10593907745\nwchar: 15481506405\nsyscr: 8177429\nsyscw: 667942\nread_bytes: 0\nwrite_bytes: 15495385088\ncancelled_write_bytes: 4096\n",
     "cmdline": "/root/autodl-tmp/envs/drivingeditor/bin/python -B -u /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/run_A_native_shared.py --spec /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_spec.json --output /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k_parallel_resume --resume /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k/checkpoint_001999_priority_yield.pt --iterations 30000 --seed 0 --joint-background --checkpoint-steps 1 5000 10000 15000 20000 25000 30000 --run "
   },
   "guardian": {
@@ -82,17 +82,17 @@
     "io": "rchar: 166201747989\nwchar: 17287864038\nsyscr: 4057944\nsyscw: 2006708\nread_bytes: 180224\nwrite_bytes: 17347547136\ncancelled_write_bytes: 69632\n",
     "cmdline": ""
   },
-  "mdstat": "Personalities : [raid6] [raid5] [raid4] [linear] [multipath] [raid0] [raid1] [raid10] \nmd0 : active raid5 nvme3n1[1] nvme2n1[3] nvme1n1[0]\n      15002667008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]\n      bitmap: 15/56 pages [60KB], 65536KB chunk\n\nunused devices: <none>\n",
-  "array_state": "clean",
+  "mdstat": "Personalities : [raid6] [raid5] [raid4] [linear] [multipath] [raid0] [raid1] [raid10] \nmd0 : active raid5 nvme3n1[1] nvme2n1[3] nvme1n1[0]\n      15002667008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UUU]\n      bitmap: 14/56 pages [56KB], 65536KB chunk\n\nunused devices: <none>\n",
+  "array_state": "active",
   "sync_completed": "none",
   "sync_speed": "none",
   "degraded": "0",
-  "io_pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=15409302776\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=15172036526\n",
+  "io_pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=15409629583\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=15172325729\n",
   "interpretation": "No persistent md write wait observed in this sample; confirm actual step advancement separately.",
   "training_updates": 0,
   "remote_mutations": 0,
   "A_process_preserved": true,
   "shutdown_performed": false,
   "checkpoint_replay_started": false,
-  "gpu_csv": "15104, 17128, 92"
+  "gpu_csv": "15104, 17128, 100"
 }

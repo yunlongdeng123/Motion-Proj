@@ -21,7 +21,14 @@ def main():
  # call a file absent during a save a completed-training failure.
  anodes=[s for s in range(5000,30001,5000) if s not in saved]
  bnodes=[s for s in range(5000,30001,5000) if s not in bsaved]
- instance_counts=(int(row['background_points']),int(row['instance_points']))
+ count_row=row;counts_source='live_status'
+ if 'background_points' not in count_row or 'instance_points' not in count_row:
+  assert row['state']=='complete' and row['step']==30000
+  with (D/'steps.jsonl').open('rb') as f:
+   f.seek(0,2);f.seek(max(0,f.tell()-4000));tail=f.read()
+  count_row=next(json.loads(line) for line in reversed(tail.splitlines()) if line.startswith(b'{') and b'background_points' in line)
+  assert count_row['step']==row['step'];counts_source='actual_terminal_step_log_last4000bytes'
+ instance_counts=(int(count_row['background_points']),int(count_row['instance_points']))
  bcounts=(int(blive['static_points']),int(blive['memory']['extra']['render_dynamic_points']))
  caps=(math.ceil(max(int(cfg['num_pts']),int(cfg['densify_until_num_points']))*1.1),math.ceil(int(cfg['dynamic_densify_until_num_points'])*1.1))
  bcaps=(math.ceil(max(int(bcfg['num_pts']),int(bcfg['densify_until_num_points']))*1.1),math.ceil(int(bcfg['dynamic_densify_until_num_points'])*1.1))
@@ -41,7 +48,7 @@ def main():
           current_free_bytes=free,estimated_remaining_required_bytes=required,estimated_headroom_bytes=free-required,
           fits_this_forecast=free>=required,A_native_remaining=dict(remaining_nodes=0,required_free_bytes=0,reason='complete; no future native saves/evaluations pending'),A_instance_estimate=instance,B_native_remaining=b,
           current_counts_required_bytes=current_required,current_counts_headroom_bytes=free-current_required,current_counts_A=current_instance,current_counts_B=current_b,
-          instance_durable_steps=saved,instance_latest_logged_counts=instance_counts,
+          instance_durable_steps=saved,instance_latest_logged_counts=instance_counts,instance_counts_source=counts_source,
           B_durable_steps=bsaved,B_latest_logged_counts=bcounts,configured_caps_with10percent_overshoot=dict(A=caps,B=bcaps),
           due_unpersisted_nodes=dict(A=[s for s in anodes if s<=row['step']],B=[s for s in bnodes if s<=blive['iteration']]),
           corrections='Completed A native requires0 future nodes; resumed A does not recreate step1; B5K already saved; A checkpoints do not each trigger native49 FP32 export. Full monolithic A temporary save included.',

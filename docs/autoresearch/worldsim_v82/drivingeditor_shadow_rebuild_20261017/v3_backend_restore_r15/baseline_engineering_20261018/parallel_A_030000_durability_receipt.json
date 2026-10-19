@@ -1,0 +1,34 @@
+{
+  "status": "PASSED_ACTUAL_NAMED_PARALLEL_CHECKPOINT_CPU_READONLY",
+  "at": "2026-10-19T04:20:03.399580+00:00",
+  "model": "A",
+  "step": 30000,
+  "run": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/direct_instance30k_parallel_resume",
+  "components": [
+    {
+      "component": "full_bundle",
+      "bytes": 3047836844,
+      "finite_model_Adam_tensor_fields": 91
+    }
+  ],
+  "RNG_present_and_CPU_states_parse": true,
+  "details": {
+    "sampler_steps": 30000,
+    "formal_runtime_present": true,
+    "strict_terminal_contract": {
+      "step": 30000,
+      "authorized_total_budget": 30000,
+      "all_required_fields_present": true,
+      "fixed_policy_equal": true,
+      "spec_binding_equal": true,
+      "resume_authorized": false,
+      "additional_updates": 0,
+      "verification_scope": "terminal_checkpoint_fields_and_policy_CPU_only"
+    }
+  },
+  "GPU_used": false,
+  "actual_GPU_restore_verified": false,
+  "training_updates": 0,
+  "checkpoint_bytes_and_mtimes_preserved": true,
+  "human_verdict": null
+}

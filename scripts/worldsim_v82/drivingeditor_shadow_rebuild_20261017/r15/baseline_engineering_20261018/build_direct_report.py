@@ -54,6 +54,10 @@ def main():
  plan['experiment_A'].update(native_status=live.get('status'),instance_status=inst)
  plan['experiment_B'].update(native_status=b_live,queue_status=b_queue)
  plan['report'].update(phase=phase,completed_media_models=models,primary_model=primary,quality_approval_implied_by_completion=False)
+ review=read('final_quality_review.json');shutdown=read('shutdown_status_current.json')
+ if phase['complete'] and review.get('status')=='COMPLETED_ACTUAL_FULLFRAME_QUALITY_REVIEW':
+  plan['report'].update(quality_review_status=review['status'],quality_accepted=review['quality_accepted'],quality_summary=review['summary'])
+ if shutdown:plan['report']['shutdown']=shutdown
  if io_health:plan['report']['runtime_io_health']=io_health
  if parallel:plan['experiment_B']['resource_policy']='authorized concurrent A/B with guarded shared GPU admission; exact A1999 continuation, no replay'
  (W/'direct_plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf-8')
@@ -100,10 +104,24 @@ def main():
  if phase['complete']:
   page=page.replace('两项训练已实际并行。额外13GiB分配实测通过；A/B分配器预算分别16/13GiB，另留2GiB余量，后续随增密继续监测。','两项训练通过受控共享准入并行执行，最终完整检查点和49帧输出已保留；训练完成本身不代表背景干净。')
   page=page.replace('最终沿用共同49帧时间轴','结果使用共同49帧时间轴').replace('最终视频会在发布前核对49帧','已发布视频在编码时核对49帧')
+  page=page.replace('五实例30K已自动启动，首步完整checkpoint已保存并CPU只读检查。','五实例30K现已完整结束；此前首步完整checkpoint已保存并CPU只读检查。')
+  completion='<section><h2>最终评估与回收凭据</h2><p>A完成49帧×5身份共245记录、1568张完整PNG；B完成49记录、343张完整PNG。两项均为零参数更新评估，checkpoint未变。A评估时实际CUDA恢复模型、Adam、环境、采样器与各随机状态精确相等；A每个ID删除目标可见alpha精确清零且static逐像素不变，B集合删除后动态点数为0且独立static回放一致。这些是删除技术合同，不是干净背景质量证明。</p><p>仅PNG与JSON的177,558,879字节归档已一次下载，1916个文件逐项哈希核对；未下载checkpoint或大NPZ。当前46路视频均为480×320、49帧、10fps、全部I帧；默认最终A。</p><p><a href="direct_full49/receipt.json">A最终245记录</a> · <a href="direct_full49/restore_receipt.json">A实际CUDA恢复</a> · <a href="all_vehicle_full49/receipt.json">B最终49记录</a> · <a href="final_full49_delivery.json">原始打包manifest</a> · <a href="final_delivery_collection.json">一次下载与逐文件验证</a> · <a href="direct_validation.json">实际媒体与文件检查</a></p></section>'
+  page=page.replace('<section><h2>完整画面验收</h2>',completion+'<section><h2>完整画面验收</h2>',1)
   review=read('final_quality_review.json')
   if review.get('status')=='COMPLETED_ACTUAL_FULLFRAME_QUALITY_REVIEW':
    shutil.copy2(W/'final_quality_review.json',O/'final_quality_review.json')
    page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p><a href="final_quality_review.json">实际完整画面质量复核记录</a>。训练和评估完成，不等同于质量通过；具体残留按实际记录说明。</p>')
+   findings='<section><h2>最终完整画面质量结论</h2><p>'+html.escape(review['summary'])+'</p><table><tr><th>实验</th><th>实际画面结论</th><th>观察</th></tr>'
+   for name,result in review['models'].items():
+    findings+='<tr><td>'+html.escape(name)+'</td><td>'+html.escape(result['status_label'])+'</td><td>'+html.escape(result['observations'])+'</td></tr>'
+   findings+='</table><table><tr><th>A身份</th><th>49帧实际观察</th></tr>'
+   for actor,observation in review.get('actors',{}).items():findings+='<tr><td>'+html.escape(actor)+'</td><td>'+html.escape(observation)+'</td></tr>'
+   findings+='</table><p>以上来自26张完整画面联系表及原生完整帧的实际查看；human_verdict=null。共同49帧属于训练观测，没有独立留出评估。未观测道路没有配对真值，删除车辆也不会自动重算原生外观中的阴影。具体残留Gaussian的因果归因尚未完成。</p><h3>raw128／129完整画面对照</h3><p>以下每张均保留完整480×320画面，点击可打开源PNG，无ROI或局部放大。</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">'
+   for example in review.get('examples',[]):
+    src=html.escape(example['path'],quote=True);label=html.escape('raw'+str(example['raw'])+' · '+example['label'])
+    findings+='<figure style="margin:0"><a href="'+src+'"><img src="'+src+'" alt="'+label+'"></a><figcaption>'+label+'</figcaption></figure>'
+   findings+='</div></section>'
+   page=page.replace('<img src="direct_architecture.svg"',findings+'<img src="direct_architecture.svg"',1)
   else:
    page=page.replace('<section><h2>完整画面验收</h2>','<section><h2>完整画面验收</h2><p><b>最终素材已到齐，逐帧质量复核尚待完成。</b>当前没有据训练完成宣布分离或道路恢复通过。</p>')
  if phase['code']=='storage_wait':
@@ -113,5 +131,10 @@ def main():
   recovered=read('runtime_io_recovery_receipt.json');shutil.copy2(W/'runtime_io_recovery_receipt.json',O/'runtime_io_recovery_receipt.json')
   notice=f'''<section><h2>存储等待已解除：原进程恢复推进</h2><p>最后一次确认受阻：{html.escape(recovered['last_confirmed_blocked_at'])}；首次确认恢复：{html.escape(recovered['first_confirmed_recovered_at'])}。A同一PID79624由20,400推进到{recovered['first_recovered_A_step']:,}步，md0恢复active，GPU重新执行计算。没有重启或重放；实际平台恢复时刻和根因未获确认。先前阻塞的磁盘预测任务已返回，新容量预测另外重新执行，未把旧结果当当前值。</p><p><a href="runtime_io_recovery_receipt.json">实际恢复前后记录</a> · <a href="runtime_io_health.json">最近只读状态</a>。此凭据仅记录存储恢复；当前训练、评估与关机阶段以本页状态为准，质量结论另按完整画面复核。</p></section>'''
   page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>'+notice,1)
+ if shutdown.get('status')=='SHUTDOWN_REQUESTED_SSH_UNREACHABLE_OBSERVED':
+  for name in ['shutdown_status_current.json','shutdown_preflight_current.json']:shutil.copy2(W/name,O/name)
+  notice='<section><h2>AutoDL关机已执行并观察到SSH不可达</h2><p>全部训练、最终零更新评估、素材下载、完整画面复核和交付推送完成后，通过当前A/B全任务preflight；无活动campaign worker、待启动controller或GPU计算进程，执行sync及已核实AutoDL入口/usr/bin/shutdown。</p><p>实际请求：'+html.escape(shutdown['request_started_at'])+'；观察完成：'+html.escape(shutdown['completed_at'])+'。SSH连续三次连接失败。交付提交：<code>'+html.escape(shutdown['delivery_git_commit'])+'</code>。该观察不代表已核实云端计费。</p><p><a href="shutdown_preflight_current.json">当前全部任务preflight</a> · <a href="shutdown_status_current.json">实际时间和SSH观察</a></p></section>'
+  page=page.replace('<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>','<h1>五身份30K＋30K；LiDAR与相机交集30K</h1>'+notice,1)
+  page=page.replace('所有实验、评估、报告和Git交付完成后再按授权关机。','全部交付后已按授权执行关机；SSH观察与云计费核实区分记录。')
  (O/'index.html').write_text(page,encoding='utf-8');print(str(O/'index.html'))
 if __name__=='__main__':main()

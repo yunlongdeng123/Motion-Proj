@@ -16,7 +16,20 @@ def rng(s):
  assert len(s['cuda_rng'])==1 and all(isinstance(x,torch.Tensor) and x.numel()>0 for x in s['cuda_rng'])
 def display(r):
  detail=r['details']
- print(json.dumps({k:r[k] for k in ['status','at','model','step','components','GPU_used','actual_GPU_restore_verified','training_updates']}|dict(sampler_steps=detail['sampler_steps'],strict_resume_contract_checked='strict_resume_contract' in detail,complete_evaluation_frames=detail.get('complete_evaluation_frames'))))
+ print(json.dumps({k:r[k] for k in ['status','at','model','step','components','GPU_used','actual_GPU_restore_verified','training_updates']}|dict(sampler_steps=detail['sampler_steps'],strict_resume_contract_checked='strict_resume_contract' in detail,strict_terminal_contract_checked='strict_terminal_contract' in detail,complete_evaluation_frames=detail.get('complete_evaluation_frames'))))
+
+def terminal_contract(s,cfg):
+ # A completed budget is valid for inspection, but never authorizes step30001.
+ from training_policy import _CHECKPOINT_FIELDS,CHECKPOINT_SCHEMA,_RIGID_STATE_FIELDS,POLICY_FIELD,validate_training_policy
+ assert s['step']==30000 and cfg['arguments']['iterations']==30000 and s['schema']==CHECKPOINT_SCHEMA
+ assert not (_CHECKPOINT_FIELDS-s.keys()) and all(s[k] is not None for k in _CHECKPOINT_FIELDS)
+ validate_training_policy(s[POLICY_FIELD],cfg['training_policy'])
+ assert s['spec']==cfg['spec'] and isinstance(s['background_exclusion'],dict)
+ i=s['instances'];assert i['version']==1 and i['instance_ids'] and isinstance(i['config'],dict) and not (_RIGID_STATE_FIELDS-i['state_dict'].keys())
+ opt=i['optimizer'];assert opt['class'] in ['Adam','AdamW'] and opt['groups'] and opt['state_dict']['state']
+ assert len(opt['groups'])==len(opt['state_dict']['param_groups'])
+ assert s['sampler']['schema_version']==1 and s['sampler']['steps']==30000 and len(s['sampler']['ids'])==49
+ return dict(step=30000,authorized_total_budget=30000,all_required_fields_present=True,fixed_policy_equal=True,spec_binding_equal=True,resume_authorized=False,additional_updates=0,verification_scope='terminal_checkpoint_fields_and_policy_CPU_only')
 def main():
  p=argparse.ArgumentParser();p.add_argument('--model',choices=['A','B'],required=True);p.add_argument('--step',type=int,required=True);a=p.parse_args();assert a.step in range(5000,30001,5000)
  out=E/f'parallel_{a.model}_{a.step:06d}_durability_receipt.json'
@@ -28,9 +41,11 @@ def main():
   d=Path(read(E/'direct_active_run.json')['output']);p=d/f'checkpoint_{a.step:06d}.pt';snapshot(p);s=torch.load(str(p),map_location='cpu',weights_only=False,mmap=True)
   assert s['step']==s['sampler']['steps']==a.step;cfg=read(d/'effective_config.json');assert cfg['arguments']['checkpoint_steps']==[1,5000,10000,15000,20000,25000,30000]
   sys.path.insert(0,str(E/'direct_implementation'));from training_policy import validate_resume_checkpoint
-  contract=validate_resume_checkpoint(s,cfg['training_policy'],30000,expected_step=a.step);assert s['formal_runtime'];rng(s)
+  contract=terminal_contract(s,cfg) if a.step==30000 else validate_resume_checkpoint(s,cfg['training_policy'],30000,expected_step=a.step)
+  assert s['formal_runtime'];rng(s)
   components.append(dict(component='full_bundle',bytes=before[str(p)][0],finite_model_Adam_tensor_fields=sum(finite(s[k]) for k in ['background','instances','environment'])))
-  details=dict(sampler_steps=a.step,strict_resume_contract=contract,formal_runtime_present=True)
+  details=dict(sampler_steps=a.step,formal_runtime_present=True)
+  details['strict_terminal_contract' if a.step==30000 else 'strict_resume_contract']=contract
  else:
   d=BASE/'campaign/r15_baseline_allvehicles_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11';event=read(d/'checkpoint_events'/f'iteration_{a.step:06d}.json')
   assert event['status']=='complete' and event['iteration']==a.step and len(event['frames'])==49

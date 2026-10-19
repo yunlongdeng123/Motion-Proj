@@ -1,0 +1,331 @@
+{
+  "status": "COMPLETED_ACTUAL_FULLFRAME_QUALITY_REVIEW",
+  "at": "2026-10-19T04:52:43.909683+00:00",
+  "summary": "A五身份两阶段30K＋30K、B交集20身份第一阶段30K及最终49帧零更新删除评估已完成；两项均未达到干净街景目标。A／B静态分支和删除图仍保留明显车形、亮白／彩色条带；A的a6独立资产有白色带状碎片。不能把训练完成、低损失或目标alpha清零当作分离质量通过。",
+  "models": {
+    "A 五身份 GN11 30K＋实例30K": {
+      "status_label": "训练与删除技术合同完成；干净背景和资产质量未通过",
+      "observations": "全49帧静态及delete-all仍有自车道白／青／彩色车形、条带与暗色足迹。a37近处银色车的独立车身连续，但删除后静态重复车形仍在。a6前方银色车独立输出下方持续出现平面白色带状碎片。a5与a26可见车身连续，删除后仍有暗色投影阴影；远处a18像素小，不能由训练视图判高质量。"
+    },
+    "B 交集20身份 GN11 第一阶段30K": {
+      "status_label": "训练与集合删除技术合同完成；干净背景未通过",
+      "observations": "全49帧动态集合包含纳入的20车辆，但static及delete-all仍有自车道亮白／青色车形、彩色条带与路面暗块，左侧停车区有拉伸碎片或车形残影。新增纳入身份没有得到干净街景；13条相机独有轨迹仍是上下文，不将其合法保留一概当错删或漏删。"
+    }
+  },
+  "quality_accepted": false,
+  "human_verdict": null,
+  "training_updates": 0,
+  "actors": {
+    "a6": "前方银色车常被更近的a37遮挡；全49帧独立资产下方有明显平面白带／碎片。删除a6保留a37是正确范围，不能将a37叫作a6。",
+    "a37": "最近银色轿车独立车身可辨且连续；逐ID删除后强烈白／青色静态车形仍保留，干净删除失败。",
+    "a5": "蓝色对向车可见段连续，约raw110–113后出左画面，随后独立图黑色符合离开视野；删除车身后暗色阴影仍在。",
+    "a26": "较晚靠近的深蓝／灰对向车由远变近，raw131–137大幅出左边界；删除车身后仍有暗色阴影，边缘截断符合相机范围。",
+    "a18": "远处浅白对向车全49帧较小，逐渐变大；删除影响小受像素尺度与遮挡限制，不据此批准高质量三维资产。"
+  },
+  "method": {
+    "reviewer": "Codex root actual image inspection",
+    "whole_frame": true,
+    "ROI": false,
+    "source_size": [
+      480,
+      320
+    ],
+    "viewed_sheets": [
+      {
+        "name": "A_overview_01.png",
+        "sha256": "91f69ccfc23367be99b05ec0e8fe4ebb700a54ec33bbf2c54c1beb7c8b606d26"
+      },
+      {
+        "name": "A_overview_02.png",
+        "sha256": "51d0e90f732841bdde9f7f851c32f6f7e9560fd354879946fed3364e8dd728c7"
+      },
+      {
+        "name": "A_overview_03.png",
+        "sha256": "2a5968fe473f7dfb9711586b5931f6638060e88e409cf25a8c790dacf6c6eb40"
+      },
+      {
+        "name": "A_overview_04.png",
+        "sha256": "d98c4855d52ab01f0c8657c465e80b86d1f8688181669a578a7c5c38279bef63"
+      },
+      {
+        "name": "A_overview_05.png",
+        "sha256": "9bdc0d97dcfc3989545a1901d214241eecbfe7499ab6bdd1307602f523f3bd23"
+      },
+      {
+        "name": "A_overview_06.png",
+        "sha256": "eace1a634ef59c2326a9becbafbf035ee0d9960637d9830bee8314f518ce20ee"
+      },
+      {
+        "name": "A_overview_07.png",
+        "sha256": "c94cc13044dbde7bfe3a5810fcba19caea1a48b451b0e558660323a3eb0d03dd"
+      },
+      {
+        "name": "B_overview_01.png",
+        "sha256": "2c1a3f5e6b12dc31d63c8657825dbc51c63b58b3edeef5585d004519f5a62d24"
+      },
+      {
+        "name": "B_overview_02.png",
+        "sha256": "43ded9cdf86919f6677297017350426e8e23650e4b8d0d9c953129953aaef647"
+      },
+      {
+        "name": "B_overview_03.png",
+        "sha256": "b6d78e8a46fc3296f939e35598b7f334570b5dd2ffe60085bc13d33a3bf77bed"
+      },
+      {
+        "name": "B_overview_04.png",
+        "sha256": "2d5b088daa81d0fb2b108c37570db500683e4ad89e09a2dd6516b394b9462d14"
+      },
+      {
+        "name": "B_overview_05.png",
+        "sha256": "c887c6cf9eb116a56a4b7b3183b849d64cf5125e56712725fee06cccccf99788"
+      },
+      {
+        "name": "B_overview_06.png",
+        "sha256": "d35a8358a49ce23a5f8fbd0432bf8148bfe20e1183648b337d1df6f66996247c"
+      },
+      {
+        "name": "B_overview_07.png",
+        "sha256": "145b4a06de35b71363e739aee65425fc08fb8df978bb4d398e5acfdbadf34f7d"
+      },
+      {
+        "name": "A_a06_isolated_49.png",
+        "sha256": "0df7c6fa25d855d54562667359d05f509a71d02162bb6212332b32c5cd13ac2e"
+      },
+      {
+        "name": "A_a06_delete_49.png",
+        "sha256": "6f6976a186b99e744e3847b851ceb4f781a72d51598ace3aa0060a9423c080a4"
+      },
+      {
+        "name": "A_a37_isolated_49.png",
+        "sha256": "c65f473a69208e7feab36c147aaca7412ce845386a69126286b7193fdf07a9ff"
+      },
+      {
+        "name": "A_a37_delete_49.png",
+        "sha256": "2640766e76221ddb13813457471c3f4695d6bbbfb083390460a8f398e149eb4b"
+      },
+      {
+        "name": "A_a05_isolated_49.png",
+        "sha256": "8c4caedc5b46e4eb1fe800aa4e557c61436fe4911327e1136e6a87837d7684b6"
+      },
+      {
+        "name": "A_a05_delete_49.png",
+        "sha256": "43812483327837242936e0647fb1387221d74b2744d5076e06d1f440fd7c7ad8"
+      },
+      {
+        "name": "A_a26_isolated_49.png",
+        "sha256": "a13d6544cc72b99e15d9f91646762b0edd20e051151e24138f42d832257cc931"
+      },
+      {
+        "name": "A_a26_delete_49.png",
+        "sha256": "f232971530e45afba0f371a535532423ce3ff9ade0266621987e7be2509ebd3c"
+      },
+      {
+        "name": "A_a18_isolated_49.png",
+        "sha256": "233134043128e603e0af519187e4df3af7ce86c4948451c0f1acbc762358e7f1"
+      },
+      {
+        "name": "A_a18_delete_49.png",
+        "sha256": "4d43d1b06666d0ec979a6ee526a189385fe15bb71b3a5577a02f54aeb0cd787a"
+      },
+      {
+        "name": "A_isolated_anchors.png",
+        "sha256": "66f8eae2560678325082e3f780107926cbeec3ec8e257b13aaf5cd64c838d19a"
+      },
+      {
+        "name": "A_delete_anchors.png",
+        "sha256": "24128772880df59e23196166e72a13f215c389559403efc8696090b48d620a5b"
+      }
+    ],
+    "coverage": "A/B各49帧GT/full/dynamic/static/delete-all；A五身份各49帧isolated/delete；raw89/107/128/129/137全部身份锚帧；另看原生raw128 A static/dynamic及B static",
+    "contact_sheet_source_pixels_resized": false,
+    "actual_browser_UI_verified": false,
+    "decoder_samples": [
+      {
+        "model": "A",
+        "channel": "static",
+        "raw": 128,
+        "actual_frame_index": 39,
+        "MAE_RGB_255": 2.512578010559082,
+        "whole_frame": true
+      },
+      {
+        "model": "B",
+        "channel": "static",
+        "raw": 128,
+        "actual_frame_index": 39,
+        "MAE_RGB_255": 2.49802303314209,
+        "whole_frame": true
+      },
+      {
+        "model": "A",
+        "channel": "a06_isolated",
+        "raw": 128,
+        "actual_frame_index": 39,
+        "MAE_RGB_255": 0.03228732571005821,
+        "whole_frame": true
+      }
+    ]
+  },
+  "limits": [
+    "共同49帧均为训练观测，无独立留出测试。",
+    "始终被挡住的道路没有配对真值，本次不添加生成补全或窗外训练。",
+    "车身mask不覆盖所有阴影；原生外观删除不重算投影阴影。",
+    "原生静态运动／衰减正则问题与道路观测不足分别有历史证据；未完成具体残留Gaussian因果归因，不分配原因百分比。"
+  ],
+  "examples": [
+    {
+      "path": "final_quality_frames/A_raw128_gt.png",
+      "label": "共同输入RGB",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "fe597dd68f06be509f9126fb415c5996c5419247b367a87a4bca5d9a355b15e8"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_gt.png",
+      "label": "共同输入RGB",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "c2dfa7c90adf730df6a8d32d8106d40579f227275051e6700ef688d2c986c6fa"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_full.png",
+      "label": "A完整重建",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "047ed8acd65d5cd4bfe72471cb913f2b896a84c72240fbb0df7378603af60efb"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_full.png",
+      "label": "A完整重建",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "6a5d7d92ec85b9a93c1158a55cb512fc7683e757577f4a29c117c3879d6875c4"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_dynamic.png",
+      "label": "A五身份动态集合",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "4cfcdbf77179bec9f11a52d8f141739ac283d4fa8e72051363c40c338e49b2f3"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_dynamic.png",
+      "label": "A五身份动态集合",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "397d93e1bb5f052c28876ae9688757f32c5a0dfad05195ee67bcb40ef4a0140d"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_static.png",
+      "label": "A静态仍有近车形与亮白彩色条带",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "5dba573a84e395c6059bd250c9ad3090eac0708429aee3b01ff592e42a1eecf3"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_static.png",
+      "label": "A静态仍有近车形与亮白彩色条带",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "50fbf0d75311300f8480a44c829c03353ecc4c9ead67f68b8244ba348fc794d8"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_delete_all.png",
+      "label": "A删除五身份后仍有静态车形",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "5dba573a84e395c6059bd250c9ad3090eac0708429aee3b01ff592e42a1eecf3"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_delete_all.png",
+      "label": "A删除五身份后仍有静态车形",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "50fbf0d75311300f8480a44c829c03353ecc4c9ead67f68b8244ba348fc794d8"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_a06_isolated.png",
+      "label": "A a6独立资产下方白色带状碎片",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "824d39cccc42c13174d2993702425a3c6925e946e42f2a14ece1b2fa4e7afffc"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_a06_isolated.png",
+      "label": "A a6独立资产下方白色带状碎片",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "ec5a5f4afb4bc97ac955f756354b5549d4b2a3d8450aa15b6f83cc428c75a4a9"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_a37_isolated.png",
+      "label": "A a37近处银色轿车独立资产",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "e4e357b50091ab1385007d54e6a1ca68d2e1c9c99d725b85e6de7961dd555509"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_a37_isolated.png",
+      "label": "A a37近处银色轿车独立资产",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "e6e32456755f76a05ba5e80f3923d613ebf107511de8c8832d404e5c669db406"
+    },
+    {
+      "path": "final_quality_frames/A_raw128_a37_delete.png",
+      "label": "A删除a37后静态车形仍在",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "6f9cd9e99a862ebab7ffb38ba942bac1717e07db4bff28d6e47ba506f6adf81b"
+    },
+    {
+      "path": "final_quality_frames/A_raw129_a37_delete.png",
+      "label": "A删除a37后静态车形仍在",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "12c133e76c6c557c560e075c58aae4b106cf283af06ce69009e08a8f1f2ea3eb"
+    },
+    {
+      "path": "final_quality_frames/B_raw128_dynamic.png",
+      "label": "B纳入20身份的动态集合",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "821c52cbb9235841e2863127eca5aeb22a76f3b328d1d85b3b00d6c6e97df29d"
+    },
+    {
+      "path": "final_quality_frames/B_raw129_dynamic.png",
+      "label": "B纳入20身份的动态集合",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "381d2954193a2c91e829ba7db1560ffaa1bdd33e9651ef629aa10a991c92801d"
+    },
+    {
+      "path": "final_quality_frames/B_raw128_static.png",
+      "label": "B静态车形与停车区碎片",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "125779a145166be58142f19c10d2ec1275880a7e7ec471de9aedc114dd17b104"
+    },
+    {
+      "path": "final_quality_frames/B_raw129_static.png",
+      "label": "B静态车形与停车区碎片",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "a9d416d71e7a7174ab4c13288e3422682e50b41dd6802094f12a6eac24623213"
+    },
+    {
+      "path": "final_quality_frames/B_raw128_delete_all.png",
+      "label": "B删除纳入集合后仍有残留",
+      "raw": 128,
+      "whole_frame": true,
+      "sha256": "125779a145166be58142f19c10d2ec1275880a7e7ec471de9aedc114dd17b104"
+    },
+    {
+      "path": "final_quality_frames/B_raw129_delete_all.png",
+      "label": "B删除纳入集合后仍有残留",
+      "raw": 129,
+      "whole_frame": true,
+      "sha256": "a9d416d71e7a7174ab4c13288e3422682e50b41dd6802094f12a6eac24623213"
+    }
+  ]
+}

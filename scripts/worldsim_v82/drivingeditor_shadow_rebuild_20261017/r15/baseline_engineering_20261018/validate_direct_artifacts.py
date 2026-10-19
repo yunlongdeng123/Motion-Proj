@@ -24,13 +24,22 @@ def main():
  subprocess.run(['node','--check',str(f)],check=True,capture_output=True)
  js+=1
  ET.parse(O/'direct_architecture.svg')
- media=0
+ media=0;verified_models={}
  if (O/'results.html').exists():
   from build_direct_player import video_contract
   result_page=(O/'results.html').read_text(encoding='utf-8')
   data=json.loads(re.search(r'<script type="application/json" id="data">(.*?)</script>',result_page,re.S).group(1))
-  model=data['models']['gn11five'];assert model['all_vehicle_stage1'] and len(model['base'])==7
-  for rel in model['base'].values():video_contract(O/rel);media+=1
+  for name in ['gn11five','matched5','allvehicles']:
+   model=data['models'].get(name)
+   if not model or not model.get('ready'):continue
+   assert len(model['base'])==7
+   paths=list(model['base'].values())
+   if name=='matched5':
+    assert set(model['actors'])=={'6','37','5','26','18'}
+    for actor in model['actors'].values():assert len(actor)==5;paths+=list(actor.values())
+   else:assert model['all_vehicle_stage1']
+   for rel in paths:video_contract(O/rel);media+=1
+   verified_models[name]=len(paths)
   subprocess.run(['node',str(W/'check_player_identity_controls.js')],check=True,capture_output=True)
  im=Image.open(O/'all_vehicle_raw128.png');assert im.size==(960,320);im.verify()
  for raw in range(89,138):
@@ -54,6 +63,6 @@ for(let n=0;n<49;n++){show(n);assert.equal(elements.frame.src,FRAMES[n].src);}
  for p in W.glob('*.py'):ast.parse(p.read_text(encoding='utf-8-sig'))
  result=dict(status='PASSED_FILE_MEDIA_JS_AND_SOURCE_CHECKS',links=links,JS_syntax_checked=js,full_frame_display=True,
   ROI_crop_controls_removed=True,input_full_frame_panels=49,input_timeline_DOM_fixture_passed=True,actual_30K_videos_verified=media,
-  identity_controls_DOM_fixture_passed=True,actual_browser_UI_verified=False,reason='file URL browser safety restriction respected',human_verdict=None)
+  verified_video_models=verified_models,identity_controls_DOM_fixture_passed=True,actual_browser_UI_verified=False,reason='file URL browser safety restriction respected',human_verdict=None)
  (O/'direct_validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result))
 if __name__=='__main__':main()

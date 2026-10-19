@@ -25,9 +25,11 @@ const context=vm.createContext({document,console,performance,queueMicrotask,canc
 vm.runInContext(js,context);const run=s=>vm.runInContext(s,context),flush=()=>new Promise(r=>setImmediate(r));
 (async()=>{
  await flush();
- assert.equal(elements.models.value,'gn11five');assert.equal(elements.actor.value,'all');assert.equal(elements.actor.options.length,1);assert.equal(elements.actor.disabled,true);assert.equal(elements['asset-control'].hidden,true);assert.ok(!elements.actor.options[0].textContent.includes('a6'));
+ const initial=data.initial_model||'gn11five';assert.equal(elements.models.value,initial);
+ if(data.models[initial].all_vehicle_stage1){assert.equal(elements.actor.value,'all');assert.equal(elements.actor.options.length,1);assert.equal(elements.actor.disabled,true);assert.equal(elements['asset-control'].hidden,true);assert.ok(!elements.actor.options[0].textContent.includes('a6'));}
+ else{assert.equal(elements.actor.options.length,5);assert.equal(elements.actor.disabled,false);assert.equal(elements['asset-control'].hidden,false);}
  const checks=[];
- for(const model of ['old5','r15','repair4k']){
+ for(const model of ['old5','r15','repair4k','matched5'].filter(m=>data.models[m]?.ready)){
   elements.models.value=model;await elements.models.onchange();
   assert.deepEqual(elements.actor.options.map(x=>x.value),['6','37','5','26','18']);assert.equal(elements.actor.disabled,false);
   for(const a of ['6','37','5','26','18']){
@@ -41,9 +43,11 @@ vm.runInContext(js,context);const run=s=>vm.runInContext(s,context),flush=()=>ne
   }
  }
  elements.actor.value='37';await elements.actor.onchange();
- elements.models.value='gn11five';await elements.models.onchange();assert.equal(elements.actor.value,'all');assert.ok(elements.scope.textContent.includes('整个动态分支'));
+ const collections=[];for(const name of ['gn11five','allvehicles'].filter(m=>data.models[m]?.ready)){
+  elements.models.value=name;await elements.models.onchange();assert.equal(elements.actor.value,'all');assert.ok(elements.scope.textContent.includes('整个动态分支'));assert.equal(elements.actor.disabled,true);assert.equal(elements['asset-control'].hidden,true);collections.push(name);
+ }
  elements.models.value='gn11five,old5';await elements.models.onchange();assert.equal(elements.actor.value,'37');assert.equal(elements.actor.disabled,false);assert.equal(elements.panels.children.length,2);assert.ok(elements.scope.textContent.includes('只作用于'));
  for(let raw=89;raw<=137;raw++){await run(`seek(${raw})`);assert.equal(elements.frame.value,raw);for(const t of run('entries.map(e=>e.video&&e.video.currentTime).filter(t=>t!==null)'))assert.ok(Math.abs(t-((raw-89)/10+.001))<1e-8);}
- const receipt={status:'PASSED_GENERATED_PAGE_IDENTITY_CONTROL_CHECK',identity_cases:checks,stage1_collection_label:true,model_switch_preserves_identity:true,mixed_stage_scope_checked:true,synchronized_frames_checked:49,media_paths_exist:true,full_frame:true,browser_interaction_verified:false,media_decoder_verified:false};
+ const receipt={status:'PASSED_GENERATED_PAGE_IDENTITY_CONTROL_CHECK',initial_model_checked:initial,identity_cases:checks,collection_models_checked:collections,stage1_collection_label:true,model_switch_preserves_identity:true,mixed_stage_scope_checked:true,synchronized_frames_checked:49,media_paths_exist:true,full_frame:true,browser_interaction_verified:false,media_decoder_verified:false};
  fs.writeFileSync(path.join(root,'player_controls_validation.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
 })().catch(e=>{console.error(e);process.exitCode=1;});
