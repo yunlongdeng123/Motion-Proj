@@ -1,0 +1,27 @@
+--- full/utils/v2_runtime_context.py
++++ real_only/utils/v2_runtime_context.py
+@@ -26,7 +26,12 @@
+         self.frames=self.meta['frames']
+         if set(self.frames)!={f'0008{i:03d}' for i in range(89,138)}:
+             raise RuntimeError('49 real frame contract failed')
+-        self.config=self.meta['config']
++        self.config=json.loads(json.dumps(self.meta['config']))
++        self.ablation_variant='real_only'
++        if args.get('v2_ablation_variant')!=self.ablation_variant:
++            raise RuntimeError('ablation arm/source mismatch')
++        # 仅关闭指定来源目标；不改来源标签、查询覆盖、目标RGB或归属修复。
++        self.config['road']['objective_weights']={'observed_rgb': 1.0, 'prior_rgb': 0.0, 'observed_depth': 0.1, 'prior_depth': 0.0}
+         self.cache={}
+         # No label changes, no learned previous30K state, no new camera views.
+         from utils.hybrid30k_runtime import camera_id
+@@ -156,7 +161,9 @@
+             for field in ['_t','_scaling_t','_velocity']:
+                 p=getattr(static,field)
+                 if p.requires_grad or p.grad is not None:raise RuntimeError('static temporal parameter has a gradient')
+-            self.gate_details.update(finite_gradient_parameter_groups=counts,optimizer_updates=0,
++            self.gate_details.update(ablation_variant=self.ablation_variant,
++                                     actual_road_weights=self.config['road']['objective_weights'],
++                                     finite_gradient_parameter_groups=counts,optimizer_updates=0,
+                                      optimizer_step_counts=dict(self.optimizer_steps),
+                                      static_temporal_gradients_absent=True)
+             if any(self.optimizer_steps.values()):raise RuntimeError('zero-update gate executed an optimizer step')

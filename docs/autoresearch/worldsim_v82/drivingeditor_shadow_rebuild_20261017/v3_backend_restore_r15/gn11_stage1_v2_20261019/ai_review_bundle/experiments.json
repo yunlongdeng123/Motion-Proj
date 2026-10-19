@@ -1,0 +1,208 @@
+[
+  {
+    "id": "baseline",
+    "label": "原生五身份GN11一阶段30K基线",
+    "actors": [
+      6,
+      37,
+      5,
+      26,
+      18
+    ],
+    "raw_frames": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "image_wh": [
+      480,
+      320
+    ],
+    "first_stage_logical_updates": 30000,
+    "second_stage_updates": 0,
+    "seed": 0,
+    "ownership_fix": false,
+    "road_weights": {
+      "observed_rgb": 0,
+      "prior_rgb": 0,
+      "observed_depth": 0,
+      "prior_depth": 0
+    },
+    "actual_optimizer_step_counts": null,
+    "effective_config": "evidence/runs/baseline/effective_config.json",
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k",
+    "independent49": "existing_native49",
+    "source_materialization": "code/base",
+    "native_checkpoint49_complete": true,
+    "all_views_are_training_views": true,
+    "quality_accepted": false
+  },
+  {
+    "id": "full",
+    "label": "完整版：归属＋跨帧＋供体",
+    "actors": [
+      6,
+      37,
+      5,
+      26,
+      18
+    ],
+    "raw_frames": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "image_wh": [
+      480,
+      320
+    ],
+    "first_stage_logical_updates": 30000,
+    "second_stage_updates": 0,
+    "seed": 0,
+    "ownership_fix": true,
+    "road_weights": {
+      "observed_rgb": 1,
+      "prior_rgb": 0.1,
+      "observed_depth": 0.1,
+      "prior_depth": 0.01
+    },
+    "actual_optimizer_step_counts": {
+      "static": 30000,
+      "dynamic": 30000,
+      "environment": 30000
+    },
+    "effective_config": "evidence/runs/full/effective_config.json",
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k",
+    "independent49": "completed_zero_update",
+    "source_materialization": "code/base + code/overlays/full",
+    "native_checkpoint49_complete": true,
+    "all_views_are_training_views": true,
+    "quality_accepted": false
+  },
+  {
+    "id": "real_only",
+    "label": "归属＋仅跨帧",
+    "actors": [
+      6,
+      37,
+      5,
+      26,
+      18
+    ],
+    "raw_frames": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "image_wh": [
+      480,
+      320
+    ],
+    "first_stage_logical_updates": 30000,
+    "second_stage_updates": 0,
+    "seed": 0,
+    "ownership_fix": true,
+    "road_weights": {
+      "observed_rgb": 1,
+      "prior_rgb": 0,
+      "observed_depth": 0.1,
+      "prior_depth": 0
+    },
+    "actual_optimizer_step_counts": {
+      "static": 30000,
+      "dynamic": 30000,
+      "environment": 30000
+    },
+    "effective_config": "evidence/runs/real_only/effective_config.json",
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/real_only/run30k",
+    "independent49": "completed_zero_update",
+    "source_materialization": "code/base + code/overlays/real_only",
+    "native_checkpoint49_complete": true,
+    "all_views_are_training_views": true,
+    "quality_accepted": false
+  },
+  {
+    "id": "prior_only",
+    "label": "归属＋仅供体",
+    "actors": [
+      6,
+      37,
+      5,
+      26,
+      18
+    ],
+    "raw_frames": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "image_wh": [
+      480,
+      320
+    ],
+    "first_stage_logical_updates": 30000,
+    "second_stage_updates": 0,
+    "seed": 0,
+    "ownership_fix": true,
+    "road_weights": {
+      "observed_rgb": 0,
+      "prior_rgb": 0.1,
+      "observed_depth": 0,
+      "prior_depth": 0.01
+    },
+    "actual_optimizer_step_counts": {
+      "static": 30000,
+      "dynamic": 30000,
+      "environment": 30000
+    },
+    "effective_config": "evidence/runs/prior_only/effective_config.json",
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/prior_only/run30k",
+    "independent49": "pending_GPU",
+    "source_materialization": "code/base + code/overlays/prior_only",
+    "native_checkpoint49_complete": true,
+    "all_views_are_training_views": true,
+    "quality_accepted": false
+  },
+  {
+    "id": "ownership_only",
+    "label": "仅归属修复",
+    "actors": [
+      6,
+      37,
+      5,
+      26,
+      18
+    ],
+    "raw_frames": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "image_wh": [
+      480,
+      320
+    ],
+    "first_stage_logical_updates": 30000,
+    "second_stage_updates": 0,
+    "seed": 0,
+    "ownership_fix": true,
+    "road_weights": {
+      "observed_rgb": 0,
+      "prior_rgb": 0,
+      "observed_depth": 0,
+      "prior_depth": 0
+    },
+    "actual_optimizer_step_counts": {
+      "static": 30000,
+      "dynamic": 30000,
+      "environment": 30000
+    },
+    "effective_config": "evidence/runs/ownership_only/effective_config.json",
+    "run": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/ablations/ownership_only/run30k",
+    "independent49": "pending_GPU",
+    "source_materialization": "code/base + code/overlays/ownership_only",
+    "native_checkpoint49_complete": true,
+    "all_views_are_training_views": true,
+    "quality_accepted": false
+  }
+]
