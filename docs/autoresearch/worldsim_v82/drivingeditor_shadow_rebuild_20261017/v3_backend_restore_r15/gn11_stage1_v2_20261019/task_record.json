@@ -2,7 +2,7 @@
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
   "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
-  "updated_utc": "2026-10-19T10:42:45.225776+00:00",
+  "updated_utc": "2026-10-19T11:12:24.637802+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
@@ -81,12 +81,12 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 65943412736
+    "disk_free_bytes_at_snapshot": 62219091968
   },
   "failure_ledger_refs": [
     "V82-F06"
   ],
-  "failure_ledger_delta": "main30K_durable_prior_admitted_no_quality_verdict",
+  "failure_ledger_delta": "named_ablation_CPU_nodes_no_quality_verdict",
   "report": "index.html",
   "code": "candidate_source.zip",
   "worker_pid": 2145,
@@ -125,11 +125,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 11400,
+      "updates_executed": 18700,
       "actual_optimizer_step_counts": {
-        "static": 11400,
-        "dynamic": 11400,
-        "environment": 11400
+        "static": 18700,
+        "dynamic": 18700,
+        "environment": 18700
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -141,7 +141,8 @@
       "worker_pid": 4194,
       "audited_checkpoint_steps": [
         5000,
-        10000
+        10000,
+        15000
       ]
     },
     "prior_only": {
@@ -149,11 +150,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 500,
+      "updates_executed": 8700,
       "actual_optimizer_step_counts": {
-        "static": 500,
-        "dynamic": 500,
-        "environment": 500
+        "static": 8700,
+        "dynamic": 8700,
+        "environment": 8700
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -163,7 +164,9 @@
         "prior_depth": 0.01
       },
       "worker_pid": 5503,
-      "audited_checkpoint_steps": []
+      "audited_checkpoint_steps": [
+        5000
+      ]
     },
     "ownership_only": {
       "updates_authorized": 30000,

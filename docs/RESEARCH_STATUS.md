@@ -1,14 +1,14 @@
 # 当前研究状态
 
-更新：2026-10-19T10:42:41.919897+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。原生随保存的49评估完成，但四组最终独立零更新49与实际视觉质量均未交付，human_verdict=null。
+更新：2026-10-19T11:12:24.637802+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。原生随保存的49评估完成，但四组最终独立零更新49与实际视觉质量均未交付，human_verdict=null。
 
-当前实际在训：real_only PID4194 11400/30000；prior_only PID5503 500/30000。两者实际static/dynamic更新计数与各自进度一致。ownership_only仍排队，controller4120继续限制总并发最多2（gate也占槽），不得重复启动或恢复旧A/B队列。prior_only已通过真实CUDA零更新gate，静态固定相机跨时间RGB最大差0、梯度6/9/1有限、优化器计数0，真实道路RGB/深度权重0、供体权重.1/.01；其前100选帧/时间扰动/全部优化器LR与完整版实际日志一致。
+当前实际在训：real_only PID4194 18700/30000（training）；prior_only PID5503 8700/30000（training）。待执行：ownership_only。实际static/dynamic更新计数与各自进度一致；controller4120继续限制总并发最多2（gate也占槽）。以各自status解释实际阶段，不把静态队列名或guardian存活当训练推进；不得重复启动或恢复旧A/B队列。
 
-保存证据：完整版5/10/15/20/25/30K六个节点已逐一CPU只读通过，终点四组件569273779/786948958/226494608/49944B，模型/Adam有限、RNG/SGCM/sampler30000/native49齐全。real_only独立5K、10K凭据通过，不能拿主实验receipt替代。所有节点核验均无GPU恢复或新增优化更新，不代表视觉通过；已验节点不重复遍历。
+保存证据：完整版5/10/15/20/25/30K六节点此前均CPU只读通过，不重复核验。各消融独立已审节点：real_only 5K/10K/15K；prior_only 5K；ownership_only 尚无已审节点。模型/Adam有限，RNG/SGCM/sampler和各自原生49齐全；CPU核验无GPU恢复或新增更新，不代表视觉质量通过，不能跨模型混用凭据。
 
 严格范围：四组各fresh第一阶段30K、同原A五身份a6/a37/a5/a26/a18、原49帧与输入初始化协议、seed0，第二阶段0。消融保持归属修复，分别关闭真实、先验或全部道路目标；输入query/provenance/目标不改，UNKNOWN无道路监督。未修改已加载训练源码，未新增重放。全部四组训练、节点核验、最终零更新49、下载、完整画面对照与Git完成后才按授权关机；当前不能启动GPU评估或关机。
 
-资源采样：NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 8943 MiB, 23289 MiB, 97 %；md0 active/degraded0/syncidle。磁盘空65.943GB，剩余资产估59.920GB（含8GB共享余量，点数预测不是严格上界）。controller在主退出后持全局GPU锁，评估必须等所有训练退出并释放锁。automation-2 ACTIVE每30分钟，普通无变化安静。
+资源采样：NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 8353 MiB, 23879 MiB, 62 %；md0 active/degraded0/syncidle。磁盘空62.219GB，剩余资产估48.732GB（含8GB余量，点数预测不是严格上界）。controller登记状态AUTHORIZED_ABLATIONS_RUNNING_MAX_TWO_TRAINING_INCLUDING_MAIN；全部训练退出并释放GPU锁前不得启动最终评估，全部对照交付前不关机。automation-2 ACTIVE每30分钟，普通无变化安静。
 
 真实输入/CUDA准入完成：相机模型锚帧raw99与SGCM地面平面锚帧raw89分别绑定，平面坐标往返、全部49相机内参/世界变换通过。当前input_bundle_002与gate_002按manifest/hash绑定；固定相机时间-0.48/0.48静态RGB最大差0，梯度组static6/dynamic9/environment1均有限，静态时间梯度无，零更新检查三个优化器实数计数均0。早期锚帧工程诊断仅零更新，未进入训练。
 
