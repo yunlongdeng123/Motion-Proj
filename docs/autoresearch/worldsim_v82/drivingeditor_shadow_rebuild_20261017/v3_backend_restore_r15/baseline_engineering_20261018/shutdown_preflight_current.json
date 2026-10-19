@@ -1,0 +1,60 @@
+{
+  "status": "PASSED_CURRENT_A_B_ALL_WORK_COMPLETE_SHUTDOWN_PREFLIGHT",
+  "at": "2026-10-19T04:55:44.529680+00:00",
+  "delivery_git_commit": "696a05c00f9409e9c9e18cbe3f235e411d9c18d3",
+  "queue": {
+    "state": "PARALLEL_A_B_FULL49_COMPLETE_AWAITING_REPORT_GIT",
+    "pid": 79622,
+    "at": "2026-10-19T04:21:32.116370+00:00",
+    "A_logical_updates": 30000,
+    "B_updates": 30000,
+    "A_replay_updates": 0,
+    "human_verdict": null
+  },
+  "guard": {
+    "state": "TRAINING_ENDED",
+    "guardian_pid": 79622,
+    "peer_pids": [
+      79624,
+      79625
+    ],
+    "allocator_budgets_GiB": {
+      "A": 16,
+      "B": 13
+    },
+    "reserve_GiB": 2
+  },
+  "A_step": 30000,
+  "B_step": 30000,
+  "A_records": 245,
+  "B_records": 49,
+  "archive_bytes": 177558879,
+  "archive_sha256": "a7e598aaedd49de48a33d5454d410a7c623ce6a74d89e3682943e3b0973f545e",
+  "active_campaign_workers": [],
+  "gpu_compute_processes": "",
+  "observed_python_service_processes": [
+    {
+      "pid": 876,
+      "state": "State:\tS (sleeping)",
+      "executable": "/root/miniconda3/bin/python",
+      "arguments_not_published": true
+    },
+    {
+      "pid": 879,
+      "state": "State:\tS (sleeping)",
+      "executable": "/root/miniconda3/bin/python",
+      "arguments_not_published": true
+    },
+    {
+      "pid": 1000,
+      "state": "State:\tS (sleeping)",
+      "executable": "/root/miniconda3/lib/python3.10/site-packages/tensorboard_data_server/bin/server",
+      "arguments_not_published": true
+    }
+  ],
+  "all_actor_gpu_claim_active": false,
+  "shutdown_entry": "/usr/bin/shutdown",
+  "shutdown_entry_sha256": "0358e83eeeaf542aa98f64ba9e339c91df46f1e025892d52dba159f4fb1cf027",
+  "shutdown_requested": true,
+  "cloud_billing_verified": false
+}

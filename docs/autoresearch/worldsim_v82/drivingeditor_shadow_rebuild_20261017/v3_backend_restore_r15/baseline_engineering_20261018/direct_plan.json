@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-19T12:53:17+08:00",
+  "updated_at": "2026-10-19T12:56:22+08:00",
   "experiment_A": {
     "target": "matched five GN1130K + fresh instances30K",
     "GN11_step": 30000,
@@ -314,6 +314,35 @@
     "quality_review_status": "COMPLETED_ACTUAL_FULLFRAME_QUALITY_REVIEW",
     "quality_accepted": false,
     "quality_summary": "A五身份两阶段30K＋30K、B交集20身份第一阶段30K及最终49帧零更新删除评估已完成；两项均未达到干净街景目标。A／B静态分支和删除图仍保留明显车形、亮白／彩色条带；A的a6独立资产有白色带状碎片。不能把训练完成、低损失或目标alpha清零当作分离质量通过。",
+    "shutdown": {
+      "status": "SHUTDOWN_REQUESTED_SSH_UNREACHABLE_OBSERVED",
+      "request_started_at": "2026-10-19T04:55:43.986900+00:00",
+      "completed_at": "2026-10-19T04:56:11.660350+00:00",
+      "delivery_git_commit": "696a05c00f9409e9c9e18cbe3f235e411d9c18d3",
+      "ssh_shutdown_returncode": 4294967295,
+      "entry": "/usr/bin/shutdown",
+      "observations": [
+        {
+          "at": "2026-10-19T04:55:47.045591+00:00",
+          "SSH_reachable": false,
+          "returncode": 255,
+          "detail": "Connection closed by 116.136.52.182 port 38300\n"
+        },
+        {
+          "at": "2026-10-19T04:55:59.381795+00:00",
+          "SSH_reachable": false,
+          "returncode": 255,
+          "detail": "Connection closed by 116.136.52.182 port 38300\n"
+        },
+        {
+          "at": "2026-10-19T04:56:11.660350+00:00",
+          "SSH_reachable": false,
+          "returncode": 255,
+          "detail": "Connection closed by 116.136.52.182 port 38300\n"
+        }
+      ],
+      "cloud_billing_verified": false
+    },
     "runtime_io_health": {
       "at": "2026-10-19T04:15:18.661646+00:00",
       "hostname": "autodl-container-396445a2a1-1984c713",
