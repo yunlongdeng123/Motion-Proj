@@ -53,6 +53,6 @@ python code/materialize.py --experiment full --output /path/to/new_empty_review_
 
 - Repository: https://github.com/yunlongdeng123/Motion-Proj
 - Branch: `research/worldsim-v8.2-drivingeditor-debug`
-- 代码快照与本指南同提交发布；最终ZIP的PROVENANCE.json记录确切代码提交。
+- Code commit: `c5ce9610a59d1e59ac1fd69723917ec12ab12f40`
 - Remote source snapshot collected UTC: `2026-10-19T14:24:18.909584+00:00`
 - 打包仅CPU只读取源，无新GPU/训练更新；内容hash见MANIFEST。媒体复用既有完整文件，没有再裁剪或生成补帧。

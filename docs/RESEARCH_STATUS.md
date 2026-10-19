@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-19T14:11:37.911250+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。四组原生49视频已交付；full/real_only独立七通道已完成，prior_only/ownership_only独立渲染待GPU，完整视觉质量复核待完成，human_verdict=null。
+更新：2026-10-19T14:37:09.577336+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。四组原生49视频已交付；full/real_only独立七通道已完成，prior_only/ownership_only独立渲染待GPU，完整视觉质量复核待完成，human_verdict=null。
 
 已完成训练：完整版、real_only、prior_only、ownership_only各fresh第一阶段30000、第二阶段0。训练及原生49节点输出齐全；独立zero-update49已完成full和real_only，prior_only/ownership_only待GPU，不能称四组最终独立评估完成。
 
@@ -25,6 +25,10 @@
 本轮无卡导出：[四组30K完整同步视频与原生A对照](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native30k_four_compare.html)，统一使用四组各自原生节点的gt/composite/static/dynamic完整49帧；[已完成独立渲染的两组七通道](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/independent_pair_compare.html)，包含真实独立delete_all及alpha。新增22视频、复用12视频，均480×320/49帧/10fps全I帧；全部34视频1666帧实际解码、对应源PNG顺序/编码误差和JS控制fixture通过，非浏览器UI。保留原两组视频页。
 
 实际静态全49复核：四组共196张完整静态PNG已查看。完整版仍有矩形道路纹理、暗条与接缝；real_only有黄白亮块/蓝边，prior_only有黑块，ownership_only仍有黑色车状轮廓。均不判干净静态通过；动态/完整重建/alpha/道路来源区域与阴影的全量质量对照仍未完成。[实际观看范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/native_static_review.json)。human_verdict=null。
+
+
+
+AI review package delivered: four ablations plus native five-ID GN11 stage1 30K baseline, 70,643,843 bytes (70.64MB), SHA256 d7c337e6768a12faf096e752081398d5ac1fcc60240e5d6bd7adbc9d710acfc0. Exact core sources/configs/diffs pushed and remote verified at c5ce9610a59d1e59ac1fd69723917ec12ab12f40. ZIP contains offline compare pages, full49 videos, frozen road evidence/targets, licenses and review prompts; excludes weights/full logs/compiled binaries. Two independent renders remain pending GPU; no new training or GPU use during packaging.
 
 ## 已完成的原A/B基线与历史证据
 
