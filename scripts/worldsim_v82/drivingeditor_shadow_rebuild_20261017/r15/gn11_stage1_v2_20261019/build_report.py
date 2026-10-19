@@ -118,11 +118,14 @@ AutoDL 待用户开机。真实 LiDAR / 相机输入绑定、CUDA 零更新前�
 <footer>构建 UTC：BUILD_TIME。仅文件、源码与本地 PNG 检查；未宣称浏览器交互验收或训练效果通过。</footer></main>
 <script>const captions={"raw89_query_and_donors.png":"紫 / 粉：车身 query 射线入口；橙：可见沥青供体。世界投影尚未执行。","raw89_donor_filter_preview.png":"青：颜色过滤后的沥青候选；红：剔除标线与边缘。真实道路 / 全部遮挡物核验尚待执行。","raw89_original.png":"未画框 raw89 原始观测图。标注图不会进入取色。"};document.querySelectorAll('button[data-image]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('frame').src=b.dataset.image;document.getElementById('frame').alt=captions[b.dataset.image];document.getElementById('caption').textContent=captions[b.dataset.image];document.querySelectorAll('button[data-image]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));</script></html>'''
 html=html.replace('COUNT_LEFT',str(counts[0])).replace('COUNT_RIGHT',str(counts[1])).replace('TEST_COUNT',str(test['tests'])).replace('BUILD_TIME',now)
+if (W/'runtime_progress.json').exists() and (W/'actual_input_bundle.json').exists():
+    from enrich_runtime_report import enrich
+    html=enrich(html,W,O)
 (O/'index.html').write_text(html,encoding='utf-8')
 with zipfile.ZipFile(O/'candidate_source.zip','w',zipfile.ZIP_DEFLATED) as z:
     z.write(W.parent/'baseline_engineering_20261018/source/LICENSE_gaussian_splatting.md','upstream_original/LICENSE_gaussian_splatting.md')
     for p in sorted(W.iterdir()):
-        if p.suffix in {'.py','.json'}:z.write(p,p.name)
+        if p.suffix=='.py' or p.name in {'config.json','cpu_test_receipt.json','candidate_manifest.json','evaluation_contract.json'}:z.write(p,p.name)
     for p in sorted((W/'candidate').rglob('*')):
         if p.is_file() and '__pycache__' not in p.parts:z.write(p,p.relative_to(W).as_posix())
-print(json.dumps(dict(output=str(O/'index.html'),candidate_pixels=counts,CPU_tests=test['tests'],training_started=False)))
+print(json.dumps(dict(output=str(O/'index.html'),candidate_pixels=counts,CPU_tests=test['tests'],runtime_snapshot=(W/'runtime_progress.json').exists())))

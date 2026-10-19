@@ -4,9 +4,12 @@ import json
 from pathlib import Path
 import numpy as np
 import torch
+import functools
 from utils.v2_static_partition import (route_depth, observed_rgb_loss,
                                        vehicle_volume_opacity, independent_road_backward)
 from utils.v2_road_objective import road_objective
+
+ACTIVE_CONTEXT=None
 
 
 class V2Context:
@@ -43,6 +46,18 @@ class V2Context:
         self.log=Path(args.model_path)/'v2_objectives.jsonl'
         self.gate_only=bool(args.get('v2_zero_update_gate',False))
         self.models=[scene.gaussians,scene.dynamic_gaussians,environment]
+        self.optimizer_steps={}
+        for name,model in zip(['static','dynamic','environment'],self.models):
+            if model is None:continue
+            self.optimizer_steps[name]=0
+            original_step=model.optimizer.step
+            def counted_step(*args,_name=name,_original=original_step,**kwargs):
+                result=_original(*args,**kwargs)
+                self.optimizer_steps[_name]+=1
+                return result
+            model.optimizer.step=functools.wraps(original_step)(counted_step)
+        global ACTIVE_CONTEXT
+        ACTIVE_CONTEXT=self
         self.gate_details={}
         self.output=Path(args.model_path)
 
@@ -142,7 +157,9 @@ class V2Context:
                 p=getattr(static,field)
                 if p.requires_grad or p.grad is not None:raise RuntimeError('static temporal parameter has a gradient')
             self.gate_details.update(finite_gradient_parameter_groups=counts,optimizer_updates=0,
+                                     optimizer_step_counts=dict(self.optimizer_steps),
                                      static_temporal_gradients_absent=True)
+            if any(self.optimizer_steps.values()):raise RuntimeError('zero-update gate executed an optimizer step')
             (self.output/'gpu_gate_details.json').write_text(json.dumps(self.gate_details,indent=2),encoding='utf-8')
             raise ZeroUpdateGateComplete('actual GPU forward/backward complete; optimizer updates=0')
 

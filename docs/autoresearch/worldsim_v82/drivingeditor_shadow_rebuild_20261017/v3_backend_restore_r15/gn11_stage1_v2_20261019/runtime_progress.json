@@ -1,0 +1,116 @@
+{
+  "collected_utc": "2026-10-19T09:13:10.314864+00:00",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
+  "status": {
+    "status": "training",
+    "mode": "train",
+    "pid": 2145,
+    "parent_pid": 1,
+    "iteration": 5100,
+    "logical_budget": 30000,
+    "second_stage_updates": 0,
+    "started_utc": "2026-10-19T09:00:10.073024+00:00",
+    "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+    "quality_accepted": false,
+    "wall_seconds": 768.7757468456402,
+    "loss": 0.453731894493103,
+    "psnr": 27.77922821044922,
+    "static_points": 633049,
+    "dynamic_points": 408955,
+    "optimizer_step_counts": {
+      "static": 5100,
+      "dynamic": 5100,
+      "environment": 5100
+    },
+    "cuda_allocated_bytes": 2320846848,
+    "cuda_reserved_bytes": 3674210304,
+    "cuda_peak_allocated_bytes": 3719700480,
+    "updated_utc": "2026-10-19T09:12:58.849374+00:00"
+  },
+  "launch": {
+    "status": "AUTHORIZED_FRESH_30K_WORKER_LAUNCHED",
+    "pid": 2145,
+    "command": [
+      "/root/autodl-tmp/envs/drivingeditor/bin/python",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/run_candidate.py",
+      "--engine",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine",
+      "--output",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k",
+      "--bundle",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json",
+      "--baseline-config",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+      "--readiness",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+      "--manifest",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/candidate_manifest.json",
+      "--binding-tools",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+      "--gpu-lock",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+      "--mode",
+      "train",
+      "--gpu-gate",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/gate_002/gpu_gate_receipt.json"
+    ],
+    "started_utc": "2026-10-19T09:00:04.016549+00:00",
+    "target_updates": 30000,
+    "second_stage_updates": 0,
+    "automatic_restart": false,
+    "gate": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/gate_002/gpu_gate_receipt.json",
+    "output": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k",
+    "log": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/training.log"
+  },
+  "gpu_gate": {
+    "status": "PASSED_ACTUAL_CUDA_FORWARD_BACKWARD_ZERO_UPDATES",
+    "optimizer_updates": 0,
+    "manifest_sha256": "cad2f23810f5ab0d33e664186ed0eb41f88702305d1e6df3ce87e57e640e25d3",
+    "bundle_sha256": "e20de33c44e9e404f447f695802de4f51b6267b4bf2d93485e14a6716239b5fb",
+    "baseline_config_sha256": "d129bfc0e73030f1f024da8f10cdaf069f861cdd3dd5091a98df0f171b0543b3",
+    "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+    "actual_checks": {
+      "static_fixed_camera_max_RGB_delta": 0.0,
+      "static_times_tested": [
+        -0.48,
+        0.48
+      ],
+      "gate_raw_frame": 89,
+      "finite_gradient_parameter_groups": [
+        6,
+        9,
+        1
+      ],
+      "optimizer_updates": 0,
+      "optimizer_step_counts": {
+        "static": 0,
+        "dynamic": 0,
+        "environment": 0
+      },
+      "static_temporal_gradients_absent": true
+    },
+    "same_fresh_seed_required_for_training": true,
+    "quality_verified": false
+  },
+  "process": {
+    "pid": 2145,
+    "exists": true,
+    "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/run_candidate.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/gate_002/gpu_gate_receipt.json ",
+    "wchan": "futex_wait_queue_me",
+    "state": "State:\tS (sleeping)",
+    "starttime_ticks": 838741102
+  },
+  "disk_free_bytes": 80184532992,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 4056 MiB, 28176 MiB, 50 %",
+  "gpu_processes": "2145, /root/autodl-tmp/envs/drivingeditor/bin/python, 4434 MiB",
+  "md0": {
+    "array_state": "active",
+    "degraded": "0",
+    "sync_action": "idle"
+  },
+  "published_checkpoint_steps": [
+    5000
+  ],
+  "audited_steps": [],
+  "log_last_4000_bytes": "       | 5157/30000 [12:41<57:23,  7.22it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5158/30000 [12:41<55:34,  7.45it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5159/30000 [12:41<54:55,  7.54it/s, loss=0.51005, l1=0.02306, psnr=26.40770, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5159/30000 [12:41<54:55,  7.54it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5160/30000 [12:41<54:26,  7.61it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5161/30000 [12:41<54:12,  7.64it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5162/30000 [12:42<54:59,  7.53it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5163/30000 [12:42<54:45,  7.56it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5164/30000 [12:42<55:13,  7.50it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5165/30000 [12:42<55:05,  7.51it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5166/30000 [12:42<55:54,  7.40it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5167/30000 [12:42<55:32,  7.45it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5168/30000 [12:42<55:19,  7.48it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5169/30000 [12:43<54:21,  7.61it/s, loss=0.47833, l1=0.02335, psnr=26.26116, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5169/30000 [12:43<54:21,  7.61it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5170/30000 [12:43<54:21,  7.61it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5171/30000 [12:43<54:51,  7.54it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5172/30000 [12:43<54:49,  7.55it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5173/30000 [12:43<54:37,  7.58it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5174/30000 [12:43<54:53,  7.54it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5175/30000 [12:43<55:01,  7.52it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5176/30000 [12:43<55:38,  7.44it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5177/30000 [12:44<56:35,  7.31it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5178/30000 [12:44<56:15,  7.35it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5179/30000 [12:44<56:06,  7.37it/s, loss=0.48324, l1=0.02500, psnr=25.62927, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5179/30000 [12:44<56:06,  7.37it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5180/30000 [12:44<56:11,  7.36it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5181/30000 [12:44<54:28,  7.59it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5182/30000 [12:44<54:09,  7.64it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5183/30000 [12:44<54:59,  7.52it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5184/30000 [12:45<54:47,  7.55it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]\rTraining progress:  17%|\u2588\u258b        | 5185/30000 [12:45<54:51,  7.54it/s, loss=0.62111, l1=0.02418, psnr=26.70701, scale=4]"
+}

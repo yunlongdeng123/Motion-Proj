@@ -11,6 +11,10 @@ import hashlib
 import json
 import os
 import sys
+import subprocess
+import time
+import math
+import traceback
 
 
 def read(p):return json.loads(Path(p).read_text(encoding='utf-8'))
@@ -53,16 +57,20 @@ def main():
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     # All six native checkpoint bundles +49 raw evals, known maxima +10%, plus8GB workspace.
     import shutil
-    reserve=6*(2.5e6*640+1.1e6*800+230e6)*1.1+8e9
+    reserve=6*(cfg['densify_until_num_points']*640+cfg['dynamic_densify_until_num_points']*800+230e6)*1.1+8e9
     free=shutil.disk_usage(a.output.parent).free
     if free<reserve:raise RuntimeError(f'insufficient space for preserved six checkpoints: free={free}, reserve={reserve}')
+    apps=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name','--format=csv,noheader'],text=True).strip()
+    if apps:raise RuntimeError('GPU has existing compute processes: '+apps)
     os.environ.setdefault('PYTHONDONTWRITEBYTECODE','1')
     sys.path.insert(0,str(a.binding_tools));sys.path.insert(0,str(a.engine))
     import torch
     if not torch.cuda.is_available():raise RuntimeError('CUDA unavailable')
+    if torch.cuda.get_device_properties(0).total_memory<30*1024**3:raise RuntimeError('actual GPU has less than30GiB memory')
     from omegaconf import OmegaConf
     import train
     if Path(train.__file__).resolve()!=(a.engine/'train.py').resolve():raise RuntimeError('wrong train import')
+    os.chdir(a.engine)
     # Preserve all native optimization schedules apart from explicitly recorded v2 policy.
     cfg.update(model_path=str(a.output),start_checkpoint=None,seed=0,iterations=30000,
                checkpoint_iterations=list(range(5000,30001,5000)),
@@ -103,7 +111,33 @@ def main():
         return original_save(path,iteration,models)
     paper_checkpoint.save_components=save_with_admission
     from utils.general_utils import seed_everything
-    from utils.v2_runtime_context import ZeroUpdateGateComplete
+    from utils import v2_runtime_context
+    ZeroUpdateGateComplete=v2_runtime_context.ZeroUpdateGateComplete
+    started=time.monotonic()
+    status=dict(status='initializing',mode=a.mode,pid=os.getpid(),parent_pid=os.getppid(),iteration=0,
+        logical_budget=30000,second_stage_updates=0,started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        GPU=torch.cuda.get_device_name(0),quality_accepted=False)
+    write(a.output/'status.json',status)
+    original_eval=train.complete_eval
+    def observed_eval(*positional,**keyword):
+        iteration=int(positional[1]);schedule=positional[2];losses=positional[6]
+        numbers={k:float(v.detach()) if torch.is_tensor(v) else float(v) for k,v in losses.items()}
+        if not all(math.isfinite(v) for v in numbers.values()):raise FloatingPointError('nonfinite actual training scalar')
+        context=v2_runtime_context.ACTIVE_CONTEXT
+        if iteration==1 or iteration%100==0 or iteration in schedule:
+            counts=dict(context.optimizer_steps)
+            if counts.get('static')!=iteration or counts.get('dynamic')!=iteration:
+                raise RuntimeError('actual optimizer update count disagrees with logical iteration')
+            status.update(status='evaluating' if iteration in schedule else 'training',iteration=iteration,
+                wall_seconds=time.monotonic()-started,loss=numbers.get('loss'),psnr=numbers.get('psnr'),
+                static_points=len(context.models[0].get_xyz),dynamic_points=len(context.models[1].get_xyz),
+                optimizer_step_counts=counts,
+                cuda_allocated_bytes=torch.cuda.memory_allocated(),cuda_reserved_bytes=torch.cuda.memory_reserved(),
+                cuda_peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                updated_utc=datetime.datetime.now(datetime.timezone.utc).isoformat())
+            write(a.output/'status.json',status)
+        return original_eval(*positional,**keyword)
+    train.complete_eval=observed_eval
     seed_everything(0)
     try:
         train.training(OmegaConf.create(cfg))
@@ -114,8 +148,24 @@ def main():
             baseline_config_sha256=sha(a.baseline_config),GPU=torch.cuda.get_device_name(),
             actual_checks=read(a.output/'gpu_gate_details.json'),
             same_fresh_seed_required_for_training=True,quality_verified=False))
+        status.update(status='zero_update_gate_passed',optimizer_step_counts=dict(v2_runtime_context.ACTIVE_CONTEXT.optimizer_steps))
+        write(a.output/'status.json',status)
         return
+    except BaseException as ex:
+        context=v2_runtime_context.ACTIVE_CONTEXT
+        status.update(status='failed_preserved_no_restart',error=repr(ex),traceback=traceback.format_exc(),
+            optimizer_step_counts=dict(context.optimizer_steps) if context is not None else {},
+            wall_seconds=time.monotonic()-started,automatic_restart=False)
+        write(a.output/'status.json',status)
+        raise
     if a.mode=='gate':raise RuntimeError('zero-update gate did not stop before Adam')
+    for step in cfg['checkpoint_iterations']:
+        event=read(a.output/'checkpoint_events'/f'iteration_{step:06d}.json')
+        if event['status']!='complete' or len(event['checkpoints'])!=4 or len(event['frames'])!=49:
+            raise RuntimeError('final six-node checkpoint/evaluation contract incomplete')
+    status.update(status='complete',iteration=30000,wall_seconds=time.monotonic()-started,
+        optimizer_step_counts=dict(v2_runtime_context.ACTIVE_CONTEXT.optimizer_steps))
+    write(a.output/'status.json',status)
     # Native complete status is necessary, not final delivery/quality acceptance.
     write(a.output/'v2_training_returned.json',dict(status='TRAINING_RETURNED_FINAL_ASSET_AUDIT_PENDING',
         quality_accepted=False,full49_deletion_evaluation_still_required=True))

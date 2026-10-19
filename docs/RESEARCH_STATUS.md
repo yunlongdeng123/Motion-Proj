@@ -1,12 +1,16 @@
 # 当前研究状态
 
-更新：2026-10-19T08:44:09.381084+00:00。当前 task=WS-V82-R15-GN11-STAGE1-V2-20261019；本地候选与15项CPU检查完成，等待用户开机后绑定真实输入及执行CUDA零更新检查。新版GPU训练0步，尚无效果结论。
+更新：2026-10-19T09:13:10.314864+00:00。当前 task=WS-V82-R15-GN11-STAGE1-V2-20261019；用户已开AutoDL，本版fresh第一阶段30K运行中，真实PID2145，最新确认5100/30000。质量尚未验收，human_verdict=null。
 
-用户授权相同五身份a6/a37/a5/a26/a18、相同49帧raw89–137、相同原始输入初始化和seed=0，重新训练第一阶段30K；第二阶段0，不从旧30K继续追加30K。归属与道路重建分为两套目标：静态关闭时间运动/显隐并限制车身监督通路；道路以raw89车后Query Patch查询raw131–137同世界位置，必要时检查同窗其余帧，无合格真实候选才使用已确认左右沥青供体，真实/先验/未知分开记录。3D数据集标注框作为新增归属体积/遮挡约束输入明确披露。两目标分别计算梯度，每步一次原生更新，不新增预算。
+严格范围：同原A五身份a6/a37/a5/a26/a18、同raw89–137完整49帧与原始输入初始化、seed0，重新第一阶段30000步，第二阶段0。当前static/dynamic实际Adam计数均5100，未加载旧30K模型、未新增重放或消融。原A实际训练源码三文件原始SHA完全匹配后，隔离部署到/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine；当前训练入口source_bundle/run_candidate.py，输出run30k，启动2026-10-19T09:00:04+00:00，独占共享GPU锁。运行中源码与目标冻结。
 
-左右供体坐标以480×320原图为准：(49,225)–(185,284)与(352,227)–(398,298)。已生成全幅定位与标线过滤候选预览，未执行真实世界Query Patch融合或补全。真实LiDAR/相机绑定、全部遮挡核验、同输入fresh初始化、CUDA前后向及磁盘准入仍待执行；本地检查不等于修复质量通过。开机后通过这些检查才进入已授权30K，完整状态每5K保存，终点完整49帧零更新评估并实际看静态/删除图和动态保持情况。
+真实输入/CUDA准入完成：相机模型锚帧raw99与SGCM地面平面锚帧raw89分别绑定，平面坐标往返、全部49相机内参/世界变换通过。当前input_bundle_002与gate_002按manifest/hash绑定；固定相机时间-0.48/0.48静态RGB最大差0，梯度组static6/dynamic9/environment1均有限，静态时间梯度无，零更新检查三个优化器实数计数均0。早期锚帧工程诊断仅零更新，未进入训练。
 
-[候选实现、简单组件图与全幅供体预览](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [执行范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/task_record.json)。failure_ledger_refs=[V82-F06]，未新增失败ID或科学结论，human_verdict=null。AutoDL上轮已关机；本轮未连接或启动GPU，旧automation-2保持暂停，不恢复旧队列。
+道路query为raw89的a6/a37车身遮挡射线，总15869像素样本，有效道路交点15625。a6：总1149，晚段/全49真实确认均0、供体先验245、未知904；a37：总14720，晚段131–137确认4765、全49确认7787、供体4874、未知2059。晚段包含在全49内；这些是像素射线样本，不是世界面积/干净GT或最终质量。左右供体按用户坐标去标线后，实际几何合格左4249/右1605；5119个先验query使用770个供体样本，独立CPU重建与冻结供体索引及RGB逐项相等，最大RGB差0，未改训练目标。
+
+首个真实5K节点CPU只读通过：静态475740851B/动态303471134B/环境226494608B/训练状态50008B，Adam/模型有限、RNG/SGCM/sampler5000及原生49评估完整；没有做5K GPU恢复或增加优化更新。下一新节点10K/15K/20K/25K/30K按实际发布核验，不重复遍历已验5K。训练完还需当前v2独立完整49帧零更新full/dynamic/static/delete_all/alpha评估及实际全画面质量复核，不能因低loss或训练complete宣称通过。最终evaluator与逐节点CPU audit工具已准备，尚未执行30K评估。
+
+[当前状态、组件图与完整画面道路查询](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [实际运行采样](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/runtime_progress.json) · [5K凭据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/checkpoint_005000_audit.json)。GPU4080SUPER 32GB，启动时空闲磁盘81.8GB、md0 active/degraded0/idle。automation-2已更新为本版每30分钟跟进，仅阶段变化/失败/需操作/完成通知，不恢复旧A/B队列。全部训练、评估、下载、实际质量报告/Git交付与无worker核对前不关机。failure_ledger_refs=[V82-F06]；本轮为候选真实输入/工程准入与5K耐久证据，不新增失败ID或科学结论。
 
 ## 已完成的原A/B基线与历史证据
 

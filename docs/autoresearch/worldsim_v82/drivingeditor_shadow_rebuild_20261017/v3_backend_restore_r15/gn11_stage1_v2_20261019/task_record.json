@@ -1,14 +1,14 @@
 {
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
-  "state": "LOCAL_CANDIDATE_CPU_CHECKED_AWAITING_USER_POWER_ON",
-  "updated_utc": "2026-10-19T08:44:09.381084+00:00",
+  "state": "FRESH_30K_TRAINING_IN_PROGRESS",
+  "updated_utc": "2026-10-19T09:13:10.314864+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
-  "updates_executed": 0,
+  "updates_executed": 5100,
   "second_stage_updates": 0,
-  "actual_GPU_gate_passed": false,
+  "actual_GPU_gate_passed": true,
   "actors": [
     6,
     37,
@@ -86,5 +86,18 @@
   ],
   "failure_ledger_delta": "candidate_and_CPU_evidence_only_no_new_scientific_verdict",
   "report": "index.html",
-  "code": "candidate_source.zip"
+  "code": "candidate_source.zip",
+  "worker_pid": 2145,
+  "optimizer_step_counts": {
+    "static": 5100,
+    "dynamic": 5100,
+    "environment": 5100
+  },
+  "latest_confirmed_checkpoint_steps": [
+    5000
+  ],
+  "real_inputs_bound": true,
+  "road_model_anchor_roles_separately_verified": true,
+  "monitor_automation": "automation-2 ACTIVE every30minutes",
+  "quality_accepted": false
 }

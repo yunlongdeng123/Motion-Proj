@@ -69,8 +69,20 @@ def prepare(engineering,output,config):
     model=np.asarray(readiness['transform_matrix'],float)
     scale=float(readiness['actual_meter_to_model_scale'])
     if not np.allclose(np.linalg.svd(model[:3,:3])[1],scale):raise ValueError('nonuniform model scale')
-    anchor=np.loadtxt(source/'pose/0008089.txt');anchor_inv=np.linalg.inv(anchor)
-    plane=np.asarray(readiness['SGCM_geometry']['ground_fit']['plane_anchor'])
+    # Camera-model orientation and SGCM ground-fit coordinates use different anchors.
+    model_anchor_frame=spec['fixed_pose_anchor']
+    if model_anchor_frame!=readiness['fixed_pose_anchor']:raise ValueError('scene/model anchor mismatch')
+    geometry=readiness['SGCM_geometry']
+    anchor_path=Path(geometry['anchor_pose']);anchor_frame=anchor_path.stem
+    anchor=np.loadtxt(anchor_path);anchor_inv=np.linalg.inv(anchor)
+    if not np.allclose(anchor,np.loadtxt(source/'pose'/f'{anchor_frame}.txt'),atol=1e-9):
+        raise ValueError('SGCM road anchor pose differs from actual source')
+    plane=np.asarray(geometry['ground_fit']['plane_anchor'])
+    plane_world=anchor_inv.T@plane;plane_model=np.linalg.inv(model).T@plane_world
+    plane_model/=np.linalg.norm(plane_model[:3])
+    expected_plane=np.asarray(geometry['plane_model']);expected_plane/=np.linalg.norm(expected_plane[:3])
+    if not np.allclose(plane_model,expected_plane,atol=1e-6,rtol=1e-6):
+        raise ValueError('road anchor/model plane conversion disagrees with actual SGCM plane')
     frames=[];ground_local=[];source_hashes={}
     for raw in RAW:
         fid=f'0008{raw:03d}'
@@ -161,8 +173,6 @@ def prepare(engineering,output,config):
     if not np.any(final['provenance']):raise RuntimeError('no verified same-world or approved donor target; preserve evidence and review input support')
     output.mkdir(parents=True);(output/'targets').mkdir();(output/'fullframes').mkdir()
     frame_meta={}
-    plane_world=anchor_inv.T@plane;plane_model=np.linalg.inv(model).T@plane_world
-    plane_model/=np.linalg.norm(plane_model[:3])
     evidence=dict(world=world,pixels_raw89=pixels,invalid_geometry_pixels_raw89=rejected_pixels,surface_supported=supported,
                   source_uv=np.asarray(uvs),candidate_weights=weights,
                   rgb=final['rgb'],provenance=final['provenance'],source_count=final['source_count'],
@@ -203,7 +213,9 @@ def prepare(engineering,output,config):
     receipt=dict(status='CPU_INPUT_BUNDLE_VERIFIED',actors=IDS,config=config,
         frames=frame_meta,world_to_model=model.tolist(),meter_to_model=scale,
         ground_plane_model=plane_model.tolist(),source_hashes=source_hashes,
-        query_raw=89,query_body_pixels_total=query_body_pixels,query_pixels=len(pixels),
+        query_raw=89,coordinate_anchor_frame=anchor_frame,model_anchor_frame=model_anchor_frame,
+        SGCM_plane_coordinate_roundtrip_verified=True,
+        query_body_pixels_total=query_body_pixels,query_pixels=len(pixels),
         geometry_invalid_unknown_pixels=len(rejected_pixels),geometry_unsupported=int((~supported).sum()),
         primary_raw131_137_observed=int(preferred.sum()),full49_observed=int((final['provenance']==1).sum()),
         prior=int((final['provenance']==2).sum()),unknown_valid_geometry=int((final['provenance']==0).sum()),
