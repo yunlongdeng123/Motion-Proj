@@ -1,31 +1,31 @@
 {
-  "collected_utc": "2026-10-19T10:03:30.952559+00:00",
+  "collected_utc": "2026-10-19T10:42:45.225776+00:00",
   "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019",
   "status": {
-    "status": "training",
+    "status": "complete",
     "mode": "train",
     "pid": 2145,
     "parent_pid": 1,
-    "iteration": 20900,
+    "iteration": 30000,
     "logical_budget": 30000,
     "second_stage_updates": 0,
     "started_utc": "2026-10-19T09:00:10.073024+00:00",
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
     "quality_accepted": false,
-    "wall_seconds": 3800.2092182040215,
-    "loss": 0.27486592531204224,
-    "psnr": 25.41343879699707,
+    "wall_seconds": 6017.172920992598,
+    "loss": 0.24620452523231506,
+    "psnr": 25.410192489624023,
     "static_points": 755994,
     "dynamic_points": 1003745,
     "optimizer_step_counts": {
-      "static": 20900,
-      "dynamic": 20900,
-      "environment": 20900
+      "static": 30000,
+      "dynamic": 30000,
+      "environment": 30000
     },
-    "cuda_allocated_bytes": 2156647936,
-    "cuda_reserved_bytes": 3818913792,
+    "cuda_allocated_bytes": 2002563584,
+    "cuda_reserved_bytes": 4267704320,
     "cuda_peak_allocated_bytes": 5253299712,
-    "updated_utc": "2026-10-19T10:03:29.784302+00:00"
+    "updated_utc": "2026-10-19T10:38:44.364935+00:00"
   },
   "launch": {
     "status": "AUTHORIZED_FRESH_30K_WORKER_LAUNCHED",
@@ -94,17 +94,13 @@
   },
   "process": {
     "pid": 2145,
-    "exists": true,
-    "command": "/root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/run_candidate.py --engine /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine --output /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k --bundle /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/input_bundle_002/bundle.json --baseline-config /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json --readiness /root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/source_bundle/candidate_manifest.json --binding-tools /root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup --gpu-lock /root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock --mode train --gpu-gate /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/gate_002/gpu_gate_receipt.json ",
-    "wchan": "futex_wait_queue_me",
-    "state": "State:\tS (sleeping)",
-    "starttime_ticks": 838741102
+    "exists": false
   },
-  "disk_free_bytes": 73750433792,
-  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 7681 MiB, 24551 MiB, 96 %",
-  "gpu_processes": "2145, /root/autodl-tmp/envs/drivingeditor/bin/python, 4882 MiB\n4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 3606 MiB",
+  "disk_free_bytes": 65943412736,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 7475 MiB, 24757 MiB, 95 %",
+  "gpu_processes": "4194, /root/autodl-tmp/envs/drivingeditor/bin/python, 6042 MiB\n5503, /root/autodl-tmp/envs/drivingeditor/bin/python, 2500 MiB",
   "md0": {
-    "array_state": "clean",
+    "array_state": "active",
     "degraded": "0",
     "sync_action": "idle"
   },
@@ -112,24 +108,28 @@
     5000,
     10000,
     15000,
-    20000
+    20000,
+    25000,
+    30000
   ],
   "audited_steps": [
     5000,
     10000,
     15000,
-    20000
+    20000,
+    25000,
+    30000
   ],
   "v2_last_logged_objectives": {
-    "step": 20900,
-    "frame": "0008131",
-    "ownership_volume_raw": 0.00037625402910634875,
+    "step": 30000,
+    "frame": "0008119",
+    "ownership_volume_raw": 1.677927139098756e-05,
     "ownership_volume_weight": 0.1,
     "road": {
-      "observed_rgb": 0.004251118283718824,
-      "prior_rgb": 0.005727364681661129,
-      "observed_depth": 0.004772313870489597,
-      "prior_depth": 0.00848577730357647
+      "observed_rgb": 0.0018663345836102962,
+      "prior_rgb": 0.0025477572344243526,
+      "observed_depth": 0.004310575779527426,
+      "prior_depth": 0.0051831332966685295
     },
     "road_weights": {
       "observed_rgb": 1.0,
@@ -137,12 +137,17 @@
       "observed_depth": 0.1,
       "prior_depth": 0.01
     },
-    "road_total": 0.005385944154113531,
+    "road_total": 0.0026039991062134504,
     "road_optimizer_steps": 0,
     "road_updates_dynamic": false,
     "road_updates_environment": false
   },
   "v2_logged_terms_finite": true,
   "v2_log_scope": "pre-backward diagnostics; exact completed updates come from status optimizer counters",
-  "log_last_4000_bytes": "\ufffd\ufffd\u2588\u2588\u2589   | 20880/30000 [1:02:59<31:16,  4.86it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20881/30000 [1:03:00<31:44,  4.79it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20882/30000 [1:03:00<31:21,  4.85it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20883/30000 [1:03:00<30:52,  4.92it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20884/30000 [1:03:00<31:06,  4.88it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20885/30000 [1:03:00<31:05,  4.89it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20886/30000 [1:03:01<31:04,  4.89it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20887/30000 [1:03:01<31:35,  4.81it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20888/30000 [1:03:01<31:24,  4.84it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20889/30000 [1:03:01<31:17,  4.85it/s, loss=0.18450, l1=0.02000, psnr=26.57675, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20889/30000 [1:03:01<31:17,  4.85it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20890/30000 [1:03:01<31:16,  4.86it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20891/30000 [1:03:02<31:02,  4.89it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20892/30000 [1:03:02<31:38,  4.80it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20893/30000 [1:03:02<32:04,  4.73it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20894/30000 [1:03:02<32:00,  4.74it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20895/30000 [1:03:02<31:15,  4.86it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20896/30000 [1:03:03<31:09,  4.87it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20897/30000 [1:03:03<30:36,  4.96it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20898/30000 [1:03:03<31:28,  4.82it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20899/30000 [1:03:03<31:49,  4.77it/s, loss=0.21323, l1=0.01724, psnr=28.11206, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20899/30000 [1:03:03<31:49,  4.77it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20900/30000 [1:03:04<1:01:33,  2.46it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20901/30000 [1:03:04<52:14,  2.90it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]  \rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20902/30000 [1:03:04<45:31,  3.33it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20903/30000 [1:03:05<41:00,  3.70it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20904/30000 [1:03:05<38:25,  3.95it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20905/30000 [1:03:05<36:30,  4.15it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]\rTraining progress:  70%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 20906/30000 [1:03:05<35:23,  4.28it/s, loss=0.26289, l1=0.02391, psnr=25.65280, scale=4]"
+  "v2_training_returned.json": {
+    "status": "TRAINING_RETURNED_FINAL_ASSET_AUDIT_PENDING",
+    "quality_accepted": false,
+    "full49_deletion_evaluation_still_required": true
+  },
+  "log_last_4000_bytes": "\ufffd\u2589| 29999/30000 [1:38:13<00:00,  4.21it/s, loss=0.18521, l1=0.02094, psnr=26.62205, scale=4]\rTraining progress: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589| 29999/30000 [1:38:14<00:00,  4.21it/s, loss=0.18847, l1=0.02019, psnr=26.88768, scale=4]755994\n1003745\n\n\r  0%|          | 0/49 [00:00<?, ?it/s]\u001b[A\n\r  2%|\u258f         | 1/49 [00:03<02:25,  3.02s/it]\u001b[A\n\r  4%|\u258d         | 2/49 [00:05<01:53,  2.42s/it]\u001b[A\n\r  6%|\u258c         | 3/49 [00:06<01:41,  2.21s/it]\u001b[A\n\r  8%|\u258a         | 4/49 [00:08<01:33,  2.08s/it]\u001b[A\n\r 10%|\u2588         | 5/49 [00:10<01:28,  2.01s/it]\u001b[A\n\r 12%|\u2588\u258f        | 6/49 [00:12<01:24,  1.96s/it]\u001b[A\n\r 14%|\u2588\u258d        | 7/49 [00:14<01:21,  1.93s/it]\u001b[A\n\r 16%|\u2588\u258b        | 8/49 [00:16<01:18,  1.91s/it]\u001b[A\n\r 18%|\u2588\u258a        | 9/49 [00:18<01:15,  1.89s/it]\u001b[A\n\r 20%|\u2588\u2588        | 10/49 [00:20<01:13,  1.88s/it]\u001b[A\n\r 22%|\u2588\u2588\u258f       | 11/49 [00:21<01:12,  1.90s/it]\u001b[A\n\r 24%|\u2588\u2588\u258d       | 12/49 [00:23<01:09,  1.89s/it]\u001b[A\n\r 27%|\u2588\u2588\u258b       | 13/49 [00:25<01:08,  1.89s/it]\u001b[A\n\r 29%|\u2588\u2588\u258a       | 14/49 [00:27<01:06,  1.89s/it]\u001b[A\n\r 31%|\u2588\u2588\u2588       | 15/49 [00:29<01:04,  1.88s/it]\u001b[A\n\r 33%|\u2588\u2588\u2588\u258e      | 16/49 [00:31<01:02,  1.89s/it]\u001b[A\n\r 35%|\u2588\u2588\u2588\u258d      | 17/49 [00:33<01:00,  1.90s/it]\u001b[A\n\r 37%|\u2588\u2588\u2588\u258b      | 18/49 [00:35<00:58,  1.90s/it]\u001b[A\n\r 39%|\u2588\u2588\u2588\u2589      | 19/49 [00:37<00:56,  1.89s/it]\u001b[A\n\r 41%|\u2588\u2588\u2588\u2588      | 20/49 [00:38<00:54,  1.89s/it]\u001b[A\n\r 43%|\u2588\u2588\u2588\u2588\u258e     | 21/49 [00:40<00:52,  1.89s/it]\u001b[A\n\r 45%|\u2588\u2588\u2588\u2588\u258d     | 22/49 [00:42<00:50,  1.89s/it]\u001b[A\n\r 47%|\u2588\u2588\u2588\u2588\u258b     | 23/49 [00:44<00:49,  1.89s/it]\u001b[A\n\r 49%|\u2588\u2588\u2588\u2588\u2589     | 24/49 [00:46<00:47,  1.88s/it]\u001b[A\n\r 51%|\u2588\u2588\u2588\u2588\u2588     | 25/49 [00:48<00:45,  1.88s/it]\u001b[A\n\r 53%|\u2588\u2588\u2588\u2588\u2588\u258e    | 26/49 [00:50<00:42,  1.87s/it]\u001b[A\n\r 55%|\u2588\u2588\u2588\u2588\u2588\u258c    | 27/49 [00:52<00:41,  1.87s/it]\u001b[A\n\r 57%|\u2588\u2588\u2588\u2588\u2588\u258b    | 28/49 [00:53<00:38,  1.86s/it]\u001b[A\n\r 59%|\u2588\u2588\u2588\u2588\u2588\u2589    | 29/49 [00:55<00:37,  1.85s/it]\u001b[A\n\r 61%|\u2588\u2588\u2588\u2588\u2588\u2588    | 30/49 [00:57<00:35,  1.86s/it]\u001b[A\n\r 63%|\u2588\u2588\u2588\u2588\u2588\u2588\u258e   | 31/49 [00:59<00:33,  1.86s/it]\u001b[A\n\r 65%|\u2588\u2588\u2588\u2588\u2588\u2588\u258c   | 32/49 [01:01<00:31,  1.86s/it]\u001b[A\n\r 67%|\u2588\u2588\u2588\u2588\u2588\u2588\u258b   | 33/49 [01:03<00:29,  1.86s/it]\u001b[A\n\r 69%|\u2588\u2588\u2588\u2588\u2588\u2588\u2589   | 34/49 [01:05<00:28,  1.87s/it]\u001b[A\n\r 71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f  | 35/49 [01:07<00:26,  1.88s/it]\u001b[A\n\r 73%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e  | 36/49 [01:08<00:24,  1.87s/it]\u001b[A\n\r 76%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 37/49 [01:10<00:22,  1.86s/it]\u001b[A\n\r 78%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a  | 38/49 [01:12<00:20,  1.85s/it]\u001b[A\n\r 80%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589  | 39/49 [01:14<00:18,  1.85s/it]\u001b[A\n\r 82%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f | 40/49 [01:16<00:16,  1.85s/it]\u001b[A\n\r 84%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 41/49 [01:18<00:14,  1.87s/it]\u001b[A\n\r 86%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c | 42/49 [01:20<00:13,  1.87s/it]\u001b[A\n\r 88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 43/49 [01:21<00:11,  1.87s/it]\u001b[A\n\r 90%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589 | 44/49 [01:23<00:09,  1.88s/it]\u001b[A\n\r 92%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f| 45/49 [01:25<00:07,  1.88s/it]\u001b[A\n\r 94%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258d| 46/49 [01:27<00:05,  1.87s/it]\u001b[A\n\r 96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 47/49 [01:29<00:03,  1.89s/it]\u001b[A\n\r 98%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a| 48/49 [01:31<00:01,  1.90s/it]\u001b[A\n\r100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 49/49 [01:33<00:00,  1.88s/it]\u001b[A\r100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 49/49 [01:33<00:00,  1.90s/it]\n\n[ITER 30000] Evaluating train: L1 0.018271345170024704 PSNR 27.644958573944713 SSIM 0.9179630024092538 LPIPS 0.07955293364974916\nCHECKPOINT_EVENT /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/run30k/checkpoint_events/iteration_030000.json\n\rTraining progress: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 30000/30000 [1:40:01<00:00, 32.45s/it, loss=0.18847, l1=0.02019, psnr=26.88768, scale=4]\rTraining progress: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 30000/30000 [1:40:01<00:00,  5.00it/s, loss=0.18847, l1=0.02019, psnr=26.88768, scale=4]\n"
 }

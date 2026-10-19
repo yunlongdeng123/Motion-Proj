@@ -28,6 +28,8 @@ def enrich(text,W,O):
     text=text.replace('开机后先只读绑定原 A 五身份的真实有效配置、输入、mask、坐标和全 49 帧，生成逐点证据与全幅预览；失败则保留证据并定位。','已完成真实A49输入、mask、相机和坐标绑定，生成逐点道路证据。相机模型锚帧raw99、SGCM道路锚帧raw89分别绑定，地面平面往返验证通过；全部49相机记录的内参与查询标定差为0。')
     text=text.replace('隔离部署候选；核对显存、磁盘及 GPU 锁，执行真实 CUDA 前向 / 反向零更新检查。相机固定、时间改变时静态 RGB 必须保持不变，模型梯度必须有限。','已隔离部署并通过真实CUDA前向 / 反向零更新检查：静态固定相机时间-0.48与0.48的RGB最大差0；静态 / 动态 / 环境梯度组6 / 9 / 1均有限，静态时间参数无梯度，三个优化器实际更新计数均0。')
     text=text.replace('通过后按已授权相同初始化 fresh 30K 执行。','正在按已授权相同初始化 fresh 30K 执行。')
+    if phase=='complete':
+        text=text.replace('正在按已授权相同初始化 fresh 30K 执行。','主实验已按授权完成相同初始化 fresh 30K；消融状态另见四组比较页。')
     text=text.replace('旧 automation-2 保持暂停，旧队列不恢复；本版尚未启动训练，human_verdict=null。','automation-2已更新为本版每30分钟跟进；仅阶段变化、失败、需操作或完成时通知。旧队列不恢复，human_verdict=null。')
     text=text.replace('仅文件、源码与本地 PNG 检查；未宣称浏览器交互验收或训练效果通过。','已完成文件、源码、真实输入和CUDA零更新检查；未宣称浏览器交互验收或训练效果通过。')
     with np.load(W/'actual_query_evidence.npz',allow_pickle=False) as z:data={k:z[k] for k in z.files}
@@ -95,5 +97,6 @@ def enrich(text,W,O):
     text=text.replace('<h2>参考工作与实际迁移范围</h2>',section+'<h2>参考工作与实际迁移范围</h2>')
     js='''<script>document.querySelectorAll('button[data-query-frame]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('queryFrame').src=b.dataset.queryFrame;document.getElementById('queryCaption').textContent=b.textContent==='raw89'?'raw89：绿=其他帧确认的同世界位置观测；紫=供体先验；红=未知。非训练结果。':'后续帧：绿=本帧参与融合；蓝=其他帧确认；紫=供体先验；红=未知。投影在遮挡物上不算曝光。';document.querySelectorAll('button[data-query-frame]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));</script>'''
     if (O/'ablations/index.html').exists():
-        text=text.replace('<h2>模块与数据流</h2>','<p><a href="ablations/index.html">查看用户新增的三组30K消融与实际排队状态</a>：仅归属、归属＋真实曝光、归属＋供体先验；最多两路并发，主实验继续。</p><h2>模块与数据流</h2>')
+        main_phase='主实验训练已完成，全部评估与质量复核尚待交付' if phase=='complete' else '主实验继续'
+        text=text.replace('<h2>模块与数据流</h2>',f'<p><a href="ablations/index.html">查看用户新增的三组30K消融与实际排队状态</a>：仅归属、归属＋真实曝光、归属＋供体先验；最多两路并发，{main_phase}。</p><h2>模块与数据流</h2>')
     return text.replace('</html>',js+'</html>').replace('>配置</a>','>冻结方法配置</a>')

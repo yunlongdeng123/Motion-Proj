@@ -1,20 +1,20 @@
 # 当前研究状态
 
-更新：2026-10-19T10:03:30.952559+00:00。当前 task=WS-V82-R15-GN11-STAGE1-V2-20261019；用户已开AutoDL，本版fresh第一阶段30K运行中，真实PID2145，最新确认20900/30000。质量尚未验收，human_verdict=null。
+更新：2026-10-19T10:42:41.919897+00:00。task=WS-V82-R15-GN11-STAGE1-V2-20261019及三组ROAD-ABLATIONS。完整版已真实complete30000/30000，static/dynamic/environment实际optimizer.step各30000，原PID2145已退出。原生随保存的49评估完成，但四组最终独立零更新49与实际视觉质量均未交付，human_verdict=null。
 
-严格范围：同原A五身份a6/a37/a5/a26/a18、同raw89–137完整49帧与原始输入初始化、seed0，重新第一阶段30000步，第二阶段0。当前static/dynamic实际Adam计数均20900，主run未加载旧30K模型、无新增重放；用户新授权的三个独立消融见下文。原A实际训练源码三文件原始SHA完全匹配后，隔离部署到/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine；当前训练入口source_bundle/run_candidate.py，输出run30k，启动2026-10-19T09:00:04+00:00，原gpu_slot.lock继续由主进程持有，新增并行由下述白名单调度器准入。主run运行中源码与目标冻结。
+当前实际在训：real_only PID4194 11400/30000；prior_only PID5503 500/30000。两者实际static/dynamic更新计数与各自进度一致。ownership_only仍排队，controller4120继续限制总并发最多2（gate也占槽），不得重复启动或恢复旧A/B队列。prior_only已通过真实CUDA零更新gate，静态固定相机跨时间RGB最大差0、梯度6/9/1有限、优化器计数0，真实道路RGB/深度权重0、供体权重.1/.01；其前100选帧/时间扰动/全部优化器LR与完整版实际日志一致。
+
+保存证据：完整版5/10/15/20/25/30K六个节点已逐一CPU只读通过，终点四组件569273779/786948958/226494608/49944B，模型/Adam有限、RNG/SGCM/sampler30000/native49齐全。real_only独立5K、10K凭据通过，不能拿主实验receipt替代。所有节点核验均无GPU恢复或新增优化更新，不代表视觉通过；已验节点不重复遍历。
+
+严格范围：四组各fresh第一阶段30K、同原A五身份a6/a37/a5/a26/a18、原49帧与输入初始化协议、seed0，第二阶段0。消融保持归属修复，分别关闭真实、先验或全部道路目标；输入query/provenance/目标不改，UNKNOWN无道路监督。未修改已加载训练源码，未新增重放。全部四组训练、节点核验、最终零更新49、下载、完整画面对照与Git完成后才按授权关机；当前不能启动GPU评估或关机。
+
+资源采样：NVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 8943 MiB, 23289 MiB, 97 %；md0 active/degraded0/syncidle。磁盘空65.943GB，剩余资产估59.920GB（含8GB共享余量，点数预测不是严格上界）。controller在主退出后持全局GPU锁，评估必须等所有训练退出并释放锁。automation-2 ACTIVE每30分钟，普通无变化安静。
 
 真实输入/CUDA准入完成：相机模型锚帧raw99与SGCM地面平面锚帧raw89分别绑定，平面坐标往返、全部49相机内参/世界变换通过。当前input_bundle_002与gate_002按manifest/hash绑定；固定相机时间-0.48/0.48静态RGB最大差0，梯度组static6/dynamic9/environment1均有限，静态时间梯度无，零更新检查三个优化器实数计数均0。早期锚帧工程诊断仅零更新，未进入训练。
 
 道路query为raw89的a6/a37车身遮挡射线，总15869像素样本，有效道路交点15625。a6：总1149，晚段/全49真实确认均0、供体先验245、未知904；a37：总14720，晚段131–137确认4765、全49确认7787、供体4874、未知2059。晚段包含在全49内；这些是像素射线样本，不是世界面积/干净GT或最终质量。左右供体按用户坐标去标线后，实际几何合格左4249/右1605；5119个先验query使用770个供体样本，独立CPU重建与冻结供体索引及RGB逐项相等，最大RGB差0，未改训练目标。
 
-当前5K/10K/15K/20K节点已有独立CPU只读核验凭据；最新20K四组件（静态/动态/环境/训练状态）569273779B/786948958B/226494608B/49944B，模型与Adam有限、RNG/SGCM/sampler20000/原生49评估齐全。没有节点GPU恢复或新增优化更新，不代表视觉质量通过。下一新节点25K/30K按实际发布核验，不重复重验已通过节点。最终v2独立完整49帧零更新full/dynamic/static/delete_all/alpha评估和实际全画面质量复核仍待30K后执行。
-
-[当前状态、组件图与完整画面道路查询](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [实际运行采样](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/runtime_progress.json) · [最新20K凭据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/checkpoint_020000_audit.json)。GPU4080SUPER 32GB，本轮采样磁盘空闲73.750GB、md0 clean/degraded0/idle。automation-2已更新为本版每30分钟跟进，仅阶段变化/失败/需操作/完成通知，不恢复旧A/B队列。全部训练、评估、下载、实际质量报告/Git交付与无worker核对前不关机。failure_ledger_refs=[V82-F06]；本轮为真实输入/工程准入与5K/10K/15K/20K保存证据，不新增失败ID或科学结论。
-
-新增授权与队列：用户已授权real_only（仅跨帧真实道路）、prior_only（仅左右供体先验）、ownership_only（仅归属修复）各fresh30K，第二阶段0，保持同五身份/49帧/seed0，三组归属修复与完整版相同、仅道路来源权重切换。当前controller PID4120最多两路并发，real_only PID4194已700步并通过实际CUDA零更新准入，另外两组排队。源码/输入未改主训练，禁止重复启动或自动重放。全部主实验和三组消融的训练、评估、下载、完整画面对照与Git完成后再关机，preflight覆盖新增controller与所有在训/待执行worker。
-
-[三组30K消融与四组对照合同](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html)。来源梯度、GPU准入和资源证据见报告及既有V82-F06追加；效果尚未验收。
+[完整版状态、组件和保存证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) · [四组实际队列与独立节点](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html)。全部为训练重建视图与工程/保存证据，质量复核尚未完成。failure_ledger_refs=[V82-F06]，不新增失败ID或效果结论。
 
 ## 已完成的原A/B基线与历史证据
 

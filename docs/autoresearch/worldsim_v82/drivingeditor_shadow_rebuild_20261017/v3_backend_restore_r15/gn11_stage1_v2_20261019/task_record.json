@@ -1,12 +1,12 @@
 {
   "task": "WS-V82-R15-GN11-STAGE1-V2-20261019",
   "run": "gn11_stage1_v2_seed0",
-  "state": "FRESH_30K_MAIN_WITH_THREE_AUTHORIZED_ABLATIONS",
-  "updated_utc": "2026-10-19T10:03:30.952559+00:00",
+  "state": "MAIN_30K_TRAINING_COMPLETE_ABLATIONS_IN_PROGRESS",
+  "updated_utc": "2026-10-19T10:42:45.225776+00:00",
   "baseline": "A fresh GN11 native firststage30K five identities",
   "seed": 0,
   "updates_authorized": 30000,
-  "updates_executed": 20900,
+  "updates_executed": 30000,
   "second_stage_updates": 0,
   "actual_GPU_gate_passed": true,
   "actors": [
@@ -81,25 +81,27 @@
     "GPU_memory_admission_pending": false,
     "disk_admission_pending": false,
     "GPU": "NVIDIA GeForce RTX 4080 SUPER",
-    "disk_free_bytes_at_snapshot": 73750433792
+    "disk_free_bytes_at_snapshot": 65943412736
   },
   "failure_ledger_refs": [
     "V82-F06"
   ],
-  "failure_ledger_delta": "CPU_durability_through_20000_no_new_scientific_verdict",
+  "failure_ledger_delta": "main30K_durable_prior_admitted_no_quality_verdict",
   "report": "index.html",
   "code": "candidate_source.zip",
   "worker_pid": 2145,
   "optimizer_step_counts": {
-    "static": 20900,
-    "dynamic": 20900,
-    "environment": 20900
+    "static": 30000,
+    "dynamic": 30000,
+    "environment": 30000
   },
   "latest_confirmed_checkpoint_steps": [
     5000,
     10000,
     15000,
-    20000
+    20000,
+    25000,
+    30000
   ],
   "real_inputs_bound": true,
   "road_model_anchor_roles_separately_verified": true,
@@ -109,7 +111,9 @@
     5000,
     10000,
     15000,
-    20000
+    20000,
+    25000,
+    30000
   ],
   "ablation_group_task": "WS-V82-R15-GN11-STAGE1-V2-ROAD-ABLATIONS-20261019",
   "additional_authorized_fresh_updates": 90000,
@@ -121,11 +125,11 @@
       "seed": 0,
       "second_stage_updates": 0,
       "status": "training",
-      "updates_executed": 700,
+      "updates_executed": 11400,
       "actual_optimizer_step_counts": {
-        "static": 700,
-        "dynamic": 700,
-        "environment": 700
+        "static": 11400,
+        "dynamic": 11400,
+        "environment": 11400
       },
       "actual_zero_update_gate_passed": true,
       "road_weights": {
@@ -133,22 +137,33 @@
         "prior_rgb": 0.0,
         "observed_depth": 0.1,
         "prior_depth": 0.0
-      }
+      },
+      "worker_pid": 4194,
+      "audited_checkpoint_steps": [
+        5000,
+        10000
+      ]
     },
     "prior_only": {
       "updates_authorized": 30000,
       "seed": 0,
       "second_stage_updates": 0,
-      "status": "queued",
-      "updates_executed": 0,
-      "actual_optimizer_step_counts": null,
-      "actual_zero_update_gate_passed": false,
+      "status": "training",
+      "updates_executed": 500,
+      "actual_optimizer_step_counts": {
+        "static": 500,
+        "dynamic": 500,
+        "environment": 500
+      },
+      "actual_zero_update_gate_passed": true,
       "road_weights": {
         "observed_rgb": 0.0,
         "prior_rgb": 0.1,
         "observed_depth": 0.0,
         "prior_depth": 0.01
-      }
+      },
+      "worker_pid": 5503,
+      "audited_checkpoint_steps": []
     },
     "ownership_only": {
       "updates_authorized": 30000,
@@ -163,7 +178,11 @@
         "prior_rgb": 0.0,
         "observed_depth": 0.0,
         "prior_depth": 0.0
-      }
+      },
+      "worker_pid": null,
+      "audited_checkpoint_steps": []
     }
-  }
+  },
+  "main_worker_exited": true,
+  "final_zero_update49_pending": true
 }
