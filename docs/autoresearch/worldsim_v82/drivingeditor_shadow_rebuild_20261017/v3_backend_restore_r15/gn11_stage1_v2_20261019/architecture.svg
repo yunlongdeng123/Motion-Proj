@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" role="img" aria-label="GN11 v2 双模块结构图">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#8fadc9"/></marker></defs>
+<rect width="1100" height="520" fill="#101b29"/>
+<g fill="#1d3044" stroke="#49728f" stroke-width="1.5">
+<rect x="20" y="180" width="185" height="118" rx="12"/><rect x="255" y="35" width="260" height="115" rx="12"/>
+<rect x="565" y="35" width="240" height="115" rx="12"/><rect x="255" y="230" width="260" height="105" rx="12"/>
+<rect x="565" y="210" width="240" height="100" rx="12"/><rect x="565" y="355" width="240" height="100" rx="12"/>
+<rect x="860" y="180" width="220" height="140" rx="12"/>
+</g><g stroke="#8fadc9" stroke-width="2" fill="none" marker-end="url(#a)">
+<path d="M205 211H230V92H255"/><path d="M205 267H255"/><path d="M515 92H565"/>
+<path d="M515 262H565"/><path d="M685 310V355"/><path d="M805 92H833V215H860"/>
+<path d="M805 255H860"/><path d="M805 405H833V295H860"/>
+</g><g fill="#e6eff7" font-family="Microsoft YaHei, sans-serif" font-size="19" text-anchor="middle">
+<text x="112" y="211">相同五身份 / 49 帧</text><text x="112" y="240">RGB、mask、LiDAR</text><text x="112" y="269">位姿 / 标定 / 测量框</text>
+<text x="385" y="65">① 静动态归属</text><text x="385" y="96">严格静态 + 原生动态</text><text x="385" y="127">车身监督路由 / 体积排除</text>
+<text x="685" y="65">归属目标</text><text x="685" y="96">可见背景 / 动态车身</text><text x="685" y="127">独立计算与记录</text>
+<text x="385" y="260">② 世界坐标道路查询</text><text x="385" y="289">raw89 遮挡道路 → 曲面</text><text x="385" y="318">同一位置 → raw131–137</text>
+<text x="685" y="240">可见性检查 + 真实 RGB 融合</text><text x="685" y="270">先后段，再检查全 49 帧</text><text x="685" y="297">来源 = 同位置真实观测</text>
+<text x="685" y="384">无真实候选 → 沥青供体</text><text x="685" y="414">去标线 / 道路坐标纹理先验</text><text x="685" y="444">来源 = 异位置先验</text>
+<text x="970" y="213">道路目标只更新静态</text><text x="970" y="247">每步一次优化器更新</text><text x="970" y="280">30K → 完整 49 帧评估</text>
+<text x="550" y="497" font-size="16" fill="#a7bed2">两套目标分别计算、限制梯度接收方；真实观测、先验和未知分别输出。</text>
+</g></svg>

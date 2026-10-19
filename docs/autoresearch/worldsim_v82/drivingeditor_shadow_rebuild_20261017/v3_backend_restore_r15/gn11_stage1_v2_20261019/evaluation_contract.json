@@ -1,0 +1,29 @@
+{
+  "comparison": "same five actors, same49 RGB and initialization seed, original A native firststage30K versus v2 firststage30K",
+  "training_budget": 30000,
+  "second_stage_updates": 0,
+  "views": {"raw_range":[89,137],"count":49,"dimensions":[480,320],"full_frame_only":true},
+  "required_render_channels": ["GT","full","dynamic","static","delete_all","dynamic_alpha","static_alpha"],
+  "ownership_checks": [
+    "actual static position and marginal opacity invariant across49 times",
+    "actual fixed-camera static RGB invariant across49 times",
+    "actual static direct pixel RGB and depth gradients absent on selected body pixels",
+    "static opacity mass inside measured selected vehicle volume recorded before/after",
+    "visually inspect a6/a37 static car-shaped residue across all49 full frames",
+    "dynamic reconstruction must not collapse or lose actors"
+  ],
+  "road_checks": [
+    "query defined from raw89 a6/a37 occlusion rays, donors defined separately by human rectangles",
+    "query world position remains identical across all source frames",
+    "source UV, actual RGB, depth, occlusion, angle, resolution and sharpness gates saved per query",
+    "report primary raw131137 and secondary full49 support separately",
+    "candidate with insufficient or inconsistent true observations remains unknown",
+    "observed and donor prior never share provenance or acceptance metric",
+    "full-frame overlays show query, actually visible source projections, unobserved queries and donor samples",
+    "no road target uses RGB from annotated overlay or old faulty static render",
+    "cross-source reprojection check is not a new training-view heldout benchmark"
+  ],
+  "delivery": ["all six durable full checkpoints","zero-update final49 render","actual full-frame quality review","report with architecture","scoped Git publication"],
+  "quality_accepted": null,
+  "training_complete": false
+}

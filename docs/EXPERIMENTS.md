@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-R15-GN11-STAGE1-V2-20261019 / gn11_stage1_v2_seed0 | 五身份第一阶段v2：静动态归属与同世界道路查询；候选代码、全幅供体预览与固定30K协议 | [组件与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) |
 | WS-V82-R15-BASELINE-ENGINEERING-20261018 | A五身份30K＋30K与B交集20身份30K完成；完整画面结果与质量结论 | [最终报告与同步视频](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) |
 | WS-V82-R15-REPAIR-4K-20261018 / r15_repair4k_seed0 | 同原始输入4K及五身份49帧实际评估完成；累计几何预算、三次归属审计、FP64阴影；同步视频第三模型 | [组件与合同](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/index.html) |
 | WS-V82-R15-IDENTITY-COMPARISON-20261018 / owner5与tristate | 旧5完整30K；五身份49帧动态/静态/delete共用时间轴，五段合成总览MP4；三维中心与三值支撑为补充 | [旧5完整对照与视频](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)、[三值交互](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)、[执行范围](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/status.json) |
