@@ -138,6 +138,9 @@ def main():
         arguments.execute_after_user_gpu_approval, arguments.arm, arguments.mode)
     require_reviewed_invocation(arguments, read(arguments.plan))
     plan, config, bundle = validate(arguments)
+    if plan.get('resource_recovery_policy'):
+        from v3_resource_recovery import validate_resource_recovery
+        validate_resource_recovery(plan, read(Path(plan['campaign'])/'GPU_APPROVAL.json'))
 
     def gpu_applications():
         output = subprocess.check_output(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader,nounits'], text=True)

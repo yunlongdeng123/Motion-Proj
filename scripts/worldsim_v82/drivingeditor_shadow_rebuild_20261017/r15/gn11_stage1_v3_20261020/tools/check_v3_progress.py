@@ -8,7 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from zoneinfo import ZoneInfo
-from v3_pair_runtime import read, process, PAIR_POLICY
+from v3_pair_runtime import read, process, matches_worker, PAIR_POLICY
 
 
 def last_jsonl(path):
@@ -27,13 +27,18 @@ def last_jsonl(path):
 
 def snapshot(campaign):
     plan = read(campaign/'plan.json')
-    registry = read(campaign/'pair_registry.json')
+    serial = plan.get('max_concurrent_training') == 1
+    registry = read(campaign/('four_arm_registry.json' if serial else 'pair_registry.json'))
     batch = registry.get('current_batch') or []
+    if serial:
+        current = registry.get('current_arm')
+        batch = next((items for items in registry.get('logical_batches', []) if current in items), [])
+    active_arms = [registry['current_arm']] if serial and registry.get('current_arm') else batch
     now = datetime.datetime.now(datetime.timezone.utc)
     gpu = subprocess.check_output(['nvidia-smi','--query-gpu=memory.used,memory.total,utilization.gpu',
                                   '--format=csv,noheader,nounits'], text=True).strip()
     used, total, utilization = map(int, gpu.split(','))
-    arms = {}; healthy = registry['status'] == 'RUNNING_TWO_PAIRS'
+    arms = {}; healthy = registry['status'] == ('RUNNING_SEQUENTIALLY' if serial else 'RUNNING_TWO_PAIRS')
     for arm in plan['arm_order']:
         root = campaign/'arms'/arm; run = root/'run30k'
         state = read(run/'status.json') if (run/'status.json').exists() else None
@@ -44,7 +49,7 @@ def snapshot(campaign):
                 complete=event.get('status') == 'complete' and len(event.get('checkpoints',[])) == 4 and len(event.get('frames',[])) == 49,
                 checkpoint_count=len(event.get('checkpoints',[])), frame_count=len(event.get('frames',[]))))
         capacity = last_jsonl(run/'v3_capacity.jsonl')
-        alive = bool(state and process(state['pid']))
+        alive = bool(state and matches_worker(process(state['pid']), campaign, arm, 'train'))
         age = (now.timestamp()-(run/'status.json').stat().st_mtime) if state else None
         finite = bool(state and all(math.isfinite(state.get(k, 0.)) for k in ['loss','psnr']))
         counts_ok = bool(state and all(v == state['iteration'] for v in state.get('optimizer_step_counts', {}).values())
@@ -52,7 +57,7 @@ def snapshot(campaign):
         arms[arm] = dict(state=state, process_alive=alive, status_age_seconds=age,
             finite_reported_scalars=finite, update_counts_match=counts_ok, checkpoint_events=events,
             capacity=capacity, latest_objective=last_jsonl(run/'v3_objectives.jsonl'))
-        if arm in batch:
+        if arm in active_arms:
             healthy &= (bool(state) and (alive or state['status'] == 'complete') and finite and counts_ok
                         and state['status'] in {'training','evaluating','complete'}
                         and (age < 600 or state['status'] == 'complete')
@@ -63,7 +68,9 @@ def snapshot(campaign):
     healthy &= disk_free >= 10*1024**3
     fivek_ready = bool(batch) and all(any(e['complete'] for e in arms[arm]['checkpoint_events']) for arm in batch)
     return dict(timestamp_utc=now.isoformat(), timestamp_SGT=now.astimezone(ZoneInfo('Asia/Singapore')).isoformat(),
-        method_version=plan['method_version'], registry=registry, arms=arms, GPU_used_MiB=used,
+        method_version=plan['method_version'], registry=registry, current_logical_batch=batch,
+        active_training_arms=active_arms, controller_kind='single_slot' if serial else 'two_slot_pairs',
+        arms=arms, GPU_used_MiB=used,
         GPU_total_MiB=total, GPU_utilization_percent=utilization, free_disk_bytes=disk_free,
         healthy_now=bool(healthy), both_current_arms_have_5k_node=bool(fivek_ready),
         interpretation='resource/implementation health only; not visual quality acceptance; cumulative CPU snapshots do not prove peak GPU capacity',

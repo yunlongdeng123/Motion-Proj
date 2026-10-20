@@ -89,6 +89,9 @@ def main():
         raise RuntimeError("reviewed arm order changed")
     if int(plan["max_concurrent_training"]) != 1:
         raise RuntimeError("v3 requires sequential single-worker execution")
+    if plan.get('resource_recovery_policy'):
+        from v3_resource_recovery import validate_resource_recovery
+        validate_resource_recovery(plan, approval)
     free = shutil.disk_usage(campaign).free
     required = int(plan["minimum_campaign_free_bytes"])
     if free < required:
@@ -113,7 +116,7 @@ def main():
         raise FileExistsError("controller registry already exists; audit before any continuation")
     for arm in expected:
         arm_root = campaign / "arms" / arm
-        if (arm_root / "gate_001").exists() or (arm_root / "run30k").exists():
+        if any((arm_root/name).exists() for name in ['gate_001', 'run30k', 'gate_001.log', 'run30k.log']):
             raise FileExistsError(f"non-fresh output exists for {arm}")
 
     registry = {
@@ -125,7 +128,10 @@ def main():
         "completed_arms": [],
         "training_updates_planned": 120000,
         "automatic_restart": False,
+        "resource_recovery_policy": plan.get('resource_recovery_policy'),
+        "logical_batches": [['full', 'real_only'], ['prior_only', 'ownership_only']],
         "started_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "coordinator_pid": os.getpid(),
     }
     write(registry_path, registry)
     write(campaign / "status.json", registry)
@@ -138,7 +144,7 @@ def main():
             arm_root = campaign / "arms" / arm
             gate_output = arm_root / "gate_001"
             gate_log = arm_root / "gate_001.log"
-            with gate_log.open("w", encoding="utf-8") as handle:
+            with gate_log.open("x", encoding="utf-8") as handle:
                 subprocess.run(
                     command(campaign, plan, arm, "gate", gate_output),
                     stdout=handle,
@@ -156,7 +162,7 @@ def main():
             write(campaign / "status.json", registry)
             run_output = arm_root / "run30k"
             train_log = arm_root / "run30k.log"
-            with train_log.open("w", encoding="utf-8") as handle:
+            with train_log.open("x", encoding="utf-8") as handle:
                 subprocess.run(
                     command(
                         campaign,
@@ -172,7 +178,8 @@ def main():
                     cwd=campaign,
                 )
             terminal = read(run_output / "status.json")
-            if terminal.get("status") != "complete" or terminal.get("iteration") != 30000:
+            from v3_resource_recovery import exact_30k
+            if not exact_30k(terminal):
                 raise RuntimeError(f"{arm} did not finish the exact 30K contract")
             registry["completed_arms"].append(arm)
             registry.update(

@@ -1,0 +1,246 @@
+{
+  "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "basis": {
+    "five_identity_v1": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "five_identity_v2": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/engine",
+    "v2_reviewed_branch": "research/worldsim-v8.2-drivingeditor-debug"
+  },
+  "python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json",
+  "road_engineering_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018",
+  "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+  "gpu_entry_version": "V3_GPU_ENTRY_R2_20261021",
+  "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+  "render_audit_policy": {
+    "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+    "profile_interval": 100,
+    "profile_SGCM_due_iterations": true,
+    "road_visibility_interval": 5000,
+    "screen_atol": 2e-05,
+    "screen_rtol": 0.0002,
+    "topology_budget_semantics": "native_pre_densify_trigger_not_new_hard_truncation",
+    "fixed_road_statistics": "excluded_from_generic_densification",
+    "timing_scope": "iteration_start_through_optimizer_SGCM_excludes_visualization_eval_checkpoint"
+  },
+  "road_policy": {
+    "cell_m": 0.2,
+    "context_halo_m": 1.2,
+    "surface_support_radius_m": 0.8,
+    "mask_margin_px": 2,
+    "depth_tolerance_m": 0.3,
+    "minimum_cosine": 0.12,
+    "minimum_area_px": 0.25,
+    "minimum_quality": 0.2,
+    "minimum_views": 2,
+    "source_batch_size": 2,
+    "robust_rgb_delta": 0.05,
+    "reliability_floor": 0.1,
+    "reliability_color_scale": 0.15,
+    "surface_weight": 0.1,
+    "normal_weight": 0.01,
+    "thin_weight": 0.01,
+    "anchor_weight": 0.01,
+    "coverage_weight": 0.1,
+    "normal_sigma_m": 0.015,
+    "maximum_normal_sigma_m": 0.03,
+    "maximum_unit_drift_m": 0.15,
+    "audit_interval": 100,
+    "normal_source": "finite_difference_measured_LiDAR_height_field",
+    "prior": "same_world_four_neighbor_continuity_with_observed_context_boundary",
+    "occluder_masks": "five_ID_union_all_vehicle_union_native_proposals_required",
+    "prior_coverage": "rendered_alpha_at_fixed_3x3_world_subcells_in_existing_prior_switch",
+    "coverage_offsets": [
+      -0.4,
+      0.0,
+      0.4
+    ],
+    "coverage_target": 0.95,
+    "prior_graph": "all_supported_prior_query_and_context_edges_to_observed_no_unknown_bridge",
+    "initial_color": [
+      0.18,
+      0.18,
+      0.18
+    ],
+    "road_topology": "one_fixed_thin_Gaussian_per_supported_world_unit_in_static_budget",
+    "observation_color_space": "unfused_source_sRGB_same_as_native_reconstruction"
+  },
+  "road_source_exclusions": [],
+  "baseline_config": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v2_20261019/baseline_config.json",
+  "readiness": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json",
+  "binding_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
+  "gpu_lock": "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_serial_r1_20261021",
+  "historical_inactive_temporal_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/temporal_evidence/metadata.json",
+  "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
+  "background_temporal_policy": {
+    "config": {
+      "lambda_t_reg": 0.1,
+      "lambda_v_reg": 0.01,
+      "paper_lambda_nps": 0.01,
+      "hybrid_nps_enabled": true,
+      "hybrid_time_reg_eps": 1e-08
+    },
+    "duration_velocity_normalization": "joint_alpha_clamp_min_1e-5",
+    "nps_normalization": "independent_static_alpha_clamp_min_1e-5",
+    "nps_domain": "unchanged_five_ID_mask_four_axial_neighbors_both_parities_sum",
+    "selective_temporal_objective_enabled": false
+  },
+  "actors": [
+    6,
+    37,
+    5,
+    26,
+    18
+  ],
+  "raw_frames": [
+    89,
+    137
+  ],
+  "frame_count": 49,
+  "seed": 0,
+  "iterations_each": 30000,
+  "second_stage_updates": 0,
+  "checkpoint_steps": [
+    5000,
+    10000,
+    15000,
+    20000,
+    25000,
+    30000
+  ],
+  "arm_order": [
+    "full",
+    "real_only",
+    "prior_only",
+    "ownership_only"
+  ],
+  "arms": {
+    "full": {
+      "road_weights": {
+        "observed_rgb": 1.0,
+        "prior_rgb": 0.1,
+        "observed_depth": 0.1,
+        "prior_depth": 0.01
+      }
+    },
+    "real_only": {
+      "road_weights": {
+        "observed_rgb": 1.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.1,
+        "prior_depth": 0.0
+      }
+    },
+    "prior_only": {
+      "road_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.1,
+        "observed_depth": 0.0,
+        "prior_depth": 0.01
+      }
+    },
+    "ownership_only": {
+      "road_weights": {
+        "observed_rgb": 0.0,
+        "prior_rgb": 0.0,
+        "observed_depth": 0.0,
+        "prior_depth": 0.0
+      }
+    }
+  },
+  "common_v3_policy": {
+    "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+    "body_l1_normalization": "v1_full_image",
+    "body_static_temporal_gradient": false,
+    "body_static_road_gradient": false,
+    "screen_gradient_accounting": "preserve_retained_buffers_then_add_routed_once",
+    "body_joint_rgb_weight": 1.0,
+    "static_front_occlusion_weight": 0.1,
+    "static_front_depth_margin_ratio": 0.01,
+    "static_front_temperature_ratio": 0.01,
+    "dynamic_color_leak_weight": 1.0,
+    "dynamic_color_ratio_weight": 0.1,
+    "dynamic_boundary_ignore_px": 2,
+    "dynamic_leak_top_fraction": 0.01,
+    "dynamic_leak_top_weight": 0.1,
+    "dynamic_radiance_ratio_cap": 4.0,
+    "dynamic_ratio_slack": 0.00392156862745098,
+    "densification_fusion": "per_gaussian_max_branch_vs_joint_single_count"
+  },
+  "invariants": {
+    "true_joint_forward_is_unmodified": true,
+    "body_joint_static_color_gradient": false,
+    "body_joint_static_geometry_opacity_gradient": true,
+    "body_joint_static_geometry_opacity_domain": "nonroad_rows_only",
+    "body_joint_static_t_scaling_t_velocity_gradient": false,
+    "body_joint_known_road_rows_gradient": false,
+    "body_joint_L1_denominator": "3HW_V1_equivalent_L1_only",
+    "masked_DSSIM_strictly_equivalent_to_V1": false,
+    "nonleaf_retained_screen_gradients_counted_once": true,
+    "exact_sampled_native_front_alpha_is_diagnostic_only": true,
+    "body_joint_all_dynamic_gradient": true,
+    "body_joint_environment_gradient": false,
+    "road_dynamic_direct_gradient": false,
+    "road_environment_direct_gradient": false,
+    "full_raw_dynamic_opacity_mse_weight": 100.0,
+    "full_raw_dynamic_opacity_mse_is_unconditional_in_v3_hybrid": true,
+    "raster_background_is_black": true,
+    "display_color_clamp_added": false,
+    "native_V1_point_caps_and_schedule_preserved": true,
+    "inherited_V2_uniform_background_time_freeze": false,
+    "background_t_scaling_t_velocity_trainable": true,
+    "global_absolute_time_velocity_regularizers": "V1_UNMODIFIED",
+    "global_NPS_enabled": true,
+    "V2_fixed_road_bundle_used": false,
+    "world_road_units_shared_across_all_times": true,
+    "world_road_geometry_common_to_four_arms": true,
+    "road_seeds_count_inside_native_static_point_cap": true,
+    "counterfactual_updates_in_main_budget": 0,
+    "selective_temporal_objective_enabled": false
+  },
+  "evaluation_regions": [
+    "body_joint_composite",
+    "measured_body_depth_static_front_occlusion",
+    "strict_dynamic_mask_outside_excluding_2px_boundary",
+    "observed_same_world_road_support",
+    "different_position_donor_prior_support",
+    "unknown_no_target_region",
+    "outside_query_region"
+  ],
+  "minimum_gpu_memory_bytes": 12884901888,
+  "minimum_campaign_free_bytes": 70000000000,
+  "max_concurrent_training": 1,
+  "automatic_restart": false,
+  "GPU_authorized_at_preparation": false,
+  "training_updates_executed": 0,
+  "human_verdict": null,
+  "restart_policy": "user_authorized_fresh_after_resource_admission_failure",
+  "preserved_failed_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_publish_r2_20261021",
+  "failed_updates_separately_accounted": 26152,
+  "execution_start_mode": "fresh",
+  "publication_fix": "seven_channel_road_float_and_v3_runtime_schema",
+  "resource_recovery_policy": {
+    "version": "V3_SINGLE_SLOT_RESOURCE_RECOVERY_R1_20261021",
+    "logical_batches": [
+      [
+        "full",
+        "real_only"
+      ],
+      [
+        "prior_only",
+        "ownership_only"
+      ]
+    ],
+    "max_concurrent_training": 1,
+    "reason": "two_late_stage_workers_exhausted_actual_32GiB_device",
+    "scientific_configuration_changed": false,
+    "failed_assets": "preserve_all_no_overwrite",
+    "restart": "fresh_seed0_no_unvalidated_resume",
+    "power": "only_after_all_four_and_formal_evaluations_and_asset_checks_complete"
+  },
+  "previous_OOM_actual_updates": {
+    "full": 8400,
+    "real_only": 7752
+  }
+}
