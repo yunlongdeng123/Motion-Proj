@@ -44,9 +44,9 @@ def validate(arguments):
         raise RuntimeError("arm is not registered in the fixed v3 plan")
     if arguments.output.exists():
         raise FileExistsError("new output required; never overwrite/replay a run")
-    if bundle.get("status") != "CPU_INPUT_BUNDLE_VERIFIED":
+    if bundle.get("status") != "CPU_MULTIVIEW_ROAD_INPUT_VERIFIED":
         raise RuntimeError("CPU real-input gate incomplete")
-    if bundle.get("full49_observed", 0) + bundle.get("prior", 0) <= 0:
+    if bundle.get("observed_units", 0) + bundle.get("prior_units", 0) <= 0:
         raise RuntimeError("road module has no fixed real target")
     if config.get("seed") != 0 or config.get("iterations") != 30000:
         raise RuntimeError("wrong baseline configuration")
@@ -64,6 +64,10 @@ def validate(arguments):
     from utils.v3_regularizer_contract import (
         TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
     )
+    from utils.v3_road_contract import ROAD_VERSION, ROAD_POLICY
+    if (bundle.get('version') != ROAD_VERSION or bundle.get('policy') != ROAD_POLICY
+            or plan.get('road_version') != ROAD_VERSION or plan.get('road_policy') != ROAD_POLICY):
+        raise RuntimeError('V2 fixed road inputs cannot authorize the multiview road method')
     validate_v1_regularizers(config)
     if (plan.get("background_temporal_version") != TEMPORAL_VERSION
             or plan.get("background_temporal_policy") != TEMPORAL_POLICY):
@@ -78,6 +82,7 @@ def validate(arguments):
             or gate.get("method_version") != METHOD_VERSION
             or gate.get("arm") != arguments.arm
             or gate.get("background_temporal_version") != TEMPORAL_VERSION
+            or gate.get('road_version') != ROAD_VERSION
         ):
             raise RuntimeError("CUDA gate belongs to another method/arm or performed updates")
     return plan, config, bundle
@@ -133,6 +138,7 @@ def main():
     from utils.v3_regularizer_contract import (
         TEMPORAL_POLICY, TEMPORAL_VERSION, V1_REGULARIZER_CONFIG,
     )
+    from utils.v3_road_contract import ROAD_VERSION, ROAD_POLICY
 
     if Path(train.__file__).resolve() != (arguments.engine / "train.py").resolve():
         raise RuntimeError("wrong train import")
@@ -159,6 +165,8 @@ def main():
         v3_arm=arguments.arm,
         v3_policy=dict(v3_runtime_context.V3_POLICY),
         v3_temporal_policy=dict(TEMPORAL_POLICY),
+        v3_road_source_exclusions=list(plan.get('road_source_exclusions', [])),
+        v3_road_meter_to_model=float(bundle['meter_to_model']),
         **V1_REGULARIZER_CONFIG,
     )
     arguments.output.mkdir()
@@ -179,6 +187,9 @@ def main():
             "background_temporal_version": TEMPORAL_VERSION,
             "background_temporal_policy": TEMPORAL_POLICY,
             "selective_temporal_objective_enabled": False,
+            'road_version': ROAD_VERSION,
+            'road_policy': ROAD_POLICY,
+            'road_source_exclusions': plan.get('road_source_exclusions', []),
             "extra_optimizer_updates": 0,
             "free_bytes": free,
             "reserved_bytes": reserve,
@@ -260,6 +271,8 @@ def main():
         if not all(math.isfinite(value) for value in numbers.values()):
             raise FloatingPointError("non-finite actual training scalar")
         context = v3_runtime_context.ACTIVE_CONTEXT
+        if iteration in schedule:
+            context.road.export(context.models[0], iteration, context.optimizer_steps['static'])
         if iteration == 1 or iteration % 100 == 0 or iteration in schedule:
             counts = dict(context.optimizer_steps)
             if any(counts.get(name) != iteration for name in ("static", "dynamic", "environment")):
@@ -295,6 +308,7 @@ def main():
                 "method_version": METHOD_VERSION,
                 "arm": arguments.arm,
                 "background_temporal_version": TEMPORAL_VERSION,
+                "road_version": ROAD_VERSION,
                 "optimizer_updates": 0,
                 "GPU": torch.cuda.get_device_name(),
                 "actual_checks": read(arguments.output / "gpu_gate_details.json"),

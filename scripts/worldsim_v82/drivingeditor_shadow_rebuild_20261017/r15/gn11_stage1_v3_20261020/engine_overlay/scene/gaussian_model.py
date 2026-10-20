@@ -413,6 +413,9 @@ class NativeGaussianModel:
 
     def reset_opacity(self):
         opacities_new = inverse_sigmoid(torch.min(self.get_opacity, torch.ones_like(self.get_opacity) * 0.01))
+        if hasattr(self, 'road_unit_mask'):
+            # 新增固定道路薄层不在节点被 reset 成透明；普通背景保留原 reset。
+            opacities_new = torch.where(self.road_unit_mask[:, None], self._opacity.detach(), opacities_new)
         optimizable_tensors = self.replace_tensor_to_optimizer(opacities_new, "opacity")
         self._opacity = optimizable_tensors["opacity"]
 
@@ -606,6 +609,8 @@ class NativeGaussianModel:
             if joint_sample:
                 selected_pts_mask = torch.logical_or(selected_pts_mask, selected_time_mask)
 
+        if hasattr(self, 'road_unit_mask'):
+            selected_pts_mask &= ~self.road_unit_mask
         new_scaling = self.scaling_inverse_activation(self.get_scaling[selected_pts_mask].repeat(N, 1) / (decay_factor))
         new_rotation = self._rotation[selected_pts_mask].repeat(N, 1)
         new_features_dc = self._features_dc[selected_pts_mask].repeat(N, 1, 1)
@@ -677,6 +682,8 @@ class NativeGaussianModel:
                                                    torch.max(self.get_scaling_t, dim=1).values <= extend_thresh)
             selected_pts_mask = torch.logical_or(selected_pts_mask, selected_time_mask)
 
+        if hasattr(self, 'road_unit_mask'):
+            selected_pts_mask &= ~self.road_unit_mask
         new_xyz = self._xyz[selected_pts_mask]
         new_features_dc = self._features_dc[selected_pts_mask]
         new_features_rest = self._features_rest[selected_pts_mask]
@@ -741,9 +748,75 @@ class NativeGaussianModel:
 
 
 class GaussianModel(NativeGaussianModel):
-    # 背景包含非编辑运动内容。可信稳定表面的时间约束由 v3 evidence loss
-    # 单独承担；此处保留原 PVG 参数、SHM 和时间显隐以及原生拓扑操作。
-    pass
+    # 普通背景保持 V1 PVG 自由度；只有明确道路单元是跨时刻共享的薄层。
+    def _road_ids(self):
+        ids = getattr(self, '_v3_road_ids', None)
+        if ids is None:
+            return torch.full((len(self._xyz),), -1, dtype=torch.long, device=self._xyz.device)
+        if len(ids) != len(self._xyz):
+            raise RuntimeError('road unit identity/topology mismatch')
+        return ids
+
+    @property
+    def road_unit_mask(self):
+        return self._road_ids() >= 0
+
+    def get_xyz_SHM(self, t, times=1):
+        native = super().get_xyz_SHM(t, times)
+        return torch.where(self.road_unit_mask[:, None], self._xyz, native)
+
+    def get_marginal_t(self, timestamp):
+        native = super().get_marginal_t(timestamp)
+        return torch.where(self.road_unit_mask[:, None], torch.ones_like(native), native)
+
+    @property
+    def get_inst_velocity(self):
+        native = super().get_inst_velocity
+        return torch.where(self.road_unit_mask[:, None], torch.zeros_like(native), native)
+
+    @property
+    def get_features(self):
+        # 道路外观是可训练 DC 纹理，不用视角高阶 SH 逃避多来源共同监督。
+        rest = torch.where(self.road_unit_mask[:, None, None], torch.zeros_like(self._features_rest), self._features_rest)
+        return torch.cat((self._features_dc, rest), dim=1)
+
+    def capture(self):
+        payload = list(super().capture())
+        if getattr(self, '_v3_road_ids', None) is not None:
+            optimizer = dict(payload[14])
+            optimizer['v3_world_road'] = {'ids': self._v3_road_ids.detach().cpu(), 'version': 'V3_WORLD_ROAD_MULTIVIEW_20261020'}
+            payload[14] = optimizer
+        return tuple(payload)
+
+    def restore(self, model_args, training_args=None):
+        payload = list(model_args)
+        optimizer = dict(payload[14])
+        road = optimizer.pop('v3_world_road', None)
+        payload[14] = optimizer
+        self._v3_road_ids = None
+        super().restore(tuple(payload), training_args)
+        if road is not None:
+            if road['version'] != 'V3_WORLD_ROAD_MULTIVIEW_20261020':
+                raise RuntimeError('unknown road checkpoint contract')
+            self._v3_road_ids = road['ids'].to(device=self._xyz.device, dtype=torch.long)
+            self._road_ids()
+            positive = self._v3_road_ids[self._v3_road_ids >= 0]
+            if (self._v3_road_ids < -1).any() or len(positive.unique()) != len(positive):
+                raise RuntimeError('corrupt or duplicated permanent road unit IDs')
+
+    def densification_postfix(self, *args, **kwargs):
+        ids = self._road_ids()
+        super().densification_postfix(*args, **kwargs)
+        if getattr(self, '_v3_road_ids', None) is not None:
+            added = len(self._xyz)-len(ids)
+            self._v3_road_ids = torch.cat((ids, ids.new_full((added,), -1)))
+
+    def prune_points(self, mask):
+        ids = self._road_ids()
+        mask = mask & ~(ids >= 0)
+        super().prune_points(mask)
+        if getattr(self, '_v3_road_ids', None) is not None:
+            self._v3_road_ids = ids[~mask]
 
 
 class Dynamic_GaussianModel(NativeGaussianModel):

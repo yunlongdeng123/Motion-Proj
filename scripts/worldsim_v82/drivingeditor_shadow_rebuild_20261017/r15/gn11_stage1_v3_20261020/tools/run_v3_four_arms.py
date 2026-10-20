@@ -75,6 +75,7 @@ def main():
         approval.get("status") != "USER_AUTHORIZED_GPU_V3"
         or approval.get("method_version") != METHOD_VERSION
         or approval.get("scope") != "zero_update_gates_and_four_fresh_30k"
+        or approval.get('road_version') != plan.get('road_version')
     ):
         raise RuntimeError("GPU approval does not match this method and four-arm scope")
 

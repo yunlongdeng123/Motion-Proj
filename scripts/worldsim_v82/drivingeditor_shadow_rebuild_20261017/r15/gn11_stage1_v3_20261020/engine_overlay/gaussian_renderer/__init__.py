@@ -177,6 +177,49 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
                 "alpha": rendered_opacity,
                 "feature": rendered_other
                 }
+def render_road_only(camera, pc, pipe):
+    """同一背景参数中的道路行；不另建颜色网络，不把真实遮挡从正常前向裁掉。"""
+    rows = torch.nonzero(pc.road_unit_mask, as_tuple=False).flatten()
+    if not len(rows):
+        raise RuntimeError('multiview road renderer has no world-unit primitives')
+    # 在建图前取道路行，避免每个额外来源都为全部背景构造一遍大图。
+    class RoadView:
+        active_sh_degree = pc.active_sh_degree
+        get_max_sh_channels = pc.get_max_sh_channels
+        get_xyz = pc._xyz[rows]
+        get_opacity = pc.opacity_activation(pc._opacity[rows])
+        get_scaling = pc.scaling_activation(pc._scaling[rows])
+        get_scaling_t = pc.scaling_t_activation(pc._scaling_t[rows])
+        get_rotation = pc.rotation_activation(pc._rotation[rows])
+        get_features = torch.cat((pc._features_dc[rows], torch.zeros_like(pc._features_rest[rows])), 1)
+
+        def get_xyz_SHM(self, timestamp):
+            return self.get_xyz
+
+        def get_marginal_t(self, timestamp):
+            return torch.ones_like(self.get_xyz[:, :1])
+
+        def get_covariance(self, modifier):
+            return pc.covariance_activation(self.get_scaling, modifier, pc._rotation[rows])
+
+    kwargs = prepare_rasterization(camera, RoadView(), pipe, other=[], mask=None)
+    kwargs = {name: value.contiguous() if value is not None else None for name, value in kwargs.items()}
+    proxy = torch.zeros_like(kwargs['means3D'], requires_grad=True) + 0
+    if proxy.requires_grad:
+        proxy.retain_grad()
+    kwargs['means2D'] = proxy
+    settings = GaussianRasterizationSettings(
+        image_height=int(camera.image_height), image_width=int(camera.image_width),
+        tanfovx=math.tan(-.5 if pipe.neg_fov else camera.FoVx*.5),
+        tanfovy=math.tan(-.5 if pipe.neg_fov else camera.FoVy*.5),
+        bg=torch.zeros(3, device=pc._xyz.device), scale_modifier=1.,
+        viewmatrix=camera.world_view_transform, projmatrix=camera.full_proj_transform,
+        sh_degree=pc.active_sh_degree, campos=camera.camera_center, prefiltered=False, debug=pipe.debug)
+    _, rgb, features, radii = GaussianRasterizer(raster_settings=settings)(**kwargs)
+    depth_sum, alpha = features.split([1, 1], dim=0)
+    return dict(rgb=rgb, depth_sum=depth_sum, alpha=alpha, proxy=proxy, rows=rows, radii=radii)
+
+
 def merge_kwargs(render_kwargs, render_kwargs_box):
     merged_kwargs = {}
     for k, v in render_kwargs.items():

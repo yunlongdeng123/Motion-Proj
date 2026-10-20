@@ -7,7 +7,8 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from utils.v2_road_objective import road_objective
+from utils.v3_multiview_road import MultiViewRoad
+from utils.v3_road_contract import ROAD_POLICY, ROAD_VERSION
 from utils.v3_densification import accumulate_max_screen_gradient
 from utils.v3_regularizer_contract import (
     TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
@@ -125,7 +126,7 @@ class V3Context:
         bundle = Path(args["v3_bundle"])
         self.root = bundle.parent
         self.meta = json.loads(bundle.read_text(encoding="utf-8"))
-        if self.meta["status"] != "CPU_INPUT_BUNDLE_VERIFIED":
+        if self.meta["status"] != "CPU_MULTIVIEW_ROAD_INPUT_VERIFIED" or self.meta.get('version') != ROAD_VERSION:
             raise RuntimeError("real inputs not bound; synthetic tests cannot authorize training")
         if int(args.iterations) != 30000 or args.start_checkpoint:
             raise RuntimeError("v3 only authorizes fresh first-stage30K")
@@ -172,6 +173,10 @@ class V3Context:
             derived[:3, :] /= float(self.meta["meter_to_model"])
             if not np.allclose(derived, expected, atol=2e-4, rtol=2e-4):
                 raise RuntimeError("world/model camera transform mismatch: " + frame_id)
+
+        if self.meta['policy'] != ROAD_POLICY:
+            raise RuntimeError('road multiview policy mismatch')
+        self.road = MultiViewRoad(bundle, scene, args, args.model_path)
 
         self.log = Path(args.model_path) / "v3_objectives.jsonl"
         self.densification_log = Path(args.model_path) / "v3_densification.jsonl"
@@ -230,6 +235,8 @@ class V3Context:
                 expected_alpha = torch.exp(
                     -0.5 * (static._t - timestamp).square() / static.get_scaling_t.square()
                 )
+                expected_xyz = torch.where(static.road_unit_mask[:, None], static._xyz, expected_xyz)
+                expected_alpha = torch.where(static.road_unit_mask[:, None], torch.ones_like(expected_alpha), expected_alpha)
                 if (not torch.allclose(static.get_xyz_SHM(timestamp), expected_xyz)
                         or not torch.allclose(static.get_marginal_t(timestamp), expected_alpha)):
                     raise RuntimeError("background no longer follows the native PVG forward")
@@ -280,6 +287,10 @@ class V3Context:
             background_temporal_parameters_trainable=True,
             fixed_camera_time_variation_is_allowed=True,
             gate_raw_frame=89,
+            road_version=ROAD_VERSION,
+            road_policy=ROAD_POLICY,
+            road_unit_count=self.road.seed_count,
+            road_world_ids_are_time_shared=True,
         )
 
     def frame(self, camera):
@@ -343,18 +354,7 @@ class V3Context:
             training["volume_edge_m"] * scale,
         )
 
-        if frame_id not in self.cache:
-            target_path = self.root / frame["road_target"]
-            with np.load(target_path, allow_pickle=False) as archive:
-                self.cache[frame_id] = {key: archive[key].copy() for key in archive.files}
-        road_target = {key: tensor(value) for key, value in self.cache[frame_id].items()}
-        road, road_terms = road_objective(
-            package["render_s"],
-            package["static_depth"],
-            package["static_alpha"],
-            road_target,
-            self.config["road"]["objective_weights"],
-        )
+        road, road_terms = self.road.objective(static, args, iteration, self.config['road']['objective_weights'])
 
         body_joint = body_joint_rgb_loss(
             package["render"], target, mask, ssim_fn, args.lambda_dssim
@@ -401,7 +401,9 @@ class V3Context:
                 "dynamic_color_ratio_raw": float(leak_ratio.detach()),
                 "dynamic_color_ratio_weight": self.policy["dynamic_color_ratio_weight"],
                 "full_dynamic_opacity_mse_weight": 100.0,
-                "road": {key: float(value.detach()) for key, value in road_terms.items()},
+                "road": road_terms,
+                "road_version": ROAD_VERSION,
+                "road_geometry_is_common_to_four_arms": True,
                 "road_weights": self.config["road"]["objective_weights"],
                 "road_total": float(road.detach()),
                 "road_updates_dynamic": False,
@@ -486,6 +488,12 @@ class V3Context:
             )
             if any(self.optimizer_steps.values()):
                 raise RuntimeError("zero-update gate executed an optimizer step")
+            if hasattr(self, 'road'):
+                if self.road.gradient_l2_cumulative.max() <= 0 and self.config['road']['objective_weights']['observed_rgb'] > 0:
+                    raise RuntimeError('real multiview road RGB path has no sampled texture gradient')
+                self.gate_details['road_source_frames_tested'] = [89+index for index in self.road.last_frames]
+                self.gate_details['road_raster_forward_backward_finite'] = True
+                self.road.export(static, iteration=0, optimizer_updates=0)
             (self.output / "gpu_gate_details.json").write_text(
                 json.dumps(self.gate_details, indent=2), encoding="utf-8"
             )

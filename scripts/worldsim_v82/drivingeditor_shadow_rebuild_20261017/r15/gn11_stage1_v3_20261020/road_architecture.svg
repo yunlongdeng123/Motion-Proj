@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L0 6L7 3" fill="#475569"/></marker><style>text{font:17px Arial,'Microsoft YaHei',sans-serif;fill:#172b3d}.h{font-weight:700}.b{fill:#e8f2ff;stroke:#4283bd;stroke-width:2;rx:12}.g{fill:#e8faee;stroke:#309769;stroke-width:2;rx:12}.p{fill:#fff3db;stroke:#b88322;stroke-width:2;rx:12}.l{stroke:#475569;stroke-width:2;fill:none;marker-end:url(#a)}</style></defs>
+<rect width="1200" height="500" fill="#f8fafc"/><text x="40" y="38" class="h">v3 世界道路：未融合来源 → 同一三维单元联合优化 → 场景渲染与来源审计</text>
+<rect class="b" x="35" y="80" width="260" height="100"/><text x="50" y="110" class="h">合法同49帧输入</text><text x="50" y="139">原始 RGB / 相机 / LiDAR</text><text x="50" y="165">五车掩码 + 全物体遮挡证据</text>
+<rect class="b" x="355" y="80" width="300" height="100"/><text x="370" y="110" class="h">自动查询 + 永久世界单元 ID</text><text x="370" y="139">五车各时刻投影 → 测量道路曲面</text><text x="370" y="165">逐单元保存49帧 RGB / uv / 门限</text>
+<rect class="g" x="725" y="80" width="425" height="100"/><text x="740" y="110" class="h">同一个道路单元，多个真实曝光来源</text><text x="740" y="139">几何硬筛选 + 有下界的 stop-grad 可靠性</text><text x="740" y="165">两来源/步；原始鲁棒 RGB + 测量深度</text>
+<path class="l" d="M295 130H345 M655 130H715"/>
+<rect class="g" x="355" y="245" width="300" height="120"/><text x="370" y="275" class="h">背景集合内固定薄层道路高斯</text><text x="370" y="304">可训练 DC纹理 / 几何 / opacity</text><text x="370" y="331">曲面 / 法线 / 薄层 / 锚点约束</text><text x="370" y="355">跨时间共享；计入原静态点数上限</text>
+<rect class="p" x="35" y="245" width="260" height="120"/><text x="50" y="275" class="h">未曝光区：连续性先验</text><text x="50" y="304">四邻域纹理 + 真实邻区边界</text><text x="50" y="331">先验不是真实 GT</text><text x="50" y="355">单来源未确认仍为 UNKNOWN</text>
+<path class="l" d="M295 300H345 M925 180V215H505V235"/>
+<rect class="b" x="725" y="245" width="425" height="120"/><text x="740" y="275" class="h">真实场景渲染 / 四臂固定预算对照</text><text x="740" y="304">道路同样进入正常 static + dynamic + EnvMap</text><text x="740" y="331">不在前向按真值掩码裁掉遮挡</text><text x="740" y="355">普通背景保留 V1 时间自由度与三项正则</text>
+<path class="l" d="M655 300H715"/>
+<text x="40" y="425" class="h">审计输出：</text><text x="155" y="425">每个世界单元的来源裁片 / 拒绝原因 / 实际权重 / 访问次数 / 采样梯度</text>
+<text x="40" y="460" class="h">因果边界：</text><text x="155" y="460">配对去来源计划单独登记与审批；来源权重和梯度都不等于“该帧已证明有帮助”</text>
+</svg>

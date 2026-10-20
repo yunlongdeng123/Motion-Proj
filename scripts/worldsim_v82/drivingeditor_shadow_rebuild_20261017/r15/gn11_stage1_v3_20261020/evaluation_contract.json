@@ -1,7 +1,7 @@
 {
   "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
   "method_version": "GN11_STAGE1_V3_20261020",
-  "comparison_principle": "All four arms share the exact v3 ownership, body-composite, leakage, and densification changes. Only road-source weights differ.",
+  "comparison_principle": "All four arms share world-road unit seeds and geometry plus v3 ownership/body/leakage/densification. Only multiview-query and continuous-prior source weights differ; not directly comparable to old V2 same-named arms.",
   "checkpoints": [5000, 10000, 15000, 20000, 25000, 30000],
   "required_final_frames": 49,
   "required_final_streams": [
@@ -13,16 +13,20 @@
     "static_alpha",
     "joint_depth",
     "static_depth",
-    "dynamic_depth"
+    "dynamic_depth",
+    "road_raw_before_environment",
+    "road_surface_color_alpha_normalized",
+    "road_alpha",
+    "road_float_RGB_alpha_depth"
   ],
   "fixed_regions": {
     "body_joint_composite": "the unchanged five-actor union mask",
     "front_occlusion": "valid measured depth inside the five-actor body mask",
     "dynamic_strict_outside": "outside a two-pixel dilation of the five-actor mask",
-    "observed_road": "provenance 1 only",
-    "prior_road": "provenance 2 only",
-    "unknown": "provenance 0; diagnostic only, never treated as target",
-    "outside_query": "all pixels outside the raw89 a6/a37 road query"
+    "observed_road": "permanent world query units with at least two hard-eligible sources, provenance1",
+    "prior_road": "supported world query units with zero hard-eligible sources, provenance2; not GT",
+    "unknown": "unsupported or single-view-unconfirmed units, provenance0; no road RGB target",
+    "outside_query": "outside the automatic all49 five-car world query; raw89 a6/a37 also reported as fixed subcohorts"
   },
   "required_numeric_reports": [
     "V1 static_duration, static_velocity and NPS: raw, weighted and gradient diagnostics",
@@ -34,7 +38,10 @@
     "dynamic color-to-alpha ratio excess mean and top one percent",
     "full raw dynamic-alpha mask MSE",
     "observed-road RGB and depth error",
-    "prior-road RGB and depth error",
+    "prior continuity, boundary RGB and surface geometry energy; no invented hidden-road RGB PSNR",
+    "source-wise hard gates, effective weights, actual RGB objective visits and sampled gradient norms",
+    "same world-unit source-exclusion paired differences only after separately approved full30K controls",
+    "extra source raster calls, time, peak memory and fixed road-unit share of native point cap",
     "static and dynamic point counts plus branch/joint densification selection counts"
   ],
   "required_human_review": [
@@ -51,7 +58,10 @@
     "one full-frame ranking proves one road source has higher unit quality",
     "unknown regions are supervised road ground truth",
     "low dynamic alpha alone proves no visible dynamic leakage",
-    "the screen-depth surrogate is exact per-splat front contribution"
+    "the screen-depth surrogate is exact per-splat front contribution",
+    "candidate weights or gradients prove a source improved final quality",
+    "a6 unexposed prior is uniquely recovered true road texture",
+    "same30K updates means the added multi-source rendering has zero compute overhead"
   ],
   "quality_accepted": false,
   "human_verdict": null

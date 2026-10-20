@@ -261,13 +261,14 @@ def training(args):
                 raise ValueError("Static and environment checkpoint iterations differ")
             env_map.restore(light_params, args)
 
+    # 先加入固定世界道路单元，再由 SGCM 初始化全体谱系，避免伪造 source parent。
+    from utils.v3_runtime_context import V3Context
+    v3_context = V3Context(args, scene, env_map)
     paper_sgcm = None
     if paper_method and args.get("paper_sgcm_enabled", False):
         from scene.paper_sgcm import create_sgcm_controller
         paper_sgcm = create_sgcm_controller(args.source_path, args, training_views=scene.getTrainCameras(), gaussians=gaussians)
 
-    from utils.v3_runtime_context import V3Context
-    v3_context = V3Context(args, scene, env_map)
     bg_color = [1, 1, 1] if args.white_background else [0, 0, 0]
     background = torch.tensor(bg_color, dtype=torch.float32, device="cuda")
 
@@ -946,6 +947,20 @@ def complete_eval(tb_writer, iteration, test_iterations, scene : Scene, renderFu
                                     "dynamic": render_pkg.get("render_d", torch.zeros_like(image))}
                         record["channels"] = {}
                         filename = record["camera"] + "_" + viewpoint.image_name + ".png"
+                        if hasattr(scene.gaussians, 'road_unit_mask') and scene.gaussians.road_unit_mask.any():
+                            from gaussian_renderer import render_road_only
+                            road_package = render_road_only(viewpoint, scene.gaussians, args)
+                            channels['road_raw_pre_environment'] = road_package['rgb']
+                            channels['road_surface_color'] = road_package['rgb']/road_package['alpha'].clamp_min(EPS)
+                            channels['road_alpha'] = road_package['alpha'].expand(3, -1, -1)
+                            road_dir = os.path.join(outdir, 'road_float')
+                            os.makedirs(road_dir, exist_ok=True)
+                            road_path = os.path.abspath(os.path.join(road_dir, filename[:-4]+'.npz'))
+                            np.savez_compressed(road_path,
+                                                rgb_sum=road_package['rgb'].detach().cpu().numpy(),
+                                                alpha=road_package['alpha'].detach().cpu().numpy(),
+                                                depth_sum=road_package['depth_sum'].detach().cpu().numpy())
+                            record['road_float'] = road_path
                         for channel, channel_image in channels.items():
                             channel_dir = os.path.join(outdir, channel)
                             os.makedirs(channel_dir, exist_ok=True)

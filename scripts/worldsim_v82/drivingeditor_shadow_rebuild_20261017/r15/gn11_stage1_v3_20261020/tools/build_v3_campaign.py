@@ -5,6 +5,8 @@ import argparse
 import datetime
 import json
 import shutil
+import subprocess
+import sys
 
 
 METHOD_VERSION = "GN11_STAGE1_V3_20261020"
@@ -46,6 +48,7 @@ def main():
     parser.add_argument("--architecture", type=Path, required=True)
     parser.add_argument("--evaluation-contract", type=Path, required=True)
     parser.add_argument("--approval-template", type=Path, required=True)
+    parser.add_argument('--road-builder', type=Path, required=True)
     arguments = parser.parse_args()
     plan = read(arguments.plan)
     if plan.get("method_version") != METHOD_VERSION:
@@ -57,10 +60,10 @@ def main():
     for required in (
         arguments.source_engine / "train.py",
         arguments.source_engine / "gaussian_renderer" / "__init__.py",
-        arguments.source_engine / "utils" / "v2_road_objective.py",
         arguments.overlay / "train.py",
         arguments.overlay / "utils" / "v3_runtime_context.py",
         arguments.overlay / "utils" / "v3_regularizer_contract.py",
+        arguments.overlay / "utils" / "v3_multiview_road.py",
         arguments.overlay / "scene" / "gaussian_model.py",
     ):
         if not required.is_file():
@@ -78,8 +81,12 @@ def main():
     shutil.copy2(arguments.plan, arguments.campaign / "plan.json")
     shutil.copy2(arguments.runner, arguments.campaign / "run_v3_arm.py")
     shutil.copy2(arguments.controller, arguments.campaign / "run_v3_four_arms.py")
+    shutil.copy2(arguments.road_builder, arguments.campaign / 'prepare_multiview_road.py')
     shutil.copy2(arguments.readme, arguments.campaign / "README.md")
     shutil.copy2(arguments.architecture, arguments.campaign / "architecture.svg")
+    shutil.copy2(arguments.readme.with_name('road_architecture.svg'), arguments.campaign/'road_architecture.svg')
+    for name in ['road_source_audit.py', 'road_source_counterfactual.py']:
+        shutil.copy2(arguments.runner.with_name(name), arguments.campaign/name)
     shutil.copy2(
         arguments.evaluation_contract,
         arguments.campaign / "evaluation_contract.json",
@@ -94,6 +101,9 @@ def main():
         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
     )
 
+    subprocess.run([sys.executable, str(arguments.campaign/'prepare_multiview_road.py'),
+                    '--engine', str(engine), '--engineering', plan['road_engineering_source'],
+                    '--output', str(Path(plan['input_bundle']).parent)], check=True)
     arms_root = arguments.campaign / "arms"
     arms_root.mkdir()
     for arm in plan["arm_order"]:

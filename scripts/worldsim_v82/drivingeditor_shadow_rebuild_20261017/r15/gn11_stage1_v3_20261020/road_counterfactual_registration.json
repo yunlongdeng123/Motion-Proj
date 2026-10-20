@@ -1,0 +1,29 @@
+{
+  "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "run_id": "road_cf_raw89_a37_drop_raw133",
+  "status": "PLANNED_ONLY_SEPARATE_GPU_AUTHORIZATION_REQUIRED",
+  "query_raw": 89,
+  "actor": 37,
+  "source_raw": 133,
+  "hard_eligible_query_units": 126,
+  "change": "only direct road-source observations of these world query units are removed",
+  "native_training_frame_removed": false,
+  "native49_reconstruction_unchanged": true,
+  "seed": 0,
+  "fresh_updates_each": 30000,
+  "second_stage_updates": 0,
+  "additional_updates_if_both_executed": 60000,
+  "updates_executed": 0,
+  "possible_reuse": "exact matching full-arm fresh30K reference may be reused after contract audit",
+  "optimizer_and_rng_state_must_match_at_start": true,
+  "required_outputs": [
+    "paired full49 joint/static/road render",
+    "fixed-world-unit numeric differences",
+    "held-source residual diagnostic, not independent test GT"
+  ],
+  "GPU_authorized": false,
+  "help_proven": false,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"],
+  "failure_ledger_delta": "none"
+}
