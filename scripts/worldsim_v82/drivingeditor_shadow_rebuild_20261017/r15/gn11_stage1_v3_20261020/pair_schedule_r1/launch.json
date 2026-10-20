@@ -1,0 +1,59 @@
+{
+  "status": "RUNNING_TWO_PAIRS",
+  "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+  "policy": {
+    "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+    "batches": [
+      [
+        "full",
+        "real_only"
+      ],
+      [
+        "prior_only",
+        "ownership_only"
+      ]
+    ],
+    "max_concurrent": 2,
+    "minimum_launch_free_bytes": 8589934592,
+    "runtime_headroom_warning_bytes": 4294967296,
+    "failure_policy": "stop_new_admissions_drain_healthy_peers_preserve_no_retry",
+    "existing_full": "adopt_live_without_restart",
+    "global_lock": "inherited_full_then_coordinator_exclusive"
+  },
+  "coordinator_pid": 3266,
+  "adopted_full_pid": 2254,
+  "replaced_controller_pid": 2167,
+  "adopted_full_iteration_snapshot": 3800,
+  "adopted_full_optimizer_counts": {
+    "static": 3800,
+    "dynamic": 3800,
+    "environment": 3800
+  },
+  "full_training_restarted": false,
+  "started_utc": "2026-10-20T16:22:21.030043+00:00",
+  "completed_arms": [],
+  "arm_phases": {
+    "full": "train",
+    "real_only": "train"
+  },
+  "training_updates_planned": 120000,
+  "automatic_restart": false,
+  "human_verdict": null,
+  "updated_utc": "2026-10-20T16:25:47.611253+00:00",
+  "batch_index": 0,
+  "current_batch": [
+    "full",
+    "real_only"
+  ],
+  "active": {
+    "full": {
+      "pid": 2254,
+      "phase": "train"
+    },
+    "real_only": {
+      "pid": 3357,
+      "phase": "train"
+    }
+  },
+  "completed_optimizer_updates_in_finished_arms": 0
+}

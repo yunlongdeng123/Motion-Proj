@@ -1,0 +1,513 @@
+{
+  "timestamp_utc": "2026-10-20T16:25:47.743611+00:00",
+  "timestamp_SGT": "2026-10-21T00:25:47.743611+08:00",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "registry": {
+    "status": "RUNNING_TWO_PAIRS",
+    "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+    "policy": {
+      "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+      "batches": [
+        [
+          "full",
+          "real_only"
+        ],
+        [
+          "prior_only",
+          "ownership_only"
+        ]
+      ],
+      "max_concurrent": 2,
+      "minimum_launch_free_bytes": 8589934592,
+      "runtime_headroom_warning_bytes": 4294967296,
+      "failure_policy": "stop_new_admissions_drain_healthy_peers_preserve_no_retry",
+      "existing_full": "adopt_live_without_restart",
+      "global_lock": "inherited_full_then_coordinator_exclusive"
+    },
+    "coordinator_pid": 3266,
+    "adopted_full_pid": 2254,
+    "replaced_controller_pid": 2167,
+    "adopted_full_iteration_snapshot": 3800,
+    "adopted_full_optimizer_counts": {
+      "static": 3800,
+      "dynamic": 3800,
+      "environment": 3800
+    },
+    "full_training_restarted": false,
+    "started_utc": "2026-10-20T16:22:21.030043+00:00",
+    "completed_arms": [],
+    "arm_phases": {
+      "full": "train",
+      "real_only": "train"
+    },
+    "training_updates_planned": 120000,
+    "automatic_restart": false,
+    "human_verdict": null,
+    "updated_utc": "2026-10-20T16:25:47.611253+00:00",
+    "batch_index": 0,
+    "current_batch": [
+      "full",
+      "real_only"
+    ],
+    "active": {
+      "full": {
+        "pid": 2254,
+        "phase": "train"
+      },
+      "real_only": {
+        "pid": 3357,
+        "phase": "train"
+      }
+    },
+    "completed_optimizer_updates_in_finished_arms": 0
+  },
+  "arms": {
+    "full": {
+      "state": {
+        "status": "training",
+        "method_version": "GN11_STAGE1_V3_20261020",
+        "arm": "full",
+        "mode": "train",
+        "pid": 2254,
+        "parent_pid": 2167,
+        "iteration": 4500,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-20T16:08:34.829573+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "wall_seconds": 1011.6250929590315,
+        "loss": 1.011892557144165,
+        "psnr": 28.025989532470703,
+        "static_points": 751823,
+        "dynamic_points": 1038987,
+        "optimizer_step_counts": {
+          "static": 4500,
+          "dynamic": 4500,
+          "environment": 4500
+        },
+        "cuda_allocated_bytes": 6648640000,
+        "cuda_reserved_bytes": 8774483968,
+        "cuda_peak_allocated_bytes": 8962740736,
+        "updated_utc": "2026-10-20T16:25:26.455033+00:00"
+      },
+      "process_alive": true,
+      "status_age_seconds": 21.290998458862305,
+      "finite_reported_scalars": true,
+      "update_counts_match": true,
+      "checkpoint_events": [],
+      "capacity": {
+        "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+        "iteration": 4550,
+        "phase": "post_optimizer_SGCM",
+        "static_total": 752744,
+        "ordinary_background": 738710,
+        "fixed_road": 14034,
+        "dynamic": 1038987,
+        "static_trigger_cap": 3000000,
+        "dynamic_trigger_cap": 1000000,
+        "fixed_road_fraction_of_static": 0.018643788592137566,
+        "fixed_road_fraction_of_static_cap": 0.004678,
+        "static_trigger_overshoot": 0,
+        "dynamic_trigger_overshoot": 38987,
+        "budget_semantics": "native_pre_densify_trigger_not_new_hard_truncation",
+        "fixed_road_ids_preserved": true,
+        "net_change_since_previous_record": {
+          "static_total": 0,
+          "ordinary_background": 0,
+          "fixed_road": 0,
+          "dynamic": 0
+        }
+      },
+      "latest_objective": {
+        "step": 4500,
+        "frame": "0008110",
+        "arm": "full",
+        "body_joint_rgb_raw": 0.018231907859444618,
+        "body_joint_rgb_weight": 1.0,
+        "ownership_volume_raw": 0.007782218977808952,
+        "ownership_volume_weight": 0.1,
+        "front_occlusion_raw": 0.0017018347280099988,
+        "front_occlusion_weight": 0.1,
+        "dynamic_color_leak_raw": 0.001955199521034956,
+        "dynamic_color_leak_weight": 1.0,
+        "dynamic_color_ratio_raw": 0.0,
+        "dynamic_color_ratio_weight": 0.1,
+        "full_dynamic_opacity_mse_weight": 100.0,
+        "road": {
+          "surface": 0.0034757170360535383,
+          "normal": 0.006814697291702032,
+          "thin": 1.9090848581981845e-05,
+          "anchor": 0.013022813946008682,
+          "mv_rgb": 0.0004552612663246691,
+          "mv_depth": 0.08152920752763748,
+          "prior_context_rgb": 0.0016024148790165782,
+          "coverage": 0.0010075686732307076,
+          "prior_rendered_coverage": 3.635326720541343e-05,
+          "prior_continuity": 0.0011563998414203525,
+          "sources": [
+            {
+              "source_index": 31,
+              "hard_eligible_units": 493,
+              "active_RGB_observations": 492,
+              "reliability_mean": 0.6681463718414307,
+              "alpha_mean": 0.9681046009063721,
+              "robust_RGB_error_mean": 0.0012780323158949614,
+              "depth_error_m_mean": 0.35910263657569885,
+              "weighted_RGB_objective": 0.0003170114359818399,
+              "selection_is_not_optimization_benefit": true,
+              "road_DC_rows_reached_by_sampled_gradient": 2465,
+              "sampled_DC_gradient_L2_sum": 0.00611540162935853
+            },
+            {
+              "source_index": 32,
+              "hard_eligible_units": 473,
+              "active_RGB_observations": 473,
+              "reliability_mean": 0.6448462009429932,
+              "alpha_mean": 0.9643095135688782,
+              "robust_RGB_error_mean": 0.001205581589601934,
+              "depth_error_m_mean": 0.38580045104026794,
+              "weighted_RGB_objective": 0.0002984913007821888,
+              "selection_is_not_optimization_benefit": true,
+              "road_DC_rows_reached_by_sampled_gradient": 2218,
+              "sampled_DC_gradient_L2_sum": 0.006890932563692331
+            }
+          ],
+          "prior_coverage": [
+            {
+              "frame_index": 31,
+              "sampled_subcells": 6776,
+              "rendered_alpha_mean": 0.993192732334137,
+              "below_target_fraction": 0.017561983317136765,
+              "weighted_objective": 1.796341422277692e-07
+            },
+            {
+              "frame_index": 32,
+              "sampled_subcells": 6775,
+              "rendered_alpha_mean": 0.9931604862213135,
+              "below_target_fraction": 0.018597785383462906,
+              "weighted_objective": 1.8389849287814286e-07
+            }
+          ],
+          "prior_boundary": {
+            "prior_switch_active": true,
+            "components": 150,
+            "context_anchored_components": 126,
+            "query_prior_units": 7156,
+            "query_prior_without_context_path": 361,
+            "continuity_edges": 23597,
+            "no_UNKNOWN_bridges": true,
+            "actual_boundary_DC_RGB_RMSE": 0.05609944462776184
+          }
+        },
+        "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+        "road_geometry_is_common_to_four_arms": true,
+        "road_weights": {
+          "observed_rgb": 1.0,
+          "prior_rgb": 0.1,
+          "observed_depth": 0.1,
+          "prior_depth": 0.01
+        },
+        "road_total": 0.009597418829798698,
+        "road_updates_dynamic": false,
+        "road_updates_environment": false,
+        "body_joint_updates_static_color": false,
+        "body_joint_updates_environment": false,
+        "body_joint_static_groups": [
+          "opacity",
+          "rotation",
+          "scaling",
+          "xyz"
+        ],
+        "body_l1_normalization": "v1_full_image",
+        "body_area_fraction": 0.14938803017139435,
+        "body_joint_updates_background_time": false,
+        "body_joint_updates_known_road_rows": false,
+        "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
+        "background_temporal_policy": {
+          "config": {
+            "lambda_t_reg": 0.1,
+            "lambda_v_reg": 0.01,
+            "paper_lambda_nps": 0.01,
+            "hybrid_nps_enabled": true,
+            "hybrid_time_reg_eps": 1e-08
+          },
+          "duration_velocity_normalization": "joint_alpha_clamp_min_1e-5",
+          "nps_normalization": "independent_static_alpha_clamp_min_1e-5",
+          "nps_domain": "unchanged_five_ID_mask_four_axial_neighbors_both_parities_sum",
+          "selective_temporal_objective_enabled": false
+        },
+        "selective_temporal_objective_enabled": false,
+        "front_valid_pixels": 4076.0,
+        "front_static_alpha_mean": 0.9827009439468384,
+        "front_hard_fraction": 0.03361138328909874,
+        "front_hard_alpha_mass": 0.03267752751708031,
+        "dynamic_strict_outside_pixels": 128748.0,
+        "dynamic_color_leak_mean": 0.0002380138757871464,
+        "dynamic_color_leak_top": 0.01717185601592064,
+        "dynamic_ratio_excess_mean": 0.0,
+        "dynamic_ratio_excess_top": 0.0,
+        "supervision_diagnostics": {
+          "body_pixels": 22946,
+          "body_lidar_pixels": 4076,
+          "joint_body_depth_valid_pixels": 4076,
+          "joint_body_depth_mae_m": 2.2021830081939697,
+          "static_body_depth_valid_pixels": 4076,
+          "static_body_depth_mae_m": 5.66713285446167,
+          "dynamic_body_depth_valid_pixels": 4076,
+          "dynamic_body_depth_mae_m": 2.3141322135925293,
+          "body_joint_rgb_l1": 0.056116972118616104,
+          "body_dynamic_raw_rgb_l1": 0.07061374932527542,
+          "body_dynamic_alpha_mse": 0.034104205667972565,
+          "full_dynamic_alpha_mse": 0.0068662515841424465,
+          "boundary_pixels": 3959,
+          "boundary_joint_rgb_l1": 0.07521133869886398,
+          "boundary_dynamic_alpha_mse": 0.10819244384765625,
+          "boundary_inside_dynamic_raw_l1": 0.14352749288082123,
+          "boundary_outside_dynamic_color": 0.03527900576591492,
+          "strict_outside_pixels": 128748,
+          "strict_outside_dynamic_color_mean": 0.0002380138757871464,
+          "strict_outside_dynamic_color_top1pct": 0.01717185601592064
+        }
+      }
+    },
+    "real_only": {
+      "state": {
+        "status": "training",
+        "method_version": "GN11_STAGE1_V3_20261020",
+        "arm": "real_only",
+        "mode": "train",
+        "pid": 3357,
+        "parent_pid": 3266,
+        "iteration": 600,
+        "logical_budget": 30000,
+        "second_stage_updates": 0,
+        "started_utc": "2026-10-20T16:22:53.999326+00:00",
+        "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+        "quality_accepted": false,
+        "wall_seconds": 155.9379088860005,
+        "loss": 2.263700246810913,
+        "psnr": 21.424558639526367,
+        "static_points": 592715,
+        "dynamic_points": 245500,
+        "optimizer_step_counts": {
+          "static": 600,
+          "dynamic": 600,
+          "environment": 600
+        },
+        "cuda_allocated_bytes": 2526964224,
+        "cuda_reserved_bytes": 3231711232,
+        "cuda_peak_allocated_bytes": 3065796096,
+        "updated_utc": "2026-10-20T16:25:29.937825+00:00"
+      },
+      "process_alive": true,
+      "status_age_seconds": 17.81095266342163,
+      "finite_reported_scalars": true,
+      "update_counts_match": true,
+      "checkpoint_events": [],
+      "capacity": {
+        "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+        "iteration": 650,
+        "phase": "post_optimizer_SGCM",
+        "static_total": 592834,
+        "ordinary_background": 578800,
+        "fixed_road": 14034,
+        "dynamic": 245500,
+        "static_trigger_cap": 3000000,
+        "dynamic_trigger_cap": 1000000,
+        "fixed_road_fraction_of_static": 0.023672731321078076,
+        "fixed_road_fraction_of_static_cap": 0.004678,
+        "static_trigger_overshoot": 0,
+        "dynamic_trigger_overshoot": 0,
+        "budget_semantics": "native_pre_densify_trigger_not_new_hard_truncation",
+        "fixed_road_ids_preserved": true,
+        "net_change_since_previous_record": {
+          "static_total": 0,
+          "ordinary_background": 0,
+          "fixed_road": 0,
+          "dynamic": 0
+        }
+      },
+      "latest_objective": {
+        "step": 600,
+        "frame": "0008129",
+        "arm": "real_only",
+        "body_joint_rgb_raw": 0.022704942151904106,
+        "body_joint_rgb_weight": 1.0,
+        "ownership_volume_raw": 0.0021129921078681946,
+        "ownership_volume_weight": 0.1,
+        "front_occlusion_raw": 0.002323870314285159,
+        "front_occlusion_weight": 0.1,
+        "dynamic_color_leak_raw": 0.004914833698421717,
+        "dynamic_color_leak_weight": 1.0,
+        "dynamic_color_ratio_raw": 0.0,
+        "dynamic_color_ratio_weight": 0.1,
+        "full_dynamic_opacity_mse_weight": 100.0,
+        "road": {
+          "surface": 0.007898522540926933,
+          "normal": 0.00832402054220438,
+          "thin": 2.3915470137580996e-06,
+          "anchor": 0.006576829124242067,
+          "mv_rgb": 0.0008823098032735288,
+          "mv_depth": 0.02839330956339836,
+          "prior_context_rgb": 0.04673406109213829,
+          "coverage": 7.838953752070665e-05,
+          "prior_rendered_coverage": 0.00010831272811628878,
+          "prior_continuity": 0.003813103074207902,
+          "sources": [
+            {
+              "source_index": 22,
+              "hard_eligible_units": 456,
+              "active_RGB_observations": 311,
+              "reliability_mean": 0.9088953733444214,
+              "alpha_mean": 0.9695509672164917,
+              "robust_RGB_error_mean": 0.003178510582074523,
+              "depth_error_m_mean": 0.10557740181684494,
+              "weighted_RGB_objective": 0.00042221593321301043,
+              "selection_is_not_optimization_benefit": true,
+              "road_DC_rows_reached_by_sampled_gradient": 2121,
+              "sampled_DC_gradient_L2_sum": 0.004901482257992029
+            },
+            {
+              "source_index": 23,
+              "hard_eligible_units": 525,
+              "active_RGB_observations": 369,
+              "reliability_mean": 0.9343385100364685,
+              "alpha_mean": 0.9685632586479187,
+              "robust_RGB_error_mean": 0.0026443784590810537,
+              "depth_error_m_mean": 0.06843546032905579,
+              "weighted_RGB_objective": 0.0004600938700605184,
+              "selection_is_not_optimization_benefit": true,
+              "road_DC_rows_reached_by_sampled_gradient": 2216,
+              "sampled_DC_gradient_L2_sum": 0.006025013513863087
+            }
+          ],
+          "prior_coverage": [
+            {
+              "frame_index": 22,
+              "sampled_subcells": 6792,
+              "rendered_alpha_mean": 0.9888309836387634,
+              "below_target_fraction": 0.08613074570894241,
+              "weighted_objective": 0.0
+            },
+            {
+              "frame_index": 23,
+              "sampled_subcells": 6783,
+              "rendered_alpha_mean": 0.9888334274291992,
+              "below_target_fraction": 0.08536045998334885,
+              "weighted_objective": 0.0
+            }
+          ],
+          "prior_boundary": {
+            "prior_switch_active": false,
+            "components": 150,
+            "context_anchored_components": 126,
+            "query_prior_units": 7156,
+            "query_prior_without_context_path": 361,
+            "continuity_edges": 23597,
+            "no_UNKNOWN_bridges": true,
+            "actual_boundary_DC_RGB_RMSE": 0.06659222394227982
+          }
+        },
+        "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+        "road_geometry_is_common_to_four_arms": true,
+        "road_weights": {
+          "observed_rgb": 1.0,
+          "prior_rgb": 0.0,
+          "observed_depth": 0.1,
+          "prior_depth": 0.0
+        },
+        "road_total": 0.004668364301323891,
+        "road_updates_dynamic": false,
+        "road_updates_environment": false,
+        "body_joint_updates_static_color": false,
+        "body_joint_updates_environment": false,
+        "body_joint_static_groups": [
+          "opacity",
+          "rotation",
+          "scaling",
+          "xyz"
+        ],
+        "body_l1_normalization": "v1_full_image",
+        "body_area_fraction": 0.08333984762430191,
+        "body_joint_updates_background_time": false,
+        "body_joint_updates_known_road_rows": false,
+        "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
+        "background_temporal_policy": {
+          "config": {
+            "lambda_t_reg": 0.1,
+            "lambda_v_reg": 0.01,
+            "paper_lambda_nps": 0.01,
+            "hybrid_nps_enabled": true,
+            "hybrid_time_reg_eps": 1e-08
+          },
+          "duration_velocity_normalization": "joint_alpha_clamp_min_1e-5",
+          "nps_normalization": "independent_static_alpha_clamp_min_1e-5",
+          "nps_domain": "unchanged_five_ID_mask_four_axial_neighbors_both_parities_sum",
+          "selective_temporal_objective_enabled": false
+        },
+        "selective_temporal_objective_enabled": false,
+        "front_valid_pixels": 2357.0,
+        "front_static_alpha_mean": 0.9709439277648926,
+        "front_hard_fraction": 0.032244376838207245,
+        "front_hard_alpha_mass": 0.03150017186999321,
+        "dynamic_strict_outside_pixels": 138996.0,
+        "dynamic_color_leak_mean": 0.0007122818497009575,
+        "dynamic_color_leak_top": 0.04202551767230034,
+        "dynamic_ratio_excess_mean": 0.0,
+        "dynamic_ratio_excess_top": 0.0,
+        "supervision_diagnostics": {
+          "body_pixels": 12801,
+          "body_lidar_pixels": 2357,
+          "joint_body_depth_valid_pixels": 2357,
+          "joint_body_depth_mae_m": 2.7609872817993164,
+          "static_body_depth_valid_pixels": 2357,
+          "static_body_depth_mae_m": 7.030789375305176,
+          "dynamic_body_depth_valid_pixels": 2357,
+          "dynamic_body_depth_mae_m": 2.922987937927246,
+          "body_joint_rgb_l1": 0.14806610345840454,
+          "body_dynamic_raw_rgb_l1": 0.18783223628997803,
+          "body_dynamic_alpha_mse": 0.09139689058065414,
+          "full_dynamic_alpha_mse": 0.01721850596368313,
+          "boundary_pixels": 3525,
+          "boundary_joint_rgb_l1": 0.14184391498565674,
+          "boundary_dynamic_alpha_mse": 0.1969069540500641,
+          "boundary_inside_dynamic_raw_l1": 0.21677416563034058,
+          "boundary_outside_dynamic_color": 0.03245440870523453,
+          "strict_outside_pixels": 138996,
+          "strict_outside_dynamic_color_mean": 0.0007122817332856357,
+          "strict_outside_dynamic_color_top1pct": 0.04202551767230034
+        }
+      }
+    },
+    "prior_only": {
+      "state": null,
+      "process_alive": false,
+      "status_age_seconds": null,
+      "finite_reported_scalars": false,
+      "update_counts_match": false,
+      "checkpoint_events": [],
+      "capacity": null,
+      "latest_objective": null
+    },
+    "ownership_only": {
+      "state": null,
+      "process_alive": false,
+      "status_age_seconds": null,
+      "finite_reported_scalars": false,
+      "update_counts_match": false,
+      "checkpoint_events": [],
+      "capacity": null,
+      "latest_objective": null
+    }
+  },
+  "GPU_used_MiB": 13353,
+  "GPU_total_MiB": 32760,
+  "GPU_utilization_percent": 98,
+  "free_disk_bytes": 105659588608,
+  "healthy_now": true,
+  "both_current_arms_have_5k_node": false,
+  "interpretation": "resource/implementation health only; not visual quality acceptance; cumulative CPU snapshots do not prove peak GPU capacity",
+  "training_mutation": false,
+  "human_verdict": null
+}

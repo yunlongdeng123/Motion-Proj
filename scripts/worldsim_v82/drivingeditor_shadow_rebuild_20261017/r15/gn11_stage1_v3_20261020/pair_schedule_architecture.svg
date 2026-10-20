@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="300" viewBox="0 0 1040 300">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L0 6L7 3" fill="#476078"/></marker></defs>
+<rect width="1040" height="300" fill="#f4f8fb"/>
+<g font-family="Microsoft YaHei,sans-serif" fill="#16354b"><text x="25" y="36" font-size="23">V3 资源调度：两批串行，每批两组并行</text>
+<g fill="white" stroke="#7193ad" stroke-width="2"><rect x="25" y="75" width="200" height="125" rx="10"/><rect x="270" y="75" width="235" height="125" rx="10"/><rect x="550" y="75" width="200" height="125" rx="10"/><rect x="795" y="75" width="220" height="125" rx="10"/></g>
+<g font-size="17"><text x="40" y="108">相同49/49、seed0</text><text x="40" y="142">每组 gate → fresh30K</text><text x="40" y="176">已有full不重启</text><text x="285" y="108">批次A：full</text><text x="285" y="142">　　　 real_only</text><text x="285" y="176">最多两个GPU进程</text><text x="565" y="108">等待两组完成</text><text x="565" y="142">核对30K/保存/评价</text><text x="565" y="176">失败停止新准入</text><text x="810" y="108">批次B：prior_only</text><text x="810" y="142">ownership_only</text><text x="810" y="176">同样最多两组</text></g>
+<text x="25" y="256" font-size="17">心跳：10分钟检查 → 两次稳定且两组通过5K节点 → 30分钟 → 持续稳定可60分钟</text><text x="25" y="282" font-size="15">新批次/异常恢复10分钟；不改损失、点数、训练预算；瞬时显存余量不等于全程容量认证。</text></g>
+<g fill="none" stroke="#476078" stroke-width="2" marker-end="url(#a)"><path d="M225 135H260"/><path d="M505 135H540"/><path d="M750 135H785"/></g></svg>

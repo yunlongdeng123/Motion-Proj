@@ -147,7 +147,17 @@
   ],
   "minimum_gpu_memory_bytes": 12884901888,
   "minimum_campaign_free_bytes": 70000000000,
-  "max_concurrent_training": 1,
+  "max_concurrent_training": 2,
+  "pair_policy": {
+    "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+    "batches": [["full", "real_only"], ["prior_only", "ownership_only"]],
+    "max_concurrent": 2,
+    "minimum_launch_free_bytes": 8589934592,
+    "runtime_headroom_warning_bytes": 4294967296,
+    "failure_policy": "stop_new_admissions_drain_healthy_peers_preserve_no_retry",
+    "existing_full": "adopt_live_without_restart",
+    "global_lock": "inherited_full_then_coordinator_exclusive"
+  },
   "automatic_restart": false,
   "GPU_authorized_at_preparation": false,
   "training_updates_executed": 0,

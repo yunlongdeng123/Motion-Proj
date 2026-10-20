@@ -92,7 +92,9 @@ def main():
     shutil.copy2(arguments.runner.with_name('validate_render_audit_cpu.py'), arguments.campaign/'validate_render_audit_cpu.py')
     shutil.copy2(arguments.readme.with_name('render_audit_architecture.svg'), arguments.campaign/'render_audit_architecture.svg')
     shutil.copy2(arguments.readme.with_name('road_review_architecture.svg'), arguments.campaign/'road_review_architecture.svg')
-    for name in ['road_source_audit.py', 'road_source_counterfactual.py', 'v3_gpu_authorization.py', 'upgrade_road_input.py']:
+    shutil.copy2(arguments.readme.with_name('pair_schedule_architecture.svg'), arguments.campaign/'pair_schedule_architecture.svg')
+    for name in ['road_source_audit.py', 'road_source_counterfactual.py', 'v3_gpu_authorization.py', 'upgrade_road_input.py',
+                 'v3_pair_runtime.py', 'run_v3_pairs.py', 'check_v3_progress.py']:
         shutil.copy2(arguments.runner.with_name(name), arguments.campaign/name)
     shutil.copy2(
         arguments.evaluation_contract,

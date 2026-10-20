@@ -130,8 +130,18 @@ def main():
     require_reviewed_invocation(arguments, read(arguments.plan))
     plan, config, bundle = validate(arguments)
 
-    lock = arguments.gpu_lock.open("a+")
-    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    def gpu_applications():
+        output = subprocess.check_output(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader,nounits'], text=True)
+        return [int(line.strip()) for line in output.splitlines() if line.strip()]
+    if int(plan['max_concurrent_training']) == 2:
+        from v3_pair_runtime import acquire_pair_entry, validate_pair_plan
+        validate_pair_plan(plan, read(Path(plan['campaign'])/'GPU_APPROVAL.json'))
+        lock = acquire_pair_entry(arguments, plan, gpu_applications)
+    else:
+        lock = arguments.gpu_lock.open('a+')
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        if gpu_applications():
+            raise RuntimeError('GPU has an existing compute process')
     checkpoints = list(plan["checkpoint_steps"])
     static_limit = int(config["densify_until_num_points"])
     dynamic_limit = int(config["dynamic_densify_until_num_points"])
@@ -143,12 +153,6 @@ def main():
         raise RuntimeError(
             f"insufficient space for six preserved checkpoints: {free} < {reserve}"
         )
-    applications = subprocess.check_output(
-        ["nvidia-smi", "--query-compute-apps=pid,process_name", "--format=csv,noheader"],
-        text=True,
-    ).strip()
-    if applications:
-        raise RuntimeError("GPU has an existing compute process: " + applications)
 
     os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
     sys.path.insert(0, str(arguments.binding_tools))
