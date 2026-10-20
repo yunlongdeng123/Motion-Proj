@@ -414,11 +414,8 @@ def training(args):
                 "nps_distances": getattr(viewpoint_cam, "_paper_nps_distance", None),
             }
             hybrid_state = v3_context.partition_state(hybrid_state, viewpoint_cam, render_pkg, gt_image, dynamic_mask, depth, args, ssim)
-            v3_loss_config = dict(args)
-            # 全图绝对时间/速度项由三维证据选择性正则替代，避免把上下文车辆
-            # 当成必须静止的表面。NPS仍关闭；局部空间平滑保留原路径。
-            v3_loss_config.update(lambda_t_reg=0.0, lambda_v_reg=0.0, hybrid_nps_enabled=False)
-            hybrid_result = compose_hybrid_loss(hybrid_state, v3_loss_config, nps_fn=nps_loss)
+            # 原样恢复 V1 寿命/速度/NPS：保留各自 alpha 归一化、监督域与权重。
+            hybrid_result = compose_hybrid_loss(hybrid_state, args, nps_fn=nps_loss)
             loss = hybrid_result.total
             log_dict.update(hybrid_result.log_values())
             if iteration in args.hybrid_gradient_nodes:

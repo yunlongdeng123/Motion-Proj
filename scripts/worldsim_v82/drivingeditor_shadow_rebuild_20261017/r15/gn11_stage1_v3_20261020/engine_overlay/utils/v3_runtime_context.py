@@ -9,8 +9,8 @@ import torch
 
 from utils.v2_road_objective import road_objective
 from utils.v3_densification import accumulate_max_screen_gradient
-from utils.v3_temporal import (
-    TEMPORAL_POLICY, TEMPORAL_VERSION, TemporalEvidence, selective_temporal_loss,
+from utils.v3_regularizer_contract import (
+    TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
 )
 from utils.v3_objectives import (
     STATIC_BODY_RGB_GROUPS,
@@ -149,20 +149,13 @@ class V3Context:
         if bool(args.get("white_background", False)):
             raise RuntimeError("dynamic_premultiplied_rgb requires the fixed black raster background")
         self.policy = supplied_policy
+        validate_v1_regularizers(args)
         if _json_clone(args.get("v3_temporal_policy", {})) != TEMPORAL_POLICY:
-            raise RuntimeError("selective background temporal policy mismatch")
-        self.temporal_evidence = TemporalEvidence(
-            args["v3_temporal_evidence"], scene.gaussians._xyz.device
-        )
-        temporal_meta = self.temporal_evidence.metadata
-        if (temporal_meta["frames"] != sorted(self.frames)
-                or not np.allclose(temporal_meta["world_to_model"], self.meta["world_to_model"])
-                or temporal_meta["input_bundle"] != str(bundle)):
-            raise RuntimeError("temporal evidence is not bound to the paired real scene")
+            raise RuntimeError("V1 background regularizer policy mismatch")
         self.config = _json_clone(self.meta["config"])
         self.config["road"]["objective_weights"] = _json_clone(ARM_ROAD_WEIGHTS[self.arm])
         self.config["training"]["static_temporal_parameters"] = (
-            "NATIVE_PVG_TRAINABLE_WITH_3D_SELECTIVE_TEMPORAL_REGULARIZATION"
+            "NATIVE_PVG_TRAINABLE_WITH_UNMODIFIED_V1_REGULARIZERS"
         )
         self.cache = {}
 
@@ -249,7 +242,7 @@ class V3Context:
                     args,
                     background,
                     env_map=environment,
-                    other=[static.get_scaling_t, static.get_inst_velocity],
+                    other=[static.get_scaling_t.clamp_max(2), static.get_inst_velocity],
                     dynamic_other=[
                         scene.dynamic_gaussians.get_scaling_t.clamp_max(2),
                         scene.dynamic_gaussians.get_inst_velocity,
@@ -384,17 +377,11 @@ class V3Context:
             self.policy["dynamic_radiance_ratio_cap"],
             self.policy["dynamic_ratio_slack"],
         )
-        temporal_weights = self.temporal_evidence.weights(static._xyz, static.get_scaling)
-        temporal, temporal_metrics = selective_temporal_loss(
-            static, temporal_weights,
-            self.temporal_evidence.metadata["time_range_model"], scale,
-        )
         base_extra = (
             training["volume_exclusion_weight"] * volume
             + self.policy["static_front_occlusion_weight"] * front
             + self.policy["dynamic_color_leak_weight"] * leak_color
             + self.policy["dynamic_color_ratio_weight"] * leak_ratio
-            + temporal
         )
         routed_body = self.policy["body_joint_rgb_weight"] * body_joint
 
@@ -424,11 +411,10 @@ class V3Context:
                 "body_joint_static_groups": sorted(STATIC_BODY_RGB_GROUPS),
                 "background_temporal_version": TEMPORAL_VERSION,
                 "background_temporal_policy": TEMPORAL_POLICY,
-                "background_temporal_total": float(temporal.detach()),
+                "selective_temporal_objective_enabled": False,
             }
             record.update({key: float(value.detach()) for key, value in front_metrics.items()})
             record.update({key: float(value.detach()) for key, value in leak_metrics.items()})
-            record.update({key: float(value) for key, value in temporal_metrics.items()})
             _append_jsonl(self.log, record)
         return {
             "base_extra": base_extra,

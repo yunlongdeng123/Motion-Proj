@@ -5,8 +5,6 @@ import argparse
 import datetime
 import json
 import shutil
-import subprocess
-import sys
 
 
 METHOD_VERSION = "GN11_STAGE1_V3_20261020"
@@ -48,7 +46,6 @@ def main():
     parser.add_argument("--architecture", type=Path, required=True)
     parser.add_argument("--evaluation-contract", type=Path, required=True)
     parser.add_argument("--approval-template", type=Path, required=True)
-    parser.add_argument("--temporal-builder", type=Path, required=True)
     arguments = parser.parse_args()
     plan = read(arguments.plan)
     if plan.get("method_version") != METHOD_VERSION:
@@ -63,7 +60,7 @@ def main():
         arguments.source_engine / "utils" / "v2_road_objective.py",
         arguments.overlay / "train.py",
         arguments.overlay / "utils" / "v3_runtime_context.py",
-        arguments.overlay / "utils" / "v3_temporal.py",
+        arguments.overlay / "utils" / "v3_regularizer_contract.py",
         arguments.overlay / "scene" / "gaussian_model.py",
     ):
         if not required.is_file():
@@ -81,7 +78,6 @@ def main():
     shutil.copy2(arguments.plan, arguments.campaign / "plan.json")
     shutil.copy2(arguments.runner, arguments.campaign / "run_v3_arm.py")
     shutil.copy2(arguments.controller, arguments.campaign / "run_v3_four_arms.py")
-    shutil.copy2(arguments.temporal_builder, arguments.campaign / "prepare_temporal_evidence.py")
     shutil.copy2(arguments.readme, arguments.campaign / "README.md")
     shutil.copy2(arguments.architecture, arguments.campaign / "architecture.svg")
     shutil.copy2(
@@ -97,14 +93,6 @@ def main():
         arguments.campaign / "tests",
         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
     )
-
-    subprocess.run([
-        sys.executable, str(arguments.campaign / "prepare_temporal_evidence.py"),
-        "--engine", str(engine),
-        "--source", plan["background_temporal_source"],
-        "--bundle", plan["input_bundle"],
-        "--output", str(Path(plan["background_temporal_evidence"]).parent),
-    ], check=True)
 
     arms_root = arguments.campaign / "arms"
     arms_root.mkdir()
@@ -135,7 +123,7 @@ def main():
         "status": "DEPLOYED_CPU_ONLY_GPU_NOT_AUTHORIZED",
         "method_version": METHOD_VERSION,
         "background_temporal_version": plan["background_temporal_version"],
-        "background_temporal_evidence": plan["background_temporal_evidence"],
+        "background_temporal_policy": plan["background_temporal_policy"],
         "campaign": str(arguments.campaign),
         "source_engine": str(arguments.source_engine),
         "overlay_source": str(arguments.overlay),

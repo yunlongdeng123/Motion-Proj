@@ -4,7 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
-| WS-V82-R15-GN11-STAGE1-V3-20261020 / full、real_only、prior_only、ownership_only | v3已CPU部署、GPU/训练0：共同修复联合车身监督、前遮挡、动态泄漏及分支增密；背景恢复原生PVG，重复三维证据选择性约束时间并保留非目标运动；四臂只改变道路来源权重，待审核与GPU授权 | [v3组件、协议与闸门](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) |
+| WS-V82-R15-GN11-STAGE1-V3-20261020 / full、real_only、prior_only、ownership_only | v3已CPU部署、GPU/训练0：共同修复联合车身监督、前遮挡、动态泄漏及分支增密；背景保留原生PVG时间自由度，寿命/速度/NPS按用户要求恢复V1、不叠加选择性时间损失；四臂只改变道路来源权重，待审核与GPU授权 | [v3组件、协议与闸门](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) |
 | WS-V82-R15-GN11-STAGE1-V2-ROAD-ABLATIONS-20261019 / real_only_seed0、prior_only_seed0、ownership_only_seed0 | 三组fresh第一阶段30K：仅跨帧真实观测、仅供体先验、仅归属修复；相同五身份49帧/seed0，最多两路并发 | [四组组件与实际队列](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html) |
 | WS-V82-R15-GN11-STAGE1-V2-20261019 / gn11_stage1_v2_seed0 | 五身份第一阶段v2：静动态归属与同世界道路查询；候选代码、全幅供体预览与固定30K协议 | [组件与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) |
 | WS-V82-R15-BASELINE-ENGINEERING-20261018 | A五身份30K＋30K与B交集20身份30K完成；完整画面结果与质量结论 | [最终报告与同步视频](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) |

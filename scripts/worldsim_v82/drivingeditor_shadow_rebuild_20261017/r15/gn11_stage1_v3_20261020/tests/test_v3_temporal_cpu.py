@@ -1,3 +1,5 @@
+"""原生时间生命周期测试；选择性证据相关四项仅保留为离线历史测试。"""
+
 import ast
 import importlib.util
 import json
@@ -163,6 +165,8 @@ class TemporalTests(unittest.TestCase):
         builder = ROOT / "tools" / "prepare_temporal_evidence.py"
         if not builder.is_file():
             builder = ROOT / "prepare_temporal_evidence.py"
+        if not builder.is_file():
+            self.skipTest("historical offline builder is not a current campaign dependency")
         spec = importlib.util.spec_from_file_location("temporal_builder_test", builder)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)

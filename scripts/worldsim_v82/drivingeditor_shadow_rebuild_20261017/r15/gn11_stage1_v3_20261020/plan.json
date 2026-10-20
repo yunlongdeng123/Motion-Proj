@@ -13,21 +13,20 @@
   "binding_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
   "gpu_lock": "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
   "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
-  "background_temporal_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/temporal_evidence/metadata.json",
-  "background_temporal_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137",
-  "background_temporal_version": "V3_SELECTIVE_BACKGROUND_TIME_20261020",
+  "historical_inactive_temporal_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/temporal_evidence/metadata.json",
+  "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
   "background_temporal_policy": {
-    "voxel_m": 0.2,
-    "minimum_observation_frames": 3,
-    "minimum_time_span_model": 0.2,
-    "object_box_padding_m": 0.15,
-    "road_protection_height_m": 0.2,
-    "maximum_stable_sigma_m": 0.2,
-    "stable_motion_weight": 0.1,
-    "stable_visibility_weight": 0.1,
-    "context_motion_weight": 0.001,
-    "context_visibility_weight": 0.001,
-    "road_geometry_confidence": 0.5
+    "config": {
+      "lambda_t_reg": 0.1,
+      "lambda_v_reg": 0.01,
+      "paper_lambda_nps": 0.01,
+      "hybrid_nps_enabled": true,
+      "hybrid_time_reg_eps": 1e-8
+    },
+    "duration_velocity_normalization": "joint_alpha_clamp_min_1e-5",
+    "nps_normalization": "independent_static_alpha_clamp_min_1e-5",
+    "nps_domain": "unchanged_five_ID_mask_four_axial_neighbors_both_parities_sum",
+    "selective_temporal_objective_enabled": false
   },
   "actors": [6, 37, 5, 26, 18],
   "raw_frames": [89, 137],
@@ -80,8 +79,9 @@
     "native_V1_point_caps_and_schedule_preserved": true,
     "inherited_V2_uniform_background_time_freeze": false,
     "background_t_scaling_t_velocity_trainable": true,
-    "global_absolute_time_velocity_regularizers": "replaced_by_3D_evidence_selective_regularizers",
-    "global_NPS_enabled": false
+    "global_absolute_time_velocity_regularizers": "V1_UNMODIFIED",
+    "global_NPS_enabled": true,
+    "selective_temporal_objective_enabled": false
   },
   "evaluation_regions": [
     "body_joint_composite",

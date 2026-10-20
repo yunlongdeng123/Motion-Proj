@@ -140,7 +140,7 @@ class GradientRoutingTests(unittest.TestCase):
     def test_runtime_accepts_omegaconf_temporal_policy(self):
         from omegaconf import OmegaConf
         from utils.v3_runtime_context import _json_clone
-        from utils.v3_temporal import TEMPORAL_POLICY
+        from utils.v3_regularizer_contract import TEMPORAL_POLICY
         self.assertEqual(_json_clone(OmegaConf.create(TEMPORAL_POLICY)), TEMPORAL_POLICY)
 
     @unittest.skipIf(V3Context is None, "full frozen v2 engine is required")

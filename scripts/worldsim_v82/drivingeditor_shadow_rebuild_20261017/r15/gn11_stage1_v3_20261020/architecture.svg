@@ -13,7 +13,7 @@
     </style>
   </defs>
   <rect width="1400" height="760" fill="#f8fafc"/>
-  <text x="700" y="44" text-anchor="middle" class="title">GN11 v3：选择性背景时间约束 + 五车编辑</text>
+  <text x="700" y="44" text-anchor="middle" class="title">GN11 v3：原生背景 PVG + V1 正则 + 五车编辑</text>
 
   <rect class="box" x="40" y="100" width="235" height="155" fill="#e0f2fe" stroke="#0284c7"/>
   <text x="158" y="132" text-anchor="middle" class="h">固定输入</text>
@@ -71,11 +71,11 @@
   <path class="line" d="M895 463 L895 505"/>
 
   <rect class="box" x="40" y="515" width="615" height="120" fill="#e0f2fe" stroke="#0284c7"/>
-  <text x="347" y="545" text-anchor="middle" class="h">同49帧三维证据 → 选择性时间正则</text>
-  <text x="62" y="576" class="t">重复 LiDAR / 支撑道路 → 强稳定倾向；三维物体体积否决稳定标签</text>
-  <text x="62" y="603" class="t">非目标运动内容 / 未知 → 保留 PVG 自由度，弱正则</text>
-  <text x="62" y="626" class="s">逐步按当前几何重查；不清零速度，不用二维mask清除道路</text>
-  <path class="line" d="M158 255 L158 505"/>
+  <text x="347" y="545" text-anchor="middle" class="h">原生背景特征图 → V1 寿命 / 速度 / NPS</text>
+  <text x="62" y="576" class="t">寿命 0.1 / 速度 0.01：背景特征 ÷ 联合 alpha</text>
+  <text x="62" y="603" class="t">NPS 0.01：背景速度特征 ÷ 独立背景 alpha；原掩码求和</text>
+  <text x="62" y="626" class="s">保留时间自由度；无统一冻结、无额外选择性时间损失</text>
+  <path class="line" d="M355 285 C320 350 320 440 320 505"/>
   <path class="line" d="M620 515 C700 470 690 300 655 285"/>
 
   <rect class="box" x="1130" y="180" width="230" height="285" fill="#f1f5f9" stroke="#475569"/>
