@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-GN11-V3-PUBLICATION-R1-20261021 / publish_r2授权fresh重跑 | 七通道与完整继续状态发布/恢复合同、0步实际49帧保存集成准入、显式fresh 2+2；76项CPU通过。原失败10K单列、旧资产保留，新四组仍49/49、seed0、各30K；实际进度统一见RESEARCH_STATUS | [组件、证据与重跑合同](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/publication_fix_r1/README.md) |
 | WS-V82-GN11-V3-PAIRS-R1-20261021 / 2+2调度 | 用户授权full+real_only→prior_only+ownership_only，live full3800步无重启交接；最大2槽、同伴/父进程准入与全局锁接管，68项CPU通过；10分钟心跳，稳定后30–60分钟。方法和120K总预算不变 | [组件与协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md#四组固定对照) |
 | WS-V82-GN11-V3-ROAD-REVIEW-R2-20261021 / 主四臂 | 单组授权/CLI绑定、3×3光栅alpha覆盖、上下文先验边界、曝光位置删除五车对照、三路mask恢复；63项CPU通过、首组真实CUDA零更新通过后开始fresh30K；49/49、seed0、四臂单路，实际进度见RESEARCH_STATUS | [组件与修订](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md#2026-10-21-道路准入修订)、[CPU证据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/road_review_r2/validation.json) |
 | WS-V82-GN11-V3-RENDER-DENSIFY-ROAD-R1-20261020 | 屏幕路由与max/分母数值比较器、CUDA事件开销与容量账、道路独立/背景/联合T贡献、来源访问vs梯度诊断；57项CPU通过，真实CUDA/训练0；49/49四臂保持来源2×2 | [组件与协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md#渲染增密与道路审计)、[CPU凭据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/render_audit_r1/validation.json) |

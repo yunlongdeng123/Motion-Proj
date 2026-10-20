@@ -278,6 +278,9 @@ def training(args):
     viewpoint_stack = None
 
     ema_dict_for_log = defaultdict(int)
+    if args.get('v3_zero_update_gate', False):
+        from utils.paper_checkpoint import zero_update_publication_smoke
+        zero_update_publication_smoke(scene, render, args, background, env_map, paper_sgcm, complete_eval)
     if paper_method and args.start_checkpoint:
         from utils.paper_checkpoint import restore_training_state
         state_path = os.path.join(os.path.dirname(args.start_checkpoint), f"training_state{first_iter}.pth")

@@ -1,0 +1,57 @@
+{
+  "status": "USER_AUTHORIZED_GPU_V3",
+  "scope": "zero_update_gates_and_four_fresh_30k",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+  "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+  "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+  "gpu_entry_version": "V3_GPU_ENTRY_R2_20261021",
+  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json",
+  "arm_order": [
+    "full",
+    "real_only",
+    "prior_only",
+    "ownership_only"
+  ],
+  "human_authorization": "用户本对话：还有几个问题，你解决之后就可以安排gpu实验了，我已开卡。",
+  "conditional_on": "five review issues repaired, CPU admission passed, each arm actual zero-update CUDA gate before fresh30K",
+  "training_frames": 49,
+  "road_reference_frames": 49,
+  "seed": 0,
+  "fresh_stage1_updates_each": 30000,
+  "second_stage_updates": 0,
+  "max_concurrent_training": 2,
+  "pair_policy": {
+    "version": "V3_PAIRS_2_PLUS_2_R1_20261021",
+    "batches": [
+      [
+        "full",
+        "real_only"
+      ],
+      [
+        "prior_only",
+        "ownership_only"
+      ]
+    ],
+    "max_concurrent": 2,
+    "minimum_launch_free_bytes": 8589934592,
+    "runtime_headroom_warning_bytes": 4294967296,
+    "failure_policy": "stop_new_admissions_drain_healthy_peers_preserve_no_retry",
+    "existing_full": "adopt_live_without_restart",
+    "global_lock": "inherited_full_then_coordinator_exclusive"
+  },
+  "resource_schedule_authorization": "用户本对话：串行2+2吧，显存应该是够的；先每十分钟看进展，稳定后30分钟至60分钟。",
+  "automatic_restart": false,
+  "counterfactual_or_short_control_authorized": false,
+  "extension49_199_or_full199_training_authorized": false,
+  "power_action_authorized": false,
+  "human_verdict": null,
+  "restart_policy": "user_authorized_fresh_after_unresumable_publication_failure",
+  "preserved_failed_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
+  "failed_updates_separately_accounted": 10000,
+  "execution_start_mode": "fresh",
+  "publication_fix": "seven_channel_road_float_and_v3_runtime_schema",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_publish_r2_20261021",
+  "authorization_quote": "不能保证从checkpoints精确续训的话，可以从头开始",
+  "authorized_utc": "2026-10-20T17:08:15.990437+00:00"
+}

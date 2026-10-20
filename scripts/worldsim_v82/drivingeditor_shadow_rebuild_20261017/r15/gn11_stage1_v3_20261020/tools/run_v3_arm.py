@@ -89,6 +89,7 @@ def validate(arguments):
             or plan.get("background_temporal_policy") != TEMPORAL_POLICY):
         raise RuntimeError("plan differs from the restored V1 regularizer contract")
     if arguments.mode == "train":
+        from utils.paper_checkpoint import PUBLICATION_VERSION
         if arguments.gpu_gate is None:
             raise RuntimeError("zero-update CUDA receipt required before training")
         gate = read(arguments.gpu_gate)
@@ -104,6 +105,14 @@ def validate(arguments):
         ):
             raise RuntimeError("CUDA gate belongs to another method/arm or performed updates")
         checks = gate.get('actual_checks', {})
+        smoke = gate.get('publication_smoke', {})
+        if (smoke.get('version') != PUBLICATION_VERSION
+                or smoke.get('status') != 'PASSED_ACTUAL_ZERO_UPDATE_49_FRAME_PUBLICATION_AND_STRICT_STATE_RESTORE'
+                or smoke.get('optimizer_updates') != 0 or smoke.get('sampler_steps') != 0
+                or smoke.get('frames') != 49 or smoke.get('checkpoint_components') != 4
+                or smoke.get('channels_per_frame') != 7 or not smoke.get('actual_cuda_rng')
+                or not smoke.get('actual_sgcm')):
+            raise RuntimeError('CUDA gate lacks actual49 publication and strict continuation smoke')
         if (set(checks.get('screen_buffers_numeric', {})) != {'joint', 'static', 'dynamic'}
                 or set(checks.get('densification_numeric', {})) != {'static', 'dynamic'}
                 or not all(item.get('denominator_exact') is True for item in checks['densification_numeric'].values())
@@ -298,6 +307,10 @@ def main():
 
     def observed_eval(*positional, **keyword):
         iteration = int(positional[1])
+        # 0步发布诊断发生在第一次道路objective之前，不导出未初始化的
+        # 优化权重，也不把0步按正常训练评估节点记账。
+        if iteration == 0 and arguments.mode == 'gate':
+            return original_eval(*positional, **keyword)
         schedule = positional[2]
         losses = positional[6]
         numbers = {
@@ -350,6 +363,7 @@ def main():
                 "optimizer_updates": 0,
                 "GPU": torch.cuda.get_device_name(),
                 "actual_checks": read(arguments.output / "gpu_gate_details.json"),
+                "publication_smoke": read(arguments.output / "publication_smoke_receipt.json"),
                 "same_fresh_seed_required_for_training": True,
                 "quality_verified": False,
             },

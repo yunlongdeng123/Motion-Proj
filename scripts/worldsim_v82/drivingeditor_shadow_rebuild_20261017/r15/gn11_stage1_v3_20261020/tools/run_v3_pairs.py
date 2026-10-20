@@ -1,4 +1,4 @@
-"""用户授权2+2资源调度；采用正在运行的full，不暂停或重跑其训练。"""
+"""用户授权2+2资源调度；显式选择采用现场或全新目录从头开始。"""
 
 import argparse
 import datetime
@@ -32,70 +32,105 @@ def completed(run):
             and all(state.get('optimizer_step_counts', {}).get(key) == 30000 for key in ['static', 'dynamic', 'environment']))
 
 
+def require_fresh_campaign(campaign, approval):
+    """重放预算必须另获授权，且只接受没有旧gate/train的新目录。"""
+    if approval.get('restart_policy') != 'user_authorized_fresh_after_unresumable_publication_failure':
+        raise RuntimeError('fresh restart requires explicit user authorization')
+    if not approval.get('preserved_failed_campaign') or Path(approval['preserved_failed_campaign']).resolve() == campaign:
+        raise RuntimeError('fresh output must differ from preserved failed campaign')
+    for arm in PAIR_POLICY['batches'][0]+PAIR_POLICY['batches'][1]:
+        for name in ['gate_001', 'run30k', 'gate_001.log', 'run30k.log']:
+            if (campaign/'arms'/arm/name).exists():
+                raise FileExistsError('non-fresh restart arm: '+arm+'/'+name)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--campaign', type=Path, required=True)
     parser.add_argument('--execute-after-user-gpu-approval', action='store_true')
-    parser.add_argument('--adopt-full-pid', type=int, required=True)
-    parser.add_argument('--replace-controller-pid', type=int, required=True)
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument('--adopt-full-pid', type=int)
+    modes.add_argument('--fresh-start', action='store_true')
+    parser.add_argument('--replace-controller-pid', type=int)
     args = parser.parse_args()
     campaign = args.campaign.resolve(); plan = read(campaign/'plan.json')
     approval = require_gpu_authorization(campaign/'plan.json', plan, args.execute_after_user_gpu_approval)
     validate_pair_plan(plan, approval)
     if (campaign/'pair_registry.json').exists():
         raise FileExistsError('pair controller already attempted; no automatic restart')
-    full = process(args.adopt_full_pid); old = process(args.replace_controller_pid)
-    state = read(campaign/'arms/full/run30k/status.json')
-    gate = read(campaign/'arms/full/gate_001/gpu_gate_receipt.json')
-    old_argv = old['argv'] if old else []
-    old_matches = (any(Path(part).name == 'run_v3_four_arms.py' for part in old_argv)
-                   and '--campaign' in old_argv and old_argv[old_argv.index('--campaign')+1] == str(campaign)
-                   and Path('/proc', str(args.replace_controller_pid), 'cwd').resolve() == campaign)
-    if (not matches_worker(full, campaign, 'full', 'train') or not old or not old_matches
-            or full.get('ppid') != args.replace_controller_pid
-            or state['pid'] != args.adopt_full_pid or state.get('status') not in {'training', 'evaluating'}
-            or gate.get('optimizer_updates') != 0
-            or gate.get('road_version') != plan['road_version']):
-        raise RuntimeError('live full/controller/gate identity cannot be adopted')
-    for arm in ['real_only', 'prior_only', 'ownership_only']:
-        if any((campaign/'arms'/arm/name).exists() for name in ['gate_001', 'run30k']):
-            raise FileExistsError('non-fresh pending arm: '+arm)
     if shutil.disk_usage(campaign).free < plan['minimum_campaign_free_bytes']:
         raise RuntimeError('campaign disk admission incomplete')
-    backup = campaign/'queue_pairs_r1'; backup.mkdir()
-    for name in ['four_arm_registry.json', 'status.json', 'plan.json', 'GPU_APPROVAL.json']:
-        shutil.copy2(campaign/name, backup/name)
-    # 只终止旧控制器PID，不对进程组发信号；subprocess.run不会把该信号转发给full。
-    os.kill(old['pid'], signal.SIGTERM)
-    for _ in range(50):
-        if not process(old['pid']):
-            break
-        time.sleep(.1)
+    full = old = state = None
+    if args.fresh_start:
+        if args.replace_controller_pid:
+            raise RuntimeError('fresh start must not signal any historical controller')
+        require_fresh_campaign(campaign, approval)
     else:
-        raise RuntimeError('old controller did not yield; full untouched')
-    after = process(full['pid'])
-    if not after or after['start_ticks'] != full['start_ticks']:
-        raise RuntimeError('adopted full exited during handoff; inspect without replay')
+        if not args.replace_controller_pid:
+            raise RuntimeError('adoption requires an exact controller identity')
+        full = process(args.adopt_full_pid); old = process(args.replace_controller_pid)
+        state = read(campaign/'arms/full/run30k/status.json')
+        gate = read(campaign/'arms/full/gate_001/gpu_gate_receipt.json')
+        old_argv = old['argv'] if old else []
+        old_matches = (any(Path(part).name == 'run_v3_four_arms.py' for part in old_argv)
+                       and '--campaign' in old_argv and old_argv[old_argv.index('--campaign')+1] == str(campaign)
+                       and Path('/proc', str(args.replace_controller_pid), 'cwd').resolve() == campaign)
+        if (not matches_worker(full, campaign, 'full', 'train') or not old or not old_matches
+                or full.get('ppid') != args.replace_controller_pid
+                or state['pid'] != args.adopt_full_pid or state.get('status') not in {'training', 'evaluating'}
+                or gate.get('optimizer_updates') != 0 or gate.get('road_version') != plan['road_version']):
+            raise RuntimeError('live full/controller/gate identity cannot be adopted')
+        for arm in ['real_only', 'prior_only', 'ownership_only']:
+            if any((campaign/'arms'/arm/name).exists() for name in ['gate_001', 'run30k']):
+                raise FileExistsError('non-fresh pending arm: '+arm)
+        backup = campaign/'queue_pairs_r1'; backup.mkdir()
+        for name in ['four_arm_registry.json', 'status.json', 'plan.json', 'GPU_APPROVAL.json']:
+            shutil.copy2(campaign/name, backup/name)
+        # 只终止旧控制器，不对进程组发信号，保持原full训练不动。
+        os.kill(old['pid'], signal.SIGTERM)
+        for _ in range(50):
+            if not process(old['pid']):
+                break
+            time.sleep(.1)
+        else:
+            raise RuntimeError('old controller did not yield; full untouched')
+        after = process(full['pid'])
+        if not after or after['start_ticks'] != full['start_ticks']:
+            raise RuntimeError('adopted full exited during handoff; inspect without replay')
     controller_lock = (campaign/'controller.lock').open('a+')
     fcntl.flock(controller_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     own = process(os.getpid())
-    lease = dict(version=PAIR_VERSION, coordinator_pid=os.getpid(), coordinator_start_ticks=own['start_ticks'],
-        batch_index=0, global_guard=dict(pid=full['pid'], start_ticks=full['start_ticks'], kind='inherited_full'),
-        slots={'full': dict(pid=full['pid'], start_ticks=full['start_ticks'], phase='train')})
-    write(campaign/'pair_lease.json', lease)
     guard_ready = threading.Event()
     guard_handle = (Path(plan['gpu_lock'])).open('a+')
+    if args.fresh_start:
+        fcntl.flock(guard_handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        applications = subprocess.check_output(['nvidia-smi', '--query-compute-apps=pid', '--format=csv,noheader,nounits'], text=True)
+        if applications.strip():
+            raise RuntimeError('fresh campaign requires an empty GPU compute process set')
+        guard = dict(pid=own['pid'], start_ticks=own['start_ticks'], kind='coordinator_exclusive')
+        slots = {}; guard_ready.set()
+    else:
+        guard = dict(pid=full['pid'], start_ticks=full['start_ticks'], kind='inherited_full')
+        slots = {'full': dict(pid=full['pid'], start_ticks=full['start_ticks'], phase='train')}
+    lease = dict(version=PAIR_VERSION, coordinator_pid=os.getpid(), coordinator_start_ticks=own['start_ticks'],
+        batch_index=0, global_guard=guard, slots=slots)
+    write(campaign/'pair_lease.json', lease)
     def inherit_guard():
         fcntl.flock(guard_handle, fcntl.LOCK_EX)
         change_lease(campaign, lambda value: value.update(global_guard=dict(
             pid=os.getpid(), start_ticks=own['start_ticks'], kind='coordinator_exclusive')))
         guard_ready.set()
     # full现有全局锁不动；内核等待者在full结束释放后接管，期间real_only使用同一cohort准入。
-    threading.Thread(target=inherit_guard, daemon=True).start()
+    if full:
+        threading.Thread(target=inherit_guard, daemon=True).start()
     registry = dict(status='RUNNING_TWO_PAIRS', version=PAIR_VERSION, policy=PAIR_POLICY,
-        coordinator_pid=os.getpid(), adopted_full_pid=full['pid'], replaced_controller_pid=old['pid'],
-        adopted_full_iteration_snapshot=state['iteration'], adopted_full_optimizer_counts=state['optimizer_step_counts'],
-        full_training_restarted=False, started_utc=utc(), completed_arms=[], arm_phases={'full':'train'},
+        coordinator_pid=os.getpid(), adopted_full_pid=full['pid'] if full else None,
+        replaced_controller_pid=old['pid'] if old else None,
+        adopted_full_iteration_snapshot=state['iteration'] if state else None,
+        adopted_full_optimizer_counts=state['optimizer_step_counts'] if state else None,
+        full_training_restarted=bool(args.fresh_start), start_mode='fresh' if args.fresh_start else 'adopt',
+        preserved_failed_campaign=approval.get('preserved_failed_campaign'),
+        started_utc=utc(), completed_arms=[], arm_phases={'full':'train'} if full else {},
         training_updates_planned=120000, automatic_restart=False, human_verdict=None)
     def save():
         registry['updated_utc'] = utc()
@@ -131,7 +166,7 @@ def main():
                     registry.update(status='WAITING_GLOBAL_GPU_GUARD', batch_index=batch_index); save()
                 change_lease(campaign, lambda value: value.update(batch_index=batch_index, slots={}))
             registry.update(status='RUNNING_TWO_PAIRS', batch_index=batch_index, current_batch=batch)
-            active = {'full':dict(pid=full['pid'], phase='train', child=None)} if batch_index == 0 else {}
+            active = {'full':dict(pid=full['pid'], phase='train', child=None)} if batch_index == 0 and full else {}
             pending = [arm for arm in batch if arm not in active]
             waiting_train = []
             while active or pending or waiting_train:

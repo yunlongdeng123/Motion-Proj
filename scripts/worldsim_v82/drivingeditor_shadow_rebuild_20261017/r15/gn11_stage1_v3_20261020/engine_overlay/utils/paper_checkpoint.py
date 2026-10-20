@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
+PUBLICATION_VERSION = 'V3_CHECKPOINT_PUBLICATION_R1_20261021'
 
 def _atomic_write(path, writer):
     path = Path(path)
@@ -141,6 +142,8 @@ def _validate_continuation(state, iteration, scene, models, args, sgcm):
                 "python_rng", "numpy_rng", "torch_rng", "cuda_rng", "model_runtime", "ema", "sgcm"}
     if args.get("hybrid_method", False):
         required.add("hybrid_sampler")
+    if args.get('v3_bundle'):
+        required.add('v3_world_road_runtime')
     if not isinstance(state, dict) or set(state) != required:
         raise ValueError("Strict resume requires exactly the complete continuation schema")
     if type(state["schema_version"]) is not int or state["schema_version"] != 1 or type(state["iteration"]) is not int or state["iteration"] != iteration:
@@ -282,6 +285,14 @@ def publish_checkpoint_event(model_path, iteration, components, training_state, 
     root = Path(model_path).resolve()
     if training_state["iteration"] != iteration:
         raise ValueError("Continuation-state iteration differs from checkpoint")
+    event_path = root / "checkpoint_events" / f"iteration_{iteration:06d}.json"
+    state_path = root / f"training_state{iteration}.pth"
+    pending_path = root / f"training_state{iteration}.unpublished.pth"
+    if any(path.exists() for path in (event_path, state_path, pending_path)):
+        raise FileExistsError('Refusing to overwrite existing checkpoint publication/state')
+    # 先保留评价后的真实状态。后续资产校验失败时只留下明确未发布的候选，
+    # 不生成 complete event，也不让自动续训把候选冒充完整检查点。
+    _atomic_write(pending_path, lambda stream: torch.save(training_state, stream))
     expected = {"static"}
     if args.including_dynamic:
         expected.add("dynamic")
@@ -298,8 +309,11 @@ def publish_checkpoint_event(model_path, iteration, components, training_state, 
         actual_cameras = [frame["frame_id"] for frame in frames]
         if len(actual_cameras) != len(expected_cameras) or set(actual_cameras) != expected_cameras:
             raise ValueError("Training evaluation is missing or duplicating camera frames")
-        if any(set(frame["channels"]) != {"gt", "composite", "static", "dynamic"} for frame in frames):
-            raise ValueError("Training evaluation must contain all four image channels")
+        required_channels = {'gt', 'composite', 'static', 'dynamic'}
+        if args.get('v3_bundle'):
+            required_channels |= {'road_raw_pre_environment', 'road_surface_color', 'road_alpha'}
+        if any(set(frame['channels']) != required_channels for frame in frames):
+            raise ValueError('Training evaluation channel contract differs: expected '+', '.join(sorted(required_channels)))
     for record in components.values():
         if not Path(record["path"]).is_file() or Path(record["path"]).stat().st_size != record["bytes"] or record["bytes"] == 0:
             raise ValueError("Missing or truncated checkpoint component")
@@ -309,10 +323,12 @@ def publish_checkpoint_event(model_path, iteration, components, training_state, 
                 raise ValueError("Evaluation metrics missing: " + evaluation[key])
         for frame in evaluation["frames"]:
             for path in frame["channels"].values():
-                if not Path(path).is_file():
+                if not Path(path).is_file() or Path(path).stat().st_size == 0:
                     raise ValueError("Evaluation frame missing: " + path)
-    state_path = root / f"training_state{iteration}.pth"
-    _atomic_write(state_path, lambda stream: torch.save(training_state, stream))
+            if args.get('v3_bundle'):
+                _validate_road_float(frame)
+    # 候选与正式文件在同一目录，原子晋升；只有最后 event 才表示发布成功。
+    os.replace(pending_path, state_path)
     components = dict(components, training_state={"path": str(state_path), "bytes": state_path.stat().st_size})
     config = _config_dict(args)
     config_hash = hashlib.sha256(json.dumps(config, sort_keys=True).encode("utf-8")).hexdigest()
@@ -330,12 +346,67 @@ def publish_checkpoint_event(model_path, iteration, components, training_state, 
                               "sgcm_geometry": training_state["sgcm"] is not None,
                               "bitwise_cuda_equivalence_claimed": False},
              "sgcm": training_state["sgcm"]["metadata"] if training_state["sgcm"] is not None else None}
+    if args.get('v3_zero_update_gate', False):
+        event['diagnostic_only_zero_update_snapshot'] = True
     train_eval = next((evaluation for evaluation in evaluations if evaluation["split"] == "train"), None)
     event.update({key: train_eval[key] if train_eval else ( [] if key == "frames" else None)
                   for key in ("eval_dir", "metrics", "paper_metrics", "frames")})
-    event_path = root / "checkpoint_events" / f"iteration_{iteration:06d}.json"
-    if event_path.exists():
-        raise FileExistsError("Checkpoint event already published")
     atomic_json(event_path, event)
     print("CHECKPOINT_EVENT " + str(event_path), flush=True)
     return event
+
+
+def _validate_road_float(frame):
+    """显示PNG不能代替未截断的道路浮点证据。逐帧检查，不改渲染值。"""
+    path = Path(frame.get('road_float', ''))
+    if not path.is_file() or path.stat().st_size == 0:
+        raise ValueError('V3 evaluation requires road_float evidence: '+str(path))
+    height, width = int(frame['height']), int(frame['width'])
+    with np.load(path, allow_pickle=False) as arrays:
+        shapes = {'rgb_sum': (3, height, width), 'alpha': (1, height, width),
+                  'depth_sum': (1, height, width)}
+        if set(arrays.files) != set(shapes):
+            raise ValueError('V3 road_float fields differ')
+        for name, shape in shapes.items():
+            value = arrays[name]
+            if value.shape != shape or not np.issubdtype(value.dtype, np.floating) or not np.isfinite(value).all():
+                raise ValueError('Invalid V3 road_float '+name)
+        if (arrays['alpha'] < -1e-5).any() or (arrays['alpha'] > 1+1e-5).any():
+            raise ValueError('V3 road alpha is outside physical bounds')
+
+
+def zero_update_publication_smoke(scene, render, args, background, environment, sgcm, evaluate):
+    """实际gate在采样/Adam之前走完整保存、49帧评价、发布、严格状态恢复。
+
+    0步诊断放在gate子目录，不是30K训练节点，不进入正式训练预算。
+    """
+    from omegaconf import OmegaConf
+    from utils.v3_runtime_context import ACTIVE_CONTEXT
+    if not args.get('v3_zero_update_gate') or args.start_checkpoint:
+        raise ValueError('publication smoke is restricted to fresh zero-update gates')
+    if any(ACTIVE_CONTEXT.optimizer_steps.values()) or scene.hybrid_sampler.steps != 0:
+        raise RuntimeError('publication smoke must precede sampling/optimizer updates')
+    models = dict(zip(['static', 'dynamic', 'environment'], ACTIVE_CONTEXT.models))
+    for model in models.values():
+        if model is not None and any(float(state.get('step', 0)) != 0 for state in model.optimizer.state.values()):
+            raise RuntimeError('publication smoke found nonzero actual Adam state')
+    root = Path(args.model_path)/'publication_smoke'
+    root.mkdir()
+    config = OmegaConf.create(_config_dict(args)); config.model_path = str(root)
+    components = save_components(root, 0, models)
+    with torch.no_grad():
+        evaluations = evaluate(None, 0, {0}, scene, render, (config, background), {},
+                               env_map=environment, including_dynamic=args.including_dynamic)
+    state = capture_training_state(0, scene, [], models, config, sgcm=sgcm, ema={'loss': 0.})
+    event = publish_checkpoint_event(root, 0, components, state, evaluations, config, scene)
+    restore_training_state(root/'training_state0.pth', 0, scene, models, config, sgcm=sgcm)
+    if len(event['frames']) != 49 or len(event['checkpoints']) != 4:
+        raise RuntimeError('actual zero-update publication contract incomplete')
+    receipt = dict(status='PASSED_ACTUAL_ZERO_UPDATE_49_FRAME_PUBLICATION_AND_STRICT_STATE_RESTORE',
+        version=PUBLICATION_VERSION, optimizer_updates=0, sampler_steps=scene.hybrid_sampler.steps,
+        channels_per_frame=7, frames=49, checkpoint_components=4,
+        actual_cuda_rng=torch.cuda.is_initialized(), actual_sgcm=sgcm is not None,
+        event=str(root/'checkpoint_events/iteration_000000.json'),
+        diagnostic_only=True, quality_accepted=False, bitwise_cuda_equivalence_claimed=False)
+    atomic_json(Path(args.model_path)/'publication_smoke_receipt.json', receipt)
+    return receipt

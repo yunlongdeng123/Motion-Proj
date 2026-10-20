@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="310" viewBox="0 0 1160 310">
+<defs><marker id="arrow" markerWidth="9" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#526579" stroke-width="1.5"/></marker></defs>
+<rect width="1160" height="310" rx="16" fill="#f5f8fb"/>
+<g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#19354a">
+<text x="580" y="32" font-size="21">V3 检查点发布组件：真实资产校验后才发布完整事件</text>
+<g fill="white" stroke="#8ea9bd" stroke-width="1.5">
+<rect x="20" y="68" width="205" height="106" rx="10"/><rect x="270" y="68" width="230" height="106" rx="10"/>
+<rect x="545" y="68" width="230" height="106" rx="10"/><rect x="820" y="68" width="315" height="106" rx="10"/>
+<rect x="545" y="220" width="230" height="65" rx="10"/>
+</g>
+<g font-size="17"><text x="123" y="101">同一时刻模型参数</text><text x="123" y="130">静态 / 动态 / 环境</text><text x="123" y="156">RNG、采样器、SGCM、道路</text>
+<text x="385" y="101">保存 3 份模型</text><text x="385" y="130">评价 49 帧 × 7 通道</text><text x="385" y="156">道路 RGB / α / 深度浮点</text>
+<text x="660" y="101">先保留 unpublished 状态</text><text x="660" y="130">校验帧、通道、真实文件</text><text x="660" y="156">通过才晋升正式状态文件</text>
+<text x="977" y="101">完整 checkpoint_event</text><text x="977" y="130">3 模型 + 1 继续训练状态</text><text x="977" y="156">gate 另测严格状态恢复，0 Adam 更新</text>
+<text x="660" y="247">失败：保留候选及全部现场</text><text x="660" y="273">无 complete event / 不自动重跑</text></g>
+</g>
+<g stroke="#526579" stroke-width="2" marker-end="url(#arrow)" fill="none"><path d="M225 120H265"/><path d="M500 120H540"/><path d="M775 120H815"/><path d="M660 174V214"/></g>
+</svg>

@@ -14,10 +14,25 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT/'tools' if (ROOT/'tools').exists() else ROOT
 sys.path.insert(0, str(TOOLS))
 from v3_pair_runtime import PAIR_POLICY, validate_pair_plan, validate_peer_admission, matches_worker
-from run_v3_pairs import completed
+from run_v3_pairs import completed, require_fresh_campaign
 
 
 class PairTests(unittest.TestCase):
+    def test_fresh_restart_requires_authority_and_new_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            campaign = Path(tmp).resolve()
+            approval = dict(restart_policy='user_authorized_fresh_after_unresumable_publication_failure',
+                            preserved_failed_campaign='/preserved-old-campaign')
+            require_fresh_campaign(campaign, approval)
+            with self.assertRaises(RuntimeError):
+                require_fresh_campaign(campaign, {})
+            bad = dict(approval, preserved_failed_campaign=str(campaign))
+            with self.assertRaises(RuntimeError):
+                require_fresh_campaign(campaign, bad)
+            output = campaign/'arms/full/run30k'; output.mkdir(parents=True)
+            with self.assertRaises(FileExistsError):
+                require_fresh_campaign(campaign, approval)
+
     def test_2plus2_requires_exact_policy_in_both_plan_and_human_approval(self):
         valid = dict(pair_policy=copy.deepcopy(PAIR_POLICY), max_concurrent_training=2)
         validate_pair_plan(valid, valid)
