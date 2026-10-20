@@ -87,7 +87,8 @@ class MultiviewRoadTests(unittest.TestCase):
             def __call__(self, **kwargs):
                 captured.update(kwargs)
                 return None, torch.zeros(3, 2, 2), torch.zeros(2, 2, 2), torch.ones(len(kwargs['means3D']))
-        namespace = dict(torch=torch, math=math, GaussianModel=object,
+        from utils.v3_render_audit import raster_call
+        namespace = dict(torch=torch, math=math, GaussianModel=object, raster_call=raster_call,
                          GaussianRasterizationSettings=lambda **kw: kw, GaussianRasterizer=RasterStub)
         exec(compile(ast.Module(body=functions, type_ignores=[]), 'actual_renderer_cpu_preparation', 'exec'), namespace)
         model, _, _ = toy()

@@ -10,6 +10,10 @@ import torch
 from utils.v3_multiview_road import MultiViewRoad
 from utils.v3_road_contract import ROAD_POLICY, ROAD_VERSION
 from utils.v3_densification import accumulate_max_screen_gradient
+from utils.v3_render_audit import (
+    RENDER_AUDIT_VERSION, RENDER_AUDIT_POLICY, RenderAudit, audit_span, capacity_snapshot,
+    expected_screen_buffers, check_screen_buffers, check_densification_numeric,
+)
 from utils.v3_supervision_diagnostics import (
     center_in_boxes, supervision_metrics, sampled_front_contributions,
 )
@@ -172,6 +176,8 @@ class V3Context:
         supplied_policy = _json_clone(args.get("v3_policy", {}))
         if supplied_policy != V3_POLICY:
             raise RuntimeError("v3 policy differs from reviewed fixed policy")
+        if _json_clone(args.get('v3_render_audit_policy', {})) != RENDER_AUDIT_POLICY:
+            raise RuntimeError('render/densification/road audit policy mismatch')
         if float(args.get("hybrid_lambda_dynamic_opacity", -1)) != 100.0:
             raise RuntimeError("full raw dynamic-mask opacity MSE weight100 must remain enabled")
         if bool(args.get("white_background", False)):
@@ -204,6 +210,10 @@ class V3Context:
         if self.meta['policy'] != ROAD_POLICY:
             raise RuntimeError('road multiview policy mismatch')
         self.road = MultiViewRoad(bundle, scene, args, args.model_path)
+        self.render_audit = RenderAudit(scene.gaussians._xyz.device)
+        self.expected_road_ids = torch.as_tensor(np.flatnonzero(self.road.numpy['surface_supported']),
+                                                device=scene.gaussians._xyz.device)
+        self.audit_args = args
 
         self.log = Path(args.model_path) / "v3_objectives.jsonl"
         self.densification_log = Path(args.model_path) / "v3_densification.jsonl"
@@ -217,15 +227,59 @@ class V3Context:
             original_step = model.optimizer.step
 
             def counted_step(*positional, _name=name, _original=original_step, **keyword):
-                result = _original(*positional, **keyword)
+                with audit_span('optimizer/'+_name):
+                    result = _original(*positional, **keyword)
                 self.optimizer_steps[_name] += 1
                 return result
 
             model.optimizer.step = functools.wraps(original_step)(counted_step)
         self.gate_details = {}
         self.output = Path(args.model_path)
+        self.capacity_event(0, 'initial_after_fixed_road_install')
         global ACTIVE_CONTEXT
         ACTIVE_CONTEXT = self
+
+    def begin_iteration(self, iteration, topology_due=False):
+        self.render_audit.begin(iteration, self.gate_only, topology_due)
+
+    def capacity_event(self, iteration, phase):
+        snapshot = capacity_snapshot(self.models[0], self.models[1], self.audit_args, self.expected_road_ids)
+        record = dict(version=RENDER_AUDIT_VERSION, iteration=iteration, phase=phase, **snapshot)
+        previous = getattr(self, '_last_capacity', None)
+        record['net_change_since_previous_record'] = None if previous is None else {
+            key: snapshot[key]-previous[key] for key in ['static_total', 'ordinary_background', 'fixed_road', 'dynamic']}
+        self._last_capacity = snapshot
+        _append_jsonl(self.output/'v3_capacity.jsonl', record)
+        return record
+
+    def finish_iteration(self, iteration):
+        record = self.render_audit.finish()
+        if record['profiled']:
+            record['capacity'] = self.capacity_event(iteration, 'gate_zero_update' if self.gate_only else 'post_optimizer_SGCM')
+            _append_jsonl(self.output/'v3_render_cost.jsonl', record)
+        return record
+
+    def road_visibility_audit(self, camera, package, static, args, iteration, frame_id):
+        from gaussian_renderer import render_road_only, render_contribution_features
+        from utils.v3_road_diagnostics import road_visibility
+        road = self.road
+        frame_index = road.meta['frame_order'].index(frame_id)
+        with audit_span('diagnostic/road_visibility'), torch.no_grad():
+            arrays, metrics = road_visibility(package, render_road_only(camera, static, args),
+                static.road_unit_mask, torch.arange(len(road.data['provenance']), device=static._xyz.device),
+                road.raster_uv[frame_index], road.data['surface_supported'], road.data['provenance'],
+                road.data['is_query'], torch.as_tensor(road.numpy['gate_in_view'][frame_index], device=static._xyz.device),
+                lambda flags, joint: render_contribution_features(package, flags, joint))
+            destination = self.output/'road_visibility'/f'iteration_{iteration:06d}_{frame_id}'
+            destination.mkdir(parents=True, exist_ok=False)
+            np.savez_compressed(destination/'units.npz', **{k: v.cpu().numpy() for k, v in arrays.items()})
+            metadata = dict(version=RENDER_AUDIT_VERSION, iteration=iteration, completed_optimizer_updates=iteration-1,
+                frame=frame_id, input_bundle=str(road.path), anchor_world_unit_projection=True,
+                ordinary_background_temporal_freedom_preserved=True, metrics=metrics,
+                interpretation='joint includes target cars; background excludes five editable cars but keeps non-edit motion; neither attenuation proves illegal occlusion',
+                quality_accepted=False, human_verdict=None)
+            (destination/'metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False), encoding='utf-8')
+        return metrics
 
     def select_gate_camera(self, scene, camera, time_shift):
         if not self.gate_only:
@@ -381,7 +435,8 @@ class V3Context:
             training["volume_edge_m"] * scale,
         )
 
-        road, road_terms = self.road.objective(static, args, iteration, self.config['road']['objective_weights'])
+        with audit_span('objective/road_geometry_and_sources'):
+            road, road_terms = self.road.objective(static, args, iteration, self.config['road']['objective_weights'])
 
         body_joint = body_joint_rgb_loss(
             package["render"], target, mask, ssim_fn, args.lambda_dssim,
@@ -455,7 +510,7 @@ class V3Context:
             record.update({key: float(value.detach()) for key, value in leak_metrics.items()})
             record['supervision_diagnostics'] = diagnostic_metrics
             _append_jsonl(self.log, record)
-        if self.gate_only or iteration == 1 or iteration % 5000 == 0:
+        if self.gate_only or iteration == 1 or iteration % RENDER_AUDIT_POLICY['road_visibility_interval'] == 0:
             # 只读节点/准入抽样，发生在当前步更新前。实际开销单列，不改变损失。
             from gaussian_renderer import render_contribution_features
             with torch.no_grad():
@@ -493,6 +548,10 @@ class V3Context:
                     self.gate_details['sampled_native_front_diagnostic'] = sampled_metrics
                     if sampled_metrics['sampled_pixels'] == 0:
                         raise RuntimeError('CUDA gate has no valid measured body depth for front diagnostic')
+            # 三次额外只读光栅化；单独道路正确不等于在完整背景中可见。
+            visibility = self.road_visibility_audit(camera, package, static, args, iteration, frame_id)
+            if self.gate_only:
+                self.gate_details['road_visibility_diagnostic'] = visibility
         return {
             "base_extra": base_extra,
             "body_joint": routed_body,
@@ -507,10 +566,12 @@ class V3Context:
         static_screen = package["static_viewspace_points"]
         proxies = [package[key] for key in (
             "viewspace_points", "static_viewspace_points", "dynamic_viewspace_points")]
+        road_mask = getattr(static, "road_unit_mask", None)
+        reference = expected_screen_buffers((base_loss, body_joint, road), proxies, road_mask, _autograd) if self.gate_only else None
 
         body_inputs = static_body_parameters + dynamic_parameters + [joint_screen]
-        body_gradients = list(_autograd(body_joint, body_inputs, proxies))
-        road_mask = getattr(static, "road_unit_mask", None)
+        with audit_span('backward/body_routed_probe'):
+            body_gradients = list(_autograd(body_joint, body_inputs, proxies))
         for index in range(len(static_body_parameters)):
             body_gradients[index] = _exclude_road_rows(body_gradients[index], road_mask)
         # 道路固定容量，本身不增密；也不把车身对道路的屏幕梯度计入需求。
@@ -519,9 +580,11 @@ class V3Context:
             static_count = road_mask.numel()
             body_gradients[-1][:static_count][road_mask] = 0
         road_inputs = static_all_parameters + [static_screen]
-        road_gradients = _autograd(road, road_inputs, proxies)
+        with audit_span('backward/road_routed_probe'):
+            road_gradients = _autograd(road, road_inputs, proxies)
 
-        base_loss.backward()
+        with audit_span('backward/base'):
+            base_loss.backward()
         body_parameter_count = len(static_body_parameters) + len(dynamic_parameters)
         _accumulate_parameter_gradients(
             static_body_parameters + dynamic_parameters,
@@ -539,6 +602,19 @@ class V3Context:
         )
 
         if self.gate_only:
+            self.gate_details['screen_buffers_numeric'] = check_screen_buffers(proxies, reference)
+            static_count = len(static.get_xyz)
+            joint = proxies[0]
+            # 使用真实CUDA梯度/可见性/半径，临时统计执行同一个融合函数，不改模型缓冲。
+            self.gate_details['densification_numeric'] = {}
+            for label, model, start, end in [('static', static, 0, static_count),
+                                              ('dynamic', dynamic, static_count, len(joint))]:
+                joint_slice = joint.detach()[start:end]
+                joint_slice.grad = joint.grad[start:end]
+                self.gate_details['densification_numeric'][label] = check_densification_numeric(
+                    model, package[label+'_viewspace_points'], package[label+'_visibility_filter'], package[label+'_radii'],
+                    joint_slice, package['visibility_filter'][start:end], package['radii'][start:end],
+                    accumulate_max_screen_gradient)
             counts = []
             for model in self.models:
                 if model is None:
@@ -574,6 +650,7 @@ class V3Context:
                 screen_gradient_double_accumulation_prevented=True,
                 body_joint_background_time_gradient_routed=False,
                 body_joint_known_road_gradient_routed=False,
+                render_audit_version=RENDER_AUDIT_VERSION,
             )
             if any(self.optimizer_steps.values()):
                 raise RuntimeError("zero-update gate executed an optimizer step")
@@ -583,6 +660,7 @@ class V3Context:
                 self.gate_details['road_source_frames_tested'] = [89+index for index in self.road.last_frames]
                 self.gate_details['road_raster_forward_backward_finite'] = True
                 self.road.export(static, iteration=0, optimizer_updates=0)
+            self.gate_details['render_cost'] = self.finish_iteration(iteration)
             (self.output / "gpu_gate_details.json").write_text(
                 json.dumps(self.gate_details, indent=2), encoding="utf-8"
             )

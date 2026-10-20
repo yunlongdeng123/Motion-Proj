@@ -45,7 +45,12 @@ def accumulate_max_screen_gradient(
     branch_visible = branch_visibility.bool()
     joint_visible = joint_visibility.bool()
     active = branch_visible | joint_visible
-    both = branch_visible & joint_visible
+    # 永久道路单元走专属几何/多来源优化，不占通用增密统计的分子或分母。
+    road = getattr(model, 'road_unit_mask', torch.zeros_like(active))
+    if road.shape != active.shape:
+        raise ValueError('road mask/topology mismatch')
+    active = active & ~road
+    both = branch_visible & joint_visible & ~road
     chosen = torch.where(
         both[:, None],
         torch.maximum(branch_gradient, joint_gradient),
@@ -74,11 +79,13 @@ def accumulate_max_screen_gradient(
 
     return {
         "active_points": active.sum(),
-        "branch_only_points": (branch_visible & ~joint_visible).sum(),
-        "joint_only_points": (joint_visible & ~branch_visible).sum(),
+        "fixed_road_points_excluded": road.sum(),
+        "branch_only_points": (branch_visible & ~joint_visible & ~road).sum(),
+        "joint_only_points": (joint_visible & ~branch_visible & ~road).sum(),
         "both_points": both.sum(),
-        "joint_selected_points": (both & (joint_gradient[:, 0] > branch_gradient[:, 0])).sum(),
-        "branch_gradient_mean": mean_or_zero(branch_gradient, branch_visible),
-        "joint_gradient_mean": mean_or_zero(joint_gradient, joint_visible),
+        "joint_selected_points": (both & ~road & (joint_gradient[:, 0] > branch_gradient[:, 0])).sum(),
+        "branch_selected_points": (both & ~road & (branch_gradient[:, 0] >= joint_gradient[:, 0])).sum(),
+        "branch_gradient_mean": mean_or_zero(branch_gradient, branch_visible & ~road),
+        "joint_gradient_mean": mean_or_zero(joint_gradient, joint_visible & ~road),
         "selected_gradient_mean": mean_or_zero(chosen, active),
     }

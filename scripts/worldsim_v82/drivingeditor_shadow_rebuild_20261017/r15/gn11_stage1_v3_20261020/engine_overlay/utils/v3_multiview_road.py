@@ -8,6 +8,7 @@ import torch
 import torch.nn.functional as F
 
 from utils.v3_road_contract import ROAD_POLICY, ROAD_VERSION
+from utils.v3_render_audit import audit_span
 
 
 def sample_map(image, uv):
@@ -174,6 +175,7 @@ class MultiViewRoad:
         self.last_frames = frame_ids
         diagnostics = iteration == 1 or iteration % policy['audit_interval'] == 0
         raw_totals = {key: total.detach()*0 for key in ['mv_rgb', 'mv_depth', 'prior_context_rgb', 'coverage']}
+        self.last_source_audit = []
         for frame_index in frame_ids:
             package = render_fn(self.cameras[frame_index], model, args)
             if not all(torch.isfinite(package[key]).all() for key in ['rgb', 'alpha', 'depth_sum']):
@@ -203,22 +205,39 @@ class MultiViewRoad:
             total = total+rgb_term+weights['observed_depth']*depth_loss+weights['observed_rgb']*policy['coverage_weight']*coverage
             self.visits[frame_index] += ((base > 0) & ((observed & (weights['observed_rgb'] > 0))
                                                      | (boundary & (weights['prior_rgb'] > 0)))).detach().cpu().numpy()
+            if diagnostics:
+                active = (base > 0) & ((observed & (weights['observed_rgb'] > 0))
+                                        | (boundary & (weights['prior_rgb'] > 0)))
+                count = int(active.sum())
+                self.last_source_audit.append(dict(source_index=frame_index, hard_eligible_units=int((base > 0).sum()),
+                    active_RGB_observations=count, reliability_mean=float(reliability[active].mean()) if count else None,
+                    alpha_mean=float(alpha[active].mean()) if count else None,
+                    robust_RGB_error_mean=float(color_error.detach()[active].mean()) if count else None,
+                    depth_error_m_mean=float(depth_error.detach()[active].mean()) if count else None,
+                    weighted_RGB_objective=float(rgb_term.detach()),
+                    selection_is_not_optimization_benefit=True))
             if diagnostics and rgb_term.requires_grad:
                 proxy = package['proxy']
                 old_gradient = None if proxy.grad is None else proxy.grad.clone()
-                gradient = torch.autograd.grad(rgb_term, model._features_dc, retain_graph=True, allow_unused=True)[0]
-                proxy.grad = old_gradient
+                try:
+                    with audit_span('probe/road_source_DC_gradient'):
+                        gradient = torch.autograd.grad(rgb_term, model._features_dc, retain_graph=True, allow_unused=True)[0]
+                finally:
+                    proxy.grad = old_gradient
                 if gradient is not None:
                     norm = gradient[rows].flatten(1).norm(dim=1).detach().cpu().numpy()
                     supported_ids = ids.detach().cpu().numpy()
                     self.gradient_l2_cumulative[frame_index, supported_ids] += norm
                     self.gradient_samples[frame_index, supported_ids] += 1
+                    self.last_source_audit[-1]['road_DC_rows_reached_by_sampled_gradient'] = int((norm > 0).sum())
+                    self.last_source_audit[-1]['sampled_DC_gradient_L2_sum'] = float(norm.sum())
             for key, value in [('mv_rgb', rgb), ('mv_depth', depth_loss), ('prior_context_rgb', boundary_rgb), ('coverage', coverage)]:
                 raw_totals[key] += value.detach()
         if not torch.isfinite(total):
             raise FloatingPointError('nonfinite world road objective')
         self.last_iteration = iteration
         self.last_terms = {key: float(value.detach()) for key, value in {**geometry_terms, **raw_totals, 'prior_continuity': continuity}.items()}
+        self.last_terms['sources'] = self.last_source_audit
         return total, self.last_terms
 
     def export(self, model, iteration, optimizer_updates):

@@ -2,6 +2,10 @@
   "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
   "method_version": "GN11_STAGE1_V3_20261020",
   "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+  "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+  "runtime_cost_scope": "iteration start through optimizer and SGCM; excludes subsequent visualization/eval/checkpoints; inclusive CUDA event spans not additive; memory is whole sampled iteration peak",
+  "native_point_cap_semantics": "pre-densify trigger; report overshoot, no new hard truncation",
+  "road_contribution_scope": "all road splats sampled at fixed supported world-unit anchors, independent/background/joint T compared; attenuation is not illegal-occlusion GT",
   "body_joint_L1": "sum(mask*abs(error))/(3HW); only L1 has V1-equivalent scale, masked DSSIM is not whole-image DSSIM",
   "body_joint_static_parameters": "nonroad xyz,opacity,scaling,rotation only; no time,SH,EnvMap",
   "comparison_principle": "All four arms share world-road unit seeds and geometry plus v3 ownership/body/leakage/densification. Only multiview-query and continuous-prior source weights differ; not directly comparable to old V2 same-named arms.",
@@ -49,6 +53,9 @@
     "source-wise hard gates, effective weights, actual RGB objective visits and sampled gradient norms",
     "same world-unit source-exclusion paired differences only after separately approved full30K controls",
     "extra source raster calls, time, peak memory and fixed road-unit share of native point cap",
+    "actual zero-update CUDA screen-buffer component comparison and scratch max-fusion/single-denominator comparison; CPU stubs not actual CUDA",
+    "road-only alpha versus road contribution under full-background and joint transmittance, per fixed query provenance cohort",
+    "fixed road IDs preserved across generic topology and SGCM; ordinary/road/dynamic counts, native trigger overshoot and event net deltas",
     "static and dynamic point counts plus branch/joint densification selection counts"
   ],
   "required_human_review": [
@@ -71,7 +78,9 @@
     "restored L1 scaling makes masked DSSIM strictly identical to V1",
     "candidate weights or gradients prove a source improved final quality",
     "a6 unexposed prior is uniquely recovered true road texture",
-    "same30K updates means the added multi-source rendering has zero compute overhead"
+    "same30K updates means the added multi-source rendering has zero compute overhead",
+    "independent road reconstruction or road attenuation proves illegal foreground occlusion has been fixed",
+    "sampled CUDA timing medians or nested span sums equal full run compute or matched V1 performance delta"
   ],
   "quality_accepted": false,
   "human_verdict": null

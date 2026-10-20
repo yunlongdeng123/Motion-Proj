@@ -16,6 +16,7 @@ from scene.gaussian_model import GaussianModel, Dynamic_GaussianModel
 from scene.cameras import Camera
 from utils.sh_utils import eval_sh
 import copy
+from utils.v3_render_audit import raster_call
 
 def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_GaussianModel, pipe, bg_color: torch.Tensor, scaling_modifier=1.0,
            override_color=None, env_map=None,
@@ -100,13 +101,13 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
         dynamic_render_kwargs["means2D"] = dyn_screenspace_points
         static_render_kwargs["means2D"] = static_screenspace_points
         # Rasterize visible Gaussians to image, obtain their radii (on screen).
-        contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)
+        contrib, rendered_image, rendered_feature, radii = raster_call('joint', rasterizer, **render_kwargs)
 
 
         # if split:
-        contrib_d, rendered_image_d, rendered_feature_d, radii_d = rasterizer(**dynamic_render_kwargs)
+        contrib_d, rendered_image_d, rendered_feature_d, radii_d = raster_call('dynamic', rasterizer, **dynamic_render_kwargs)
         #
-        contrib_s, rendered_image_s, rendered_feature_s, radii_s = rasterizer(**static_render_kwargs)
+        contrib_s, rendered_image_s, rendered_feature_s, radii_s = raster_call('static', rasterizer, **static_render_kwargs)
 
         rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)
         rendered_other_s, rendered_depth_s, rendered_opacity_s = rendered_feature_s.split([S_other, 1, 1], dim=0)
@@ -166,7 +167,7 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
         except:
             pass
         render_kwargs["means2D"] = screenspace_points
-        contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)
+        contrib, rendered_image, rendered_feature, radii = raster_call('single_branch', rasterizer, **render_kwargs)
         rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)
         if env_map is not None:
             bg_color_from_envmap = env_map(viewpoint_camera.get_world_directions(is_training).permute(1, 2, 0)).permute(2, 0, 1)
@@ -196,7 +197,8 @@ def render_contribution_features(package, static_features, joint=False):
     kwargs['colors_precomp'] = torch.zeros_like(kwargs['means3D'])
     kwargs = {key: value.detach().contiguous() if torch.is_tensor(value) else value for key, value in kwargs.items()}
     settings = package['raster_settings']._replace(bg=features.new_zeros(3))
-    _, _, feature_map, _ = GaussianRasterizer(raster_settings=settings)(**kwargs)
+    _, _, feature_map, _ = raster_call('contribution_joint' if joint else 'contribution_static',
+                                      GaussianRasterizer(raster_settings=settings), **kwargs)
     return feature_map
 
 
@@ -238,7 +240,7 @@ def render_road_only(camera, pc, pipe):
         bg=torch.zeros(3, device=pc._xyz.device), scale_modifier=1.,
         viewmatrix=camera.world_view_transform, projmatrix=camera.full_proj_transform,
         sh_degree=pc.active_sh_degree, campos=camera.camera_center, prefiltered=False, debug=pipe.debug)
-    _, rgb, features, radii = GaussianRasterizer(raster_settings=settings)(**kwargs)
+    _, rgb, features, radii = raster_call('road_only', GaussianRasterizer(raster_settings=settings), **kwargs)
     depth_sum, alpha = features.split([1, 1], dim=0)
     return dict(rgb=rgb, depth_sum=depth_sum, alpha=alpha, proxy=proxy, rows=rows, radii=radii)
 

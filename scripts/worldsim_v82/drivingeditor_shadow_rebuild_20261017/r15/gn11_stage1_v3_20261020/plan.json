@@ -10,6 +10,18 @@
   "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_001/bundle.json",
   "road_engineering_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018",
   "road_version": "V3_WORLD_ROAD_MULTIVIEW_20261020",
+  "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+  "render_audit_policy": {
+    "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+    "profile_interval": 100,
+    "profile_SGCM_due_iterations": true,
+    "road_visibility_interval": 5000,
+    "screen_atol": 0.00002,
+    "screen_rtol": 0.0002,
+    "topology_budget_semantics": "native_pre_densify_trigger_not_new_hard_truncation",
+    "fixed_road_statistics": "excluded_from_generic_densification",
+    "timing_scope": "iteration_start_through_optimizer_SGCM_excludes_visualization_eval_checkpoint"
+  },
   "road_policy": {
     "cell_m": 0.2, "context_halo_m": 1.2, "surface_support_radius_m": 0.8,
     "mask_margin_px": 2, "depth_tolerance_m": 0.3, "minimum_cosine": 0.12,

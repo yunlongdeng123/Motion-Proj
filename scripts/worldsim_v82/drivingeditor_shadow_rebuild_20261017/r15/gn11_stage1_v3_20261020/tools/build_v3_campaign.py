@@ -88,6 +88,9 @@ def main():
     shutil.copy2(arguments.readme.with_name('supervision_architecture.svg'), arguments.campaign/'supervision_architecture.svg')
     shutil.copy2(arguments.readme.with_name('supervision_short_controls.json'), arguments.campaign/'supervision_short_controls.json')
     shutil.copy2(arguments.runner.with_name('report_supervision_audit.py'), arguments.campaign/'report_supervision_audit.py')
+    shutil.copy2(arguments.runner.with_name('report_render_audit.py'), arguments.campaign/'report_render_audit.py')
+    shutil.copy2(arguments.runner.with_name('validate_render_audit_cpu.py'), arguments.campaign/'validate_render_audit_cpu.py')
+    shutil.copy2(arguments.readme.with_name('render_audit_architecture.svg'), arguments.campaign/'render_audit_architecture.svg')
     for name in ['road_source_audit.py', 'road_source_counterfactual.py']:
         shutil.copy2(arguments.runner.with_name(name), arguments.campaign/name)
     shutil.copy2(

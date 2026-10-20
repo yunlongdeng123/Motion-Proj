@@ -72,7 +72,12 @@ def validate(arguments):
         TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
     )
     from utils.v3_road_contract import ROAD_VERSION, ROAD_POLICY
-    from utils.v3_runtime_context import V3_POLICY, SUPERVISION_VERSION
+    from utils.v3_runtime_context import V3_POLICY, SUPERVISION_VERSION, ARM_ROAD_WEIGHTS
+    if {key: value.get('road_weights') for key, value in plan['arms'].items()} != ARM_ROAD_WEIGHTS:
+        raise RuntimeError('four-arm weights differ from fixed runtime comparison')
+    from utils.v3_render_audit import RENDER_AUDIT_VERSION, RENDER_AUDIT_POLICY
+    if plan.get('render_audit_version') != RENDER_AUDIT_VERSION or plan.get('render_audit_policy') != RENDER_AUDIT_POLICY:
+        raise RuntimeError('plan differs from reviewed render/densification/road audit')
     if plan.get('common_v3_policy') != V3_POLICY:
         raise RuntimeError('plan differs from reviewed supervision/gradient responsibility')
     if (bundle.get('version') != ROAD_VERSION or bundle.get('policy') != ROAD_POLICY
@@ -94,8 +99,16 @@ def validate(arguments):
             or gate.get("background_temporal_version") != TEMPORAL_VERSION
             or gate.get('road_version') != ROAD_VERSION
             or gate.get('supervision_version') != SUPERVISION_VERSION
+            or gate.get('render_audit_version') != RENDER_AUDIT_VERSION
         ):
             raise RuntimeError("CUDA gate belongs to another method/arm or performed updates")
+        checks = gate.get('actual_checks', {})
+        if (set(checks.get('screen_buffers_numeric', {})) != {'joint', 'static', 'dynamic'}
+                or set(checks.get('densification_numeric', {})) != {'static', 'dynamic'}
+                or not all(item.get('denominator_exact') is True for item in checks['densification_numeric'].values())
+                or checks.get('render_cost', {}).get('backend') != 'actual_cuda_events'
+                or not checks.get('road_visibility_diagnostic', {}).get('original_alpha_replay_checked')):
+            raise RuntimeError('CUDA gate lacks actual numeric screen/densification/visibility/cost evidence')
     return plan, config, bundle
 
 
@@ -175,6 +188,7 @@ def main():
         v3_zero_update_gate=arguments.mode == "gate",
         v3_arm=arguments.arm,
         v3_policy=dict(v3_runtime_context.V3_POLICY),
+        v3_render_audit_policy=dict(v3_runtime_context.RENDER_AUDIT_POLICY),
         v3_temporal_policy=dict(TEMPORAL_POLICY),
         v3_road_source_exclusions=list(plan.get('road_source_exclusions', [])),
         v3_road_meter_to_model=float(bundle['meter_to_model']),
@@ -202,6 +216,7 @@ def main():
             'road_policy': ROAD_POLICY,
             'road_source_exclusions': plan.get('road_source_exclusions', []),
             'supervision_version': v3_runtime_context.SUPERVISION_VERSION,
+            'render_audit_version': v3_runtime_context.RENDER_AUDIT_VERSION,
             "extra_optimizer_updates": 0,
             "free_bytes": free,
             "reserved_bytes": reserve,
@@ -322,6 +337,7 @@ def main():
                 "background_temporal_version": TEMPORAL_VERSION,
                 "road_version": ROAD_VERSION,
                 "supervision_version": v3_runtime_context.SUPERVISION_VERSION,
+                "render_audit_version": v3_runtime_context.RENDER_AUDIT_VERSION,
                 "optimizer_updates": 0,
                 "GPU": torch.cuda.get_device_name(),
                 "actual_checks": read(arguments.output / "gpu_gate_details.json"),

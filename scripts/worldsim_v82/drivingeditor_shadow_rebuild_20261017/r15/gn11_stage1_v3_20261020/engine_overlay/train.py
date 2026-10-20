@@ -289,6 +289,7 @@ def training(args):
     progress_bar = tqdm(range(first_iter + 1, args.iterations + 1), desc="Training progress")
 
     for iteration in progress_bar:
+        v3_context.begin_iteration(iteration, topology_due=paper_sgcm is not None and paper_sgcm.due(iteration))
         iter_start.record()
         gaussians.update_learning_rate(iteration)
         if dynamic_gaussians is not None:
@@ -661,13 +662,17 @@ def training(args):
             if paper_sgcm is not None:
                 # Controller uses an offset schedule: no generic topology change
                 # on these iterations, so rendered static radii still align.
-                sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration, visibility_filter=visibility_filter[:end_idx])
+                from utils.v3_render_audit import audit_span
+                with audit_span('topology/SGCM' if paper_sgcm.due(iteration) else 'topology/SGCM_not_due'):
+                    sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration, visibility_filter=visibility_filter[:end_idx])
                 if sgcm_statistics:
+                    v3_context.capacity_event(iteration, 'post_SGCM_event')
                     print("SGCM_STATS " + json.dumps(sgcm_statistics), flush=True)
                     if tb_writer:
                         for name, value in sgcm_statistics.items():
                             if isinstance(value, (int, float)):
                                 tb_writer.add_scalar("sgcm/" + name, value, iteration)
+            v3_context.finish_iteration(iteration)
             torch.cuda.empty_cache()
             if dynamic_gaussians is not None:
                 if iteration % args.vis_step == 0 or iteration == 1:
@@ -843,7 +848,11 @@ def densification_and_optimization(
                     size_threshold *= 0.5
             # do_prune = (iteration < cfg_sd.start_guiding_from_iter) and cfg_sd.do_prune
             # gaussians.densify_and_prune(densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold, prune=do_prune)
-            gaussians.densify_and_prune(densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)
+            from utils.v3_render_audit import audit_span
+            with audit_span('topology/generic_'+str(branch_name)):
+                gaussians.densify_and_prune(densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)
+            if v3_context is not None:
+                v3_context.capacity_event(iteration, 'post_generic_topology_'+branch_name)
 
     if iteration < args.densify_until_iter and (iteration % args.opacity_reset_interval == 0 or (
             args.white_background and iteration == args.densify_from_iter)) and not dynamic:

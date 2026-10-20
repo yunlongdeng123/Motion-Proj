@@ -161,7 +161,8 @@ class DiagnosticTests(unittest.TestCase):
                 calls.append(kwargs)
                 self.assert_background = self.settings.bg
                 return None, None, kwargs['features'].sum(0)[:, None, None], None
-        namespace = dict(torch=torch, GaussianRasterizer=Raster)
+        from utils.v3_render_audit import raster_call
+        namespace = dict(torch=torch, GaussianRasterizer=Raster, raster_call=raster_call)
         exec(compile(ast.Module(body=[function], type_ignores=[]), 'actual_feature_render', 'exec'), namespace)
         def kwargs(count):
             return dict(means3D=torch.ones(count, 3), means2D=torch.zeros(count, 3),
@@ -218,6 +219,7 @@ class DiagnosticTests(unittest.TestCase):
             context.meta = dict(ground_plane_model=[0, 0, 1, 0], meter_to_model=.1)
             context.frame = lambda _: ('0008089', {'selected_boxes_model': [
                 dict(center=[0, 0, 10], axes=torch.eye(3).tolist(), half=[1, 1, 1])]})
+            context.road_visibility_audit = lambda *a: {'CPU_stub_only': True}
             result = context.objectives(SimpleNamespace(pts_depth=torch.tensor([[10.]])), package,
                 SimpleNamespace(_xyz=torch.ones(2, 3), road_unit_mask=torch.tensor([False, True])),
                 torch.ones(1, 1, 1), torch.zeros(3, 1, 1), SimpleNamespace(lambda_dssim=.2),

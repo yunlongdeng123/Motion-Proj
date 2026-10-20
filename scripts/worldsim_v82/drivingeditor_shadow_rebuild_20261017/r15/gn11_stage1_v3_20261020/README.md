@@ -137,6 +137,30 @@ g_i=\max(g_i^{branch},g_i^{joint}),\qquad denom_i\mathrel{+}=1.
 
 实现依据为当前原生 `forward.cu` 的 feature `alpha*T` 累积与中心相机z；没有修改CUDA内核。PyTorch的[autograd.grad](https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html)与[retain_grad](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.retain_grad.html)合同分别说明返回梯度和非叶子留存行为；本工程重复计数判断以实际部署版本的数值回归为准，不仅依据文档措辞。
 
+## 渲染、增密与道路审计
+
+![渲染、增密与道路组件](render_audit_architecture.svg)
+
+合同 `V3_RENDER_DENSIFY_ROAD_R1_20261020` 保留原生联合/背景/动态三次光栅化、环境混入前的动态预乘颜色、逐点max融合、原增密调度和SGCM。道路永久行现在也明确排除在通用增密统计的分子/分母之外；其独立来源代理不与当前训练视图代理相加。道路仍通过专属几何和多来源目标更新，固定容量不因此获得新的增密配额。
+
+零更新CUDA gate新增两个数值比较器（本轮只CPU回归，未执行真实CUDA）：在真实场景图中分别对base/body/road求导，保存/恢复非叶子retain_grad缓冲，构造应得的三套屏幕梯度，再与实际责任路由后的`.grad`比较，包含道路行屏蔽。用真实梯度/可见性/半径在临时缓冲执行当前融合函数，独立核对逐点max、并集可见性、分母恰好一次和道路排除，不污染训练缓冲/拓扑。比较容差atol=2e-5、rtol=2e-4。它验证路由与统计的数值一致性，不是CUDA导数的有限差分认证；额外反传计入gate开销，不冒充30K训练性能。
+
+开销日志 `v3_render_cost.jsonl` 在gate、第一步、每100步及SGCM实际due步用CUDA events记录各类原生/道路/贡献光栅、道路目标、路由反传、DC梯度诊断、Adam、通用拓扑和SGCM的当前流时间，同时记录主机dispatch wall和整步峰值allocated/reserved显存。SGCM原生offset50与整100步错开，due步单独采样，非due空调用另命名，不用空调用估算真实细化成本。每次训练迭代的光栅调用数累计到采样记录中；计时范围从迭代开始到optimizer/SGCM结束，不含随后可视化、评价、checkpoint。同步仅在采样边界做，峰值在该步开始重置；显存是整步峰值，不声称已分离某模块的增量。嵌套span不相加，CUDA当前流时间可包含主机等待，不称kernel-exclusive。
+
+四臂均保留每步2次来源道路光栅，即使来源权重关闭；关闭组记录有效RGB访问0，不把“调用过”写成“受到该类监督”。每臂30K有60K次额外来源前向；四臂合计240K次，另加gate、贡献诊断及原生评价，反向开销需真实计量，不能从步数推断。没有同状态V1性能采样时不报告V3相对V1的加速比或显存增量。
+
+容量账 `v3_capacity.jsonl` 在初始化、通用拓扑事件、SGCM事件、每100步及gate保存普通背景/固定道路/动态点数、道路占比、各事件间净变化；校验14,034个原世界道路ID守恒。记录是净变化，不伪装成精确birth/prune总次数。原生cap是增密前触发门槛，可能在单事件后超额，日志显式报告overshoot；未改成新的硬截断或静态/动态重分配策略。
+
+gate、第一步和每5K更新前增加3次只读光栅：道路独立alpha、保留全部背景高斯的道路标记alpha*T、保留全部静动态高斯的道路标记alpha*T。保存永久单元anchor投影处三者浮点贡献和衰减、支撑/来源类型/查询域，在 `road_visibility/iteration_*/` 逐单元输出。贡献是**全部道路高斯在单元anchor处的贡献**，不冒称该单元孤立splat贡献；节点不是终点更新后的完整49帧评价。重放alpha必须与原静态/联合alpha一致，否则失败，不裁掉前方几何。
+
+背景渲染不含五辆可编辑车，仍保留非编辑运动内容；联合图则包含五车。车遮住道路或非编辑前景遮住道路都可能合法，衰减本身不是非法遮挡GT。这一诊断用于区分“道路自身没学好”和“放回场景后看不见”，不新增去遮挡损失，也不宣称薄层道路已解决遮挡。
+
+来源记录新增逐采样帧硬通过数、实际有效RGB访问、可靠性、alpha、RGB/米制深度残差、加权目标及被采样DC梯度触达的道路行数。梯度可经splat重叠到邻行，选中观测、梯度触达与因果改善仍分开；原始来源/门限/连续先验不变。
+
+`tools/report_render_audit.py --run <run> --output <new_dir>` 只读汇总实际日志，gate与训练分开，计时样本中位数不冒充总运行时间；无数据标记 `NOT_EXECUTED_NO_RENDER_AUDIT`。`tools/validate_render_audit_cpu.py` 执行CPU准入并保存完整日志，真实CUDA数值、开销、道路遮挡与最终质量均待用户授权。新gate和GPU审批必须匹配本轮render版本；旧gate或只有版本字段而无数值/可见性/计时证据的receipt均拒绝。
+
+计时接口依据[PyTorch CUDA Event](https://docs.pytorch.org/docs/stable/generated/torch.cuda.Event.html)和实际安装Torch 2.2.2的本地接口；本轮CPU不创建CUDA event，实际性能字段未填测量值。
+
 ## 四组固定对照
 
 四组均为同一五身份 `a6/a37/a5/a26/a18`、raw89–137 共 49 帧、seed 0、fresh 第一阶段 30K、第二阶段 0；每 5K 保存。唯一变化是道路来源权重。
@@ -152,7 +176,7 @@ g_i=\max(g_i^{branch},g_i^{joint}),\qquad denom_i\mathrel{+}=1.
 
 ## GPU 与存储闸门
 
-当前没有 `GPU_APPROVAL.json`，控制器即使被误调用也会拒绝执行。未来收到用户明确授权后，仍需生成与本方法/道路版本/`V3_RESPONSIBILITY_R2_20261020`/四臂范围匹配的审批文件，并显式传入 `--execute-after-user-gpu-approval`。旧监督版本的CUDA gate不能授权修订后的训练。
+当前没有 `GPU_APPROVAL.json`，控制器即使被误调用也会拒绝执行。未来收到用户明确授权后，仍需生成与本方法/道路版本/`V3_RESPONSIBILITY_R2_20261020`/`V3_RENDER_DENSIFY_ROAD_R1_20261020`/四臂范围匹配的审批文件，并显式传入 `--execute-after-user-gpu-approval`。旧版本或缺少实际数值检查证据的CUDA gate不能授权修订后的训练。
 
 参考 v2 四组实际产物约 48.25 GB，v3 在启动控制器前要求 campaign 所在盘至少 70,000,000,000 字节可用；不足时状态写为 `WAITING_STORAGE_BEFORE_GPU_EXECUTION`，不会占用 GPU。单臂内部还会在启动和每个节点保存前重新做空间准入。
 
