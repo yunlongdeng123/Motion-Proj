@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
 import numpy as np
 import torch
 from PIL import Image
@@ -17,10 +18,28 @@ TOOLS = ROOT/'tools' if (ROOT/'tools').exists() else ROOT
 sys.path[:0] = [str(ENGINE), str(TOOLS)]
 from utils.v3_road_prior import prior_graph, rendered_coverage, fixed_subcells
 from utils.v3_road_geometry import required_occluder_masks
-from v3_gpu_authorization import GPU_ENTRY_VERSION, require_gpu_authorization
+from v3_gpu_authorization import GPU_ENTRY_VERSION, require_gpu_authorization, require_reviewed_invocation
 
 
 class RoadReviewTests(unittest.TestCase):
+    def test_approved_plan_cannot_be_paired_with_different_CLI_inputs_or_extra_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            plan = dict(campaign=str(root), input_bundle=str(root/'road/bundle.json'),
+                baseline_config=str(root/'baseline.json'), readiness=str(root/'readiness.json'),
+                binding_tools=str(root/'bindings'), gpu_lock=str(root/'gpu.lock'))
+            args = SimpleNamespace(arm='full', mode='train', engine=root/'engine',
+                output=root/'arms/full/run30k', bundle=Path(plan['input_bundle']),
+                baseline_config=Path(plan['baseline_config']), readiness=Path(plan['readiness']),
+                binding_tools=Path(plan['binding_tools']), gpu_lock=Path(plan['gpu_lock']),
+                gpu_gate=root/'arms/full/gate_001/gpu_gate_receipt.json')
+            require_reviewed_invocation(args, plan)
+            for key in ['engine', 'bundle', 'baseline_config', 'readiness', 'binding_tools', 'gpu_lock', 'output', 'gpu_gate']:
+                old = getattr(args, key); setattr(args, key, root/'unapproved')
+                with self.assertRaisesRegex(RuntimeError, key):
+                    require_reviewed_invocation(args, plan)
+                setattr(args, key, old)
+
     def test_high_point_opacity_same_color_surface_can_still_have_subcell_holes(self):
         uv = torch.tensor([[[x, y] for x in [8., 16., 24.] for y in [8., 16., 24.]]])
         valid = torch.ones(1, 9, dtype=torch.bool)

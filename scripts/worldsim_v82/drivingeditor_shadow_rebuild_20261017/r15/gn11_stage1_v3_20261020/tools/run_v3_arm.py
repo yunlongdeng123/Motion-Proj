@@ -16,7 +16,7 @@ import subprocess
 import sys
 import time
 import traceback
-from v3_gpu_authorization import require_gpu_authorization
+from v3_gpu_authorization import require_gpu_authorization, require_reviewed_invocation
 
 
 METHOD_VERSION = "GN11_STAGE1_V3_20261020"
@@ -127,6 +127,7 @@ def main():
     arguments = parser.parse_args()
     require_gpu_authorization(arguments.plan, read(arguments.plan),
         arguments.execute_after_user_gpu_approval, arguments.arm, arguments.mode)
+    require_reviewed_invocation(arguments, read(arguments.plan))
     plan, config, bundle = validate(arguments)
 
     lock = arguments.gpu_lock.open("a+")

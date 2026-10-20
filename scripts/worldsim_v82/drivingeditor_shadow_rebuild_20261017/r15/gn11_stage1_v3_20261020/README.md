@@ -54,7 +54,7 @@
 - 在线可靠性/访问/采样梯度计数也进入完整`training_state.pth`，不只存在审计副本；恢复函数检查来源合同并恢复它们。主v3入口仍只授权fresh30K，不自动续训。道路永久ID在静态`.pth`中保存；原生裸PLY不含完整世界单元协议，不作为独立v3重放入口。
 - `tools/road_source_counterfactual.py --plan ...`：登记相同初始化/seed/49帧/30K预算的reference与去来源计划，移除指定世界查询单元的额外道路来源，不移除原生整帧重建。不会执行GPU；若两组均新跑需额外60K，精确同合同full臂可审核后复用。比较入口要求两个真实30K终态，只报告资产变化，仍需完整49帧质量与固定区残差检查才能判断帮助。
 
-CPU验证在部署campaign目录执行：`CUDA_VISIBLE_DEVICES='' /root/autodl-tmp/envs/drivingeditor/bin/python -m unittest discover -s tests -v`。真实CUDA光栅前反向、额外开销和训练质量仍需用户授权后验证。
+CPU验证在部署campaign目录执行：`CUDA_VISIBLE_DEVICES='' /root/autodl-tmp/envs/drivingeditor/bin/python -m unittest discover -s tests -v`。2026-10-21用户授权后首组真实CUDA零更新已通过；额外开销开始记录，训练质量未验收。
 
 设计参考：[3DGS原始表示/优化](https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/)、[2DGS的曲面与法线动机](https://surfsplatting.github.io/)、[PyTorch grid_sample约定](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.grid_sample.html)。本实现为本项目内的薄层3DGS设计，不宣称复现2DGS光栅器或已证明优于基线。
 
@@ -131,7 +131,7 @@ g_i=\max(g_i^{branch},g_i^{joint}),\qquad denom_i\mathrel{+}=1.
 
 对最多14个按像素序均匀抽取的有效车身LiDAR像素，复用当次真实光栅参数，以每个车辆深度阈值作为独立feature通道输出 `sum T_i alpha_i 1[z_i<d_vehicle*(1-.01)]`。保持所有高斯/掩码/深度排序/opacity，**不是只渲染前方子集**；独立静态T与真实联合T分别报告。额外区分框内中心、框外中心的前方贡献及明确道路行贡献，和三维框内中心数量对照。每7个样本使用两次额外光栅、最多4次/节点；输出alpha必须和原静态/联合图在样本处一致，否则准入失败。
 
-这是原生3DGS中心z排序约定下的贡献，不是椭球连续表面first-return；最多14条射线不是全图front-alpha。CPU测试中的5m/20m平均抵消构造仅证明诊断能识别这种情况，不是V3场景已测出大量漏检。真实CUDA数值、开销和场景漏检率仍待授权。
+这是原生3DGS中心z排序约定下的贡献，不是椭球连续表面first-return；最多14条射线不是全图front-alpha。CPU测试中的5m/20m平均抵消构造仅证明诊断能识别这种情况，不是V3场景已测出大量漏检。首组已实际输出CUDA贡献和alpha重放核验，不据初始样本宣称整个场景漏检率或修复成功。
 
 `tools/report_supervision_audit.py --run <run> --output <new_dir>` 在CPU汇总实际记录与逐样本CSV；没有文件就标记 `NOT_EXECUTED_NO_DIAGNOSTIC_FILES`，拒绝覆盖。背景时间路由1000+1000步短程配对仅在[独立登记](supervision_short_controls.json)中提出，需单独审核runner和GPU授权，没有新增执行队列；面积归一化留作后续单独对照，不混进这对控制。
 
@@ -173,7 +173,9 @@ gate、第一步和每5K更新前增加3次只读光栅：道路独立alpha、�
 
 节点诊断额外选择硬通过查询曝光权重最多的一个真实来源视角，并保存道路独立RGB/alpha、完整背景RGB（删除全部五辆可编辑车、保留非编辑运动）、实际联合RGB、三种T下的道路贡献及先验子单元alpha。只在当前来源真正硬通过且确认曝光的世界单元上比较RGB残差；其余遮挡不当负例。PNG仅浏览，未截断浮点保留。每节点最多额外一次原生三分支和三次贡献/道路光栅；开销另计。当前没有新增深度门控背景去遮挡目标；只有实测道路改善而背景/删除不改善后，才据此决定下一轮是否需要。
 
-控制器与单组gate/train共用 `V3_GPU_ENTRY_R2_20261021` 授权校验，在任何GPU查询/导入/输出创建之前要求显式开关和精确匹配的审批。绑定主plan、当前输入、方法/道路/监督/渲染版本、四臂顺序；拒绝备用plan、旧包、来源反事实和未登记模式。反事实另有历史登记，但此入口目前fail-closed，不在本次GPU范围。CPU62/62通过；本次用户明确允许修完后启动GPU，只授权主49/49四臂，49/199与199/199继续暂缓，无关机授权。
+控制器与单组gate/train共用 `V3_GPU_ENTRY_R2_20261021` 授权校验，在任何GPU查询/导入/输出创建之前要求显式开关和精确匹配的审批。绑定主plan、当前输入、方法/道路/监督/渲染版本、四臂顺序，并核对实际CLI中的engine/bundle/config/readiness/binding/lock、固定run目录与gate凭据路径；正确plan不能搭配别的CLI输入或额外run。拒绝备用plan、旧包、来源反事实和未登记模式。反事实另有历史登记，但此入口目前fail-closed，不在本次GPU范围。CPU63/63通过；本次用户明确允许修完后启动GPU，只授权主49/49四臂，49/199与199/199继续暂缓，无关机授权。
+
+首组实际CUDA gate在RTX 4080 SUPER通过，Adam更新0；非叶子三套屏幕缓冲最大绝对差joint=6.7521e-9、static=9.0804e-9、dynamic=6.5193e-9，增密scratch最大梯度差均0、分母精确，14,034道路行排除。原背景/联合alpha重放通过。实际道路子单元alpha检查已执行；初始常色造成边界DC差0不等于学到了纹理。主控制器PID2167、首组训练PID2254已从fresh seed0运行，超过500步；首次550步SGCM后14,034道路ID全部保留。其余三组尚排队，各自仍先过gate。完整30K和49帧质量待完成，不依据初始道路贡献下降给合法车辆遮挡定罪。见[实际零更新凭据](road_review_r2/gpu_full_gate_001/gpu_gate_receipt.json)与[训练启动快照](road_review_r2/training_launch_snapshot.json)。
 
 ## 四组固定对照
 

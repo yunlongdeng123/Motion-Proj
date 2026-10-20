@@ -1,0 +1,405 @@
+{
+  "status": "PASSED_ACTUAL_CUDA_V3_FORWARD_BACKWARD_ZERO_UPDATES",
+  "method_version": "GN11_STAGE1_V3_20261020",
+  "arm": "full",
+  "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
+  "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+  "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+  "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+  "optimizer_updates": 0,
+  "GPU": "NVIDIA GeForce RTX 4080 SUPER",
+  "actual_checks": {
+    "method_version": "GN11_STAGE1_V3_20261020",
+    "arm": "full",
+    "v3_policy": {
+      "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+      "body_l1_normalization": "v1_full_image",
+      "body_static_temporal_gradient": false,
+      "body_static_road_gradient": false,
+      "screen_gradient_accounting": "preserve_retained_buffers_then_add_routed_once",
+      "body_joint_rgb_weight": 1.0,
+      "static_front_occlusion_weight": 0.1,
+      "static_front_depth_margin_ratio": 0.01,
+      "static_front_temperature_ratio": 0.01,
+      "dynamic_color_leak_weight": 1.0,
+      "dynamic_color_ratio_weight": 0.1,
+      "dynamic_boundary_ignore_px": 2,
+      "dynamic_leak_top_fraction": 0.01,
+      "dynamic_leak_top_weight": 0.1,
+      "dynamic_radiance_ratio_cap": 4.0,
+      "dynamic_ratio_slack": 0.00392156862745098,
+      "densification_fusion": "per_gaussian_max_branch_vs_joint_single_count"
+    },
+    "actual_road_weights": {
+      "observed_rgb": 1.0,
+      "prior_rgb": 0.1,
+      "observed_depth": 0.1,
+      "prior_depth": 0.01
+    },
+    "static_fixed_camera_max_RGB_delta": 0.07602441310882568,
+    "static_times_tested": [
+      -0.48,
+      0.48
+    ],
+    "background_temporal_version": "V1_BACKGROUND_REGULARIZERS_RESTORED_20261020",
+    "background_temporal_policy": {
+      "config": {
+        "lambda_t_reg": 0.1,
+        "lambda_v_reg": 0.01,
+        "paper_lambda_nps": 0.01,
+        "hybrid_nps_enabled": true,
+        "hybrid_time_reg_eps": 1e-08
+      },
+      "duration_velocity_normalization": "joint_alpha_clamp_min_1e-5",
+      "nps_normalization": "independent_static_alpha_clamp_min_1e-5",
+      "nps_domain": "unchanged_five_ID_mask_four_axial_neighbors_both_parities_sum",
+      "selective_temporal_objective_enabled": false
+    },
+    "background_temporal_parameters_trainable": true,
+    "fixed_camera_time_variation_is_allowed": true,
+    "gate_raw_frame": 89,
+    "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+    "road_policy": {
+      "cell_m": 0.2,
+      "context_halo_m": 1.2,
+      "surface_support_radius_m": 0.8,
+      "mask_margin_px": 2,
+      "depth_tolerance_m": 0.3,
+      "minimum_cosine": 0.12,
+      "minimum_area_px": 0.25,
+      "minimum_quality": 0.2,
+      "minimum_views": 2,
+      "source_batch_size": 2,
+      "robust_rgb_delta": 0.05,
+      "reliability_floor": 0.1,
+      "reliability_color_scale": 0.15,
+      "surface_weight": 0.1,
+      "normal_weight": 0.01,
+      "thin_weight": 0.01,
+      "anchor_weight": 0.01,
+      "coverage_weight": 0.1,
+      "normal_sigma_m": 0.015,
+      "maximum_normal_sigma_m": 0.03,
+      "maximum_unit_drift_m": 0.15,
+      "audit_interval": 100,
+      "normal_source": "finite_difference_measured_LiDAR_height_field",
+      "prior": "same_world_four_neighbor_continuity_with_observed_context_boundary",
+      "occluder_masks": "five_ID_union_all_vehicle_union_native_proposals_required",
+      "prior_coverage": "rendered_alpha_at_fixed_3x3_world_subcells_in_existing_prior_switch",
+      "coverage_offsets": [
+        -0.4,
+        0.0,
+        0.4
+      ],
+      "coverage_target": 0.95,
+      "prior_graph": "all_supported_prior_query_and_context_edges_to_observed_no_unknown_bridge",
+      "initial_color": [
+        0.18,
+        0.18,
+        0.18
+      ],
+      "road_topology": "one_fixed_thin_Gaussian_per_supported_world_unit_in_static_budget",
+      "observation_color_space": "unfused_source_sRGB_same_as_native_reconstruction"
+    },
+    "road_unit_count": 14034,
+    "road_world_ids_are_time_shared": true,
+    "sampled_native_front_diagnostic": {
+      "sampled_pixels": 14,
+      "extra_raster_calls": 4,
+      "status": "SAMPLED_NATIVE_FEATURE_COMPOSITING",
+      "static_front_alpha_mean": 0.09698633849620819,
+      "joint_front_static_alpha_mean": 0.09233914315700531,
+      "static_front_center_outside_alpha_mean": 0.05980968475341797,
+      "static_front_road_alpha_mean": 0.08226612955331802,
+      "mean_depth_missed_front_mass_mean": 0.009165359660983086,
+      "mean_depth_missed_pixels_alpha_gt_1over255": 10
+    },
+    "road_visibility_diagnostic": {
+      "cohorts": {
+        "observed": {
+          "units": 1226,
+          "road_only_alpha": 0.9651845693588257,
+          "road_alpha_in_background": 0.9516387581825256,
+          "road_alpha_in_joint": 0.8660906553268433,
+          "background_attenuation": 0.01354584377259016,
+          "joint_attenuation": 0.09909394383430481
+        },
+        "prior": {
+          "units": 7116,
+          "road_only_alpha": 0.9968486428260803,
+          "road_alpha_in_background": 0.9434213638305664,
+          "road_alpha_in_joint": 0.774881899356842,
+          "background_attenuation": 0.05342719331383705,
+          "joint_attenuation": 0.2219667136669159
+        },
+        "unknown": {
+          "units": 181,
+          "road_only_alpha": 0.9685094952583313,
+          "road_alpha_in_background": 0.947564959526062,
+          "road_alpha_in_joint": 0.8272745609283447,
+          "background_attenuation": 0.02094457857310772,
+          "joint_attenuation": 0.14123490452766418
+        }
+      },
+      "raster_calls": 3,
+      "original_alpha_replay_checked": true,
+      "all_road_gaussians_sampled_at_unit_anchor_not_isolated_per_unit_splat": true,
+      "unit_projection_sampling_not_unique_pixel_area": true,
+      "attenuation_is_not_illegal_occlusion_ground_truth": true,
+      "explanation": "normal target vehicles and legitimate non-edit foreground may hide road; no loss or culling",
+      "verified_exposure_only": {
+        "units": 403,
+        "road_RGB_L1": 0.21313396096229553,
+        "deleted_five_background_RGB_L1": 0.20849411189556122,
+        "joint_RGB_L1": 0.2241886407136917
+      },
+      "verified_source_view": {
+        "cohorts": {
+          "observed": {
+            "units": 1178,
+            "road_only_alpha": 0.962202787399292,
+            "road_alpha_in_background": 0.9268513917922974,
+            "road_alpha_in_joint": 0.7790407538414001,
+            "background_attenuation": 0.03535133972764015,
+            "joint_attenuation": 0.18316195905208588
+          },
+          "prior": {
+            "units": 7065,
+            "road_only_alpha": 0.9969548583030701,
+            "road_alpha_in_background": 0.9013398885726929,
+            "road_alpha_in_joint": 0.640453577041626,
+            "background_attenuation": 0.09561503678560257,
+            "joint_attenuation": 0.3565012812614441
+          },
+          "unknown": {
+            "units": 163,
+            "road_only_alpha": 0.9767603874206543,
+            "road_alpha_in_background": 0.9245911240577698,
+            "road_alpha_in_joint": 0.6888248920440674,
+            "background_attenuation": 0.05216927081346512,
+            "joint_attenuation": 0.2879355847835541
+          }
+        },
+        "raster_calls": 3,
+        "original_alpha_replay_checked": true,
+        "all_road_gaussians_sampled_at_unit_anchor_not_isolated_per_unit_splat": true,
+        "unit_projection_sampling_not_unique_pixel_area": true,
+        "attenuation_is_not_illegal_occlusion_ground_truth": true,
+        "explanation": "normal target vehicles and legitimate non-edit foreground may hide road; no loss or culling",
+        "verified_exposure_only": {
+          "units": 226,
+          "road_RGB_L1": 0.19309835135936737,
+          "deleted_five_background_RGB_L1": 0.1845923513174057,
+          "joint_RGB_L1": 0.20065149664878845
+        }
+      }
+    },
+    "screen_buffers_numeric": {
+      "joint": {
+        "max_absolute_error": 6.752088665962219e-09,
+        "points": 749049,
+        "nonleaf": true
+      },
+      "static": {
+        "max_absolute_error": 9.080395102500916e-09,
+        "points": 599977,
+        "nonleaf": true
+      },
+      "dynamic": {
+        "max_absolute_error": 6.51925802230835e-09,
+        "points": 149072,
+        "nonleaf": true
+      }
+    },
+    "densification_numeric": {
+      "static": {
+        "points": 599977,
+        "active_nonroad_points": 47441,
+        "fixed_road_excluded": 14034,
+        "max_gradient_error": 0.0,
+        "denominator_exact": true
+      },
+      "dynamic": {
+        "points": 149072,
+        "active_nonroad_points": 124840,
+        "fixed_road_excluded": 0,
+        "max_gradient_error": 0.0,
+        "denominator_exact": true
+      }
+    },
+    "finite_gradient_parameter_groups": [
+      9,
+      9,
+      1
+    ],
+    "optimizer_updates": 0,
+    "optimizer_step_counts": {
+      "static": 0,
+      "dynamic": 0,
+      "environment": 0
+    },
+    "background_temporal_gradients_finite": true,
+    "body_joint_static_color_gradient_routed": false,
+    "body_joint_environment_gradient_routed": false,
+    "independent_branch_screen_gradients_present": true,
+    "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+    "screen_gradient_double_accumulation_prevented": true,
+    "body_joint_background_time_gradient_routed": false,
+    "body_joint_known_road_gradient_routed": false,
+    "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+    "road_source_frames_tested": [
+      128,
+      137
+    ],
+    "road_raster_forward_backward_finite": true,
+    "prior_rendered_coverage": [
+      {
+        "frame_index": 39,
+        "sampled_subcells": 7027,
+        "rendered_alpha_mean": 0.9876708984375,
+        "below_target_fraction": 0.05720791220664978,
+        "weighted_objective": 2.002907876885729e-06
+      },
+      {
+        "frame_index": 48,
+        "sampled_subcells": 8161,
+        "rendered_alpha_mean": 0.9824411869049072,
+        "below_target_fraction": 0.10341870039701462,
+        "weighted_objective": 3.2179975733015453e-06
+      }
+    ],
+    "prior_boundary": {
+      "prior_switch_active": true,
+      "components": 150,
+      "context_anchored_components": 126,
+      "query_prior_units": 7156,
+      "query_prior_without_context_path": 361,
+      "continuity_edges": 23597,
+      "no_UNKNOWN_bridges": true,
+      "actual_boundary_DC_RGB_RMSE": 0.0
+    },
+    "render_cost": {
+      "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+      "iteration": 1,
+      "gate": true,
+      "SGCM_due": false,
+      "backend": "actual_cuda_events",
+      "profiled": true,
+      "raster_calls": {
+        "joint": 4,
+        "dynamic": 4,
+        "static": 4,
+        "road_only": 4,
+        "contribution_static": 4,
+        "contribution_joint": 4
+      },
+      "spans": {
+        "raster/joint": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 2.3386776447296143,
+          "cuda_stream_elapsed_ms": 6.988064169883728
+        },
+        "raster/dynamic": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 5.209304392337799,
+          "cuda_stream_elapsed_ms": 4.5373440980911255
+        },
+        "raster/static": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 4.581909626722336,
+          "cuda_stream_elapsed_ms": 3.5768319964408875
+        },
+        "raster/road_only": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 2.181965857744217,
+          "cuda_stream_elapsed_ms": 3.344223976135254
+        },
+        "probe/road_source_DC_gradient": {
+          "calls": 2,
+          "cpu_dispatch_wall_ms": 31.623858958482742,
+          "cuda_stream_elapsed_ms": 31.951008558273315
+        },
+        "objective/road_geometry_and_sources": {
+          "calls": 1,
+          "cpu_dispatch_wall_ms": 97.02976047992706,
+          "cuda_stream_elapsed_ms": 97.03324890136719
+        },
+        "raster/contribution_static": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 2.579083666205406,
+          "cuda_stream_elapsed_ms": 5.453823983669281
+        },
+        "raster/contribution_joint": {
+          "calls": 4,
+          "cpu_dispatch_wall_ms": 3.956671804189682,
+          "cuda_stream_elapsed_ms": 6.705056071281433
+        },
+        "diagnostic/road_visibility": {
+          "calls": 2,
+          "cpu_dispatch_wall_ms": 2587.6660346984863,
+          "cuda_stream_elapsed_ms": 2587.7020263671875
+        },
+        "gate/screen_reference_autograd": {
+          "calls": 1,
+          "cpu_dispatch_wall_ms": 43.40444505214691,
+          "cuda_stream_elapsed_ms": 48.91417694091797
+        },
+        "backward/body_routed_probe": {
+          "calls": 1,
+          "cpu_dispatch_wall_ms": 20.124612376093864,
+          "cuda_stream_elapsed_ms": 14.725119590759277
+        },
+        "backward/road_routed_probe": {
+          "calls": 1,
+          "cpu_dispatch_wall_ms": 16.63803867995739,
+          "cuda_stream_elapsed_ms": 16.635072708129883
+        },
+        "backward/base": {
+          "calls": 1,
+          "cpu_dispatch_wall_ms": 21.22076228260994,
+          "cuda_stream_elapsed_ms": 21.211135864257812
+        }
+      },
+      "inclusive_spans_must_not_be_summed": true,
+      "wall_ms": 3153.8693960756063,
+      "timing_scope": "iteration_start_through_optimizer_SGCM_excludes_visualization_eval_checkpoint",
+      "memory_start_allocated_bytes": 516933120,
+      "memory_peak_allocated_bytes": 2116469248,
+      "memory_peak_reserved_bytes": 2659188736,
+      "memory_is_whole_profiled_iteration_not_attributed_to_one_module": true,
+      "cumulative_raster_calls_all_training_iterations": {
+        "joint": 4,
+        "dynamic": 4,
+        "static": 4,
+        "road_only": 4,
+        "contribution_static": 4,
+        "contribution_joint": 4
+      },
+      "capacity": {
+        "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
+        "iteration": 1,
+        "phase": "gate_zero_update",
+        "static_total": 599977,
+        "ordinary_background": 585943,
+        "fixed_road": 14034,
+        "dynamic": 149072,
+        "static_trigger_cap": 3000000,
+        "dynamic_trigger_cap": 1000000,
+        "fixed_road_fraction_of_static": 0.02339089665103829,
+        "fixed_road_fraction_of_static_cap": 0.004678,
+        "static_trigger_overshoot": 0,
+        "dynamic_trigger_overshoot": 0,
+        "budget_semantics": "native_pre_densify_trigger_not_new_hard_truncation",
+        "fixed_road_ids_preserved": true,
+        "net_change_since_previous_record": {
+          "static_total": 0,
+          "ordinary_background": 0,
+          "fixed_road": 0,
+          "dynamic": 0
+        }
+      }
+    }
+  },
+  "same_fresh_seed_required_for_training": true,
+  "quality_verified": false
+}

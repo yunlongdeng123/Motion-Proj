@@ -16,6 +16,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--campaign', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--allow-approved-campaign', action='store_true', help='CPU-only recheck after separate human approval; never creates approval or invokes GPU')
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
@@ -34,7 +35,10 @@ def main():
     assert plan['render_audit_policy'] == RENDER_AUDIT_POLICY
     assert plan['common_v3_policy'] == V3_POLICY
     assert {key: value['road_weights'] for key, value in plan['arms'].items()} == ARM_ROAD_WEIGHTS
-    assert not (args.campaign/'GPU_APPROVAL.json').exists()
+    if (args.campaign/'GPU_APPROVAL.json').exists():
+        assert args.allow_approved_campaign
+        from v3_gpu_authorization import require_gpu_authorization
+        require_gpu_authorization(args.campaign/'plan.json', plan, True)
     bundle = Path(plan['input_bundle'])
     meta = json.loads(bundle.read_text())
     parent = Path(meta['parent_bundle'])

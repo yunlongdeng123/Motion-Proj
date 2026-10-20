@@ -28,3 +28,18 @@ def require_gpu_authorization(plan_path, plan, acknowledged, arm=None, mode=None
     if plan.get('road_source_exclusions'):
         raise RuntimeError('main approval excludes source counterfactual experiments')
     return approval
+
+
+def require_reviewed_invocation(arguments, plan):
+    """不能拿正确plan的审批，配上CLI里的另一套engine/input或额外run。"""
+    campaign = Path(plan['campaign']).resolve()
+    expected = dict(engine=campaign/'engine', bundle=Path(plan['input_bundle']),
+        baseline_config=Path(plan['baseline_config']), readiness=Path(plan['readiness']),
+        binding_tools=Path(plan['binding_tools']), gpu_lock=Path(plan['gpu_lock']),
+        output=campaign/'arms'/arguments.arm/('gate_001' if arguments.mode == 'gate' else 'run30k'))
+    if arguments.mode == 'train':
+        expected['gpu_gate'] = campaign/'arms'/arguments.arm/'gate_001/gpu_gate_receipt.json'
+    for key, path in expected.items():
+        actual = getattr(arguments, key, None)
+        if actual is None or Path(actual).resolve() != path.resolve():
+            raise RuntimeError('GPU invocation differs from approved main run: '+key)
