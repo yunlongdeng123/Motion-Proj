@@ -72,6 +72,9 @@ def validate(arguments):
         TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
     )
     from utils.v3_road_contract import ROAD_VERSION, ROAD_POLICY
+    from utils.v3_runtime_context import V3_POLICY, SUPERVISION_VERSION
+    if plan.get('common_v3_policy') != V3_POLICY:
+        raise RuntimeError('plan differs from reviewed supervision/gradient responsibility')
     if (bundle.get('version') != ROAD_VERSION or bundle.get('policy') != ROAD_POLICY
             or plan.get('road_version') != ROAD_VERSION or plan.get('road_policy') != ROAD_POLICY):
         raise RuntimeError('V2 fixed road inputs cannot authorize the multiview road method')
@@ -90,6 +93,7 @@ def validate(arguments):
             or gate.get("arm") != arguments.arm
             or gate.get("background_temporal_version") != TEMPORAL_VERSION
             or gate.get('road_version') != ROAD_VERSION
+            or gate.get('supervision_version') != SUPERVISION_VERSION
         ):
             raise RuntimeError("CUDA gate belongs to another method/arm or performed updates")
     return plan, config, bundle
@@ -197,6 +201,7 @@ def main():
             'road_version': ROAD_VERSION,
             'road_policy': ROAD_POLICY,
             'road_source_exclusions': plan.get('road_source_exclusions', []),
+            'supervision_version': v3_runtime_context.SUPERVISION_VERSION,
             "extra_optimizer_updates": 0,
             "free_bytes": free,
             "reserved_bytes": reserve,
@@ -316,6 +321,7 @@ def main():
                 "arm": arguments.arm,
                 "background_temporal_version": TEMPORAL_VERSION,
                 "road_version": ROAD_VERSION,
+                "supervision_version": v3_runtime_context.SUPERVISION_VERSION,
                 "optimizer_updates": 0,
                 "GPU": torch.cuda.get_device_name(),
                 "actual_checks": read(arguments.output / "gpu_gate_details.json"),

@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 
 STATIC_BODY_RGB_GROUPS = frozenset({
-    "xyz", "opacity", "scaling", "rotation", "t", "scaling_t", "velocity",
+    "xyz", "opacity", "scaling", "rotation",
 })
 
 
@@ -42,16 +42,22 @@ def observed_rgb_loss(prediction, target, selected_mask, ssim_fn, dssim=0.2):
             + dssim * (1.0 - ssim_fn(prediction_outside, target_outside)))
 
 
-def body_joint_rgb_loss(prediction, target, selected_mask, ssim_fn, dssim=0.2):
+def body_joint_rgb_loss(prediction, target, selected_mask, ssim_fn, dssim=0.2,
+                        l1_normalization="v1_full_image"):
     """在真实联合渲染上检查车身最终合成，不构造裁剪后的伪前向。
 
-    L1 按有效车身像素归一，避免远车因全图平均而几乎没有监督。DSSIM
-    仍在同一个真实联合图的掩码视图上计算。参数梯度由运行时路由到全部
-    动态参数以及静态几何/opacity，明确排除静态 SH 颜色和 EnvMap。
+    主实验 L1 分母为 C*H*W，仅 L1 与 V1 整图项的掩码内部分同尺度。
+    body_area 只作为明确登记的备选；掩码 DSSIM 不等价于 V1 整图 DSSIM。
+    参数路由排除背景时间参数、SH、EnvMap 和已知道路行。
     """
     mask = _mask_like(selected_mask, prediction)
     channels = prediction.shape[0]
-    denominator = (mask.sum() * channels).clamp_min(1.0)
+    if l1_normalization == "v1_full_image":
+        denominator = prediction.numel()
+    elif l1_normalization == "body_area":
+        denominator = (mask.sum() * channels).clamp_min(1.0)
+    else:
+        raise ValueError("unknown body L1 normalization")
     l1 = ((prediction - target).abs() * mask).sum() / denominator
     masked_prediction = prediction * mask
     masked_target = target * mask

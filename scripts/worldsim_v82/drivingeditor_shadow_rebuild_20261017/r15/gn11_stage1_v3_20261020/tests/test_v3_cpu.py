@@ -147,7 +147,7 @@ class GradientRoutingTests(unittest.TestCase):
     def test_body_and_road_parameter_responsibility_is_explicit(self):
         self.assertEqual(
             STATIC_BODY_RGB_GROUPS,
-            frozenset({"xyz", "opacity", "scaling", "rotation", "t", "scaling_t", "velocity"}),
+            frozenset({"xyz", "opacity", "scaling", "rotation"}),
         )
         static_parameters = {
             name: torch.tensor(1.0, requires_grad=True)
@@ -185,6 +185,9 @@ class GradientRoutingTests(unittest.TestCase):
         )
         base = (
             12 * static_parameters["f_dc"]
+            + 20 * static_parameters['t']
+            + 21 * static_parameters['scaling_t']
+            + 22 * static_parameters['velocity']
             + 13 * environment_parameter
             + 14 * dynamic_screen.sum()
         )
@@ -208,9 +211,9 @@ class GradientRoutingTests(unittest.TestCase):
         self.assertEqual(float(static_parameters["opacity"].grad), 3.0)
         self.assertEqual(float(static_parameters["scaling"].grad), 4.0)
         self.assertEqual(float(static_parameters["rotation"].grad), 5.0)
-        self.assertEqual(float(static_parameters["t"].grad), 15.0)
-        self.assertEqual(float(static_parameters["scaling_t"].grad), 16.0)
-        self.assertEqual(float(static_parameters["velocity"].grad), 17.0)
+        self.assertEqual(float(static_parameters["t"].grad), 20.0)
+        self.assertEqual(float(static_parameters["scaling_t"].grad), 21.0)
+        self.assertEqual(float(static_parameters["velocity"].grad), 22.0)
         self.assertEqual(float(static_parameters["f_dc"].grad), 21.0)
         self.assertEqual(float(static_parameters["f_rest"].grad), 10.0)
         self.assertEqual(float(dynamic_parameter.grad), 6.0)

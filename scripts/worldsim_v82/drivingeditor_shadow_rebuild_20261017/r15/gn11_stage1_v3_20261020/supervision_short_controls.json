@@ -1,0 +1,32 @@
+{
+  "task": "WS-V82-GN11-V3-SUPERVISION-R2-SHORT-20261020",
+  "status": "REGISTERED_NOT_EXECUTABLE_NOT_GPU_AUTHORIZED",
+  "basis_supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+  "comparison": "body_static_temporal_route_only",
+  "primary": "revised nonroad spatial geometry/opacity only",
+  "control": "same revision plus body RGB gradients to nonroad t,scaling_t,velocity",
+  "common": [
+    "nonleaf screen double-count fix",
+    "V1-equivalent 3HW body L1 and unchanged masked DSSIM",
+    "body gradients exclude all known road rows, background SH and EnvMap",
+    "native V1 background regularizers, NPS and nonbody temporal gradients retained",
+    "49 training and49 reference frames, five identities, full road arm, seed0",
+    "same initialization and sampler, native50K learning-rate horizon, no extra densification schedule changes"
+  ],
+  "suggested_updates_per_arm": 1000,
+  "extra_updates_if_both_fresh": 2000,
+  "requires_separate_review_of_short_runner": true,
+  "requires_separate_user_GPU_approval": true,
+  "main_four_arm_approval_covers_this": false,
+  "automatic_queue_created": false,
+  "body_area_L1_alternative": {
+    "status": "SEPARATE_FUTURE_ABLATION_NOT_MIXED_INTO_THIS_PAIR",
+    "normalization": "sum(mask*abs(error))/(3sum(mask))",
+    "main_default": false
+  },
+  "stop_rule": "Any nonfinite or screen-accounting mismatch stops immediately with assets retained; no seed or threshold search. Short losses cannot establish final30K quality or temporal-leak causality.",
+  "training_updates_executed": 0,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"],
+  "failure_ledger_delta": "none"
+}

@@ -10,6 +10,9 @@ import torch
 from utils.v3_multiview_road import MultiViewRoad
 from utils.v3_road_contract import ROAD_POLICY, ROAD_VERSION
 from utils.v3_densification import accumulate_max_screen_gradient
+from utils.v3_supervision_diagnostics import (
+    center_in_boxes, supervision_metrics, sampled_front_contributions,
+)
 from utils.v3_regularizer_contract import (
     TEMPORAL_POLICY, TEMPORAL_VERSION, validate_v1_regularizers,
 )
@@ -25,7 +28,13 @@ from utils.v3_objectives import (
 
 
 V3_METHOD_VERSION = "GN11_STAGE1_V3_20261020"
+SUPERVISION_VERSION = "V3_RESPONSIBILITY_R2_20261020"
 V3_POLICY = {
+    "supervision_version": SUPERVISION_VERSION,
+    "body_l1_normalization": "v1_full_image",
+    "body_static_temporal_gradient": False,
+    "body_static_road_gradient": False,
+    "screen_gradient_accounting": "preserve_retained_buffers_then_add_routed_once",
     "body_joint_rgb_weight": 1.0,
     "static_front_occlusion_weight": 0.1,
     "static_front_depth_margin_ratio": 0.01,
@@ -91,10 +100,28 @@ def _optimizer_parameters(model, allowed_groups=None):
     return result
 
 
-def _autograd(loss, inputs):
+def _autograd(loss, inputs, screen_proxies=()):
     if not inputs or not loss.requires_grad:
         return [None] * len(inputs)
-    return torch.autograd.grad(loss, inputs, retain_graph=True, allow_unused=True)
+    # autograd.grad 虽不累积叶子参数 .grad，仍会触发非叶子 retain_grad。
+    # 隔离所有分支代理，不只隔离本次 inputs 中的那个代理；保留先前梯度。
+    saved = [(proxy, None if proxy.grad is None else proxy.grad.detach().clone())
+             for proxy in screen_proxies]
+    try:
+        return torch.autograd.grad(loss, inputs, retain_graph=True, allow_unused=True)
+    finally:
+        for proxy, gradient in saved:
+            proxy.grad = gradient
+
+
+def _exclude_road_rows(gradient, road_mask):
+    if gradient is None or road_mask is None:
+        return gradient
+    if gradient.ndim == 0 or gradient.shape[0] != road_mask.numel():
+        raise RuntimeError("body static gradient / road topology mismatch")
+    result = gradient.clone()
+    result[road_mask] = 0
+    return result
 
 
 def _accumulate_parameter_gradients(parameters, gradients, label):
@@ -357,7 +384,8 @@ class V3Context:
         road, road_terms = self.road.objective(static, args, iteration, self.config['road']['objective_weights'])
 
         body_joint = body_joint_rgb_loss(
-            package["render"], target, mask, ssim_fn, args.lambda_dssim
+            package["render"], target, mask, ssim_fn, args.lambda_dssim,
+            self.policy["body_l1_normalization"],
         )
         front, front_metrics = static_front_occlusion_loss(
             package["static_depth"],
@@ -385,7 +413,11 @@ class V3Context:
         )
         routed_body = self.policy["body_joint_rgb_weight"] * body_joint
 
-        if iteration == 1 or iteration % 100 == 0:
+        if self.gate_only or iteration == 1 or iteration % 100 == 0:
+            with torch.no_grad():
+                diagnostic_metrics, diagnostic_maps = supervision_metrics(
+                    package, target, mask, camera.pts_depth, scale,
+                    self.policy['dynamic_boundary_ignore_px'])
             record = {
                 "step": iteration,
                 "frame": frame_id,
@@ -411,13 +443,56 @@ class V3Context:
                 "body_joint_updates_static_color": False,
                 "body_joint_updates_environment": False,
                 "body_joint_static_groups": sorted(STATIC_BODY_RGB_GROUPS),
+                "body_l1_normalization": self.policy["body_l1_normalization"],
+                "body_area_fraction": float(mask.float().mean()),
+                "body_joint_updates_background_time": False,
+                "body_joint_updates_known_road_rows": False,
                 "background_temporal_version": TEMPORAL_VERSION,
                 "background_temporal_policy": TEMPORAL_POLICY,
                 "selective_temporal_objective_enabled": False,
             }
             record.update({key: float(value.detach()) for key, value in front_metrics.items()})
             record.update({key: float(value.detach()) for key, value in leak_metrics.items()})
+            record['supervision_diagnostics'] = diagnostic_metrics
             _append_jsonl(self.log, record)
+        if self.gate_only or iteration == 1 or iteration % 5000 == 0:
+            # 只读节点/准入抽样，发生在当前步更新前。实际开销单列，不改变损失。
+            from gaussian_renderer import render_contribution_features
+            with torch.no_grad():
+                inside = center_in_boxes(package['background_means3D'], centers, axes, half_sizes)
+                arrays, sampled_metrics = sampled_front_contributions(
+                    package, mask, camera.pts_depth, inside, static.road_unit_mask,
+                    lambda flags, joint: render_contribution_features(package, flags, joint),
+                    self.policy['static_front_depth_margin_ratio'])
+                destination = self.output/'supervision_audit'/f'iteration_{iteration:06d}_{frame_id}'
+                destination.mkdir(parents=True, exist_ok=False)
+                diagnostic_maps.update(arrays)
+                diagnostic_maps.update(joint_rgb=package['render'], target_rgb=target,
+                                       dynamic_raw_rgb=package['dynamic_premultiplied_rgb'],
+                                       dynamic_alpha=package['dynamic_alpha'], static_alpha=package['static_alpha'])
+                np.savez_compressed(destination/'maps.npz', **{
+                    key: value.detach().cpu().numpy() for key, value in diagnostic_maps.items()})
+                volume_count = int(inside.sum())
+                height = package['background_means3D'] @ tensor(plane[:3])+float(plane[3])
+                penalizable = inside & (height > training['road_clearance_m']*scale)
+                metadata = dict(supervision_version=SUPERVISION_VERSION, iteration=iteration,
+                                completed_optimizer_updates=iteration-1, frame=frame_id, arm=self.arm,
+                                meter_to_model=scale, body_l1_normalization=self.policy['body_l1_normalization'],
+                                static_centers_inside_selected_boxes=volume_count,
+                                static_centers_above_road_clearance_inside_boxes=int(penalizable.sum()),
+                                static_total_centers=len(inside),
+                                diagnostics=diagnostic_metrics, sampled_front=sampled_metrics,
+                                sample_depth_units='model units; divide by meter_to_model for metres',
+                                depth_maps='opacity-normalized camera-z before sky/environment depth blending',
+                                sample_policy='up to14 deterministic evenly spaced valid body LiDAR pixels',
+                                front_definition='native center camera-z < measured_depth*(1-margin_ratio), native alpha*T; all geometry retained',
+                                static_and_joint_transmittance_reported_separately=True,
+                                gradient_or_optimization_target_added=False, quality_accepted=False, human_verdict=None)
+                (destination/'metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False), encoding='utf-8')
+                if self.gate_only:
+                    self.gate_details['sampled_native_front_diagnostic'] = sampled_metrics
+                    if sampled_metrics['sampled_pixels'] == 0:
+                        raise RuntimeError('CUDA gate has no valid measured body depth for front diagnostic')
         return {
             "base_extra": base_extra,
             "body_joint": routed_body,
@@ -430,11 +505,21 @@ class V3Context:
         dynamic_parameters = _optimizer_parameters(dynamic)
         joint_screen = package["viewspace_points"]
         static_screen = package["static_viewspace_points"]
+        proxies = [package[key] for key in (
+            "viewspace_points", "static_viewspace_points", "dynamic_viewspace_points")]
 
         body_inputs = static_body_parameters + dynamic_parameters + [joint_screen]
-        body_gradients = _autograd(body_joint, body_inputs)
+        body_gradients = list(_autograd(body_joint, body_inputs, proxies))
+        road_mask = getattr(static, "road_unit_mask", None)
+        for index in range(len(static_body_parameters)):
+            body_gradients[index] = _exclude_road_rows(body_gradients[index], road_mask)
+        # 道路固定容量，本身不增密；也不把车身对道路的屏幕梯度计入需求。
+        if body_gradients[-1] is not None and road_mask is not None:
+            body_gradients[-1] = body_gradients[-1].clone()
+            static_count = road_mask.numel()
+            body_gradients[-1][:static_count][road_mask] = 0
         road_inputs = static_all_parameters + [static_screen]
-        road_gradients = _autograd(road, road_inputs)
+        road_gradients = _autograd(road, road_inputs, proxies)
 
         base_loss.backward()
         body_parameter_count = len(static_body_parameters) + len(dynamic_parameters)
@@ -485,6 +570,10 @@ class V3Context:
                 body_joint_static_color_gradient_routed=False,
                 body_joint_environment_gradient_routed=False,
                 independent_branch_screen_gradients_present=True,
+                supervision_version=SUPERVISION_VERSION,
+                screen_gradient_double_accumulation_prevented=True,
+                body_joint_background_time_gradient_routed=False,
+                body_joint_known_road_gradient_routed=False,
             )
             if any(self.optimizer_steps.values()):
                 raise RuntimeError("zero-update gate executed an optimizer step")

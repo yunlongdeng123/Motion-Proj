@@ -1,0 +1,46 @@
+{
+  "task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "supervision_version": "V3_RESPONSIBILITY_R2_20261020",
+  "created_utc": "2026-10-20T13:57:56.418845+00:00",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
+  "status": "CPU_PASSED_REAL_CUDA_PENDING",
+  "torch_version": "2.2.2+cu118",
+  "tests_run": 49,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "full_log": "unittest.log",
+  "real49_bundle_unchanged": true,
+  "V1_native_regularizer_source_bytes_unchanged": true,
+  "four_arm_CPU_preflight": [
+    "full",
+    "real_only",
+    "prior_only",
+    "ownership_only"
+  ],
+  "old_supervision_GPU_gate_rejected": true,
+  "plan_matches_runtime": true,
+  "SVG_XML_valid": true,
+  "nonleaf_old_repro": "returned7 + retained7 + manual addition ->14; numeric regression asserts this",
+  "nonleaf_fix": "preserve all three proxy .grad buffers around each routed autograd.grad; base and routed contributions exactly once, including existing buffers and road-row mask",
+  "front_diagnostic_CPU": "synthetic and native-render-function CPU stubs only; not actual scene CUDA front mass",
+  "GPU_device_nodes_present": false,
+  "GPU_used": false,
+  "training_updates": 0,
+  "control_updates": 0,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "pending": [
+    "user review",
+    "explicit GPU approval",
+    "actual native CUDA feature/transmittance parity and overhead",
+    "real scene front-alpha diagnostic",
+    "separately reviewed short control",
+    "four fresh30K and full49 review"
+  ],
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none"
+}

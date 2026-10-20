@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="440" viewBox="0 0 1100 440">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#334155"/></marker></defs>
+<rect width="1100" height="440" fill="#f8fafc"/>
+<g font-family="Arial,Microsoft YaHei,sans-serif" fill="#0f172a">
+<text x="30" y="35" font-size="24">V3 监督与梯度责任 R2：真实前向，分开反向与诊断</text>
+<g fill="#e0f2fe" stroke="#0284c7"><rect x="30" y="75" width="220" height="90" rx="10"/><rect x="310" y="75" width="260" height="90" rx="10"/></g>
+<g font-size="17"><text x="45" y="105">49帧 RGB / mask / LiDAR</text><text x="45" y="137">背景PVG + 五车 + 道路</text><text x="325" y="105">真实联合光栅化</text><text x="325" y="137">不裁遮挡，不改物理合成</text></g>
+<g fill="#dcfce7" stroke="#16a34a"><rect x="640" y="70" width="420" height="110" rx="10"/></g>
+<g font-size="17"><text x="655" y="100">车身 L1：全图分母 3HW；掩码 DSSIM 保留</text><text x="655" y="130">→ 全动态参数 + 非道路背景空间几何/α</text><text x="655" y="160">× 背景时间 / SH / 道路行 / EnvMap</text></g>
+<g fill="#fef3c7" stroke="#d97706"><rect x="30" y="245" width="310" height="140" rx="10"/><rect x="390" y="245" width="310" height="140" rx="10"/><rect x="750" y="245" width="310" height="140" rx="10"/></g>
+<g font-size="16"><text x="45" y="275">车外/独立监督 + V1 正则</text><text x="45" y="307">背景时间自由度保留</text><text x="45" y="339">动态全mask MSE100保留</text><text x="45" y="371">道路专属几何 / 多视角监督</text>
+<text x="405" y="275">梯度结算</text><text x="405" y="307">隔离 autograd.grad 留存副作用</text><text x="405" y="339">base backward + routed 各一次</text><text x="405" y="371">分支/联合增密取 max、单计数</text>
+<text x="765" y="275">只读贡献诊断（不加损失）</text><text x="765" y="307">原生 αT：车前 / 框外中心 / 道路</text><text x="765" y="339">联合/动态/LiDAR 深度 + 边界误差</text><text x="765" y="371">节点 NPZ / JSON → 离线逐样本表</text></g></g>
+<g stroke="#334155" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M250 120H310"/><path d="M570 120H640"/><path d="M850 180V215H545V245"/><path d="M440 165V210H185V245"/><path d="M570 145H610V220H900V245"/></g>
+</svg>

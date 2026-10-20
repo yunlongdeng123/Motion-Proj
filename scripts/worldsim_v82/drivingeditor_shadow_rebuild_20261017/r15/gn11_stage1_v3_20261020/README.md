@@ -80,9 +80,11 @@ CPU 配对测试读取实际 V1 与 v3 的 `train.py` 特征映射和原生损�
 
 ## 监督责任
 
+![监督与梯度责任组件](supervision_architecture.svg)
+
 | 目标 | 前向 | 参数责任 | 明确不做 |
 |---|---|---|---|
-| 车身最终合成 RGB | 真实 `I_joint`，不按真值掩码裁掉静态贡献 | 全部动态参数；背景几何/opacity（含 `t/scaling_t/velocity`） | 不给背景 SH 颜色或 EnvMap 车身 RGB 梯度 |
+| 车身最终合成 RGB | 真实 `I_joint`，不按真值掩码裁掉静态贡献 | 全部动态参数；仅非道路背景 `xyz/opacity/scaling/rotation` | 不给背景 `t/scaling_t/velocity`、SH、明确道路行或 EnvMap 车身 RGB 梯度 |
 | 非法静态前遮挡 | 独立静态深度和 alpha，对比车身有效 LiDAR 深度 | 静态几何与不透明度 | 不用动态分支独自补偿静态挡车 |
 | 动态身份泄漏 | 加入 EnvMap 之前的独立动态预乘颜色 | 动态参数 | 不把环境背景算作动态泄漏；不靠最终图像截断掩盖资产 |
 | 道路恢复 | 世界单元的未融合真实来源 RGB/测量深度 + 连续先验/邻区边界 | 同一静态集合内的道路参数 | 不直接更新动态或环境参数；不加载 V2 固定颜色包 |
@@ -91,10 +93,15 @@ CPU 配对测试读取实际 V1 与 v3 的 `train.py` 特征映射和原生损�
 车身联合项在真实联合图上计算：
 
 \[
-L_{body}=\ell(M I_{joint}, M I_{GT}).
+L_{body}=(1-\lambda)\frac{\sum M|I_{joint}-I_{GT}|}{3HW}
++\lambda\left(1-SSIM(MI_{joint},MI_{GT})\right).
 \]
 
-反向路由保留动态外观/几何对最终合成的责任，同时允许背景几何、不透明度及其时间参数移开错误遮挡；背景颜色不能从车身 RGB 复制车辆外观。静态前遮挡项使用 `static_depth_sum/static_alpha` 与有效测量深度的相对顺序，并按静态 alpha 加权。它能覆盖“中心在框外但宽投影侵入车身”的情况，但仍是屏幕深度代理，不宣称是逐 splat 的精确 front-alpha。
+反向路由仅改变车身联合损失的梯度，不冻结参数、不修改真实前向。普通背景时间参数仍可从车外联合RGB、独立背景RGB、V1正则等原有效路径学习；动态参数全部保留。对四类背景空间梯度，明确道路行归零；道路可继续通过道路专属监督、正常非车身监督和几何项优化。车身RGB不再直接驱动道路空间参数，但不宣称道路已与所有其他目标完全隔离。
+
+主实验只把车身 **L1** 恢复到V1整图L1的等效分母 `3HW`。掩码外与车内L1相加在权重1时等于原整图L1；两项掩码SSIM相加不等于原整图SSIM，不声称严格恢复V1整个RGB目标。旧车身面积分母保留为显式 `body_area` 备选函数参数，主plan拒绝该替换；暂不混入四臂。
+
+静态前遮挡项仍使用 `static_depth_sum/static_alpha` 与有效测量深度的相对顺序，并按静态alpha加权；它仍可能被前后层的平均抵消，不宣称是逐splat的精确front-alpha。本轮不调高其权重，也不增加可微分前缀损失。真实LiDAR提供的几何约束仍可更新背景时间参数；禁止的是目标车身**RGB**时间路由，不是禁止所有车身几何证据。
 
 动态泄漏使用固定语义字段 `dynamic_premultiplied_rgb`：它来自独立动态光栅化，且位于 EnvMap 混入之前。在车身掩码膨胀 2 px 之外，损失同时包含区域均值与 top-1%，另处罚当前低动态范围约定下的
 
@@ -106,13 +113,29 @@ L_{body}=\ell(M I_{joint}, M I_{GT}).
 
 ## 分支增密
 
-渲染器显式返回联合、静态、动态三套屏幕代理、可见性与投影半径。静态道路损失进入静态代理，车身联合项进入联合代理；每个 Gaussian、每个采样视图只记一次：
+渲染器显式返回联合、静态、动态三套屏幕代理、可见性与投影半径。独立背景重建进入静态代理，车身联合项进入联合代理；每个 Gaussian、每个采样视图只记一次：
 
 \[
 g_i=\max(g_i^{branch},g_i^{joint}),\qquad denom_i\mathrel{+}=1.
 \]
 
 投影半径也逐点取最大值。原 30K 调度、静态/动态点数上限、SGCM 和完整动态 alpha 监督均不变。
+
+屏幕梯度的确定性修复：每次路由 `autograd.grad` 前保存三套代理的既有 `.grad`，调用后在 `finally` 中恢复；然后执行正常 `base_loss.backward()`，只把返回的指定联合/静态梯度补一次。即使代理仍是原生 `zeros_like(..., requires_grad=True)+0` 的非叶子并启用 `retain_grad()`，也不会把自动留存和手动补入重复计数。叶子代理、已有梯度、两个路由项与base叠加均回归。道路独立光栅代理是额外来源自己的图；其固定容量道路行不进入通用增密，不能再声称道路RGB全部进入当前训练视图的静态代理。
+
+## 深度、体积与泄漏的只读诊断
+
+每100步记录车内联合/独立动态RGB、动态alpha、严格掩码外颜色均值/top1%以及内外边界带误差；记录联合、独立动态、独立静态的有效车身LiDAR覆盖和深度MAE。无有效像素时误差为 `null`，不是零误差。动态RGB一律取EnvMap混入之前的预乘颜色，不把背景颜色当作动态泄漏；阈值、比值约束和MSE100均未改。
+
+准入、第一步及每5K步更新**之前**保存 `supervision_audit/iteration_*_<frame>/maps.npz` 与 `metadata.json`。更新计数为当前iteration−1，不冒称保存后的终态；后续完整49帧终态评价仍须独立执行。保存同一帧联合/动态/静态/LiDAR浮点深度图、mask、RGB与alpha；深度图为相机z米数、未混入天空深度，sample数组保留模型单位并记录换算比例。
+
+对最多14个按像素序均匀抽取的有效车身LiDAR像素，复用当次真实光栅参数，以每个车辆深度阈值作为独立feature通道输出 `sum T_i alpha_i 1[z_i<d_vehicle*(1-.01)]`。保持所有高斯/掩码/深度排序/opacity，**不是只渲染前方子集**；独立静态T与真实联合T分别报告。额外区分框内中心、框外中心的前方贡献及明确道路行贡献，和三维框内中心数量对照。每7个样本使用两次额外光栅、最多4次/节点；输出alpha必须和原静态/联合图在样本处一致，否则准入失败。
+
+这是原生3DGS中心z排序约定下的贡献，不是椭球连续表面first-return；最多14条射线不是全图front-alpha。CPU测试中的5m/20m平均抵消构造仅证明诊断能识别这种情况，不是V3场景已测出大量漏检。真实CUDA数值、开销和场景漏检率仍待授权。
+
+`tools/report_supervision_audit.py --run <run> --output <new_dir>` 在CPU汇总实际记录与逐样本CSV；没有文件就标记 `NOT_EXECUTED_NO_DIAGNOSTIC_FILES`，拒绝覆盖。背景时间路由1000+1000步短程配对仅在[独立登记](supervision_short_controls.json)中提出，需单独审核runner和GPU授权，没有新增执行队列；面积归一化留作后续单独对照，不混进这对控制。
+
+实现依据为当前原生 `forward.cu` 的 feature `alpha*T` 累积与中心相机z；没有修改CUDA内核。PyTorch的[autograd.grad](https://docs.pytorch.org/docs/stable/generated/torch.autograd.grad.html)与[retain_grad](https://docs.pytorch.org/docs/stable/generated/torch.Tensor.retain_grad.html)合同分别说明返回梯度和非叶子留存行为；本工程重复计数判断以实际部署版本的数值回归为准，不仅依据文档措辞。
 
 ## 四组固定对照
 
@@ -129,7 +152,7 @@ g_i=\max(g_i^{branch},g_i^{joint}),\qquad denom_i\mathrel{+}=1.
 
 ## GPU 与存储闸门
 
-当前没有 `GPU_APPROVAL.json`，控制器即使被误调用也会拒绝执行。未来收到用户明确授权后，仍需生成与本方法/四臂范围匹配的审批文件，并显式传入 `--execute-after-user-gpu-approval`。
+当前没有 `GPU_APPROVAL.json`，控制器即使被误调用也会拒绝执行。未来收到用户明确授权后，仍需生成与本方法/道路版本/`V3_RESPONSIBILITY_R2_20261020`/四臂范围匹配的审批文件，并显式传入 `--execute-after-user-gpu-approval`。旧监督版本的CUDA gate不能授权修订后的训练。
 
 参考 v2 四组实际产物约 48.25 GB，v3 在启动控制器前要求 campaign 所在盘至少 70,000,000,000 字节可用；不足时状态写为 `WAITING_STORAGE_BEFORE_GPU_EXECUTION`，不会占用 GPU。单臂内部还会在启动和每个节点保存前重新做空间准入。
 

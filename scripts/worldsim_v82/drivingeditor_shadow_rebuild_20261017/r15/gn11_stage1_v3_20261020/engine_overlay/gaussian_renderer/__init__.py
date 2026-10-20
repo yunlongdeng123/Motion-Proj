@@ -137,6 +137,9 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
                 "static_radii": radii_s,
                 "background_means3D": static_render_kwargs["means3D"],
                 "background_opacities": static_render_kwargs["opacities"],
+                "static_raster_kwargs": static_render_kwargs,
+                "joint_raster_kwargs": render_kwargs,
+                "raster_settings": raster_settings,
                 "dynamic_viewspace_points": dyn_screenspace_points,
                 "dynamic_visibility_filter": radii_d > 0,
                 "dynamic_radii": radii_d,
@@ -177,6 +180,26 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
                 "alpha": rendered_opacity,
                 "feature": rendered_other
                 }
+@torch.no_grad()
+def render_contribution_features(package, static_features, joint=False):
+    """离线/节点抽样归因；保持全部几何、可见性、排序和opacity，不裁高斯。"""
+    kwargs = dict(package['joint_raster_kwargs'] if joint else package['static_raster_kwargs'])
+    static_count = len(package['background_means3D'])
+    if len(static_features) != static_count or static_features.shape[1]+2 > 24:
+        raise ValueError('contribution features exceed topology or compact channel budget')
+    features = static_features
+    if joint:
+        features = torch.cat((features, features.new_zeros(len(kwargs['means3D'])-static_count, features.shape[1])), 0)
+    kwargs['features'] = torch.cat((features, kwargs['features'][:, -2:]), 1).contiguous()
+    kwargs['means2D'] = torch.zeros_like(kwargs['means3D'])
+    kwargs['shs'] = None
+    kwargs['colors_precomp'] = torch.zeros_like(kwargs['means3D'])
+    kwargs = {key: value.detach().contiguous() if torch.is_tensor(value) else value for key, value in kwargs.items()}
+    settings = package['raster_settings']._replace(bg=features.new_zeros(3))
+    _, _, feature_map, _ = GaussianRasterizer(raster_settings=settings)(**kwargs)
+    return feature_map
+
+
 def render_road_only(camera, pc, pipe):
     """同一背景参数中的道路行；不另建颜色网络，不把真实遮挡从正常前向裁掉。"""
     rows = torch.nonzero(pc.road_unit_mask, as_tuple=False).flatten()
