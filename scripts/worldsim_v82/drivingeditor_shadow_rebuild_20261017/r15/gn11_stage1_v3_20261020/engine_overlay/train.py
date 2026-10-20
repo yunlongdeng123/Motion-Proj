@@ -289,7 +289,6 @@ def training(args):
 
     for iteration in progress_bar:
         iter_start.record()
-        gaussians.enforce_static()
         gaussians.update_learning_rate(iteration)
         if dynamic_gaussians is not None:
             dynamic_gaussians.update_learning_rate(iteration)
@@ -415,9 +414,11 @@ def training(args):
                 "nps_distances": getattr(viewpoint_cam, "_paper_nps_distance", None),
             }
             hybrid_state = v3_context.partition_state(hybrid_state, viewpoint_cam, render_pkg, gt_image, dynamic_mask, depth, args, ssim)
-            v2_loss_config = dict(args)
-            v2_loss_config.update(lambda_t_reg=0.0, lambda_v_reg=0.0, hybrid_nps_enabled=False)
-            hybrid_result = compose_hybrid_loss(hybrid_state, v2_loss_config, nps_fn=nps_loss)
+            v3_loss_config = dict(args)
+            # 全图绝对时间/速度项由三维证据选择性正则替代，避免把上下文车辆
+            # 当成必须静止的表面。NPS仍关闭；局部空间平滑保留原路径。
+            v3_loss_config.update(lambda_t_reg=0.0, lambda_v_reg=0.0, hybrid_nps_enabled=False)
+            hybrid_result = compose_hybrid_loss(hybrid_state, v3_loss_config, nps_fn=nps_loss)
             loss = hybrid_result.total
             log_dict.update(hybrid_result.log_values())
             if iteration in args.hybrid_gradient_nodes:
@@ -663,7 +664,6 @@ def training(args):
                 # Controller uses an offset schedule: no generic topology change
                 # on these iterations, so rendered static radii still align.
                 sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration, visibility_filter=visibility_filter[:end_idx])
-                gaussians.enforce_static()
                 if sgcm_statistics:
                     print("SGCM_STATS " + json.dumps(sgcm_statistics), flush=True)
                     if tb_writer:

@@ -60,6 +60,11 @@ def validate(arguments):
         raise RuntimeError("complete raw dynamic-mask opacity MSE100 must remain enabled")
     if bool(config.get("white_background", False)):
         raise RuntimeError("v3 raw dynamic color contract requires black raster background")
+    evidence = read(plan["background_temporal_evidence"])
+    if evidence.get("status") != "CPU_GEOMETRY_EVIDENCE_READY":
+        raise RuntimeError("background temporal geometry evidence has not been prepared")
+    if evidence.get("policy") != plan["background_temporal_policy"]:
+        raise RuntimeError("plan and actual background temporal evidence differ")
     if arguments.mode == "train":
         if arguments.gpu_gate is None:
             raise RuntimeError("zero-update CUDA receipt required before training")
@@ -69,6 +74,7 @@ def validate(arguments):
             or gate.get("optimizer_updates") != 0
             or gate.get("method_version") != METHOD_VERSION
             or gate.get("arm") != arguments.arm
+            or gate.get("background_temporal_version") != evidence.get("version")
         ):
             raise RuntimeError("CUDA gate belongs to another method/arm or performed updates")
     return plan, config, bundle
@@ -121,6 +127,7 @@ def main():
     from omegaconf import OmegaConf
     import train
     from utils import v3_runtime_context
+    from utils.v3_temporal import TEMPORAL_POLICY, TEMPORAL_VERSION
 
     if Path(train.__file__).resolve() != (arguments.engine / "train.py").resolve():
         raise RuntimeError("wrong train import")
@@ -130,6 +137,8 @@ def main():
         raise RuntimeError("runtime context is not the reviewed v3 engine")
     if plan.get("common_v3_policy") != v3_runtime_context.V3_POLICY:
         raise RuntimeError("plan policy differs from the reviewed v3 runtime policy")
+    if plan["background_temporal_policy"] != TEMPORAL_POLICY:
+        raise RuntimeError("plan differs from the selective background temporal runtime")
     os.chdir(arguments.engine)
 
     config.update(
@@ -144,6 +153,11 @@ def main():
         v3_zero_update_gate=arguments.mode == "gate",
         v3_arm=arguments.arm,
         v3_policy=dict(v3_runtime_context.V3_POLICY),
+        v3_temporal_policy=dict(TEMPORAL_POLICY),
+        v3_temporal_evidence=plan["background_temporal_evidence"],
+        lambda_t_reg=0.0,
+        lambda_v_reg=0.0,
+        hybrid_nps_enabled=False,
     )
     arguments.output.mkdir()
     write(arguments.output / "effective_config.json", config)
@@ -160,6 +174,9 @@ def main():
             "checkpoint_steps": checkpoints,
             "road_weights": plan["arms"][arguments.arm]["road_weights"],
             "full_dynamic_opacity_mse_weight": 100.0,
+            "background_temporal_version": TEMPORAL_VERSION,
+            "background_temporal_policy": TEMPORAL_POLICY,
+            "background_temporal_evidence": plan["background_temporal_evidence"],
             "extra_optimizer_updates": 0,
             "free_bytes": free,
             "reserved_bytes": reserve,
@@ -275,6 +292,7 @@ def main():
                 "status": "PASSED_ACTUAL_CUDA_V3_FORWARD_BACKWARD_ZERO_UPDATES",
                 "method_version": METHOD_VERSION,
                 "arm": arguments.arm,
+                "background_temporal_version": TEMPORAL_VERSION,
                 "optimizer_updates": 0,
                 "GPU": torch.cuda.get_device_name(),
                 "actual_checks": read(arguments.output / "gpu_gate_details.json"),

@@ -13,6 +13,22 @@
   "binding_tools": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/tools/followup",
   "gpu_lock": "/root/autodl-tmp/drivingeditor_repro/campaign/gpu_slot.lock",
   "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020",
+  "background_temporal_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/temporal_evidence/metadata.json",
+  "background_temporal_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137",
+  "background_temporal_version": "V3_SELECTIVE_BACKGROUND_TIME_20261020",
+  "background_temporal_policy": {
+    "voxel_m": 0.2,
+    "minimum_observation_frames": 3,
+    "minimum_time_span_model": 0.2,
+    "object_box_padding_m": 0.15,
+    "road_protection_height_m": 0.2,
+    "maximum_stable_sigma_m": 0.2,
+    "stable_motion_weight": 0.1,
+    "stable_visibility_weight": 0.1,
+    "context_motion_weight": 0.001,
+    "context_visibility_weight": 0.001,
+    "road_geometry_confidence": 0.5
+  },
   "actors": [6, 37, 5, 26, 18],
   "raw_frames": [89, 137],
   "frame_count": 49,
@@ -61,7 +77,11 @@
     "full_raw_dynamic_opacity_mse_is_unconditional_in_v3_hybrid": true,
     "raster_background_is_black": true,
     "display_color_clamp_added": false,
-    "point_caps_and_native_schedule_changed": false
+    "native_V1_point_caps_and_schedule_preserved": true,
+    "inherited_V2_uniform_background_time_freeze": false,
+    "background_t_scaling_t_velocity_trainable": true,
+    "global_absolute_time_velocity_regularizers": "replaced_by_3D_evidence_selective_regularizers",
+    "global_NPS_enabled": false
   },
   "evaluation_regions": [
     "body_joint_composite",

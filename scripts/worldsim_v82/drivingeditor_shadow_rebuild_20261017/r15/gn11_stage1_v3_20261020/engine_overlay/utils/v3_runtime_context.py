@@ -9,6 +9,9 @@ import torch
 
 from utils.v2_road_objective import road_objective
 from utils.v3_densification import accumulate_max_screen_gradient
+from utils.v3_temporal import (
+    TEMPORAL_POLICY, TEMPORAL_VERSION, TemporalEvidence, selective_temporal_loss,
+)
 from utils.v3_objectives import (
     STATIC_BODY_RGB_GROUPS,
     body_joint_rgb_loss,
@@ -66,6 +69,9 @@ ACTIVE_CONTEXT = None
 
 
 def _json_clone(value):
+    from omegaconf import OmegaConf
+    if OmegaConf.is_config(value):
+        value = OmegaConf.to_container(value, resolve=True)
     return json.loads(json.dumps(value))
 
 
@@ -143,8 +149,21 @@ class V3Context:
         if bool(args.get("white_background", False)):
             raise RuntimeError("dynamic_premultiplied_rgb requires the fixed black raster background")
         self.policy = supplied_policy
+        if _json_clone(args.get("v3_temporal_policy", {})) != TEMPORAL_POLICY:
+            raise RuntimeError("selective background temporal policy mismatch")
+        self.temporal_evidence = TemporalEvidence(
+            args["v3_temporal_evidence"], scene.gaussians._xyz.device
+        )
+        temporal_meta = self.temporal_evidence.metadata
+        if (temporal_meta["frames"] != sorted(self.frames)
+                or not np.allclose(temporal_meta["world_to_model"], self.meta["world_to_model"])
+                or temporal_meta["input_bundle"] != str(bundle)):
+            raise RuntimeError("temporal evidence is not bound to the paired real scene")
         self.config = _json_clone(self.meta["config"])
         self.config["road"]["objective_weights"] = _json_clone(ARM_ROAD_WEIGHTS[self.arm])
+        self.config["training"]["static_temporal_parameters"] = (
+            "NATIVE_PVG_TRAINABLE_WITH_3D_SELECTIVE_TEMPORAL_REGULARIZATION"
+        )
         self.cache = {}
 
         from utils.hybrid30k_runtime import camera_id
@@ -203,13 +222,24 @@ class V3Context:
         ]
         images = []
         with torch.no_grad():
+            if not all(getattr(static, field).requires_grad for field in (
+                "_t", "_scaling_t", "_velocity"
+            )):
+                raise RuntimeError("background temporal freedom was disabled")
+            groups = {group["name"]: group for group in static.optimizer.param_groups}
+            if not all(groups[name]["lr"] > 0 for name in ("t", "scaling_t", "velocity")):
+                raise RuntimeError("background temporal learning rate was zeroed")
             for timestamp in times:
-                if not torch.equal(static.get_xyz_SHM(timestamp), static._xyz):
-                    raise RuntimeError("static positions vary with time")
-                if not torch.equal(
-                    static.get_marginal_t(timestamp), torch.ones_like(static._opacity)
-                ):
-                    raise RuntimeError("static visibility varies with time")
+                angular = 2 * np.pi / static.T
+                expected_xyz = static._xyz + static._velocity * (
+                    torch.sin((timestamp - static._t) * angular) / angular
+                )
+                expected_alpha = torch.exp(
+                    -0.5 * (static._t - timestamp).square() / static.get_scaling_t.square()
+                )
+                if (not torch.allclose(static.get_xyz_SHM(timestamp), expected_xyz)
+                        or not torch.allclose(static.get_marginal_t(timestamp), expected_alpha)):
+                    raise RuntimeError("background no longer follows the native PVG forward")
                 probe = copy.copy(camera)
                 probe.timestamp = timestamp
                 package = render(
@@ -233,6 +263,8 @@ class V3Context:
                     "dynamic_viewspace_points",
                     "static_visibility_filter",
                     "dynamic_visibility_filter",
+                    "background_means3D",
+                    "background_opacities",
                 }
                 if not required.issubset(package):
                     raise RuntimeError("v3 renderer contract is incomplete")
@@ -241,8 +273,8 @@ class V3Context:
                 images.append(package["render_s"].detach().clone())
                 del package
             difference = float((images[0] - images[1]).abs().max())
-            if not np.isfinite(difference) or difference > 1e-6:
-                raise RuntimeError("actual fixed-camera static RGB is time-varying")
+            if not np.isfinite(difference):
+                raise RuntimeError("background time diagnostic is non-finite")
         self.gate_details.update(
             method_version=V3_METHOD_VERSION,
             arm=self.arm,
@@ -250,6 +282,10 @@ class V3Context:
             actual_road_weights=self.config["road"]["objective_weights"],
             static_fixed_camera_max_RGB_delta=difference,
             static_times_tested=times,
+            background_temporal_version=TEMPORAL_VERSION,
+            background_temporal_policy=TEMPORAL_POLICY,
+            background_temporal_parameters_trainable=True,
+            fixed_camera_time_variation_is_allowed=True,
             gate_raw_frame=89,
         )
 
@@ -303,8 +339,8 @@ class V3Context:
         scale = float(self.meta["meter_to_model"])
         training = self.config["training"]
         volume = vehicle_volume_opacity(
-            static._xyz,
-            static.get_opacity,
+            package["background_means3D"],
+            package["background_opacities"],
             centers,
             axes,
             half_sizes,
@@ -348,11 +384,17 @@ class V3Context:
             self.policy["dynamic_radiance_ratio_cap"],
             self.policy["dynamic_ratio_slack"],
         )
+        temporal_weights = self.temporal_evidence.weights(static._xyz, static.get_scaling)
+        temporal, temporal_metrics = selective_temporal_loss(
+            static, temporal_weights,
+            self.temporal_evidence.metadata["time_range_model"], scale,
+        )
         base_extra = (
             training["volume_exclusion_weight"] * volume
             + self.policy["static_front_occlusion_weight"] * front
             + self.policy["dynamic_color_leak_weight"] * leak_color
             + self.policy["dynamic_color_ratio_weight"] * leak_ratio
+            + temporal
         )
         routed_body = self.policy["body_joint_rgb_weight"] * body_joint
 
@@ -380,9 +422,13 @@ class V3Context:
                 "body_joint_updates_static_color": False,
                 "body_joint_updates_environment": False,
                 "body_joint_static_groups": sorted(STATIC_BODY_RGB_GROUPS),
+                "background_temporal_version": TEMPORAL_VERSION,
+                "background_temporal_policy": TEMPORAL_POLICY,
+                "background_temporal_total": float(temporal.detach()),
             }
             record.update({key: float(value.detach()) for key, value in front_metrics.items()})
             record.update({key: float(value.detach()) for key, value in leak_metrics.items()})
+            record.update({key: float(value) for key, value in temporal_metrics.items()})
             _append_jsonl(self.log, record)
         return {
             "base_extra": base_extra,
@@ -435,8 +481,9 @@ class V3Context:
                 counts.append(len(parameters))
             for field in ["_t", "_scaling_t", "_velocity"]:
                 parameter = getattr(static, field)
-                if parameter.requires_grad or parameter.grad is not None:
-                    raise RuntimeError("static temporal parameter has a gradient")
+                if (not parameter.requires_grad or parameter.grad is None
+                        or not torch.isfinite(parameter.grad).all()):
+                    raise RuntimeError("background temporal gradient is missing or non-finite")
             for key in ["viewspace_points", "static_viewspace_points", "dynamic_viewspace_points"]:
                 gradient = package[key].grad
                 if gradient is None or not torch.isfinite(gradient).all():
@@ -445,7 +492,8 @@ class V3Context:
                 finite_gradient_parameter_groups=counts,
                 optimizer_updates=0,
                 optimizer_step_counts=dict(self.optimizer_steps),
-                static_temporal_gradients_absent=True,
+                background_temporal_gradients_finite=True,
+                background_temporal_version=TEMPORAL_VERSION,
                 body_joint_static_color_gradient_routed=False,
                 body_joint_environment_gradient_routed=False,
                 independent_branch_screen_gradients_present=True,

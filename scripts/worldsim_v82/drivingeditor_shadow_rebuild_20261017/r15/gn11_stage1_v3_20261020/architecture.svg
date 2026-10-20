@@ -13,7 +13,7 @@
     </style>
   </defs>
   <rect width="1400" height="760" fill="#f8fafc"/>
-  <text x="700" y="44" text-anchor="middle" class="title">GN11 Stage-1 v3：真实合成监督、泄漏控制与分支增密</text>
+  <text x="700" y="44" text-anchor="middle" class="title">GN11 v3：选择性背景时间约束 + 五车编辑</text>
 
   <rect class="box" x="40" y="100" width="235" height="155" fill="#e0f2fe" stroke="#0284c7"/>
   <text x="158" y="132" text-anchor="middle" class="h">固定输入</text>
@@ -27,7 +27,7 @@
   <text x="505" y="169" text-anchor="middle" class="s">前向不按真值 mask 裁剪</text>
 
   <rect class="box" x="355" y="220" width="300" height="105" fill="#dcfce7" stroke="#16a34a"/>
-  <text x="505" y="253" text-anchor="middle" class="h">独立静态渲染</text>
+  <text x="505" y="253" text-anchor="middle" class="h">背景 PVG：含非目标运动</text>
   <text x="505" y="283" text-anchor="middle" class="t">RGB / alpha / depth / screen-grad</text>
   <text x="505" y="307" text-anchor="middle" class="s">道路目标 + 车前遮挡顺序</text>
 
@@ -43,7 +43,7 @@
   <rect class="box" x="740" y="70" width="310" height="125" fill="#f5f3ff" stroke="#7c3aed"/>
   <text x="895" y="103" text-anchor="middle" class="h">车身联合 RGB + 梯度路由</text>
   <text x="762" y="134" class="t">动态：全部参数</text>
-  <text x="762" y="159" class="t">静态：几何/尺度/旋转/opacity</text>
+  <text x="762" y="159" class="t">背景：几何/opacity及其时间参数</text>
   <text x="762" y="183" class="s">排除静态 SH 颜色与 EnvMap</text>
 
   <rect class="box" x="740" y="220" width="310" height="105" fill="#f0fdf4" stroke="#16a34a"/>
@@ -69,6 +69,14 @@
   <path class="line" d="M895 195 L895 210"/>
   <path class="line" d="M895 325 L895 348"/>
   <path class="line" d="M895 463 L895 505"/>
+
+  <rect class="box" x="40" y="515" width="615" height="120" fill="#e0f2fe" stroke="#0284c7"/>
+  <text x="347" y="545" text-anchor="middle" class="h">同49帧三维证据 → 选择性时间正则</text>
+  <text x="62" y="576" class="t">重复 LiDAR / 支撑道路 → 强稳定倾向；三维物体体积否决稳定标签</text>
+  <text x="62" y="603" class="t">非目标运动内容 / 未知 → 保留 PVG 自由度，弱正则</text>
+  <text x="62" y="626" class="s">逐步按当前几何重查；不清零速度，不用二维mask清除道路</text>
+  <path class="line" d="M158 255 L158 505"/>
+  <path class="line" d="M620 515 C700 470 690 300 655 285"/>
 
   <rect class="box" x="1130" y="180" width="230" height="285" fill="#f1f5f9" stroke="#475569"/>
   <text x="1245" y="215" text-anchor="middle" class="h">四臂 fresh 30K</text>

@@ -135,6 +135,8 @@ def render(viewpoint_camera: Camera, pc: GaussianModel, pc_dyn: Dynamic_Gaussian
                 "static_viewspace_points": static_screenspace_points,
                 "static_visibility_filter": radii_s > 0,
                 "static_radii": radii_s,
+                "background_means3D": static_render_kwargs["means3D"],
+                "background_opacities": static_render_kwargs["opacities"],
                 "dynamic_viewspace_points": dyn_screenspace_points,
                 "dynamic_visibility_filter": radii_d > 0,
                 "dynamic_radii": radii_d,

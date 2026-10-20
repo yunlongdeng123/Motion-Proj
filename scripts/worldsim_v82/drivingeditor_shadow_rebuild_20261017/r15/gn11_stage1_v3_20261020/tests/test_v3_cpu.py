@@ -137,14 +137,21 @@ class _RouteModelStub:
 
 class GradientRoutingTests(unittest.TestCase):
     @unittest.skipIf(V3Context is None, "full frozen v2 engine is required")
+    def test_runtime_accepts_omegaconf_temporal_policy(self):
+        from omegaconf import OmegaConf
+        from utils.v3_runtime_context import _json_clone
+        from utils.v3_temporal import TEMPORAL_POLICY
+        self.assertEqual(_json_clone(OmegaConf.create(TEMPORAL_POLICY)), TEMPORAL_POLICY)
+
+    @unittest.skipIf(V3Context is None, "full frozen v2 engine is required")
     def test_body_and_road_parameter_responsibility_is_explicit(self):
         self.assertEqual(
             STATIC_BODY_RGB_GROUPS,
-            frozenset({"xyz", "opacity", "scaling", "rotation"}),
+            frozenset({"xyz", "opacity", "scaling", "rotation", "t", "scaling_t", "velocity"}),
         )
         static_parameters = {
             name: torch.tensor(1.0, requires_grad=True)
-            for name in ["xyz", "opacity", "scaling", "rotation", "f_dc", "f_rest"]
+            for name in ["xyz", "opacity", "scaling", "rotation", "f_dc", "f_rest", "t", "scaling_t", "velocity"]
         }
         dynamic_parameter = torch.tensor(1.0, requires_grad=True)
         environment_parameter = torch.tensor(1.0, requires_grad=True)
@@ -159,6 +166,9 @@ class GradientRoutingTests(unittest.TestCase):
             + 3 * static_parameters["opacity"]
             + 4 * static_parameters["scaling"]
             + 5 * static_parameters["rotation"]
+            + 15 * static_parameters["t"]
+            + 16 * static_parameters["scaling_t"]
+            + 17 * static_parameters["velocity"]
             + 100 * static_parameters["f_dc"]
             + 100 * static_parameters["f_rest"]
             + 6 * dynamic_parameter
@@ -198,6 +208,9 @@ class GradientRoutingTests(unittest.TestCase):
         self.assertEqual(float(static_parameters["opacity"].grad), 3.0)
         self.assertEqual(float(static_parameters["scaling"].grad), 4.0)
         self.assertEqual(float(static_parameters["rotation"].grad), 5.0)
+        self.assertEqual(float(static_parameters["t"].grad), 15.0)
+        self.assertEqual(float(static_parameters["scaling_t"].grad), 16.0)
+        self.assertEqual(float(static_parameters["velocity"].grad), 17.0)
         self.assertEqual(float(static_parameters["f_dc"].grad), 21.0)
         self.assertEqual(float(static_parameters["f_rest"].grad), 10.0)
         self.assertEqual(float(dynamic_parameter.grad), 6.0)

@@ -1,14 +1,16 @@
 # 当前研究状态
 
-更新：2026-10-20T00:48:03+08:00。task=WS-V82-R15-GN11-STAGE1-V3-20261020。五身份 GN11 Stage-1 v3 已完成代码、四臂协议、架构图、CPU 测试和远端 campaign 部署；GPU 未授权、控制器未启动、训练更新 0、human_verdict=null。
+更新：2026-10-20T19:41:45+08:00。task=WS-V82-R15-GN11-STAGE1-V3-20261020。v3 已按用户要求撤销背景统一时间冻结，改为原生背景 PVG + 三维证据选择性时间正则；代码、四臂计划、架构图与CPU证据已部署。GPU 未授权、控制器未启动、训练更新0、human_verdict=null。
 
 v3 共同修复四条机制：在真实联合前向上恢复车身最终合成 RGB，并把梯度路由到全部动态参数和静态几何/opacity，排除静态 SH 颜色与 EnvMap；用车身有效 LiDAR 深度处罚非法静态前遮挡，同时保留 v2 的三维中心体积排斥；对 EnvMap 混入前的独立动态预乘颜色增加严格掩码外 mean+top-1% 与低 alpha/高颜色比值约束；显式返回静态/动态分支屏幕梯度，与联合统计逐 Gaussian 取 max 且每视图只计一次。完整动态 mask alpha MSE 权重 100 无条件保留，不增加显示阶段颜色截断。
 
+本次时间修订：背景 `_t/_scaling_t/_velocity` 和原生 SHM/时间显隐、时间梯度/原生时间细化恢复；稳定表面权重由同49帧重复LiDAR与有支撑路面几何决定，所有车辆/行人/骑行者三维体积否决稳定标签。稳定区运动/显隐各0.1，上下文/未知各0.001；直接约束raw velocity位移上界，避免feature velocity随寿命衰减的漏洞。全图绝对时间/速度项由选择性目标替代，NPS仍关闭。五车排斥使用本次光栅化实际位置及有效opacity，保护合法道路薄层；车身联合梯度包含背景时间参数但继续排除颜色。CPU体素并集82,973，与物体否决区交集0；原585,943点中心查询有59,151个上下文/未知，实际训练还按尺度筛选稳定资格。
+
 四组均为 a6/a37/a5/a26/a18、raw89–137 共49帧、seed0、fresh 第一阶段30K、第二阶段0、5K间隔六节点；共同使用上述 v3 修复，只改变道路来源权重：full、real_only、prior_only、ownership_only。固定单路顺序执行，每组先做真实 CUDA 前向/反向零更新 gate；失败保留现场，不自动重试或覆盖。
 
-CPU 验证：Python 编译通过；6项张量/路由/增密测试通过；运行时政策与四臂计划逐项一致；完整动态 alpha 权重已绑定配置且不再依赖通用 entropy 开关；控制器在缺显式执行开关或缺 `GPU_APPROVAL.json` 时均实际拒绝。验证后无 v3 训练进程，无 `/dev/nvidia*`，campaign 状态为 `WAITING_USER_REVIEW_GPU_APPROVAL_AND_STORAGE`。
+CPU 验证：14项测试通过，覆盖原有目标/路由、背景时间前向与梯度、raw运动不被宽寿命藏住、当前几何/拓扑重查、时间增密计数、append/prune与checkpoint恢复、OmegaConf政策解析。模型生命周期测试只替换CUDA设备常量为CPU；另以真实49帧metadata和模型桩验证配置构造。编译、政策/四臂实际输入预检通过。真实CUDA准入与质量仍待授权后验证；缺GPU审批时控制器实际拒绝，无训练进程。
 
-资源准入：v2 四组实际产物约48.25GB；当前同盘可用31,948,443,648B，v3 四臂控制器要求启动前至少70,000,000,000B。当前尚差约38.05GB，因此即使误加执行参数也不能进入四臂训练；不删除任何既有实验，待用户审核、补足存储并明确开放GPU后再创建独立审批文件。
+资源准入：本轮只读采样同盘可用106,154,893,312B，已超过四臂控制器70,000,000,000B门槛。此前空间阻塞已不适用；本轮未清理既有资产。campaign状态更新为 `WAITING_USER_REVIEW_AND_GPU_APPROVAL`，用户审核并明确开放GPU后才创建独立审批文件。
 
 [v3 方法、组件图、四臂与限制](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) · [固定计划](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/plan.json) · [CPU 部署凭据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/cpu_validation_receipt.json)。failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=none；本轮不新增失败ID，不宣称GPU、30K或质量结果。
 

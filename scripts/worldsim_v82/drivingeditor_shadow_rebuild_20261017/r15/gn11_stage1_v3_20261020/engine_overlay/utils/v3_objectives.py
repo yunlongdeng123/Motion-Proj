@@ -8,7 +8,9 @@ import torch
 import torch.nn.functional as F
 
 
-STATIC_BODY_RGB_GROUPS = frozenset({"xyz", "opacity", "scaling", "rotation"})
+STATIC_BODY_RGB_GROUPS = frozenset({
+    "xyz", "opacity", "scaling", "rotation", "t", "scaling_t", "velocity",
+})
 
 
 def _mask_like(mask, reference):
