@@ -16,6 +16,7 @@ import subprocess
 import sys
 import time
 import traceback
+from v3_gpu_authorization import require_gpu_authorization
 
 
 METHOD_VERSION = "GN11_STAGE1_V3_20261020"
@@ -122,7 +123,10 @@ def main():
     parser.add_argument("--arm", choices=("full", "real_only", "prior_only", "ownership_only"), required=True)
     parser.add_argument("--mode", choices=("gate", "train"), required=True)
     parser.add_argument("--gpu-gate", type=Path)
+    parser.add_argument('--execute-after-user-gpu-approval', action='store_true')
     arguments = parser.parse_args()
+    require_gpu_authorization(arguments.plan, read(arguments.plan),
+        arguments.execute_after_user_gpu_approval, arguments.arm, arguments.mode)
     plan, config, bundle = validate(arguments)
 
     lock = arguments.gpu_lock.open("a+")

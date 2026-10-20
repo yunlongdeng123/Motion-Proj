@@ -7,9 +7,10 @@
     "v2_reviewed_branch": "research/worldsim-v8.2-drivingeditor-debug"
   },
   "python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
-  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_001/bundle.json",
+  "input_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json",
   "road_engineering_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018",
-  "road_version": "V3_WORLD_ROAD_MULTIVIEW_20261020",
+  "road_version": "V3_WORLD_ROAD_MULTIVIEW_R2_20261021",
+  "gpu_entry_version": "V3_GPU_ENTRY_R2_20261021",
   "render_audit_version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
   "render_audit_policy": {
     "version": "V3_RENDER_DENSIFY_ROAD_R1_20261020",
@@ -34,6 +35,10 @@
     "maximum_unit_drift_m": 0.15, "audit_interval": 100,
     "normal_source": "finite_difference_measured_LiDAR_height_field",
     "prior": "same_world_four_neighbor_continuity_with_observed_context_boundary",
+    "occluder_masks": "five_ID_union_all_vehicle_union_native_proposals_required",
+    "prior_coverage": "rendered_alpha_at_fixed_3x3_world_subcells_in_existing_prior_switch",
+    "coverage_offsets": [-0.4, 0.0, 0.4], "coverage_target": 0.95,
+    "prior_graph": "all_supported_prior_query_and_context_edges_to_observed_no_unknown_bridge",
     "initial_color": [0.18, 0.18, 0.18],
     "road_topology": "one_fixed_thin_Gaussian_per_supported_world_unit_in_static_budget",
     "observation_color_space": "unfused_source_sRGB_same_as_native_reconstruction"

@@ -29,7 +29,7 @@ def obb(label, pose, transform):
 def prepare(engineering, output, engine):
     from utils.v3_road_contract import ROAD_VERSION, ROAD_POLICY
     from utils.v3_road_geometry import (transform, MeasuredRoadSurface, sparse_depth_maps,
-                                       source_observation)
+                                       source_observation, required_occluder_masks)
     if output.exists():
         raise FileExistsError('never overwrite evidence, trained output or old V2 bundle')
     source = engineering.parent/'inputs/scene0008_089_137'
@@ -93,14 +93,15 @@ def prepare(engineering, output, engine):
         ground &= (local[:, 0] >= 3) & (local[:, 0] <= 90) & (np.abs(local[:, 1]) <= 8)
         measured.append(local[ground])
         depth, valid, road = sparse_depth_maps(world, ground, intrinsic, w2c)
-        other_mask = np.asarray(Image.open(all_vehicle/'dynamic_masks/dynamic_mask_0'/f'{fid}.png').resize((480, 320), Image.Resampling.NEAREST)) > 0
+        occluder, mask_record = required_occluder_masks(engineering, fid)
         frames.append(dict(fid=fid, raw=raw, K=intrinsic, w2c=w2c, rgb=rgb, labels=labels,
                            depth=depth, valid=valid, road=road, boxes=boxes,
-                           occluder=(labels > 0) | other_mask,
+                           occluder=occluder,
                            sharpness=float(np.var(laplace(rgb.astype(float).mean(2)/255.)))))
         frame_meta[fid] = dict(world_to_camera=w2c.tolist(), intrinsic=intrinsic.tolist(),
                                selected_boxes_model=chosen, original_rgb=str(rgb_path),
-                               label_path=str(selected/'matched_training_labels'/f'{fid}.png'))
+                               label_path=str(selected/'matched_training_labels'/f'{fid}.png'),
+                               occluder_masks=mask_record)
     measured = np.concatenate(measured)
     _, indices = np.unique(np.floor(measured[:, :2]/.1).astype(int), axis=0, return_index=True)
     measured = measured[indices]
@@ -165,6 +166,9 @@ def prepare(engineering, output, engine):
                   query_unit_id=np.concatenate(unit_ids))
     for name in gate_stack[0]:
         arrays['gate_'+name] = np.asarray([entry[name] for entry in gate_stack])
+    from utils.v3_road_prior import fixed_subcells
+    arrays['coverage_model_xyz'] = fixed_subcells(arrays, dict(coordinate_anchor=anchor.tolist(),
+        world_to_model=model.tolist()), ROAD_POLICY)
     np.savez_compressed(output/'units.npz', **arrays)
     summary = {}
     for actor in actors:
@@ -185,7 +189,7 @@ def prepare(engineering, output, engine):
                   evidence_roles=dict(camera='dataset calibration', boxes='all annotated 3D occluders',
                                       depth='nearest measured LiDAR within1.5px; not dense GT',
                                       road='plane-close measured non-object returns; not semantic GT',
-                                      masks='original five-ID and all-vehicle prepared masks'),
+                                      masks='required original five-ID + all-vehicle + native proposal union'),
                   config=dict(training=dict(volume_exclusion_weight=.1, road_clearance_m=.2, volume_edge_m=.1), road={}),
                   original_engineering=str(engineering), original_readiness=str(metadata/'CPU_readiness.json'),
                   limitations=['No confirmed exposure means prior, not recovered hidden texture.',

@@ -40,6 +40,9 @@ def toy():
     road.cameras, road.scale = [0, 1], .1
     road.visits, road.gradient_samples = np.zeros((2, 2), np.int32), np.zeros((2, 2), np.int32)
     road.gradient_l2_cumulative = np.zeros((2, 2))
+    road.coverage_uv = torch.zeros(2, 2, 9, 2)
+    road.coverage_valid = torch.zeros(2, 2, 9, dtype=torch.bool)
+    road.coverage_denominator = road.coverage_valid.sum()
     return model, args, road
 
 

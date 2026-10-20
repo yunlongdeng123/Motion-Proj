@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="300" viewBox="0 0 1100 300">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L0 6L7 3" fill="#476078"/></marker></defs>
+<rect width="1100" height="300" fill="#f4f8fb"/>
+<g font-family="Microsoft YaHei,sans-serif" fill="#16354b"><text x="25" y="36" font-size="23">V3 道路准入修订：同一世界道路，不裁真实前景</text>
+<g fill="white" stroke="#7193ad" stroke-width="2"><rect x="25" y="75" width="240" height="140" rx="10"/><rect x="310" y="75" width="240" height="140" rx="10"/><rect x="595" y="75" width="225" height="140" rx="10"/><rect x="865" y="75" width="210" height="140" rx="10"/></g>
+<g font-size="17"><text x="40" y="108">49帧 + LiDAR + 三路mask</text><text x="40" y="143">固定世界单元 / 原始RGB</text><text x="40" y="178">门限重算，旧输入保留</text><text x="325" y="108">共享薄层道路高斯</text><text x="325" y="143">3×3子单元渲染alpha覆盖</text><text x="325" y="178">查询—上下文—曝光边界</text><text x="610" y="108">既有真实 / 先验2×2</text><text x="610" y="143">道路 / 背景 / 联合对照</text><text x="610" y="178">曝光位置核验背景竞争</text><text x="880" y="108">CPU → CUDA零更新</text><text x="880" y="143">单组和控制器同授权</text><text x="880" y="178">通过后fresh30K ×4</text></g>
+<text x="25" y="263" font-size="16">先验不是隐藏纹理GT；未连通单元明示。合法车辆遮路不作非法遮挡，未新增背景去遮挡目标。</text></g>
+<g fill="none" stroke="#476078" stroke-width="2" marker-end="url(#a)"><path d="M265 145H300"/><path d="M550 145H585"/><path d="M820 145H855"/></g></svg>

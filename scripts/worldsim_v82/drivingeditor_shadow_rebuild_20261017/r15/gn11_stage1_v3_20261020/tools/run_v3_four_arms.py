@@ -13,6 +13,7 @@ import os
 import shutil
 import subprocess
 import traceback
+from v3_gpu_authorization import require_gpu_authorization
 
 
 METHOD_VERSION = "GN11_STAGE1_V3_20261020"
@@ -45,6 +46,7 @@ def command(campaign, plan, arm, mode, output, gate=None):
         "--plan", str(campaign / "plan.json"),
         "--arm", arm,
         "--mode", mode,
+        '--execute-after-user-gpu-approval',
     ]
     if gate is not None:
         result.extend(["--gpu-gate", str(gate)])
@@ -65,6 +67,7 @@ def main():
         raise RuntimeError("explicit post-review GPU execution flag is required")
 
     plan = read(campaign / "plan.json")
+    require_gpu_authorization(campaign/'plan.json', plan, arguments.execute_after_user_gpu_approval)
     if plan.get("method_version") != METHOD_VERSION:
         raise RuntimeError("campaign plan is not the reviewed v3 method")
     approval_path = campaign / "GPU_APPROVAL.json"

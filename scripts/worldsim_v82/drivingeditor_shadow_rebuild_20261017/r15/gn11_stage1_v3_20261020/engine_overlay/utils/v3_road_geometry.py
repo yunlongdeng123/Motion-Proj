@@ -5,6 +5,27 @@ from scipy.ndimage import binary_dilation, distance_transform_edt, map_coordinat
 from scipy.spatial import cKDTree
 
 
+def required_occluder_masks(engineering, fid):
+    """恢复V2的三路输入；缺任一路就拒绝，不能静默降级。"""
+    from pathlib import Path
+    from PIL import Image
+    root = Path(engineering)
+    paths = [root/'full5_pipeline/inputs/scene0008_089_137/matched_training_labels'/f'{fid}.png',
+             root/'all_vehicle_pipeline/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0'/f'{fid}.png',
+             root/'all_vehicle_native49/native_predictions'/f'{fid}.npz']
+    first, second = [np.asarray(Image.open(path).resize((480, 320), Image.Resampling.NEAREST)) > 0
+                     for path in paths[:2]]
+    with np.load(paths[2], allow_pickle=False) as archive:
+        masks = archive['masks']
+        if masks.ndim != 3 or not np.isfinite(masks).all():
+            raise ValueError('invalid original native proposal masks')
+        native = masks.astype(bool).any(0)
+    native = np.asarray(Image.fromarray(native).resize((480, 320), Image.Resampling.NEAREST)) > 0
+    return first | second | native, dict(paths=[str(path) for path in paths],
+        pixels=[int(first.sum()), int(second.sum()), int(native.sum())],
+        native_extra_pixels=int((native & ~(first | second)).sum()), complete=True)
+
+
 def transform(points, matrix):
     return np.asarray(points) @ matrix[:3, :3].T + matrix[:3, 3]
 

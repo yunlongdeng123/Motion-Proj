@@ -9,6 +9,7 @@ import torch.nn.functional as F
 
 from utils.v3_road_contract import ROAD_POLICY, ROAD_VERSION
 from utils.v3_render_audit import audit_span
+from utils.v3_road_prior import prior_graph, rendered_coverage
 
 
 def sample_map(image, uv):
@@ -122,6 +123,22 @@ class MultiViewRoad:
             # 无条件当成光栅坐标（原生可能存在半像素中心差）。
             raster_uv.append(((ndc+1)*homogeneous.new_tensor([camera.image_width, camera.image_height])-1)/2)
         self.raster_uv = torch.stack(raster_uv)
+        self.initialize_prior_graph()
+        points = torch.as_tensor(self.numpy['coverage_model_xyz'], device=device, dtype=homogeneous.dtype)
+        points = torch.cat((points, torch.ones_like(points[..., :1])), -1)
+        coverage_uv, coverage_valid = [], []
+        for frame_index, camera in enumerate(self.cameras):
+            clip = points @ camera.full_proj_transform.to(points)
+            uv = ((clip[..., :2]/clip[..., 3:].clamp_min(1e-8)+1)*points.new_tensor(
+                [camera.image_width, camera.image_height])-1)/2
+            valid = ((clip[..., 3] > 0) & torch.isfinite(uv).all(-1) & (uv[..., 0] >= 0)
+                     & (uv[..., 0] <= camera.image_width-1) & (uv[..., 1] >= 0) & (uv[..., 1] <= camera.image_height-1))
+            for key in ['gate_in_view', 'gate_angle_ok', 'gate_resolution_ok']:
+                valid &= torch.as_tensor(self.numpy[key][frame_index], device=device)[:, None]
+            valid &= (self.data['surface_supported'] & self.data['is_query'] & (self.data['provenance'] == 2))[:, None]
+            coverage_uv.append(uv); coverage_valid.append(valid)
+        self.coverage_uv, self.coverage_valid = torch.stack(coverage_uv), torch.stack(coverage_valid)
+        self.coverage_denominator = self.coverage_valid.sum()
         self.exclusions = [dict(entry) for entry in args.get('v3_road_source_exclusions', [])]
         for exclusion in self.exclusions:
             frame = int(exclusion['source_raw'])-89
@@ -144,6 +161,13 @@ class MultiViewRoad:
         self.last_iteration = 0
         self.last_terms = {}
 
+    def initialize_prior_graph(self):
+        data = self.data
+        cpu = lambda key: data[key].detach().cpu().numpy()
+        graph, self.prior_components = prior_graph(cpu('provenance'), cpu('surface_supported'),
+                                                 cpu('is_query'), cpu('edges'))
+        self.prior_graph = {key: torch.as_tensor(value, device=data['provenance'].device) for key, value in graph.items()}
+
     def objective(self, model, args, iteration, weights):
         from gaussian_renderer import render_road_only
         return self.objective_with_renderer(model, args, iteration, weights, render_road_only)
@@ -158,14 +182,13 @@ class MultiViewRoad:
         unit_color = color.new_zeros((len(data['provenance']), 3)).index_copy(0, ids, color)
         edges = data['edges'].long()
         prior = (data['provenance'] == 2) & data['is_query']
-        edge_valid = (data['surface_supported'][edges].all(1) & prior[edges].any(1)
-                      & (data['provenance'][edges] != 0).all(1))
-        continuity = (unit_color[edges[:, 0]]-unit_color[edges[:, 1]]).square().mean(1)
-        continuity = (continuity*edge_valid).sum()/edge_valid.sum().clamp_min(1)
-        prior_alpha = model.get_opacity[rows, 0]
-        prior_coverage = (F.relu(.95-prior_alpha).square()*prior[ids]).sum()/prior[ids].sum().clamp_min(1)
+        if not hasattr(self, 'prior_graph'):
+            self.initialize_prior_graph()
+        edge_valid = self.prior_graph['edge_valid']
+        edge_color_error = (unit_color[edges[:, 0]]-unit_color[edges[:, 1]]).square().mean(1)
+        continuity = (edge_color_error*edge_valid).sum()/edge_valid.sum().clamp_min(1)
         prior_depth = ((model._xyz[rows]-data['model_xyz'][ids]).norm(dim=1)/self.scale*prior[ids]).sum()/prior[ids].sum().clamp_min(1)
-        total = common+weights['prior_rgb']*(continuity+policy['coverage_weight']*prior_coverage)+weights['prior_depth']*prior_depth
+        total = common+weights['prior_rgb']*continuity+weights['prior_depth']*prior_depth
         batch = [(iteration-1)*policy['source_batch_size']+index for index in range(policy['source_batch_size'])]
         frame_ids = [index % len(self.cameras) for index in batch]
         if getattr(args, 'v3_zero_update_gate', False):
@@ -174,7 +197,8 @@ class MultiViewRoad:
             frame_ids = torch.argsort(scores, descending=True, stable=True)[:policy['source_batch_size']].tolist()
         self.last_frames = frame_ids
         diagnostics = iteration == 1 or iteration % policy['audit_interval'] == 0
-        raw_totals = {key: total.detach()*0 for key in ['mv_rgb', 'mv_depth', 'prior_context_rgb', 'coverage']}
+        raw_totals = {key: total.detach()*0 for key in ['mv_rgb', 'mv_depth', 'prior_context_rgb', 'coverage', 'prior_rendered_coverage']}
+        coverage_stats = []
         self.last_source_audit = []
         for frame_index in frame_ids:
             package = render_fn(self.cameras[frame_index], model, args)
@@ -182,6 +206,20 @@ class MultiViewRoad:
                 raise FloatingPointError('nonfinite actual road raster output')
             uv = self.raster_uv[frame_index] if hasattr(self, 'raster_uv') else data['source_uv'][frame_index]
             alpha = sample_map(package['alpha'], uv)[:, 0]
+            # 即使道路在真实来源被车挡住，也只约束道路独立渲染的先验alpha；
+            # 不把这些位置的车身RGB当道路GT，不改正常联合前向。
+            prior_coverage, sub_alpha = rendered_coverage(package['alpha'], self.coverage_uv[frame_index],
+                self.coverage_valid[frame_index], self.coverage_denominator,
+                len(self.cameras)/len(frame_ids), policy['coverage_target'])
+            total = total+weights['prior_rgb']*policy['coverage_weight']*prior_coverage
+            raw_totals['prior_rendered_coverage'] += prior_coverage.detach()
+            if diagnostics:
+                valid_sub = self.coverage_valid[frame_index]
+                count_sub = int(valid_sub.sum())
+                coverage_stats.append(dict(frame_index=frame_index, sampled_subcells=count_sub,
+                    rendered_alpha_mean=float(sub_alpha[valid_sub].mean()) if count_sub else None,
+                    below_target_fraction=float((sub_alpha[valid_sub] < policy['coverage_target']).float().mean()) if count_sub else None,
+                    weighted_objective=float((weights['prior_rgb']*policy['coverage_weight']*prior_coverage).detach())))
             predicted = sample_map(package['rgb'], uv)/alpha[:, None].clamp_min(1e-5)
             depth = sample_map(package['depth_sum'], uv)[:, 0]/alpha.clamp_min(1e-5)
             color_error = robust_rgb(predicted, data['source_rgb'][frame_index], policy['robust_rgb_delta'])
@@ -238,6 +276,14 @@ class MultiViewRoad:
         self.last_iteration = iteration
         self.last_terms = {key: float(value.detach()) for key, value in {**geometry_terms, **raw_totals, 'prior_continuity': continuity}.items()}
         self.last_terms['sources'] = self.last_source_audit
+        self.last_terms['prior_coverage'] = coverage_stats
+        self.last_terms['prior_boundary'] = dict(prior_switch_active=weights['prior_rgb'] > 0,
+            components=len(self.prior_components), context_anchored_components=sum(c['anchored_to_context'] for c in self.prior_components),
+            query_prior_units=int(prior.sum()), query_prior_without_context_path=int((prior & (self.prior_graph['context_hops'] < 0)).sum()),
+            continuity_edges=int(edge_valid.sum()), no_UNKNOWN_bridges=True)
+        boundary_edge = edge_valid & (data['provenance'][edges] == 1).any(1)
+        self.last_terms['prior_boundary']['actual_boundary_DC_RGB_RMSE'] = (
+            float(edge_color_error[boundary_edge].detach().mean().sqrt()) if boundary_edge.any() else None)
         return total, self.last_terms
 
     def export(self, model, iteration, optimizer_updates):
@@ -258,6 +304,8 @@ class MultiViewRoad:
                             reliability=self.reliability.detach().cpu().numpy(),
                             effective_base_weight=self.data['base_weight'].detach().cpu().numpy(),
                             effective_rgb_weight=coefficients.detach().cpu().numpy(),
+                            prior_context_hops=self.prior_graph['context_hops'].cpu().numpy(),
+                            prior_component=self.prior_graph['component'].cpu().numpy(),
                             objective_visits=self.visits, gradient_l2_cumulative=self.gradient_l2_cumulative,
                             gradient_samples=self.gradient_samples)
         metadata = dict(version=ROAD_VERSION, input_bundle=str(self.path), iteration=iteration,
@@ -267,6 +315,8 @@ class MultiViewRoad:
                         diagnostics_interval=ROAD_POLICY['audit_interval'], arm_weights=self.arm_weights,
                         effective_weight_definition='last reliability snapshot, true provenance/domain and arm coefficient, full49 normalization; batch uses F/B factor',
                         counterfactual_required_for_causal_claim=True, quality_accepted=False)
+        metadata['prior_components'] = self.prior_components
+        metadata['prior_boundary_active'] = self.arm_weights['prior_rgb'] > 0
         (destination/'metadata.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
         return destination
 

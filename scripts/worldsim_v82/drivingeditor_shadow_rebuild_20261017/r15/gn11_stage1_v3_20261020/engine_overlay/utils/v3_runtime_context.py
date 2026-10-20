@@ -259,26 +259,61 @@ class V3Context:
             _append_jsonl(self.output/'v3_render_cost.jsonl', record)
         return record
 
-    def road_visibility_audit(self, camera, package, static, args, iteration, frame_id):
-        from gaussian_renderer import render_road_only, render_contribution_features
+    def road_visibility_audit(self, camera, package, static, args, iteration, frame_id, include_source=True):
+        from gaussian_renderer import render, render_road_only, render_contribution_features
         from utils.v3_road_diagnostics import road_visibility
+        from utils.v3_multiview_road import sample_map
+        from utils.v3_road_prior import rendered_coverage
+        from PIL import Image
         road = self.road
         frame_index = road.meta['frame_order'].index(frame_id)
         with audit_span('diagnostic/road_visibility'), torch.no_grad():
-            arrays, metrics = road_visibility(package, render_road_only(camera, static, args),
+            road_package = render_road_only(camera, static, args)
+            arrays, metrics = road_visibility(package, road_package,
                 static.road_unit_mask, torch.arange(len(road.data['provenance']), device=static._xyz.device),
                 road.raster_uv[frame_index], road.data['surface_supported'], road.data['provenance'],
                 road.data['is_query'], torch.as_tensor(road.numpy['gate_in_view'][frame_index], device=static._xyz.device),
                 lambda flags, joint: render_contribution_features(package, flags, joint))
+            verified = ((road.data['base_weight'][frame_index] > 0) & (road.data['provenance'] == 1)
+                        & road.data['is_query'])
+            uv = road.raster_uv[frame_index]
+            prediction = sample_map(road_package['rgb'], uv)/sample_map(road_package['alpha'], uv).clamp_min(1e-5)
+            background = sample_map(package['render_s'], uv)
+            joint = sample_map(package['render'], uv)
+            truth = road.data['source_rgb'][frame_index]
+            metrics['verified_exposure_only'] = dict(units=int(verified.sum()), **{
+                key: float((value-truth).abs()[verified].mean()) if verified.any() else None
+                for key, value in [('road_RGB_L1', prediction), ('deleted_five_background_RGB_L1', background), ('joint_RGB_L1', joint)]})
+            arrays['verified_exposure'] = verified
+            arrays.update(road_only_RGB=road_package['rgb'], deleted_five_background_RGB=package['render_s'],
+                          joint_RGB=package['render'])
+            _, subalpha = rendered_coverage(road_package['alpha'], road.coverage_uv[frame_index],
+                road.coverage_valid[frame_index], road.coverage_denominator, 1., ROAD_POLICY['coverage_target'])
+            arrays.update(prior_subcell_uv=road.coverage_uv[frame_index], prior_subcell_alpha=subalpha,
+                          prior_subcell_valid=road.coverage_valid[frame_index])
             destination = self.output/'road_visibility'/f'iteration_{iteration:06d}_{frame_id}'
             destination.mkdir(parents=True, exist_ok=False)
             np.savez_compressed(destination/'units.npz', **{k: v.cpu().numpy() for k, v in arrays.items()})
+            for name in ['road_only_RGB', 'deleted_five_background_RGB', 'joint_RGB']:
+                # PNG仅用于浏览；浮点NPZ不截断，不把显示clamp作为资产修复。
+                pixels = (arrays[name].permute(1, 2, 0).clamp(0, 1).cpu().numpy()*255).round().astype(np.uint8)
+                Image.fromarray(pixels).save(destination/(name+'.png'))
             metadata = dict(version=RENDER_AUDIT_VERSION, iteration=iteration, completed_optimizer_updates=iteration-1,
                 frame=frame_id, input_bundle=str(road.path), anchor_world_unit_projection=True,
                 ordinary_background_temporal_freedom_preserved=True, metrics=metrics,
                 interpretation='joint includes target cars; background excludes five editable cars but keeps non-edit motion; neither attenuation proves illegal occlusion',
                 quality_accepted=False, human_verdict=None)
             (destination/'metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False), encoding='utf-8')
+            if include_source:
+                scores = (road.data['base_weight']*((road.data['provenance'] == 1) & road.data['is_query'])[None]).sum(1)
+                source_index = int(scores.argmax())
+                if scores[source_index] > 0 and source_index != frame_index:
+                    source_camera = road.cameras[source_index]
+                    # 删除五车=正常独立背景渲染；保留不编辑的运动内容，不按道路贡献裁背景。
+                    source_package = render(source_camera, self.models[0], self.models[1], args,
+                        static._xyz.new_zeros(3), env_map=self.models[2], is_training=False)
+                    metrics['verified_source_view'] = self.road_visibility_audit(source_camera, source_package,
+                        static, args, iteration, road.meta['frame_order'][source_index], include_source=False)
         return metrics
 
     def select_gate_camera(self, scene, camera, time_shift):
@@ -659,6 +694,8 @@ class V3Context:
                     raise RuntimeError('real multiview road RGB path has no sampled texture gradient')
                 self.gate_details['road_source_frames_tested'] = [89+index for index in self.road.last_frames]
                 self.gate_details['road_raster_forward_backward_finite'] = True
+                self.gate_details['prior_rendered_coverage'] = self.road.last_terms['prior_coverage']
+                self.gate_details['prior_boundary'] = self.road.last_terms['prior_boundary']
                 self.road.export(static, iteration=0, optimizer_updates=0)
             self.gate_details['render_cost'] = self.finish_iteration(iteration)
             (self.output / "gpu_gate_details.json").write_text(

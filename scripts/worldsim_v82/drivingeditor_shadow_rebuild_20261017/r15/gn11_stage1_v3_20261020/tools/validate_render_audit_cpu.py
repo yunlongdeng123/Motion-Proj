@@ -36,7 +36,16 @@ def main():
     assert {key: value['road_weights'] for key, value in plan['arms'].items()} == ARM_ROAD_WEIGHTS
     assert not (args.campaign/'GPU_APPROVAL.json').exists()
     bundle = Path(plan['input_bundle'])
-    assert bundle.read_bytes() == (args.campaign/'source_before_exposure199_20261020/bundle_before_turn_snapshot.json').read_bytes()
+    meta = json.loads(bundle.read_text())
+    parent = Path(meta['parent_bundle'])
+    old_meta = json.loads(parent.read_text())
+    with np.load(parent.parent/old_meta['units'], allow_pickle=False) as old, np.load(bundle.parent/meta['units'], allow_pickle=False) as new:
+        for key in ['unit_ids', 'keys', 'world', 'model_xyz', 'normal_world', 'normal_model',
+                    'surface_supported', 'query_unit_id', 'query_frame', 'query_actor', 'source_rgb', 'source_uv', 'source_depth']:
+            assert np.array_equal(old[key], new[key]), key
+        assert not ((new['base_weight'] > 0) & ~(old['base_weight'] > 0)).any()
+        assert new['coverage_model_xyz'].shape == (meta['unit_count'], 9, 3)
+        assert all(frame['occluder_masks']['complete'] for frame in meta['frames'].values())
     v1 = Path(plan['basis']['five_identity_v1'])
     for name in ['hybrid30k_losses.py', 'paper_losses.py']:
         assert (v1/'utils'/name).read_bytes() == (args.campaign/'engine/utils'/name).read_bytes()
@@ -77,20 +86,22 @@ def main():
     result = unittest.TextTestRunner(stream=log, verbosity=2).run(unittest.defaultTestLoader.discover(str(args.campaign/'tests')))
     args.output.mkdir(parents=True)
     (args.output/'unittest.log').write_text(log.getvalue(), encoding='utf-8')
-    receipt = dict(task='WS-V82-GN11-V3-RENDER-DENSIFY-ROAD-R1-20261020', render_audit_version=RENDER_AUDIT_VERSION,
+    receipt = dict(task='WS-V82-GN11-V3-ROAD-REVIEW-R2-20261021', road_version=plan['road_version'],
+        render_audit_version=RENDER_AUDIT_VERSION,
         created_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         status='CPU_PASSED_ACTUAL_CUDA_PENDING' if result.wasSuccessful() else 'CPU_FAILED_PRESERVED',
         torch_version=torch.__version__, tests_run=result.testsRun, failures=len(result.failures), errors=len(result.errors),
         skipped=len(result.skipped), full_log='unittest.log',
         road_supported_world_units=supported, hard_eligible_source_observations=source_observations,
-        main49_bundle_unchanged=True, main_reference_frames=49, V1_native_regularizer_source_bytes_unchanged=True,
+        main49_geometry_queries_raw_RGB_unchanged=True, mask_union_repaired=meta['mask_union_repair'],
+        main_reference_frames=49, V1_native_regularizer_source_bytes_unchanged=True,
         four_arm_CPU_preflight=plan['arm_order'], stale_and_evidence_free_CUDA_gates_rejected=True,
         actual_CUDA_screen_numeric_check='implemented_not_executed', actual_CUDA_cost_memory='not_measured',
         actual_scene_road_contribution='not_measured',
         GPU_used=False, training_updates=0, extra_optimizer_updates=0,
         GPU_device_nodes_present=bool(list(Path('/dev').glob('nvidia*'))),
         extended49_199_and_full199_199='deferred_not_authorized', human_verdict=None, quality_accepted=False,
-        pending=['user review', 'explicit GPU approval', 'actual zero-update CUDA gates for each arm',
+        pending=['actual zero-update CUDA gates for each arm',
                  'numerical screen/count comparisons and feature alpha parity', 'actual overhead and capacity logs',
                  'four fresh30K and full49 reconstruction/edit quality review'],
         failure_ledger_refs=['V82-F01', 'V82-F06'], failure_ledger_delta='none')
