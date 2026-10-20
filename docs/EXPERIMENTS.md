@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-GN11-ROAD-EXPOSURE199-20261020 / road_exposure199_005 | 独立CPU审计同场景raw0–198、固定V3世界单元；同口径49/199曝光配对与逐来源裁片。主实验仍49/49，扩展与完整199训练暂缓；无训练或GPU | [组件、真实统计与复现](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/exposure199/README.md) |
 | WS-V82-R15-GN11-STAGE1-V3-20261020 / full、real_only、prior_only、ownership_only；road_cf_raw89_a37_drop_raw133仅登记 | v3世界道路多视角输入/共享薄层高斯/连续先验与逐单元来源工具已CPU部署；普通背景时间与三项正则保持V1。四臂共同道路表示/几何，仅来源权重变化；去来源对照独立审批另计预算。GPU/训练0，待审核 | [v3组件、协议与闸门](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) |
 | WS-V82-R15-GN11-STAGE1-V2-ROAD-ABLATIONS-20261019 / real_only_seed0、prior_only_seed0、ownership_only_seed0 | 三组fresh第一阶段30K：仅跨帧真实观测、仅供体先验、仅归属修复；相同五身份49帧/seed0，最多两路并发 | [四组组件与实际队列](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/ablations/index.html) |
 | WS-V82-R15-GN11-STAGE1-V2-20261019 / gn11_stage1_v2_seed0 | 五身份第一阶段v2：静动态归属与同世界道路查询；候选代码、全幅供体预览与固定30K协议 | [组件与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/gn11_stage1_v2_20261019/index.html) |

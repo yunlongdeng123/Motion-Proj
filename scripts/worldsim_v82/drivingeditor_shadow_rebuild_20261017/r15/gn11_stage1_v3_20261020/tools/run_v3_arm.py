@@ -34,6 +34,12 @@ def write(path, value):
     os.replace(temporary, path)
 
 
+def validate_main49_sources(bundle):
+    expected = [f'0008{raw:03d}' for raw in range(89, 138)]
+    if bundle.get('frame_order') != expected or set(bundle.get('frames', {})) != set(expected):
+        raise RuntimeError('V3 main remains49/49;199 references require a separately reviewed extension')
+
+
 def validate(arguments):
     plan = read(arguments.plan)
     config = read(arguments.baseline_config)
@@ -46,6 +52,7 @@ def validate(arguments):
         raise FileExistsError("new output required; never overwrite/replay a run")
     if bundle.get("status") != "CPU_MULTIVIEW_ROAD_INPUT_VERIFIED":
         raise RuntimeError("CPU real-input gate incomplete")
+    validate_main49_sources(bundle)
     if bundle.get("observed_units", 0) + bundle.get("prior_units", 0) <= 0:
         raise RuntimeError("road module has no fixed real target")
     if config.get("seed") != 0 or config.get("iterations") != 30000:

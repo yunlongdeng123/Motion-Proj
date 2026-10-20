@@ -1,0 +1,16 @@
+{
+  "task": "WS-V82-GN11-ROAD-EXPOSURE199-20261020",
+  "main_task": "WS-V82-R15-GN11-STAGE1-V3-20261020",
+  "experiments": [
+    {"id": "v1_baseline", "GN11_training_frames": 49, "road_reference_frames": 0, "state": "existing_baseline_preserved"},
+    {"id": "v3_main", "GN11_training_frames": 49, "road_reference_frames": 49, "state": "waiting_user_review_and_GPU_approval", "stage1_updates_per_arm": 30000, "stage2_updates": 0},
+    {"id": "road_exposure199_audit", "GN11_training_frames": 0, "road_reference_frames": 199, "state": "CPU_audit_only", "raw_range": [0, 198], "original49_range": [89, 137], "training_updates": 0, "GPU_used": false},
+    {"id": "v3_extension_49train_199reference", "GN11_training_frames": 49, "road_reference_frames": 199, "state": "deferred_by_user", "execution_enabled": false},
+    {"id": "full199_training", "GN11_training_frames": 199, "road_reference_frames": 199, "state": "deferred_by_user", "execution_enabled": false}
+  ],
+  "audit_training_input_promotion_allowed": false,
+  "main_input_bundle_unchanged": true,
+  "source_count_is_not_optimization_contribution": true,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"],
+  "failure_ledger_delta": "none"
+}
