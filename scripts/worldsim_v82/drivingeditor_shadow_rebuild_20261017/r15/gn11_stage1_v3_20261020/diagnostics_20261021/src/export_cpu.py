@@ -1,10 +1,12 @@
-"""Stream derived, hash-bound diagnostic assets to stdout. No remote output writes."""
+"""Stream derived CPU diagnostic assets; no protected input writes."""
 import base64
+import contextlib
 import datetime as dt
 import io
 import json
 import sys
 import tarfile
+import tempfile
 import zlib
 from pathlib import Path
 import numpy as np
@@ -68,6 +70,7 @@ def export():
     js('data/scene.js', 'scene', dict(cameras=camera_records, world_to_model=adapter.A,
         model_to_world=adapter.invA, meter_to_model=adapter.scale, gates=gates, raw_start=89, raw_end=137,
         source='frozen V3 serial_r1 30K', road_cells=26088, supported_road=14034,
+        experiments=[dict(id=arm,name=dict(full='完整版',real_only='仅真实观测',prior_only='仅先验',ownership_only='仅归属修复').get(arm,arm)) for arm in ARMS],
         gpu_used=False, optimizer_updates=0, native_manifest_sha256=MANIFEST_SHA,
         precision=dict(map_alpha='uint16 /65535', map_depth='uint16 centimeters, 65535 invalid; >=655.34 m clipped',
                        geometry='float32 model coordinates; sampled centers, not full novel-view rendering',
@@ -137,6 +140,13 @@ def export():
         training_updates=0, optimizer_created=False, gpu_used=False, remote_assets_modified=False,
         source_files=source_files, protected_inputs_unchanged=unchanged, summary=summary,
         cuda_topk_status='PENDING_GPU', counterfactual_render_status='PENDING_GPU'))
+    # 标准导出同步包含离线几何，之后无需另行接入localhost服务。
+    from export_offline import export as export_offline
+    with tempfile.TemporaryDirectory(prefix='gsdiag_offline_') as folder:
+        with contextlib.redirect_stdout(sys.stderr):
+            export_offline(Path(folder),list(ARMS))
+        for path in sorted(Path(folder).rglob('*')):
+            if path.is_file():put(str(path.relative_to(folder)),path.read_bytes())
     tar.close()
 
 

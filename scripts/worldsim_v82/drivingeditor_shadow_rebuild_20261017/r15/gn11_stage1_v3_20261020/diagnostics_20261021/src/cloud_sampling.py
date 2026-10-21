@@ -3,7 +3,7 @@ import argparse, base64, gc, json, math, os, sys, zlib
 from pathlib import Path
 from collections import OrderedDict
 import numpy as np
-from backend import Adapter, CAMPAIGN, clean, digest
+from backend import Adapter, CAMPAIGN, ARMS, clean, digest
 
 ACTORS=(5,26,18,6,37)
 V1=CAMPAIGN.parent/'r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k'
@@ -72,7 +72,7 @@ class Sampler:
             single_vehicle_definition='current camera mask dilated5px, all depths; or 3D box expanded0.5m; spatial region, not permanent Gaussian ownership')
 
     def get_model(self,arm):
-        if arm not in ('full','real_only','prior_only','ownership_only','gn11_v1'):raise ValueError('unknown arm')
+        if arm not in (*ARMS,'gn11_v1'):raise ValueError('unknown arm')
         if self.current==arm:return self.model
         self.model=None;self.orders={};gc.collect()
         if arm!='gn11_v1':

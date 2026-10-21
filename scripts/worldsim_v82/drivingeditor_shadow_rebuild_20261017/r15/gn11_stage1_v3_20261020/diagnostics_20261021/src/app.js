@@ -1,8 +1,10 @@
 /* Buildless, offline first. No external JS/CDN, uploads, telemetry or GPU calls. */
 'use strict';
 const $ = id => document.getElementById(id);
-const ARMS = ['full','real_only','prior_only','ownership_only','gn11_v1'];
-const NAMES = ['完整版','仅真实观测','仅先验','仅归属修复','V1 原生 GN11（历史恢复30K）'];
+const EXPERIMENTS=[...(window.GSDATA.scene.experiments||[{id:'full',name:'完整版'},{id:'real_only',name:'仅真实观测'},{id:'prior_only',name:'仅先验'},{id:'ownership_only',name:'仅归属修复'},{id:'gn11_v1',name:'V1 原生 GN11（历史恢复30K）'}])];
+if(window.GSDATA.scene.bindings?.gn11_v1&&!EXPERIMENTS.some(v=>v.id==='gn11_v1'))EXPERIMENTS.push({id:'gn11_v1',name:'V1 原生 GN11（历史恢复30K）'});
+const ARMS = EXPERIMENTS.map(v=>v.id);
+const NAMES = EXPERIMENTS.map(v=>v.name);
 const COLORS = {ordinary:'#80aff0',road:'#5ed7b1',dynamic:'#ffb379'};
 const S = {preview_sampling:{...GSCloud.defaults},arm:'full',raw:102,x:90,y:255,channel:'deleted_five',rayMode:'deleted_five',unit:null,selected:null,ray:null,checked:new Set(),playing:false};
 const cache = new Map(), images = new Map(); let version=0,comparisonVersion=0,timer=null,scene,road,maps,units,cloud,opt,lidar;
@@ -21,7 +23,7 @@ async function unpack(p){
 function load(key,path,packed=true){
  if(cache.has(key))return cache.get(key);
  const promise=new Promise((resolve,reject)=>{if(window.GSDATA[key]){resolve(window.GSDATA[key]);return;}const script=document.createElement('script');script.src=path;script.onload=()=>{script.remove();window.GSDATA[key]?resolve(window.GSDATA[key]):reject(Error('证据键缺失 '+key));};script.onerror=()=>{script.remove();reject(Error('缺少证据文件 '+path));};document.head.append(script);}).then(async p=>{if(packed){delete window.GSDATA[key];const own=await unpack(p);return p.shared?{...await load(p.shared.key,p.shared.path),...own}:own;}return p;}).catch(e=>{cache.delete(key);throw e;});
- cache.set(key,promise);const frameKeys=[...cache.keys()].filter(k=>/^((?:lidar|unitbase)\/\d+|(?:full|real_only|prior_only|ownership_only)\/(?:units\/)?\d+)$/.test(k));while(frameKeys.length>24)cache.delete(frameKeys.shift());return promise;
+ cache.set(key,promise);const frameKeys=[...cache.keys()].filter(k=>/^((?:lidar|unitbase)\/\d+|[^/]+\/(?:units\/)?\d+)$/.test(k));while(frameKeys.length>24)cache.delete(frameKeys.shift());return promise;
 }
 function img(path){if(images.has(path))return images.get(path);const p=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(Error('图像缺失 '+path));im.src=path;});images.set(path,p);while(images.size>72)images.delete(images.keys().next().value);return p;}
 const asset=(arm,ch,raw)=>ch==='gt'?`assets/gt/${raw}.webp`:`assets/${arm}/${ch}/${String(raw).padStart(3,'0')}.webp`;
@@ -177,6 +179,8 @@ async function importCase(file){
  rankRows();status('案例已载入；只恢复选择、合成模式与人工备注，不执行任何GPU作业或优化。');
 }
 function bind(){
+ $('arm').replaceChildren(...EXPERIMENTS.map(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=`${v.id} · ${v.name}`;return o;}));
+ const compareLink=document.querySelector('nav a[href="#compare"]'),compareTitle=document.querySelector('#compare h2');if(compareLink)compareLink.textContent='实验同帧对照';if(compareTitle)compareTitle.textContent=`${ARMS.length}组实验 · 同帧对照`;
  GSCloud.bind(S,{refresh,draw3D,stop,focus:center=>{V.focus=[...center];V.distance=2.5;V.camera=false;draw3D();}});
  $('comparison').innerHTML=ARMS.map((a,i)=>`<article class="compare-card"><h3>${a} · ${NAMES[i]}</h3><canvas id="compare_${a}" width="480" height="320" aria-label="${a}同帧对照"></canvas><p>点击同位置联动像素；切换实验组查看三维证据</p></article>`).join('');
  $('arm').onchange=e=>{S.arm=e.target.value;stop();refresh();};$('channel').onchange=async e=>{stop();S.channel=e.target.value;const ch=S.channel;S.rayMode=['joint','joint_alpha','joint_depth_m','residual','depth_error','road_joint'].includes(ch)?'joint':['dynamic_raw','dynamic_alpha','dynamic_depth_m'].includes(ch)?'dynamic':['road_raw','road_surface_color','road_alpha'].includes(ch)?'road_only':'deleted_five';$('rayMode').value=S.rayMode;await refresh();};$('rayMode').onchange=async e=>{stop();S.rayMode=e.target.value;await refresh();};$('frame').oninput=e=>{stop();S.raw=+e.target.value;refresh();};$('prev').onclick=()=>{stop();S.raw=Math.max(89,S.raw-1);refresh();};$('next').onclick=()=>{stop();S.raw=Math.min(137,S.raw+1);refresh();};

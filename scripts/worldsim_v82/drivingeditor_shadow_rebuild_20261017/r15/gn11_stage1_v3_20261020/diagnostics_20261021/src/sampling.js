@@ -9,7 +9,7 @@ window.GSCloud=(()=>{
  function sync(){for(const k of Object.keys(defaults)){const n=el('sample_'+k);if(n)n.value=state.preview_sampling[k];}el('sample_vehicle_rate').disabled=state.preview_sampling.vehicle==='none';el('sample_vehicle_scope').disabled=state.preview_sampling.vehicle==='none';}
  function message(t,bad=false){notice=t;const n=el('samplingState');if(n){n.textContent=t;n.classList.toggle('bad',bad);}}
  function bind(s,a){state=s;api=a;state.preview_sampling=valid(state.preview_sampling);
-  const controls=document.createElement('div');controls.className='sampling-controls';controls.innerHTML=`<label>静态采样率（普通背景）<span><input id="sample_static_rate" type="number" min="0" max="100" step="0.5" value="2" aria-label="静态采样率"> %</span></label><label>动态采样率<span><input id="sample_dynamic_rate" type="number" min="0" max="100" step="0.5" value="2" aria-label="动态采样率"> %</span></label><label>单独加密车辆<select id="sample_vehicle"><option value="none">不单独加密</option>${[5,26,18,6,37].map(i=>`<option value="${i}">a${i}</option>`).join('')}</select></label><label>单车采样率<span><input id="sample_vehicle_rate" type="number" min="0" max="100" step="1" value="10" aria-label="单车采样率"> %</span></label><label>单车区域<select id="sample_vehicle_scope"><option value="projection">车身投影及后方背景</option><option value="box">三维车框及周边0.5m</option></select></label><button id="applySampling">应用采样</button><label>点透明度<select id="pointAlpha"><option value="effective">按真实有效 opacity</option><option value="solid">不透明中心 · 看分布</option></select></label><button id="isolateVehicle">聚焦所选车辆</button>`;
+  const controls=document.createElement('div');controls.className='sampling-controls';controls.innerHTML=`<label>静态采样率（普通背景）<span><input id="sample_static_rate" type="number" min="0" max="100" step="0.5" value="2" aria-label="静态采样率"> %</span></label><label>动态采样率<span><input id="sample_dynamic_rate" type="number" min="0" max="100" step="0.5" value="2" aria-label="动态采样率"> %</span></label><label>单独加密车辆<select id="sample_vehicle"><option value="none">不单独加密</option>${[5,26,18,6,37].map(i=>`<option value="${i}">a${i}</option>`).join('')}</select></label><label>单车采样率<span><input id="sample_vehicle_rate" type="number" min="0" max="100" step="1" value="10" aria-label="单车采样率"> %</span></label><input type="hidden" id="sample_vehicle_scope" value="projection"><button id="applySampling">应用采样</button><label>点透明度<select id="pointAlpha"><option value="effective">按真实有效 opacity</option><option value="solid">不透明中心 · 看分布</option></select></label><button id="isolateVehicle">聚焦所选车辆</button>`;
   el('cloudColor').closest('.subtools').after(controls);
   const msg=document.createElement('p');msg.id='samplingState';msg.className='note';msg.setAttribute('role','status');controls.after(msg);
   const help=document.createElement('p');help.className='note';help.textContent='V3道路始终全量保留；V1无专用道路。单车加密同时覆盖普通背景与动态，是当前帧区域采样，不是永久车辆归属。投影区域为原始车身掩码外扩5像素，包含车后背景。';msg.after(help);
@@ -18,7 +18,7 @@ window.GSCloud=(()=>{
   el('sample_vehicle').onchange=()=>{const off=el('sample_vehicle').value==='none';el('sample_vehicle_rate').disabled=off;el('sample_vehicle_scope').disabled=off;};
   el('pointAlpha').onchange=api.draw3D;
   el('isolateVehicle').onclick=()=>{const actor=Number(el('sample_vehicle').value),box=vehicles().find(b=>b.actor===actor);if(box)api.focus(box.center);else message('先选择一辆车，再点击聚焦。');};
-  sync();message(location.protocol==='file:'?'离线支持0—2%基础采样；提高采样率或单车加密，请运行 start_local.ps1。':'默认2%基础采样；更高采样率由远端CPU按需读取完整模型。');
+  sync();message('默认静态／动态各2%；调高比例或单车加密时读取同目录几何分块，无需启动服务。');
  }
  function vehicles(){return window.GSDATA.samplingMeta?.vehicles?.[String(state.raw)]||[];}
  function vehicleLabels(scene){if(!state)return;const cam=scene.cameras[state.raw-89],W=cam.W;
@@ -29,8 +29,12 @@ window.GSCloud=(()=>{
  }
  async function load(s,loader,unpack){sync();const epoch=++cloudEpoch,p=valid(s.preview_sampling),arm=s.arm,raw=s.raw;let result;
   try{if(p.static_rate<=2&&p.dynamic_rate<=2&&p.vehicle==='none'){const base=await loader(`${arm}/cloud`, `data/${arm}/cloud.js`);if(!base.sampling)throw Error('缺少新版2%采样数据，请更新数据包');result=p.static_rate===2&&p.dynamic_rate===2?base:reduced(base,p);}
-   else{if(location.protocol==='file:')throw Error('离线文件无法读取更多高斯；请运行 start_local.ps1 后打开本地网址');const key=JSON.stringify([arm,p,p.vehicle==='none'?null:raw]);if(cache.has(key))result=cache.get(key);else{message(`正在CPU采样 ${arm} / raw${raw}，首次读取检查点可能需要数十秒…`);const response=await fetch('/api/cloud?'+new URLSearchParams({arm,raw,...p}),{cache:'no-store'});const packed=await response.json();if(!response.ok||packed.error)throw Error(packed.error||'采样服务不可用');result=await unpack(packed);cache.set(key,result);while(cache.size>2)cache.delete(cache.keys().next().value);}}
-   if(epoch===cloudEpoch){lastGood={arm,cloud:result,p:{...p}};message(`已应用：静态 ${p.static_rate}% · 动态 ${p.dynamic_rate}%`+(p.vehicle==='none'?'':` · a${p.vehicle} 单车目标 ${p.vehicle_rate}%（不降低基础采样率）`));}return result;
+   else{const key=JSON.stringify([arm,p,p.vehicle==='none'?null:raw]);if(cache.has(key))result=cache.get(key);else{
+    if(window.GSOfflineGeometry?.available(arm)){const base=await loader(`${arm}/cloud`,`data/${arm}/cloud.js`);result=await GSOfflineGeometry.make(arm,raw,p,base,unpack,message,()=>epoch!==cloudEpoch);}
+    else throw Error('当前实验缺少离线几何分块；请运行 export_offline.ps1 更新此目录');
+    cache.set(key,result);while(cache.size>2)cache.delete(cache.keys().next().value);
+   }}
+   if(epoch===cloudEpoch){lastGood={arm,cloud:result,p:{...p}};message(`已应用${result.sampling?.offline?"（离线）":""}：静态 ${p.static_rate}% · 动态 ${p.dynamic_rate}%`+(p.vehicle==='none'?'':` · a${p.vehicle} 单车目标 ${p.vehicle_rate}%（不降低基础采样率）`));}return result;
   }catch(e){if(epoch!==cloudEpoch)throw e;message(e.message+'；仍显示上次成功采样。',true);if(lastGood?.arm===arm){s.preview_sampling={...lastGood.p};sync();return lastGood.cloud;}const base=await loader(`${arm}/cloud`,`data/${arm}/cloud.js`);s.preview_sampling={...defaults};sync();lastGood={arm,cloud:base,p:{...defaults}};return base;}
  }
  function begin(cloud){counts={ordinary:{pool:0,active:0,screen:0},road:{pool:0,active:0,screen:0},dynamic:{pool:0,active:0,screen:0}};for(const prefix of ['static_','dynamic_'])for(const role of cloud[prefix+'role'])counts[['ordinary','road','dynamic'][role]].pool++;}
