@@ -232,6 +232,8 @@ gate、第一步和每5K更新前增加3次只读光栅：道路独立alpha、�
 
 R2补齐固定合同中的显式终态输出：每帧用同一冻结定义记录车身掩码结构损失、前遮挡硬比例/alpha质量、动态颜色/alpha比例退化；保存完整静态/联合alpha、三分支深度、道路alpha归一化颜色。逐帧抽最多14个有效车身LiDAR像素，用保留全部几何与透射率的原生feature pass记录静态/联合车前贡献、框外中心质量与平均深度漏检；这不是全图front-alpha或连续椭球first-return。另报告真实曝光道路深度、硬通过查询区外背景/联合残差、终态道路几何能量和不经UNKNOWN桥接的先验边界连续性，固定raw89/a6、a37查询映射完整保留。无训练、optimizer或额外Adam步。首个full_r1实际49帧零更新重放通过，但补齐诊断后使用新目录full_r2作为最终完整入口，保留r1不覆盖；不是额外训练或为质量重调参数。
 
+2026-10-21四组R2均已实际CUDA完成49帧、零优化重放和终态诊断，CPU全套98/98通过。`tools/audit_v3_final49.py`又以纯CPU核验全部正式节点资产、清理保护与12,297项哈希，四组对照和[含组件图的最终报告](final49_20261021/REPORT.md)已保存。四组完整画面删除后均有明显车形残留，不能判定干净街景通过；`human_verdict=null`。原历史CPU87/94项与初轮R1结果保留，不再冒充当前尚未执行GPU评价。
+
 CPU新增8项通过：拒绝未完成/0步gate/错误调用计数、缺帧/越界checkpoint、loader写入或变换变化、显示裁剪冒充浮点重放，并验证原生半像素投影及dry-run不创建GPU任务/成功凭据。首次在不完整`engine_overlay`上运行全套测试因缺少原生`hybrid30k_runtime`导入失败，保留该日志；随后在隔离CPU测试目录绑定当前冻结完整engine，87/87通过，无skip。日志位于当前campaign的`monitor/final49_cpu_native_RZEQ1S44/unittest.log`。这些是CPU准入，不是实际49帧CUDA重放通过；实际执行和四组结果汇总仍待训练结束。
 
 执行时使用当前分支工具，`--campaign <当前单槽campaign> --arm <固定四组之一> --output <campaign>/final49/<arm>_r1 --execute-final-evaluation-after-user-approval`。输出目录必须全新，失败保留现场；不自动重复评价、不修改训练终态或伪造质量接受。
