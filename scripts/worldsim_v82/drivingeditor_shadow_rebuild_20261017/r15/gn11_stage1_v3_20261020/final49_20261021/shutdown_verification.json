@@ -1,0 +1,26 @@
+{
+  "status": "NORMAL_SHUTDOWN_REQUEST_SENT_SSH_NOW_CLOSED_NO_PLATFORM_CONFIRMATION",
+  "host": "wm-vgpu-1011",
+  "normal_shutdown_attempts": 1,
+  "requested_utc": "2026-10-21T06:45:05.474137+00:00",
+  "delivery_commit_before_shutdown": "26f8d3c4f8a80d2c161b78fd6a6aa47d36ebe2dc",
+  "execution_evidence": [
+    "Final host audit and supervisor identity/start_ticks recheck passed.",
+    "sync completed before sourcing the verified AutoDL normal shutdown wrapper.",
+    "SKIPPED_BUNDLED_TRASH_DELETE_NO_DATA_REMOVED",
+    "Connection to connect.nmb1.seetacloud.com closed by remote host."
+  ],
+  "ssh_observations": [
+    {"attempt": 1, "started_utc": "2026-10-21T06:45:38.3774848Z", "finished_utc": "2026-10-21T06:45:40.6856813Z", "exit_code": 255, "output": "Connection closed by 116.136.52.182 port 38300"},
+    {"attempt": 2, "started_utc": "2026-10-21T06:45:45.6926867Z", "finished_utc": "2026-10-21T06:45:48.0042830Z", "exit_code": 255, "output": "Connection closed by 116.136.52.182 port 38300"},
+    {"attempt": 3, "started_utc": "2026-10-21T06:45:53.0106267Z", "finished_utc": "2026-10-21T06:45:55.3796163Z", "exit_code": 255, "output": "Connection closed by 116.136.52.182 port 38300"}
+  ],
+  "platform_power_confirmed": false,
+  "platform_billing_confirmed": false,
+  "data_removed_by_shutdown": false,
+  "instance_released_or_destroyed": false,
+  "heartbeat": {"id": "v3-gpu", "status": "PAUSED", "same_automation_preserved": true},
+  "quality_accepted": false,
+  "human_verdict": null,
+  "interpretation": "The verified normal shutdown path was requested once and SSH then became unavailable. This is not platform power/billing confirmation; do not repeat shutdown based only on SSH failure."
+}
