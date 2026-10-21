@@ -20,6 +20,9 @@ $IndexPath = Join-Path $Destination 'index.html'
 $IndexText = [IO.File]::ReadAllText($IndexPath)
 if (-not $IndexText.Contains('data/geometry_index.js')) {
     $IndexText = $IndexText.Replace('<script src="sampling.js">', '<script src="data/geometry_index.js"></script><script src="offline_geometry.js"></script><script src="sampling.js">')
-    [IO.File]::WriteAllText($IndexPath, $IndexText, [Text.UTF8Encoding]::new($false))
 }
+if (-not $IndexText.Contains('inspection.js')) { $IndexText = $IndexText.Replace('<script src="app.js', '<script src="inspection_math.js"></script><script src="inspection.js"></script><script src="app.js') }
+if (-not $IndexText.Contains('inspection.css')) { $IndexText = $IndexText.Replace('</head>', '<link rel="stylesheet" href="inspection.css"></head>') }
+$IndexText = $IndexText.Replace('app.js?v=sampling2','app.js?v=inspection1')
+[IO.File]::WriteAllText($IndexPath, $IndexText, [Text.UTF8Encoding]::new($false))
 Write-Host "Updated $IndexPath. Open it directly; no local server is required."
