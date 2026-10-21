@@ -1,0 +1,35 @@
+{
+  "status": "PASSED",
+  "tests": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "cross_origin",
+      "status": 403
+    },
+    {
+      "case": "cross_site",
+      "status": 403
+    },
+    {
+      "case": "wrong_type",
+      "status": 403
+    },
+    {
+      "case": "training_rejected_before_worker",
+      "status": 503
+    },
+    {
+      "case": "DNS_rebinding",
+      "status": 403
+    },
+    {
+      "case": "same_origin_static_guards",
+      "status": 200
+    }
+  ],
+  "extra_GPU_queries": 0,
+  "training_updates": 0
+}

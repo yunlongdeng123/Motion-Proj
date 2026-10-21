@@ -1,0 +1,6 @@
+/* Pixel picking must use the full native image extent, with no object-fit bars. */
+#renderCanvas{height:auto;max-height:none;object-fit:fill;aspect-ratio:3/2}
+.comparison canvas{height:auto;aspect-ratio:3/2}
+.case-row input{font:12px "Segoe UI","Microsoft YaHei",sans-serif}
+.workspace[aria-busy=true]{opacity:.55;pointer-events:none}
+@media(max-width:620px){.case-row{flex-wrap:wrap}.case-row input[type=text]{flex-basis:100%!important}}

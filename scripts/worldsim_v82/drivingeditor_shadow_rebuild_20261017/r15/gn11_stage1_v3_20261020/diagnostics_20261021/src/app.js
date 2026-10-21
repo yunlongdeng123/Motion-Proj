@@ -1,0 +1,199 @@
+/* Buildless, offline first. No external JS/CDN, uploads, telemetry or GPU calls. */
+'use strict';
+const $ = id => document.getElementById(id);
+const ARMS = ['full','real_only','prior_only','ownership_only'];
+const NAMES = ['完整版','仅真实观测','仅先验','仅归属修复'];
+const COLORS = {ordinary:'#80aff0',road:'#5ed7b1',dynamic:'#ffb379'};
+const S = {arm:'full',raw:102,x:90,y:255,channel:'deleted_five',rayMode:'deleted_five',unit:null,selected:null,ray:null,checked:new Set(),playing:false};
+const cache = new Map(), images = new Map(); let version=0,comparisonVersion=0,timer=null,scene,road,maps,units,cloud,opt,lidar;
+const f = (v,n=3) => v===null||v===undefined||!Number.isFinite(Number(v))?'—':Number(v).toFixed(n);
+const fmt = v => f(v,4);
+function status(t,bad=false){$('status').textContent=t;$('status').className=bad?'bad':'';}
+function half(h){const e=(h>>10)&31,m=h&1023,sign=(h&32768)?-1:1;return sign*(e===0?Math.pow(2,-14)*(m/1024):e===31?(m?NaN:Infinity):Math.pow(2,e-15)*(1+m/1024));}
+async function unpack(p){
+ const b=Uint8Array.from(atob(p.data),c=>c.charCodeAt(0));
+ if(!window.DecompressionStream) throw Error('浏览器缺少 DecompressionStream，请使用较新的 Chrome / Edge');
+ const raw=await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('deflate'))).arrayBuffer(),out={};
+ const types={'<f4':Float32Array,'<f8':Float64Array,'<i4':Int32Array,'<u4':Uint32Array,'<u2':Uint16Array,'|u1':Uint8Array,'|b1':Uint8Array};
+ for(const [k,a] of Object.entries(p.arrays)){const data=raw.slice(a.offset,a.offset+a.bytes);let v;if(a.dtype==='<f2'){const h=new Uint16Array(data);v=Float32Array.from(h,half);}else{const T=types[a.dtype];if(!T)throw Error('Unsupported dtype '+a.dtype);v=new T(data);}if(a.multiplier)v=Float32Array.from(v,x=>x*a.multiplier);if(a.log_depth)v=Float32Array.from(v,x=>x===0?65535:Math.expm1((x-1)/254*Math.log(656.34))*100);if(a.nearest_upsample){const factor=a.nearest_upsample,[h,w]=a.shape,expanded=new Float32Array(h*w*factor*factor);for(let y=0;y<h*factor;y++)for(let x=0;x<w*factor;x++)expanded[y*w*factor+x]=v[Math.floor(y/factor)*w+Math.floor(x/factor)];v=expanded;}out[k]=v;}
+ if(p.branches)out.branches=p.branches;return out;
+}
+function load(key,path,packed=true){
+ if(cache.has(key))return cache.get(key);
+ const promise=new Promise((resolve,reject)=>{if(window.GSDATA[key]){resolve(window.GSDATA[key]);return;}const script=document.createElement('script');script.src=path;script.onload=()=>{script.remove();window.GSDATA[key]?resolve(window.GSDATA[key]):reject(Error('证据键缺失 '+key));};script.onerror=()=>{script.remove();reject(Error('缺少证据文件 '+path));};document.head.append(script);}).then(async p=>{if(packed){delete window.GSDATA[key];const own=await unpack(p);return p.shared?{...await load(p.shared.key,p.shared.path),...own}:own;}return p;}).catch(e=>{cache.delete(key);throw e;});
+ cache.set(key,promise);const frameKeys=[...cache.keys()].filter(k=>/^((?:lidar|unitbase)\/\d+|(?:full|real_only|prior_only|ownership_only)\/(?:units\/)?\d+)$/.test(k));while(frameKeys.length>24)cache.delete(frameKeys.shift());return promise;
+}
+function img(path){if(images.has(path))return images.get(path);const p=new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(Error('图像缺失 '+path));im.src=path;});images.set(path,p);while(images.size>72)images.delete(images.keys().next().value);return p;}
+const asset=(arm,ch,raw)=>ch==='gt'?`assets/gt/${raw}.webp`:`assets/${arm}/${ch}/${String(raw).padStart(3,'0')}.webp`;
+const mapPath=(arm,raw)=>`data/${arm}/${raw}.js`;
+function rgbHeat(t){t=Math.max(0,Math.min(1,t));const stops=[[20,34,65],[35,114,170],[58,190,178],[240,210,97],[239,96,79]];const a=t*4,i=Math.min(3,Math.floor(a)),v=a-i;return stops[i].map((x,k)=>Math.round(x*(1-v)+stops[i+1][k]*v));}
+function mapValue(m,key,i){if(!m||!m[key])return null;const v=m[key][i];if(key.includes('depth'))return v===65535?null:v/100;return v/65535;}
+function heat(canvas,m,ch,mark=true){
+ const ctx=canvas.getContext('2d'),im=ctx.createImageData(480,320);let legend='';
+ if(scene?.precision?.map_stride>1&&ch==='normal'){ctx.fillStyle='#0a1422';ctx.fillRect(0,0,480,320);ctx.fillStyle='#c3b087';ctx.font='14px sans-serif';ctx.fillText('便携包不从低分辨率热图计算法线，请使用完整版',16,35);return '便携版法线代理关闭；不把显示采样当成几何测量';}
+ for(let i=0;i<480*320;i++){
+  let val=null,c;
+  if(ch==='depth_error'){let a=mapValue(m,'joint_depth_m',i),b=mapValue(m,'lidar_depth_m',i);if(a!==null&&b!==null)val=Math.abs(a-b)/5;legend='绝对深度残差 0—5 m；无有效 LiDAR 为黑色';}
+  else if(ch==='normal'){
+   const x=i%480,y=(i/480)|0,d=mapValue(m,'static_depth_m',i),dx=x<479?mapValue(m,'static_depth_m',i+1):null,dy=y<319?mapValue(m,'static_depth_m',i+480):null;
+   if(d!==null&&dx!==null&&dy!==null){let n=[-(dx-d),-(dy-d),.2],r=Math.hypot(...n);c=n.map(v=>Math.round((v/r*.5+.5)*255));}
+   legend='期望深度的屏幕梯度法线代理；不是实测法线或 Gaussian 协方差法线';
+  }else{const v=mapValue(m,ch,i);if(v!==null)val=ch.includes('depth')?Math.log1p(Math.min(v,150))/Math.log(151):ch==='residual'?v/.15:v;legend=ch.includes('depth')?'相机 z [m]，对数色标 0—150 m；非射线欧氏距离':ch==='residual'?'原始观测重建平均 RGB L1，色标 0—0.15；非删除 GT':'原生 alpha／组贡献，色标 0—1';}
+  c=c||(val===null?[5,9,16]:rgbHeat(val));im.data.set([...c,255],i*4);
+ }
+ ctx.putImageData(im,0,0);if(mark)cross(ctx);return (scene?.precision?.map_stride>1?`便携热图${scene.precision.map_stride}×${scene.precision.map_stride}采样预览，非逐像素测量；`:'')+legend;
+}
+function cross(ctx){ctx.save();ctx.strokeStyle='#ff9bb0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(S.x-7,S.y);ctx.lineTo(S.x+7,S.y);ctx.moveTo(S.x,S.y-7);ctx.lineTo(S.x,S.y+7);ctx.stroke();ctx.strokeRect(S.x-2.5,S.y-2.5,5,5);
+ if(S.selected?.cov2&&S.selected?.uv){const [a,b,d]=S.selected.cov2,disc=Math.sqrt((a-d)**2+4*b*b),l1=Math.max(.01,(a+d+disc)/2),l2=Math.max(.01,(a+d-disc)/2),ang=.5*Math.atan2(2*b,a-d);ctx.strokeStyle='#f6d978';ctx.beginPath();ctx.ellipse(...S.selected.uv,3*Math.sqrt(l1),3*Math.sqrt(l2),ang,0,2*Math.PI);ctx.stroke();}ctx.restore();}
+const isImage=ch=>['deleted_five','joint','gt','dynamic_raw','road_raw','road_surface_color'].includes(ch);
+async function render2D(){const epoch=version,channel=S.channel,arm=S.arm,raw=S.raw,ctx=$('renderCanvas').getContext('2d');try{let legend;if(isImage(channel)){const im=await img(asset(arm,channel,raw));if(epoch!==version||channel!==S.channel||arm!==S.arm||raw!==S.raw)return;ctx.clearRect(0,0,480,320);ctx.drawImage(im,0,0,480,320);cross(ctx);legend='原生渲染派生图像 · 完整480×320 · 显示编码非指标输入';}else legend=heat($('renderCanvas'),maps,channel);$('renderCanvas').dataset.raw=raw;$('renderCanvas').dataset.arm=arm;$('renderCanvas').dataset.channel=channel;$('mapLegend').textContent=legend;$('pixelLabel').textContent=`p = (${S.x}, ${S.y})`;}catch(e){status(e.message,true);}}
+function pixelMetrics(){const i=S.y*480+S.x,pairs=[['背景 alpha',mapValue(maps,'static_alpha',i)],['道路独立 alpha',mapValue(maps,'road_alpha',i)],['道路 / 背景 T',mapValue(maps,'road_bg',i)],['道路 / 联合 T',mapValue(maps,'road_joint',i)],['LiDAR z [m]',mapValue(maps,'lidar_depth_m',i)],['背景 z [m]',mapValue(maps,'static_depth_m',i)],['联合 z [m]',mapValue(maps,'joint_depth_m',i)],['RGB L1',mapValue(maps,'residual',i)]];
+ const stride=scene?.precision?.map_stride||1,notSample=S.x%stride!==0||S.y%stride!==0;if(notSample)for(const pair of pairs)pair[1]=null;
+ const n=S.ray?.native,active=n&&S.ray.arm===S.arm&&S.ray.raw===S.raw&&S.ray.pixel[0]===S.x&&S.ray.pixel[1]===S.y;
+ if(active){pairs[0][1]=n.static_alpha?.[0]??(S.ray.mode==='deleted_five'?n.alpha:pairs[0][1]);pairs[1][1]=n.road_alpha?.[0]??pairs[1][1];pairs[2][1]=n.road_in_background?.[0]??pairs[2][1];pairs[3][1]=n.road_in_joint?.[0]??pairs[3][1];pairs[4][1]=n.lidar_m;for(const [i,key] of [[5,'static_depth_m'],[6,'joint_depth_m']])if(n[key])pairs[i][1]=n[key][0]>0?n[key][0]:null;if(n.joint&&n.gt)pairs[7][1]=n.joint.reduce((s,v,i)=>s+Math.abs(v-n.gt[i]),0)/3;}
+ $('pixelMetrics').setAttribute('data-precision',active?'native-saved-float-with-display-fallback':'quantized-display');$('pixelMetrics').innerHTML=`<div style="grid-column:1/-1;font-size:10px;color:#91a7c2">${active?'已读取所选像素原生保存浮点；缺字段保持未知或用已标注预览':notSample?'便携热图为4×4显示采样，此像素未打包测量值；请CPU查询':'数值为显示量化预览；精确值需原生浮点CPU查询'}</div>`+pairs.map(([k,v])=>`<div class="metric"><span>${k}</span><strong>${f(v,k.includes('alpha')||k.includes('L1')?4:3)}</strong></div>`).join('');}
+function offlineCase(raw,x,y){return ([89,102,131,137].includes(raw)&&[[120,210],[255,210],[220,280]].some(p=>x===p[0]&&y===p[1]))||(raw===102&&[[90,255],[255,240],[365,280]].some(p=>x===p[0]&&y===p[1]));}
+async function comparison(){
+ const epoch=version,token=++comparisonVersion,{raw,x,y,channel}=S,stride=scene?.precision?.map_stride||1,missing=x%stride!==0||y%stride!==0;
+ const all=await Promise.all(ARMS.map(async arm=>{
+  const m=await load(`${arm}/${raw}`,mapPath(arm,raw)),canvas=$('compare_'+arm);let image=null;
+  if(isImage(channel))image=await img(asset(arm,channel,raw));
+  if(epoch!==version||token!==comparisonVersion)return null;
+  if(image){const c=canvas.getContext('2d');c.drawImage(image,0,0,480,320);cross(c);}else heat(canvas,m,channel);
+  canvas.dataset.raw=raw;canvas.dataset.arm=arm;canvas.dataset.channel=channel;
+  const p=y*480+x;let result={arm,alpha:mapValue(m,'static_alpha',p),bg:mapValue(m,'road_bg',p),joint:mapValue(m,'road_joint',p),depth:mapValue(m,'static_depth_m',p),error:mapValue(m,'residual',p),source:'显示预览'};
+  if(missing){for(const key of ['alpha','bg','joint','depth','error'])result[key]=null;result.source='未打包该像素';}
+  let ray=S.ray?.arm===arm&&S.ray.raw===raw&&S.ray.pixel[0]===x&&S.ray.pixel[1]===y&&S.ray.mode==='deleted_five'?S.ray:null;
+  if(!ray&&offlineCase(raw,x,y)){try{ray=await load(`ray/${arm}/${raw}/${x}/${y}`,`data/rays/${arm}_${raw}_${x}_${y}.js`,false);}catch(error){/* no substitute evidence */}}
+  if(ray){const n=ray.native;result={arm,alpha:n.static_alpha?.[0]??n.alpha,bg:n.road_in_background[0],joint:n.road_in_joint[0],depth:n.static_depth_m?.[0]??(n.alpha>1e-5?n.depth_sum_model/n.alpha/scene.meter_to_model:null),error:n.joint.reduce((v,c,i)=>v+Math.abs(c-n.gt[i]),0)/3,source:'原生保存浮点'};}
+  return result;
+ }));
+ if(epoch!==version||token!==comparisonVersion)return;
+ $('compareMetrics').innerHTML='<table><thead><tr><th>同像素对照</th><th>背景α</th><th>道路／背景</th><th>道路／联合</th><th>背景z [m]</th><th>观测 RGB L1</th><th>数值来源</th></tr></thead><tbody>'+all.filter(Boolean).map(v=>`<tr data-arm="${v.arm}"><td>${v.arm}</td><td>${fmt(v.alpha)}</td><td>${fmt(v.bg)}</td><td>${fmt(v.joint)}</td><td>${f(v.depth)}</td><td>${fmt(v.error)}</td><td>${v.source}</td></tr>`).join('')+'</tbody></table>';
+ for(const tr of $('compareMetrics').querySelectorAll('tbody tr'))tr.onclick=()=>{stop();S.arm=tr.dataset.arm;refresh();};
+}
+const get3=(a,i)=>[a[i*3],a[i*3+1],a[i*3+2]];
+const add=(a,b)=>a.map((v,i)=>v+b[i]);const sub=(a,b)=>a.map((v,i)=>v-b[i]);const mul=(a,t)=>a.map(v=>v*t);const dot=(a,b)=>a.reduce((v,x,i)=>v+x*b[i],0);
+function mat(m,p,point=true){return m.slice(0,3).map(r=>r[0]*p[0]+r[1]*p[1]+r[2]*p[2]+(point?r[3]:0));}
+function worldM(p){return mat(scene.model_to_world,p);}
+function quat(q){const len=Math.hypot(...q)||1,[w,x,y,z]=q.map(v=>v/len);return [[1-2*(y*y+z*z),2*(x*y-w*z),2*(x*z+w*y)],[2*(x*y+w*z),1-2*(x*x+z*z),2*(y*z-w*x)],[2*(x*z-w*y),2*(y*z+w*x),1-2*(x*x+y*y)]];}
+const V={yaw:.5,pitch:1.05,distance:12,focus:[2,0,0],camera:false,picks:[],drag:null,moved:false};
+function fitCanvas(c){const w=Math.max(160,Math.round(c.clientWidth)),h=Math.max(100,Math.round(c.clientHeight));if(c.width!==w)c.width=w;if(c.height!==h)c.height=h;}
+function project3(p){const c=$('sceneCanvas'),w=c.width,h=c.height;let q;if(V.camera){const cam=scene.cameras[S.raw-89],z=mat(cam.W,p);if(z[2]<=.02)return null;const k=cam.K,scale=Math.min(w/480,h/320);return [(z[0]/z[2]*k[0][0]+k[0][2])*scale+(w-480*scale)/2,(z[1]/z[2]*k[1][1]+k[1][2])*scale+(h-320*scale)/2,z[2]];}
+ const a=sub(p,V.focus),cs=Math.cos(V.yaw),sn=Math.sin(V.yaw),x=cs*a[0]-sn*a[1],b=sn*a[0]+cs*a[1],y=Math.cos(V.pitch)*b-Math.sin(V.pitch)*a[2],z=Math.sin(V.pitch)*b+Math.cos(V.pitch)*a[2]+V.distance;if(z<.02)return null;return [w/2+x*w*.8/z,h/2+y*w*.8/z,z];}
+function getView(){if(V.camera)return null;const cy=Math.cos(V.yaw),sy=Math.sin(V.yaw),cp=Math.cos(V.pitch),sp=Math.sin(V.pitch),R=[[cy,-sy,0],[cp*sy,cp*cy,-sp],[sp*sy,sp*cy,cp]],T=R.map((r,i)=>-dot(r,V.focus)+(i===2?V.distance:0));return {R,T,intrinsics:[384,384,240,160]};}
+function line3(ctx,a,b,color,width=1){const u=project3(a),v=project3(b);if(!u||!v)return;ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(u[0],u[1]);ctx.lineTo(v[0],v[1]);ctx.stroke();}
+function cloudPositions(){const out=[];if(!cloud)return out;for(const prefix of ['static_','dynamic_']){const n=cloud[prefix+'row'].length;const timestamp=scene.cameras[S.raw-89].timestamp,cycle=cloud[prefix+'cycle'][0],angular=2*Math.PI/cycle;
+ for(let i=0;i<n;i++){const role=cloud[prefix+'role'][i];if((role===0&&!$('ordinary').checked)||(role===1&&!$('roads3d').checked)||(role===2&&!$('dynamic3d').checked))continue;const roadRow=role===1,delta=timestamp-cloud[prefix+'t'][i],st=cloud[prefix+'sigma_t'][i],m=roadRow?1:Math.exp(-.5*(delta/st)**2);if(m<=.05)continue;let p=get3(cloud[prefix+'xyz'],i);if(!roadRow)p=add(p,mul(get3(cloud[prefix+'velocity'],i),Math.sin(delta*angular)/angular));const sigma=get3(cloud[prefix+'sigma'],i),opacity=cloud[prefix+'opacity'][i]*m;out.push({p,i,prefix,role,opacity,sigma});}}
+ return out;}
+function draw3D(){if(!cloud||!scene)return;const canvas=$('sceneCanvas');fitCanvas(canvas);const ctx=canvas.getContext('2d');ctx.fillStyle='#09111d';ctx.fillRect(0,0,canvas.width,canvas.height);const points=cloudPositions();V.picks=[];const mode=$('cloudColor').value;
+ // Grid at model z=0; spacing is 10 physical meters.
+ const spacing=10*scene.meter_to_model;for(let v=-20;v<=20;v++){line3(ctx,[v*spacing,-20*spacing,0],[v*spacing,20*spacing,0],'#17263b');line3(ctx,[-20*spacing,v*spacing,0],[20*spacing,v*spacing,0],'#17263b');}
+ for(const rec of points){const p=project3(rec.p);if(!p||p[0]<-3||p[1]<-3||p[0]>canvas.width+3||p[1]>canvas.height+3)continue;let color;if(mode==='role')color=[COLORS.ordinary,COLORS.road,COLORS.dynamic][rec.role];else if(mode==='scale')color='rgb('+rgbHeat(Math.log1p(Math.max(...rec.sigma)/scene.meter_to_model)/Math.log(4)).join(',')+')';else if(mode==='opacity')color='rgb('+rgbHeat(rec.opacity).join(',')+')';else color='rgb('+get3(cloud[rec.prefix+'color'],rec.i).map(v=>Math.min(255,Math.max(0,Math.round(v*255)))).join(',')+')';ctx.fillStyle=color;ctx.globalAlpha=.35+Math.min(1,rec.opacity)*.6;const size=rec.role===1?1.9:1.2;ctx.fillRect(p[0],p[1],size,size);V.picks.push({screen:p,rec});}ctx.globalAlpha=1;
+ if($('lidar3d').checked&&lidar){ctx.fillStyle='#76e1ec';for(let i=0;i<lidar.xyz.length/3;i++){const p=project3(get3(lidar.xyz,i));if(p&&p[0]>0&&p[1]>0&&p[0]<canvas.width&&p[1]<canvas.height)ctx.fillRect(p[0],p[1],1.3,1.3);}}
+ if($('boxes3d').checked){for(const box of scene.cameras[S.raw-89].boxes){let c=[];for(let i=0;i<8;i++){let local=box.half.map((v,j)=>v*((i>>j)&1?1:-1));c.push(add(box.center,mat(box.axes,local,false)));}for(let i=0;i<8;i++)for(let j=0;j<3;j++)if(!(i&(1<<j)))line3(ctx,c[i],c[i|(1<<j)],'#c7a371',1.2);}}
+ for(let i=1;i<49;i++)line3(ctx,scene.cameras[i-1].center,scene.cameras[i].center,'#637998');
+ const cam=scene.cameras[S.raw-89],invR=cam.W.slice(0,3).map((r,i)=>cam.W.slice(0,3).map(rr=>rr[i]));
+ let ray=[(S.x+.5-cam.K[0][2])/cam.K[0][0],(S.y+.5-cam.K[1][2])/cam.K[1][1],1],dir=mat(invR,ray,false);line3(ctx,cam.center,add(cam.center,mul(dir,8)), '#ed83a2',1.5);
+ // Camera frustum is actual calibrated, shortened for legibility.
+ const corner=[[0,0],[480,0],[480,320],[0,320]].map(([x,y])=>add(cam.center,mul(mat(invR,[(x-cam.K[0][2])/cam.K[0][0],(y-cam.K[1][2])/cam.K[1][1],1],false),.5)));
+ for(let i=0;i<4;i++){line3(ctx,cam.center,corner[i],'#85a3c7');line3(ctx,corner[i],corner[(i+1)%4],'#85a3c7');}
+ if(S.selected?.model_xyz){const q=quat(S.selected.quaternion||[1,0,0,0]),sigma=S.selected.sigma_m.map(v=>v*scene.meter_to_model),center=S.selected.model_xyz;for(let a=0;a<3;a++){const b=(a+1)%3,c=(a+2)%3;let old=null;for(let j=0;j<=60;j++){const theta=j*Math.PI/30,v=[0,0,0];v[b]=Math.cos(theta)*sigma[b];v[c]=Math.sin(theta)*sigma[c];const p=add(center,mat(q,v,false));if(old)line3(ctx,old,p,'#ffe08c',2);old=p;}}line3(ctx,cam.center,center,'#ffe08c',1.5);}
+ ctx.fillStyle='#9fb5d1';ctx.font='12px monospace';ctx.fillText('GEOMETRY PREVIEW · grid 10 m · not novel-view RGB',12,canvas.height-13);
+ $('cloudInfo').textContent=cloud.branches.map(b=>`${b.branch} 显示 ${b.displayed.toLocaleString()} / ${b.total.toLocaleString()}`).join('；')+'。全部道路行保留；颜色为 DC 预览，原生 SH 外观见二维结果。';}
+function selectPoint(rec){const prefix=rec.prefix,i=rec.i,b=cloud.branches.find(v=>v.branch===(prefix==='static_'?'static':'dynamic')),q=Array.from(cloud[prefix+'q'].slice(i*4,i*4+4));S.selected={id:`${S.arm}:${b.checkpoint_sha256.slice(0,12)}:${b.branch}:${cloud[prefix+'row'][i]}`,model_xyz:rec.p,world_m:worldM(rec.p),quaternion:q,sigma_m:rec.sigma.map(v=>v/scene.meter_to_model),branch:['ordinary','road','dynamic'][rec.role]};$('gaussianInfo').textContent=`显示采样点（非像素归因） ${S.selected.id} · 世界[m] ${S.selected.world_m.map(v=>f(v)).join(', ')} · σ[m] ${S.selected.sigma_m.map(v=>f(v)).join(', ')}`;draw3D();render2D();}
+let bevTransform=null;
+function drawBEV(){if(!road||!units)return;const canvas=$('bevCanvas');fitCanvas(canvas);const ctx=canvas.getContext('2d'),n=road.provenance.length,mode=$('bevMode').value;ctx.fillStyle='#09111c';ctx.fillRect(0,0,canvas.width,canvas.height);const xx=[],yy=[];for(let i=0;i<n;i++){xx.push(road.world_local[i*3]);yy.push(road.world_local[i*3+1]);}const minX=Math.min(...xx),maxX=Math.max(...xx),minY=Math.min(...yy),maxY=Math.max(...yy),scale=Math.min((canvas.width-60)/(maxX-minX),(canvas.height-50)/(maxY-minY));bevTransform={minX,maxY,scale,x:30,y:20};
+ for(let i=0;i<n;i++){let color,valid=true,t=0;const p=road.provenance[i];if(mode==='exposure'){t=Math.min(road.source_count[i]/15,1);color=road.source_count[i]>=2?rgbHeat(t):p===2?[167,129,69]:[96,105,124];}
+ else if(mode==='prior')color=p===1?[61,189,143]:p===2?(road.prior_graph_context_hops[i]>=0?[174,136,71]:[139,85,105]):[82,96,118];
+ else if(mode==='coverage'){valid=!!units.in_view[i];t=units.road_alpha_in_background[i];color=rgbHeat(t);}
+ else if(mode==='color'){valid=!!units.verified_exposure[i];const r=road.source_rgb;const j=(S.raw-89)*n*3+i*3;t=(Math.abs(units.road[i*3]-r[j]/255)+Math.abs(units.road[i*3+1]-r[j+1]/255)+Math.abs(units.road[i*3+2]-r[j+2]/255))/3/.2;color=rgbHeat(t);}
+ else if(mode==='reliability'){valid=p===1;let sum=0,c=0;if(opt)for(let frame=0;frame<49;frame++)if(road.gates[frame*n+i]===511){sum+=opt.reliability[frame*n+i];c++;}t=c?sum/c:0;color=rgbHeat(t);}
+ else{const point=roadPoints.get(i);valid=!!point;if(valid)t=Math.hypot(...sub(point,get3(road.model_xyz,i)))/scene.meter_to_model/.25;color=rgbHeat(t);}
+ ctx.fillStyle=valid?'rgb('+color.join(',')+')':'#263141';const x=30+(xx[i]-minX)*scale,y=20+(maxY-yy[i])*scale;ctx.fillRect(x,y,Math.max(1.4,.2*scale),Math.max(1.4,.2*scale));}
+ if(S.unit!==null){const x=30+(xx[S.unit]-minX)*scale,y=20+(maxY-yy[S.unit])*scale;ctx.strokeStyle='#fff0b5';ctx.lineWidth=2;ctx.strokeRect(x-5,y-5,10,10);}
+ ctx.fillStyle='#a7bad3';ctx.font='11px monospace';ctx.fillText('WORLD X/Y · 0.2 m cells · gray = no applicable evidence',14,canvas.height-11);const bar=10*scale;ctx.strokeStyle='#b5c7dc';ctx.beginPath();ctx.moveTo(canvas.width-30-bar,canvas.height-28);ctx.lineTo(canvas.width-30,canvas.height-28);ctx.stroke();ctx.fillText('10 m',canvas.width-67,canvas.height-33);
+ $('bevLegend').textContent={exposure:'支持来源：0／1 不确认；2+ 确认。色标2—15+帧，不等于独立姿态数。',reliability:'九门限通过来源的终态可靠性均值；不是因果收益。',geometry:'实际道路中心相对初始化曲面锚点的三维偏移，色标0—0.25m。',coverage:'当前相机、全部道路组在背景T下的贡献，于单元anchor采样；不是独立单元面积。',color:'当前帧确认曝光单元，独立道路表面色对来源显示RGB的L1，色标0—0.2；8bit预览。',prior:'绿色=确认曝光；黄色=先验且连通观测；紫色=先验无观测路径；灰色=未知。'}[mode];}
+const roadPoints=new Map();function indexRoadPoints(){roadPoints.clear();if(!cloud)return;const a=cloud.static_road_id;for(let i=0;i<a.length;i++)if(a[i]>=0)roadPoints.set(a[i],get3(cloud.static_xyz,i));}
+function unitInfo(){if(S.unit===null||!road)return;const i=S.unit,n=road.provenance.length,world=add(get3(road.world_local,i),Array.from(road.world_origin)),p=road.provenance[i],point=roadPoints.get(i),drift=point?Math.hypot(...sub(point,get3(road.model_xyz,i)))/scene.meter_to_model:null;
+ $('unitInfo').textContent=`世界单元 X${i} · [m] ${world.map(v=>f(v)).join(', ')} · ${['UNKNOWN / 无可验证真值','至少2帧确认曝光','连续先验 / 非真实隐藏纹理'][p]} · 来源${road.source_count[i]} · 曲面支撑距离${f(road.surface_distance_m[i])}m · 优化中心偏移${f(drift)}m · 当前道路独立/背景/联合贡献 ${f(units.road_only_alpha[i])}/${f(units.road_alpha_in_background[i])}/${f(units.road_alpha_in_joint[i])}`;
+ $('sourceLabel').textContent=`X${i} · ${p===1?'有确认曝光':'无可验证隐藏纹理真值'}`;
+ const frame=S.raw-89,j=frame*n+i;if(opt){$('unitInfo').textContent+=` · 当前来源真实RGB目标访问${opt.objective_visits[j]}次；末态有效权重${opt.effective_rgb_weight[j].toExponential(2)}。梯度访问不是责任因果证明。`;}}
+function sourceGrid(){if(S.unit===null)return;const n=road.provenance.length,i=S.unit;$('sourceGrid').innerHTML='';for(let frame=0;frame<49;frame++){const raw=frame+89,index=frame*n+i,bits=road.gates[index],uv=Array.from(road.source_uv.slice(index*2,index*2+2)),failed=scene.gates.filter((_,g)=>!(bits&(1<<g))),pass=failed.length===0,card=document.createElement('article');card.className='source-card'+(pass?' pass':'')+(S.raw===raw?' active':'');const visits=opt?opt.objective_visits[index]:null;card.innerHTML=`<h4>raw${raw} · ${pass?'几何通过':'拒绝'}</h4><div class="crop"></div><p>uv ${f(uv[0],1)}, ${f(uv[1],1)} · z ${f(road.source_depth_m[index],2)}m</p><p>${pass?'九门限全部通过':failed.join(' / ')}</p><p>真实目标访问 ${visits===null?'—':visits} · 可靠性 ${opt?f(opt.reliability[index],3):'—'}<br>有效RGB权重 ${opt?opt.effective_rgb_weight[index].toExponential(2):'—'}</p>`;
+ const anchorZ=mat(scene.cameras[frame].W,get3(road.model_xyz,i))[2]/scene.meter_to_model,depthNote=document.createElement('p');depthNote.textContent=`曲面锚点z ${f(anchorZ,2)}m；测量z ${f(road.source_depth_m[index],2)}m；差 ${f(anchorZ-road.source_depth_m[index],2)}m（拒绝来源仍列出）`;card.append(depthNote);
+ if(Number.isFinite(uv[0])&&Number.isFinite(uv[1])&&uv[0]>=0&&uv[0]<480&&uv[1]>=0&&uv[1]<320){const im=document.createElement('img');im.src=asset('full','gt',raw);im.style.left=`calc(50% - ${uv[0]}px)`;im.style.top=`${42-uv[1]}px`;card.querySelector('.crop').append(im);}else card.querySelector('.crop').textContent='当前帧无有效投影';card.addEventListener('click',()=>{S.raw=raw;$('frame').value=raw;refresh();});$('sourceGrid').append(card);}}
+function profile(){const c=$('profileCanvas');fitCanvas(c);const ctx=c.getContext('2d');ctx.fillStyle='#0a1422';ctx.fillRect(0,0,c.width,c.height);ctx.font='11px monospace';ctx.fillStyle='#849fbe';if(!S.ray){ctx.fillText('选择内置案例或运行全模型 CPU 参考查询',17,30);return;}
+ const rows=S.ray.profile||[],maxZ=Math.min(200,Math.max(5,...rows.map(v=>v.z_m))),maxW=Math.max(.01,...rows.map(v=>v.weight)),X=z=>45+Math.min(maxZ,z)/maxZ*(c.width-70),Y=w=>c.height-30-w/maxW*(c.height-55);ctx.strokeStyle='#334764';ctx.beginPath();ctx.moveTo(45,15);ctx.lineTo(45,c.height-30);ctx.lineTo(c.width-20,c.height-30);ctx.stroke();for(const r of rows){ctx.strokeStyle=COLORS[r.branch];ctx.beginPath();ctx.moveTo(X(r.z_m),c.height-30);ctx.lineTo(X(r.z_m),Y(r.weight));ctx.stroke();}ctx.strokeStyle='#c2b6ec';ctx.beginPath();rows.forEach((r,i)=>{const x=X(r.z_m),y=c.height-30-r.T*(c.height-55);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();const measured=S.ray.native?.lidar_m;if(measured){ctx.setLineDash([5,3]);ctx.strokeStyle='#7be8f0';ctx.beginPath();ctx.moveTo(X(measured),12);ctx.lineTo(X(measured),c.height-30);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#7be8f0';ctx.fillText('LiDAR z '+f(measured,2)+'m',Math.min(c.width-150,X(measured)+5),17);}ctx.fillStyle='#90a8c7';ctx.fillText(`0       相机深度 [m] → ${f(maxZ,1)}     柱:Tα / 紫线:T`,45,c.height-8);}
+function rankRows(){const body=$('topRows');body.innerHTML='';if(!S.ray)return;const rows=[...S.ray.top].sort((a,b)=>$('rank').value==='weight'?b.weight-a.weight:Math.hypot(...b.color_contribution)-Math.hypot(...a.color_contribution)).slice(0,20);for(const row of rows){const tr=document.createElement('tr');if(S.selected?.id===row.id)tr.className='selected';tr.innerHTML=`<td><input type="checkbox" aria-label="选择Gaussian ${row.row}" ${S.checked.has(row.id)?'checked':''}></td><td style="color:${COLORS[row.branch]}">${row.branch} : ${row.row}</td><td>${f(row.camera_z_m)}</td><td>${f(row.weight,5)}</td><td>${f(Math.hypot(...row.color_contribution),5)}</td><td>${f(Math.max(...row.sigma_m))}</td>`;tr.querySelector('input').addEventListener('click',e=>{e.stopPropagation();e.target.checked?S.checked.add(row.id):S.checked.delete(row.id);});tr.addEventListener('click',()=>{S.selected=row;V.focus=row.model_xyz;V.distance=Math.max(.8,Math.min(V.distance,3));V.camera=false;$('gaussianInfo').textContent=`${row.id} · 世界[m] ${row.world_m.map(v=>f(v)).join(', ')} · 有效α ${f(row.alpha,5)} / T ${f(row.T,5)} · 屏幕半径${f(row.radius_px,1)}px · SGCM源谱系 ${row.source_lineage??'未记录'}（非唯一寿命ID） · 深度为中心z，非椭球首交点。`;rankRows();draw3D();render2D();});body.append(tr);}}
+function showRay(value){
+ S.ray=value;S.checked.clear();const e=value.replay_errors,n=value.native,gpu=value.status==='NATIVE_BUFFER_CUDA_TRACE_VERIFIED';
+ const ratio=n.dynamic_alpha&&n.dynamic_alpha[0]>1e-8?Math.hypot(...n.dynamic_raw)/n.dynamic_alpha[0]:null;
+ const scope=gpu?'实际原生排序／投影缓冲区，RGB／α／depth／T重放通过':value.mode==='ordinary'?'该CPU分支暂无原生独立渲染基线':value.numeric_alpha_depth_agree?'本像素alpha/depth在CPU参考门限内':'本像素参考不一致，不得作精确归因';
+ $('rayState').textContent=`${gpu?'原生缓冲区CUDA trace':'CPU参考，非CUDA trace'} [${value.mode}] · ${value.candidate_count}个tile候选 / ${value.accepted_count}参与合成 · α误差=${f(e?.alpha_abs,7)}，深度累积[model]误差=${f(e?.depth_sum_model_abs,7)} · ${scope}。${value.id_weight_validation?`另${value.id_weight_validation.count}个ID one-hot原生权重核验通过。`:''} RGB贡献不含环境；排序不是错误点／因果改善结论。${ratio===null?'':`动态‖RGB‖/α=${f(ratio,3)}。`}`;
+ rankRows();profile();pixelMetrics();
+}
+async function cachedRay(){
+ S.ray=null;S.selected=null;S.checked.clear();$('topRows').innerHTML='';$('gaussianInfo').textContent='选择 Gaussian 后显示协方差椭球。';profile();
+ window.gpuDiag?.onSelection();
+ const gpuKey=`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`,gpuPath=window.GSDATA.gpu_index?.queries?.[gpuKey];
+ if(gpuPath){const v=await load(gpuKey,gpuPath,false);if(gpuKey===`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`)showRay(v);return;}
+ const key=`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`;
+ if(S.rayMode==='deleted_five'&&offlineCase(S.raw,S.x,S.y)){const v=await load(key,`data/rays/${S.arm}_${S.raw}_${S.x}_${S.y}.js`,false);if(key===`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`&&S.rayMode==='deleted_five')showRay(v);}
+ else $('rayState').textContent=`当前像素／模式 ${S.rayMode} 无离线全模型射线。可点击实时CUDA归因，或用CPU作独立参考；不以邻近像素替代。`;
+}
+async function pixelChange(x,y){S.x=Math.max(0,Math.min(479,Math.round(x)));S.y=Math.max(0,Math.min(319,Math.round(y)));await cachedRay();pixelMetrics();render2D();comparison();draw3D();}
+async function refresh(){
+ const epoch=++version,workspace=document.querySelector('.workspace');workspace.setAttribute('aria-busy','true');
+ $('frameLabel').textContent=`raw${S.raw} · ${S.raw-88}/49`;$('frame').value=S.raw;$('arm').value=S.arm;status(`加载 ${S.arm} / raw${S.raw} 的真实数据…`);
+ try{
+  const data=await Promise.all([load(`${S.arm}/${S.raw}`,mapPath(S.arm,S.raw)),load(`${S.arm}/units/${S.raw}`,`data/${S.arm}/units_${S.raw}.js`),load(`${S.arm}/cloud`,`data/${S.arm}/cloud.js`),load(`${S.arm}/optimization`,`data/${S.arm}/optimization.js`),load(`lidar/${S.raw}`,`data/lidar/${S.raw}.js`)]);
+  if(epoch!==version)return;[maps,units,cloud,opt,lidar]=data;indexRoadPoints();
+  if(S.unit===null){let best=Infinity;for(let i=0;i<road.provenance.length;i++){const uv=units.raster_uv.slice(i*2,i*2+2),d=(uv[0]-S.x)**2+(uv[1]-S.y)**2;if(units.in_view[i]&&d<best){S.unit=i;best=d;}}}
+  try{await cachedRay();}catch(error){$('rayState').textContent='当前离线射线文件不可用；不伪造贡献。其余原生证据仍可使用。';}
+  if(epoch!==version)return;pixelMetrics();await render2D();if(epoch!==version)return;
+  draw3D();drawBEV();unitInfo();sourceGrid();await comparison();
+  if(epoch===version){status(`就绪 · ${S.arm} / raw${S.raw} · 原生结果＋只读CPU证据 · 数值预览alpha 1/65535、深度1cm量化`);workspace.setAttribute('aria-busy','false');}
+ }catch(e){
+  if(epoch!==version)return;S.ray=null;S.selected=null;S.checked.clear();$('topRows').replaceChildren();$('pixelMetrics').replaceChildren();$('sourceGrid').replaceChildren();
+  for(const c of document.querySelectorAll('.workspace canvas,#comparison canvas')){const ctx=c.getContext('2d');ctx.fillStyle='#0a1422';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ffb5ab';ctx.font='12px monospace';ctx.fillText('证据未就绪 / ASSET ERROR',12,25);}
+  workspace.setAttribute('aria-busy','false');status(e.message+'；不会用其他组或插值填补。',true);console.error(e);
+ }
+}
+function stop(){S.playing=false;clearTimeout(timer);$('play').textContent='播放';}
+function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+function request(){return {schema:'GS_DIAGNOSTIC_REQUEST_V1',arm:S.arm,iteration:30000,raw:S.raw,pixel:[S.x,S.y],camera:'FRONT',render_mode:S.rayMode,display_channel:S.channel,camera_binding:scene.cameras[S.raw-89],camera_binding_scope:'CPU reconstructed from immutable bundle; native CUDA replay required before tracing',gaussian_ids:[...S.checked],remove_gaussian_ids:S.checked.size?[...S.checked]:(S.selected?[S.selected.id]:[]),selected:S.selected?.id||null,road_unit:S.unit,checkpoint_sha256:scene.bindings?.[S.arm]||cloud?.branches.map(v=>({branch:v.branch,sha256:v.checkpoint_sha256})),config_binding:scene.config_bindings?.[S.arm],road_bundle_binding:scene.road_bundle_binding,world_to_model:scene.world_to_model,requested:['native_cuda_sparse_ray_trace','full_rasterization_selected_gaussian_removal','normal_region_damage_check'],training_updates_allowed:0,model_parameter_mutation_allowed:false,output_must_be_new:true,status:'PENDING_GPU_NOT_EXECUTED',scientific_quality_accepted:false};}
+async function importCase(file){
+ if(!file)return;if(file.size>2*1024*1024)throw Error('案例文件过大');const q=JSON.parse(await file.text());
+ if(q.schema!=='GS_DIAGNOSTIC_REQUEST_V1'||!ARMS.includes(q.arm)||!Number.isInteger(q.raw)||q.raw<89||q.raw>137||!Array.isArray(q.pixel)||q.pixel.length!==2||!q.pixel.every(Number.isInteger)||q.pixel[0]<0||q.pixel[0]>=480||q.pixel[1]<0||q.pixel[1]>=320||q.training_updates_allowed!==0||q.model_parameter_mutation_allowed!==false)throw Error('不兼容的诊断案例合同');
+ const mode=q.render_mode||'deleted_five';if(!['deleted_five','joint','dynamic','road_only','ordinary'].includes(mode))throw Error('未知合成模式');
+ stop();S.arm=q.arm;S.raw=q.raw;[S.x,S.y]=q.pixel;S.rayMode=mode;$('rayMode').value=mode;
+ const channel=q.channel||q.display_channel;if(Array.from($('channel').options).some(o=>o.value===channel)){S.channel=channel;$('channel').value=channel;}
+ $('caseNote').value=typeof q.note==='string'?q.note.slice(0,5000):'';await refresh();
+ for(const id of q.gaussian_ids||[]){if(typeof id!=='string')continue;const [arm,sha,branch,row]=id.split(':'),b=cloud.branches.find(v=>v.branch===branch);if(arm!==S.arm||!b||sha!==b.checkpoint_sha256.slice(0,12)||!/^\d+$/.test(row)||+row>=b.total)throw Error('案例Gaussian不属于当前检查点');S.checked.add(id);}
+ rankRows();status('案例已载入；只恢复选择、合成模式与人工备注，不执行任何GPU作业或优化。');
+}
+function bind(){
+ $('comparison').innerHTML=ARMS.map((a,i)=>`<article class="compare-card"><h3>${a} · ${NAMES[i]}</h3><canvas id="compare_${a}" width="480" height="320" aria-label="${a}同帧对照"></canvas><p>点击同位置联动像素；切换实验组查看三维证据</p></article>`).join('');
+ $('arm').onchange=e=>{S.arm=e.target.value;stop();refresh();};$('channel').onchange=async e=>{stop();S.channel=e.target.value;const ch=S.channel;S.rayMode=['joint','joint_alpha','joint_depth_m','residual','depth_error','road_joint'].includes(ch)?'joint':['dynamic_raw','dynamic_alpha','dynamic_depth_m'].includes(ch)?'dynamic':['road_raw','road_surface_color','road_alpha'].includes(ch)?'road_only':'deleted_five';$('rayMode').value=S.rayMode;await refresh();};$('rayMode').onchange=async e=>{stop();S.rayMode=e.target.value;await refresh();};$('frame').oninput=e=>{stop();S.raw=+e.target.value;refresh();};$('prev').onclick=()=>{stop();S.raw=Math.max(89,S.raw-1);refresh();};$('next').onclick=()=>{stop();S.raw=Math.min(137,S.raw+1);refresh();};
+ $('play').onclick=()=>{if(S.playing){stop();return;}S.playing=true;$('play').textContent='暂停';const tick=async()=>{if(!S.playing)return;if(S.raw===137){stop();return;}const started=performance.now();S.raw++;await refresh();if(S.playing)timer=setTimeout(tick,Math.max(0,1000/+$('fps').value-(performance.now()-started)));};timer=setTimeout(tick,0);};$('fps').onchange=stop;
+ $('preset').onchange=e=>{stop();[S.raw,S.x,S.y]=e.target.value.split(',').map(Number);refresh();};
+ function canvasClick(e){if(document.querySelector('.workspace').getAttribute('aria-busy')==='true')return;const r=e.currentTarget.getBoundingClientRect();pixelChange((e.clientX-r.left)/r.width*480,(e.clientY-r.top)/r.height*320);}
+ $('renderCanvas').onclick=canvasClick;for(const a of ARMS)$('compare_'+a).onclick=canvasClick;
+ $('bevMode').onchange=drawBEV;$('rank').onchange=rankRows;
+ $('bevCanvas').onclick=e=>{if(!bevTransform)return;const r=e.currentTarget.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*e.currentTarget.width,y=(e.clientY-r.top)/r.height*e.currentTarget.height,t=bevTransform;let best=Infinity,index=null;for(let i=0;i<road.provenance.length;i++){const px=t.x+(road.world_local[i*3]-t.minX)*t.scale,py=t.y+(t.maxY-road.world_local[i*3+1])*t.scale,d=(px-x)**2+(py-y)**2;if(d<best){best=d;index=i;}}S.unit=index;drawBEV();unitInfo();sourceGrid();};
+ $('unitToPixel').onclick=()=>{if(S.unit===null)return;const uv=units.raster_uv.slice(S.unit*2,S.unit*2+2);if(uv[0]>=0&&uv[0]<480&&uv[1]>=0&&uv[1]<320)pixelChange(...uv);else status('该世界单元在当前相机不可见，不伪造投影。',true);};$('sourceJump').onclick=()=>$('sources').scrollIntoView({behavior:'smooth'});
+ $('saveCase').onclick=()=>download(`case_${S.arm}_raw${S.raw}_${S.x}_${S.y}.json`,{...request(),created_utc:new Date().toISOString(),status:'CASE_SAVED',channel:S.channel,ray_reference:S.ray,gpu_trace_status:S.ray?.status,note:$('caseNote').value,human_verdict:null});$('gpuRequest').onclick=()=>download(`gpu_request_${S.arm}_raw${S.raw}.json`,{...request(),note:$('caseNote').value});
+ $('loadCase').onclick=()=>$('caseFile').click();$('caseFile').onchange=async e=>{try{await importCase(e.target.files[0]);}catch(error){status(error.message,true);}finally{e.target.value='';}};
+ $('queryRay').onclick=async()=>{if(location.protocol==='file:'){status('任意像素CPU查询需运行 start_local.ps1；离线案例与其余面板可直接使用。',true);return;}const b=$('queryRay');b.disabled=true;$('rayState').textContent='正在CPU读取完整30K参数并分析射线；不使用GPU，不优化…';const identity=`${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`;try{const r=await fetch('/api/ray?'+new URLSearchParams({arm:S.arm,raw:S.raw,x:S.x,y:S.y,mode:S.rayMode}),{cache:'no-store'});if(!r.ok)throw Error('CPU服务未启用或不可达');const v=await r.json();if(v.error)throw Error(v.error);if(identity===`${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`)showRay(v);}catch(e){$('rayState').textContent=e.message+'。使用 start_local.ps1 启用SSH只读CPU桥接；GPU诊断仍未执行。';}finally{b.disabled=false;}};
+ const c=$('sceneCanvas');c.onpointerdown=e=>{V.drag={x:e.clientX,y:e.clientY};V.moved=false;c.setPointerCapture(e.pointerId);};c.onpointermove=e=>{if(!V.drag)return;const dx=e.clientX-V.drag.x,dy=e.clientY-V.drag.y;if(Math.abs(dx)+Math.abs(dy)>1)V.moved=true;if(e.shiftKey){V.focus[0]-=dx*V.distance*.001;V.focus[1]+=dy*V.distance*.001;}else{V.yaw+=dx*.007;V.pitch=Math.max(-1.4,Math.min(1.55,V.pitch+dy*.007));V.camera=false;}V.drag={x:e.clientX,y:e.clientY};draw3D();};c.onpointerup=e=>{V.drag=null;if(!V.moved){const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*c.width,y=(e.clientY-r.top)/r.height*c.height;let best=64,pick;for(const p of V.picks){const d=(p.screen[0]-x)**2+(p.screen[1]-y)**2;if(d<best){best=d;pick=p.rec;}}if(pick)selectPoint(pick);}};c.onwheel=e=>{e.preventDefault();V.distance=Math.max(.2,Math.min(100,V.distance*Math.exp(e.deltaY*.001)));V.camera=false;draw3D();};
+ $('fit3d').onclick=()=>{V.focus=[2,0,0];V.yaw=.5;V.pitch=1.05;V.distance=12;V.camera=false;draw3D();};$('camera3d').onclick=()=>{V.camera=true;draw3D();};for(const id of ['ordinary','roads3d','dynamic3d','lidar3d','boxes3d','cloudColor'])$(id).onchange=draw3D;
+ document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='ArrowLeft')$('prev').click();if(e.key==='ArrowRight')$('next').click();});
+ $('topRows').addEventListener('click',e=>{if(e.target.tagName==='INPUT'||!S.selected)return;const row=S.selected;if(row.road_id>=0){S.unit=row.road_id;drawBEV();unitInfo();sourceGrid();}if(S.ray?.native?.lidar_m!==null&&S.ray?.native?.lidar_m!==undefined&&row.camera_z_m!==undefined){$('gaussianInfo').textContent+=` · 中心z减测量LiDAR z = ${f(row.camera_z_m-S.ray.native.lidar_m)}m（不是椭球首交距离）。`;}});
+ $('bevCanvas').addEventListener('click',()=>{if(S.unit===null||!cloud)return;const i=cloud.static_road_id.indexOf(S.unit);if(i<0)return;selectPoint({prefix:'static_',i,p:get3(cloud.static_xyz,i),role:1,sigma:get3(cloud.static_sigma,i)});V.focus=get3(cloud.static_xyz,i);V.distance=2;V.camera=false;draw3D();});
+ const observer=new ResizeObserver(()=>{draw3D();drawBEV();profile();});for(const id of ['sceneCanvas','bevCanvas','profileCanvas'])observer.observe($(id));
+}
+async function init(){try{scene=window.GSDATA.scene;road=await load('road','data/road.js');window.gsdiag={state:S,scene,refresh,selectPixel:pixelChange,getMaps:()=>maps,getRoad:()=>road,getUnits:()=>units,draw3D,showRay,rankRows,load,getView};bind();await refresh();}catch(e){status(e.message,true);console.error(e);}}
+for(const [value,label] of [['102,365,280','raw102 · 右侧正常路面候选'],['102,255,240','raw102 · 前车黑色残影'],['102,90,255','raw102 · 左侧黑色残影']]){const option=document.createElement('option');option.value=value;option.textContent=label;$('preset').prepend(option);}
+$('preset').value='102,90,255';
+for(const option of $('preset').options){if(option.value==='102,120,210')option.textContent='raw102 · 道路对照候选（原）';if(option.value==='102,220,280')option.textContent='raw102 · 车影下缘区域';}
+init();
