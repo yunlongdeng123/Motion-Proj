@@ -44,6 +44,48 @@ def campaign_fixture(root):
 
 
 class Final49CPU(unittest.TestCase):
+    def test_terminal_contract_uses_existing_front_and_ratio_definitions(self):
+        mask = torch.zeros(1, 16, 16)
+        mask[:, 4:12, 4:12] = 1
+        package = dict(static_depth=torch.ones_like(mask)*5,
+            static_alpha=torch.ones_like(mask), dynamic_alpha=torch.ones_like(mask)*.01,
+            dynamic_premultiplied_rgb=torch.ones(3, 16, 16)*.2,
+            render=torch.ones(3, 16, 16)*.25)
+        policy = dict(static_front_depth_margin_ratio=.01,
+            static_front_temperature_ratio=.01, dynamic_boundary_ignore_px=2,
+            dynamic_leak_top_fraction=.01, dynamic_leak_top_weight=.1,
+            dynamic_radiance_ratio_cap=4., dynamic_ratio_slack=1/255,
+            body_l1_normalization='v1_full_image')
+        before = {k: v.clone() for k, v in package.items()}
+        with patch.object(torch.cuda, 'is_available', side_effect=AssertionError('CPU only')):
+            result = final49.frame_contract_diagnostics(package, torch.zeros(3, 16, 16),
+                mask, torch.ones_like(mask)*10, policy, .2)
+        self.assertEqual(result['front_hard_fraction'], 1.)
+        self.assertEqual(result['front_hard_alpha_mass'], 1.)
+        self.assertGreater(result['dynamic_ratio_excess_mean'], 0.)
+        self.assertGreater(result['body_masked_structural_loss'], 0.)
+        self.assertTrue(all(np.isfinite(v) for v in result.values()))
+        self.assertTrue(all(torch.equal(v, before[k]) for k, v in package.items()))
+
+    def test_terminal_road_state_does_not_bridge_unknown_or_mutate_model(self):
+        from types import SimpleNamespace
+        static = SimpleNamespace(road_unit_mask=torch.ones(3, dtype=torch.bool),
+            _road_ids=lambda: torch.arange(3), _xyz=torch.zeros(3, 3),
+            _rotation=torch.tensor([[1., 0., 0., 0.]]).repeat(3, 1),
+            get_scaling=torch.ones(3, 3)*.01,
+            _features_dc=torch.tensor([[[0., 0., 0.]], [[1., 1., 1.]], [[20., 20., 20.]]]))
+        data = dict(model_xyz=torch.zeros(3, 3), normal_model=torch.tensor([[0., 0., 1.]]).repeat(3, 1),
+            provenance=torch.tensor([1, 2, 0]), is_query=torch.tensor([False, True, True]),
+            edges=torch.tensor([[0, 1], [1, 2]]), prior_graph_edge_valid=torch.tensor([True, False]),
+            prior_graph_context_hops=torch.tensor([0, 1, -1]))
+        before = static._features_dc.clone()
+        result = final49.road_state_diagnostics(static, data,
+            dict(prior_graph_component=np.array([-1, 0, -1])), 1.)
+        self.assertEqual(result['continuity_edges'], 1)
+        self.assertEqual(result['prior_query_without_context_path'], 0)
+        self.assertAlmostEqual(result['prior_boundary_DC_RGB_RMSE'], .28209479177387814, places=6)
+        self.assertTrue(torch.equal(before, static._features_dc))
+
     def test_complete_contract_is_cpu_only(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

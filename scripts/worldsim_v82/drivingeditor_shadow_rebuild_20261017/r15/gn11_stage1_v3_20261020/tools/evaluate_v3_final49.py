@@ -22,7 +22,7 @@ STEPS = (5000, 10000, 15000, 20000, 25000, 30000)
 FRAMES = tuple(f'0008{i:03d}' for i in range(89, 138))
 CHANNELS = {'gt', 'composite', 'static', 'dynamic', 'road_raw_pre_environment',
             'road_surface_color', 'road_alpha'}
-VERSION = 'V3_FINAL49_ZERO_UPDATE_EVALUATION_R1'
+VERSION = 'V3_FINAL49_ZERO_UPDATE_EVALUATION_R2'
 RETENTION_VERSION = 'V3_COMPLETED_CHECKPOINT_RETENTION_R1'
 COMPONENT_PREFIXES = dict(static='chkpnt', dynamic='dynamic_chkpnt',
                           environment='env_light_chkpnt', training_state='training_state')
@@ -172,6 +172,50 @@ def assert_close(actual, expected, name):
     return float((actual-expected).abs().max())
 
 
+def frame_contract_diagnostics(package, target, mask, depth, policy, dssim):
+    """Same frozen training definitions, evaluated without gradients or updates."""
+    from utils.loss_utils import ssim
+    from utils.v3_objectives import (body_joint_rgb_loss, static_front_occlusion_loss,
+                                      dynamic_color_leak_losses)
+    front, front_metrics = static_front_occlusion_loss(package['static_depth'],
+        package['static_alpha'], depth, mask, policy['static_front_depth_margin_ratio'],
+        policy['static_front_temperature_ratio'])
+    leak, ratio, leak_metrics = dynamic_color_leak_losses(
+        package['dynamic_premultiplied_rgb'], package['dynamic_alpha'], mask,
+        policy['dynamic_boundary_ignore_px'], policy['dynamic_leak_top_fraction'],
+        policy['dynamic_leak_top_weight'], policy['dynamic_radiance_ratio_cap'],
+        policy['dynamic_ratio_slack'])
+    result = dict(front_metrics, **leak_metrics)
+    result.update(body_joint_rgb_objective=body_joint_rgb_loss(package['render'], target,
+        mask, ssim, dssim, policy['body_l1_normalization']),
+        body_masked_structural_loss=1-ssim(package['render']*mask, target*mask),
+        front_soft_objective=front, dynamic_color_objective=leak,
+        dynamic_color_ratio_objective=ratio)
+    return {k: float(v) for k, v in result.items()}
+
+
+def road_state_diagnostics(static, data, numpy, scale):
+    from utils.v3_multiview_road import geometry_objective
+    common, terms = geometry_objective(static, data, scale)
+    rows = static.road_unit_mask.nonzero().flatten()
+    ids = static._road_ids()[rows]
+    color = (static._features_dc[rows, 0]*.28209479177387814+.5).clamp_min(0)
+    unit_color = color.new_zeros((len(data['provenance']), 3)).index_copy(0, ids, color)
+    edges = data['edges'].long()
+    valid = data['prior_graph_edge_valid'].bool()
+    error = (unit_color[edges[:, 0]]-unit_color[edges[:, 1]]).square().mean(1)
+    boundary = valid & (data['provenance'][edges] == 1).any(1)
+    prior = (data['provenance'] == 2) & data['is_query']
+    return dict(geometry={k: float(v) for k, v in terms.items()},
+        common_geometry_objective=float(common), continuity_edges=int(valid.sum()),
+        prior_continuity=float((error*valid).sum()/valid.sum().clamp_min(1)),
+        prior_boundary_DC_RGB_RMSE=float(error[boundary].mean().sqrt()) if boundary.any() else None,
+        prior_query_units=int(prior.sum()), prior_query_without_context_path=int(
+            (prior & (data['prior_graph_context_hops'] < 0)).sum()),
+        components=int(numpy['prior_graph_component'].max()+1),
+        no_UNKNOWN_bridges=True, no_hidden_road_RGB_ground_truth=True)
+
+
 def evaluate(campaign, arm, output, event):
     started = time.monotonic()
     import torch
@@ -185,7 +229,8 @@ def evaluate(campaign, arm, output, event):
     from utils.general_utils import seed_everything
     from utils.hybrid30k_runtime import camera_id
     from utils.paper_masks import load_dynamic_mask
-    from utils.v3_supervision_diagnostics import supervision_metrics
+    from utils.v3_supervision_diagnostics import (supervision_metrics, center_in_boxes,
+                                                  sampled_front_contributions)
     from utils.v3_road_diagnostics import road_visibility
     from utils.v3_multiview_road import sample_map
     from utils.v3_road_prior import rendered_coverage
@@ -244,14 +289,18 @@ def evaluate(campaign, arm, output, event):
         numpy = {k: z[k].copy() for k in z.files}
     data = {k: torch.as_tensor(v, device='cuda') for k, v in numpy.items()
             if k in ('model_xyz', 'surface_supported', 'provenance', 'is_query',
-                     'source_rgb', 'base_weight', 'coverage_model_xyz')}
+                     'source_rgb', 'source_depth', 'base_weight', 'coverage_model_xyz',
+                     'normal_model', 'edges', 'prior_graph_edge_valid', 'prior_graph_context_hops')}
+    for key in ('model_xyz', 'normal_model'):
+        data[key] = data[key].to(static._xyz)
     expected_ids = torch.nonzero(data['surface_supported']).flatten()
     ids = static._road_ids()[static.road_unit_mask]
     if len(ids) != 14034 or not torch.equal(ids.sort().values, expected_ids.sort().values):
         raise RuntimeError('fixed14034 world-road identity mismatch')
     np.savez_compressed(output/'world_units.npz', **{k: numpy[k] for k in (
         'unit_ids', 'world', 'model_xyz', 'provenance', 'is_query', 'surface_supported',
-        'query_frame', 'query_actor')})
+        'query_frame', 'query_actor', 'query_unit_id', 'query_pixel', 'source_count')})
+    road_state = road_state_diagnostics(static, data, numpy, float(meta['meter_to_model']))
     saved_frames = {f['image_name']: f for f in event['frames']}
     background = torch.zeros(3, device='cuda')
     deleted_args = OmegaConf.create(dict(config, including_dynamic=False, adding=False))
@@ -303,6 +352,13 @@ def evaluate(campaign, arm, output, event):
                     'deleted': sample_map(deleted['render'], uv), 'joint': sample_map(package['render'], uv)}
         errors = {key: float((value-data['source_rgb'][index]).abs()[verified].mean())
                   if verified.any() else None for key, value in unit_rgb.items()}
+        outside = ((data['base_weight'][index] > 0) & (data['provenance'] == 1)
+                   & ~data['is_query'] & unit_arrays['in_view'])
+        outside_errors = {key: float((value-data['source_rgb'][index]).abs()[outside].mean())
+                          if outside.any() else None for key, value in unit_rgb.items()}
+        road_depth = sample_map(road['depth_sum'], uv)[:, 0]/sample_map(
+            road['alpha'], uv)[:, 0].clamp_min(1e-5)
+        depth_error = (road_depth-data['source_depth'][index]).abs()/float(meta['meter_to_model'])
         coverage_uv, valid = raster_uv(data['coverage_model_xyz'].to(static._xyz), camera)
         for key in ('gate_in_view', 'gate_angle_ok', 'gate_resolution_ok'):
             valid &= torch.as_tensor(numpy[key][index], device='cuda')[:, None]
@@ -313,18 +369,39 @@ def evaluate(campaign, arm, output, event):
         mask = load_dynamic_mask(config['source_path'], camera)
         supervision, maps = supervision_metrics(package, gt, mask, camera.pts_depth,
                                                 float(meta['meter_to_model']))
+        supervision.update(frame_contract_diagnostics(package, gt, mask, camera.pts_depth,
+            config['v3_policy'], config['lambda_dssim']))
+        boxes = meta['frames'][frame]['selected_boxes_model']
+        tensor = lambda x: torch.as_tensor(x, device=static._xyz.device, dtype=static._xyz.dtype)
+        inside = center_in_boxes(package['background_means3D'],
+            tensor([b['center'] for b in boxes]).reshape(-1, 3),
+            tensor([b['axes'] for b in boxes]).reshape(-1, 3, 3),
+            tensor([b['half'] for b in boxes]).reshape(-1, 3))
+        samples, sample_metrics = sampled_front_contributions(package, mask, camera.pts_depth,
+            inside, static.road_unit_mask,
+            lambda flags, joint: render_contribution_features(package, flags, joint),
+            config['v3_policy']['static_front_depth_margin_ratio'])
+        supervision['static_centers_inside_selected_boxes'] = int(inside.sum())
+        supervision['static_total_centers'] = len(inside)
         raw = dict(joint=package['render'], deleted_five=deleted['render'], gt=gt,
             dynamic_raw=package['dynamic_premultiplied_rgb'], dynamic_alpha=package['dynamic_alpha'],
+            static_alpha=package['static_alpha'], joint_alpha=package['alpha'],
+            joint_depth_sum=package['depth'], static_depth_sum=package['static_depth'],
+            dynamic_depth_sum=package['dynamic_depth'],
+            road_surface_color=road['rgb']/road['alpha'].clamp_min(1e-5),
             road_raw=road['rgb'], road_alpha=road['alpha'], road_depth_sum=road['depth_sum'],
-            road_in_background=contribution['background'], road_in_joint=contribution['joint'], **maps)
+            road_in_background=contribution['background'], road_in_joint=contribution['joint'],
+            **maps, **samples)
         folder = output/frame
         folder.mkdir()
-        for name in ('joint', 'deleted_five', 'dynamic_raw', 'road_raw'):
+        for name in ('joint', 'deleted_five', 'dynamic_raw', 'road_raw', 'road_surface_color'):
             pixels = (raw[name].permute(1, 2, 0).clamp(0, 1).cpu().numpy()*255).round().astype(np.uint8)
             Image.fromarray(pixels).save(folder/(name+'.png'))
         unit_arrays.update(verified_exposure=verified, prior_subcell_alpha=subalpha,
                            prior_subcell_valid=valid, source_RGB=data['source_rgb'][index],
-                           source_base_weight=data['base_weight'][index], **unit_rgb)
+                           source_base_weight=data['base_weight'][index],
+                           verified_outside_query=outside, road_depth_model=road_depth,
+                           source_depth_model=data['source_depth'][index], **unit_rgb)
         for filename, arrays in [('render_float.npz', raw), ('world_unit_float.npz', unit_arrays)]:
             values = {k: v.detach().cpu().numpy() for k, v in arrays.items()}
             if any(v.dtype.kind in 'fc' and not np.isfinite(v).all() for v in values.values()):
@@ -335,8 +412,12 @@ def evaluate(campaign, arm, output, event):
             reconstruction=dict(PSNR=float(-10*torch.log10(mse.clamp_min(1e-12))),
                 L1=float((package['render'].clamp(0, 1)-gt.clamp(0, 1)).abs().mean()),
                 scope='observed reconstruction, not edited GT'),
-            supervision=supervision, visibility=visibility,
-            verified_exposure=dict(units=int(verified.sum()), RGB_L1=errors),
+            supervision=supervision, sampled_front=sample_metrics, visibility=visibility,
+            sampled_front_scope='at most14 measured body pixels; native center-z ordering, not full-frame front mass',
+            verified_exposure=dict(units=int(verified.sum()), RGB_L1=errors,
+                road_depth_MAE_m=float(depth_error[verified].mean()) if verified.any() else None),
+            verified_outside_query=dict(units=int(outside.sum()), RGB_L1=outside_errors,
+                scope='accepted observed world-context anchors, not unique pixel area or hidden GT'),
             prior_coverage=dict(subcells=int(valid.sum()),
                 alpha_mean=float(subalpha[valid].mean()) if valid.any() else None,
                 below_target_fraction=float((subalpha[valid]<ROAD_POLICY['coverage_target']).float().mean())
@@ -344,7 +425,7 @@ def evaluate(campaign, arm, output, event):
         write_new(folder/'metrics.json', row)
         rows.append(row)
         print(json.dumps(dict(arm=arm, evaluated_frames=len(rows), frame=frame)), flush=True)
-        del package, deleted, road, raw, unit_arrays, contribution, colors, maps
+        del package, deleted, road, raw, unit_arrays, contribution, colors, maps, samples, inside
         gc.collect()
     if file_state(protected) != before:
         raise RuntimeError('training assets or shared input modified during evaluation')
@@ -356,6 +437,7 @@ def evaluate(campaign, arm, output, event):
         evaluation_peak_reserved_bytes=torch.cuda.max_memory_reserved(),
         evaluation_peak_scope='this evaluation process; not training or device-wide peak',
         fixed_road_ids=14034, training_assets_unchanged=True, quality_accepted=False,
+        terminal_road_state=road_state,
         human_verdict=None, finished_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
         interpretation='No edited-road GT. Verified exposure errors only use same-world accepted sources. '
         'Attenuation may be legal occlusion; source selection/gradient is not causal benefit. '
