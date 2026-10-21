@@ -13,12 +13,12 @@ el('cloudColor').value='role';el('pointAlpha').value='effective';el('threeSize')
 const cloud=unpack(read(path.join(base,'data/full/cloud.js'))),road=unpack(read(path.join(base,'data/road.js'))),maps=unpack(read(path.join(base,'data/full/102.js'))),lidar=unpack(read(path.join(base,'data/lidar/102.js')));
 const history=unpack(read(path.join(dataRoot,'road_history.js'))),shared=unpack(read(path.join(dataRoot,'inspection/shared_102.js'))),surfaces=unpack(read(path.join(dataRoot,'inspection/full_102.js')));
 const scene=read(path.join(base,'data/scene.js'));
-const sandbox={console,Float32Array,Uint8Array,Uint16Array,Int32Array,Map,Set,Math,Number,Array,Object,JSON,Promise,performance,Buffer,
- document:{getElementById:el,createElement:()=>({style:{},setAttribute(){}})},GSDATA:{scene},__cloud:cloud,__road:road,__maps:maps,__lidar:lidar,
+const sandbox={console,Float32Array,Uint8Array,Uint16Array,Int32Array,Map,Set,Math,Number,Array,Object,JSON,Promise,performance,Buffer,atob,Blob,Response,DecompressionStream,
+ document:{getElementById:el,createElement:()=>({style:{},setAttribute(){},remove(){}}),head:{append(script){try{const relative=script.src.replace(/^data\//,'');let file=path.join(dataRoot,relative);if(!fs.existsSync(file))file=path.join(base,script.src);const text=fs.readFileSync(file,'utf8'),key=JSON.parse(text.slice(text.indexOf('window.GSDATA[')+14,text.indexOf(']=')));sandbox.GSDATA[key]=read(file);queueMicrotask(()=>script.onload());}catch(e){queueMicrotask(()=>script.onerror(e));}}}},GSDATA:{scene},__cloud:cloud,__road:road,__maps:maps,__lidar:lidar,
  GSCloud:{defaults:{static_rate:2,dynamic_rate:2},begin(){},active(){},drawn(){},alpha:v=>el('pointAlpha').value==='solid'?1:v,legend(){},vehicles(){return [];}}};sandbox.window=sandbox;
 const ctx=vm.createContext(sandbox);for(const file of ['inspection_math.js','inspection.js'])vm.runInContext(fs.readFileSync(path.join(source,file),'utf8'),ctx);
 vm.runInContext(fs.readFileSync(path.join(source,'app.js'),'utf8').replace(/init\(\);\s*$/,''),ctx);
-vm.runInContext("scene=GSDATA.scene;cloud=__cloud;road=__road;maps=__maps;lidar=__lidar;S.x=255;S.y=240;GSInspect.bind({state:()=>S,scene:()=>scene,maps:()=>maps,cloud:()=>cloud,project:project3,line:line3,world:worldM,quat,mapValue,draw:draw3D});",ctx);
+vm.runInContext("scene=GSDATA.scene;cloud=__cloud;road=__road;maps=__maps;lidar=__lidar;S.x=255;S.y=240;GSInspect.bind({state:()=>S,scene:()=>scene,maps:()=>maps,cloud:()=>cloud,project:project3,line:line3,world:worldM,quat,mapValue,draw:draw3D,selectionChanged:()=>{window.selectionUpdates=(window.selectionUpdates||0)+1;}});",ctx);
 sandbox.__inspection={history,shared,surfaces,identity:'full/102'};vm.runInContext('GSInspect.accept(__inspection);',ctx);
 const checks=[];
 // 在旋转后的多个视角，投影焦平面的点必须严格按手势移动，不交换横纵坐标。
@@ -36,7 +36,7 @@ el('compareRoadLayers').onclick();assert(el('ground49').checked&&el('initialRoad
 assert.equal(vm.runInContext('GSInspect.alpha(.00001)',ctx),1);el('threeSolid').checked=false;assert.equal(vm.runInContext('GSInspect.alpha(.00001)',ctx),.00001);el('threeSolid').checked=true;
 checks.push('three layers share point size and solid alpha independently of trained effective opacity');
 vm.runInContext('V.focus=[__inspection.history.init_xyz[1283*3],__inspection.history.init_xyz[1283*3+1],__inspection.history.init_xyz[1283*3+2]];V.distance=1.2;draw3D();GSInspect.selectUnit(1283);',ctx);assert(el('roadHistoryInfo').textContent.includes('位移'));assert(el('roadHistoryInfo').textContent.includes('opacity 0.5000'));assert(vm.runInContext('S.selected.id',ctx).startsWith('full:'));assert(vm.runInContext('GSInspect.debug().neighbors.length',ctx)>0);
-checks.push('actual trained road1283 links to frozen initial location/scale/opacity and ground support');
+assert(vm.runInContext('selectionUpdates',ctx)>0);checks.push('actual trained road1283 links to frozen initial location/scale/opacity and ground support, and notifies BEV/source linkage');
 fs.writeFileSync(path.join(out,'three_layers_canvas.png'),el('sceneCanvas').toBuffer('image/png'));
 const empty=history.supported.findIndex(v=>!v);sandbox.__empty=empty;vm.runInContext('GSInspect.selectUnit(__empty)',ctx);assert(el('roadHistoryInfo').textContent.includes('初始化未创建'));assert.equal(vm.runInContext('S.selected',ctx),null);
 checks.push('uncreated cells remain gray grid candidates and have no invented trained Gaussian');
@@ -55,5 +55,9 @@ el('sceneCanvas').onpointerdown({clientX:300,clientY:300,pointerId:1});el('scene
 const pointerDelta=vm.runInContext('(()=>{const p=project3(testPanPoint);return [p[0]-testPanBefore[0],p[1]-testPanBefore[1]];})()',ctx);assert(Math.abs(pointerDelta[0])<1e-7);assert(Math.abs(pointerDelta[1]-40)<1e-7);el('sceneCanvas').onpointerup({clientX:300,clientY:340});
 vm.runInContext('V.camera=true;V.cameraPan=[0,0];',ctx);el('sceneCanvas').onpointerdown({clientX:300,clientY:300,pointerId:1});el('sceneCanvas').onpointermove({clientX:340,clientY:300,shiftKey:true});assert.equal(vm.runInContext('V.cameraPan[0]',ctx),40);assert.equal(vm.runInContext('V.cameraPan[1]',ctx),0);el('sceneCanvas').onpointerup({clientX:340,clientY:300});
 checks.push('actual app pointer handlers pan vertically in orbit view and horizontally in calibrated-camera view');
-const result={status:'PASSED',checks,browser_ui_verified:false,rendering_scope:'actual app draw3D and inspection modules executed with Node Canvas and test DOM, not a browser screenshot',current_pixel:values.map(v=>({name:v.name,z_m:v.z})),initial_ground_points:history.metadata.used_ground_count};
-fs.writeFileSync(path.join(out,'interaction_validation.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+(async()=>{
+ const loaded=await vm.runInContext('GSInspect.load(S,load)',ctx);assert.equal(loaded.history.metadata.used_ground_count,49182);assert.equal(loaded.history.supported.length,26088);assert.equal(loaded.shared.lidar_nearest_m.length,480*320);assert.equal(loaded.surfaces.ordinary_depth_m.length,480*320);
+ checks.push('actual script-file loader and DecompressionStream decode all new local evidence with metadata, without HTTP');
+ const result={status:'PASSED',checks,browser_ui_verified:false,rendering_scope:'actual app draw3D and inspection modules executed with Node Canvas and test DOM, not a browser screenshot',current_pixel:values.map(v=>({name:v.name,z_m:v.z})),initial_ground_points:history.metadata.used_ground_count};
+ fs.writeFileSync(path.join(out,'interaction_validation.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+})().catch(e=>{console.error(e);process.exitCode=1;});
