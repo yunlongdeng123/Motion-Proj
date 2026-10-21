@@ -40,9 +40,11 @@ def run(root,package=False):
         if q['full_frame_saved_replay_max_error'] is not None:assert q['full_frame_saved_replay_max_error']<=3e-5
         with Image.open(root/q['image']) as im:assert im.size==(480,320);im.verify()
     old=json.loads((root/'validation.json').read_text()) if (root/'validation.json').exists() else {}
+    qa_path=root/'browser_gpu_qa.json'
+    browser_qa=json.loads(qa_path.read_text()) if qa_path.exists() else old.get('gpu_browser_qa',old.get('browser_qa','PENDING_GPU_UI_QA'))
     result.update(status='NATIVE_CUDA_DIAGNOSTIC_SYSTEM_VALIDATED',gpu_used=True,native_cuda_topk='116_NATIVE_BUFFER_TRACES_REPLAYED',full_counterfactual_rerasterization='12_SELECTED_PLUS36_TEMPORAL_CONTROLS_COMPLETE',
         full_model_views=25,nonempty_traces_with_independent_ID_weight_replay=id_count,additional_optimization_steps=0,
-        browser_qa=old.get('gpu_browser_qa','PENDING_GPU_UI_QA'),original_CPU_export_provenance_preserved=True)
+        browser_qa=browser_qa,original_CPU_export_provenance_preserved=True)
     (root/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     if package:
         files={p.relative_to(root).as_posix():dict(bytes=p.stat().st_size,sha256=hashlib.file_digest(p.open('rb'),'sha256').hexdigest()) for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.name!='package_manifest.json'}

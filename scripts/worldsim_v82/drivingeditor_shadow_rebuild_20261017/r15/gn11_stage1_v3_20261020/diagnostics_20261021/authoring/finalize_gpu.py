@@ -17,7 +17,8 @@ for name in ('GS_Reconstruction_Diagnostics_20261021_GPU_r2','GS_Reconstruction_
         if source.is_file():shutil.copy2(source,out/'source/gpu'/source.name)
     p=out/'GPU_REPORT.html';text=p.read_text(encoding='utf-8').replace('每个raw102像素按颜色贡献选20个普通背景Gaussian','每个raw102像素从已导出的贡献候选表，按颜色贡献选最多20个普通背景Gaussian（两个路面对照为19个，不冒充20个）')
     text=text.replace('CPU8项回归通过','CPU18项回归通过')
-    text=text.replace('研发曾遇Ninja','最终原始冻结资产审计完整重算12,297个文件、40,157,562,775字节的SHA256，全部未变。研发曾遇Ninja')
+    audit_note='最终原始冻结资产审计完整重算12,297个文件、40,157,562,775字节的SHA256，全部未变。'
+    text=text.replace(audit_note,'').replace('研发曾遇Ninja',audit_note+'研发曾遇Ninja')
     p.write_text(text,encoding='utf-8')
     contract=json.loads((out/'data/data_contract.json').read_text())
     contract['gpu_diagnostic_addendum']=dict(native_buffer_trace_verified=True,independent_top_ID_weights_checked=True,
