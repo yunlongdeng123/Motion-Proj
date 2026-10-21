@@ -214,10 +214,10 @@ gate、第一步和每5K更新前增加3次只读光栅：道路独立alpha、�
 
 ## 正式 49 帧删除评价入口（CPU 准入，尚未执行 GPU 评价）
 
-`tools/evaluate_v3_final49.py` 只在当前单槽四组训练全部返回真实30K、每组六个四件/49帧节点齐全后准入。显式执行开关、原GPU独占锁和“无现存GPU进程”检查同时通过才渲染；不会插队训练，不会创建优化器、调用Adam、安装道路行、SGCM细化或关机。它逐帧重新加载原生相机/三份模型，保留背景PVG时间自由度，并验证原生loader重算的PCA变换与已有输入一致而不重写共享输入。
+`tools/evaluate_v3_final49.py` 只在当前单槽四组训练全部返回真实30K、每组六个四件/49帧节点发布历史齐全后准入。用户精确授权清理的full/real_only旧5K–25K四件按下述完成凭据核对，四组30K与全部评价文件仍必须在盘。显式执行开关、原GPU独占锁和“无现存GPU进程”检查同时通过才渲染；不会插队训练，不会创建优化器、调用Adam、安装道路行、SGCM细化或关机。它逐帧重新加载原生相机/三份模型，保留背景PVG时间自由度，并验证原生loader重算的PCA变换与已有输入一致而不重写共享输入。
 
 ```text
-[30K三份模型 + 原49帧相机/道路世界单元]
+[30K三份模型 + 原49帧相机/道路世界单元 + 发布/授权清理凭据]
                    ↓
 [零更新原生渲染：联合 / 移除五车共享动态分支 / 道路单独]
                    ↓
@@ -233,6 +233,12 @@ gate、第一步和每5K更新前增加3次只读光栅：道路独立alpha、�
 CPU新增8项通过：拒绝未完成/0步gate/错误调用计数、缺帧/越界checkpoint、loader写入或变换变化、显示裁剪冒充浮点重放，并验证原生半像素投影及dry-run不创建GPU任务/成功凭据。首次在不完整`engine_overlay`上运行全套测试因缺少原生`hybrid30k_runtime`导入失败，保留该日志；随后在隔离CPU测试目录绑定当前冻结完整engine，87/87通过，无skip。日志位于当前campaign的`monitor/final49_cpu_native_RZEQ1S44/unittest.log`。这些是CPU准入，不是实际49帧CUDA重放通过；实际执行和四组结果汇总仍待训练结束。
 
 执行时使用当前分支工具，`--campaign <当前单槽campaign> --arm <固定四组之一> --output <campaign>/final49/<arm>_r1 --execute-final-evaluation-after-user-approval`。输出目录必须全新，失败保留现场；不自动重复评价、不修改训练终态或伪造质量接受。
+
+### 用户授权的旧 checkpoint 清理
+
+2026-10-21 10:01 SGT，仅当前serial_r1中已完成的full/real_only各5K、10K、15K、20K、25K四件checkpoint共40文件已删除，释放23,317,435,622字节（21.716GiB），盘余约41.13→62.84GiB。两组30K四件共8文件在清理前后SHA-256一致；7,948个其他文件的size/mtime/inode未变，包括全部原始发布事件和各49帧评价。prior_only、ownership_only、全部旧失败campaign均不在清理范围。旧步数没有另做checkpoint字节备份，不能再从这些已删节点恢复。
+
+一次性工具`tools/prune_v3_completed_checkpoints.py`只允许该campaign/两组/五步数/四固定文件名，拒绝活跃目标worker、被打开的目标文件、软链接、目标变化或重复尝试；不递归删除。完整意图及完成凭据保存在campaign根目录`checkpoint_retention.intent.json`/`checkpoint_retention.json`；[版本化索引](resource_recovery_r1/checkpoint_retention_20261021.json)记录原事件摘要、删除字节和保留30K校验和。最终评价只接受status=complete且40路径/原事件SHA-256/bytes完全匹配的豁免；缺其他checkpoint、30K或评价仍失败，不能据此降低预算或冒称从未保存。完整冻结engine上的CPU回归94/94通过，包括7项清理/保护/最终评价兼容测试；同一心跳已同步此例外，不新建任务、不给另外两组自动清理授权。
 
 ## 已知限制
 

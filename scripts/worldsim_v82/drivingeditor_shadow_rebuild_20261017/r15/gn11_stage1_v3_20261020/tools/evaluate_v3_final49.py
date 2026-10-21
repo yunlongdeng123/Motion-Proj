@@ -8,6 +8,7 @@ import argparse
 from contextlib import contextmanager
 import datetime
 import gc
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -22,6 +23,9 @@ FRAMES = tuple(f'0008{i:03d}' for i in range(89, 138))
 CHANNELS = {'gt', 'composite', 'static', 'dynamic', 'road_raw_pre_environment',
             'road_surface_color', 'road_alpha'}
 VERSION = 'V3_FINAL49_ZERO_UPDATE_EVALUATION_R1'
+RETENTION_VERSION = 'V3_COMPLETED_CHECKPOINT_RETENTION_R1'
+COMPONENT_PREFIXES = dict(static='chkpnt', dynamic='dynamic_chkpnt',
+                          environment='env_light_chkpnt', training_state='training_state')
 
 
 def read(path):
@@ -33,6 +37,46 @@ def write_new(path, data):
         json.dump(data, handle, indent=2, allow_nan=False, ensure_ascii=False)
 
 
+def retention_removals(campaign):
+    """Only the user's exact full/real_only old-step cleanup is an exception.
+
+    Publication events and evaluation assets are never removed or rewritten.
+    Missing checkpoints without a completed, event-bound receipt still fail.
+    """
+    campaign = Path(campaign).resolve()
+    receipt = campaign/'checkpoint_retention.json'
+    if not receipt.exists():
+        return {}
+    data = read(receipt)
+    if (data.get('version') != RETENTION_VERSION or data.get('status') != 'complete'
+            or data.get('campaign') != str(campaign)
+            or data.get('authorization') != 'user_requested_full_real_only_keep_latest_30k'
+            or data.get('keep_iteration') != 30000
+            or data.get('protected_assets_unchanged') is not True
+            or data.get('latest30k_sha256_unchanged') is not True):
+        raise RuntimeError('invalid checkpoint retention receipt')
+    expected = {(a, s, k) for a in ('full', 'real_only')
+                for s in STEPS[:-1] for k in COMPONENT_PREFIXES}
+    removed = {}
+    for item in data.get('removed', []):
+        key = (item['arm'], item['iteration'], item['component'])
+        if key not in expected or key in removed:
+            raise RuntimeError('retention scope expanded or duplicated')
+        arm, step, name = key
+        run = campaign/'arms'/arm/'run30k'
+        path = run/f'{COMPONENT_PREFIXES[name]}{step}.pth'
+        event_path = run/'checkpoint_events'/f'iteration_{step:06d}.json'
+        if (item['path'] != str(path) or path.exists() or path.is_symlink()
+                or item['event_sha256'] != hashlib.sha256(event_path.read_bytes()).hexdigest()
+                or read(event_path)['checkpoints'][name] != dict(path=str(path), bytes=item['bytes'])
+                or item['bytes'] <= 0):
+            raise RuntimeError('retention does not match original publication')
+        removed[key] = item
+    if set(removed) != expected:
+        raise RuntimeError('retention receipt is incomplete')
+    return removed
+
+
 def require_complete(campaign):
     """Reject gates, old failures, partial runs, and mismatched logical budgets."""
     campaign = Path(campaign).resolve()
@@ -42,6 +86,7 @@ def require_complete(campaign):
             or tuple(registry['completed_arms']) != ARMS):
         raise RuntimeError('all four fresh30K runs must finish before GPU evaluation')
     result = {}
+    removed = retention_removals(campaign)
     for arm in ARMS:
         run = campaign/'arms'/arm/'run30k'
         state = read(run/'status.json')
@@ -56,10 +101,13 @@ def require_complete(campaign):
                     or set(event['checkpoints']) != {
                         'static', 'dynamic', 'environment', 'training_state'}):
                 raise RuntimeError('incomplete four-component publication')
-            for value in event['checkpoints'].values():
+            for name, value in event['checkpoints'].items():
                 path = Path(value['path']).resolve()
-                if (not path.is_relative_to(run.resolve()) or not path.is_file()
-                        or path.stat().st_size != value['bytes'] or value['bytes'] <= 0):
+                if not path.is_relative_to(run.resolve()) or value['bytes'] <= 0:
+                    raise RuntimeError('missing or escaped checkpoint')
+                if (arm, step, name) in removed:
+                    continue
+                if not path.is_file() or path.stat().st_size != value['bytes']:
                     raise RuntimeError('missing or escaped checkpoint')
             frames = event['frames']
             if (len(frames) != 49 or {f['image_name'] for f in frames} != set(FRAMES)
