@@ -66,3 +66,5 @@
 - 原始资产根：`/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_serial_r1_20261021/final49/`，完整结果在各`<arm>_r2/`，CPU核验在`summary_r2/`。
 
 四个train的原控制器状态保留为`FOUR_ARMS_TRAINING_COMPLETE_EVALUATION_PENDING`这一历史返回；最终工程完成凭据以`summary_r2/comparison.json`的`FOUR_ARM_FORMAL49_AND_ASSET_AUDIT_COMPLETE`为准。关机须在本报告/索引代码推送、全机无未完成或待启动作业后，按既有授权正常执行；关机意图及后续可用SSH观察另行记录，不能把SSH断开写成平台计费确认。
+
+[关机前完成清单与意图](shutdown_intent.json)记录06:41:06 UTC的全机只读核验：无训练/评价/数据/渲染/队列作业，GPU锁空闲，只剩平台服务和本次核验SSH会话。正常AutoDL关机包装附带清空Trash动作；本轮会屏蔽该动作，不删除数据，只走其正常SIGTERM停机路径。意图本身不代表已关机或平台已确认。
