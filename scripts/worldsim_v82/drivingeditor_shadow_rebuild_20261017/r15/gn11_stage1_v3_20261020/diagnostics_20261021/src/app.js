@@ -1,8 +1,8 @@
 /* Buildless, offline first. No external JS/CDN, uploads, telemetry or GPU calls. */
 'use strict';
 const $ = id => document.getElementById(id);
-const ARMS = ['full','real_only','prior_only','ownership_only'];
-const NAMES = ['完整版','仅真实观测','仅先验','仅归属修复'];
+const ARMS = ['full','real_only','prior_only','ownership_only','gn11_v1'];
+const NAMES = ['完整版','仅真实观测','仅先验','仅归属修复','V1 原生 GN11（历史恢复30K）'];
 const COLORS = {ordinary:'#80aff0',road:'#5ed7b1',dynamic:'#ffb379'};
 const S = {arm:'full',raw:102,x:90,y:255,channel:'deleted_five',rayMode:'deleted_five',unit:null,selected:null,ray:null,checked:new Set(),playing:false};
 const cache = new Map(), images = new Map(); let version=0,comparisonVersion=0,timer=null,scene,road,maps,units,cloud,opt,lidar;
@@ -46,7 +46,8 @@ function heat(canvas,m,ch,mark=true){
 function cross(ctx){ctx.save();ctx.strokeStyle='#ff9bb0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(S.x-7,S.y);ctx.lineTo(S.x+7,S.y);ctx.moveTo(S.x,S.y-7);ctx.lineTo(S.x,S.y+7);ctx.stroke();ctx.strokeRect(S.x-2.5,S.y-2.5,5,5);
  if(S.selected?.cov2&&S.selected?.uv){const [a,b,d]=S.selected.cov2,disc=Math.sqrt((a-d)**2+4*b*b),l1=Math.max(.01,(a+d+disc)/2),l2=Math.max(.01,(a+d-disc)/2),ang=.5*Math.atan2(2*b,a-d);ctx.strokeStyle='#f6d978';ctx.beginPath();ctx.ellipse(...S.selected.uv,3*Math.sqrt(l1),3*Math.sqrt(l2),ang,0,2*Math.PI);ctx.stroke();}ctx.restore();}
 const isImage=ch=>['deleted_five','joint','gt','dynamic_raw','road_raw','road_surface_color'].includes(ch);
-async function render2D(){const epoch=version,channel=S.channel,arm=S.arm,raw=S.raw,ctx=$('renderCanvas').getContext('2d');try{let legend;if(isImage(channel)){const im=await img(asset(arm,channel,raw));if(epoch!==version||channel!==S.channel||arm!==S.arm||raw!==S.raw)return;ctx.clearRect(0,0,480,320);ctx.drawImage(im,0,0,480,320);cross(ctx);legend='原生渲染派生图像 · 完整480×320 · 显示编码非指标输入';}else legend=heat($('renderCanvas'),maps,channel);$('renderCanvas').dataset.raw=raw;$('renderCanvas').dataset.arm=arm;$('renderCanvas').dataset.channel=channel;$('mapLegend').textContent=legend;$('pixelLabel').textContent=`p = (${S.x}, ${S.y})`;}catch(e){status(e.message,true);}}
+function unavailable(canvas){const c=canvas.getContext('2d');c.fillStyle='#0a1422';c.fillRect(0,0,canvas.width,canvas.height);c.fillStyle='#c0b18a';c.font='14px sans-serif';c.fillText('V1 无专用道路分支，此项不适用',25,45);}
+async function render2D(){const epoch=version,channel=S.channel,arm=S.arm,raw=S.raw,ctx=$('renderCanvas').getContext('2d');try{let legend;if(arm==='gn11_v1'&&channel.includes('road')){unavailable($('renderCanvas'));legend='共享BEV仅作外部测量证据；没有向V1注入道路高斯。';}else if(isImage(channel)){const im=await img(asset(arm,channel,raw));if(epoch!==version||channel!==S.channel||arm!==S.arm||raw!==S.raw)return;ctx.clearRect(0,0,480,320);ctx.drawImage(im,0,0,480,320);cross(ctx);legend='原生渲染派生图像 · 完整480×320 · 显示编码非指标输入';}else legend=heat($('renderCanvas'),maps,channel);$('renderCanvas').dataset.raw=raw;$('renderCanvas').dataset.arm=arm;$('renderCanvas').dataset.channel=channel;$('mapLegend').textContent=legend;$('pixelLabel').textContent=`p = (${S.x}, ${S.y})`;}catch(e){status(e.message,true);}}
 function pixelMetrics(){const i=S.y*480+S.x,pairs=[['背景 alpha',mapValue(maps,'static_alpha',i)],['道路独立 alpha',mapValue(maps,'road_alpha',i)],['道路 / 背景 T',mapValue(maps,'road_bg',i)],['道路 / 联合 T',mapValue(maps,'road_joint',i)],['LiDAR z [m]',mapValue(maps,'lidar_depth_m',i)],['背景 z [m]',mapValue(maps,'static_depth_m',i)],['联合 z [m]',mapValue(maps,'joint_depth_m',i)],['RGB L1',mapValue(maps,'residual',i)]];
  const stride=scene?.precision?.map_stride||1,notSample=S.x%stride!==0||S.y%stride!==0;if(notSample)for(const pair of pairs)pair[1]=null;
  const n=S.ray?.native,active=n&&S.ray.arm===S.arm&&S.ray.raw===S.raw&&S.ray.pixel[0]===S.x&&S.ray.pixel[1]===S.y;
@@ -57,15 +58,15 @@ async function comparison(){
  const epoch=version,token=++comparisonVersion,{raw,x,y,channel}=S,stride=scene?.precision?.map_stride||1,missing=x%stride!==0||y%stride!==0;
  const all=await Promise.all(ARMS.map(async arm=>{
   const m=await load(`${arm}/${raw}`,mapPath(arm,raw)),canvas=$('compare_'+arm);let image=null;
-  if(isImage(channel))image=await img(asset(arm,channel,raw));
+  if(isImage(channel)&&!(arm==='gn11_v1'&&channel.includes('road')))image=await img(asset(arm,channel,raw));
   if(epoch!==version||token!==comparisonVersion)return null;
-  if(image){const c=canvas.getContext('2d');c.drawImage(image,0,0,480,320);cross(c);}else heat(canvas,m,channel);
+  if(arm==='gn11_v1'&&channel.includes('road'))unavailable(canvas);else if(image){const c=canvas.getContext('2d');c.drawImage(image,0,0,480,320);cross(c);}else heat(canvas,m,channel);
   canvas.dataset.raw=raw;canvas.dataset.arm=arm;canvas.dataset.channel=channel;
   const p=y*480+x;let result={arm,alpha:mapValue(m,'static_alpha',p),bg:mapValue(m,'road_bg',p),joint:mapValue(m,'road_joint',p),depth:mapValue(m,'static_depth_m',p),error:mapValue(m,'residual',p),source:'显示预览'};
   if(missing){for(const key of ['alpha','bg','joint','depth','error'])result[key]=null;result.source='未打包该像素';}
   let ray=S.ray?.arm===arm&&S.ray.raw===raw&&S.ray.pixel[0]===x&&S.ray.pixel[1]===y&&S.ray.mode==='deleted_five'?S.ray:null;
-  if(!ray&&offlineCase(raw,x,y)){try{ray=await load(`ray/${arm}/${raw}/${x}/${y}`,`data/rays/${arm}_${raw}_${x}_${y}.js`,false);}catch(error){/* no substitute evidence */}}
-  if(ray){const n=ray.native;result={arm,alpha:n.static_alpha?.[0]??n.alpha,bg:n.road_in_background[0],joint:n.road_in_joint[0],depth:n.static_depth_m?.[0]??(n.alpha>1e-5?n.depth_sum_model/n.alpha/scene.meter_to_model:null),error:n.joint.reduce((v,c,i)=>v+Math.abs(c-n.gt[i]),0)/3,source:'原生保存浮点'};}
+  if(!ray&&arm!=='gn11_v1'&&offlineCase(raw,x,y)){try{ray=await load(`ray/${arm}/${raw}/${x}/${y}`,`data/rays/${arm}_${raw}_${x}_${y}.js`,false);}catch(error){/* no substitute evidence */}}
+  if(ray){const n=ray.native;result={arm,alpha:n.static_alpha?.[0]??n.alpha,bg:n.road_in_background?.[0]??null,joint:n.road_in_joint?.[0]??null,depth:n.static_depth_m?.[0]??(n.alpha>1e-5?n.depth_sum_model/n.alpha/scene.meter_to_model:null),error:n.joint&&n.gt?n.joint.reduce((v,c,i)=>v+Math.abs(c-n.gt[i]),0)/3:result.error,source:'原生浮点／缺项保持未知'};}
   return result;
  }));
  if(epoch!==version||token!==comparisonVersion)return;
@@ -100,7 +101,7 @@ function draw3D(){if(!cloud||!scene)return;const canvas=$('sceneCanvas');fitCanv
  for(let i=0;i<4;i++){line3(ctx,cam.center,corner[i],'#85a3c7');line3(ctx,corner[i],corner[(i+1)%4],'#85a3c7');}
  if(S.selected?.model_xyz){const q=quat(S.selected.quaternion||[1,0,0,0]),sigma=S.selected.sigma_m.map(v=>v*scene.meter_to_model),center=S.selected.model_xyz;for(let a=0;a<3;a++){const b=(a+1)%3,c=(a+2)%3;let old=null;for(let j=0;j<=60;j++){const theta=j*Math.PI/30,v=[0,0,0];v[b]=Math.cos(theta)*sigma[b];v[c]=Math.sin(theta)*sigma[c];const p=add(center,mat(q,v,false));if(old)line3(ctx,old,p,'#ffe08c',2);old=p;}}line3(ctx,cam.center,center,'#ffe08c',1.5);}
  ctx.fillStyle='#9fb5d1';ctx.font='12px monospace';ctx.fillText('GEOMETRY PREVIEW · grid 10 m · not novel-view RGB',12,canvas.height-13);
- $('cloudInfo').textContent=cloud.branches.map(b=>`${b.branch} 显示 ${b.displayed.toLocaleString()} / ${b.total.toLocaleString()}`).join('；')+'。全部道路行保留；颜色为 DC 预览，原生 SH 外观见二维结果。';}
+ $('cloudInfo').textContent=cloud.branches.map(b=>`${b.branch} 显示 ${b.displayed.toLocaleString()} / ${b.total.toLocaleString()}`).join('；')+(S.arm==='gn11_v1'?'。V1无专用道路行，BEV仅外部测量参照；':'。全部道路行保留；')+'颜色为 DC 预览，原生 SH 外观见二维结果。';}
 function selectPoint(rec){const prefix=rec.prefix,i=rec.i,b=cloud.branches.find(v=>v.branch===(prefix==='static_'?'static':'dynamic')),q=Array.from(cloud[prefix+'q'].slice(i*4,i*4+4));S.selected={id:`${S.arm}:${b.checkpoint_sha256.slice(0,12)}:${b.branch}:${cloud[prefix+'row'][i]}`,model_xyz:rec.p,world_m:worldM(rec.p),quaternion:q,sigma_m:rec.sigma.map(v=>v/scene.meter_to_model),branch:['ordinary','road','dynamic'][rec.role]};$('gaussianInfo').textContent=`显示采样点（非像素归因） ${S.selected.id} · 世界[m] ${S.selected.world_m.map(v=>f(v)).join(', ')} · σ[m] ${S.selected.sigma_m.map(v=>f(v)).join(', ')}`;draw3D();render2D();}
 let bevTransform=null;
 function drawBEV(){if(!road||!units)return;const canvas=$('bevCanvas');fitCanvas(canvas);const ctx=canvas.getContext('2d'),n=road.provenance.length,mode=$('bevMode').value;ctx.fillStyle='#09111c';ctx.fillRect(0,0,canvas.width,canvas.height);const xx=[],yy=[];for(let i=0;i<n;i++){xx.push(road.world_local[i*3]);yy.push(road.world_local[i*3+1]);}const minX=Math.min(...xx),maxX=Math.max(...xx),minY=Math.min(...yy),maxY=Math.max(...yy),scale=Math.min((canvas.width-60)/(maxX-minX),(canvas.height-50)/(maxY-minY));bevTransform={minX,maxY,scale,x:30,y:20};
@@ -131,6 +132,7 @@ function showRay(value){
  const scope=gpu?'实际原生排序／投影缓冲区，RGB／α／depth／T重放通过':value.mode==='ordinary'?'该CPU分支暂无原生独立渲染基线':value.numeric_alpha_depth_agree?'本像素alpha/depth在CPU参考门限内':'本像素参考不一致，不得作精确归因';
  $('rayState').textContent=`${gpu?'原生缓冲区CUDA trace':'CPU参考，非CUDA trace'} [${value.mode}] · ${value.candidate_count}个tile候选 / ${value.accepted_count}参与合成 · α误差=${f(e?.alpha_abs,7)}，深度累积[model]误差=${f(e?.depth_sum_model_abs,7)} · ${scope}。${value.id_weight_validation?`另${value.id_weight_validation.count}个ID one-hot原生权重核验通过。`:''} RGB贡献不含环境；排序不是错误点／因果改善结论。${ratio===null?'':`动态‖RGB‖/α=${f(ratio,3)}。`}`;
  rankRows();profile();pixelMetrics();
+ window.evidenceUI?.showTrace(value);
 }
 async function cachedRay(){
  S.ray=null;S.selected=null;S.checked.clear();$('topRows').innerHTML='';$('gaussianInfo').textContent='选择 Gaussian 后显示协方差椭球。';profile();
@@ -138,16 +140,18 @@ async function cachedRay(){
  const gpuKey=`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`,gpuPath=window.GSDATA.gpu_index?.queries?.[gpuKey];
  if(gpuPath){const v=await load(gpuKey,gpuPath,false);if(gpuKey===`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`)showRay(v);return;}
  const key=`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`;
- if(S.rayMode==='deleted_five'&&offlineCase(S.raw,S.x,S.y)){const v=await load(key,`data/rays/${S.arm}_${S.raw}_${S.x}_${S.y}.js`,false);if(key===`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`&&S.rayMode==='deleted_five')showRay(v);}
+ if(S.arm!=='gn11_v1'&&S.rayMode==='deleted_five'&&offlineCase(S.raw,S.x,S.y)){const v=await load(key,`data/rays/${S.arm}_${S.raw}_${S.x}_${S.y}.js`,false);if(key===`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`&&S.rayMode==='deleted_five')showRay(v);}
  else $('rayState').textContent=`当前像素／模式 ${S.rayMode} 无离线全模型射线。可点击实时CUDA归因，或用CPU作独立参考；不以邻近像素替代。`;
 }
 async function pixelChange(x,y){S.x=Math.max(0,Math.min(479,Math.round(x)));S.y=Math.max(0,Math.min(319,Math.round(y)));await cachedRay();pixelMetrics();render2D();comparison();draw3D();}
 async function refresh(){
  const epoch=++version,workspace=document.querySelector('.workspace');workspace.setAttribute('aria-busy','true');
+ const v1=S.arm==='gn11_v1';$('rayMode').querySelector('option[value="road_only"]').disabled=v1;if(v1&&S.rayMode==='road_only')S.rayMode='deleted_five';$('rayMode').value=S.rayMode;$('queryRay').disabled=v1;
  $('frameLabel').textContent=`raw${S.raw} · ${S.raw-88}/49`;$('frame').value=S.raw;$('arm').value=S.arm;status(`加载 ${S.arm} / raw${S.raw} 的真实数据…`);
  try{
-  const data=await Promise.all([load(`${S.arm}/${S.raw}`,mapPath(S.arm,S.raw)),load(`${S.arm}/units/${S.raw}`,`data/${S.arm}/units_${S.raw}.js`),load(`${S.arm}/cloud`,`data/${S.arm}/cloud.js`),load(`${S.arm}/optimization`,`data/${S.arm}/optimization.js`),load(`lidar/${S.raw}`,`data/lidar/${S.raw}.js`)]);
+  const data=await Promise.all([load(`${S.arm}/${S.raw}`,mapPath(S.arm,S.raw)),load(`${v1?'full':S.arm}/units/${S.raw}`,`data/${v1?'full':S.arm}/units_${S.raw}.js`),load(`${S.arm}/cloud`,`data/${S.arm}/cloud.js`),v1?null:load(`${S.arm}/optimization`,`data/${S.arm}/optimization.js`),load(`lidar/${S.raw}`,`data/lidar/${S.raw}.js`)]);
   if(epoch!==version)return;[maps,units,cloud,opt,lidar]=data;indexRoadPoints();
+  if(v1){units={...units};for(const key of ['road_only_alpha','road_alpha_in_background','road_alpha_in_joint','road_depth_model','road'])units[key]=new Float32Array(units[key]?.length??road.provenance.length).fill(NaN);units.verified_exposure=new Uint8Array(units.verified_exposure.length);}
   if(S.unit===null){let best=Infinity;for(let i=0;i<road.provenance.length;i++){const uv=units.raster_uv.slice(i*2,i*2+2),d=(uv[0]-S.x)**2+(uv[1]-S.y)**2;if(units.in_view[i]&&d<best){S.unit=i;best=d;}}}
   try{await cachedRay();}catch(error){$('rayState').textContent='当前离线射线文件不可用；不伪造贡献。其余原生证据仍可使用。';}
   if(epoch!==version)return;pixelMetrics();await render2D();if(epoch!==version)return;
@@ -192,7 +196,7 @@ function bind(){
  $('bevCanvas').addEventListener('click',()=>{if(S.unit===null||!cloud)return;const i=cloud.static_road_id.indexOf(S.unit);if(i<0)return;selectPoint({prefix:'static_',i,p:get3(cloud.static_xyz,i),role:1,sigma:get3(cloud.static_sigma,i)});V.focus=get3(cloud.static_xyz,i);V.distance=2;V.camera=false;draw3D();});
  const observer=new ResizeObserver(()=>{draw3D();drawBEV();profile();});for(const id of ['sceneCanvas','bevCanvas','profileCanvas'])observer.observe($(id));
 }
-async function init(){try{scene=window.GSDATA.scene;road=await load('road','data/road.js');window.gsdiag={state:S,scene,refresh,selectPixel:pixelChange,getMaps:()=>maps,getRoad:()=>road,getUnits:()=>units,draw3D,showRay,rankRows,load,getView};bind();await refresh();}catch(e){status(e.message,true);console.error(e);}}
+async function init(){try{scene=window.GSDATA.scene;road=await load('road','data/road.js');window.gsdiag={state:S,scene,refresh,selectPixel:pixelChange,getMaps:()=>maps,getRoad:()=>road,getUnits:()=>units,draw3D,showRay,rankRows,load,getView,selectGaussian:row=>{S.selected=row;V.focus=row.model_xyz;V.distance=Math.max(.8,Math.min(V.distance,3));V.camera=false;rankRows();draw3D();render2D();}};bind();await refresh();}catch(e){status(e.message,true);console.error(e);}}
 for(const [value,label] of [['102,365,280','raw102 · 右侧正常路面候选'],['102,255,240','raw102 · 前车黑色残影'],['102,90,255','raw102 · 左侧黑色残影']]){const option=document.createElement('option');option.value=value;option.textContent=label;$('preset').prepend(option);}
 $('preset').value='102,90,255';
 for(const option of $('preset').options){if(option.value==='102,120,210')option.textContent='raw102 · 道路对照候选（原）';if(option.value==='102,220,280')option.textContent='raw102 · 车影下缘区域';}

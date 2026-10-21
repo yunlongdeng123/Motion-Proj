@@ -28,7 +28,8 @@ os.environ.setdefault('CUDA_HOME','/usr/local/cuda')
 os.environ.setdefault('TORCH_CUDA_ARCH_LIST','8.9')
 REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v3')
 REL=Path('scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020')
-ARMS=('full','real_only','prior_only','ownership_only')
+ARMS=('full','real_only','prior_only','ownership_only','gn11_v1')
+V1_RUN=Path('/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k')
 MODES=('deleted_five','joint','ordinary','road_only','dynamic')
 MANIFEST_SHA='eb926ef96b21f5b7382bc7e9eff7f4424cb13fc914246482d90ad179f6b72465'
 
@@ -88,17 +89,22 @@ class GPUAdapter:
         if self.arm:
             self.check_protected();self.kwargs.clear();del self.models
             gc.collect();torch.cuda.empty_cache()
-        run=CAMPAIGN/f'arms/{arm}/run30k'
+        run=V1_RUN if arm=='gn11_v1' else CAMPAIGN/f'arms/{arm}/run30k'
         config=json.loads((run/'effective_config.json').read_text())
         self.config=OmegaConf.create(config)
         if config['iterations']!=30000 or config['seed']!=0:raise ValueError('scientific config mismatch')
-        self.meta=json.loads(Path(config['v3_bundle']).read_text());self.scale=float(self.meta['meter_to_model'])
+        # V1 uses the measured V3 road bundle ONLY as external diagnostic evidence,
+        # never as model input or a new road primitive. Check cameras on both loads.
+        reference_config=json.loads((CAMPAIGN/'arms/full/run30k/effective_config.json').read_text())
+        evidence_bundle=Path(reference_config['v3_bundle'])
+        self.meta=json.loads(evidence_bundle.read_text());self.scale=float(self.meta['meter_to_model'])
         self.invA=np.linalg.inv(np.asarray(self.meta['world_to_model']))
-        if self.cameras is None:
+        if self.cameras is None or getattr(self,'camera_source',None)!=config['source_path']:
             with self.final.preserve_transform_file(Path(config['source_path'])/'transform_matrix.txt'):
                 info=readWaymoInfo_add(self.config)
             cameras=cameraList_from_camInfos(info.train_cameras,4,self.config)
             self.cameras=sorted(cameras,key=lambda c:float(c.timestamp));self.duration=info.time_duration
+            self.camera_source=config['source_path']
             if len(self.cameras)!=49:raise ValueError('49 native cameras required')
             for raw,c in zip(range(89,138),self.cameras):
                 if c.image_width!=480 or c.image_height!=320 or abs(c.timestamp-(raw-113)*.02)>1e-7:raise ValueError('camera binding')
@@ -107,7 +113,8 @@ class GPUAdapter:
         models=[GaussianModel(self.config),Dynamic_GaussianModel(self.config),EnvLight(resolution=self.config.env_map_res).cuda()]
         self.bindings={}
         for name,prefix,model in zip(('static','dynamic','environment'),('chkpnt','dynamic_chkpnt','env_light_chkpnt'),models):
-            path=run/f'{prefix}30000.pth';entry=self.manifest[path.relative_to(CAMPAIGN).as_posix()]
+            path=run/f'{prefix}30000.pth'
+            entry=json.loads((HERE/'v1_binding.json').read_text())['checkpoints'][name] if arm=='gn11_v1' else self.manifest[path.relative_to(CAMPAIGN).as_posix()]
             if sha(path)!=entry['sha256'] or path.stat().st_size!=entry['bytes']:raise ValueError('checkpoint binding mismatch')
             self.bindings[name]=entry
             self.protected[str(path)]=(path.stat().st_size,path.stat().st_mtime_ns)
@@ -124,7 +131,10 @@ class GPUAdapter:
                 if torch.is_tensor(value):value.requires_grad_(False)
             del payload;gc.collect()
         self.models=models;self.arm=arm;self.kwargs={}
-        for path in (run/'effective_config.json',run/'status.json',Path(config['source_path'])/'transform_matrix.txt',Path(config['v3_bundle'])):
+        from evidence import Evidence
+        self.evidence=Evidence(CAMPAIGN,self.meta,self.scale)
+        if arm=='gn11_v1' and bool((self.models[0]._road_ids()>=0).any()):raise RuntimeError('V1 must have no injected road rows')
+        for path in (run/'effective_config.json',run/'status.json',Path(config['source_path'])/'transform_matrix.txt',evidence_bundle):
             self.protected[str(path)]=(path.stat().st_size,path.stat().st_mtime_ns)
 
     def check_protected(self):
@@ -161,6 +171,7 @@ class GPUAdapter:
         import torch
         from gaussian_renderer import merge_kwargs
         if mode not in MODES:raise ValueError('invalid mode')
+        if arm=='gn11_v1' and mode=='road_only':raise ValueError('V1 has no dedicated road branch')
         p=self.prepare(arm,raw);static=self.models[0];sr=p['static_rows'];dr=p['dynamic_rows']
         if mode=='joint':k=merge_kwargs(p['sk'],p['dk']);mapping=torch.cat((sr,dr));dyn=torch.cat((torch.zeros_like(sr),torch.ones_like(dr))).bool()
         elif mode=='dynamic':k=dict(p['dk']);mapping=dr;dyn=torch.ones_like(dr).bool()
@@ -197,11 +208,14 @@ class GPUAdapter:
             rgb_pre_environment_abs_max=float(abs(sums[:3]-native_rgb).max()),T_abs=float(abs(sums[5]-sums[6])))
         if max(errors.values())>2e-5:raise RuntimeError('native-buffer trace failed aggregate replay: '+str(errors))
         saved=CAMPAIGN/f'final49/{arm}_r2/0008{raw:03d}/render_float.npz'
+        # V1 has no final49 V3 baseline. Its whole-frame original PNG replay is
+        # independently checked by the V1 export, never borrowed from a V3 arm.
+        if arm=='gn11_v1':saved=CAMPAIGN/f'final49/full_r2/0008{raw:03d}/render_float.npz'
         with np.load(saved) as z:
             fields={key:z[key][:,y,x].copy() for key in ('joint','deleted_five','gt','dynamic_raw','road_raw','road_in_background','road_in_joint','static_alpha','joint_alpha','dynamic_alpha','road_alpha','static_depth_m','joint_depth_m')}
             lidar=float(z['lidar_depth_m'][0,y,x]);prefix={'joint':'joint','dynamic':'dynamic','road_only':'road','deleted_five':'static'}.get(mode)
             old_errors=None
-            if prefix:
+            if prefix and arm!='gn11_v1':
                 expected_rgb=z[{'joint':'joint','deleted_five':'deleted_five','road_only':'road_raw','dynamic':'dynamic_raw'}[mode]][:,y,x]
                 rgb=native_rgb+(1-native_feat[-1])*p['env'][:,y,x].cpu().numpy() if mode in ('joint','deleted_five') else native_rgb
                 old_errors=dict(rgb=float(abs(rgb-expected_rgb).max()),alpha=float(abs(native_feat[-1]-z[prefix+'_alpha'][0,y,x])),depth=float(abs(native_feat[-2]-z[prefix+'_depth_sum'][0,y,x])))
@@ -238,14 +252,18 @@ class GPUAdapter:
             if error>2e-6:raise RuntimeError('native one-hot ID weight replay failed')
             id_validation=dict(status='NATIVE_ONE_HOT_ID_WEIGHT_REPLAY_PASSED',count=len(sample),max_weight_error=error)
         self.check_protected()
-        return clean(dict(status='NATIVE_BUFFER_CUDA_TRACE_VERIFIED',arm=arm,raw=raw,pixel=[x,y],mode=mode,
+        value=dict(status='NATIVE_BUFFER_CUDA_TRACE_VERIFIED',arm=arm,raw=raw,pixel=[x,y],mode=mode,
             candidate_count=cnt[0],accepted_count=n,top=top,profile=profile,no_optimizer=True,parameter_updates=0,gpu_used=True,
             reference=dict(rgb_gaussians=sums[:3],alpha=sums[4],T=sums[5],depth_sum_model=sums[3]),
             native=dict(alpha=native_feat[-1],depth_sum_model=native_feat[-2],lidar_m=lidar if lidar>0 else None,**fields),
             replay_errors=errors,saved_final49_replay_errors=old_errors,numeric_alpha_depth_agree=True,id_weight_validation=id_validation,
             native_rasterizer_binary_sha256=self.binary_sha,environment_color_not_in_reference_rgb=True,
             trace_scope='read native CUDA preprocessing/sorted tile buffers; same alpha/early termination expressions; aggregate replay checked',
-            causal_claim=False,elapsed_s=time.monotonic()-started,limitations=['center-z order is not ellipsoid first intersection','source lineage is not unique lifetime ID','Top-K responsibility alone is not evidence of reconstruction error']))
+            causal_claim=False,elapsed_s=time.monotonic()-started,limitations=['center-z order is not ellipsoid first intersection','source lineage is not unique lifetime ID','Top-K responsibility alone is not evidence of reconstruction error'])
+        if arm=='gn11_v1':
+            value['native']={'alpha':float(native_feat[-1]),'depth_sum_model':float(native_feat[-2]),'lidar_m':lidar if lidar>0 else None}
+            value['historical_contract']='native GN11 stage1 20K->30K recovery; no dedicated V3 road; not fresh matched V3 method control'
+        return clean(self.evidence.enrich_trace(value))
 
     def counterfactual(self,arm,raw,x,y,mode,selected):
         import torch
@@ -287,8 +305,10 @@ class GPUAdapter:
             pixels=(value.permute(1,2,0).clamp(0,1).cpu().numpy()*255).round().astype(np.uint8)
             buf=io.BytesIO();Image.fromarray(pixels).save(buf,format='WEBP',lossless=True)
             frames[name]='data:image/webp;base64,'+base64.b64encode(buf.getvalue()).decode()
+        evidence=self.evidence.evaluate_cf(raw,{key:v.cpu().numpy() for key,v in b.items()},{key:v.cpu().numpy() for key,v in a.items()},[x,y])
         self.check_protected()
         return clean(dict(status='FULL_NATIVE_RERASTERIZATION_COMPLETE',arm=arm,raw=raw,pixel=[x,y],mode=mode,
+            scientific_evaluation=evidence,
             removed=removed,metrics=metrics,images=frames,optimizer_updates=0,parameters_mutated=False,
             float_asset=dict(path=str(capture),sha256=sha(capture),bytes=capture.stat().st_size),
             gpu_used=True,environment_fixed=True,removal='fresh mask copy, complete native preprocessing/sorting/alpha compositing rerun; not RGB subtraction',
@@ -329,7 +349,7 @@ class GPUAdapter:
         capture=self.output/f'view_{self.sequence:05d}_{arm}_{raw}_{mode}.npz';self.sequence+=1
         np.savez_compressed(capture,rgb=rgb.cpu().numpy(),alpha=alpha.cpu().numpy(),depth_sum_model=depth.cpu().numpy())
         saved_error=None
-        if view is None and mode!='ordinary':
+        if view is None and mode!='ordinary' and arm!='gn11_v1':
             channel={'joint':'joint','deleted_five':'deleted_five','road_only':'road_raw','dynamic':'dynamic_raw'}[mode]
             with np.load(CAMPAIGN/f'final49/{arm}_r2/0008{raw:03d}/render_float.npz') as saved:saved_error=float(abs(rgb.cpu().numpy()-saved[channel]).max())
             if saved_error>3e-5:raise RuntimeError('full-frame native view replay mismatch')

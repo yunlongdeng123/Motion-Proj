@@ -25,14 +25,18 @@
   const m=value.metrics;$('cfMetrics').textContent=`选中像素 RGB L1变化 ${fmt(m.selected_pixel_L1_change)}；道路贡献 ${fmt(m.selected_pixel_road_before)} → ${fmt(m.selected_pixel_road_after)}；α ${fmt(m.selected_pixel_alpha_before)} → ${fmt(m.selected_pixel_alpha_after)}。全图平均变化 ${fmt(m.mean_abs_RGB_change)}；21×21像素邻域外变化 ${fmt(m.outside_ROI_RGB_change)}；变化>1/255像素 ${m.changed_pixel_count}。邻域外变化仅是潜在误伤提示，未经正常区域GT验证。`;
   const temporal=value.temporal_controls||[];$('cfTemporal').textContent=temporal.length?'相同Gaussian集合跨帧干预：'+temporal.map(v=>`raw${v.raw} 全图Δ=${fmt(v.metrics.mean_abs_RGB_change)}，区域外Δ=${fmt(v.metrics.outside_ROI_RGB_change)}`).join('；')+'。同一屏幕坐标不等于同一世界表面。':'';
   $('saveCF').disabled=false;
+  window.evidenceUI?.showCF(value);
  }
  async function selection(){
   const token=++generation;cf=null;$('cfImages').replaceChildren();$('cfMetrics').textContent='';$('cfTemporal').textContent='';$('saveCF').disabled=true;
+  if($('scientificEvaluation'))$('scientificEvaluation').replaceChildren();
+  if($('geometrySelection'))$('geometrySelection').textContent='';
+  if($('geometryRows')){$('geometryRows').replaceChildren();$('geometrySummary').textContent='当前像素尚未载入带测量判别的归因；保持未知。';$('geometryDetail').textContent='';}
   $('cachedView').value='native';
   $('nativeViewImage').hidden=true;$('viewState').textContent='点击渲染当前三维视角；未用采样几何生成虚假外观。';
   $('cfState').textContent='勾选贡献表Gaussian后，点击完整重渲染。内置raw102三案例已从贡献表中选最多20个普通背景执行移除。';
   const s=state(),key=`cf/${s.arm}/${s.raw}/${s.x}/${s.y}`,path=window.GSDATA?.gpu_index?.counterfactuals?.[key];
-  if(path&&s.rayMode==='deleted_five'){try{const value=await window.gsdiag.load(key,path,false);if(token===generation)showCF(value,'已执行预计算：贡献表内颜色较高的最多20个普通背景，不代表当前复选集合');}catch(e){if(token===generation)$('cfState').textContent='预计算结果缺失：'+e.message;}}
+  if(path&&s.rayMode==='deleted_five'){try{const value=await window.gsdiag.load(key,path,false);if(token===generation)showCF(value,value.selection_kind==='geometry_conflict_candidates'?'已执行：当前射线3个几何冲突候选（不代表保证受益或当前复选集合）':'已执行预计算：贡献表内颜色较高的最多20个普通背景，不代表当前复选集合');}catch(e){if(token===generation)$('cfState').textContent='预计算结果缺失：'+e.message;}}
   const viewKey=`view/${s.arm}/${s.raw}/${s.rayMode}/native`,viewPath=window.GSDATA?.gpu_index?.views?.[viewKey];
   if(viewPath){try{const value=await window.gsdiag.load(viewKey,viewPath,false);if(token===generation)showView(value,'预计算原相机分支图像');}catch(e){if(token===generation)$('viewState').textContent=e.message;}}
  }

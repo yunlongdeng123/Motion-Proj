@@ -11,7 +11,7 @@ import threading
 from urllib.parse import urlsplit, parse_qs
 
 REMOTE = 'CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/gsdiag_cpu_20261021_r1/backend.py --stdio'
-GPU_REMOTE='PYTHONDONTWRITEBYTECODE=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/gsdiag_gpu_20261021_r1/gpu_backend.py --stdio'
+GPU_REMOTE='PYTHONDONTWRITEBYTECODE=1 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/gsdiag_gpu_20261021_r2/gpu_backend.py --stdio'
 class Bridge:
     def __init__(self,command=REMOTE): self.process=None; self.lines=queue.Queue(); self.lock=threading.Lock(); self.command=command
     def close(self):
@@ -63,7 +63,8 @@ class Handler(SimpleHTTPRequestHandler):
     @staticmethod
     def validate_gpu(data):
         if not isinstance(data,dict) or set(data)-{'action','arm','raw','x','y','mode','ids','view'}:raise ValueError('unknown fields')
-        if data.get('arm') not in ('full','real_only','prior_only','ownership_only'):raise ValueError('arm')
+        if data.get('arm') not in ('full','real_only','prior_only','ownership_only','gn11_v1'):raise ValueError('arm')
+        if data.get('arm')=='gn11_v1' and data.get('mode')=='road_only':raise ValueError('V1 has no dedicated road branch')
         if data.get('mode','deleted_five') not in ('deleted_five','joint','dynamic','road_only','ordinary'):raise ValueError('mode')
         if any(type(data.get(k)) is not int for k in ('raw','x','y')):raise ValueError('integer query required')
         if not(89<=data['raw']<=137 and 0<=data['x']<480 and 0<=data['y']<320):raise ValueError('bounds')
