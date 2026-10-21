@@ -7,6 +7,14 @@ import sys
 from pathlib import Path
 import numpy as np
 from PIL import Image
+
+def ranked_sample(rows, percent):
+    # 与CPU查看器使用相同uint32嵌套顺序；本导出器保持独立部署。
+    x=np.asarray(rows,dtype=np.uint32).copy()
+    x^=x>>np.uint32(16);x*=np.uint32(0x7feb352d);x^=x>>np.uint32(15)
+    x*=np.uint32(0x846ca68b);x^=x>>np.uint32(16)
+    return rows[np.lexsort((rows,x))[:int(np.ceil(len(rows)*percent/100))]]
+
 from gpu_backend import GPUAdapter,V1_RUN,CAMPAIGN,HERE,sha,clean,global_slot
 
 def main():
@@ -24,14 +32,14 @@ def main():
     with global_slot(),patch.object(torch.optim.Adam,'step',side_effect=RuntimeError('no optimization')),torch.no_grad():
         adapter=GPUAdapter();adapter.model('gn11_v1');records=[];queries=[];cloud={};branches=[]
         for name,model in zip(('static','dynamic'),adapter.models[:2]):
-            n=len(model._xyz);ids=np.linspace(0,n-1,min(n,18000 if name=='static' else 6000)).astype(int);ix=torch.tensor(ids,device='cuda');prefix=name+'_'
+            n=len(model._xyz);ids=np.sort(ranked_sample(np.arange(n),2));ix=torch.tensor(ids,device='cuda');prefix=name+'_'
             attrs=dict(row=ids.astype(np.int32),xyz=model._xyz[ix],sigma=torch.exp(model._scaling[ix]),q=model._rotation[ix],velocity=model._velocity[ix],
                 t=model._t[ix,0],sigma_t=torch.exp(model._scaling_t[ix,0]),opacity=torch.sigmoid(model._opacity[ix,0]),
                 color=(.5+.28209479177387814*model._features_dc[ix,0]).clamp_min(0),role=np.full(len(ids),0 if name=='static' else 2,np.uint8),
                 road_id=np.full(len(ids),-1,np.int32),cycle=np.array([float(adapter.config.cycle)],np.float32))
             for k,v in attrs.items():cloud[prefix+k]=v.cpu().numpy() if torch.is_tensor(v) else v
             branches.append(dict(branch=name,total=n,displayed=len(ids),checkpoint_sha256=binding['checkpoints'][name]['sha256']))
-        js('data/gn11_v1/cloud.js','gn11_v1/cloud',dict(**packed(cloud),branches=branches))
+        js('data/gn11_v1/cloud.js','gn11_v1/cloud',dict(**packed(cloud),branches=branches,sampling=dict(static_rate=2,dynamic_rate=2,vehicle='none',vehicle_rate=10,vehicle_scope='projection',raw=102,roads_all_retained=True,gpu_used=True,optimizer_updates=0,stats={b['branch']:dict(total=b['total'],ordinary_total=b['total'],road_total=0,base_sampled=b['displayed'],sampled=b['displayed'],vehicle_candidates=0,vehicle_sampled=0) for b in branches})))
         for raw in range(89,138):
             packs={};m={};oldroot=V1_RUN/'eval/train_30000_render'
             for mode,channel,old in [('deleted_five','deleted_five','static'),('joint','joint','composite'),('dynamic','dynamic_raw','dynamic')]:

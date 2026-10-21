@@ -9,6 +9,7 @@ import zlib
 from pathlib import Path
 import numpy as np
 from PIL import Image
+from cloud_sampling import Sampler
 from backend import Adapter, CAMPAIGN, ARMS, MANIFEST_SHA, clean, digest
 
 
@@ -24,7 +25,7 @@ def packed(arrays):
 
 
 def export():
-    adapter = Adapter(); source_files = {}
+    adapter = Adapter(); sampler=Sampler(adapter); source_files = {}
     tar = tarfile.open(fileobj=sys.stdout.buffer, mode='w|')
     def put(name, value):
         if not isinstance(value, bytes): value = json.dumps(clean(value), ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
@@ -41,6 +42,7 @@ def export():
         else: record['sha256'] = digest(path)
         source_files[str(path)] = record
 
+    js('data/sampling_meta.js', 'samplingMeta', sampler.metadata)
     bundle = adapter.meta
     source(adapter.bundle); source(adapter.bundle.parent/bundle['units'])
     with np.load(adapter.bundle.parent/bundle['units']) as z:
@@ -73,22 +75,9 @@ def export():
     summary = {}
     for arm in ARMS:
         print('export '+arm, file=sys.stderr, flush=True)
-        model = adapter.model(arm); cloud = []; attrs = {}; totals = {}
-        for b in model['branches']:
-            n = len(b['xyz']); totals[b['name']] = n
-            ordinary = np.flatnonzero(b['road'] < 0)
-            count = 18000 if b['name'] == 'static' else 6000
-            indices = ordinary[np.linspace(0, len(ordinary)-1, min(count, len(ordinary))).astype(int)]
-            if b['name'] == 'static': indices = np.unique(np.r_[indices, np.flatnonzero(b['road'] >= 0)])
-            role = np.where(b['road'][indices] >= 0, 1, 0) if b['name'] == 'static' else np.full(len(indices), 2)
-            prefix = b['name']+'_'
-            for key, arr in [('row', indices.astype(np.int32)), ('xyz', b['xyz'][indices]), ('sigma', b['scale'][indices]),
-                ('q', b['q'][indices]), ('velocity', b['vel'][indices]), ('t', b['t'][indices]), ('sigma_t', b['sigma_t'][indices]),
-                ('opacity', b['opacity'][indices]), ('color', np.maximum(.5+.28209479177387814*b['dc'][indices, 0], 0)),
-                ('role', role.astype(np.uint8)), ('road_id', b['road'][indices].astype(np.int32))]: attrs[prefix+key] = arr
-            attrs[prefix+'cycle'] = np.array([b['cycle']], np.float32)
-            cloud.append(dict(branch=b['name'], total=n, displayed=len(indices), checkpoint_sha256=b['sha']))
-        js(f'data/{arm}/cloud.js', arm+'/cloud', dict(**packed(attrs), branches=cloud))
+        cloud_pack = sampler.query(dict(arm=arm, raw=102, static_rate=2, dynamic_rate=2))
+        cloud = cloud_pack['branches']; totals = {b['branch']: b['total'] for b in cloud}
+        js(f'data/{arm}/cloud.js', arm+'/cloud', cloud_pack)
         # Actual optimized source weights/visits, separate from original geometry acceptance.
         optpath = CAMPAIGN/f'arms/{arm}/run30k/road_audit/iteration_030000/optimization.npz'
         source(optpath)

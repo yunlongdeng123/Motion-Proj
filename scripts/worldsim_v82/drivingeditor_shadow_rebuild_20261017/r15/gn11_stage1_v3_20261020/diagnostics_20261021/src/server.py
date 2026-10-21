@@ -39,6 +39,7 @@ class Bridge:
                 self.close(); raise RuntimeError('SSH CPU worker disconnected (check AutoDL CPU memory and connectivity)')
             return json.loads(line)
 
+cloud_bridge=Bridge('CUDA_VISIBLE_DEVICES= PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=2 /root/autodl-tmp/envs/drivingeditor/bin/python /root/autodl-tmp/gsdiag_cpu_20261021_r1/cloud_sampling.py --stdio');atexit.register(cloud_bridge.close)
 bridge=Bridge(); atexit.register(bridge.close)
 gpu_bridge=Bridge(GPU_REMOTE);atexit.register(gpu_bridge.close)
 class Handler(SimpleHTTPRequestHandler):
@@ -86,8 +87,29 @@ class Handler(SimpleHTTPRequestHandler):
         if url.path=='/favicon.ico':
             self.send_response(204);self.end_headers();return
         if url.path=='/api/health':
-            body=json.dumps(dict(app='Gaussian Evidence Lab',version=2,remote_cpu_enabled=self.remote_enabled,gpu_enabled=self.gpu_enabled)).encode()
+            body=json.dumps(dict(app='Gaussian Evidence Lab',version=3,remote_cpu_enabled=self.remote_enabled,gpu_enabled=self.gpu_enabled,cloud_sampling=self.remote_enabled)).encode()
             self.send_response(200);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body);return
+        if url.path=='/api/cloud':
+            try:
+                if not self.remote_enabled:raise ValueError('CPU sampling disabled; run start_local.ps1')
+                origin=self.headers.get('Origin')
+                if origin and origin!='http://'+self.headers.get('Host',''):raise ValueError('cross-origin request rejected')
+                q=parse_qs(url.query)
+                allowed={'arm','raw','static_rate','dynamic_rate','vehicle','vehicle_rate','vehicle_scope'}
+                if not {'arm','raw'}<=set(q) or set(q)-allowed or any(len(v)!=1 for v in q.values()):raise ValueError('invalid sampling query')
+                data={k:v[0] for k,v in q.items()}
+                if data['arm'] not in ('full','real_only','prior_only','ownership_only','gn11_v1'):raise ValueError('unknown arm')
+                data['raw']=int(data['raw'])
+                if not 89<=data['raw']<=137:raise ValueError('raw out of range')
+                for k in ('static_rate','dynamic_rate','vehicle_rate'):
+                    if k in data:
+                        data[k]=float(data[k])
+                        if not 0<=data[k]<=100:raise ValueError('sampling rate must be0..100')
+                if data.get('vehicle','none')!='none' and data['vehicle'] not in ('5','26','18','6','37'):raise ValueError('unknown actor')
+                if data.get('vehicle_scope','projection') not in ('projection','box'):raise ValueError('unknown vehicle scope')
+                value=cloud_bridge.query(data);self.json_result(value,503 if value.get('error') else 200)
+            except Exception as e:self.json_result(dict(error=str(e),gpu_used=False,optimizer_updates=0),503)
+            return
         if url.path!='/api/ray': return super().do_GET()
         host=self.headers.get('Host','')
         origin=self.headers.get('Origin')
