@@ -242,11 +242,13 @@ def export(output,campaign=CAMPAIGN,raws=range(89,138),resume=False):
     write_json(root/'summary.json',summary);write_json(root/'receipt.json',receipt)
     for name in ['v4_initialization.html','v4_initialization.js','v4_initialization.css','v4_embed.js','export_v4_initialization.ps1']:
         if (HERE/name).exists():shutil.copy2(HERE/name,output/name)
+    from export_experiment_slots import export as export_slots,integrate_index
+    export_slots(output,campaign)
+    for name in ['app.js','gpu.js']:
+        shutil.copy2(DIAG/name,output/name)
     index=output/'index.html'
     if index.exists():
-        content=index.read_text(encoding='utf-8')
-        if 'v4_initialization.html' not in content and '#v4-initialization' not in content:content=content.replace('</nav>','<a href="v4_initialization.html">V4初始化验收</a></nav>',1)
-        if 'v4_embed.js' not in content:content=content.replace('</body>','<script src="v4_embed.js?v=embed1"></script></body>',1)
+        content=integrate_index(index.read_text(encoding='utf-8'))
         index.write_text(content,encoding='utf-8')
     print(json.dumps(dict(status=receipt['status'],counts=summary['counts'],regions=summary_regions,seconds=receipt['elapsed_seconds']),ensure_ascii=False),flush=True)
     return receipt
