@@ -240,12 +240,13 @@ def export(output,campaign=CAMPAIGN,raws=range(89,138),resume=False):
     receipt.update(status='COMPLETE',elapsed_seconds=round(time.time()-started,2),frame_count=len(receipt['frames']),full_float_statistics=True,display_only_quantization=True)
     if torch.cuda.is_initialized():raise AssertionError('read-only CPU audit initialized CUDA')
     write_json(root/'summary.json',summary);write_json(root/'receipt.json',receipt)
-    for name in ['v4_initialization.html','v4_initialization.js','v4_initialization.css','export_v4_initialization.ps1']:
+    for name in ['v4_initialization.html','v4_initialization.js','v4_initialization.css','v4_embed.js','export_v4_initialization.ps1']:
         if (HERE/name).exists():shutil.copy2(HERE/name,output/name)
     index=output/'index.html'
     if index.exists():
         content=index.read_text(encoding='utf-8')
-        if 'v4_initialization.html' not in content:content=content.replace('</nav>','<a href="v4_initialization.html">V4初始化验收</a></nav>',1)
+        if 'v4_initialization.html' not in content and '#v4-initialization' not in content:content=content.replace('</nav>','<a href="v4_initialization.html">V4初始化验收</a></nav>',1)
+        if 'v4_embed.js' not in content:content=content.replace('</body>','<script src="v4_embed.js?v=embed1"></script></body>',1)
         index.write_text(content,encoding='utf-8')
     print(json.dumps(dict(status=receipt['status'],counts=summary['counts'],regions=summary_regions,seconds=receipt['elapsed_seconds']),ensure_ascii=False),flush=True)
     return receipt

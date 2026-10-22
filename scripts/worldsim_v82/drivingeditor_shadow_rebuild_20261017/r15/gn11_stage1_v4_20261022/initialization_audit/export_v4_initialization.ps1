@@ -14,6 +14,7 @@ scp -C -r "${HostAlias}:$TaskRemoteOutput/." $Destination
 if ($LASTEXITCODE -ne 0) { throw 'Download incomplete; rerun before opening the page' }
 $TaskIndex=Join-Path $Destination 'index.html'
 $TaskHtml=[IO.File]::ReadAllText($TaskIndex)
-if (-not $TaskHtml.Contains('v4_initialization.html')) { $TaskHtml=$TaskHtml.Replace('</nav>','<a href="v4_initialization.html">V4初始化验收</a></nav>') }
+if (-not $TaskHtml.Contains('v4_initialization.html') -and -not $TaskHtml.Contains('#v4-initialization')) { $TaskHtml=$TaskHtml.Replace('</nav>','<a href="v4_initialization.html">V4初始化验收</a></nav>') }
+if (-not $TaskHtml.Contains('v4_embed.js')) { $TaskHtml=$TaskHtml.Replace('</body>','<script src="v4_embed.js?v=embed1"></script></body>') }
 [IO.File]::WriteAllText($TaskIndex,$TaskHtml,[Text.UTF8Encoding]::new($false))
 Write-Host 'Updated V4 initialization audit in the original package. Open v4_initialization.html directly.'
