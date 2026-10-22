@@ -1,6 +1,6 @@
 # GN11 V4：V1 原模型＋独立道路补层
 
-当前范围：只改代码和做 CPU 工程检查。没有启动真实场景训练、GPU gate 或评价。V4 从五身份 V1 的训练源码复制；不继承 V3 训练模型、梯度路由或分层改造。
+V4 从五身份 V1 的训练源码复制；不继承 V3 训练模型、梯度路由或分层改造。本文描述方法和执行协议；当前授权、运行进度及异常统一见仓库 `docs/RESEARCH_STATUS.md`。
 
 ![输入、两条训练路径与深度合成](architecture.svg)
 
@@ -63,7 +63,11 @@ python tools/build_v4_campaign.py --source <V1训练源码> --baseline-config <V
   --bundle <已核对49帧bundle.json> --destination <全新V4目录>
 ```
 
-`tools/run_v4_arm.py --campaign <V4目录> --arm B` 默认只展示配置。R/RP 同理。只有显式 `--execute` 才训练；本轮没有使用该参数，也没有排队或定时任务。入口只允许 fresh30K，已有运行不覆盖、不自动恢复。底层 sidecar 已实现恢复与私有来源状态保存，供后续显式恢复流程使用。
+`tools/run_v4_arm.py --campaign <V4目录> --arm B` 默认只展示配置。R/RP 同理。只有显式 `--execute` 才训练；入口只允许 fresh30K，已有运行不覆盖、不自动恢复。底层 sidecar 已实现恢复与私有来源状态保存，供后续显式恢复流程使用。
+
+按本轮用户授权，`tools/run_v4_serial.py --campaign <V4目录> --execute` 持有共享 GPU 锁，串行 R30K→RP30K，不启动 B。每组沿用10K/20K/30K保存与原 V1 节点评价；每个节点保留静态、动态、环境、完整训练状态和道路五件 checkpoint。R 正常返回且三节点齐全后才启动 RP；异常即停、不自动从零重跑、不删旧节点。控制状态为 `serial_status.json`，原始日志在 `arms/<arm>/training.log`；`tools/check_v4_progress.py` 是单次只读快照入口。道路逐步更新，但道路日志每100步记录一次，日志尾部迭代与原生逐步日志之间的差不能直接解释为漏更新。
+
+定时跟进在当前聊天心跳中执行：每组前期每10分钟检查，至少两次真实定时检查都稳定且10K完整节点已发布后，改为每30分钟。切换新组或出现风险则恢复10分钟。训练结束不自动关机；原始训练数据、模型、checkpoint与运行日志不提交Git。
 
 第一项验收必须是原 V1 分支一致性：`tools/compare_v1_states.py` 比较 B 与 R/RP 同节点静态、动态、环境参数/optimizer及训练 RNG/相机采样状态，配置只排除输出路径和 v4 字段。发现不一致则先定位，不能继续声称控制变量成立。
 
@@ -81,4 +85,4 @@ python tools/build_v4_campaign.py --source <V1训练源码> --baseline-config <V
 
 CPU 回归覆盖 RNG/V1 toy 轨迹隔离、已有 V1 梯度不变、固定几何、未知图桥拒绝、两类参数、灰色抑制、R 关闭先验、sidecar 严格恢复、步数合同、SH/深度组装、前黑后路的解析深度遮挡，以及 clamp/原始浮点分离、原 SSIM/LPIPS 调用参数、49帧均值与完美/缺失帧。另由 `tools/validate_v4_cpu.py` 检查新 engine 的151个其余 V1 文件未改、两处 hook 去除后与原 train.py 相同、真实道路输入与三组配置，并用已保存49帧 V1 相机元数据实例化 CPU 道路层，不执行真实场景 step。原相机与道路归一化外参最大差6.19e-13。
 
-未运行真实 CUDA 光栅/反传、真实 V1 配对30K或正式49帧评价；不能由 CPU 检查认定道路有效或车身不会退化。质量验收由用户评审，`human_verdict=null`，`failure_ledger_delta=none`。
+上述 CPU 检查不能替代真实 CUDA 光栅/反传、V1 配对30K和正式49帧评价，不能据此认定道路有效或车身不会退化。实际执行结果见当前状态与对应运行记录。质量验收由用户评审，`human_verdict=null`，`failure_ledger_delta=none`。
