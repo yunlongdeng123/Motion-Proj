@@ -1,0 +1,93 @@
+{
+  "scope": "CPU read-only saved-image and exact source bundle audit; normalized road_surface_color is 8-bit; bilinear center sampling diagnostic, not formal float objective or ablation",
+  "frame_count": 49,
+  "optimizer_updates": 0,
+  "averages": {
+    "eligible_source_centers": 447.7142857142857,
+    "affected_road_pixels": 30696.34693877551,
+    "source_alpha_mean": 0.9793022325172964,
+    "affected_pixels_over_1px_from_eligible_center": 0.9565233481362886,
+    "joint_darker_than_native_and_independent_fraction": 0.8047261842476217,
+    "actual_joint_minus_simple_image_blend_mean": -0.0545313767288999,
+    "source_rgb_vs_saved_GT_at_raw_uv": {
+      "mae": 0.004430243101629021,
+      "psnr": 42.63462161877152
+    },
+    "source_rgb_vs_saved_GT_at_native_uv": {
+      "mae": 0.011466367791277913,
+      "psnr": 32.698039761689195
+    },
+    "independent_road_at_source_centers": {
+      "mae": 0.007736302457475215,
+      "psnr": 37.36893684399986
+    },
+    "native_at_source_centers": {
+      "mae": 0.011491851797383434,
+      "psnr": 32.93498736808783
+    },
+    "independent_road_dense_affected": {
+      "mae": 0.041523185698184854,
+      "psnr": 22.393263061886678
+    },
+    "native_dense_affected": {
+      "mae": 0.0062838231024514805,
+      "psnr": 38.40319165704472
+    },
+    "joint_dense_affected": {
+      "mae": 0.06073090953293712,
+      "psnr": 22.037908059713725
+    },
+    "simple_image_blend_dense": {
+      "mae": 0.020462681093120622,
+      "psnr": 28.357232407620728
+    },
+    "joint": {
+      "mae": 0.019565475495753857,
+      "psnr": 28.380761213636475
+    },
+    "V3_full_same_saved_GT": {
+      "mae": 0.010988632432139522,
+      "psnr": 33.86017325876523
+    },
+    "V3_real_only_same_saved_GT": {
+      "mae": 0.010979748149259705,
+      "psnr": 33.79584704027812
+    },
+    "V3_prior_only_same_saved_GT": {
+      "mae": 0.011254680170679382,
+      "psnr": 33.618601363841954
+    },
+    "V3_ownership_only_same_saved_GT": {
+      "mae": 0.011573413566815613,
+      "psnr": 33.318051678401176
+    },
+    "native_dense_rgb_mean": [
+      0.33052480553906,
+      0.3537802545735139,
+      0.3913777579632957
+    ],
+    "gt_dense_rgb_mean": [
+      0.33088420460397194,
+      0.354156238829656,
+      0.39173399434776546
+    ],
+    "joint_dense_rgb_mean": [
+      0.28564732596655446,
+      0.306105486819942,
+      0.34170174075509097
+    ],
+    "independent_dense_rgb_mean": [
+      0.35187461935124037,
+      0.36949055007218357,
+      0.40219121606432806
+    ]
+  },
+  "V3_formal_full": {
+    "psnr": 34.61380479773696,
+    "ssim": 0.9655380005739173,
+    "lpips": 0.03892113085912198,
+    "source": "r15_gn11_stage1_v3_serial_r1_20261021/final49/summary_r2/comparison.json",
+    "not_same_V1_or_road_geometry_single_factor_ablation": true
+  },
+  "V3_saved_image_warning": "Old V3 viewer image differs from native PNG at raw102, MAE0.00608177594; display-image metrics are not replacements for formal float metrics."
+}
