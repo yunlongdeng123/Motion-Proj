@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="360" viewBox="0 0 1050 360">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#53677a"/></marker></defs>
+<rect width="1050" height="360" rx="12" fill="#f7f9fb"/>
+<g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#163044">
+<text x="525" y="33" font-size="21" font-weight="bold">V4 · V1 原有模型 ＋ 独立道路补层</text>
+<g stroke="#8195a8" stroke-width="1.5" fill="#fff">
+<rect x="22" y="127" width="162" height="82" rx="9"/>
+<rect x="246" y="70" width="280" height="84" rx="9"/>
+<rect x="246" y="204" width="280" height="98" rx="9"/>
+<rect x="600" y="128" width="206" height="90" rx="9"/>
+<rect x="857" y="125" width="170" height="96" rx="9"/>
+</g>
+<g font-size="17"><text x="103" y="158">同一49帧</text><text x="103" y="187">RGB / LiDAR</text>
+<text x="386" y="101">V1 原样训练 · 30K</text><text x="386" y="129" font-size="14">静态＋动态＋环境光 / SGCM＋NPS</text>
+<text x="386" y="233">地面筛选 → 固定道路 · 30K</text><text x="386" y="260" font-size="14">只优化 DC 颜色＋opacity</text><text x="386" y="283" font-size="13">R：真实观测　RP：＋连通邻域先验</text>
+<text x="703" y="159">同一次原生光栅化</text><text x="703" y="190" font-size="14">按真实深度统一排序</text>
+<text x="942" y="158">完整重建</text><text x="942" y="187">／删车结果</text></g>
+<g stroke="#53677a" stroke-width="2" fill="none" marker-end="url(#a)">
+<path d="M184 151H214V111H246"/><path d="M184 189H214V251H246"/>
+<path d="M526 111H561V151H600"/><path d="M526 251H561V195H600"/><path d="M806 174H857"/>
+</g>
+<path d="M265 180H508" stroke="#afbac4" stroke-dasharray="5 5"/>
+<text x="386" y="185" font-size="12" fill="#738493">两条训练路径独立，无共享梯度</text>
+<text x="525" y="337" font-size="14" fill="#607687">分别验收：原 V1 输出 → 道路独立输出 → 合成输出　｜　额外道路容量与计算单独记录</text>
+</g></svg>

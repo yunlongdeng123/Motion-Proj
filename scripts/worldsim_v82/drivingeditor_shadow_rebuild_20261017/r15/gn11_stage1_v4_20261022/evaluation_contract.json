@@ -1,0 +1,18 @@
+{
+  "version": "GN11_V4_INDEPENDENT_ROAD_20261022",
+  "first_check": "B/R/RP original V1 state and float output equality",
+  "views": ["native_V1", "independent_road", "composite", "delete_all_dynamic", "delete_all_dynamic_with_road"],
+  "regions": ["full", "body_interior", "body_edge", "background", "fixed_B_normal_background"],
+  "body_border_radius_pixels": 3,
+  "normal_background_B_mean_absolute_error_max": 0.05,
+  "unknown_denominators": ["unsupported", "single_view", "unconnected_prior", "not_yet_color_updated"],
+  "reliable_road_metrics": "same-world road source samples only; source-RGB Charbonnier/MAE, independent rendered alpha, measured-gated depth consistency",
+  "hidden_road_RGB_ground_truth": null,
+  "hidden_road_diagnostics": ["connected prior coverage", "independent road alpha", "joint actual road Talpha"],
+  "cost": ["V1 point count and native iteration timing", "extra road points", "extra road synchronized step seconds", "total run wall time", "checkpoint/evaluation wall time separately"],
+  "equal_steps_not_equal_compute": true,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"],
+  "failure_ledger_delta": "none"
+}
