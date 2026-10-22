@@ -85,7 +85,7 @@ async function comparison(){
   const p=y*480+x;let result={arm,alpha:mapValue(m,'static_alpha',p),bg:mapValue(m,'road_bg',p),joint:mapValue(m,'road_joint',p),depth:mapValue(m,'static_depth_m',p),error:mapValue(m,'residual',p),source:'显示预览'};
   if(missing){for(const key of ['alpha','bg','joint','depth','error'])result[key]=null;result.source='未打包该像素';}
   let ray=S.ray?.arm===arm&&S.ray.raw===raw&&S.ray.pixel[0]===x&&S.ray.pixel[1]===y&&S.ray.mode==='deleted_five'?S.ray:null;
-  if(!ray&&arm!=='gn11_v1'&&offlineCase(raw,x,y)){try{ray=await load(`ray/${arm}/${raw}/${x}/${y}`,`data/rays/${arm}_${raw}_${x}_${y}.js`,false);}catch(error){/* no substitute evidence */}}
+  if(!ray&&arm!=='gn11_v1'&&!arm.startsWith('v4_')&&offlineCase(raw,x,y)){try{ray=await load(`ray/${arm}/${raw}/${x}/${y}`,`data/rays/${arm}_${raw}_${x}_${y}.js`,false);}catch(error){/* no substitute evidence */}}
   if(ray){const n=ray.native;result={arm,alpha:n.static_alpha?.[0]??n.alpha,bg:n.road_in_background?.[0]??null,joint:n.road_in_joint?.[0]??null,depth:n.static_depth_m?.[0]??(n.alpha>1e-5?n.depth_sum_model/n.alpha/scene.meter_to_model:null),error:n.joint&&n.gt?n.joint.reduce((v,c,i)=>v+Math.abs(c-n.gt[i]),0)/3:result.error,source:'原生浮点／缺项保持未知'};}
   return result;
  }));
@@ -173,24 +173,24 @@ async function cachedRay(){
  const gpuKey=`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`,gpuPath=window.GSDATA.gpu_index?.queries?.[gpuKey];
  if(gpuPath){const v=await load(gpuKey,gpuPath,false);if(gpuKey===`gpu/${S.arm}/${S.raw}/${S.x}/${S.y}/${S.rayMode}`)showRay(v);return;}
  const key=`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`;
- if(S.arm!=='gn11_v1'&&S.rayMode==='deleted_five'&&offlineCase(S.raw,S.x,S.y)){const v=await load(key,`data/rays/${S.arm}_${S.raw}_${S.x}_${S.y}.js`,false);if(key===`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`&&S.rayMode==='deleted_five')showRay(v);}
+ if(S.arm!=='gn11_v1'&&!S.arm.startsWith('v4_')&&S.rayMode==='deleted_five'&&offlineCase(S.raw,S.x,S.y)){const v=await load(key,`data/rays/${S.arm}_${S.raw}_${S.x}_${S.y}.js`,false);if(key===`ray/${S.arm}/${S.raw}/${S.x}/${S.y}`&&S.rayMode==='deleted_five')showRay(v);}
  else $('rayState').textContent=`当前像素／模式 ${S.rayMode} 无离线全模型射线。可点击实时CUDA归因，或用CPU作独立参考；不以邻近像素替代。`;
 }
 async function pixelChange(x,y){if(pendingExperiment())return refresh();S.x=Math.max(0,Math.min(479,Math.round(x)));S.y=Math.max(0,Math.min(319,Math.round(y)));await cachedRay();pixelMetrics();render2D();comparison();draw3D();}
 async function refresh(){
  const epoch=++version,workspace=document.querySelector('.workspace');workspace.setAttribute('aria-busy','true');
  const pending=pendingExperiment();if(pending){$('frameLabel').textContent=`raw${S.raw} · ${S.raw-88}/49`;$('frame').value=S.raw;$('arm').value=S.arm;showPendingExperiment(pending);workspace.setAttribute('aria-busy','false');await comparison().catch(console.error);return;}pendingControls(false);
- const v1=S.arm==='gn11_v1';$('rayMode').querySelector('option[value="road_only"]').disabled=v1;if(v1&&S.rayMode==='road_only')S.rayMode='deleted_five';$('rayMode').value=S.rayMode;$('queryRay').disabled=v1;
+ const v1=S.arm==='gn11_v1',v4=S.arm.startsWith('v4_');$('rayMode').querySelector('option[value="road_only"]').disabled=v1;if(v1&&S.rayMode==='road_only')S.rayMode='deleted_five';$('rayMode').value=S.rayMode;$('queryRay').disabled=v1||v4;
  $('frameLabel').textContent=`raw${S.raw} · ${S.raw-88}/49`;$('frame').value=S.raw;$('arm').value=S.arm;status(`加载 ${S.arm} / raw${S.raw} 的真实数据…`);
  try{
-  const data=await Promise.all([load(`${S.arm}/${S.raw}`,mapPath(S.arm,S.raw)),load(`${v1?'full':S.arm}/units/${S.raw}`,`data/${v1?'full':S.arm}/units_${S.raw}.js`),GSCloud.load(S,load,unpack),v1?null:load(`${S.arm}/optimization`,`data/${S.arm}/optimization.js`),load(`lidar/${S.raw}`,`data/lidar/${S.raw}.js`),GSInspect.load(S,load)]);
+  const data=await Promise.all([load(`${S.arm}/${S.raw}`,mapPath(S.arm,S.raw)),load(`${v1?'full':S.arm}/units/${S.raw}`,`data/${v1?'full':S.arm}/units_${S.raw}.js`),GSCloud.load(S,load,unpack),v1||v4?null:load(`${S.arm}/optimization`,`data/${S.arm}/optimization.js`),load(`lidar/${S.raw}`,`data/lidar/${S.raw}.js`),GSInspect.load(S,load)]);
   if(epoch!==version)return;[maps,units,cloud,opt,lidar]=data;GSInspect.accept(data[5]);indexRoadPoints();
   if(v1){units={...units};for(const key of ['road_only_alpha','road_alpha_in_background','road_alpha_in_joint','road_depth_model','road'])units[key]=new Float32Array(units[key]?.length??road.provenance.length).fill(NaN);units.verified_exposure=new Uint8Array(units.verified_exposure.length);}
   if(S.unit===null){let best=Infinity;for(let i=0;i<road.provenance.length;i++){const uv=units.raster_uv.slice(i*2,i*2+2),d=(uv[0]-S.x)**2+(uv[1]-S.y)**2;if(units.in_view[i]&&d<best){S.unit=i;best=d;}}}
   try{await cachedRay();}catch(error){$('rayState').textContent='当前离线射线文件不可用；不伪造贡献。其余原生证据仍可使用。';}
   if(epoch!==version)return;pixelMetrics();await render2D();if(epoch!==version)return;
   draw3D();drawBEV();unitInfo();sourceGrid();await comparison();
-  if(epoch===version){status(`就绪 · ${S.arm} / raw${S.raw} · 原生结果＋只读CPU证据 · 数值预览alpha 1/65535、深度1cm量化`);workspace.setAttribute('aria-busy','false');}
+  if(epoch===version){status(`就绪 · ${S.arm} / raw${S.raw} · ${S.arm.startsWith('v4_')?'V4真实30K原生CUDA结果＋固定道路几何':'原生结果＋只读CPU证据'} · 数值预览alpha 1/65535、深度1cm量化`);workspace.setAttribute('aria-busy','false');}
  }catch(e){
   if(epoch!==version)return;S.ray=null;S.selected=null;S.checked.clear();$('topRows').replaceChildren();$('pixelMetrics').replaceChildren();$('sourceGrid').replaceChildren();
   for(const c of document.querySelectorAll('.workspace canvas,#comparison canvas')){const ctx=c.getContext('2d');ctx.fillStyle='#0a1422';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ffb5ab';ctx.font='12px monospace';ctx.fillText('证据未就绪 / ASSET ERROR',12,25);}
@@ -199,7 +199,7 @@ async function refresh(){
 }
 function stop(){S.playing=false;clearTimeout(timer);$('play').textContent='播放';}
 function download(name,value){const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
-function request(){if(pendingExperiment())throw Error('当前实验结果尚未导出，无法绑定检查点请求。');return {schema:'GS_DIAGNOSTIC_REQUEST_V1',arm:S.arm,iteration:30000,raw:S.raw,pixel:[S.x,S.y],camera:'FRONT',render_mode:S.rayMode,display_channel:S.channel,preview_sampling:{...S.preview_sampling},camera_binding:scene.cameras[S.raw-89],camera_binding_scope:'CPU reconstructed from immutable bundle; native CUDA replay required before tracing',gaussian_ids:[...S.checked],remove_gaussian_ids:S.checked.size?[...S.checked]:(S.selected?[S.selected.id]:[]),selected:S.selected?.id||null,road_unit:S.unit,checkpoint_sha256:scene.bindings?.[S.arm]||cloud?.branches.map(v=>({branch:v.branch,sha256:v.checkpoint_sha256})),config_binding:scene.config_bindings?.[S.arm],road_bundle_binding:scene.road_bundle_binding,world_to_model:scene.world_to_model,requested:['native_cuda_sparse_ray_trace','full_rasterization_selected_gaussian_removal','normal_region_damage_check'],training_updates_allowed:0,model_parameter_mutation_allowed:false,output_must_be_new:true,status:'PENDING_GPU_NOT_EXECUTED',scientific_quality_accepted:false};}
+function request(){if(pendingExperiment())throw Error('当前实验结果尚未导出，无法绑定检查点请求。');if(S.arm.startsWith('v4_'))throw Error('V4当前已导出整幅诊断和几何；逐Gaussian CUDA trace及干预尚未接入。');return {schema:'GS_DIAGNOSTIC_REQUEST_V1',arm:S.arm,iteration:30000,raw:S.raw,pixel:[S.x,S.y],camera:'FRONT',render_mode:S.rayMode,display_channel:S.channel,preview_sampling:{...S.preview_sampling},camera_binding:scene.cameras[S.raw-89],camera_binding_scope:'CPU reconstructed from immutable bundle; native CUDA replay required before tracing',gaussian_ids:[...S.checked],remove_gaussian_ids:S.checked.size?[...S.checked]:(S.selected?[S.selected.id]:[]),selected:S.selected?.id||null,road_unit:S.unit,checkpoint_sha256:scene.bindings?.[S.arm]||cloud?.branches.map(v=>({branch:v.branch,sha256:v.checkpoint_sha256})),config_binding:scene.config_bindings?.[S.arm],road_bundle_binding:scene.road_bundle_binding,world_to_model:scene.world_to_model,requested:['native_cuda_sparse_ray_trace','full_rasterization_selected_gaussian_removal','normal_region_damage_check'],training_updates_allowed:0,model_parameter_mutation_allowed:false,output_must_be_new:true,status:'PENDING_GPU_NOT_EXECUTED',scientific_quality_accepted:false};}
 async function importCase(file){
  if(!file)return;if(file.size>2*1024*1024)throw Error('案例文件过大');const q=JSON.parse(await file.text());
  if(q.schema!=='GS_DIAGNOSTIC_REQUEST_V1'||!ARMS.includes(q.arm)||!Number.isInteger(q.raw)||q.raw<89||q.raw>137||!Array.isArray(q.pixel)||q.pixel.length!==2||!q.pixel.every(Number.isInteger)||q.pixel[0]<0||q.pixel[0]>=480||q.pixel[1]<0||q.pixel[1]>=320||q.training_updates_allowed!==0||q.model_parameter_mutation_allowed!==false)throw Error('不兼容的诊断案例合同');

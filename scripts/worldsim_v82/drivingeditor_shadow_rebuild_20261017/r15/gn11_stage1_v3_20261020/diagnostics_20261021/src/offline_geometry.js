@@ -3,7 +3,7 @@ window.GSOfflineGeometry=(()=>{
  'use strict';
  const chunks=new Map();
  const fields=['row','xyz','sigma','q','velocity','t','sigma_t','opacity','color','role','road_id'];
- function available(arm){return Boolean(window.GSDATA.geometryIndex?.arms?.[arm]);}
+ function available(arm){return Boolean(window.GSDATA.geometryIndex?.arms?.[arm])||Boolean(window.GSDATA.v4Experiments?.experiments.find(v=>v.id===arm&&v.available));}
  async function read(record,unpack){
   if(chunks.has(record.key))return chunks.get(record.key);
   const promise=new Promise((resolve,reject)=>{
@@ -25,6 +25,7 @@ window.GSOfflineGeometry=(()=>{
   return {selected,base,candidates,sampled};
  }
  async function make(arm,raw,p,base,unpack,progress,cancelled=()=>false){
+  if(arm.startsWith('v4_')&&!window.GSDATA.geometryIndex?.arms?.[arm]){const extra=await window.gsdiag.load(arm+'/geometry_index',`data/${arm}/geometry_index.js`,false);window.GSDATA.geometryIndex.arms[arm]=extra;}
   const index=window.GSDATA.geometryIndex,meta=index.arms[arm],out={...base,branches:base.branches.map(b=>({...b}))},stats={};
   const actor=index.actors.indexOf(Number(p.vehicle));
   const members=p.vehicle==='none'?null:await read(meta.members[String(raw)],unpack);

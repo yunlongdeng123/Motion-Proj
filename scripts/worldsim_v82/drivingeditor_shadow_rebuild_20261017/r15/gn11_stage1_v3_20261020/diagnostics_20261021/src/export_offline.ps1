@@ -11,7 +11,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $Destination 'index.html'))) { throw
 $ExportId = [DateTime]::UtcNow.ToString('yyyyMMdd_HHmmss')
 $RemoteOutput = "/root/autodl-tmp/gsdiag_offline_$ExportId"
 $ArmArguments = if ($Arms.Count) { '--arms ' + ($Arms -join ' ') } else { '' }
-Write-Host 'Exporting offline geometry on AutoDL CPU. Original checkpoints and native evidence stay unchanged.'
+Write-Host 'Exporting offline geometry on CPU and completed V4 results with bounded native CUDA inference. Zero training updates; original checkpoints stay unchanged.'
 ssh $HostAlias "cd '$RemoteSource' && CUDA_VISIBLE_DEVICES= OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 /root/autodl-tmp/envs/drivingeditor/bin/python export_offline.py --output '$RemoteOutput' $ArmArguments"
 if ($LASTEXITCODE -ne 0) { throw 'AutoDL export failed; local package has not been updated' }
 scp -C -r "${HostAlias}:$RemoteOutput/." $Destination
@@ -24,6 +24,9 @@ if (-not $IndexText.Contains('data/geometry_index.js')) {
 if (-not $IndexText.Contains('inspection.js')) { $IndexText = $IndexText.Replace('<script src="app.js', '<script src="inspection_math.js"></script><script src="inspection.js"></script><script src="app.js') }
 if (-not $IndexText.Contains('v1_ground.js')) { $IndexText = $IndexText.Replace('<script src="inspection.js', '<script src="v1_ground.js"></script><script src="inspection.js') }
 if (-not $IndexText.Contains('inspection.css')) { $IndexText = $IndexText.Replace('</head>', '<link rel="stylesheet" href="inspection.css"></head>') }
+if (-not $IndexText.Contains('data/v4_experiments.js')) { $IndexText = $IndexText.Replace('<script src="data/scene.js"></script>', '<script src="data/scene.js"></script><script src="data/v4_experiments.js?v=results1"></script>') }
+$IndexText = [regex]::Replace($IndexText, 'src="data/v4_experiments\.js(?:\?[^"]*)?"', 'src="data/v4_experiments.js?v=results1"')
+foreach ($Script in @('app','gpu','inspection','sampling','offline_geometry')) { $IndexText = [regex]::Replace($IndexText, 'src="'+$Script+'\.js(?:\?[^"]*)?"', 'src="'+$Script+'.js?v=v4results1"') }
 foreach ($OldVersion in @('sampling2','inspection1','v1ground1')) { $IndexText = $IndexText.Replace("app.js?v=$OldVersion",'app.js?v=v1perf2') }
 [IO.File]::WriteAllText($IndexPath, $IndexText, [Text.UTF8Encoding]::new($false))
 Write-Host "Updated $IndexPath. Open it directly; no local server is required."

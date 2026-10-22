@@ -1,4 +1,4 @@
-"""导出可由 file:// 直接读取的完整几何分块与逐帧车辆区域；只读CPU。"""
+"""导出file://完整几何分块与已完成V4原生结果；冻结模型只读导出。"""
 import argparse
 import json
 from pathlib import Path
@@ -58,6 +58,8 @@ def memberships(sampler,b,raw,order,include_box=True):
 
 def export(root,arms,chunk_size=32768,resume=False):
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
+    v4arms=[a[3:] for a in arms if a in ('v4_R','v4_RP')]
+    arms=[a for a in arms if not a.startswith('v4_')]
     sampler=Sampler();started=time.time()
     index=dict(version=1,chunk_size=chunk_size,actors=list(ACTORS),arms={},max_rate=100,
         selection='exact ceil counts; nested uint32 rank; roads always retained',gpu_used=False,optimizer_updates=0)
@@ -101,7 +103,7 @@ def export(root,arms,chunk_size=32768,resume=False):
         print('complete '+arm,flush=True)
     # 后续标准导出同时携带三层初始化证据及完整逐帧深度标记。
     from export_inspection import export as export_inspection
-    export_inspection(root,arms,resume=resume)
+    if arms:export_inspection(root,arms,resume=resume)
     if 'gn11_v1' in arms:
         from export_v1_ground import export as export_v1_ground
         export_v1_ground(root,resume=resume)
@@ -109,12 +111,20 @@ def export(root,arms,chunk_size=32768,resume=False):
     # V4分支的一键离线导出同时带上固定初始化验收；不执行训练。
     initialization_audit=source.parents[2]/'gn11_stage1_v4_20261022/initialization_audit/export_initialization_audit.py'
     if initialization_audit.exists():
-        subprocess.run([sys.executable,str(initialization_audit),'--output',str(root)],check=True)
-    for name in ('app.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','v1_ground.js','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
+        if arms:subprocess.run([sys.executable,str(initialization_audit),'--output',str(root)],check=True)
+    if v4arms:
+        for phase in ('render','geometry','finish'):
+            subprocess.run([sys.executable,str(source/'export_v4_results.py'),'--output',str(root),'--arms',*v4arms,'--phase',phase],check=True)
+    if (source.parents[2]/'gn11_stage1_v4_20261022/initialization_audit/export_experiment_slots.py').exists():
+        audit=source.parents[2]/'gn11_stage1_v4_20261022/initialization_audit'
+        sys.path.insert(0,str(audit));from export_experiment_slots import export as slots,integrate_index
+        slots(root)
+        if (root/'index.html').exists():(root/'index.html').write_text(integrate_index((root/'index.html').read_text(encoding='utf-8')),encoding='utf-8')
+    for name in ('app.js','gpu.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','v1_ground.js','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
         if (source/name).exists():shutil.copy2(source/name,root/name)
     if (root/'index.html').exists():
         p=root/'index.html';html=p.read_text(encoding='utf-8')
-        if 'data/geometry_index.js' not in html:
+        if arms and 'data/geometry_index.js' not in html:
             html=html.replace('<script src="sampling.js">','<script src="data/geometry_index.js"></script><script src="offline_geometry.js"></script><script src="sampling.js">',1)
         if 'v1_ground.js' not in html:html=html.replace('<script src="inspection.js', '<script src="v1_ground.js"></script><script src="inspection.js',1)
         if 'inspection.js' not in html:
@@ -122,8 +132,8 @@ def export(root,arms,chunk_size=32768,resume=False):
         if 'inspection.css' not in html:html=html.replace('</head>','<link rel="stylesheet" href="inspection.css"></head>',1)
         html=html.replace('app.js?v=sampling2','app.js?v=inspection1')
         p.write_text(html,encoding='utf-8')
-    receipt=dict(status='OFFLINE_GEOMETRY_COMPLETE',arms=arms,frames=49,max_rate=100,elapsed_seconds=round(time.time()-started,1),
-        gpu_used=False,optimizer_updates=0,entry='index.html',transport='file:// script chunks; no HTTP/SSH required to change sampling')
+    receipt=dict(status='OFFLINE_GEOMETRY_COMPLETE',arms=arms+['v4_'+a for a in v4arms],frames=49,max_rate=100,elapsed_seconds=round(time.time()-started,1),
+        gpu_used=bool(v4arms),optimizer_updates=0,entry='index.html',transport='file:// script chunks; no HTTP/SSH required to change sampling')
     (root/'offline_geometry_receipt.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
     print(json.dumps(receipt),flush=True)
     return index
@@ -137,5 +147,6 @@ if __name__=='__main__':
     p.add_argument('--resume',action='store_true',help='继续同一次未完成导出；仅限检查点与参数未变')
     a=p.parse_args()
     if not 1024<=a.chunk_size<=100000:raise ValueError('chunk size outside1024..100000')
-    arms=a.arms or list(ARMS)+(['gn11_v1'] if V1.exists() and Path('/root/autodl-tmp/gsdiag_gpu_20261021_r2/v1_binding.json').exists() else [])
+    complete_v4=[f'v4_{arm}' for arm in ('R','RP') if (Path('/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_replay_r1_20261022')/'arms'/arm/'run30k/v4_training_returned.json').exists()]
+    arms=a.arms or list(ARMS)+(['gn11_v1'] if V1.exists() and Path('/root/autodl-tmp/gsdiag_gpu_20261021_r2/v1_binding.json').exists() else [])+complete_v4
     export(a.output,arms,a.chunk_size,a.resume)
