@@ -8,6 +8,35 @@ import sys
 import time
 
 
+def bind_scene_contract(training, config):
+    """补接 V1 启动器的 sceneSpec；只检查并绑定元数据，不改 Scene/RNG。"""
+    original_scene = training.Scene
+    spec = config['followup_scene_spec']
+
+    def checked_scene(*args, **kwargs):
+        scene = original_scene(*args, **kwargs)
+        cameras = sorted(scene.getTrainCameras(), key=lambda camera: float(camera.timestamp))
+        identities = [Path(camera.image_path).parent.name+'/'+camera.image_name for camera in cameras]
+        if identities != spec['frame_ids_with_camera'] or len(cameras) != 49:
+            raise ValueError('actual Scene 身份与 V1 sceneSpec 不匹配')
+        if (len(spec['model_timestamps']) != len(cameras)
+                or not all(abs(float(camera.timestamp)-timestamp) < 1e-7
+                           for camera, timestamp in zip(cameras, spec['model_timestamps']))):
+            raise ValueError('actual Scene timestamps 与 V1 sceneSpec 不匹配')
+        if not all(camera.image_width == 480 and camera.image_height == 320 for camera in cameras):
+            raise ValueError('actual Scene render dimensions 不是 W480H320')
+        if scene.getTestCameras(scale=4):
+            raise ValueError('V1 固定49视图协议不允许新增 heldout')
+        scene.followup_scene_spec = spec
+        with (Path(config['model_path'])/'actual_scene_binding.json').open('x', encoding='utf-8') as stream:
+            json.dump(dict(status='PASS_ACTUAL_SCENE_BINDING',
+                frame_ids=identities, timestamps=spec['model_timestamps'], render_wh=[480, 320],
+                anchor_pose_frame=spec['anchor_frame']), stream, ensure_ascii=False, indent=2)
+        return scene
+
+    training.Scene = checked_scene
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--campaign', type=Path, required=True)
@@ -39,6 +68,7 @@ def main():
         raise RuntimeError('错误的 V4 engine 导入')
     if not torch.cuda.is_available():
         raise RuntimeError('训练需要 CUDA；本入口不自动降级为 CPU 实验')
+    bind_scene_contract(train, config)
     output.mkdir()
     (output/'effective_config.json').write_text(json.dumps(config, indent=2), encoding='utf-8')
     os.chdir(engine)

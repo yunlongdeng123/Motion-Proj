@@ -65,6 +65,8 @@ python tools/build_v4_campaign.py --source <V1训练源码> --baseline-config <V
 
 `tools/run_v4_arm.py --campaign <V4目录> --arm B` 默认只展示配置。R/RP 同理。只有显式 `--execute` 才训练；入口只允许 fresh30K，已有运行不覆盖、不自动恢复。底层 sidecar 已实现恢复与私有来源状态保存，供后续显式恢复流程使用。
 
+启动入口沿用 V1 外部启动器的 Scene 绑定：检查实际49帧身份、时间戳、480×320尺寸与空 heldout，将原配置的普通 `dict` 类型 `followup_scene_spec` 绑定到同一个 Scene，供原生静态时间评价读取。该接线不修改 V1 训练源码、相机列表顺序、模型、目标或随机状态；不跳过原评价。CPU 回归只核对接线与拒绝错误输入，不代替真实 CUDA 完整节点验证。
+
 按本轮用户授权，`tools/run_v4_serial.py --campaign <V4目录> --execute` 持有共享 GPU 锁，串行 R30K→RP30K，不启动 B。每组沿用10K/20K/30K保存与原 V1 节点评价；每个节点保留静态、动态、环境、完整训练状态和道路五件 checkpoint。R 正常返回且三节点齐全后才启动 RP；异常即停、不自动从零重跑、不删旧节点。控制状态为 `serial_status.json`，原始日志在 `arms/<arm>/training.log`；`tools/check_v4_progress.py` 是单次只读快照入口。道路逐步更新，但道路日志每100步记录一次，日志尾部迭代与原生逐步日志之间的差不能直接解释为漏更新。
 
 定时跟进在当前聊天心跳中执行：每组前期每10分钟检查，至少两次真实定时检查都稳定且10K完整节点已发布后，改为每30分钟。切换新组或出现风险则恢复10分钟。训练结束不自动关机；原始训练数据、模型、checkpoint与运行日志不提交Git。
