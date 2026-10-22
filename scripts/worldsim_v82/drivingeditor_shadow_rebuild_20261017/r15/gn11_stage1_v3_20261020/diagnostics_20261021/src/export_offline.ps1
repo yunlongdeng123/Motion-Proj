@@ -1,7 +1,7 @@
 param(
     [string]$Destination = $PSScriptRoot,
     [string]$HostAlias = 'wm-vgpu-1011',
-    [string]$RemoteSource = '/root/autodl-tmp/motion_proj_v82_gn11_v3/scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/diagnostics_20261021/src',
+    [string]$RemoteSource = '/root/autodl-tmp/motion_proj_v82_gn11_v4/scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/diagnostics_20261021/src',
     [string[]]$Arms = @()
 )
 $ErrorActionPreference = 'Stop'

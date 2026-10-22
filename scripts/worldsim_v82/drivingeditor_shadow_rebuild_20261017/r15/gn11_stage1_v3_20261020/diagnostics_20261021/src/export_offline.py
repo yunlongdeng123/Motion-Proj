@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 import shutil
 import time
+import subprocess
+import sys
 import numpy as np
 from PIL import Image
 from scipy.ndimage import binary_dilation
@@ -104,6 +106,10 @@ def export(root,arms,chunk_size=32768,resume=False):
         from export_v1_ground import export as export_v1_ground
         export_v1_ground(root,resume=resume)
     source=Path(__file__).resolve().parent
+    # V4分支的一键离线导出同时带上固定初始化验收；不执行训练。
+    initialization_audit=source.parents[2]/'gn11_stage1_v4_20261022/initialization_audit/export_initialization_audit.py'
+    if initialization_audit.exists():
+        subprocess.run([sys.executable,str(initialization_audit),'--output',str(root)],check=True)
     for name in ('app.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','v1_ground.js','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
         if (source/name).exists():shutil.copy2(source/name,root/name)
     if (root/'index.html').exists():

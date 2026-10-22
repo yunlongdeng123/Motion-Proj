@@ -1,0 +1,401 @@
+{
+  "version": 1,
+  "task": "WS-V82-V4-INITIALIZATION-AUDIT-20261022",
+  "code_reference": "c9385395",
+  "scene": "scene0008_089_137",
+  "anchor_raw": 102,
+  "frames": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "cell_m": 0.2,
+  "meter_to_model": 0.09999999999999999,
+  "plane_anchor": [
+    -0.00532795770677883,
+    0.018610331108169613,
+    0.9998126166651025,
+    0.06703996088270742
+  ],
+  "scope": "initialization only; no trained V4 result",
+  "counts": {
+    "candidate_cells": 26088,
+    "common_audit_grid_cells": 26277,
+    "outside_original_candidate_grid": 189,
+    "created": 14034,
+    "unsupported": 12054,
+    "observed": 1919,
+    "connected_prior": 11082,
+    "supported_unknown": 1033,
+    "R_train": 1919,
+    "RP_train": 13001,
+    "output_step0": 0
+  },
+  "V4_native_initial": {
+    "total_static": 585943,
+    "ground_count": 71120,
+    "initial_opacity": 0.01,
+    "initial_sigma_t": 0.30983866769659335,
+    "actual_loader_time_duration": [
+      -0.48,
+      0.48
+    ],
+    "native_cycle": 0.2,
+    "definition": "current V4 source points3d.ply, exact native dynamic-neighbor<0.1m exclusion; ground diagnostic subset plane±0.15m and x3..90m/y±8m; no trained historical V1 points",
+    "sigma_source": "CPU reconstruction of native 3NN mean-square formula, not saved CUDA step0",
+    "point_source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d.ply"
+  },
+  "V4_V3_max_abs": {
+    "xyz": 0.0,
+    "q": 2.216279972344637e-05,
+    "scale": 1.862645149230957e-09,
+    "opacity": 0.0
+  },
+  "V4_V3_rotation_max_degrees": 0.0025396676419425007,
+  "V4_V3_comparison": "same cells/positions/scales; explicit small float32 quaternion difference from normal normalization order; separate raster maps, not bitwise identical claim",
+  "ground_support": {
+    "frames": 49,
+    "all_raw_ground_points": 1065640,
+    "used_dedup_points": 49182,
+    "xy_dedup_m": 0.1,
+    "radius_m": 0.8,
+    "minimum_k8_points": 3
+  },
+  "regions": {
+    "5": {
+      "core": {
+        "grid_cells": 210,
+        "outside_original_candidate_grid": 0,
+        "unsupported_inside_original_grid": 0,
+        "native_centers": 838,
+        "native_occupied_cells": 183,
+        "road_created": 210,
+        "road_missing": 0,
+        "R_train": 143,
+        "RP_train": 204,
+        "unknown_created": 6,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.022226152196526527,
+          0.0465975496917963,
+          0.11720008850097656
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 1.0,
+        "road_footprint_3sigma": 1.0,
+        "R_footprint_3sigma": 1.0,
+        "RP_footprint_3sigma": 1.0,
+        "v3_footprint_3sigma": 1.0
+      },
+      "context": {
+        "grid_cells": 726,
+        "outside_original_candidate_grid": 0,
+        "unsupported_inside_original_grid": 0,
+        "native_centers": 3956,
+        "native_occupied_cells": 636,
+        "road_created": 726,
+        "road_missing": 0,
+        "R_train": 487,
+        "RP_train": 705,
+        "unknown_created": 21,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.018499577417969704,
+          0.04141015373170376,
+          0.09892838448286057
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 1.0,
+        "road_footprint_3sigma": 1.0,
+        "R_footprint_3sigma": 0.9544593663911846,
+        "RP_footprint_3sigma": 1.0,
+        "v3_footprint_3sigma": 1.0
+      }
+    },
+    "6": {
+      "core": {
+        "grid_cells": 225,
+        "outside_original_candidate_grid": 0,
+        "unsupported_inside_original_grid": 91,
+        "native_centers": 4,
+        "native_occupied_cells": 2,
+        "road_created": 134,
+        "road_missing": 91,
+        "R_train": 0,
+        "RP_train": 134,
+        "unknown_created": 0,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.06896456629037857,
+          0.08099083602428436,
+          0.18062789142131808
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 0.5008333333333334,
+        "road_footprint_3sigma": 0.89,
+        "R_footprint_3sigma": 0.02388888888888889,
+        "RP_footprint_3sigma": 0.89,
+        "v3_footprint_3sigma": 0.89
+      },
+      "context": {
+        "grid_cells": 756,
+        "outside_original_candidate_grid": 0,
+        "unsupported_inside_original_grid": 137,
+        "native_centers": 1061,
+        "native_occupied_cells": 300,
+        "road_created": 619,
+        "road_missing": 137,
+        "R_train": 160,
+        "RP_train": 589,
+        "unknown_created": 30,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.02465842105448246,
+          0.0603426992893219,
+          0.14630047976970673
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 0.794890873015873,
+        "road_footprint_3sigma": 0.9483300264550265,
+        "R_footprint_3sigma": 0.4383267195767196,
+        "RP_footprint_3sigma": 0.9483300264550265,
+        "v3_footprint_3sigma": 0.9483300264550265
+      }
+    },
+    "37": {
+      "core": {
+        "grid_cells": 210,
+        "outside_original_candidate_grid": 10,
+        "unsupported_inside_original_grid": 0,
+        "native_centers": 866,
+        "native_occupied_cells": 145,
+        "road_created": 200,
+        "road_missing": 10,
+        "R_train": 103,
+        "RP_train": 180,
+        "unknown_created": 20,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.0296387430280447,
+          0.05330123007297516,
+          0.0888083279132843
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 1.0,
+        "road_footprint_3sigma": 1.0,
+        "R_footprint_3sigma": 0.5952380952380952,
+        "RP_footprint_3sigma": 1.0,
+        "v3_footprint_3sigma": 1.0
+      },
+      "context": {
+        "grid_cells": 721,
+        "outside_original_candidate_grid": 189,
+        "unsupported_inside_original_grid": 0,
+        "native_centers": 8779,
+        "native_occupied_cells": 640,
+        "road_created": 532,
+        "road_missing": 189,
+        "R_train": 364,
+        "RP_train": 501,
+        "unknown_created": 31,
+        "output_step0": 0,
+        "native_sigma_m": [
+          0.01490036528557539,
+          0.0329153910279274,
+          0.06552085280418396
+        ],
+        "road_sigma_m": [
+          0.13,
+          0.13,
+          0.015
+        ],
+        "native_footprint_3sigma": 1.0,
+        "road_footprint_3sigma": 0.7948162274618585,
+        "R_footprint_3sigma": 0.602375173370319,
+        "RP_footprint_3sigma": 0.7948162274618585,
+        "v3_footprint_3sigma": 0.7948162274618585
+      }
+    }
+  },
+  "region_definitions": {
+    "5": {
+      "actor": 5,
+      "anchor_raw": 102,
+      "center_xy": [
+        13.915277013402388,
+        3.347166268699751
+      ],
+      "axes_xy": [
+        [
+          -0.999993974354908,
+          -0.0034714915923157196
+        ],
+        [
+          0.0034714915923157196,
+          -0.999993974354908
+        ]
+      ],
+      "half_xy": [
+        2.1386316844448143,
+        1.004655030239698
+      ],
+      "context_halo_m": 1.2,
+      "definition": "fixed world horizontal envelope of the raw102 measured vehicle OBB; core, plus separate1.2m context; not image car mask or hidden-road GT"
+    },
+    "6": {
+      "actor": 6,
+      "anchor_raw": 102,
+      "center_xy": [
+        17.956753634092046,
+        -0.5551443963988223
+      ],
+      "axes_xy": [
+        [
+          0.9999036333875475,
+          0.013882504758907552
+        ],
+        [
+          -0.013882504758907552,
+          0.9999036333875475
+        ]
+      ],
+      "half_xy": [
+        2.1670908096830006,
+        1.0388364660395626
+      ],
+      "context_halo_m": 1.2,
+      "definition": "fixed world horizontal envelope of the raw102 measured vehicle OBB; core, plus separate1.2m context; not image car mask or hidden-road GT"
+    },
+    "37": {
+      "actor": 37,
+      "anchor_raw": 102,
+      "center_xy": [
+        8.860101756856778,
+        -0.3141540310219482
+      ],
+      "axes_xy": [
+        [
+          0.9999984520009494,
+          0.001759544175242584
+        ],
+        [
+          -0.001759544175242584,
+          0.9999984520009494
+        ]
+      ],
+      "half_xy": [
+        2.069427039373196,
+        0.989775391270757
+      ],
+      "context_halo_m": 1.2,
+      "definition": "fixed world horizontal envelope of the raw102 measured vehicle OBB; core, plus separate1.2m context; not image car mask or hidden-road GT"
+    }
+  },
+  "gate_names": [
+    "gate_angle_ok",
+    "gate_boxes_clear",
+    "gate_in_view",
+    "gate_mask_clear",
+    "gate_measured_depth_match",
+    "gate_quality_ok",
+    "gate_resolution_ok",
+    "gate_road_support",
+    "gate_surface_supported"
+  ],
+  "geometry_parameters_fixed": true,
+  "trainable_parameters": [
+    "dc",
+    "opacity"
+  ],
+  "map_precision": {
+    "alpha": "uint16/65535",
+    "depth": "uint16 centimetres;0 means unavailable",
+    "statistics": "full float32 before display quantization",
+    "domain": "only fixed raw102 a5/a37/a6 context projection union;outside is not exported,not zero coverage evidence",
+    "source_RGB": "only actual positive-weight sources packed;rejected values omitted while all49 gate flags retained"
+  },
+  "thresholds": {
+    "alpha50": 0.5,
+    "alpha95": 0.95,
+    "geometric_footprint": "horizontal projection3sigma,16fixed probes per0.2m cell;not rendered alpha",
+    "capacity": "diagnostic counterfactual opacity=1,timeweight=1 with native0.99 alpha clamp/early termination;not a strict pointwise upper bound,training or output result"
+  },
+  "world_region_denominator": "fixed raw102 world OBB horizontal core and separate1.2m halo;common0.2m grid includes cells outside original candidate grid, marked separately;no shrinking by support or prediction",
+  "pixel_denominator": "projected common world cell quadrilateral union;fixed before prediction,not car mask/not hidden clean GT;independent road/static-subset rendering,no vehicle occlusion",
+  "GPU_used": false,
+  "optimizer_updates": 0,
+  "training_started_by_audit": false,
+  "human_verdict": null,
+  "quality_accepted": false,
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none"
+}
