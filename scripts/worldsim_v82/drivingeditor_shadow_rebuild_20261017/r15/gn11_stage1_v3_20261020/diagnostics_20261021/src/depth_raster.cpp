@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
-extern "C" int project_depth(int n,const float* xyz,const float* scales,const float* quat,const float* opacity,const float* time,const float* sigma_t,const float* vel,const long long* road,float timestamp,float cycle,const float* W,const float* K,int neg,float* uv,float* conic,float* op,float* depth,int* lo,int* hi,unsigned char* isroad){
+static int project_depth_core(int n,const float* xyz,const float* scales,const float* quat,const float* opacity,const float* time,const float* sigma_t,const float* vel,const long long* road,float timestamp,float cycle,const float* W,const float* K,int neg,float* uv,float* conic,float* op,float* depth,int* lo,int* hi,unsigned char* isroad,int* source_row){
  int count=0;float omega=float(2*3.14159265358979323846)/cycle;
  double tx=neg?std::tan(-.5):480./(2*K[0]),ty=neg?std::tan(-.5):320./(2*K[4]);float fx=float(480./(2*tx)),fy=float(320./(2*ty));
  for(int i=0;i<n;i++){
@@ -21,9 +21,11 @@ extern "C" int project_depth(int n,const float* xyz,const float* scales,const fl
   if(!std::isfinite(radius)||!std::isfinite(u)||!std::isfinite(v))continue;
   auto bound=[](double value,int maximum){return int(std::min(double(maximum),std::max(0.,std::trunc(value))));};
   int lx=bound((u-radius)/16,30),ly=bound((v-radius)/16,20),hx=bound((u+radius+15)/16,30),hy=bound((v+radius+15)/16,20);if(hx<=lx||hy<=ly)continue;
-  uv[count*2]=u;uv[count*2+1]=v;conic[count*3]=d/det;conic[count*3+1]=-b/det;conic[count*3+2]=a/det;op[count]=opacity[i]*m;depth[count]=c[2];lo[count*2]=lx;lo[count*2+1]=ly;hi[count*2]=hx;hi[count*2+1]=hy;isroad[count]=rd;count++;
+  uv[count*2]=u;uv[count*2+1]=v;conic[count*3]=d/det;conic[count*3+1]=-b/det;conic[count*3+2]=a/det;op[count]=opacity[i]*m;depth[count]=c[2];lo[count*2]=lx;lo[count*2+1]=ly;hi[count*2]=hx;hi[count*2+1]=hy;isroad[count]=rd;if(source_row)source_row[count]=i;count++;
  }return count;
 }
+extern "C" int project_depth(int n,const float* xyz,const float* scales,const float* quat,const float* opacity,const float* time,const float* sigma_t,const float* vel,const long long* road,float timestamp,float cycle,const float* W,const float* K,int neg,float* uv,float* conic,float* op,float* depth,int* lo,int* hi,unsigned char* isroad){return project_depth_core(n,xyz,scales,quat,opacity,time,sigma_t,vel,road,timestamp,cycle,W,K,neg,uv,conic,op,depth,lo,hi,isroad,nullptr);}
+extern "C" int project_depth_rows(int n,const float* xyz,const float* scales,const float* quat,const float* opacity,const float* time,const float* sigma_t,const float* vel,const long long* road,float timestamp,float cycle,const float* W,const float* K,int neg,float* uv,float* conic,float* op,float* depth,int* lo,int* hi,unsigned char* isroad,int* source_row){return project_depth_core(n,xyz,scales,quat,opacity,time,sigma_t,vel,road,timestamp,cycle,W,K,neg,uv,conic,op,depth,lo,hi,isroad,source_row);}
 extern "C" int raster_depth(int n,const float* uv,const float* conic,const float* opacity,const float* z,const int* lo,const int* hi,float* alpha,float* depth){
  // 全局中心z稳定顺序与逐tile顺序等价。只访问alpha可达到1/255的椭圆包围盒。
  std::vector<int> ids;for(int i=0;i<n;i++)if(opacity[i]>=1.f/255.f)ids.push_back(i);

@@ -76,10 +76,12 @@ def library(root):
     if not lib.exists() or lib.stat().st_mtime<source.stat().st_mtime:subprocess.run(['g++','-std=c++17','-O3','-ffp-contract=off','-shared','-fPIC',str(source),'-o',str(lib)],check=True)
     return ctypes.CDLL(str(lib))
 
-def prepare_depth(a,b,raw,root):
+def prepare_depth(a,b,raw,root,include_rows=False):
     cam=a.camera(raw);n=len(b['xyz']);arrays={k:np.empty((n,stride),dtype) if stride>1 else np.empty(n,dtype) for k,stride,dtype in [('uv',2,np.float32),('conic',3,np.float32),('opacity',1,np.float32),('depth',1,np.float32),('lo',2,np.int32),('hi',2,np.int32),('road',1,np.uint8)]}
     ins=[np.ascontiguousarray(b[k]) for k in ['xyz','scale','q','opacity','t','sigma_t','vel','road']];W=np.ascontiguousarray(cam['W'],np.float32);K=np.ascontiguousarray(cam['K'],np.float32)
-    fn=library(root).project_depth;fn.argtypes=[ctypes.c_int]+[ctypes.c_void_p]*8+[ctypes.c_float,ctypes.c_float,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_int]+[ctypes.c_void_p]*7;fn.restype=ctypes.c_int
+    fn=library(root).project_depth_rows if include_rows else library(root).project_depth;fn.argtypes=[ctypes.c_int]+[ctypes.c_void_p]*8+[ctypes.c_float,ctypes.c_float,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_int]+[ctypes.c_void_p]*7;fn.restype=ctypes.c_int
+    if include_rows:
+        arrays['source_row']=np.empty(n,np.int32);fn.argtypes.append(ctypes.c_void_p)
     count=fn(n,*[v.ctypes.data for v in ins],cam['timestamp'],b['cycle'],W.ctypes.data,K.ctypes.data,int(bool(a.config['neg_fov'])),*[v.ctypes.data for v in arrays.values()])
     out={k:np.ascontiguousarray(v[:count]) for k,v in arrays.items()};out['road']=out['road'].astype(bool);return out
 

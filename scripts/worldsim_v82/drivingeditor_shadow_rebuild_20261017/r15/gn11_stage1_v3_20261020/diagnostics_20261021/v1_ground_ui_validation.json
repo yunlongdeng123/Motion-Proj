@@ -1,0 +1,55 @@
+{
+  "status": "PASSED",
+  "checks": [
+    "48 screen-pan directions across yaw/pitch preserve exact horizontal/vertical gesture",
+    "LiDAR/road/ordinary 3D markers project to one selected pixel center, within0.002px",
+    "three layers share point size and solid alpha independently of trained effective opacity",
+    "actual trained road1283 links to frozen initial location/scale/opacity and ground support, and notifies BEV/source linkage",
+    "uncreated cells remain gray grid candidates and have no invented trained Gaussian",
+    "screen rectangle reports all ground/init/trained/missing counts regardless of opacity",
+    "a pixel without a LiDAR return explicitly reports no measured point",
+    "V1 enabled native initial ground and trained candidates, with inapplicable grid disabled",
+    "V1 full-subset and remaining-static mean depth markers share actual selected pixel center with nearest measured LiDAR",
+    "V1 click preserves native checkpoint static-row ID and links true initial lineage, support, scale and effective opacity",
+    "a pruned original V1 ground source explicitly has zero survivors and no invented current point",
+    "V1 full-area counts, mean effective opacity/scale/source offset unchanged when display sampling is lowered",
+    "V1 independent heatmap reads full candidates; ordinary sampled display excludes duplicate candidate native rows",
+    "switching back restores V3 fixed-road controls and does not carry V1 geometry across arms",
+    "all14034 trained road IDs match the initial supported set exactly;12054 uncreated cells preserved",
+    "actual app pointer handlers pan vertically in orbit view and horizontally in calibrated-camera view",
+    "actual large V1 offline loader and DecompressionStream decode full geometry and surfaces without HTTP",
+    "actual script-file loader and DecompressionStream decode all new local evidence with metadata, without HTTP"
+  ],
+  "v1_values": [
+    {
+      "name": "LiDAR实测",
+      "z_m": 6.379560947418213
+    },
+    {
+      "name": "V1地面候选深度",
+      "z_m": 9.280815124511719
+    },
+    {
+      "name": "V1其余静态深度",
+      "z_m": 9.848369598388672
+    }
+  ],
+  "v1_region": "V1屏幕投影框选（非三维体积）：实际初始化地面输入 70770点；初始地面高斯 70770个；本帧时间有效训练后地面候选 1246032个；平均有效opacity 0.0239；平均最大σ 0.177m；平均距初始来源 3.648m（含clone/split，非逐点训练位移）。候选全量统计，与显示开关、普通背景采样率无关；V1无道路网格。",
+  "browser_ui_verified": false,
+  "rendering_scope": "actual app draw3D and inspection modules executed with Node Canvas and test DOM, not a browser screenshot",
+  "current_pixel": [
+    {
+      "name": "LiDAR实测",
+      "z_m": 6.379560947418213
+    },
+    {
+      "name": "道路深度",
+      "z_m": 12.481870651245117
+    },
+    {
+      "name": "普通背景深度",
+      "z_m": 12.39780330657959
+    }
+  ],
+  "initial_ground_points": 49182
+}

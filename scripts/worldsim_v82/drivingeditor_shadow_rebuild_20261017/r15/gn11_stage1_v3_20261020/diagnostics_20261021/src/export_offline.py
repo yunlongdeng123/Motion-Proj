@@ -100,15 +100,19 @@ def export(root,arms,chunk_size=32768,resume=False):
     # 后续标准导出同时携带三层初始化证据及完整逐帧深度标记。
     from export_inspection import export as export_inspection
     export_inspection(root,arms,resume=resume)
+    if 'gn11_v1' in arms:
+        from export_v1_ground import export as export_v1_ground
+        export_v1_ground(root,resume=resume)
     source=Path(__file__).resolve().parent
-    for name in ('app.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
+    for name in ('app.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','v1_ground.js','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
         if (source/name).exists():shutil.copy2(source/name,root/name)
     if (root/'index.html').exists():
         p=root/'index.html';html=p.read_text(encoding='utf-8')
         if 'data/geometry_index.js' not in html:
             html=html.replace('<script src="sampling.js">','<script src="data/geometry_index.js"></script><script src="offline_geometry.js"></script><script src="sampling.js">',1)
+        if 'v1_ground.js' not in html:html=html.replace('<script src="inspection.js', '<script src="v1_ground.js"></script><script src="inspection.js',1)
         if 'inspection.js' not in html:
-            html=html.replace('<script src="app.js','<script src="inspection_math.js"></script><script src="inspection.js"></script><script src="app.js',1)
+            html=html.replace('<script src="app.js','<script src="inspection_math.js"></script><script src="v1_ground.js"></script><script src="inspection.js"></script><script src="app.js',1)
         if 'inspection.css' not in html:html=html.replace('</head>','<link rel="stylesheet" href="inspection.css"></head>',1)
         html=html.replace('app.js?v=sampling2','app.js?v=inspection1')
         p.write_text(html,encoding='utf-8')
