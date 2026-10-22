@@ -69,12 +69,16 @@ python tools/build_v4_campaign.py --source <V1训练源码> --baseline-config <V
 
 `tools/evaluate_v4.py` 读冻结节点，分别保存原 V1、道路独立、完整合成、删除全部动态前后。支持显式传入与当前动态行对应的 bool keep 文件进行既有删车选择；本轮不新造逐车归属规则。每帧先核对无道路合成器与 V1 原前向，R/RP 再以 `--reference-eval <同节点B评价>` 核对原 V1 浮点输出。
 
-保存完整图、车身内部、边缘、非天空背景的 MAE/PSNR。提供 B 评价时，固定正常背景为 B 原误差≤0.05且位于车身7px膨胀域外、非天空的像素。误差使用原浮点；PNG 仅展示。逐帧另记录固定可靠世界来源的 V1/合成/道路 MAE、道路 alpha 和深度一致性，不根据输出 alpha 或效果缩减分母。隐藏道路无干净 GT，删除结果不与原车辆 RGB 计算重建误差，不用同一车形掩码充当隐藏道路真值。`evaluation_contract.json` 规定评价域与未知分母；运行入口记录含初始化、评价和 checkpoint 的完整训练墙钟，离线评价另记墙钟。
+主指标 `regions` 先把预测与 GT 的浮点 RGB 都 clamp 到 `[0,1]`，与 V1 原 `complete_eval` 同口径；完整图、车身内部、边缘、非天空背景保留 MAE/PSNR，完整图另调用原 `utils.loss_utils.ssim` 与 `lpipsPyTorch.lpips(net_type='vgg', version='0.1')`。LPIPS 直接接受与 V1 相同的 `[0,1]` 输入，不额外重映射到 `[-1,1]`。指标不经过 PNG 量化。未限制浮点的 MAE/MSE/PSNR 独立存为 `raw_regions` 诊断，不能与旧主指标混比；`raw.npz` 原始 V1/合成 RGB 和原分支一致性检查不做 clamp。
+
+`summary.json.aggregate49` 验证完整、无重复的49帧顺序后，分别汇总 V1/合成的 `regions` 和 `raw_regions`。完整图四指标均按 V1 的逐帧算术平均，PSNR 不是先平均 MSE 再取对数。空局部区域显式记录 `nonempty_frame_count`，不填0。原 PSNR 无 epsilon/上限，完美重建的正无穷序列化为 `psnr=null`、`psnr_is_positive_infinity=true`；汇总保留正无穷及其帧数，不删除该帧，也不封顶到120dB。
+
+提供 B 评价时，固定正常背景为 B 原始浮点误差≤0.05且位于车身7px膨胀域外、非天空的像素；该固定域规则不变。逐帧另记录固定可靠世界来源的未限制 V1/合成/道路 MAE、道路 alpha 和深度一致性，不根据输出 alpha 或效果缩减分母。隐藏道路无干净 GT，删除结果不与原车辆 RGB 计算重建误差，不用同一车形掩码充当隐藏道路真值。`evaluation_contract.json` 规定评价域与未知分母；运行入口记录含初始化、评价和 checkpoint 的完整训练墙钟，离线评价另记墙钟。
 
 道路 sidecar 单独保存 `road_chkpntN.pth`：固定几何/DC/opacity、实际更新数、来源 sampler 栈/状态和 Adam 状态；V1 四件原 checkpoint 格式不变。`v4_checkpointN.json` 在道路 sidecar 完成后发布，未来消费者必须同时检查两侧节点，不能把尚未写入道路的 V1 event 当成完整 V4 节点。
 
 ## 验证边界
 
-16项 CPU 回归覆盖 RNG/V1 toy 轨迹隔离、已有 V1 梯度不变、固定几何、未知图桥拒绝、两类参数、灰色抑制、R 关闭先验、sidecar 严格恢复、步数合同、SH/深度组装和前黑后路的解析深度遮挡。另由 `tools/validate_v4_cpu.py` 检查新 engine 的151个其余 V1 文件未改、两处 hook 去除后与原 train.py 相同、真实道路输入与三组配置，并用已保存49帧 V1 相机元数据实例化 CPU 道路层，不执行真实场景 step。原相机与道路归一化外参最大差6.19e-13。
+CPU 回归覆盖 RNG/V1 toy 轨迹隔离、已有 V1 梯度不变、固定几何、未知图桥拒绝、两类参数、灰色抑制、R 关闭先验、sidecar 严格恢复、步数合同、SH/深度组装、前黑后路的解析深度遮挡，以及 clamp/原始浮点分离、原 SSIM/LPIPS 调用参数、49帧均值与完美/缺失帧。另由 `tools/validate_v4_cpu.py` 检查新 engine 的151个其余 V1 文件未改、两处 hook 去除后与原 train.py 相同、真实道路输入与三组配置，并用已保存49帧 V1 相机元数据实例化 CPU 道路层，不执行真实场景 step。原相机与道路归一化外参最大差6.19e-13。
 
 未运行真实 CUDA 光栅/反传、真实 V1 配对30K或正式49帧评价；不能由 CPU 检查认定道路有效或车身不会退化。质量验收由用户评审，`human_verdict=null`，`failure_ledger_delta=none`。

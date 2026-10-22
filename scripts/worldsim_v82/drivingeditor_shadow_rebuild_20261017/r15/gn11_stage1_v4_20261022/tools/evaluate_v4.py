@@ -10,6 +10,7 @@ import time
 import numpy as np
 import torch
 import torch.nn.functional as F
+from v4_eval_metrics import METRIC_CONTRACT, region_metrics, full_perceptual_metrics, aggregate49
 
 
 @contextmanager
@@ -22,16 +23,6 @@ def preserve_transform(path):
             path.write_bytes(original)
         elif path.exists():
             path.unlink()
-
-
-def region_metrics(image, gt, mask):
-    mask = mask.bool().squeeze(0)
-    if not mask.any():
-        return dict(pixels=0, mae=None, psnr=None)
-    error = (image-gt)[:, mask]
-    mse = float(error.square().mean())
-    return dict(pixels=int(mask.sum()), mae=float(error.abs().mean()),
-                psnr=-10*np.log10(max(mse, 1e-12)))
 
 
 def main():
@@ -155,8 +146,13 @@ def main():
             metrics = {name: {region: region_metrics(value, gt, domain)
                        for region, domain in domains.items()} for name, value in outputs.items()
                        if value is not None and name in ('v1', 'composite')}
+            raw_metrics = {name: {region: region_metrics(value, gt, domain, clamp=False)
+                           for region, domain in domains.items()} for name, value in outputs.items()
+                           if value is not None and name in ('v1', 'composite')}
+            for name in ('v1', 'composite'):
+                metrics[name]['full'].update(full_perceptual_metrics(outputs[name], gt))
             # 隐藏路面没有整图 GT，不拿原车身 RGB 评价删车画面。
-            record = dict(frame=camera.image_name, regions=metrics,
+            record = dict(frame=camera.image_name, regions=metrics, raw_regions=raw_metrics,
                 road_visible_alpha_mean=float(combined['road_visible_alpha'].mean()),
                 road_independent_alpha_mean=None if independent is None else float(independent['alpha'].mean()))
             # 固定同世界可靠来源分母；alpha 小或结果变差不剔除样本。
@@ -192,7 +188,8 @@ def main():
                 composite_alpha=combined['alpha'].cpu().numpy(),
                 composite_depth_sum=combined['depth_sum'].cpu().numpy(),
                 road_visible_alpha=combined['road_visible_alpha'].cpu().numpy())
-    summary = dict(version=VERSION, arm=options.arm, iteration=options.iteration,
+    summary = dict(version=VERSION, metric_contract=METRIC_CONTRACT,
+        aggregate49=aggregate49(records, FRAMES), arm=options.arm, iteration=options.iteration,
         V1_native_replay_max_abs=max_native_difference, V1_vs_B_max_abs=max_reference_difference,
         V1_vs_B_passed=None if max_reference_difference is None else max_reference_difference <= 2e-5,
         delete_scope='external_dynamic_keep' if keep is not None else 'all_dynamic',
