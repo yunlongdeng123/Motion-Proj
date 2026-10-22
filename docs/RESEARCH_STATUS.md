@@ -1,10 +1,10 @@
 # 当前研究状态
 
-更新：2026-10-22 23:23 SGT启动并确认实际更新。当前task=WS-V82-R15-GN11-V4-20261022，活动运行改为r15_gn11_stage1_v4_replay_r1_20261022，状态RUNNING。用户在获知首次R失败及额外重放成本后，最新明确催促继续执行；已据此启动修复版R fresh30K→RP fresh30K，授权和旧失败更新另记于新目录serial_launch.json。仍不开subagent、不启动B、不加第二阶段、不改变损失/采样/学习率/道路几何/增密预算、不清理资产、不关机。
+更新：2026-10-22 23:23 SGT启动并确认实际更新。当前task=WS-V82-R15-GN11-V4-20261022，活动运行改为r15_gn11_stage1_v4_replay_r1_20261022，状态RUNNING。用户在获知首次R失败及额外重放成本后，最新明确催促继续执行；已据此启动修复版R fresh30K→RP fresh30K，授权和旧失败更新另记于新目录serial_launch.json。仍不开subagent、不启动B、不加第二阶段、不改变损失/采样/学习率/道路几何/增密预算、不清理资产。用户最新长期授权同方法必要工程修复、恢复及新目录重放自主推进、额外更新单列；只有确认带GPU模式开机且无可推进任务时才在保存推送、排查其他活动后主动关机，无卡开机不因空闲关机。未来小时级长任务先做约10分钟真实smoke，覆盖保存/评价/恢复/下一阶段入口。
 
 唯一串行控制器PID14982、start_ticks=866964752；R训练PID14985、start_ticks=866964767，2026-10-22T15:23:52.931100+00:00启动。已确认真实CUDA执行，启动人工快照V1迭代34、道路日志1（每100步记录）、两侧loss finite、道路14034点固定；实际Scene绑定49帧身份/时间戳/480×320尺寸及锚帧已PASS，RP尚未启动。两组配置除model_path外与失败前逐项相同；V1删除两处道路hook后源码相同，其余151文件原样，真实49帧输入CPU合同及28项CPU回归通过。完整10K/20K/30K节点仍待运行；实际CUDA完整节点评价/保存尚未验证，不能据启动成功判质量或控制变量验收通过。
 
-新活动目录=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_replay_r1_20261022；旧失败现场=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_20261022，全部保留。首次R于19:56 SGT在10K评价漏接sceneSpec而退出，已执行V1 10000步、道路9999步（按控制流推断，日志9900）；三件原生模型已保存，完整训练状态/道路状态缺失，无法无损恢复，失败执行成本单列，不混入新两组各30000步。修复仅在启动入口按V1原外部启动器检查并绑定Scene元数据；保留V1原评价，不改模型、相机顺序或RNG。本次重放以外不得再次自动从零重跑。
+新活动目录=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_replay_r1_20261022；旧失败现场=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_20261022，全部保留。首次R于19:56 SGT在10K评价漏接sceneSpec而退出，已执行V1 10000步、道路9999步（按控制流推断，日志9900）；三件原生模型已保存，完整训练状态/道路状态缺失，无法无损恢复，失败执行成本单列，不混入新两组各30000步。修复仅在启动入口按V1原外部启动器检查并绑定Scene元数据；保留V1原评价，不改模型、相机顺序或RNG。后续工程故障优先可验证的精确恢复；确无安全恢复点时可在保留旧现场后于新目录必要重放并继续原队列，额外更新独立记账，不再因执行授权等待让带GPU实例空闲；不扩大研究范围或改变正式训练合同。
 
 心跳gn11-v4-r-rp-30k已更新同一任务，指向新活动目录并恢复每10分钟；稳定定时检查从0重新累计，启动人工快照不计入。每个新arm至少两次真实定时检查稳定且10K完整五件及v4_checkpoint10000.json齐全后才改30分钟；RP切换或风险时恢复10分钟。R正常返回且三节点完整后由唯一控制器自动接RP，最终核对六个完整节点及两组V1/道路各30000更新，再CPU只读比较R/RP原V1参数/optimizer/RNG/采样状态。异常立即报告真实停止和恢复限制，保留现场，不让空检查代替推进。Git目录motion_proj_v82_gn11_v4，分支research/worldsim-v8.2-drivingeditor-v4；数据/模型/日志不入Git。quality_accepted=false、human_verdict=null、failure_ledger_delta=none。[组件、接线与运行协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v4_20261022/README.md)。
 
