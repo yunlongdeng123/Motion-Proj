@@ -24,6 +24,6 @@ if (-not $IndexText.Contains('data/geometry_index.js')) {
 if (-not $IndexText.Contains('inspection.js')) { $IndexText = $IndexText.Replace('<script src="app.js', '<script src="inspection_math.js"></script><script src="inspection.js"></script><script src="app.js') }
 if (-not $IndexText.Contains('v1_ground.js')) { $IndexText = $IndexText.Replace('<script src="inspection.js', '<script src="v1_ground.js"></script><script src="inspection.js') }
 if (-not $IndexText.Contains('inspection.css')) { $IndexText = $IndexText.Replace('</head>', '<link rel="stylesheet" href="inspection.css"></head>') }
-$IndexText = $IndexText.Replace('app.js?v=sampling2','app.js?v=inspection1')
+foreach ($OldVersion in @('sampling2','inspection1','v1ground1')) { $IndexText = $IndexText.Replace("app.js?v=$OldVersion",'app.js?v=v1perf2') }
 [IO.File]::WriteAllText($IndexPath, $IndexText, [Text.UTF8Encoding]::new($false))
 Write-Host "Updated $IndexPath. Open it directly; no local server is required."

@@ -25,3 +25,28 @@ flowchart LR
 数据：`/root/autodl-tmp/gsdiag_v1_ground_20261022_r1`。仅CPU派生、optimizer_updates=0；初次导出曾因一次性邻居列表超过2GiB内存限额失败，已改成邻居计数查询后完成；失败不改模型或训练输入。
 
 failure_ledger_refs=[V82-F01,V82-F06]；failure_ledger_delta=none；quality_accepted=false；human_verdict=null。
+
+
+## V1配色分组与交互性能修订（2026-10-22）
+
+task/run=WS-V82-GSDIAG-V1-VIEW-PERF-20261022/r1；只读诊断显示，不修改模型、训练、固定候选集合或独立alpha/深度。
+
+DC为原0阶SH基础RGB，不是地面类别。进入V1默认配色改为来源/离地：初始地面来源贴地=绿、已离地=橙；其他来源本帧贴地=蓝、不贴地=灰。贴地定义延续实测拟合平面±0.30m和纵向3..90m/横向±8m走廊；该几何谓词不是道路语义真值。可筛选全部、当前贴地、初始地面后代、离地后代。初始地面后代允许保留离地点，其他初始来源指初始中心不在±0.15m地面带。选择筛选时仅改变3D标记；二维固定全集与屏幕框选全量统计不变。
+
+raw102锚定纵向11..15m、横向-1..0m的4平方米局部，共约79.2万个时间有效候选中心，来源169个；其中约八成候选的来源为初始非地面。这是冻结检查点中的同源后代聚集，不是重复绘制同一行，不能把整团称为正常道路，也不据中心数量宣称原生像素贡献或删除残影因果。raw100/102与五车框只读统计见v1_view_cluster_analysis.json。
+
+性能：去除每次接受帧的百万行Set/Map；位图判断重复静态行、双精度按帧位置/时间权重缓存、确定性显示子集和配色缓存、标量投影、紧凑可点选数组。pointermove按requestAnimationFrame合并，拖动/缩放时每层最多约12000标记，明确标注预览减点，松开恢复设定显示率（默认10%，可调100%）；初始输入同样仅交互时减点。大型base64每1MiB解码后让出事件循环，类型对齐时共享解压Buffer。无最低opacity抬升，无点密度增亮或数据合并。
+
+同数据、10%显示率、1200x700 Node Canvas测得旧完整重绘中位约1.6s，新缓存后完整重绘约0.28s，拖动预览约0.05s；实际数字见v1_view_performance.json。首次帧/配色准备仍有单独成本；这些是本地Node测试，不能当浏览器FPS。原功能+分组/缓存/选择/预览/解压回归24项通过（修订后最终凭据为准）。浏览器file协议UI没有实际操作验收。
+
+```mermaid
+flowchart LR
+ A[冻结V1初始化与谱系] --> B[单帧位置/时间权重缓存]
+ B --> C[来源与贴地分组]
+ C --> D[确定性标记 / 交互减点预览]
+ C --> E[全量框选 / 原独立alpha深度]
+ D --> F[离线HTML / 点击追溯]
+ E --> F
+```
+
+CPU测试沿用原只读实现，GPU使用0、optimizer_updates=0；failure_ledger_refs=[V82-F01,V82-F06]；failure_ledger_delta=none；quality_accepted=false；human_verdict=null。
