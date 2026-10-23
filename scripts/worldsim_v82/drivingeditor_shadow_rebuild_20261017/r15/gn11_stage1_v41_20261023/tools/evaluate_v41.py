@@ -149,6 +149,7 @@ def main():
                 vehicle_edge = torch.as_tensor(z['vehicle_edge'], device='cuda')
                 unit_ids = z['unit_id'].copy()
                 deletion_domains = z['deletion_domains'].copy()
+                deletion_kinds = z['deletion_label_kind'].copy()
                 actor_labels = z['actor_labels'].copy()
                 deletion_reference = torch.as_tensor(z['deletion_target_rgb'], device='cuda')
             domains['reliable_road'] = visible[None]
@@ -191,14 +192,19 @@ def main():
                 masked_ssim={name:float(ssim_map(outputs[name].clamp(0, 1), gt.clamp(0, 1), visible)[windows].mean())
                     for name in ('v1', 'composite')},
                 protected_change_mae=float((combined['rgb']-native['render']).abs()[:, protected].mean()))
-            record['crossview_deleted'] = dict(scope='all_dynamic', hidden_GT=False, source='two other reliable visible views',
-                applicable=keep is None, actors={})
-            if keep is None:
-                for a, actor in enumerate(ACTORS):
-                    record['crossview_deleted']['actors'][str(actor)] = paired_deleted_metrics(
-                        native_removed['rgb'].cpu().numpy(), removed['rgb'].cpu().numpy(),
-                        deletion_reference.cpu().numpy(), actor_labels == a+1, deletion_domains[a],
-                        removed['road_visible_alpha'][0].cpu().numpy())
+            # Keep the old yardstick alongside additions: expanded labels must not silently change comparison scope.
+            for key, selector, source in (
+                    ('crossview_deleted', deletion_kinds > 0, 'legacy plus blocked-consensus additions'),
+                    ('crossview_deleted_legacy', deletion_kinds == 1, 'unchanged R5 two-view proxy'),
+                    ('crossview_deleted_added', deletion_kinds == 2, 'fit-only median gated by disjoint validation blocks')):
+                record[key] = dict(scope='all_dynamic', hidden_GT=False, source=source,
+                    applicable=keep is None, actors={})
+                if keep is None:
+                    for a, actor in enumerate(ACTORS):
+                        record[key]['actors'][str(actor)] = paired_deleted_metrics(
+                            native_removed['rgb'].cpu().numpy(), removed['rgb'].cpu().numpy(),
+                            deletion_reference.cpu().numpy(), actor_labels == a+1, deletion_domains[a] & selector,
+                            removed['road_visible_alpha'][0].cpu().numpy())
             if options.audit_deletion_gradients and camera.image_name in AUDIT_FRAMES:
                 # Extra diagnostic forward/backward only; autograd.grad does not fill .grad or step Adam.
                 with torch.enable_grad():
@@ -282,6 +288,8 @@ def main():
     summary['acceptance_contract'] = CONTRACT
     summary['quality_regressions'] = regression_summary(records)
     summary['crossview_deleted_comparison'] = deletion_summary(records)
+    summary['crossview_deleted_legacy_comparison'] = deletion_summary(records, 'crossview_deleted_legacy')
+    summary['crossview_deleted_added_comparison'] = deletion_summary(records, 'crossview_deleted_added')
     if options.audit_deletion_gradients:
         audits = {r['frame']:r['deletion_gradient_audit'] for r in records if 'deletion_gradient_audit' in r}
         summary['deletion_gradient_audit'] = dict(frames=audits, failures=a37_path_failures(audits),

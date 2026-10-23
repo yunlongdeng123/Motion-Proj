@@ -12,8 +12,8 @@ CONTRACT = dict(vehicle_ids=[5, 26, 18, 6, 37],
     success='final image AND each vehicle preserved AND actual road completion improves; transparency alone fails',
     a6='fixed geometry cannot add unsupported cells', human_verdict=None)
 
-DELETION_CONTRACT = dict(version='V41_PAIRED_DELETION_V1',
-    reference='fixed two-other-view RGB proxy; NOT hidden-road ground truth',
+DELETION_CONTRACT = dict(version='V41_PAIRED_DELETION_R7',
+    reference='fixed cross-view RGB proxy; legacy and additions also reported separately; NOT hidden-road ground truth',
     primary='float RGB clipped to [0,1]; raw float errors retained separately',
     delta='after static+road minus before native static; negative error delta is improvement',
     pixel_comparison='per-pixel channel-mean absolute error; epsilon=1e-6',
@@ -70,11 +70,11 @@ def paired_deleted_metrics(before, after, reference, target, labelled, contribut
     return result
 
 
-def deletion_summary(records):
-    applicable = [r for r in records if r['crossview_deleted']['applicable']]
-    result = dict(contract=DELETION_CONTRACT, applicable_frames=len(applicable), actors={})
+def deletion_summary(records, field='crossview_deleted'):
+    applicable = [r for r in records if r[field]['applicable']]
+    result = dict(contract=DELETION_CONTRACT, source_field=field, applicable_frames=len(applicable), actors={})
     for actor in CONTRACT['vehicle_ids']:
-        rows = [dict(frame=r['frame'], **r['crossview_deleted']['actors'][str(actor)]) for r in applicable]
+        rows = [dict(frame=r['frame'], **r[field]['actors'][str(actor)]) for r in applicable]
         known = [r for r in rows if r['labelled_pixels']]
         total = sum(r['target_pixels'] for r in rows)
         n = sum(r['labelled_pixels'] for r in rows)

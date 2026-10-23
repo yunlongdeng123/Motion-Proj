@@ -3,7 +3,7 @@
 import torch
 import torch.nn.functional as F
 
-VERSION = 'GN11_V41_DENSE_COMPOSITE_ROAD_R5_20261024'
+VERSION = 'GN11_V41_DENSE_COMPOSITE_ROAD_R7_20261024'
 POLICY = dict(joint_weight=1., appearance_weight=1., preserve_weight=1.,
               vehicle_body_weight=1., vehicle_edge_weight=1.,
               vehicle_reduction='mean of nonempty identity means, interior and edge separately',
@@ -15,7 +15,7 @@ POLICY = dict(joint_weight=1., appearance_weight=1., preserve_weight=1.,
               deletion_rgb_weight=1., deletion_contribution_weight=.1,
               deletion_contribution_target=.25,
               deletion_scope='all_dynamic; frozen static/environment, no ownership edits',
-              deletion_target='two other box-clear measured views, color MAE <=0.05, R-observed units only',
+              deletion_target='unchanged R5 labels plus fit-consensus additions with disjoint temporal-block validation; R-observed only',
               deletion_reduction='mean nonempty identity means; fixed evidence masks, no prediction filtering',
               prior='unchanged_V4_connected_world_neighbors_weight_0.1')
 

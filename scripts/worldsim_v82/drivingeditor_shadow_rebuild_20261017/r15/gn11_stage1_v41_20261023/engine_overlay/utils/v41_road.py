@@ -9,6 +9,7 @@ import torch.nn.functional as F
 from scipy.ndimage import convolve
 from utils.v4_road import RoadTraining, POLICY as BASE_POLICY, FRAMES, sample_map
 from utils.v41_objectives import VERSION, POLICY, dense_objective, deletion_objective
+from utils.v41_sources import EVIDENCE_VERSION, SOURCE_POLICY, validate_label_sources
 
 
 class DenseRoadTraining(RoadTraining):
@@ -17,15 +18,20 @@ class DenseRoadTraining(RoadTraining):
         self.args = args
         self.dense_path = str(Path(args.v41_dense_manifest).resolve())
         meta = json.loads(Path(self.dense_path).read_text(encoding='utf-8'))
-        if (meta['version'] != 'V41_FIXED_DENSE_EVIDENCE_R5' or meta['frame_order'] != FRAMES
+        if (meta['version'] != EVIDENCE_VERSION or meta['frame_order'] != FRAMES
+                or meta['policy'].get('source_expansion') != SOURCE_POLICY
                 or meta['source_bundle'] != self.path or not meta['dense_domain_ready']):
             raise ValueError('密集监督输入未通过49帧证据检查')
         self.mask_policy = meta['policy']
         self.dense = []
         for frame, record in zip(FRAMES, meta['frames']):
             with np.load(Path(self.dense_path).parent/'frames'/f'{frame}.npz', allow_pickle=False) as z:
+                source_keys = ('deletion_source_ids','deletion_label_kind','deletion_legacy_valid',
+                    'deletion_validation_source_ids','deletion_fit_count','deletion_fit_inliers',
+                    'deletion_fit_span','deletion_validation_count','deletion_validation_inliers')
                 row = {key: z[key].copy() for key in ('visible', 'protect', 'ssim_valid', 'unit_id', 'vehicle_body',
-                    'vehicle_edge', 'deletion_domains', 'deletion_target_rgb', 'deletion_source_ids')}
+                    'vehicle_edge', 'deletion_domains', 'deletion_target_rgb', *source_keys)}
+            validate_label_sources(row,len(self.dense))
             visible, protect, windows = [row[k] for k in ('visible', 'protect', 'ssim_valid')]
             if any(x.shape != (320, 480) or x.dtype != bool for x in (visible, protect, windows)):
                 raise ValueError('密集掩码形状/类型错误')
@@ -50,15 +56,13 @@ class DenseRoadTraining(RoadTraining):
             if not np.isin(ids, eligible).all():
                 raise ValueError('未知或先验单元不能获得真实 RGB 标签')
             deletion = row['deletion_domains']; deletion_valid = deletion.any(0)
-            sources = row.pop('deletion_source_ids')[deletion_valid]
             if (deletion.shape != (5, 320, 480) or deletion.dtype != bool
                     or row['deletion_target_rgb'].shape != (3, 320, 480)
                     or not np.isfinite(row['deletion_target_rgb']).all()
                     or (deletion_valid & ~vehicle).any()
-                    or (sources < 0).any() or (sources >= len(FRAMES)).any()
-                    or (sources == len(self.dense)).any() or (sources[:, 0] == sources[:, 1]).any()
                     or not np.isin(row['unit_id'][deletion_valid], eligible).all()):
-                raise ValueError('删车监督必须来自两个其它帧的真实来源和已观测 R 几何')
+                raise ValueError('删车监督须来自已验收跨帧来源和已观测 R 几何')
+            for key in source_keys:del row[key]
             ids = np.union1d(ids, row['unit_id'][deletion_valid])
             row['observed_rows'] = torch.as_tensor(np.flatnonzero(np.isin(self.layer.unit_ids.cpu().numpy(), ids)))
             for key in ('visible', 'protect', 'ssim_valid', 'vehicle_body', 'vehicle_edge', 'deletion_domains', 'deletion_target_rgb'):
