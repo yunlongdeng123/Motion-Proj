@@ -1,6 +1,6 @@
 # V4.1：最终质量约束下的道路补全
 
-当前实现 `GN11_V41_DENSE_COMPOSITE_ROAD_R7_20261024`，仅固定几何R。用户开启GPU后已启动真实生命周期smoke，正式30K尚未启动；旧V4-R/RP和全部旧证据保留。
+当前实现 `GN11_V41_DENSE_COMPOSITE_ROAD_R7_20261024`，仅固定几何R。用户开启GPU后已完成真实生命周期smoke执行；严格轨迹准入未通过，正式30K尚未启动；旧V4-R/RP和全部旧证据保留。
 
 ![当前架构](multisource_architecture.svg)
 

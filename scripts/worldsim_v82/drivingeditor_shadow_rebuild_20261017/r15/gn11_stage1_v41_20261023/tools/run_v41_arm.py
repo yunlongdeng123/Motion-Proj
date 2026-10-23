@@ -95,6 +95,8 @@ def main():
         raise RuntimeError('GPU smoke/训练需要 CUDA，不降级 CPU 实验')
     output.mkdir(parents=True, exist_ok=bool(options.resume))
     if options.resume:
+        from v41_restore_audit import install
+        install(output)
         # 原 Scene 绑定凭据保留；恢复仍逐项检查，写新凭据。
         existing = output/'actual_scene_binding.json'
         previous = output/f'actual_scene_binding_before_resume_{Path(options.resume).stem}.json'
