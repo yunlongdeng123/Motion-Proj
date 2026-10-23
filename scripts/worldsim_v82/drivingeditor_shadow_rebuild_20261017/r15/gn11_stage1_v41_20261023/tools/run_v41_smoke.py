@@ -20,7 +20,7 @@ def commands(campaign, python):
         [python, str(campaign/'tools/compare_v41_states.py'), '--reference', str(a), '--candidate', str(b),
             '--iteration', '1000', '--output', str(campaign/'smoke/exact_resume_comparison.json')],
         [python, str(evaluator), '--campaign', str(campaign), '--arm', 'R', '--run', str(b),
-            '--iteration', '1000', '--output', str(campaign/'smoke/evaluation49')]]
+            '--iteration', '1000', '--audit-deletion-gradients', '--output', str(campaign/'smoke/evaluation49')]]
 
 
 def main():
@@ -54,6 +54,9 @@ def main():
         evaluation = json.loads((root/'evaluation49/summary.json').read_text())
         if not comparison['exact_equal'] or evaluation['aggregate49']['frame_count'] != 49:
             raise RuntimeError('完整恢复/49帧评价未通过')
+        audit = evaluation.get('deletion_gradient_audit')
+        if audit is None or audit['failures']:
+            raise RuntimeError('a37 固定困难帧梯度审计未通过: '+str(audit))
         for name in ('continuous_R', 'split_R'):
             run = root/name
             rows = [json.loads(line) for line in (run/'v41_road_steps.jsonl').read_text().splitlines()]

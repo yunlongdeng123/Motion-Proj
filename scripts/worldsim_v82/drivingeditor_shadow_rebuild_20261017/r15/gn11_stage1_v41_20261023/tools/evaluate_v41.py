@@ -11,7 +11,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from v4_eval_metrics import METRIC_CONTRACT, region_metrics, full_perceptual_metrics, aggregate49
-from v41_acceptance import CONTRACT, regression_summary, road_query_metrics, topology
+from v41_acceptance import CONTRACT, regression_summary, road_query_metrics, paired_deleted_metrics, deletion_summary, topology
 
 
 @contextmanager
@@ -34,6 +34,7 @@ def main():
     parser.add_argument('--iteration', type=int, default=30000)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--dynamic-keep', type=Path, help='可选：对应该 checkpoint 动态行的 bool .npy')
+    parser.add_argument('--audit-deletion-gradients', action='store_true', help='固定 raw102/129/137 的逐车只读梯度审计，零优化更新')
     options = parser.parse_args()
     started = time.perf_counter()
     campaign = options.campaign.resolve()
@@ -50,6 +51,8 @@ def main():
     from utils.v41_objectives import VERSION, POLICY, ssim_map, valid_windows
     from utils.v41_vehicle import ACTORS
     from utils.v4_road_render import render_road, render_composite
+    from v41_gradient_audit import AUDIT_FRAMES, domain_gradient_audit, a37_path_failures
+    from utils.v41_render import render_training_deleted
     run = options.run.resolve() if options.run else campaign/'arms'/options.arm/'run30k'
     config = json.loads((run/'effective_config.json').read_text(encoding='utf-8'))
     dense_root = Path(config['v41_dense_manifest']).parent
@@ -105,6 +108,8 @@ def main():
             unsupported_unit_ids=np.flatnonzero(~arrays['surface_supported']))
     keep = None
     if options.dynamic_keep:
+        if options.audit_deletion_gradients:
+            raise ValueError('逐车梯度审计仅适用于默认 all_dynamic 删车')
         keep = torch.as_tensor(np.load(options.dynamic_keep, allow_pickle=False), device='cuda')
         if keep.dtype != torch.bool or keep.shape != (len(dynamic.get_xyz),):
             raise ValueError('动态 keep 文件须精确对应当前 checkpoint 行')
@@ -144,6 +149,7 @@ def main():
                 vehicle_edge = torch.as_tensor(z['vehicle_edge'], device='cuda')
                 unit_ids = z['unit_id'].copy()
                 deletion_domains = z['deletion_domains'].copy()
+                actor_labels = z['actor_labels'].copy()
                 deletion_reference = torch.as_tensor(z['deletion_target_rgb'], device='cuda')
             domains['reliable_road'] = visible[None]
             domains['protected'] = protected[None]
@@ -189,16 +195,34 @@ def main():
                 applicable=keep is None, actors={})
             if keep is None:
                 for a, actor in enumerate(ACTORS):
-                    domain = torch.as_tensor(deletion_domains[a], device='cuda')
-                    count = int(domain.sum())
-                    contribution = removed['road_visible_alpha'][0]
-                    color_ok = (removed['rgb']-deletion_reference).abs().mean(0) <= CONTRACT['color_mae_threshold']
-                    record['crossview_deleted']['actors'][str(actor)] = dict(pixels=count,
-                        source_mae=float((removed['rgb']-deletion_reference).abs()[:, domain].mean()) if count else None,
-                        road_contribution=float(contribution[domain].mean()) if count else None,
-                        thresholds={str(t):dict(effective=topology(deletion_domains[a], (contribution >= t).cpu().numpy()),
-                            effective_and_source_color=topology(deletion_domains[a], ((contribution >= t) & color_ok).cpu().numpy()))
-                            for t in CONTRACT['coverage_thresholds']})
+                    record['crossview_deleted']['actors'][str(actor)] = paired_deleted_metrics(
+                        native_removed['rgb'].cpu().numpy(), removed['rgb'].cpu().numpy(),
+                        deletion_reference.cpu().numpy(), actor_labels == a+1, deletion_domains[a],
+                        removed['road_visible_alpha'][0].cpu().numpy())
+            if options.audit_deletion_gradients and camera.image_name in AUDIT_FRAMES:
+                # Extra diagnostic forward/backward only; autograd.grad does not fill .grad or step Adam.
+                with torch.enable_grad():
+                    probe = render_training_deleted(camera, static, road, args, background, environment)
+                    record['deletion_gradient_audit'] = domain_gradient_audit(probe, deletion_reference,
+                        torch.as_tensor(deletion_domains, device='cuda'),
+                        torch.as_tensor(np.stack([actor_labels == a+1 for a in range(len(ACTORS))]), device='cuda'),
+                        (road.dc,road.opacity), POLICY['deletion_contribution_target'])
+                    del probe
+                # Diagnostic only: retain geometry/native state, saturate road opacity, restore in finally.
+                # A raster probe of available visibility, not a training update or guaranteed physical bound.
+                saved_opacity = road.opacity.detach().clone()
+                try:
+                    road.opacity.fill_(20.)
+                    opaque = render_training_deleted(camera, static, road, args, background, environment)
+                    opaque_contribution = opaque['road_visible_alpha'][0].cpu().numpy()
+                finally:
+                    road.opacity.copy_(saved_opacity)
+                for a,actor in enumerate(ACTORS):
+                    record['deletion_gradient_audit'][str(actor)]['opaque_probe'] = {
+                        str(t):dict(full_target=topology(actor_labels == a+1, opaque_contribution >= t),
+                            labelled=topology(deletion_domains[a], opaque_contribution >= t))
+                        for t in CONTRACT['coverage_thresholds']}
+                del opaque
             # 固定同世界可靠来源分母；alpha 小或结果变差不剔除样本。
             clip = source_xyz @ camera.full_proj_transform
             source_uv = ((clip[:, :2]/clip[:, 3:].clamp_min(1e-8)+1)*source_xyz.new_tensor(
@@ -257,6 +281,12 @@ def main():
         optimizer_updates=0, frames=records, quality_accepted=False, human_verdict=None)
     summary['acceptance_contract'] = CONTRACT
     summary['quality_regressions'] = regression_summary(records)
+    summary['crossview_deleted_comparison'] = deletion_summary(records)
+    if options.audit_deletion_gradients:
+        audits = {r['frame']:r['deletion_gradient_audit'] for r in records if 'deletion_gradient_audit' in r}
+        summary['deletion_gradient_audit'] = dict(frames=audits, failures=a37_path_failures(audits),
+            optimizer_updates=0, scope='training forward masks; same frozen checkpoint; separate actors',
+            limitation='nonzero gradient is not improvement; raw137/a6 zero-label regions remain unknown; opaque probe uses same raster/fixed geometry, not a physical upper-bound proof')
     summary['a37_and_a6_verdict'] = 'REVIEW_REQUIRED: compare fixed-query coverage/color/connectivity to V4; opacity alone cannot pass'
     summary['dense_aggregate49'] = {key:float(np.mean([record['dense_road'][key] for record in records]))
         for key in ('visible_pixels', 'ssim_windows', 'independent_alpha', 'joint_road_contribution',
