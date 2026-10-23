@@ -63,6 +63,9 @@ def main():
                     or any(r['road_points'] != 14034 or not math.isfinite(r['loss']) for r in rows)
                     or not all(r['cuda_peak_allocated_bytes'] > 0 for r in rows)):
                 raise RuntimeError('真实梯度/finite loss/固定点数/显存记录检查失败')
+            if not any(r.get('deletion_pixels', 0) > 0 and r.get('deletion_dc_gradient_l1', 0) > 0
+                       and r.get('deletion_opacity_gradient_l1', 0) > 0 for r in rows):
+                raise RuntimeError('真实删车前向与道路 DC/opacity 梯度路径未覆盖')
             for step in (200, 500, 1000):
                 node = json.loads((run/f'v41_checkpoint{step}.json').read_text())
                 if len(node['files']) != 5 or not all((run/f).is_file() and (run/f).stat().st_size > 0 for f in node['files']):

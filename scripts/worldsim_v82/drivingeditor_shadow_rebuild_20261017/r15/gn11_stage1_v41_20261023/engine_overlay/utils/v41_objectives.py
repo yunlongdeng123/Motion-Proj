@@ -3,7 +3,7 @@
 import torch
 import torch.nn.functional as F
 
-VERSION = 'GN11_V41_DENSE_COMPOSITE_ROAD_20261023'
+VERSION = 'GN11_V41_DENSE_COMPOSITE_ROAD_R5_20261024'
 POLICY = dict(joint_weight=1., appearance_weight=1., preserve_weight=1.,
               vehicle_body_weight=1., vehicle_edge_weight=1.,
               vehicle_reduction='mean of nonempty identity means, interior and edge separately',
@@ -12,6 +12,11 @@ POLICY = dict(joint_weight=1., appearance_weight=1., preserve_weight=1.,
               robust_delta=.05, alpha_epsilon=1e-5,
               normalization='mean_valid_pixels_per_frame_then_mean_sampled_frames',
               coverage='unchanged_V4_center_weighted_target_0.95_weight_0.1',
+              deletion_rgb_weight=1., deletion_contribution_weight=.1,
+              deletion_contribution_target=.25,
+              deletion_scope='all_dynamic; frozen static/environment, no ownership edits',
+              deletion_target='two other box-clear measured views, color MAE <=0.05, R-observed units only',
+              deletion_reduction='mean nonempty identity means; fixed evidence masks, no prediction filtering',
               prior='unchanged_V4_connected_world_neighbors_weight_0.1')
 
 
@@ -56,6 +61,23 @@ def ssim_map(prediction, target, mask=None):
 def identity_mean(error, domains):
     values = [masked_mean(error, mask) for mask in domains if mask.any()]
     return torch.stack(values).mean() if values else error.sum()*0
+
+
+def deletion_objective(package, target, domains):
+    """跨帧观测派生目标不是隐藏纹理 GT；道路变透明不能消除固定分母。"""
+    if target.requires_grad or domains.requires_grad or domains.dtype != torch.bool:
+        raise ValueError('删车来源和监督域必须固定且停止梯度')
+    if target.shape != package['rgb'].shape or domains.shape[1:] != target.shape[-2:]:
+        raise ValueError('删车 RGB/逐身份域维度错误')
+    contribution = package['road_visible_alpha']
+    if contribution.shape != target[:1].shape:
+        raise ValueError('需要同次真实深度光栅的道路贡献，不能用独立 alpha 替代')
+    rgb = identity_mean((package['rgb']-target).abs(), domains)
+    coverage = identity_mean(F.relu(POLICY['deletion_contribution_target']-contribution).square(), domains)
+    total = POLICY['deletion_rgb_weight']*rgb+POLICY['deletion_contribution_weight']*coverage
+    return total, dict(deletion_rgb=rgb.detach(), deletion_effective_coverage=coverage.detach(),
+        deletion_actual_contribution=identity_mean(contribution, domains).detach(),
+        deletion_pixels=domains.sum().detach())
 
 
 def dense_objective(joint, native, road, target, visible, protect, windows=None, bodies=None, edges=None):

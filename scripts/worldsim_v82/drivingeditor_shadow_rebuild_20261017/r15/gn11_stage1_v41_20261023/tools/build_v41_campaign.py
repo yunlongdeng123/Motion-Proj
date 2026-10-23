@@ -45,7 +45,7 @@ def main():
     for name in ('README.md', 'architecture.svg'):
         if (package/name).exists():
             shutil.copy2(package/name, destination/name)
-    plan = dict(task='WS-V82-R15-GN11-V41-PRE-GPU-20261023', version='GN11_V41_DENSE_COMPOSITE_ROAD_20261023',
+    plan = dict(task='WS-V82-R15-GN11-V41-PRE-GPU-20261023', version='GN11_V41_DENSE_COMPOSITE_ROAD_R5_20261024',
         V1_source=str(args.source.resolve()), baseline_config=str(args.baseline_config.resolve()),
         road_bundle=str(args.bundle.resolve()), dense_manifest=str(args.dense_manifest.resolve()),
         campaign=str(destination), arms=['R'], deferred=['RP', 'a6_geometry_completion'], iterations_each=30000,

@@ -17,14 +17,18 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = Path(os.environ.get('V4_PACKAGE_PATH', ROOT.parent/'gn11_stage1_v4_20261022'))
 ENGINE = ROOT/'engine' if (ROOT/'engine').exists() else ROOT/'engine_overlay'
 sys.path[:0] = [str(ENGINE), str(BASE/'engine_overlay'), str(ROOT/'tools'), str(BASE/'tools'), str(BASE/'tests')]
-from utils.v41_objectives import dense_objective, valid_windows, ssim_map
-from utils.v41_render import native_snapshot, render_snapshot
+if os.environ.get('V1_ENGINE_PATH'):
+    import utils
+    utils.__path__ = list(utils.__path__)+[str(Path(os.environ['V1_ENGINE_PATH'])/'utils')]
+from utils.v41_objectives import dense_objective, valid_windows, ssim_map, deletion_objective
+from utils.v41_render import native_snapshot, render_snapshot, render_training_deleted
 from utils.v41_road import DenseRoadTraining
 from utils.v4_road import RoadTraining, RoadLayer
 from v41_dense_geometry import FixedSurface, finalize_masks, project, ray_box_blocked, measured_patch_evidence
 from v41_train_hooks import install_hooks, strip_hooks
 from utils.v41_vehicle import vehicle_domains
 from v41_acceptance import road_query_metrics, regression_summary
+from prepare_v41_revision import restored_visible, witness_at
 from compare_v1_states import differences
 from test_v4_cpu import fixture, prepare, Config
 
@@ -139,6 +143,18 @@ class ObjectiveTests(unittest.TestCase):
 
 
 class RenderGradientTests(unittest.TestCase):
+    def test_deleted_joint_contribution_gradient_cannot_update_frozen_static(self):
+        rgb, alpha, xyz, rows, camera, static, road, pipe = inputs()
+        fake = SimpleNamespace(prepare_rasterization=lambda *a, **k:rows)
+        with torch.no_grad(): road.opacity.fill_(-3.)
+        with patch.dict(sys.modules, gaussian_renderer=fake), patch('utils.v41_render.raster', analytic_raster):
+            deleted = render_training_deleted(camera, static, road, pipe, torch.zeros(3), None)
+            target = deleted['rgb'].detach()
+            loss, _ = deletion_objective(deleted, target, torch.ones(1, 1, 1, dtype=torch.bool))
+            loss.backward()
+        self.assertIsNone(rgb.grad); self.assertIsNone(alpha.grad); self.assertIsNone(xyz.grad)
+        self.assertLess(float(road.opacity.grad[0]), 0)
+
     def test_interleaving_darkening_gradient_only_road(self):
         rgb, alpha, xyz, rows, camera, static, road, pipe = inputs()
         fake = SimpleNamespace(prepare_rasterization=lambda *a, **k:rows)
@@ -183,7 +199,9 @@ def tiny_training(path):
         camera.original_image = torch.full((3, 8, 8), .4)
     training.dense = [dict(visible=torch.ones(8, 8, dtype=torch.bool), protect=torch.zeros(8, 8, dtype=torch.bool),
         ssim_valid=torch.zeros(8, 8, dtype=torch.bool), observed_rows=torch.tensor([0, 5]),
-        vehicle_body=torch.zeros(6, 8, 8, dtype=torch.bool), vehicle_edge=torch.zeros(6, 8, 8, dtype=torch.bool)) for _ in training.cameras]
+        vehicle_body=torch.zeros(6, 8, 8, dtype=torch.bool), vehicle_edge=torch.zeros(6, 8, 8, dtype=torch.bool),
+        deletion_domains=torch.ones(1, 8, 8, dtype=torch.bool),
+        deletion_target_rgb=torch.full((3, 8, 8), .4)) for _ in training.cameras]
     return training, scene.gaussians.get_xyz
 
 
@@ -199,6 +217,12 @@ def tiny_pair(camera, native, dynamic, road, pipe, background, env):
     detached = native.detach().expand(3, 8, 8)/5
     rendered = tiny_road(camera, road, pipe)
     return detached, dict(rgb=rendered['rgb']+(1-rendered['alpha'])*detached, alpha=rendered['alpha'])
+
+
+def tiny_deleted(camera, native, road, pipe, background, env):
+    _, result = tiny_pair(camera, native, None, road, pipe, background, env)
+    result['road_visible_alpha'] = result['alpha']*.5
+    return result
 
 
 class IsolationRecoveryTests(unittest.TestCase):
@@ -217,7 +241,7 @@ class IsolationRecoveryTests(unittest.TestCase):
                     optimizer.step(); optimizer.zero_grad(set_to_none=True)
                     if enabled:
                         with torch.no_grad():
-                            road.step(step, native, None, None, None, tiny_road, tiny_pair)
+                            road.step(step, native, None, None, None, tiny_road, tiny_pair, tiny_deleted)
                 result.append((native.detach().clone(), optimizer.state_dict(), samples,
                     torch.get_rng_state(), np.random.get_state(), random.getstate()))
             self.assertEqual(differences(*result), [])
@@ -226,12 +250,12 @@ class IsolationRecoveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             road, native = tiny_training(temp)
             initial = {k:getattr(road.layer, k).clone() for k in ('xyz', 'scaling', 'rotation')}
-            road.step(1, native, None, None, None, tiny_road, tiny_pair)
+            road.step(1, native, None, None, None, tiny_road, tiny_pair, tiny_deleted)
             path = Path(temp)/'road_chkpnt1.pth'; torch.save(road.state(1), path)
-            road.step(2, native, None, None, None, tiny_road, tiny_pair)
+            road.step(2, native, None, None, None, tiny_road, tiny_pair, tiny_deleted)
             restored, reference = tiny_training(temp)
             restored.restore(path, 1)
-            restored.step(2, reference, None, None, None, tiny_road, tiny_pair)
+            restored.step(2, reference, None, None, None, tiny_road, tiny_pair, tiny_deleted)
             for key in ('layer', 'optimizer', 'sampler', 'stack'):
                 self.assertEqual(differences(road.state(2)[key], restored.state(2)[key]), [])
             for key, value in initial.items():
@@ -240,7 +264,7 @@ class IsolationRecoveryTests(unittest.TestCase):
     def test_old_V4_state_rejected_and_manifest_requires_native_four(self):
         with tempfile.TemporaryDirectory() as temp:
             road, native = tiny_training(temp)
-            road.step(1, native, None, None, None, tiny_road, tiny_pair)
+            road.step(1, native, None, None, None, tiny_road, tiny_pair, tiny_deleted)
             with self.assertRaises(ValueError): road.save(1)
             path = Path(temp)/'old.pth'; state = road.state(1); state['version'] = 'V4'
             torch.save(state, path)
@@ -248,6 +272,29 @@ class IsolationRecoveryTests(unittest.TestCase):
 
 
 class AcceptanceTests(unittest.TestCase):
+    def test_transparent_road_cannot_hide_from_fixed_deleted_domain(self):
+        domains = torch.zeros(2, 8, 8, dtype=torch.bool); domains[0, :2, :2] = True
+        opacity = torch.tensor(-4., requires_grad=True)
+        contribution = opacity.sigmoid().expand(1, 8, 8)
+        target = torch.full((3, 8, 8), .4)
+        package = dict(rgb=target.clone(), road_visible_alpha=contribution,
+            alpha=torch.ones(1, 8, 8))  # 总alpha已经1也不能冒充道路贡献。
+        loss, terms = deletion_objective(package, target, domains)
+        loss.backward()
+        self.assertLess(float(opacity.grad), 0)
+        self.assertGreater(float(terms['deletion_effective_coverage']), 0)
+        self.assertEqual(int(terms['deletion_pixels']), 4)
+
+    def test_deleted_color_reads_only_verified_domains_not_target_vehicle_rgb(self):
+        domains = torch.zeros(1, 8, 8, dtype=torch.bool); domains[0, 2:4, 2:4] = True
+        rgb = torch.full((3, 8, 8), .2, requires_grad=True)
+        target = torch.full_like(rgb, .4); target[:, ~domains[0]] = 100
+        contribution = torch.full((1, 8, 8), .3, requires_grad=True)
+        loss, _ = deletion_objective(dict(rgb=rgb, road_visible_alpha=contribution), target, domains)
+        loss.backward()
+        self.assertEqual(float(rgb.grad[:, ~domains[0]].abs().sum()), 0)
+        self.assertLess(float(rgb.grad[:, domains[0]].sum()), 0)
+
     def test_independent_alpha_cannot_pass_deleted_effective_coverage(self):
         arrays = dict(query_frame=np.array([0, 0]), query_actor=np.array([37, 37]),
             query_pixel=np.array([[3, 3], [4, 3]]), query_unit_id=np.array([0, 1]),
@@ -269,6 +316,18 @@ class AcceptanceTests(unittest.TestCase):
 
 
 class GeometryTests(unittest.TestCase):
+    def test_box_corner_needs_independent_witness_and_vehicle_guard_wins(self):
+        actual = restored_visible(np.ones(5, bool), np.array([1, 1, 1, 0, 1], bool),
+            np.array([3, -1, 3, 3, -1]), np.array([0, 0, 1, 0, 0], bool))
+        np.testing.assert_array_equal(actual, [1, 0, 0, 0, 0])
+
+    def test_witness_requires_entire_bilinear_footprint_and_matching_depth(self):
+        frame = dict(intrinsic=np.eye(3), world_to_camera=np.eye(4))
+        points = np.array([[3., 3., 1.], [4., 4., 1.], [2., 2., 2.]])
+        valid = np.ones((5, 5), bool); valid[2, 2] = False
+        ok, _ = witness_at(points, frame, valid, np.ones((5, 5)))
+        np.testing.assert_array_equal(ok, [False, True, False])
+
     def test_second_view_and_occluder_required(self):
         current = np.ones((32, 32), bool); count = np.full((32, 32), 2, np.uint8)
         protect = np.zeros((32, 32), bool); protect[:, 15:18] = True; count[:6] = 1

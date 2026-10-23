@@ -8,7 +8,7 @@ import torch
 import torch.nn.functional as F
 from scipy.ndimage import convolve
 from utils.v4_road import RoadTraining, POLICY as BASE_POLICY, FRAMES, sample_map
-from utils.v41_objectives import VERSION, POLICY, dense_objective
+from utils.v41_objectives import VERSION, POLICY, dense_objective, deletion_objective
 
 
 class DenseRoadTraining(RoadTraining):
@@ -17,14 +17,15 @@ class DenseRoadTraining(RoadTraining):
         self.args = args
         self.dense_path = str(Path(args.v41_dense_manifest).resolve())
         meta = json.loads(Path(self.dense_path).read_text(encoding='utf-8'))
-        if (meta['version'] != 'V41_FIXED_DENSE_EVIDENCE_R4' or meta['frame_order'] != FRAMES
+        if (meta['version'] != 'V41_FIXED_DENSE_EVIDENCE_R5' or meta['frame_order'] != FRAMES
                 or meta['source_bundle'] != self.path or not meta['dense_domain_ready']):
             raise ValueError('密集监督输入未通过49帧证据检查')
         self.mask_policy = meta['policy']
         self.dense = []
         for frame, record in zip(FRAMES, meta['frames']):
             with np.load(Path(self.dense_path).parent/'frames'/f'{frame}.npz', allow_pickle=False) as z:
-                row = {key: z[key].copy() for key in ('visible', 'protect', 'ssim_valid', 'unit_id', 'vehicle_body', 'vehicle_edge')}
+                row = {key: z[key].copy() for key in ('visible', 'protect', 'ssim_valid', 'unit_id', 'vehicle_body',
+                    'vehicle_edge', 'deletion_domains', 'deletion_target_rgb', 'deletion_source_ids')}
             visible, protect, windows = [row[k] for k in ('visible', 'protect', 'ssim_valid')]
             if any(x.shape != (320, 480) or x.dtype != bool for x in (visible, protect, windows)):
                 raise ValueError('密集掩码形状/类型错误')
@@ -48,8 +49,19 @@ class DenseRoadTraining(RoadTraining):
                                       & ((self.arrays['base_weight'] > 0).sum(0) >= 2))
             if not np.isin(ids, eligible).all():
                 raise ValueError('未知或先验单元不能获得真实 RGB 标签')
+            deletion = row['deletion_domains']; deletion_valid = deletion.any(0)
+            sources = row.pop('deletion_source_ids')[deletion_valid]
+            if (deletion.shape != (5, 320, 480) or deletion.dtype != bool
+                    or row['deletion_target_rgb'].shape != (3, 320, 480)
+                    or not np.isfinite(row['deletion_target_rgb']).all()
+                    or (deletion_valid & ~vehicle).any()
+                    or (sources < 0).any() or (sources >= len(FRAMES)).any()
+                    or (sources == len(self.dense)).any() or (sources[:, 0] == sources[:, 1]).any()
+                    or not np.isin(row['unit_id'][deletion_valid], eligible).all()):
+                raise ValueError('删车监督必须来自两个其它帧的真实来源和已观测 R 几何')
+            ids = np.union1d(ids, row['unit_id'][deletion_valid])
             row['observed_rows'] = torch.as_tensor(np.flatnonzero(np.isin(self.layer.unit_ids.cpu().numpy(), ids)))
-            for key in ('visible', 'protect', 'ssim_valid', 'vehicle_body', 'vehicle_edge'):
+            for key in ('visible', 'protect', 'ssim_valid', 'vehicle_body', 'vehicle_edge', 'deletion_domains', 'deletion_target_rgb'):
                 row[key] = torch.from_numpy(row[key])
             del row['unit_id']
             self.dense.append(row)
@@ -82,14 +94,15 @@ class DenseRoadTraining(RoadTraining):
             loss = loss+(self.layer.opacity.sigmoid()[a]-self.layer.opacity.sigmoid()[b]).square().mean()
         return loss
 
-    def step(self, iteration, static, dynamic, background, environment, render_fn=None, pair_fn=None):
+    def step(self, iteration, static, dynamic, background, environment, render_fn=None, pair_fn=None, deleted_fn=None):
         from utils.hybrid30k_runtime import preserve_rng, append_json
         from utils.v4_road_render import render_road
-        from utils.v41_render import render_training_pair
+        from utils.v41_render import render_training_pair, render_training_deleted
         if iteration != int(self.layer.steps)+1:
             raise ValueError('每个 V1 step 只能对应一次道路 step')
         render_fn = render_fn or render_road
         pair_fn = pair_fn or render_training_pair
+        deleted_fn = deleted_fn or render_training_deleted
         with preserve_rng(), torch.enable_grad():
             device = self.layer.xyz.device
             if device.type == 'cuda':
@@ -122,6 +135,29 @@ class DenseRoadTraining(RoadTraining):
                     logs[key] = logs.get(key, 0.)+float(value.detach())/len(selected)
                 self.layer.source_seen[masks['observed_rows'].to(device)] = True
                 del loss, terms, independent, joint, native
+                # 完整图反传已释放，再做删车前向；同一采样、同一次 Adam step，无新增训练步。
+                if masks['deletion_domains'].any():
+                    deleted = deleted_fn(camera, static, self.layer, self.args, background, environment)
+                    if any(not torch.isfinite(deleted[k]).all() for k in ('rgb', 'road_visible_alpha')):
+                        raise FloatingPointError('删车前向含非有限值')
+                    deletion_loss, deletion_terms = deletion_objective(deleted,
+                        masks['deletion_target_rgb'].to(device), masks['deletion_domains'].to(device))
+                    if not torch.isfinite(deletion_loss): raise FloatingPointError('删车损失非有限')
+                    if iteration == 1 or iteration % BASE_POLICY['log_interval'] == 0:
+                        gradients = torch.autograd.grad(deletion_loss, (self.layer.dc, self.layer.opacity),
+                            retain_graph=True, allow_unused=False)
+                        if any(not torch.isfinite(g).all() for g in gradients):
+                            raise FloatingPointError('删车梯度非有限')
+                        for name, gradient in zip(('dc', 'opacity'), gradients):
+                            deletion_terms['deletion_'+name+'_gradient_l1'] = gradient.detach().abs().sum()
+                    (deletion_loss/len(selected)).backward()
+                    total_value += float(deletion_loss.detach())/len(selected)
+                    for key, value in deletion_terms.items():
+                        logs[key] = logs.get(key, 0.)+float(value)/len(selected)
+                    del deleted, deletion_loss, deletion_terms
+                else:
+                    for key in ('deletion_rgb', 'deletion_effective_coverage', 'deletion_actual_contribution', 'deletion_pixels'):
+                        logs.setdefault(key, 0.)
             prior = self.continuity()*BASE_POLICY['prior_weight']
             prior.backward()
             total_value += float(prior.detach())

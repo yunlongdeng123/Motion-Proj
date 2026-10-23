@@ -9,8 +9,8 @@
     "R": {
       "points": 14034,
       "active": 1919,
-      "dense_pixels": 645888,
-      "ssim_windows": 243177
+      "dense_pixels": 781389,
+      "ssim_windows": 301872
     }
   },
   "real_scene_training_updates": 0,
@@ -19,18 +19,25 @@
   "CUDA_raster_backward_verified": false,
   "real_lifecycle_smoke_passed": false,
   "image_quality_improvement_verified": false,
-  "tests": {
-    "v41_mechanism": 20,
-    "inherited_v4": 28,
-    "failures": 0,
-    "skipped": 0,
-    "framework": "unittest; remote Python 3.9; CUDA_VISIBLE_DEVICES empty"
+  "mechanism_tests_passed": 25,
+  "inherited_tests_passed": 28,
+  "evidence": {
+    "status": "PASS_ACTUAL49_EVIDENCE",
+    "frames": 49,
+    "independently_reprojected_source_checks": 1179605,
+    "box_restored_pixels": 135501,
+    "crossview_deletion_pixels": 199108,
+    "current_vehicle_RGB_used_for_deletion": false,
+    "vehicle_visible_road_overlap": 0,
+    "unknown_or_prior_color_labels": 0,
+    "GPU_used": false,
+    "optimizer_updates": 0,
+    "semantic_or_hidden_GT_verified": false,
+    "quality_accepted": false
   },
-  "test_invocation_correction": "Initial inherited-test invocation omitted the full native engine PYTHONPATH; resolved harness path and all 28 passed, no source fix required.",
-  "dry_runs": {
-    "smoke_controller": true,
-    "formal_R": true,
-    "execute": false
-  },
-  "automation_status": "PAUSED"
+  "method_revision": "V41_FIXED_DENSE_EVIDENCE_R5",
+  "GPU_smoke_started": false,
+  "geometry_changed": false,
+  "quality_accepted": false,
+  "human_verdict": null
 }

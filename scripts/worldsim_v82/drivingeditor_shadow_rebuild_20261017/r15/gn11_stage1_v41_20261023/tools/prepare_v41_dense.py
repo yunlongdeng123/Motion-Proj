@@ -1,4 +1,4 @@
-"""仅 CPU；49 帧固定密集证据、逐帧遮挡、至少两帧几何确认。"""
+"""历史 R2 复现入口；当前 R5 使用 prepare_v41_revision.py 复核框空角。"""
 
 import argparse
 import json

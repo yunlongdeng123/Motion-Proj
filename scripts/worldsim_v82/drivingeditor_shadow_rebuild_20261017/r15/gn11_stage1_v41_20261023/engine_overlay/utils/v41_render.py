@@ -47,3 +47,9 @@ def render_training_pair(camera, static, dynamic, road, pipe, background, enviro
         native = render_snapshot(camera, pipe, snapshot)['rgb']
     joint = render_snapshot(camera, pipe, snapshot, road, for_training=True)
     return native, joint
+
+
+def render_training_deleted(camera, static, road, pipe, background, environment):
+    # 与既有验收默认的 all_dynamic 删除一致；不改写静态分层或任何 Gaussian 归属。
+    snapshot = native_snapshot(camera, static, None, pipe, background, environment)
+    return render_snapshot(camera, pipe, snapshot, road, for_training=True)

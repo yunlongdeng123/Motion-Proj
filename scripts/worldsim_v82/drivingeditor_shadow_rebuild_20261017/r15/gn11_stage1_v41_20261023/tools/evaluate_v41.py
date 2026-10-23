@@ -11,7 +11,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from v4_eval_metrics import METRIC_CONTRACT, region_metrics, full_perceptual_metrics, aggregate49
-from v41_acceptance import CONTRACT, regression_summary, road_query_metrics
+from v41_acceptance import CONTRACT, regression_summary, road_query_metrics, topology
 
 
 @contextmanager
@@ -143,6 +143,8 @@ def main():
                 vehicle_body = torch.as_tensor(z['vehicle_body'], device='cuda')
                 vehicle_edge = torch.as_tensor(z['vehicle_edge'], device='cuda')
                 unit_ids = z['unit_id'].copy()
+                deletion_domains = z['deletion_domains'].copy()
+                deletion_reference = torch.as_tensor(z['deletion_target_rgb'], device='cuda')
             domains['reliable_road'] = visible[None]
             domains['protected'] = protected[None]
             # 每身份始终保留同一键；远处小车内部为空也明确记录，不静默跳过身份。
@@ -183,6 +185,20 @@ def main():
                 masked_ssim={name:float(ssim_map(outputs[name].clamp(0, 1), gt.clamp(0, 1), visible)[windows].mean())
                     for name in ('v1', 'composite')},
                 protected_change_mae=float((combined['rgb']-native['render']).abs()[:, protected].mean()))
+            record['crossview_deleted'] = dict(scope='all_dynamic', hidden_GT=False, source='two other reliable visible views',
+                applicable=keep is None, actors={})
+            if keep is None:
+                for a, actor in enumerate(ACTORS):
+                    domain = torch.as_tensor(deletion_domains[a], device='cuda')
+                    count = int(domain.sum())
+                    contribution = removed['road_visible_alpha'][0]
+                    color_ok = (removed['rgb']-deletion_reference).abs().mean(0) <= CONTRACT['color_mae_threshold']
+                    record['crossview_deleted']['actors'][str(actor)] = dict(pixels=count,
+                        source_mae=float((removed['rgb']-deletion_reference).abs()[:, domain].mean()) if count else None,
+                        road_contribution=float(contribution[domain].mean()) if count else None,
+                        thresholds={str(t):dict(effective=topology(deletion_domains[a], (contribution >= t).cpu().numpy()),
+                            effective_and_source_color=topology(deletion_domains[a], ((contribution >= t) & color_ok).cpu().numpy()))
+                            for t in CONTRACT['coverage_thresholds']})
             # 固定同世界可靠来源分母；alpha 小或结果变差不剔除样本。
             clip = source_xyz @ camera.full_proj_transform
             source_uv = ((clip[:, :2]/clip[:, 3:].clamp_min(1e-8)+1)*source_xyz.new_tensor(
