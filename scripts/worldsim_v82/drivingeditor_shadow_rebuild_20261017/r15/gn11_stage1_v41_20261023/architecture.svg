@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="440" viewBox="0 0 1120 440">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#42607e"/></marker><style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;fill:#19334e;font-size:17px}.small{font-size:14px}rect{stroke:#b3c4d4;stroke-width:1.5;rx:12}.line{fill:none;stroke:#42607e;stroke-width:2;marker-end:url(#a)}</style></defs>
+<rect width="1120" height="440" fill="#f6f9fc" stroke="none"/>
+<rect x="20" y="160" width="170" height="110" fill="#e8eff8"/><text x="40" y="197">同一 49 帧</text><text x="40" y="226">RGB / LiDAR</text><text class="small" x="40" y="252">标定与车辆掩码</text>
+<rect x="250" y="55" width="220" height="110" fill="#e8eff8"/><text x="270" y="89">V1 原流程更新</text><text class="small" x="270" y="119">静态 / 动态 / 环境光</text><text class="small" x="270" y="145">原损失、采样、增密不变</text>
+<rect x="250" y="260" width="220" height="110" fill="#e6f4eb"/><text x="270" y="296">固定几何道路层</text><text class="small" x="270" y="326">14,034 个高斯，不增删</text><text class="small" x="270" y="352">仅更新 DC 颜色 / opacity</text>
+<rect x="540" y="160" width="230" height="110" fill="#e6f4eb"/><text x="560" y="198">可导真实深度合成</text><text class="small" x="560" y="226">V1 输入全部 detach</text><text class="small" x="560" y="252">保留道路的透射梯度</text>
+<rect x="860" y="55" width="240" height="165" fill="#fff0d9"/><text x="880" y="88">最终质量监督</text><text class="small" x="880" y="117">可靠路面：稠密 RGB / SSIM</text><text class="small" x="880" y="143">其余像素：保持当前 V1</text><text class="small" x="880" y="169">车身内部 / 边缘：单独均值</text><text class="small" x="880" y="195">另保留道路颜色与覆盖约束</text>
+<rect x="860" y="280" width="240" height="90" fill="#e8eff8"/><text x="880" y="316">完整重建 / 删车结果</text><text class="small" x="880" y="345">逐车质量 + 道路有效覆盖</text>
+<path class="line" d="M190 198H215V110H250"/><path class="line" d="M190 232H215V315H250"/>
+<path class="line" d="M470 110H655V160"/><text class="small" x="505" y="98">本步更新后冻结</text>
+<path class="line" d="M470 315H655V270"/><path class="line" d="M770 200H815V136H860"/>
+<path class="line" d="M770 238H815V325H860"/>
+<path class="line" d="M980 220V412H360V370"/><text class="small" x="610" y="400">反向梯度只更新道路</text>
+<path class="line" stroke-dasharray="5 5" d="M470 73H815V73H860"/><text class="small" x="537" y="52">当前 V1 作为保护目标</text>
+</svg>
