@@ -70,10 +70,13 @@ def main():
         raise ValueError('CPU 检查未通过')
     if options.mode == 'train':
         receipt = read(campaign/'smoke'/'receipt.json')
-        if receipt['status'] != 'PASS_REAL_GPU_LIFECYCLE_SMOKE' or receipt['wall_seconds'] < 600:
-            raise ValueError('先完成约10分钟真实 GPU 生命周期 smoke')
         sys.path.insert(0, str(campaign/'engine'))
         from utils.v41_objectives import VERSION, POLICY
+        if receipt['status'] != 'PASS_REAL_GPU_LIFECYCLE_SMOKE':
+            from v41_formal_contract import validate_authorization
+            validate_authorization(campaign, config)
+        if receipt['wall_seconds'] < 600:
+            raise ValueError('先完成约10分钟真实 GPU 生命周期 smoke')
         if receipt['version'] != VERSION or receipt['policy'] != POLICY or receipt['formal_config'] != config:
             raise ValueError('smoke 与待启动正式方法/配置不一致')
     output = Path(config['model_path'])

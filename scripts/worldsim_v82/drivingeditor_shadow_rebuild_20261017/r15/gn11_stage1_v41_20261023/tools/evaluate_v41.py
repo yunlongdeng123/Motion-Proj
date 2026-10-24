@@ -29,7 +29,7 @@ def preserve_transform(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--campaign', type=Path, required=True)
-    parser.add_argument('--arm', choices=('R',), required=True)
+    parser.add_argument('--arm', choices=('R', 'B'), required=True)
     parser.add_argument('--run', type=Path, help='可选：独立 smoke 输出目录')
     parser.add_argument('--iteration', type=int, default=30000)
     parser.add_argument('--output', type=Path, required=True)
@@ -55,9 +55,21 @@ def main():
     from utils.v41_render import render_training_deleted
     run = options.run.resolve() if options.run else campaign/'arms'/options.arm/'run30k'
     config = json.loads((run/'effective_config.json').read_text(encoding='utf-8'))
+    if options.arm == 'B':
+        if options.audit_deletion_gradients:
+            raise ValueError('原V1没有道路参数，不做道路梯度审计')
+        plan = json.loads((campaign/'plan.json').read_text())
+        baseline = json.loads(Path(plan['baseline_config']).read_text())
+        if config != dict(baseline, model_path=str(run)):
+            raise ValueError('B须为原V1配置，训练不加道路字段')
+        # 仅评价读取共同域和来源；不回写训练配置，不引入道路模型。
+        config = dict(config, v4_arm='B', v4_bundle=plan['road_bundle'],
+                      v41_dense_manifest=plan['dense_manifest'])
     dense_root = Path(config['v41_dense_manifest']).parent
-    node = json.loads((run/f'v41_checkpoint{options.iteration}.json').read_text())
-    if node['iteration'] != options.iteration or len(node['files']) != 5 or not all((run/f).is_file() for f in node['files']):
+    prefix = 'v1' if options.arm == 'B' else 'v41'
+    node = json.loads((run/f'{prefix}_checkpoint{options.iteration}.json').read_text())
+    expected_files = 4 if options.arm == 'B' else 5
+    if node['iteration'] != options.iteration or len(node['files']) != expected_files or not all((run/f).is_file() for f in node['files']):
         raise ValueError('完整 V4.1 节点缺失')
     if config['v4_arm'] != options.arm:
         raise ValueError('错误实验组配置')
@@ -131,7 +143,9 @@ def main():
                                        road, args, background, environment, keep)
             native_removed = render_composite(camera, static, dynamic if keep is not None else None,
                                               None, args, background, environment, keep)
-            independent = render_road(camera, road, args) if road is not None else None
+            # B的零数组只表示道路不存在；道路颜色误差记null，不当作黑色道路预测。
+            independent = render_road(camera, road, args) if road is not None else dict(
+                rgb=torch.zeros_like(native['render']), alpha=torch.zeros_like(combined['alpha']))
             gt = camera.original_image.cuda()
             mask = load_dynamic_mask(args.source_path, camera).float()
             if mask.ndim == 2:
@@ -185,7 +199,7 @@ def main():
                 road_visible_alpha_mean=float(combined['road_visible_alpha'].mean()),
                 road_independent_alpha_mean=None if independent is None else float(independent['alpha'].mean()))
             record['dense_road'] = dict(visible_pixels=int(visible.sum()), ssim_windows=int(windows.sum()),
-                road_surface=region_metrics(outputs['road_surface'], gt, visible[None]),
+                road_surface=region_metrics(outputs['road_surface'], gt, visible[None]) if road is not None else None,
                 independent_alpha=float(independent['alpha'][0, visible].mean()),
                 joint_road_contribution=float(combined['road_visible_alpha'][0, visible].mean()),
                 alpha_below_point_one_fraction=float((independent['alpha'][0, visible] < .1).float().mean()),
@@ -241,7 +255,7 @@ def main():
                 for name, image in (('v1', native['render']), ('composite', combined['rgb'])):
                     error = (sample_map(image, source_uv)-target_rgb).abs().mean(1)
                     road_metrics[name+'_source_mae'] = float((error*source_weight).sum())/weight_sum
-                if independent is not None:
+                if road is not None:
                     source_alpha = sample_map(independent['alpha'], source_uv)[:, 0]
                     source_color = sample_map(independent['rgb'], source_uv)/source_alpha[:, None].clamp_min(1e-5)
                     error = (source_color-target_rgb).abs().mean(1)
@@ -254,8 +268,9 @@ def main():
             record['reliable_world_sources'] = road_metrics
             pixel_ids = unit_ids[visible.cpu().numpy()]
             errors = (outputs['road_surface']-gt).abs().mean(0)[visible].cpu().numpy()
-            np.add.at(color_sum, pixel_ids, errors)
-            np.add.at(color_count, pixel_ids, 1)
+            if road is not None:
+                np.add.at(color_sum, pixel_ids, errors)
+                np.add.at(color_count, pixel_ids, 1)
             records.append(record)
             for name, value in outputs.items():
                 if value is not None:
@@ -281,7 +296,8 @@ def main():
     summary = dict(version=VERSION, metric_contract=METRIC_CONTRACT,
         aggregate49=aggregate49(records, FRAMES), arm=options.arm, iteration=options.iteration,
         V1_native_replay_max_abs=max_native_difference,
-        V1_parameter_identity='separate CPU compare_v41_states --native-only against original V4-R at same iteration',
+        V1_parameter_identity='separate CPU compare_v41_states --native-only B versus R; report CUDA trajectory differences without claiming bitwise identity',
+        absent_road_arrays_are_zero=road is None,
         delete_scope='external_dynamic_keep' if keep is not None else 'all_dynamic',
         evaluation_wall_seconds=time.perf_counter()-started,
         optimizer_updates=0, frames=records, quality_accepted=False, human_verdict=None)
