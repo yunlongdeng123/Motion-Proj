@@ -4,9 +4,11 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 ap=argparse.ArgumentParser();ap.add_argument('--report',type=Path,default=ROOT/'outputs/V42_Interior_Road_Teacher_20261024');OUT=ap.parse_args().report
 data=json.loads((OUT/'summary.json').read_text());val=json.loads((OUT/'validation.json').read_text())
-shutil.copyfile(Path(__file__).with_name('interior_teacher_architecture.svg'),OUT/'architecture.svg')
-shutil.copyfile(Path(__file__).with_name('interior_teacher_architecture.svg'),OUT/'interior_teacher_architecture.svg')
-shutil.copyfile(Path(__file__).with_name('INTERIOR_ROAD_TEACHER.md'),OUT/'method.md')
+ASSET=Path(__file__).resolve().parent
+if not (ASSET/'interior_teacher_architecture.svg').exists():ASSET=ASSET.parent
+shutil.copyfile(ASSET/'interior_teacher_architecture.svg',OUT/'architecture.svg')
+shutil.copyfile(ASSET/'interior_teacher_architecture.svg',OUT/'interior_teacher_architecture.svg')
+shutil.copyfile(ASSET/'INTERIOR_ROAD_TEACHER.md',OUT/'method.md')
 def rows(split):
     names={'nearest':'最近邻','isotropic':'各向同性高斯','road_gaussian':'道路方向高斯教师'}
     return ''.join(f"<tr><td>{names[k]}</td><td>{v['mae']:.5f}</td><td>{v['psnr']:.3f}</td><td>{v['p90_abs']:.5f}</td><td>{data['geometry_validation'][split][k]*100:.3f} cm</td></tr>" for k,v in data['validation'][split].items())

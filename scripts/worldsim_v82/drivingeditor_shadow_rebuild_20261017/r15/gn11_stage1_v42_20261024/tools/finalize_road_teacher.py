@@ -1,6 +1,6 @@
 import os
 os.environ['CUDA_VISIBLE_DEVICES']=''
-import json,argparse
+import json,argparse,shutil
 from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw
@@ -17,9 +17,12 @@ def run(a):
     a.output.mkdir(parents=True,exist_ok=False);(a.output/'frames').mkdir();(a.output/'generative_inputs').mkdir()
     summary=json.loads((a.results/'summary.json').read_text());v=json.loads((a.results/'validation.json').read_text())
     atlas=dict(np.load(a.results/'observed_atlas.npz'));cloud=dict(np.load(a.results/'road_birth_proposals.npz'))
-    ids=json.loads((a.inputs/'manifest.json').read_text())['frame_order'];checks=[]
+    ids=json.loads((a.inputs/'manifest.json').read_text())['frame_order'];checks=[];train_count=0;core_train_count=0
     for fid in ids:
         f=dict(np.load(a.inputs/f'{fid}.npz'));p=dict(np.load(a.results/'frames'/f'{fid}.npz'))
+        a37=f['actor_labels']==5;core=a37&(distance_transform_edt(a37)>=5)
+        eligible=(p['source_kind']==2)&~p['observed_reference_valid']
+        train_count+=int((eligible&a37).sum());core_train_count+=int((eligible&core).sum())
         # Deliberately label this composited RGB preview as a pseudo-target, not a render.
         target=f['rgb'].copy();m=p['source_kind']>0;target[m]=p['pseudo_rgb'][m]
         weight=f['rgb']*.3;weight[m]=plt.get_cmap('viridis')(p['loss_weight'][m])[...,:3]
@@ -45,6 +48,10 @@ def run(a):
                 next_step='RGB inpainting first; then metric-anchored depth completion; fuse in one shared road coordinate system before Gaussian insertion',
                 external_model_executed=False,do_not_use='original vehicle RGB inside mask as road labels'),indent=2))
     summary['cpu_splat_checks']=checks
+    summary['source_priority']=dict(a37_pseudo_train=train_count,a37_core_pseudo_train=core_train_count)
+    if (a.results/'strict_withdrawal.json').exists():
+        strict=json.loads((a.results/'strict_withdrawal.json').read_text());summary['strict_withdrawal']=strict['aggregate']
+        shutil.copyfile(a.results/'strict_withdrawal.json',a.output/'strict_withdrawal.json')
     # Show the evidence atlas and predictions in road coordinates, not only image boundaries.
     xx,yy=np.meshgrid(np.arange(5,35,.1),np.arange(-4,8,.1));q=np.c_[xx.ravel(),yy.ravel()]
     pred=Teacher(atlas).predict(q)

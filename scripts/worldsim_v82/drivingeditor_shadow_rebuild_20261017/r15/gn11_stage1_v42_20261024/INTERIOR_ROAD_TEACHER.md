@@ -70,7 +70,9 @@ raw102 的 `(255,240)`、`(256,219)`，在已经测试的曲面上没有合格�
 
 ```bash
 python tools/road_teacher_cpu.py --inputs INPUTS --output NEW_OUTPUT
+python tools/audit_teacher_withdrawal.py --results NEW_OUTPUT
 python tools/finalize_road_teacher.py --inputs INPUTS --results NEW_OUTPUT --output NEW_REPORT
+python tools/build_interior_teacher_report.py --report NEW_REPORT
 python -m unittest discover -s tools -p test_road_teacher.py -v
 ```
 
