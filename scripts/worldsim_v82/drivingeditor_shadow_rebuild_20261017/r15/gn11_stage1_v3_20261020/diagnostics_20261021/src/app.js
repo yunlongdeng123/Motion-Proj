@@ -6,7 +6,7 @@ if(window.GSDATA.scene.bindings?.gn11_v1&&!EXPERIMENTS.some(v=>v.id==='gn11_v1')
 const ARMS = EXPERIMENTS.map(v=>v.id);
 const NAMES = EXPERIMENTS.map(v=>v.name);
 const COLORS = {ordinary:'#80aff0',road:'#5ed7b1',dynamic:'#ffb379'};
-const S = {preview_sampling:{...GSCloud.defaults},arm:'full',raw:102,x:90,y:255,channel:'deleted_five',rayMode:'deleted_five',unit:null,selected:null,ray:null,checked:new Set(),playing:false};
+const S = {preview_sampling:{...GSCloud.defaults},arm:window.GSDATA.defaultExperiment||'full',raw:102,x:90,y:255,channel:window.GSDATA.defaultChannel||'deleted_five',rayMode:'deleted_five',unit:null,selected:null,ray:null,checked:new Set(),playing:false};
 const cache = new Map(), images = new Map(); let version=0,comparisonVersion=0,timer=null,scene,road,maps,units,cloud,opt,lidar;
 const f = (v,n=3) => v===null||v===undefined||!Number.isFinite(Number(v))?'—':Number(v).toFixed(n);
 const fmt = v => f(v,4);
@@ -64,9 +64,11 @@ function heat(canvas,m,ch,mark=true){
 }
 function cross(ctx){ctx.save();ctx.translate(.5,.5);ctx.strokeStyle='#ff9bb0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(S.x-7,S.y);ctx.lineTo(S.x+7,S.y);ctx.moveTo(S.x,S.y-7);ctx.lineTo(S.x,S.y+7);ctx.stroke();ctx.strokeRect(S.x-2.5,S.y-2.5,5,5);
  if(S.selected?.cov2&&S.selected?.uv){const [a,b,d]=S.selected.cov2,disc=Math.sqrt((a-d)**2+4*b*b),l1=Math.max(.01,(a+d+disc)/2),l2=Math.max(.01,(a+d-disc)/2),ang=.5*Math.atan2(2*b,a-d);ctx.strokeStyle='#f6d978';ctx.beginPath();ctx.ellipse(...S.selected.uv,3*Math.sqrt(l1),3*Math.sqrt(l2),ang,0,2*Math.PI);ctx.stroke();}ctx.restore();}
-const isImage=ch=>['deleted_five','joint','gt','dynamic_raw','road_raw','road_surface_color'].includes(ch);
-function unavailable(canvas){const c=canvas.getContext('2d');c.fillStyle='#0a1422';c.fillRect(0,0,canvas.width,canvas.height);c.fillStyle='#c0b18a';c.font='14px sans-serif';c.fillText('V1 无专用道路分支，此项不适用',25,45);}
-async function render2D(){const pending=pendingExperiment();if(pending){pendingCanvas($('renderCanvas'),pending);return;}const epoch=version,channel=S.channel,arm=S.arm,raw=S.raw,ctx=$('renderCanvas').getContext('2d');try{let legend;if(channel.startsWith('v1_')){if(GSV1Ground.heat($('renderCanvas'),channel,cross))legend='V1完整地面候选／其余静态独立CPU参考，α 0—1；相机z对数色标0—150m；不是原生独立道路分支。';else{unavailable($('renderCanvas'));legend='此通道仅适用V1地面候选诊断';}}else if(arm==='gn11_v1'&&channel.includes('road')){unavailable($('renderCanvas'));legend='共享BEV仅作外部测量证据；没有向V1注入道路高斯。';}else if(isImage(channel)){const im=await img(asset(arm,channel,raw));if(epoch!==version||channel!==S.channel||arm!==S.arm||raw!==S.raw)return;ctx.clearRect(0,0,480,320);ctx.drawImage(im,0,0,480,320);cross(ctx);legend='原生渲染派生图像 · 完整480×320 · 显示编码非指标输入';}else legend=heat($('renderCanvas'),maps,channel);$('renderCanvas').dataset.raw=raw;$('renderCanvas').dataset.arm=arm;$('renderCanvas').dataset.channel=channel;$('mapLegend').textContent=legend;$('pixelLabel').textContent=`p = (${S.x}, ${S.y})`;}catch(e){status(e.message,true);}}
+const isImage=ch=>['deleted_five','joint','gt','dynamic_raw','road_raw','road_surface_color','native_v1','native_static_delete'].includes(ch);
+const extraImage=ch=>['native_v1','native_static_delete'].includes(ch);
+const supportsImage=(arm,ch)=>!extraImage(ch)||Boolean(EXPERIMENTS.find(e=>e.id===arm)?.extra_channels?.includes(ch));
+function unavailable(canvas,message='V1 无专用道路分支，此项不适用'){const c=canvas.getContext('2d');c.fillStyle='#0a1422';c.fillRect(0,0,canvas.width,canvas.height);c.fillStyle='#c0b18a';c.font='14px sans-serif';c.fillText(message,25,45);}
+async function render2D(){const pending=pendingExperiment();if(pending){pendingCanvas($('renderCanvas'),pending);return;}const epoch=version,channel=S.channel,arm=S.arm,raw=S.raw,ctx=$('renderCanvas').getContext('2d');try{let legend;if(channel.startsWith('v1_')){if(GSV1Ground.heat($('renderCanvas'),channel,cross))legend='V1完整地面候选／其余静态独立CPU参考，α 0—1；相机z对数色标0—150m；不是原生独立道路分支。';else{unavailable($('renderCanvas'));legend='此通道仅适用V1地面候选诊断';}}else if(arm==='gn11_v1'&&channel.includes('road')){unavailable($('renderCanvas'));legend='共享BEV仅作外部测量证据；没有向V1注入道路高斯。';}else if(extraImage(channel)&&!supportsImage(arm,channel)){unavailable($('renderCanvas'),'该实验尚未导出此通道');legend='当前通道仅绑定已明确导出的同checkpoint结果';}else if(isImage(channel)){const im=await img(asset(arm,channel,raw));if(epoch!==version||channel!==S.channel||arm!==S.arm||raw!==S.raw)return;ctx.clearRect(0,0,480,320);ctx.drawImage(im,0,0,480,320);cross(ctx);legend='原生渲染派生图像 · 完整480×320 · 显示编码非指标输入';}else legend=heat($('renderCanvas'),maps,channel);$('renderCanvas').dataset.raw=raw;$('renderCanvas').dataset.arm=arm;$('renderCanvas').dataset.channel=channel;$('mapLegend').textContent=legend;$('pixelLabel').textContent=`p = (${S.x}, ${S.y})`;}catch(e){status(e.message,true);}}
 function pixelMetrics(){if(pendingExperiment())return;const i=S.y*480+S.x,pairs=[['背景 alpha',mapValue(maps,'static_alpha',i)],['道路独立 alpha',mapValue(maps,'road_alpha',i)],['道路 / 背景 T',mapValue(maps,'road_bg',i)],['道路 / 联合 T',mapValue(maps,'road_joint',i)],['LiDAR z [m]',mapValue(maps,'lidar_depth_m',i)],['背景 z [m]',mapValue(maps,'static_depth_m',i)],['联合 z [m]',mapValue(maps,'joint_depth_m',i)],['RGB L1',mapValue(maps,'residual',i)]];
  const stride=scene?.precision?.map_stride||1,notSample=S.x%stride!==0||S.y%stride!==0;if(notSample)for(const pair of pairs)pair[1]=null;
  const n=S.ray?.native,active=n&&S.ray.arm===S.arm&&S.ray.raw===S.raw&&S.ray.pixel[0]===S.x&&S.ray.pixel[1]===S.y;
@@ -78,9 +80,9 @@ async function comparison(){
  const all=await Promise.all(ARMS.map(async arm=>{
   const pending=pendingExperiment(arm);if(pending){pendingCanvas($('compare_'+arm),pending);return {arm,alpha:null,bg:null,joint:null,depth:null,error:null,source:pending.training_state+' · 结果待导出'};}
   const m=await load(`${arm}/${raw}`,mapPath(arm,raw)),canvas=$('compare_'+arm);let image=null;
-  if(isImage(channel)&&!(arm==='gn11_v1'&&channel.includes('road')))image=await img(asset(arm,channel,raw));
+  if(isImage(channel)&&supportsImage(arm,channel)&&!(arm==='gn11_v1'&&channel.includes('road')))image=await img(asset(arm,channel,raw));
   if(epoch!==version||token!==comparisonVersion)return null;
-  if(channel.startsWith('v1_')){if(arm!=='gn11_v1'||!GSV1Ground.heat(canvas,channel,cross))unavailable(canvas);}else if(arm==='gn11_v1'&&channel.includes('road'))unavailable(canvas);else if(image){const c=canvas.getContext('2d');c.drawImage(image,0,0,480,320);cross(c);}else heat(canvas,m,channel);
+  if(extraImage(channel)&&!supportsImage(arm,channel)){unavailable(canvas,'该实验尚未导出此通道');}else if(channel.startsWith('v1_')){if(arm!=='gn11_v1'||!GSV1Ground.heat(canvas,channel,cross))unavailable(canvas);}else if(arm==='gn11_v1'&&channel.includes('road'))unavailable(canvas);else if(image){const c=canvas.getContext('2d');c.drawImage(image,0,0,480,320);cross(c);}else heat(canvas,m,channel);
   canvas.dataset.raw=raw;canvas.dataset.arm=arm;canvas.dataset.channel=channel;
   const p=y*480+x;let result={arm,alpha:mapValue(m,'static_alpha',p),bg:mapValue(m,'road_bg',p),joint:mapValue(m,'road_joint',p),depth:mapValue(m,'static_depth_m',p),error:mapValue(m,'residual',p),source:'显示预览'};
   if(missing){for(const key of ['alpha','bg','joint','depth','error'])result[key]=null;result.source='未打包该像素';}
@@ -190,7 +192,7 @@ async function refresh(){
   try{await cachedRay();}catch(error){$('rayState').textContent='当前离线射线文件不可用；不伪造贡献。其余原生证据仍可使用。';}
   if(epoch!==version)return;pixelMetrics();await render2D();if(epoch!==version)return;
   draw3D();drawBEV();unitInfo();sourceGrid();await comparison();
-  if(epoch===version){status(`就绪 · ${S.arm} / raw${S.raw} · ${S.arm.startsWith('v4_')?'V4真实30K原生CUDA结果＋固定道路几何':'原生结果＋只读CPU证据'} · 数值预览alpha 1/65535、深度1cm量化`);workspace.setAttribute('aria-busy','false');}
+  if(epoch===version){status(`就绪 · ${S.arm} / raw${S.raw} · ${S.arm.startsWith('v4_')?'真实30K原生CUDA结果＋固定道路几何':'原生结果＋只读CPU证据'} · 数值预览alpha 1/65535、深度1cm量化`);workspace.setAttribute('aria-busy','false');}
  }catch(e){
   if(epoch!==version)return;S.ray=null;S.selected=null;S.checked.clear();$('topRows').replaceChildren();$('pixelMetrics').replaceChildren();$('sourceGrid').replaceChildren();
   for(const c of document.querySelectorAll('.workspace canvas,#comparison canvas')){const ctx=c.getContext('2d');ctx.fillStyle='#0a1422';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ffb5ab';ctx.font='12px monospace';ctx.fillText('证据未就绪 / ASSET ERROR',12,25);}

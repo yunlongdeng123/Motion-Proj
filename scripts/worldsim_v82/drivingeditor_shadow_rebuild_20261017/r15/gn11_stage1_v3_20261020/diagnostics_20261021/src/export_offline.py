@@ -58,6 +58,7 @@ def memberships(sampler,b,raw,order,include_box=True):
 
 def export(root,arms,chunk_size=32768,resume=False):
     root=Path(root);root.mkdir(parents=True,exist_ok=True)
+    v41arms=[a for a in arms if a=='v4_1_R']
     v4arms=[a[3:] for a in arms if a in ('v4_R','v4_RP')]
     arms=[a for a in arms if not a.startswith('v4_')]
     sampler=Sampler();started=time.time()
@@ -120,6 +121,13 @@ def export(root,arms,chunk_size=32768,resume=False):
         sys.path.insert(0,str(audit));from export_experiment_slots import export as slots,integrate_index
         slots(root)
         if (root/'index.html').exists():(root/'index.html').write_text(integrate_index((root/'index.html').read_text(encoding='utf-8')),encoding='utf-8')
+    if v41arms:
+        for phase in ('render','geometry','finish'):
+            subprocess.run([sys.executable,str(source/'export_v41_results.py'),'--output',str(root),'--arms','R','--phase',phase],check=True)
+        from register_v41_experiment import export as register_v41,integrate_index as integrate_v41
+        register_v41(root)
+        if (root/'index.html').exists():
+            (root/'index.html').write_text(integrate_v41((root/'index.html').read_text(encoding='utf-8')),encoding='utf-8')
     for name in ('app.js','gpu.js','sampling.js','sampling.css','offline_geometry.js','export_offline.ps1','v1_ground.js','inspection.js','inspection_math.js','inspection.css','inspection_help.html'):
         if (source/name).exists():shutil.copy2(source/name,root/name)
     if (root/'index.html').exists():
@@ -132,8 +140,8 @@ def export(root,arms,chunk_size=32768,resume=False):
         if 'inspection.css' not in html:html=html.replace('</head>','<link rel="stylesheet" href="inspection.css"></head>',1)
         html=html.replace('app.js?v=sampling2','app.js?v=inspection1')
         p.write_text(html,encoding='utf-8')
-    receipt=dict(status='OFFLINE_GEOMETRY_COMPLETE',arms=arms+['v4_'+a for a in v4arms],frames=49,max_rate=100,elapsed_seconds=round(time.time()-started,1),
-        gpu_used=bool(v4arms),optimizer_updates=0,entry='index.html',transport='file:// script chunks; no HTTP/SSH required to change sampling')
+    receipt=dict(status='OFFLINE_GEOMETRY_COMPLETE',arms=arms+['v4_'+a for a in v4arms]+v41arms,frames=49,max_rate=100,elapsed_seconds=round(time.time()-started,1),
+        gpu_used=bool(v4arms or v41arms),optimizer_updates=0,entry='index.html',transport='file:// script chunks; no HTTP/SSH required to change sampling')
     (root/'offline_geometry_receipt.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
     print(json.dumps(receipt),flush=True)
     return index
@@ -148,5 +156,6 @@ if __name__=='__main__':
     a=p.parse_args()
     if not 1024<=a.chunk_size<=100000:raise ValueError('chunk size outside1024..100000')
     complete_v4=[f'v4_{arm}' for arm in ('R','RP') if (Path('/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v4_replay_r1_20261022')/'arms'/arm/'run30k/v4_training_returned.json').exists()]
-    arms=a.arms or list(ARMS)+(['gn11_v1'] if V1.exists() and Path('/root/autodl-tmp/gsdiag_gpu_20261021_r2/v1_binding.json').exists() else [])+complete_v4
+    complete_v41=['v4_1_R'] if (Path('/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023')/'arms/R/run30k/phase_0_30000_returned.json').exists() else []
+    arms=a.arms or list(ARMS)+(['gn11_v1'] if V1.exists() and Path('/root/autodl-tmp/gsdiag_gpu_20261021_r2/v1_binding.json').exists() else [])+complete_v4+complete_v41
     export(a.output,arms,a.chunk_size,a.resume)
