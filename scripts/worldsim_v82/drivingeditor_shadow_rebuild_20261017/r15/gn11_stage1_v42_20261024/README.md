@@ -1,6 +1,6 @@
 # V4.2 design and read-only gate audit
 
-[中文设计与现有方法比较](V42_DESIGN.md) · [组件图](architecture.svg)
+[中文设计与现有方法比较](V42_DESIGN.md) · [组件图](architecture.svg) · [固定V4.1-B基线与波动尺度](../../../../../docs/V41_B_BASELINE.md)
 
 This package contains CPU diagnostics and a design, **not an implemented V4.2 training engine**. It does not alter V4.1 inputs, output eligibility, checkpoints, or optimizer state. GPU runs are not started by any tool here.
 
