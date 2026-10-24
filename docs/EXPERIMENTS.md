@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-GN11-V42-DESIGN-20261024 / CPU门限审计与设计 | 49帧九门精确重放、实际候选与保守性、原V1主副本＋独立编辑副本、补点与污染成对决策假设；GPU/优化更新0，非已验证方法 | [组件与设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/V42_DESIGN.md)、[复现入口](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/README.md) |
 | WS-V82-R15-GN11-V4-20261022 / R→RP串行30K | 用户授权R后RP各fresh30K、stage2=0，10K/20K/30K五件checkpoint；V1原路径与独立道路，23项CPU回归和V1指标对照；实际进度统一见当前状态 | [组件与代码](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v4_20261022/README.md) |
 | WS-V82-GN11-V3-RESOURCE-RECOVERY-R1-20261021 / serial_r1 | 后期双槽OOM后只改单槽准入、保留两批逻辑分组与全部科研配置；79项CPU与新full真实CUDA零更新通过。失败26,152更新单列；用户授权自主工程修复、四组和正式评价全部核验后关机，非现在关机 | [组件、资源证据与关机条件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/resource_recovery_r1/README.md) |
 | WS-V82-GN11-V3-PUBLICATION-R1-20261021 / publish_r2授权fresh重跑 | 七通道与完整继续状态发布/恢复合同、0步实际49帧保存集成准入、显式fresh 2+2；76项CPU通过。原失败10K单列、旧资产保留，新四组仍49/49、seed0、各30K；实际进度统一见RESEARCH_STATUS | [组件、证据与重跑合同](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/publication_fix_r1/README.md) |
