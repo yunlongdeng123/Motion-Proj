@@ -33,3 +33,11 @@ Implementation milestones, not completed claims:
 - GPU identity/gradient checks and real ~10-minute save/evaluate/restore/next-stage smoke before any newly authorized long run.
 
 No additional formal experiment budget has been assigned in this design. Default-output isolation is an engineering contract; scientific novelty and editing quality require the comparisons in the design document.
+
+## GaussianPro机制CPU实证
+
+已完成49帧完整车辆轮廓检验及四项几何/信息隔离检查；关键a37/a6未解决，不据此启动GPU。见[CPU_PROPAGATION.md](CPU_PROPAGATION.md)及 tools/cpu_plane_propagation.py。首轮及有界深度修正回退均保留。完整GaussianPro GPU基线尚未复现，候选文件未写入原V1/R/B。
+
+## 孔洞内部道路教师
+
+随后完成独立的CPU内部伪真值原型，见[INTERIOR_ROAD_TEACHER.md](INTERIOR_ROAD_TEACHER.md)。tools/road_teacher_cpu.py输出伪RGB/深度/权重与薄高斯补点；tools/road_teacher_bridge.py提供主副本隔离检查、真实标签优先的编辑损失和近似CPU光栅。整块撤源验证与5项检查已完成；最终编辑训练未接入，生成式模型仅完成调研和输入准备。

@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-GN11-V42-CPU-PROPAGATION-20261024 / 机制原型 | GaussianPro式平面提议、统一核验、来源深度修正；a37未优于图像平面对照、a6/中心0，GPU/更新0 | [CPU结果与边界](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/CPU_PROPAGATION.md) |
 | WS-V82-GN11-V42-DESIGN-20261024 / CPU门限审计与设计 | 49帧九门精确重放、实际候选与保守性、原V1主副本＋独立编辑副本、补点与污染成对决策假设；GPU/优化更新0，非已验证方法 | [组件与设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/V42_DESIGN.md)、[复现入口](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/README.md) |
 | WS-V82-R15-GN11-V4-20261022 / R→RP串行30K | 用户授权R后RP各fresh30K、stage2=0，10K/20K/30K五件checkpoint；V1原路径与独立道路，23项CPU回归和V1指标对照；实际进度统一见当前状态 | [组件与代码](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v4_20261022/README.md) |
 | WS-V82-GN11-V3-RESOURCE-RECOVERY-R1-20261021 / serial_r1 | 后期双槽OOM后只改单槽准入、保留两批逻辑分组与全部科研配置；79项CPU与新full真实CUDA零更新通过。失败26,152更新单列；用户授权自主工程修复、四组和正式评价全部核验后关机，非现在关机 | [组件、资源证据与关机条件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/resource_recovery_r1/README.md) |
@@ -202,3 +203,7 @@
 每个 run 的真实完成数量、配置、seed、数据角色、成本和失败边界以该报告及对应 manifest 为准。不同类型执行次数不合并为独立样本。更早版本的实验从[历史归档](archive/README.md)进入。
 
 - `WS-V77-DELETE-REPAIR-20260927/r1`：三场景入口试验失败并回退；实际数量与边界见[报告](v77/DELETE_REPAIR.md)、[登记](autoresearch/worldsim_v77/delete_repair_20260927/registration.json)、[收口](autoresearch/worldsim_v77/delete_repair_20260927/closeout.json)。
+
+- 2026-10-24 V4.2 CPU内部教师：固定道路方向高斯先验，49帧内部软目标和35648补点请求；9处整块撤源孔洞（5开发/4验证），验证核心MAE0.02330/PSNR27.725，开发MAE未胜简单插值；真实标签优先，GPU更新0。5项来源隔离/遮挡梯度检查通过；生成式仅调研与输入准备。参见V4.2 INTERIOR_ROAD_TEACHER.md；不宣称最终编辑质量通过。
+
+- 同轮更严格1.7m撤源halo复核：算法参数未改；验证核心RGB MAE0.03152/PSNR26.015/高度MAE0.01197m，几何优于各向同性0.06969m而颜色差异小，开发颜色MAE仍较差。以此为主要CPU证据，旧非halo指标保留。

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="480" viewBox="0 0 1120 480">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#38546c"/></marker></defs>
+<rect width="1120" height="480" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" font-size="18" fill="#17344b">
+<text x="560" y="33" font-size="24" font-weight="bold">V4.2：为孔洞内部生成道路监督，完整重建保持原 V1</text>
+<g fill="white" stroke="#9fb8cc" stroke-width="2">
+<rect x="30" y="70" width="235" height="65" rx="10"/><rect x="375" y="70" width="300" height="65" rx="10"/><rect x="830" y="70" width="250" height="65" rx="10"/>
+<rect x="30" y="205" width="235" height="95" rx="10"/><rect x="330" y="205" width="260" height="95" rx="10"/><rect x="660" y="205" width="205" height="95" rx="10"/><rect x="920" y="205" width="175" height="95" rx="10"/>
+<rect x="330" y="365" width="260" height="80" rx="10"/><rect x="660" y="365" width="435" height="80" rx="10"/>
+</g>
+<text x="147" y="110">原 V1 主副本</text><text x="525" y="110">原生静态＋动态＋环境</text><text x="955" y="110">默认完整重建</text>
+<text x="147" y="240">可见路面 RGB / LiDAR</text><text x="147" y="271">排除车辆与受保护区域</text>
+<text x="460" y="240">道路坐标高斯教师</text><text x="460" y="271">曲面＋颜色＋不确定性</text>
+<text x="762" y="240">内部伪 RGB / 深度</text><text x="762" y="271">射线反投影补点</text>
+<text x="1008" y="240">独立编辑副本</text><text x="1008" y="271">道路＋局部去污染</text>
+<text x="460" y="395">整块遮挡检验</text><text x="460" y="424">内部误差 / 来源隔离</text>
+<text x="877" y="395">可选：RGB 修补＋受几何约束的深度补全</text><text x="877" y="424">统一三维参考、候选筛选；生成内容单列</text>
+</g>
+<g fill="none" stroke="#38546c" stroke-width="2" marker-end="url(#a)"><path d="M265 102H375"/><path d="M675 102H830"/><path d="M265 252H330"/><path d="M590 252H660"/><path d="M865 252H920"/><path d="M460 300V365"/><path d="M877 365V327H762V300"/></g>
+</svg>
