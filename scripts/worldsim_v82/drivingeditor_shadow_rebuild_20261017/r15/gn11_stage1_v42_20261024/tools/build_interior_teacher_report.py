@@ -35,5 +35,5 @@ sr=''.join(f"<tr><td>{k}</td><td>{v['mae']:.5f}</td><td>{v['psnr']:.3f}</td><td>
 section='<section><h2>更严格撤源：主要依据</h2><p>为防止三角形预处理跨孔洞边界泄漏几何，撤源矩形再向外扩1.7m（原三角形最长1.6m）；仍评价相同内部核心，算法参数未改。</p><table><tr><th>方法</th><th>RGB MAE↓</th><th>PSNR↑</th><th>高度MAE↓</th></tr>'+sr+'</table><p>几何优势明显；颜色相对各向同性只有小幅改善。开发域MAE仍较差：道路教师0.03602、各向同性0.03083。原生教师适合作几何和低频外观先验，细节补全仍需继续验证。不是不可见a37真实GT的检验。</p><a href="strict_withdrawal.json">完整撤源复核</a></section>'
 html=html.replace('<section><h2>怎样真正让内部道路收到更新',section+'<section><h2>怎样真正让内部道路收到更新')
 (OUT/'index.html').write_text(html,encoding='utf-8')
-(Path(__file__).parent/'interior_report_check.js').write_text(html.split('<script>')[1].split('</script>')[0],encoding='utf-8')
+(OUT/'interior_report_check.js').write_text(html.split('<script>')[1].split('</script>')[0],encoding='utf-8')
 print(OUT/'index.html')
