@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-24 SGT。用户在真实smoke报告后明确授权直接完成30K再检查指标，新增原V1独立对照，随后指定暂时串行、全程监控显存峰值、每30分钟检查一次。当前唯一正式队列为V4.1固定几何R fresh30K → 原V1 B fresh30K → 两组同口径49帧评价 → CPU原生状态比较 → 报告取回与交付。正式控制器已于2026-10-24 09:47 SGT启动R，PID1579/start_ticks879345479，训练child1580/start_ticks879345497；后续身份和实际进度以formal_serial_status.json为准。旧RP保持暂停，不增加第三组、几何补全或正式步数。
+更新：2026-10-24 16:50 SGT。当前两组正式30K保持严格串行。V4.1固定几何R已于16:25正常完成，V1/道路各30000更新，10K/20K/30K三档五件及manifest齐全；CPU只读检查确认三个节点的道路位置/尺度/朝向/单元身份/分类均与smoke相同，DC/opacity有限。唯一控制器已自动接原V1 B fresh30K，检查时B约7.96K，loss有限。B启动前零更新49帧评价接线检查通过，同smoke原生四件的PSNR/SSIM/LPIPS重放差值均为0；这不是额外训练组或B训练结果。后续仍为B完成→两组正式49帧评价→CPU原生状态比较→报告取回与交付。R质量尚未判通过，旧RP保持暂停，不增加第三组或几何补全。控制器PID1579/start_ticks879345479，B训练child12779/start_ticks881736104；实际阶段与身份以formal_serial_status.json为准。
 
 活动campaign=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023；R7监督=_dense_r7/manifest.json。R与B共同49帧raw89–137、480×320、seed0，原V1初始化/损失/采样/学习率/SGCM/NPS/增密裁剪不变，均从共同起点fresh。R的V1/道路各30000更新，B仅原V1 30000更新；工程smoke原生/道路各2000更新另外记账。每10K保留R五件及manifest、B原生四件；B直接运行原V1源码，无道路hook或训练字段。R正常返回且三档完整节点通过后自动接B，不在已完成V1后追加道路训练。配置、授权、组件图和验收合同见[两组30K登记](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v41_20261023/FORMAL30K.md)。
 
