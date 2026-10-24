@@ -41,3 +41,7 @@ No additional formal experiment budget has been assigned in this design. Default
 ## 孔洞内部道路教师
 
 随后完成独立的CPU内部伪真值原型，见[INTERIOR_ROAD_TEACHER.md](INTERIOR_ROAD_TEACHER.md)。tools/road_teacher_cpu.py输出伪RGB/深度/权重与薄高斯补点；tools/road_teacher_bridge.py提供主副本隔离检查、真实标签优先的编辑损失和近似CPU光栅。整块撤源验证与5项检查已完成；最终编辑训练未接入，生成式模型仅完成调研和输入准备。
+
+## 当前优先级：预训练模型直接补中心
+
+用户已明确a37/a6车底中心是主要目标。外部预训练几何／生成先验成为中心补全主线，已有教师保留为边界约束与控制。近一年候选、公开资源、组件图和核心验收见[PRETRAINED_CENTER_COMPLETION.md](PRETRAINED_CENTER_COMPLETION.md)。首个可运行候选FreeInpaint，GPGS作学习式几何对照，WINGS作原生三维生成方向参考；模型尚未运行，未声称中心已解决。

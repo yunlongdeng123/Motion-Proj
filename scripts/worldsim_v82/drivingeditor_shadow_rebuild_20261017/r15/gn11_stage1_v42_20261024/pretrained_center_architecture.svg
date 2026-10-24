@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="530" viewBox="0 0 1180 530" role="img" aria-labelledby="title desc">
+<title id="title">V4.2 预训练先验驱动的中心道路补全</title>
+<desc id="desc">原V1直接输出完整重建。编辑路径使用预训练模型生成a37和a6中心缺口，再通过实测边界对齐为三维路面、生成高斯及监督、处理局部残影并渲染编辑结果。</desc>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#44617a"/></marker></defs>
+<rect width="1180" height="530" fill="#f5f8fb"/>
+<g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#15324b">
+<text x="32" y="42" font-size="25" font-weight="700">中心缺口由预训练先验提出，已有观测约束尺度与边界</text>
+<g fill="#e4edf5" stroke="#8ca6bc" stroke-width="1.5">
+<rect x="32" y="68" width="210" height="62" rx="9"/><rect x="314" y="68" width="260" height="62" rx="9"/>
+</g><text x="67" y="106" font-size="20">原 V1 主副本</text><text x="353" y="106" font-size="20">默认完整重建</text>
+<g stroke="#44617a" stroke-width="2.3" fill="none" marker-end="url(#a)"><path d="M242 99H306"/></g>
+<text x="619" y="105" font-size="17">编辑参数独立，不回写完整通路</text>
+<g fill="#fff" stroke="#8ca6bc" stroke-width="1.5">
+<rect x="32" y="188" width="237" height="100" rx="9"/>
+<rect x="319" y="188" width="245" height="100" rx="9" fill="#d9eee7"/>
+<rect x="614" y="188" width="245" height="100" rx="9"/>
+<rect x="909" y="188" width="239" height="100" rx="9"/>
+<rect x="319" y="343" width="245" height="90" rx="9"/>
+<rect x="614" y="343" width="245" height="90" rx="9"/>
+<rect x="909" y="343" width="239" height="90" rx="9" fill="#d9eee7"/>
+</g>
+<g font-size="19" text-anchor="middle">
+<text x="150" y="224">RGB／LiDAR／相机</text><text x="150" y="254">a37／a6 中心缺口</text>
+<text x="441" y="224" font-weight="700">外部预训练补全模型</text><text x="441" y="254">生成中心几何与外观</text>
+<text x="736" y="224">实测边界与尺度核验</text><text x="736" y="254">保留多个候选及来源</text>
+<text x="1028" y="224">共享世界道路表面</text><text x="1028" y="254">新增高斯／伪监督</text>
+<text x="441" y="379">局部平面／邻域传播</text><text x="441" y="408">对照与边界约束</text>
+<text x="736" y="379">独立编辑副本</text><text x="736" y="408">局部静态残影处理</text>
+<text x="1028" y="379" font-weight="700">真实深度编辑合成</text><text x="1028" y="408">验收核心与保留车辆</text>
+</g>
+<g stroke="#44617a" stroke-width="2.3" fill="none" marker-end="url(#a)">
+<path d="M269 238H311"/><path d="M564 238H606"/><path d="M859 238H901"/>
+<path d="M1028 288V335"/><path d="M859 388H901"/>
+<path d="M564 365H590V279H606" stroke-dasharray="6 5"/>
+</g>
+<text x="32" y="487" font-size="18">本图是修订后的设计：模型尚未运行；生成结果标注为先验，不当作隐藏道路实测真值。</text>
+</g></svg>

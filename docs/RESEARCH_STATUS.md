@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-10-24。当前分支research/worldsim-v8.2-drivingeditor-v42，独立工作树/root/autodl-tmp/motion_proj_v82_gn11_v42。用户要求继续解决a37内部监督并研究几何约束生成式后备。本轮在保留GaussianPro机制CPU负结果后，已实现道路方向高斯教师、内部伪RGB/深度/补点、整块撤源孔洞评价和编辑损失接口；原生可导编辑渲染与局部静态抑制尚未接通，GPU训练更新0。原V1主副本与旧R/B/RP均未改动。
+更新：2026-10-24。当前分支research/worldsim-v8.2-drivingeditor-v42，独立工作树/root/autodl-tmp/motion_proj_v82_gn11_v42。用户澄清：外部预训练几何与生成先验直接用于a37/a6车底中心，改为V4.2主线；邻域外推保留为控制和边界约束。已核验近一年WINGS、FreeInpaint、GPGS等论文及公开资源；FreeInpaint为第一可运行候选，尚未下载权重或推理，a6/模型接口仍待适配。已有CPU教师、负结果和严格撤源检验保留；原生编辑渲染与静态抑制尚未接通，GPU更新0，原V1与旧R/B/RP不变。选型与组件图见[中心补全设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/PRETRAINED_CENTER_COMPLETION.md)。
 
 V4.2目标是“原V1完整重建主副本＋独立编辑副本”。原生完整请求不加载道路/编辑状态；编辑请求才在独立参数、优化器、目录中做对象编辑、道路增点和局部静态污染抑制。原V1本身仍保留其原有静态/动态/环境组件。此前查看器native_v1切换不等于完成该架构。设计、组件图、近邻工作和评价矩阵见[V4.2设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/V42_DESIGN.md)。双通路属于工程保护；提出的“补点与错静态遮挡的成对干预选择”是研究假设，创新性和效果未验证。
 
