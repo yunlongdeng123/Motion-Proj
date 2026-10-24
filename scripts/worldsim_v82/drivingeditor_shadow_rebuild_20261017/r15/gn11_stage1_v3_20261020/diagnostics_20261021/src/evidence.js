@@ -8,7 +8,7 @@
  const tools=document.createElement('div');tools.className='subtools';tools.innerHTML='<label>证据筛选<select id="geometryFilter"><option value="all">全部导出贡献</option><option value="geometry_conflict">仅几何冲突候选</option><option value="protect">合法道路／遮挡保护</option><option value="unknown">仅未知</option></select></label><button id="selectConflicts">选择当前冲突候选（仅诊断）</button><span id="geometrySelection" class="note"></span>';panel.querySelector('.panel-title').after(tools);
  function showTrace(value){
   const e=value.geometry_evidence;const body=$('geometryRows');body.replaceChildren();
-  if(!e){$('geometrySummary').textContent='当前为CPU参考或旧数据，没有测量判别；保持未知。';$('geometryDetail').textContent='';return;}
+  if(!e){$('geometrySummary').textContent=value.arm==='v4_1_R'?'当前为已核验原生CUDA贡献；逐高斯合法/冲突几何标签尚未完成，保持未知。':'当前为CPU参考或旧数据，没有测量判别；保持未知。';$('geometryDetail').textContent='';return;}
   const s=e.support,r=s.road,v=s.vehicle;
   $('geometrySummary').textContent=Object.entries(e.counts).map(([k,n])=>`${names[k]} ${n}`).join(' · ')+'。这是Top权重∪Top颜色导出集合，不是整条射线总量。';
   $('geometryDetail').textContent=`LiDAR z=${fmt(s.lidar_m)}m，匹配偏移${fmt(s.lidar_offset_px)}px；容差±${fmt(s.lidar_uncertainty_m)}m。道路X${r.unit_id} z=${fmt(r.z_m)}m，±${fmt(r.uncertainty_m)}m，局部曲面${r.supported?'有支撑':'不足'}，当前${r.current_visible?'确认无遮挡曝光':'不能确认无遮挡'}，${r.confirmed_sources}个通过来源。${v?`车辆OBB范围${fmt(v.near_m)}—${fmt(v.far_m)}m（框不是实测表面）。`:'无已核对目标车表面。'}来源帧：${r.source_raws.map(x=>'raw'+x).join(', ')||'无'}。`;
@@ -32,7 +32,7 @@
  const evalPanel=document.createElement('div');evalPanel.id='scientificEvaluation';$('cfMetrics').after(evalPanel);
  function showCF(value){
   evalPanel.replaceChildren();const e=value.scientific_evaluation;
-  if(!e){evalPanel.textContent='该旧干预尚未进行固定世界有效区评价，不用全图变化冒充改善。';return;}
+  if(!e){evalPanel.textContent=value.arm==='v4_1_R'?'本次已记录目标车mask外观测损伤，但尚未完成固定世界有效路面验收；不把全图变化当隐藏路面改善。':'该旧干预尚未进行固定世界有效区评价，不用全图变化冒充改善。';return;}
   evalPanel.append(metricTable(e,`raw${value.raw} · 固定同世界验证区域`));
   const damage=document.createElement('p');damage.className='note';const normal=e.normal_control;damage.textContent=`正常区：深度误差增加超过容差 ${normal.depth_harmed_count??'未知'} 单元；α平均下降 ${fmt(normal.alpha_drop)}，下降超过1/255的单元 ${normal.alpha_drop_over_1_255_count??'未知'}。未通过RGB验证的查询投影只报告道路贡献Δ ${fmt(e.unobserved_query.road_contribution_change)}、期望深度变化 ${fmt(e.unobserved_query.depth_change_m)}m、α变化 ${fmt(e.unobserved_query.alpha_change)}；不定义隐藏RGB误差。`;evalPanel.append(damage);
   const note=document.createElement('p');note.className='note';note.textContent=`valid逐单元要求：九来源门限、至少2帧确认、当前四采样像素无遮挡（外扩1px）、1.5px内实测LiDAR且匹配道路z；干预前固定分母。${e.valid.count}个世界单元 / ${e.unique_valid_pixels}个独立屏幕采样位置。正常区还要求干预前RGB L1≤0.05、α≥0.95且深度一致，位于21×21邻域外。未通过有效区的${e.unobserved_query.count}个可见投影查询单元没有隐藏RGB真值。阈值是声明的诊断容差，不是人工科学验收。`;evalPanel.append(note);

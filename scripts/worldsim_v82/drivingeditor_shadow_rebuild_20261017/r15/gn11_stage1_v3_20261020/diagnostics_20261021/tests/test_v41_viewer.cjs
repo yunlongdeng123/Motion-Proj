@@ -18,7 +18,7 @@ async function main(){
  let source=fs.readFileSync(path.join(root,'app.js'),'utf8');assert(source.trimEnd().endsWith('init();'));
  source=source.trimEnd().slice(0,-7)+'\nwindow.check={S,render2D,supportsImage,asset};';
  vm.runInContext(source,ctx,{filename:'app.js'});
- assert.equal(ctx.check.S.arm,'v4_1_R');assert.equal(ctx.check.S.channel,'joint');
+ assert.equal(ctx.check.S.arm,'v4_1_R');assert.equal(ctx.check.S.channel,'native_v1');
  for(const raw of [89,102,137])for(const channel of ['joint','deleted_five','native_v1','native_static_delete','dynamic_raw','road_raw','road_surface_color']){
    ctx.check.S.raw=raw;ctx.check.S.channel=channel;await ctx.check.render2D();
    assert.equal(node('renderCanvas').dataset.raw,raw);assert.equal(node('renderCanvas').dataset.channel,channel);

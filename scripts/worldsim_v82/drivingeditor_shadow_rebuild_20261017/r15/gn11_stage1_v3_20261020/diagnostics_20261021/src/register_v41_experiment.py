@@ -32,8 +32,8 @@ g.v4Experiments.experiments=g.v4Experiments.experiments.filter(v=>v.id!=='v4_1_R
 const scene=g.scene;if(!scene)return;scene.experiments=(scene.experiments||[]).filter(v=>v.id!=='v4_1_R').concat(record.experiments);
 scene.bindings=scene.bindings||{};scene.config_bindings=scene.config_bindings||{};
 for(const e of record.experiments){scene.bindings[e.id]=e.bindings;scene.config_bindings[e.id]=e.bindings.config;}
-g.defaultExperiment='v4_1_R';g.defaultChannel='joint';
-const select=document.getElementById('channel');if(select)for(const [value,label] of [['native_v1','同checkpoint · 原V1完整重建'],['native_static_delete','同checkpoint · 原静态删车']]){
+g.defaultExperiment='v4_1_R';g.defaultChannel='native_v1';
+const select=document.getElementById('channel');if(select)for(const [value,label] of [['native_v1','原V1完整通路 · 本组checkpoint（默认）'],['native_static_delete','同checkpoint · 原静态删车']]){
 if(!Array.from(select.options).some(o=>o.value===value)){const o=document.createElement('option');o.value=value;o.textContent=label;select.append(o);}}
 })();'''.replace('PAYLOAD',json.dumps(record,ensure_ascii=False,separators=(',',':')))
     (data/'v41_experiments.js').write_text(script,encoding='utf-8')
