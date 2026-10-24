@@ -45,3 +45,8 @@ No additional formal experiment budget has been assigned in this design. Default
 ## 当前优先级：预训练模型直接补中心
 
 用户已明确a37/a6车底中心是主要目标。外部预训练几何／生成先验成为中心补全主线，已有教师保留为边界约束与控制。近一年候选、公开资源、组件图和核心验收见[PRETRAINED_CENTER_COMPLETION.md](PRETRAINED_CENTER_COMPLETION.md)。首个可运行候选FreeInpaint，GPGS作学习式几何对照，WINGS作原生三维生成方向参考；模型尚未运行，未声称中心已解决。
+
+
+## 外部权重准备
+
+用户要求先下载、GPU就绪后再实验。FreeInpaint删车路线36文件19.69GB已在本地校验通过，远端主缓存正在从hf-mirror直连下载，完成后自动校验退出。未加载模型或启动实验，现有训练环境保持不变。固定版本、依赖范围、镜像测速、断点续传和凭据位置见[FREEINPAINT_WEIGHTS.md](FREEINPAINT_WEIGHTS.md)。
