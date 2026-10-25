@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V82-GN11-V42-FREEINPAINT-20261026 / 首轮协议 | 固定B、FreeInpaint中心候选、全洞撤源控制、三种子、四组合编辑归因；配置与smoke/恢复/交付合同，不代表实验结果 | [实验协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/EXPERIMENT_PLAN_20261026.md)、[路线组件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/PRIORITY_ROADMAP_20261026.md) |
 | WS-V82-GN11-V42-CPU-PROPAGATION-20261024 / 机制原型 | GaussianPro式平面提议、统一核验、来源深度修正；a37未优于图像平面对照、a6/中心0，GPU/更新0 | [CPU结果与边界](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/CPU_PROPAGATION.md) |
 | WS-V82-GN11-V42-DESIGN-20261024 / CPU门限审计与设计 | 49帧九门精确重放、实际候选与保守性、原V1主副本＋独立编辑副本、补点与污染成对决策假设；GPU/优化更新0，非已验证方法 | [组件与设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/V42_DESIGN.md)、[复现入口](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/README.md) |
 | WS-V82-R15-GN11-V4-20261022 / R→RP串行30K | 用户授权R后RP各fresh30K、stage2=0，10K/20K/30K五件checkpoint；V1原路径与独立道路，23项CPU回归和V1指标对照；实际进度统一见当前状态 | [组件与代码](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v4_20261022/README.md) |

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+<title id="title">V42：统一编辑架构，两阶段先验验证</title>
+<desc id="desc">固定 V41-B 主副本直接完整重建。RGB、LiDAR 和三维缺口先进入 FreeInpaint，后续候选是经过道路编解码验证和后训练的 TRELLIS。生成结果经世界对齐、独立编辑副本和局部污染处理后输出编辑图；按边界到核心验收。</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#547084"/></marker></defs>
+<rect width="1200" height="630" rx="16" fill="#f6f9fc"/>
+<g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" fill="#18364b">
+<text x="35" y="45" font-size="26" font-weight="700">先验证中心补全闭环，再验证道路专用后训练</text>
+<g stroke="#9db2c3" stroke-width="1.5" fill="#e7eef5">
+<rect x="35" y="76" width="270" height="74" rx="10"/>
+<rect x="875" y="76" width="285" height="74" rx="10"/>
+<rect x="35" y="245" width="240" height="126" rx="10"/>
+<rect x="355" y="200" width="340" height="90" rx="10" fill="#def4e9" stroke="#6ba58a"/>
+<rect x="355" y="335" width="340" height="118" rx="10" fill="#f6edda" stroke="#b7a069"/>
+<rect x="775" y="245" width="385" height="92" rx="10"/>
+<rect x="775" y="392" width="385" height="92" rx="10"/>
+<rect x="355" y="532" width="805" height="65" rx="10" fill="#fff"/>
+</g>
+<g text-anchor="middle" font-size="20">
+<text x="170" y="107">固定 V41-B 主副本</text><text x="170" y="134" font-size="16">原生权重与渲染通路</text>
+<text x="1017" y="107">默认完整重建</text><text x="1017" y="134" font-size="16">身份及输出隔离检查</text>
+<text x="155" y="278">道路 RGB / LiDAR</text><text x="155" y="310">相机、世界缺口</text><text x="155" y="342" font-size="16">已知 / 自由空间 / 未知</text>
+<text x="525" y="234" font-weight="700">先：FreeInpaint</text><text x="525" y="264" font-size="16">图像与掩码 → 中心三维候选</text>
+<text x="525" y="369" font-weight="700">后：TRELLIS 道路适配</text><text x="525" y="399" font-size="16">已知道路编解码 → 中心预测</text><text x="525" y="427" font-size="16">条件流后训练：下一阶段候选</text>
+<text x="967" y="280">统一候选适配与世界对齐</text><text x="967" y="311" font-size="16">米制几何 / 高斯 / 来源 / 未知域</text>
+<text x="967" y="426">独立编辑副本</text><text x="967" y="457" font-size="16">局部残影处理 + 中心道路 → 编辑输出</text>
+<text x="757" y="558">统一验收：边界 / 过渡 / 内部核心</text><text x="757" y="582" font-size="16">几何、留出视角、实际贡献；真实未知不伪造真值</text>
+</g>
+<g fill="none" stroke="#547084" stroke-width="2" marker-end="url(#arrow)">
+<path d="M305 112H875"/>
+<path d="M275 280H310V245H355"/>
+<path d="M275 337H310V393H355"/>
+<path d="M695 245H735V274H775"/>
+<path d="M695 394H735V309H775" stroke-dasharray="6 5"/>
+<path d="M967 337V392"/>
+<path d="M967 484V532"/>
+<path d="M170 150V178H1178V438H1160"/>
+</g>
+<text x="555" y="103" text-anchor="middle" font-size="16">完整重建直接输出</text>
+<text x="1080" y="172" text-anchor="middle" font-size="14">独立载入</text>
+<text x="35" y="566" font-size="17">设计方案 · 2026-10-26</text><text x="35" y="592" font-size="14">模型效果与后训练尚待实验验证</text>
+</g></svg>

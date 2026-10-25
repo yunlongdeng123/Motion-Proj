@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "task_id": "WS-V82-GN11-V42-FREEINPAINT-20261026",
+  "launch_policy": "wait_for_explicit_user_gpu_ready_message_then_engineering_preflight_and_real_smoke",
+  "autostart": false,
+  "execution": "serial",
+  "method": "frozen_freeinpaint_object_removal_then_metric_alignment_and_edit_evaluation",
+  "formal_optimizer_updates": 0,
+  "baseline": {
+    "name": "V41_B_native_30K",
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+    "files": ["chkpnt30000.pth", "dynamic_chkpnt30000.pth", "env_light_chkpnt30000.pth", "training_state30000.pth"]
+  },
+  "weights_root": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024",
+  "source_commit": "9ac03f14b652c8d03d65f770bdf61da253da0fef",
+  "isolated_python": "/root/autodl-tmp/envs/v42-freeinpaint/bin/python",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v42_freeinpaint_20261026",
+  "cases": ["scene0008_a37", "scene0008_a6", "observed_road_withdrawal_control"],
+  "seeds": [0, 1, 2],
+  "max_final_candidates": 9,
+  "evaluation_raw_frames": {"start": 89, "end": 137, "count": 49},
+  "input_manifest": "inputs/frozen_cases.json",
+  "execution_contract": "inputs/frozen_execution.json",
+  "engineering_receipt": "preparation/adapter_checks.json",
+  "render_combinations": ["static_only", "static_plus_candidate", "suppression_only", "suppression_plus_candidate"],
+  "smoke_minutes_target": 10,
+  "smoke_optimizer_restore": "not_applicable_for_frozen_inference; mandatory_if_any_trainable_stage_is_added",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"]
+}

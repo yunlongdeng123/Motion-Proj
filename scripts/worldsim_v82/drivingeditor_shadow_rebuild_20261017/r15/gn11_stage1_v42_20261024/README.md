@@ -1,6 +1,6 @@
 # V4.2 design and read-only gate audit
 
-[中文设计与现有方法比较](V42_DESIGN.md) · [组件图](architecture.svg) · [固定V4.1-B基线与波动尺度](../../../../../docs/V41_B_BASELINE.md)
+[中文设计与现有方法比较](V42_DESIGN.md) · [组件图](architecture.svg) · [固定V4.1-B基线与波动尺度](../../../../../docs/V41_B_BASELINE.md) · [路线优先级](PRIORITY_ROADMAP_20261026.md) · [首轮实验与smoke协议](EXPERIMENT_PLAN_20261026.md)
 
 This package contains CPU diagnostics and a design, **not an implemented V4.2 training engine**. It does not alter V4.1 inputs, output eligibility, checkpoints, or optimizer state. GPU runs are not started by any tool here.
 
@@ -32,7 +32,7 @@ Implementation milestones, not completed claims:
 - Actual-contribution-driven paired road insertion and local static suppression.
 - GPU identity/gradient checks and real ~10-minute save/evaluate/restore/next-stage smoke before any newly authorized long run.
 
-No additional formal experiment budget has been assigned in this design. Default-output isolation is an engineering contract; scientific novelty and editing quality require the comparisons in the design document.
+The first frozen-inference experiment and its launch prerequisites are defined in [the execution protocol](EXPERIMENT_PLAN_20261026.md). Default-output isolation is an engineering contract; scientific novelty and editing quality require the comparisons in the design document.
 
 ## GaussianPro机制CPU实证
 
@@ -42,11 +42,13 @@ No additional formal experiment budget has been assigned in this design. Default
 
 随后完成独立的CPU内部伪真值原型，见[INTERIOR_ROAD_TEACHER.md](INTERIOR_ROAD_TEACHER.md)。tools/road_teacher_cpu.py输出伪RGB/深度/权重与薄高斯补点；tools/road_teacher_bridge.py提供主副本隔离检查、真实标签优先的编辑损失和近似CPU光栅。整块撤源验证与5项检查已完成；最终编辑训练未接入，生成式模型仅完成调研和输入准备。
 
-## 当前优先级：预训练模型直接补中心
+## 外部先验与实验入口
 
-用户已明确a37/a6车底中心是主要目标。外部预训练几何／生成先验成为中心补全主线，已有教师保留为边界约束与控制。近一年候选、公开资源、组件图和核心验收见[PRETRAINED_CENTER_COMPLETION.md](PRETRAINED_CENTER_COMPLETION.md)。首个可运行候选FreeInpaint，GPGS作学习式几何对照，WINGS作原生三维生成方向参考；模型尚未运行，未声称中心已解决。
+- [预训练模型研究依据](PRETRAINED_CENTER_COMPLETION.md)
+- [FreeInpaint先行、TRELLIS道路后训练的路线与组件图](PRIORITY_ROADMAP_20261026.md)
+- [首轮实验、真实smoke与正式评价协议](EXPERIMENT_PLAN_20261026.md)
+- [机器可读实验配置](configs/experiment_plan_20261026.json)
+- [只读CPU准备检查](tools/check_v42_preflight.py)
+- [权重固定版本、下载与离线接线](FREEINPAINT_WEIGHTS.md)
 
-
-## 外部权重准备
-
-用户要求先下载、GPU就绪后再实验。FreeInpaint删车路线36文件19.69GB已在本地校验通过，远端主缓存正在从hf-mirror直连下载，完成后自动校验退出。未加载模型或启动实验，现有训练环境保持不变。固定版本、依赖范围、镜像测速、断点续传和凭据位置见[FREEINPAINT_WEIGHTS.md](FREEINPAINT_WEIGHTS.md)。
+实际准备进度、缺项与下一步统一记录于 [RESEARCH_STATUS](../../../../../docs/RESEARCH_STATUS.md)。
