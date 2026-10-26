@@ -16,6 +16,17 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def edit_clocks(row, family, ego_speed_clock='global_retime_control'):
+    assert ego_speed_clock in ['fixed_world', 'global_retime_control']
+    world = float(row['model_time'])
+    actor = float(row['query_model_time']) if family == 'vehicle_speed' else world
+    camera_path = float(row['query_model_time']) if family == 'ego_speed' else world
+    if family == 'ego_speed' and ego_speed_clock == 'global_retime_control':
+        world = actor = camera_path
+    return dict(world_model_time=world, dynamic_query_model_time=actor,
+                camera_path_query_model_time=camera_path)
+
+
 def model_camera(T, world):
     T, world = np.asarray(T), np.asarray(world)
     scale = np.linalg.norm(T[:3, 0])

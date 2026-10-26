@@ -30,7 +30,7 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
         scale_section+=f'<section><h2>八类执行适配器：真实相机曲线与不同场景资产</h2><img src="admission/benchmark_execution_architecture.svg"><p>输入相机到原生相机的49帧最大差{d["camera_original49_max_abs"]:.3g}；跨场景资产按米制尺寸转换均值、协方差与SH方向，位置/协方差往返检查通过。首例31帧按源车真实尺寸复查框碰撞{d["actual_source_dimensions_collision_frames"]}帧。底部只按目标框粗对齐，尚未证明道路支撑、光照适配或新视角正确。</p><p>这些是CPU工程核对，不能代替GPU入口。<a href="admission/benchmark_adapter_cpu_audit_v1.json">逐帧变换审计</a></p>'
         for path in sorted((ADMISSION/'benchmark_execution').glob('*/status.json')):
             item=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
-            scale_section+=f'<p>{path.parent.name}：{escape(item["phase"])}；实际完成原生任务族{len(item["completed_native_families"])}，固定后端{len(item["completed_fixed_backend_families"])}，正式准入仍0。<a href="{relative}/status.json">真实执行状态</a></p>'
+            scale_section+=f'<p>{path.parent.name}：{escape(item["phase"])}；原生诊断输出族{len(item["completed_native_families"])}（旧父的ego_speed是全局播放对照，须另查固定世界时钟控制），固定后端{len(item["completed_fixed_backend_families"])}，正式准入仍0。<a href="{relative}/status.json">真实执行状态</a></p>'
             delivery=path.parent/'cpu_delivery'
             if (delivery/'summary.json').exists():
                 done=json.loads((delivery/'summary.json').read_text());scale_section+=f'<img src="{relative}/cpu_delivery/comparison.jpg">'
@@ -38,6 +38,21 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
                     name=family['family'];scale_section+=f'<details><summary>{escape(name)} · 原生31帧</summary><video controls preload="metadata" src="{relative}/cpu_delivery/{name}/native.mp4"></video></details>'
                     if family['fixed_backend_executed']:scale_section+=f'<details><summary>{escape(name)} · 固定后端</summary><video controls preload="metadata" src="{relative}/cpu_delivery/{name}/generated.mp4"></video></details>'
         scale_section+='</section>'
+    if (ADMISSION/'benchmark_asset_diversity_audit_v1.json').exists():
+        asset=json.loads((ADMISSION/'benchmark_asset_diversity_audit_v1.json').read_text())
+        scale_section+=f'<p>插车输入的资产多样性仍不足：{asset["input_eligible_insertion_requests"]}个请求只有{asset["distinct_source_contexts"]}个源场景。不能以换位置的次数代替任意车辆外观泛化。需在合格新资产形成后冻结新版资产库；旧请求保留，版本不重复计数。<a href="admission/benchmark_asset_diversity_audit_v1.json">资产来源分布</a> · <a href="admission/TIME_AND_SPACE_CONTRACT.md">时钟、空间与准入边界</a></p>'
+    if (ADMISSION/'ego_speed_clock_CPU_audit.json').exists():
+        audit=json.loads((ADMISSION/'ego_speed_clock_CPU_audit.json').read_text())
+        scale_section+=f'<section><h2>控制语义：自车变速与整体播放变速分开</h2><p>此前八类入口同时重定时相机与世界，这只能作为整体播放对照。真正的自车单独变速保留输出世界时刻与其他车辆时刻，只改变相机路径查询。原对照完整保留，两种输出不增加案例数。CPU核对{audit["rows_checked"]}条输入时钟；raw{audit["nonanchor_raw"]}的其他车辆实测轨迹在两种时钟下相差{audit["nonanchor_other_actor_position_difference_m"]:.2f}m，说明混用时钟会改变研究问题。这是输入轨迹差，不是渲染质量分数。</p><a href="admission/ego_speed_clock_CPU_audit.json">CPU时钟审计</a>'
+        for path in sorted((ADMISSION/'ego_speed_clock_control').glob('*/status.json')):
+            d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
+            scale_section+=f'<p>真实GPU对照状态：{escape(d["phase"])}；<a href="{relative}/status.json">运行收据</a>。</p>'
+            if (path.parent/'summary.json').exists():scale_section+=f'<img src="{relative}/comparison.jpg"><p><a href="{relative}/summary.json">31帧时钟分离与实际浮点差异</a>，差异不等于质量提升。</p>'
+        scale_section+='</section>'
+    if (ADMISSION/'benchmark_request_space_audit_v1.json').exists():
+        audit=json.loads((ADMISSION/'benchmark_request_space_audit_v1.json').read_text())
+        rows=''.join(f'<tr><td>{escape(name)}</td><td>{d["cases"]}</td><td>{d["cases_with_conflict"]}</td><td>{d["conflict_frames"]}/{d["audited_frames"]}</td></tr>' for name,d in audit['by_family'].items())
+        scale_section+=f'<section><h2>33段输入的请求空间复核</h2><table><tr><th>任务族</th><th>输入合格请求</th><th>有标注框冲突请求</th><th>冲突帧/核对帧</th></tr>{rows}</table><p>车辆使用三维标注框与真实源资产尺寸；自车只检查相机中心是否进入车辆框，不是自车车身碰撞或可行驶空间认证。删车不需新位置碰撞检查。未读取编辑输出、未改变输入筛查资格，也未用框过滤训练点。冲突单列压力层，不能算作②失败；无框冲突不等于道路几何支撑。</p><a href="admission/benchmark_request_space_audit_v1.json">逐帧审计与完整分母</a></section>'
 if (ADMISSION/'registry.json').exists():
     registry=json.loads((ADMISSION/'registry.json').read_text())
     shutil.copy2(Path(__file__).parent/'native_training_architecture.svg',ADMISSION/'native_training_architecture.svg')

@@ -6,7 +6,7 @@ REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
 CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
 CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
 for p in (ROOT/'code').glob('*.py'):(CODE/p.name).write_text(p.read_text(encoding='utf-8'),encoding='utf-8')
-for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','benchmark_execution_architecture.svg']:
+for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','benchmark_execution_architecture.svg','TIME_AND_SPACE_CONTRACT.md']:
     (DOC/name).write_text((ROOT/'code'/name).read_text(encoding='utf-8'),encoding='utf-8')
 quota=json.loads((ROOT/'quota_state.json').read_text())
 native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
@@ -53,6 +53,8 @@ NATIVE_STATUS
 4. 继续合格新开发目标关联、原生几何守卫、约10分钟真实smoke和逐场景30K；输入有问题与真实遮挡困难分层，不能按编辑效果删样。
 
 历史scene0017/0029已有整动态分支操作及视频，不冒充精确多实例编辑。道路原始输入撤源v2是两个路段组件测试，参考为稀疏可见LiDAR域，不是全洞GT、完整B撤源重训或三维补全成功。旧保背景repair10K可只读评价，旧geometry正式10K未启动、旧三父调度不恢复。保留用户选定保背景状态，不追求道路贡献最大；199帧参考进入初始化，不能当独立GT或记忆收益。
+
+时钟与空间合同已细化：[单实体编辑与整体播放对照](autoresearch/persistent_world_20261027/TIME_AND_SPACE_CONTRACT.md)。旧八类自车变速入口相机/全世界一起重定时，仅保留为整体播放控制，不能单独证明自车控制。新增固定世界时钟对照正在等GPU，未来新controller默认单实体时钟；不新增case、不改变原11变体和训练。CPU8184条时钟核对，首场景raw109其他车辆实测轨迹两时钟差2.01m，不是渲染分数。33段三维框审计发现插车7/26、变道3/16、转向1/16存在框冲突，保留压力层，不归②；自车只查相机中心，非车身自由空间证明。输入资格、mask和训练点未改。
 
 资源停止线：工具周剩余QUOTA%，至少每30分钟复查；严格低于20%即禁启、最近可恢复边界保存、取回必要结果、提交推送验证并按授权关闭AutoDL，然后暂停同一心跳。此前持续研究，不因阶段结束/负结果/队列暂空关机。每秒NVML监控与历史峰不重置。磁盘紧张只按本场景30K完成后的精确中间四件保留策略处理，不清其他数据资产。保留用户桥接脚本修改，数据/模型/日志不入Git。
 

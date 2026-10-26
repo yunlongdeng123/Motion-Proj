@@ -49,13 +49,16 @@ def main():
                                     '-threads', '2', '-an', str(destination)], check=True)
             tile = Image.new('RGB', (480, 350), '#152b3d')
             tile.paste(Image.open(frames[contact_index]).convert('RGB'), (0, 30))
-            ImageDraw.Draw(tile).text((8, 8), family+' / raw'+frames[contact_index].stem, fill='white')
+            title = family+' / global playback control' if summary.get('counts_as_ego_only_speed') is False else family
+            ImageDraw.Draw(tile).text((8, 8), title+' / raw'+frames[contact_index].stem, fill='white')
             panels.append(tile)
             items.append(dict(family=family, frames=31, native_source=str(source),
                               fixed_backend_executed=(target/'backend_summary.json').exists(),
                               formal_admitted=False, quality_accepted=False, human_verdict=None,
                               unknown_camera_domain=family.startswith('ego_'),
                               source_distinct_scene=family == 'vehicle_insertion',
+                              counts_as_ego_only_speed=summary.get('counts_as_ego_only_speed'),
+                              ego_speed_clock_policy=summary.get('ego_speed_clock_policy'),
                               collision_frames=sum(bool(x['asset_alignment']['annotated_collision_tracks']) for x in summary['rows']) if family == 'vehicle_insertion' else None))
     assert len({x['family'] for x in items}) == len(items)
     if panels:
@@ -67,6 +70,7 @@ def main():
                   executed_fixed_backend_families=sum(x['fixed_backend_executed'] for x in items),
                   request_count_not_independent_scene_count=True, formal_admitted=0,
                   camera_masks_pending=True, counterfactual_RGB_GT=False,
+                  counts_include_global_playback_control=any(x['counts_as_ego_only_speed'] is False for x in items),
                   quality_accepted=False, human_verdict=None)
     (output/'summary.json').write_text(json.dumps(result, indent=2))
     print(json.dumps(result))

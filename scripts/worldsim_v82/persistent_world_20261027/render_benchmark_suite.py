@@ -11,7 +11,7 @@ from PIL import Image
 from scipy.ndimage import binary_dilation
 from scipy.spatial.transform import Rotation
 from resource_control import require_start
-from benchmark_geometry import ROOT, read, model_camera, sensor_camera, ActorTrack, asset_transfer
+from benchmark_geometry import ROOT, read, edit_clocks, model_camera, sensor_camera, ActorTrack, asset_transfer
 from render_motion_suite import NativeMotion, Camera, prepare_rasterization, actual_native_render, helpers, torch, cpu, save, quat_product, Dynamic_GaussianModel
 from sh_rotation_control import rotate
 
@@ -23,7 +23,7 @@ class BenchmarkNative(NativeMotion):
         r = self.records[row['camera_index']]
         c2w = model_camera(self.T, row['camera_c2w_world'])
         w = np.linalg.inv(c2w)
-        timestamp = row['dynamic_query_model_time'] if query or case.get('benchmark_family') == 'ego_speed' else row['camera_model_time']
+        timestamp = row['dynamic_query_model_time'] if query else row['world_model_time']
         return Camera(row['camera_index'], w[:3, :3].T.copy(), w[:3, 3].copy(),
                       cx=r['cx']/4, cy=r['cy']/4, fx=r['fx']/4, fy=r['fy']/4,
                       image=torch.zeros(3, 320, 480), image_name=r['img_name'],
@@ -102,10 +102,10 @@ def insertion(native, asset, destination_track, row):
     return out, audit
 
 
-def adapt_row(row):
+def adapt_row(row, family='no_edit', ego_speed_clock='global_retime_control'):
     result = copy.deepcopy(row)
     result['camera_model_time'] = row['model_time']
-    result['dynamic_query_model_time'] = row['query_model_time']
+    result.update(edit_clocks(row, family, ego_speed_clock))
     return result
 
 
@@ -115,6 +115,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--families', nargs='+', required=True)
     parser.add_argument('--single-frame', action='store_true')
+    parser.add_argument('--ego-speed-clock', choices=['global_retime_control', 'fixed_world'], default='global_retime_control')
     args = parser.parse_args()
     require_start()
     args.output.mkdir(parents=True, exist_ok=False)
@@ -126,7 +127,7 @@ def main():
     specs = [read(ROOT/'benchmark_cases_v1/scenes'/args.context/'requests'/(family+'.json')) for family in args.families]
     selection = read(native.source/'native_preparation/selection_reviewed.json')
     assert all(spec['target_track'] == selection['track'] for spec in specs), 'Do not silently reuse another target'
-    indices = [15] if args.single_frame else range(31)
+    indices = [23] if args.single_frame else range(31)
     identity_max = 0.
     for i in indices:
         row = adapt_row(specs[0]['frames'][i])
@@ -158,7 +159,7 @@ def main():
         rows = []
         for i in indices:
             require_start()
-            row = adapt_row(spec['frames'][i])
+            row = adapt_row(spec['frames'][i], family, args.ego_speed_clock)
             if family == 'vehicle_insertion':
                 out, asset_audit = insertion(native, foreign, target_track, row)
             else:
@@ -180,6 +181,8 @@ def main():
             Image.fromarray(mask.astype('uint8')*255).save(folder/'mask'/(name+'.png'))
             np.savez_compressed(folder/'float'/(name+'.npz'), rgb=cpu(out['rgb']), alpha=cpu(out['alpha']), depth_sum=cpu(out['depth_sum']), dynamic_weight=cpu(out['extra']))
             rows.append(dict(raw=row['raw'], generation_pixels=int(mask.sum()),
+                             world_model_time=row['world_model_time'], dynamic_query_model_time=row['dynamic_query_model_time'],
+                             camera_path_query_model_time=row['camera_path_query_model_time'],
                              mask_status='unknown_domain_pending_native_only' if camera_edit else ('insertion_no_old_hole_new_asset_protected' if foreign is not None and family == 'vehicle_insertion' else 'original_support_new_object_protected'),
                              input_collision_tracks=row['request_box_collision_tracks'],
                              input_collision_status='ego_or_retimed_collision_not_checked' if camera_edit or family == 'vehicle_speed' else ('not_required_for_deletion' if family == 'vehicle_removal' else 'annotated_vehicle_boxes_only_not_drivable_space'),
@@ -191,6 +194,8 @@ def main():
                       original_SH_world_basis=True if family != 'vehicle_insertion' else None,
                       imported_asset_SH_rigidly_rotated=family == 'vehicle_insertion',
                       imported_asset_relighting=False, quality_accepted=False, human_verdict=None)
+        result['ego_speed_clock_policy'] = args.ego_speed_clock if family == 'ego_speed' else None
+        result['counts_as_ego_only_speed'] = args.ego_speed_clock == 'fixed_world' if family == 'ego_speed' else None
         (folder/'summary.json').write_text(json.dumps(result, indent=2))
         records.append({k:v for k,v in result.items() if k != 'rows'})
         if foreign is not None:

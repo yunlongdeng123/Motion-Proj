@@ -33,6 +33,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--context', required=True)
     parser.add_argument('--resume-failed', action='store_true')
+    parser.add_argument('--ego-speed-clock', choices=['fixed_world', 'global_retime_control'])
     args = parser.parse_args()
     require_start()
     dest = ROOT/'benchmark_execution_v1'/args.context
@@ -45,6 +46,9 @@ def main():
         assert not child or not same_process(child['pid'], child['start_ticks'])
     else:
         dest.mkdir(parents=True, exist_ok=False)
+    clock_policy = previous.get('ego_speed_clock_policy', 'global_retime_control') if previous else (args.ego_speed_clock or 'fixed_world')
+    if previous and args.ego_speed_clock:
+        assert args.ego_speed_clock == clock_policy, 'Resume must preserve completed-stage clock policy; use a separate control for policy changes'
     attempt = previous['attempt']+1 if previous else 1
     directory = dest/f'attempt_{attempt}'
     directory.mkdir(exist_ok=False)
@@ -55,7 +59,7 @@ def main():
                  stages=previous['stages'] if previous else {},
                  completed_native_families=[], completed_fixed_backend_families=[],
                  formal_admitted=0, quality_accepted=False, human_verdict=None,
-                 new_training_updates=0)
+                 new_training_updates=0, ego_speed_clock_policy=clock_policy)
 
     def update(**kw):
         state.update(kw)
@@ -96,7 +100,7 @@ def main():
     update()
     try:
         wait30k(args.context)
-        base = [PY, str(ROOT/'code/render_benchmark_suite.py'), '--context', args.context]
+        base = [PY, str(ROOT/'code/render_benchmark_suite.py'), '--context', args.context, '--ego-speed-clock', clock_policy]
         entry = directory/'camera_object_entry'
         proof = stage('camera_object_entry', base+['--output', str(entry), '--families']+FAMILIES+['--single-frame'], entry/'summary.json')
         assert read(proof)['adapter_actual_native_max_difference'] <= 2e-6

@@ -8,15 +8,27 @@ for name in ['registry.json','operation_window_proposals.json','status.json']:
     shutil.copy2(ROOT/'evaluation_admission_v2'/name,DEST/name)
 for name in ['ADMISSION_POLICY.json','admission_architecture.svg','EVALUATION_PROTOCOL.md','motion_diagnostics_architecture.svg']:
     shutil.copy2(ROOT/'code'/name,DEST/name)
-for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
+for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','TIME_AND_SPACE_CONTRACT.md']:
     shutil.copy2(ROOT/'code'/name,DEST/name)
 shutil.copy2(ROOT/'code/benchmark_execution_architecture.svg',DEST/'benchmark_execution_architecture.svg')
 for path in (ROOT/'benchmark_execution_v1').glob('*/status.json'):
     target=DEST/'benchmark_execution'/path.parent.name;target.mkdir(parents=True,exist_ok=True)
     shutil.copy2(path,target/'status.json')
+    state=json.loads(path.read_text())
+    for name,stage in state.get('stages',{}).items():
+        summary=Path(stage['summary'])
+        if summary.exists():shutil.copy2(summary,target/('stage_'+name+'_summary.json'))
     if (path.parent/'cpu_delivery/summary.json').exists():shutil.copytree(path.parent/'cpu_delivery',target/'cpu_delivery',dirs_exist_ok=True)
-for name in ['benchmark_adapter_cpu_audit_v1.json','benchmark_execution_dispatch.json']:
+for name in ['benchmark_adapter_cpu_audit_v1.json','benchmark_execution_dispatch.json','ego_speed_clock_CPU_audit.json','ego_speed_clock_dispatch.json','benchmark_request_space_audit_v1.json','benchmark_asset_diversity_audit_v1.json']:
     if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
+for folder in (ROOT/'ego_speed_clock_control_v1').glob('*'):
+    if not folder.is_dir():continue
+    target=DEST/'ego_speed_clock_control'/folder.name;target.mkdir(parents=True,exist_ok=True)
+    for name in ['status.json','summary.json','comparison.jpg']:
+        if (folder/name).exists():shutil.copy2(folder/name,target/name)
+    if (folder/'status.json').exists():
+        state=json.loads((folder/'status.json').read_text());native=Path(state.get('native_output',str(folder/'fixed_world')))
+        if (native/'summary.json').exists():shutil.copy2(native/'summary.json',target/'native_batch_summary.json')
 ledger=ROOT/'benchmark_cases_v1/scale_ledger.json'
 if ledger.exists():shutil.copy2(ledger,DEST/'benchmark_scale_ledger.json')
 for source in (ROOT/'benchmark_cases_v1/scenes').glob('*/summary.json'):
