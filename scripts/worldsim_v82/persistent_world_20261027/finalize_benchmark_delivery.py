@@ -17,9 +17,6 @@ def main():
         actual = read(dest/'status.json')
         state['parent_phase'] = actual['phase']
         receipt.write_text(json.dumps(state, indent=2))
-        if (dest/'cpu_delivery/summary.json').exists():
-            state['phase'] = 'CPU_delivery_verified_already_present'
-            break
         if actual['phase'] == 'diagnostic_execution_complete_formal_admission_pending':
             subprocess.run(['/root/autodl-tmp/envs/drivingeditor/bin/python', str(ROOT/'code/analyze_benchmark_suite.py'), '--execution', str(dest)], check=True)
             state['phase'] = 'CPU_delivery_completed'

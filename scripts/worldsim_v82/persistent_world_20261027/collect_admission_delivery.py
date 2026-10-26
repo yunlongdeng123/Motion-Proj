@@ -38,6 +38,7 @@ for folder in (ROOT/'ego_speed_clock_control_v1').glob('*'):
     if (folder/'status.json').exists():
         state=json.loads((folder/'status.json').read_text());native=Path(state.get('native_output',str(folder/'fixed_world')))
         if (native/'summary.json').exists():shutil.copy2(native/'summary.json',target/'native_batch_summary.json')
+        if (native/'ego_speed/native_rgb_h264.mp4').exists():shutil.copy2(native/'ego_speed/native_rgb_h264.mp4',target/'fixed_world_native.mp4')
 ledger=ROOT/'benchmark_cases_v1/scale_ledger.json'
 if ledger.exists():shutil.copy2(ledger,DEST/'benchmark_scale_ledger.json')
 for source in (ROOT/'benchmark_cases_v1/scenes').glob('*/summary.json'):
@@ -85,6 +86,11 @@ for p in (ROOT/'motion_suite_execution_v1').glob('*/status.json'):
     if (continuous/'summary.json').exists():
         q=target/'continuous';q.mkdir(exist_ok=True);shutil.copy2(continuous/'summary.json',q/'summary.json')
         audit=continuous/'fixed_backend_audit'
+        replay=continuous/'fixed_backend_same_input_replay'
+        if replay.exists():
+            delivery=q/'same_input_replay';delivery.mkdir(exist_ok=True)
+            for name in ['status.json','summary.json']:
+                if (replay/name).exists():shutil.copy2(replay/name,delivery/name)
         if (audit/'summary.json').exists():
             delivery=q/'fixed_backend';delivery.mkdir(exist_ok=True)
             for name in ['status.json','summary.json','cpu_delivery_summary.json','comparison.jpg']:
@@ -102,7 +108,8 @@ for p in (ROOT/'motion_suite_execution_v1').glob('*/status.json'):
         if not case.is_dir():continue
         frames=sorted((case/'native_rgb').glob('*.png'))
         if not frames:continue
-        middle=frames[len(frames)//2];q=target/case.name;q.mkdir(exist_ok=True)
+        middle=frames[3*len(frames)//4];q=target/case.name;q.mkdir(exist_ok=True)
+        (q/'preview_frame.json').write_text(json.dumps(dict(raw=int(middle.stem),selection='same floor(3N/4) index, avoiding speed identity anchor',source=str(middle)),indent=2))
         shutil.copy2(middle,q/'native.png')
         for source,name in [(case/'mask'/middle.name,'mask.png'),(case/'propainter/model_png'/middle.name,'generated.png'),(case/'propainter/summary.json','backend_summary.json')]:
             if source.exists():shutil.copy2(source,q/name)
@@ -117,6 +124,8 @@ for name in ['scene0017','scene0029']:
 for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','monitor_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
+for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json']:
+    if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
 archive=ROOT/'admission_delivery_v2.tar.gz'
 with tarfile.open(archive,'w:gz') as tar:tar.add(DEST,arcname='admission',recursive=True)
 print(json.dumps({'archive':str(archive),'bytes':archive.stat().st_size}))

@@ -30,7 +30,8 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
         scale_section+=f'<section><h2>八类执行适配器：真实相机曲线与不同场景资产</h2><img src="admission/benchmark_execution_architecture.svg"><p>输入相机到原生相机的49帧最大差{d["camera_original49_max_abs"]:.3g}；跨场景资产按米制尺寸转换均值、协方差与SH方向，位置/协方差往返检查通过。首例31帧按源车真实尺寸复查框碰撞{d["actual_source_dimensions_collision_frames"]}帧。底部只按目标框粗对齐，尚未证明道路支撑、光照适配或新视角正确。</p><p>这些是CPU工程核对，不能代替GPU入口。<a href="admission/benchmark_adapter_cpu_audit_v1.json">逐帧变换审计</a></p>'
         for path in sorted((ADMISSION/'benchmark_execution').glob('*/status.json')):
             item=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
-            scale_section+=f'<p>{path.parent.name}：{escape(item["phase"])}；原生诊断输出族{len(item["completed_native_families"])}（旧父的ego_speed是全局播放对照，须另查固定世界时钟控制），固定后端{len(item["completed_fixed_backend_families"])}，正式准入仍0。<a href="{relative}/status.json">真实执行状态</a></p>'
+            clock_label='ego_speed固定世界时钟' if item.get('ego_speed_clock_policy')=='fixed_world' else '旧父ego_speed是全局播放对照，另查固定世界时钟控制'
+            scale_section+=f'<p>{path.parent.name}：{escape(item["phase"])}；原生诊断输出族{len(item["completed_native_families"])}（{clock_label}），固定后端{len(item["completed_fixed_backend_families"])}，正式准入仍0。<a href="{relative}/status.json">真实执行状态</a></p>'
             delivery=path.parent/'cpu_delivery'
             if (delivery/'summary.json').exists():
                 done=json.loads((delivery/'summary.json').read_text());scale_section+=f'<img src="{relative}/cpu_delivery/comparison.jpg">'
@@ -48,6 +49,7 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
             d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
             scale_section+=f'<p>真实GPU对照状态：{escape(d["phase"])}；<a href="{relative}/status.json">运行收据</a>。</p>'
             if (path.parent/'summary.json').exists():scale_section+=f'<img src="{relative}/comparison.jpg"><p><a href="{relative}/summary.json">31帧时钟分离与实际浮点差异</a>，差异不等于质量提升。</p>'
+            if (path.parent/'fixed_world_native.mp4').exists():scale_section+=f'<video controls preload="metadata" src="{relative}/fixed_world_native.mp4"></video>'
         scale_section+='</section>'
     if (ADMISSION/'benchmark_request_space_audit_v1.json').exists():
         audit=json.loads((ADMISSION/'benchmark_request_space_audit_v1.json').read_text())
@@ -116,6 +118,12 @@ if (ADMISSION/'registry.json').exists():
         if sh.exists():
             d=json.loads(sh.read_text());rows=''.join(f'<tr><td>{r["case"]}</td><td>{r["actor_domain_rgb_change_MAE_macro"]:.5f}</td><td>{max(r["unchanged_geometry_channels_max_difference"].values())}</td></tr>' for r in d['records'])
             admission_section+=f'<section><h2>转向算子控制：SH随物体旋转</h2><img src="admission/sh_operator_control/comparison.jpg"><table><tr><th>操作</th><th>动态支撑域RGB变化MAE</th><th>alpha／动态权重／深度和最大差</th></tr>{rows}</table><p>原生无编辑适配差0，主副本未变。3变体×31帧真实GPU完成；只改变外观方向约定，几何通道逐像素不变。此处是算子控制，不是重新打光，也没有转向反事实RGB真值。原世界系SH基线仍保留。</p><a href="admission/sh_operator_control/cpu_control_summary.json">GPU输出CPU核对</a></section>'
+        for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/same_input_replay/status.json')):
+            d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix()
+            admission_section+=f'<p>相同RGB/mask、相同ProPainter设置的真实重推控制：{escape(d["phase"])}；它与普通缓存复用分开记账，不新增编辑case。<a href="{relative}/status.json">控制状态</a></p>'
+            if (path.parent/'summary.json').exists():
+                result=json.loads((path.parent/'summary.json').read_text());admission_section+=f'<p>31帧实际重推最大字节差{result["maximum_output_byte_difference"]}，洞内MAE {result["macro_masked_MAE"]:.6f}。这是单次重复推理控制，不能当多种子方差估计。<a href="{relative}/summary.json">逐帧重推差异</a></p>'
+                admission_section=admission_section.replace('也没有反事实RGB真值、相同输入重复推理方差或学习记忆收益证明。','没有反事实RGB真值或学习记忆收益证明；相同输入31帧实际重推已完成，最大字节差0，另节保留证据。')
         for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
             d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
             rows=''.join(f'<tr><td>{escape(x["case"])}</td><td>{x["generation_pixels_mean"]:.1f}</td><td>{x["preservation_MAE_macro"] if x["preservation_MAE_macro"] is not None else "新视角无对应真值"}</td><td>{x["backend"]["outside_mask_max_byte_difference"] if x["backend"] else "未调用"}</td></tr>' for x in d['cases'])
@@ -164,6 +172,9 @@ if hold_audit.exists():
 night_hold=ADMISSION/'motion_inputs/3417928259332148981_7018_550_7038_550/association_review_hold.json'
 if night_hold.exists():
     failures.append(dict(scene='3417928259332148981_7018_550_7038_550',operation='夜间输入实例关联准入',observation='49帧contact逐帧检查，候选ID13/2/95切换，多帧仅车顶/尾灯及碎片，前景银车遮挡。',status='HOLD，无selection_reviewed、不构建训练资产；保留困难层',cause='①输入/关联问题；没有运行编辑，不能计为②失败。',evidence='admission/motion_inputs/3417928259332148981_7018_550_7038_550/association_review_hold.json'))
+bench_evidence=ADMISSION/'benchmark_execution/14705303724557273004_3105_000_3125_000/cpu_delivery/comparison.jpg'
+if bench_evidence.exists():
+    failures.append(dict(scene='14705303724557273004_3105_000_3125_000',operation='真实自车变道/转向轨迹，他车变道/转向及删除',observation='raw109自车新视角中远处车辆与路面拖影，转向视角边缘出现未覆盖区域；他车变道/转向有原位残影及资产失真。',status='7族原生31帧完成，中帧图像已看；旧ego_speed只算整体播放控制；跨场景插车和固定世界时钟另查实际状态',cause='新视角暴露表达/观测范围限制，未知域不造GT；①资产/算子与②静态残影须分离。未经过③，不可归因后端；没有同视角反事实PSNR。',evidence=bench_evidence.relative_to(OUT).as_posix()))
 if (ADMISSION/'sh_operator_control/cpu_control_summary.json').exists():
     for row in failures:row['cause']=row['cause'].replace('SH物体系旋转CPU控制通过、GPU控制待执行。','SH物体系旋转真实GPU3变体31帧控制完成，几何通道差0；仅小幅颜色变化，raw109重影仍在，单改SH约定不足。')
 for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json')):
@@ -173,6 +184,9 @@ labels = {'previous_method_development': '原方法开发', 'previous_reconstruc
           'new_diagnostic_development': '新增诊断开发', 'heldout_reserved': '封存：未跑编辑评测'}
 gallery = ''.join(f'<article><img loading="lazy" src="delivery/gallery/{escape(s["context"])}.jpg"><p>{escape(s["context"])}</p><small>{labels[s["split"]]} · {escape(s["location"])} · {escape(s["time_of_day"])}<br>{s["frames"]}原始帧 / 49帧PNG；像素掩码与道路GT待补齐</small></article>' for s in manifest['scenes'])
 failure_rows = ''.join(f'<tr><td>{x["scene"]}</td><td>{x["observation"]}</td><td>{x["cause"]}</td><td>{x["status"]}</td></tr>' for x in failures)
+completed_native_variants=sum(json.loads(p.read_text())['single_request_variants'] for p in (ADMISSION/'motion_execution').glob('*/native_summary.json') if json.loads(p.read_text())['frames']==31)
+completed_backend_cases=len(list((ADMISSION/'motion_execution').glob('*/*/backend_summary.json')))
+continuous_native_revisions=sum(json.loads(p.read_text())['revision_count'] for p in (ADMISSION/'motion_execution').glob('*/continuous/summary.json'))
 body = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>4D 编辑 · 评测驱动研究</title>
 <style>body{{background:#f3f7fa;color:#203c51;font:16px/1.7 "Microsoft YaHei",sans-serif;margin:0}}main{{max-width:1400px;margin:auto;padding:25px}}section{{background:white;border:1px solid #d8e3eb;border-radius:12px;margin:22px 0;padding:22px}}h1{{font-size:29px}}h2{{font-size:22px}}a{{color:#126c9a}}img,video{{max-width:100%}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;border-bottom:1px solid #dce5ed;padding:12px;vertical-align:top}}.note{{background:#fff1d5;padding:16px;border-left:4px solid #b68c37}}.grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}article{{border:1px solid #dce5ed;padding:10px;border-radius:8px}}article p{{font-size:12px;overflow-wrap:anywhere}}small{{font-size:13px}}video{{width:100%;background:#152536}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:12px}}}}</style>
 <main><h1>4D 编辑评测：先发现重复失败，再改进背景修复</h1><p>2026-10-27 · 阶段二早期 · 质量待用户评审 · 持续自主推进</p>
@@ -193,6 +207,7 @@ for name, title in [('scene0017', '路口白色轿车'), ('scene0029', '路口�
 body += f'''<section><h2>数据清单与接续任务</h2><p>下面只展示输入RGB，封存场景没有运行编辑效果评测。原始三维标签、像素语义、可信道路参考、原生checkpoint的就绪状态分别记录；框不作为像素掩码。</p><div class="grid">{gallery}</div>
 <ol><li>补齐新增开发路段的像素掩码、米制几何与高斯输入；封存场景保持方法选择隔离。</li><li>严格撤源先移除全部关联输入再编码/初始化，分别报告边界、过渡、内部核心；做不到的只标module-only。</li><li>按完整目标与参考分母评价污染残留、保留对象、跨视角/请求一致性和视频修补负担；无标签中心仍为未知。</li><li>依据跨场景反复失败再设计②，固定①③消融；保留简单锚点、确定性补全和普通缓存强对照。</li></ol></section>
 <section><h2>资源与质量状态</h2><p>同一心跳每30分钟继续。每次先查Codex周额度；剩余严格低于20%时快速保存收尾、取回必要结果并关闭AutoDL，再暂停心跳。在此之前继续自主研究，不因阶段结束或负结果关机。</p><p>额度快照见本页最新流水区，以后续工具读取为准。质量仍为quality_accepted=false、human_verdict=null。重复渲染最大差0仅为工程检查，不是世界记忆收益。</p><p>本页做了图片和文件链接校验，没有声称浏览器交互QA。<a href="delivery/summary.json">执行与指标清单</a></p></section></main></html>'''
+body=body.replace('新场景首个30K后11原生变体×31帧、6固定视频、6次连续原生修订完成。',f'新场景已完成{completed_native_variants}个原生变体×31帧、{completed_backend_cases}个固定视频、{continuous_native_revisions}次连续原生修订。')
 (OUT / 'index.html').write_text(body, encoding='utf-8')
 class Links(HTMLParser):
     def __init__(self):
@@ -205,7 +220,7 @@ for file in [*DATA.rglob('*.jpg'),*ADMISSION.rglob('*.jpg'),*ADMISSION.rglob('*.
     with Image.open(file) as im:im.verify()
 assert not broken,broken
 result=dict(local_links=len(parser.paths),broken=broken,actual_independent_heldout_results=0,
-            raw_contexts=36,prepared_pngs=1764,historical_operation_sequences=12,new_native_variants=11,new_fixed_backend_cases=6,continuous_native_revisions=6,new_eight_family_completed=0,all_six_families_complete=False,
+            raw_contexts=36,prepared_pngs=1764,historical_operation_sequences=12,new_native_variants=completed_native_variants,new_fixed_backend_cases=completed_backend_cases,continuous_native_revisions=continuous_native_revisions,new_eight_family_completed=0,all_six_families_complete=False,
             browser_render_qa=False,quality_accepted=False,human_verdict=None)
 result['completed_native_training_contexts']=len(list((ADMISSION/'native_training').glob('*/formal30k_agent_acceptance.json')))
 result['continuous_fixed_backend_fresh_calls']=sum(json.loads(p.read_text())['fresh_backend_calls'] for p in (ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json'))
