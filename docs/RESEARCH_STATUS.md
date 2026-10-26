@@ -1,104 +1,21 @@
 # 当前研究状态
 
-更新：2026-10-26。research/worldsim-v8.2-drivingeditor-v42。当前WS-V82-GN11-V42-CONTROLLED-SMOKE-20261026已按用户授权完成199帧真实观测、静态编辑与FreeInpaint有界对照；正式/原生B更新0，工程机制及恢复合计7003更新。原完整重建仍用冻结V41-B主副本，编辑参数独立。GPU开机由用户明确确认，本轮未恢复旧V4/V41队列。
+更新：2026-10-27。分支`research/worldsim-v8.2-drivingeditor-v42`。Task：`WS-V82-PERSISTENT-WORLD-20261027`。
 
-199帧收益保留：固定49帧车身核心独立alpha覆盖a37 24.40%→65.68%、a6 0→95.56%；a6加入原静态后实际贡献覆盖仍仅0.135%，说明主要遮挡而非缺点。raw102 a37多数未启用像素已有多帧几何，但被首对颜色拒绝；追加时间分块核验498个单元，原合格点不变，核心覆盖59.35%→78.97%。与早期子集参考面查询的计数口径差、输入预算变化、未知分母均保留。
+用户已授权按最小端到端基线→针对性测试/失败发现→固定编辑与生成后端改进背景修复的三阶段持续自主研究。当前主研究链路为证据驱动的背景联合修复；①编辑操作与③预训练后端先复用。协议和组件图见[当前执行计划](autoresearch/persistent_world_20261027/PLAN.md)，代码入口为`scripts/worldsim_v82/persistent_world_20261027/`。当前campaign=`/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027`。负结果保留并导向下一轮，不设置额外科学止损点；单次输入/方法/步数与工程成本仍固定登记。
 
-用户2026-10-26明确纠正：选中的C是保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth。dd785189将edit_visibility错认C并追求提高道路贡献，偏离问题；现已撤回该绑定与主线。强透射数据保留为未选对照，不覆盖C。新增诊断训练0、10种固定状态×49帧、8点原生缓冲追踪；B完整主通路不变。
+原生V41-B完整重建主副本冻结；编辑起点为用户选中的`edit_smoke_preserve/full199/checkpoint1000_from0.pth`。强透射`edit_visibility`是未选对照，不以提高道路贡献代替最终质量。此前错误绑定的更正见[历史机制证据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)。
 
-正确C机制：raw102同7000参考像素，A原静态MAE0.19989→B仅静态抑制0.05535→C静态+道路0.00879。最终道路权重零的3485像素A→B/C为0.29043→0.01134；有明显道路作用的3006像素B→C为0.11436→0.00608，其中2944改善。两标记点B/C RGB逐位相同、静态权重约0.9999；原静态颜色不变，opacity重分配让原静态贡献组合改善；其他区域道路提供必要修补。这是推理归因，不排除道路对门控联合训练的间接作用。未知分母和三训练视图重叠保留。
+已完成49帧原生输出、状态重载和同后端视频闭环。主通路编辑前后最大RGB差0，raw102独立重载差0。两个上游状态均已运行预训练ProPainter；生成前3D帧与最终视频分别保存。三个原型优化视图中修复原生MAE0.00769，整洞生成后0.05012，暴露有效内容被覆盖。最简单证据路由及同来源直接RGB锚点强控制继续检验；不把输入证据域内的保护效果称泛化。
 
-后续沿用户选中的C：以最终编辑质量/外围保护/多视角稳定为目标，允许原静态与道路共同输出，道路贡献仅作诊断。三帧参考MAE选中C0.00760低于强透射0.01336，49帧外围变化0.00378低于0.00904；不因分支贡献而倒置优先级。先定位C自身近处条带、其他残影和几何不确定性，再按证据局部改进；生成外观与可信几何分开。正确静态可复用，不强制中心由新道路替代。详细更正与证据见[C选定版本](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)。quality_accepted=false，human_verdict=null。
+49帧参考诊断已生成；来源138–169曾进入199帧初始化，只是同片段跨视图一致性，不是独立GT。选择删除、侧移、复用插入、相机变轨/再显露的六项49帧原生基线已保存。原B没有逐行对象身份，当前七时刻框投票仍有867871/1030499行未决；保留未决行，并检查实际贡献，单对象编辑尚未解决。
 
-完整参数/optimizer/RNG/采样器保存与独立进程恢复、评价、下一阶段入口均实际执行；CUDA续一步非逐位一致如实记录，Free高斯恢复重渲染逐位相同。NVML初始采样缺口与失败编译/额外更新单列。当前远端结果/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_v42_controlled_20261026；本地outputs/V42_Fullclip_Controlled_Smoke_20261026；[本轮报告](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/EXPERIMENT_REPORT.md)。当前已转入用户要求的C机制诊断与主线固化，推送/本地取回验收完成后按实际依赖处理资源；不恢复旧正式队列。quality_accepted=false，human_verdict=null，failure_ledger_refs=[V82-F01,V82-F06]。
+持久SQLite状态保存26088世界候选单元的逐来源帧、修复版本、请求及独立的生成假设。7848为观测支持候选、13778为有支撑但未满足颜色资格、4462未知；候选与修复不冒称已核实三维表面。生成结果不自动升级为观测或可信几何。
 
-后续固定比较基线按用户2026-10-25决定统一为 V4.1-B 原生30K（非R、非道路合成）。历史V1→B差异：全图PSNR +0.1893dB、SSIM +0.000373、LPIPS −0.001459（−3.9634%）、车辆ROI PSNR −0.2739dB、背景ROI +0.2571dB；相近幅度按用户认可的正常经验波动忽略，不据此宣称算法收益或实质退化。它是两次运行的实测尺度，尚非多种子统计方差；ROI口径与车身内部/边缘诊断分开，局部严重问题仍单列。B固定四件、原始指标和未来比较规则见[基线登记](V41_B_BASELINE.md)。
+当前训练阶段：`smoke_restore_train_10min`；权威运行状态是campaign/training_status.json，PID/start_ticks见对应dispatch。队列先100更新实际保存/评价，再独立进程完整状态恢复并真实训练至少600秒，之后fresh 10000更新可配置多视图修复基线。训练视图94/110/126；固定199初始化、几何、继承损失与学习率。原B更新0；smoke/必要重放单列，不能用旧149秒短跑代替本轮smoke。健康训练不重启、不修改配置。
 
-V4.2目标是“原V1完整重建主副本＋独立编辑副本”。原生完整请求不加载道路/编辑状态；编辑请求才在独立参数、优化器、目录中做对象编辑、道路增点和局部静态污染抑制。原V1本身仍保留其原有静态/动态/环境组件。此前查看器native_v1切换不等于完成该架构。设计、组件图、近邻工作和评价矩阵见[V4.2设计](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/V42_DESIGN.md)。双通路属于工程保护；提出的“补点与错静态遮挡的成对干预选择”是研究假设，创新性和效果未验证。
+GPU NVML每秒采样与CUDA allocator峰分开保存。DiffuEraser历史目录大权重未完成，当前正在新目录按固定revision补齐；ProPainter完整可用。新目录`/root/autodl-tmp/models/persistent_world_diffueraser_20261027`。后端不同不作为②收益，完整权重加载和实际推理通过后才称接入。
 
-49帧逐来源CPU重放九项门限，布尔数组差异均0。原创建14034、双源1919、单源226、零通过来源11889，1919最终全部输出；不是训练剪掉其余点。角度余弦0.12→0.06可增加1722候选；818有不沿用旧角度门限的小三角形/分块颜色一致性支持，但不是独立GT。a37查询世界单元并集仅新增43、a6为0。取消框新增425，仅是诊断上限；掩码margin2→0只增18、深度0.3→0.5只增47。固定中心资格与后来的稠密像素域分开，单改minimum_views仍受provenance和多处observed硬编码限制。raw102两个中心单元1652/2987四角缺支撑，资格调参不能创建它们。完整CPU输出在/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v42_design_20261024/gate_audit_r2；本地报告outputs/V42_Design_Audit_20261024/index.html，含逐点图、原始来源帧和JSON/NPZ；数据不入Git。
+接续：收齐smoke/10K与49帧评价；检查简单直接参考控制能解释多少收益；依据失败决定几何、污染或持续记忆算法。严格道路撤源必须在初始化/编码前移除全部关联证据，不能使用已见答案的原生B冒充未观测输入。跨场景适配与独立测试尚未完成，240例仍是规模目标。代码/协议与结果取回、推送需逐轮核实；当前队列和下载仍在推进，禁止提前关机。无卡模式不因空闲关机。
 
-GaussianPro机制CPU检验已完成同49帧全部车辆轮廓，强控制使用同一核验器。a37另组验证通过：固定曲面28639、图像平面32135、米制平面31473、来源深度修正31304；a6与raw102(255,240)/(256,219)仍0。深度修正新增旧标签外5723像素，离线并集潜在覆盖23.71%→24.74%，但图像平面已新增5696，不能声称本轮改进胜出；原标签未按新标准全部重验。a5/a26改善不能替代a37核心失败。米制邻域/深度修正不作为已成立主贡献、不据此启动长训练；此前匹配负结果据此转入独立的内部伪真值补全算子，详见下一段。CPU首轮与有界回退均保留，588个未改控制数组相同，4项几何/信息隔离检查通过。候选未写回原V1/R/B；本地49帧报告outputs/V42_GaussianPro_CPU_20261024/index.html，详见[机制与负结果](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/CPU_PROPAGATION.md)。
-
-内部道路教师已完成49帧目标生成：raw102(255,240)/(256,219)伪深度13.113/17.618m，新道路单独近似CPU alpha0.9966/0.9998；这不是含静态污染的最终合成。a37内缩5像素核心481617均产生先验，其中排除真实参考后伪训练域核心371735；推断覆盖不冒充观测覆盖。整块8×2m孔洞撤掉全部帧的颜色/几何来源，验证核心2420格MAE0.02330/PSNR27.725/高度MAE0.00521m，优于最近邻0.02615/26.149/0.02714m；为隔离三角形跨界几何来源，再扩撤源带1.7m：验证MAE0.03152/PSNR26.015/高度MAE0.01197m，相对各向同性0.03249/25.914/0.06969m，主要支持几何优势、颜色仅小幅改善。开发域颜色MAE反而较差，保留限制。5项CPU来源/主副本隔离/遮挡梯度检查通过。InFusion等生成式路线仅调研并准备raw102/129/137输入，未运行大模型。详见[内部教师](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/INTERIOR_ROAD_TEACHER.md)，本地outputs/V42_Interior_Road_Teacher_20261024/index.html。
-
-V4.1正式R/B已严格串行完成各30K；R原V1/道路各30000、B原V1 30000，六个完整节点、finite loss和返回凭据已核对。两组49帧同口径原始浮点评价及CPU严格状态比较完成。B完整PSNR36.7909/SSIM0.969602/LPIPS0.035364；R同checkpoint原V1为36.6206/0.968937/0.037396；R加道路为33.7581/0.956686/0.063198。R同checkpoint车身PSNR40.7297→37.1190、边缘27.7423→25.8024，仍有明显退化。原V1参数/optimizer严格比较不一致，保留真实差异，不把fresh CUDA差异伪称精确一致；不新增训练重放。
-
-a37固定跨帧参考131820/555950像素帧，覆盖23.71%；同checkpoint原静态→静态+道路，标签域MAE0.078012→0.071624，改善43.98%、退化53.89%，不能据平均误差下降判整片补全成功；a6无参考标签，目标域道路实际贡献0。默认完整通路的独立B结果与R原生结果分别标识。质量仍待人工判断，quality_accepted=false，human_verdict=null。
-
-显存NVML每秒采样全程峰值31923175424字节（29.7308GiB）；B CUDA allocated峰10881664512字节、reserved30989615104字节，R allocated10626029056、reserved27107786752，采样与分配器峰分开报告。V4.1活动campaign=/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023；控制器已到REPORT_PENDING，不再启动训练。旧smoke轨迹失败/质量代价与额外原生/道路各2000更新仍保留，正式执行基于用户后续授权，不改判smoke全通过。旧V4 RP保持暂停，旧V4/V3历史结果不与本轮浮点指标混比。
-
-V4.1报告、49帧取回与发布收尾仍按实际交付凭据确认。V4.2所有远端CPU审计、报告、提交推送及取回完成后，才排查其他任务/待启动控制器，按用户带GPU且无可推进任务的长期授权处理关机。无卡模式不因空闲关机，未知模式不据CUDA状态推断。保留用户无关脚本修改；数据、模型、日志不入Git。failure_ledger_refs=[V82-F01,V82-F06]，本次无新增执行失败类型。
-
-原V3收口记录如下。原WS-V82-R15-GN11-STAGE1-V3-20261020四组full/real_only/prior_only/ownership_only已各fresh stage1 30K、stage2 0，三个optimizer.step实际调用各30000，主四组合计120000更新；正式49帧评价与资产审计早已完成，FOUR_ARM_FORMAL49_AND_ASSET_AUDIT_COMPLETE见campaign/final49/summary_r2/comparison.json。主campaign仍为/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_serial_r1_20261021，原生49训练/49道路参考、raw89–137、五身份[6,37,5,26,18]、seed0及方法/分辨率/点数/调度/损失/SGCM/NPS未变。两组full/real_only旧5K–25K四件仅按用户精确授权清理40文件、23317435622字节，完成凭据checkpoint_retention.json严格绑定原事件；四组30K均在盘、prior_only/ownership_only各24件全部保留，历史事件/评价/日志及原失败现场不删除、不补造旧checkpoint。原失败额外更新26152=10000+8400+7752、publish_r1零更新gate和full_r1零更新评价另记，不混入主120000。训练/工程完成不等于科学质量通过；删除背景残影仍真实存在，quality_accepted=false、human_verdict=null。原训练与正式评价报告继续保留在final49_20261021/REPORT.md。 历史正常关机于2026-10-21T06:45:05.474137+00:00只请求过一次，随后三次SSH关闭仅是SSH证据，不当平台电源/计费确认；origin 1817b9e2/28a6ae02及final49_20261021/shutdown_verification.json原样合并保留。当前开机是用户新的CPU/GPU诊断安排，不重复历史关机。
-
-V4固定初始化验收与结果接入：用户原离线包的“实验组”现已接入新replay_r1运行的V4 R真实30K；RP仍为进行中的占位。R的49帧245张完整480×320原生CUDA图像、alpha/深度、同一次光栅化道路组贡献、独立道路/普通背景深度标记与全量采样几何已导出核验。原V1输出逐帧重放训练PNG，最大差0.0019608101（半灰度量化范围）；追加one-hot道路feature与原合成器逐帧一致。固定xyz/尺度/四元数逐张量相同，初始化14034、R实际输出1919；未输出点保留sidecar可查，不当作训练移动/删除。未知来源优化访问和V4逐Gaussian trace/干预不借用旧V3，入口明确禁用；原五组不变。增量一键导出支持-Arms v4_R，默认纳入已完成V4组。派生目录/root/autodl-tmp/gsdiag_v4_R_30k_20261023_r1；只读恢复不创建optimizer，不改原输入/检查点/训练队列，本轮训练更新0，不关机。前端使用实际app/packed数据的Node Canvas验收，不声称浏览器UI验收。工程可用不代表质量通过，quality_accepted=false、human_verdict=null、failure_ledger_delta=none。当前V4原生初始化与新增道路/V3按raw102真实a5/a37/a6世界OBB、共同0.2m网格对比，切49相机不移动世界选区。核心原生初始地面中心838/866/4，落格183/145/2；道路创建210/210、200/210、134/225，a37缺10为原候选区外，a6缺91为实测支撑不足。a37不支持简单归因初始点少，a6有支撑/覆盖缺口；几何足迹、初始alpha、可训练mask和输出分开。V4/V3同14034位置/尺度，实际四元数最大方向差0.002540°且分别光栅，非逐位相等。支持实际尺度足迹、来源九门限、49帧独立覆盖/深度、点格追溯和CSV。R/RP初始可训练1919/13001，0步输出0，不当恢复结果。6项新增数学、23项V4 CPU、49帧1470显示编码/浮点统计及10项真实页面JS/Node Canvas检查通过；151原文件和两hook剥离一致，只读校验保留现有R/run30k；未冒称保存CUDA step0、新CUDA全幅或浏览器UI验收。原生初始尺度由3NN CPU复原、opacity .01；道路 .5；统一高opacity仅为几何参考。派生数据在/root/autodl-tmp/gsdiag_v4_initialization_20261022_r1，原代码/几何/init输入不改、GPU0、优化0；quality_accepted=false、human_verdict=null、failure_ledger_delta=none。[初始化组件、真实对照与边界](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v4_20261022/initialization_audit/README.md)。
-
-诊断显示迭代（2026-10-22）已完成：AutoDL源码1c4174cb/6bd4d708已推送，用户原GS_Reconstruction_Diagnostics_20261021_Evidence_r1离线目录已原地更新，不以localhost交付。新增同视角49帧地面支撑池49182点、按冻结输入及原安装公式复原的14034初始道路、30K道路与12054未创建灰框，创建标志、支撑距离、道路ID一致。点选显示初始/当前位置、位移、sigma/opacity、0.8m水平支撑数及原K8有效数；支持统一大小/不透明、屏幕框选及BEV/来源联动。粉色射线新增当前帧最近LiDAR、道路原生独立期望深度与普通背景CPU参考深度；统一像素中心，49帧回投最大误差0.0000331px，避免旧投影图远点覆盖近点。Shift屏幕方向平移修复。四组49帧共246文件362634804B核验；V1原生无专用道路；现已按其真实初始化和保存谱系补齐地面静态候选，原生静态仍保留原语义。44项CPU回归、11项前端/本地解压/Node Canvas检查通过；正式192帧固定7像素加此前4帧试导出对照通过，不冒称新CUDA。file协议工具受限，未宣称浏览器UI验收。派生记录inspection_update_qa.json、inspection_export_receipt.json位于diagnostics_20261021，数据位于/root/autodl-tmp/gsdiag_inspection_20261022_r1。原训练/模型/native输入不改，优化0、GPU0，不关机。此为工程验收，quality_accepted=false、human_verdict=null，failure_ledger_delta=none。 V1补齐代码c95f03d6已推送并在用户原HTML目录安装：真实初始静态585943与启动绑定一致，初始地面71120；地面来源后代及49时刻近地面候选1278443，全量载入，初始/训练后标记各默认10%可调，不受普通背景2%限制；独立二维alpha/深度及投影框选均全量。点选使用原sgcm_lineage_v1，一对多来源偏移不冒充同点位移；无后代不造当前点。原生道路网格/曝光不适用。49帧50新块经本地解码核验，46项CPU和18项Canvas检查通过；V1原生量化地图28像素抽查最大alpha误差0.00000710、深度0.004908m；非新CUDA全幅逐位验证、非浏览器UI验收。远端数据/root/autodl-tmp/gsdiag_v1_ground_20261022_r1，V1_GROUND.md及v1_ground_*validation.json在同诊断目录。候选为几何诊断，不是语义GT；首次只读导出内存超限已改为计数查询修复，零优化、原资产未改。 V1显示性能修订已完成代码与Node验收：默认来源/离地四色、全部/贴地/地面后代/离地后代筛选；候选全集和二维数值不改。按帧缓存双精度位置与时间权重，取消每帧百万行Set/Map，显示子集/配色缓存及紧凑点选；拖动按动画帧合并并临时限点，松开恢复10%设置，全量框选不减点。相同1200x700、10% Node Canvas暖重绘约1.6s→0.28s，拖动约0.05s；非浏览器FPS，首次准备单列。raw102局部4平方米约79.2万候选来自169初始来源，约八成候选为初始非地面来源；不称纯道路或残影因果。详情、架构及凭据在既有V1_GROUND.md/v1_view_*文件，零GPU/优化，failure_ledger_delta=none。
-
-既有诊断task=WS-V82-GSDIAG-EVIDENCE-20261021。此前按用户要求补齐两项P0及V1只读对照；只做冻结30K诊断，不恢复旧训练/控制器/队列，不改科研配置，该诊断不启动新训练消融，不再次关机；原v3-gpu心跳保持暂停。现共180个打包原生CUDA trace（原116、V1同像素24、独立测量选取的道路/车表面对照40），173条非空射线另用原生one-hot核验最多20个实际ID的Tα。导出Top权重∪Top颜色集合有76条几何冲突候选、348条合法道路候选、126条合法遮挡/车后道路保护、8552条未知；这是重复帧/分支诊断条目，不是全模型唯一Gaussian数量或错误率。实际Tα/conic与三维协方差、原生投影J形成条件z的3σ线性代理，结合1.5px内LiDAR、道路切平面和车辆OBB区间/目标mask/颜色；不是中心z硬判或体积首交面；当前像素本身的LiDAR还必须匹配道路，不能用邻近来源锚点代替。LiDAR容差0.20m+2%z、道路0.15m+2%z是声明诊断政策，不是标定概率；区间跨面、稀疏深度、非目标身份不足都保留未知。标签只适用于当前帧射线，不授权永久语义或自动删点，来源梯度不作因果质量。
-
-12个raw102真实全帧移除与36个跨帧同集合控制已用原始CF浮点重新评价，同世界单元原始来源sRGB，九门限、至少两来源确认、四采样像素mask外扩1px无遮挡、附近实测LiDAR匹配道路，valid在干预前固定；非有限值拒绝而非根据after缩分母。ΔL=mean(L1_before-L1_after)，正常区另要求干预前L1≤0.05/alpha≥0.95/深度一致/21×21邻域外，报告颜色/深度误差和alpha变化/损伤。full左侧原Top20干预在raw102的218个验证单元ΔL=-0.008406，177个正常单元中79个RGB误差增加超过1/255；道路贡献0.121876→0.140121不能当作修复。其他真实负结果与零影响均保留。raw89/131/137控制按各自同世界曝光评价，不再以固定屏幕位置当世界跟踪；当前不通过验证的隐藏/遮挡查询RGB_loss=null，只报覆盖/几何变化。20幅原相机分支、5幅真实新视角和原116trace仍保留历史凭据；新视角无GT，几何总览仍是采样点云，完整外观必须看原生按钮。 另通过实际浏览器选择full/raw102/(171,270)三个几何冲突候选后完整重渲染，valid218单元ΔL=-0.000411，正常175单元中3个RGB误伤；深度MAE略降而RGB略差，证明标签不保证移除收益。该第13次干预已加入离线，原36跨帧控制不变。
-
-V1来自r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k，明确历史20K恢复到30K，不冒称fresh或单因素配对。49帧相机/世界变换实际对齐，兼容无道路原生前向逐帧静态/联合/动态对原训练节点PNG做147次全幅核验（8bit最大误差≤1，PNG不当浮点逐位重放）；V1没有注入V3道路，ID只绑定自身30K SHA，不能按行号跨版本对应。三分支49帧、采样几何和原生trace已进同一深色界面；不存在的V1专用道路/优化访问标不适用。CPU36项回归通过。首两次V1导出工程失败（误读cycle属性、动态PNG环境语义不匹配）均在独立新目录保留，零优化；修正后重新核验，不记科学失败。
-
-2026-10-21T13:55:56Z最终重算原冻结asset_manifest全部12297文件、40157562775字节SHA256，全部未变；manifest SHA=eb926ef96b21f5b7382bc7e9eff7f4424cb13fc914246482d90ad179f6b72465。新增原件仅在/root/autodl-tmp/gsdiag_gpu_20261021_r2/，旧r1与全部失败现场保留。新本地完整版outputs/GS_Reconstruction_Diagnostics_20261021_Evidence_r1/index.html及≤100MB便携版，EVIDENCE_REPORT.html含组件箭头图、判别合同与真实负结果；源码/轻量证据位于同分支diagnostics_20261021。显示压缩不作指标输入。quality_accepted=false、human_verdict=null；测试结束只停止自身SSH worker/本地预览，不杀其他进程、不关机/销毁AutoDL。failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=none。
-
-199曝光审计真实读取同一TFRecord的raw0–198，固定原26,088个世界单元与13,720查询并集，不重建曲面/法线/支撑。窗外没有原准备SAM mask，因此49/199均按全类别相机标注框、投影标签框、近面裁剪三维框包络的同口径重算，另用原有LiDAR/射线等门限；原V3/SAM49仅作独立参考。raw89/a6的确认单元0→225/493（来源raw149–198；仍42零来源、47单来源、179无曲面支撑）；a37为283→840/1170（新增557，仍56零来源、76单来源、198无支撑）。查询并集1013→4013，新增3000=2897零来源转确认+103单来源转确认。至少2帧才确认；几何证据不是语义GT、纹理质量通过或因果收益。原49全RGB/pose/标定/LiDAR/时间戳实测一致；主道路包未晋升199候选。不能把a6在49中无曝光外推成199中全部只能先验，也不能把剩余未知补成真实纹理。[组件、真实结果与复现](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/exposure199/README.md)。
-
-v3共同修复保持真实联合前向、不裁错误遮挡。R2车身RGB仅更新非道路 `xyz/opacity/scaling/rotation` 与全部动态参数，排除背景 `t/scaling_t/velocity`、SH、明确道路行和EnvMap；其余原有效路径仍可更新背景时间参数，不是全背景冻结。车身L1主分母改为3HW，仅这一部分与V1等效，掩码DSSIM不等于V1整图DSSIM；旧面积归一只留作独立备选。静态平均深度前遮挡、三维中心体积排斥和动态严格掩码外mean+top1%/低alpha高颜色损失的权重与阈值不变。完整动态mask alpha MSE100与独立RGB继续保留，动态独立RGB环境填充仍stop-gradient。
-
-确定性屏幕重复计数已修复：路由autograd.grad前后保存/恢复三套代理.grad，隔离非叶子retain_grad的自动留存副作用，再把base与指定路由梯度各计一次。CPU原式复现7→14；修复覆盖非叶子/叶子、既有缓冲、body/road/base叠加和道路行屏蔽。分支/联合增密仍逐Gaussian取max、每视图单计数。道路额外来源有自己的光栅代理；固定道路容量不走通用增密，不误称其全部进入当前训练视图的静态代理。
-
-新增只读诊断：每100步记录车内质量、车外颜色/top1%、边界带误差、联合/独立动态/静态与LiDAR深度覆盖/MAE。准入、第一步与5K节点更新前保存浮点图，并抽最多14个有效车身LiDAR像素；用原生feature通道保留全部高斯与原alpha*T，分别计算静态T/联合T中的车前静态贡献、框外中心贡献与道路行贡献，同时对照框内中心计数。最多4次额外光栅/节点、样本alpha与原图不等即失败；缺LiDAR不伪造零误差。5m/20m平均抵消用CPU构造验证，未宣称真实场景已测出漏检；不是连续椭球first-return，也不是全图贡献统计。[组件、责任和诊断工具](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md#监督责任)。
-
-本次正则修订：静态寿命项 `1/mean(abs(map))` 权重0.1，静态速度图L1权重0.01；两者保留联合alpha归一化。NPS重新启用、权重0.01，保留独立背景alpha归一化、原五身份mask、边界距离和四邻域双奇偶求和。训练直接传原配置给原生混合损失；上一轮选择性raw运动／显隐正则从活跃路径移除，不叠加、不加载三维时间证据。旧证据和离线工具保留，不是本轮方法依赖。原生 `_t/_scaling_t/_velocity` 仍可训练；五车排斥仍用实际渲染三维位置、有效opacity与合法道路薄层保护。V1 feature velocity的寿命衰减继承不改；全图软正则可能抑制非目标运动，不能称为选择性保真已解决。
-
-道路新路径：五车全部49帧掩码射线自动查询同一实测曲面，永久0.2m世界单元与1.2m上下文邻域；每个来源保留原始RGB/uv/深度/9项硬门限，不融合颜色、不优先late帧、不用人工供体或周期纹理。至少2个硬通过来源才能确认曝光，单来源仍未知；有曲面支持但零来源才是先验。26,088个世界单元中14,034个有支撑，新增同数固定薄层高斯计入原300万静态点数上限，不另加Adam步。道路行用同一DC纹理和几何参加正常联合渲染；曲面/法线/薄层/锚点约束共同启用，固定ID不参与通用拓扑与SGCM替换，也不在opacity reset节点清成透明。普通背景机制不变。额外每步2个来源共享优化同一参数，可靠性只能对硬通过观测减权；无曝光区用连续先验与真实邻区边界，不是真实隐藏纹理。
-
-真实覆盖分母为世界单元：raw89/a37=1170（351确认曝光、528先验、291未知，其中93单来源未确认）；raw89/a6=493（0确认曝光、314先验、179未知）。a6仍不能宣称恢复唯一真实纹理；不能与V2像素统计直接比成功率。已生成两车逐单元来源审计页，并在浏览器实际切换查看原图裁片/拒绝原因；现在训练日志开始记录实际可靠性、访问和采样梯度，不以示意值代填，梯度触达不代表因果收益。实际某单元raw131被拒绝，不照搬用户示例数值。
-
-四组仍为五身份、同49帧、seed0、fresh第一阶段30K/第二阶段0、5K间隔六节点。共同包含新道路表示/几何和原v3修复，只改变查询真实多视角与连续先验来源权重：full、real_only、prior_only、ownership_only。最后一组现在是共同道路表示/几何条件下两类新增外观来源关闭，不等同旧V2同名组。额外来源光栅开销另报，不声称与原生30K相同计算量。每组先真实CUDA零更新gate，失败保留现场不自动重试。正常四臂审批还需匹配新的road_version。
-
-反事实仅登记：`road_cf_raw89_a37_drop_raw133`，真实几何权重自动选择raw133，覆盖126个确认查询单元。reference与drop_source同初始化/seed/30K，移除指定单元的额外道路来源，不移除原生整帧重建；执行入口需独立GPU审批，主四臂审批不能授权额外两组。如果均fresh运行增加60K，精确同合同full臂可审核后复用。当前来源权重/采样梯度不能证明帮助，两个真实终态和49帧质量检查仍待执行。
-
-渲染审计新增：gate在真实图逐项求导对照三套屏幕缓冲，再在临时统计核对max/可见性并集/单次分母；本轮只CPU桩回归。固定道路行不计通用增密统计。CUDA events采样gate/1/100步及全步光栅调用累计，主机wall/整步显存峰值、来源访问/权重/梯度触达、原生cap超额和拓扑/SGCM净容量变化分别记录。gate/1/5K更新前增加3次贡献光栅，核对原alpha并输出道路单独/背景/联合T下的全部道路贡献，按世界单元anchor采样；合法车遮路不标成非法遮挡。新render版本和真实数值证据加入准入闸门。[组件、边界和复现](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md#渲染增密与道路审计)。
-
-CPU验证现63项通过、0失败/错误/跳过，包含先前57项与覆盖孔洞/边界图/固定子单元/三路mask/两种入口授权及CLI绑定回归。V1两份损失源码不变；新49包只修复mask门限，固定查询/几何/原始RGB相等。中途新增边界诊断曾误索引已reduce标量，CPU捕获后修复并全量重跑，未进入GPU；旧expand测试桩修复证据保留。首组实际CUDA数值/alpha重放通过并开始开销/容量日志，最终场景质量未验收。199审计不重跑、不晋升。新凭据见[road_review_r2/validation.json](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/road_review_r2/validation.json)与同目录gpu_full_gate_001；历史render_audit_r1和supervision_r2保持原记录。failure_ledger_refs=[V82-F01,V82-F06]；failure_ledger_delta=none。
-
-短程控制仅登记背景时间车身路由开/关配对建议，各1000步、额外2000步；两者共同采用本轮屏幕bug修复、道路行保护和V1尺度L1，面积归一不混入。需要独立runner审核与GPU批准，没有可执行队列、没有消耗预算；该建议不能冒充已验证时间路由是泄漏原因。主审批和gate新增监督版本匹配，旧版本准入不授权新配置。
-
-资源准入：199审计后只读采样同盘可用105,957,957,632B，超过主四臂70,000,000,000B门槛。旧V2包、checkpoint与旧审计保留，本轮未清理既有资产；早期001–004不完整CPU工程运行现场保留，未计入曝光结果。状态仍为 `WAITING_USER_REVIEW_AND_GPU_APPROVAL`；真实CUDA新路径、显存/时间和训练质量待用户审核授权。
-
-[v3 方法、组件图、四臂与限制](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/README.md) · [固定计划](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/plan.json) · [CPU 部署凭据](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v3_20261020/cpu_validation_receipt.json)。failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=none；本轮不新增失败ID，不宣称GPU、30K或质量结果。
-
-## 已完成的原A/B基线与历史证据
-
-A同一批a6/a37/a5/a26/a18完成fresh GN11逻辑30K＋fresh实例30K。B按最新范围完成LiDAR∩FRONT相机20身份原生第一阶段30K，第二阶段0。两项均保留原49帧完整RGB；13纯相机轨迹只作上下文，B删除全部纳入车辆不等于全画面无车。原45K暂停，所有历史输入/checkpoint保留；未加入窗外训练帧、生成补全或新消融，human_verdict=null。
-
-A五身份两阶段30K＋30K、B交集20身份第一阶段30K及最终49帧零更新删除评估已完成；两项均未达到干净街景目标。A／B静态分支和删除图仍保留明显车形、亮白／彩色条带；A的a6独立资产有白色带状碎片。不能把训练完成、低损失或目标alpha清零当作分离质量通过。
-
-技术完成凭据：A真正30K完整单文件3047836844B，91项模型/Adam张量有限、RNG/采样器30000与终点策略合同已CPU核验，终点检查明确不授权30001步；最终评估另实际CUDA恢复全部模型/Adam/RNG/采样状态精确相等，零更新。A完整49帧×5身份共245记录、1568 PNG；每ID删除目标可见alpha精确0，静态分支逐像素不变。B四组件30K/Adam/RNG/SGCM/sampler及native49评估已CPU核验，最终另49帧343 PNG删除纳入动态集合，独立static回放通过。两项最终评估不改checkpoint。177558879B仅PNG/JSON归档已一次下载并逐文件SHA核对，未下载checkpoint/NPZ。46路当前完整480×320/49帧/10fps/all-I视频已发布（新A32、新B7、A第一阶段7），默认新A，可逐身份选择；全部显示/导出完整画面，无ROI。技术和文件通过不代表背景质量通过。
-
-原GN11曾在25847读取未完成CUDA事件中断，用户仅授权5846必要重放；该历史额外预算单列。后续所有原生/实例完整状态每5K保存；原不存在的GN11 5/15K不补造。实例1999完整保存后切换同预算共享准入、从2000精确恢复，额外重放0。后来宿主机md0写入等待时保留原进程，02:45UTC确认同PID恢复继续，额外重放0；具体平台根因和恢复时刻未获确认。30K只读检查脚本首次遇到终点续训限制和终态精简字段，现用独立终点合同/真实最后4000字节日志解决；未修改训练实现、目标、上限或已保存模型。
-
-两阶段身份/mask/init输入绑定已验证。实例适配为GT刚体、原孤立raw-body100＋visible-ID100、SH2000、49无放回、原生static与保owner空间clone/split/prune，staticLR.1/环境冻结、第二阶段无新SGCM；不复现PVG时间split。静态原生时间位移与衰减正则不一致的继承问题、缺道路观测与外观阴影证据分别保留，不能将所有残留归因于补道路，也未对具体残留Gaussian完成因果归因。学习率10倍误判和短测body域误标撤回继续保留。
-
-[完整画面同步播放器与质量报告](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/index.html) · [原始输入覆盖](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/baseline_engineering_20261018/intersection_inputs.html)。文件/PNG/实际视频解码与JS合同验证已完成；file URL安全限制未绕过，未宣称浏览器UI交互验收。13份真实训练源码原字节ZIP和licenses哈希核对，源ZIP SHA256=331f837f2f0fd36c9d58875d1027d1e878aa84f957110f9621a5f618e3cb1c58。failure_ledger_refs=[V82-F06]，不新增ID。全部A/B训练、最终零更新49帧删除评估、一次素材下载、完整画面实际复核和Git交付后，已按授权执行AutoDL关机。实际请求2026-10-19T04:55:43.986900+00:00，SSH观察完成2026-10-19T04:56:11.660350+00:00；入口/usr/bin/shutdown，执行前sync。关机前交付提交696a05c00f9409e9c9e18cbe3f235e411d9c18d3已推送并核对remote HEAD。当前A/B-aware preflight核对guardian79622、A79624、B79625、旧磁盘helper252862/252851及全部campaign worker/待启动controller均无活动，GPU计算进程为空，最终完整检查点和归档保留。SSH连续三次连接失败；这是实际SSH不可达观察，不声称已核实AutoDL平台计费。A/B干净街景质量仍未通过；没有再训练或重放，human_verdict=null。
-
-五身份分支同步视频已交付：旧五身份30K与原R15冻结4K，a6/a37/a5/a26/a18，共49帧raw89—137。主入口改为同一时间轴的删除前后整景、全部Actor动态分支、静态分支，可切换alpha、独立资产、观测图与物理阴影；另导出五段合成总览MP4，所有分支在同一视频内逐帧对齐。默认关闭物理阴影，删除前后整景保持相同开关；开阴影时目标从实际太阳caster中移除，静态接收面独立光栅化。旧5重放full逐像素匹配既有PNG，所有删除target-alpha=0；R15静态几何/外观不改。浏览器安全策略拒绝file://验证，未宣称实际浏览器验收；帧数/编码/帧序和异步解码同步逻辑另有验证。[同步播放器与组件图](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html)。三维中心页仅作补充，human_verdict=null。
-
-旧GN11 30K＋五实例30K已完成，a5/a26/a18/a6/a37都有真实独立owner，全49帧245身份帧的独立RGB、alpha、全景可见alpha与删除完成。历史旧3的147身份帧与原冻结R15的245身份帧也已完成，总637身份帧；本地全PNG矩阵及31视频交付，Git保存视频、固定锚帧和完整三值支撑证据。[旧基线完成对照与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/baseline_complete.html) · [旧5/原R15三维中心与真实支撑](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/identity_20261018/tristate/index.html)。
-
-以同一真实车框、物理米坐标及1e-5m容差，旧5/原R15的框外中心：a6 3.73%/24.09%，a37 6.35%/17.53%，a5 1.97%/4.22%，a26 2.45%/6.85%，a18 34.97%/46.44%。旧5无增密且初始化不同；a6最大σ约3.29m，在raw105/113/121可见大面积下部支撑、亮白/蓝色条带。a37两版删除均残留车形；旧5不是干净资产真值，框外率低也不能证明资产干净。旧5没有三值证据/概率，绿色只表示硬owner。原始历史旧3检查点仍只有三个owner，不能把新5归属倒推到它。
-
-修复R15实际完成4000步，训练总用时63.11分钟（含周期审计/保存，非同点数单步基准）；1K/2K/3K/4K检查点保留。三次46帧当前证据审计实际owner变化分别为[86, 39, 30]。五身份49帧独立/删除及真实动态/静态分支完成，已加入同步播放器第三模型；该轮R15队列已结束；当前新增基线工程重跑仍在执行，不能据旧队列状态关机。实际raw113中a6下部白带、a37关阴影删除后的静态车形仍在，整体资产质量未通过。[完整实际结果与组件](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/index.html)。human_verdict=null。
-
-修复使用Actor不可重置来源锚点、累计0.25m、真实框+0.10m容许域（保留初始异常包络）、σ增长1.5倍、2%每次/4倍总增密预算；当前证据审计在1500/2500/3500，source-tag不挡候选，反证撤销确定状态，重复真实3D才改owner，真实道路/大支撑可否决整点转车。FP64因子阴影接入模型/恢复。原30K学习率、loss、SGCM、容量保留，外部池不重放旧459点补入。组合修复不能归因单项，需检查保体、a6碎片与a37外观残影。26项CPU针对测试通过；4项旧reference失败在原版相同复现，已披露。
-
-新旧五身份实际分支已经交付为同步逐帧视频。原GN11、旧3、旧5、原R15及新修复4K检查点和原始输入保留，用户其他dirty不动。同一重建窗口，无独立编辑GT，human_verdict=null，problem_solved=null。
-
-此前R15 4K和三版分支渲染结束；当前用户新增的基线两阶段工程重跑优先。全部新任务、controller、评估、报告与Git交付真正完成后才按既有授权关机，记录实际SSH观察。
-
-
-补充修复4K三维归属对照：[原4K／修复4K同视角中心与证据](autoresearch/worldsim_v82/drivingeditor_shadow_rebuild_20261017/v3_backend_restore_r15/repair_4k_20261018/tristate/index.html)，可切相同初始化／旧5对照，五身份/背景/状态筛选及点属性。CPU只读提取真实4000步检查点，a6/a37/a5/a26/a18内部unknown=50/20/53/27/0，全部稀有unknown保留于显示样本；背景视图同时保留目标本体。中心不等于完整Gaussian支撑，新增修复三值GPU支撑着色投影未另做；真实49帧RGB/alpha/Delete视频已交付。控制逻辑与状态计数验证通过，未冒称浏览器file://实际验收。
+旧V4/V41正式队列不恢复；V41-R/B 30K已完成并封存，旧7003工程更新继续保留，不混入当前新账。本轮`quality_accepted=false`、`human_verdict=null`；`failure_ledger_refs=[V82-F01,V82-F06]`，新增失败卡尚未收口，不自动判质量接受。
