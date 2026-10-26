@@ -29,7 +29,10 @@ def write(p,d):
 
 def worker(scene,local_index):
     key=scene['context'];folder=ROOT/'motion_scene_inputs_v1'/key;folder.mkdir(parents=True,exist_ok=True)
-    if (folder/'sensor_preparation.json').exists():return json.loads((folder/'sensor_preparation.json').read_text())
+    if (folder/'sensor_preparation.json').exists():
+        saved=json.loads((folder/'sensor_preparation.json').read_text())
+        assert [x['raw'] for x in saved['frames']]==scene['selected_window'],'Never silently reuse another window'
+        return saved
     for name in ['image/image_0','velodyne','calib','pose','timestamp','annotations','projection_QA','frame_receipts']:(folder/name).mkdir(parents=True,exist_ok=True)
     selected=set(scene['selected_window']);rows=[];crc=decoder.crc_function()
     from google.protobuf.json_format import MessageToDict
@@ -37,6 +40,8 @@ def worker(scene,local_index):
         for raw in range(max(selected)+1):
             header=stream.read(12);length,check=struct.unpack('<QI',header);assert crc(header[:8])==check
             if raw not in selected:stream.seek(length+4,1);continue
+            from resource_control import require_start
+            require_start()
             payload=stream.read(length);assert crc(payload)==struct.unpack('<I',stream.read(4))[0]
             frame=pb.Frame.FromString(payload);assert frame.context.name==key
             fid=f'{local_index:04d}{raw:03d}';receipt=folder/'frame_receipts'/(fid+'.json')
@@ -62,11 +67,14 @@ def worker(scene,local_index):
                 Image.fromarray(base).save(folder/'projection_QA'/f'{raw:03d}.png')
             data=dict(frame_id=fid,raw=raw,timestamp_micros=frame.timestamp_micros,lidar_points=len(cloud),
                       front_projected_returns=int(valid.sum()),image_size=[rgb.shape[1],rgb.shape[0]],returns=details,crc_verified=True)
+            camera=next(x for x in frame.context.camera_calibrations if x.name==1)
+            data['front_camera_calibration']=dict(intrinsic=list(camera.intrinsic),extrinsic=list(camera.extrinsic.transform))
             write(receipt,data);rows.append(data)
             print('SENSOR_INPUT',local_index,raw,len(cloud),flush=True)
     result=dict(context=key,local_scene_index=local_index,index_provenance='assigned evaluation-local ID, not author scene mapping',
                 source_raw=scene['raw_path'],frames=rows,target_track=scene['selected_track'],
-                selection='new diagnostic development; passed raw checks; target continuous49, moving, calibrated correspondences; no editing outputs used',
+                selection=scene.get('selection_policy','input-only window proposal; per-window quality and asset checks pending'),
+                split=scene['split'],selected_window=scene['selected_window'],target_stats=scene.get('target_stats'),
                 outputs='real RGB, five-LiDAR/two-return points with TOP motion compensation, calibration, poses, timestamps, labels',
                 pending=['pixel masks and independent target association','native observed-region reconstruction QA','asset orientation/time coverage','destination/camera 3D support','source/evaluation split and long-run smoke'],
                 placeholders_created=False,target_GT_boxes_filter_initialization=False,training_ready=False,

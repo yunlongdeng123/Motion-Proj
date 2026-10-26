@@ -8,11 +8,22 @@ for name in ['registry.json','operation_window_proposals.json','status.json']:
     shutil.copy2(ROOT/'evaluation_admission_v2'/name,DEST/name)
 for name in ['ADMISSION_POLICY.json','admission_architecture.svg','EVALUATION_PROTOCOL.md','motion_diagnostics_architecture.svg']:
     shutil.copy2(ROOT/'code'/name,DEST/name)
+for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
+    shutil.copy2(ROOT/'code'/name,DEST/name)
+ledger=ROOT/'benchmark_cases_v1/scale_ledger.json'
+if ledger.exists():shutil.copy2(ledger,DEST/'benchmark_scale_ledger.json')
+for source in (ROOT/'benchmark_cases_v1/scenes').glob('*/summary.json'):
+    folder=source.parent;target=DEST/'benchmark_inputs'/folder.name;target.mkdir(parents=True,exist_ok=True)
+    for name in ['summary.json','input_quality.json','case_inputs.jpg']:
+        shutil.copy2(folder/name,target/name)
+    shutil.copytree(folder/'requests',target/'requests',dirs_exist_ok=True)
+    shutil.copy2(ROOT/'motion_scene_inputs_v1'/folder.name/'sensor_preparation.json',target/'sensor_preparation.json')
 for scene in (ROOT/'evaluation_admission_v1/scenes').iterdir():
     target=DEST/'contacts';target.mkdir(exist_ok=True)
     shutil.copy2(scene/'input_contact.jpg',target/(scene.name+'.jpg'))
 for scene in (ROOT/'motion_scene_inputs_v1').iterdir():
     if not scene.is_dir():continue
+    if not (scene/'sensor_preparation.json').exists():continue
     target=DEST/'motion_inputs'/scene.name;target.mkdir(parents=True,exist_ok=True)
     shutil.copy2(scene/'sensor_preparation.json',target/'sensor_preparation.json')
     shutil.copytree(scene/'projection_QA',target/'projection_QA',dirs_exist_ok=True)
@@ -54,7 +65,7 @@ for name in ['scene0017','scene0029']:
         shutil.copy2(source/'measurement_evaluation'/f,target/f)
     shutil.copy2(source/'propainter/summary.json',target/'backend_summary.json')
     shutil.copy2(source/'propainter/video.mp4',target/'generated.mp4')
-for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','phase2_git_publish.json']:
+for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
 archive=ROOT/'admission_delivery_v2.tar.gz'

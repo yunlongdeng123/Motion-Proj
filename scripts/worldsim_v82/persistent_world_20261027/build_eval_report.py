@@ -14,6 +14,17 @@ manifest = json.loads((DATA / 'manifest.json').read_text())
 summary = json.loads((DATA / 'summary.json').read_text())
 ADMISSION=OUT/'admission'
 admission_section=''
+scale_section=''
+if (ADMISSION/'benchmark_scale_ledger.json').exists():
+    scale=json.loads((ADMISSION/'benchmark_scale_ledger.json').read_text())
+    family_labels={'ego_speed':'自车变速','ego_lane_change':'自车变道','ego_direction':'自车转向','vehicle_speed':'他车变速','vehicle_lane_change':'他车变道','vehicle_direction':'他车转向','vehicle_insertion':'跨场景车辆插入','vehicle_removal':'指定车辆删除'}
+    family_rows=''.join(f'<tr><td>{family_labels[name]}</td><td>{d["materialized"]}</td><td>{d["input_screened"]}</td><td>{d["reserved_input_screened"]}</td><td>{d["completed"]}</td></tr>' for name,d in scale['families'].items())
+    expansion=scale.get('expansion') or {};done=len(expansion.get('completed',[]))
+    scale_section=f'''<section><h2>实际扩展其他case：八类任务，至少109个有效编辑</h2><img src="admission/benchmark_expansion_architecture.svg"><p>HorizonForge完整论文评测109编辑；展示页32编辑、128视频，不能混成32独立场景。本轮执行目标128有效编辑，长期240；正式完成不足109就继续补齐，不能以输入包、帧数、种子或多个方法凑数。</p><p><strong>30个额外片段正在CPU三路并行：本快照已完成{done}/30个新增真实传感器包。</strong> 加上复用输入共{scale['materialized_contexts']}段已落盘八类请求包，{scale['input_screened_cases']}个请求通过输入筛查；正式准入与新八类编辑完成仍为0。每包有49帧真实RGB/LiDAR/标定/位姿和31时刻米制请求，新窗口重新质检。开发优先，23封存只准备输入，不参与方法选择。</p><table><tr><th>任务</th><th>实际输入请求包</th><th>输入筛查通过</th><th>其中封存输入通过</th><th>实际完成</th></tr>{family_rows}</table><p>跨场景插入的资产库与朝向/尺度适配、自车轨迹渲染、操作空间支撑仍须核验；这里不是效果报告。新分割已排队，合格目标关联后接每场景一次smoke＋30K。<a href="admission/benchmark_scale_ledger.json">分阶段规模账本</a> · <a href="admission/BENCHMARK_SCALE.md">规模与准入合同</a> · 快照时间{escape(scale['updated_at_utc'])}</p></section>'''
+    for path in sorted((ADMISSION/'benchmark_inputs').glob('*/summary.json')):
+        d=json.loads(path.read_text());key=path.parent.name
+        if key in ['14705303724557273004_3105_000_3125_000','4295449061847708198_3769_000_3789_000','473735159277431842_630_095_650_095']:continue
+        scale_section+=f'<details><summary>其他实际输入：{key} · {d["input_screened_cases"]}/8输入通过 · {escape(d["split"])}</summary><img loading="lazy" src="admission/benchmark_inputs/{key}/case_inputs.jpg"><p>上图是任务输入，不是编辑效果。<a href="admission/benchmark_inputs/{key}/summary.json">真实传感器与任务状态</a> · <a href="admission/benchmark_inputs/{key}/input_quality.json">新窗口质检</a></p></details>'
 if (ADMISSION/'registry.json').exists():
     registry=json.loads((ADMISSION/'registry.json').read_text())
     shutil.copy2(Path(__file__).parent/'native_training_architecture.svg',ADMISSION/'native_training_architecture.svg')
@@ -98,6 +109,7 @@ body = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="v
 <style>body{{background:#f3f7fa;color:#203c51;font:16px/1.7 "Microsoft YaHei",sans-serif;margin:0}}main{{max-width:1400px;margin:auto;padding:25px}}section{{background:white;border:1px solid #d8e3eb;border-radius:12px;margin:22px 0;padding:22px}}h1{{font-size:29px}}h2{{font-size:22px}}a{{color:#126c9a}}img,video{{max-width:100%}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;border-bottom:1px solid #dce5ed;padding:12px;vertical-align:top}}.note{{background:#fff1d5;padding:16px;border-left:4px solid #b68c37}}.grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}article{{border:1px solid #dce5ed;padding:10px;border-radius:8px}}article p{{font-size:12px;overflow-wrap:anywhere}}small{{font-size:13px}}video{{width:100%;background:#152536}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:12px}}}}</style>
 <main><h1>4D 编辑评测：先发现重复失败，再改进背景修复</h1><p>2026-10-27 · 阶段二早期 · 质量待用户评审 · 持续自主推进</p>
 <p><a href="../Persistent_World_Autoresearch_20261027/index.html">原开发场景证据</a> · <a href="delivery/EVALUATION_PROTOCOL.md">冻结评测合同</a> · <a href="delivery/manifest.json">场景与案例规格</a> · <a href="failure_matrix.json">失败矩阵</a></p>
+{scale_section}
 {admission_section}
 <section><h2>已经做了什么，哪些仍未完成</h2><table><tr><th>层次</th><th>实际进展</th><th>不能据此宣称</th></tr>
 <tr><td>数据准备</td><td>36个真实context逐记录双CRC核验；1764帧RGB和原始轨迹标注。原方法开发1段、历史重建开发2段、新开发10段、封存23段。</td><td>尚未全部成为高斯编辑案例；context之间物理路段重叠仍待审计。</td></tr>

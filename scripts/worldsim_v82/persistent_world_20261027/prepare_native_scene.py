@@ -26,7 +26,8 @@ def propose(context):
     entries=proposals['proposals']
     if isinstance(entries,dict):entry=entries[context]
     else:entry=next(x for x in entries if x['context']==context)
-    target=entry['current_window_moving_target']
+    target=sensor.get('target_stats') or entry['current_window_moving_target']
+    assert target is not None,'No motion-qualified target for this window; do not invent instance ownership'
     track=target['target_track']
     assert track, target
     dest=scene/'native_preparation';dest.mkdir(exist_ok=True)

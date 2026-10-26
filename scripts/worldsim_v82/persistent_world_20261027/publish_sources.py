@@ -6,7 +6,7 @@ REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
 CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
 CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
 for p in (ROOT/'code').glob('*.py'):shutil.copy2(p,CODE/p.name)
-for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg']:
+for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
     shutil.copy2(ROOT/'code'/name,DOC/name)
 quota=json.loads((ROOT/'quota_state.json').read_text())
 native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
@@ -19,6 +19,8 @@ current='''# 当前研究状态
 [计划](autoresearch/persistent_world_20261027/PLAN.md) · [评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md) · [输入准入规则](autoresearch/persistent_world_20261027/ADMISSION_POLICY.json)
 
 ![逐场景流水](autoresearch/persistent_world_20261027/native_training_architecture.svg)
+
+**其他case已在实际准备，不能只排已有3段训练。** 新增30段（7开发、23封存）真实RGB/LiDAR/标定/轨迹由3个CPU进程并行提取；八类物理请求与新窗口重筛同步落盘，分割父队列已接入，当前首场景编辑诊断仍优先。[八类规模合同](autoresearch/persistent_world_20261027/BENCHMARK_SCALE.md)：至少109个有效编辑、执行目标128，长期240。HorizonForge论文109例，展示32编辑/128视频，不能混为场景数。实际进度以benchmark_cases_v1/scale_ledger.json为准，输入包、输入通过、实例/空间/训练、执行与质量分别计数；封存不参与方法选择。
 
 最新用户授权：通过数据质量检查的场景立即优先训练，不等所有候选；每场景只fresh训练一次原生V41-B/GN11基座30K，多种编辑复用。每5K保存静态、动态、环境、优化器/RNG/采样状态四件与评价。smoke真实fresh≥300秒+完整恢复≥300秒，实跑保存/49帧评价/恢复/下一入口；额外更新单列，正式fresh30K不混smoke。bug自主修复、精确恢复或新目录重放，旧现场与成本保留。仅本场景30K完整成功、最终可恢复四件和评价验证后且磁盘紧张，才清本场景中间checkpoint产物；不清其他资产。
 

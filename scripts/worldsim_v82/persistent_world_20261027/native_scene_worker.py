@@ -35,8 +35,16 @@ def main():
     require_start();assert json.loads((ROOT/'research_policy.json').read_text())['allow_native_scene_training']
     assert not a.output.exists(),'No-clobber: use new attempt directories'
     assert json.loads((a.scene/'native_preparation/selection_reviewed.json').read_text())['status']=='agent_visually_reviewed'
-    registry=json.loads((ROOT/'evaluation_admission_v2/registry.json').read_text())
-    admitted=next(x for x in registry['scenes'] if x['context']==a.scene.name)
+    window_screen=ROOT/'benchmark_cases_v1/scenes'/a.scene.name/'input_quality.json'
+    if window_screen.exists():
+        admitted=json.loads(window_screen.read_text())
+        sensor=json.loads((a.scene/'sensor_preparation.json').read_text())
+        selection=json.loads((a.scene/'native_preparation/selection_reviewed.json').read_text())
+        assert [x['raw'] for x in admitted['image_metrics']]==[x['raw'] for x in sensor['frames']],'New window must be screened, not inherit old largest-window admission'
+        assert admitted['target']['track']==selection['track'],'Admission must match the actual reviewed target'
+    else:
+        registry=json.loads((ROOT/'evaluation_admission_v2/registry.json').read_text())
+        admitted=next(x for x in registry['scenes'] if x['context']==a.scene.name)
     assert admitted['raw_input_status']=='raw_checks_passed' and not admitted['structural_failures'] and not admitted['review_flags']
     assert len(list((a.scene/'sky/sky_0').glob('*.png')))==49
     a.output.mkdir(parents=True)
