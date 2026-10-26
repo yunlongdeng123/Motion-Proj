@@ -67,4 +67,6 @@ def main():
     (dest/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary),flush=True)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from gpu_slot import exclusive
+    with exclusive():main()

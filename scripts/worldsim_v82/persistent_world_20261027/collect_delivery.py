@@ -9,7 +9,7 @@ for name in ['delete_selected','move_selected','insert_reused','camera_shift','c
     state.revision(name,'background_preserve_199',dict(operation=name,asset_binding=str(ops/'dynamic_binding.npz'),
         source='原生4D高斯工程基线',semantic_binding_verified=False))
     state.record_request(name,name,dict(operation=name,frames=list(range(89,138))),ops/name)
-for case in ['delete_all_unrepaired','delete_all_repaired','delete_all_evidence_routed']:
+for case in ['delete_all_unrepaired','delete_all_repaired','delete_all_evidence_routed','delete_all_direct_reference']:
     path=native/case/'propainter/summary.json'
     if path.exists():
         payload=dict(outputs=str(path.parent/'model_png'),mask=str(native/case/'mask'),
@@ -19,7 +19,7 @@ for case in ['delete_all_unrepaired','delete_all_repaired','delete_all_evidence_
             (state.scene,case,payload['native_state'],'ProPainter',json.dumps(payload)))
 summary=state.summary();state.close()
 snap=dict(persistent_state=summary,snapshot_time=time.time(),research_complete=False,quality_accepted=False,human_verdict=None)
-for name in ['controller_status','training_status','gpu_peak','download_status']:
+for name in ['controller_status','training_status','geometry_status','paired_eval_status','gpu_peak','download_status']:
     p=ROOT/(name+'.json')
     if p.exists():snap[name]=json.loads(p.read_text())
 snap['reference49_completed']=len(list((ROOT/'phase2_reference49/crossview').glob('*.npz')))
@@ -45,7 +45,7 @@ for parent in [native,ops]:
 snap['videos']=videos
 (ROOT/'milestone_snapshot.json').write_text(json.dumps(snap,indent=2))
 archive=ROOT/'milestone_delivery.tar.gz'
-with tarfile.open(archive,'w:gz') as tar:
+with tarfile.open(archive,'w:gz',dereference=True) as tar:
     for p in ROOT.rglob('*'):
         if not p.is_file():continue
         rel=p.relative_to(ROOT)

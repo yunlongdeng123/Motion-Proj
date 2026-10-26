@@ -11,7 +11,12 @@ def main():
     p.add_argument('--steps',type=int,required=True);p.add_argument('--min-seconds',type=float,default=0)
     p.add_argument('--resume');a=p.parse_args();config=read(a.config);dest=Path(a.output);dest.mkdir(parents=True,exist_ok=True)
     torch.manual_seed(config['seed']);np.random.seed(config['seed']);random.seed(config['seed'])
-    n=Native();road=Road(Path(config['initialization']));views=config['train_views']
+    n=Native();geometry_weight=config.get('surface_moment_weight',0.)
+    if geometry_weight:
+        import surface_moments
+        check=surface_moments.install(n)
+        (dest/'surface_moment_cuda_check.json').write_text(json.dumps(check,indent=2))
+    road=Road(Path(config['initialization']));views=config['train_views']
     data=[dict(np.load(Path(config['reference_root'])/f'{raw}.npz')) for raw in views];cams=[n.camera(raw) for raw in views]
     selected=np.zeros(len(n.static.get_xyz),bool);scale=config['meter_to_model'];sigma=cpu(n.static.get_scaling).max(1)
     with torch.no_grad():
@@ -80,10 +85,14 @@ def main():
             src,obs=dense[i];visible_mask=torch.tensor(obs['visible'],device='cuda');gt=torch.tensor(obs['rgb'].transpose(2,0,1),device='cuda')
             direct=render_road(n.camera(src),road,n.args,for_training=True);road_loss=(direct['rgb']-gt).abs()[:,visible_mask].mean()
             loss=deleted+preserve+.1*visible+.1*road_loss
+            geometry=loss.new_zeros(())
+            if geometry_weight:
+                geometry=surface_moments.loss(result,torch.tensor(d['depth'],device='cuda'),mask,scale,config['surface_tolerance_m'])
+                loss=loss+geometry_weight*geometry
             assert torch.isfinite(loss);loss.backward()
             assert all(x.grad is not None and torch.isfinite(x.grad).all() for x in [gate,road.dc,road.opacity])
             optimizer.step()
-            record=dict(step=step,raw=views[i],loss=float(loss),deleted=float(deleted),protect=float(preserve),road=float(road_loss),
+            record=dict(step=step,raw=views[i],loss=float(loss),deleted=float(deleted),protect=float(preserve),road=float(road_loss),geometry=float(geometry),
                 seconds=time.time()-start,cuda_peak_allocated=torch.cuda.max_memory_allocated(),cuda_peak_reserved=torch.cuda.max_memory_reserved())
             log.write(json.dumps(record)+'\n');log.flush()
             if step%100==0:print(json.dumps(record),flush=True)
@@ -96,4 +105,6 @@ def main():
     (dest/f'receipt_from{start_step}.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt),flush=True)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    from gpu_slot import exclusive
+    with exclusive():main()
