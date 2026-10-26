@@ -10,6 +10,13 @@ for name in ['ADMISSION_POLICY.json','admission_architecture.svg','EVALUATION_PR
     shutil.copy2(ROOT/'code'/name,DEST/name)
 for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
     shutil.copy2(ROOT/'code'/name,DEST/name)
+shutil.copy2(ROOT/'code/benchmark_execution_architecture.svg',DEST/'benchmark_execution_architecture.svg')
+for path in (ROOT/'benchmark_execution_v1').glob('*/status.json'):
+    target=DEST/'benchmark_execution'/path.parent.name;target.mkdir(parents=True,exist_ok=True)
+    shutil.copy2(path,target/'status.json')
+    if (path.parent/'cpu_delivery/summary.json').exists():shutil.copytree(path.parent/'cpu_delivery',target/'cpu_delivery',dirs_exist_ok=True)
+for name in ['benchmark_adapter_cpu_audit_v1.json','benchmark_execution_dispatch.json']:
+    if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
 ledger=ROOT/'benchmark_cases_v1/scale_ledger.json'
 if ledger.exists():shutil.copy2(ledger,DEST/'benchmark_scale_ledger.json')
 for source in (ROOT/'benchmark_cases_v1/scenes').glob('*/summary.json'):

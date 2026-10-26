@@ -25,6 +25,19 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
         d=json.loads(path.read_text());key=path.parent.name
         if key in ['14705303724557273004_3105_000_3125_000','4295449061847708198_3769_000_3789_000','473735159277431842_630_095_650_095']:continue
         scale_section+=f'<details><summary>其他实际输入：{key} · {d["input_screened_cases"]}/8输入通过 · {escape(d["split"])}</summary><img loading="lazy" src="admission/benchmark_inputs/{key}/case_inputs.jpg"><p>上图是任务输入，不是编辑效果。<a href="admission/benchmark_inputs/{key}/summary.json">真实传感器与任务状态</a> · <a href="admission/benchmark_inputs/{key}/input_quality.json">新窗口质检</a></p></details>'
+    if (ADMISSION/'benchmark_adapter_cpu_audit_v1.json').exists():
+        d=json.loads((ADMISSION/'benchmark_adapter_cpu_audit_v1.json').read_text())
+        scale_section+=f'<section><h2>八类执行适配器：真实相机曲线与不同场景资产</h2><img src="admission/benchmark_execution_architecture.svg"><p>输入相机到原生相机的49帧最大差{d["camera_original49_max_abs"]:.3g}；跨场景资产按米制尺寸转换均值、协方差与SH方向，位置/协方差往返检查通过。首例31帧按源车真实尺寸复查框碰撞{d["actual_source_dimensions_collision_frames"]}帧。底部只按目标框粗对齐，尚未证明道路支撑、光照适配或新视角正确。</p><p>这些是CPU工程核对，不能代替GPU入口。<a href="admission/benchmark_adapter_cpu_audit_v1.json">逐帧变换审计</a></p>'
+        for path in sorted((ADMISSION/'benchmark_execution').glob('*/status.json')):
+            item=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
+            scale_section+=f'<p>{path.parent.name}：{escape(item["phase"])}；实际完成原生任务族{len(item["completed_native_families"])}，固定后端{len(item["completed_fixed_backend_families"])}，正式准入仍0。<a href="{relative}/status.json">真实执行状态</a></p>'
+            delivery=path.parent/'cpu_delivery'
+            if (delivery/'summary.json').exists():
+                done=json.loads((delivery/'summary.json').read_text());scale_section+=f'<img src="{relative}/cpu_delivery/comparison.jpg">'
+                for family in done['families']:
+                    name=family['family'];scale_section+=f'<details><summary>{escape(name)} · 原生31帧</summary><video controls preload="metadata" src="{relative}/cpu_delivery/{name}/native.mp4"></video></details>'
+                    if family['fixed_backend_executed']:scale_section+=f'<details><summary>{escape(name)} · 固定后端</summary><video controls preload="metadata" src="{relative}/cpu_delivery/{name}/generated.mp4"></video></details>'
+        scale_section+='</section>'
 if (ADMISSION/'registry.json').exists():
     registry=json.loads((ADMISSION/'registry.json').read_text())
     shutil.copy2(Path(__file__).parent/'native_training_architecture.svg',ADMISSION/'native_training_architecture.svg')
@@ -120,6 +133,9 @@ failures = [
 ]
 if (ADMISSION/'motion_execution/14705303724557273004_3105_000_3125_000/diagnostics/summary.json').exists():
     failures.append(dict(scene='14705303724557273004_3105_000_3125_000',operation='单目标删除、平移、转向、变速、克隆和相机变化',observation='raw109删除后保留SUV形状静态残影；ProPainter变成暗块；平移/转向资产失真，相机侧移暴露其他车辆和背景失真。',status='实际11变体31帧及6固定视频已完成，6次连续原生修订已执行；同时间raw109图像已检查',cause='②静态残留可见；①资产/算子与静态遮挡尚需分离；③暗块无反事实GT不能直接认定改坏正确道路。SH物体系旋转CPU控制通过、GPU控制待执行。',evidence='admission/motion_execution/14705303724557273004_3105_000_3125_000/diagnostics/comparison.jpg'))
+hold_audit=ADMISSION/'motion_inputs/13506499849906169066_120_000_140_000/association_candidate_audit.json'
+if hold_audit.exists():
+    failures.append(dict(scene='13506499849906169066_120_000_140_000',operation='输入实例关联准入，未开始训练或编辑',observation='DEVA65候选保留点仅1.70%处于目标框扩0.1m内，与视觉邻车吻合；DEVA63有7帧主组件守卫失败。',status='HOLD保留，49帧候选已CPU审计；mask/点/守卫均未改',cause='①输入实例关联/源点支撑问题，不能归为②背景修复失败；框只用于诊断。',evidence='admission/motion_inputs/13506499849906169066_120_000_140_000/association_candidate_audit.json'))
 (OUT / 'failure_matrix.json').write_text(json.dumps(failures, ensure_ascii=False, indent=2), encoding='utf-8')
 labels = {'previous_method_development': '原方法开发', 'previous_reconstruction_development': '历史重建开发',
           'new_diagnostic_development': '新增诊断开发', 'heldout_reserved': '封存：未跑编辑评测'}

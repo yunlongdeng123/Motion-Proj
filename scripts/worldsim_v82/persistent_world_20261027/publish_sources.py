@@ -6,7 +6,7 @@ REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
 CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
 CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
 for p in (ROOT/'code').glob('*.py'):(CODE/p.name).write_text(p.read_text(encoding='utf-8'),encoding='utf-8')
-for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
+for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','benchmark_execution_architecture.svg']:
     (DOC/name).write_text((ROOT/'code'/name).read_text(encoding='utf-8'),encoding='utf-8')
 quota=json.loads((ROOT/'quota_state.json').read_text())
 native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
@@ -48,7 +48,7 @@ NATIVE_STATUS
 ## 接下来应解决的链路
 
 1. 在已完成首场景结果上补静态遮挡/资产/SH变换控制，并汇总跨场景①②③失败矩阵；不把所有问题预归②。
-2. 接真实自车速度/变道/转向相机曲线与不同场景资产插入的GPU适配器。已有0.5m侧移、3°yaw和同资产克隆不能冒充这四类已完成。
+2. 真实自车速度/变道/转向相机曲线与不同场景资产插入已接新的只读执行器，GPU entry与完整31帧排队，尚未声称通过。CPU核对49相机差1.11e-13、资产位置/协方差往返及真实尺寸碰撞；首插入请求0框碰撞。米制尺寸保留，底部仅按目标框粗对齐，不代表实测道路支撑。已有0.5m侧移、3°yaw和同资产克隆不冒充这四类已完成。
 3. 连续编辑固定ProPainter对照：3次实际推理+2个完全相同输入/掩码的普通缓存控制；未知相机域不伪造生成掩码。复用一致性不等于正确三维背景，需要留出视角、参考域和生成负担共同验证。
 4. 继续合格新开发目标关联、原生几何守卫、约10分钟真实smoke和逐场景30K；输入有问题与真实遮挡困难分层，不能按编辑效果删样。
 
