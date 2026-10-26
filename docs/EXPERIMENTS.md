@@ -209,3 +209,7 @@
 - 2026-10-24 V4.2 CPU内部教师：固定道路方向高斯先验，49帧内部软目标和35648补点请求；9处整块撤源孔洞（5开发/4验证），验证核心MAE0.02330/PSNR27.725，开发MAE未胜简单插值；真实标签优先，GPU更新0。5项来源隔离/遮挡梯度检查通过；生成式仅调研与输入准备。参见V4.2 INTERIOR_ROAD_TEACHER.md；不宣称最终编辑质量通过。
 
 - 同轮更严格1.7m撤源halo复核：算法参数未改；验证核心RGB MAE0.03152/PSNR26.015/高度MAE0.01197m，几何优于各向同性0.06969m而颜色差异小，开发颜色MAE仍较差。以此为主要CPU证据，旧非halo指标保留。
+
+- WS-V82-GN11-V42-CONTROLLED-SMOKE-20261026：[199帧真实观测、独立编辑透射与FreeInpaint短程控制](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/EXPERIMENT_REPORT.md)；原生B/正式更新0；质量待人工评审。
+
+- WS-V82-GN11-V42-C-MECHANISM-20261026：[C组件归因与后续路线](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)；零更新，10种固定状态×49帧，非重训消融。
