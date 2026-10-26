@@ -3,11 +3,11 @@
 Wait behind the first scene's immediate diagnostic round, never stop a healthy
 training. Semantic contacts still need agent review before new native training.
 """
-import json,os,subprocess,time,traceback
+import argparse,json,os,subprocess,time,traceback
 from pathlib import Path
 from PIL import Image
 from prepare_motion_masks import ROOT,BASE,SEG,PYTHON,digest
-from native_scene_controller import dependency_result
+from native_scene_controller import dependency_result,same_process
 from gpu_slot import exclusive
 from resource_control import require_start,stop_requested
 
@@ -18,8 +18,14 @@ def write(p,d):
     q=p.with_suffix('.tmp');q.write_text(json.dumps(d,indent=2));q.replace(p)
 
 def main():
-    require_start();DEST.mkdir(exist_ok=False)
-    state=dict(pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='waiting_first_scene_diagnostics',child=None,completed=[],errors=[],native_training_started=[],new_training_updates=0)
+    p=argparse.ArgumentParser();p.add_argument('--resume-boundary',action='store_true');a=p.parse_args()
+    require_start();completed=[];errors=[]
+    if a.resume_boundary:
+        previous=json.loads((DEST/'status.json').read_text());assert previous['phase']=='paused_after_completed_mask_for_first_diagnostic_recovery'
+        assert previous['child'] is None and not same_process(previous['pid'],previous['start_ticks'])
+        write(DEST/f'previous_controller_{previous["pid"]}.json',previous);completed=previous['completed'];errors=previous['errors']
+    else:DEST.mkdir(exist_ok=False)
+    state=dict(pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='waiting_first_scene_diagnostics',child=None,completed=completed,errors=errors,native_training_started=[],new_training_updates=0)
     def update(**kw):state.update(kw);write(DEST/'status.json',state)
     update()
     while dependency_result(ROOT/'motion_suite_execution_v1'/FIRST/'status.json') is None:require_start();time.sleep(5)

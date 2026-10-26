@@ -20,7 +20,7 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
     family_labels={'ego_speed':'自车变速','ego_lane_change':'自车变道','ego_direction':'自车转向','vehicle_speed':'他车变速','vehicle_lane_change':'他车变道','vehicle_direction':'他车转向','vehicle_insertion':'跨场景车辆插入','vehicle_removal':'指定车辆删除'}
     family_rows=''.join(f'<tr><td>{family_labels[name]}</td><td>{d["materialized"]}</td><td>{d["input_screened"]}</td><td>{d["reserved_input_screened"]}</td><td>{d["completed"]}</td></tr>' for name,d in scale['families'].items())
     expansion=scale.get('expansion') or {};done=len(expansion.get('completed',[]))
-    scale_section=f'''<section><h2>实际扩展其他case：八类任务，至少109个有效编辑</h2><img src="admission/benchmark_expansion_architecture.svg"><p>HorizonForge完整论文评测109编辑；展示页32编辑、128视频，不能混成32独立场景。本轮执行目标128有效编辑，长期240；正式完成不足109就继续补齐，不能以输入包、帧数、种子或多个方法凑数。</p><p><strong>30个额外片段正在CPU三路并行：本快照已完成{done}/30个新增真实传感器包。</strong> 加上复用输入共{scale['materialized_contexts']}段已落盘八类请求包，{scale['input_screened_cases']}个请求通过输入筛查；正式准入与新八类编辑完成仍为0。每包有49帧真实RGB/LiDAR/标定/位姿和31时刻米制请求，新窗口重新质检。开发优先，23封存只准备输入，不参与方法选择。</p><table><tr><th>任务</th><th>实际输入请求包</th><th>输入筛查通过</th><th>其中封存输入通过</th><th>实际完成</th></tr>{family_rows}</table><p>跨场景插入的资产库与朝向/尺度适配、自车轨迹渲染、操作空间支撑仍须核验；这里不是效果报告。新分割已排队，合格目标关联后接每场景一次smoke＋30K。<a href="admission/benchmark_scale_ledger.json">分阶段规模账本</a> · <a href="admission/BENCHMARK_SCALE.md">规模与准入合同</a> · 快照时间{escape(scale['updated_at_utc'])}</p></section>'''
+    scale_section=f'''<section><h2>实际扩展其他case：八类任务，至少109个有效编辑</h2><img src="admission/benchmark_expansion_architecture.svg"><p>HorizonForge完整论文评测109编辑；展示页32编辑、128视频，不能混成32独立场景。本轮执行目标128有效编辑，长期240；正式完成不足109就继续补齐，不能以输入包、帧数、种子或多个方法凑数。</p><p><strong>30个额外片段已通过CPU三路提取：本快照完成{done}/30个新增真实传感器包。</strong> 加上复用输入共{scale['materialized_contexts']}段已落盘八类请求包，{scale['input_screened_cases']}个请求通过输入筛查；正式准入与新八类编辑完成仍为0。每包有49帧真实RGB/LiDAR/标定/位姿和31时刻米制请求，新窗口重新质检。开发优先，23封存只准备输入，不参与方法选择。</p><table><tr><th>任务</th><th>实际输入请求包</th><th>输入筛查通过</th><th>其中封存输入通过</th><th>实际完成</th></tr>{family_rows}</table><p>跨场景插入的资产库与朝向/尺度适配、自车轨迹渲染、操作空间支撑仍须核验；这里不是效果报告。新分割已排队，合格目标关联后接每场景一次smoke＋30K。<a href="admission/benchmark_scale_ledger.json">分阶段规模账本</a> · <a href="admission/BENCHMARK_SCALE.md">规模与准入合同</a> · 快照时间{escape(scale['updated_at_utc'])}</p></section>'''
     for path in sorted((ADMISSION/'benchmark_inputs').glob('*/summary.json')):
         d=json.loads(path.read_text());key=path.parent.name
         if key in ['14705303724557273004_3105_000_3125_000','4295449061847708198_3769_000_3789_000','473735159277431842_630_095_650_095']:continue
@@ -65,11 +65,27 @@ if (ADMISSION/'registry.json').exists():
             executed=json.loads(status_file.read_text()) if status_file.exists() else {}
             execution=f'原生变体 {executed.get("completed_native_cases",0)}；后端 {executed.get("completed_backend_cases",0)}<br><small>{escape(executed.get("phase","not_dispatched"))}</small>'
             request_rows.append(f'<tr><td>{context}</td><td>{item["single_request_specs"]}单请求变体 + 1组合协议<br><strong>{execution}</strong></td><td>{collisions}</td><td><a href="admission/motion_requests/{context}/summary.json">物理时刻、轨迹和限制</a></td></tr>')
-        admission_section+=f'''<section><h2>接续运动与相机测试：请求先做物理一致性检查</h2><img src="admission/motion_diagnostics_architecture.svg"><p>共同中央31个相机时刻；0.75/1.25倍速的查询都在原49帧支持内，无时间截断或外推。新增平移、复用插入、±15°转向、0.5m相机侧移和3°旋转入口；同一个30K checkpoint复用，不训练每case。队列等待同场景完整30K后先做真实GPU单帧原生一致性检查，再完整执行。连续修订协议尚未实际执行。</p><table><tr><th>场景</th><th>规格数≠结果数</th><th>输入标注框碰撞压力</th><th>来源</th></tr>{''.join(request_rows)}</table><p>克隆插入也必须检查与保留原车的碰撞。冲突请求保留为压力层，不当正常编辑质量失败，也不推断旧场景所有拖影均由碰撞造成。新位置道路支撑尚未证明；标注框仅用于请求条件与诊断，未过滤训练点。相机未知mask未定义时保留原生诊断，不伪称视频补完。</p></section>'''
+        admission_section+=f'''<section><h2>接续运动与相机测试：请求先做物理一致性检查</h2><img src="admission/motion_diagnostics_architecture.svg"><p>共同中央31个相机时刻；0.75/1.25倍速的查询都在原49帧支持内，无时间截断或外推。新增平移、复用插入、±15°转向、0.5m相机侧移和3°旋转入口；同一个30K checkpoint复用，不训练每case。队列等待同场景完整30K后先做真实GPU单帧原生一致性检查，再完整执行。首场景6次连续原生修订已执行；后端连续对照仍待完成。</p><table><tr><th>场景</th><th>规格数≠结果数</th><th>输入标注框碰撞压力</th><th>来源</th></tr>{''.join(request_rows)}</table><p>克隆插入也必须检查与保留原车的碰撞。冲突请求保留为压力层，不当正常编辑质量失败，也不推断旧场景所有拖影均由碰撞造成。新位置道路支撑尚未证明；标注框仅用于请求条件与诊断，未过滤训练点。相机未知mask未定义时保留原生诊断，不伪称视频补完。</p></section>'''
         for picture in sorted((ADMISSION/'motion_execution').glob('*/*/native.png')):
             case_dir=picture.parent;relative=str(case_dir.relative_to(OUT)).replace('\\','/')
             generated=case_dir/'generated.png';backend=(f'<img src="{relative}/generated.png">' if generated.exists() else '<p>固定后端结果尚未完成或该操作仅做原生诊断。</p>')
             admission_section+=f'<section><h2>新场景实际输出：{escape(case_dir.parent.name)} / {escape(case_dir.name)}</h2><p>左为原生，右为固定后端（若已完成）；仅供失败定位，无反事实RGB真值，质量仍待评审。</p><div class="grid"><img src="{relative}/native.png">{backend}</div></section>'
+            for filename,label in [('native_h264.mp4','生成前原生3D'),('generated_h264.mp4','固定ProPainter')]:
+                if (case_dir/filename).exists():admission_section+=f'<details><summary>{escape(case_dir.name)}：{label}31帧视频</summary><video controls preload="metadata" src="{relative}/{filename}"></video></details>'
+        for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/summary.json')):
+            d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
+            panels=''.join(f'<article><p>{escape(x["revision"])}</p><img src="{relative}/{x["revision"]}.png"></article>' for x in d['revisions'])
+            admission_section+=f'<section><h2>实际连续请求原生基线：{path.parent.parent.name}</h2><p>{d["revision_count"]}次修订，每次31帧，始终操作同一克隆实例。原车删除后保持删除；移动和转向不重新插入原车。相机回访与同状态普通缓存差{d["revisit_same_revision_original_camera_max_difference"]}；这是工程控制，不能证明学习到的持久记忆收益。连续请求固定后端仍待执行。</p><div class="grid">{panels}</div><a href="{relative}/summary.json">版本状态与缓存控制</a></section>'
+        if list((ADMISSION/'motion_execution').glob('*/continuous/summary.json')):
+            admission_section=admission_section.replace('首场景6次连续原生修订已执行；后端连续对照仍待完成。','首场景连续原生6次修订×31帧已实际运行；连续视频后端仍待执行。')
+        for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
+            d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
+            rows=''.join(f'<tr><td>{escape(x["case"])}</td><td>{x["generation_pixels_mean"]:.1f}</td><td>{x["preservation_MAE_macro"] if x["preservation_MAE_macro"] is not None else "新视角无对应真值"}</td><td>{x["backend"]["outside_mask_max_byte_difference"] if x["backend"] else "未调用"}</td></tr>' for x in d['cases'])
+            admission_section+=f'<section><h2>首场景多操作证据：生成前后分开</h2><img src="{relative}/comparison.jpg"><table><tr><th>操作</th><th>平均修补像素</th><th>保留域对原生图MAE</th><th>后端mask外最大字节差</th></tr>{rows}</table><p>保留域排除原车、新车投影与边缘；这些指标只检查编辑局部性与后端负担，不是删车真值、几何成功率或新视角PSNR。原生适配差{d["adapter_native_max_difference"]}，主副本未变。<a href="{relative}/summary.json">逐帧指标</a></p></section>'
+    for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
+        d=json.loads(path.read_text());branch=d.get('branch_contributions')
+        if branch:
+            admission_section+=f'<p>首场景DEVA车身内缩2像素区域：动态合成权重均值{branch["body_core_dynamic_weight_macro"]:.4f}，静态{branch["body_core_static_weight_macro"]:.4f}，静态占优像素比例{branch["body_core_static_dominant_fraction_macro"]:.2%}。这是分支贡献诊断，不能当污染率；玻璃、透明度和掩码不确定性也会留下背景贡献。需结合独立动态层、静态层和变换控制定位失真。</p>'
     audit=ADMISSION/'native_actor_source_audit.json'
     if audit.exists():
         audit_rows=''.join(f'<tr><td>{x["context"]}</td><td>{x["total_dynamic_points"]:,}</td><td>{100*x["inside_annotated_box_fraction"]["0.0"]:.2f}%</td><td>{x["world_replay_max_abs_m"]:.1f}m</td></tr>' for x in json.loads(audit.read_text()))
@@ -82,7 +98,9 @@ if (ADMISSION/'registry.json').exists():
             canvas.paste(Image.open(node/(name+'.png')).convert('RGB'),(i*480,30));ImageDraw.Draw(canvas).text((i*480+8,8),name+f' / {event["iteration"]}',fill=(20,40,60))
         canvas.save(picture,quality=94)
         relative=str(node.relative_to(OUT)).replace('\\','/')
-        admission_section+=f'<section><h2>训练中间快照：{path.parent.parent.name} · {event["iteration"]:,}步</h2><img loading="lazy" src="{relative}/contact.jpg"><p>原生保存的中间相机；依次GT、完整、静态、动态。未达到30K，资产仍可见模糊/残影，不提前接受编辑质量或判定最终失败。<a href="{relative}/paper_metrics.json">原生49帧区域指标</a></p></section>'
+        stage='正式30K完成' if event['iteration']==30000 else '训练中间快照'
+        interpretation='六档完整节点和30000条有限更新已核对，资产与编辑质量仍待检查。' if event['iteration']==30000 else '尚未达到30K，不提前接受编辑质量或判定最终失败。'
+        admission_section+=f'<section><h2>{stage}：{path.parent.parent.name} · {event["iteration"]:,}步</h2><img loading="lazy" src="{relative}/contact.jpg"><p>原生保存的中间相机；依次GT、完整、静态、动态。{interpretation}<a href="{relative}/paper_metrics.json">原生49帧区域指标</a></p></section>'
 for name in ['scene0017', 'scene0029', 'scene0008_repair10k']:
     video = DATA / name / 'delete_video.mp4'
     result = video.with_name('delete_h264.mp4')

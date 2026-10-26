@@ -34,7 +34,7 @@ for scene in (ROOT/'motion_scene_inputs_v1').iterdir():
 for run in (ROOT/'native_scene_training_v1').iterdir():
     target=DEST/'native_training'/run.name;target.mkdir(parents=True,exist_ok=True)
     for p in run.rglob('*.json'):
-        if p.name in ['status.json','smoke_gate.json','latest_complete_node.json','returned.json','restore_verification.json','cuda_memory_peak.json','config_delta.json','actual_scene_binding.json']:
+        if p.name in ['status.json','smoke_gate.json','latest_complete_node.json','returned.json','restore_verification.json','cuda_memory_peak.json','config_delta.json','actual_scene_binding.json','formal30k_agent_acceptance.json','checkpoint_retention.json']:
             q=target/p.relative_to(run);q.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,q)
     for event in (run/'formal30k/checkpoint_events').glob('*.json'):
         d=json.loads(event.read_text());step=d['iteration'];node=target/f'checkpoint{step}';node.mkdir(exist_ok=True)
@@ -49,8 +49,17 @@ for suite in (ROOT/'motion_edit_suite_v1').iterdir():
         (DEST/'motion_requests').mkdir(exist_ok=True);shutil.copy2(suite,DEST/'motion_requests'/suite.name)
 for p in (ROOT/'motion_suite_execution_v1').glob('*/status.json'):
     target=DEST/'motion_execution'/p.parent.name;target.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target/'status.json')
-    suite=p.parent/'native_suite'
+    state=json.loads(p.read_text());suite=Path(state.get('native_suite_path',str(p.parent/'native_suite')))
+    assert suite.resolve().is_relative_to(p.parent.resolve())
     if (suite/'summary.json').exists():shutil.copy2(suite/'summary.json',target/'native_summary.json')
+    if (suite/'cpu_diagnostics/summary.json').exists():shutil.copytree(suite/'cpu_diagnostics',target/'diagnostics',dirs_exist_ok=True)
+    continuous=suite/'continuous'
+    if (continuous/'summary.json').exists():
+        q=target/'continuous';q.mkdir(exist_ok=True);shutil.copy2(continuous/'summary.json',q/'summary.json')
+        for revision in continuous.iterdir():
+            frames=sorted((revision/'native_rgb').glob('*.png')) if revision.is_dir() else []
+            if frames:shutil.copy2(frames[len(frames)//2],q/(revision.name+'.png'))
+            if (revision/'native_rgb_h264.mp4').exists():shutil.copy2(revision/'native_rgb_h264.mp4',q/(revision.name+'.mp4'))
     for case in suite.iterdir() if suite.exists() else []:
         if not case.is_dir():continue
         frames=sorted((case/'native_rgb').glob('*.png'))
@@ -59,13 +68,15 @@ for p in (ROOT/'motion_suite_execution_v1').glob('*/status.json'):
         shutil.copy2(middle,q/'native.png')
         for source,name in [(case/'mask'/middle.name,'mask.png'),(case/'propainter/model_png'/middle.name,'generated.png'),(case/'propainter/summary.json','backend_summary.json')]:
             if source.exists():shutil.copy2(source,q/name)
+        for source,name in [(case/'native_rgb_h264.mp4','native_h264.mp4'),(case/'propainter/model_png_h264.mp4','generated_h264.mp4')]:
+            if source.exists():shutil.copy2(source,q/name)
 for name in ['scene0017','scene0029']:
     source=ROOT/'evaluation_withdrawal_v2'/name;target=DEST/'withdrawal'/name;target.mkdir(parents=True,exist_ok=True)
     for f in ['summary.json','comparison.jpg','reference_layers.png','summary_before_png_alignment.json']:
         shutil.copy2(source/'measurement_evaluation'/f,target/f)
     shutil.copy2(source/'propainter/summary.json',target/'backend_summary.json')
     shutil.copy2(source/'propainter/video.mp4',target/'generated.mp4')
-for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json']:
+for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
 archive=ROOT/'admission_delivery_v2.tar.gz'

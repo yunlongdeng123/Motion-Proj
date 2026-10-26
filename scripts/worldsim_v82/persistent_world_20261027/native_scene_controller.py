@@ -26,7 +26,7 @@ def dependency_result(path):
     except json.JSONDecodeError:return None
     phase=d.get('phase','')
     if phase in ('single_request_diagnostics_complete_continuous_pending','diagnostics_complete'):
-        assert d.get('completed_native_cases',0)>=11 and d.get('completed_backend_cases',0)>=6
+        assert d.get('completed_native_cases',0)>=d.get('expected_native_cases',11) and d.get('completed_backend_cases',0)>=d.get('expected_backend_cases',6)
         return dict(status='diagnostic_complete',snapshot=d)
     if phase=='engineering_repair_needed_preserved' and not same_process(d['pid'],d['start_ticks']):
         child=d.get('child')
@@ -35,19 +35,19 @@ def dependency_result(path):
     return None
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--context',required=True);p.add_argument('--after-motion');p.add_argument('--resume-waiting',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--context',required=True);p.add_argument('--after-motion');p.add_argument('--mask-first-count',type=int,default=0);p.add_argument('--resume-waiting',action='store_true');a=p.parse_args()
     scene=ROOT/'motion_scene_inputs_v1'/a.context;run=ROOT/'native_scene_training_v1'/a.context
     previous=None
     if a.resume_waiting:
         previous=json.loads((run/'status.json').read_text())
-        assert previous['context']==a.context and previous['phase'] in ('waiting_gpu','waiting_previous_scene_diagnostics')
+        assert previous['context']==a.context and previous['phase'] in ('waiting_gpu','waiting_previous_scene_diagnostics','waiting_new_scene_mask_batch')
         assert not previous.get('child') and not same_process(previous['pid'],previous['start_ticks'])
         assert not any((run/x).exists() for x in ['smoke_fresh','smoke_restore','formal30k'])
         assert not list(run.glob('*.log')),'Resume is only for a zero-work waiting controller'
         archive=run/f'waiting_controller_{previous["pid"]}_{previous["start_ticks"]}.json'
         assert not archive.exists();write(archive,previous)
     else:run.mkdir(parents=True,exist_ok=False)
-    state=dict(context=a.context,pid=os.getpid(),start_ticks=ticks(os.getpid()),formal_steps=30000,save_every=5000,per_edit_retraining=False,phase='waiting_gpu',child=None,after_motion_context=a.after_motion,previous_waiting_controller=previous)
+    state=dict(context=a.context,pid=os.getpid(),start_ticks=ticks(os.getpid()),formal_steps=30000,save_every=5000,per_edit_retraining=False,phase='waiting_gpu',child=None,after_motion_context=a.after_motion,mask_first_count=a.mask_first_count,previous_waiting_controller=previous)
     def status(**kw):state.update(kw);write(run/'status.json',state)
     def launch(phase,cmd,env=None):
         require_start();status(phase=phase,command=cmd)
@@ -72,6 +72,20 @@ def main():
                 if result is not None:
                     write(run/'diagnostic_priority_release.json',dict(checked_at=time.time(),dependency=str(dependency),**result));break
                 time.sleep(5)
+            status(phase='waiting_gpu')
+        if a.mask_first_count:
+            masks=ROOT/'benchmark_mask_preparation_v1/status.json'
+            status(phase='waiting_new_scene_mask_batch',dependency=str(masks))
+            while True:
+                require_start()
+                if masks.exists():
+                    d=json.loads(masks.read_text())
+                    enough=len(d.get('completed',[]))>=a.mask_first_count
+                    finished=d['phase']=='available_masks_complete_target_review_and_training_pending'
+                    failed=bool(d.get('errors')) and not same_process(d['pid'],d['start_ticks'])
+                    if enough or finished or failed:
+                        write(run/'mask_batch_priority_release.json',dict(checked_at=time.time(),requested=a.mask_first_count,completed=len(d.get('completed',[])),state=d,partial_or_failed=not enough));break
+                time.sleep(3)
             status(phase='waiting_gpu')
         with exclusive():
             require_start()

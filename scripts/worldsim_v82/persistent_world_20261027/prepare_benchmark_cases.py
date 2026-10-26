@@ -92,7 +92,7 @@ def main():
         eligible=screen['raw_input_status']=='raw_checks_passed';reasons=[]
         if family.startswith('ego_') and np.linalg.norm(np.diff(origin[ids],axis=0),axis=1).sum()<1:eligible=False;reasons.append('insufficient_ego_motion_for_trajectory_edit')
         if family.startswith('vehicle_') and not complete:eligible=False;reasons.append('incomplete_target_3D_track_window')
-        if family=='vehicle_speed' and not screen['operations']['change_speed']['raw_data_eligible']:eligible=False;reasons.append('target_not_speed_eligible')
+        if family in ('vehicle_speed','vehicle_lane_change','vehicle_direction') and not screen['operations']['change_speed']['raw_data_eligible']:eligible=False;reasons.append('stationary_or_unreliable_target_not_a_moving_trajectory_case')
         if family in ('vehicle_lane_change','vehicle_direction') and not screen['operations']['translate_vehicle']['raw_data_eligible']:eligible=False;reasons.append('target_motion_input_not_eligible')
         if screen['raw_input_status']!='raw_checks_passed':reasons+=screen['review_flags'] or ['input_structure_review']
         rows=[];collisions=0

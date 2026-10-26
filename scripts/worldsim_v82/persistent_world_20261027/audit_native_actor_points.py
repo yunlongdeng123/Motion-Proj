@@ -6,6 +6,7 @@ ROOT=Path('/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_202610
 rows=[]
 for scene in sorted((ROOT/'motion_scene_inputs_v1').iterdir()):
     if not scene.is_dir():continue
+    if not (scene/'native_preparation/selection_reviewed.json').exists() or not (scene/'dynamic_actor_assets/actor_0/source_lidar_indices.npz').exists():continue
     chosen=json.loads((scene/'native_preparation/selection_reviewed.json').read_text());track=chosen['track']
     sensor=json.loads((scene/'sensor_preparation.json').read_text());indices=np.load(scene/'dynamic_actor_assets/actor_0/source_lidar_indices.npz')
     ply=PlyData.read(str(scene/'points3d_dynamic_0.ply'))['vertex'];offset=0;frames=[];inside={str(m):0 for m in [0.,.1,.25]};total=0;max_error=0.

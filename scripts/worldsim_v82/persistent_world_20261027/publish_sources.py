@@ -5,55 +5,59 @@ ROOT=Path('/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_202610
 REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
 CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
 CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
-for p in (ROOT/'code').glob('*.py'):shutil.copy2(p,CODE/p.name)
+for p in (ROOT/'code').glob('*.py'):(CODE/p.name).write_text(p.read_text(encoding='utf-8'),encoding='utf-8')
 for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg']:
-    shutil.copy2(ROOT/'code'/name,DOC/name)
+    (DOC/name).write_text((ROOT/'code'/name).read_text(encoding='utf-8'),encoding='utf-8')
 quota=json.loads((ROOT/'quota_state.json').read_text())
 native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
 current='''# 当前研究状态
 
-更新：2026-10-27。Task：WS-V82-PERSISTENT-WORLD-20261027。分支research/worldsim-v8.2-drivingeditor-v42。
+更新：2026-10-27。任务WS-V82-PERSISTENT-WORLD-20261027，分支research/worldsim-v8.2-drivingeditor-v42。
 
-**阶段二：输入准入、操作适配和逐场景原生训练。** 阶段一最小编辑→三维修复→固定ProPainter已有实际输出，质量未接受；阶段三仅探索。固定①③的方法选择，先区分实例/轨迹、背景污染或缺失、视频改坏三种归因，再决定②算法。持久世界状态是框架目标，不预定为创新。
+**阶段二：多场景、多操作评测与失败归因。** 阶段一最小闭环已有实际输出；阶段三核心算法尚未确定。固定①编辑与资产接口和③预训练ProPainter，区分①实例/轨迹/资产、②背景污染或缺失、③后端修改问题。持久可编辑世界状态是框架目标，尚未证明论文创新。完整重建从冻结原V41-B/GN11直接输出，编辑独立载入副本，不改主副本。
 
-[计划](autoresearch/persistent_world_20261027/PLAN.md) · [评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md) · [输入准入规则](autoresearch/persistent_world_20261027/ADMISSION_POLICY.json)
+[计划](autoresearch/persistent_world_20261027/PLAN.md) · [评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md) · [准入规则](autoresearch/persistent_world_20261027/ADMISSION_POLICY.json) · [规模合同](autoresearch/persistent_world_20261027/BENCHMARK_SCALE.md)
 
-![逐场景流水](autoresearch/persistent_world_20261027/native_training_architecture.svg)
+![逐场景训练与操作诊断](autoresearch/persistent_world_20261027/motion_diagnostics_architecture.svg)
 
-**其他case已在实际准备，不能只排已有3段训练。** 新增30段（7开发、23封存）真实RGB/LiDAR/标定/轨迹由3个CPU进程并行提取；八类物理请求与新窗口重筛同步落盘，分割父队列已接入，当前首场景编辑诊断仍优先。[八类规模合同](autoresearch/persistent_world_20261027/BENCHMARK_SCALE.md)：至少109个有效编辑、执行目标128，长期240。HorizonForge论文109例，展示32编辑/128视频，不能混为场景数。实际进度以benchmark_cases_v1/scale_ledger.json为准，输入包、输入通过、实例/空间/训练、执行与质量分别计数；封存不参与方法选择。
+## 实际完成
 
-最新用户授权：通过数据质量检查的场景立即优先训练，不等所有候选；每场景只fresh训练一次原生V41-B/GN11基座30K，多种编辑复用。每5K保存静态、动态、环境、优化器/RNG/采样状态四件与评价。smoke真实fresh≥300秒+完整恢复≥300秒，实跑保存/49帧评价/恢复/下一入口；额外更新单列，正式fresh30K不混smoke。bug自主修复、精确恢复或新目录重放，旧现场与成本保留。仅本场景30K完整成功、最终可恢复四件和评价验证后且磁盘紧张，才清本场景中间checkpoint产物；不清其他资产。
+首个新增场景147053...的原生fresh30K正常返回：30000条有序有限更新，六档5K完整四件与各49帧评价核对。此前真实smoke为fresh1000+恢复1000额外更新、965.23秒，模型、Adam、Python/NumPy/Torch/CUDA RNG、采样状态完整恢复通过。CUDA整个training调用峰allocated 5.19GiB、reserved 6.59GiB，与每秒NVML采样峰分开记账。数据盘紧张时已按授权验证最终四件CPU可读及49帧评价，保存SHA/bytes清单后仅释放本场景5K–25K模型四件；最终30K和全部评价/事件保留。
 
-36个context/1764帧RGB与轨迹已准备，1原方法开发、2历史重建开发、10新诊断开发、23封存；216任务规格不是216完成实验，物理路段重叠仍待审计。自动原始检查34通过、2复核，完整正式基准就绪仍为0。准入v2检查清晰度/曝光、标定/位姿刚性、轨迹、极线及目标裁切。最大框原窗口只有1个普通运动候选、0个变速候选；按操作重选窗后33普通运动、21真实运动目标候选，仍须窗口/资产/几何检查。雨水镜头336353...归光学退化困难层；183975...低匹配率待LiDAR核验，不直接判标定坏。
+首轮实际原生适配差0、主副本权重/张量版本未变；11个单请求变体×31帧、6类固定ProPainter，以及6次连续原生修订×31帧均完成。连续序列维持删除状态，反复操作同一个克隆，不重新出现原车；普通缓存31次命中及原相机回访差0只证明工程状态一致，不是世界记忆算法收益。连续请求的固定后端对照正在排队。
 
-3个新开发段各49帧真实1920×1280 RGB、五LiDAR双回波TOP运动补偿、位姿与标定提取完成，3段DEVA掩码完成。原最大框目标多被边缘裁切，已选择同窗完整可见运动目标，无需重提传感器。147053...SUV49帧DEVA166已逐帧检查，18147真实动态点；静态继承600000点RandomState(0)有放回采样，全部6967169源点可追溯。GT框只用于身份提案，不生成像素掩码或过滤训练点。天空沿原SegFormer真实推理；首场景原生Scene/SGCM守卫与真实smoke通过：fresh1000+恢复1000额外更新，合计965.23秒（含原生评价/保存），所有参数/Adam/RNG/采样恢复核对通过；正式fresh30K已启动，训练质量未接受。
+首次GPU入口因Torch2.2的mmap要求字符串路径失败，已修复并保留失败attempt，从新只读attempt接续，没有重训。成功目录由motion_suite_execution_v1/*/status.json的native_suite_path指明，不能读取失败旧目录代替结果。
 
-当前控制器快照：
+可视证据：删除后静态SUV残影仍在；平移、复用插入和转向出现失真；固定视频将删除残影变为暗块，不能称已恢复正确背景；相机侧移也暴露其他车辆/背景问题。原生DEVA车身内缩2像素区域，动态合成权重均值0.8410、静态0.1588，但这不是污染率（玻璃/透明度/掩码本身可含背景）。资产问题、SH变换、静态遮挡仍需控制变量定位，不能直接归因道路缺几何。新增只读SH旋转控制CPU等变/逆变误差<2e-14，GPU渲染尚未执行；原11变体仍为原世界系SH基线，不悄悄替换旧结果。
+
+## 其他场景与规模
+
+30个追加上下文全部完成真实RGB、五LiDAR双回波、标定、位姿、物理微秒时间与标注提取，errors=[]；连同原3个新开发场景共33段、1617帧完整传感器输入。八类31时刻物理请求共264个。输入准入前瞻修订将18个停放车辆的变道/转向请求从普通运动层排除，当前178项输入筛查通过（开发53、封存125），正式准入和完成新八类基准仍为0。封存仅准备输入/固定请求，编辑结果不参与方法选择；物理路段重叠尚待审计。
+
+目标至少109个有效编辑，执行目标128、长期240；HorizonForge论文109例，展示32编辑/128视频，不混作独立场景数。帧、种子、方法、checkpoint、生成前后不重复计数。旧216份六类草案不与264请求叠加。同协议效果和成本对比未完成，不宣称超过。
+
+第二场景429544...通过真实smoke及完整恢复，已进入fresh30K。第三473735...等待第二场景首轮诊断。新100966...49帧DEVA62已逐帧核验，17273真实动态点；新255598...49帧DEVA31已核验，46005真实动态点，已分别排第4/5场景训练及诊断。100966停放车辆跳过无意义变速，转向只作静态姿态压力层。135064...目标关联在DEVA63/65切换且原生主连通组件守卫未通过，明确HOLD，不能标注已核验或硬塞训练。GT框仅身份建议与只读审计，不过滤训练点。
+
+当前控制器快照（实际PID/start_ticks和child以campaign文件为权威）：
 ```json
 NATIVE_STATUS
 ```
-权威native_scene_training_v1/*/status.json、native_scene_dispatch.json和最新native_scene_priority_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
 
-最新人类纠偏已落实：每场景30K完成后立即优先执行该场景多操作诊断，再训练下一场景，CPU质检、准备和失败分析异步。后续训练使用--after-motion在GPU锁之外等待前一场景11个原生变体及6个固定ProPainter对象编辑完成，不能让连续30K训练挤掉首轮诊断。scene_diagnostic_priority_v1/receipt.json记录仅替换两个零更新无child的等待父进程，首场景健康训练不动、丢失更新0。首轮诊断若工程失败且父/child退出，保留现场、标注待修复、释放后续训练，代理优先修复，不算已完成案例。尽快按①实例/轨迹资产、②背景、③后端建立失败证据，再决定阶段三，而非不断增加准备和训练。
+每场景只fresh原生30K一次，多编辑复用；每5K保存静态/动态/环境/完整训练状态与49帧评价。按训练→本场景多操作诊断→下一场景交错，CPU准备/分析异步；不让连续长训练挤掉操作诊断。新②训练和③切换仍禁启。健康worker不重启；零更新等待父的边界调整与首轮GPU接线失败均保留收据。当前分割父53383在GPU锁外等待，旧46606已在健康GPU子正常退出后重接门控，不恢复旧父。
 
-两个其他历史开发路段scene0017/0029各6种整动态分支操作×49帧及固定视频完成，FP32适配差0；不冒充精确实例编辑。0017视频把部分正确背景变暗块；0029删除后暗色轮廓保留，移动/插入拖影。不同历史基座绝对分数不作方法增益。变速、转向、连续组合及同协议HorizonForge对比仍待补齐；封存无编辑成绩。
+## 接下来应解决的链路
 
-![运动诊断组件](autoresearch/persistent_world_20261027/motion_diagnostics_architecture.svg)
+1. 在已完成首场景结果上补静态遮挡/资产/SH变换控制，并汇总跨场景①②③失败矩阵；不把所有问题预归②。
+2. 接真实自车速度/变道/转向相机曲线与不同场景资产插入的GPU适配器。已有0.5m侧移、3°yaw和同资产克隆不能冒充这四类已完成。
+3. 连续编辑固定ProPainter对照：3次实际推理+2个完全相同输入/掩码的普通缓存控制；未知相机域不伪造生成掩码。复用一致性不等于正确三维背景，需要留出视角、参考域和生成负担共同验证。
+4. 继续合格新开发目标关联、原生几何守卫、约10分钟真实smoke和逐场景30K；输入有问题与真实遮挡困难分层，不能按编辑效果删样。
 
-当前已为3个新增段准备同一中央31帧的物理编辑请求：删除、平移、复用插入、0.75/1.25倍速、±15°转向、0.5m侧移和3°相机旋转，另有连续修订协议。11单请求变体+1组合协议/场景均未冒充完成案例。变速查询均在原49帧时间支持内，无裁剪伪停顿或外推；模型时间与微秒物理时间分开。source request碰撞检查发现147053...和473735...的2m克隆插入与保留原车重叠，第三段3.5m插入也与其他车辆冲突，左转11/31帧冲突；保留为碰撞压力层，不能归为背景算法失败。原检查漏掉克隆与原车重叠的CPU草案已留档修复，未跑GPU编辑。三段动态源点世界坐标/时间逐点回放差0，99.55%/99.71%/99.91%在未扩张标注框内；只作几何一致性诊断，不证明语义纯度，不用GT框过滤训练点。
+历史scene0017/0029已有整动态分支操作及视频，不冒充精确多实例编辑。道路原始输入撤源v2是两个路段组件测试，参考为稀疏可见LiDAR域，不是全洞GT、完整B撤源重训或三维补全成功。旧保背景repair10K可只读评价，旧geometry正式10K未启动、旧三父调度不恢复。保留用户选定保背景状态，不追求道路贡献最大；199帧参考进入初始化，不能当独立GT或记忆收益。
 
-render_motion_suite.py已接原生模型只读载入、时间查询、世界/模型仿射和高斯协方差旋转；CPU四元数与相似变换核对通过，不替代GPU验证。motion_suite_controller.py已按场景排队：等同场景30K完整返回，真实GPU单帧原生通路核验，再运行31帧单请求与6个对象编辑的固定ProPainter。连续多请求实际执行仍待完成，相机未知域未定义时只做原生诊断，不伪称生成补全。该队列不追加训练，不更换①③方法，仅补操作测试入口。
-
-首场景5K中间节点四件/49帧评价已确认；动态ROI PSNR21.24dB，已查看中帧，资产仍模糊且有残影，不能接受编辑质量，也不把未收敛5K当30K最终失败；继续健康原配置训练。完整benchmark准入仍待30K质量核对。
-
-严格道路原始输入撤源v2完成两路段组件基线：49源RGB编码前遮挡、世界洞LiDAR初始化前移除，不输入已有高斯/潜特征，不是整个B撤源重训。真实最近LiDAR可见性和车辆排除定义稀疏地面参考，分边界/过渡/≥0.75m核心。0017核心9426累计帧像素，确定性平面+邻色MAE0.02752，固定ProPainter0.02418；0029核心4628，0.03863→0.02885。稀疏域不是全洞GT，视频不是3D；输入平面不读取隐藏目标点/教师平面。PNG量化口径对齐，旧分数保留。不据此提前扩②算法。
-
-保背景原型fresh10K/49帧验收已完成，额外smoke4166；几何候选仅smoke3985、正式10K未启动。旧三父队列因阶段二优先停止，非工程失败，不恢复。保留用户选择保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth，不追求道路贡献最大化。199参考来源曾进入初始化，不是独立GT；直接锚点解释大部分旧收益，不能宣称世界记忆创新。
-
-资源停止线：周剩余严格<20%快速保存、禁启、取回必要结果、提交推送并关AutoDL，再暂停同一心跳。在此前持续研究，不因阶段结束/负结果/队列空关机。当前工具周剩余QUOTA%，至少30分钟复查。NVML每秒记录，历史31.09GiB采样峰与CUDA分配器峰分开。数据/模型/日志不入Git，保留用户桥接脚本修改。
+资源停止线：工具周剩余QUOTA%，至少每30分钟复查；严格低于20%即禁启、最近可恢复边界保存、取回必要结果、提交推送验证并按授权关闭AutoDL，然后暂停同一心跳。此前持续研究，不因阶段结束/负结果/队列暂空关机。每秒NVML监控与历史峰不重置。磁盘紧张只按本场景30K完成后的精确中间四件保留策略处理，不清其他数据资产。保留用户桥接脚本修改，数据/模型/日志不入Git。
 
 本地报告outputs/4D_Editing_Evaluation_20261027/index.html。quality_accepted=false，human_verdict=null。
-'''.replace('NATIVE_STATUS',json.dumps(native,ensure_ascii=False,indent=2)).replace('QUOTA',str(quota['remaining_percent']))
+'''.replace('NATIVE_STATUS',json.dumps({k:{f:v.get(f) for f in ['pid','start_ticks','phase','child','formal_steps','after_motion_context']} for k,v in native.items()},ensure_ascii=False,indent=2)).replace('QUOTA',str(quota['remaining_percent']))
 (REPO/'docs/RESEARCH_STATUS.md').write_text(current,encoding='utf-8')
 index=REPO/'docs/EXPERIMENTS.md';prefix='- WS-V82-PERSISTENT-WORLD-20261027：'
 line=prefix+'[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二按场景交错30K训练与多操作诊断，CPU准备异步，5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。'

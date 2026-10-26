@@ -54,6 +54,10 @@ def prepare(context):
         dict(id='turn_left15',family='turn',final_yaw_deg=15.),dict(id='turn_right15',family='turn',final_yaw_deg=-15.),
         dict(id='camera_lateral_05m',family='camera_lateral',camera_lateral_m=.5),
         dict(id='camera_yaw3',family='camera_yaw',camera_yaw_deg=3.)]
+    speed=float(np.median(np.linalg.norm(np.diff(centers_world,axis=0),axis=1)/np.diff(physical)))
+    if speed<1:specs=[x for x in specs if x['family']!='speed']
+    for spec in specs:
+        if spec['family']=='turn':spec['trajectory_interpretation']='moving_turn_diagnostic' if speed>=1 else 'stationary_asset_orientation_stress_not_HorizonForge_moving_turn'
     prepared=[]
     for spec in specs:
         family=spec['family'];query=stamps[selected]*spec.get('time_scale',1.)
@@ -114,6 +118,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--context',action='append');a=p.parse_args()
     contexts=a.context or sorted(p.name for p in (ROOT/'motion_scene_inputs_v1').iterdir() if p.is_dir())
     (ROOT/'motion_edit_suite_v1').mkdir(exist_ok=True)
-    results=[prepare(context) for context in contexts]
+    fresh=[prepare(context) for context in contexts]
+    old=read(ROOT/'motion_edit_suite_v1/status.json')['scenes'] if (ROOT/'motion_edit_suite_v1/status.json').exists() else []
+    indexed={x['context']:x for x in old};indexed.update({x['context']:x for x in fresh});results=list(indexed.values())
     write(ROOT/'motion_edit_suite_v1/status.json',dict(phase='input_only_motion_suite_prepared',scenes=results,completed_edit_cases=0))
     print(json.dumps(results,indent=2))
