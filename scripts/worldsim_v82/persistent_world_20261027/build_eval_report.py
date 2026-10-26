@@ -22,7 +22,11 @@ if (ADMISSION/'registry.json').exists():
         item=json.loads(path.read_text());context=path.parent.name;assets=ADMISSION/'motion_inputs'/context
         build=json.loads((assets/'actor_build_returned.json').read_text())
         links=' · '.join(f'<a href="admission/motion_inputs/{context}/actor_review_{i}.jpg">49帧核验 {i+1}/3</a>' for i in range(3))
-        training_rows.append(f'<tr><td>{context}<br><small>{links}</small></td><td>{build["dynamic_real_points"]:,}真实动态点<br>600,000静态初始点</td><td>{escape(item["phase"])}<br><small>30K一次；每5K完整四件</small></td></tr>')
+        gate=path.parent/'smoke_gate.json';gate_text=''
+        if gate.exists():
+            g=json.loads(gate.read_text());extra=g['fresh_extra_updates']+g['restore_extra_updates']
+            gate_text=f'<br><small>smoke通过：{g["real_seconds"]:.2f}s，额外{extra}更新（含评价/保存）</small><br><a href="admission/native_training/{context}/smoke_restore/restore_verification.json">完整恢复核验</a>'
+        training_rows.append(f'<tr><td>{context}<br><small>{links}</small></td><td>{build["dynamic_real_points"]:,}真实动态点<br>600,000静态初始点</td><td>{escape(item["phase"])}<br><small>30K一次；每5K完整四件</small>{gate_text}</td></tr>')
     quota=json.loads((ADMISSION/'quota_state.json').read_text())
     admission_section=f'''<section><h2>最新：逐场景质检通过就训练，多编辑复用</h2><p>不等所有候选完成质检。场景数据与目标就绪后进入原生几何守卫和真实GPU smoke；训练后再检查原生资产、背景与操作空间，决定哪些编辑适合正式评测。训练准入与完整评测准入分开，后者目前仍为0。</p>
 <img src="admission/native_training_architecture.svg"><table><tr><th>新开发场景</th><th>真实初始化</th><th>本地证据快照</th></tr>{''.join(training_rows)}</table>
