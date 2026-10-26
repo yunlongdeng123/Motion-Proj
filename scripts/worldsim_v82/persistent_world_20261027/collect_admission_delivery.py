@@ -21,6 +21,15 @@ for path in (ROOT/'benchmark_execution_v1').glob('*/status.json'):
     if (path.parent/'cpu_delivery/summary.json').exists():shutil.copytree(path.parent/'cpu_delivery',target/'cpu_delivery',dirs_exist_ok=True)
 for name in ['benchmark_adapter_cpu_audit_v1.json','benchmark_execution_dispatch.json','ego_speed_clock_CPU_audit.json','ego_speed_clock_dispatch.json','benchmark_request_space_audit_v1.json','benchmark_asset_diversity_audit_v1.json']:
     if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
+sh_control=ROOT/'motion_SH_operator_control_v1'
+if (sh_control/'summary.json').exists():
+    target=DEST/'sh_operator_control';target.mkdir(exist_ok=True)
+    shutil.copy2(sh_control/'summary.json',target/'summary.json')
+    for name in ['cpu_control_summary.json','comparison.jpg']:
+        if (sh_control/name).exists():shutil.copy2(sh_control/name,target/name)
+    for case in sh_control.iterdir():
+        frames=sorted((case/'native_rgb').glob('*.png')) if case.is_dir() else []
+        if frames:shutil.copy2(frames[3*len(frames)//4],target/(case.name+'.png'))
 for folder in (ROOT/'ego_speed_clock_control_v1').glob('*'):
     if not folder.is_dir():continue
     target=DEST/'ego_speed_clock_control'/folder.name;target.mkdir(parents=True,exist_ok=True)
@@ -75,6 +84,16 @@ for p in (ROOT/'motion_suite_execution_v1').glob('*/status.json'):
     continuous=suite/'continuous'
     if (continuous/'summary.json').exists():
         q=target/'continuous';q.mkdir(exist_ok=True);shutil.copy2(continuous/'summary.json',q/'summary.json')
+        audit=continuous/'fixed_backend_audit'
+        if (audit/'summary.json').exists():
+            delivery=q/'fixed_backend';delivery.mkdir(exist_ok=True)
+            for name in ['status.json','summary.json','cpu_delivery_summary.json','comparison.jpg']:
+                if (audit/name).exists():shutil.copy2(audit/name,delivery/name)
+            for revision_name in ['delete_original','insert_reused','move_inserted','turn_inserted','revisit_original_camera']:
+                revision=continuous/revision_name;frames=sorted((revision/'propainter/model_png').glob('*.png'))
+                if frames:shutil.copy2(frames[3*len(frames)//4],delivery/(revision_name+'.png'))
+                for source,name in [(revision/'propainter/model_png_h264.mp4',revision_name+'.mp4'),(revision/'ordinary_cache_receipt.json',revision_name+'_cache_receipt.json')]:
+                    if source.exists():shutil.copy2(source,delivery/name)
         for revision in continuous.iterdir():
             frames=sorted((revision/'native_rgb').glob('*.png')) if revision.is_dir() else []
             if frames:shutil.copy2(frames[len(frames)//2],q/(revision.name+'.png'))
@@ -95,7 +114,7 @@ for name in ['scene0017','scene0029']:
         shutil.copy2(source/'measurement_evaluation'/f,target/f)
     shutil.copy2(source/'propainter/summary.json',target/'backend_summary.json')
     shutil.copy2(source/'propainter/video.mp4',target/'generated.mp4')
-for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
+for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','monitor_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
 archive=ROOT/'admission_delivery_v2.tar.gz'

@@ -106,10 +106,20 @@ if (ADMISSION/'registry.json').exists():
             admission_section+=f'<section><h2>实际连续请求原生基线：{path.parent.parent.name}</h2><p>{d["revision_count"]}次修订，每次31帧，始终操作同一克隆实例。原车删除后保持删除；移动和转向不重新插入原车。相机回访与同状态普通缓存差{d["revisit_same_revision_original_camera_max_difference"]}；这是工程控制，不能证明学习到的持久记忆收益。连续请求固定后端仍待执行。</p><div class="grid">{panels}</div><a href="{relative}/summary.json">版本状态与缓存控制</a></section>'
         if list((ADMISSION/'motion_execution').glob('*/continuous/summary.json')):
             admission_section=admission_section.replace('首场景6次连续原生修订已执行；后端连续对照仍待完成。','首场景连续原生6次修订×31帧已实际运行；连续视频后端仍待执行。')
+        for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json')):
+            d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix()
+            pairs=''.join(f'<tr><td>{escape(name)}</td><td>{row["frame_pixel_observations"]:,}</td><td>{row["native_float_MAE_pixel_weighted"]:.3g}</td><td>{row["generated_png_MAE_pixel_weighted"]:.5f}</td></tr>' for name,row in d['pairwise_domain_control']['per_revision'].items())
+            clips=''.join(f'<details><summary>{name}：31帧，{"普通缓存复用" if name in ["delete_original","revisit_original_camera"] else "本轮实际推理"}</summary><video controls preload="metadata" src="{relative}/{name}.mp4"></video></details>' for name in ['delete_original','insert_reused','move_inserted','turn_inserted','revisit_original_camera'] if (path.parent/(name+'.mp4')).exists())
+            admission_section+=f'<section><h2>连续请求固定后端对照已完成：覆盖分母必须同时看</h2><p>3次实际ProPainter推理＋2次完全相同输入的普通缓存复用，不是5次新推理。五版本共同暴露域共{d["common_frame_pixel_observations"]:,}个累计帧像素，每帧{d["common_pixels_min"]}–{d["common_pixels_max"]}，中位数{d["common_pixels_median"]:.0f}；这是很小的局部域，不是整片道路面积。原生浮点变化MAE {d["native_float_change_MAE_macro"]:.3g}，生成PNG变化MAE {d["generated_png_change_MAE_macro"]:.5f}。两者精度不同，不能作倍率结论；也没有反事实RGB真值、相同输入重复推理方差或学习记忆收益证明。</p><img src="{relative}/comparison.jpg"><p>上排原生，中排固定后端，下排仅共同域内相对删除版本的差异×5；黄线标域。逐对比较可扩大暴露域，但各行分母不同，不能互当质量排名。</p><table><tr><th>对删除版本</th><th>逐对累计帧像素</th><th>原生浮点变化MAE</th><th>生成PNG变化MAE</th></tr>{pairs}</table><a href="{relative}/cpu_delivery_summary.json">完整域、逐帧分母和精度说明</a>{clips}</section>'
+            admission_section=admission_section.replace('连续请求固定后端仍待执行。','连续请求固定后端已完成，详见覆盖分母审计。').replace('连续视频后端仍待执行。','连续视频后端3次实际推理和2次普通缓存已完成。')
+        sh=ADMISSION/'sh_operator_control/cpu_control_summary.json'
+        if sh.exists():
+            d=json.loads(sh.read_text());rows=''.join(f'<tr><td>{r["case"]}</td><td>{r["actor_domain_rgb_change_MAE_macro"]:.5f}</td><td>{max(r["unchanged_geometry_channels_max_difference"].values())}</td></tr>' for r in d['records'])
+            admission_section+=f'<section><h2>转向算子控制：SH随物体旋转</h2><img src="admission/sh_operator_control/comparison.jpg"><table><tr><th>操作</th><th>动态支撑域RGB变化MAE</th><th>alpha／动态权重／深度和最大差</th></tr>{rows}</table><p>原生无编辑适配差0，主副本未变。3变体×31帧真实GPU完成；只改变外观方向约定，几何通道逐像素不变。此处是算子控制，不是重新打光，也没有转向反事实RGB真值。原世界系SH基线仍保留。</p><a href="admission/sh_operator_control/cpu_control_summary.json">GPU输出CPU核对</a></section>'
         for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
             d=json.loads(path.read_text());relative=str(path.parent.relative_to(OUT)).replace('\\','/')
             rows=''.join(f'<tr><td>{escape(x["case"])}</td><td>{x["generation_pixels_mean"]:.1f}</td><td>{x["preservation_MAE_macro"] if x["preservation_MAE_macro"] is not None else "新视角无对应真值"}</td><td>{x["backend"]["outside_mask_max_byte_difference"] if x["backend"] else "未调用"}</td></tr>' for x in d['cases'])
-            admission_section+=f'<section><h2>首场景多操作证据：生成前后分开</h2><img src="{relative}/comparison.jpg"><table><tr><th>操作</th><th>平均修补像素</th><th>保留域对原生图MAE</th><th>后端mask外最大字节差</th></tr>{rows}</table><p>保留域排除原车、新车投影与边缘；这些指标只检查编辑局部性与后端负担，不是删车真值、几何成功率或新视角PSNR。原生适配差{d["adapter_native_max_difference"]}，主副本未变。<a href="{relative}/summary.json">逐帧指标</a></p></section>'
+            admission_section+=f'<section><h2>场景{path.parent.parent.name}多操作证据：生成前后分开</h2><img src="{relative}/comparison.jpg"><table><tr><th>操作</th><th>平均修补像素</th><th>保留域对原生图MAE</th><th>后端mask外最大字节差</th></tr>{rows}</table><p>保留域排除原车、新车投影与边缘；这些指标只检查编辑局部性与后端负担，不是删车真值、几何成功率或新视角PSNR。原生适配差{d["adapter_native_max_difference"]}，主副本未变。<a href="{relative}/summary.json">逐帧指标</a></p></section>'
     for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
         d=json.loads(path.read_text());branch=d.get('branch_contributions')
         if branch:
@@ -151,6 +161,13 @@ if (ADMISSION/'motion_execution/14705303724557273004_3105_000_3125_000/diagnosti
 hold_audit=ADMISSION/'motion_inputs/13506499849906169066_120_000_140_000/association_candidate_audit.json'
 if hold_audit.exists():
     failures.append(dict(scene='13506499849906169066_120_000_140_000',operation='输入实例关联准入，未开始训练或编辑',observation='DEVA65候选保留点仅1.70%处于目标框扩0.1m内，与视觉邻车吻合；DEVA63有7帧主组件守卫失败。',status='HOLD保留，49帧候选已CPU审计；mask/点/守卫均未改',cause='①输入实例关联/源点支撑问题，不能归为②背景修复失败；框只用于诊断。',evidence='admission/motion_inputs/13506499849906169066_120_000_140_000/association_candidate_audit.json'))
+night_hold=ADMISSION/'motion_inputs/3417928259332148981_7018_550_7038_550/association_review_hold.json'
+if night_hold.exists():
+    failures.append(dict(scene='3417928259332148981_7018_550_7038_550',operation='夜间输入实例关联准入',observation='49帧contact逐帧检查，候选ID13/2/95切换，多帧仅车顶/尾灯及碎片，前景银车遮挡。',status='HOLD，无selection_reviewed、不构建训练资产；保留困难层',cause='①输入/关联问题；没有运行编辑，不能计为②失败。',evidence='admission/motion_inputs/3417928259332148981_7018_550_7038_550/association_review_hold.json'))
+if (ADMISSION/'sh_operator_control/cpu_control_summary.json').exists():
+    for row in failures:row['cause']=row['cause'].replace('SH物体系旋转CPU控制通过、GPU控制待执行。','SH物体系旋转真实GPU3变体31帧控制完成，几何通道差0；仅小幅颜色变化，raw109重影仍在，单改SH约定不足。')
+for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json')):
+    failures.append(dict(scene=path.parents[2].name,operation='连续编辑固定后端一致性诊断',observation='五版本共同暴露域1569累计帧像素；原生浮点变化MAE3.07e-7，生成PNG变化0.01005。逐对暴露域分母更大且不同。',status='3次新推理、2次精确输入普通缓存，图像和31帧视频已检查/保留',cause='③局部跨请求变化证据；共同域每帧2–180像素很小，无反事实GT及相同输入重推方差，不能证明全背景质量或记忆创新。',evidence=path.relative_to(OUT).as_posix()))
 (OUT / 'failure_matrix.json').write_text(json.dumps(failures, ensure_ascii=False, indent=2), encoding='utf-8')
 labels = {'previous_method_development': '原方法开发', 'previous_reconstruction_development': '历史重建开发',
           'new_diagnostic_development': '新增诊断开发', 'heldout_reserved': '封存：未跑编辑评测'}
@@ -190,4 +207,7 @@ assert not broken,broken
 result=dict(local_links=len(parser.paths),broken=broken,actual_independent_heldout_results=0,
             raw_contexts=36,prepared_pngs=1764,historical_operation_sequences=12,new_native_variants=11,new_fixed_backend_cases=6,continuous_native_revisions=6,new_eight_family_completed=0,all_six_families_complete=False,
             browser_render_qa=False,quality_accepted=False,human_verdict=None)
+result['completed_native_training_contexts']=len(list((ADMISSION/'native_training').glob('*/formal30k_agent_acceptance.json')))
+result['continuous_fixed_backend_fresh_calls']=sum(json.loads(p.read_text())['fresh_backend_calls'] for p in (ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json'))
+result['SH_object_frame_GPU_control_complete']=(ADMISSION/'sh_operator_control/cpu_control_summary.json').exists()
 (OUT/'validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
