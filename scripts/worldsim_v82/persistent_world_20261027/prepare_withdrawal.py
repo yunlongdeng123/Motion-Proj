@@ -26,7 +26,7 @@ def transform(points, matrix):
 
 def main():
     for name, run in RUNS.items():
-        out = ROOT / 'evaluation_withdrawal_v1' / name
+        out = ROOT / 'evaluation_withdrawal_v2' / name
         out.mkdir(parents=True, exist_ok=True)
         if (out / 'audit.json').exists():
             continue
@@ -59,24 +59,27 @@ def main():
         assert count >= 100, '没有足够实测地面支撑，不伪造正例'
         center = np.array([x, y]); half = np.array([2., 1.2]); margin = .3
         z = -(plane[0]*x+plane[1]*y+plane[3])/plane[2]
-        corners = np.array([[x+sx*(half[0]+margin), y+sy*(half[1]+margin), z+sz*3.] for sx in [-1,1] for sy in [-1,1] for sz in [-1,1]])
         rows = []
         for row, cloud, local, is_ground in records:
             frame = row['img_name']; raw = int(frame[-3:])
             inside = (np.abs(local[:, :2]-center) <= half+margin).all(1)
             c2w = np.eye(4);c2w[:3,:3]=row['rotation'];c2w[:3,3]=row['position']
             w2c = np.linalg.inv(c2w)
-            cam = transform(transform(transform(corners, anchor), world_to_model), w2c)
             K = np.array([[row['fx']/4,0,row['cx']/4],[0,row['fy']/4,row['cy']/4],[0,0,1.]])
-            mask = np.zeros((320,480), np.uint8)
-            if (cam[:,2] <= .1).any():
-                # 保守处理近裁剪，宁可记录不可用来源，不让答案从未遮挡源图泄漏。
-                mask[:] = 255
-            else:
-                uv = (cam @ K.T)[:,:2] / cam[:,2:]
-                hull = cv2.convexHull(np.round(np.clip(uv, -10000, 10000)).astype(np.int32))
-                cv2.fillConvexPoly(mask, hull, 255)
-                mask = cv2.dilate(mask, np.ones((5,5), np.uint8))
+            # v1按角点近裁剪遇到过整帧屏蔽；保留旧包，v2用真实射线/道路带相交。
+            # 粗高度只用于定义撤源查询盒，目标点不由这个盒生成。
+            gy,gx=np.mgrid[:320,:480]
+            ray=np.stack([(gx+.5-K[0,2])/K[0,0],(gy+.5-K[1,2])/K[1,1],np.ones_like(gx)],-1)
+            camera_to_anchor=inv_anchor@np.linalg.inv(world_to_model)@c2w
+            origin=camera_to_anchor[:3,3]
+            direction=ray@camera_to_anchor[:3,:3].T
+            lo=np.array([x-half[0]-margin,y-half[1]-margin,z-.6])
+            hi=np.array([x+half[0]+margin,y+half[1]+margin,z+.6])
+            safe=np.where(np.abs(direction)>1e-12,direction,1e-12)
+            ta=(lo-origin)/safe;tb=(hi-origin)/safe
+            near=np.minimum(ta,tb).max(-1);far=np.maximum(ta,tb).min(-1)
+            mask=((far>=np.maximum(near,0))&(far>0)).astype(np.uint8)*255
+            mask=cv2.dilate(mask,np.ones((5,5),np.uint8))
             # 检查并覆盖隐藏实测点的投影，包含0.3m撤源保护带。
             hidden_cam = transform(transform(transform(local[inside], anchor), world_to_model), w2c)
             uv = (hidden_cam @ K.T)[:,:2] / np.maximum(hidden_cam[:,2:], 1e-8)
@@ -107,7 +110,7 @@ def main():
                    limitations=['ground selected by historical coarse plane; not dense semantic-road GT',
                                 'input cloud contains remaining raw returns; no road classifier answers provided',
                                 'target RGB is original observed image; visibility validation and dense target mask still required',
-                                'projected 3D pillar masking is conservative; lost valid context must be quantified'],
+                                'ray/road-band masking is conservative; lost valid context must be quantified; v1 retained'],
                    optimizer_updates=0,GPU_used=False,quality_accepted=False,human_verdict=None)
         (out/'audit.json').write_text(json.dumps(audit,indent=2));print(name,'PREPARED',sum(r['measured_target_ground_points'] for r in rows),flush=True)
 
