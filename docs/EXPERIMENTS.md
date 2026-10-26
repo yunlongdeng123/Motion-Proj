@@ -212,4 +212,6 @@
 
 - WS-V82-GN11-V42-CONTROLLED-SMOKE-20261026：[199帧真实观测、独立编辑透射与FreeInpaint短程控制](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/EXPERIMENT_REPORT.md)；原生B/正式更新0；质量待人工评审。
 
-- WS-V82-GN11-V42-C-MECHANISM-20261026：[C组件归因与后续路线](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)；零更新，10种固定状态×49帧，非重训消融。
+- WS-V82-GN11-V42-C-MECHANISM-20261026：[历史误绑定：强透射版本归因](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/VISIBILITY_VARIANT_AUDIT.md)；零更新，10种固定状态×49帧，非重训消融。
+
+- WS-V82-GN11-V42-SELECTED-C-MECHANISM-20261026：[用户选定保背景C的正确归因](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)；纠正前条C绑定，新增训练0，强透射仅保留为未选对照。

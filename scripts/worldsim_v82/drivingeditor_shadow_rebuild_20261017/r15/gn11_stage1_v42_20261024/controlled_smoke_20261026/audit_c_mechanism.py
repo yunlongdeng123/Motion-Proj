@@ -5,6 +5,7 @@ of retraining ablations. Surface-depth agreement is internal consistency only.
 """
 from editor_common import *
 from scipy.ndimage import binary_dilation, binary_erosion
+import argparse
 
 
 def render_depth_moments(n, camera, road, mult, scale):
@@ -24,16 +25,23 @@ def render_depth_moments(n, camera, road, mult, scale):
 
 
 def main():
-    dest = OUT/'c_mechanism'; dest.mkdir(exist_ok=True)
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--checkpoint-group',default='edit_smoke_preserve')
+    parser.add_argument('--out',default='c_selected_mechanism')
+    parser.add_argument('--comparison-group',default='edit_visibility')
+    parser.add_argument('--comparison-name',default='forced_visibility_not_selected')
+    args=parser.parse_args()
+    dest = OUT/args.out; dest.mkdir(exist_ok=True)
     n = Native()
-    path = OUT/'edit_visibility/full199/checkpoint1000_from0.pth'
+    path = OUT/args.checkpoint_group/'full199/checkpoint1000_from0.pth'
     ck = torch.load(path, weights_only=False)
+    assert ck['master']==n.before
     init = Road(FULL/'full199_initialization.npz')
     trained = Road(FULL/'full199_initialization.npz')
     initial49 = Road(FULL/'window49_initialization.npz')
     trained.dc.data.copy_(ck['dc']); trained.opacity.data.copy_(ck['opacity'])
     mult = torch.ones(len(n.static.get_xyz), device='cuda').index_copy(0, ck['ids'], ck['gate'].sigmoid())
-    old = torch.load(OUT/'edit_smoke_preserve/full199/checkpoint1000_from0.pth', weights_only=False)
+    old = torch.load(OUT/args.comparison_group/'full199/checkpoint1000_from0.pth', weights_only=False)
     oldroad = Road(FULL/'full199_initialization.npz')
     oldroad.dc.data.copy_(old['dc']); oldroad.opacity.data.copy_(old['opacity'])
     oldmult = torch.ones_like(mult).index_copy(0, old['ids'], old['gate'].sigmoid())
@@ -42,7 +50,7 @@ def main():
     variants = [('B_static', None, None), ('initial_road_only_change', init, None),
                 ('trained_road_no_gate', trained, None), ('gate_no_road', None, mult),
                 ('gate_initial_road', init, mult), ('C_full', trained, mult),
-                ('same_gate_49_initial', initial49, mult), ('RGB_only_previous', oldroad, oldmult),
+                ('same_gate_49_initial', initial49, mult), (args.comparison_name, oldroad, oldmult),
                 ('gate_trained_color_initial_opacity', coloronly, mult),
                 ('gate_initial_color_trained_opacity', opacityonly, mult)]
     rows = []; depth_rows = []; master_difference = 0.0
@@ -96,7 +104,7 @@ def main():
                                outside_MAE=sum(r['outside_MAE']*r['outside_pixels'] for r in items)/sum(r['outside_pixels'] for r in items),
                                worst_outside=max(items,key=lambda r:r['outside_MAE']),actors={actor:{key:sum(r['actors'][actor][key] for r in items) for key in ['core','visible','contribution_sum']} for actor in ['37','6']})
         assert n.unchanged() and same_geometry and master_difference==0
-        result=dict(checkpoint=str(path),source_variant='edit_visibility/full199',updates_this_audit=0,
+        result=dict(checkpoint=str(path),source_variant=args.checkpoint_group+'/full199',updates_this_audit=0,
                     qualification_rescue_used=False,freeinpaint_used=False,geometry_unchanged=same_geometry,
                     native_repeat_maxabs=master_difference,master_files_unchanged=n.unchanged(),gate=gate_summary,
                     limitations=['Fixed-state interventions are not retrained ablations.', 'Three color-reference views were used in optimization.',
