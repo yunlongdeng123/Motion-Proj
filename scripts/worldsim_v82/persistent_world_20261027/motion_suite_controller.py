@@ -1,7 +1,7 @@
 """Wait for one scene30K, real GPU adapter entry check, same-state motion suite.
 
-No case-specific training. Original training controllers keep GPU priority by
-their existing exclusive lock. This evaluation is queued, not falsely executed.
+No case-specific training. Later native scene controllers wait outside the GPU
+lock for this scene's first diagnostic round, so training cannot starve edits.
 """
 import argparse,json,os,subprocess,time,traceback
 from pathlib import Path

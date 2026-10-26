@@ -30,7 +30,9 @@ current='''# 当前研究状态
 ```json
 NATIVE_STATUS
 ```
-权威native_scene_training_v1/*/status.json和native_scene_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
+权威native_scene_training_v1/*/status.json、native_scene_dispatch.json和最新native_scene_priority_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
+
+最新人类纠偏已落实：每场景30K完成后立即优先执行该场景多操作诊断，再训练下一场景，CPU质检、准备和失败分析异步。后续训练使用--after-motion在GPU锁之外等待前一场景11个原生变体及6个固定ProPainter对象编辑完成，不能让连续30K训练挤掉首轮诊断。scene_diagnostic_priority_v1/receipt.json记录仅替换两个零更新无child的等待父进程，首场景健康训练不动、丢失更新0。首轮诊断若工程失败且父/child退出，保留现场、标注待修复、释放后续训练，代理优先修复，不算已完成案例。尽快按①实例/轨迹资产、②背景、③后端建立失败证据，再决定阶段三，而非不断增加准备和训练。
 
 两个其他历史开发路段scene0017/0029各6种整动态分支操作×49帧及固定视频完成，FP32适配差0；不冒充精确实例编辑。0017视频把部分正确背景变暗块；0029删除后暗色轮廓保留，移动/插入拖影。不同历史基座绝对分数不作方法增益。变速、转向、连续组合及同协议HorizonForge对比仍待补齐；封存无编辑成绩。
 
@@ -52,7 +54,7 @@ render_motion_suite.py已接原生模型只读载入、时间查询、世界/模
 '''.replace('NATIVE_STATUS',json.dumps(native,ensure_ascii=False,indent=2)).replace('QUOTA',str(quota['remaining_percent']))
 (REPO/'docs/RESEARCH_STATUS.md').write_text(current,encoding='utf-8')
 index=REPO/'docs/EXPERIMENTS.md';prefix='- WS-V82-PERSISTENT-WORLD-20261027：'
-line=prefix+'[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二输入准入、逐场景30K/5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。'
+line=prefix+'[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二按场景交错30K训练与多操作诊断，CPU准备异步，5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。'
 lines=[line if x.startswith(prefix) else x for x in index.read_text().splitlines()]
 if not any(x.startswith(prefix) for x in lines):lines.append(line)
 index.write_text('\n'.join(lines)+'\n',encoding='utf-8')

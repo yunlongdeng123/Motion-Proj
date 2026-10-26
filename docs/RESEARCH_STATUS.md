@@ -41,27 +41,53 @@
   },
   "4295449061847708198_3769_000_3789_000": {
     "context": "4295449061847708198_3769_000_3789_000",
-    "pid": 34105,
-    "start_ticks": "903032402",
+    "pid": 44539,
+    "start_ticks": "903397702",
     "formal_steps": 30000,
     "save_every": 5000,
     "per_edit_retraining": false,
-    "phase": "waiting_gpu",
-    "child": null
+    "phase": "waiting_previous_scene_diagnostics",
+    "child": null,
+    "after_motion_context": "14705303724557273004_3105_000_3125_000",
+    "previous_waiting_controller": {
+      "context": "4295449061847708198_3769_000_3789_000",
+      "pid": 34105,
+      "start_ticks": "903032402",
+      "formal_steps": 30000,
+      "save_every": 5000,
+      "per_edit_retraining": false,
+      "phase": "waiting_gpu",
+      "child": null
+    },
+    "dependency": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/motion_suite_execution_v1/14705303724557273004_3105_000_3125_000/status.json"
   },
   "473735159277431842_630_095_650_095": {
     "context": "473735159277431842_630_095_650_095",
-    "pid": 34781,
-    "start_ticks": "903048683",
+    "pid": 44540,
+    "start_ticks": "903397703",
     "formal_steps": 30000,
     "save_every": 5000,
     "per_edit_retraining": false,
-    "phase": "waiting_gpu",
-    "child": null
+    "phase": "waiting_previous_scene_diagnostics",
+    "child": null,
+    "after_motion_context": "4295449061847708198_3769_000_3789_000",
+    "previous_waiting_controller": {
+      "context": "473735159277431842_630_095_650_095",
+      "pid": 34781,
+      "start_ticks": "903048683",
+      "formal_steps": 30000,
+      "save_every": 5000,
+      "per_edit_retraining": false,
+      "phase": "waiting_gpu",
+      "child": null
+    },
+    "dependency": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/motion_suite_execution_v1/4295449061847708198_3769_000_3789_000/status.json"
   }
 }
 ```
-权威native_scene_training_v1/*/status.json和native_scene_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
+权威native_scene_training_v1/*/status.json、native_scene_dispatch.json和最新native_scene_priority_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
+
+最新人类纠偏已落实：每场景30K完成后立即优先执行该场景多操作诊断，再训练下一场景，CPU质检、准备和失败分析异步。后续训练使用--after-motion在GPU锁之外等待前一场景11个原生变体及6个固定ProPainter对象编辑完成，不能让连续30K训练挤掉首轮诊断。scene_diagnostic_priority_v1/receipt.json记录仅替换两个零更新无child的等待父进程，首场景健康训练不动、丢失更新0。首轮诊断若工程失败且父/child退出，保留现场、标注待修复、释放后续训练，代理优先修复，不算已完成案例。尽快按①实例/轨迹资产、②背景、③后端建立失败证据，再决定阶段三，而非不断增加准备和训练。
 
 两个其他历史开发路段scene0017/0029各6种整动态分支操作×49帧及固定视频完成，FP32适配差0；不冒充精确实例编辑。0017视频把部分正确背景变暗块；0029删除后暗色轮廓保留，移动/插入拖影。不同历史基座绝对分数不作方法增益。变速、转向、连续组合及同协议HorizonForge对比仍待补齐；封存无编辑成绩。
 
@@ -77,6 +103,6 @@ render_motion_suite.py已接原生模型只读载入、时间查询、世界/模
 
 保背景原型fresh10K/49帧验收已完成，额外smoke4166；几何候选仅smoke3985、正式10K未启动。旧三父队列因阶段二优先停止，非工程失败，不恢复。保留用户选择保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth，不追求道路贡献最大化。199参考来源曾进入初始化，不是独立GT；直接锚点解释大部分旧收益，不能宣称世界记忆创新。
 
-资源停止线：周剩余严格<20%快速保存、禁启、取回必要结果、提交推送并关AutoDL，再暂停同一心跳。在此前持续研究，不因阶段结束/负结果/队列空关机。当前工具周剩余54%，至少30分钟复查。NVML每秒记录，历史31.09GiB采样峰与CUDA分配器峰分开。数据/模型/日志不入Git，保留用户桥接脚本修改。
+资源停止线：周剩余严格<20%快速保存、禁启、取回必要结果、提交推送并关AutoDL，再暂停同一心跳。在此前持续研究，不因阶段结束/负结果/队列空关机。当前工具周剩余53%，至少30分钟复查。NVML每秒记录，历史31.09GiB采样峰与CUDA分配器峰分开。数据/模型/日志不入Git，保留用户桥接脚本修改。
 
 本地报告outputs/4D_Editing_Evaluation_20261027/index.html。quality_accepted=false，human_verdict=null。

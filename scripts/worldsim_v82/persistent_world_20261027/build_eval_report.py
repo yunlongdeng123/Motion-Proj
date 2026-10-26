@@ -28,7 +28,7 @@ if (ADMISSION/'registry.json').exists():
             gate_text=f'<br><small>smoke通过：{g["real_seconds"]:.2f}s，额外{extra}更新（含评价/保存）</small><br><a href="admission/native_training/{context}/smoke_restore/restore_verification.json">完整恢复核验</a>'
         training_rows.append(f'<tr><td>{context}<br><small>{links}</small></td><td>{build["dynamic_real_points"]:,}真实动态点<br>600,000静态初始点</td><td>{escape(item["phase"])}<br><small>30K一次；每5K完整四件</small>{gate_text}</td></tr>')
     quota=json.loads((ADMISSION/'quota_state.json').read_text())
-    admission_section=f'''<section><h2>最新：逐场景质检通过就训练，多编辑复用</h2><p>不等所有候选完成质检。场景数据与目标就绪后进入原生几何守卫和真实GPU smoke；训练后再检查原生资产、背景与操作空间，决定哪些编辑适合正式评测。训练准入与完整评测准入分开，后者目前仍为0。</p>
+    admission_section=f'''<section><h2>最新：训练与多操作诊断交错推进</h2><p><strong>每个场景完成30K，立即优先执行该场景多种编辑及固定后端，再训练下一场景。</strong> 后续训练在GPU锁之外等待前一场景首轮诊断，CPU质检、准备与失败分析异步；不能用不断准备和训练代替失败定位。首轮结果按①实例/轨迹与资产、②背景污染/缺失、③后端改坏分别归因，推动阶段三选择。</p><p>不等所有候选完成质检。场景数据与目标就绪后进入原生几何守卫和真实GPU smoke；训练后再检查原生资产、背景与操作空间，决定哪些编辑适合正式评测。训练准入与完整评测准入分开，后者目前仍为0。</p>
 <img src="admission/native_training_architecture.svg"><table><tr><th>新开发场景</th><th>真实初始化</th><th>本地证据快照</th></tr>{''.join(training_rows)}</table>
 <p>原V41-B/GN11的方法、损失、学习率、采样和增密预算不变，正式从零训练30K；5K/10K/15K/20K/25K/30K保存静态、动态、环境、完整训练状态和评价。真实smoke包括fresh≥300秒与严格恢复≥300秒，开销单列。每个新场景当前只有一个经过核验的动态目标；不能据此声称任意多对象归属已解决。</p>
 <p>仅本场景30K成功且磁盘紧张时清其中间checkpoint；先核对最终可恢复四件与49帧评价，保留精确文件/字节/散列删除收据。bug自主修复和必要重放，旧现场保留。周额度快照剩余{quota['remaining_percent']}%；未触发20%停止线。</p></section>
@@ -50,8 +50,15 @@ if (ADMISSION/'registry.json').exists():
         request_rows=[]
         for item in json.loads(motion.read_text())['scenes']:
             context=item['context'];collisions='；'.join(f'{k}: {v}/31' for k,v in item['collisions'].items() if v) or '未见标注框碰撞；空间支撑仍待检查'
-            request_rows.append(f'<tr><td>{context}</td><td>{item["single_request_specs"]}单请求变体 + 1组合协议<br><strong>完成编辑：0</strong></td><td>{collisions}</td><td><a href="admission/motion_requests/{context}/summary.json">物理时刻、轨迹和限制</a></td></tr>')
+            status_file=ADMISSION/'motion_execution'/context/'status.json'
+            executed=json.loads(status_file.read_text()) if status_file.exists() else {}
+            execution=f'原生变体 {executed.get("completed_native_cases",0)}；后端 {executed.get("completed_backend_cases",0)}<br><small>{escape(executed.get("phase","not_dispatched"))}</small>'
+            request_rows.append(f'<tr><td>{context}</td><td>{item["single_request_specs"]}单请求变体 + 1组合协议<br><strong>{execution}</strong></td><td>{collisions}</td><td><a href="admission/motion_requests/{context}/summary.json">物理时刻、轨迹和限制</a></td></tr>')
         admission_section+=f'''<section><h2>接续运动与相机测试：请求先做物理一致性检查</h2><img src="admission/motion_diagnostics_architecture.svg"><p>共同中央31个相机时刻；0.75/1.25倍速的查询都在原49帧支持内，无时间截断或外推。新增平移、复用插入、±15°转向、0.5m相机侧移和3°旋转入口；同一个30K checkpoint复用，不训练每case。队列等待同场景完整30K后先做真实GPU单帧原生一致性检查，再完整执行。连续修订协议尚未实际执行。</p><table><tr><th>场景</th><th>规格数≠结果数</th><th>输入标注框碰撞压力</th><th>来源</th></tr>{''.join(request_rows)}</table><p>克隆插入也必须检查与保留原车的碰撞。冲突请求保留为压力层，不当正常编辑质量失败，也不推断旧场景所有拖影均由碰撞造成。新位置道路支撑尚未证明；标注框仅用于请求条件与诊断，未过滤训练点。相机未知mask未定义时保留原生诊断，不伪称视频补完。</p></section>'''
+        for picture in sorted((ADMISSION/'motion_execution').glob('*/*/native.png')):
+            case_dir=picture.parent;relative=str(case_dir.relative_to(OUT)).replace('\\','/')
+            generated=case_dir/'generated.png';backend=(f'<img src="{relative}/generated.png">' if generated.exists() else '<p>固定后端结果尚未完成或该操作仅做原生诊断。</p>')
+            admission_section+=f'<section><h2>新场景实际输出：{escape(case_dir.parent.name)} / {escape(case_dir.name)}</h2><p>左为原生，右为固定后端（若已完成）；仅供失败定位，无反事实RGB真值，质量仍待评审。</p><div class="grid"><img src="{relative}/native.png">{backend}</div></section>'
     audit=ADMISSION/'native_actor_source_audit.json'
     if audit.exists():
         audit_rows=''.join(f'<tr><td>{x["context"]}</td><td>{x["total_dynamic_points"]:,}</td><td>{100*x["inside_annotated_box_fraction"]["0.0"]:.2f}%</td><td>{x["world_replay_max_abs_m"]:.1f}m</td></tr>' for x in json.loads(audit.read_text()))
