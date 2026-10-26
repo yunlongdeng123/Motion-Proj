@@ -45,6 +45,26 @@ if (ADMISSION/'registry.json').exists():
     for name in ['scene0017','scene0029']:
         admission_section+=f'<details><summary>{name}：组件比较与参考域</summary><img loading="lazy" src="admission/withdrawal/{name}/comparison.jpg"><img loading="lazy" src="admission/withdrawal/{name}/reference_layers.png"><p><a href="admission/withdrawal/{name}/summary.json">分层指标、来源和分母</a></p></details>'
     admission_section+='</section>'
+    motion=ADMISSION/'motion_requests/status.json'
+    if motion.exists():
+        request_rows=[]
+        for item in json.loads(motion.read_text())['scenes']:
+            context=item['context'];collisions='；'.join(f'{k}: {v}/31' for k,v in item['collisions'].items() if v) or '未见标注框碰撞；空间支撑仍待检查'
+            request_rows.append(f'<tr><td>{context}</td><td>{item["single_request_specs"]}单请求变体 + 1组合协议<br><strong>完成编辑：0</strong></td><td>{collisions}</td><td><a href="admission/motion_requests/{context}/summary.json">物理时刻、轨迹和限制</a></td></tr>')
+        admission_section+=f'''<section><h2>接续运动与相机测试：请求先做物理一致性检查</h2><img src="admission/motion_diagnostics_architecture.svg"><p>共同中央31个相机时刻；0.75/1.25倍速的查询都在原49帧支持内，无时间截断或外推。新增平移、复用插入、±15°转向、0.5m相机侧移和3°旋转入口；同一个30K checkpoint复用，不训练每case。队列等待同场景完整30K后先做真实GPU单帧原生一致性检查，再完整执行。连续修订协议尚未实际执行。</p><table><tr><th>场景</th><th>规格数≠结果数</th><th>输入标注框碰撞压力</th><th>来源</th></tr>{''.join(request_rows)}</table><p>克隆插入也必须检查与保留原车的碰撞。冲突请求保留为压力层，不当正常编辑质量失败，也不推断旧场景所有拖影均由碰撞造成。新位置道路支撑尚未证明；标注框仅用于请求条件与诊断，未过滤训练点。相机未知mask未定义时保留原生诊断，不伪称视频补完。</p></section>'''
+    audit=ADMISSION/'native_actor_source_audit.json'
+    if audit.exists():
+        audit_rows=''.join(f'<tr><td>{x["context"]}</td><td>{x["total_dynamic_points"]:,}</td><td>{100*x["inside_annotated_box_fraction"]["0.0"]:.2f}%</td><td>{x["world_replay_max_abs_m"]:.1f}m</td></tr>' for x in json.loads(audit.read_text()))
+        admission_section+=f'<section><h2>初始化来源核对</h2><table><tr><th>场景</th><th>真实动态点</th><th>未扩张标注框内比例</th><th>逐源点世界回放差</th></tr>{audit_rows}</table><p>源索引、世界坐标和模型时间逐点对齐；框一致性不证明语义纯度，不把3D框作为训练过滤器。<a href="admission/native_actor_source_audit.json">审计详情</a></p></section>'
+    for path in sorted((ADMISSION/'native_training').glob('*/checkpoint*/event.json')):
+        node=path.parent;event=json.loads(path.read_text());picture=node/'contact.jpg'
+        canvas=Image.new('RGB',(1920,350),(240,244,248))
+        from PIL import ImageDraw
+        for i,name in enumerate(['gt','composite','static','dynamic']):
+            canvas.paste(Image.open(node/(name+'.png')).convert('RGB'),(i*480,30));ImageDraw.Draw(canvas).text((i*480+8,8),name+f' / {event["iteration"]}',fill=(20,40,60))
+        canvas.save(picture,quality=94)
+        relative=str(node.relative_to(OUT)).replace('\\','/')
+        admission_section+=f'<section><h2>训练中间快照：{path.parent.parent.name} · {event["iteration"]:,}步</h2><img loading="lazy" src="{relative}/contact.jpg"><p>原生保存的中间相机；依次GT、完整、静态、动态。未达到30K，资产仍可见模糊/残影，不提前接受编辑质量或判定最终失败。<a href="{relative}/paper_metrics.json">原生49帧区域指标</a></p></section>'
 for name in ['scene0017', 'scene0029', 'scene0008_repair10k']:
     video = DATA / name / 'delete_video.mp4'
     result = video.with_name('delete_h264.mp4')
