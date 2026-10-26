@@ -118,6 +118,8 @@ failures = [
          status='中间帧图像已检查，49帧保留供时序复核', cause='背景中烘焙阴影/污染是候选解释；需要贡献与真实显露对照，尚未确认几何错误',
          evidence='delivery/scene0029/contact.jpg'),
 ]
+if (ADMISSION/'motion_execution/14705303724557273004_3105_000_3125_000/diagnostics/summary.json').exists():
+    failures.append(dict(scene='14705303724557273004_3105_000_3125_000',operation='单目标删除、平移、转向、变速、克隆和相机变化',observation='raw109删除后保留SUV形状静态残影；ProPainter变成暗块；平移/转向资产失真，相机侧移暴露其他车辆和背景失真。',status='实际11变体31帧及6固定视频已完成，6次连续原生修订已执行；同时间raw109图像已检查',cause='②静态残留可见；①资产/算子与静态遮挡尚需分离；③暗块无反事实GT不能直接认定改坏正确道路。SH物体系旋转CPU控制通过、GPU控制待执行。',evidence='admission/motion_execution/14705303724557273004_3105_000_3125_000/diagnostics/comparison.jpg'))
 (OUT / 'failure_matrix.json').write_text(json.dumps(failures, ensure_ascii=False, indent=2), encoding='utf-8')
 labels = {'previous_method_development': '原方法开发', 'previous_reconstruction_development': '历史重建开发',
           'new_diagnostic_development': '新增诊断开发', 'heldout_reserved': '封存：未跑编辑评测'}
@@ -132,7 +134,7 @@ body = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="v
 <section><h2>已经做了什么，哪些仍未完成</h2><table><tr><th>层次</th><th>实际进展</th><th>不能据此宣称</th></tr>
 <tr><td>数据准备</td><td>36个真实context逐记录双CRC核验；1764帧RGB和原始轨迹标注。原方法开发1段、历史重建开发2段、新开发10段、封存23段。</td><td>尚未全部成为高斯编辑案例；context之间物理路段重叠仍待审计。</td></tr>
 <tr><td>任务规格</td><td>六类任务，共216份待执行规格，先划场景再选目标/窗口。</td><td>不是216项已完成实验；严格撤源、核心真值与多请求复用尚未完成。</td></tr>
-<tr><td>实际运行</td><td>另外两个历史开发路段各6种原生操作×49帧，共12条操作序列；各有固定ProPainter删车视频。已完成保背景10K也补齐49帧原生与视频验收。</td><td>整动态分支操作不能冒充指定实例归属已解决；不同历史基座不能直接算方法增益。</td></tr>
+<tr><td>实际运行</td><td>新场景首个30K后11原生变体×31帧、6固定视频、6次连续原生修订完成。历史两个开发路段另有12条49帧操作序列，保留其协议区别。</td><td>整动态分支操作不能冒充指定实例归属已解决；不同历史基座不能直接算方法增益。</td></tr>
 <tr><td>阶段三</td><td>候选几何smoke正常保存，共3985额外更新；正式10K未启动，已撤下。视频后端保持ProPainter。</td><td>不提前选择核心算法，也不切换后端掩盖失败。</td></tr></table>
 <p class="note">阶段一闭环已经运行，当前重点是阶段二。持久世界状态仍是框架目标；必须证明三维背景在换视角、反复编辑时正确，并减少③修补需求，才能形成算法贡献。</p>
 <img src="delivery/evaluation_architecture.svg" alt="多场景评测、固定编辑和生成后端、三维与视频分开检查、失败驱动算法迭代"></section>
@@ -151,10 +153,10 @@ class Links(HTMLParser):
         self.paths += [v for k,v in attrs if k in ['src','href'] and v and not v.startswith(('http:','https:','#'))]
 parser=Links();parser.feed(body)
 broken=[p for p in parser.paths if not (OUT / p).exists()]
-for file in DATA.rglob('*.jpg'):
+for file in [*DATA.rglob('*.jpg'),*ADMISSION.rglob('*.jpg'),*ADMISSION.rglob('*.png')]:
     with Image.open(file) as im:im.verify()
 assert not broken,broken
 result=dict(local_links=len(parser.paths),broken=broken,actual_independent_heldout_results=0,
-            raw_contexts=36,prepared_pngs=1764,operation_sequences=12,all_six_families_complete=False,
+            raw_contexts=36,prepared_pngs=1764,historical_operation_sequences=12,new_native_variants=11,new_fixed_backend_cases=6,continuous_native_revisions=6,new_eight_family_completed=0,all_six_families_complete=False,
             browser_render_qa=False,quality_accepted=False,human_verdict=None)
 (OUT/'validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
