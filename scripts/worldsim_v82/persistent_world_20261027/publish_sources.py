@@ -1,0 +1,52 @@
+"""Publish scoped code and rewrite the single current research snapshot."""
+from pathlib import Path
+import json,shutil,subprocess
+ROOT=Path('/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027')
+REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
+CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
+CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
+for p in (ROOT/'code').glob('*.py'):shutil.copy2(p,CODE/p.name)
+for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg']:
+    shutil.copy2(ROOT/'code'/name,DOC/name)
+quota=json.loads((ROOT/'quota_state.json').read_text())
+native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
+current='''# 当前研究状态
+
+更新：2026-10-27。Task：WS-V82-PERSISTENT-WORLD-20261027。分支research/worldsim-v8.2-drivingeditor-v42。
+
+**阶段二：输入准入、操作适配和逐场景原生训练。** 阶段一最小编辑→三维修复→固定ProPainter已有实际输出，质量未接受；阶段三仅探索。固定①③的方法选择，先区分实例/轨迹、背景污染或缺失、视频改坏三种归因，再决定②算法。持久世界状态是框架目标，不预定为创新。
+
+[计划](autoresearch/persistent_world_20261027/PLAN.md) · [评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md) · [输入准入规则](autoresearch/persistent_world_20261027/ADMISSION_POLICY.json)
+
+![逐场景流水](autoresearch/persistent_world_20261027/native_training_architecture.svg)
+
+最新用户授权：通过数据质量检查的场景立即优先训练，不等所有候选；每场景只fresh训练一次原生V41-B/GN11基座30K，多种编辑复用。每5K保存静态、动态、环境、优化器/RNG/采样状态四件与评价。smoke真实fresh≥300秒+完整恢复≥300秒，实跑保存/49帧评价/恢复/下一入口；额外更新单列，正式fresh30K不混smoke。bug自主修复、精确恢复或新目录重放，旧现场与成本保留。仅本场景30K完整成功、最终可恢复四件和评价验证后且磁盘紧张，才清本场景中间checkpoint产物；不清其他资产。
+
+36个context/1764帧RGB与轨迹已准备，1原方法开发、2历史重建开发、10新诊断开发、23封存；216任务规格不是216完成实验，物理路段重叠仍待审计。自动原始检查34通过、2复核，完整正式基准就绪仍为0。准入v2检查清晰度/曝光、标定/位姿刚性、轨迹、极线及目标裁切。最大框原窗口只有1个普通运动候选、0个变速候选；按操作重选窗后33普通运动、21真实运动目标候选，仍须窗口/资产/几何检查。雨水镜头336353...归光学退化困难层；183975...低匹配率待LiDAR核验，不直接判标定坏。
+
+3个新开发段各49帧真实1920×1280 RGB、五LiDAR双回波TOP运动补偿、位姿与标定提取完成，3段DEVA掩码完成。原最大框目标多被边缘裁切，已选择同窗完整可见运动目标，无需重提传感器。147053...SUV49帧DEVA166已逐帧检查，18147真实动态点；静态继承600000点RandomState(0)有放回采样，全部6967169源点可追溯。GT框只用于身份提案，不生成像素掩码或过滤训练点。天空沿原SegFormer真实推理；首场景原生Scene/SGCM守卫与真实smoke通过：fresh1000+恢复1000额外更新，合计965.23秒（含原生评价/保存），所有参数/Adam/RNG/采样恢复核对通过；正式fresh30K已启动，训练质量未接受。
+
+当前控制器快照：
+```json
+NATIVE_STATUS
+```
+权威native_scene_training_v1/*/status.json和native_scene_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
+
+两个其他历史开发路段scene0017/0029各6种整动态分支操作×49帧及固定视频完成，FP32适配差0；不冒充精确实例编辑。0017视频把部分正确背景变暗块；0029删除后暗色轮廓保留，移动/插入拖影。不同历史基座绝对分数不作方法增益。变速、转向、连续组合及同协议HorizonForge对比仍待补齐；封存无编辑成绩。
+
+严格道路原始输入撤源v2完成两路段组件基线：49源RGB编码前遮挡、世界洞LiDAR初始化前移除，不输入已有高斯/潜特征，不是整个B撤源重训。真实最近LiDAR可见性和车辆排除定义稀疏地面参考，分边界/过渡/≥0.75m核心。0017核心9426累计帧像素，确定性平面+邻色MAE0.02752，固定ProPainter0.02418；0029核心4628，0.03863→0.02885。稀疏域不是全洞GT，视频不是3D；输入平面不读取隐藏目标点/教师平面。PNG量化口径对齐，旧分数保留。不据此提前扩②算法。
+
+保背景原型fresh10K/49帧验收已完成，额外smoke4166；几何候选仅smoke3985、正式10K未启动。旧三父队列因阶段二优先停止，非工程失败，不恢复。保留用户选择保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth，不追求道路贡献最大化。199参考来源曾进入初始化，不是独立GT；直接锚点解释大部分旧收益，不能宣称世界记忆创新。
+
+资源停止线：周剩余严格<20%快速保存、禁启、取回必要结果、提交推送并关AutoDL，再暂停同一心跳。在此前持续研究，不因阶段结束/负结果/队列空关机。当前工具周剩余QUOTA%，至少30分钟复查。NVML每秒记录，历史31.09GiB采样峰与CUDA分配器峰分开。数据/模型/日志不入Git，保留用户桥接脚本修改。
+
+本地报告outputs/4D_Editing_Evaluation_20261027/index.html。quality_accepted=false，human_verdict=null。
+'''.replace('NATIVE_STATUS',json.dumps(native,ensure_ascii=False,indent=2)).replace('QUOTA',str(quota['remaining_percent']))
+(REPO/'docs/RESEARCH_STATUS.md').write_text(current,encoding='utf-8')
+index=REPO/'docs/EXPERIMENTS.md';prefix='- WS-V82-PERSISTENT-WORLD-20261027：'
+line=prefix+'[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二输入准入、逐场景30K/5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。'
+lines=[line if x.startswith(prefix) else x for x in index.read_text().splitlines()]
+if not any(x.startswith(prefix) for x in lines):lines.append(line)
+index.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+paths=['scripts/worldsim_v82/persistent_world_20261027','docs/autoresearch/persistent_world_20261027','docs/RESEARCH_STATUS.md','docs/EXPERIMENTS.md']
+for args in [['add','--']+paths,['diff','--cached','--check'],['diff','--cached','--stat'],['status','--short']]:subprocess.run(['git','-C',str(REPO)]+args,check=True)

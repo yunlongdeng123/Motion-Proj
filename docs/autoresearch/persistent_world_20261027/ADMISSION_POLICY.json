@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "date_local": "2026-10-27",
+  "purpose": "prospective input and per-operation screening; existing convenience examples retained",
+  "does_not_consume_edit_outputs": true,
+  "formal_admission_requires": ["valid_sensor_structure", "image_quality_review", "operation_specific_data", "native_reconstruction_and_asset_QA", "geometry_and_edit_domain"],
+  "hard_structural": {"frames": 49, "rotation_orthogonality_max": 0.001, "rotation_determinant_min": 0.999, "rotation_determinant_max": 1.001, "finite_positive_intrinsics": true, "strictly_increasing_timestamps": true},
+  "review_flags_not_automatic_exclusion": {"laplacian_variance_below": 20, "low_focus_frame_fraction_above": 0.25, "very_dark_or_bright_fraction_above": 0.7, "timestamp_gap_seconds_above": 0.15, "ego_speed_mps_above": 60, "target_speed_mps_above": 60, "target_acceleration_mps2_above": 20, "heading_rate_degrees_per_second_above": 90, "calibrated_epipolar_error_pixels_above": 2, "epipolar_inlier_fraction_below": 0.5},
+  "motion_data": {"presence_at_least": 40, "longest_contiguous_at_least": 35, "maximum_internal_gap_frames": 2, "median_target_area_at_480x320_at_least": 300, "maximum_border_touch_fraction_for_normal_case": 0.1, "minimum_speed_for_speed_edit_mps": 1, "minimum_heading_samples": 20},
+  "delete_data": {"presence_at_least": 15, "median_target_area_at_480x320_at_least": 100},
+  "camera_difficulty": {"translation_baseline_low_below_m": 0.5, "measured_parallax_low_below_degrees": 0.5, "need_measured_support_for_requested_camera_volume": true},
+  "hard_cases_to_keep": ["occluded_unknown_road_center", "long_occlusion", "large_viewpoint_change", "sparse_geometric_support_with_valid_calibration", "unseen_asset_surface"],
+  "failure_ownership": {"instance_or_trajectory_binding": 1, "missing_or_contaminated_background": 2, "video_overwrites_valid_render": 3},
+  "status_semantics": {"structurally_invalid": "repair or exclude input; preserve record", "review_required": "hold formal admission; inspect input evidence", "raw_checks_passed": "not formal edit-ready until asset and geometry QA", "hard_but_valid": "keep and stratify, do not remove because editing failed"}
+}

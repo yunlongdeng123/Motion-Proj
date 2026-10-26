@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="none" stroke="#42647d" stroke-width="1.4"/></marker></defs>
+<rect width="1200" height="650" rx="18" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei,Noto Sans CJK SC,sans-serif" fill="#173c53" text-anchor="middle">
+<text x="600" y="43" font-size="25" font-weight="bold">候选池 → 输入准入 → 逐操作适配 → 难度分层 → 责任模块归因</text>
+<g stroke="#97afc4" stroke-width="1.5" fill="#e8f0f7"><rect x="30" y="90" width="205" height="110" rx="11"/><rect x="285" y="90" width="250" height="110" rx="11"/><rect x="585" y="90" width="255" height="110" rx="11"/><rect x="890" y="90" width="280" height="110" rx="11"/></g>
+<text x="132" y="128" font-size="21">真实候选片段</text><text x="132" y="162" font-size="17">RGB / LiDAR / 相机</text><text x="132" y="187" font-size="17">轨迹 / 标注 / 来源</text>
+<text x="410" y="128" font-size="21">输入有效性</text><text x="410" y="162" font-size="17">画质 · 标定 · 位姿</text><text x="410" y="187" font-size="17">时间连续 · 轨迹跳变</text>
+<text x="712" y="128" font-size="21">逐操作适配</text><text x="712" y="162" font-size="17">对象资产 / 时域 / 目标空间</text><text x="712" y="187" font-size="17">移动 · 变速 · 转向 · 相机</text>
+<text x="1030" y="128" font-size="21">版本化案例与难度</text><text x="1030" y="162" font-size="17">正常 / 长遮挡 / 稀疏几何</text><text x="1030" y="187" font-size="17">大视角 / 连续组合请求</text>
+<rect x="285" y="250" width="250" height="84" rx="11" fill="#fff0df" stroke="#c49c6f" stroke-width="1.5"/>
+<text x="410" y="284" font-size="19">损坏：修复或排除</text><text x="410" y="315" font-size="16">疑似：先复核，保留证据</text>
+<rect x="890" y="250" width="280" height="84" rx="11" fill="#e4f3e9" stroke="#78a990" stroke-width="1.5"/>
+<text x="1030" y="284" font-size="19">有效困难样例必须保留</text><text x="1030" y="315" font-size="16">不按编辑失败事后剔除</text>
+<g stroke="#97afc4" stroke-width="1.5" fill="white"><rect x="30" y="405" width="330" height="115" rx="11"/><rect x="435" y="405" width="330" height="115" rx="11"/><rect x="840" y="405" width="330" height="115" rx="11"/></g>
+<text x="195" y="441" font-size="22">① 编辑与资产</text><text x="195" y="475" font-size="17">实例归属 · 轨迹 · 资产覆盖</text><text x="195" y="501" font-size="17">速度 / 转向 / 组合请求正确性</text>
+<text x="600" y="441" font-size="22">② 背景修复</text><text x="600" y="475" font-size="17">缺几何 · 静态污染 · 显露表面</text><text x="600" y="501" font-size="17">米制核心与跨视角一致性</text>
+<text x="1005" y="441" font-size="22">③ 视频后端</text><text x="1005" y="475" font-size="17">覆盖正确背景 · 时序 · 成本</text><text x="1005" y="501" font-size="17">生成前与生成后分别保存</text>
+<text x="600" y="595" font-size="20">冻结版本做测量；再按确证的责任模块改进，其他模块保持对照</text>
+<text x="600" y="625" font-size="17">数据准备 ≠ 操作可用 ≠ 正式准入 ≠ 质量通过</text>
+</g>
+<g stroke="#42647d" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M235 145H285"/><path d="M535 145H585"/><path d="M840 145H890"/><path d="M410 200V250"/><path d="M1030 200V250"/><path d="M1030 334V367H195V405"/><path d="M600 367V405"/><path d="M1005 367V405"/></g>
+</svg>

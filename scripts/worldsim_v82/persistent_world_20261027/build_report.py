@@ -56,7 +56,7 @@ body{{font-family:"Microsoft YaHei",sans-serif;color:#19384b;background:#f4f7fa;
 <p>实际执行快照 · {now} · 研究继续进行 · 质量待用户评审</p>
 <p><a href="../4D_Editing_Research_Roadmap_20261027/index.html">完整框架与HorizonForge对标路线</a> · <a href="delivery/phase1_native/pipeline_evaluation49.json">逐帧原始指标</a> · <a href="delivery/phase1_native/evidence_registration.json">世界证据登记</a></p>
 <section><h2>当前推进到哪里</h2><p>最小原生三维→预训练视频补全闭环已实际运行。已保存49帧×5种原生输出、三个视频策略与直接参考强控制；六项对象/相机操作也已各渲染49帧。只有一个开发场景，不能把操作数或帧数计为独立场景。</p>
-<p>当前训练控制器快照为 <code>{escape(training.get('phase','unknown'))}</code>。真实10分钟保存/评价/恢复smoke之后自动fresh 10K；最新状态以远端 <code>training_status.json</code> 为准。本文不是实时监控页。</p>
+<p>历史保背景训练快照为 <code>{escape(training.get('phase','unknown'))}</code>；其smoke和fresh10K已完成，当前不追加新修复训练。新增开发路段正在逐场景准备原生30K基座，多编辑复用；见下方最新评测报告。本文保留历史机制证据，属于静态快照。</p>
 <img src="architecture.svg" alt="输入、编辑、背景联合修复、按需生成与持久世界状态"/></section>
 <section><h2>第一条实验证据：整洞生成会覆盖已有有效结果</h2>
 <p>在原型优化过的三个视图上，修复原生MAE为0.00769，整洞视频补全后为0.05012。固定后端保留有来源支持的内容，能避免这部分覆盖。46个其他同片段视图同时改善，但仍需独立场景和几何验证。</p>
@@ -94,7 +94,7 @@ body+='''</div><p>相机变化和插入暂无配对GT；同场景复用插入不
 <p>来源：<a href="https://github.com/lixiaowen-xw/DiffuEraser">DiffuEraser官方实现</a>；现阶段使用其已有ProPainter组件，扩散大权重仍在补齐。<a href="https://github.com/sczhou/ProPainter">ProPainter官方实现</a>。</p>
 </section></main></html>'''
 # 保留历史机制证据，但当前执行方向必须随最新用户纠偏更新。
-body=body.replace('<section><h2>当前推进到哪里</h2>', '<section><h2>当前推进到哪里</h2><p class="note"><strong>2026-10-27更新：阶段二评测优先。</strong>新几何正式10K与后端切换已撤下；固定①③，先建立多场景失败矩阵。<a href="../4D_Editing_Evaluation_20261027/index.html">查看最新36片段数据准备与两个其他路段的实际评测</a>。持久状态是框架目标，不预定论文创新。周额度剩余低于20%快速保存收尾并关AutoDL；此前继续研究。</p>')
+body=body.replace('<section><h2>当前推进到哪里</h2>', '<section><h2>当前推进到哪里</h2><p class="note"><strong>2026-10-27更新：阶段二输入准入与逐场景原生训练。</strong>新增3个开发路段已准备真实传感器、分割和目标点云；先就绪场景优先进入真实smoke→fresh30K，每5K保存完整四件，多种编辑复用。新②训练与③切换仍延后，固定方法建立失败矩阵。<a href="../4D_Editing_Evaluation_20261027/index.html">查看最新流水、输入质检与实际评测</a>。持久状态是框架目标，不预定创新。周额度剩余低于20%快速保存收尾并关AutoDL；此前继续研究。</p>')
 body=body.replace('下一组已排队：固定原训练合同，仅增加分支无关的表面深度矩约束；等待当前健康10K结束后，先独立真实10分钟smoke再fresh10K，并自动接续49帧原生与同后端视频评价。这是由实际失败触发的简单几何原型，尚未确认效果或创新。', '该深度矩候选已完成3985额外smoke更新并保存；正式10K未启动，已撤下。当前保背景基线10K与两个其他开发路段的只读评价已完成；先补多场景评测，再决定②改进。')
 body=body.replace('DiffuEraser权重补齐后接显式三维prior；几何未知、对象身份与外观生成分别定位，按实测需求迭代。', 'DiffuEraser权重已完整下载且CPU导入通过，GPU后端切换延后；阶段二固定ProPainter。')
 body=body.replace('接入独立路段并按场景划分。240例仍是目标，当前没有完成跨场景benchmark。', '36个context已完成RGB/标注准备，两个其他历史开发路段已完成49帧固定基线；封存23段未跑编辑评测。完整六类任务、道路GT及严格撤源仍需补齐。')

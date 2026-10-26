@@ -12,6 +12,35 @@ OUT = ROOT / 'outputs/4D_Editing_Evaluation_20261027'
 DATA = OUT / 'delivery'
 manifest = json.loads((DATA / 'manifest.json').read_text())
 summary = json.loads((DATA / 'summary.json').read_text())
+ADMISSION=OUT/'admission'
+admission_section=''
+if (ADMISSION/'registry.json').exists():
+    registry=json.loads((ADMISSION/'registry.json').read_text())
+    shutil.copy2(Path(__file__).parent/'native_training_architecture.svg',ADMISSION/'native_training_architecture.svg')
+    training_rows=[]
+    for path in sorted((ADMISSION/'native_training').glob('*/status.json')):
+        item=json.loads(path.read_text());context=path.parent.name;assets=ADMISSION/'motion_inputs'/context
+        build=json.loads((assets/'actor_build_returned.json').read_text())
+        links=' · '.join(f'<a href="admission/motion_inputs/{context}/actor_review_{i}.jpg">49帧核验 {i+1}/3</a>' for i in range(3))
+        training_rows.append(f'<tr><td>{context}<br><small>{links}</small></td><td>{build["dynamic_real_points"]:,}真实动态点<br>600,000静态初始点</td><td>{escape(item["phase"])}<br><small>30K一次；每5K完整四件</small></td></tr>')
+    quota=json.loads((ADMISSION/'quota_state.json').read_text())
+    admission_section=f'''<section><h2>最新：逐场景质检通过就训练，多编辑复用</h2><p>不等所有候选完成质检。场景数据与目标就绪后进入原生几何守卫和真实GPU smoke；训练后再检查原生资产、背景与操作空间，决定哪些编辑适合正式评测。训练准入与完整评测准入分开，后者目前仍为0。</p>
+<img src="admission/native_training_architecture.svg"><table><tr><th>新开发场景</th><th>真实初始化</th><th>本地证据快照</th></tr>{''.join(training_rows)}</table>
+<p>原V41-B/GN11的方法、损失、学习率、采样和增密预算不变，正式从零训练30K；5K/10K/15K/20K/25K/30K保存静态、动态、环境、完整训练状态和评价。真实smoke包括fresh≥300秒与严格恢复≥300秒，开销单列。每个新场景当前只有一个经过核验的动态目标；不能据此声称任意多对象归属已解决。</p>
+<p>仅本场景30K成功且磁盘紧张时清其中间checkpoint；先核对最终可恢复四件与49帧评价，保留精确文件/字节/散列删除收据。bug自主修复和必要重放，旧现场保留。周额度快照剩余{quota['remaining_percent']}%；未触发20%停止线。</p></section>
+<section><h2>输入准入已补齐，原“最大框”窗口存在偏差</h2><p>36段自动原始检查：34通过、2复核，均未被包装成正式完成案例。v2增加目标边框接触检查后，旧最大框窗口只有1个普通运动候选、0个变速候选。按操作重新选窗可提出33个普通运动候选、21个运动目标变速候选；这些仍需窗口复核、分割、资产和几何检查。</p>
+<p>三段已准备同一49帧的真实全分辨率RGB、五LiDAR双回波与TOP运动补偿、相机和位姿；自动DEVA全部完成，完整可见目标均逐帧检查。GT框只提出身份，不生成掩码或过滤训练点。原始预测边界和未决状态保留。</p>
+<p><a href="admission/registry.json">输入检查明细</a> · <a href="admission/operation_window_proposals.json">逐操作窗口提案</a> · <a href="admission/ADMISSION_POLICY.json">冻结门限</a></p></section>'''
+    withdrawal_rows=[]
+    for name in ['scene0017','scene0029']:
+        d=json.loads((ADMISSION/'withdrawal'/name/'summary.json').read_text());m=d['methods']
+        withdrawal_rows.append(f'<tr><td>{name}</td><td>{d["frame_summed_generation_mask_pixels"]:,}</td><td>{d["frame_summed_reference_pixels"]:,} / 核心{d["frame_summed_core_reference_pixels"]:,}</td><td>{m["input_plane_neighbor_color"]["core"]["MAE"]:.5f}</td><td>{m["fixed_propainter"]["core"]["MAE"]:.5f}</td></tr>')
+    admission_section+=f'''<section><h2>道路撤源组件：保留完整分母，单列内部核心</h2><p>两路段49帧的全部关联RGB先遮挡、世界洞LiDAR先移除，不输入旧高斯/潜特征。4×2.4m洞与0.3m保护带；最近实测LiDAR可见性和车辆边缘排除定义稀疏参考。核心为距边界≥0.75m。输入平面与邻色只读保留输入，固定ProPainter仍是二维基线。</p>
+<table><tr><th>场景</th><th>撤源mask累计像素</th><th>稀疏参考累计像素</th><th>确定性核心MAE</th><th>固定ProPainter核心MAE</th></tr>{''.join(withdrawal_rows)}</table>
+<p>这是累计帧像素，非唯一世界面积或完整恢复率。场景0017的核心MAE改善但PSNR略降（28.55→28.17dB）；不能说所有指标变好。整个基座没有撤源重训，组件结果不证明高斯三维背景正确。稀疏标签之外仍是未知。</p>'''
+    for name in ['scene0017','scene0029']:
+        admission_section+=f'<details><summary>{name}：组件比较与参考域</summary><img loading="lazy" src="admission/withdrawal/{name}/comparison.jpg"><img loading="lazy" src="admission/withdrawal/{name}/reference_layers.png"><p><a href="admission/withdrawal/{name}/summary.json">分层指标、来源和分母</a></p></details>'
+    admission_section+='</section>'
 for name in ['scene0017', 'scene0029', 'scene0008_repair10k']:
     video = DATA / name / 'delete_video.mp4'
     result = video.with_name('delete_h264.mp4')
@@ -38,6 +67,7 @@ body = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="v
 <style>body{{background:#f3f7fa;color:#203c51;font:16px/1.7 "Microsoft YaHei",sans-serif;margin:0}}main{{max-width:1400px;margin:auto;padding:25px}}section{{background:white;border:1px solid #d8e3eb;border-radius:12px;margin:22px 0;padding:22px}}h1{{font-size:29px}}h2{{font-size:22px}}a{{color:#126c9a}}img,video{{max-width:100%}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;border-bottom:1px solid #dce5ed;padding:12px;vertical-align:top}}.note{{background:#fff1d5;padding:16px;border-left:4px solid #b68c37}}.grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}article{{border:1px solid #dce5ed;padding:10px;border-radius:8px}}article p{{font-size:12px;overflow-wrap:anywhere}}small{{font-size:13px}}video{{width:100%;background:#152536}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:12px}}}}</style>
 <main><h1>4D 编辑评测：先发现重复失败，再改进背景修复</h1><p>2026-10-27 · 阶段二早期 · 质量待用户评审 · 持续自主推进</p>
 <p><a href="../Persistent_World_Autoresearch_20261027/index.html">原开发场景证据</a> · <a href="delivery/EVALUATION_PROTOCOL.md">冻结评测合同</a> · <a href="delivery/manifest.json">场景与案例规格</a> · <a href="failure_matrix.json">失败矩阵</a></p>
+{admission_section}
 <section><h2>已经做了什么，哪些仍未完成</h2><table><tr><th>层次</th><th>实际进展</th><th>不能据此宣称</th></tr>
 <tr><td>数据准备</td><td>36个真实context逐记录双CRC核验；1764帧RGB和原始轨迹标注。原方法开发1段、历史重建开发2段、新开发10段、封存23段。</td><td>尚未全部成为高斯编辑案例；context之间物理路段重叠仍待审计。</td></tr>
 <tr><td>任务规格</td><td>六类任务，共216份待执行规格，先划场景再选目标/窗口。</td><td>不是216项已完成实验；严格撤源、核心真值与多请求复用尚未完成。</td></tr>
@@ -51,7 +81,7 @@ for name, title in [('scene0017', '路口白色轿车'), ('scene0029', '路口�
     body += f'<section><h2>{title} · {name}</h2><p>上排：原生完整、删除、删除＋固定ProPainter、移动。下排：复用插入、相机侧移、重复删除。所有操作均未训练新修复算法。</p><img src="delivery/{name}/contact.jpg"><video controls preload="metadata" src="delivery/{name}/delete_h264.mp4"></video><p><a href="delivery/{name}/summary.json">逐帧原生记录</a> · <a href="delivery/{name}/video_summary.json">视频改动/时间/显存记录</a></p></section>'
 body += f'''<section><h2>数据清单与接续任务</h2><p>下面只展示输入RGB，封存场景没有运行编辑效果评测。原始三维标签、像素语义、可信道路参考、原生checkpoint的就绪状态分别记录；框不作为像素掩码。</p><div class="grid">{gallery}</div>
 <ol><li>补齐新增开发路段的像素掩码、米制几何与高斯输入；封存场景保持方法选择隔离。</li><li>严格撤源先移除全部关联输入再编码/初始化，分别报告边界、过渡、内部核心；做不到的只标module-only。</li><li>按完整目标与参考分母评价污染残留、保留对象、跨视角/请求一致性和视频修补负担；无标签中心仍为未知。</li><li>依据跨场景反复失败再设计②，固定①③消融；保留简单锚点、确定性补全和普通缓存强对照。</li></ol></section>
-<section><h2>资源与质量状态</h2><p>同一心跳每30分钟继续。每次先查Codex周额度；剩余严格低于20%时快速保存收尾、取回必要结果并关闭AutoDL，再暂停心跳。在此之前继续自主研究，不因阶段结束或负结果关机。</p><p>当前快照周剩余57%；额度以后续工具读取为准。质量仍为quality_accepted=false、human_verdict=null。重复渲染最大差0仅为工程检查，不是世界记忆收益。</p><p>本页做了图片和文件链接校验，没有声称浏览器交互QA。<a href="delivery/summary.json">执行与指标清单</a></p></section></main></html>'''
+<section><h2>资源与质量状态</h2><p>同一心跳每30分钟继续。每次先查Codex周额度；剩余严格低于20%时快速保存收尾、取回必要结果并关闭AutoDL，再暂停心跳。在此之前继续自主研究，不因阶段结束或负结果关机。</p><p>额度快照见本页最新流水区，以后续工具读取为准。质量仍为quality_accepted=false、human_verdict=null。重复渲染最大差0仅为工程检查，不是世界记忆收益。</p><p>本页做了图片和文件链接校验，没有声称浏览器交互QA。<a href="delivery/summary.json">执行与指标清单</a></p></section></main></html>'''
 (OUT / 'index.html').write_text(body, encoding='utf-8')
 class Links(HTMLParser):
     def __init__(self):

@@ -2,24 +2,73 @@
 
 更新：2026-10-27。Task：WS-V82-PERSISTENT-WORLD-20261027。分支research/worldsim-v8.2-drivingeditor-v42。
 
-**当前阶段二早期，优先评测驱动研究。** 阶段一最小编辑→三维修复→ProPainter闭环已跑通，质量未通过；阶段三仅候选探索。用户最新纠偏要求固定①③，完成多场景针对性评测，再依据反复失败改进②。持久世界状态是框架目标，不预定为论文创新。
+**阶段二：输入准入、操作适配和逐场景原生训练。** 阶段一最小编辑→三维修复→固定ProPainter已有实际输出，质量未接受；阶段三仅探索。固定①③的方法选择，先区分实例/轨迹、背景污染或缺失、视频改坏三种归因，再决定②算法。持久世界状态是框架目标，不预定为创新。
 
-协议和组件图：[执行计划](autoresearch/persistent_world_20261027/PLAN.md)、[评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md)。代码scripts/worldsim_v82/persistent_world_20261027/。唯一campaign=/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027。
+[计划](autoresearch/persistent_world_20261027/PLAN.md) · [评测合同](autoresearch/persistent_world_20261027/EVALUATION_PROTOCOL.md) · [输入准入规则](autoresearch/persistent_world_20261027/ADMISSION_POLICY.json)
 
-原V41-B完整重建通路独立不改，原生更新0。编辑副本起点保持用户选定保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth，不混强透射，不以道路贡献最大化代替质量。
+![逐场景流水](autoresearch/persistent_world_20261027/native_training_architecture.svg)
 
-保背景smoke4166额外更新，恢复段600.799秒、参数/Adam/采样/RNG加载检查通过；fresh基线严格10000更新已完成并完成49帧固定后端验收。深度矩候选只完成3985额外smoke更新，恢复段600.680秒；其正式10K未启动，已因研究优先级撤下。三个旧父调度器停止、子smoke正常保存，收据phase2_reprioritization/receipt.json；不是工程失败。research_policy.json禁启新②训练与③切换。
+最新用户授权：通过数据质量检查的场景立即优先训练，不等所有候选；每场景只fresh训练一次原生V41-B/GN11基座30K，多种编辑复用。每5K保存静态、动态、环境、优化器/RNG/采样状态四件与评价。smoke真实fresh≥300秒+完整恢复≥300秒，实跑保存/49帧评价/恢复/下一入口；额外更新单列，正式fresh30K不混smoke。bug自主修复、精确恢复或新目录重放，旧现场与成本保留。仅本场景30K完整成功、最终可恢复四件和评价验证后且磁盘紧张，才清本场景中间checkpoint产物；不清其他资产。
 
-36个真实context逐条双CRC核验、1764帧RGB与标注已准备：原方法开发1段、历史重建开发2段、新诊断开发10段、封存23段。216份任务规格不是216项已运行实验。物理路段重叠、像素掩码、新场景高斯与道路GT仍需继续准备。封存集尚无编辑结果，不能声称泛化。
+36个context/1764帧RGB与轨迹已准备，1原方法开发、2历史重建开发、10新诊断开发、23封存；216任务规格不是216完成实验，物理路段重叠仍待审计。自动原始检查34通过、2复核，完整正式基准就绪仍为0。准入v2检查清晰度/曝光、标定/位姿刚性、轨迹、极线及目标裁切。最大框原窗口只有1个普通运动候选、0个变速候选；按操作重选窗后33普通运动、21真实运动目标候选，仍须窗口/资产/几何检查。雨水镜头336353...归光学退化困难层；183975...低匹配率待LiDAR核验，不直接判标定坏。
 
-两个其他历史开发路段scene0017/scene0029的适配器FP32完整通路最大差0；各6种原生操作×49帧与相同ProPainter删车视频完成。操作为整动态分支删除/移动/复用插入、相机侧移、无编辑和重复删除；不冒充指定实例归属已解决。当前也完成已训练保背景10K的49帧只读评价。不同历史基座/路段的绝对分数不能当方法增益。重复渲染差0仅为工程验收。
+3个新开发段各49帧真实1920×1280 RGB、五LiDAR双回波TOP运动补偿、位姿与标定提取完成，3段DEVA掩码完成。原最大框目标多被边缘裁切，已选择同窗完整可见运动目标，无需重提传感器。147053...SUV49帧DEVA166已逐帧检查，18147真实动态点；静态继承600000点RandomState(0)有放回采样，全部6967169源点可追溯。GT框只用于身份提案，不生成像素掩码或过滤训练点。天空沿原SegFormer真实推理；首场景原生Scene/SGCM守卫与真实smoke通过：fresh1000+恢复1000额外更新，合计965.23秒（含原生评价/保存），所有参数/Adam/RNG/采样恢复核对通过；正式fresh30K已启动，训练质量未接受。
 
-首轮scene0008参考MAE：原静态0.19592，修复原型0.08015，原型整洞视频0.06722，证据路由0.01172，直接参考锚点0.01400。简单锚点解释大部分收益。来源138–169曾进入199初始化，非独立GT；三个优化视图与46同片段视图分开。左车黑影、近处条带与对象残影仍在，不能凭MAE接受质量。B逐行对象归属缺失；贡献期望深度不是首交真实几何。生成视频不自动升级观测或3D。
+当前控制器快照：
+```json
+{
+  "14705303724557273004_3105_000_3125_000": {
+    "context": "14705303724557273004_3105_000_3125_000",
+    "pid": 32375,
+    "start_ticks": "902980215",
+    "formal_steps": 30000,
+    "save_every": 5000,
+    "per_edit_retraining": false,
+    "phase": "formal30k",
+    "command": [
+      "/root/autodl-tmp/envs/drivingeditor/bin/python",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/code/native_scene_worker.py",
+      "--scene",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/motion_scene_inputs_v1/14705303724557273004_3105_000_3125_000",
+      "--output",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/14705303724557273004_3105_000_3125_000/formal30k"
+    ],
+    "child": {
+      "pid": 35829,
+      "start_ticks": "903090773"
+    },
+    "last_returncode": 0
+  },
+  "4295449061847708198_3769_000_3789_000": {
+    "context": "4295449061847708198_3769_000_3789_000",
+    "pid": 34105,
+    "start_ticks": "903032402",
+    "formal_steps": 30000,
+    "save_every": 5000,
+    "per_edit_retraining": false,
+    "phase": "waiting_gpu",
+    "child": null
+  },
+  "473735159277431842_630_095_650_095": {
+    "context": "473735159277431842_630_095_650_095",
+    "pid": 34781,
+    "start_ticks": "903048683",
+    "formal_steps": 30000,
+    "save_every": 5000,
+    "per_edit_retraining": false,
+    "phase": "waiting_gpu",
+    "child": null
+  }
+}
+```
+权威native_scene_training_v1/*/status.json和native_scene_dispatch.json；核对PID/start_ticks，健康进程不重复启动。新场景训练属于阶段二基础设施，不是新②算法训练。原V41-B完整重建不加道路或编辑hook；编辑在副本进行。新②训练仍禁启，③保持同权重ProPainter，不自动切DiffuEraser。
 
-下一步：固定基线失败矩阵、逐场景保留对象/几何/生成负担，准备新增开发路段的原生与标注输入，完成严格道路撤源、米制核心分层、重复多请求对照。严格撤源必须早于初始化/编码和全部关联输入，已见答案的基座只能标module-only。再按反复失败选择②算法，固定①③消融。③仍为同权重ProPainter；DiffuEraser已下载且CPU导入通过，GPU切换延后。
+两个其他历史开发路段scene0017/0029各6种整动态分支操作×49帧及固定视频完成，FP32适配差0；不冒充精确实例编辑。0017视频把部分正确背景变暗块；0029删除后暗色轮廓保留，移动/插入拖影。不同历史基座绝对分数不作方法增益。变速、转向、连续组合及同协议HorizonForge对比仍待补齐；封存无编辑成绩。
 
-**资源停止线：Codex周剩余严格低于20%时快速保存可恢复现场、禁启新任务、取回必要结果、提交推送并关闭AutoDL，然后暂停同一心跳。** 每次唤醒先检查、持续工作至少每30分钟复核；未知不当成0。在此前持续自主研究，不因负结果、阶段结束或队列暂空停止/关机。resource_control.py提供禁启/停止请求，未来训练收到SIGTERM/额度停止请求步间保存全部状态；小时级新方法仍须真实约10分钟smoke覆盖保存/评价/恢复和下一入口。
+严格道路原始输入撤源v2完成两路段组件基线：49源RGB编码前遮挡、世界洞LiDAR初始化前移除，不输入已有高斯/潜特征，不是整个B撤源重训。真实最近LiDAR可见性和车辆排除定义稀疏地面参考，分边界/过渡/≥0.75m核心。0017核心9426累计帧像素，确定性平面+邻色MAE0.02752，固定ProPainter0.02418；0029核心4628，0.03863→0.02885。稀疏域不是全洞GT，视频不是3D；输入平面不读取隐藏目标点/教师平面。PNG量化口径对齐，旧分数保留。不据此提前扩②算法。
 
-当前额度快照：2026-10-27T02:09:47+08:00，周剩余57%；权威以每次get_usage_limits为准。当前评价状态frozen_baselines_complete_analysis_pending；PID/start_ticks见dispatch。NVML与CUDA峰分开保存，数据/模型/日志不入Git，保留用户无关桥接脚本修改。Git提交推送与本地取回按每轮验证。
+保背景原型fresh10K/49帧验收已完成，额外smoke4166；几何候选仅smoke3985、正式10K未启动。旧三父队列因阶段二优先停止，非工程失败，不恢复。保留用户选择保背景edit_smoke_preserve/full199/checkpoint1000_from0.pth，不追求道路贡献最大化。199参考来源曾进入初始化，不是独立GT；直接锚点解释大部分旧收益，不能宣称世界记忆创新。
 
-quality_accepted=false，human_verdict=null；用户评审质量。旧V4/V41正式队列不恢复，不把历史原型开销混入当前正式预算。
+资源停止线：周剩余严格<20%快速保存、禁启、取回必要结果、提交推送并关AutoDL，再暂停同一心跳。在此前持续研究，不因阶段结束/负结果/队列空关机。当前工具周剩余54%，至少30分钟复查。NVML每秒记录，历史31.09GiB采样峰与CUDA分配器峰分开。数据/模型/日志不入Git，保留用户桥接脚本修改。
+
+本地报告outputs/4D_Editing_Evaluation_20261027/index.html。quality_accepted=false，human_verdict=null。
