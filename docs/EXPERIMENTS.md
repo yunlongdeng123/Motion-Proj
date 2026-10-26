@@ -216,4 +216,4 @@
 
 - WS-V82-GN11-V42-SELECTED-C-MECHANISM-20261026：[用户选定保背景C的正确归因](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)；纠正前条C绑定，新增训练0，强透射仅保留为未选对照。
 
-- WS-V82-PERSISTENT-WORLD-20261027：[持久世界状态三阶段自主研究](autoresearch/persistent_world_20261027/PLAN.md)；保留原生3D与生成视频，原生B冻结，smoke/正式基线分账，当前进行中。
+- WS-V82-PERSISTENT-WORLD-20261027：[4D编辑评测驱动自主研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二优先，36段RGB/标注准备、两个其他开发路段固定基线，质量未接受，周剩余<20%快速收尾关机。

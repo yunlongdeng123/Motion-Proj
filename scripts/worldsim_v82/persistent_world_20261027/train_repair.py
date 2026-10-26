@@ -1,5 +1,5 @@
 """可配置视图的背景联合修复基线；继承保背景原型目标，隔离主副本。"""
-import argparse,json,random,sys,time
+import argparse,json,random,signal,sys,time
 from pathlib import Path
 sys.path.insert(0,'/root/autodl-tmp')
 from editor_common import *
@@ -7,6 +7,11 @@ from scipy.ndimage import distance_transform_edt
 
 
 def main():
+    import resource_control
+    resource_control.require_start(repair_training=True)
+    requested_stop=[]
+    for sig in [signal.SIGTERM,signal.SIGINT]:
+        signal.signal(sig,lambda signum,frame:requested_stop.append(signum))
     p=argparse.ArgumentParser();p.add_argument('--config',required=True);p.add_argument('--output',required=True)
     p.add_argument('--steps',type=int,required=True);p.add_argument('--min-seconds',type=float,default=0)
     p.add_argument('--resume');a=p.parse_args();config=read(a.config);dest=Path(a.output);dest.mkdir(parents=True,exist_ok=True)
@@ -76,6 +81,8 @@ def main():
     evaluate(start_step);start=time.time();step=start_step;torch.cuda.reset_peak_memory_stats()
     with (dest/f'loss_from{start_step}.jsonl').open('x') as log:
         while step<a.steps or time.time()-start<a.min_seconds:
+            if requested_stop or resource_control.stop_requested():
+                break
             step+=1;i=int(torch.randint(len(views),(1,),generator=sampler));camera=cams[i];d=data[i]
             mask=torch.tensor(d['valid'],device='cuda');protect=~torch.tensor(d['target'],device='cuda');target=torch.tensor(d['rgb'].transpose(2,0,1),device='cuda')
             optimizer.zero_grad(set_to_none=True);mult=torch.ones(len(selected),device='cuda').index_copy(0,ids,gate.sigmoid())
@@ -100,7 +107,7 @@ def main():
                 torch.save(state(step),str(dest/f'checkpoint_{step}.pth'));evaluate(step)
             del loss,result,direct,mult
     torch.save(state(step),str(dest/'checkpoint_final.pth'));evaluate(step);assert n.unchanged()
-    receipt=dict(completed=True,start_step=start_step,final_step=step,updates=step-start_step,active_training_seconds=time.time()-start,
+    receipt=dict(completed=not(requested_stop or resource_control.stop_requested()),resource_stop=bool(requested_stop or resource_control.stop_requested()),start_step=start_step,final_step=step,updates=step-start_step,active_training_seconds=time.time()-start,
         min_seconds_requested=a.min_seconds,master_unchanged=True,quality_accepted=False,human_verdict=None)
     (dest/f'receipt_from{start_step}.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt),flush=True)
 

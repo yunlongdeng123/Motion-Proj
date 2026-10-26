@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#41627b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="590" rx="18" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei,Noto Sans CJK SC,sans-serif" fill="#183b52" text-anchor="middle">
+<text x="600" y="43" font-size="25" font-weight="bold">先建多场景评测，再由重复失败选择背景修复算法</text>
+<g stroke="#98afc4" stroke-width="1.6" fill="#e7eff7"><rect x="35" y="85" width="255" height="102" rx="12"/><rect x="345" y="85" width="340" height="102" rx="12"/><rect x="750" y="85" width="415" height="102" rx="12"/></g>
+<text x="162" y="122" font-size="21">真实多路段数据</text><text x="162" y="155" font-size="17">RGB / LiDAR / 相机 / 实例轨迹</text>
+<text x="515" y="122" font-size="21">场景划分与六类编辑案例</text><text x="515" y="155" font-size="17">开发集 / 封存集 · 来源与未知域</text>
+<text x="957" y="122" font-size="21">冻结①编辑、③ProPainter</text><text x="957" y="155" font-size="17">同输入、掩码、种子 · ②先用现有基线</text>
+<g stroke="#68a98d" fill="#e1f2e9" stroke-width="1.6"><rect x="85" y="260" width="350" height="95" rx="12"/><rect x="505" y="260" width="335" height="95" rx="12"/></g>
+<text x="260" y="297" font-size="21">保存生成前的三维输出</text><text x="260" y="330" font-size="17">几何 / 保留对象 / 核心 / 重复编辑</text>
+<text x="672" y="297" font-size="21">保存最终视频与修补负担</text><text x="672" y="330" font-size="17">修改面积 / 强度 / 时序 / 成本</text>
+<rect x="900" y="248" width="265" height="120" rx="12" fill="#f5ecd8" stroke="#b29b61" stroke-width="1.6"/>
+<text x="1032" y="286" font-size="21">跨场景失败矩阵</text><text x="1032" y="320" font-size="17">缺几何 / 静态污染</text><text x="1032" y="346" font-size="17">归属不清 / 不一致 / 覆盖</text>
+<rect x="345" y="440" width="820" height="95" rx="12" fill="white" stroke="#98afc4" stroke-width="1.6"/>
+<text x="755" y="477" font-size="21">再选择②的单项算法改进 → 固定①③做消融 → 回到同一评测</text><text x="755" y="510" font-size="17">目标：正确且可复用的三维背景，并减少后端修补；创新不预定</text>
+<text x="170" y="480" font-size="18">周额度剩余 &lt;20%</text><text x="170" y="511" font-size="17">快速保存收尾并关机</text>
+</g>
+<g stroke="#41627b" stroke-width="2" fill="none" marker-end="url(#a)"><path d="M290 136H345"/><path d="M685 136H750"/><path d="M957 187V218H260V260"/><path d="M672 218V260"/><path d="M435 308H505"/><path d="M840 308H900"/><path d="M1032 368V440"/><path d="M755 440V407H40V218H515V187"/></g>
+</svg>
