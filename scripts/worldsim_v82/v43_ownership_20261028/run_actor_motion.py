@@ -13,7 +13,7 @@ if previous.exists():
 status=dict(pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='waiting_formal10k',child=None,completed=[])
 def update(**kw):status.update(kw);write(ROOT/'actor_motion_dispatch.json',status)
 def run(ctx,stage,command):
-    require_start();update(context=ctx,phase=stage,command=command)
+    require_start(ctx);update(context=ctx,phase=stage,command=command)
     log=ROOT/('motion_'+ctx+'_'+stage+'.log')
     if log.exists():log=ROOT/('motion_'+ctx+'_'+stage+'_retry_'+str(os.getpid())+'.log')
     with log.open('w') as f:
@@ -21,6 +21,7 @@ def run(ctx,stage,command):
     update(child=None,returncode=rc);assert rc==0,(ctx,stage,rc)
 update()
 for ctx in CONTEXTS:
+    if ctx in json.loads((ROOT/'authorization.json').read_text()).get('held_contexts',[]):continue
     while True:
         require_start();p=ROOT/'actor_campaign_v1'/ctx/'formal10k/status.json'
         if p.exists() and json.loads(p.read_text()).get('phase')=='complete':break

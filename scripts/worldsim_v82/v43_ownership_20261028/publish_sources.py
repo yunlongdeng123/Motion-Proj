@@ -19,13 +19,16 @@ doc='''# 当前研究状态
 
 代码：scripts/worldsim_v82/v43_ownership_20261028；新campaign：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028。模型、数据、日志不入Git。保留用户桥接脚本未提交；保留旧checkpoint spillover物理依赖。failure_ledger_refs=[V82-F01]，failure_ledger_delta=none；当前只是增加同口径诊断，不新造普遍失败结论。
 '''.replace('FORMAL_COUNT',str(len(formal)))
+doc=doc.replace('当前输入为三个已完成V42 30K的开发场景，各49帧。','当前诊断范围仅第一、第二开发场景；第二已完成10K。第三已在用户新指示到达前完成10K及原生/固定后端诊断，保留现场，此后禁止继续训练、编辑或研究分析。原输入三个V42 30K场景各49帧。')
+doc=doc.replace('当前完整正式10K场景数：','逐项badcase当前状态见[六项诊断](autoresearch/v43_ownership_20261028/BADCASES.md)。已恢复默认无编辑V1原生通路，新增3米偏移、3/5/8像素unknown带与opacity控制。静态残影仍未修净，整行抑制有背景副作用；不将诊断候选冒充归属已解决。车底/阴影按用户要求暂缓。\n\n历史完整正式10K场景数：')
 payload={}
 for p in W.iterdir():
     if p.is_file() and p.suffix in ['.py','.cjs','.md']:payload['scripts/worldsim_v82/v43_ownership_20261028/'+p.name]=p.read_bytes()
 payload['docs/RESEARCH_STATUS.md']=doc.encode()
 prefix='docs/autoresearch/v43_ownership_20261028/'
 payload[prefix+'STATE.json']=json.dumps(state,ensure_ascii=True,indent=2).encode();payload[prefix+'EXPERIMENT_CONTRACT.md']=(W/'EXPERIMENT_CONTRACT.md').read_bytes();payload[prefix+'architecture.svg']=(O/'architecture.svg').read_bytes()
-template_files=['scene_viewer.js','scene_viewer.html','scene_edit_geometry.js','scene_sampling.js','scene_semantics.js','scene_workspace.css']
+if (W/'BADCASES.md').exists():payload[prefix+'BADCASES.md']=(W/'BADCASES.md').read_bytes();payload[prefix+'badcase_architecture.svg']=(O/'badcase_architecture.svg').read_bytes()
+template_files=['scene_viewer.js','scene_viewer.html','scene_edit_geometry.js','scene_sampling.js','scene_semantics.js','scene_boundary_semantics.js','scene_workspace.css']
 template={name:(VIEW/name).read_bytes() for name in template_files};template['style.css']=(B/'outputs/GS_Scene_Diagnostics_20261027/style.css').read_bytes()
 template['architecture.svg']=(O/'architecture.svg').read_bytes();template['build_diagnostic_template.py']=(W/'build_diagnostic_template.py').read_bytes()
 template['README.md']='''# V43 通用GPU诊断模板

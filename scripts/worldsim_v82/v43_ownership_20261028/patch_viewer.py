@@ -33,8 +33,12 @@ for name in ['scene_viewer.js','scene_edit_geometry.js']:
     p=W/name;s=p.read_text(encoding='utf8');s=s.replace("['gt','sensor_overlay']","['gt','sensor_overlay','semantic_2d']");p.write_text(s,encoding='utf8')
 viewer=(W/'scene_viewer.js').read_text(encoding='utf8')
 for marker,name in [('EDIT_GEOMETRY','scene_edit_geometry.js'),('SAMPLING','scene_sampling.js'),('SEMANTIC','scene_semantics.js')]:viewer=viewer.replace('/* '+marker+'_RUNTIME */',(W/name).read_text(encoding='utf8'))
+viewer=viewer.replace('/* BOUNDARY_RUNTIME */',(W/'scene_boundary_semantics.js').read_text(encoding='utf8'))
 (O/'viewer.js').write_text(viewer,encoding='utf8')
 for scene in json.loads((O/'scenes.json').read_text(encoding='utf8')):
     (O/scene['context']/'index.html').write_text((W/'scene_viewer.html').read_text(encoding='utf8'),encoding='utf8')
     if not (O/scene['context']/'v43_groups.js').exists():(O/scene['context']/'v43_groups.js').write_text('// V43 nodes pending; never substitute smoke for formal.\n')
 print('GPU viewer patched; all prior groups retained')
+if (B/'outputs/V43_Ownership_20261027/gpu_v43/first_badcase_delivery_v1/delivery_validation.json').exists():
+    import subprocess,sys
+    subprocess.run([sys.executable,str(B/'work/v43_gpu_20261028/build_badcase_notes.py')],check=True)

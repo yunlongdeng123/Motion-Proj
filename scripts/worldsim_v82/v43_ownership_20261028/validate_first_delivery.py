@@ -18,7 +18,7 @@ s=(scene/'index.html').read_text(encoding='utf8');assert s.count('src="v43_group
 g=json.loads((scene/'v43_groups_data.json').read_text());frames=0;images=0
 from PIL import Image
 for row in g['groups']:
-    assert len(row['frames'])==(31 if row['kind']=='v43_motion' else 49)
+    assert len(row['frames'])==(49 if row['kind'] in ['v43_structure','v43_bypass'] else 31)
     for f in row['frames'].values():
         frames+=1
         for p in f['channels'].values():

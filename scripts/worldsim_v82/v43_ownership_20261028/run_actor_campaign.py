@@ -5,6 +5,7 @@ from segmentation import ROOT,CONTEXTS,write
 state=dict(pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='running',contexts=[],formal_budget_per_case=10000,smoke_extra_updates=0,old_queue_resumed=False)
 def run(ctx,name,extra):
     assert not (ROOT/'USER_STOP').exists()
+    assert ctx not in json.loads((ROOT/'authorization.json').read_text()).get('held_contexts',[]),'Scene held by latest user instruction'
     free=shutil.disk_usage(str(ROOT)).free
     assert free>25*1024**3,'Reserve exceeded; preserve checkpoints and request storage handling'
     dest=ROOT/'actor_campaign_v1'/ctx/name

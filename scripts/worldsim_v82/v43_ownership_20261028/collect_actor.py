@@ -27,6 +27,6 @@ for item in json.loads((root/'index.json').read_text()):
         evidence=scene/'evidence'/(key+'_metrics.json');evidence.write_text(json.dumps(node,ensure_ascii=False,indent=2))
         groups.append(dict(id=key,title='V43 局部车身约束 · '+str(step//1000)+'K',category='v43',kind='v43_structure',frames=records,summary='evidence/'+key+'_metrics.json'));geometries[key]=gs;clouds['v43:'+str(step)]=json.loads((source/'cloud.json').read_text())
     ids={g['id'] for g in groups};old['groups']=[g for g in old['groups'] if g['id'] not in ids]+groups;old['geometry'].update(geometries);old['clouds'].update(clouds);previous.write_text(json.dumps(old,separators=(',',':')))
-    script='window.V43_DELIVERY='+json.dumps(old,separators=(',',':'))+';window.SCENE_DATA.groups.push(...window.V43_DELIVERY.groups);Object.assign(window.EDIT_GEOMETRY.groups,window.V43_DELIVERY.geometry);Object.assign(window.FOREIGN_CLOUDS,window.V43_DELIVERY.clouds);'
+    script='window.V43_BADCASE_AVAILABLE='+json.dumps(old.get('badcase_available',False))+';window.V43_DELIVERY='+json.dumps(old,separators=(',',':'))+';window.SCENE_DATA.groups.push(...window.V43_DELIVERY.groups);Object.assign(window.EDIT_GEOMETRY.groups,window.V43_DELIVERY.geometry);Object.assign(window.FOREIGN_CLOUDS,window.V43_DELIVERY.clouds);'
     (scene/'v43_groups.js').write_text(script,encoding='utf8')
 print(json.dumps(dict(delivery=name,archive_SHA_verified=True,models_downloaded=False,scenes=[dict(context=x['context'],nodes=[n['step'] for n in x['nodes']]) for x in json.loads((root/'index.json').read_text())])))

@@ -9,7 +9,7 @@ from segmentation import ROOT,OLD,write
 from gpu_slot import exclusive
 from v43_resource_control import require_start
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--context',required=True);a=p.parse_args();ctx=a.context;dest=ROOT/'actor_motion_v1'/ctx;dest.mkdir(parents=True,exist_ok=False)
+    p=argparse.ArgumentParser();p.add_argument('--context',required=True);a=p.parse_args();ctx=a.context;require_start(ctx);dest=ROOT/'actor_motion_v1'/ctx;dest.mkdir(parents=True,exist_ok=False)
     status=dict(pid=__import__('os').getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='waiting_GPU',context=ctx,frames=0,training_updates=0)
     def update(**kw):status.update(kw);write(dest/'status.json',status)
     update()

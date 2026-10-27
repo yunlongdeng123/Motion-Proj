@@ -7,11 +7,13 @@ from scipy.spatial.transform import Rotation
 from segmentation import ROOT,CONTEXTS,write
 from export_diagnostics import pack
 def main():
-    a=argparse.ArgumentParser();a.add_argument('--name',required=True);p=a.parse_args();dest=ROOT/p.name;dest.mkdir(exist_ok=False);index=[]
-    for ctx in CONTEXTS:
+    a=argparse.ArgumentParser();a.add_argument('--name',required=True);a.add_argument('--context',action='append');a.add_argument('--steps',nargs='+',type=int,default=[1000,5000,10000]);p=a.parse_args();dest=ROOT/p.name;dest.mkdir(exist_ok=False);index=[]
+    held=json.loads((ROOT/'authorization.json').read_text()).get('held_contexts',[])
+    for ctx in p.context or [c for c in CONTEXTS if c not in held]:
+        assert ctx not in held,'Scene held by latest user instruction'
         root=ROOT/'actor_campaign_v1'/ctx/'formal10k';dataset=ROOT/'datasets'/ctx;manifest=json.loads((dataset/'manifest.json').read_text());nodes=[]
         out=dest/ctx;out.mkdir();write(out/'dataset_manifest.json',manifest)
-        for step in [1000,5000,10000]:
+        for step in p.steps:
             source=root/'evaluation'/('%06d'%step);checkpoint=root/('checkpoint%06d.pth'%step)
             if not (source/'summary.json').exists() or not checkpoint.exists():continue
             summary=json.loads((source/'summary.json').read_text());assert len(summary['frames'])==49

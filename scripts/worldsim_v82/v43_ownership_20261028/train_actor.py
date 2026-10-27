@@ -92,7 +92,7 @@ def evaluate(out,n,actor,frames,observations,step):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--context',required=True);p.add_argument('--output',required=True,type=Path);p.add_argument('--steps',type=int,default=10000);p.add_argument('--smoke-seconds',type=float,default=0);p.add_argument('--resume',type=Path);p.add_argument('--unconstrained',action='store_true');p.add_argument('--entry-only',action='store_true');args=p.parse_args()
     assert args.steps<=20000 or args.smoke_seconds
-    auth=json.loads((ROOT/'authorization.json').read_text());assert auth['allow_v43_training'] and not (ROOT/'USER_STOP').exists()
+    auth=json.loads((ROOT/'authorization.json').read_text());assert auth['allow_v43_training'] and not (ROOT/'USER_STOP').exists();assert args.context not in auth.get('held_contexts',[]),'Scene held by latest user instruction'
     args.output.mkdir(parents=True,exist_ok=False);status=dict(context=args.context,pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],phase='waiting_GPU',formal_steps=args.steps,extra_smoke=bool(args.smoke_seconds),quality_accepted=False,human_verdict=None)
     def update(**kw):status.update(kw);write(args.output/'status.json',status)
     update();stop=[False];signal.signal(signal.SIGTERM,lambda *_:stop.__setitem__(0,True))

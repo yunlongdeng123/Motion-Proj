@@ -1,7 +1,8 @@
+/* BOUNDARY_RUNTIME */
 // Read-only observational semantics. Never change renderer branch or owner.
 const SEMANTIC_MAP={0:'unknown / 未取得类别证据',1:'vehicle / 车辆（当前仅目标车掩码）',2:'road / 道路',3:'sidewalk / 人行道',4:'building / 建筑',5:'vegetation / 植被',6:'sky / 天空',7:'pole-sign / 杆与标牌',8:'person-cycle / 行人与骑行者'};
 const GPU_SEMANTIC_NAMES=['unknown','road / 道路','sidewalk / 人行道','building / 建筑','wall / 墙','fence / 围栏','pole / 杆','traffic light / 信号灯','traffic sign / 标牌','vegetation / 植被','terrain / 地形','sky / 天空','person / 行人','rider / 骑行者','car / 小汽车','truck / 卡车','bus / 客车','train / 轨道车','motorcycle / 摩托车','bicycle / 自行车'];
-const GPU_SEMANTIC_COLORS=['#505968','#804080','#f423e8','#7e7e7e','#66669c','#be9999','#b2b2b2','#faaa1e','#dcdc00','#6b8e23','#98fb98','#4682b4','#dc143c','#ff0000','#2863ff','#3c42ba','#0084a0','#008064','#0000e6','#770b20'];
+const GPU_SEMANTIC_COLORS=['#c8cdd4','#804080','#f423e8','#7e7e7e','#66669c','#be9999','#b2b2b2','#faaa1e','#dcdc00','#6b8e23','#98fb98','#4682b4','#dc143c','#ff0000','#2de5aa','#3c42ba','#0084a0','#008064','#0000e6','#770b20'];
 async function ensureGPUSemantic(){
  if(!window.GPU_SEMANTIC_INDEX)await loadScript('gpu_semantics/index.js');
  S.gpuSemanticFrames=S.gpuSemanticFrames||new Map();const raw=S.raw;
@@ -17,8 +18,9 @@ async function ensureGPUSemantic(){
 }
 function sparseIndex(ids,id){let lo=0,hi=ids.length-1;while(lo<=hi){const mid=(lo+hi)>>1;if(ids[mid]===id)return mid;if(ids[mid]<id)lo=mid+1;else hi=mid-1;}return -1;}
 function gpuSemanticRow(instance,j){
+ const boundary=boundarySemanticRow(instance,j);if(boundary)return boundary;
  const part=instance.cloud==='static'?'static':'dynamic',a=S.gpuSemanticFrames?.get(S.raw),index=window.GPU_SEMANTIC_INDEX;
- if(instance.cloud.startsWith('v43:'))return {class_id:14,class_name:'car / 已核验目标车身种子',branch:'dynamic',map_version:'measured-actor-seed-v1',instance_id:D.target_track,source_status:'原始实测点及已核验目标掩码；局部刚体结构组',reason:'新行空间，原30K unknown标签不复用；不是unknown学习结果'};
+ if(instance.cloud.startsWith('v43:'))return {class_id:0,class_name:'unknown / 新资产逐行贡献语义尚未加载',branch:'dynamic',map_version:'measured-actor-seed-v1',instance_id:D.target_track,source_status:'原始实测点及已核验目标掩码；局部刚体结构组',reason:'新行空间，原30K unknown标签不复用；不是unknown学习结果'};
  if(!a||!index||!['static','dynamic'].includes(instance.cloud))return {class_id:0,branch:part,reason:'没有此资产的原始 GPU 贡献观测',map_version:'cityscapes19-plus-unknown-v1'};
  const row=S.clouds[instance.cloud].data.ids[j],id=row+(part==='dynamic'?index.branch_sizes[0]:0),found=sparseIndex(a.ids,id);
  if(found<0)return {class_id:0,branch:part,reason:'该源帧没有足够可见贡献；不能当非车辆',map_version:index.version};
@@ -28,11 +30,11 @@ function gpuSemanticRow(instance,j){
 function drawSemanticImage(){
  const a=S.gpuSemanticFrames?.get(S.raw);if(!a){empty($('renderCanvas'),'GPU 语义图未加载');return;}
  const x=$('renderCanvas').getContext('2d'),image=x.createImageData(W,H);
- for(let i=0;i<W*H;i++){const color=GPU_SEMANTIC_COLORS[a.semantic_image[i]],rgb=[1,3,5].map(k=>parseInt(color.slice(k,k+2),16));image.data.set([...rgb,255],i*4);}
+ for(let i=0;i<W*H;i++){const band=S.boundaryFrames?.get(S.raw)?.image,rad=Number($('semanticBoundary')?.value||0),bi=[3,5,8].indexOf(rad),unknown=band&&bi>=0&&band.bands[bi*W*H+i];const color=GPU_SEMANTIC_COLORS[unknown?0:a.semantic_image[i]],rgb=[1,3,5].map(k=>parseInt(color.slice(k,k+2),16));image.data.set([...rgb,255],i*4);}
  x.putImageData(image,0,0);cross(x,W,H);$('mapLegend').textContent='原始实拍的 SegFormer-B0 语义预测；置信门限0.65；标签不是 GT，也不随反事实编辑移动。';
 }
 async function ensureSemantic(){
- if(S.channel==='semantic_2d'||($('semanticProfile').value==='gpu'&&$('cloudColor').value.startsWith('semantic'))){await ensureGPUSemantic();return;}
+ if(S.channel==='semantic_2d'||($('semanticProfile').value==='gpu'&&$('cloudColor').value.startsWith('semantic'))){await ensureGPUSemantic();await ensureBoundarySemantic();return;}
  if(!['semantic','semantic_branch','semantic_conflict'].includes($('cloudColor').value))return;
  if(!window.SEMANTIC_OBSERVATIONS)await loadScript('semantic_observations.js');
  S.semanticFrames=S.semanticFrames||new Map();
@@ -62,13 +64,13 @@ function semanticRow(instance,j){
 }
 function semanticColor(e,mode){
  if(mode==='semantic_conflict'){if(e.conflict_candidate)return '#ff4fd2';if(e.branch==='static'&&e.target_mask_fraction>.05)return e.depth_status==='incompatible'?'#56c7e8':'#f0b64b';return '#374658';}
- if(e.map_version){if(!e.class_id)return e.branch==='static'?'#536d89':'#b6c0ce';const c=GPU_SEMANTIC_COLORS[e.class_id];if(mode==='semantic')return c;const rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),factor=e.branch==='static'?.65:1;return `rgb(${rgb.map(v=>Math.round(v*factor)).join(',')})`;}
- if(!e.class_id)return e.branch==='static'?'#536d89':'#b6c0ce';
+ if(e.map_version){if(!e.class_id)return '#c8cdd4';const c=GPU_SEMANTIC_COLORS[e.class_id];if(mode==='semantic')return c;const rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),factor=e.branch==='static'?.65:1;return `rgb(${rgb.map(v=>Math.round(v*factor)).join(',')})`;}
+ if(!e.class_id)return '#c8cdd4';
  return mode==='semantic'?'#4df3c4':e.branch==='static'?'#ff4fd2':'#42e8a2';
 }
 function semanticLegend(){
  const mode=$('cloudColor').value;if(!mode.startsWith('semantic'))return;
- if($('semanticProfile').value==='gpu'){$('semanticStatus').textContent='GPU map v2（与旧 CPU map 编码分开）：'+GPU_SEMANTIC_NAMES.map((n,i)=>i+' '+n).join('；')+'。联合着色：同类别静态较暗、动态较亮；灰色 unknown。目标支持模式：洋红=静态参与目标且实测深度相容（候选）；青=与实测车深差>1m；黄=缺测/未定，不能整颗直接删。证据源为原V42 30K，不是当前编辑重新计算的权重；原 owner 不变。';return;}
+ if($('semanticProfile').value==='gpu'){$('semanticStatus').textContent='GPU map v2（与旧 CPU map 编码分开）：'+GPU_SEMANTIC_NAMES.map((n,i)=>i+' '+n).join('；')+'。联合着色：同类别静态较暗、动态较亮；浅灰 unknown；绿色 car，静态car为深绿、动态car为亮绿。同一高斯可以是car语义＋原static分支，不能把分支当语义。目标支持模式：洋红=静态参与目标且实测深度相容（候选）；青=与实测车深差>1m；黄=缺测/未定，不能整颗直接删。证据源为原V42 30K，不是当前编辑重新计算的权重；原 owner 不变。';return;}
  $('semanticStatus').textContent='当前模式：'+($('semanticProfile').value==='projection'?'仅二维掩码中心投影（弱候选）':'掩码＋LiDAR 邻域深度＋尺度（候选）')+'。绿=vehicle×原动态分支；洋红=vehicle×原静态分支，提示目标表达跨分支；灰蓝=unknown×静态；灰白=unknown×动态。静态车辆可为停放车，不能只凭 vehicle×static 判错。当前只有已审阅目标车掩码，其他车辆/道路等尚无密集语义；框不生成语义。';
 }
 async function enableSemantics(){try{await ensureSemantic();draw3D();semanticLegend();}catch(e){$('semanticStatus').textContent='语义观测未加载：'+e.message;}}

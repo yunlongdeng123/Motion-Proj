@@ -7,6 +7,7 @@ for name in ['scene.js','cloud.js','identity.js','edit_geometry.js','foreign_clo
 if (s/'identity.js').read_text(encoding='utf8').strip().endswith('null;'):raise SystemExit('Export all original vehicle boxes before building')
 runtime=(t/'scene_viewer.js').read_text(encoding='utf8')
 for token,name in [('EDIT_GEOMETRY','scene_edit_geometry.js'),('SAMPLING','scene_sampling.js'),('SEMANTIC','scene_semantics.js')]:runtime=runtime.replace('/* '+token+'_RUNTIME */',(t/name).read_text(encoding='utf8'))
+runtime=runtime.replace('/* BOUNDARY_RUNTIME */',(t/'scene_boundary_semantics.js').read_text(encoding='utf8'))
 assert '/* SEMANTIC_RUNTIME */' not in runtime
 def atomic(path,text):
     tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(text,encoding='utf8');os.replace(str(tmp),str(path))

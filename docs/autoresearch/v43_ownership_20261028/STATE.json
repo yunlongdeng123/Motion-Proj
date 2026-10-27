@@ -1,9 +1,9 @@
 {
-  "checked_utc": "2026-10-27T18:06:05Z",
+  "checked_utc": "2026-10-27T19:17:14Z",
   "campaign": {
     "pid": 5848,
     "start_ticks": "910834496",
-    "phase": "running",
+    "phase": "complete",
     "contexts": [
       {
         "context": "14705303724557273004_3105_000_3125_000",
@@ -262,13 +262,142 @@
           "source_checkpoint_unchanged": true,
           "stop_requested": false
         }
+      },
+      {
+        "context": "473735159277431842_630_095_650_095",
+        "formal": {
+          "context": "473735159277431842_630_095_650_095",
+          "pid": 18786,
+          "start_ticks": "911144661",
+          "phase": "complete",
+          "formal_steps": 10000,
+          "extra_smoke": false,
+          "quality_accepted": false,
+          "human_verdict": null,
+          "seed_points": 5315,
+          "step": 10000,
+          "last_loss": {
+            "step": 10000,
+            "camera_index": 30,
+            "loss": 0.12005966901779175,
+            "composite_RGB": 0.008598802611231804,
+            "body_RGB": 0.021090231835842133,
+            "body_alpha": 0.00121739087626338,
+            "sparse_depth": 0.11649221181869507,
+            "anchor": 0.006335102021694183,
+            "wall_seconds": 378.8179088290781
+          },
+          "wall_seconds": 387.5361200738698,
+          "since_first_step": 385.15651432052255,
+          "cuda_peak_allocated": 1748252672,
+          "cuda_peak_reserved": 2239758336,
+          "geometry": {
+            "points": 5315,
+            "outside_exact_box": 19,
+            "outside_preserved_initial_envelope": 0,
+            "max_drift_m": 0.24906976521015167,
+            "max_sigma_m": 0.17912913858890533,
+            "actor_local_rigid": true
+          },
+          "source_checkpoint_unchanged": true,
+          "stop_requested": false
+        },
+        "latest_complete_node": {
+          "step": 10000,
+          "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/formal10k/checkpoint010000.pth",
+          "checkpoint_bytes": 999632,
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/formal10k/evaluation/010000/summary.json",
+          "frames": 49,
+          "geometry": {
+            "points": 5315,
+            "outside_exact_box": 19,
+            "outside_preserved_initial_envelope": 0,
+            "max_drift_m": 0.24906976521015167,
+            "max_sigma_m": 0.17912913858890533,
+            "actor_local_rigid": true
+          }
+        },
+        "smoke_fresh": {
+          "context": "473735159277431842_630_095_650_095",
+          "pid": 15536,
+          "start_ticks": "911069613",
+          "phase": "smoke_complete",
+          "formal_steps": 10000,
+          "extra_smoke": true,
+          "quality_accepted": false,
+          "human_verdict": null,
+          "seed_points": 5315,
+          "step": 4750,
+          "last_loss": {
+            "step": 4750,
+            "camera_index": 6,
+            "loss": 0.15716691315174103,
+            "composite_RGB": 0.008741839788854122,
+            "body_RGB": 0.028717830777168274,
+            "body_alpha": 0.0037447961512953043,
+            "sparse_depth": 0.08842211961746216,
+            "anchor": 0.004034244455397129,
+            "wall_seconds": 299.59653003141284
+          },
+          "wall_seconds": 306.7584134656936,
+          "since_first_step": 304.2626356203109,
+          "cuda_peak_allocated": 1747692032,
+          "cuda_peak_reserved": 2239758336,
+          "geometry": {
+            "points": 5315,
+            "outside_exact_box": 20,
+            "outside_preserved_initial_envelope": 0,
+            "max_drift_m": 0.24903400242328644,
+            "max_sigma_m": 0.17740432918071747,
+            "actor_local_rigid": true
+          },
+          "source_checkpoint_unchanged": true,
+          "stop_requested": false
+        },
+        "smoke_restore": {
+          "context": "473735159277431842_630_095_650_095",
+          "pid": 17368,
+          "start_ticks": "911109165",
+          "phase": "smoke_complete",
+          "formal_steps": 10000,
+          "extra_smoke": true,
+          "quality_accepted": false,
+          "human_verdict": null,
+          "seed_points": 5315,
+          "step": 9500,
+          "last_loss": {
+            "step": 9500,
+            "camera_index": 11,
+            "loss": 0.1951533854007721,
+            "composite_RGB": 0.008727522566914558,
+            "body_RGB": 0.036502014845609665,
+            "body_alpha": 0.0028391233645379543,
+            "sparse_depth": 0.07140543311834335,
+            "anchor": 0.006160291377454996,
+            "wall_seconds": 304.1962366718799
+          },
+          "wall_seconds": 310.9982867296785,
+          "since_first_step": 308.7657869104296,
+          "cuda_peak_allocated": 1748008960,
+          "cuda_peak_reserved": 2206203904,
+          "geometry": {
+            "points": 5315,
+            "outside_exact_box": 17,
+            "outside_preserved_initial_envelope": 0,
+            "max_drift_m": 0.24978040158748627,
+            "max_sigma_m": 0.17651741206645966,
+            "actor_local_rigid": true
+          },
+          "source_checkpoint_unchanged": true,
+          "stop_requested": false
+        }
       }
     ],
     "formal_budget_per_case": 10000,
-    "smoke_extra_updates": 26500,
+    "smoke_extra_updates": 31250,
     "old_queue_resumed": false,
     "context": "473735159277431842_630_095_650_095",
-    "stage": "smoke_restore",
+    "stage": "formal10k",
     "command": [
       "/root/autodl-tmp/envs/drivingeditor/bin/python",
       "-u",
@@ -276,32 +405,30 @@
       "--context",
       "473735159277431842_630_095_650_095",
       "--output",
-      "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_restore",
-      "--smoke-seconds",
-      "300",
-      "--resume",
-      "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_fresh/checkpoint004750.pth"
+      "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/formal10k",
+      "--steps",
+      "10000"
     ],
-    "free_bytes": 130792148992,
-    "child": 17368,
-    "child_start_ticks": "911109165"
+    "free_bytes": 130544771072,
+    "child": null,
+    "child_start_ticks": "911144661"
   },
   "monitor": {
-    "time": 1793124364.8720043,
-    "checked_utc": "2026-10-27T18:06:04Z",
+    "time": 1793128633.835481,
+    "checked_utc": "2026-10-27T19:17:13Z",
     "pid": 7219,
     "start_ticks": "910880735",
     "kind": "NVML_1s_sample_not_allocator_peak",
     "historical_previous_peak_mib": 31838,
-    "used_mib": 2454,
-    "utilization": 62,
-    "v43_run_peak_mib": 3768,
+    "used_mib": 1,
+    "utilization": 0,
+    "v43_run_peak_mib": 3948,
     "historical_max_mib": 31838
   },
   "disk": {
     "total": 697932185600,
-    "used": 567337627648,
-    "free": 130594557952
+    "used": 568171589632,
+    "free": 129760595968
   },
   "authorization": {
     "created_utc": "2026-10-27T17:02:34Z",
@@ -315,15 +442,24 @@
     "formal_first_budget": 10000,
     "max_per_case_per_arm": 20000,
     "quality_accepted": false,
-    "human_verdict": null
+    "human_verdict": null,
+    "held_contexts": [
+      "473735159277431842_630_095_650_095"
+    ],
+    "active_development_contexts": [
+      "14705303724557273004_3105_000_3125_000",
+      "4295449061847708198_3769_000_3789_000"
+    ],
+    "latest_user_scope": "Case2 stop at10K; do not continue case3; diagnose case1 badcases",
+    "updated_utc": "2026-10-27T18:36:46Z"
   },
   "quota": {
-    "checked_utc": "2026-10-27T17:58:10Z",
+    "checked_utc": "2026-10-27T19:13:58Z",
     "bucket": "codex",
     "windowDurationMins": 10080,
-    "usedPercent": 87.0,
-    "remaining": 13.0,
-    "remaining_percent": 13.0,
+    "usedPercent": 89.0,
+    "remaining": 11.0,
+    "remaining_percent": 11.0,
     "resetsAt": 1793599185,
     "v43_quota_stop_enabled": false,
     "user_override": "Ignore quota for now; user will notify when to stop",
@@ -789,44 +925,55 @@
             "context": "473735159277431842_630_095_650_095",
             "pid": 17368,
             "start_ticks": "911109165",
-            "phase": "training",
+            "phase": "smoke_complete",
             "formal_steps": 10000,
             "extra_smoke": true,
             "quality_accepted": false,
             "human_verdict": null,
             "seed_points": 5315,
-            "step": 8625,
+            "step": 9500,
             "last_loss": {
-              "step": 8625,
-              "camera_index": 7,
-              "loss": 0.09730792790651321,
-              "composite_RGB": 0.008714159950613976,
-              "body_RGB": 0.016815273091197014,
-              "body_alpha": 0.0032433310989290476,
-              "sparse_depth": 0.08270496875047684,
-              "anchor": 0.005781360901892185,
-              "wall_seconds": 253.69678899645805
+              "step": 9500,
+              "camera_index": 11,
+              "loss": 0.1951533854007721,
+              "composite_RGB": 0.008727522566914558,
+              "body_RGB": 0.036502014845609665,
+              "body_alpha": 0.0028391233645379543,
+              "sparse_depth": 0.07140543311834335,
+              "anchor": 0.006160291377454996,
+              "wall_seconds": 304.1962366718799
             },
-            "wall_seconds": 253.69695592299104
+            "wall_seconds": 310.9982867296785,
+            "since_first_step": 308.7657869104296,
+            "cuda_peak_allocated": 1748008960,
+            "cuda_peak_reserved": 2206203904,
+            "geometry": {
+              "points": 5315,
+              "outside_exact_box": 17,
+              "outside_preserved_initial_envelope": 0,
+              "max_drift_m": 0.24978040158748627,
+              "max_sigma_m": 0.17651741206645966,
+              "actor_local_rigid": true
+            },
+            "source_checkpoint_unchanged": true,
+            "stop_requested": false
           },
           "identity": {
             "pid": 17368,
-            "expected": "911109165",
-            "actual": "911109165",
-            "alive": true
+            "alive": false
           },
           "latest_complete_node": {
-            "step": 8500,
-            "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_restore/checkpoint008500.pth",
-            "checkpoint_bytes": 999632,
-            "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_restore/evaluation/008500/summary.json",
+            "step": 9500,
+            "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_restore/checkpoint009500.pth",
+            "checkpoint_bytes": 999568,
+            "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/smoke_restore/evaluation/009500/summary.json",
             "frames": 49,
             "geometry": {
               "points": 5315,
-              "outside_exact_box": 18,
+              "outside_exact_box": 17,
               "outside_preserved_initial_envelope": 0,
-              "max_drift_m": 0.24828681349754333,
-              "max_sigma_m": 0.17364731431007385,
+              "max_drift_m": 0.24978040158748627,
+              "max_sigma_m": 0.17651741206645966,
               "actor_local_rigid": true
             }
           },
@@ -843,6 +990,65 @@
             "all_passed": true,
             "resumed_step": 4750
           }
+        },
+        "formal10k": {
+          "status": {
+            "context": "473735159277431842_630_095_650_095",
+            "pid": 18786,
+            "start_ticks": "911144661",
+            "phase": "complete",
+            "formal_steps": 10000,
+            "extra_smoke": false,
+            "quality_accepted": false,
+            "human_verdict": null,
+            "seed_points": 5315,
+            "step": 10000,
+            "last_loss": {
+              "step": 10000,
+              "camera_index": 30,
+              "loss": 0.12005966901779175,
+              "composite_RGB": 0.008598802611231804,
+              "body_RGB": 0.021090231835842133,
+              "body_alpha": 0.00121739087626338,
+              "sparse_depth": 0.11649221181869507,
+              "anchor": 0.006335102021694183,
+              "wall_seconds": 378.8179088290781
+            },
+            "wall_seconds": 387.5361200738698,
+            "since_first_step": 385.15651432052255,
+            "cuda_peak_allocated": 1748252672,
+            "cuda_peak_reserved": 2239758336,
+            "geometry": {
+              "points": 5315,
+              "outside_exact_box": 19,
+              "outside_preserved_initial_envelope": 0,
+              "max_drift_m": 0.24906976521015167,
+              "max_sigma_m": 0.17912913858890533,
+              "actor_local_rigid": true
+            },
+            "source_checkpoint_unchanged": true,
+            "stop_requested": false
+          },
+          "identity": {
+            "pid": 18786,
+            "alive": false
+          },
+          "latest_complete_node": {
+            "step": 10000,
+            "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/formal10k/checkpoint010000.pth",
+            "checkpoint_bytes": 999632,
+            "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_campaign_v1/473735159277431842_630_095_650_095/formal10k/evaluation/010000/summary.json",
+            "frames": 49,
+            "geometry": {
+              "points": 5315,
+              "outside_exact_box": 19,
+              "outside_preserved_initial_envelope": 0,
+              "max_drift_m": 0.24906976521015167,
+              "max_sigma_m": 0.17912913858890533,
+              "actor_local_rigid": true
+            }
+          },
+          "restore_verification": null
         }
       },
       "seed_points": 5315,
@@ -912,9 +1118,7 @@
       "receipt": "actor_campaign_v1_dispatch_receipt.json",
       "identity": {
         "pid": 5848,
-        "expected": "910834496",
-        "actual": "910834496",
-        "alive": true
+        "alive": false
       },
       "command": [
         "/root/autodl-tmp/envs/drivingeditor/bin/python",
@@ -1071,9 +1275,7 @@
       "receipt": "actor_motion_repair_2_dispatch_receipt.json",
       "identity": {
         "pid": 17057,
-        "expected": "911103338",
-        "actual": "911103338",
-        "alive": true
+        "alive": false
       },
       "command": [
         "/root/autodl-tmp/envs/drivingeditor/bin/python",
@@ -1093,6 +1295,110 @@
         "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_actor_motion.py",
         "--name",
         "first_motion_delivery_v1"
+      ]
+    },
+    {
+      "receipt": "boundary_semantics_first_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 25398,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/attribute_boundary_semantics.py"
+      ]
+    },
+    {
+      "receipt": "first_badcase_diagnostics_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 25906,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/diagnose_first_badcases.py"
+      ]
+    },
+    {
+      "receipt": "boundary_semantics_first_v2_dispatch_receipt.json",
+      "identity": {
+        "pid": 26367,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/attribute_boundary_semantics.py",
+        "--output",
+        "boundary_semantics_v2"
+      ]
+    },
+    {
+      "receipt": "first_fade_control_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 27224,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/fade_opacity_control.py"
+      ]
+    },
+    {
+      "receipt": "second_actor_delivery10k_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 27365,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_actor_delivery.py",
+        "--name",
+        "second_actor_delivery10k_v1",
+        "--context",
+        "4295449061847708198_3769_000_3789_000",
+        "--steps",
+        "10000"
+      ]
+    },
+    {
+      "receipt": "first_static_ghost_sweep_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 28023,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/static_ghost_sweep.py"
+      ]
+    },
+    {
+      "receipt": "first_badcase_delivery_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 28580,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_first_badcases.py"
+      ]
+    },
+    {
+      "receipt": "parameter_populations_v1_dispatch_receipt.json",
+      "identity": {
+        "pid": 32228,
+        "alive": false
+      },
+      "command": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/compare_parameter_populations.py"
       ]
     }
   ],
