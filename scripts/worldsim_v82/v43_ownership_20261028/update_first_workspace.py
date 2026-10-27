@@ -14,6 +14,7 @@ s=s.replace('v43-semantic-gpu-2','v43-first-structure-3')
 s=s.replace('src="v43_groups.js"','src="v43_groups.js?v=v43-first-structure-3"')
 if 'first_structural_contact.jpg' not in s:
     s=s.replace('<p id="v43FocusStatus"></p>','<p id="v43FocusStatus"></p><details><summary>查看 raw91 / 109 / 114 的旧新原生 RGB 排查图</summary><p><a href="../../V43_Ownership_20261027/gpu_v43/first_structural_contact.jpg" target="_blank">打开完整对照图 →</a>（场景1）</p></details>')
+s=s.replace('<details><summary>查看 raw91','<details id="v43FirstContact" hidden><summary>查看 raw91')
 p.write_text(s,encoding='utf8')
 p=W/'scene_viewer.js';s=p.read_text(encoding='utf8')
 s=s.replace("['benchmark','motion','continuous'].includes(selected().category)","['benchmark','motion','continuous','v43'].includes(selected().category)")
@@ -31,6 +32,8 @@ s=s.replace("const met=f?.metrics?.full;$('frameMetrics').textContent=met?", "co
 s=s.replace("if(params.get('channel')==='sensor_overlay'&&IA){S.channel='sensor_overlay';$('channel').value=S.channel;}","if(params.has('channel')&&[...$('channel').options].some(o=>o.value===params.get('channel'))){S.channel=params.get('channel');$('channel').value=S.channel;}")
 s=s.replace('零训练更新、远端无大型打包写入。','原 V42 只读导出与 V43 新实验分组记录。')
 s=s.replace('已完成：1K / 5K / 10K 新车身（各49帧）；已交付的新编辑在按钮和实验组中显示。结构集中与刚体稳定性已有对照，静态残影尚未修复；语义提示仍是证据候选，不直接改写原归属。','初步目视：raw109/114 转向时，新车身比旧资产集中，旧长条拖散减轻；原位静态车影仍明显，车辆侧面仍有缺陷。语义提示是候选证据，尚未据此重划静态归属。1K / 5K / 10K 各49帧，原生编辑各31帧；请继续逐帧核验。')
+if "if(!D.context.startsWith('147053'))$('v43FocusStatus')" not in s:
+    s=s.replace("\n}\nasync function init(){","\n if($('v43FirstContact'))$('v43FirstContact').hidden=!D.context.startsWith('147053');\n if(!D.context.startsWith('147053'))$('v43FocusStatus').textContent='本场景已交付的新车身检查点和编辑在实验组中显示。请按同帧核对车体结构、静态残影和语义证据；不套用其他场景的观察结论。';\n}\nasync function init(){",1)
 p.write_text(s,encoding='utf8')
 p=W/'scene_edit_geometry.js';s=p.read_text(encoding='utf8').replace('30K 几何加载量：','当前组几何加载量：');p.write_text(s,encoding='utf8')
 p=O/'index.html';s=p.read_text(encoding='utf8');ctx='14705303724557273004_3105_000_3125_000'
