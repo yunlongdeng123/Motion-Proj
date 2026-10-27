@@ -34,7 +34,7 @@ function drawSemanticImage(){
  x.putImageData(image,0,0);cross(x,W,H);$('mapLegend').textContent='原始实拍的 SegFormer-B0 语义预测；置信门限0.65；标签不是 GT，也不随反事实编辑移动。';
 }
 async function ensureSemantic(){
- if(S.channel==='semantic_2d'||($('semanticProfile').value==='gpu'&&$('cloudColor').value.startsWith('semantic'))){await ensureGPUSemantic();await ensureBoundarySemantic();return;}
+ if(S.channel==='semantic_2d'||($('semanticProfile').value==='gpu'&&($('cloudColor').value.startsWith('semantic')||($('semanticAblation')?.value||'all')!=='all'))){await ensureGPUSemantic();await ensureBoundarySemantic();return;}
  if(!['semantic','semantic_branch','semantic_conflict'].includes($('cloudColor').value))return;
  if(!window.SEMANTIC_OBSERVATIONS)await loadScript('semantic_observations.js');
  S.semanticFrames=S.semanticFrames||new Map();
@@ -63,6 +63,7 @@ function semanticRow(instance,j){
  return {class_id:accepted?1:0,branch:part,mask_hit:mask,depth_consistent:depthOK,depth_delta_m:Number.isFinite(depth)?cam[2]-depth:null,max_sigma_m:sigma,profile,reason:accepted?(profile==='projection'?'目标车掩码中心投影；遮挡与深度未核验':'掩码与稀疏 LiDAR 深度候选一致；贡献仍待 GPU 核验'):(mask?'掩码投影命中但深度/尺度证据不足':'无此点类别证据；不自动归背景'),conflict_candidate:accepted&&part==='static'};
 }
 function semanticColor(e,mode){
+ if(mode==='semantic_unknown_reason'){if(e.class_id)return '#24384a';if(e.static_vehicle_quarantined)return '#ffa64d';if(e.boundary_abstained)return '#f5dc62';return e.base_class_id===0?'#c8cdd4':'#77b7ff';}
  if(mode==='semantic_conflict'){if(e.conflict_candidate)return '#ff4fd2';if(e.branch==='static'&&e.target_mask_fraction>.05)return e.depth_status==='incompatible'?'#56c7e8':'#f0b64b';return '#374658';}
  if(e.map_version){if(!e.class_id)return '#c8cdd4';const c=GPU_SEMANTIC_COLORS[e.class_id];if(mode==='semantic')return c;const rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),factor=e.branch==='static'?.65:1;return `rgb(${rgb.map(v=>Math.round(v*factor)).join(',')})`;}
  if(!e.class_id)return '#c8cdd4';
@@ -73,4 +74,4 @@ function semanticLegend(){
  if($('semanticProfile').value==='gpu'){$('semanticStatus').textContent='GPU map v2（与旧 CPU map 编码分开）：'+GPU_SEMANTIC_NAMES.map((n,i)=>i+' '+n).join('；')+'。联合着色：同类别静态较暗、动态较亮；浅灰 unknown；绿色 car，静态car为深绿、动态car为亮绿。同一高斯可以是car语义＋原static分支，不能把分支当语义。目标支持模式：洋红=静态参与目标且实测深度相容（候选）；青=与实测车深差>1m；黄=缺测/未定，不能整颗直接删。证据源为原V42 30K，不是当前编辑重新计算的权重；原 owner 不变。';return;}
  $('semanticStatus').textContent='当前模式：'+($('semanticProfile').value==='projection'?'仅二维掩码中心投影（弱候选）':'掩码＋LiDAR 邻域深度＋尺度（候选）')+'。绿=vehicle×原动态分支；洋红=vehicle×原静态分支，提示目标表达跨分支；灰蓝=unknown×静态；灰白=unknown×动态。静态车辆可为停放车，不能只凭 vehicle×static 判错。当前只有已审阅目标车掩码，其他车辆/道路等尚无密集语义；框不生成语义。';
 }
-async function enableSemantics(){try{await ensureSemantic();draw3D();semanticLegend();}catch(e){$('semanticStatus').textContent='语义观测未加载：'+e.message;}}
+async function enableSemantics(){try{if(($('semanticAblation')?.value||'all')!=='all')$('semanticProfile').value='gpu';await ensureSemantic();S.selected=null;if(S.channel==='semantic_2d')drawSemanticImage();draw3D();semanticLegend();}catch(e){$('semanticStatus').textContent='语义观测未加载：'+e.message;}}

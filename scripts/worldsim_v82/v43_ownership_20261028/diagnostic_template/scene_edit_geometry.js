@@ -32,7 +32,7 @@ function draw3D(){
  if(!st?.supported){empty(canvas,st?.note||'本组没有此帧的编辑几何');$('cloudInfo').textContent='未拿原场景替代当前请求。';$('boxInfo').textContent='';$('viewMode').textContent='';return;}
  if(!S.clouds){empty(canvas,'几何加载中');return;}
  if(!S.cameraView)for(let v=-60;v<=100;v+=10){line3(x,[[v,-60,0],[v,60,0]],'#182c40');line3(x,[[-40,v,0],[100,v,0]],'#182c40');}
- const mode=$('cloudColor').value,instances=geometryInstances(),counts={};
+ const mode=$('cloudColor').value,instances=geometryInstances(),counts={};S.semanticFilterStats={considered:0,hidden:0,unknown:0,vehicle:0,contour:0,static_vehicle:0,base_unknown:0,road_to_unknown:0};
  for(const instance of instances){
   const part=instance.cloud==='static'?'static':'dynamic';if(!$(part+'3d').checked)continue;
   const cloud=S.clouds[instance.cloud];if(!cloud){empty(canvas,'外来资产几何加载中');return;}
@@ -43,8 +43,10 @@ function draw3D(){
    const baseSample=sampleBase(cloud,part,j)||(mode==='ownership'&&own?.state===1&&$('allPositive').checked);if(!baseSample&&(!S.sampling||S.sampling.boost==='none'))continue;
    const pt=editedPoint(instance,j);if(!baseSample&&!sampleBoost(pt.p,data.ids[j]))continue;if(pt.marginal<=.05||pt.opacity<.005)continue;
    const p=projection(pt.p);if(!p||p[0]<0||p[0]>=canvas.width||p[1]<0||p[1]>=canvas.height)continue;
+   const e=(mode.startsWith('semantic')||($('semanticAblation')?.value||'all')!=='all')?semanticRow(instance,j):null;
+   if(e){const q=S.semanticFilterStats;q.considered++;if(e.class_id===0)q.unknown++;if(e.class_id>=14&&e.class_id<=19)q.vehicle++;if(e.boundary_abstained)q.contour++;if(e.static_vehicle_quarantined)q.static_vehicle++;if(e.base_class_id===0)q.base_unknown++;if(e.base_class_id===1&&e.class_id===0)q.road_to_unknown++;if(semanticFilterReject(e)){q.hidden++;continue;}}
    const foreign=instance.cloud.startsWith('foreign:');
-   x.fillStyle=mode.startsWith('semantic')?semanticColor(semanticRow(instance,j),mode):mode==='ownership'?(own?['#63b3ff','#4bea9b','#ffb347'][own.state]:'#787f89'):mode==='rgb'?`rgb(${data.rgb[j*3]},${data.rgb[j*3+1]},${data.rgb[j*3+2]})`:mode==='branch'?(part==='static'?'#78b0f4':foreign?'#68f2bd':'#ffa85d'):`rgb(${heat(pt.opacity).join(',')})`;
+   x.fillStyle=mode.startsWith('semantic')?semanticColor(e,mode):mode==='ownership'?(own?['#63b3ff','#4bea9b','#ffb347'][own.state]:'#787f89'):mode==='rgb'?`rgb(${data.rgb[j*3]},${data.rgb[j*3+1]},${data.rgb[j*3+2]})`:mode==='branch'?(part==='static'?'#78b0f4':foreign?'#68f2bd':'#ffa85d'):`rgb(${heat(pt.opacity).join(',')})`;
    x.globalAlpha=$('opaquePoints').checked?1:Math.max(0,Math.min(1,pt.opacity));
    const size=Number($('pointSize').value)||2.5;x.fillRect(p[0]-size/2,p[1]-size/2,size,size);
    S.projection.push({x:p[0],y:p[1],part,j,p:pt.p,opacity:pt.opacity,instance:instance.key,cloud:instance.cloud});count++;
@@ -85,7 +87,8 @@ function draw3D(){
  $('pointSizeValue').textContent=Number($('pointSize').value).toFixed(1)+' px';
  $('viewMode').textContent=S.cameraView?(S.cameraReference==='original'?'原相机观察当前几何（显式对照）':'当前请求相机 · 与左侧原生输出同投影'):'三维总览 · 绿线/视锥为当前请求相机 · 蓝灰为原相机';
  if(mode==='ownership')$('ownershipStatus').textContent='1 绿色：目标候选；0 蓝色：非目标候选；unknown 橙色。灰色：尚未加载证据。以当前查询帧显示中心；标签来自全49帧证据。不是像素贡献真值。';
- semanticLegend();if($('geometryColorLegend'))$('geometryColorLegend').textContent=mode.startsWith('semantic')?'语义：亮绿=car×dynamic，深绿=car×static，浅灰=unknown；紫=road。static是原渲染分支，不是背景语义。橙框=所选目标，蓝框=其他原始车辆。':mode==='opacity'?'色标为有效opacity；关闭不透明标记时按实际点opacity显示。点opacity不等于像素alpha*T，可切换二维覆盖率与可见比例。':mode==='ownership'?'归属候选：绿1，蓝0，橙unknown；原branch与语义分别保留。':'蓝=原static分支，橙=目标dynamic分支，青=原LiDAR；橙框目标，蓝框其他原始车辆。';const count=IA?.frames[S.raw].visible_count;
+ if($('semanticFilterStatus')){const q=S.semanticFilterStats;$('semanticFilterStatus').textContent=`当前画内抽样中心：unknown ${q.unknown}（基础低置信/混合 ${q.base_unknown}，轮廓规则 ${q.contour}，静态车影候选 ${q.static_vehicle}；原因可重叠），车辆类 ${q.vehicle}，本开关隐藏 ${q.hidden}。road→unknown ${q.road_to_unknown}。不是全模型比例。仅右侧几何预览；左侧RGB未重渲染，不能据此判定残影已剥离。`;}
+ semanticLegend();if($('geometryColorLegend'))$('geometryColorLegend').textContent=mode==='semantic_unknown_reason'?'unknown来源：灰=基础低置信/混合；黄=额外轮廓带；橙=跨帧静态车影候选；蓝=本帧无贡献证据。多原因优先显示橙/黄，其余类别暗显。':mode.startsWith('semantic')?'语义：亮绿=car×dynamic，深绿=car×static，浅灰=unknown；紫=road。static是原渲染分支，不是背景语义。橙框=所选目标，蓝框=其他原始车辆。':mode==='opacity'?'色标为有效opacity；关闭不透明标记时按实际点opacity显示。点opacity不等于像素alpha*T，可切换二维覆盖率与可见比例。':mode==='ownership'?'归属候选：绿1，蓝0，橙unknown；原branch与语义分别保留。':'蓝=原static分支，橙=目标dynamic分支，青=原LiDAR；橙框目标，蓝框其他原始车辆。';const count=IA?.frames[S.raw].visible_count;
  $('boxInfo').textContent=`当前有效资产框 ${st.objects.length} 个${count!==undefined?'；原帧 '+count+' 个车辆标注与前视相交':''}。目标框随资产平移、旋转或删除；其他蓝框是原始观测标注，不代表独立资产。`;
  const sampling=instances.map(o=>{const c=S.clouds[o.cloud];return c?`${o.label}：${c.sample.toLocaleString()}/${c.total.toLocaleString()} 行（${(100*c.sample/c.total).toFixed(2)}%）`:'';}).filter(Boolean).join('；');
  $('cloudInfo').textContent=`当前组几何加载量：${sampling}。加载量不等于显示量；显示采样见上方配置。中心点不是完整高斯表面。当前画内 ${Object.entries(counts).map(([k,n])=>k+': '+n).join(' / ')}。${$('lidar3d').checked?'青色 LiDAR 保持原始实测状态，不是编辑后传感器输出。':''} ${st.note||''}${S.channel==='generated'?' 右侧是视频后处理之前的三维状态。':''}`;

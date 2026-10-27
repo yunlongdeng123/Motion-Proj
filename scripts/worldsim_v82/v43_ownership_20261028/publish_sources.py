@@ -22,12 +22,18 @@ doc='''# 当前研究状态
 doc=doc.replace('当前输入为三个已完成V42 30K的开发场景，各49帧。','当前诊断范围仅第一、第二开发场景；第二已完成10K。第三已在用户新指示到达前完成10K及原生/固定后端诊断，保留现场，此后禁止继续训练、编辑或研究分析。原输入三个V42 30K场景各49帧。')
 doc=doc.replace('当前完整正式10K场景数：','逐项badcase当前状态见[六项诊断](autoresearch/v43_ownership_20261028/BADCASES.md)。已恢复默认无编辑V1原生通路，新增3米偏移、3/5/8像素unknown带与opacity控制。静态残影仍未修净，整行抑制有背景副作用；不将诊断候选冒充归属已解决。车底/阴影按用户要求暂缓。\n\n历史完整正式10K场景数：')
 payload={}
+doc=doc.replace('实际GPU/进程/节点只看', '最新用户指示：当前仅CPU排查，下一项需要GPU时停止并告知；不得启动新GPU渲染、训练或恢复队列。已完成49帧unknown规则审计、静态车影候选暂缓及四档几何中心剥离预览；原生RGB剥离尚未运行。opacity两域监督归一化与共享校准场仅为待验证方案，固定opacity增强仍保留为控制。[本轮证据与方案](autoresearch/v43_ownership_20261028/OPACITY_UNKNOWN_REVIEW.md)。\n\n实际GPU/进程/节点只看')
 for p in W.iterdir():
     if p.is_file() and p.suffix in ['.py','.cjs','.md']:payload['scripts/worldsim_v82/v43_ownership_20261028/'+p.name]=p.read_bytes()
 payload['docs/RESEARCH_STATUS.md']=doc.encode()
 prefix='docs/autoresearch/v43_ownership_20261028/'
 payload[prefix+'STATE.json']=json.dumps(state,ensure_ascii=True,indent=2).encode();payload[prefix+'EXPERIMENT_CONTRACT.md']=(W/'EXPERIMENT_CONTRACT.md').read_bytes();payload[prefix+'architecture.svg']=(O/'architecture.svg').read_bytes()
 if (W/'BADCASES.md').exists():payload[prefix+'BADCASES.md']=(W/'BADCASES.md').read_bytes();payload[prefix+'badcase_architecture.svg']=(O/'badcase_architecture.svg').read_bytes()
+if (W/'OPACITY_UNKNOWN_REVIEW.md').exists():
+    payload[prefix+'OPACITY_UNKNOWN_REVIEW.md']=(W/'OPACITY_UNKNOWN_REVIEW.md').read_bytes()
+    payload[prefix+'opacity_unknown_architecture.svg']=(O/'opacity_unknown_architecture.svg').read_bytes()
+    for name in ['unknown_cpu_audit.json','alpha_normalization_cpu_audit.json','unknown_preview_validation.json']:
+        payload[prefix+name]=(O/name).read_bytes()
 template_files=['scene_viewer.js','scene_viewer.html','scene_edit_geometry.js','scene_sampling.js','scene_semantics.js','scene_boundary_semantics.js','scene_workspace.css']
 template={name:(VIEW/name).read_bytes() for name in template_files};template['style.css']=(B/'outputs/GS_Scene_Diagnostics_20261027/style.css').read_bytes()
 template['architecture.svg']=(O/'architecture.svg').read_bytes();template['build_diagnostic_template.py']=(W/'build_diagnostic_template.py').read_bytes()

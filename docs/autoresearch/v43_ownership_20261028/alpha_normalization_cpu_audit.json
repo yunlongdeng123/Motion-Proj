@@ -1,0 +1,76 @@
+{
+  "source": "existing 8-bit quantized no-edit isolated-alpha maps and original target DEVA masks",
+  "quantization_error_bound": 0.00392156862745098,
+  "training_alpha_loss": ".1 * full_image_mean(abs(alpha-body))",
+  "rgb_scores_used": false,
+  "gpu_calls": 0,
+  "records": [
+    {
+      "raw": 91,
+      "body_pixels": 1913,
+      "body_area_fraction": 0.012454427083333334,
+      "inside_alpha_MAE": 0.08767668070887588,
+      "outside_alpha_MAE": 0.0022036089020773795,
+      "inside_coefficient_in_current_loss": 0.0012454427083333334,
+      "outside_coefficient_in_current_loss": 0.09875455729166667,
+      "inside_alpha_loss_contribution": 0.0001091962826797393,
+      "outside_alpha_loss_contribution": 0.0002176164215686273
+    },
+    {
+      "raw": 98,
+      "body_pixels": 2009,
+      "body_area_fraction": 0.013079427083333333,
+      "inside_alpha_MAE": 0.09472471915595566,
+      "outside_alpha_MAE": 0.0023171482708697205,
+      "inside_coefficient_in_current_loss": 0.0013079427083333333,
+      "outside_coefficient_in_current_loss": 0.09869205729166668,
+      "inside_alpha_loss_contribution": 0.00012389450571895504,
+      "outside_alpha_loss_contribution": 0.00022868412990196082
+    },
+    {
+      "raw": 101,
+      "body_pixels": 2053,
+      "body_area_fraction": 0.013365885416666667,
+      "inside_alpha_MAE": 0.09477856412901305,
+      "outside_alpha_MAE": 0.0021046470149621607,
+      "inside_coefficient_in_current_loss": 0.0013365885416666667,
+      "outside_coefficient_in_current_loss": 0.09866341145833334,
+      "inside_alpha_loss_contribution": 0.00012667994281045822,
+      "outside_alpha_loss_contribution": 0.0002076516544117647
+    },
+    {
+      "raw": 109,
+      "body_pixels": 2126,
+      "body_area_fraction": 0.013841145833333334,
+      "inside_alpha_MAE": 0.09808901923892852,
+      "outside_alpha_MAE": 0.0022268495182114936,
+      "inside_coefficient_in_current_loss": 0.0013841145833333336,
+      "outside_coefficient_in_current_loss": 0.09861588541666667,
+      "inside_alpha_loss_contribution": 0.00013576644199346486,
+      "outside_alpha_loss_contribution": 0.00021960273692810405
+    },
+    {
+      "raw": 113,
+      "body_pixels": 2202,
+      "body_area_fraction": 0.0143359375,
+      "inside_alpha_MAE": 0.10177913127103774,
+      "outside_alpha_MAE": 0.00223762895823992,
+      "inside_coefficient_in_current_loss": 0.0014335937500000002,
+      "outside_coefficient_in_current_loss": 0.09856640625000002,
+      "inside_alpha_loss_contribution": 0.00014590992647058927,
+      "outside_alpha_loss_contribution": 0.00022055504493464023
+    },
+    {
+      "raw": 114,
+      "body_pixels": 2223,
+      "body_area_fraction": 0.01447265625,
+      "inside_alpha_MAE": 0.10299630423469483,
+      "outside_alpha_MAE": 0.0021776043631877647,
+      "inside_coefficient_in_current_loss": 0.001447265625,
+      "outside_coefficient_in_current_loss": 0.098552734375,
+      "inside_alpha_loss_contribution": 0.00014906301062091577,
+      "outside_alpha_loss_contribution": 0.0002146088643790848
+    }
+  ],
+  "causal_claim": "area normalization weakens small foreground weighting; causal effect on pale edits not yet tested"
+}
