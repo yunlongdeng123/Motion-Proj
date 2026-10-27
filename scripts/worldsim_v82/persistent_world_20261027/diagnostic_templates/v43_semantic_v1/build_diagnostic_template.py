@@ -11,5 +11,5 @@ assert '/* SEMANTIC_RUNTIME */' not in runtime
 def atomic(path,text):
  tmp=path.with_suffix(path.suffix+'.tmp');tmp.write_text(text,encoding='utf8');os.replace(str(tmp),str(path))
 atomic(s.parent/'viewer.js',runtime);atomic(s/'index.html',(t/'scene_viewer.html').read_text(encoding='utf8'))
-for src,dest in [('scene_workspace.css','workspace.css'),('style.css','style.css')]:atomic(s.parent/dest,(t/src).read_text(encoding='utf8'))
+for src,dest in [('scene_workspace.css','workspace.css'),('style.css','style.css'),('architecture.svg','architecture.svg')]:atomic(s.parent/dest,(t/src).read_text(encoding='utf8'))
 print(json.dumps({'scene':str(s),'shared_runtime_sha256':hashlib.sha256(runtime.encode()).hexdigest(),'training_updates':0,'renderer_owner_modified':False}))
