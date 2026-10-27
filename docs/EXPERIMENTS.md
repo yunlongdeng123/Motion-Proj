@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-OWNERSHIP-STRUCTURE-20261028 | 三开发场景49帧语义与真实Gaussian贡献、静态车身深度支持及Actor局部结构10K探针；执行与质量分开 | [当前状态](RESEARCH_STATUS.md)、[协议](autoresearch/v43_ownership_20261028/EXPERIMENT_CONTRACT.md) |
 | WS-V82-FULLCLIP-ROAD-CPU-20261026 | 相同20cm网格49/199帧重初始化，中心真实露出与49帧零更新GPU贡献；核心已补点但静态遮挡仍在 | [报告与组件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/fullclip_20261026/README.md) |
 | WS-V82-GN11-V42-FREEINPAINT-20261026 / 首轮协议 | 固定B、FreeInpaint中心候选、全洞撤源控制、三种子、四组合编辑归因；配置与smoke/恢复/交付合同，不代表实验结果 | [实验协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/EXPERIMENT_PLAN_20261026.md)、[路线组件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/PRIORITY_ROADMAP_20261026.md) |
 | WS-V82-GN11-V42-CPU-PROPAGATION-20261024 / 机制原型 | GaussianPro式平面提议、统一核验、来源深度修正；a37未优于图像平面对照、a6/中心0，GPU/更新0 | [CPU结果与边界](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/CPU_PROPAGATION.md) |

@@ -1,0 +1,16 @@
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict');
+const {createCanvas,loadImage}=require('C:/Users/dengyunlong/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas');
+const root=path.resolve('outputs/GS_Scene_Diagnostics_20261027'),out=path.resolve('outputs/V43_Ownership_20261027/gpu_v43'),ctx='14705303724557273004_3105_000_3125_000',folder=path.join(root,ctx),nodes=new Map(),canvas=createCanvas(840,560);
+function get(id){if(id==='sceneCanvas')return canvas;if(!nodes.has(id))nodes.set(id,{checked:!['lidar3d'].includes(id),value:({cloudColor:'branch',pointSize:'2.5',geometryState:'current',semanticProfile:'gpu'})[id]||'',textContent:''});return nodes.get(id);}
+const sb={console,Float32Array,Float64Array,Uint8Array,Uint8ClampedArray,Uint16Array,Int32Array,ArrayBuffer,TextDecoder,Map,Set,Blob,Response,DecompressionStream,atob,document:{getElementById:get}};sb.window=sb;vm.createContext(sb);
+for(const f of ['scene.js','cloud.js','identity.js','edit_geometry.js','foreign_clouds.js','v43_groups.js'])vm.runInContext(fs.readFileSync(path.join(folder,f),'utf8'),sb);
+vm.runInContext(fs.readFileSync(path.join(root,'viewer.js'),'utf8').replace(/init\(\);\s*$/,''),sb);
+(async()=>{const a=sb.SceneViewer;a.S.clouds={};for(const [key,v]of Object.entries({...sb.CLOUD_DATA,...sb.FOREIGN_CLOUDS}))a.S.clouds[key]={...v,data:await a.unpack(v.data)};a.S.cameraView=true;const groups=a.D.groups.filter(g=>g.kind==='v43_motion');assert.equal(groups.length,4);const receipt=[];
+for(const g of groups){assert.equal(Object.keys(g.frames).length,31);a.S.group=g.id;let images=0;
+ for(const [raw,f]of Object.entries(g.frames)){a.S.raw=Number(raw);const st=a.editState();assert(st.supported);assert.deepEqual(st.camera,sb.EDIT_GEOMETRY.groups[g.id.replace('v43_','')][raw].camera);assert(a.currentBoxes().some(b=>!b.target));
+ const instances=a.geometryInstances();assert(instances.some(x=>x.cloud==='static'));if(g.id.endsWith('delete_target')){assert(!instances.some(x=>x.key==='target'));assert(!a.currentBoxes().some(x=>x.target));}else{assert(instances.some(x=>x.cloud==='v43:10000'));}
+ for(const p of Object.values(f.channels)){const im=await loadImage(path.join(folder,p));assert.equal(im.width,480);assert.equal(im.height,320);assert(fs.existsSync(path.join(folder,p+'.js')));images++;}
+ }
+ const gallery=createCanvas(1320,600),x=gallery.getContext('2d');x.fillStyle='#101b2a';x.fillRect(0,0,1320,600);x.fillStyle='white';x.font='20px sans-serif';x.fillText(g.title+' / raw114 / same request, time, camera',15,30);a.S.raw=114;a.draw3D();x.drawImage(await loadImage(path.join(folder,g.frames[114].channels.rgb)),0,50,480,320);x.drawImage(canvas,480,40,840,560);fs.writeFileSync(path.join(out,g.id+'_rgb_geometry.png'),gallery.toBuffer('image/png'));
+ receipt.push({group:g.id,frames:31,decoded_pngs:images,current_asset:'v43:10000',same_saved_camera:true,blue_original_vehicle_boxes:true,delete_removes_dynamic_asset_only:g.id.endsWith('delete_target'),no_RGB_geometry_backdrop:true,browserQA:false});}
+fs.writeFileSync(path.join(out,'first_motion_viewer_validation.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));})().catch(e=>{console.error(e);process.exitCode=1;});
