@@ -34,20 +34,36 @@ def dependency_result(path):
             return dict(status='failed_attempt_preserved_agent_repair_pending',snapshot=d,not_a_completed_case=True)
     return None
 
+def benchmark_dependency_result(path):
+    if not path.exists():return None
+    try:d=json.loads(path.read_text())
+    except json.JSONDecodeError:return None
+    if d.get('phase')=='diagnostic_execution_complete_formal_admission_pending':
+        delivery=d.get('stages',{}).get('CPU_delivery',{}).get('summary',str(path.parent/'cpu_delivery/summary.json'))
+        assert Path(delivery).exists(),'Completed diagnostics require their final CPU receipt'
+        assert d.get('completed_native_families'),'Do not release a scene with no executed diagnostic families'
+        assert json.loads(Path(delivery).read_text())['executed_native_families']==len(d['completed_native_families'])
+        return dict(status='benchmark_diagnostic_complete_not_quality_accepted',snapshot=d)
+    if d.get('phase')=='engineering_repair_needed_preserved' and not same_process(d['pid'],d['start_ticks']):
+        child=d.get('child')
+        if not child or not same_process(child['pid'],child['start_ticks']):
+            return dict(status='failed_benchmark_preserved_agent_repair_pending',snapshot=d,not_a_completed_case=True)
+    return None
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--context',required=True);p.add_argument('--after-motion');p.add_argument('--mask-first-count',type=int,default=0);p.add_argument('--resume-waiting',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--context',required=True);p.add_argument('--after-motion');p.add_argument('--after-benchmark');p.add_argument('--mask-first-count',type=int,default=0);p.add_argument('--resume-waiting',action='store_true');a=p.parse_args()
     scene=ROOT/'motion_scene_inputs_v1'/a.context;run=ROOT/'native_scene_training_v1'/a.context
     previous=None
     if a.resume_waiting:
         previous=json.loads((run/'status.json').read_text())
-        assert previous['context']==a.context and previous['phase'] in ('waiting_gpu','waiting_previous_scene_diagnostics','waiting_new_scene_mask_batch')
+        assert previous['context']==a.context and previous['phase'] in ('waiting_gpu','waiting_previous_scene_diagnostics','waiting_previous_scene_benchmark','waiting_new_scene_mask_batch')
         assert not previous.get('child') and not same_process(previous['pid'],previous['start_ticks'])
         assert not any((run/x).exists() for x in ['smoke_fresh','smoke_restore','formal30k'])
         assert not list(run.glob('*.log')),'Resume is only for a zero-work waiting controller'
         archive=run/f'waiting_controller_{previous["pid"]}_{previous["start_ticks"]}.json'
         assert not archive.exists();write(archive,previous)
     else:run.mkdir(parents=True,exist_ok=False)
-    state=dict(context=a.context,pid=os.getpid(),start_ticks=ticks(os.getpid()),formal_steps=30000,save_every=5000,per_edit_retraining=False,phase='waiting_gpu',child=None,after_motion_context=a.after_motion,mask_first_count=a.mask_first_count,previous_waiting_controller=previous)
+    state=dict(context=a.context,pid=os.getpid(),start_ticks=ticks(os.getpid()),formal_steps=30000,save_every=5000,per_edit_retraining=False,phase='waiting_gpu',child=None,after_motion_context=a.after_motion,after_benchmark_context=a.after_benchmark,mask_first_count=a.mask_first_count,previous_waiting_controller=previous)
     def status(**kw):state.update(kw);write(run/'status.json',state)
     def launch(phase,cmd,env=None):
         require_start();status(phase=phase,command=cmd)
@@ -71,6 +87,16 @@ def main():
                 require_start();result=dependency_result(dependency)
                 if result is not None:
                     write(run/'diagnostic_priority_release.json',dict(checked_at=time.time(),dependency=str(dependency),**result));break
+                time.sleep(5)
+            status(phase='waiting_gpu')
+        if a.after_benchmark:
+            assert a.after_benchmark!=a.context
+            dependency=ROOT/'benchmark_execution_v1'/a.after_benchmark/'status.json'
+            status(phase='waiting_previous_scene_benchmark',dependency=str(dependency))
+            while True:
+                require_start();result=benchmark_dependency_result(dependency)
+                if result is not None:
+                    write(run/'benchmark_priority_release.json',dict(checked_at=time.time(),dependency=str(dependency),**result));break
                 time.sleep(5)
             status(phase='waiting_gpu')
         if a.mask_first_count:

@@ -18,6 +18,11 @@ for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','TIME_A
     shutil.copy2(ROOT/'code'/name,DEST/name)
 shutil.copy2(ROOT/'code/benchmark_execution_architecture.svg',DEST/'benchmark_execution_architecture.svg')
 shutil.copy2(ROOT/'code/layer_diagnostics_architecture.svg',DEST/'layer_diagnostics_architecture.svg')
+shutil.copy2(ROOT/'code/actor_view_audit_architecture.svg',DEST/'actor_view_audit_architecture.svg')
+if (ROOT/'actor_view_support_v2/summary.json').exists():
+    target=DEST/'actor_view_support';target.mkdir(exist_ok=True)
+    for path in (ROOT/'actor_view_support_v2').iterdir():
+        if path.suffix=='.json' or path.name=='view_directions.png':shutil.copy2(path,target/path.name)
 for folder in (ROOT/'native_layer_isolation_v1').glob('*'):
     if not folder.is_dir():continue
     target=DEST/'layer_isolation'/folder.name;target.mkdir(parents=True,exist_ok=True)
@@ -144,6 +149,7 @@ for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_sce
 for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json','native_layer_isolation_dispatch.json','benchmark_mask_development_priority_dispatch.json','native_smoke_cost_ledger.json']:
     if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
 if (ROOT/'checkpoint_storage_relocation_v1/receipt.json').exists():shutil.copy2(ROOT/'checkpoint_storage_relocation_v1/receipt.json',DEST/'checkpoint_storage_relocation.json')
+if (ROOT/'benchmark_interleaving_extension_v1/receipt.json').exists():shutil.copy2(ROOT/'benchmark_interleaving_extension_v1/receipt.json',DEST/'benchmark_interleaving_extension.json')
 archive=ROOT/('admission_delivery_delta.tar.gz' if args.delta_base else 'admission_delivery_v2.tar.gz')
 snapshot={}
 for path in sorted(DEST.rglob('*')):

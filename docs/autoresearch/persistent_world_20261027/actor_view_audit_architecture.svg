@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10" fill="#45647b"/></marker></defs>
+<rect width="1200" height="330" rx="18" fill="#f5f9fc"/>
+<g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#18394e">
+<text x="600" y="35" font-size="23" font-weight="bold">资产视角支持诊断：输入观测 → 车体坐标 → 编辑方向距离</text>
+<g stroke="#91adbf" stroke-width="1.5" fill="#e8f0f7"><rect x="30" y="73" width="250" height="95" rx="10"/><rect x="30" y="199" width="250" height="95" rx="10"/><rect x="355" y="108" width="220" height="140" rx="10"/><rect x="650" y="108" width="220" height="140" rx="10"/><rect x="940" y="108" width="230" height="140" rx="10"/></g>
+<g font-size="19"><text x="155" y="105">原始49帧相机 / 目标轨迹</text><text x="155" y="136" font-size="15">实测中心、车体朝向、相机标定</text><text x="155" y="231">冻结编辑请求 / 外部资产</text><text x="155" y="262" font-size="15">转向、位移、源资产与目标位置</text><text x="465" y="148">统一车体坐标</text><text x="465" y="180" font-size="15">相机位置－车体中心</text><text x="465" y="210" font-size="15">与原生相机闭合核对</text><text x="760" y="148">观察方向支持</text><text x="760" y="180" font-size="15">原始方向范围 / 最近角距</text><text x="760" y="210" font-size="15">逐帧与阈值敏感性</text><text x="1055" y="148">与分层图像对照</text><text x="1055" y="180" font-size="15">① 资产未充分观测的表面</text><text x="1055" y="210" font-size="15">② 静态遮挡另行验证</text></g></g>
+<g fill="none" stroke="#45647b" stroke-width="2" marker-end="url(#a)"><path d="M280 120H316V147H355"/><path d="M280 247H316V210H355"/><path d="M575 178H650"/><path d="M870 178H940"/></g>
+<text x="700" y="291" text-anchor="middle" font-family="Microsoft YaHei,sans-serif" font-size="15" fill="#745d38">方向覆盖是输入代理量；不代表逐点可见性、正确几何或编辑质量真值</text>
+</svg>

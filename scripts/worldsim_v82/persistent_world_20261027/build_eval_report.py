@@ -26,6 +26,15 @@ if layer_paths:
             rows+=f'<tr><td>{case["case"]}</td><td>{clear["frames"]}</td><td>{clear["core_frame_pixels"]:,}</td><td>{value:.2%}</td><td>{case["request_collision_frames"]}</td></tr>'
         diagnostic_section+=f'<h3>{path.parent.name}</h3><img src="{relative}/comparison_index23.jpg"><p>每行依次为联合图、动态层灰底显示、动态alpha、静态＋环境。两场景独立动态层都仍可见转向侧面拉伸；静态层另保留原位残影。加入静态层后，部分新姿态的动态可见贡献明显下降，不能只把问题归为道路点缺失。</p><table><tr><th>姿态</th><th>无车框冲突帧</th><th>动态核心累计帧像素</th><th>静态层引起的可见贡献减少</th><th>标注框冲突帧</th></tr>{rows}</table><p>分母为独立动态alpha&gt;.1且内缩2像素的域，按独立alpha总量加权。它度量分层可见性，不是语义污染率；正常前景、玻璃和未知道路支撑仍可能参与。无标注框冲突也不等于已认证自由空间。</p><a href="{relative}/cpu_summary.json">完整分母与碰撞分层</a><details><summary>同协议较近时刻</summary><img src="{relative}/comparison_index30.jpg"></details>'
     diagnostic_section+='</section>'
+view_path=ADMISSION/'actor_view_support/summary.json'
+if view_path.exists():
+    views=json.loads(view_path.read_text());rows='';case_rows=''
+    for d in views['contexts']:
+        rows+=f'<tr><td>{escape(d["context"])}</td><td>{d["original_training_frames"]}</td><td>{d["azimuth_span_deg"]:.3f}°</td><td>{d["elevation_min_deg"]:.2f}–{d["elevation_max_deg"]:.2f}°</td><td>{d["camera_sensor_closure_max_abs_m"]:.3g}m</td></tr>'
+        for c in d['cases']:
+            if c['case'] in ['turn_left15','turn_right15','foreign_asset_insertion']:
+                case_rows+=f'<tr><td>{escape(d["context"].split("_")[0])}</td><td>{escape(c["case"])}</td><td>{escape(c["source_context"].split("_")[0])}</td><td>{c["nearest_direction_degrees_mean"]:.2f}° / {c["nearest_direction_degrees_max"]:.2f}°</td><td>{c["frames_over_direction_distance"]["3"]}/{c["frames"]}</td></tr>'
+    diagnostic_section+=f'<section><h2>资产观察支持：49帧并不等于49种有效视角</h2><img src="admission/actor_view_audit_architecture.svg"><table><tr><th>场景</th><th>训练帧</th><th>车体水平观察方向跨度</th><th>仰角范围</th><th>原生与传感器相机闭合差</th></tr>{rows}</table><img src="admission/actor_view_support/view_directions.png"><p>原始49帧的车体观察方向非常集中。转向请求与源资产插入方向明显离开原观察方向集合，这与分层图中的侧面失真相符，支持继续检查①未充分观测表面；尚不能证明它是唯一原因。左图仅比较宿主原观察方向与自己的转向；右图的外部资产插入使用对应供体的49帧方向，而非宿主方向。</p><table><tr><th>宿主</th><th>请求</th><th>使用的源资产</th><th>最近训练方向角距：均值 / 最大</th><th>角距大于3°的帧</th></tr>{case_rows}</table><p>3°仅为描述性敏感性统计，不能作成功、失败或剔除门限。车体中心方向基于标注框刚体坐标，不等于高斯的准确变形坐标、逐点可见性或正确表面；汇合49时刻可能高估单时刻支持。相机原地yaw不会改变这一方向量，但仍可改变视野，不能据角距0断言该相机编辑有充分支持。困难编辑保持原请求与分层，不因已经失败事后删样。</p><a href="admission/actor_view_support/summary.json">完整输入支持统计与限制</a></section>'
 for path in sorted((ADMISSION/'observed_pose').glob('*/summary.json')):
     d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix()
     diagnostic_section+=f'<details><summary>辅助诊断：真实输入相机位置上的稀疏道路颜色一致性</summary><section><p>{d["matched_source_pose_frames"]}个查询相机与原输入位姿精确重合，其中{d["nonanchor_frames"]}个非零锚点。只评分两时刻均有近深度LiDAR支持、并排除目标车身的{d["nonanchor_evaluation_frame_pixels"]:,}个累计帧像素。固定世界时钟对源RGB的MAE {d["fixed_world_MAE_macro"]:.5f}，整体播放控制{d["global_playback_MAE_macro"]:.5f}。源图时间与输出世界时间不同，因此这是局部颜色一致性诊断，不能当反事实时刻RGB真值、整个路面质量或任意新视角PSNR。</p><p>地面仅由实际原生粗平面分类实测回波，未生成路面标签；稀疏LiDAR可见性也不是相机密集遮挡真值。旧的全DEVA排除域和仅源时刻参考均保留，当前v3增加双时刻实测深度支持。</p><img src="{relative}/comparison.jpg"><a href="{relative}/summary.json">逐帧相机闭合、参考分母和限制</a></section></details>'
@@ -203,6 +212,8 @@ for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/fixed_backe
     failures.append(dict(scene=path.parents[2].name,operation='连续编辑固定后端一致性诊断',observation='五版本共同暴露域1569累计帧像素；原生浮点变化MAE3.07e-7，生成PNG变化0.01005。逐对暴露域分母更大且不同。',status='3次新推理、2次精确输入普通缓存，图像和31帧视频已检查/保留',cause='③局部跨请求变化证据；共同域每帧2–180像素很小，无反事实GT及相同输入重推方差，不能证明全背景质量或记忆创新。',evidence=path.relative_to(OUT).as_posix()))
 for path in layer_paths:
     failures.append(dict(scene=path.parent.name,operation='同姿态动态／静态／联合分层控制',observation='独立动态层仍有转向侧面拉伸；静态单独层保留原位残影，并改变新姿态动态层可见性。',status='4姿态×31帧真实GPU完成，原生与保存浮点重放差0、主副本未变；raw109或181及较近帧图像已检查',cause='①资产新姿态表达与②静态可见性分别存在候选问题；可见性降低不是污染率，正常前景与未知几何仍须区分；③未参与此控制。',evidence=(path.parent/'comparison_index23.jpg').relative_to(OUT).as_posix()))
+if view_path.exists():
+    failures.append(dict(scene='147053 / 429544 开发资产',operation='训练观察方向与编辑方向支持',observation='49帧训练水平观察方向跨度分别仅2.814°和0.246°；转向最近训练方向最大角距约4.87–6.30°，首例跨场景插入供体方向最大差7.65°。',status='只读真实相机/车体轨迹/冻结编辑请求审计，相机闭合小于2e-12m；未新增GPU、训练或case',cause='①未充分观测表面是受输入证据支持的候选瓶颈，不是唯一因果证明。方向量不测逐点可见性，跨时刻汇合可高估支持；不放宽门限或按失败删样。',evidence='admission/actor_view_support/summary.json'))
 foreign=ADMISSION/'benchmark_execution/14705303724557273004_3105_000_3125_000/cpu_delivery/vehicle_insertion/native_summary.json'
 if foreign.exists():
     failures.append(dict(scene='14705303724557273004_3105_000_3125_000',operation='真实跨场景资产插入，源429544',observation='raw109宿主原车保留，导入车辆外观发虚、边缘失真；不是同场景克隆。',status='31帧原生完成，实际源/目的不同，均值和协方差GPU变换检查通过，31帧标注框碰撞0',cause='①资产新视角/外观适配仍有问题；数值变换通过不保证形状与外观可信。粗车底对齐不认证道路支撑；未调用③，没有新增原位洞。',evidence=foreign.relative_to(OUT).as_posix()))
@@ -254,6 +265,7 @@ result['completed_native_training_contexts']=len(list((ADMISSION/'native_trainin
 result['continuous_fixed_backend_fresh_calls']=sum(json.loads(p.read_text())['fresh_backend_calls'] for p in (ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json'))
 result['SH_object_frame_GPU_control_complete']=(ADMISSION/'sh_operator_control/cpu_control_summary.json').exists()
 result['completed_layer_isolation_contexts']=len(layer_paths)
+result['actor_view_support_audited_contexts']=len(json.loads(view_path.read_text())['contexts']) if view_path.exists() else 0
 result['eight_family_diagnostic_entries_including_legacy_playback_control']=sum(json.loads(p.read_text())['executed_native_families'] for p in (ADMISSION/'benchmark_execution').glob('*/cpu_delivery/summary.json'))
 result['canonical_ego_speed_GPU_control_complete']=any(json.loads(p.read_text()).get('status')=='clock_separation_GPU_complete' for p in (ADMISSION/'ego_speed_clock_control').glob('*/summary.json'))
 (OUT/'validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
