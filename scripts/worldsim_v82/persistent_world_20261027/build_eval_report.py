@@ -50,8 +50,13 @@ if (ADMISSION/'benchmark_scale_ledger.json').exists():
     scale=json.loads((ADMISSION/'benchmark_scale_ledger.json').read_text())
     family_labels={'ego_speed':'自车变速','ego_lane_change':'自车变道','ego_direction':'自车转向','vehicle_speed':'他车变速','vehicle_lane_change':'他车变道','vehicle_direction':'他车转向','vehicle_insertion':'跨场景车辆插入','vehicle_removal':'指定车辆删除'}
     family_rows=''.join(f'<tr><td>{family_labels[name]}</td><td>{d["materialized"]}</td><td>{d["input_screened"]}</td><td>{d["reserved_input_screened"]}</td><td>{d["completed"]}</td></tr>' for name,d in scale['families'].items())
+    benchmark_states=[json.loads(p.read_text()) for p in (ADMISSION/'benchmark_execution').glob('*/status.json')]
+    diagnostic_native_count=sum(len(s.get('completed_native_families',[])) for s in benchmark_states)
+    diagnostic_backend_count=sum(len(s.get('completed_fixed_backend_families',[])) for s in benchmark_states)
     expansion=scale.get('expansion') or {};done=len(expansion.get('completed',[]))
     scale_section=f'''<section><h2>实际扩展其他case：八类任务，至少109个有效编辑</h2><img src="admission/benchmark_expansion_architecture.svg"><p>HorizonForge完整论文评测109编辑；展示页32编辑、128视频，不能混成32独立场景。本轮执行目标128有效编辑，长期240；正式完成不足109就继续补齐，不能以输入包、帧数、种子或多个方法凑数。</p><p><strong>30个额外片段已通过CPU三路提取：本快照完成{done}/30个新增真实传感器包。</strong> 加上复用输入共{scale['materialized_contexts']}段已落盘八类请求包，{scale['input_screened_cases']}个请求通过输入筛查；正式准入与新八类编辑完成仍为0。每包有49帧真实RGB/LiDAR/标定/位姿和31时刻米制请求，新窗口重新质检。开发优先，23封存只准备输入，不参与方法选择。</p><table><tr><th>任务</th><th>实际输入请求包</th><th>输入筛查通过</th><th>其中封存输入通过</th><th>实际完成</th></tr>{family_rows}</table><p>跨场景插入的资产库与朝向/尺度适配、自车轨迹渲染、操作空间支撑仍须核验；这里不是效果报告。新分割已排队，合格目标关联后接每场景一次smoke＋30K。<a href="admission/benchmark_scale_ledger.json">分阶段规模账本</a> · <a href="admission/BENCHMARK_SCALE.md">规模与准入合同</a> · 快照时间{escape(scale['updated_at_utc'])}</p></section>'''
+    scale_section=scale_section.replace('<th>实际完成</th>','<th>正式评测完成</th>')
+    scale_section+=f'<p><strong>开发诊断的实际输出另计：新八类协议已有{diagnostic_native_count}个场景／请求族的31帧原生输出，{diagnostic_backend_count}个固定视频后端输出。</strong> 第一套旧自车速度输出是全局播放控制，另已完成同case的固定世界时钟版本；版本不重复计数。上表0指尚未完成正式准入与质量评审，不是没有运行诊断。原11变体协议与本八类请求不累加为有效编辑数。</p>'
     for path in sorted((ADMISSION/'benchmark_inputs').glob('*/summary.json')):
         d=json.loads(path.read_text());key=path.parent.name
         if key in ['14705303724557273004_3105_000_3125_000','4295449061847708198_3769_000_3789_000','473735159277431842_630_095_650_095']:continue
@@ -266,6 +271,8 @@ result['continuous_fixed_backend_fresh_calls']=sum(json.loads(p.read_text())['fr
 result['SH_object_frame_GPU_control_complete']=(ADMISSION/'sh_operator_control/cpu_control_summary.json').exists()
 result['completed_layer_isolation_contexts']=len(layer_paths)
 result['actor_view_support_audited_contexts']=len(json.loads(view_path.read_text())['contexts']) if view_path.exists() else 0
+result['diagnostic_eight_family_native_outputs']=sum(len(json.loads(p.read_text()).get('completed_native_families',[])) for p in (ADMISSION/'benchmark_execution').glob('*/status.json'))
+result['diagnostic_eight_family_backend_outputs']=sum(len(json.loads(p.read_text()).get('completed_fixed_backend_families',[])) for p in (ADMISSION/'benchmark_execution').glob('*/status.json'))
 result['eight_family_diagnostic_entries_including_legacy_playback_control']=sum(json.loads(p.read_text())['executed_native_families'] for p in (ADMISSION/'benchmark_execution').glob('*/cpu_delivery/summary.json'))
 result['canonical_ego_speed_GPU_control_complete']=any(json.loads(p.read_text()).get('status')=='clock_separation_GPU_complete' for p in (ADMISSION/'ego_speed_clock_control').glob('*/summary.json'))
 (OUT/'validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
