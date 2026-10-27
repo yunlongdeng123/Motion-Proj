@@ -18,7 +18,8 @@ s=(scene/'index.html').read_text(encoding='utf8');assert s.count('src="v43_group
 g=json.loads((scene/'v43_groups_data.json').read_text());frames=0;images=0
 from PIL import Image
 for row in g['groups']:
-    assert len(row['frames'])==(49 if row['kind'] in ['v43_structure','v43_bypass'] or (row['kind']=='v43_opacity_calibration' and row['id'].endswith('_no_edit')) else 31)
+    expected=(49 if row['kind'] in ['v43_structure','v43_bypass'] or (row['kind']=='v43_opacity_calibration' and row['id'].endswith('_no_edit')) or (row['kind']=='v43_target_unknown' and row['id'].split('v43_unknown_v2_')[1] in ['joint199','split199','joint_dense199','conditional_joint','conditional_split','time_local75','time_local95']) else 31)
+    assert len(row['frames'])==expected,(row['id'],len(row['frames']),expected)
     for f in row['frames'].values():
         frames+=1
         for p in f['channels'].values():

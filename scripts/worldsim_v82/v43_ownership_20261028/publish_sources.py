@@ -32,6 +32,13 @@ if (O/'first_gpu_review_status.json').exists():
 '''+doc[end:]
 for p in W.iterdir():
     if p.is_file() and p.suffix in ['.py','.cjs','.md']:payload['scripts/worldsim_v82/v43_ownership_20261028/'+p.name]=p.read_bytes()
+if (W/'TARGET_UNKNOWN_V2.md').exists():
+    start=doc.index('最新用户');end=doc.index('实际GPU/进程/节点只看',start)
+    doc=doc[:start]+'''最新用户因额度要求收尾，禁止新增实验。远端allow_v43_training=false、user_research_hold=true。第一场景本轮5个独立10K分支完成，另3K pilot、980 smoke/恢复更新，共53,980；第二、第三没有追加实验。旧队列/心跳没有恢复。[阶段简报、Top 3与延期清单](autoresearch/v43_ownership_20261028/V43_WRAPUP.md)。
+
+三候选依次为：按时刻软归属联合+视频教师、受限插值联合、直接实测背景联合。仍未通过“RGB无车影、正确背景不破坏”；门控与教师收益尚未拆开归因，新增归属训练仅第一场景。原static批次也含SHM运动与时间opacity，27,642个目标相关行中25,413个时间门控有效的位置跨度>10cm；旧背景深度支持7,491行中6,569个也如此。深度相符不等于可靠静止背景；页面已更正，历史掩码不追溯修改。混合支撑和环境颜色泄漏继续列为问题，保留率不是身份概率。[阶段记录](autoresearch/v43_ownership_20261028/TARGET_UNKNOWN_V2.md)。
+
+'''+doc[end:]
 payload['docs/RESEARCH_STATUS.md']=doc.encode()
 prefix='docs/autoresearch/v43_ownership_20261028/'
 payload[prefix+'STATE.json']=json.dumps(state,ensure_ascii=True,indent=2).encode();payload[prefix+'EXPERIMENT_CONTRACT.md']=(W/'EXPERIMENT_CONTRACT.md').read_bytes();payload[prefix+'architecture.svg']=(O/'architecture.svg').read_bytes()
@@ -45,12 +52,21 @@ if (W/'FIRST_GPU_REVIEW.md').exists():
     payload[prefix+'FIRST_GPU_REVIEW.md']=(W/'FIRST_GPU_REVIEW.md').read_bytes();payload[prefix+'gpu_review_architecture.svg']=(O/'gpu_review_architecture.svg').read_bytes()
     for name in ['first_gpu_review_status.json','residual_class_probe.json','opacity_view_audit.json','boundary_view_audit.json','opacity_core_fringe_CPU.json','calibration_entry_verification.json','boundary_loss_interface_CPU.json','gpu_review_viewer_validation.json']:
         if (O/name).exists():payload[prefix+name]=(O/name).read_bytes()
+if (W/'TARGET_UNKNOWN_V2.md').exists():
+    report=(W/'TARGET_UNKNOWN_V2.md').read_text(encoding='utf8').replace('(architecture.svg)','(target_unknown_architecture.svg)')
+    payload[prefix+'TARGET_UNKNOWN_V2.md']=report.encode('utf8');payload[prefix+'target_unknown_architecture.svg']=(O/'target_unknown_v2/architecture.svg').read_bytes()
+    for name in ['summary.json','viewer_validation.json','mixed_support_audit/summary.json']:
+        if (O/'target_unknown_v2'/name).exists():payload[prefix+'target_unknown_'+name.replace('/','_')]=(O/'target_unknown_v2'/name).read_bytes()
+    if (W/'V43_WRAPUP.md').exists():
+        payload[prefix+'V43_WRAPUP.md']=(W/'V43_WRAPUP.md').read_bytes();payload[prefix+'wrapup_architecture.svg']=(O/'target_unknown_v2/wrapup_architecture.svg').read_bytes()
+        for name in ['wrapup_summary.json','static_motion_audit/summary.json','remote_closeout.json']:
+            payload[prefix+'wrapup_'+name.replace('/','_')]=(O/'target_unknown_v2'/name).read_bytes()
 template_files=['scene_viewer.js','scene_viewer.html','scene_edit_geometry.js','scene_sampling.js','scene_semantics.js','scene_boundary_semantics.js','scene_workspace.css']
 template={name:(VIEW/name).read_bytes() for name in template_files};template['style.css']=(B/'outputs/GS_Scene_Diagnostics_20261027/style.css').read_bytes()
 template['architecture.svg']=(O/'architecture.svg').read_bytes();template['build_diagnostic_template.py']=(W/'build_diagnostic_template.py').read_bytes()
 template['README.md']='''# V43 通用GPU诊断模板
 
-每个case共用这些模板；必须另导出scene/cloud/identity/edit_geometry/foreign_clouds/semantic_observations。GPU语义放gpu_semantics/index.js及frame_*.js；深度索引可选。v43_groups.js负责已实际完成新节点，未完成时保持空文件。新旧行ID不同命名空间，不能用原30K 0/1/U覆盖新Actor局部种子；二维预测与原owner分别保存。GPU map为Cityscapes19+unknown，旧CPU map是独立版本。含目标橙框与其他原始车辆蓝框；没有RGB三维背景底图。每次build后做路径、图像和实际Canvas检查。
+每个case共用这些模板；必须另导出scene/cloud/identity/edit_geometry/foreign_clouds/semantic_observations。GPU语义放gpu_semantics/index.js及frame_*.js；深度索引可选。v43_groups.js负责已实际完成新节点，未完成时保持空文件。新旧行ID不同命名空间，不能用原30K 0/1/U覆盖新Actor局部种子；二维预测与原owner分别保存。GPU map为Cityscapes19+unknown，旧CPU map是独立版本。原static批次含SHM运动与时间opacity，不等于world_static；新增固定世界表面补层另标。含目标橙框与其他原始车辆蓝框；没有RGB三维背景底图。每次build后做路径、图像和实际Canvas检查。
 '''.encode()
 template={k:v.replace(b'\r\n',b'\n') for k,v in template.items()}
 template['manifest.json']=json.dumps({k:hashlib.sha256(v).hexdigest() for k,v in template.items()},indent=2).encode()

@@ -8,12 +8,15 @@ function editState(raw=S.raw){
 function currentCamera(){return S.cameraReference==='original'?D.frames[S.raw].c2w:(editState()?.camera||D.frames[S.raw].c2w);}
 function geometryInstances(){
  const st=editState();if(!st?.supported)return [];
- const list=st.static_visible?[{key:'static',cloud:'static',query_time:st.world_time,transform:null,label:'STATIC',suppressed_rows:st.static_suppressed_rows||null,suppressed_rows:st.static_suppressed_rows||null}]:[];
+ const list=st.static_visible?[{key:'static',cloud:'static',query_time:st.world_time,transform:null,label:'STATIC',suppressed_rows:st.static_suppressed_rows||null,static_adapter:st.static_adapter||null}]:[];
  return [...list,...st.objects];
 }
 function editedPoint(instance,j){
  const cloud=S.clouds[instance.cloud],pt=cloudPoint(cloud.data,j,cloud.cycle,instance.query_time);
  if(instance.transform)pt.p=matp(instance.transform,pt.p);
+ /* target-unknown-adapter */
+ const a=S.staticAdapters?.[instance.static_adapter],idx=a?sparseIndex(a.ids,cloud.data.ids[j]):-1;
+ if(idx>=0){const ti=a.raws?a.raws.indexOf(S.raw):-1,phi=a.time_phi&&ti>=0?a.time_phi[ti*a.ids.length+idx]:1;pt.opacity*=1-(1-a.opacity_factor[idx])*phi;pt.rgb=[0,1,2].map(k=>Math.round(Math.max(0,Math.min(255,cloud.data.rgb[j*3+k]+255*phi*a.dc_rgb_delta[idx*3+k]))));}
  if(cloud.opacity_density_scale)pt.opacity=1-Math.pow(1-pt.opacity,cloud.opacity_density_scale);return pt;
 }
 function currentBoxes(){
@@ -21,7 +24,7 @@ function currentBoxes(){
  const source=$('geometryState').value==='baseline'||['gt','sensor_overlay','semantic_2d'].includes(S.channel)||S.group==='reconstruction_30000'||S.group==='motion_no_edit';
  if(source)return IA?IA.frames[S.raw].vehicle_boxes:[{target:true,track:D.target_track,label:'TARGET',corners_local:boxPoints(D.frames[S.raw])}];
  const others=IA?IA.frames[S.raw].vehicle_boxes.filter(b=>!b.target):[];
- return [...others,...st.objects.map(o=>({target:true,track:o.key==='target'?D.target_track:o.key,label:o.label,corners_local:o.corners_local,imported:o.cloud.startsWith('foreign:')}))];
+ return [...others,...(st.reference_boxes||[]),...st.objects.filter(o=>!o.render_only).map(o=>({target:true,track:o.key==='target'?D.target_track:o.key,label:o.label,corners_local:o.corners_local,imported:o.cloud.startsWith('foreign:')}))];
 }
 function draw3D(){
  const canvas=$('sceneCanvas'),x=canvas.getContext('2d'),st=editState();
@@ -34,7 +37,7 @@ function draw3D(){
  if(!S.cameraView)for(let v=-60;v<=100;v+=10){line3(x,[[v,-60,0],[v,60,0]],'#182c40');line3(x,[[-40,v,0],[100,v,0]],'#182c40');}
  const mode=$('cloudColor').value,instances=geometryInstances(),counts={};S.semanticFilterStats={considered:0,hidden:0,unknown:0,vehicle:0,contour:0,static_vehicle:0,base_unknown:0,road_to_unknown:0};
  for(const instance of instances){
-  const part=instance.cloud==='static'?'static':'dynamic';if(!$(part+'3d').checked)continue;
+  const part=instance.cloud==='static'||S.clouds[instance.cloud]?.branch==='static'?'static':'dynamic';if(!$(part+'3d').checked)continue;
   const cloud=S.clouds[instance.cloud];if(!cloud){empty(canvas,'外来资产几何加载中');return;}
   const {data}=cloud;let count=0;const suppressed=instance.suppressed_rows?new Set(instance.suppressed_rows):null;
   for(let j=0;j<data.ids.length;j++){
@@ -46,7 +49,7 @@ function draw3D(){
    const e=(mode.startsWith('semantic')||st.semantic_render_filter||($('semanticAblation')?.value||'all')!=='all')?semanticRow(instance,j):null;
    if(e){const q=S.semanticFilterStats;q.considered++;if(e.class_id===0)q.unknown++;if(e.class_id>=14&&e.class_id<=19)q.vehicle++;if(e.boundary_abstained)q.contour++;if(e.static_vehicle_quarantined)q.static_vehicle++;if(e.base_class_id===0)q.base_unknown++;if(e.base_class_id===1&&e.class_id===0)q.road_to_unknown++;if(semanticFilterReject(e)){q.hidden++;continue;}}
    const foreign=instance.cloud.startsWith('foreign:');
-   x.fillStyle=mode.startsWith('semantic')?semanticColor(e,mode):mode==='ownership'?(own?['#63b3ff','#4bea9b','#ffb347'][own.state]:'#787f89'):mode==='rgb'?`rgb(${data.rgb[j*3]},${data.rgb[j*3+1]},${data.rgb[j*3+2]})`:mode==='branch'?(part==='static'?'#78b0f4':foreign?'#68f2bd':'#ffa85d'):`rgb(${heat(pt.opacity).join(',')})`;
+   x.fillStyle=mode==='target_unknown_v2'?targetUnknownColor(instance,data.ids[j]):mode.startsWith('semantic')?semanticColor(e,mode):mode==='ownership'?(own?['#63b3ff','#4bea9b','#ffb347'][own.state]:'#787f89'):mode==='rgb'?`rgb(${(pt.rgb||Array.from(data.rgb.slice(j*3,j*3+3))).join(',')})`:mode==='branch'?(part==='static'?'#78b0f4':foreign?'#68f2bd':'#ffa85d'):`rgb(${heat(pt.opacity).join(',')})`;
    x.globalAlpha=$('opaquePoints').checked?1:Math.max(0,Math.min(1,pt.opacity));
    const size=Number($('pointSize').value)||2.5;x.fillRect(p[0]-size/2,p[1]-size/2,size,size);
    S.projection.push({x:p[0],y:p[1],part,j,p:pt.p,opacity:pt.opacity,instance:instance.key,cloud:instance.cloud});count++;
@@ -81,14 +84,16 @@ function draw3D(){
   if(p){x.strokeStyle='#ff8cbd';x.lineWidth=2;x.beginPath();x.arc(p[0],p[1],7,0,Math.PI*2);x.stroke();}
   for(const axes of [[0,1],[0,2],[1,2]]){const pts=[];for(let t=0;t<=48;t++){const a=t/48*2*Math.PI,offset=[0,1,2].map(k=>d.rotation[j*9+k*3+axes[0]]*d.scales[j*3+axes[0]]*Math.cos(a)+d.rotation[j*9+k*3+axes[1]]*d.scales[j*3+axes[1]]*Math.sin(a));const v=inst.transform?[0,1,2].map(k=>offset.reduce((s,x,i)=>s+inst.transform[k][i]*x,0)):offset;pts.push(pt.p.map((p,k)=>p+v[k]));}line3(x,pts,'#ff8cbd');}
   $('gaussianInfo').textContent=`${inst.label} · ${inst.source_context||D.context} · checkpoint 行 ${d.ids[j]} · 当前编辑位置米 (${pt.p.map(v=>fmt(v,2)).join(', ')}) · opacity ${fmt(pt.opacity)} · 时间 ${fmt(inst.query_time,3)}。椭球方向使用相同刚体旋转；不是像素贡献排名。`+(mode==='ownership'?(()=>{const v=ownershipRow(inst,d.ids[j]);return v?` 候选 ${v.state===2?'unknown':v.state}；目标证据 ${v.target_hits} 帧，非目标证据 ${v.other_hits} 帧（候选需要 ≥3 帧、覆盖 ≥2 时间段且无反证）。`:' 候选未加载';})():'');
+  /* target-unknown-selected */
+  if(mode==='target_unknown_v2'){const a=S.targetUnknown,k=inst.cloud==='static'&&a?sparseIndex(a.ids,d.ids[j]):-1,ad=S.staticAdapters?.[inst.static_adapter],ai=ad?sparseIndex(ad.ids,d.ids[j]):-1;$('gaussianInfo').textContent+=k>=0?` V2证据状态 ${['背景深度支持（未核验静止）','车辆候选','目标unknown','混合支撑'][a.role[k]]}；目标支持 ${a.target_frames[k]} 帧，背景深度支持 ${a.background_frames[k]} 帧。`:' V2：此目标之外，或新增实证背景补层（语义仍unknown）。';if(ai>=0)$('gaussianInfo').textContent+=` 实际学习保留率 ${fmt(ad.opacity_factor[ai])}，不是身份概率。`;}
   if(mode.startsWith('semantic'))$('gaussianInfo').textContent+=' 语义观测：'+JSON.stringify(semanticRow(inst,j));
  }else $('gaussianInfo').textContent='点击几何点查看真实 checkpoint 行号、编辑后位置和查询时间。';
  x.fillStyle='#9fb5d1';x.font='12px monospace';x.fillText('EDIT STATE · grid 10 m · Gaussian samples · no RGB backdrop',12,canvas.height-13);
  $('pointSizeValue').textContent=Number($('pointSize').value).toFixed(1)+' px';
  $('viewMode').textContent=S.cameraView?(S.cameraReference==='original'?'原相机观察当前几何（显式对照）':'当前请求相机 · 与左侧原生输出同投影'):'三维总览 · 绿线/视锥为当前请求相机 · 蓝灰为原相机';
- if(mode==='ownership')$('ownershipStatus').textContent='1 绿色：目标候选；0 蓝色：非目标候选；unknown 橙色。灰色：尚未加载证据。以当前查询帧显示中心；标签来自全49帧证据。不是像素贡献真值。';
+ if(mode==='target_unknown_v2')$('ownershipStatus').textContent='V2目标专属证据：橙=目标相关但未分清；紫=目标与真实背景混合；蓝=重复背景深度支持（未核验静止）；灰=此目标之外。青=新增实证背景补层（语义仍unknown）。渲染保留率不是身份概率。';if(mode==='ownership')$('ownershipStatus').textContent='1 绿色：目标候选；0 蓝色：非目标候选；unknown 橙色。灰色：尚未加载证据。以当前查询帧显示中心；标签来自全49帧证据。不是像素贡献真值。';
  if($('semanticFilterStatus')){const q=S.semanticFilterStats;$('semanticFilterStatus').textContent=`当前画内抽样中心：unknown ${q.unknown}（基础低置信/混合 ${q.base_unknown}，轮廓规则 ${q.contour}，静态车影候选 ${q.static_vehicle}；原因可重叠），车辆类 ${q.vehicle}，本开关隐藏 ${q.hidden}。road→unknown ${q.road_to_unknown}。不是全模型比例。仅右侧几何预览；左侧RGB未重渲染，不能据此判定残影已剥离。`;}
- semanticLegend();if($('geometryColorLegend'))$('geometryColorLegend').textContent=mode==='semantic_unknown_reason'?'unknown来源：灰=基础低置信/混合；黄=额外轮廓带；橙=跨帧静态车影候选；蓝=本帧无贡献证据。多原因优先显示橙/黄，其余类别暗显。':mode.startsWith('semantic')?'语义：亮绿=car×dynamic，深绿=car×static，浅灰=unknown；紫=road。static是原渲染分支，不是背景语义。橙框=所选目标，蓝框=其他原始车辆。':mode==='opacity'?'色标为有效opacity；关闭不透明标记时按实际点opacity显示。点opacity不等于像素alpha*T，可切换二维覆盖率与可见比例。':mode==='ownership'?'归属候选：绿1，蓝0，橙unknown；原branch与语义分别保留。':'蓝=原static分支，橙=目标dynamic分支，青=原LiDAR；橙框目标，蓝框其他原始车辆。';const count=IA?.frames[S.raw].visible_count;
+ semanticLegend();if($('geometryColorLegend'))$('geometryColorLegend').textContent=mode==='target_unknown_v2'?'V2颜色：橙=目标相关未分清；紫=目标/背景混合；蓝=重复背景深度支持（未核验静止）；灰=此目标之外；青=新增背景补层。保留率不是身份概率。':mode==='semantic_unknown_reason'?'unknown来源：灰=基础低置信/混合；黄=额外轮廓带；橙=跨帧静态车影候选；蓝=本帧无贡献证据。多原因优先显示橙/黄，其余类别暗显。':mode.startsWith('semantic')?'语义：亮绿=car×dynamic，深绿=car×static，浅灰=unknown；紫=road。static是原渲染分支，不是背景语义。橙框=所选目标，蓝框=其他原始车辆。':mode==='opacity'?'色标为有效opacity；关闭不透明标记时按实际点opacity显示。点opacity不等于像素alpha*T，可切换二维覆盖率与可见比例。':mode==='ownership'?'归属候选：绿1，蓝0，橙unknown；原branch与语义分别保留。':'蓝=原static分支，橙=目标dynamic分支，青=原LiDAR；橙框目标，蓝框其他原始车辆。';const count=IA?.frames[S.raw].visible_count;
  $('boxInfo').textContent=`当前有效资产框 ${st.objects.length} 个${count!==undefined?'；原帧 '+count+' 个车辆标注与前视相交':''}。目标框随资产平移、旋转或删除；其他蓝框是原始观测标注，不代表独立资产。`;
  const sampling=instances.map(o=>{const c=S.clouds[o.cloud];return c?`${o.label}：${c.sample.toLocaleString()}/${c.total.toLocaleString()} 行（${(100*c.sample/c.total).toFixed(2)}%）`:'';}).filter(Boolean).join('；');
  $('cloudInfo').textContent=`当前组几何加载量：${sampling}。加载量不等于显示量；显示采样见上方配置。中心点不是完整高斯表面。当前画内 ${Object.entries(counts).map(([k,n])=>k+': '+n).join(' / ')}。${$('lidar3d').checked?'青色 LiDAR 保持原始实测状态，不是编辑后传感器输出。':''} ${st.note||''}${S.channel==='generated'?' 右侧是视频后处理之前的三维状态。':''}`;

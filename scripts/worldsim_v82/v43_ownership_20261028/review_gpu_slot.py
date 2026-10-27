@@ -9,7 +9,7 @@ def slot(round_dir=None):
         from gpu_slot import exclusive
         with exclusive():yield
         return
-    p=Path(round_dir).resolve();assert str(p).startswith('/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/first_gpu_review_')
+    p=Path(round_dir).resolve();assert str(p).startswith(('/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/first_gpu_review_', '/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/target_unknown_v2/'))
     lease=json.loads((p/'lease.json').read_text());stat=Path('/proc/%d/stat'%lease['pid']).read_text().split();assert stat[2]!='Z' and stat[21]==str(lease['start_ticks'])
     assert os.environ.get('V43_REVIEW_LEASE')==lease['token'],'Wrong GPU lease'
     for _ in range(100):

@@ -1,0 +1,69 @@
+{
+  "context": "14705303724557273004_3105_000_3125_000",
+  "original_static_rows": 918850,
+  "model_to_world_scale": 0.03903476718359823,
+  "motion_period_model_units": 0.2,
+  "model_time_span": [
+    -0.48,
+    0.48
+  ],
+  "physical_time_span_seconds": 4.8,
+  "motion_formula": "xyz(t)=xyz0+velocity*sin((t-center_time)*2pi/T)/(2pi/T); opacity(t)=opacity0*exp(-0.5*((t-center_time)/sigma_t)^2)",
+  "branch_is_not_motion_state": true,
+  "statistics": {
+    "all": {
+      "rows": 918850,
+      "visible_trajectory_span_m_quantiles": [
+        0.0,
+        0.039263747909315194,
+        0.7585843891944059,
+        2.1315452625478497,
+        5.702503390088452
+      ],
+      "moved_gt10cm_rows": 407611,
+      "moved_gt50cm_rows": 155434,
+      "visible_fewer_than40_of49_rows": 210526
+    },
+    "target_candidate": {
+      "rows": 27642,
+      "visible_trajectory_span_m_quantiles": [
+        0.00022356913527554192,
+        0.4987444671583159,
+        1.4637989765075365,
+        2.466418396228317,
+        5.505265250016578
+      ],
+      "moved_gt10cm_rows": 25413,
+      "moved_gt50cm_rows": 13795,
+      "visible_fewer_than40_of49_rows": 55
+    },
+    "background_protected": {
+      "rows": 7491,
+      "visible_trajectory_span_m_quantiles": [
+        0.003518798188789418,
+        0.32226081540372675,
+        1.0821193522917838,
+        1.9415602643109724,
+        3.41024146468132
+      ],
+      "moved_gt10cm_rows": 6569,
+      "moved_gt50cm_rows": 2369,
+      "visible_fewer_than40_of49_rows": 745
+    },
+    "mixed": {
+      "rows": 1235,
+      "visible_trajectory_span_m_quantiles": [
+        0.003518798188789418,
+        0.6317551711743263,
+        1.5487787933002397,
+        2.155386524928269,
+        2.920532443591128
+      ],
+      "moved_gt10cm_rows": 1191,
+      "moved_gt50cm_rows": 734,
+      "visible_fewer_than40_of49_rows": 0
+    }
+  },
+  "source_checkpoint_unchanged": true,
+  "training_updates": 0
+}
