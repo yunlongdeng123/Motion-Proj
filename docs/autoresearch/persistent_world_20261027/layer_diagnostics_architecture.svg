@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#4f7084"/></marker></defs>
+<rect width="1280" height="420" rx="16" fill="#f5f8fb"/>
+<g font-family="Microsoft YaHei,sans-serif" fill="#193c51" text-anchor="middle">
+<text x="36" y="36" text-anchor="start" font-size="24" font-weight="bold">分开检查资产表达、静态遮挡和视频后端</text>
+<g stroke="#9eb5c5" stroke-width="1.5" fill="#e6eef6"><rect x="30" y="130" width="220" height="130" rx="12"/><rect x="300" y="70" width="260" height="80" rx="12"/><rect x="300" y="180" width="260" height="80" rx="12"/><rect x="300" y="290" width="260" height="80" rx="12"/></g>
+<rect x="620" y="128" width="285" height="140" rx="12" fill="#dff2e9" stroke="#72ac96" stroke-width="1.5"/>
+<rect x="965" y="128" width="280" height="140" rx="12" fill="#f7edd5" stroke="#bda86a" stroke-width="1.5"/>
+<g font-size="20"><text x="140" y="169">冻结30K高斯状态</text><text x="140" y="204">同一编辑请求／相机</text><text x="430" y="103">联合渲染</text><text x="430" y="131" font-size="16">原生浮点差0核对</text><text x="430" y="213">动态资产单独渲染</text><text x="430" y="241" font-size="16">RGB、alpha；灰底仅作显示</text><text x="430" y="323">普通静态层＋环境</text><text x="430" y="351" font-size="16">保留原始残影与前景</text><text x="762" y="163">① 资产在新姿态是否失真</text><text x="762" y="199">② 静态层改变多少可见性</text><text x="762" y="235" font-size="16">同姿态、同像素域；碰撞分层</text><text x="1105" y="164">固定ProPainter前后对照</text><text x="1105" y="199">③ 修改范围与跨请求变化</text><text x="1105" y="235" font-size="16">相同输入真实重推＋普通缓存</text></g>
+<g fill="none" stroke="#4f7084" stroke-width="2" marker-end="url(#a)"><path d="M250 167H275V110H300"/><path d="M250 196H300"/><path d="M250 225H275V330H300"/><path d="M560 110H590V163H620"/><path d="M560 220H620"/><path d="M560 330H590V244H620"/><path d="M905 198H965"/></g>
+<text x="820" y="326" font-size="17">可见性下降不是污染率；正常前景、玻璃与未知几何仍须区分</text>
+<text x="820" y="359" font-size="17">独立列出来源、分母、碰撞与未知域，不把诊断控制计作新编辑case</text>
+<text x="34" y="399" text-anchor="start" font-size="15">主副本不变 · 新训练更新0 · 分层图为诊断，不是修复结果 · 质量仍由用户评审</text>
+</g></svg>

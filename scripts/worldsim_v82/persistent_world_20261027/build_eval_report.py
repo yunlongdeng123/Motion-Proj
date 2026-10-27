@@ -15,6 +15,20 @@ summary = json.loads((DATA / 'summary.json').read_text())
 ADMISSION=OUT/'admission'
 admission_section=''
 scale_section=''
+diagnostic_section=''
+layer_paths=sorted((ADMISSION/'layer_isolation').glob('*/cpu_summary.json'))
+if layer_paths:
+    diagnostic_section='<section><h2>新证据：资产表达与静态遮挡可以分别检查</h2><img src="admission/layer_diagnostics_architecture.svg"><p>两个开发场景，各4种姿态×31帧。相同冻结权重、编辑姿态与相机，分开渲染动态层和静态层，再与原生联合图对照；原生及已保存浮点重放差均0，主副本未变，无新增训练或编辑case。</p>'
+    for path in layer_paths:
+        d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix();rows=''
+        for case in d['cases']:
+            clear=case['strata']['no_annotated_vehicle_box_collision'];value=clear['static_layer_visibility_mass_reduction']
+            rows+=f'<tr><td>{case["case"]}</td><td>{clear["frames"]}</td><td>{clear["core_frame_pixels"]:,}</td><td>{value:.2%}</td><td>{case["request_collision_frames"]}</td></tr>'
+        diagnostic_section+=f'<h3>{path.parent.name}</h3><img src="{relative}/comparison_index23.jpg"><p>每行依次为联合图、动态层灰底显示、动态alpha、静态＋环境。两场景独立动态层都仍可见转向侧面拉伸；静态层另保留原位残影。加入静态层后，部分新姿态的动态可见贡献明显下降，不能只把问题归为道路点缺失。</p><table><tr><th>姿态</th><th>无车框冲突帧</th><th>动态核心累计帧像素</th><th>静态层引起的可见贡献减少</th><th>标注框冲突帧</th></tr>{rows}</table><p>分母为独立动态alpha&gt;.1且内缩2像素的域，按独立alpha总量加权。它度量分层可见性，不是语义污染率；正常前景、玻璃和未知道路支撑仍可能参与。无标注框冲突也不等于已认证自由空间。</p><a href="{relative}/cpu_summary.json">完整分母与碰撞分层</a><details><summary>同协议较近时刻</summary><img src="{relative}/comparison_index30.jpg"></details>'
+    diagnostic_section+='</section>'
+for path in sorted((ADMISSION/'observed_pose').glob('*/summary.json')):
+    d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix()
+    diagnostic_section+=f'<details><summary>辅助诊断：真实输入相机位置上的稀疏道路颜色一致性</summary><section><p>{d["matched_source_pose_frames"]}个查询相机与原输入位姿精确重合，其中{d["nonanchor_frames"]}个非零锚点。只评分两时刻均有近深度LiDAR支持、并排除目标车身的{d["nonanchor_evaluation_frame_pixels"]:,}个累计帧像素。固定世界时钟对源RGB的MAE {d["fixed_world_MAE_macro"]:.5f}，整体播放控制{d["global_playback_MAE_macro"]:.5f}。源图时间与输出世界时间不同，因此这是局部颜色一致性诊断，不能当反事实时刻RGB真值、整个路面质量或任意新视角PSNR。</p><p>地面仅由实际原生粗平面分类实测回波，未生成路面标签；稀疏LiDAR可见性也不是相机密集遮挡真值。旧的全DEVA排除域和仅源时刻参考均保留，当前v3增加双时刻实测深度支持。</p><img src="{relative}/comparison.jpg"><a href="{relative}/summary.json">逐帧相机闭合、参考分母和限制</a></section></details>'
 if (ADMISSION/'benchmark_scale_ledger.json').exists():
     scale=json.loads((ADMISSION/'benchmark_scale_ledger.json').read_text())
     family_labels={'ego_speed':'自车变速','ego_lane_change':'自车变道','ego_direction':'自车转向','vehicle_speed':'他车变速','vehicle_lane_change':'他车变道','vehicle_direction':'他车转向','vehicle_insertion':'跨场景车辆插入','vehicle_removal':'指定车辆删除'}
@@ -131,7 +145,7 @@ if (ADMISSION/'registry.json').exists():
     for path in sorted((ADMISSION/'motion_execution').glob('*/diagnostics/summary.json')):
         d=json.loads(path.read_text());branch=d.get('branch_contributions')
         if branch:
-            admission_section+=f'<p>首场景DEVA车身内缩2像素区域：动态合成权重均值{branch["body_core_dynamic_weight_macro"]:.4f}，静态{branch["body_core_static_weight_macro"]:.4f}，静态占优像素比例{branch["body_core_static_dominant_fraction_macro"]:.2%}。这是分支贡献诊断，不能当污染率；玻璃、透明度和掩码不确定性也会留下背景贡献。需结合独立动态层、静态层和变换控制定位失真。</p>'
+            admission_section+=f'<p>场景{path.parent.parent.name}的DEVA车身内缩2像素区域：动态合成权重均值{branch["body_core_dynamic_weight_macro"]:.4f}，静态{branch["body_core_static_weight_macro"]:.4f}，静态占优像素比例{branch["body_core_static_dominant_fraction_macro"]:.2%}。这是分支贡献诊断，不能当污染率；玻璃、透明度和掩码不确定性也会留下背景贡献。需结合独立动态层、静态层和变换控制定位失真。</p>'
     audit=ADMISSION/'native_actor_source_audit.json'
     if audit.exists():
         audit_rows=''.join(f'<tr><td>{x["context"]}</td><td>{x["total_dynamic_points"]:,}</td><td>{100*x["inside_annotated_box_fraction"]["0.0"]:.2f}%</td><td>{x["world_replay_max_abs_m"]:.1f}m</td></tr>' for x in json.loads(audit.read_text()))
@@ -179,6 +193,11 @@ if (ADMISSION/'sh_operator_control/cpu_control_summary.json').exists():
     for row in failures:row['cause']=row['cause'].replace('SH物体系旋转CPU控制通过、GPU控制待执行。','SH物体系旋转真实GPU3变体31帧控制完成，几何通道差0；仅小幅颜色变化，raw109重影仍在，单改SH约定不足。')
 for path in sorted((ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json')):
     failures.append(dict(scene=path.parents[2].name,operation='连续编辑固定后端一致性诊断',observation='五版本共同暴露域1569累计帧像素；原生浮点变化MAE3.07e-7，生成PNG变化0.01005。逐对暴露域分母更大且不同。',status='3次新推理、2次精确输入普通缓存，图像和31帧视频已检查/保留',cause='③局部跨请求变化证据；共同域每帧2–180像素很小，无反事实GT及相同输入重推方差，不能证明全背景质量或记忆创新。',evidence=path.relative_to(OUT).as_posix()))
+for path in layer_paths:
+    failures.append(dict(scene=path.parent.name,operation='同姿态动态／静态／联合分层控制',observation='独立动态层仍有转向侧面拉伸；静态单独层保留原位残影，并改变新姿态动态层可见性。',status='4姿态×31帧真实GPU完成，原生与保存浮点重放差0、主副本未变；raw109或181及较近帧图像已检查',cause='①资产新姿态表达与②静态可见性分别存在候选问题；可见性降低不是污染率，正常前景与未知几何仍须区分；③未参与此控制。',evidence=(path.parent/'comparison_index23.jpg').relative_to(OUT).as_posix()))
+foreign=ADMISSION/'benchmark_execution/14705303724557273004_3105_000_3125_000/cpu_delivery/vehicle_insertion/native_summary.json'
+if foreign.exists():
+    failures.append(dict(scene='14705303724557273004_3105_000_3125_000',operation='真实跨场景资产插入，源429544',observation='raw109宿主原车保留，导入车辆外观发虚、边缘失真；不是同场景克隆。',status='31帧原生完成，实际源/目的不同，均值和协方差GPU变换检查通过，31帧标注框碰撞0',cause='①资产新视角/外观适配仍有问题；数值变换通过不保证形状与外观可信。粗车底对齐不认证道路支撑；未调用③，没有新增原位洞。',evidence=foreign.relative_to(OUT).as_posix()))
 (OUT / 'failure_matrix.json').write_text(json.dumps(failures, ensure_ascii=False, indent=2), encoding='utf-8')
 labels = {'previous_method_development': '原方法开发', 'previous_reconstruction_development': '历史重建开发',
           'new_diagnostic_development': '新增诊断开发', 'heldout_reserved': '封存：未跑编辑评测'}
@@ -191,6 +210,7 @@ body = f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="v
 <style>body{{background:#f3f7fa;color:#203c51;font:16px/1.7 "Microsoft YaHei",sans-serif;margin:0}}main{{max-width:1400px;margin:auto;padding:25px}}section{{background:white;border:1px solid #d8e3eb;border-radius:12px;margin:22px 0;padding:22px}}h1{{font-size:29px}}h2{{font-size:22px}}a{{color:#126c9a}}img,video{{max-width:100%}}table{{width:100%;border-collapse:collapse}}td,th{{text-align:left;border-bottom:1px solid #dce5ed;padding:12px;vertical-align:top}}.note{{background:#fff1d5;padding:16px;border-left:4px solid #b68c37}}.grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}article{{border:1px solid #dce5ed;padding:10px;border-radius:8px}}article p{{font-size:12px;overflow-wrap:anywhere}}small{{font-size:13px}}video{{width:100%;background:#152536}}@media(max-width:850px){{.grid{{grid-template-columns:1fr}}main{{padding:12px}}}}</style>
 <main><h1>4D 编辑评测：先发现重复失败，再改进背景修复</h1><p>2026-10-27 · 阶段二早期 · 质量待用户评审 · 持续自主推进</p>
 <p><a href="../Persistent_World_Autoresearch_20261027/index.html">原开发场景证据</a> · <a href="delivery/EVALUATION_PROTOCOL.md">冻结评测合同</a> · <a href="delivery/manifest.json">场景与案例规格</a> · <a href="failure_matrix.json">失败矩阵</a></p>
+{diagnostic_section}
 {scale_section}
 {admission_section}
 <section><h2>已经做了什么，哪些仍未完成</h2><table><tr><th>层次</th><th>实际进展</th><th>不能据此宣称</th></tr>
@@ -225,4 +245,7 @@ result=dict(local_links=len(parser.paths),broken=broken,actual_independent_heldo
 result['completed_native_training_contexts']=len(list((ADMISSION/'native_training').glob('*/formal30k_agent_acceptance.json')))
 result['continuous_fixed_backend_fresh_calls']=sum(json.loads(p.read_text())['fresh_backend_calls'] for p in (ADMISSION/'motion_execution').glob('*/continuous/fixed_backend/cpu_delivery_summary.json'))
 result['SH_object_frame_GPU_control_complete']=(ADMISSION/'sh_operator_control/cpu_control_summary.json').exists()
+result['completed_layer_isolation_contexts']=len(layer_paths)
+result['eight_family_diagnostic_entries_including_legacy_playback_control']=sum(json.loads(p.read_text())['executed_native_families'] for p in (ADMISSION/'benchmark_execution').glob('*/cpu_delivery/summary.json'))
+result['canonical_ego_speed_GPU_control_complete']=any(json.loads(p.read_text()).get('status')=='clock_separation_GPU_complete' for p in (ADMISSION/'ego_speed_clock_control').glob('*/summary.json'))
 (OUT/'validation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))

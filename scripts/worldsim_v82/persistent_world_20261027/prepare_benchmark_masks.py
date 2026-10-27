@@ -18,7 +18,7 @@ def write(p,d):
     q=p.with_suffix('.tmp');q.write_text(json.dumps(d,indent=2));q.replace(p)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--resume-boundary',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--resume-boundary',action='store_true');p.add_argument('--after-benchmark',action='append',default=[]);a=p.parse_args()
     require_start();completed=[];errors=[]
     if a.resume_boundary:
         previous=json.loads((DEST/'status.json').read_text());assert previous['phase']=='paused_after_completed_mask_for_first_diagnostic_recovery'
@@ -32,6 +32,15 @@ def main():
     processed=set()
     while True:
         require_start();candidates=[]
+        for context in a.after_benchmark:
+            dependency=ROOT/'benchmark_execution_v1'/context/'status.json'
+            while True:
+                require_start();d=json.loads(dependency.read_text())
+                if d['phase']=='diagnostic_execution_complete_formal_admission_pending':break
+                if d['phase']=='engineering_repair_needed_preserved' and not same_process(d['pid'],d['start_ticks']):
+                    child=d.get('child')
+                    if not child or not same_process(child['pid'],child['start_ticks']):break
+                update(phase='waiting_development_benchmark_diagnostics',child=None,dependency=str(dependency));time.sleep(5)
         for summary in (ROOT/'benchmark_cases_v1/scenes').glob('*/summary.json'):
             d=json.loads(summary.read_text());context=d['context'];source=ROOT/'motion_scene_inputs_v1'/context
             if context in processed or (source/'mask/mask_0/preparation_receipt.json').exists():continue

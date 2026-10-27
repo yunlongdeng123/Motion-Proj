@@ -6,7 +6,7 @@ REPO=Path('/root/autodl-tmp/motion_proj_v82_gn11_v42')
 CODE=REPO/'scripts/worldsim_v82/persistent_world_20261027';DOC=REPO/'docs/autoresearch/persistent_world_20261027'
 CODE.mkdir(parents=True,exist_ok=True);DOC.mkdir(parents=True,exist_ok=True)
 for p in (ROOT/'code').glob('*.py'):(CODE/p.name).write_text(p.read_text(encoding='utf-8'),encoding='utf-8')
-for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','benchmark_execution_architecture.svg','TIME_AND_SPACE_CONTRACT.md']:
+for name in ['PLAN.md','architecture.svg','EVALUATION_PROTOCOL.md','evaluation_architecture.svg','ADMISSION_POLICY.json','admission_architecture.svg','native_training_architecture.svg','motion_diagnostics_architecture.svg','BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','benchmark_execution_architecture.svg','TIME_AND_SPACE_CONTRACT.md','layer_diagnostics_architecture.svg']:
     (DOC/name).write_text((ROOT/'code'/name).read_text(encoding='utf-8'),encoding='utf-8')
 quota=json.loads((ROOT/'quota_state.json').read_text())
 native={p.parent.name:json.loads(p.read_text()) for p in (ROOT/'native_scene_training_v1').glob('*/status.json')}
@@ -30,20 +30,28 @@ current='''# 当前研究状态
 
 可视证据：删除后静态SUV残影仍在；平移、复用插入和转向出现失真；固定视频将删除残影变为暗块，不能称已恢复正确背景；相机侧移也暴露其他车辆/背景问题。原生DEVA车身内缩2像素区域，动态合成权重均值0.8410、静态0.1588，但这不是污染率（玻璃/透明度/掩码本身可含背景）。资产问题、SH变换、静态遮挡仍需控制变量定位，不能直接归因道路缺几何。新增只读SH旋转控制CPU等变/逆变误差<2e-14，真实GPU3变体×31帧完成；alpha/动态权重/深度和逐像素差0，动态支撑域RGB变化MAE约0.0010/0.0013，raw109转向重影仍在，单改SH约定不能解决；原11变体仍为原世界系SH基线，不悄悄替换旧结果。
 
+## 跨场景分层因果诊断
+
+![分层诊断组件](autoresearch/persistent_world_20261027/layer_diagnostics_architecture.svg)
+
+147053与429544各完成4姿态×31帧的动态层单独渲染／联合渲染对照，原生及已保存浮点重放差均0、主副本不变。动态单独层仍有转向侧面拉伸，静态单独层保留原位残影。无标注车框碰撞的转向请求中，静态层使动态alpha可见贡献减少：147053左42.23%／右20.14%，429544左37.08%／右46.65%；分母为独立动态alpha>.1内缩2像素域，按alpha权重总量加权。它不是语义污染率，正常前景/玻璃/路面支撑未知仍须区分；不能将全部失真归道路缺几何。
+
+原输入视角的稀疏颜色一致性检查另列：7个相机与真实输入位姿精确重合、6个非零锚点；v3仅1067累计帧像素同时有两时刻近深度回波支持。固定世界时间对源视角RGB MAE .03104，全局播放 .00581；来源时间不同，不是反事实世界时刻RGB真值或全路面几何分数。全DEVA排除v1和仅源时刻v2保留，v3增加双时刻实测深度支持，不能用换域夸大提升。
+
 ## 其他场景与规模
 
 30个追加上下文全部完成真实RGB、五LiDAR双回波、标定、位姿、物理微秒时间与标注提取，errors=[]；连同原3个新开发场景共33段、1617帧完整传感器输入。八类31时刻物理请求共264个。输入准入前瞻修订将18个停放车辆的变道/转向请求从普通运动层排除，当前178项输入筛查通过（开发53、封存125），正式准入和完成新八类基准仍为0。封存仅准备输入/固定请求，编辑结果不参与方法选择；物理路段重叠尚待审计。
 
 目标至少109个有效编辑，执行目标128、长期240；HorizonForge论文109例，展示32编辑/128视频，不混作独立场景数。帧、种子、方法、checkpoint、生成前后不重复计数。旧216份六类草案不与264请求叠加。同协议效果和成本对比未完成，不宣称超过。
 
-第二场景429544...正式fresh30K正常返回，1..30000有序有限更新、六档5K四件和49帧评价、最终四件CPU可读已核对；CUDA allocated4547549696/reserved6106906624字节。磁盘紧张按精确ledger仅释放其20个中间模型文件，约5.12GiB；最终四件和所有评价/事件保留。其GPU原生入口适配差0，11变体/6后端正在自动接续。第三473735...等待第二场景首轮诊断。新100966...49帧DEVA62已逐帧核验，17273真实动态点；新255598...49帧DEVA31已核验，46005真实动态点，已分别排第4/5场景训练及诊断。100966停放车辆跳过无意义变速，转向只作静态姿态压力层。135064...目标关联在DEVA63/65切换且原生主连通组件守卫未通过，明确HOLD，不能标注已核验或硬塞训练。GT框仅身份建议与只读审计，不过滤训练点。
+第二场景429544...正式fresh30K正常返回，1..30000有序有限更新、六档5K四件和49帧评价、最终四件CPU可读已核对；CUDA allocated4547549696/reserved6106906624字节。磁盘紧张按精确ledger仅释放其20个中间模型文件，约5.12GiB；最终四件和所有评价/事件保留。其GPU原生入口适配差0，11变体/6固定后端和6次连续原生修订均完成；CPU同3/4时刻图和H264已完成。第三473735...已进入真实fresh smoke，500步有限损失并进入保存/评价，恢复与正式30K仍须后续实际凭据。新100966...49帧DEVA62已逐帧核验，17273真实动态点；新255598...49帧DEVA31已核验，46005真实动态点，已分别排第4/5场景训练及诊断。100966停放车辆跳过无意义变速，转向只作静态姿态压力层。135064...目标关联在DEVA63/65切换且原生主连通组件守卫未通过，明确HOLD，不能标注已核验或硬塞训练。GT框仅身份建议与只读审计，不过滤训练点。
 
 当前控制器快照（实际PID/start_ticks和child以campaign文件为权威）：
 ```json
 NATIVE_STATUS
 ```
 
-每场景只fresh原生30K一次，多编辑复用；每5K保存静态/动态/环境/完整训练状态与49帧评价。按训练→本场景多操作诊断→下一场景交错，CPU准备/分析异步；不让连续长训练挤掉操作诊断。新②训练和③切换仍禁启。健康worker不重启；零更新等待父的边界调整与首轮GPU接线失败均保留收据。当前分割父53383逐段运行分割，旧46606已在健康GPU子正常退出后重接门控，不恢复旧父。
+每场景只fresh原生30K一次，多编辑复用；每5K保存静态/动态/环境/完整训练状态与49帧评价。按训练→本场景多操作诊断→下一场景交错，CPU准备/分析异步；不让连续长训练挤掉操作诊断。新②训练和③切换仍禁启。健康worker不重启；零更新等待父的边界调整与首轮GPU接线失败均保留收据。封存分割在零GPU子进程的等待边界重接为93715，等待两个开发八类诊断，现场mask_development_priority_boundary_v1/receipt.json；0训练更新损失，没有重启健康GPU子进程。旧53383/46606不恢复。
 
 341792夜间片段49帧关联contact已逐帧检查：ID13/2/95切换，部分仅车顶/尾灯，且有前景银车遮挡，明确HOLD不构建训练资产；属于①输入/关联困难，不当②失败。保留原输入和receipt，不剔除困难层。
 
@@ -52,13 +60,15 @@ NATIVE_STATUS
 ## 接下来应解决的链路
 
 1. 在已完成首场景结果上补静态遮挡/资产/SH变换控制，并汇总跨场景①②③失败矩阵；不把所有问题预归②。
-2. 真实自车速度/变道/转向相机曲线与不同场景资产插入已接新的只读执行器，首场景7族原生31帧已完成，适配差0、主副本未变；旧ego_speed仅整体播放控制，固定世界时钟31帧已通过、原生适配差0且其他车时刻保持；跨场景资产入口另排队，尚未称正式评测通过。第二个开发场景83400已接八类GPU队列，默认fixed_world，未重复训练。CPU核对49相机差1.11e-13、资产位置/协方差往返及真实尺寸碰撞；首插入请求0框碰撞。米制尺寸保留，底部仅按目标框粗对齐，不代表实测道路支撑。已有0.5m侧移、3°yaw和同资产克隆不冒充这四类已完成。
+2. 真实自车速度/变道/转向相机曲线与不同场景资产插入已接新的只读执行器，首场景8族原生31帧及4类固定ProPainter已完成，适配差0、主副本未变；旧ego_speed仅整体播放控制，另有固定世界时钟31帧完成。真实跨场景429544→147053资产插入31帧完成，非宿主克隆，GPU均值变换与协方差相对误差均约1e-7以内，0标注框碰撞；米制尺寸保留、光照/道路支撑未认证。正式准入仍0，不能称HorizonForge对标通过。第二个开发场景83400已接八类GPU队列，默认fixed_world，未重复训练。CPU核对49相机差1.11e-13、资产位置/协方差往返及真实尺寸碰撞；首插入请求0框碰撞。米制尺寸保留，底部仅按目标框粗对齐，不代表实测道路支撑。已有0.5m侧移、3°yaw和同资产克隆不冒充这四类已完成。
 3. 连续编辑固定ProPainter对照已完成：3次实际推理+2个完全相同输入/掩码的普通缓存控制；未知相机域不伪造生成掩码；相同输入实际ProPainter重推控制83821已完成31帧、逐字节差0，以区分普通缓存和真实推理重复性，不新增case。复用一致性不等于正确三维背景，需要留出视角、参考域和生成负担共同验证。
 4. 继续合格新开发目标关联、原生几何守卫、约10分钟真实smoke和逐场景30K；输入有问题与真实遮挡困难分层，不能按编辑效果删样。
 
 历史scene0017/0029已有整动态分支操作及视频，不冒充精确多实例编辑。道路原始输入撤源v2是两个路段组件测试，参考为稀疏可见LiDAR域，不是全洞GT、完整B撤源重训或三维补全成功。旧保背景repair10K可只读评价，旧geometry正式10K未启动、旧三父调度不恢复。保留用户选定保背景状态，不追求道路贡献最大；199帧参考进入初始化，不能当独立GT或记忆收益。
 
 时钟与空间合同已细化：[单实体编辑与整体播放对照](autoresearch/persistent_world_20261027/TIME_AND_SPACE_CONTRACT.md)。旧八类自车变速入口相机/全世界一起重定时，仅保留为整体播放控制，不能单独证明自车控制。新增固定世界时钟31帧真实GPU对照已完成、适配差0；固定/整体播放RGB均差0.01584只证明输入控制不同，不是质量提升。未来新controller默认单实体时钟；不新增case、不改变原11变体和训练。CPU8184条时钟核对，首场景raw109其他车辆实测轨迹两时钟差2.01m，不是渲染分数。33段三维框审计发现插车7/26、变道3/16、转向1/16存在框冲突，保留压力层，不归②；自车只查相机中心，非车身自由空间证明。输入资格、mask和训练点未改。
+
+存储保障：首场景已完成smoke的16个pth、2887171832字节已无损迁至/root/persistent_world_checkpoint_spillover_20261027；原路径保持软链接，逐文件SHA256与mmap CPU载入验证通过，正式和活动检查点未移动、内容无丢弃。checkpoint_storage_relocation_v1/receipt.json记录完整物理位置与前后空间；系统盘余约2.7GiB，勿再盲目向该卷放资产。保留该位置依赖与收据，后续备份/恢复/收尾需覆盖它。
 
 资源停止线：工具周剩余QUOTA%，至少每30分钟复查；严格低于20%即禁启、最近可恢复边界保存、取回必要结果、提交推送验证并按授权关闭AutoDL，然后暂停同一心跳。此前持续研究，不因阶段结束/负结果/队列暂空关机。每秒NVML监控与历史峰不重置。磁盘紧张只按本场景30K完成后的精确中间四件保留策略处理，不清其他数据资产。保留用户桥接脚本修改，数据/模型/日志不入Git。
 

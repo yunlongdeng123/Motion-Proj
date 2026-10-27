@@ -1,6 +1,12 @@
 """打包输入准入、运动准备和撤源组件的必要证据，不打包传感器大文件/权重。"""
 from pathlib import Path
-import json,shutil,tarfile
+import argparse,hashlib,json,shutil,tarfile
+parser=argparse.ArgumentParser();parser.add_argument('--delta-base',type=Path);args=parser.parse_args()
+def digest_file(path):
+    h=hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda:stream.read(1024*1024),b''):h.update(chunk)
+    return h.hexdigest()
 
 ROOT=Path('/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027')
 DEST=ROOT/'admission_delivery_v2';DEST.mkdir(exist_ok=True)
@@ -11,6 +17,17 @@ for name in ['ADMISSION_POLICY.json','admission_architecture.svg','EVALUATION_PR
 for name in ['BENCHMARK_SCALE.md','benchmark_expansion_architecture.svg','TIME_AND_SPACE_CONTRACT.md']:
     shutil.copy2(ROOT/'code'/name,DEST/name)
 shutil.copy2(ROOT/'code/benchmark_execution_architecture.svg',DEST/'benchmark_execution_architecture.svg')
+shutil.copy2(ROOT/'code/layer_diagnostics_architecture.svg',DEST/'layer_diagnostics_architecture.svg')
+for folder in (ROOT/'native_layer_isolation_v1').glob('*'):
+    if not folder.is_dir():continue
+    target=DEST/'layer_isolation'/folder.name;target.mkdir(parents=True,exist_ok=True)
+    for name in ['status.json','summary.json','cpu_summary.json','comparison_index23.jpg','comparison_index30.jpg']:
+        if (folder/name).exists():shutil.copy2(folder/name,target/name)
+for folder in (ROOT/'observed_pose_diagnostics_v3').glob('*'):
+    if not folder.is_dir():continue
+    target=DEST/'observed_pose'/folder.name;target.mkdir(parents=True,exist_ok=True)
+    for name in ['summary.json','comparison.jpg']:
+        if (folder/name).exists():shutil.copy2(folder/name,target/name)
 for path in (ROOT/'benchmark_execution_v1').glob('*/status.json'):
     target=DEST/'benchmark_execution'/path.parent.name;target.mkdir(parents=True,exist_ok=True)
     shutil.copy2(path,target/'status.json')
@@ -124,8 +141,21 @@ for name in ['scene0017','scene0029']:
 for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','monitor_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
-for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json']:
+for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json','native_layer_isolation_dispatch.json','benchmark_mask_development_priority_dispatch.json']:
     if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
-archive=ROOT/'admission_delivery_v2.tar.gz'
-with tarfile.open(archive,'w:gz') as tar:tar.add(DEST,arcname='admission',recursive=True)
-print(json.dumps({'archive':str(archive),'bytes':archive.stat().st_size}))
+if (ROOT/'checkpoint_storage_relocation_v1/receipt.json').exists():shutil.copy2(ROOT/'checkpoint_storage_relocation_v1/receipt.json',DEST/'checkpoint_storage_relocation.json')
+archive=ROOT/('admission_delivery_delta.tar.gz' if args.delta_base else 'admission_delivery_v2.tar.gz')
+snapshot={}
+for path in sorted(DEST.rglob('*')):
+    if path.is_file() and path.name!='delivery_snapshot_manifest.json':
+        snapshot[path.relative_to(DEST).as_posix()]=dict(bytes=path.stat().st_size,sha256=digest_file(path))
+base=json.loads(args.delta_base.read_text()).get('files',{}) if args.delta_base else {}
+changed=[name for name,value in snapshot.items() if base.get(name)!=value]
+manifest=dict(files=snapshot,transferred_files=changed,remote_snapshot_absent_local_paths=sorted(set(base)-set(snapshot)),local_deletions_performed=False)
+(DEST/'delivery_snapshot_manifest.json').write_text(json.dumps(manifest,indent=2))
+temp=archive.with_suffix('.tmp')
+with tarfile.open(temp,'w:gz') as tar:
+    for name in changed:tar.add(DEST/name,arcname='admission/'+name,recursive=False)
+    tar.add(DEST/'delivery_snapshot_manifest.json',arcname='admission/delivery_snapshot_manifest.json',recursive=False)
+temp.replace(archive)
+print(json.dumps({'archive':str(archive),'bytes':archive.stat().st_size,'sha256':digest_file(archive),'snapshot_files':len(snapshot),'transferred_files':len(changed),'local_deletions_performed':False}))
