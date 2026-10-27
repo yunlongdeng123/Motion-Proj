@@ -29,6 +29,14 @@ if layer_paths:
 for path in sorted((ADMISSION/'observed_pose').glob('*/summary.json')):
     d=json.loads(path.read_text());relative=path.parent.relative_to(OUT).as_posix()
     diagnostic_section+=f'<details><summary>辅助诊断：真实输入相机位置上的稀疏道路颜色一致性</summary><section><p>{d["matched_source_pose_frames"]}个查询相机与原输入位姿精确重合，其中{d["nonanchor_frames"]}个非零锚点。只评分两时刻均有近深度LiDAR支持、并排除目标车身的{d["nonanchor_evaluation_frame_pixels"]:,}个累计帧像素。固定世界时钟对源RGB的MAE {d["fixed_world_MAE_macro"]:.5f}，整体播放控制{d["global_playback_MAE_macro"]:.5f}。源图时间与输出世界时间不同，因此这是局部颜色一致性诊断，不能当反事实时刻RGB真值、整个路面质量或任意新视角PSNR。</p><p>地面仅由实际原生粗平面分类实测回波，未生成路面标签；稀疏LiDAR可见性也不是相机密集遮挡真值。旧的全DEVA排除域和仅源时刻参考均保留，当前v3增加双时刻实测深度支持。</p><img src="{relative}/comparison.jpg"><a href="{relative}/summary.json">逐帧相机闭合、参考分母和限制</a></section></details>'
+costs=ADMISSION/'native_smoke_cost_ledger.json'
+if costs.exists():
+    d=json.loads(costs.read_text());rows=''.join(f'<tr><td>{r["context"]}</td><td>{r["extra_smoke_updates"]}</td><td>{r["two_invocation_wall_seconds"]:.2f}s</td><td>{r["two_since_first_step_seconds"]:.2f}s</td><td>{r["strict_restore_all_passed"]}</td></tr>' for r in d['rows'])
+    diagnostic_section+=f'<details><summary>运行成本与模型存储位置</summary><section><table><tr><th>场景</th><th>额外smoke更新</th><th>两调用全部wall时间</th><th>首步后时间</th><th>完整恢复</th></tr>{rows}</table><p>初始化和装载时间包含在wall列，正式预算仍每场景fresh30K。诊断推理没有训练更新。</p><a href="admission/native_smoke_cost_ledger.json">原始成本账本</a>'
+    relocation=ADMISSION/'checkpoint_storage_relocation.json'
+    if relocation.exists():
+        r=json.loads(relocation.read_text());diagnostic_section+=f'<p>已完成首场景smoke的{len(r["files"])}个pth共{r["actual_relocated_bytes"]/2**30:.2f}GiB无损迁到{escape(r["target_root"])}。原路径软链接、SHA256和CPU mmap载入均验证，正式及活动检查点保持原位置。备份与恢复须包含该物理目录；软链接本身不是模型副本。</p><a href="admission/checkpoint_storage_relocation.json">逐文件位置与校验收据</a>'
+    diagnostic_section+='</section></details>'
 if (ADMISSION/'benchmark_scale_ledger.json').exists():
     scale=json.loads((ADMISSION/'benchmark_scale_ledger.json').read_text())
     family_labels={'ego_speed':'自车变速','ego_lane_change':'自车变道','ego_direction':'自车转向','vehicle_speed':'他车变速','vehicle_lane_change':'他车变道','vehicle_direction':'他车转向','vehicle_insertion':'跨场景车辆插入','vehicle_removal':'指定车辆删除'}

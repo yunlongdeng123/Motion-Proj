@@ -141,7 +141,7 @@ for name in ['scene0017','scene0029']:
 for name in ['motion_masks_status.json','motion_masks_dispatch.json','native_scene_dispatch.json','native_scene_priority_dispatch.json','native_scene_mask_priority_dispatch.json','motion_suite_dispatch.json','native_actor_source_audit.json','motion_suite_engineering_ledger.json','quota_state.json','monitor_state.json','phase2_git_publish.json','benchmark_expansion_dispatch.json','benchmark_masks_dispatch.json','benchmark_ledger_dispatch.json','native_scene4_dispatch.json','native_scene5_dispatch.json','sh_rotation_cpu_control.json','sh_rotation_GPU_dispatch.json','continuous_backend_first_dispatch.json']:
     p=ROOT/name
     if p.exists():shutil.copy2(p,DEST/name)
-for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json','native_layer_isolation_dispatch.json','benchmark_mask_development_priority_dispatch.json']:
+for name in ['native_scene6_heldout_base_dispatch.json','benchmark_second_execution_dispatch.json','benchmark_CPU_delivery_repair_receipt.json','backend_same_input_replay_dispatch.json','native_layer_isolation_dispatch.json','benchmark_mask_development_priority_dispatch.json','native_smoke_cost_ledger.json']:
     if (ROOT/name).exists():shutil.copy2(ROOT/name,DEST/name)
 if (ROOT/'checkpoint_storage_relocation_v1/receipt.json').exists():shutil.copy2(ROOT/'checkpoint_storage_relocation_v1/receipt.json',DEST/'checkpoint_storage_relocation.json')
 archive=ROOT/('admission_delivery_delta.tar.gz' if args.delta_base else 'admission_delivery_v2.tar.gz')
