@@ -43,7 +43,7 @@ function draw3D(){
    const baseSample=sampleBase(cloud,part,j)||(mode==='ownership'&&own?.state===1&&$('allPositive').checked);if(!baseSample&&(!S.sampling||S.sampling.boost==='none'))continue;
    const pt=editedPoint(instance,j);if(!baseSample&&!sampleBoost(pt.p,data.ids[j]))continue;if(pt.marginal<=.05||pt.opacity<.005)continue;
    const p=projection(pt.p);if(!p||p[0]<0||p[0]>=canvas.width||p[1]<0||p[1]>=canvas.height)continue;
-   const e=(mode.startsWith('semantic')||($('semanticAblation')?.value||'all')!=='all')?semanticRow(instance,j):null;
+   const e=(mode.startsWith('semantic')||st.semantic_render_filter||($('semanticAblation')?.value||'all')!=='all')?semanticRow(instance,j):null;
    if(e){const q=S.semanticFilterStats;q.considered++;if(e.class_id===0)q.unknown++;if(e.class_id>=14&&e.class_id<=19)q.vehicle++;if(e.boundary_abstained)q.contour++;if(e.static_vehicle_quarantined)q.static_vehicle++;if(e.base_class_id===0)q.base_unknown++;if(e.base_class_id===1&&e.class_id===0)q.road_to_unknown++;if(semanticFilterReject(e)){q.hidden++;continue;}}
    const foreign=instance.cloud.startsWith('foreign:');
    x.fillStyle=mode.startsWith('semantic')?semanticColor(e,mode):mode==='ownership'?(own?['#63b3ff','#4bea9b','#ffb347'][own.state]:'#787f89'):mode==='rgb'?`rgb(${data.rgb[j*3]},${data.rgb[j*3+1]},${data.rgb[j*3+2]})`:mode==='branch'?(part==='static'?'#78b0f4':foreign?'#68f2bd':'#ffa85d'):`rgb(${heat(pt.opacity).join(',')})`;

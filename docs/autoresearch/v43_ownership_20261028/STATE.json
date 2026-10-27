@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-27T19:17:14Z",
+  "checked_utc": "2026-10-27T21:01:04Z",
   "campaign": {
     "pid": 5848,
     "start_ticks": "910834496",
@@ -414,21 +414,16 @@
     "child_start_ticks": "911144661"
   },
   "monitor": {
-    "time": 1793128633.835481,
-    "checked_utc": "2026-10-27T19:17:13Z",
-    "pid": 7219,
-    "start_ticks": "910880735",
-    "kind": "NVML_1s_sample_not_allocator_peak",
-    "historical_previous_peak_mib": 31838,
-    "used_mib": 1,
-    "utilization": 0,
-    "v43_run_peak_mib": 3948,
-    "historical_max_mib": 31838
+    "scope": "first_gpu_review_v1",
+    "phase": "completed",
+    "NVML_sampled_peak_mib": 3647,
+    "CUDA_allocator_peak_separately_recorded": true,
+    "old_baseline_monitor_historical": true
   },
   "disk": {
     "total": 697932185600,
-    "used": 568171589632,
-    "free": 129760595968
+    "used": 569106006016,
+    "free": 128826179584
   },
   "authorization": {
     "created_utc": "2026-10-27T17:02:34Z",
@@ -447,19 +442,21 @@
       "473735159277431842_630_095_650_095"
     ],
     "active_development_contexts": [
-      "14705303724557273004_3105_000_3125_000",
-      "4295449061847708198_3769_000_3789_000"
+      "14705303724557273004_3105_000_3125_000"
     ],
-    "latest_user_scope": "Case2 stop at10K; do not continue case3; diagnose case1 badcases",
-    "updated_utc": "2026-10-27T18:36:46Z"
+    "latest_user_scope": "GPU opened: continue first-scene diagnostic experiments and algorithm improvements; parallel if measured memory permits",
+    "updated_utc": "2026-10-27T18:36:46Z",
+    "gpu_execution_hold": false,
+    "gpu_hold_reason": "Released by explicit user GPU-resume request",
+    "gpu_hold_updated_utc": "2026-10-27T20:09:49Z"
   },
   "quota": {
-    "checked_utc": "2026-10-27T19:13:58Z",
+    "checked_utc": "2026-10-27T20:39:53Z",
     "bucket": "codex",
     "windowDurationMins": 10080,
-    "usedPercent": 89.0,
-    "remaining": 11.0,
-    "remaining_percent": 11.0,
+    "usedPercent": 93.0,
+    "remaining": 7.0,
+    "remaining_percent": 7.0,
     "resetsAt": 1793599185,
     "v43_quota_stop_enabled": false,
     "user_override": "Ignore quota for now; user will notify when to stop",
@@ -1055,353 +1052,7 @@
       "initial_outside_box_rows": 13
     }
   ],
-  "workers": [
-    {
-      "receipt": "attribution_v2_dispatch_receipt.json",
-      "identity": {
-        "pid": 3713,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/run_attributions.py"
-      ]
-    },
-    {
-      "receipt": "prepare_datasets_dispatch_receipt.json",
-      "identity": {
-        "pid": 4898,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/prepare_actor_dataset.py"
-      ]
-    },
-    {
-      "receipt": "actor_entry_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 5117,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/train_actor.py",
-        "--context",
-        "14705303724557273004_3105_000_3125_000",
-        "--output",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_entry_v1",
-        "--entry-only"
-      ]
-    },
-    {
-      "receipt": "actor_entry_v2_dispatch_receipt.json",
-      "identity": {
-        "pid": 5453,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/train_actor.py",
-        "--context",
-        "14705303724557273004_3105_000_3125_000",
-        "--output",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/actor_entry_v2",
-        "--entry-only"
-      ]
-    },
-    {
-      "receipt": "actor_campaign_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 5848,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/run_actor_campaign.py"
-      ]
-    },
-    {
-      "receipt": "export_semantics_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 6291,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_diagnostics.py"
-      ]
-    },
-    {
-      "receipt": "first_unconstrained10k_dispatch_receipt.json",
-      "identity": {
-        "pid": 11315,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/train_actor.py",
-        "--context",
-        "14705303724557273004_3105_000_3125_000",
-        "--output",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/first_unconstrained10k",
-        "--unconstrained",
-        "--steps",
-        "10000"
-      ]
-    },
-    {
-      "receipt": "depth_support_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 6976,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/attribute_depth_support.py"
-      ]
-    },
-    {
-      "receipt": "monitor_v43_dispatch_receipt.json",
-      "identity": {
-        "pid": 7219,
-        "expected": "910880735",
-        "actual": "910880735",
-        "alive": true
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/monitor.py"
-      ]
-    },
-    {
-      "receipt": "actor_delivery_early_dispatch_receipt.json",
-      "identity": {
-        "pid": 9492,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_actor_delivery.py",
-        "--name",
-        "actor_delivery_early"
-      ]
-    },
-    {
-      "receipt": "export_depth_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 9997,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_depth.py"
-      ]
-    },
-    {
-      "receipt": "zero_control_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 11033,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/diagnose_actor.py",
-        "--output",
-        "zero_control_v1"
-      ]
-    },
-    {
-      "receipt": "first10k_control_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 11174,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/diagnose_actor.py",
-        "--context",
-        "14705303724557273004_3105_000_3125_000",
-        "--output",
-        "first10k_control_v1",
-        "--checkpoint",
-        "checkpoint010000.pth"
-      ]
-    },
-    {
-      "receipt": "first10k_native_eval_v2_dispatch_receipt.json",
-      "identity": {
-        "pid": 13885,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/diagnose_actor.py",
-        "--context",
-        "14705303724557273004_3105_000_3125_000",
-        "--output",
-        "first10k_native_eval_v2",
-        "--checkpoint",
-        "checkpoint010000.pth"
-      ]
-    },
-    {
-      "receipt": "actor_motion_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 14533,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/run_actor_motion.py"
-      ]
-    },
-    {
-      "receipt": "actor_motion_repair_2_dispatch_receipt.json",
-      "identity": {
-        "pid": 17057,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/run_actor_motion.py"
-      ]
-    },
-    {
-      "receipt": "first_motion_delivery_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 17137,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_actor_motion.py",
-        "--name",
-        "first_motion_delivery_v1"
-      ]
-    },
-    {
-      "receipt": "boundary_semantics_first_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 25398,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/attribute_boundary_semantics.py"
-      ]
-    },
-    {
-      "receipt": "first_badcase_diagnostics_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 25906,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/diagnose_first_badcases.py"
-      ]
-    },
-    {
-      "receipt": "boundary_semantics_first_v2_dispatch_receipt.json",
-      "identity": {
-        "pid": 26367,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/attribute_boundary_semantics.py",
-        "--output",
-        "boundary_semantics_v2"
-      ]
-    },
-    {
-      "receipt": "first_fade_control_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 27224,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/fade_opacity_control.py"
-      ]
-    },
-    {
-      "receipt": "second_actor_delivery10k_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 27365,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_actor_delivery.py",
-        "--name",
-        "second_actor_delivery10k_v1",
-        "--context",
-        "4295449061847708198_3769_000_3789_000",
-        "--steps",
-        "10000"
-      ]
-    },
-    {
-      "receipt": "first_static_ghost_sweep_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 28023,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/static_ghost_sweep.py"
-      ]
-    },
-    {
-      "receipt": "first_badcase_delivery_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 28580,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/export_first_badcases.py"
-      ]
-    },
-    {
-      "receipt": "parameter_populations_v1_dispatch_receipt.json",
-      "identity": {
-        "pid": 32228,
-        "alive": false
-      },
-      "command": [
-        "/root/autodl-tmp/envs/drivingeditor/bin/python",
-        "-u",
-        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/code/compare_parameter_populations.py"
-      ]
-    }
-  ],
+  "workers": [],
   "controls": [
     {
       "family": "zero_control_v1",
@@ -1536,5 +1187,174 @@
     },
     "source_checkpoint_unchanged": true,
     "stop_requested": false
-  }
+  },
+  "first_gpu_review": {
+    "checked_utc": "2026-10-27T20:57:53Z",
+    "controllers": {
+      "opacity_controller.json": {
+        "pid": 1901,
+        "start_ticks": "911968896",
+        "running": {},
+        "completed": {
+          "legacy/smoke": {
+            "pid": 1969,
+            "start_ticks": "911969162",
+            "arm": "legacy",
+            "elapsed_seconds": 21.196962663903832,
+            "phase": "complete",
+            "step": 100,
+            "cuda_peak_allocated": 1405219840,
+            "cuda_peak_reserved": 1497366528
+          },
+          "balanced/smoke": {
+            "pid": 2099,
+            "start_ticks": "911969370",
+            "arm": "balanced",
+            "elapsed_seconds": 23.663704965263605,
+            "phase": "complete",
+            "step": 100,
+            "cuda_peak_allocated": 1404096512,
+            "cuda_peak_reserved": 1495269376
+          },
+          "field/smoke": {
+            "pid": 2673,
+            "start_ticks": "911972107",
+            "arm": "field",
+            "elapsed_seconds": 21.77380878292024,
+            "phase": "complete",
+            "step": 100,
+            "cuda_peak_allocated": 1417051648,
+            "cuda_peak_reserved": 1535115264
+          },
+          "legacy/restore": {
+            "pid": 2884,
+            "start_ticks": "911972729",
+            "arm": "legacy",
+            "elapsed_seconds": 20.698841409757733,
+            "phase": "complete",
+            "step": 110,
+            "cuda_peak_allocated": 1404439040,
+            "cuda_peak_reserved": 1524629504
+          },
+          "balanced/restore": {
+            "pid": 3393,
+            "start_ticks": "911975041",
+            "arm": "balanced",
+            "elapsed_seconds": 19.434526907280087,
+            "phase": "complete",
+            "step": 110,
+            "cuda_peak_allocated": 1403670528,
+            "cuda_peak_reserved": 1522532352
+          },
+          "field/restore": {
+            "pid": 3604,
+            "start_ticks": "911975673",
+            "arm": "field",
+            "elapsed_seconds": 23.747380554676056,
+            "phase": "complete",
+            "step": 110,
+            "cuda_peak_allocated": 1416257536,
+            "cuda_peak_reserved": 1516240896
+          },
+          "legacy/formal": {
+            "pid": 4099,
+            "start_ticks": "911977785",
+            "arm": "legacy",
+            "elapsed_seconds": 356.1108173765242,
+            "phase": "complete",
+            "step": 10000,
+            "cuda_peak_allocated": 1407617024,
+            "cuda_peak_reserved": 1560281088
+          },
+          "balanced/formal": {
+            "pid": 4445,
+            "start_ticks": "911978849",
+            "arm": "balanced",
+            "elapsed_seconds": 406.52405962720513,
+            "phase": "complete",
+            "step": 10000,
+            "cuda_peak_allocated": 1406935552,
+            "cuda_peak_reserved": 1556086784
+          },
+          "field/formal": {
+            "pid": 5649,
+            "start_ticks": "912014340",
+            "arm": "field",
+            "elapsed_seconds": 332.6278427001089,
+            "phase": "complete",
+            "step": 10000,
+            "cuda_peak_allocated": 1419013120,
+            "cuda_peak_reserved": 1537212416
+          }
+        },
+        "phase": "complete",
+        "failure": null,
+        "peak_NVML_mib": 3647,
+        "concurrency_limit": 2,
+        "extra_updates_per_arm": 110
+      },
+      "boundary_controller.json": {
+        "phase": "complete",
+        "pid": 7718,
+        "records": [
+          {
+            "stage": "smoke",
+            "status": {
+              "pid": 7719,
+              "start_ticks": "912076995",
+              "arm": "boundary",
+              "elapsed_seconds": 21.737844886258245,
+              "phase": "complete",
+              "step": 100,
+              "cuda_peak_allocated": 1413050368,
+              "cuda_peak_reserved": 1505755136
+            }
+          },
+          {
+            "stage": "restore",
+            "status": {
+              "pid": 8121,
+              "start_ticks": "912079948",
+              "arm": "boundary",
+              "elapsed_seconds": 20.082823669537902,
+              "phase": "complete",
+              "step": 110,
+              "cuda_peak_allocated": 1412110336,
+              "cuda_peak_reserved": 1530920960
+            }
+          },
+          {
+            "stage": "formal",
+            "status": {
+              "pid": 8515,
+              "start_ticks": "912082663",
+              "arm": "boundary",
+              "elapsed_seconds": 301.42731614783406,
+              "phase": "complete",
+              "step": 10000,
+              "cuda_peak_allocated": 1415375360,
+              "cuda_peak_reserved": 1566572544
+            }
+          }
+        ],
+        "peak_NVML_mib": 1834,
+        "extra_smoke_updates": 110
+      }
+    },
+    "formal_arms": 4,
+    "formal_updates_per_arm": 10000,
+    "total_additional_formal_updates": 40000,
+    "extra_smoke_updates": 440,
+    "all_save_evaluate_restore_passed": true,
+    "active_review_workers": [],
+    "GPU_compute_query": "pid, process_name, used_gpu_memory [MiB]\n",
+    "first_scene_only": true,
+    "second_scene_unchanged": true,
+    "third_scene_still_held": true,
+    "models_and_logs_retained": true,
+    "phase": "experiments_complete_artifacts_verified",
+    "quality_accepted": false,
+    "human_verdict": null
+  },
+  "GPU_compute_query": "pid, process_name, used_gpu_memory [MiB]\n"
 }

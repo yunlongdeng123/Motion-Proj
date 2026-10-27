@@ -34,7 +34,7 @@ function drawSemanticImage(){
  x.putImageData(image,0,0);cross(x,W,H);$('mapLegend').textContent='原始实拍的 SegFormer-B0 语义预测；置信门限0.65；标签不是 GT，也不随反事实编辑移动。';
 }
 async function ensureSemantic(){
- if(S.channel==='semantic_2d'||($('semanticProfile').value==='gpu'&&($('cloudColor').value.startsWith('semantic')||($('semanticAblation')?.value||'all')!=='all'))){await ensureGPUSemantic();await ensureBoundarySemantic();return;}
+ if(S.channel==='semantic_2d'||editState()?.semantic_render_filter||($('semanticProfile').value==='gpu'&&($('cloudColor').value.startsWith('semantic')||($('semanticAblation')?.value||'all')!=='all'))){await ensureGPUSemantic();await ensureBoundarySemantic();return;}
  if(!['semantic','semantic_branch','semantic_conflict'].includes($('cloudColor').value))return;
  if(!window.SEMANTIC_OBSERVATIONS)await loadScript('semantic_observations.js');
  S.semanticFrames=S.semanticFrames||new Map();
@@ -48,7 +48,7 @@ async function ensureSemantic(){
 }
 function semanticRow(instance,j){
  if(instance.cloud.startsWith('v43:'))return gpuSemanticRow(instance,j);
- if($('semanticProfile').value==='gpu')return gpuSemanticRow(instance,j);
+ if($('semanticProfile').value==='gpu'||editState()?.semantic_render_filter)return gpuSemanticRow(instance,j);
  const part=instance.cloud==='static'?'static':'dynamic',a=S.semanticFrames?.get(S.raw);
  if(!a||instance.cloud.startsWith('foreign:'))return {class_id:0,branch:part,reason:'无此资产的语义观测，保留 unknown'};
  // Evaluate original geometry with original observed camera. Carry the evidence with the row into edits.

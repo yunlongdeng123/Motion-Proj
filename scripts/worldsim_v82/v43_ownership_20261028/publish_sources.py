@@ -23,6 +23,13 @@ doc=doc.replace('当前输入为三个已完成V42 30K的开发场景，各49帧
 doc=doc.replace('当前完整正式10K场景数：','逐项badcase当前状态见[六项诊断](autoresearch/v43_ownership_20261028/BADCASES.md)。已恢复默认无编辑V1原生通路，新增3米偏移、3/5/8像素unknown带与opacity控制。静态残影仍未修净，整行抑制有背景副作用；不将诊断候选冒充归属已解决。车底/阴影按用户要求暂缓。\n\n历史完整正式10K场景数：')
 payload={}
 doc=doc.replace('实际GPU/进程/节点只看', '最新用户指示：当前仅CPU排查，下一项需要GPU时停止并告知；不得启动新GPU渲染、训练或恢复队列。已完成49帧unknown规则审计、静态车影候选暂缓及四档几何中心剥离预览；原生RGB剥离尚未运行。opacity两域监督归一化与共享校准场仅为待验证方案，固定opacity增强仍保留为控制。[本轮证据与方案](autoresearch/v43_ownership_20261028/OPACITY_UNKNOWN_REVIEW.md)。\n\n实际GPU/进程/节点只看')
+if (O/'first_gpu_review_status.json').exists():
+    start=doc.index('最新用户指示：');end=doc.index('实际GPU/进程/节点只看',start)
+    doc=doc[:start]+'''最新用户已开GPU并授权继续第一场景诊断与算法改进。仅第一场景追加原生语义剥离310图，以及同Actor10K起点、冻结几何/DC的四组opacity控制，各新增10K，smoke+恢复额外各110更新单列；最多两个已登记子进程并行，NVML采样峰约3647MiB。当前状态与证据见[第一场景GPU报告](autoresearch/v43_ownership_20261028/FIRST_GPU_REVIEW.md)。第三场景仍暂缓，第二未新增训练，旧队列/心跳没有恢复。
+
+内外分区监督在本开发场景改善核心覆盖并降低外泄漏；共享MLP没有额外收益证据，保留实验接口，不设为默认。原生V1无编辑通路不变，实际编辑接口与保存RGB字节差0。原生去车辆+unknown仍有暗残留及背景缺损，目标区域保留贡献多带road标签；静态外观污染/混合支撑没有解决，不整批迁移road到车辆。归属学习、补全与跨场景泛化尚未证明。
+
+'''+doc[end:]
 for p in W.iterdir():
     if p.is_file() and p.suffix in ['.py','.cjs','.md']:payload['scripts/worldsim_v82/v43_ownership_20261028/'+p.name]=p.read_bytes()
 payload['docs/RESEARCH_STATUS.md']=doc.encode()
@@ -34,6 +41,10 @@ if (W/'OPACITY_UNKNOWN_REVIEW.md').exists():
     payload[prefix+'opacity_unknown_architecture.svg']=(O/'opacity_unknown_architecture.svg').read_bytes()
     for name in ['unknown_cpu_audit.json','alpha_normalization_cpu_audit.json','unknown_preview_validation.json']:
         payload[prefix+name]=(O/name).read_bytes()
+if (W/'FIRST_GPU_REVIEW.md').exists():
+    payload[prefix+'FIRST_GPU_REVIEW.md']=(W/'FIRST_GPU_REVIEW.md').read_bytes();payload[prefix+'gpu_review_architecture.svg']=(O/'gpu_review_architecture.svg').read_bytes()
+    for name in ['first_gpu_review_status.json','residual_class_probe.json','opacity_view_audit.json','boundary_view_audit.json','opacity_core_fringe_CPU.json','calibration_entry_verification.json','boundary_loss_interface_CPU.json','gpu_review_viewer_validation.json']:
+        if (O/name).exists():payload[prefix+name]=(O/name).read_bytes()
 template_files=['scene_viewer.js','scene_viewer.html','scene_edit_geometry.js','scene_sampling.js','scene_semantics.js','scene_boundary_semantics.js','scene_workspace.css']
 template={name:(VIEW/name).read_bytes() for name in template_files};template['style.css']=(B/'outputs/GS_Scene_Diagnostics_20261027/style.css').read_bytes()
 template['architecture.svg']=(O/'architecture.svg').read_bytes();template['build_diagnostic_template.py']=(W/'build_diagnostic_template.py').read_bytes()

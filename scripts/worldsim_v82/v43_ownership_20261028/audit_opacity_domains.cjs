@@ -1,0 +1,15 @@
+// CPU: fixed core/fringe domains from saved native alpha. No new GPU or RGB score.
+const fs=require('fs'),path=require('path'),vm=require('vm');
+const S=path.resolve('outputs/GS_Scene_Diagnostics_20261027/14705303724557273004_3105_000_3125_000'),O=path.resolve('outputs/V43_Ownership_20261027/gpu_v43'),s={console,Float32Array,Float64Array,Uint8Array,Uint8ClampedArray,Uint16Array,Int32Array,ArrayBuffer,TextDecoder,Map,Set,Blob,Response,DecompressionStream,atob,document:{getElementById(){return null}}};s.window=s;s.EVIDENCE_MAPS={};vm.createContext(s);
+for(const f of ['scene.js','identity.js','edit_geometry.js','foreign_clouds.js','v43_groups.js'])vm.runInContext(fs.readFileSync(path.join(S,f),'utf8'),s,{filename:f});
+vm.runInContext(fs.readFileSync(path.resolve('outputs/GS_Scene_Diagnostics_20261027/viewer.js'),'utf8').replace(/init\(\);\s*$/,''),s);
+async function maps(f){vm.runInContext(fs.readFileSync(path.join(S,f.maps),'utf8'),s,{filename:path.basename(f.maps)});const a=await s.SceneViewer.unpack(s.EVIDENCE_MAPS[f.maps]);delete s.EVIDENCE_MAPS[f.maps];return a;}
+(async()=>{const gs=Object.fromEntries(s.SCENE_DATA.groups.map(g=>[g.id,g])),records=[];
+ for(const c of ['turn_left15','translate_lateral_1m'])for(const raw of Object.keys(gs['v43_motion_'+c].frames)){
+  const base=await maps(gs['v43_motion_'+c].frames[raw]),reference=base.isolated_alpha,core=[],fringe=[];for(let j=0;j<reference.length;j++){if(reference[j]/255>.8)core.push(j);else if(reference[j]/255>.1)fringe.push(j)}
+  const variants={base:'v43_motion_'+c,legacy:'v43_opacity_legacy_'+c,balanced:'v43_opacity_balanced_'+c,field:'v43_opacity_field_'+c,boundary:'v43_opacity_boundary_'+c};if(c==='turn_left15')variants.fixed2='v43_density2_turn';
+  for(const [name,gid]of Object.entries(variants)){const m=name==='base'?base:await maps(gs[gid].frames[raw]);records.push({case:c,raw:Number(raw),variant:name,core_pixels:core.length,fringe_pixels:fringe.length,core_alpha:core.reduce((sum,j)=>sum+m.isolated_alpha[j]/255,0)/core.length,fringe_alpha:fringe.reduce((sum,j)=>sum+m.isolated_alpha[j]/255,0)/fringe.length,core_visible_fraction:core.reduce((sum,j)=>sum+m.visibility_ratio[j]/255,0)/core.length});}
+ }
+ const summary=[];for(const c of ['turn_left15','translate_lateral_1m'])for(const name of ['base','legacy','balanced','field','boundary','fixed2']){const rows=records.filter(r=>r.case===c&&r.variant===name);if(rows.length)summary.push({case:c,variant:name,frames:rows.length,core_alpha:rows.reduce((sum,r)=>sum+r.core_alpha,0)/rows.length,fringe_alpha:rows.reduce((sum,r)=>sum+r.fringe_alpha,0)/rows.length,core_visible_fraction:rows.reduce((sum,r)=>sum+r.core_visible_fraction,0)/rows.length})}
+ fs.writeFileSync(path.join(O,'opacity_core_fringe_CPU.json'),JSON.stringify({source:'saved native 8-bit alpha/visibility maps',quantization_bound:1/255,domain:'fixed per-pose baseline isolated alpha>.8 core and .1<alpha<=.8 fringe, not edited GT',gpu_calls:0,records,summary},null,2));console.log(JSON.stringify(summary));
+})().catch(e=>{console.error(e.message);process.exitCode=1});

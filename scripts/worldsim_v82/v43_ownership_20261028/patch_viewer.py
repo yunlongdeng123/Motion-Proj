@@ -45,3 +45,6 @@ if (B/'outputs/V43_Ownership_20261027/gpu_v43/first_badcase_delivery_v1/delivery
 if (B/'outputs/V43_Ownership_20261027/gpu_v43/unknown_cpu_audit.json').exists():
     import subprocess,sys
     subprocess.run([sys.executable,str(B/'work/v43_gpu_20261028/build_opacity_unknown_review.py')],check=True)
+if (B/'outputs/V43_Ownership_20261027/gpu_v43/first_review_ablation_delivery_v1/delivery_validation.json').exists():
+    import subprocess,sys
+    subprocess.run([sys.executable,str(B/'work/v43_gpu_20261028/build_gpu_review_report.py')],check=True)
