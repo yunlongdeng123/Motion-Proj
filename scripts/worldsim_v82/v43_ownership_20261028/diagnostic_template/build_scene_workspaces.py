@@ -80,3 +80,11 @@ print(json.dumps(build,ensure_ascii=False))
 if (OUT/"legacy_scene0008/coverage_audit.json").exists():
     import runpy
     runpy.run_path(str(BASE/"work/v43_ownership_20261027/integrate_legacy.py"))
+
+# Restore R2 reference and legacy-study separation only when complete input assets exist.
+import runpy
+for repair in (Path(__file__).with_name('patch_ui.py'), BASE/'work/v43_r2_regression_20261029/patch_ui.py'):
+    if repair.is_file():
+        namespace=runpy.run_path(str(repair))
+        if namespace['can_repair'](BASE):namespace['main'](BASE)
+        break

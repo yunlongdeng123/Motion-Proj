@@ -1,0 +1,42 @@
+{
+  "schema": "r2-inheritance-regression-audit-v1",
+  "read_only_remote_inventory": true,
+  "GPU_executed_this_audit": false,
+  "root_cause": "The completed 147-frame source-only control arm was not a continuation of accepted R2: initial selection, query content and outside baseline all changed.",
+  "differences": [
+    {"component": "initial removed static rows", "R2": "same-frame existing contributors removed_ids, generated from original target static_role>=2", "temporal": "empty set; starting_removed_rows=0"},
+    {"component": "query", "R2": "observed body OR manual contact OR same-frame existing float RGB outside [0,1], clipped to original blue polygon", "temporal": "observed body OR manual contact; float saturation channel omitted"},
+    {"component": "outside protected RGB", "R2": "same-frame existing native RGB", "temporal": "actor-omitted static plus environment RGB"},
+    {"component": "maximum passes", "R2": "8 evaluation passes, at most 7 unions", "temporal": "9 evaluation passes, at most 8 unions"},
+    {"component": "same components", "both": "static30K/actor10K checkpoints; projection-center eligibility; threshold 1e-7; rerender after deletion; local G+(1-alpha)*white; original template/display scopes"}
+  ],
+  "evidence": {
+    "old_gpu": "work/v43_unknown_detection_20261028/bounded_white_v1/render_bounded.py:21,31,32,42",
+    "R2_CPU_composition": "work/v43_unknown_detection_20261028/bounded_white_v1/localize_native.py:11-19",
+    "new_empty_init": "work/v43_temporal_multiscene_20261029/render_temporal.py:50",
+    "new_explicit_status": "work/v43_temporal_multiscene_20261029/render_temporal.py:74",
+    "existing_seed_ancestry": "work/v43_unknown_detection_20261028/recall_upperbound/run_recall_probe.py:77",
+    "seed_configuration": "work/v43_unknown_detection_20261028/native_target_contact_smoke_r1/contract.json"
+  },
+  "remote_inputs": {
+    "base": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3",
+    "body_probe_r1_frames": 49,
+    "shadow_evidence_r2_frames": 49,
+    "shadow_evidence_r3_frames": 49,
+    "contact_effect_evidence_r1_frames": 3,
+    "native_target_contact_smoke_r1_existing_seed_frames": 3,
+    "anchor_raws": [98,113,114],
+    "missing_dependencies_for_all49": "46 contact-effect records and 46 original existing candidate seed sets; regenerate with original methods, never replace with empty"
+  },
+  "prepared_runner": "r2_inherited_runner.py",
+  "queue": [
+    {"phase": "replay", "device": "GPU then CPU", "action": "Use unchanged render_bounded.py and original old seeds/gates; localize using exact R2 scope; require same discrete IDs and float error<=1e-5 against preserved reference"},
+    {"phase": "contact", "device": "CPU", "action": "Original build_contact_effect_evidence.py using shadow_evidence_r2 for raw77..125; require 3 original contact masks identical"},
+    {"phase": "seeds", "device": "GPU", "action": "Original render_detection.py photo profile, full49 body history, shadow_evidence_r3 and regenerated contact49; require 3 anchor seed sets identical"},
+    {"phase": "extend", "device": "GPU", "action": "R2 pipeline on49 frames using same-frame regenerated seed set and original query channels; require anchors retain reference results; log legacy outside-center IDs separately from newly selected IDs"}
+  ],
+  "command_template": "<GPU_PY> r2_inherited_runner.py --phase replay|contact|seeds|extend --work /root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/r2_inherited_20261029_r1",
+  "authorization_note": "No execution performed. GPU phases require live GPU and root's authorization state preparation. No experiment method fallback on missing data or failed anchor gate.",
+  "labels_for_training": false,
+  "scope": "scene1 R2 replay and all49 extension only; scene2/3 not yet validated for identical original-seed generation"
+}

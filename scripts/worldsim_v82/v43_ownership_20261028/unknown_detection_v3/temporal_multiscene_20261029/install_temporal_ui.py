@@ -210,7 +210,7 @@ REGISTRATION = r'''(function(root){
     frames[raw]={channels:{rgb:f.images.white},bounded_unknown_receipt:f.receipt_path};
   }
   root.SCENE_DATA.groups=root.SCENE_DATA.groups.filter(g=>g.id!==M.group_id);
-  root.SCENE_DATA.groups.push({id:M.group_id,title:'V43 局部unknown原生诊断 · 49帧',category:'v43',kind:'v43_bounded_unknown',frames,summary:'bounded_unknown/install_receipt.json'});
+  root.SCENE_DATA.groups.push({id:M.group_id,title:'非R2消融 · 空集合初始化49帧（未采纳）',category:'v43',kind:'v43_bounded_unknown',frames,summary:'bounded_unknown/install_receipt.json'});
   root.EDIT_GEOMETRY.groups[M.group_id]=geometry;
 })(window);
 '''
@@ -273,21 +273,21 @@ def build_products(deliveries, input_root):
         known_issues = '<p class="notice warn">' + VISUAL_NOTE + '</p>'
         if delivery['scene_number'] == 3:
             known_issues += '<p><a href="#workspace?group=' + GID + '&amp;raw=13&amp;channel=rgb">检查raw13暗带 →</a>　<a href="#workspace?group=' + GID + '&amp;raw=37&amp;channel=rgb">检查raw37邻车边界 →</a></p>'
-        panel = '<section class="panel notice" id="boundedUnknown"><h2>逐帧局部unknown原生诊断 · 49帧独立重算</h2><p>' + NOTE + '</p><p>范围由原始body框传递蓝色多边形；eligible是二维投影中心约束。此组从空集合逐帧起步，与先前接受的R2初始化不同；保留旧R2报告和全部旧组。</p>' + known_issues + validation_note + '<a class="button" style="display:inline-block;padding:8px 12px;border:1px solid #8a78b5;border-radius:5px" href="' + direct + '">打开本场景49帧真实白底RGB＋删行几何 →</a><details><summary>组件与数据流</summary><img class="architecture" src="../temporal_unknown_architecture.svg" alt="同帧输入、真实删行重算、二维合成与三维删行"></details><div id="boundedUnknownFrame" hidden><p id="boundedUnknownFrameStatus"></p><div id="boundedUnknownEvidence" class="subtools"></div></div><p><a href="bounded_unknown_manifest.json">147帧任务中的本场景实际清单 →</a></p></section>'
+        panel = '<section class="panel notice" id="boundedUnknown"><h2>非R2消融 · 空集合初始化49帧（未采纳）</h2><p>' + NOTE + '</p><p>范围由原始body框传递蓝色多边形；eligible是二维投影中心约束。此组从空集合逐帧起步，与先前接受的R2初始化不同；保留旧R2报告和全部旧组。</p>' + known_issues + validation_note + '<a class="button" style="display:inline-block;padding:8px 12px;border:1px solid #8a78b5;border-radius:5px" href="' + direct + '">查看非R2消融49帧（未采纳）→</a><details><summary>组件与数据流</summary><img class="architecture" src="../temporal_unknown_architecture.svg" alt="同帧输入、真实删行重算、二维合成与三维删行"></details><div id="boundedUnknownFrame" hidden><p id="boundedUnknownFrameStatus"></p><div id="boundedUnknownEvidence" class="subtools"></div></div><p><a href="bounded_unknown_manifest.json">147帧任务中的本场景实际清单 →</a></p></section>'
         products[scene / 'index.html'] = block(page, 'bounded-unknown-panel', panel, after='<main>')
         scene_manifests.append(receipt)
     shared = (OUT / 'index.html').read_text(encoding='utf8')
-    links = ' '.join(link(m['context'], 113 if m['scene_number'] == 1 else 181 if m['scene_number'] == 2 else 45, '场景' + str(m['scene_number']) + ' · 49帧局部unknown') for m in deliveries)
+    links = ' '.join(link(m['context'], 113 if m['scene_number'] == 1 else 181 if m['scene_number'] == 2 else 45, '场景' + str(m['scene_number']) + ' · 非R2消融49帧（未采纳）') for m in deliveries)
     remote_note = '<p>本地为轻量接线核对；浮点方程与after归因见<a href="bounded_unknown_remote_full_audit.json">远端完整审核</a>。</p>' if deliveries[0]['light_delivery'] else ''
-    report_link = '<p><a href="' + REPORT_RELATIVE + '">147帧时序、邻车边界与坏例报告 →</a></p>'
-    shared = block(shared, 'bounded-unknown-summary', '<section class="notice"><strong>新增147帧独立原生诊断：</strong>' + links + '<p>默认真实white RGB；右侧按同raw原static行ID删行。范围外保留同帧actor-omitted像素，不宣称全局三维修复或语义标签；旧R2与全部历史组保留。</p><p>' + VISUAL_NOTE + '</p>' + remote_note + report_link + '</section>', after='<main id="workspace">')
+    report_link = '<p><a href="' + REPORT_RELATIVE + '">非R2消融147帧报告（未采纳）→</a></p>'
+    shared = block(shared, 'bounded-unknown-summary', '<section class="notice"><strong>历史消融147帧已执行（非R2、未采纳）：</strong>' + links + '<p>默认真实white RGB；右侧按同raw原static行ID删行。范围外保留同帧actor-omitted像素，不宣称全局三维修复或语义标签；旧R2与全部历史组保留。</p><p>' + VISUAL_NOTE + '</p>' + remote_note + report_link + '</section>', after='<main id="workspace">')
     for delivery in deliveries:
         context = delivery['context']; raw = 113 if delivery['scene_number'] == 1 else 181 if delivery['scene_number'] == 2 else 45
         def card(match):
             source = match[0]
             if context not in source:
                 return source
-            addition = '<p>' + link(context, raw, '新增：49帧局部unknown诊断 →') + '</p>'
+            addition = '<p>' + link(context, raw, '历史非R2消融49帧（未采纳）→') + '</p>'
             return block(source, 'bounded-unknown-card', addition, before_pattern=r'</article>')
         shared = re.sub(r'<article\b[^>]*>.*?</article>', card, shared, flags=re.S)
     products[OUT / 'index.html'] = shared
@@ -316,6 +316,14 @@ def install(deliveries, input_root, *, remote_audit=None):
         file.write_text(source, encoding='utf8')
     check(protected_sha == sha(protected), 'accepted R2 page unexpectedly changed')
     check(prior_ids == {ctx: [group['id'] for group in read_json(OUT / ctx / 'v43_groups_data.json')['groups']] for ctx in CONTEXTS}, 'prior V43 manifest unexpectedly changed')
+
+    # Reapply R2/history separation only with the actual complete R2 input assets.
+    import runpy
+    for repair in (Path(__file__).with_name('patch_ui.py'), BASE / 'work/v43_r2_regression_20261029/patch_ui.py'):
+        if repair.is_file():
+            namespace = runpy.run_path(str(repair))
+            if namespace['can_repair'](BASE): namespace['main'](BASE)
+            break
     return dict(schema='bounded-unknown-local-install-qa-v1', total_frames=147, real_pngs_copied=len(deliveries) * 49 * len(PNG_NAMES), output_files_written=len(products) + len(copies), local_full_float_reloaded=not deliveries[0]['light_delivery'], remote_full_audit_sha256=sha(remote_audit) if remote_audit else None, protected_R2_sha256=protected_sha, original_v43_group_ids_preserved=prior_ids, actual_static_row_filter=True, browserQA=False, ssh_used=False)
 
 

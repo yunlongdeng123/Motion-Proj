@@ -183,14 +183,17 @@
     const style = add('style');
     style.textContent = '#targetDetection .td-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}#targetDetection figure{margin:0;min-width:0}#targetDetection canvas{width:100%;height:auto;cursor:crosshair}#targetDetection figcaption{font-weight:650;margin:7px 0}#targetDetection .td-active{outline:2px solid #ffbf47;outline-offset:5px}#targetDetection .td-swatch{display:inline-block;width:11px;height:11px;margin:0 4px 0 12px;vertical-align:middle}#targetDetection .td-raw{font:13px monospace}#targetDetectionSelected{white-space:pre-wrap;overflow-wrap:anywhere}#targetDetection .td-buttons{display:flex;flex-wrap:wrap;gap:8px}#targetDetection .td-source{max-height:130px;overflow:auto}';
     document.head.append(style);
-    const panel = add('section', { id: 'targetDetection', className: 'panel' });
-    panel.append(add('h2', {}, '目标专属检测 · 原图 / 阴影候选 / 同帧原生剥离' + (manifest.quality_accepted === false ? ' · 未通过' : '')));
-    panel.append(add('p', { className: 'note' }, '冻结检查点的检测诊断。原static语义与19类编码、分支和owner分别保留；浅灰U只限此目标。阴影为 vehicle_shadow_candidate effect，身份与语义均非GT。'));
+    const panel = add('details', { id: 'targetDetection', className: 'panel' });
+    panel.append(add('summary', {}, '历史三帧检测（98 / 113 / 114）· 未通过 · 展开查看'));
+    panel.ontoggle = () => { if (panel.open) evidenceFor(S.raw).catch(() => null).then(() => drawPanels(S.raw, S.epoch)); };
+    panel.append(add('h2', {}, '历史检测对照 · 仅3帧已执行，非R2、非当前逐帧队列' + (manifest.quality_accepted === false ? ' · 未通过' : '')));
+    panel.append(add('p', { className: 'note' }, '此历史实验仅执行raw98/113/114，其余帧未执行且没有后台排队。当前R2参考请使用上方入口。原static语义与19类编码、分支和owner分别保留；浅灰U只限此目标。阴影为 vehicle_shadow_candidate effect，身份与语义均非GT。'));
     panel.append(add('p', { id: 'targetDetectionQuality', className: 'notice bad' }, (manifest.quality_accepted === false ? '未通过：' : '质量尚未验收：') + (manifest.source_note || '仅显示实际执行的检测与删除对照；不把渲染完成当成干净剥离。')));
     panel.append(add('p', { id: 'targetDetectionRemovalRisk', className: 'notice' }, WHOLE_ROW_RISK));
     const buttons = add('div', { className: 'td-buttons' });
     const rawLabel = add('label', {}, '共享源帧 '), rawSelect = add('select', { id: 'targetDetectionRaw', ariaLabel: '检测诊断共享源帧' });
-    for (const raw of Object.keys(manifest.frames).map(Number).sort((a, b) => a - b)) rawSelect.append(add('option', { value: String(raw) }, 'raw' + raw + (manifest.frames[String(raw)].evidence_path ? '' : ' · pending')));
+    for (const raw of Object.keys(manifest.frames).map(Number).filter(raw => manifest.frames[String(raw)].evidence_path).sort((a,b)=>a-b)) rawSelect.append(add('option', { value: String(raw) }, 'raw' + raw));
+    rawSelect.append(add('option', { id: 'targetDetectionMissingRaw', value: '', disabled: true, hidden: true }, '当前帧未执行历史对照'));
     rawSelect.onchange = () => { S.raw = Number(rawSelect.value); show(); };
     rawLabel.append(rawSelect); buttons.append(rawLabel);
     for (const key of CASES) {
@@ -289,9 +292,10 @@
     const panelEpoch = ++state.panelEpoch, frame = manifest.frames[String(raw)];
     const alive = () => raw === S.raw && epoch === S.epoch && panelEpoch === state.panelEpoch;
     const evidence = currentEvidence();
+    const missingOption=get('targetDetectionMissingRaw');missingOption.hidden=!!frame?.evidence_path;missingOption.value=String(raw);missingOption.textContent='raw'+raw+' · 不在历史三帧内（未执行）';
     get('targetDetectionRaw').value = String(raw);
     const shadowCount = state.cache.get(raw)?.pixelShadowCount;
-    get('targetDetectionStatus').textContent = 'raw' + raw + ' · ' + (frame?.evidence_path ? evidence ? evidence.ids.length.toLocaleString() + '行static目标证据已载入' : '检测证据加载中' : 'pending · 此raw尚无检测证据') + (shadowCount == null ? '' : ' · 独立二维shadow effect ' + shadowCount + '像素（弱候选，未验收）') + (state.errors.has(raw) ? ' · ' + state.errors.get(raw) : '') + '；所有卡片与右侧共用此raw，不替换邻帧。';
+    get('targetDetectionStatus').textContent = 'raw' + raw + ' · ' + (frame?.evidence_path ? evidence ? evidence.ids.length.toLocaleString() + '行static目标证据已载入' : '检测证据加载中' : '历史对照未执行：本实验只有raw98/113/114') + (shadowCount == null ? '' : ' · 独立二维shadow effect ' + shadowCount + '像素（弱候选，未验收）') + (state.errors.has(raw) ? ' · ' + state.errors.get(raw) : '') + '；所有卡片与右侧共用此raw，不替换邻帧。';
     const source = { query_raw: raw, source_checkpoint: manifest.source_checkpoint, checkpoint_frozen: manifest.checkpoint_frozen, actor: manifest.actor, globalsource_frames: frame?.globalsource_frames || manifest.globalsource_frames || [], removal_roles: manifest.removal_roles, thresholds: frame?.thresholds || manifest.thresholds || null };
     get('targetDetectionSource').textContent = JSON.stringify(source, null, 2);
     const point = S.pixel[1] * W + S.pixel[0];
@@ -300,9 +304,9 @@
     await Promise.all(['observed', 'overlay', ...CASES].map(async key => {
       const canvas = get('targetDetectionCanvas_' + key), note = get('targetDetectionNote_' + key);
       get('targetDetectionFigure_' + key).classList.toggle('td-active', detectionCase() === key);
-      if (key === 'overlay' && !evidence?.pixel_role && !evidence?.pixel_shadow_effect) { empty(canvas, 'pending：此raw像素候选证据未导出'); note.textContent = 'raw' + raw + ' · 不以3D中心投影冒充像素贡献'; return; }
+      if (key === 'overlay' && !evidence?.pixel_role && !evidence?.pixel_shadow_effect) { empty(canvas, '历史对照未执行：此raw没有像素候选证据'); note.textContent = 'raw' + raw + ' · 不以3D中心投影冒充像素贡献'; return; }
       const path = key === 'observed' || key === 'overlay' ? D.gt[raw] : frame?.images?.[key];
-      if (!path) { empty(canvas, 'pending：此raw尚无已核验原生RGB'); note.textContent = 'raw' + raw + ' · ' + (frame?.render_status?.[key] || 'pending · 未导出') + '；3D筛行预览不能代替原生重渲染'; return; }
+      if (!path) { empty(canvas, '历史对照未执行：此raw没有该组原生RGB'); note.textContent = 'raw' + raw + ' · ' + (frame?.render_status?.[key] || 'pending · 未导出') + '；3D筛行预览不能代替原生重渲染'; return; }
       try {
         const image = await loadImage(path);
         if (!alive()) return;
@@ -388,7 +392,7 @@
     get('geometryColorLegend').textContent = (mode === 'effect' ? 'effect模式：紫罗兰突出vehicle_shadow_candidate；没有effect的角色暗显。' : '') + ' 此目标关系：绿=car候选；浅灰=本目标U；紫罗兰=阴影U；橙紫双色=混合U。紫色外边=阴影effect（role3或显式shadow_effect=true）；mixed仍为role4，不自动推阴影。灰蓝=本目标外/未纳入。bg_protected独立，19类语义与原分支未改。橙框=目标原位，蓝框=其他车辆。';
     get('ownershipStatus').textContent = '检测仅使用本raw导出的目标专属角色；基础unknown不自动加入U。阴影是effect候选，不把道路几何标成car。' + (state.fullTargetRows ? '已请求全模型中此目标证据行完整显示；仍有时间/opacity/视野门限。' : '当前为真实checkpoint采样；载入完整模型可补齐此目标证据行。');
     const frame = currentFrame();
-    if (!frame?.evidence_path || !currentEvidence()) get('geometryStateInfo').textContent += ' · pending：此raw检测证据尚未可用，灰蓝不代表已确认背景。';
+    if (!frame?.evidence_path || !currentEvidence()) get('geometryStateInfo').textContent += ' · 历史对照未执行：此raw检测证据不可用，灰蓝不代表已确认背景。';
     const key = detectionCase();
     if (key) {
       get('geometryStateInfo').textContent += ' · ' + (frame?.images?.[key] ? '本组同raw原生RGB已到达' : '本组原生RGB pending；右侧仅为真实行筛选几何预览');
@@ -399,6 +403,8 @@
   const originalShow = show;
   show = async function (...args) {
     const result = originalShow(...args), raw = S.raw, epoch = S.epoch;
+    if (detectionCase()) get('targetDetection').open = true;
+    if (!get('targetDetection').open && !isMode(get('cloudColor').value)) return await result;
     await Promise.allSettled([result, evidenceFor(raw)]);
     if (raw !== S.raw || epoch !== S.epoch) return;
     await drawPanels(raw, epoch);
@@ -410,7 +416,7 @@
   if (root.SceneViewer) Object.assign(root.SceneViewer, { show, draw3D, editedPoint, sampleBase });
   root.addEventListener('hashchange', () => { if (location.hash.startsWith('#targetDetection')) activate('baseline', true); });
   if (location.hash.startsWith('#targetDetection')) activate('baseline', true);
-  else {
+  else if (get('targetDetection').open) {
     const raw = S.raw, epoch = S.epoch;
     evidenceFor(raw).catch(() => null).then(() => { if (raw === S.raw && epoch === S.epoch) { drawPanels(raw, epoch); draw3D(); } });
   }

@@ -1,0 +1,22 @@
+{
+  "review_type": "AI视觉核查",
+  "scope": "R2 inherited same-frame existing seeds + body/contact/out-of-range query, frames 077-125",
+  "human_acceptance": "本AI视觉核查不能替代用户人工验收；human_verdict remains pending.",
+  "inspection": {
+    "all_49_local_crops_viewed": true,
+    "crop_method": "Viewed all 49 white.png crops from pixel ROI [260,140,356,236] as a labeled contact sheet.",
+    "full_resolution_frames_viewed": [77, 82, 84, 86, 87, 90, 93, 98, 101, 113, 114],
+    "evidence_files": [
+      "r2_delivery/r2_inherited49_white_crops.png",
+      "r2_delivery/r2_inherited49_suspect_fullframes.png"
+    ]
+  },
+  "visual_findings": {
+    "overall": "The localized white hole is visible across the sequence. The target's apparent movement progresses smoothly across frames; no conspicuous temporal jump or flicker was seen. Nearby traffic, road markings, and scene context remain visible. The white region is a display mask, not reconstructed background.",
+    "severe_bad_frames": [],
+    "minor_boundary_residue_frames": [82, 83, 84, 85, 86, 87, 90, 93, 94, 98, 101, 113, 114],
+    "minor_residue_description": "In these frames, faint dark and/or magenta-green pixels remain along portions of the hole boundary, with some soft gray shading at the lower edge. The effect is localized and does not obscure the surrounding scene; frames 101 and 113-114 show the clearest color fringe.",
+    "known_limitation": "Fine texture is not uniformly white; this matches the stated expected behavior."
+  },
+  "ai_visual_verdict": "No severe visual failure identified; pass with localized minor boundary residue for user review."
+}
