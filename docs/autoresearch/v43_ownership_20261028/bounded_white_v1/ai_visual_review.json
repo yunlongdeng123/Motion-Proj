@@ -1,0 +1,46 @@
+{
+  "review_type": "AI visual review of bounded native white diagnostic",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "Compared R2 real-render outputs with each raw frame's existing.png, scope.png, and white.png reference for raw098/raw113/raw114. This review is limited to visible black-band suppression, colored fine traces, and nearby vehicle/road impact.",
+  "evidence": {
+    "native_gpu_outputs": "work/v43_unknown_detection_20261028/bounded_white_v1/bounded_native_r2/{098,113,114}/white.png",
+    "existing_inputs_and_references": "outputs/V43_Ownership_20261027/gpu_v43/bounded_white_v1/{098,113,114}/{existing.png,scope.png,white.png}",
+    "comparison_note": "The reference white.png is a flat spatial fill of the drawn scope. The bounded_native_r2 white.png is the actual rendered contribution-gated result. They are not interchangeable: seeing a flat white reference does not show that Gaussian content was physically removed, and the rendered result need not be a flat raster mask."
+  },
+  "overall": {
+    "black_band": "The dark band under the target is reduced/washed out in the R2 render, but a dark gray/black core remains near the lower edge in the three inspected frames. It is not fully gone by visual inspection.",
+    "colored_fine_traces": "Thin colored/fringed traces remain around the bright patch, most visibly along its upper/right and lower edges. The patch is not uniformly white like the reference fill.",
+    "neighbor_and_road": "A broad milky/white region affects road pixels inside the drawn scope, as expected for this diagnostic. Outside the main patch the road is largely recognizable. In raw098 the scope/bright patch reaches the left edge of the adjacent silver sedan and appears to disturb part of its outline; in raw113/raw114 the right sedan is largely outside the scope and remains visible. This is a visible scope consequence, not evidence of semantic attribution.",
+    "interpretation": "The outputs show a bounded local contribution gate rendered through the existing scene, not an automatic semantic detector, full Gaussian identity attribution, background completion, or a verified vehicle-shadow solution. No human ground-truth conclusion is made."
+  },
+  "frames": [
+    {
+      "raw_frame": 98,
+      "black_band_disappeared": false,
+      "colored_fine_traces_remain": true,
+      "observations": "R2 native output replaces much of the bright/colorful car-shaped region with a diffuse white patch, but the lower dark strip/core is still visible and the patch edge is soft rather than flat. Colored fringes remain above and to the right. The large scope visibly reaches the near/left part of the silver sedan, whose nearby contour is partially washed, and whitens a substantial road region inside the polygon. The flat reference white.png is cleaner and harder-edged than R2.",
+      "neighbor_road_impact": "Noticeable within the broad scope; slight visible intrusion at the adjacent sedan edge."
+    },
+    {
+      "raw_frame": 113,
+      "black_band_disappeared": false,
+      "colored_fine_traces_remain": true,
+      "observations": "R2 native shows a broad diffuse white patch over the former vehicle footprint. A dark low core/band remains near the bottom center, and narrow colored traces persist around the upper/right and lower boundaries. Road surface within scope is washed out; the transverse white line below the scope remains recognizable. The right-hand car is mostly outside the scope and remains visible.",
+      "neighbor_road_impact": "Road pixels inside scope are heavily washed; no strong change to the far-right car is apparent."
+    },
+    {
+      "raw_frame": 114,
+      "black_band_disappeared": false,
+      "colored_fine_traces_remain": true,
+      "observations": "R2 native again has a soft white patch, not a flat fill. A dark lower-center residue remains, with colored fine traces around the perimeter, particularly to the right/lower-right. The broad road region inside the scope is washed out; the transverse line and far-right sedan remain mostly recognizable outside it.",
+      "neighbor_road_impact": "Road pixels inside scope are visibly washed; adjacent sedan remains largely visible."
+    }
+  ],
+  "limits": [
+    "This is an AI model visual review, not human ground truth; human_verdict is null.",
+    "Visual darkness is not sufficient to identify a real cast/contact shadow or assign physical ownership.",
+    "The review does not infer Gaussian identity from the spatial gate and does not claim a generalized removal algorithm succeeded."
+  ]
+}

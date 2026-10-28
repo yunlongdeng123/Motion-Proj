@@ -1,15 +1,11 @@
 # 当前研究状态
 
-当前任务WS-V43-TARGET-DETECTION-20261028，run recall-ceiling-r1。用户最新要求先解决召回上界，背景误选只记录、不否决扩候选；车底与关联阴影立即纳入，独立紫色effect。训练更新0，第三场景仍停止，旧队列/心跳未恢复。
+用户最新验收收紧为：以 existing 为基线，蓝框外禁止新增 unknown；框内车底黑影与彩噪应白底显示。本轮三帧 raw98/113/114，训练更新0，第三场景保持停止。
 
-第一场景raw98/113/114的原门槛重放、同域全开门槛、扩域一次、删除后全量重算并再剥一轮均完成。固定body/effect/broad域最终Gaussian alpha为数值0；原生RGB仍有斑块，分量和环境cube texel伴随闭合说明剩余暗像素由environment回填提供。不能把负值PNG截黑全当未删Gaussian，也不能宣称语义召回100%。[算法、组件和结果](autoresearch/v43_ownership_20261028/RECALL_CEILING_V1.md)。
+已交付两种明确区分的图：局部全白范围预览（二维门控，非归属成功）与真实GPU候选剥离。真实新候选要求投影中心在用户蓝色多边形内，新增14874/8485/7936行，域外新中心0。每轮删除后重算 alpha*T；残留421/326/345个域外中心的支撑仍伸进查询域，没有将它们整颗标unknown。真实白底为 G_after+(1-alpha_after)*1；框外取同帧existing以保护跨界支撑。实际几何不是立体box约束，只是当前帧投影范围。
 
-逐行台账分检测域未覆盖、规则排除、after新贡献（exact0与阈值穿越分列）；13列旧规则重放零差异。background_veto=false，训练标签未写入，剥离后查询仅作诊断。暗像素查询0.1/0.2/0.3阈值同时记录；环境原参数、颜色、checkpoint均未改，无补景。
+纯白范围预览满足显示边界要求；真实渲染仍有浅暗边/细彩纹，未通过完整去影验收。暗像素阈值计数为0不等于纯白或目视去影成功。未修改颜色、checkpoint、环境参数，无补景。没有获得语义P/R或跨场景泛化证据，不能将查询区域标签用于训练。
 
-共享工作台及第一场景已增加召回上界入口。3帧×5阶段原生RGB/Gaussian/环境/alpha、逐行gate原因、旧历史双目标报告和AI初审均保留。AI不是人工GT，human_verdict=null；没有跨场景泛化验证。浏览器验证未采纳，交付以真实数据分量、PNG、静态接线检查为据。
+[算法与验收范围](autoresearch/v43_ownership_20261028/BOUNDED_WHITE_V1.md)。共享工作台保持同入口，当前页并列两种图，独立AI目视复核 human_verdict=null。下一步由用户验收局部范围；真实剥离若继续，需要处理跨边界混合支撑，不能扩大框外整行unknown来凑召回，也不能把显示全白当已解决身份归属。
 
-下一步：先独立判断环境方向/texel中的目标关联污染与真实阴影，不能继续把这些残留当Gaussian漏删；候选生成中保留宽域，把深度/时序/运动冲突存作后续学习特征。获得独立车体/阴影/环境伪影评审后，再逐项加回背景保护，记录召回损失。当前未自动开新训练或扩大case。
-
-现场：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3；当前资源/快照见[STATE](autoresearch/v43_ownership_20261028/STATE.json)。带GPU实例仅在结果取回、代码发布与活动进程排查完成后按长期授权关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
-
-上一阶段[独立阴影证据](autoresearch/v43_ownership_20261028/TARGET_DETECTION_V3.md)和旧Top3均作为历史资料保留，不作为当前验收结论。
+CPU范围预览加约5.51秒GPU冻结渲染，峰值reserved约1.48GiB；CPU分量组合和完整结果均已取回。GPU资源只在提交推送、取回与活动进程检查后关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。

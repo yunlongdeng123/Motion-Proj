@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-TARGET-DETECTION-20261028 / bounded-native-r1+local-r2 | 用户蓝框硬上限；真实中心候选剥离与纯白范围预览分开验收，仍有跨界支撑，训练0 | [范围与结果](autoresearch/v43_ownership_20261028/BOUNDED_WHITE_V1.md) |
 | WS-V43-TARGET-DETECTION-20261028 / recall-ceiling-r1 | 三帧召回上界、规则漏检与after重算、环境源精确归因；背景仅记录、训练0 | [组件与结果](autoresearch/v43_ownership_20261028/RECALL_CEILING_V1.md) |
 | WS-V43-TARGET-DETECTION-20261028 / frozen-evidence-r1 | 第一场景49帧独立阴影证据、3帧四设置原生剥离、背景见证与199源覆盖；训练0，仍未通过去影保背景 | [报告与组件](autoresearch/v43_ownership_20261028/TARGET_DETECTION_V3.md) |
 | WS-V43-OWNERSHIP-STRUCTURE-20261028 | 三开发场景49帧语义与真实Gaussian贡献、静态车身深度支持及Actor局部结构10K探针；执行与质量分开 | [当前状态](RESEARCH_STATUS.md)、[协议](autoresearch/v43_ownership_20261028/EXPERIMENT_CONTRACT.md) |
