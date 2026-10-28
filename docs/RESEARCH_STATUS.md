@@ -1,11 +1,15 @@
 # 当前研究状态
 
-用户最新验收收紧为：以 existing 为基线，蓝框外禁止新增 unknown；框内车底黑影与彩噪应白底显示。本轮三帧 raw98/113/114，训练更新0，第三场景保持停止。
+当前任务：WS-V43-TEMPORAL-MULTISCENE-20261029。用户认可旧 bounded-white 第三列三帧作为当前视觉基线，授权第一场景逐帧检验并将第二、三场景同流程接入共享工作台，现已开启GPU。此前第三场景停止范围已被本次授权覆盖，旧训练/自动队列未恢复。
 
-已交付两种明确区分的图：局部全白范围预览（二维门控，非归属成功）与真实GPU候选剥离。真实新候选要求投影中心在用户蓝色多边形内，新增14874/8485/7936行，域外新中心0。每轮删除后重算 alpha*T；残留421/326/345个域外中心的支撑仍伸进查询域，没有将它们整颗标unknown。真实白底为 G_after+(1-alpha_after)*1；框外取同帧existing以保护跨界支撑。实际几何不是立体box约束，只是当前帧投影范围。
+已复用第二、三场景暂停前完成的10K模型及原生motion，不重复训练；各场景49帧结构、4类×31帧编辑已取回并接入。原生与既有ProPainter生成通道分开，默认原生RGB。新增三场景各49帧冻结unknown诊断，训练更新0。新臂从每帧空候选开始，只读原始body和统一车底query，蓝框形状归一化传递；同raw删除后重算完整alpha*T。旧R2依赖的场景一专属种子未冒充跨场景证据。
 
-纯白范围预览满足显示边界要求；真实渲染仍有浅暗边/细彩纹，未通过完整去影验收。暗像素阈值计数为0不等于纯白或目视去影成功。未修改颜色、checkpoint、环境参数，无补景。没有获得语义P/R或跨场景泛化证据，不能将查询区域标签用于训练。
+147帧完整浮点审核通过：独立重置、三场景参数一致、范围内查询贡献无未选中有效候选、框外新增中心0、局部范围外像素差0、G_after+T×白底方程一致。局部合成保护框外像素不等于全局3D删除。原始完整浮点现场保留远端，本地取回全部PNG、行ID、bool范围及远端完整审核；旧三帧本地完整浮点对照保留。
 
-[算法与验收范围](autoresearch/v43_ownership_20261028/BOUNDED_WHITE_V1.md)。共享工作台保持同入口，当前页并列两种图，独立AI目视复核 human_verdict=null。下一步由用户验收局部范围；真实剥离若继续，需要处理跨边界混合支撑，不能扩大框外整行unknown来凑召回，也不能把显示全白当已解决身份归属。
+质量不能写成全部通过：新body/contact三锚点AI目视接近旧R2，但contact alpha更高；扩大整条局部带只多删背景，没有改善三锚点contact alpha，故未扩跑。场景3 raw13仍有车底紫褐带，raw37/49/61邻车边缘存在粘连观感。重点时序检查段：场景1 raw104–105/108–109、场景2 raw149–153、场景3 raw21–25。行ID变化不等价于RGB闪烁，没有语义GT或P/R结论。
 
-CPU范围预览加约5.51秒GPU冻结渲染，峰值reserved约1.48GiB；CPU分量组合和完整结果均已取回。GPU资源只在提交推送、取回与活动进程检查后关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
+同一共享入口：outputs/GS_Scene_Diagnostics_20261027/index.html。新完整对照：outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/index.html。详细机器证据和组件图见[TEMPORAL_MULTISCENE_20261029.html](autoresearch/v43_ownership_20261028/TEMPORAL_MULTISCENE_20261029.html)。
+
+下一步等待用户逐帧视觉验收，再针对跨边界混合支撑、车底残留和邻车边界做有约束改进；不继续扩大框外unknown，不把白洞当补景成功。正式渲染前有六结果真实pilot；两次接口名称不一致各额外raw98单帧已保留并单列，修正后完整重放，没有训练恢复或预算变更。
+
+GPU/发布/本地取回和关闭凭据见STATE.json及本轮delivery记录；关机只在全部后续依赖、Git推送及活动任务检查结束后执行。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。新147帧human_verdict=null，quality_accepted=false。

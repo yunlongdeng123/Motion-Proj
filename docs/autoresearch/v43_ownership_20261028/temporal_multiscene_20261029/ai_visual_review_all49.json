@@ -1,0 +1,46 @@
+{
+  "review_type": "AI temporal white-output contact-sheet visual review",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "Scanned the three 49-crop contact sheets and checked only short adjacent original/white sequences around the specified transitions and one visible scene-1 size change. This is not a full review of all 147 original full-frame pairs.",
+  "evidence": [
+    "outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/scene1_all49_crops.png",
+    "outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/scene2_all49_crops.png",
+    "outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/scene3_all49_crops.png",
+    "outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/{context}/{raw}/original.png and white.png for checked neighboring frames"
+  ],
+  "id_vs_visual": {
+    "visual_continuity": "In the checked adjacent frames, the white region remains visually centered on the same apparent vehicle/ground region; no obvious object swap is visible in these short sequences.",
+    "identity_limit": "The crop-sheet n= values match per-frame final_removed_rows counts in the receipts; they are not actor or object IDs. Receipts expose sequential frame_id/camera_index but no object tracking ID. Therefore no ID continuity or change is claimed from this review."
+  },
+  "scenes": [
+    {
+      "scene": 1,
+      "context": "14705303724557273004_3105_000_3125_000",
+      "focus_frames": [104,105,108,109],
+      "observations": "At 104→105 and 108→109, the white patch stays on the same apparent dark SUV region; the patch narrows/softens modestly, with no clear one-frame jump or visible target swap. The displayed n counts fall 22997→20982 and 19182→17453 respectively, but these are removed-row counts, not IDs. A broader white haze is visible later around 110–116, spreading over nearby road/curb and approaching the right-side silver sedan; this looks like a gradual range/footprint change, not a confirmed identity switch. Across the crops a soft gray/dark lower edge persists, but white coverage prevents reliable shadow attribution.",
+      "assessment": "No obvious abrupt discontinuity at the two requested pairs; later scene-1 range broadening merits attention. Vehicle-shadow status remains visually unresolved because the white display masks the surface."
+    },
+    {
+      "scene": 2,
+      "context": "4295449061847708198_3769_000_3789_000",
+      "focus_frames": [149,150,151,152,153],
+      "observations": "The white patch remains localized around the same apparent light-colored vehicle/ground area in these five frames. The n counts decrease 5112→4303 gradually; no conspicuous discrete shape or position jump is visible in the crop sheet or checked full-frame pairs. The patch has a soft edge and hides the underlying road/shadow detail; there is no clear residual body silhouette separable from the white region.",
+      "assessment": "No obvious temporal range jump in raw149–153. This does not establish stable object ID or successful shadow removal."
+    },
+    {
+      "scene": 3,
+      "context": "473735159277431842_630_095_650_095",
+      "focus_frames": [21,22,23,24,25],
+      "observations": "The white region stays over the same apparent light-colored target car across these frames, while the separate foreground white pickup becomes closer at the right edge. A purple-brown/gray band remains along the bottom of the white patch in the crops. By raw24–25 the white region reaches or visually merges with the pickup's left edge, making the target/neighbor boundary ambiguous and washing out nearby pavement. Counts decline 79056→47560 across the five frames; this is a removed-row count, not an identity label. The visible patch changes in extent gradually, with no single-frame swap established.",
+      "assessment": "Persistent lower band and later pickup-edge contact are the clearest issues in this short run. The white region masks the actual road/shadow, so it is not evidence of background completion or clean shadow removal."
+    }
+  ],
+  "overall": "This limited contact-sheet review finds no confirmed ID change. Visually, scene 1 has a gradual later spread toward adjacent road/curb, scene 2 raw149–153 remains localized, and scene 3 retains a lower purple-brown band while approaching/merging with the foreground pickup. These observations do not support an all-scene pass claim.",
+  "limitations": [
+    "AI visual observations only; human_verdict is null and no human ground truth is supplied.",
+    "White fill obscures the original surface; it cannot show that a cast/contact shadow was physically removed or that the road was reconstructed.",
+    "Only contact sheets plus short selected neighboring sequences were checked; no full 147-frame original-image audit was performed."
+  ]
+}

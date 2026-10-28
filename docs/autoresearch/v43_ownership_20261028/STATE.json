@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-28T17:04:17.977838+00:00",
+  "checked_utc": "2026-10-28T18:16:32.170916+00:00",
   "campaign": {
     "pid": 5848,
     "start_ticks": "910834496",
@@ -1712,9 +1712,9 @@
     "pilot_updates": 3000,
     "extra_smoke_updates": 980
   },
-  "current_task": "WS-V43-TARGET-DETECTION-20261028",
+  "current_task": "WS-V43-TEMPORAL-MULTISCENE-20261029",
   "target_detection": {
-    "phase": "bounded_white_user_review",
+    "phase": "multiscene_user_review",
     "report": "TARGET_DETECTION_V3.md",
     "training_updates": 0,
     "contexts": [
@@ -1727,10 +1727,10 @@
     "quality_accepted": false,
     "human_verdict": null,
     "old_queue_resumed": false,
-    "third_scene_held": true,
+    "third_scene_held": false,
     "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3",
     "source_checkpoint_frozen": true,
-    "latest_report": "BOUNDED_WHITE_V1.md",
+    "latest_report": "TEMPORAL_MULTISCENE_20261029.html",
     "background_precision_gate": "hard user query boundary for new Gaussian centers",
     "query_raws": [
       98,
@@ -1743,6 +1743,21 @@
     "native_clean_removal_verified": false,
     "semantic_recall_available": false,
     "environment_source_traced": true,
-    "next": "User reviews bounded scope; investigate cross-boundary Gaussian support without relabelling outside rows"
+    "next": "Inspect complete temporal sequence; investigate cross-boundary support without outside relabeling"
+  },
+  "temporal_multiscene": {
+    "phase": "published_pending_human_review",
+    "contexts": 3,
+    "frames_per_context": 49,
+    "training_updates": 0,
+    "mechanical_audit_passed": true,
+    "quality_accepted": false,
+    "human_verdict": null,
+    "old_queue_resumed": false,
+    "third_scene_held": false,
+    "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/temporal_multiscene_20261029_r1",
+    "report": "TEMPORAL_MULTISCENE_20261029.html",
+    "full_float_local_copy": false,
+    "complete_PNG_and_row_ID_delivery": true
   }
 }
