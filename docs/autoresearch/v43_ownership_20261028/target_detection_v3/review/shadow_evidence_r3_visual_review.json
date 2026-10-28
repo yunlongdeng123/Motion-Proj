@@ -1,0 +1,54 @@
+{
+  "review_type": "AI visual review of shadow candidate overlay",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "Visual comparison of shadow_evidence_r3 propagation overlays with their exact raw RGB frames for frames 98, 113, and 114. Review only the purple shadow-candidate pixels; do not change detection rules or infer from removal outputs.",
+  "image_coordinate_system": "Original-frame coordinates, 480x320, origin upper-left. Candidate component boxes below are inclusive as recorded in the r3 per-frame JSON; visual coverage descriptions are qualitative.",
+  "color_key_as_shown_in_overlay": {
+    "purple": "strict candidate",
+    "light_purple": "strict plus propagated proposal",
+    "cyan": "vehicle/body outline in the diagnostic overlay",
+    "amber": "photo-supported unknown, explicitly not labeled shadow"
+  },
+  "frames": [
+    {
+      "raw_frame": 98,
+      "evidence": ["work/v43_unknown_detection_20261028/shadow_evidence_r3/098_propagation_overlay.png", "work/v43_unknown_detection_20261028/review/raw_rgb/098.png"],
+      "purple_components_from_overlay_metadata": [
+        {"bbox_xyxy_inclusive": [281,211,294,212], "pixels": 21},
+        {"bbox_xyxy_inclusive": [278,217,319,218], "pixels": 43}
+      ],
+      "coverage_assessment": "Purple covers a narrow strip at the lower-left/underside of the middle SUV, including pavement immediately below the left/central rear-wheel area. The raw photo has a weak dark contact zone close to the underside, so this is plausible partial overlap. The mark is much narrower than a full underbody footprint and does not trace a larger projected-shadow edge.",
+      "likely_omissions": "Little or no purple is visible below the right half/right rear wheel of the SUV (roughly x=320..350 in this frame), and no broader diffuse shadow boundary is outlined toward the lower-right. Those areas remain visually ambiguous in the photo.",
+      "road_or_marking_false_positive": "No clear purple overlap with the white road markings or the long road seams farther down-frame. The leftward extension around x=278..293 touches exposed roadway outside the body; it could be shadow continuation but could also include ordinary road pixels, so this edge is uncertain rather than a confirmed false positive."
+    },
+    {
+      "raw_frame": 113,
+      "evidence": ["work/v43_unknown_detection_20261028/shadow_evidence_r3/113_propagation_overlay.png", "work/v43_unknown_detection_20261028/review/raw_rgb/113.png"],
+      "purple_components_from_overlay_metadata": [
+        {"bbox_xyxy_inclusive": [278,215,286,215], "pixels": 9},
+        {"bbox_xyxy_inclusive": [288,215,295,215], "pixels": 8},
+        {"bbox_xyxy_inclusive": [278,217,296,219], "pixels": 33},
+        {"bbox_xyxy_inclusive": [276,221,316,223], "pixels": 95}
+      ],
+      "coverage_assessment": "Purple covers a broken/low strip below and left of the SUV's underside. It overlaps the weak dark region nearest the left/central wheels but is disconnected and does not form a complete contact boundary. The light-purple propagated panel appears similarly localized; it does not visibly solve the missing right-side extent.",
+      "likely_omissions": "The area beneath the vehicle's central and right underside/right rear wheel (about x=317..350) is mostly unmarked, despite being the natural continuation to inspect for contact shading. No clear broad projected shadow extending away from the tires is covered.",
+      "road_or_marking_false_positive": "The lower strip reaches exposed roadway below-left of the SUV, so some included pixels may be normal pavement. It does not visibly run onto the bright transverse line lower in the image or the long road-texture seams. The separate sedan at far right is not included, which is appropriate for the specified SUV target."
+    },
+    {
+      "raw_frame": 114,
+      "evidence": ["work/v43_unknown_detection_20261028/shadow_evidence_r3/114_propagation_overlay.png", "work/v43_unknown_detection_20261028/review/raw_rgb/114.png"],
+      "purple_components_from_overlay_metadata": [
+        {"bbox_xyxy_inclusive": [276,216,283,217], "pixels": 9},
+        {"bbox_xyxy_inclusive": [287,216,296,217], "pixels": 14},
+        {"bbox_xyxy_inclusive": [296,217,299,219], "pixels": 6},
+        {"bbox_xyxy_inclusive": [281,224,295,224], "pixels": 15}
+      ],
+      "coverage_assessment": "The purple candidate is fragmented and mainly left of/just under the SUV's left-to-central lower edge. It captures only a small part of the faint dark contact zone visible in the RGB; the separately visible lower edge under the rest of the SUV is not outlined as one coherent region.",
+      "likely_omissions": "The candidate leaves the central-to-right tire/underbody area (roughly x=300..350) unmarked and does not capture a larger projected-shadow envelope. Whether these omitted pixels are actual shadow cannot be decided from this RGB alone.",
+      "road_or_marking_false_positive": "No obvious purple pixels land on the lower transverse white line or extended road seams. The small segment at y=224 is just beyond the SUV's visible underside and may include exposed roadway; treat as a possible edge overreach, not a certain false positive. The right-hand sedan's own dark contact region remains separate."
+    }
+  ],
+  "overall_assessment": "Across all three frames, the purple proposal behaves like a sparse lower-left/underbody candidate rather than a complete vehicle-shadow region. It partially covers faint darkening close to the SUV's wheels/underside, misses the central/right underside extent and does not establish a separate cast-shadow perimeter. The inspected purple pixels do not clearly spill onto the bright road markings or long pavement seams; the exposed road immediately left/below the SUV remains an ambiguous edge where overreach is possible. These are AI model observations for candidate validation, not a human verdict or ground-truth segmentation."
+}

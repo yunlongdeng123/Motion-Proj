@@ -1,0 +1,55 @@
+{
+  "schema": "recall-upperbound-rule-miss-ledger-v1",
+  "static_rows": 918850,
+  "row_namespace": "original_static_rows",
+  "initial_columns": [
+    "old_domain",
+    "broad_domain",
+    "body",
+    "effect",
+    "outside",
+    "total"
+  ],
+  "profile": "photo",
+  "epsilon": 0.0001,
+  "configuration": {
+    "body_min_mass": 0.02,
+    "body_min_fraction": 0.05,
+    "body_repeat_frames": 2,
+    "single_core_min_mass": 0.05,
+    "single_core_min_fraction": 0.2,
+    "shadow_min_mass": 0.01,
+    "shadow_min_fraction": 0.05,
+    "boundary_fraction": 0.2,
+    "weak_background_min_mass": 0.05,
+    "background_depth_rms_m": 0.5,
+    "mixed_exterior_fraction": 0.25
+  },
+  "body_history_frames": 49,
+  "category_bits_multilabel": {
+    "scope_missed": 1,
+    "inside_but_gated": 2,
+    "newly_visible": 4,
+    "not_in_old_probe_export": 8,
+    "entered_old_domain_only_after_removal": 16
+  },
+  "scope_definition": "stage old_domain<=epsilon and broad_domain>epsilon; weighted support, not proof of geometric footprint outside",
+  "gate_definition": "initial old_domain>epsilon and absent from original selected set",
+  "newly_visible_definition": "stage broad_domain>epsilon and initial broad_domain<=epsilon; fixed actor-omitted reference",
+  "background_veto": false,
+  "background_false_positives_record_only": true,
+  "post_suppression_contribution_role": "mechanical audit only; never semantic or training GT",
+  "edited_RGB_content_used_for_rule_labels": false,
+  "training_updates": 0,
+  "GPU_calls": 0,
+  "human_GT": null,
+  "omitted_stage_rows_are_zero": true,
+  "source_classify": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/code/classify_detection.py",
+  "body_probe": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/body_probe_r1",
+  "old_profile": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/native_target_contact_smoke_r1/evidence",
+  "classify_nonselection_notes": [
+    "bg_rms and exterior fraction only change mixed role; mixed is still removed, so these are not candidate veto gates",
+    "target_depth_valid/sum/squared are presently unused by classify; no depth veto is invented here",
+    "semantic class is not a direct row candidate gate; frozen actor has its own namespace"
+  ]
+}

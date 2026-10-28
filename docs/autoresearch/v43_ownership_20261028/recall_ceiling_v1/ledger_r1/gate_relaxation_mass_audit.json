@@ -1,0 +1,3700 @@
+{
+  "schema": "recall-gate-marginal-mass-audit-v1",
+  "scope": "fixed broad\u5f85\u67e5\u57df\u7684\u673a\u68b0\u8d21\u732e\uff0c\u5305\u542b\u9053\u8def/\u80cc\u666f\uff1b\u4e0d\u662f\u771f\u8f66\u5f71GT\uff0c\u4e0d\u662f\u72ec\u7acb\u8bed\u4e49recall\uff1b\u5404gate\u96c6\u5408\u91cd\u53e0\uff0c\u4e0d\u80fd\u76f8\u52a0",
+  "alpha_mass_units": "sum of native alpha*T over pixels in the named domain",
+  "queries": [
+    {
+      "raw": 98,
+      "scope": "fixed broad\u5f85\u67e5\u57df\u7684\u673a\u68b0\u8d21\u732e\uff0c\u5305\u542b\u9053\u8def/\u80cc\u666f\uff1b\u4e0d\u662f\u771f\u8f66\u5f71GT\uff0c\u4e0d\u662f\u72ec\u7acb\u8bed\u4e49recall\uff1b\u5404gate\u96c6\u5408\u91cd\u53e0\uff0c\u4e0d\u80fd\u76f8\u52a0",
+      "stages": [
+        {
+          "stage": "actor_omitted",
+          "remaining": {
+            "rows": 64622,
+            "broad_alpha_mass": 18035.60236722129,
+            "old_domain_alpha_mass": 2583.164567565898,
+            "body_alpha_mass": 1997.8245975283498,
+            "effect_alpha_mass": 256.0748753556427
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 6098,
+              "broad_alpha_mass": 4398.782024308712,
+              "old_domain_alpha_mass": 164.6010678707753,
+              "body_alpha_mass": 45.71199199890714,
+              "effect_alpha_mass": 60.83075026167171
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 5755,
+              "broad_alpha_mass": 4391.66849514866,
+              "old_domain_alpha_mass": 153.91350670265092,
+              "body_alpha_mass": 32.62053222484417,
+              "effect_alpha_mass": 63.23218179608921
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 4689,
+              "broad_alpha_mass": 4378.574676205302,
+              "old_domain_alpha_mass": 157.4547273502103,
+              "body_alpha_mass": 45.40821827932257,
+              "effect_alpha_mass": 54.41857499771686
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 5093,
+              "broad_alpha_mass": 4372.631782114455,
+              "old_domain_alpha_mass": 144.40642194524116,
+              "body_alpha_mass": 27.15915934186512,
+              "effect_alpha_mass": 63.075037595333924
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 4944,
+              "broad_alpha_mass": 4343.020086618846,
+              "old_domain_alpha_mass": 130.15900284492818,
+              "body_alpha_mass": 38.9998121046184,
+              "effect_alpha_mass": 62.60396232780295
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 6751,
+              "broad_alpha_mass": 3462.566470288679,
+              "old_domain_alpha_mass": 123.67289128086122,
+              "body_alpha_mass": 24.73934828776862,
+              "effect_alpha_mass": 47.823656739941725
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 4307,
+              "broad_alpha_mass": 3302.74642053515,
+              "old_domain_alpha_mass": 95.46472515713685,
+              "body_alpha_mass": 20.78500023813774,
+              "effect_alpha_mass": 57.73556477063539
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 4307,
+              "broad_alpha_mass": 3302.74642053515,
+              "old_domain_alpha_mass": 95.46472515713685,
+              "body_alpha_mass": 20.78500023813774,
+              "effect_alpha_mass": 57.73556477063539
+            },
+            {
+              "gate": "body_mass",
+              "rows": 6664,
+              "broad_alpha_mass": 2508.805005836308,
+              "old_domain_alpha_mass": 98.30636020867678,
+              "body_alpha_mass": 19.350247287265915,
+              "effect_alpha_mass": 39.38033159728184
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 4805,
+              "broad_alpha_mass": 2260.178930289585,
+              "old_domain_alpha_mass": 68.51765469358361,
+              "body_alpha_mass": 0.052749595446471176,
+              "effect_alpha_mass": 37.30087046894732
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 6695,
+              "broad_alpha_mass": 2250.9672786230294,
+              "old_domain_alpha_mass": 113.4862567170203,
+              "body_alpha_mass": 35.96645277070809,
+              "effect_alpha_mass": 22.489546673123186
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 6078,
+              "broad_alpha_mass": 2164.6100997114627,
+              "old_domain_alpha_mass": 66.53642963363382,
+              "body_alpha_mass": 18.148002095805964,
+              "effect_alpha_mass": 35.70661508919693
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 6506,
+              "broad_alpha_mass": 1641.0405792323945,
+              "old_domain_alpha_mass": 98.94339543233218,
+              "body_alpha_mass": 34.481506886966486,
+              "effect_alpha_mass": 10.896265471104925
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 279,
+              "rows": 279,
+              "broad_alpha_mass": 2764.3957486059517,
+              "old_domain_alpha_mass": 68.29399160575122,
+              "body_alpha_mass": 11.245270736515522,
+              "effect_alpha_mass": 52.35632306430489
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 90,
+              "rows": 90,
+              "broad_alpha_mass": 2154.4690492153168,
+              "old_domain_alpha_mass": 53.7511303210631,
+              "body_alpha_mass": 9.76032485277392,
+              "effect_alpha_mass": 40.76304186228663
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 142,
+              "rows": 142,
+              "broad_alpha_mass": 711.4195137321949,
+              "old_domain_alpha_mass": 28.95306528918445,
+              "body_alpha_mass": 14.97955211030785,
+              "effect_alpha_mass": 2.0307335613688338
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 62,
+              "rows": 62,
+              "broad_alpha_mass": 631.2930880784988,
+              "old_domain_alpha_mass": 24.951409623026848,
+              "body_alpha_mass": 14.136293735355139,
+              "effect_alpha_mass": 1.8610139407610404
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 351,
+              "rows": 351,
+              "broad_alpha_mass": 31.960390646010637,
+              "old_domain_alpha_mass": 17.90868533588946,
+              "body_alpha_mass": 0.002228498073236551,
+              "effect_alpha_mass": 0.06354620191268623
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 2104,
+              "rows": 2097,
+              "broad_alpha_mass": 26.86268137452862,
+              "old_domain_alpha_mass": 9.782721396026318,
+              "body_alpha_mass": 0.3185593441594392,
+              "effect_alpha_mass": 8.83407524584618
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 806,
+              "rows": 806,
+              "broad_alpha_mass": 21.005635344074108,
+              "old_domain_alpha_mass": 12.507324132951908,
+              "body_alpha_mass": 9.847526781260967,
+              "effect_alpha_mass": 0.02505707391537726
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 397,
+              "rows": 397,
+              "broad_alpha_mass": 7.938006691634655,
+              "old_domain_alpha_mass": 5.847769206389785,
+              "body_alpha_mass": 3.7301089538959786,
+              "effect_alpha_mass": 0.02505707391537726
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 687,
+              "rows": 687,
+              "broad_alpha_mass": 6.65430352963449,
+              "old_domain_alpha_mass": 2.636319167308102,
+              "body_alpha_mass": 0.014785624574869871,
+              "effect_alpha_mass": 2.4218382737381035
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 42,
+              "rows": 42,
+              "broad_alpha_mass": 3.271130569279194,
+              "old_domain_alpha_mass": 2.0039893966168165,
+              "body_alpha_mass": 0.5651754189748317,
+              "effect_alpha_mass": 0.03604497550986707
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 13,
+              "rows": 13,
+              "broad_alpha_mass": 1.4218623097985983,
+              "old_domain_alpha_mass": 0.728824308142066,
+              "body_alpha_mass": 0.4155071023851633,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 13,
+              "rows": 13,
+              "broad_alpha_mass": 1.4218623097985983,
+              "old_domain_alpha_mass": 0.728824308142066,
+              "body_alpha_mass": 0.4155071023851633,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 8,
+              "rows": 8,
+              "broad_alpha_mass": 0.17864331789314747,
+              "old_domain_alpha_mass": 0.17864331789314747,
+              "body_alpha_mass": 0.17864331789314747,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 0,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "existing",
+          "remaining": {
+            "rows": 54707,
+            "broad_alpha_mass": 16472.654259436335,
+            "old_domain_alpha_mass": 1221.8824253716004,
+            "body_alpha_mass": 812.8929836550451,
+            "effect_alpha_mass": 168.2981514169216
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 6098,
+              "broad_alpha_mass": 6276.065041202572,
+              "old_domain_alpha_mass": 1202.2859730797209,
+              "body_alpha_mass": 804.2232810565038,
+              "effect_alpha_mass": 158.51591055786412
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 4689,
+              "broad_alpha_mass": 6239.524041415061,
+              "old_domain_alpha_mass": 1188.0237705157924,
+              "body_alpha_mass": 803.7403505627299,
+              "effect_alpha_mass": 145.30514500562276
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 5755,
+              "broad_alpha_mass": 6143.967424957533,
+              "old_domain_alpha_mass": 1065.0480094053637,
+              "body_alpha_mass": 662.4816919459263,
+              "effect_alpha_mass": 168.2338453106786
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 4944,
+              "broad_alpha_mass": 6068.34870823774,
+              "old_domain_alpha_mass": 1040.0876388230681,
+              "body_alpha_mass": 709.6434939851752,
+              "effect_alpha_mass": 167.08642117508862
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 5093,
+              "broad_alpha_mass": 5965.620751668917,
+              "old_domain_alpha_mass": 918.8844809236325,
+              "body_alpha_mass": 541.0761658282718,
+              "effect_alpha_mass": 167.9302905981167
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 6751,
+              "broad_alpha_mass": 4654.470812131869,
+              "old_domain_alpha_mass": 735.9327780131571,
+              "body_alpha_mass": 450.13351788779255,
+              "effect_alpha_mass": 109.70935165269475
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 4307,
+              "broad_alpha_mass": 3863.223585411193,
+              "old_domain_alpha_mass": 381.6424689389387,
+              "body_alpha_mass": 186.19326589384582,
+              "effect_alpha_mass": 143.29311435755517
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 4307,
+              "broad_alpha_mass": 3863.223585411193,
+              "old_domain_alpha_mass": 381.6424689389387,
+              "body_alpha_mass": 186.19326589384582,
+              "effect_alpha_mass": 143.29311435755517
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 6695,
+              "broad_alpha_mass": 3818.2138371963374,
+              "old_domain_alpha_mass": 983.1137099240295,
+              "body_alpha_mass": 714.1819868151797,
+              "effect_alpha_mass": 49.747049785612035
+            },
+            {
+              "gate": "body_mass",
+              "rows": 6664,
+              "broad_alpha_mass": 3331.6668435775064,
+              "old_domain_alpha_mass": 543.4546448506735,
+              "body_alpha_mass": 326.6315699092811,
+              "effect_alpha_mass": 89.86474395093683
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 6506,
+              "broad_alpha_mass": 3013.1237356180645,
+              "old_domain_alpha_mass": 884.6273643823661,
+              "body_alpha_mass": 653.9602388747735,
+              "effect_alpha_mass": 28.222661666033673
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 6078,
+              "broad_alpha_mass": 2832.954556095632,
+              "old_domain_alpha_mass": 448.4572646946035,
+              "body_alpha_mass": 304.4750652759103,
+              "effect_alpha_mass": 79.35109894785273
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 4805,
+              "broad_alpha_mass": 2604.5756564067997,
+              "old_domain_alpha_mass": 168.5137823207624,
+              "body_alpha_mass": 16.994756826548837,
+              "effect_alpha_mass": 80.75584323371004
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 279,
+              "rows": 279,
+              "broad_alpha_mass": 3283.4319653296843,
+              "old_domain_alpha_mass": 327.7270420314744,
+              "body_alpha_mass": 150.2898295330815,
+              "effect_alpha_mass": 140.0417004674673
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 90,
+              "rows": 90,
+              "broad_alpha_mass": 2478.3418637514114,
+              "old_domain_alpha_mass": 229.24069648981094,
+              "body_alpha_mass": 90.0680815926753,
+              "effect_alpha_mass": 118.51731234788895
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 142,
+              "rows": 142,
+              "broad_alpha_mass": 1575.436069354415,
+              "old_domain_alpha_mass": 485.6058509219438,
+              "body_alpha_mass": 372.7587141946424,
+              "effect_alpha_mass": 17.75949976989068
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 62,
+              "rows": 62,
+              "broad_alpha_mass": 1418.9339987039566,
+              "old_domain_alpha_mass": 451.2410342171788,
+              "body_alpha_mass": 352.1561121754348,
+              "effect_alpha_mass": 17.385857483604923
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 806,
+              "rows": 806,
+              "broad_alpha_mass": 267.5032764468342,
+              "old_domain_alpha_mass": 236.07611226849258,
+              "body_alpha_mass": 212.082624980947,
+              "effect_alpha_mass": 0.08096830593422055
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 397,
+              "rows": 397,
+              "broad_alpha_mass": 93.9517689216882,
+              "old_domain_alpha_mass": 82.31384025514126,
+              "body_alpha_mass": 65.4794280580245,
+              "effect_alpha_mass": 0.08096830593422055
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 351,
+              "rows": 351,
+              "broad_alpha_mass": 62.719405587762594,
+              "old_domain_alpha_mass": 37.20057042688131,
+              "body_alpha_mass": 0.48480993905104697,
+              "effect_alpha_mass": 0.10812258906662464
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 2104,
+              "rows": 2102,
+              "broad_alpha_mass": 57.03724087510636,
+              "old_domain_alpha_mass": 24.332425988082832,
+              "body_alpha_mass": 0.5097178451251239,
+              "effect_alpha_mass": 22.961007217912993
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 687,
+              "rows": 687,
+              "broad_alpha_mass": 20.490659745177254,
+              "old_domain_alpha_mass": 10.068433334119618,
+              "body_alpha_mass": 0.026787351351231337,
+              "effect_alpha_mass": 9.748451575636864
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 42,
+              "rows": 42,
+              "broad_alpha_mass": 6.562513409182429,
+              "old_domain_alpha_mass": 4.0266476552933455,
+              "body_alpha_mass": 0.9239938780665398,
+              "effect_alpha_mass": 0.05497694108635187
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 13,
+              "rows": 13,
+              "broad_alpha_mass": 2.0787055548280478,
+              "old_domain_alpha_mass": 1.1054740156978369,
+              "body_alpha_mass": 0.5798070412129164,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 13,
+              "rows": 13,
+              "broad_alpha_mass": 2.0787055548280478,
+              "old_domain_alpha_mass": 1.1054740156978369,
+              "body_alpha_mass": 0.5798070412129164,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 8,
+              "rows": 8,
+              "broad_alpha_mass": 0.2313272450119257,
+              "old_domain_alpha_mass": 0.2313272450119257,
+              "body_alpha_mass": 0.2313272450119257,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 0,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "gates_open_same_domain",
+          "remaining": {
+            "rows": 48087,
+            "broad_alpha_mass": 13574.79930508833,
+            "old_domain_alpha_mass": 41.98768550378736,
+            "body_alpha_mass": 13.320924539584666,
+            "effect_alpha_mass": 24.486192360403948
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 2104,
+              "rows": 8,
+              "broad_alpha_mass": 0.9351640632376075,
+              "old_domain_alpha_mass": 0.5008009979501367,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.5008009383454919
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 806,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 62,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 8,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 0,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 397,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 142,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 42,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 351,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 687,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 90,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 279,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "broad_once",
+          "remaining": {
+            "rows": 229,
+            "broad_alpha_mass": 75.42285156925209,
+            "old_domain_alpha_mass": 14.024577524745837,
+            "body_alpha_mass": 1.07382333278656,
+            "effect_alpha_mass": 12.367326814914122
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 2104,
+              "rows": 7,
+              "broad_alpha_mass": 1.3502730368636549,
+              "old_domain_alpha_mass": 0.4975763796828687,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.4975763796828687
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 806,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 62,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 8,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 0,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 397,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 142,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 42,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 351,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 687,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 90,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 279,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "peel_01",
+          "remaining": {
+            "rows": 0,
+            "broad_alpha_mass": 0.0,
+            "old_domain_alpha_mass": 0.0,
+            "body_alpha_mass": 0.0,
+            "effect_alpha_mass": 0.0
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 806,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 62,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 8,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 0,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 397,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 142,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 42,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 351,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 687,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 90,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 2104,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 279,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 13,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        }
+      ]
+    },
+    {
+      "raw": 113,
+      "scope": "fixed broad\u5f85\u67e5\u57df\u7684\u673a\u68b0\u8d21\u732e\uff0c\u5305\u542b\u9053\u8def/\u80cc\u666f\uff1b\u4e0d\u662f\u771f\u8f66\u5f71GT\uff0c\u4e0d\u662f\u72ec\u7acb\u8bed\u4e49recall\uff1b\u5404gate\u96c6\u5408\u91cd\u53e0\uff0c\u4e0d\u80fd\u76f8\u52a0",
+      "stages": [
+        {
+          "stage": "actor_omitted",
+          "remaining": {
+            "rows": 40620,
+            "broad_alpha_mass": 20089.143351599472,
+            "old_domain_alpha_mass": 2834.8747830976054,
+            "body_alpha_mass": 2191.9276070216833,
+            "effect_alpha_mass": 305.0783971885039
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 2584,
+              "broad_alpha_mass": 4754.956484199065,
+              "old_domain_alpha_mass": 161.76231347141584,
+              "body_alpha_mass": 61.979580291692855,
+              "effect_alpha_mass": 48.58440761643578
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 2372,
+              "broad_alpha_mass": 4747.240294569434,
+              "old_domain_alpha_mass": 160.04736453689839,
+              "body_alpha_mass": 61.9593611444875,
+              "effect_alpha_mass": 47.39241536731424
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 1979,
+              "broad_alpha_mass": 4747.184187357547,
+              "old_domain_alpha_mass": 153.4941957176561,
+              "body_alpha_mass": 53.417907231837034,
+              "effect_alpha_mass": 49.172865535569144
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 1643,
+              "broad_alpha_mass": 4726.798131183663,
+              "old_domain_alpha_mass": 147.02593761850585,
+              "body_alpha_mass": 50.379305230221235,
+              "effect_alpha_mass": 49.15671669176663
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 2076,
+              "broad_alpha_mass": 4726.5825804097985,
+              "old_domain_alpha_mass": 148.04119361974153,
+              "body_alpha_mass": 58.681309915617476,
+              "effect_alpha_mass": 49.02682389502297
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 2624,
+              "broad_alpha_mass": 3067.5290701213817,
+              "old_domain_alpha_mass": 76.05673287873651,
+              "body_alpha_mass": 16.681110480014922,
+              "effect_alpha_mass": 32.95262337566237
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 1224,
+              "broad_alpha_mass": 2914.1128561514197,
+              "old_domain_alpha_mass": 80.71386081165838,
+              "body_alpha_mass": 21.750757567291657,
+              "effect_alpha_mass": 39.51345402034349
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 1224,
+              "broad_alpha_mass": 2914.1128561514197,
+              "old_domain_alpha_mass": 80.71386081165838,
+              "body_alpha_mass": 21.750757567291657,
+              "effect_alpha_mass": 39.51345402034349
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 2610,
+              "broad_alpha_mass": 2808.122080248926,
+              "old_domain_alpha_mass": 92.56095237722184,
+              "body_alpha_mass": 42.124810369831266,
+              "effect_alpha_mass": 4.947253521037055
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 2555,
+              "broad_alpha_mass": 2558.4050967517833,
+              "old_domain_alpha_mass": 86.762118235878,
+              "body_alpha_mass": 40.89739724356377,
+              "effect_alpha_mass": 2.1478907460987102
+            },
+            {
+              "gate": "body_mass",
+              "rows": 2549,
+              "broad_alpha_mass": 2161.2303389228473,
+              "old_domain_alpha_mass": 48.9266047782221,
+              "body_alpha_mass": 11.791949461360218,
+              "effect_alpha_mass": 18.696011294581695
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 1342,
+              "broad_alpha_mass": 1694.046755433461,
+              "old_domain_alpha_mass": 29.82209601969953,
+              "body_alpha_mass": 0.06230187686787758,
+              "effect_alpha_mass": 18.46073240946862
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 2278,
+              "broad_alpha_mass": 1636.787453941215,
+              "old_domain_alpha_mass": 34.71604153019871,
+              "body_alpha_mass": 11.12744352136042,
+              "effect_alpha_mass": 18.21920928565669
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 122,
+              "rows": 122,
+              "broad_alpha_mass": 2198.4357037246227,
+              "old_domain_alpha_mass": 75.58865315467119,
+              "body_alpha_mass": 21.08218304812908,
+              "effect_alpha_mass": 47.024974789470434
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 67,
+              "rows": 67,
+              "broad_alpha_mass": 1948.71872022748,
+              "old_domain_alpha_mass": 69.78981901332736,
+              "body_alpha_mass": 19.85476992186159,
+              "effect_alpha_mass": 44.22561201453209
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 141,
+              "rows": 141,
+              "broad_alpha_mass": 1479.2923137843609,
+              "old_domain_alpha_mass": 61.36317996494472,
+              "body_alpha_mass": 32.72902663378045,
+              "effect_alpha_mass": 7.9115739616099745
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 71,
+              "rows": 71,
+              "broad_alpha_mass": 1364.3199490904808,
+              "old_domain_alpha_mass": 58.738995496183634,
+              "body_alpha_mass": 32.31332720257342,
+              "effect_alpha_mass": 7.91059482563287
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 593,
+              "rows": 593,
+              "broad_alpha_mass": 17.2325001845893,
+              "old_domain_alpha_mass": 8.421066733571934,
+              "body_alpha_mass": 6.899119578680256,
+              "effect_alpha_mass": 0.0020786882378160954
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 104,
+              "rows": 104,
+              "broad_alpha_mass": 12.117072898894548,
+              "old_domain_alpha_mass": 5.806292729452252,
+              "body_alpha_mass": 0.0038835831910546403,
+              "effect_alpha_mass": 0.07031208323314786
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 305,
+              "rows": 305,
+              "broad_alpha_mass": 9.600505906972103,
+              "old_domain_alpha_mass": 2.303406853650813,
+              "body_alpha_mass": 0.020219147205352783,
+              "effect_alpha_mass": 1.7804501682549017
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 18,
+              "rows": 18,
+              "broad_alpha_mass": 6.830998769029975,
+              "old_domain_alpha_mass": 2.2503245286643505,
+              "body_alpha_mass": 1.1018765084445477,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 18,
+              "rows": 18,
+              "broad_alpha_mass": 6.830998769029975,
+              "old_domain_alpha_mass": 2.2503245286643505,
+              "body_alpha_mass": 1.1018765084445477,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 40,
+              "rows": 40,
+              "broad_alpha_mass": 5.961936643347144,
+              "old_domain_alpha_mass": 2.8534449357539415,
+              "body_alpha_mass": 0.8202087365789339,
+              "effect_alpha_mass": 0.014070155564695597
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 231,
+              "rows": 231,
+              "broad_alpha_mass": 5.524212120100856,
+              "old_domain_alpha_mass": 3.1033611746970564,
+              "body_alpha_mass": 2.0110882613807917,
+              "effect_alpha_mass": 0.0020786882378160954
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 1,
+              "rows": 1,
+              "broad_alpha_mass": 3.556432008743286,
+              "old_domain_alpha_mass": 0.7972205281257629,
+              "body_alpha_mass": 0.33953553438186646,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 1.8843162773409858,
+              "old_domain_alpha_mass": 0.5884579191333614,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.5884579191333614
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 6,
+              "rows": 6,
+              "broad_alpha_mass": 0.1455595549196005,
+              "old_domain_alpha_mass": 0.14255153760313988,
+              "body_alpha_mass": 0.14177277125418186,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "existing",
+          "remaining": {
+            "rows": 33785,
+            "broad_alpha_mass": 18068.431575440438,
+            "old_domain_alpha_mass": 1269.7599679364357,
+            "body_alpha_mass": 892.8706180547015,
+            "effect_alpha_mass": 169.58536955504678
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 2584,
+              "broad_alpha_mass": 7413.179958555149,
+              "old_domain_alpha_mass": 1266.8318502387265,
+              "body_alpha_mass": 892.4627011512057,
+              "effect_alpha_mass": 167.28319575928617
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 2372,
+              "broad_alpha_mass": 7399.082293048268,
+              "old_domain_alpha_mass": 1263.568445736193,
+              "body_alpha_mass": 892.4310183339403,
+              "effect_alpha_mass": 164.80687019054312
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 2076,
+              "broad_alpha_mass": 7292.548252436332,
+              "old_domain_alpha_mass": 1183.4934161092388,
+              "body_alpha_mass": 841.3350130245672,
+              "effect_alpha_mass": 169.3243236002745
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 1979,
+              "broad_alpha_mass": 7214.292453574715,
+              "old_domain_alpha_mass": 1077.2079699399183,
+              "body_alpha_mass": 707.6507317349897,
+              "effect_alpha_mass": 169.5766519337194
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 1643,
+              "broad_alpha_mass": 7060.335753968451,
+              "old_domain_alpha_mass": 975.0900987064233,
+              "body_alpha_mass": 623.8254974992597,
+              "effect_alpha_mass": 169.5529784631217
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 2610,
+              "broad_alpha_mass": 4754.3036070584785,
+              "old_domain_alpha_mass": 965.5958953356603,
+              "body_alpha_mass": 774.9941176977591,
+              "effect_alpha_mass": 11.999649296631105
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 2624,
+              "broad_alpha_mass": 4635.186791491462,
+              "old_domain_alpha_mass": 770.0852576872567,
+              "body_alpha_mass": 568.0986092333333,
+              "effect_alpha_mass": 86.27508648030926
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 2555,
+              "broad_alpha_mass": 4402.302541208221,
+              "old_domain_alpha_mass": 925.7813042184571,
+              "body_alpha_mass": 748.0252177026705,
+              "effect_alpha_mass": 6.115015759249218
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 1224,
+              "broad_alpha_mass": 3591.849361283472,
+              "old_domain_alpha_mass": 310.76904663210735,
+              "body_alpha_mass": 134.3574018906802,
+              "effect_alpha_mass": 125.9288312693825
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 1224,
+              "broad_alpha_mass": 3591.849361283472,
+              "old_domain_alpha_mass": 310.76904663210735,
+              "body_alpha_mass": 134.3574018906802,
+              "effect_alpha_mass": 125.9288312693825
+            },
+            {
+              "gate": "body_mass",
+              "rows": 2549,
+              "broad_alpha_mass": 3135.676131036831,
+              "old_domain_alpha_mass": 435.0577298110584,
+              "body_alpha_mass": 306.63432812696556,
+              "effect_alpha_mass": 46.28742507577408
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 2278,
+              "broad_alpha_mass": 2778.8073917671572,
+              "old_domain_alpha_mass": 637.2669750085333,
+              "body_alpha_mass": 532.565728424408,
+              "effect_alpha_mass": 43.198760590166785
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 1342,
+              "broad_alpha_mass": 2064.041172265308,
+              "old_domain_alpha_mass": 81.45306262106169,
+              "body_alpha_mass": 6.282014920201618,
+              "effect_alpha_mass": 43.439898110111244
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 122,
+              "rows": 122,
+              "broad_alpha_mass": 3016.5159806013107,
+              "old_domain_alpha_mass": 343.34400218725204,
+              "body_alpha_mass": 144.4374834485352,
+              "effect_alpha_mass": 163.4616361744702
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 71,
+              "rows": 71,
+              "broad_alpha_mass": 2699.410378277302,
+              "old_domain_alpha_mass": 632.6939064636827,
+              "body_alpha_mass": 497.1148847360164,
+              "effect_alpha_mass": 40.009933365508914
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 67,
+              "rows": 67,
+              "broad_alpha_mass": 2664.514914751053,
+              "old_domain_alpha_mass": 303.5294110700488,
+              "body_alpha_mass": 117.46858345344663,
+              "effect_alpha_mass": 157.5770026370883
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 141,
+              "rows": 141,
+              "broad_alpha_mass": 2549.9788299947977,
+              "old_domain_alpha_mass": 395.02121913433075,
+              "body_alpha_mass": 264.8781078038737,
+              "effect_alpha_mass": 40.01278868736699
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 593,
+              "rows": 593,
+              "broad_alpha_mass": 306.11941349320114,
+              "old_domain_alpha_mass": 257.2155962456018,
+              "body_alpha_mass": 237.7181829402689,
+              "effect_alpha_mass": 0.003527435939759016
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 231,
+              "rows": 231,
+              "broad_alpha_mass": 67.8387112095952,
+              "old_domain_alpha_mass": 55.39740188140422,
+              "body_alpha_mass": 44.52729272493161,
+              "effect_alpha_mass": 0.003527435939759016
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 104,
+              "rows": 104,
+              "broad_alpha_mass": 25.851979054510593,
+              "old_domain_alpha_mass": 13.10471629165113,
+              "body_alpha_mass": 0.031084538204595447,
+              "effect_alpha_mass": 0.11848432011902332
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 305,
+              "rows": 305,
+              "broad_alpha_mass": 19.73622876126319,
+              "old_domain_alpha_mass": 5.556860669516027,
+              "body_alpha_mass": 0.03168281726539135,
+              "effect_alpha_mass": 4.7697817431762815
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 40,
+              "rows": 40,
+              "broad_alpha_mass": 10.835045166313648,
+              "old_domain_alpha_mass": 5.5446036998182535,
+              "body_alpha_mass": 1.171554700937122,
+              "effect_alpha_mass": 0.02014603465795517
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 18,
+              "rows": 18,
+              "broad_alpha_mass": 8.172554597258568,
+              "old_domain_alpha_mass": 2.848234251141548,
+              "body_alpha_mass": 1.4232642948627472,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 18,
+              "rows": 18,
+              "broad_alpha_mass": 8.172554597258568,
+              "old_domain_alpha_mass": 2.848234251141548,
+              "body_alpha_mass": 1.4232642948627472,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 5.638563254382461,
+              "old_domain_alpha_mass": 2.2934561669826508,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 2.2934561744332314
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 1,
+              "rows": 1,
+              "broad_alpha_mass": 3.8796002864837646,
+              "old_domain_alpha_mass": 0.876194953918457,
+              "body_alpha_mass": 0.371488481760025,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 6,
+              "rows": 6,
+              "broad_alpha_mass": 0.3199395202100277,
+              "old_domain_alpha_mass": 0.29480060562491417,
+              "body_alpha_mass": 0.28507159277796745,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "gates_open_same_domain",
+          "remaining": {
+            "rows": 31122,
+            "broad_alpha_mass": 14070.160381609698,
+            "old_domain_alpha_mass": 1.565006681252271,
+            "body_alpha_mass": 0.8842214061878622,
+            "effect_alpha_mass": 0.06825842848047614
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 593,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 71,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 6,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 1,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 231,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 141,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 40,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 104,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 67,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 305,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 122,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "broad_once",
+          "remaining": {
+            "rows": 40,
+            "broad_alpha_mass": 9.87389988778159,
+            "old_domain_alpha_mass": 0.0,
+            "body_alpha_mass": 0.0,
+            "effect_alpha_mass": 0.0
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 593,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 71,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 6,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 1,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 231,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 141,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 40,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 104,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 67,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 305,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 122,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "peel_01",
+          "remaining": {
+            "rows": 0,
+            "broad_alpha_mass": 0.0,
+            "old_domain_alpha_mass": 0.0,
+            "body_alpha_mass": 0.0,
+            "effect_alpha_mass": 0.0
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 593,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 71,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 6,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 1,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 231,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 141,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 40,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 104,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 67,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 305,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 122,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 18,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        }
+      ]
+    },
+    {
+      "raw": 114,
+      "scope": "fixed broad\u5f85\u67e5\u57df\u7684\u673a\u68b0\u8d21\u732e\uff0c\u5305\u542b\u9053\u8def/\u80cc\u666f\uff1b\u4e0d\u662f\u771f\u8f66\u5f71GT\uff0c\u4e0d\u662f\u72ec\u7acb\u8bed\u4e49recall\uff1b\u5404gate\u96c6\u5408\u91cd\u53e0\uff0c\u4e0d\u80fd\u76f8\u52a0",
+      "stages": [
+        {
+          "stage": "actor_omitted",
+          "remaining": {
+            "rows": 36583,
+            "broad_alpha_mass": 20379.199091492002,
+            "old_domain_alpha_mass": 2812.801234228652,
+            "body_alpha_mass": 2213.0500647368817,
+            "effect_alpha_mass": 258.71298140534236
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 2455,
+              "broad_alpha_mass": 5467.533288795399,
+              "old_domain_alpha_mass": 163.18173274153378,
+              "body_alpha_mass": 63.948799324651986,
+              "effect_alpha_mass": 44.8973924788952
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 1959,
+              "broad_alpha_mass": 5461.905598145197,
+              "old_domain_alpha_mass": 156.07083620809135,
+              "body_alpha_mass": 56.60377851436431,
+              "effect_alpha_mass": 45.41558840586367
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 2268,
+              "broad_alpha_mass": 5460.644622924461,
+              "old_domain_alpha_mass": 161.71973533480195,
+              "body_alpha_mass": 63.88850077936593,
+              "effect_alpha_mass": 43.79448381247494
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 2021,
+              "broad_alpha_mass": 5441.971893342023,
+              "old_domain_alpha_mass": 148.2550611862971,
+              "body_alpha_mass": 59.7641849327382,
+              "effect_alpha_mass": 45.34610144998442
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 1623,
+              "broad_alpha_mass": 5434.861631035179,
+              "old_domain_alpha_mass": 147.17101872895728,
+              "body_alpha_mass": 52.18915799231843,
+              "effect_alpha_mass": 45.40123239445529
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 2490,
+              "broad_alpha_mass": 3424.392316872385,
+              "old_domain_alpha_mass": 71.95246784336632,
+              "body_alpha_mass": 16.607227188965112,
+              "effect_alpha_mass": 25.75989765086706
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 2484,
+              "broad_alpha_mass": 3323.932334298399,
+              "old_domain_alpha_mass": 106.36679364129668,
+              "body_alpha_mass": 49.759123722521394,
+              "effect_alpha_mass": 6.473746220297471
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 1173,
+              "broad_alpha_mass": 3182.949142057434,
+              "old_domain_alpha_mass": 90.55134133531101,
+              "body_alpha_mass": 31.280841691154706,
+              "effect_alpha_mass": 36.17014119140367
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 1173,
+              "broad_alpha_mass": 3182.949142057434,
+              "old_domain_alpha_mass": 90.55134133531101,
+              "body_alpha_mass": 31.280841691154706,
+              "effect_alpha_mass": 36.17014119140367
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 2418,
+              "broad_alpha_mass": 2466.504852676895,
+              "old_domain_alpha_mass": 93.40234061185038,
+              "body_alpha_mass": 44.817383890237465,
+              "effect_alpha_mass": 2.126280353120819
+            },
+            {
+              "gate": "body_mass",
+              "rows": 2394,
+              "broad_alpha_mass": 2146.947654571515,
+              "old_domain_alpha_mass": 42.80363718181616,
+              "body_alpha_mass": 10.773470097651511,
+              "effect_alpha_mass": 12.92651498941268
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 1299,
+              "broad_alpha_mass": 1899.0523595122067,
+              "old_domain_alpha_mass": 24.434441143355798,
+              "body_alpha_mass": 0.06287774533200263,
+              "effect_alpha_mass": 12.482657054970332
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 2132,
+              "broad_alpha_mass": 1833.9636206069408,
+              "old_domain_alpha_mass": 27.50372906163102,
+              "body_alpha_mass": 9.988367719521989,
+              "effect_alpha_mass": 12.07173866051744
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 130,
+              "rows": 130,
+              "broad_alpha_mass": 3003.589837998152,
+              "old_domain_alpha_mass": 70.30360083375126,
+              "body_alpha_mass": 19.13141543441452,
+              "effect_alpha_mass": 43.29206565953791
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 64,
+              "rows": 64,
+              "broad_alpha_mass": 2146.162356376648,
+              "old_domain_alpha_mass": 57.33914780430496,
+              "body_alpha_mass": 14.189675602130592,
+              "effect_alpha_mass": 38.94459979236126
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 171,
+              "rows": 171,
+              "broad_alpha_mass": 1686.2889325991273,
+              "old_domain_alpha_mass": 54.16226221807301,
+              "body_alpha_mass": 26.65390394325368,
+              "effect_alpha_mass": 7.221178051782772
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 1577.885996490717,
+              "old_domain_alpha_mass": 50.769398864358664,
+              "body_alpha_mass": 26.112459490075707,
+              "effect_alpha_mass": 7.076904372079298
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 486,
+              "rows": 486,
+              "broad_alpha_mass": 16.721011012705276,
+              "old_domain_alpha_mass": 7.3651567300839815,
+              "body_alpha_mass": 5.601077029918088,
+              "effect_alpha_mass": 0.009840266313403845
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 15,
+              "rows": 15,
+              "broad_alpha_mass": 12.468206284567714,
+              "old_domain_alpha_mass": 4.392709834501147,
+              "body_alpha_mass": 2.17326851002872,
+              "effect_alpha_mass": 0.006543284049257636
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 15,
+              "rows": 15,
+              "broad_alpha_mass": 12.468206284567714,
+              "old_domain_alpha_mass": 4.392709834501147,
+              "body_alpha_mass": 2.17326851002872,
+              "effect_alpha_mass": 0.006543284049257636
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 89,
+              "rows": 89,
+              "broad_alpha_mass": 9.98390593379736,
+              "old_domain_alpha_mass": 5.32014992646873,
+              "body_alpha_mass": 0.000906125787878409,
+              "effect_alpha_mass": 0.030580450780689716
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 280,
+              "rows": 280,
+              "broad_alpha_mass": 9.450067750585731,
+              "old_domain_alpha_mass": 1.9862061107996851,
+              "body_alpha_mass": 0.06029854528605938,
+              "effect_alpha_mass": 1.623862200183794
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 29,
+              "rows": 29,
+              "broad_alpha_mass": 6.432509800419211,
+              "old_domain_alpha_mass": 4.276762001216412,
+              "body_alpha_mass": 1.7315039336681366,
+              "effect_alpha_mass": 0.015399523777887225
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 2,
+              "rows": 2,
+              "broad_alpha_mass": 5.714537143707275,
+              "old_domain_alpha_mass": 2.5295405983924866,
+              "body_alpha_mass": 1.3700700998306274,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 201,
+              "rows": 201,
+              "broad_alpha_mass": 5.057479333598167,
+              "old_domain_alpha_mass": 2.9751716973260045,
+              "body_alpha_mass": 1.8510652933036909,
+              "effect_alpha_mass": 0.009840266313403845
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 2.5614018796477467,
+              "old_domain_alpha_mass": 0.5242087040678598,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.5209535337635316
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 5,
+              "rows": 5,
+              "broad_alpha_mass": 0.14398053102195263,
+              "old_domain_alpha_mass": 0.14398053102195263,
+              "body_alpha_mass": 0.128600450232625,
+              "effect_alpha_mass": 0.0027576067950576544
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "existing",
+          "remaining": {
+            "rows": 30149,
+            "broad_alpha_mass": 18293.27047866721,
+            "old_domain_alpha_mass": 1185.9705446271837,
+            "body_alpha_mass": 834.6175188391353,
+            "effect_alpha_mass": 139.88055836688727
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 2455,
+              "broad_alpha_mass": 8149.362346274807,
+              "old_domain_alpha_mass": 1183.678648716712,
+              "body_alpha_mass": 834.24111210712,
+              "effect_alpha_mass": 138.22989182914898
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 2268,
+              "broad_alpha_mass": 8136.673774087598,
+              "old_domain_alpha_mass": 1180.7116295373417,
+              "body_alpha_mass": 834.1533530398156,
+              "effect_alpha_mass": 135.80453945645422
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 1959,
+              "broad_alpha_mass": 8044.488393070205,
+              "old_domain_alpha_mass": 1080.573512974137,
+              "body_alpha_mass": 733.6450994742918,
+              "effect_alpha_mass": 139.8700175149861
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 2021,
+              "broad_alpha_mass": 8039.180679731799,
+              "old_domain_alpha_mass": 1100.8905307128443,
+              "body_alpha_mass": 785.0852324214065,
+              "effect_alpha_mass": 139.75959553146095
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 1623,
+              "broad_alpha_mass": 7891.429193659715,
+              "old_domain_alpha_mass": 979.8483302490204,
+              "body_alpha_mass": 651.7633928469731,
+              "effect_alpha_mass": 139.82984318486706
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 2484,
+              "broad_alpha_mass": 5548.818158516224,
+              "old_domain_alpha_mass": 959.9470641691587,
+              "body_alpha_mass": 749.599660584412,
+              "effect_alpha_mass": 15.814508203373407
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 2490,
+              "broad_alpha_mass": 5027.404834756191,
+              "old_domain_alpha_mass": 685.1526447259239,
+              "body_alpha_mass": 498.47895335563226,
+              "effect_alpha_mass": 67.41431235331402
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 2418,
+              "broad_alpha_mass": 4272.408912134852,
+              "old_domain_alpha_mass": 873.6743006822071,
+              "body_alpha_mass": 694.8774037060211,
+              "effect_alpha_mass": 5.608859640502487
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 1173,
+              "broad_alpha_mass": 3833.932408741006,
+              "old_domain_alpha_mass": 306.97817228297936,
+              "body_alpha_mass": 142.77422329748515,
+              "effect_alpha_mass": 108.33372356738255
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 1173,
+              "broad_alpha_mass": 3833.932408741006,
+              "old_domain_alpha_mass": 306.97817228297936,
+              "body_alpha_mass": 142.77422329748515,
+              "effect_alpha_mass": 108.33372356738255
+            },
+            {
+              "gate": "body_mass",
+              "rows": 2394,
+              "broad_alpha_mass": 3060.6937435227737,
+              "old_domain_alpha_mass": 329.3986053210101,
+              "body_alpha_mass": 217.96639840089483,
+              "effect_alpha_mass": 29.220621076136013
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 2132,
+              "broad_alpha_mass": 2892.745677414845,
+              "old_domain_alpha_mass": 543.6262042153976,
+              "body_alpha_mass": 460.66921453305986,
+              "effect_alpha_mass": 25.336883542317082
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 1299,
+              "broad_alpha_mass": 2274.9107972029888,
+              "old_domain_alpha_mass": 67.34842955874046,
+              "body_alpha_mass": 5.909110659908038,
+              "effect_alpha_mass": 25.505971048682113
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 130,
+              "rows": 130,
+              "broad_alpha_mass": 3883.45763522014,
+              "old_domain_alpha_mass": 311.65322311781347,
+              "body_alpha_mass": 139.36370840109885,
+              "effect_alpha_mass": 134.2655507819727
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 2977.6491926312447,
+              "old_domain_alpha_mass": 641.3048951849341,
+              "body_alpha_mass": 518.2361003737897,
+              "effect_alpha_mass": 26.2192220648285
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 171,
+              "rows": 171,
+              "broad_alpha_mass": 2849.8858023285866,
+              "old_domain_alpha_mass": 390.64473982714117,
+              "body_alpha_mass": 269.39855545712635,
+              "effect_alpha_mass": 27.985955061158165
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 64,
+              "rows": 64,
+              "broad_alpha_mass": 2607.048388838768,
+              "old_domain_alpha_mass": 225.38045963086188,
+              "body_alpha_mass": 84.64145152270794,
+              "effect_alpha_mass": 124.05990221910179
+            },
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 486,
+              "rows": 486,
+              "broad_alpha_mass": 207.70475390180945,
+              "old_domain_alpha_mass": 168.5543348584324,
+              "body_alpha_mass": 151.74462052364834,
+              "effect_alpha_mass": 0.020360376220196486
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 201,
+              "rows": 201,
+              "broad_alpha_mass": 59.454199988394976,
+              "old_domain_alpha_mass": 50.15115508530289,
+              "body_alpha_mass": 40.743119292426854,
+              "effect_alpha_mass": 0.020360376220196486
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 89,
+              "rows": 89,
+              "broad_alpha_mass": 23.998265717178583,
+              "old_domain_alpha_mass": 13.581915844231844,
+              "body_alpha_mass": 0.008550758007913828,
+              "effect_alpha_mass": 0.0469239610247314
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 280,
+              "rows": 280,
+              "broad_alpha_mass": 19.19277326739393,
+              "old_domain_alpha_mass": 4.615894262678921,
+              "body_alpha_mass": 0.08775906730443239,
+              "effect_alpha_mass": 4.0698709660209715
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 15,
+              "rows": 15,
+              "broad_alpha_mass": 13.643240047618747,
+              "old_domain_alpha_mass": 4.743509558960795,
+              "body_alpha_mass": 2.336057586595416,
+              "effect_alpha_mass": 0.008553677704185247
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 15,
+              "rows": 15,
+              "broad_alpha_mass": 13.643240047618747,
+              "old_domain_alpha_mass": 4.743509558960795,
+              "body_alpha_mass": 2.336057586595416,
+              "effect_alpha_mass": 0.008553677704185247
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 29,
+              "rows": 29,
+              "broad_alpha_mass": 7.88523724861443,
+              "old_domain_alpha_mass": 5.369084045290947,
+              "body_alpha_mass": 1.912541734520346,
+              "effect_alpha_mass": 0.02064379444345832
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 93,
+              "broad_alpha_mass": 6.50420108018443,
+              "old_domain_alpha_mass": 1.648875083308667,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 1.644518593326211
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 2,
+              "rows": 2,
+              "broad_alpha_mass": 6.1602723598480225,
+              "old_domain_alpha_mass": 2.6066749691963196,
+              "body_alpha_mass": 1.4034931659698486,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 5,
+              "rows": 5,
+              "broad_alpha_mass": 0.22141250781714916,
+              "old_domain_alpha_mass": 0.22141250781714916,
+              "body_alpha_mass": 0.19740700535476208,
+              "effect_alpha_mass": 0.004392907489091158
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "gates_open_same_domain",
+          "remaining": {
+            "rows": 27610,
+            "broad_alpha_mass": 13939.283791723792,
+            "old_domain_alpha_mass": 1.4967935553286225,
+            "body_alpha_mass": 0.7307379781268537,
+            "effect_alpha_mass": 0.1187095632776618
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 486,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 5,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 2,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 201,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 171,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 29,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 89,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 64,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 280,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 130,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "broad_once",
+          "remaining": {
+            "rows": 24,
+            "broad_alpha_mass": 5.169339027721435,
+            "old_domain_alpha_mass": 0.0314406999386847,
+            "body_alpha_mass": 0.0,
+            "effect_alpha_mass": 0.0314406999386847
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 486,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 5,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 2,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 201,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 171,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 29,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 89,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 64,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 280,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 130,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        },
+        {
+          "stage": "peel_01",
+          "remaining": {
+            "rows": 0,
+            "broad_alpha_mass": 0.0,
+            "old_domain_alpha_mass": 0.0,
+            "body_alpha_mass": 0.0,
+            "effect_alpha_mass": 0.0
+          },
+          "failed_gate_multilabel_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "single_gate_marginal_sorted_by_broad_mass": [
+            {
+              "gate": "body_mass",
+              "global_marginal_added_rows": 486,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_fraction",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_repeat",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_mass",
+              "global_marginal_added_rows": 5,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "single_core_fraction",
+              "global_marginal_added_rows": 2,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_mass",
+              "global_marginal_added_rows": 201,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_fraction",
+              "global_marginal_added_rows": 171,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_repeat",
+              "global_marginal_added_rows": 29,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "boundary_body_mass",
+              "global_marginal_added_rows": 89,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_mass",
+              "global_marginal_added_rows": 93,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "strict_shadow_fraction",
+              "global_marginal_added_rows": 64,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_mass",
+              "global_marginal_added_rows": 280,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "photo_shadow_fraction",
+              "global_marginal_added_rows": 130,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            },
+            {
+              "gate": "body_support_requirement",
+              "global_marginal_added_rows": 15,
+              "rows": 0,
+              "broad_alpha_mass": 0.0,
+              "old_domain_alpha_mass": 0.0,
+              "body_alpha_mass": 0.0,
+              "effect_alpha_mass": 0.0
+            }
+          ],
+          "note": "failed condition is not necessarily the sole cause; marginal means only this gate was relaxed while the OR/AND formula stayed fixed"
+        }
+      ]
+    }
+  ]
+}

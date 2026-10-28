@@ -35,8 +35,13 @@ viewer=(W/'scene_viewer.js').read_text(encoding='utf8')
 for marker,name in [('EDIT_GEOMETRY','scene_edit_geometry.js'),('SAMPLING','scene_sampling.js'),('SEMANTIC','scene_semantics.js')]:viewer=viewer.replace('/* '+marker+'_RUNTIME */',(W/name).read_text(encoding='utf8'))
 viewer=viewer.replace('/* BOUNDARY_RUNTIME */',(W/'scene_boundary_semantics.js').read_text(encoding='utf8'))
 (O/'viewer.js').write_text(viewer,encoding='utf8')
+import shutil
+shutil.copy2(W/'scene_target_detection.js',O/'scene_target_detection.js')
 for scene in json.loads((O/'scenes.json').read_text(encoding='utf8')):
-    (O/scene['context']/'index.html').write_text((W/'scene_viewer.html').read_text(encoding='utf8'),encoding='utf8')
+    folder=O/scene['context'];page=(W/'scene_viewer.html').read_text(encoding='utf8')
+    if (folder/'target_detection_data.js').exists():
+        page=page.replace('<!-- target-detection-data-start --><!-- target-detection-data-end -->','<!-- target-detection-data-start --><script src="target_detection_data.js?v=target-detection-2"></script><!-- target-detection-data-end -->')
+    (folder/'index.html').write_text(page,encoding='utf8')
     if not (O/scene['context']/'v43_groups.js').exists():(O/scene['context']/'v43_groups.js').write_text('// V43 nodes pending; never substitute smoke for formal.\n')
 print('GPU viewer patched; all prior groups retained')
 if (B/'outputs/V43_Ownership_20261027/gpu_v43/first_badcase_delivery_v1/delivery_validation.json').exists():

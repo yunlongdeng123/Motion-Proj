@@ -4,6 +4,8 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-TARGET-DETECTION-20261028 / recall-ceiling-r1 | 三帧召回上界、规则漏检与after重算、环境源精确归因；背景仅记录、训练0 | [组件与结果](autoresearch/v43_ownership_20261028/RECALL_CEILING_V1.md) |
+| WS-V43-TARGET-DETECTION-20261028 / frozen-evidence-r1 | 第一场景49帧独立阴影证据、3帧四设置原生剥离、背景见证与199源覆盖；训练0，仍未通过去影保背景 | [报告与组件](autoresearch/v43_ownership_20261028/TARGET_DETECTION_V3.md) |
 | WS-V43-OWNERSHIP-STRUCTURE-20261028 | 三开发场景49帧语义与真实Gaussian贡献、静态车身深度支持及Actor局部结构10K探针；执行与质量分开 | [当前状态](RESEARCH_STATUS.md)、[协议](autoresearch/v43_ownership_20261028/EXPERIMENT_CONTRACT.md) |
 | WS-V82-FULLCLIP-ROAD-CPU-20261026 | 相同20cm网格49/199帧重初始化，中心真实露出与49帧零更新GPU贡献；核心已补点但静态遮挡仍在 | [报告与组件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/fullclip_20261026/README.md) |
 | WS-V82-GN11-V42-FREEINPAINT-20261026 / 首轮协议 | 固定B、FreeInpaint中心候选、全洞撤源控制、三种子、四组合编辑归因；配置与smoke/恢复/交付合同，不代表实验结果 | [实验协议](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/EXPERIMENT_PLAN_20261026.md)、[路线组件](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/PRIORITY_ROADMAP_20261026.md) |

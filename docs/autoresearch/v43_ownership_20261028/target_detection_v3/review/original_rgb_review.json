@@ -1,0 +1,550 @@
+{
+  "review_type": "original_rgb_visual_review",
+  "ground_truth": false,
+  "scope": "AI model visual inspection of the exact original captured RGB frames supplied in review/raw_rgb. Only the middle dark SUV is the target. Boundaries below are coarse candidate regions for downstream comparison, not pixel masks or ground-truth labels.",
+  "image_size_px": [
+    480,
+    320
+  ],
+  "coordinate_convention": "Origin at upper-left. Bboxes are [x_min,y_min,x_max,y_max), polygons are approximate ordered pixel vertices. Boundaries have low precision due to small image size and soft shadow edges.",
+  "distinction_rules_from_observation": [
+    "The target SUV is the dark SUV near the middle of each image (approximately x=293..351, y=172..220).",
+    "The light gray sedan to its right is a separate vehicle; its own close, narrow road-contact shadow is to be excluded from the target SUV candidate.",
+    "The dark gray area immediately below the SUV is a possible ground-contact/projected shadow. The vehicle silhouette, tire bottoms, and soft dark pixels overlap, so no sharp physical boundary is visible.",
+    "Long narrow gray seams/cracks and irregular pavement marks farther down the road (notably around x=225..270, y=237..319) follow roadway texture and do not form a compact footprint attached to the SUV. Do not include them as SUV shadow candidates.",
+    "No deletion/edit/comparison output was used to infer these original-image regions."
+  ],
+  "frames": [
+    {
+      "raw_frame": 98,
+      "image": "work/v43_unknown_detection_20261028/review/raw_rgb/098.png",
+      "target_vehicle_bbox_px": [
+        292,
+        171,
+        352,
+        218
+      ],
+      "candidates": [
+        {
+          "kind": "underbody_contact_shadow_candidate",
+          "bbox_px": [
+            295,
+            207,
+            350,
+            220
+          ],
+          "polygon_px": [
+            [
+              295,
+              208
+            ],
+            [
+              302,
+              207
+            ],
+            [
+              310,
+              211
+            ],
+            [
+              337,
+              211
+            ],
+            [
+              347,
+              207
+            ],
+            [
+              350,
+              210
+            ],
+            [
+              349,
+              219
+            ],
+            [
+              297,
+              219
+            ]
+          ],
+          "observation": "Narrow dark band/patch at rear tire and lower bumper contact area. This mixes tire/undercarriage pixels with possible immediate contact shadow; label remains uncertain.",
+          "confidence": "low"
+        },
+        {
+          "kind": "projected_shadow_candidate",
+          "bbox_px": [
+            287,
+            212,
+            355,
+            231
+          ],
+          "polygon_px": [
+            [
+              291,
+              215
+            ],
+            [
+              301,
+              212
+            ],
+            [
+              317,
+              215
+            ],
+            [
+              341,
+              213
+            ],
+            [
+              352,
+              217
+            ],
+            [
+              355,
+              223
+            ],
+            [
+              344,
+              227
+            ],
+            [
+              320,
+              224
+            ],
+            [
+              303,
+              229
+            ],
+            [
+              291,
+              225
+            ]
+          ],
+          "observation": "Very soft, low-contrast darker pavement region contiguous with/below the SUV, strongest near the wheels and underside. No crisp outer edge; this is a review window for candidate checking, not a confirmed cast-shadow mask.",
+          "confidence": "very low"
+        },
+        {
+          "kind": "nearby_right_sedan_shadow_exclusion",
+          "bbox_px": [
+            374,
+            211,
+            451,
+            228
+          ],
+          "observation": "Separate narrow dark region directly under the light gray sedan to the right. Its spatial attachment is to that sedan, not the middle SUV.",
+          "confidence": "medium"
+        },
+        {
+          "kind": "road_texture_exclusion",
+          "bbox_px": [
+            220,
+            235,
+            280,
+            320
+          ],
+          "observation": "Long road seams/cracks and irregular stains below-left of the SUV; visually extended along the pavement rather than compact and attached to the SUV.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "raw_frame": 101,
+      "image": "work/v43_unknown_detection_20261028/review/raw_rgb/101.png",
+      "target_vehicle_bbox_px": [
+        292,
+        171,
+        352,
+        219
+      ],
+      "candidates": [
+        {
+          "kind": "underbody_contact_shadow_candidate",
+          "bbox_px": [
+            294,
+            208,
+            350,
+            221
+          ],
+          "polygon_px": [
+            [
+              295,
+              209
+            ],
+            [
+              302,
+              207
+            ],
+            [
+              310,
+              212
+            ],
+            [
+              337,
+              212
+            ],
+            [
+              347,
+              208
+            ],
+            [
+              350,
+              211
+            ],
+            [
+              349,
+              220
+            ],
+            [
+              297,
+              220
+            ]
+          ],
+          "observation": "Possible thin contact/underside darkening at the SUV tires and lower rear edge. It is inseparable from tire and bumper shading at this resolution.",
+          "confidence": "low"
+        },
+        {
+          "kind": "projected_shadow_candidate",
+          "bbox_px": [
+            287,
+            213,
+            356,
+            232
+          ],
+          "polygon_px": [
+            [
+              290,
+              217
+            ],
+            [
+              301,
+              213
+            ],
+            [
+              315,
+              216
+            ],
+            [
+              340,
+              214
+            ],
+            [
+              352,
+              218
+            ],
+            [
+              356,
+              224
+            ],
+            [
+              345,
+              228
+            ],
+            [
+              322,
+              225
+            ],
+            [
+              303,
+              230
+            ],
+            [
+              289,
+              226
+            ]
+          ],
+          "observation": "A faint diffuse darkening immediately below the SUV may be a projected vehicle shadow; edge is weak and merges with the road tone. Keep as a candidate region only.",
+          "confidence": "very low"
+        },
+        {
+          "kind": "nearby_right_sedan_shadow_exclusion",
+          "bbox_px": [
+            379,
+            211,
+            453,
+            230
+          ],
+          "observation": "The separate right-hand sedan has a short dark band immediately under its own wheels/body. Do not merge it with the SUV candidate.",
+          "confidence": "medium"
+        },
+        {
+          "kind": "road_texture_exclusion",
+          "bbox_px": [
+            218,
+            235,
+            281,
+            320
+          ],
+          "observation": "Persistent longitudinal road repair/seam and surface marks below-left of the SUV; not a compact shadow attached to the SUV.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "raw_frame": 113,
+      "image": "work/v43_unknown_detection_20261028/review/raw_rgb/113.png",
+      "target_vehicle_bbox_px": [
+        291,
+        172,
+        352,
+        222
+      ],
+      "candidates": [
+        {
+          "kind": "underbody_contact_shadow_candidate",
+          "bbox_px": [
+            294,
+            210,
+            350,
+            223
+          ],
+          "polygon_px": [
+            [
+              295,
+              211
+            ],
+            [
+              302,
+              209
+            ],
+            [
+              311,
+              213
+            ],
+            [
+              337,
+              213
+            ],
+            [
+              347,
+              210
+            ],
+            [
+              351,
+              213
+            ],
+            [
+              349,
+              222
+            ],
+            [
+              297,
+              222
+            ]
+          ],
+          "observation": "Darkening at the tire bottoms/lower rear edge, possibly immediate contact shadow but mixed with visible tire and underbody shading.",
+          "confidence": "low"
+        },
+        {
+          "kind": "projected_shadow_candidate",
+          "bbox_px": [
+            286,
+            215,
+            356,
+            235
+          ],
+          "polygon_px": [
+            [
+              290,
+              219
+            ],
+            [
+              302,
+              215
+            ],
+            [
+              317,
+              218
+            ],
+            [
+              341,
+              216
+            ],
+            [
+              353,
+              220
+            ],
+            [
+              356,
+              227
+            ],
+            [
+              345,
+              231
+            ],
+            [
+              321,
+              228
+            ],
+            [
+              302,
+              233
+            ],
+            [
+              288,
+              229
+            ]
+          ],
+          "observation": "Possible soft, close projected shadow below the SUV. The boundary is not distinct against the gray roadway; this region is intentionally conservative and uncertain.",
+          "confidence": "very low"
+        },
+        {
+          "kind": "nearby_right_sedan_shadow_exclusion",
+          "bbox_px": [
+            444,
+            211,
+            480,
+            229
+          ],
+          "observation": "Only part of the right-hand sedan is in frame. Its own lower-body/road-contact darkening lies at the far right and is separate from the target SUV.",
+          "confidence": "low"
+        },
+        {
+          "kind": "road_texture_exclusion",
+          "bbox_px": [
+            218,
+            245,
+            281,
+            320
+          ],
+          "observation": "Road seams/stains extend down-frame below-left of the SUV, including dark linear texture. Their elongated continuation and separation from the SUV distinguish them from the compact shadow candidate.",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "raw_frame": 114,
+      "image": "work/v43_unknown_detection_20261028/review/raw_rgb/114.png",
+      "target_vehicle_bbox_px": [
+        291,
+        172,
+        352,
+        222
+      ],
+      "candidates": [
+        {
+          "kind": "underbody_contact_shadow_candidate",
+          "bbox_px": [
+            294,
+            210,
+            350,
+            223
+          ],
+          "polygon_px": [
+            [
+              295,
+              211
+            ],
+            [
+              302,
+              209
+            ],
+            [
+              311,
+              213
+            ],
+            [
+              337,
+              213
+            ],
+            [
+              347,
+              210
+            ],
+            [
+              351,
+              213
+            ],
+            [
+              349,
+              222
+            ],
+            [
+              297,
+              222
+            ]
+          ],
+          "observation": "Possible underbody/contact darkening at the SUV tire line; visible tires and bumper make a separate ground shadow edge indeterminate.",
+          "confidence": "low"
+        },
+        {
+          "kind": "projected_shadow_candidate",
+          "bbox_px": [
+            286,
+            215,
+            356,
+            235
+          ],
+          "polygon_px": [
+            [
+              290,
+              219
+            ],
+            [
+              302,
+              215
+            ],
+            [
+              317,
+              218
+            ],
+            [
+              341,
+              216
+            ],
+            [
+              353,
+              220
+            ],
+            [
+              356,
+              227
+            ],
+            [
+              345,
+              231
+            ],
+            [
+              321,
+              228
+            ],
+            [
+              302,
+              233
+            ],
+            [
+              288,
+              229
+            ]
+          ],
+          "observation": "A weak diffuse shadow-like patch immediately below the SUV is a candidate only. No definite outer silhouette can be followed into the pavement.",
+          "confidence": "very low"
+        },
+        {
+          "kind": "nearby_right_sedan_shadow_exclusion",
+          "bbox_px": [
+            444,
+            211,
+            480,
+            229
+          ],
+          "observation": "Partial lower edge/contact darkening of the separate sedan at the far right; it is not the target SUV shadow.",
+          "confidence": "low"
+        },
+        {
+          "kind": "road_texture_exclusion",
+          "bbox_px": [
+            218,
+            245,
+            281,
+            320
+          ],
+          "observation": "Longitudinal/irregular road marks below-left remain visible and are spatially detached from the SUV footprint; treat as existing pavement texture.",
+          "confidence": "medium"
+        }
+      ]
+    }
+  ],
+  "summary": "The original photos clearly show an actual dark SUV at the center and a narrow dark contact zone beneath its wheels/lower body. A larger, separate projected-shadow boundary is not clearly resolved; the low-contrast area immediately below is recorded as a very-low-confidence candidate. The nearby right sedan's own contact shadow and long road seams/stains are separately excluded. These observations provide independent RGB evidence for candidate review but are not human ground-truth segmentation or physical ownership labels.",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null
+}

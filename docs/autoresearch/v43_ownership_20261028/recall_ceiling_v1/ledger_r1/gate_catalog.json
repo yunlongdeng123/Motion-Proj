@@ -1,0 +1,62 @@
+{
+  "row_selection_gates": {
+    "body_mass": "body_mass > 0.02",
+    "body_fraction": "body_mass / max(total,1e-8) > 0.05",
+    "body_repeat": "body_frames >= 2",
+    "single_core_mass": "core_mass > 0.05",
+    "single_core_fraction": "core_mass / total > 0.2",
+    "body_support_requirement": "body_repeat OR (single_core_mass AND single_core_fraction)",
+    "boundary_mass": "ring_mass > .02",
+    "boundary_fraction": "ring_mass/total > 0.2",
+    "boundary_repeat": "body_frames >= 2",
+    "boundary_body_mass": "body_mass > .001",
+    "strict_shadow_mass": "strict_shadow_mass > 0.01",
+    "strict_shadow_fraction": "strict_shadow_mass/total > 0.05",
+    "photo_shadow_mass": "photo_shadow_mass > 0.01",
+    "photo_shadow_fraction": "photo_shadow_mass/total > 0.05"
+  },
+  "formula": {
+    "body": "body_mass AND body_fraction AND body_support_requirement",
+    "boundary": "boundary_mass AND boundary_fraction AND boundary_repeat AND boundary_body_mass",
+    "shadow_strict": "strict_shadow_mass AND strict_shadow_fraction",
+    "shadow_photo": "photo_shadow_mass AND photo_shadow_fraction",
+    "photo_profile": "body OR boundary OR shadow_strict OR shadow_photo",
+    "shadow_profile": "shadow_strict OR shadow_photo"
+  },
+  "input_scope_and_export_gates": [
+    "raw target body mask fixed upstream; core erosion radius clip(round(.04*sqrt(body_pixels)),1,5)",
+    "ring=(distance_to_body<=radius) AND NOT core; contains body boundary and exterior band",
+    "probe exported ids iff without_actor body>1e-4 OR without_actor ring>1e-4 OR full body>1e-4",
+    "render evidence exported ids iff static_role>0 OR weak_bg_mass>.02; this can hide subthreshold contributors",
+    "recall broad domain is fixed raw-body-relative bbox expanded once and OR old_domain; it is an observation range, not car GT"
+  ],
+  "independent_shadow_upstream_gates": [
+    "same-scene/target original observations only; semantic prediction is Cityscapes+1",
+    "local actual-road plane >=100 inliers, residual<=.10m, fit radius15m and residual inlier .12m",
+    "candidate_domain world footprint distance<=5m; query inside camera; body excluded in r2 strict",
+    "query road confidence>=.55; actual-road LiDAR pixel radius<=2.5 and depth residual<=.65m; other actor clearance>=1m",
+    "source road confidence>=.75, dynamic semantic dilation3px, all-actor clearance>=2.5m and target>=4m",
+    "source luminosity .05..95; exposure >=60 actual shared anchors, medianRGB error<=.045, gain .65..1.5",
+    ">=3 different source frames; raw span>=5; reference medianRGB deviation<=.045",
+    "query luminance ratio .25..84; luminance drop>=.035; multiplicative RGB residual<=.035",
+    "target-carried witnesses offsets[-6,-3,3,6], target displacement>=.8m, >=2 visible darkening supports",
+    "strict connected component >=6 pixels",
+    "r3 propagation requires strict seed, independent per-pixel photo, color/ref continuity .045, ratio neighbor .12, step<=.8m, geodesic<=1.5m",
+    "old r3 propagation blocked weak_bg/body/actor/foreground; this historical rule is audited, NEVER reused as recall veto",
+    "contact uses direct frontmost actual LiDAR height within .05m of plane, raw bbox\u00b14 and bottom[-8,+5], same photo gates; no body hard exclusion"
+  ],
+  "not_candidate_veto_gates": [
+    "weak background depth-compatible mass only marks mixed; mixed is still removed",
+    "exterior fraction only marks mixed, not candidate veto",
+    "target-depth moments are computed but unused by current classify",
+    "shadow confidence score cap does not affect current bool-to-adjoint row selection",
+    "semantic class is not a direct row selection condition"
+  ],
+  "new_probe_thresholds": [
+    "producer mass_epsilon from summary, normally1e-4",
+    "later diagnostic peeling may use1e-7 and finite round budget; record exact producer receipt"
+  ],
+  "source_classify": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/code/classify_detection.py",
+  "background_veto": false,
+  "human_GT": null
+}

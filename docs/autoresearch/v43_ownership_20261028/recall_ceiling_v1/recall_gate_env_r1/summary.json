@@ -1,0 +1,68 @@
+{
+  "schema": "recall-gate-and-environment-source-v1",
+  "channels": [
+    "body",
+    "core",
+    "boundary",
+    "shadow_strict",
+    "shadow_photo",
+    "background_weak",
+    "background_depth_sum",
+    "background_depth_squared",
+    "target_depth_valid",
+    "target_depth_sum",
+    "target_depth_squared",
+    "candidate_union",
+    "total"
+  ],
+  "static_rows": 918850,
+  "omitted_rows_are_zero": true,
+  "receipts": [
+    {
+      "raw": 98,
+      "original_static_rows_with_any_support": 182315,
+      "adjoint_closure": 0.0,
+      "environment_texel_rows": 18957,
+      "environment_integral_relative_error": 8.275034133475856e-07,
+      "environment_negative_texels": 3827,
+      "environment_channels": [
+        "body",
+        "effect",
+        "broad_domain"
+      ],
+      "final_stage": "peel_01"
+    },
+    {
+      "raw": 113,
+      "original_static_rows_with_any_support": 130412,
+      "adjoint_closure": 1.7282101794080518e-07,
+      "environment_texel_rows": 21084,
+      "environment_integral_relative_error": 4.388588877191069e-06,
+      "environment_negative_texels": 4483,
+      "environment_channels": [
+        "body",
+        "effect",
+        "broad_domain"
+      ],
+      "final_stage": "peel_01"
+    },
+    {
+      "raw": 114,
+      "original_static_rows_with_any_support": 122910,
+      "adjoint_closure": 3.4087508993252413e-07,
+      "environment_texel_rows": 21444,
+      "environment_integral_relative_error": 2.5597887542971876e-06,
+      "environment_negative_texels": 4564,
+      "environment_channels": [
+        "body",
+        "effect",
+        "broad_domain"
+      ],
+      "final_stage": "peel_01"
+    }
+  ],
+  "source_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "environment_modified": false,
+  "wall_seconds": 4.518582420423627
+}

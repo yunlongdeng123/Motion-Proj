@@ -1,0 +1,679 @@
+{
+  "raw": 113,
+  "static_rows": 918850,
+  "original_selected": 6848,
+  "fine_gate_data_consistency": {
+    "body_mass_max_abs_difference_on_common_probe_ids": 3.0517578125e-05,
+    "old_probe_export_upper_bound_verified": true,
+    "exact_gate_input_source": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_gate_env_r1/113_gate_inputs.npz",
+    "exact_gate_channels": [
+      "body",
+      "core",
+      "boundary",
+      "shadow_strict",
+      "shadow_photo",
+      "background_weak",
+      "background_depth_sum",
+      "background_depth_squared",
+      "target_depth_valid",
+      "target_depth_sum",
+      "target_depth_squared",
+      "candidate_union",
+      "total"
+    ],
+    "exact_sparse_omitted_rows_zero": true
+  },
+  "formula_membership_audit": {
+    "known_formula_disagrees_original_membership": 0,
+    "formula_unknown_missing_fields": 0
+  },
+  "row_gate_states": {
+    "body_mass": {
+      "pass": 5282,
+      "fail": 913568,
+      "unknown": 0
+    },
+    "body_fraction": {
+      "pass": 6367,
+      "fail": 912483,
+      "unknown": 0
+    },
+    "body_repeat": {
+      "pass": 17239,
+      "fail": 901611,
+      "unknown": 0
+    },
+    "single_core_mass": {
+      "pass": 3154,
+      "fail": 915696,
+      "unknown": 0
+    },
+    "single_core_fraction": {
+      "pass": 5011,
+      "fail": 913839,
+      "unknown": 0
+    },
+    "boundary_mass": {
+      "pass": 2644,
+      "fail": 916206,
+      "unknown": 0
+    },
+    "boundary_fraction": {
+      "pass": 2303,
+      "fail": 916547,
+      "unknown": 0
+    },
+    "boundary_repeat": {
+      "pass": 17239,
+      "fail": 901611,
+      "unknown": 0
+    },
+    "boundary_body_mass": {
+      "pass": 6747,
+      "fail": 912103,
+      "unknown": 0
+    },
+    "strict_shadow_mass": {
+      "pass": 1044,
+      "fail": 917806,
+      "unknown": 0
+    },
+    "strict_shadow_fraction": {
+      "pass": 1128,
+      "fail": 917722,
+      "unknown": 0
+    },
+    "photo_shadow_mass": {
+      "pass": 1869,
+      "fail": 916981,
+      "unknown": 0
+    },
+    "photo_shadow_fraction": {
+      "pass": 2009,
+      "fail": 916841,
+      "unknown": 0
+    }
+  },
+  "single_gate_and_scope_relaxations": {
+    "drop_body_mass": {
+      "selected": 7441,
+      "definite_additions": 593,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_body_fraction": {
+      "selected": 6919,
+      "definite_additions": 71,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_body_repeat": {
+      "selected": 6866,
+      "definite_additions": 18,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_single_core_mass": {
+      "selected": 6854,
+      "definite_additions": 6,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_single_core_fraction": {
+      "selected": 6849,
+      "definite_additions": 1,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_boundary_mass": {
+      "selected": 7079,
+      "definite_additions": 231,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_boundary_fraction": {
+      "selected": 6989,
+      "definite_additions": 141,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_boundary_repeat": {
+      "selected": 6888,
+      "definite_additions": 40,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_boundary_body_mass": {
+      "selected": 6952,
+      "definite_additions": 104,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_strict_shadow_mass": {
+      "selected": 6941,
+      "definite_additions": 93,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_strict_shadow_fraction": {
+      "selected": 6915,
+      "definite_additions": 67,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_photo_shadow_mass": {
+      "selected": 7153,
+      "definite_additions": 305,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_photo_shadow_fraction": {
+      "selected": 6970,
+      "definite_additions": 122,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "drop_body_support_requirement": {
+      "selected": 6866,
+      "definite_additions": 18,
+      "possible_additions_missing_gate_fields": 0
+    },
+    "original_selected": {
+      "selected": 6848,
+      "definite_additions": 0
+    },
+    "any_positive_body": {
+      "selected": 8306,
+      "definite_additions": 1458
+    },
+    "any_positive_body_or_boundary": {
+      "selected": 9084,
+      "definite_additions": 2236
+    },
+    "all_initial_old_domain_contributors": {
+      "selected": 9525,
+      "definite_additions": 2677
+    },
+    "all_initial_broad_domain_contributors": {
+      "selected": 40620,
+      "definite_additions": 33772
+    }
+  },
+  "independent_shadow_pixel_gate_audit": {
+    "available": true,
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/shadow_evidence_r3/113.npz",
+    "original_strict_pixels": 145,
+    "saved_spatial_domain_pixels": 9553,
+    "body_pixels": 2202,
+    "single_gate_drop": {
+      "body_exclusion": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "query_road_semantic": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "query_actual_lidar": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "query_other_actor_clear": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "source_count_3": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "source_span_5": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "source_rgb_stable": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "luminance_ratio_lower": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "luminance_ratio_upper": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "luminance_drop": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "multiplicative_rgb_residual": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      },
+      "motion_support_2": {
+        "before_component_filter_pixels": 287,
+        "after_component_filter_pixels": 285,
+        "added_vs_original_strict_pixels": 140
+      },
+      "component_minimum_6": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 162,
+        "added_vs_original_strict_pixels": 17
+      },
+      "none": {
+        "before_component_filter_pixels": 162,
+        "after_component_filter_pixels": 145,
+        "added_vs_original_strict_pixels": 0
+      }
+    },
+    "scope_limit": "outside saved candidate_domain raw comparisons are missing, not zero; domain widening needs the independent broad contribution probe",
+    "missing_reference_data_pixels_in_saved_domain": 2836,
+    "background_counterevidence_pixels_record_only": 2589,
+    "background_veto": false,
+    "human_GT": null
+  },
+  "stages": [
+    {
+      "remaining_broad_contributors": 40620,
+      "remaining_broad_alpha_mass": 20089.14453125,
+      "scope_missed": 31095,
+      "inside_but_gated": 2677,
+      "newly_visible_vs_initial": 0,
+      "newly_visible_vs_previous_stage": null,
+      "not_in_old_probe_export": 32782,
+      "entered_old_domain_only_after_removal": 0,
+      "original_selected_still_contributing": 6848,
+      "background_counterevidence_overlap_record_only": 96,
+      "gate_fail_counts_multilabel": {
+        "body_mass": 2549,
+        "body_fraction": 1643,
+        "body_repeat": 1224,
+        "single_core_mass": 2624,
+        "single_core_fraction": 1979,
+        "boundary_mass": 2278,
+        "boundary_fraction": 2076,
+        "boundary_repeat": 1224,
+        "boundary_body_mass": 1342,
+        "strict_shadow_mass": 2610,
+        "strict_shadow_fraction": 2584,
+        "photo_shadow_mass": 2555,
+        "photo_shadow_fraction": 2372
+      },
+      "gate_unknown_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "rule_relaxation_remaining_coverage": {
+        "original_selected": 6848,
+        "drop_body_mass": 7441,
+        "drop_body_fraction": 6919,
+        "drop_body_repeat": 6866,
+        "drop_single_core_mass": 6854,
+        "drop_single_core_fraction": 6849,
+        "drop_boundary_mass": 7079,
+        "drop_boundary_fraction": 6989,
+        "drop_boundary_repeat": 6888,
+        "drop_boundary_body_mass": 6952,
+        "drop_strict_shadow_mass": 6941,
+        "drop_strict_shadow_fraction": 6915,
+        "drop_photo_shadow_mass": 7153,
+        "drop_photo_shadow_fraction": 6970,
+        "drop_body_support_requirement": 6866,
+        "any_positive_body": 8306,
+        "any_positive_body_or_boundary": 9084,
+        "all_initial_old_domain_contributors": 9525,
+        "all_initial_broad_domain_contributors": 40620
+      },
+      "source_artifact": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/actor_omitted/contributors.npz",
+      "selection_source": "existing actor identity only",
+      "background_veto": false,
+      "labels_for_training": false,
+      "human_GT": null,
+      "non_gaussian_environment_diagnostic": {
+        "alpha_mean": 0.9458165975164784,
+        "env_rgb_mean": [
+          0.03888588026165962,
+          0.041961319744586945,
+          0.04836428537964821
+        ],
+        "negative_environment_pixels": 4093,
+        "negative_native_pixels": 0,
+        "source": "fixed original environment multiplied by post-removal transmittance; no row ID, not car GT"
+      },
+      "stage": "actor_omitted"
+    },
+    {
+      "remaining_broad_contributors": 33785,
+      "remaining_broad_alpha_mass": 18068.431640625,
+      "scope_missed": 31079,
+      "inside_but_gated": 2677,
+      "newly_visible_vs_initial": 13,
+      "newly_visible_vs_previous_stage": 13,
+      "not_in_old_probe_export": 31549,
+      "entered_old_domain_only_after_removal": 29,
+      "original_selected_still_contributing": 0,
+      "background_counterevidence_overlap_record_only": 95,
+      "gate_fail_counts_multilabel": {
+        "body_mass": 2549,
+        "body_fraction": 1643,
+        "body_repeat": 1224,
+        "single_core_mass": 2624,
+        "single_core_fraction": 1979,
+        "boundary_mass": 2278,
+        "boundary_fraction": 2076,
+        "boundary_repeat": 1224,
+        "boundary_body_mass": 1342,
+        "strict_shadow_mass": 2610,
+        "strict_shadow_fraction": 2584,
+        "photo_shadow_mass": 2555,
+        "photo_shadow_fraction": 2372
+      },
+      "gate_unknown_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "rule_relaxation_remaining_coverage": {
+        "original_selected": 0,
+        "drop_body_mass": 593,
+        "drop_body_fraction": 71,
+        "drop_body_repeat": 18,
+        "drop_single_core_mass": 6,
+        "drop_single_core_fraction": 1,
+        "drop_boundary_mass": 231,
+        "drop_boundary_fraction": 141,
+        "drop_boundary_repeat": 40,
+        "drop_boundary_body_mass": 104,
+        "drop_strict_shadow_mass": 93,
+        "drop_strict_shadow_fraction": 67,
+        "drop_photo_shadow_mass": 305,
+        "drop_photo_shadow_fraction": 122,
+        "drop_body_support_requirement": 18,
+        "any_positive_body": 1458,
+        "any_positive_body_or_boundary": 2236,
+        "all_initial_old_domain_contributors": 2677,
+        "all_initial_broad_domain_contributors": 33772
+      },
+      "source_artifact": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/existing/contributors.npz",
+      "selection_source": "previous frozen candidate labels",
+      "background_veto": false,
+      "labels_for_training": false,
+      "human_GT": null,
+      "non_gaussian_environment_diagnostic": {
+        "alpha_mean": 0.8506795477283428,
+        "env_rgb_mean": [
+          0.21162037551403046,
+          0.20163172483444214,
+          0.23491643369197845
+        ],
+        "negative_environment_pixels": 4093,
+        "negative_native_pixels": 187,
+        "source": "fixed original environment multiplied by post-removal transmittance; no row ID, not car GT"
+      },
+      "stage": "existing"
+    },
+    {
+      "remaining_broad_contributors": 31122,
+      "remaining_broad_alpha_mass": 14070.16015625,
+      "scope_missed": 31093,
+      "inside_but_gated": 0,
+      "newly_visible_vs_initial": 27,
+      "newly_visible_vs_previous_stage": 14,
+      "not_in_old_probe_export": 31122,
+      "entered_old_domain_only_after_removal": 29,
+      "original_selected_still_contributing": 0,
+      "background_counterevidence_overlap_record_only": 95,
+      "gate_fail_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "gate_unknown_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "rule_relaxation_remaining_coverage": {
+        "original_selected": 0,
+        "drop_body_mass": 0,
+        "drop_body_fraction": 0,
+        "drop_body_repeat": 0,
+        "drop_single_core_mass": 0,
+        "drop_single_core_fraction": 0,
+        "drop_boundary_mass": 0,
+        "drop_boundary_fraction": 0,
+        "drop_boundary_repeat": 0,
+        "drop_boundary_body_mass": 0,
+        "drop_strict_shadow_mass": 0,
+        "drop_strict_shadow_fraction": 0,
+        "drop_photo_shadow_mass": 0,
+        "drop_photo_shadow_fraction": 0,
+        "drop_body_support_requirement": 0,
+        "any_positive_body": 0,
+        "any_positive_body_or_boundary": 0,
+        "all_initial_old_domain_contributors": 0,
+        "all_initial_broad_domain_contributors": 31095
+      },
+      "source_artifact": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/gates_open_same_domain/contributors.npz",
+      "selection_source": "all initial old-domain contributors; no depth/history/fraction gates",
+      "background_veto": false,
+      "labels_for_training": false,
+      "human_GT": null,
+      "non_gaussian_environment_diagnostic": {
+        "alpha_mean": 0.6624370107991996,
+        "env_rgb_mean": [
+          0.4484172761440277,
+          0.44952449202537537,
+          0.5083000063896179
+        ],
+        "negative_environment_pixels": 4093,
+        "negative_native_pixels": 1441,
+        "source": "fixed original environment multiplied by post-removal transmittance; no row ID, not car GT"
+      },
+      "stage": "gates_open_same_domain"
+    },
+    {
+      "remaining_broad_contributors": 40,
+      "remaining_broad_alpha_mass": 9.873899459838867,
+      "scope_missed": 40,
+      "inside_but_gated": 0,
+      "newly_visible_vs_initial": 40,
+      "newly_visible_vs_previous_stage": 13,
+      "not_in_old_probe_export": 40,
+      "entered_old_domain_only_after_removal": 0,
+      "original_selected_still_contributing": 0,
+      "background_counterevidence_overlap_record_only": 0,
+      "gate_fail_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "gate_unknown_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "rule_relaxation_remaining_coverage": {
+        "original_selected": 0,
+        "drop_body_mass": 0,
+        "drop_body_fraction": 0,
+        "drop_body_repeat": 0,
+        "drop_single_core_mass": 0,
+        "drop_single_core_fraction": 0,
+        "drop_boundary_mass": 0,
+        "drop_boundary_fraction": 0,
+        "drop_boundary_repeat": 0,
+        "drop_boundary_body_mass": 0,
+        "drop_strict_shadow_mass": 0,
+        "drop_strict_shadow_fraction": 0,
+        "drop_photo_shadow_mass": 0,
+        "drop_photo_shadow_fraction": 0,
+        "drop_body_support_requirement": 0,
+        "any_positive_body": 0,
+        "any_positive_body_or_boundary": 0,
+        "all_initial_old_domain_contributors": 0,
+        "all_initial_broad_domain_contributors": 0
+      },
+      "source_artifact": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/broad_once/contributors.npz",
+      "selection_source": "fixed raw-body-relative broad domain; all initial contributors",
+      "background_veto": false,
+      "labels_for_training": false,
+      "human_GT": null,
+      "non_gaussian_environment_diagnostic": {
+        "alpha_mean": 0.0004648729008245378,
+        "env_rgb_mean": [
+          1.420504093170166,
+          1.3827849626541138,
+          1.5084995031356812
+        ],
+        "negative_environment_pixels": 4093,
+        "negative_native_pixels": 4069,
+        "source": "fixed original environment multiplied by post-removal transmittance; no row ID, not car GT"
+      },
+      "stage": "broad_once"
+    },
+    {
+      "remaining_broad_contributors": 0,
+      "remaining_broad_alpha_mass": 0.0,
+      "scope_missed": 0,
+      "inside_but_gated": 0,
+      "newly_visible_vs_initial": 0,
+      "newly_visible_vs_previous_stage": 0,
+      "not_in_old_probe_export": 0,
+      "entered_old_domain_only_after_removal": 0,
+      "original_selected_still_contributing": 0,
+      "background_counterevidence_overlap_record_only": 0,
+      "gate_fail_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "gate_unknown_counts_multilabel": {
+        "body_mass": 0,
+        "body_fraction": 0,
+        "body_repeat": 0,
+        "single_core_mass": 0,
+        "single_core_fraction": 0,
+        "boundary_mass": 0,
+        "boundary_fraction": 0,
+        "boundary_repeat": 0,
+        "boundary_body_mass": 0,
+        "strict_shadow_mass": 0,
+        "strict_shadow_fraction": 0,
+        "photo_shadow_mass": 0,
+        "photo_shadow_fraction": 0
+      },
+      "rule_relaxation_remaining_coverage": {
+        "original_selected": 0,
+        "drop_body_mass": 0,
+        "drop_body_fraction": 0,
+        "drop_body_repeat": 0,
+        "drop_single_core_mass": 0,
+        "drop_single_core_fraction": 0,
+        "drop_boundary_mass": 0,
+        "drop_boundary_fraction": 0,
+        "drop_boundary_repeat": 0,
+        "drop_boundary_body_mass": 0,
+        "drop_strict_shadow_mass": 0,
+        "drop_strict_shadow_fraction": 0,
+        "drop_photo_shadow_mass": 0,
+        "drop_photo_shadow_fraction": 0,
+        "drop_body_support_requirement": 0,
+        "any_positive_body": 0,
+        "any_positive_body_or_boundary": 0,
+        "all_initial_old_domain_contributors": 0,
+        "all_initial_broad_domain_contributors": 0
+      },
+      "source_artifact": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/peel_01/contributors.npz",
+      "selection_source": "recomputed post-removal contribution in FIXED domain; diagnostic only",
+      "background_veto": false,
+      "labels_for_training": false,
+      "human_GT": null,
+      "non_gaussian_environment_diagnostic": {
+        "alpha_mean": 0.0,
+        "env_rgb_mean": [
+          1.4205129146575928,
+          1.3829017877578735,
+          1.5086292028427124
+        ],
+        "negative_environment_pixels": 4093,
+        "negative_native_pixels": 4093,
+        "source": "fixed original environment multiplied by post-removal transmittance; no row ID, not car GT"
+      },
+      "stage": "peel_01"
+    }
+  ],
+  "source_initial": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3/recall_ceiling_r1/113/initial_weights.npz",
+  "background_veto": false,
+  "labels_for_training": false,
+  "human_GT": null
+}

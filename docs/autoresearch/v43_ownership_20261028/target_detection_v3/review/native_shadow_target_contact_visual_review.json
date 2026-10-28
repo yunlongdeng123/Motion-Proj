@@ -1,0 +1,107 @@
+{
+  "review_type": "AI visual comparison of native RGB shadow-only and target-contact smoke outputs",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "Compared baseline, remove_car, remove_u, remove_car_u native RGB for raw098, raw113, and raw114 in native_shadow_only_smoke_r1 and native_target_contact_smoke_r1. Main comparison: shadow-only remove_car_u versus shadow-only remove_car. These are AI observations, not human labels or ground truth.",
+  "reviewed_files_pattern": "work/v43_unknown_detection_20261028/{native_shadow_only_smoke_r1,native_target_contact_smoke_r1}/{baseline,remove_car,remove_u,remove_car_u}/native_rgb/{098,113,114}.png",
+  "coordinate_convention": "Approximate 480x320 frame coordinates with origin at upper-left. Bboxes describe visible regions, not precise masks.",
+  "shadow_only_assessment": {
+    "remove_car_vs_remove_car_u": "Removing the car produces a dark blurry vehicle-like patch at the former SUV position. Adding shadow-only U changes the patch only modestly; it does not remove the dark footprint. A dark low band/smear remains under the former bumper and wheels in all three frames. Body-remnant, contact shadow, and render residue are not separable from these images.",
+    "road_impact": "Compared with the broader body+shadow group in native_target_contact_smoke_r1, shadow-only remove_car_u preserves nearby pavement, lane markings, curb, and neighboring vehicles substantially better. The remaining changes are localized around the old vehicle footprint, with occasional small bright/color specks close to its lower/left edge; there is no large blown-out road/curb spill in this smoke set. This is a comparison of the observed groups and does not isolate the added contact candidate as the cause.",
+    "verdict": "Not solved. The car body is removed, but a dark vehicle-shaped/contact-area residue remains. Shadow-only appears better scoped and less destructive to adjacent road than the broader body+shadow group, but does not establish successful shadow removal."
+  },
+  "target_contact_assessment": {
+    "remove_u": "The SUV remains visible but is strongly corrupted with bright white/chromatic artifacts around its body and near-ground region.",
+    "remove_car_u": "The body is reduced but replaced by a large white/chromatic patch, with dark residue below. The artifact affects the road/curb adjacent to the vehicle and extends rightward toward the nearby sedan/curb region.",
+    "verdict": "The body+shadow/contact group is visibly damaged and not solved. This comparison cannot attribute the damage to the newly added contact candidate alone: the variant also includes the body projection candidate, and native_photo_smoke_r1 (body+photo, without the new contact candidate) shows the same white-hole artifact."
+  },
+  "frames": [
+    {
+      "raw_frame": 98,
+      "target_approx_bbox_px": [
+        292,
+        171,
+        352,
+        220
+      ],
+      "shadow_only_remove_car_residual_bbox_px": [
+        291,
+        193,
+        354,
+        228
+      ],
+      "shadow_only_remove_car_u_residual_bbox_px": [
+        293,
+        194,
+        354,
+        229
+      ],
+      "shadow_only_observation": "The dark car-shaped blur persists in remove_car_u, concentrated around the old rear-body/lower-wheel area. The U-only contribution appears to soften/change a small part of the footprint but does not clear the dark patch. The adjacent silver sedan and broad road markings remain visually intact; only tiny colored/bright specks occur close to the former SUV footprint.",
+      "target_contact_observation": "remove_u leaves the SUV present but bright/color-damaged; remove_car_u replaces much of it with a white/chromatic region and contaminates adjacent road/curb near the silver sedan."
+    },
+    {
+      "raw_frame": 113,
+      "target_approx_bbox_px": [
+        291,
+        172,
+        352,
+        222
+      ],
+      "shadow_only_remove_car_residual_bbox_px": [
+        289,
+        194,
+        351,
+        233
+      ],
+      "shadow_only_remove_car_u_residual_bbox_px": [
+        276,
+        207,
+        352,
+        233
+      ],
+      "shadow_only_observation": "A dark low smear remains under the old SUV position in remove_car_u, including a small darker spot to the left/below plus a broader shallow residual under the bumper. Its exact shadow/body-origin split cannot be determined. Nearby road surface and the lower transverse white marking are mostly preserved, with localized change close to the former footprint.",
+      "target_contact_observation": "remove_u severely corrupts the still-visible SUV; remove_car_u leaves a conspicuous bright patch and dark bottom residue, with spill onto adjacent roadway/curb toward the right."
+    },
+    {
+      "raw_frame": 114,
+      "target_approx_bbox_px": [
+        291,
+        172,
+        352,
+        222
+      ],
+      "shadow_only_remove_car_residual_bbox_px": [
+        289,
+        197,
+        351,
+        234
+      ],
+      "shadow_only_remove_car_u_residual_bbox_px": [
+        278,
+        207,
+        352,
+        234
+      ],
+      "shadow_only_observation": "The combined shadow-only removal still shows a dark flattened patch beneath/near the former rear bumper and wheels. This is similar in scale to the remove_car residual, so it is not evidence of complete shadow removal. Nearby pavement, transverse line, and the partly cropped right sedan are substantially preserved.",
+      "target_contact_observation": "The broad target-contact U again creates a white/chromatic vehicle-footprint artifact and alters neighboring road/curb pixels; a dark lower residue remains."
+    }
+  ],
+  "recommendation": {
+    "resolved_status": false,
+    "suitable_to_claim_solved": false,
+    "reason": "All three shadow-only remove_car_u frames retain a dark ground-level footprint that could contain unresolved vehicle residue, contact shadow, and rendering error. The broader body+shadow/body+photo groups have obvious image damage; the comparisons do not isolate the added contact candidate as its cause. Shadow-only is the less destructive observed group, but this smoke does not demonstrate clean shadow removal or verified shadow ownership.",
+    "expansion": "This review does not support calling the issue solved or treating either smoke as validated across the sequence."
+  },
+  "limitations": [
+    "The review is an AI model visual assessment only; human_verdict is null.",
+    "A dark patch after removal cannot by itself be called a real vehicle shadow; it may include body residue or renderer artifacts.",
+    "Only three frames were reviewed; no full-sequence or quantitative assessment is implied.",
+    "No new experiment was started and no detection rules were changed."
+  ],
+  "causal_attribution": {
+    "conclusion": "Do not attribute the larger background damage in native_target_contact_smoke_r1 specifically to the added contact candidate.",
+    "evidence": "The body+shadow combination has visibly larger damage than shadow-only in the reviewed outputs, but the variants differ in more than the added contact candidate. native_photo_smoke_r1 uses body+photo without the new contact candidate and shows the same white-hole artifact.",
+    "limitation": "The available comparisons support an observed difference between shadow-only and broader body+shadow/body+photo combinations; they do not isolate a causal effect of contact."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "target-detection-native-v1",
+  "context": "14705303724557273004_3105_000_3125_000",
+  "profile": "strict",
+  "configuration": {
+    "body_min_mass": 0.02,
+    "body_min_fraction": 0.05,
+    "body_repeat_frames": 2,
+    "single_core_min_mass": 0.05,
+    "single_core_min_fraction": 0.2,
+    "shadow_min_mass": 0.01,
+    "shadow_min_fraction": 0.05,
+    "weak_background_min_mass": 0.05,
+    "background_depth_rms_m": 0.5,
+    "mixed_exterior_fraction": 0.25,
+    "boundary_fraction": 0.2
+  },
+  "reasons": {
+    "body_evidence": 1,
+    "boundary_with_body_history": 2,
+    "shadow_multiframe": 4,
+    "shadow_photometric_only": 8,
+    "background_support_conflict": 16,
+    "wide_footprint_mixed": 32,
+    "existing_actor_identity": 64
+  },
+  "channels": [
+    "body",
+    "core",
+    "boundary",
+    "shadow_strict",
+    "shadow_photo",
+    "background_weak",
+    "background_depth_sum",
+    "background_depth_squared",
+    "target_depth_valid",
+    "target_depth_sum",
+    "target_depth_squared",
+    "candidate_union",
+    "total"
+  ],
+  "shadow_source": "../shadow_evidence_r2",
+  "body_probe": "../body_probe_r1",
+  "source_checkpoint_frozen": true,
+  "training_updates": 0,
+  "body_history_used_all_source_frames": true,
+  "inpainting_used": false,
+  "labels_depend_on_edited_RGB": false
+}

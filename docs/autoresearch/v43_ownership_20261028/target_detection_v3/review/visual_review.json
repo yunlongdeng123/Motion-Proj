@@ -1,0 +1,67 @@
+{
+  "review_type": "model_review",
+  "human_ground_truth": false,
+  "scope": "First scene only; visual inspection of wrap_compare_raw98.png, wrap_compare_raw113.png, wrap_compare_raw114.png, and comparison_raw101.png. Vehicle residual detection and ownership remain unresolved.",
+  "coordinate_convention": {
+    "image_size_px": [480, 320],
+    "bbox_format": "[x_min, y_min, x_max, y_max), approximate pixels in the individual 480x320 panel/frame coordinate system; estimates from displayed images, not annotation-grade masks",
+    "normalized_position": "fractions of image width and height, origin at upper left"
+  },
+  "observations": [
+    {
+      "raw_frame": 98,
+      "evidence": "outputs/V43_Ownership_20261027/gpu_v43/target_unknown_v2/wrap_compare_raw98.png; baseline RGB cross-checked at outputs/V43_Ownership_20261027/gpu_v43/target_unknown_delivery_v1/baseline/native_rgb/098.png",
+      "panels_compared": ["old baseline", "joint direct199", "joint dense199", "conditional joint", "conditional fixed", "local75"],
+      "regions": [
+        {"kind": "vehicle_body_like_residual", "bbox_px": [290, 188, 357, 222], "relative_position": "center-right, low in frame (x≈0.60–0.74, y≈0.59–0.69)", "observation": "A compact, dark gray blurred silhouette with a vehicle-like outline is visible on the roadway in baseline and several comparison panels. Conditional-fixed/local75 show a much brighter, washed-out object-like patch at the corresponding location. This appearance alone does not establish its physical identity or ownership."},
+        {"kind": "possible_contact_shadow_or_merged_dark_residual", "bbox_px": [296, 213, 354, 232], "relative_position": "directly below/overlapping the vehicle-like residual", "observation": "A darker horizontal patch is visually merged with the lower edge of the blurred object. Contact shadow cannot be separated from body residue, compositing, or pavement appearance."},
+        {"kind": "projected_shadow", "bbox_px": null, "relative_position": "around and below the vehicle-like region", "observation": "No separate cast-shadow boundary can be confidently traced in these renders; status uncertain."},
+        {"kind": "normal_roadway", "bbox_px": [0, 178, 480, 320], "relative_position": "lower half", "observation": "Pavement, lane dividers, surface cracks/stains, and foreground road remain visible. Do not interpret all dark pavement marks as vehicle shadows."}
+      ],
+      "confidence": "low for body identity; very low for shadow identity"
+    },
+    {
+      "raw_frame": 113,
+      "evidence": "outputs/V43_Ownership_20261027/gpu_v43/target_unknown_v2/wrap_compare_raw113.png; baseline RGB cross-checked at outputs/V43_Ownership_20261027/gpu_v43/target_unknown_delivery_v1/baseline/native_rgb/113.png",
+      "panels_compared": ["old baseline", "joint direct199", "joint dense199", "conditional joint", "conditional fixed", "local75"],
+      "regions": [
+        {"kind": "vehicle_body_like_residual", "bbox_px": [287, 194, 351, 225], "relative_position": "center-right, low in frame (x≈0.60–0.73, y≈0.61–0.70)", "observation": "A low, dark blurred vehicle-like shape remains on the roadway in baseline and the joint comparison panels. Conditional-fixed/local75 again display a bright colored/white patch at its location. These are model render outputs, not independent observation of the object's true identity."},
+        {"kind": "possible_contact_shadow_or_merged_dark_residual", "bbox_px": [293, 214, 350, 233], "relative_position": "touching/overlapping the lower edge of the vehicle-like residual", "observation": "A short dark region is visible immediately under the blur, but no boundary separates it from the blur or the road. Contact-shadow attribution is unresolved."},
+        {"kind": "projected_shadow", "bbox_px": null, "relative_position": "around and below the vehicle-like region", "observation": "No distinct cast shadow can be isolated with confidence from this view."},
+        {"kind": "normal_roadway", "bbox_px": [0, 169, 480, 320], "relative_position": "lower half", "observation": "Road surface and broad transverse road marking are visible; pavement texture and neighboring vehicles remain in view."}
+      ],
+      "confidence": "low for body identity; very low for shadow identity"
+    },
+    {
+      "raw_frame": 114,
+      "evidence": "outputs/V43_Ownership_20261027/gpu_v43/target_unknown_v2/wrap_compare_raw114.png; baseline RGB cross-checked at outputs/V43_Ownership_20261027/gpu_v43/target_unknown_delivery_v1/baseline/native_rgb/114.png",
+      "panels_compared": ["old baseline", "joint direct199", "joint dense199", "conditional joint", "conditional fixed", "local75"],
+      "regions": [
+        {"kind": "vehicle_body_like_residual", "bbox_px": [285, 200, 350, 230], "relative_position": "center-right, low in frame (x≈0.59–0.73, y≈0.63–0.72)", "observation": "A compact dark blurred silhouette remains in the same roadway area in baseline and joint panels; conditional-fixed/local75 show a bright patch there. Its vehicle-like shape is an appearance description, not a verified object label."},
+        {"kind": "possible_contact_shadow_or_merged_dark_residual", "bbox_px": [292, 219, 349, 238], "relative_position": "at and just below the lower edge of the blur", "observation": "Dark pixels appear contiguous with the blurred shape; a separate underbody contact shadow cannot be determined."},
+        {"kind": "projected_shadow", "bbox_px": null, "relative_position": "around and below the vehicle-like region", "observation": "No independently bounded projected shadow is clearly visible; uncertain."},
+        {"kind": "normal_roadway", "bbox_px": [0, 173, 480, 320], "relative_position": "lower half", "observation": "Pavement, road markings, and surrounding cars remain visible; no semantic conclusion is drawn from localized pavement darkness."}
+      ],
+      "confidence": "low for body identity; very low for shadow identity"
+    },
+    {
+      "raw_frame": 101,
+      "evidence": "outputs/V43_Ownership_20261027/gpu_v43/target_unknown_v2/comparison_raw101.png; baseline RGB cross-checked at outputs/V43_Ownership_20261027/gpu_v43/target_unknown_delivery_v1/baseline/native_rgb/101.png",
+      "panels_compared": ["baseline", "target_upper_bound", "target_preserve_observed_bg", "split199", "joint199", "joint_dense199"],
+      "regions": [
+        {"kind": "vehicle_body_like_residual", "bbox_px": [291, 190, 357, 227], "relative_position": "center-right, low in frame (x≈0.61–0.74, y≈0.59–0.71)", "observation": "The baseline has a dark blurred vehicle-like form on the road. Joint panels retain a dark form in the same vicinity; upper-bound/preserve-observed-bg and split panels show strong bright/color artifacts nearby. These method differences do not supply ground truth."},
+        {"kind": "possible_contact_shadow_or_merged_dark_residual", "bbox_px": [297, 216, 355, 236], "relative_position": "immediately below/overlapping the vehicle-like residual", "observation": "The dark lower area merges visually with the object-like blur. Its origin and whether it is a vehicle contact shadow are unknown."},
+        {"kind": "projected_shadow", "bbox_px": null, "relative_position": "around and below the vehicle-like region", "observation": "No separate projected-shadow shape can be confidently distinguished."},
+        {"kind": "normal_roadway", "bbox_px": [0, 174, 480, 320], "relative_position": "lower half", "observation": "Road texture, markings, and other vehicles remain visible in baseline/joint panels. Broad white/color spill in some edit panels is an artifact of those generated comparisons, not observed road appearance."}
+      ],
+      "confidence": "low for body identity; very low for shadow identity"
+    }
+  ],
+  "limitations_and_missing_evidence": [
+    "The four requested composite PNGs and the matched baseline/native_rgb PNGs are renderer/model outputs. They are not original camera photographs and are not human ground truth.",
+    "No original captured RGB frame for this exact rendered viewpoint/time, synchronized multi-view evidence showing the same vehicle and its ground contact, or verified vehicle/lighting annotation was located among the inspected evidence. The workspace's available source camera images inspected during this review depict different viewpoints/scenes and cannot establish shadow ownership here.",
+    "The contact-shadow region is occluded/merged with the vehicle-like blur at this image scale. A separate projected shadow is not discernible with confidence.",
+    "This review did not infer a shadow label from pixels exposed by deleting/removing the vehicle in any comparison output."
+  ],
+  "status": "provisional visual observations only; detection and ownership pending additional evidence"
+}

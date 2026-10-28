@@ -1,0 +1,20 @@
+{
+  "task_id": "WS-V43-TARGET-DETECTION-20261028",
+  "run_id": "frozen-evidence-r1",
+  "context": "14705303724557273004_3105_000_3125_000",
+  "scope": "Target vehicle ghost detection and ownership abstention, including underbody/contact and cast shadow; independent RGB/LiDAR witnesses; frozen model",
+  "training_updates": 0,
+  "allowed": ["independent observation evidence", "native contribution attribution", "diagnostic suppression", "visual review", "viewer integration"],
+  "forbidden_inputs": ["inpainted images", "joint-repair results", "feedback from suppression render into evidence labels"],
+  "calibration_raws": [91, 98, 113],
+  "check_raws": [86, 101, 109, 114, 116],
+  "cross_scene_generalization_tested": false,
+  "base_checkpoint_seen_all_query_frames": true,
+  "human_ground_truth": false,
+  "quality_accepted": false,
+  "failure_ledger_refs": ["V82-F01"],
+  "failure_ledger_delta": "none",
+  "controls": ["baseline", "remove_car", "remove_u", "remove_car_u"],
+  "static_model_warning": "Original static branch includes learned SHM motion and temporal opacity. Branch is not semantic identity.",
+  "shadow_warning": "Road surface carrying a target shadow is an effect candidate, not car semantic identity. Mixed support separately reported."
+}

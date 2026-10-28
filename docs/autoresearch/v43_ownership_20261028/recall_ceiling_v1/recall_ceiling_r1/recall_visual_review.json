@@ -1,0 +1,63 @@
+{
+  "review_type": "AI visual review of recall ceiling rendering diagnostics",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "AI visual inspection of raw098/raw113/raw114 original.png and domain_overlay.png, plus native.png, gaussian_only.png, environment_term.png, and alpha.png from stages existing, gates_open_same_domain, broad_once, and peel_01. Focus: whether vehicle-shaped residue and underbody darkness remain, and whether apparent darkness is co-located with environment_term. Background damage is noted separately and is not used as the primary rejection criterion for this recall-ceiling review.",
+  "reviewed_directory": "work/v43_unknown_detection_20261028/recall_upperbound/recall_ceiling_r1",
+  "coordinate_convention": "Approximate pixel regions in 480x320 source frames, origin upper-left. Region boxes are viewing aids, not masks or annotations.",
+  "overall_assessment": {
+    "car_body_residual": "No inspected stage provides a clean, unambiguous removal result. In existing and gates_open_same_domain, the native render still has a conspicuous vehicle-shaped region, though it is largely clipped/bright and mixed with artifacts; gaussian_only also retains a dark vehicle-shaped form. In broad_once and peel_01 the target area becomes so overexposed that the body is no longer assessable from native RGB.",
+    "undercarriage_shadow": "A dark low patch/band remains near the former lower-body/wheel location in the native images. It is not cleanly separated from body residue or rendering effects, and the evidence does not establish that the real underbody shadow has been removed.",
+    "environment_term_relation": "The dark/bright structures around the vehicle footprint in native are spatially co-located with strong structures in environment_term. The Gaussian-only and alpha channels also show body-shaped patterns, but in the later stages the body/effect alpha is near zero while environment_term contains negative values. Therefore black pixels in native alone cannot be called a vehicle shadow or residual vehicle body; the apparent pattern may be driven by the environment term and channel interaction. Visual co-location is not a pixel-identity claim.",
+    "background_side_note": "broad_once and peel_01 cause extensive white/color clipping across road and nearby scene. This is recorded as a side effect only per the recall-first instruction; it is not used as the primary reason to reject recall coverage.",
+    "conclusion": "Not solved / not visually verified. The images do not support a confident claim that both vehicle body and undercarriage shadow are gone. The remaining dark footprint cannot be assigned to a real shadow because it tracks environment_term structure and the relevant alpha is near zero in late stages."
+  },
+  "frames": [
+    {
+      "raw_frame": 98,
+      "original_vehicle_approx_bbox_px": [292,171,352,220],
+      "original_low_shadow_candidate_region_px": [280,204,355,230],
+      "reference_observation": "Original shows a dark SUV and a shallow dark contact/ground region below it. domain_overlay places purple candidate pixels in a narrow strip under the SUV, within a much broader tinted domain. This is only domain context, not shadow ground truth.",
+      "stages": {
+        "existing": "native shows a clipped bright vehicle-shaped patch with a dark low band; gaussian_only contains a dark blurred vehicle-like form; environment_term has a strong structure over the same footprint, including a darker lower component; alpha still shows a body-shaped region. The dark low patch is therefore not separable as a real shadow.",
+        "gates_open_same_domain": "native remains strongly clipped around the target and its lower edge; gaussian_only and alpha retain a body-shaped dark pattern while environment_term has strong bright/dark structure over the same coordinates. The image does not show clean body-and-shadow disappearance.",
+        "broad_once": "native is heavily clipped over a wider road area, obscuring the target boundary. alpha in the selected region is nearly absent and environment_term carries large spatial structure; any remaining dark pixels cannot establish a shadow.",
+        "peel_01": "Visually similar to broad_once in this crop: the road/vehicle region is largely clipped, alpha is near zero, and environment_term dominates the visible pattern. No reliable shadow-removal judgment can be made from the native appearance."
+      },
+      "apparent_dark_residual_vs_environment": "The lower dark band in native is co-located with dark structure in environment_term; it is not evidence by itself of a surviving physical shadow."
+    },
+    {
+      "raw_frame": 113,
+      "original_vehicle_approx_bbox_px": [290,171,352,224],
+      "original_low_shadow_candidate_region_px": [275,207,356,238],
+      "reference_observation": "Original shows the SUV with a diffuse dark region beneath/just left of its lower body. Purple domain candidates cover only a short strip beneath the SUV; the surrounding road and transverse line are within the broader scene context.",
+      "stages": {
+        "existing": "native contains a large bright vehicle-shaped patch with dark pixels at the lower edge; gaussian_only shows a dark blurred car-like region; environment_term has a bright vehicle-footprint shape and dark lower structure in the same location; alpha remains body-shaped. Body residue and undercarriage shadow are unresolved.",
+        "gates_open_same_domain": "The native output remains a bright/color-clipped footprint with a dark lower region. gaussian_only/alpha and environment_term retain aligned body-shaped or lower-edge structures. The native pattern is not a clean roadway replacement.",
+        "broad_once": "Native is broadly white/color clipped and the original vehicle boundary is not reliably visible. alpha is near zero in the target region while environment_term is strongly structured; dark areas cannot be interpreted as shadow from appearance alone.",
+        "peel_01": "Very similar to broad_once, with extensive clipping. No distinct undercarriage shadow boundary can be evaluated in native RGB."
+      },
+      "apparent_dark_residual_vs_environment": "The dark lower patch in native overlaps dark structure in environment_term. With late-stage alpha near zero and negative environment values present, this is ambiguous and cannot be labeled as shadow."
+    },
+    {
+      "raw_frame": 114,
+      "original_vehicle_approx_bbox_px": [290,171,352,224],
+      "original_low_shadow_candidate_region_px": [275,207,356,238],
+      "reference_observation": "Original shows a dark SUV and a soft low dark region below its rear/underbody. The purple domain mark is narrow and close to the lower edge; it does not define a verified shadow boundary.",
+      "stages": {
+        "existing": "native has a clipped bright car-shaped region and dark lower band; gaussian_only shows a blurred dark form; environment_term and alpha both have aligned structure at the former vehicle footprint. The low dark pixels are not uniquely attributable to a cast shadow.",
+        "gates_open_same_domain": "The target footprint remains dominated by bright/color artifacts, with a dark lower shape. Component views retain a matching environment structure; the native does not show a clean body-plus-shadow removal.",
+        "broad_once": "The local road/target area is extensively clipped. Near-zero target alpha and strong environment_term structure make the remaining dark pixels inconclusive for body or shadow identity.",
+        "peel_01": "Similar broad clipping persists and prevents reliable visual separation of the original undercarriage shadow from environment/rendering artifacts."
+      },
+      "apparent_dark_residual_vs_environment": "The apparent dark lower pattern is spatially aligned with environment_term structure. This prevents treating black native pixels alone as proof of a remaining real shadow."
+    }
+  ],
+  "limitations": [
+    "This is an AI model visual review, not a human annotation, human verdict, or ground-truth segmentation; human_verdict is null.",
+    "Negative environment values and near-zero body/effect alpha in late stages make RGB color alone insufficient to determine physical ownership of black residuals.",
+    "The review covers only three frames and provides no independent recall metric.",
+    "No GPU work was run and no other files were changed."
+  ]
+}

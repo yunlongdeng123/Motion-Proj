@@ -1,21 +1,15 @@
 # 当前研究状态
 
-当前任务：WS-V43-OWNERSHIP-STRUCTURE-20261028。沿用v42框架，先推进语义/实例归属诊断和车辆结构；再研究静态车辆表达分解及显露背景修复。当前诊断范围仅第一、第二开发场景；第二已完成10K。第三已在用户新指示到达前完成10K及原生/固定后端诊断，保留现场，此后禁止继续训练、编辑或研究分析。原输入三个V42 30K场景各49帧。旧队列和自动心跳未恢复，原V42 checkpoint与操作结果保留。用户本轮明确覆盖额度20%停止线，额度只记录，收到用户停止通知后保存边界。
+当前任务WS-V43-TARGET-DETECTION-20261028，run recall-ceiling-r1。用户最新要求先解决召回上界，背景误选只记录、不否决扩候选；车底与关联阴影立即纳入，独立紫色effect。训练更新0，第三场景仍停止，旧队列/心跳未恢复。
 
-最新用户因额度要求收尾，禁止新增实验。远端allow_v43_training=false、user_research_hold=true。第一场景本轮5个独立10K分支完成，另3K pilot、980 smoke/恢复更新，共53,980；第二、第三没有追加实验。旧队列/心跳没有恢复。[阶段简报、Top 3与延期清单](autoresearch/v43_ownership_20261028/V43_WRAPUP.md)。
+第一场景raw98/113/114的原门槛重放、同域全开门槛、扩域一次、删除后全量重算并再剥一轮均完成。固定body/effect/broad域最终Gaussian alpha为数值0；原生RGB仍有斑块，分量和环境cube texel伴随闭合说明剩余暗像素由environment回填提供。不能把负值PNG截黑全当未删Gaussian，也不能宣称语义召回100%。[算法、组件和结果](autoresearch/v43_ownership_20261028/RECALL_CEILING_V1.md)。
 
-三候选依次为：按时刻软归属联合+视频教师、受限插值联合、直接实测背景联合。仍未通过“RGB无车影、正确背景不破坏”；门控与教师收益尚未拆开归因，新增归属训练仅第一场景。原static批次也含SHM运动与时间opacity，27,642个目标相关行中25,413个时间门控有效的位置跨度>10cm；旧背景深度支持7,491行中6,569个也如此。深度相符不等于可靠静止背景；页面已更正，历史掩码不追溯修改。混合支撑和环境颜色泄漏继续列为问题，保留率不是身份概率。[阶段记录](autoresearch/v43_ownership_20261028/TARGET_UNKNOWN_V2.md)。
+逐行台账分检测域未覆盖、规则排除、after新贡献（exact0与阈值穿越分列）；13列旧规则重放零差异。background_veto=false，训练标签未写入，剥离后查询仅作诊断。暗像素查询0.1/0.2/0.3阈值同时记录；环境原参数、颜色、checkpoint均未改，无补景。
 
-实际GPU/进程/节点只看[当前快照](autoresearch/v43_ownership_20261028/STATE.json)。已完成19类+unknown的147帧冻结SegFormer-B0推理，以及完整Gaussian行的alpha*T可见贡献、同像素实际目标LiDAR深度支持。类别预测不是GT，掩码贡献不是正确身份。大量静态目标像素贡献位于与车身不相容的中心深度，支持背景外观污染或混合支撑的候选解释，不能全部整颗搬入车辆。
+共享工作台及第一场景已增加召回上界入口。3帧×5阶段原生RGB/Gaussian/环境/alpha、逐行gate原因、旧历史双目标报告和AI初审均保留。AI不是人工GT，human_verdict=null；没有跨场景泛化验证。浏览器验证未采纳，交付以真实数据分量、PNG、静态接线检查为据。
 
-结构探针从带来源的实测目标点重建Actor局部资产，复用冻结static/environment；每case fresh10K，完整fresh300s+restore300s smoke单列。原百万行自由动态分支继续作为对照。此探针改变表示、容量、颜色、损失与RGB缩放，不能冒称完整GN11继承或把原30K与新10K直接当单因素比较；同初始化无约束10K控制隔离几何预算。还没有unknown分类器学习或背景联合优化的优越性证明。
+下一步：先独立判断环境方向/texel中的目标关联污染与真实阴影，不能继续把这些残留当Gaussian漏删；候选生成中保留宽域，把深度/时序/运动冲突存作后续学习特征。获得独立车体/阴影/环境伪影评审后，再逐项加回背景保护，记录召回损失。当前未自动开新训练或扩大case。
 
-实验合同、明确差异、验收与下一步见[本轮协议](autoresearch/v43_ownership_20261028/EXPERIMENT_CONTRACT.md)；[组件图](autoresearch/v43_ownership_20261028/architecture.svg)。每case一个离线HTML，原重建、原编辑、新结构节点与19类联合着色共用帧轴，目标橙框、其他车辆蓝框；CPU/GPU标签编码分别版本化，原owner不覆盖。
+现场：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_detection_v3；当前资源/快照见[STATE](autoresearch/v43_ownership_20261028/STATE.json)。带GPU实例仅在结果取回、代码发布与活动进程排查完成后按长期授权关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
 
-逐项badcase当前状态见[六项诊断](autoresearch/v43_ownership_20261028/BADCASES.md)。已恢复默认无编辑V1原生通路，新增3米偏移、3/5/8像素unknown带与opacity控制。静态残影仍未修净，整行抑制有背景副作用；不将诊断候选冒充归属已解决。车底/阴影按用户要求暂缓。
-
-历史完整正式10K场景数：3 / 3。这是执行完成数，quality_accepted=false，human_verdict=null。v43自身物理编辑只做目标相关诊断，旧八类物理请求及其固定ProPainter结果保留；不把新增checkpoint/版本/诊断帧重复计正式案例。
-
-固定后端仍为同一预训练ProPainter，输入/权重/参数不变；新局部资产移动/转向/删除诊断按原请求执行，原生与生成结果分开。历史阶段二规模和封存协议见[原v42计划](autoresearch/persistent_world_20261027/PLAN.md)，未运行封存编辑选方法。
-
-代码：scripts/worldsim_v82/v43_ownership_20261028；新campaign：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028。模型、数据、日志不入Git。保留用户桥接脚本未提交；保留旧checkpoint spillover物理依赖。failure_ledger_refs=[V82-F01]，failure_ledger_delta=none；当前只是增加同口径诊断，不新造普遍失败结论。
+上一阶段[独立阴影证据](autoresearch/v43_ownership_20261028/TARGET_DETECTION_V3.md)和旧Top3均作为历史资料保留，不作为当前验收结论。

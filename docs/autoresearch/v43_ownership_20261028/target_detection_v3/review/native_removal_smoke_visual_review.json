@@ -1,0 +1,61 @@
+{
+  "review_type": "AI visual comparison of native RGB removal smoke outputs",
+  "reviewer_model": "gpt-6-luna",
+  "human_verdict": null,
+  "ground_truth": false,
+  "scope": "Compared baseline, remove_car, remove_u, and remove_car_u native_rgb outputs for raw098/raw113/raw114 in native_strict_smoke_r1 and native_photo_smoke_r1. This is direct image review of native RGB renders, not semantic overlay review.",
+  "reviewed_files_pattern": "work/v43_unknown_detection_20261028/{native_strict_smoke_r1,native_photo_smoke_r1}/{baseline,remove_car,remove_u,remove_car_u}/native_rgb/{098,113,114}.png",
+  "coordinate_convention": "Approximate pixel regions in each 480x320 frame, origin upper-left. Bounding boxes describe image areas visually, not masks.",
+  "overall_findings": {
+    "remove_car": "The SUV body is largely replaced, but a dark, blurred, vehicle-shaped residue remains at its former location in all three frames. The lower part remains merged with a dark patch directly below the vehicle; the renders do not allow a confident split between residual body appearance and contact/projected shadow.",
+    "remove_u": "The SUV remains visibly present, but its body is strongly corrupted by bright/colored artifacts. The artifact spills into nearby road/curb and toward the adjacent right-hand sedan. This is substantial change to both the target vehicle pixels and neighboring scene content; it is not a clean background-only edit.",
+    "remove_car_u": "The car-shaped body is reduced, but a bright white/chromatic region and dark residual remain around its footprint. The corruption extends onto nearby roadway/curb pixels, visibly degrading the background in the removal area.",
+    "roadway": "Outside the target region, baseline and remove_car preserve the major lane/cross-road markings and broad pavement texture more consistently. The combined remove_u outputs show the most obvious local background damage around and to the right of the SUV.",
+    "strict_vs_photo": "Across the inspected 3 frames and four render variants, strict and photo smoke outputs look qualitatively near-identical. No clear visual gain from the photo-supported variant is apparent in these comparisons; subtle pixel-level differences are not assessed here.",
+    "expansion_recommendation": "No current visual evidence justifies expanding either smoke variant to the full 49-frame run. The removal path still leaves a car-shaped dark residue, U-only editing damages the visible SUV and nearby background, combined removal leaves a bright halo, and strict versus photo shows no clear visual separation. First resolve what should happen to the dark footprint and validate preservation around the adjacent sedan/curb on targeted frames; then reassess expansion. This recommendation is limited to these three frames and is not a quantitative benchmark."
+  },
+  "frames": [
+    {
+      "raw_frame": 98,
+      "target_vehicle_approx_bbox_px": [292, 171, 352, 220],
+      "remove_car_residual_bbox_px": [292, 193, 354, 229],
+      "observations": {
+        "baseline": "The original dark SUV is visible in the center-right. The nearby light sedan is to its right.",
+        "remove_car": "A dark blurry, roughly car-shaped remnant remains around x=292..354, y=193..229. A darker horizontal area under it merges with the remnant, so separate body residue and shadow boundaries are uncertain.",
+        "remove_u": "The SUV remains but has bright saturated distortion across the body. A bright colored streak spills rightward across nearby roadway and reaches the vicinity/edge of the light sedan and curb.",
+        "remove_car_u": "The SUV shape is mostly suppressed, but a bright white/chromatic patch remains around x=286..364, y=185..230 with a darker lower remnant. Local pavement/curb and nearby right-side content are visibly altered."
+      },
+      "strict_vs_photo": "No obvious difference in the viewed output images."
+    },
+    {
+      "raw_frame": 113,
+      "target_vehicle_approx_bbox_px": [291, 172, 352, 222],
+      "remove_car_residual_bbox_px": [288, 194, 351, 232],
+      "observations": {
+        "baseline": "The SUV is visible on the road. The white transverse road line lies farther below it and remains distinct.",
+        "remove_car": "A dark, low vehicle-shaped smear remains at approximately x=288..351, y=194..232. Its lower dark patch is contiguous with the blur; no clean projected-shadow edge is visible.",
+        "remove_u": "The SUV body is still present but heavily distorted by bright/color artifacts. The artifact affects the immediate road around the vehicle and streaks rightward toward the curb/adjacent vehicle area.",
+        "remove_car_u": "A bright blown-out/chromatic patch occupies the SUV footprint and spills to adjacent roadway/curb; dark residue is still visible at the bottom. The broad white transverse line below is not the main damaged area, but local pavement around the SUV is changed."
+      },
+      "strict_vs_photo": "No clear visual quality difference in the inspected outputs."
+    },
+    {
+      "raw_frame": 114,
+      "target_vehicle_approx_bbox_px": [291, 172, 352, 222],
+      "remove_car_residual_bbox_px": [288, 198, 350, 234],
+      "observations": {
+        "baseline": "The dark SUV is visible, with the right-hand sedan partly cropped at the far right.",
+        "remove_car": "A dark blurred vehicle-like residue remains around x=288..350, y=198..234. A dark band immediately below merges with it and cannot be assigned separately to contact shadow.",
+        "remove_u": "The SUV remains visible but is strongly corrupted. Bright/color spill reaches the nearby pavement and curb to the right.",
+        "remove_car_u": "The vehicle body is mostly suppressed but replaced by bright white/chromatic contamination around the former footprint, with a dark lower residual. Nearby road/curb pixels are altered."
+      },
+      "strict_vs_photo": "No obvious difference by direct visual inspection."
+    }
+  ],
+  "interpretation_limits": [
+    "All judgments are AI model visual observations. No human ground-truth labels or physical shadow ownership labels are supplied.",
+    "A dark post-removal region cannot by itself establish that the remaining pixels are a real cast shadow; it may include residual vehicle appearance or rendering error.",
+    "The sample is three frames only. Visual similarity between strict and photo variants does not prove exact pixel equality or generalize to all 49 frames.",
+    "No GPU work was performed and no detection rule was edited."
+  ]
+}
