@@ -1,0 +1,1018 @@
+{
+  "candidates": 777,
+  "evaluated": 8,
+  "retained": 7,
+  "skipped": [
+    {
+      "row": 645814,
+      "reason": "split_initialization_unsafe",
+      "details": [
+        "leq: tiny_tail_mass"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "row": 855150,
+      "separation_m": 4.337003924462318,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "855150",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.8119456768035889,
+          0.1398097276687622,
+          -0.2877228558063507
+        ],
+        "parent_covariance": [
+          [
+            0.007029676770643368,
+            0.0035693027903616788,
+            -0.005215972656093814
+          ],
+          [
+            0.0035693027903616788,
+            0.0026673872486574434,
+            -0.0018369624472814896
+          ],
+          [
+            -0.005215972656093814,
+            -0.0018369624472814896,
+            0.004663646018617973
+          ]
+        ],
+        "parent_opacity": 0.2895757853984833,
+        "parent_reduced_mass": 3.4351522003036884e-06,
+        "log_parent_reduced_mass": -12.581449324595088,
+        "plane_normal_unit": [
+          -0.703091228923164,
+          -0.3161561405008178,
+          0.6369521321378414
+        ],
+        "plane_offset_unit": -1.0420882785787902,
+        "standardized_offset": 4.086930049869407,
+        "mass_weights": [
+          0.9999781440579567,
+          2.1855942043334663e-05
+        ],
+        "opacity_candidates": [
+          0.28962519621310867,
+          2.9783439334210128e-05
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "855150",
+          "split_id": "plane_split",
+          "child_ids": [
+            "855150/plane_split/leq",
+            "855150/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "855150/plane_split/leq",
+            "parent_id": "855150",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.8119535470471582,
+              0.13981351722982682,
+              -0.28772890396334344
+            ],
+            "covariance": [
+              [
+                0.0070269884952027,
+                0.0035680083724886897,
+                -0.005213906759179497
+              ],
+              [
+                0.0035680083724886897,
+                0.002666763980072474,
+                -0.0018359677077361331
+              ],
+              [
+                -0.005213906759179497,
+                -0.0018359677077361331,
+                0.004662058409701113
+              ]
+            ],
+            "mass_weight": 0.9999781440579567,
+            "log_mass_weight": -2.1856180887916085e-05,
+            "reduced_mass": 3.435077121816287e-06,
+            "log_reduced_mass": -12.581471180775976,
+            "opacity_candidate": 0.28962519621310867,
+            "log_opacity_candidate": -1.2391676187568572,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "855150/plane_split/gt",
+            "parent_id": "855150",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.4518572604745936,
+              -0.033574619374389686,
+              -0.011000635709006557
+            ],
+            "covariance": [
+              [
+                0.0003602384621085067,
+                0.00035793537660578706,
+                -9.061540535175086e-05
+              ],
+              [
+                0.00035793537660578706,
+                0.0011210980127354558,
+                0.0006309223276368855
+              ],
+              [
+                -9.061540535175086e-05,
+                0.0006309223276368855,
+                0.0007248904994136789
+              ]
+            ],
+            "mass_weight": 2.1855942043334663e-05,
+            "log_mass_weight": -10.731037726330204,
+            "reduced_mass": 7.507848739987096e-11,
+            "log_reduced_mass": -23.31248705092529,
+            "opacity_candidate": 2.9783439334210128e-05,
+            "log_opacity_candidate": -10.421558045966348,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 735803,
+      "separation_m": 1.0577211564960174,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "735803",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.1360933780670166,
+          0.08005975931882858,
+          -0.10152865946292877
+        ],
+        "parent_covariance": [
+          [
+            0.00031235019242627834,
+            1.9542346250535595e-05,
+            9.320999102469058e-05
+          ],
+          [
+            1.9542346250535595e-05,
+            0.00035558315808267697,
+            -4.969681378603215e-05
+          ],
+          [
+            9.320999102469058e-05,
+            -4.969681378603215e-05,
+            0.00016554289293974742
+          ]
+        ],
+        "parent_opacity": 0.051271144300699234,
+        "parent_reduced_mass": 1.9375620019215397e-07,
+        "log_parent_reduced_mass": -15.456665168233213,
+        "plane_normal_unit": [
+          0.8359242571745352,
+          -0.5162161393873578,
+          0.1864176324900976
+        ],
+        "plane_offset_unit": 0.9409809237796051,
+        "standardized_offset": 2.793443050932527,
+        "mass_weights": [
+          0.9973924894655499,
+          0.0026075105344500944
+        ],
+        "opacity_candidates": [
+          0.05172647556728054,
+          0.00048027749201800455
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "735803",
+          "split_id": "plane_split",
+          "child_ids": [
+            "735803/plane_split/leq",
+            "735803/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "735803/plane_split/leq",
+            "parent_id": "735803",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.1359758157208437,
+              0.08013706551018784,
+              -0.10158754418494999
+            ],
+            "covariance": [
+              [
+                0.0003075599501486852,
+                2.269229517741572e-05,
+                9.081065063967057e-05
+              ],
+              [
+                2.269229517741572e-05,
+                0.00035351182689169193,
+                -4.811906484703454e-05
+              ],
+              [
+                9.081065063967057e-05,
+                -4.811906484703454e-05,
+                0.00016434110940781284
+              ]
+            ],
+            "mass_weight": 0.9973924894655499,
+            "log_mass_weight": -0.002610916011209549,
+            "reduced_mass": 1.93250978859038e-07,
+            "log_reduced_mass": -15.459276084244422,
+            "opacity_candidate": 0.05172647556728054,
+            "log_opacity_candidate": -2.961785528598784,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "735803/plane_split/gt",
+            "parent_id": "735803",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.1810618641258923,
+              0.050489556770378,
+              -0.07900480818322204
+            ],
+            "covariance": [
+              [
+                0.00011720273364909336,
+                0.00014786665486305118,
+                -4.535624279217385e-06
+              ],
+              [
+                0.00014786665486305118,
+                0.00027120015722750335,
+                1.4578368593362253e-05
+              ],
+              [
+                -4.535624279217385e-06,
+                1.4578368593362253e-05,
+                0.00011658399093299186
+              ]
+            ],
+            "mass_weight": 0.0026075105344500944,
+            "log_mass_weight": -5.949359331039945,
+            "reduced_mass": 5.052213331160629e-10,
+            "log_reduced_mass": -21.40602449927316,
+            "opacity_candidate": 0.00048027749201800455,
+            "log_opacity_candidate": -7.641146512731764,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 740795,
+      "separation_m": 21.997399481178988,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "740795",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.7194408178329468,
+          0.0855327770113945,
+          -0.12870608270168304
+        ],
+        "parent_covariance": [
+          [
+            0.001925869206995175,
+            0.0004159644967259898,
+            -0.0025974338953677063
+          ],
+          [
+            0.0004159644967259898,
+            0.002824163204690176,
+            0.002586693524827277
+          ],
+          [
+            -0.0025974338953677063,
+            0.002586693524827277,
+            0.007324105074051093
+          ]
+        ],
+        "parent_opacity": 0.05167366564273834,
+        "parent_reduced_mass": 1.6657401116870722e-06,
+        "log_parent_reduced_mass": -13.30524102177408,
+        "plane_normal_unit": [
+          -0.998086811596946,
+          -0.054844885721438814,
+          0.028543914000096652
+        ],
+        "plane_offset_unit": -1.675585473757696,
+        "standardized_offset": 1.0631025388679651,
+        "mass_weights": [
+          0.8561322733841851,
+          0.14386772661581493
+        ],
+        "opacity_candidates": [
+          0.05494261735373543,
+          0.016971643427647946
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "740795",
+          "split_id": "plane_split",
+          "child_ids": [
+            "740795/plane_split/leq",
+            "740795/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "740795/plane_split/leq",
+            "parent_id": "740795",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.7310583421232846,
+              0.08838790899246123,
+              -0.14400895147218193
+            ],
+            "covariance": [
+              [
+                0.0012490884552946314,
+                0.00024963832257220094,
+                -0.00170596280644676
+              ],
+              [
+                0.00024963832257220094,
+                0.002783286752251001,
+                0.0028057821664831803
+              ],
+              [
+                -0.00170596280644676,
+                0.0028057821664831803,
+                0.006149838961451102
+              ]
+            ],
+            "mass_weight": 0.8561322733841851,
+            "log_mass_weight": -0.15533038979662553,
+            "reduced_mass": 1.4260938686858783e-06,
+            "log_reduced_mass": -13.460571411570706,
+            "opacity_candidate": 0.05494261735373543,
+            "log_opacity_candidate": -2.9014659592288834,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "740795/plane_split/gt",
+            "parent_id": "740795",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.650306914658518,
+              0.06854237415134232,
+              -0.03764132385710371
+            ],
+            "covariance": [
+              [
+                0.00037061452172271664,
+                3.3743872120251306e-05,
+                -0.0005488168442097358
+              ],
+              [
+                3.3743872120251306e-05,
+                0.002730228360926367,
+                0.0030901632756574387
+              ],
+              [
+                -0.0005488168442097358,
+                0.0030901632756574387,
+                0.004625619827848506
+              ]
+            ],
+            "mass_weight": 0.14386772661581493,
+            "log_mass_weight": -1.9388609667136005,
+            "reduced_mass": 2.3964624300119287e-07,
+            "log_reduced_mass": -15.24410198848768,
+            "opacity_candidate": 0.016971643427647946,
+            "log_opacity_candidate": -4.076211361310795,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 846880,
+      "separation_m": 26.42655166116192,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "846880",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.8696837425231934,
+          0.07627227157354355,
+          -0.234944686293602
+        ],
+        "parent_covariance": [
+          [
+            0.004187637563658555,
+            -0.00033100568563213336,
+            -0.006569916620822244
+          ],
+          [
+            -0.00033100568563213336,
+            0.0006603990556921488,
+            0.0008221027049027886
+          ],
+          [
+            -0.006569916620822244,
+            0.0008221027049027886,
+            0.01472019026509679
+          ]
+        ],
+        "parent_opacity": 0.13550883531570435,
+        "parent_reduced_mass": 1.4427780909451926e-05,
+        "log_parent_reduced_mass": -11.146354980133097,
+        "plane_normal_unit": [
+          -0.9785434512569939,
+          -0.06624115886266946,
+          0.19510208321435674
+        ],
+        "plane_offset_unit": -1.7591064117893787,
+        "standardized_offset": 1.4486091519352413,
+        "mass_weights": [
+          0.9262766180390377,
+          0.07372338196096227
+        ],
+        "opacity_candidates": [
+          0.1440979969342544,
+          0.0254659424301009
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "846880",
+          "split_id": "plane_split",
+          "child_ids": [
+            "846880/plane_split/leq",
+            "846880/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "846880/plane_split/leq",
+            "parent_id": "846880",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.8793303869363693,
+              0.07547904398271983,
+              -0.2515931819518896
+            ],
+            "covariance": [
+              [
+                0.0032008401350648663,
+                -0.00024986296766843513,
+                -0.0048668692188559935
+              ],
+              [
+                -0.00024986296766843513,
+                0.0006537268244035859,
+                0.0006820639380674366
+              ],
+              [
+                -0.0048668692188559935,
+                0.0006820639380674366,
+                0.011781015142318661
+              ]
+            ],
+            "mass_weight": 0.9262766180390377,
+            "log_mass_weight": -0.07658236536068995,
+            "reduced_mass": 1.3364116106615329e-05,
+            "log_reduced_mass": -11.222937345493786,
+            "opacity_candidate": 0.1440979969342544,
+            "log_opacity_candidate": -1.93726167659892,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "846880/plane_split/gt",
+            "parent_id": "846880",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.7484812023685217,
+              0.08623855568341404,
+              -0.02576936302964772
+            ],
+            "covariance": [
+              [
+                0.0007267217020732353,
+                -4.6420307199476794e-05,
+                -0.0005969543940190107
+              ],
+              [
+                -4.6420307199476794e-05,
+                0.0006369980714276656,
+                0.00033095591496027407
+              ],
+              [
+                -0.0005969543940190107,
+                0.00033095591496027407,
+                0.0044118559427257596
+              ]
+            ],
+            "mass_weight": 0.07372338196096227,
+            "log_mass_weight": -2.6074352714736557,
+            "reduced_mass": 1.063664802836605e-06,
+            "log_reduced_mass": -13.753790251606752,
+            "opacity_candidate": 0.0254659424301009,
+            "log_opacity_candidate": -3.67041331049076,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 795680,
+      "separation_m": 14.777800443012863,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "795680",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.4959959983825684,
+          0.0878501757979393,
+          -0.1196027621626854
+        ],
+        "parent_covariance": [
+          [
+            0.009480030458823056,
+            -0.006672784110987057,
+            0.0021988604524757005
+          ],
+          [
+            -0.006672784110987057,
+            0.008439461858844165,
+            0.0018900743004631332
+          ],
+          [
+            0.0021988604524757005,
+            0.0018900743004631332,
+            0.013765694453994927
+          ]
+        ],
+        "parent_opacity": 0.03847441077232361,
+        "parent_reduced_mass": 2.3029298619383147e-05,
+        "log_parent_reduced_mass": -10.67874329968085,
+        "plane_normal_unit": [
+          -0.9894038802226615,
+          -0.07972341925211364,
+          0.12134306005327765
+        ],
+        "plane_offset_unit": -1.527604147552578,
+        "standardized_offset": -0.2915282955891498,
+        "mass_weights": [
+          0.3853236532263502,
+          0.6146763467736498
+        ],
+        "opacity_candidates": [
+          0.026858251544283417,
+          0.035991879877058264
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "795680",
+          "split_id": "plane_split",
+          "child_ids": [
+            "795680/plane_split/leq",
+            "795680/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "795680/plane_split/leq",
+            "parent_id": "795680",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.5916742407283258,
+              0.019179966409755653,
+              -0.1122895908423813
+            ],
+            "covariance": [
+              [
+                0.0030152429029467825,
+                -0.0020328753477400815,
+                0.0017047240868154501
+              ],
+              [
+                -0.0020328753477400815,
+                0.005109305508743043,
+                0.0022447259627875944
+              ],
+              [
+                0.0017047240868154501,
+                0.0022447259627875944,
+                0.013727925115751789
+              ]
+            ],
+            "mass_weight": 0.3853236532263502,
+            "log_mass_weight": -0.9536716401183756,
+            "reduced_mass": 8.873733475261254e-06,
+            "log_reduced_mass": -11.632414939799226,
+            "opacity_candidate": 0.026858251544283417,
+            "log_opacity_candidate": -3.6171821851553645,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "795680/plane_split/gt",
+            "parent_id": "795680",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.4360179464069986,
+              0.13089763660907922,
+              -0.12418718761617926
+            ],
+            "covariance": [
+              [
+                0.004196666211884825,
+                -0.002880806747939486,
+                0.0017950262375263904
+              ],
+              [
+                -0.002880806747939486,
+                0.00571788302198883,
+                0.002179914283083922
+              ],
+              [
+                0.0017950262375263904,
+                0.002179914283083922,
+                0.013734827365234535
+              ]
+            ],
+            "mass_weight": 0.6146763467736498,
+            "log_mass_weight": -0.4866594151105621,
+            "reduced_mass": 1.4155565144121887e-05,
+            "log_reduced_mass": -11.165402714791412,
+            "opacity_candidate": 0.035991879877058264,
+            "log_opacity_candidate": -3.3244619249388814,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 670421,
+      "separation_m": 42.37816108136207,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "670421",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.8379273414611816,
+          0.08804119378328323,
+          -0.1882605254650116
+        ],
+        "parent_covariance": [
+          [
+            0.001787940823282171,
+            0.000166997090646012,
+            -0.0013622891144190134
+          ],
+          [
+            0.000166997090646012,
+            0.00018850906264606114,
+            -0.0003449518181520941
+          ],
+          [
+            -0.0013622891144190134,
+            -0.0003449518181520941,
+            0.0021637440501998946
+          ]
+        ],
+        "parent_opacity": 0.15285734832286835,
+        "parent_reduced_mass": 2.480309853574324e-06,
+        "log_parent_reduced_mass": -12.907127064634466,
+        "plane_normal_unit": [
+          -0.9976893008968893,
+          -0.03437399900741966,
+          0.05860449699565718
+        ],
+        "plane_offset_unit": -2.087870634056483,
+        "standardized_offset": -5.424712116083482,
+        "mass_weights": [
+          2.9024009901829526e-08,
+          0.9999999709759901
+        ],
+        "opacity_candidates": [
+          2.626978403741219e-08,
+          0.15285741125262323
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "670421",
+          "split_id": "plane_split",
+          "child_ids": [
+            "670421/plane_split/leq",
+            "670421/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "670421/plane_split/leq",
+            "parent_id": "670421",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              2.0743447446529695,
+              0.11248830004370407,
+              -0.3776846836433099
+            ],
+            "covariance": [
+              [
+                5.538096177246305e-05,
+                -1.2160934376822475e-05,
+                2.5885735779094783e-05
+              ],
+              [
+                -1.2160934376822475e-05,
+                0.0001699829507100998,
+                -0.00020140545645169725
+              ],
+              [
+                2.5885735779094783e-05,
+                -0.00020140545645169725,
+                0.0010514999901052688
+              ]
+            ],
+            "mass_weight": 2.9024009901829526e-08,
+            "log_mass_weight": -17.355142421853685,
+            "reduced_mass": 7.198853774974653e-14,
+            "log_reduced_mass": -30.26226948648815,
+            "opacity_candidate": 2.626978403741219e-08,
+            "log_opacity_candidate": -17.454846454165427,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "670421/plane_split/gt",
+            "parent_id": "670421",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.8379273345994005,
+              0.08804119307373016,
+              -0.18826051996716278
+            ],
+            "covariance": [
+              [
+                0.001787939251323455,
+                0.0001669969280951961,
+                -0.00136228785492224
+              ],
+              [
+                0.0001669969280951961,
+                0.0001885090458372433,
+                -0.0003449516879118875
+              ],
+              [
+                -0.00136228785492224,
+                -0.0003449516879118875,
+                0.0021637430410562665
+              ]
+            ],
+            "mass_weight": 0.9999999709759901,
+            "log_mass_weight": -2.9024010323026108e-08,
+            "reduced_mass": 2.4803097815857877e-06,
+            "log_reduced_mass": -12.907127093658476,
+            "opacity_candidate": 0.15285741125262323,
+            "log_opacity_candidate": -1.8782497447247573,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    },
+    {
+      "row": 575268,
+      "separation_m": 1.2773082449100477,
+      "result": {
+        "method": "two_sided_truncated_gaussian_moment_match",
+        "initialization_only": true,
+        "exact_pixel_alpha_conservation": false,
+        "semantic_boundary_discovery": false,
+        "complete_evsplitting_implementation": false,
+        "parent_id": "575268",
+        "split_id": "plane_split",
+        "parent_mean": [
+          1.518251657485962,
+          0.11686399579048157,
+          -0.1502763032913208
+        ],
+        "parent_covariance": [
+          [
+            0.001653881708723706,
+            0.001020375949301543,
+            0.0006054454772231287
+          ],
+          [
+            0.001020375949301543,
+            0.005427428056606844,
+            0.002418879544519239
+          ],
+          [
+            0.0006054454772231287,
+            0.002418879544519239,
+            0.0027880526198774754
+          ]
+        ],
+        "parent_opacity": 0.04287164658308029,
+        "parent_reduced_mass": 4.971260645174358e-06,
+        "log_parent_reduced_mass": -12.211837099079183,
+        "plane_normal_unit": [
+          -0.5512614165205405,
+          -0.7889099882323478,
+          0.271536150674277
+        ],
+        "plane_offset_unit": -0.778701986484131,
+        "standardized_offset": 3.1206364030942058,
+        "mass_weights": [
+          0.9990976965004619,
+          0.0009023034995381457
+        ],
+        "opacity_candidates": [
+          0.04303959328013291,
+          0.00014956189392003181
+        ],
+        "needs_review": false,
+        "lineage": {
+          "parent_id": "575268",
+          "split_id": "plane_split",
+          "child_ids": [
+            "575268/plane_split/leq",
+            "575268/plane_split/gt"
+          ]
+        },
+        "children": [
+          {
+            "child_id": "575268/plane_split/leq",
+            "parent_id": "575268",
+            "split_id": "plane_split",
+            "side": "leq",
+            "mean": [
+              1.5183293278897394,
+              0.1170735161304243,
+              -0.1502020015647639
+            ],
+            "covariance": [
+              [
+                0.0016477364630014062,
+                0.0010037987988021615,
+                0.0005995667596540645
+              ],
+              [
+                0.0010037987988021615,
+                0.005382710248548829,
+                0.0024030213689003052
+              ],
+              [
+                0.0005995667596540645,
+                0.0024030213689003052,
+                0.0027824288707519666
+              ]
+            ],
+            "mass_weight": 0.9990976965004619,
+            "log_mass_weight": -0.0009027108203772297,
+            "reduced_mass": 4.966775059297103e-06,
+            "log_reduced_mass": -12.21273980989956,
+            "opacity_candidate": 0.04303959328013291,
+            "log_opacity_candidate": -3.145634812984296,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          },
+          {
+            "child_id": "575268/plane_split/gt",
+            "parent_id": "575268",
+            "split_id": "plane_split",
+            "side": "gt",
+            "mean": [
+              1.4322491965178759,
+              -0.11513254319438171,
+              -0.23254871372417885
+            ],
+            "covariance": [
+              [
+                0.0010552527286188389,
+                -0.0005944598351291336,
+                3.277989772922447e-05
+              ],
+              [
+                -0.0005944598351291336,
+                0.0010713165128238738,
+                0.0008740815126623649
+              ],
+              [
+                3.277989772922447e-05,
+                0.0008740815126623649,
+                0.0022402243709349675
+              ]
+            ],
+            "mass_weight": 0.0009023034995381457,
+            "log_mass_weight": -7.010559620507253,
+            "reduced_mass": 4.485585877257091e-09,
+            "log_reduced_mass": -19.222396719586435,
+            "opacity_candidate": 0.00014956189392003181,
+            "log_opacity_candidate": -8.807800244656375,
+            "opacity_candidate_safe": true,
+            "needs_review": false,
+            "review_reasons": [],
+            "semantic_owner": null
+          }
+        ],
+        "native_safe": true,
+        "native_safe_scope": "numeric_candidate_gate_only_renderer_and_plane_unvalidated",
+        "warnings": []
+      }
+    }
+  ],
+  "owner_labels_are_hypotheses": true
+}

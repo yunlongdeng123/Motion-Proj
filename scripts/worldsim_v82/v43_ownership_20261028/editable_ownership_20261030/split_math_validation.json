@@ -1,0 +1,157 @@
+{
+  "created_utc": "2026-10-29T17:51:32.212540+00:00",
+  "method": "two_sided_truncated_gaussian_moment_match",
+  "status": "passed",
+  "tests_run": 24,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runtime": {
+    "python": "3.11.9",
+    "numpy": "2.2.6",
+    "device": "CPU"
+  },
+  "scope": {
+    "normalized_moment_orders_validated": [
+      0,
+      1,
+      2
+    ],
+    "rotated_anisotropic_random_cases": 100,
+    "both_children_retained": true,
+    "peak_opacity_formula": "parent_opacity * p_child * sqrt(det_parent / det_child)",
+    "peak_opacity_clipping": false,
+    "native_quaternion_order": "wxyz",
+    "scale_convention": "positive_linear_standard_deviation",
+    "complete_evsplitting_implementation": false,
+    "native_renderer_validated": false,
+    "exact_pixel_alpha_conservation": false,
+    "semantic_boundary_discovery": false,
+    "verified_real_3d_cut_plane_available": false,
+    "r2_bulk_split_performed": false,
+    "ssh_gpu_training_used": false
+  },
+  "max_numerical_errors": {
+    "quat_cov_roundtrip_scaled_max_error": 9.031021981266058e-16,
+    "zeroth_abs_error": 0.0,
+    "first_scaled_max_error": 6.550819608606029e-16,
+    "second_scaled_max_error": 5.747825030931667e-16,
+    "tail_variance_quadrature_relative_error": 3.9745984281580604e-14
+  },
+  "representative_cases": {
+    "rotated_offcenter": {
+      "standardized_offset": 0.8000000000000004,
+      "mass_weights": [
+        0.7881446014166034,
+        0.2118553985833966
+      ],
+      "log_mass_weights": [
+        -0.23807370162332797,
+        -1.551851319187777
+      ],
+      "opacity_candidates": [
+        0.7302022187472567,
+        0.31324548431487625
+      ],
+      "review_reasons": [
+        [],
+        []
+      ],
+      "reconstruction": {
+        "zeroth_abs_error": 0.0,
+        "first_scaled_max_error": 0.0,
+        "second_scaled_max_error": 1.204823176783936e-16
+      }
+    },
+    "unsafe_opacity": {
+      "standardized_offset": 1.0,
+      "mass_weights": [
+        0.8413447460685429,
+        0.15865525393145707
+      ],
+      "log_mass_weights": [
+        -0.1727537790234499,
+        -1.8410216450092634
+      ],
+      "opacity_candidates": [
+        1.0496561732269873,
+        0.3520112708567583
+      ],
+      "review_reasons": [
+        [
+          "unsafe_peak_opacity_candidate_not_clipped"
+        ],
+        []
+      ],
+      "reconstruction": {
+        "zeroth_abs_error": 0.0,
+        "first_scaled_max_error": 0.0,
+        "second_scaled_max_error": 7.5301448548996e-17
+      }
+    },
+    "tiny_tail": {
+      "standardized_offset": 11.999999999999998,
+      "mass_weights": [
+        1.0,
+        1.7764821120777044e-33
+      ],
+      "log_mass_weights": [
+        -1.7764821120777044e-33,
+        -75.41067300156878
+      ],
+      "opacity_candidates": [
+        0.5,
+        1.0875376001221154e-32
+      ],
+      "review_reasons": [
+        [],
+        [
+          "tiny_tail_mass"
+        ]
+      ],
+      "reconstruction": {
+        "zeroth_abs_error": 0.0,
+        "first_scaled_max_error": 0.0,
+        "second_scaled_max_error": 1.204823176783936e-16
+      }
+    },
+    "underflow_tail": {
+      "standardized_offset": 40.0,
+      "mass_weights": [
+        1.0,
+        0.0
+      ],
+      "log_mass_weights": [
+        -0.0,
+        -804.6084420137538
+      ],
+      "opacity_candidates": [
+        0.5,
+        0.0
+      ],
+      "review_reasons": [
+        [],
+        [
+          "tiny_tail_mass",
+          "mass_weight_underflow_log_mass_retained",
+          "opacity_candidate_underflow_log_candidate_retained",
+          "reduced_mass_underflow_log_mass_retained"
+        ]
+      ],
+      "reconstruction": {
+        "zeroth_abs_error": 0.0,
+        "first_scaled_max_error": 0.0,
+        "second_scaled_max_error": 1.204823176783936e-16
+      }
+    }
+  },
+  "limitations": [
+    "Moment-matched initialization only; child Gaussians retain cross-plane tails.",
+    "Tiny tails are retained; float64 mass underflow is explicit and finite log-mass is retained.",
+    "Condition number >= 1e14 is rejected rather than silently regularized.",
+    "Unsafe peak opacity candidates are reported and never clipped.",
+    "No semantic owner or real 3D plane is inferred; no automatic application to the R2 set.",
+    "Native pixel alpha and compositing must be separately validated."
+  ],
+  "background_reference": "https://orca.cardiff.ac.uk/174775/1/3680528.3687592.pdf"
+}

@@ -1,11 +1,11 @@
 # 当前研究状态
 
-当前任务：WS-V43-UNKNOWN-WHITE-20261030。用户要求在共享工作台的原RGB下方显示相同unknown高斯的白材质原生RGB，与右侧绿车身/灰unknown几何逐帧对照。场景1六组204个group/frame已完成：Actor10K重建49帧，no-edit/delete/横移1m/左转15°/横移3m各31帧。训练更新0。
+当前任务：WS-V43-EDITABLE-OWNERSHIP-20261030。V43修订3保留三大模块及内部串联布局，补齐语义/实例或表面/运动/证据四字段、混合支撑、几何修复、独立阴影effect及编辑后贡献核验。场景1是后续分类器的推理与诊断对象，本轮分类器训练0、原模型训练0；仅14个诊断子高斯颜色和opacity累计200步短拟合。
 
-原R2逐帧static最终集合与Actor10K已有语义/轮廓证据按行连接。只将unknown的SH设为白材质，高阶SH清零；车辆核心保留原色。编辑携带原观测行标签，重算当前相机贡献；static候选保留原世界位置。该诊断没有新增归属算法或证明召回改善，白色材质也不保证合成后纯白。
+已完成49帧CPU证据审计、raw98/113/114三锚帧原生CUDA贡献探针、全候选空间支撑审计，以及raw113的7父→14子两侧保留对照。原生完整基准与已有Actor10K PNG逐像素一致。删Actor后静态在车身域的可见贡献从约216/313/318增至1998/2192/2213；重新遮挡合成后的来源与删除前不同。三个锚帧452/777/810个投影双域候选中，没有候选的两侧实测质心同时处于父高斯3σ椭球内；该描述是深度/支撑不相容警报，非语义真值或全场景错误率。
 
-真实CUDA六分支raw113有限重放9.97秒；完整204帧197.90秒。所有基准与已发布原PNG逐像素一致，原生reference最大误差0，alpha/radii/depth/extra严格相同。远端和本地完整float/PNG/行ID审计通过，1,904,015,360字节原始归档取回验证成功。独立真实Canvas核验204项文件、24次切换及六组参数清空恢复通过；HTML插入位检查通过，browserQA=false。quality_accepted=false、human_verdict=null。
+两侧截断矩初始化与子高斯短拟合可改善无编辑RGB保真，但删Actor后假设两侧分离比例由0.3976降到0.3851，没有证明归属或编辑改善。因此当前不得将投影双域直接视为可拆分几何，更不能只依语义概率硬路由混合父点。下一步先核验实测深度与表面可观测性，修复不相容几何或重新建模，再作保留双侧的局部拆分与编辑后验证；阴影在固定道路接收面上的effect另行验证，不将阴影等同车体实体。
 
-原入口已新增六组直达链接；左侧新增真实unknown白材质图，默认5px/20%，改参数不复用旧图。1K/5K需各自checkpoint匹配证据，V1原生动态行空间不同；场景2/3尚未迁移本次R2与白材质方案。此前R2剥离结果保持原样，完整浮点与原始检查点保留。
+短拟合r1实际200步并保存状态，恢复验收遇到NumPy uint32 RNG兼容错误；修复后r2精确恢复200步状态、增加更新0，11项恢复检查通过。24项拆分数学检查、49张PNG与浮点显示核对、28项局部指标复算、4项两域比例复算通过。浏览器交互QA未完成；human_verdict=null、quality_accepted=false。这不是小时级正式训练，也没有新分类器、跨场景泛化或联合优化优于流水线的结论。
 
-报告：[白材质交付与组件图](autoresearch/v43_ownership_20261028/unknown_white_20261030/index.html)。现场：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_white_20261030。复现源码已同步诊断模板，旧队列与训练保持关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
+报告：[场景1身份与表示修复](autoresearch/v43_ownership_20261028/editable_ownership_20261030/index.html)；设计：[V43修订3](autoresearch/v43_ownership_20261028/editable_ownership_20261030/V43_DESIGN.md)。原R2和已交付unknown白材质六组204帧不变，新报告中的R2删行+原环境是来源对照，不替代已接受的局部白底R2。主工作台与场景1只新增独立报告入口。完整浮点、checkpoint和失败现场已取回并校验归档；代码同步独立远端模板。无其他实验排队。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。

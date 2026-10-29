@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-EDITABLE-OWNERSHIP-20261030 / probe-anchors-r1 + child-refit-r2 | 49帧证据审计、3锚帧after贡献与空间支撑、7父14子保留双侧及200步短拟合；编辑后分离未改善，分类器/原模型训练0 | [报告与组件图](autoresearch/v43_ownership_20261028/editable_ownership_20261030/index.html)、[设计](autoresearch/v43_ownership_20261028/editable_ownership_20261030/V43_DESIGN.md) |
 | WS-V43-UNKNOWN-WHITE-20261030 / native-color-r1 | 场景1六组204帧unknown白材质原生对照；原参数/几何保持，完整float审计和24次真实Canvas切换通过，训练0 | [报告与组件图](autoresearch/v43_ownership_20261028/unknown_white_20261030/index.html) |
 | WS-V43-R2-RECOVERY-20261029 / inherited-r1 | 场景1真实R2三锚点逐值复现、49帧原生重放与同帧3D；零训练，独立审计通过，边缘残留待人工验收 | [报告与组件图](autoresearch/v43_ownership_20261028/r2_recovery_20261029/index.html) |
 | WS-V43-TEMPORAL-MULTISCENE-20261029 / source-body-contact-r1 | 三场景147帧独立局部剥离；2/3场景10K原生编辑接入；冻结训练0，机械审计通过、视觉待验且保留badcase | [组件与记录](autoresearch/v43_ownership_20261028/TEMPORAL_MULTISCENE_20261029.html) |
