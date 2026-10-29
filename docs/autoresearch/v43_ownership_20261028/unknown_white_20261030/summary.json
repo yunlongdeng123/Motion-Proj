@@ -1,0 +1,193 @@
+{
+  "schema": "v43-unknown-white-delivery-report-v1",
+  "generated_utc": "2026-10-29T16:40:56.481180+00:00",
+  "context": "14705303724557273004_3105_000_3125_000",
+  "status": "complete",
+  "verified_group_frames": 204,
+  "required_group_frames": 204,
+  "full_render_wall_seconds": 197.89616805501282,
+  "training_updates": 0,
+  "classification": {
+    "radius": 5,
+    "fraction": 0.2,
+    "actor_rule": "unknown = NOT(present AND 14 <= class_id <= 19 AND NOT(boundary_fraction[radius] >= fraction)); radius 0 disables boundary only",
+    "static_rule": "unknown = exact same-frame R2 final_removed_ids; all other static rows keep native color",
+    "source": "frozen no-edit Actor10K alpha*T semantics/contour plus inherited R2 same-frame static IDs",
+    "edited_visibility": "source-view labels carried with the same rows; native renderer recomputes edited-view contributions",
+    "known_actor_color": "native RGB/SH, never semantic green",
+    "white_operation": "SH DC=(1-0.5)/C0; higher SH coefficients=0 on unknown rows only",
+    "environment": "native environment unchanged; no local scope clipping",
+    "labels_for_training": false
+  },
+  "source_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\outputs\\GS_Scene_Diagnostics_20261027\\14705303724557273004_3105_000_3125_000\\unknown_white_manifest.json",
+  "source_manifest_sha256": "7de7badf9ca2c79f6f68eb3e6e8ab3dace3889317aa14dbaaf00db9f63f0c6ac",
+  "native_reference_max_error": 0.0,
+  "invariant_checks_all_verified": [
+    "alpha_identical",
+    "radii_identical",
+    "depth_sum_identical",
+    "extra_identical",
+    "baseline_saved_png_pixels_identical",
+    "non_color_inputs_identical",
+    "known_row_SH_identical",
+    "row_order_unchanged",
+    "native_environment_unchanged",
+    "frozen_model_unchanged"
+  ],
+  "groups": [
+    {
+      "group_id": "v43_actor_10000",
+      "title": "V43 局部车身约束 · 10K",
+      "short_title": "10K 重建",
+      "verified_frames": 49,
+      "raw_range": [
+        77,
+        125
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_actor_10000/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_actor_10000/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_actor_10000/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_actor_10000/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 3576
+    },
+    {
+      "group_id": "v43_motion_no_edit",
+      "title": "V43 10K · 无编辑",
+      "short_title": "无编辑",
+      "verified_frames": 31,
+      "raw_range": [
+        86,
+        116
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_no_edit/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_no_edit/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_no_edit/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_no_edit/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 3576
+    },
+    {
+      "group_id": "v43_motion_delete_target",
+      "title": "V43 10K · 删目标车",
+      "short_title": "删除目标车",
+      "verified_frames": 31,
+      "raw_range": [
+        86,
+        116
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_delete_target/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_delete_target/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_delete_target/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_delete_target/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 0
+    },
+    {
+      "group_id": "v43_motion_translate_lateral_1m",
+      "title": "V43 10K · 横移 1 米",
+      "short_title": "横移 1 m",
+      "verified_frames": 31,
+      "raw_range": [
+        86,
+        116
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_translate_lateral_1m/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_translate_lateral_1m/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_translate_lateral_1m/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_translate_lateral_1m/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 3576
+    },
+    {
+      "group_id": "v43_motion_turn_left15",
+      "title": "V43 10K · 左转 15°",
+      "short_title": "左转 15°",
+      "verified_frames": 31,
+      "raw_range": [
+        86,
+        116
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_turn_left15/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_turn_left15/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_turn_left15/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_motion_turn_left15/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 3576
+    },
+    {
+      "group_id": "v43_shift_3m",
+      "title": "V43 10K · 横移3米（压力对照）",
+      "short_title": "横移 3 m",
+      "verified_frames": 31,
+      "raw_range": [
+        86,
+        116
+      ],
+      "status": "complete",
+      "example_raw": 113,
+      "example_images": {
+        "baseline": "assets/v43_unknown_white/072ccd512dfadef4/v43_shift_3m/113/baseline.png",
+        "unknownwhite": "assets/v43_unknown_white/072ccd512dfadef4/v43_shift_3m/113/unknownwhite.png",
+        "source": "assets/v43_unknown_white/072ccd512dfadef4/v43_shift_3m/113/source.png"
+      },
+      "example_receipt": "assets/v43_unknown_white/072ccd512dfadef4/v43_shift_3m/113/receipt.json",
+      "static_unknown_rows": 15333,
+      "actor_unknown_rows": 3576
+    }
+  ],
+  "QA": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\work\\v43_unknown_white_20261029\\real_manifest_canvas_qa_204.json",
+      "sha256": "b512a387cc6941809f8bc739615848c640fe7202c4eeb18ece2177b64de788a1",
+      "schema": "v43-real-unknown-white-canvas-qa-v1",
+      "passed": true,
+      "actualCanvas": true,
+      "browserQA": false,
+      "images": "actual published native PNG bytes; no synthetic fixtures",
+      "manifestSha256": "7de7badf9ca2c79f6f68eb3e6e8ab3dace3889317aa14dbaaf00db9f63f0c6ac",
+      "verifiedEntries": 204,
+      "assetFilesChecked": 1020,
+      "allPNGJsExactBytes": true,
+      "allNativeUnknownIDsMatchCurrentJS": true
+    }
+  ],
+  "human_verdict_provided": false,
+  "human_verdict": null,
+  "research_scope": "diagnostic adaptation; no new algorithm or recall-improvement claim",
+  "scope_exclusions": [
+    "Actor1K/5K need checkpoint-matched attribution",
+    "V1 original dynamic row namespace needs independent adaptation",
+    "Scenes2/3 not migrated to this inherited-R2 unknown-white delivery"
+  ],
+  "contact_sheet": {
+    "path": "raw113_pairs.png",
+    "source_rgb_images": 12,
+    "native_image_size": [
+      480,
+      320
+    ],
+    "resampling": false,
+    "original_pixels_verified_after_save": true
+  }
+}

@@ -1,13 +1,11 @@
 # 当前研究状态
 
-当前任务：WS-V43-R2-RECOVERY-20261029。用户指出旧检测面板 pending 和后续结果回退。本轮恢复原 R2 继承链，完成第一场景 raw77—125 共49帧；无新增训练。旧检测面板实际仅3帧，已折叠为历史记录。此前147帧空初始化方法改变了种子、彩噪查询及框外基线，不能视为 R2 的逐帧推广，保留为未采纳消融。
+当前任务：WS-V43-UNKNOWN-WHITE-20261030。用户要求在共享工作台的原RGB下方显示相同unknown高斯的白材质原生RGB，与右侧绿车身/灰unknown几何逐帧对照。场景1六组204个group/frame已完成：Actor10K重建49帧，no-edit/delete/横移1m/左转15°/横移3m各31帧。训练更新0。
 
-CPU先按原算法补齐49帧接触区，三锚点掩码完全一致；GPU重放原三锚点，行集合与 G/alpha/局部白底浮点差均为0，再按原分类规则生成49帧 existing。原R2同帧existing种子、body/contact/浮点越界查询、8次评估上限与局部范围外existing基线全部保留；原生删除并重渲染49帧，逐帧重新计算贡献。五项继承门槛及独立完整浮点审核通过，441张PNG已取回。完整逐像素浮点留远端；本地含全部PNG、删行ID、范围和审计。
+原R2逐帧static最终集合与Actor10K已有语义/轮廓证据按行连接。只将unknown的SH设为白材质，高阶SH清零；车辆核心保留原色。编辑携带原观测行标签，重算当前相机贡献；static候选保留原世界位置。该诊断没有新增归属算法或证明召回改善，白色材质也不保证合成后纯白。
 
-共享工作台场景1默认 v43_r2_inherited49，49帧主滑块同步实拍/existing/R2白底及删行3D；旧R2三帧留作对照。当前49无数据缺帧。新增unknown中心框外0，既有种子框外单列；白底是 G+(1-alpha) 的局部空洞诊断，框外使用existing，不是补景成功或全局删除无影响。
+真实CUDA六分支raw113有限重放9.97秒；完整204帧197.90秒。所有基准与已发布原PNG逐像素一致，原生reference最大误差0，alpha/radii/depth/extra严格相同。远端和本地完整float/PNG/行ID审计通过，1,904,015,360字节原始归档取回验证成功。独立真实Canvas核验204项文件、24次切换及六组参数清空恢复通过；HTML插入位检查通过，browserQA=false。quality_accepted=false、human_verdict=null。
 
-AI视觉核查49张局部图及11帧原尺寸，未发现严重坏帧或明显跳变；部分边缘仍有灰暗和彩边，raw101/113/114较明显。没有语义GT和P/R结论，quality_accepted=false、human_verdict=null。当前研究方向仍是车辆相关unknown检测，不能把白底本身作为语义正确证明。
+原入口已新增六组直达链接；左侧新增真实unknown白材质图，默认5px/20%，改参数不复用旧图。1K/5K需各自checkpoint匹配证据，V1原生动态行空间不同；场景2/3尚未迁移本次R2与白材质方案。此前R2剥离结果保持原样，完整浮点与原始检查点保留。
 
-第二、三场景既有10K车身和编辑保留；本轮没有重做其R2继承。后续先由用户验收场景1逐帧，再以相同输入合同复现实例2/3，禁止空种子静默回退。边缘混合支撑和关联阴影仍待核验；不扩大框外unknown。
-
-记录：[R2继承回归报告](autoresearch/v43_ownership_20261028/r2_recovery_20261029/index.html)。执行开销：CPU接触区96.32秒，49帧GPU扩展79.84秒；锚点重放和种子生成另记日志，无训练更新。源码和报告归档并推送后，按用户要求检查活动进程并关机；旧队列不恢复。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
+报告：[白材质交付与组件图](autoresearch/v43_ownership_20261028/unknown_white_20261030/index.html)。现场：/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/unknown_white_20261030。复现源码已同步诊断模板，旧队列与训练保持关闭。failure_ledger_refs=[V82-F01]；failure_ledger_delta=none。
