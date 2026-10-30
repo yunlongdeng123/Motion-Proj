@@ -1,0 +1,39 @@
+{
+  "method": "M2 conditional truth-assisted support-centroid position / scale cap / controlled mixed split",
+  "m1_candidates_reused": true,
+  "candidate_indices_verified": "comparison.json, exact equal for all 3 keys and all five repair arms",
+  "modifiable": [
+    "selected static means3D",
+    "selected static scales for scale arm",
+    "selected mixed opacity and one extra child for split arm"
+  ],
+  "unchanged_params": [
+    "learned dynamic branch",
+    "nonselected static rows",
+    "SH/color",
+    "rotations",
+    "environment",
+    "checkpoint files"
+  ],
+  "optimization_updates": 0,
+  "privileged_trainview_geometry_used_for_repair": true,
+  "GT_RGB_replaced": false,
+  "position_target": "mean of accepted M1 independent first-hit vehicle support positions; not exact mesh projection",
+  "scale_cap_world_m": 0.08,
+  "split_trigger": "balanced selected AND mixed finite-support AND actual original alphaT to body and nonvehicle each >1e-4",
+  "opacity_conservation": "optical thickness fractions, exact transmittance only at co-located equal footprints; relocation changes pixelwise alpha",
+  "heldout": "load fixed frame8 repaired geometry from train query, never use heldout geometry for selection or repair; score only none against available none reference",
+  "inference_scope": "query-conditioned diagnostic, not a persistent camera-independent Gaussian model or deployable predictor",
+  "mathematical_upper_bound": false,
+  "quality_accepted": false,
+  "failures": [
+    {
+      "folder": "strict_position",
+      "reason": "position-repaired none incorrectly compared to unmodified native none; assertion removed, all output rerun in strict_position_r2"
+    },
+    {
+      "folder": "balanced_position_scale_split",
+      "reason": "float64 depth versus float32 calibrated camera; cast to float32, rerun new folder"
+    }
+  ]
+}

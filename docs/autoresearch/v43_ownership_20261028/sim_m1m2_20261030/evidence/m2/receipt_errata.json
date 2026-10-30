@@ -1,0 +1,13 @@
+{
+  "scope": "refit_assignment/responsibility_summary.json generic apply_recall fields only",
+  "corrected_fields": {
+    "scale_cap_world_m": null,
+    "displacement_world_m_mean": 0.0,
+    "displacement_world_m_max": 0.0
+  },
+  "reason": "The assignment branch computes candidate targets for common receipt structure but its stage guard does not apply them and never applies scale cap. Generic receipt fields accidentally described the hypothetical target displacement.",
+  "actual_execution": "M1 original means/scales remain unchanged; only candidate DC/opacity receive 200 local updates. Geometry frozen, consistent with final_completion_receipt.json and local_refit control contract.",
+  "changes_to_saved_tensors_or_rendered_RGB": false,
+  "source_corrected": "repair_recall.py assignment receipt fields now emit null cap and zero applied displacement",
+  "original_evidence_preserved": true
+}

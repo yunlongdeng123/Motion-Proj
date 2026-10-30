@@ -1,0 +1,145 @@
+{
+  "status": "NATIVE_BRANCH_ROUTING_EDIT_RENDERED",
+  "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/checkpoint_events/iteration_010000.json",
+  "iteration": 10000,
+  "frames": [
+    {
+      "frame": "000008",
+      "edit": "none",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_split_depth_r2/none/000008.npz",
+      "environment": {
+        "min": -3.202840566635132,
+        "max": 8.733818054199219,
+        "channel_fraction_outside_0_1": 0.036150173611111114
+      },
+      "environment_fill": {
+        "min": -1.6513596773147583,
+        "max": 7.908265590667725,
+        "channel_fraction_outside_0_1": 0.007701822916666667
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.999901294708252,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.0031293402777777778
+    },
+    {
+      "frame": "000008",
+      "edit": "delete",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_split_depth_r2/delete/000008.npz",
+      "environment": {
+        "min": -3.202840566635132,
+        "max": 8.733818054199219,
+        "channel_fraction_outside_0_1": 0.036150173611111114
+      },
+      "environment_fill": {
+        "min": -2.5970664024353027,
+        "max": 7.942486763000488,
+        "channel_fraction_outside_0_1": 0.0095703125
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.9999015927314758,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.007552083333333333
+    },
+    {
+      "frame": "000008",
+      "edit": "shift",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_split_depth_r2/shift/000008.npz",
+      "environment": {
+        "min": -3.202840566635132,
+        "max": 8.733818054199219,
+        "channel_fraction_outside_0_1": 0.036150173611111114
+      },
+      "environment_fill": {
+        "min": -0.3399972915649414,
+        "max": 2.6115190982818604,
+        "channel_fraction_outside_0_1": 0.006644965277777777
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.9999015927314758,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.003220486111111111
+    },
+    {
+      "frame": "000008",
+      "edit": "rotate",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_split_depth_r2/rotate/000008.npz",
+      "environment": {
+        "min": -3.202840566635132,
+        "max": 8.733818054199219,
+        "channel_fraction_outside_0_1": 0.036150173611111114
+      },
+      "environment_fill": {
+        "min": -0.43481484055519104,
+        "max": 3.3403756618499756,
+        "channel_fraction_outside_0_1": 0.006417100694444444
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.9999013543128967,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.005757378472222222
+    }
+  ],
+  "keyframes": [
+    "000008"
+  ],
+  "edits": [
+    "none",
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "same_camera_for_all_edits": true,
+  "compositor": "native premultiplied C; fill=(1-alpha)*E; final=C+fill; white=C+(1-alpha)",
+  "required_fp32_arrays": [
+    "C",
+    "alpha",
+    "E",
+    "fill",
+    "final",
+    "white",
+    "depth_sum_model"
+  ],
+  "native_none_identity_max_abs": null,
+  "native_none_identity_checked_frames": [],
+  "original_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "routing": "exact high-recall M1 selected static rows repaired and edited with unchanged original dynamic; split background children stay static",
+  "operation": {
+    "shift_world_m": [
+      0,
+      1.5,
+      0
+    ],
+    "rotate_world_z_deg": 30,
+    "rotation_center": "legal ideal-track object root; same XY as body center",
+    "rotate_SH_frame": "inherited world-space SH; no relighting, no object-frame SH superiority claim"
+  },
+  "privileged_reference_used_for_training": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

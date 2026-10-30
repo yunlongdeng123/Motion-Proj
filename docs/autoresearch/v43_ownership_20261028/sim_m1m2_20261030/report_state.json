@@ -1,0 +1,39 @@
+{
+  "task_id": "WS-V43-SIM-M1-M2-20261030",
+  "artifact_kind": "actual_run_report",
+  "base_native_updates": 10000,
+  "new_local_refit_updates": 400,
+  "reference_association_frames": 3,
+  "temporal_consistency_passed": false,
+  "unique_gaussian_gt": false,
+  "truth_assisted_not_mathematical_upper_bound": true,
+  "new_transferable_model_trained": false,
+  "edited_or_heldout_rgb_used_for_optimization": false,
+  "automatic_autodl_shutdown": false,
+  "human_verdict": null,
+  "frozen_representation_train_views": 60,
+  "main_geometry_heldout_views": 20,
+  "local_refit_train_views": 8,
+  "local_refit_heldout_views": 8,
+  "same_budget_refit_relative_full_image_improvement": {
+    "none": {
+      "raw_relative_improvement": -2.2273397199209244,
+      "clamped_relative_improvement": -2.202709634026513
+    },
+    "delete": {
+      "raw_relative_improvement": 0.18863254163529997,
+      "clamped_relative_improvement": 0.1616473824371466
+    },
+    "shift": {
+      "raw_relative_improvement": -0.22469031464834543,
+      "clamped_relative_improvement": -0.14098477847944824
+    },
+    "rotate": {
+      "raw_relative_improvement": 0.07096722687042567,
+      "clamped_relative_improvement": 0.10462538869967697
+    }
+  },
+  "conclusion": "No robust whole-edit gain from hard reassignment or direct moment repair; split plus local appearance refit helps some deletion errors but fails none/shift preservation. Not evidence that all feasible assignments or repairs fail.",
+  "depth_evidence": "use corrected *_depth_r2 NPZ; historical images unchanged with exact RGB parity",
+  "next_step": "audit pure vs mixed footprint responsibility and enforce unedited-state preservation for learned/joint surface-aware repair; no bulk dataset generation yet"
+}

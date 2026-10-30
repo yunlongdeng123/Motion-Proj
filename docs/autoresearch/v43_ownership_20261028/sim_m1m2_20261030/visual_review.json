@@ -1,0 +1,322 @@
+{
+  "review_type": "independent_agent_visual_review_of_actual_view_image_contact_sheets",
+  "human_verdict": null,
+  "frames_viewed": [
+    0,
+    8,
+    15
+  ],
+  "heldout_frame_viewed": 8,
+  "edits_viewed": [
+    "none",
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "arms": [
+    "M0",
+    "M1_recall_verified",
+    "M2_recall_position",
+    "M2_recall_position_scale",
+    "M2_recall_position_scale_split"
+  ],
+  "findings": [
+    "At all three anchors and heldout, M1 delete retains conspicuous pink/cyan car-shaped residuals plus colored edge fragments; it is not a clean road.",
+    "All three frozen-appearance M2 delete arms retain the same conspicuous residual; no visually established continuous road restoration.",
+    "Position-only repair severely changes none/shift/rotate: broad gray-white haze or covering, blurred road/background, and changed vehicle color. At frame0 vehicle visibility is severely reduced. These bright areas are not reconstructed road.",
+    "Scale cap suppresses the broad position-only covering and preserves more scene structure, but none has extra colored edge noise and shift retains a new car plus the old car-shaped residual.",
+    "Rotate remains dominated by saturated green/red smears and fragmented shape for M1 and scale/split M2; it does not match the independent rotated car.",
+    "Split and position_scale are visually very similar at inspected resolution; there is no obvious positive split-specific visual outcome.",
+    "Heldout exhibits the same failure pattern; it is a fixed repaired frame8 replay, not generalization of a learned repair algorithm."
+  ],
+  "cannot_conclude": [
+    "Images alone cannot establish unique Gaussian owners, exact mixed-support attribution, or shadow GT.",
+    "Frozen-appearance repair failure cannot establish that geometry repair is useless; appearance/covariance are inconsistent after relocation.",
+    "No mathematical upper bound, deployable algorithm, or real-scene generalization conclusion."
+  ],
+  "metrics_policy": {
+    "raw": "floating composite before clamp; use raw_mae fields only",
+    "clamped": "clip float composite to [0,1], then compare to reference; use clamped_mae fields only",
+    "png": "8bit displayed PNG MAE additionally contains quantization and is not either float metric",
+    "heldout_current": "heldout_recall_comparison.json inspected contains raw_mae/mse only; do not mix with clamped tables"
+  },
+  "middle_frame_full_metrics": [
+    {
+      "arm": "M1",
+      "edit": "none",
+      "raw_mae": 0.0035516839381000767,
+      "clamped_mae": 0.003534289962855945
+    },
+    {
+      "arm": "M1",
+      "edit": "delete",
+      "raw_mae": 0.024603469878947078,
+      "clamped_mae": 0.021510573494727698
+    },
+    {
+      "arm": "M1",
+      "edit": "shift",
+      "raw_mae": 0.01737058685848903,
+      "clamped_mae": 0.017173738462691088
+    },
+    {
+      "arm": "M1",
+      "edit": "rotate",
+      "raw_mae": 0.032054758078381616,
+      "clamped_mae": 0.0282042073453406
+    },
+    {
+      "arm": "M2_position",
+      "edit": "none",
+      "raw_mae": 0.08200947428910756,
+      "clamped_mae": 0.0819827216954153
+    },
+    {
+      "arm": "M2_position",
+      "edit": "delete",
+      "raw_mae": 0.024603469878947078,
+      "clamped_mae": 0.021510573494727698
+    },
+    {
+      "arm": "M2_position",
+      "edit": "shift",
+      "raw_mae": 0.07931782831209261,
+      "clamped_mae": 0.07928162104506113
+    },
+    {
+      "arm": "M2_position",
+      "edit": "rotate",
+      "raw_mae": 0.09481789535869328,
+      "clamped_mae": 0.09455560366468506
+    },
+    {
+      "arm": "M2_position_scale",
+      "edit": "none",
+      "raw_mae": 0.01572618794644062,
+      "clamped_mae": 0.01528181515387959
+    },
+    {
+      "arm": "M2_position_scale",
+      "edit": "delete",
+      "raw_mae": 0.024603469878947078,
+      "clamped_mae": 0.021510573494727698
+    },
+    {
+      "arm": "M2_position_scale",
+      "edit": "shift",
+      "raw_mae": 0.02523980110832484,
+      "clamped_mae": 0.022793748587643436
+    },
+    {
+      "arm": "M2_position_scale",
+      "edit": "rotate",
+      "raw_mae": 0.030680736512036063,
+      "clamped_mae": 0.028434405073160914
+    },
+    {
+      "arm": "M2_split",
+      "edit": "none",
+      "raw_mae": 0.015295727825980099,
+      "clamped_mae": 0.01470119451268703
+    },
+    {
+      "arm": "M2_split",
+      "edit": "delete",
+      "raw_mae": 0.02359386733458147,
+      "clamped_mae": 0.020875985725820605
+    },
+    {
+      "arm": "M2_split",
+      "edit": "shift",
+      "raw_mae": 0.024602287599686922,
+      "clamped_mae": 0.02232417236897422
+    },
+    {
+      "arm": "M2_split",
+      "edit": "rotate",
+      "raw_mae": 0.03198391962368664,
+      "clamped_mae": 0.02830311689727977
+    }
+  ],
+  "refit_code_review": {
+    "file": "m2_repair/local_refit.py",
+    "updates": 200,
+    "observation": "original single-frame RGB only",
+    "trainable": "selected DC SH coefficient and opacity logits; split includes added background children",
+    "frozen": "geometry, other SH coefficients, environment, other rows",
+    "assessment": "Executed equal-step original-RGB appearance control verified from final_completion_receipt.json and actual train/heldout four-edit images. No pending refit review.",
+    "caveats": [
+      "Equal update counts do not mean equal parameter capacity; list trainable_rows and trainable_parameters for every arm.",
+      "It is DC-only, not full SH refit.",
+      "Raw composite L1 used for optimization; report raw and clamped results separately.",
+      "Refit should never use edited or heldout references.",
+      "Heldout must replay the same fitted frame8 state without refitting."
+    ],
+    "save_restore": "Actual completion receipt records per-arm restore render max difference 0.0."
+  },
+  "contact_sheets": [
+    "train_contact.png",
+    "frame0_contact.png",
+    "frame15_contact.png",
+    "heldout_contact.png",
+    "refit_train_contact.png",
+    "refit_heldout_contact.png"
+  ],
+  "refit_results_reviewed": true,
+  "refit_final_receipt": {
+    "arms": [
+      "refit_assignment",
+      "refit_split"
+    ],
+    "updates_per_arm": 200,
+    "total_updates": 400,
+    "trainable": "exact M1 selected DC+opacity, plus split background child DC+opacity in M2; higher SH/geometry/nonselected/dynamic/environment frozen",
+    "loss": "full-frame original trainRGB L1, no masks, no edited/heldout RGB",
+    "lr": {
+      "DC": 0.0025,
+      "opacity": 0.05
+    },
+    "optimizer": "Adam eps1e-8",
+    "single_frame": 8,
+    "save_reload_parity": [
+      0.0,
+      0.0
+    ],
+    "capacity_and_trainable_count": [
+      {
+        "arm": "refit_assignment",
+        "rows": 12678,
+        "parameters": 50712
+      },
+      {
+        "arm": "refit_split",
+        "rows": 23135,
+        "parameters": 92540
+      }
+    ]
+  },
+  "refit_visual_findings": [
+    "M2 refit reduces none-view purple color shift and some colored boundary noise relative to frozen M2; original red vehicle appearance is partly recovered.",
+    "Compared with M1 refit, M2 refit still has additional colored edge fragments in none, including heldout; it does not visibly exceed the assignment baseline in original-view fidelity.",
+    "Delete still contains a large pink/cyan car silhouette at original car position in both refit arms; M2 has fewer peripheral speckles in places but no continuous road restoration.",
+    "Shift still shows displaced red car plus original-position pink/cyan residual in both arms.",
+    "Rotate remains a saturated green/red fragmented smear for both; M2 reduces the long bright leftward streak seen in M1 but does not recover a coherent rotated car.",
+    "Heldout reproduces these limited appearance improvements and major edit failures; no clean novel-camera editing result."
+  ],
+  "refit_interpretation": "Negative result for this specific responsibility-plus-first-hit-moment repair, even after matched 200-update DC/opacity adaptation. Limited none appearance and peripheral-artifact improvements are real but do not resolve edit failure. Equal steps are not equal capacity (50712 vs 92540 parameters). This does not establish geometry repair is useless.",
+  "refit_metrics": [
+    {
+      "arm": "refit_assignment",
+      "heldout": false,
+      "edit": "none",
+      "raw_mae": 0.003133005909363621,
+      "clamped_mae": 0.0031242687849441023
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": false,
+      "edit": "delete",
+      "raw_mae": 0.024603469878947078,
+      "clamped_mae": 0.021510573494727698
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": false,
+      "edit": "shift",
+      "raw_mae": 0.017599313800413054,
+      "clamped_mae": 0.017422081018987935
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": false,
+      "edit": "rotate",
+      "raw_mae": 0.033390123773637315,
+      "clamped_mae": 0.02939320876921422
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": true,
+      "edit": "none",
+      "raw_mae": 0.02164695840913305,
+      "clamped_mae": 0.02151498672050237
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": true,
+      "edit": "delete",
+      "raw_mae": 0.0395499675623311,
+      "clamped_mae": 0.03398315860862365
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": true,
+      "edit": "shift",
+      "raw_mae": 0.025235759337001583,
+      "clamped_mae": 0.025178679681831555
+    },
+    {
+      "arm": "refit_assignment",
+      "heldout": true,
+      "edit": "rotate",
+      "raw_mae": 0.04626680368588951,
+      "clamped_mae": 0.04160187711556673
+    },
+    {
+      "arm": "refit_split",
+      "heldout": false,
+      "edit": "none",
+      "raw_mae": 0.01011127441403619,
+      "clamped_mae": 0.010006125736828785
+    },
+    {
+      "arm": "refit_split",
+      "heldout": false,
+      "edit": "delete",
+      "raw_mae": 0.019962454822633743,
+      "clamped_mae": 0.0180334455945831
+    },
+    {
+      "arm": "refit_split",
+      "heldout": false,
+      "edit": "shift",
+      "raw_mae": 0.02155370915582283,
+      "clamped_mae": 0.019878329252100948
+    },
+    {
+      "arm": "refit_split",
+      "heldout": false,
+      "edit": "rotate",
+      "raw_mae": 0.031020519284562002,
+      "clamped_mae": 0.02631793287660443
+    },
+    {
+      "arm": "refit_split",
+      "heldout": true,
+      "edit": "none",
+      "raw_mae": 0.02718373138162674,
+      "clamped_mae": 0.02558638848172388
+    },
+    {
+      "arm": "refit_split",
+      "heldout": true,
+      "edit": "delete",
+      "raw_mae": 0.03462603589729244,
+      "clamped_mae": 0.03059655212033249
+    },
+    {
+      "arm": "refit_split",
+      "heldout": true,
+      "edit": "shift",
+      "raw_mae": 0.02852695401688013,
+      "clamped_mae": 0.028183562195671356
+    },
+    {
+      "arm": "refit_split",
+      "heldout": true,
+      "edit": "rotate",
+      "raw_mae": 0.04509795208059024,
+      "clamped_mae": 0.03931780920376557
+    }
+  ],
+  "next_research_priority": "Audit the car-shaped residual contributions that survive high-recall routing against independent surface/depth support, before adding more repair capacity: missing responsibility coverage is a direct unresolved bottleneck that local geometry/appearance operations on selected rows cannot remove."
+}

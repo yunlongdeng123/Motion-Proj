@@ -1,0 +1,83 @@
+{
+  "status": "SCORED_FIXED_TRAINFRAME_REPAIR_ON_HELDOUT_EDITS",
+  "run": "recall_position_scale",
+  "rows": [
+    {
+      "frame": "000008",
+      "edit": "none",
+      "regions": {
+        "full": {
+          "pixels": 153600,
+          "raw_mae": 0.031388474177057375,
+          "raw_mse": 0.009810714741349551
+        },
+        "original_body_footprint": {
+          "pixels": 4759,
+          "raw_mae": 0.0866773409446979,
+          "raw_mse": 0.02121835756607711
+        }
+      },
+      "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/none/000008.png",
+      "reference_sha256": "19ec3b1d4bf5b89056414a7ce8f0b6187e97e24c8caad639929c99ac2ea4a418"
+    },
+    {
+      "frame": "000008",
+      "edit": "delete",
+      "regions": {
+        "full": {
+          "pixels": 153600,
+          "raw_mae": 0.0395499675623311,
+          "raw_mse": 0.021074559567666094
+        },
+        "original_body_footprint": {
+          "pixels": 4759,
+          "raw_mae": 0.26820093922040705,
+          "raw_mse": 0.17555985170730992
+        }
+      },
+      "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/delete/000008.png",
+      "reference_sha256": "5eaa375440ca64f0d65ad470438b3974353b416f04b3d328e5f5f8d2c9b33e50"
+    },
+    {
+      "frame": "000008",
+      "edit": "shift",
+      "regions": {
+        "full": {
+          "pixels": 153600,
+          "raw_mae": 0.03113771292131547,
+          "raw_mse": 0.006393308052194463
+        },
+        "original_body_footprint": {
+          "pixels": 4759,
+          "raw_mae": 0.20992413593276418,
+          "raw_mse": 0.08826223422282237
+        }
+      },
+      "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/shift/000008.png",
+      "reference_sha256": "93c4a3c813d1198fc4f1421134d1a33a97f3054244b63a9ae9b037e036ffc0c1"
+    },
+    {
+      "frame": "000008",
+      "edit": "rotate",
+      "regions": {
+        "full": {
+          "pixels": 153600,
+          "raw_mae": 0.04525291229645236,
+          "raw_mse": 0.02074771923467499
+        },
+        "original_body_footprint": {
+          "pixels": 4759,
+          "raw_mae": 0.4081211720992062,
+          "raw_mse": 0.41859947507385725
+        }
+      },
+      "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/rotate/000008.png",
+      "reference_sha256": "c7aca77e4aabc8082acae9e3f56aaf74226f525e8b7abab6e23868c9793b8157"
+    }
+  ],
+  "repair": "exact frame8 repaired geometry replay, no heldout geometry/GT RGB selection or optimization",
+  "region_scope": "fixed original heldout body footprint, not edited-body label",
+  "reference_scope": "new independent heldout edited renders; none differs from earlier none on 51/460800 channels, max5/255, per reference manifest",
+  "human_verdict": null,
+  "quality_accepted": false
+}

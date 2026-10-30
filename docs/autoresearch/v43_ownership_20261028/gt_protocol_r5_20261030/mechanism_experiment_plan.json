@@ -92,18 +92,19 @@
     },
     {
       "id": "M1",
-      "purpose": "truth-assisted ownership reference on fixed actual reconstruction",
+      "purpose": "truth-assisted ownership reference on fixed actual reconstruction; minimal scene probe before expansion",
       "depends_on": [
-        "DATA"
+        "M0"
       ],
       "status": "planned_without_run_receipt",
       "mathematical_upper_bound": false
     },
     {
       "id": "M2",
-      "purpose": "truth-assisted geometry/split/effect repair reference with disclosed budget",
+      "purpose": "truth-assisted geometry/split/effect repair reference with disclosed budget; share M1 candidates",
       "depends_on": [
-        "DATA"
+        "M0",
+        "M1"
       ],
       "status": "planned_without_run_receipt",
       "mathematical_upper_bound": false

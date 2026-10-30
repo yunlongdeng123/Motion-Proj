@@ -230,3 +230,5 @@
 
 - WS-V43-WORLD-GT-PROTOCOL-R5-20261030：[世界表面GT、真实重建污染与部署输入隔离](autoresearch/v43_ownership_20261028/gt_protocol_r5_20261030/index.html)；R5设计修订，文档生成训练/场景渲染0，M1/M2为真值辅助参考。
 - WS-V43-SIM-RECON-M0-20261030：[最小普通场景实际重建与独立参考核验](autoresearch/v43_ownership_20261028/sim_mechanism_20261030/index.html)；具体状态、预算和边界以该报告及运行记录为准。
+
+- WS-V43-SIM-M1-M2-20261030：[真值辅助归属与同集合表示修复实际对照](autoresearch/v43_ownership_20261028/sim_m1m2_20261030/index.html)；3关键帧、1留出相机、两臂各200步局部拟合；有限删除收益，未编辑/横移仍失败，不是数学上界或泛化证明。

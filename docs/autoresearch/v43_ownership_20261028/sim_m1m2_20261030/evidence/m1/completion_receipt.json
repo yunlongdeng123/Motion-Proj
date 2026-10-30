@@ -1,0 +1,159 @@
+{
+  "status": "COMPLETE_2_POLICIES_24_NATIVE_RENDERS",
+  "rows": [
+    {
+      "policy": "strict_r2",
+      "frame": "000000",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.1791958630183468,
+      "m1_mae": 0.17927942809628522
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000000",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.01271627994601052,
+      "m1_mae": 0.012699255631598337
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000000",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.01714289917144434,
+      "m1_mae": 0.01709978826943708
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000008",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.17816185929066022,
+      "m1_mae": 0.1773025527594385
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000008",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.013622135967612444,
+      "m1_mae": 0.01354684701664155
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000008",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.017630742409110504,
+      "m1_mae": 0.01762061676138931
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000015",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.15955385387677895,
+      "m1_mae": 0.16319617539087752
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000015",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.015839747584697965,
+      "m1_mae": 0.016029363024013542
+    },
+    {
+      "policy": "strict_r2",
+      "frame": "000015",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.02124898490674456,
+      "m1_mae": 0.021340828620050666
+    },
+    {
+      "policy": "balanced",
+      "frame": "000000",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.1791958630183468,
+      "m1_mae": 0.17279169924029855
+    },
+    {
+      "policy": "balanced",
+      "frame": "000000",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.01271627994601052,
+      "m1_mae": 0.012419043570347286
+    },
+    {
+      "policy": "balanced",
+      "frame": "000000",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.01714289917144434,
+      "m1_mae": 0.017371476878579414
+    },
+    {
+      "policy": "balanced",
+      "frame": "000008",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.17816185929066022,
+      "m1_mae": 0.17286032692044234
+    },
+    {
+      "policy": "balanced",
+      "frame": "000008",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.013622135967612444,
+      "m1_mae": 0.013357569779404407
+    },
+    {
+      "policy": "balanced",
+      "frame": "000008",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.017630742409110504,
+      "m1_mae": 0.01762703211178457
+    },
+    {
+      "policy": "balanced",
+      "frame": "000015",
+      "edit": "delete",
+      "region": "newly_exposed_road",
+      "baseline_mae": 0.15955385387677895,
+      "m1_mae": 0.1684169903017304
+    },
+    {
+      "policy": "balanced",
+      "frame": "000015",
+      "edit": "shift",
+      "region": "full",
+      "baseline_mae": 0.015839747584697965,
+      "m1_mae": 0.016344387360062076
+    },
+    {
+      "policy": "balanced",
+      "frame": "000015",
+      "edit": "rotate",
+      "region": "full",
+      "baseline_mae": 0.02124898490674456,
+      "m1_mae": 0.02143003481917276
+    }
+  ],
+  "training_updates": 0,
+  "checkpoint_unchanged": true,
+  "failed_attempt_preserved": "strict",
+  "failure": "first attempt depth float64 versus native float32; fixed by explicit dtype",
+  "limitations": [
+    "finite13 sigma-point depth/surface association, not complete Gaussian footprint or alphaT responsibility",
+    "conditional per-frame selection; distinct policy and evidence uncertainty, not unique owner GT",
+    "wrong-depth/unobserved components deliberately remain, so this is not best possible deletion",
+    "no geometry/color/opacity optimization; no shadow/effect GT assignment"
+  ]
+}

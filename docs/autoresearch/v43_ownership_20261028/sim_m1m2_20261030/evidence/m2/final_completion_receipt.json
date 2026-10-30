@@ -1,0 +1,49 @@
+{
+  "primary_depth_corrected_outputs": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/recall_position_depth_r2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_depth_r2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/recall_position_scale_depth_r2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_depth_r2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/recall_position_scale_split_depth_r2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_recall_position_scale_split_depth_r2"
+  ],
+  "original_RGB_assets_remain_valid": "original main images C/alpha/E/final are bitwise identical, depth-replay parity receipt; use corrected NPZ for depth",
+  "local_refit": {
+    "arms": [
+      "refit_assignment",
+      "refit_split"
+    ],
+    "updates_per_arm": 200,
+    "total_updates": 400,
+    "trainable": "exact M1 selected DC+opacity, plus split background child DC+opacity in M2; higher SH/geometry/nonselected/dynamic/environment frozen",
+    "loss": "full-frame original trainRGB L1, no masks, no edited/heldout RGB",
+    "lr": {
+      "DC": 0.0025,
+      "opacity": 0.05
+    },
+    "optimizer": "Adam eps1e-8",
+    "single_frame": 8,
+    "save_reload_parity": [
+      0.0,
+      0.0
+    ],
+    "capacity_and_trainable_count": [
+      {
+        "arm": "refit_assignment",
+        "rows": 12678,
+        "parameters": 50712
+      },
+      {
+        "arm": "refit_split",
+        "rows": 23135,
+        "parameters": 92540
+      }
+    ]
+  },
+  "depth_bug": "none features originally used pre-repair z; corrected features regenerated using modified means3D before native raster, 48 forward renders replayed, C/alpha/E/final parity receipt",
+  "native_checkpoint_unchanged": true,
+  "GT_RGB_replaced": false,
+  "mathematical_upper_bound": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

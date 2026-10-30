@@ -1,0 +1,1006 @@
+[
+  {
+    "name": "refit_assignment",
+    "local_refit": {
+      "updates": 200,
+      "optimizer": "Adam eps1e-8",
+      "dc_lr": 0.0025,
+      "opacity_lr": 0.05,
+      "loss": "full-frame original observation RGB L1, raw composite, no edited/heldout GT, no masks",
+      "trainable_rows": 12678,
+      "trainable_parameters": 50712,
+      "geometry_fixed": true,
+      "DC_only": true,
+      "opacity_parameterization": "sigmoid logit",
+      "loss_trace": [
+        {
+          "step": 1,
+          "l1": 0.0035516838543117046
+        },
+        {
+          "step": 50,
+          "l1": 0.003219118108972907
+        },
+        {
+          "step": 100,
+          "l1": 0.0031730900518596172
+        },
+        {
+          "step": 150,
+          "l1": 0.0031482758931815624
+        },
+        {
+          "step": 200,
+          "l1": 0.003133244113996625
+        }
+      ],
+      "save_reload_render_max_abs": 0.0,
+      "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/refit_assignment/local_refit_state.pt",
+      "model_scope": "single-time local diagnostic, no joint/new model training"
+    },
+    "train_rows": [
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "none",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/none/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.003133005909363621,
+            "raw_mse": 3.106300237651179e-05,
+            "raw_psnr_db": 45.077565700969956,
+            "clamped_mae": 0.0031242687849441023,
+            "clamped_mse": 3.0846898258666636e-05,
+            "clamped_psnr_db": 45.10788498952259
+          },
+          "body_reference": {
+            "pixels": 4804,
+            "raw_mae": 0.012136929775453805,
+            "raw_mse": 0.00037227020116405537,
+            "raw_psnr_db": 34.291417260377514,
+            "clamped_mae": 0.012120286834537372,
+            "clamped_mse": 0.0003706301226951505,
+            "clamped_psnr_db": 34.310592866127784
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.012136929775453805,
+            "raw_mse": 0.00037227020116405537,
+            "raw_psnr_db": 34.291417260377514,
+            "clamped_mae": 0.012120286834537372,
+            "clamped_mse": 0.0003706301226951505,
+            "clamped_psnr_db": 34.310592866127784
+          },
+          "road_reference": {
+            "pixels": 69404,
+            "raw_mae": 0.002782602472196583,
+            "raw_mse": 2.1204669571671253e-05,
+            "raw_psnr_db": 46.735684906797694,
+            "clamped_mae": 0.00276441807903948,
+            "clamped_mse": 2.083992610535237e-05,
+            "clamped_psnr_db": 46.81103825300277
+          },
+          "newly_exposed_road": {
+            "pixels": 0
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.002477999648460261,
+            "raw_mse": 1.1433804980744977e-05,
+            "raw_psnr_db": 49.41809219547723,
+            "clamped_mae": 0.002477999648460261,
+            "clamped_mse": 1.1433804980744977e-05,
+            "clamped_psnr_db": 49.41809219547723
+          },
+          "roadside": {
+            "pixels": 17479,
+            "raw_mae": 0.0043698016374804265,
+            "raw_mse": 4.5958067619140325e-05,
+            "raw_psnr_db": 43.37638240209759,
+            "clamped_mae": 0.0043698016374804265,
+            "clamped_mse": 4.5958067619140325e-05,
+            "clamped_psnr_db": 43.37638240209759
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.0070215636388348025,
+            "raw_mse": 0.00011538851174480601,
+            "raw_psnr_db": 39.37837428045102,
+            "clamped_mae": 0.0070215636388348025,
+            "clamped_mse": 0.00011538851174480601,
+            "clamped_psnr_db": 39.37837428045102
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 68620,
+            "raw_mae": 0.002734171321589699,
+            "raw_mse": 2.012859652789775e-05,
+            "raw_psnr_db": 46.96186505361644,
+            "clamped_mae": 0.002715779167368254,
+            "clamped_mse": 1.97596857797719e-05,
+            "clamped_psnr_db": 47.042199658818014
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.0070215636388348025,
+            "raw_mse": 0.00011538851174480601,
+            "raw_psnr_db": 39.37837428045102,
+            "clamped_mae": 0.0070215636388348025,
+            "clamped_mse": 0.00011538851174480601,
+            "clamped_psnr_db": 39.37837428045102
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "delete",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/delete/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.024603469878947078,
+            "raw_mse": 0.011350406528415508,
+            "raw_psnr_db": 19.449885834148386,
+            "clamped_mae": 0.021510573494727698,
+            "clamped_mse": 0.003664130890012589,
+            "clamped_psnr_db": 24.360290208680283
+          },
+          "body_reference": {
+            "pixels": 0
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.29320151995356464,
+            "raw_mse": 0.2886618522372919,
+            "raw_psnr_db": 5.396106059963591,
+            "clamped_mae": 0.21982124634752687,
+            "clamped_mse": 0.06930402059399886,
+            "clamped_psnr_db": 11.592415695564897
+          },
+          "road_reference": {
+            "pixels": 72971,
+            "raw_mae": 0.031655848366841224,
+            "raw_mse": 0.006079207160150525,
+            "raw_psnr_db": 22.161530569811937,
+            "clamped_mae": 0.03090380283648173,
+            "clamped_mse": 0.005348362390463018,
+            "clamped_psnr_db": 22.71779173802293
+          },
+          "newly_exposed_road": {
+            "pixels": 3567,
+            "raw_mae": 0.22101908282340882,
+            "raw_mse": 0.0756448598010513,
+            "raw_psnr_db": 11.21220577698745,
+            "clamped_mae": 0.21307501658475597,
+            "clamped_mse": 0.06484744943487267,
+            "clamped_psnr_db": 11.881071008157388
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.002624869542210483,
+            "raw_mse": 1.636946366165032e-05,
+            "raw_psnr_db": 47.859655498245615,
+            "clamped_mae": 0.002624869542210483,
+            "clamped_mse": 1.636946366165032e-05,
+            "clamped_psnr_db": 47.859655498245615
+          },
+          "roadside": {
+            "pixels": 18716,
+            "raw_mae": 0.06981302170670137,
+            "raw_mse": 0.06939533738392789,
+            "raw_psnr_db": 11.586697084566314,
+            "clamped_mae": 0.04736210429805454,
+            "clamped_mse": 0.00916444059135356,
+            "clamped_psnr_db": 20.378940397582895
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 0
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 72971,
+            "raw_mae": 0.031655848366841224,
+            "raw_mse": 0.006079207160150525,
+            "raw_psnr_db": 22.161530569811937,
+            "clamped_mae": 0.03090380283648173,
+            "clamped_mse": 0.005348362390463018,
+            "clamped_psnr_db": 22.71779173802293
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.2531618376731315,
+            "raw_mse": 0.08145626205887657,
+            "raw_psnr_db": 10.890755231040636,
+            "clamped_mae": 0.24974956239263216,
+            "clamped_mse": 0.07811455024642122,
+            "clamped_psnr_db": 11.072680633932244
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "shift",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/shift/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.017599313800413054,
+            "raw_mse": 0.003649339273156796,
+            "raw_psnr_db": 24.37785759104397,
+            "clamped_mae": 0.017422081018987935,
+            "clamped_mse": 0.0034560548675942686,
+            "clamped_psnr_db": 24.614193713713057
+          },
+          "body_reference": {
+            "pixels": 4859,
+            "raw_mae": 0.1078011940801614,
+            "raw_mse": 0.03610990334876847,
+            "raw_psnr_db": 14.42373673997784,
+            "clamped_mae": 0.10654150011289003,
+            "clamped_mse": 0.03366373637261691,
+            "clamped_psnr_db": 14.72837682895111
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.1938984908575573,
+            "raw_mse": 0.06832736417524674,
+            "raw_psnr_db": 11.654053324783227,
+            "clamped_mae": 0.18964193341697821,
+            "clamped_mse": 0.06237644108660015,
+            "clamped_psnr_db": 12.049794077216
+          },
+          "road_reference": {
+            "pixels": 70665,
+            "raw_mae": 0.019563867515941254,
+            "raw_mse": 0.0036358192138470856,
+            "raw_psnr_db": 24.3939771961415,
+            "clamped_mae": 0.019423947759976388,
+            "clamped_mse": 0.0035633118862695916,
+            "clamped_psnr_db": 24.481461634592847
+          },
+          "newly_exposed_road": {
+            "pixels": 2120,
+            "raw_mae": 0.201279215459747,
+            "raw_mse": 0.06208704102829358,
+            "raw_psnr_db": 12.069990374596347,
+            "clamped_mae": 0.19943565792951778,
+            "clamped_mse": 0.060017857783892084,
+            "clamped_psnr_db": 12.21719509898138
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.002676323239538208,
+            "raw_mse": 2.1362811564210454e-05,
+            "raw_psnr_db": 46.70341590292008,
+            "clamped_mae": 0.002676323239538208,
+            "clamped_mse": 2.1362811564210454e-05,
+            "clamped_psnr_db": 46.70341590292008
+          },
+          "roadside": {
+            "pixels": 16163,
+            "raw_mae": 0.039056406543613385,
+            "raw_mse": 0.007847100877704537,
+            "raw_psnr_db": 21.05290764320957,
+            "clamped_mae": 0.03836255808202399,
+            "clamped_mse": 0.00706266549726649,
+            "clamped_psnr_db": 21.510313623643643
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 783,
+            "raw_mae": 0.09512671073498231,
+            "raw_mse": 0.017648422577199056,
+            "raw_psnr_db": 17.532941059494107,
+            "clamped_mae": 0.09500042927439933,
+            "clamped_mse": 0.01748605311566076,
+            "clamped_psnr_db": 17.573082067320634
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 69882,
+            "raw_mae": 0.018717215928400695,
+            "raw_mse": 0.003478813569568092,
+            "raw_psnr_db": 24.585688445715498,
+            "clamped_mae": 0.018577143360763528,
+            "clamped_mse": 0.003407313111440406,
+            "clamped_psnr_db": 24.67587955565492
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 709,
+            "raw_mae": 0.16662036764142543,
+            "raw_mse": 0.03858325897814123,
+            "raw_psnr_db": 14.136010919734492,
+            "clamped_mae": 0.16662036764142543,
+            "clamped_mse": 0.03858325897814123,
+            "clamped_psnr_db": 14.136010919734492
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "rotate",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/rotate/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.033390123773637315,
+            "raw_mse": 0.018151052722663086,
+            "raw_psnr_db": 17.410981817361208,
+            "clamped_mae": 0.02939320876921422,
+            "clamped_mse": 0.007183994194666038,
+            "clamped_psnr_db": 21.436340272908527
+          },
+          "body_reference": {
+            "pixels": 4669,
+            "raw_mae": 0.36320562782469096,
+            "raw_mse": 0.46873870456135003,
+            "raw_psnr_db": 3.290691845565589,
+            "clamped_mae": 0.24185592222036428,
+            "clamped_mse": 0.12148726808481337,
+            "clamped_psnr_db": 9.15469233919506
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.3661241206247697,
+            "raw_mse": 0.4634492350190777,
+            "raw_psnr_db": 3.339978303620434,
+            "clamped_mae": 0.24550605344961146,
+            "clamped_mse": 0.12075455895335549,
+            "clamped_psnr_db": 9.180964639643584
+          },
+          "road_reference": {
+            "pixels": 69434,
+            "raw_mae": 0.025586108474668218,
+            "raw_mse": 0.003952431912102789,
+            "raw_psnr_db": 24.031356028512224,
+            "clamped_mae": 0.02552102846873982,
+            "clamped_mse": 0.003950149004046426,
+            "clamped_psnr_db": 24.03386521990089
+          },
+          "newly_exposed_road": {
+            "pixels": 753,
+            "raw_mae": 0.17205145697786764,
+            "raw_mse": 0.04065716486757788,
+            "raw_psnr_db": 13.908629091533589,
+            "clamped_mae": 0.17205145697786764,
+            "clamped_mse": 0.04065716486757788,
+            "clamped_psnr_db": 13.908629091533589
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.0070610163165791846,
+            "raw_mse": 0.0006337457312237478,
+            "raw_psnr_db": 31.980849529638775,
+            "clamped_mae": 0.00701855089965738,
+            "clamped_mse": 0.0005801090703955445,
+            "clamped_psnr_db": 32.364903439929485
+          },
+          "roadside": {
+            "pixels": 17584,
+            "raw_mae": 0.0693358380504282,
+            "raw_mse": 0.01625286793459433,
+            "raw_psnr_db": 17.890699935607287,
+            "clamped_mae": 0.06704987110756684,
+            "clamped_mse": 0.012855238557231028,
+            "clamped_psnr_db": 18.909198596568462
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 772,
+            "raw_mae": 0.12708117631975793,
+            "raw_mse": 0.026607156661058687,
+            "raw_psnr_db": 15.750015332798839,
+            "clamped_mae": 0.12708117631975793,
+            "clamped_mse": 0.026607156661058687,
+            "clamped_psnr_db": 15.750015332798839
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 68662,
+            "raw_mae": 0.024444950448738165,
+            "raw_mse": 0.003697713909332788,
+            "raw_psnr_db": 24.320666930698863,
+            "clamped_mae": 0.024379138716897664,
+            "clamped_mse": 0.003695405333439492,
+            "clamped_psnr_db": 24.323379187247628
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 573,
+            "raw_mae": 0.12008549068247712,
+            "raw_mse": 0.022514526728710387,
+            "raw_psnr_db": 16.475371777825405,
+            "clamped_mae": 0.12008549068247712,
+            "clamped_mse": 0.022514526728710387,
+            "clamped_psnr_db": 16.475371777825405
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      }
+    ],
+    "heldout_rows": [
+      {
+        "edit": "none",
+        "regions": {
+          "full": {
+            "raw_mae": 0.02164695840913305,
+            "raw_mse": 0.003641407081244814,
+            "clamped_mae": 0.02151498672050237,
+            "clamped_mse": 0.0033540500244003536
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.07462545230895647,
+            "raw_mse": 0.027683440657062755,
+            "clamped_mae": 0.07036597523947286,
+            "clamped_mse": 0.01840879389696419
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/none/000008.png"
+      },
+      {
+        "edit": "delete",
+        "regions": {
+          "full": {
+            "raw_mae": 0.0395499675623311,
+            "raw_mse": 0.021074559567666094,
+            "clamped_mae": 0.03398315860862365,
+            "clamped_mse": 0.006712498830146711
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.26820093922040705,
+            "raw_mse": 0.17555985170730992,
+            "clamped_mae": 0.2212152397814545,
+            "clamped_mse": 0.06897142055746461
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/delete/000008.png"
+      },
+      {
+        "edit": "shift",
+        "regions": {
+          "full": {
+            "raw_mae": 0.025235759337001583,
+            "raw_mse": 0.004146342691798265,
+            "clamped_mae": 0.025178679681831555,
+            "clamped_mse": 0.004102078204508835
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.14250236442345868,
+            "raw_mse": 0.03757502049946695,
+            "clamped_mae": 0.1415268555191569,
+            "clamped_mse": 0.03659647642123508
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/shift/000008.png"
+      },
+      {
+        "edit": "rotate",
+        "regions": {
+          "full": {
+            "raw_mae": 0.04626680368588951,
+            "raw_mse": 0.022902766603634855,
+            "clamped_mae": 0.04160187711556673,
+            "clamped_mse": 0.010174911519220328
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.41252420038807786,
+            "raw_mse": 0.5426019288074717,
+            "clamped_mae": 0.2708029077498703,
+            "clamped_mse": 0.14333858408744685
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/rotate/000008.png"
+      }
+    ]
+  },
+  {
+    "name": "refit_split",
+    "local_refit": {
+      "updates": 200,
+      "optimizer": "Adam eps1e-8",
+      "dc_lr": 0.0025,
+      "opacity_lr": 0.05,
+      "loss": "full-frame original observation RGB L1, raw composite, no edited/heldout GT, no masks",
+      "trainable_rows": 23135,
+      "trainable_parameters": 92540,
+      "geometry_fixed": true,
+      "DC_only": true,
+      "opacity_parameterization": "sigmoid logit",
+      "loss_trace": [
+        {
+          "step": 1,
+          "l1": 0.015295728109776974
+        },
+        {
+          "step": 50,
+          "l1": 0.011314998380839825
+        },
+        {
+          "step": 100,
+          "l1": 0.010457930155098438
+        },
+        {
+          "step": 150,
+          "l1": 0.010232292115688324
+        },
+        {
+          "step": 200,
+          "l1": 0.010113145224750042
+        }
+      ],
+      "save_reload_render_max_abs": 0.0,
+      "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/refit_split/local_refit_state.pt",
+      "model_scope": "single-time local diagnostic, no joint/new model training"
+    },
+    "train_rows": [
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "none",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/none/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.01011127441403619,
+            "raw_mse": 0.0003585943237361821,
+            "raw_psnr_db": 34.45396589256727,
+            "clamped_mae": 0.010006125736828785,
+            "clamped_mse": 0.0003276999335966827,
+            "clamped_psnr_db": 34.84523646620667
+          },
+          "body_reference": {
+            "pixels": 4804,
+            "raw_mae": 0.015293205992478616,
+            "raw_mse": 0.0005976236383033487,
+            "raw_psnr_db": 32.235722328431365,
+            "clamped_mae": 0.015275840748481366,
+            "clamped_mse": 0.0005958497061808073,
+            "clamped_psnr_db": 32.24863270473761
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.015293205992478616,
+            "raw_mse": 0.0005976236383033487,
+            "raw_psnr_db": 32.235722328431365,
+            "clamped_mae": 0.015275840748481366,
+            "clamped_mse": 0.0005958497061808073,
+            "clamped_psnr_db": 32.24863270473761
+          },
+          "road_reference": {
+            "pixels": 69404,
+            "raw_mae": 0.01363856486760443,
+            "raw_mse": 0.0004348107369030626,
+            "raw_psnr_db": 33.616997402983,
+            "clamped_mae": 0.013465150712652708,
+            "clamped_mse": 0.0004105268654749767,
+            "clamped_psnr_db": 33.86658416752195
+          },
+          "newly_exposed_road": {
+            "pixels": 0
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.0026252269473708,
+            "raw_mse": 1.619862877131433e-05,
+            "raw_psnr_db": 47.9052174732505,
+            "clamped_mae": 0.0026252269473708,
+            "clamped_mse": 1.619862877131433e-05,
+            "clamped_psnr_db": 47.9052174732505
+          },
+          "roadside": {
+            "pixels": 17479,
+            "raw_mae": 0.021197812022673235,
+            "raw_mse": 0.001203077640616153,
+            "raw_psnr_db": 29.197063445611366,
+            "clamped_mae": 0.020967147901349042,
+            "clamped_mse": 0.0010284990867563467,
+            "clamped_psnr_db": 29.877960895957575
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.014914516818893402,
+            "raw_mse": 0.0007087329098829374,
+            "raw_psnr_db": 31.495174003854878,
+            "clamped_mae": 0.01488348628793444,
+            "clamped_mse": 0.0007051277229689211,
+            "clamped_psnr_db": 31.517322101623577
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 68620,
+            "raw_mae": 0.013623986809752337,
+            "raw_mse": 0.0004316811102108995,
+            "raw_psnr_db": 33.648369550747034,
+            "clamped_mae": 0.013448945887659691,
+            "clamped_mse": 0.0004071609798399539,
+            "clamped_psnr_db": 33.90233849168803
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.014914516818893402,
+            "raw_mse": 0.0007087329098829374,
+            "raw_psnr_db": 31.495174003854878,
+            "clamped_mae": 0.01488348628793444,
+            "clamped_mse": 0.0007051277229689211,
+            "clamped_psnr_db": 31.517322101623577
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "delete",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/delete/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.019962454822633743,
+            "raw_mse": 0.008347856912353686,
+            "raw_psnr_db": 20.78425003630038,
+            "clamped_mae": 0.0180334455945831,
+            "clamped_mse": 0.003035675151987087,
+            "clamped_psnr_db": 25.1774470420201
+          },
+          "body_reference": {
+            "pixels": 0
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.27015257444055124,
+            "raw_mse": 0.23425644326924133,
+            "raw_psnr_db": 6.3030845492132395,
+            "clamped_mae": 0.21215264256166042,
+            "clamped_mse": 0.06557928644594455,
+            "clamped_psnr_db": 11.83233313105427
+          },
+          "road_reference": {
+            "pixels": 72971,
+            "raw_mae": 0.02692091559675035,
+            "raw_mse": 0.005167176032426065,
+            "raw_psnr_db": 22.867467429039152,
+            "clamped_mae": 0.0264553396798235,
+            "clamped_mse": 0.004788145854902825,
+            "clamped_psnr_db": 23.198326287304006
+          },
+          "newly_exposed_road": {
+            "pixels": 3567,
+            "raw_mae": 0.21255253738191152,
+            "raw_mse": 0.06886396950510007,
+            "raw_psnr_db": 11.620079470034948,
+            "clamped_mae": 0.2065900101079846,
+            "clamped_mse": 0.06162637831745989,
+            "clamped_psnr_db": 12.102333543033856
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.002624239061010697,
+            "raw_mse": 1.635173342453127e-05,
+            "raw_psnr_db": 47.86436201608907,
+            "clamped_mae": 0.002624239061010697,
+            "clamped_mse": 1.635173342453127e-05,
+            "clamped_psnr_db": 47.86436201608907
+          },
+          "roadside": {
+            "pixels": 18716,
+            "raw_mae": 0.05018766914734547,
+            "raw_mse": 0.048309704776867454,
+            "raw_psnr_db": 13.15965616501664,
+            "clamped_mae": 0.036171732131182306,
+            "clamped_mse": 0.0061910412104931156,
+            "clamped_psnr_db": 22.082363051083696
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 0
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 72971,
+            "raw_mae": 0.02692091559675035,
+            "raw_mse": 0.005167176032426065,
+            "raw_psnr_db": 22.867467429039152,
+            "clamped_mae": 0.0264553396798235,
+            "clamped_mse": 0.004788145854902825,
+            "clamped_psnr_db": 23.198326287304006
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 784,
+            "raw_mae": 0.33845128434461536,
+            "raw_mse": 0.1267680297687761,
+            "raw_psnr_db": 8.969902594326529,
+            "clamped_mae": 0.3384158336616844,
+            "clamped_mse": 0.1267400880537151,
+            "clamped_psnr_db": 8.97085995481023
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "shift",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/shift/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.02155370915582283,
+            "raw_mse": 0.008781319598071316,
+            "raw_psnr_db": 20.564402163150636,
+            "clamped_mae": 0.019878329252100948,
+            "clamped_mse": 0.004191742825847188,
+            "clamped_psnr_db": 23.776053702852067
+          },
+          "body_reference": {
+            "pixels": 4859,
+            "raw_mae": 0.12241759599475813,
+            "raw_mse": 0.051659947194900864,
+            "raw_psnr_db": 12.868460420840119,
+            "clamped_mae": 0.11898628385956274,
+            "clamped_mse": 0.044595691206173675,
+            "clamped_psnr_db": 13.507071003860743
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.2772671595656325,
+            "raw_mse": 0.23391432711493626,
+            "raw_psnr_db": 6.30943177094644,
+            "clamped_mae": 0.22669961280137152,
+            "clamped_mse": 0.08775809817578925,
+            "clamped_psnr_db": 10.567127970184627
+          },
+          "road_reference": {
+            "pixels": 70665,
+            "raw_mae": 0.02518761307939048,
+            "raw_mse": 0.004705767960992051,
+            "raw_psnr_db": 23.273694914705025,
+            "clamped_mae": 0.024865648609610068,
+            "clamped_mse": 0.004503761447296421,
+            "clamped_psnr_db": 23.464246210133997
+          },
+          "newly_exposed_road": {
+            "pixels": 2120,
+            "raw_mae": 0.23739021657116757,
+            "raw_mse": 0.0850317226713739,
+            "raw_psnr_db": 10.704190223924215,
+            "clamped_mae": 0.23264125158670562,
+            "clamped_mse": 0.07916993740136383,
+            "clamped_psnr_db": 11.014396984511306
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.002651326611151657,
+            "raw_mse": 1.6552924608890445e-05,
+            "raw_psnr_db": 47.81125262958325,
+            "clamped_mae": 0.002651326611151657,
+            "clamped_mse": 1.6552924608890445e-05,
+            "clamped_psnr_db": 47.81125262958325
+          },
+          "roadside": {
+            "pixels": 16163,
+            "raw_mae": 0.047750316442770294,
+            "raw_mse": 0.047283120253598786,
+            "raw_psnr_db": 13.252938717163376,
+            "clamped_mae": 0.03426804283702051,
+            "clamped_mse": 0.006674385360689119,
+            "clamped_psnr_db": 21.755887219860988
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 783,
+            "raw_mae": 0.2659986734147615,
+            "raw_mse": 0.09869627398939101,
+            "raw_psnr_db": 10.056992426332176,
+            "clamped_mae": 0.264326653866317,
+            "clamped_mse": 0.09541064559959443,
+            "clamped_psnr_db": 10.204031654717616
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 69882,
+            "raw_mae": 0.022489420980672706,
+            "raw_mse": 0.0036526417450818533,
+            "raw_psnr_db": 24.373929217557645,
+            "clamped_mae": 0.022182583340785458,
+            "clamped_mse": 0.003485185987360395,
+            "clamped_psnr_db": 24.577740407714103
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 709,
+            "raw_mae": 0.3037264173654257,
+            "raw_mse": 0.10836991675919741,
+            "raw_psnr_db": 9.650912602212074,
+            "clamped_mae": 0.3036909245543942,
+            "clamped_mse": 0.10833992613221113,
+            "clamped_psnr_db": 9.652114648572159
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      },
+      {
+        "status": "SCORED_INDEPENDENT_REFERENCE",
+        "frame": "000008",
+        "edit": "rotate",
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged/references/rotate/shadow_on/rgb/000008.png",
+        "regions": {
+          "full": {
+            "pixels": 153600,
+            "raw_mae": 0.031020519284562002,
+            "raw_mse": 0.022188532164644045,
+            "raw_psnr_db": 16.538714266494836,
+            "clamped_mae": 0.02631793287660443,
+            "clamped_mse": 0.008121410364876737,
+            "clamped_psnr_db": 20.903685445893952
+          },
+          "body_reference": {
+            "pixels": 4669,
+            "raw_mae": 0.40318065792347657,
+            "raw_mse": 0.560519831204097,
+            "raw_psnr_db": 2.5140901744875768,
+            "clamped_mae": 0.26213219794802056,
+            "clamped_mse": 0.13196377063898923,
+            "clamped_psnr_db": 8.795452837275523
+          },
+          "original_body_footprint": {
+            "pixels": 4804,
+            "raw_mae": 0.44141512795164733,
+            "raw_mse": 0.585342907248446,
+            "raw_psnr_db": 2.325896397364238,
+            "clamped_mae": 0.29871915030305046,
+            "clamped_mse": 0.15221811692636472,
+            "clamped_psnr_db": 8.175336549708135
+          },
+          "road_reference": {
+            "pixels": 69434,
+            "raw_mae": 0.02633506217784405,
+            "raw_mse": 0.005357187266032276,
+            "raw_psnr_db": 22.710631721481434,
+            "clamped_mae": 0.02623924584512138,
+            "clamped_mse": 0.005352648997793731,
+            "clamped_psnr_db": 22.714312347259114
+          },
+          "newly_exposed_road": {
+            "pixels": 753,
+            "raw_mae": 0.32106602225549014,
+            "raw_mse": 0.13781469907729366,
+            "raw_psnr_db": 8.60704458860128,
+            "clamped_mae": 0.3210657433167631,
+            "clamped_mse": 0.13781460689536365,
+            "clamped_psnr_db": 8.607047493524862
+          },
+          "environment_or_no_hit": {
+            "pixels": 61913,
+            "raw_mae": 0.0026304961484414783,
+            "raw_mse": 1.62827111437393e-05,
+            "raw_psnr_db": 47.88273281465483,
+            "clamped_mae": 0.0026304961484414783,
+            "clamped_mse": 1.62827111437393e-05,
+            "clamped_psnr_db": 47.88273281465483
+          },
+          "roadside": {
+            "pixels": 17584,
+            "raw_mae": 0.0506648461652144,
+            "raw_mse": 0.023778002529155455,
+            "raw_psnr_db": 16.238246310882815,
+            "clamped_mae": 0.047417058324529034,
+            "clamped_mse": 0.014709158605765115,
+            "clamped_psnr_db": 18.3241216910281
+          },
+          "shadow_road_current_effect_contrast_proxy": {
+            "pixels": 772,
+            "raw_mae": 0.12009133969894434,
+            "raw_mse": 0.030717217435446517,
+            "raw_psnr_db": 15.126181280664433,
+            "clamped_mae": 0.12009100234816443,
+            "clamped_mse": 0.030717171151064995,
+            "clamped_psnr_db": 15.126187824573131
+          },
+          "road_outside_current_effect_contrast_proxy": {
+            "pixels": 68662,
+            "raw_mae": 0.02528091510600971,
+            "raw_mse": 0.005072052208929547,
+            "raw_psnr_db": 22.948162847136047,
+            "clamped_mae": 0.025184025257018076,
+            "clamped_mse": 0.005067463435148816,
+            "clamped_psnr_db": 22.95209376324227
+          },
+          "shadow_road_original_effect_contrast_proxy": {
+            "pixels": 573,
+            "raw_mae": 0.15113029793199087,
+            "raw_mse": 0.04819977077325153,
+            "raw_psnr_db": 13.16955027158426,
+            "clamped_mae": 0.1511254031625155,
+            "clamped_mse": 0.04819974044335664,
+            "clamped_psnr_db": 13.16955300440019
+          }
+        },
+        "body_and_road": "independent first-hit semantic surfaces; not Gaussian labels",
+        "shadow_effect_contrast_proxy": "road receiver pixel contrast of independent vehicle-shadow on/off RGB, max channel >2/255; finite Monte Carlo rendering at32 samples has not been shown converged; proxy can include sampling variation, excludes body self-shadow; not a GT shadow mask and never used for training",
+        "reference_only_used_for_evaluation": true
+      }
+    ],
+    "heldout_rows": [
+      {
+        "edit": "none",
+        "regions": {
+          "full": {
+            "raw_mae": 0.02718373138162674,
+            "raw_mse": 0.008013667131609488,
+            "clamped_mae": 0.02558638848172388,
+            "clamped_mse": 0.003890951114155893
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.07783764326283438,
+            "raw_mse": 0.03295442912599206,
+            "clamped_mae": 0.0720492485704603,
+            "clamped_mse": 0.01925523812673881
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/none/000008.png"
+      },
+      {
+        "edit": "delete",
+        "regions": {
+          "full": {
+            "raw_mae": 0.03462603589729244,
+            "raw_mse": 0.016526528658999416,
+            "clamped_mae": 0.03059655212033249,
+            "clamped_mse": 0.005688426756253091
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.24219253679248598,
+            "raw_mse": 0.15157596452582253,
+            "clamped_mae": 0.2045123519960011,
+            "clamped_mse": 0.061662600658224674
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/delete/000008.png"
+      },
+      {
+        "edit": "shift",
+        "regions": {
+          "full": {
+            "raw_mae": 0.02852695401688013,
+            "raw_mse": 0.005245848991518598,
+            "clamped_mae": 0.028183562195671356,
+            "clamped_mse": 0.0048022985142603045
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.18087535776683517,
+            "raw_mse": 0.06856140432549905,
+            "clamped_mae": 0.1706400631788441,
+            "clamped_mse": 0.05491900442677976
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/shift/000008.png"
+      },
+      {
+        "edit": "rotate",
+        "regions": {
+          "full": {
+            "raw_mae": 0.04509795208059024,
+            "raw_mse": 0.02876405462227262,
+            "clamped_mae": 0.03931780920376557,
+            "clamped_mse": 0.011055566377770824
+          },
+          "original_body_footprint": {
+            "raw_mae": 0.4924671983103395,
+            "raw_mse": 0.7088513687203873,
+            "clamped_mae": 0.3173108903828787,
+            "clamped_mse": 0.16708852251714768
+          }
+        },
+        "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/heldout_edit_refs_r1/rotate/000008.png"
+      }
+    ]
+  }
+]

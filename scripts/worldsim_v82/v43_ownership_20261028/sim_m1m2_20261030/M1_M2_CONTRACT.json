@@ -1,0 +1,72 @@
+{
+  "task_id": "WS-V43-SIM-M1-M2-20261030",
+  "status": "execution_contract_exploratory_pilots_and_fixed_followup",
+  "base": "formal_r3_10k iteration_010000; dataset_r2; native_scene_r3",
+  "questions": {
+    "M1": "How much can truth-assisted association and edit routing change with all Gaussian parameters fixed?",
+    "M2": "With exactly the same selected rows, what is the extra effect of location repair, scale repair and conditional splitting?"
+  },
+  "world_gt_is_unique_gaussian_gt": false,
+  "mathematical_upper_bound": false,
+  "scope": "one procedural mechanism scene; no classifier training; no real-world generalization claim",
+  "pilot": {
+    "geometric_association": "13 covariance support probes vs independent unedited first-hit surfaces at the query time",
+    "strict": {"depth_tolerance_m": 0.15, "minimum_vehicle_samples": 2, "vehicle_fraction_minimum": 0.9},
+    "balanced": {"depth_tolerance_m": 0.35, "minimum_vehicle_samples": 1, "vehicle_fraction_minimum": 0.5},
+    "status": "already executed exploratory sensitivity controls; not retrospectively preregistered",
+    "known_limitation": "depth matching can reject the wrong-depth contaminants we need to diagnose; sparse support is not actual alphaT responsibility"
+  },
+  "main_followup": {
+    "M0": "Edit the original learned dynamic branch, keep all static rows",
+    "M1_recall": "Add static rows with native unified-scene sum(body-mask alpha*T) > 0.0001 pixel-weight; no depth gate or background veto",
+    "association_meaning": "conditional contribution candidate, not proof of physical object identity; original dynamic branch is inherited noisy routing",
+    "M2_position": "Same M1 candidates; move selected static means to independently observed body first-hit XYZ weighted by their actual original alpha*T",
+    "M2_position_scale": "M2 position plus fixed 0.08m max-axis cap preserving axis proportions; heuristic diagnostic, not fitted best threshold",
+    "M2_position_scale_split": "Same candidates; split contributions with both body/background alphaT into vehicle and retained-background children using separately weighted first-hit coordinates",
+    "split_budget": "at most one extra background child per triggered parent; inherited parent SH; optical-thickness fractions from original body/background weights",
+    "split_conservation_boundary": "co-located identical-footprint transmittance only; moving/shrinking children does not conserve every pixel alpha",
+    "updated_parameters": "M1 none; M2 selected static means/scales and split child opacity; original dynamic and environment frozen",
+    "optimization_updates": 0,
+    "color_or_environment_fitting": false,
+    "reference_rgb_copied_into_render": false,
+    "selection_fixed_between_M1_and_M2": true,
+    "parameter_only_delete_control": "Moving or shrinking rows that are subsequently fully deleted must yield the same delete RGB; only a retained split child can change this control"
+  },
+  "evidence_and_holdout": {
+    "construction": "unedited original training-camera surface/depth at each time, actual native compositing contribution, calibrated camera",
+    "edit_reference_rgb": "independently generated final evaluation only; not optimization input or threshold tuning target",
+    "heldout": "mid-time worldY+1m re-aimed camera; reuse original mid-time selection and repaired geometry, no reassociation with heldout geometry",
+    "temporal_scope": "actual responsibility audit and editing metrics on 3 anchors only; 16-frame full audit not executed; conditional time-specific references do not establish persistent identity",
+    "shadow": "road receiver/effect proxy separately scored; no claim body-mask selection covers all shadow or supplies pure shadow GT",
+    "environment": "original frozen E and diagnostic constant white, same Gaussian state; save CG, alpha, E, fill, final and white"
+  },
+  "validation": [
+    "native none parity and camera convention",
+    "sum feature-gradient equals sum raster alpha over the same mask",
+    "checkpoint parameters unchanged",
+    "M1/M2 exact selected row identity",
+    "M1 original-body responsibility coverage and nonvehicle conflict",
+    "newly exposed contributions after deletion",
+    "independent edited-body / original-body / retained road errors",
+    "none-view preservation and heldout camera",
+    "capacity, parameter modification, attempts and compute disclosed"
+  ],
+  "appearance_followup": {
+    "reason": "Separate representation intervention from the mismatch caused by retaining pre-repair appearance",
+    "registered_after_negative_fixed_appearance_results": true,
+    "arms": ["M1 recall same geometry", "M2 recall position_scale_split"],
+    "frame": 8,
+    "updates_per_arm": 200,
+    "total_updates": 400,
+    "trainable": "selected DC and opacity; M2 also retained split background children",
+    "loss": "full-frame raw-composite L1 vs original observed RGB; no masks, edited or heldout RGB",
+    "adam_lr": {"DC": 0.0025, "opacity": 0.05},
+    "same_capacity": false,
+    "trainable_parameter_count": [50712, 92540],
+    "save_reload_render_parity_required": true
+  },
+  "resources": {"main_comparison_training_steps": 0, "appearance_followup_updates": 400, "autodl_auto_shutdown": false},
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01"],
+  "failure_ledger_delta": "none"
+}

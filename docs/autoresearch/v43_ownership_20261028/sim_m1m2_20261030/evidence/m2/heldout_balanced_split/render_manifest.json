@@ -1,0 +1,52 @@
+{
+  "status": "NATIVE_SINGLE_HELDOUT_VIEW_RENDERED",
+  "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/checkpoint_events/iteration_010000.json",
+  "iteration": 10000,
+  "heldout_views": 1,
+  "edit": "none",
+  "frame": "000008",
+  "view_id": "lateral_y_plus_1m",
+  "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_balanced_split/heldout_none.npz",
+  "query_camera": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/heldout_balanced_split/query_camera.json",
+  "actual_camera_reconstruction_max_abs": 2.917401087376703e-08,
+  "native_none_identity_max_abs": 0.2975693941116333,
+  "original_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "compositor": "native premultiplied C; fill=(1-alpha)*E; final=C+fill; white=C+(1-alpha)",
+  "required_fp32_arrays": [
+    "C",
+    "alpha",
+    "E",
+    "fill",
+    "final",
+    "white",
+    "depth_sum_model"
+  ],
+  "camera_image_input": "all-zero placeholder; no reference RGB",
+  "heldout_ground_truth_used_for_forward": false,
+  "trainframe_privileged_support_geometry_used": true,
+  "repaired_geometry_source": "campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/balanced_position_scale_split_r2/repaired_geometry_000008.npz",
+  "environment": {
+    "min": -3.202840566635132,
+    "max": 8.733818054199219,
+    "channel_fraction_outside_0_1": 0.036150173611111114
+  },
+  "environment_fill": {
+    "min": -0.027364930137991905,
+    "max": 0.7270222306251526,
+    "channel_fraction_outside_0_1": 0.0061892361111111115
+  },
+  "alpha": {
+    "min": 0.0,
+    "max": 0.9999013543128967,
+    "fraction_outside_0_1": 0.0
+  },
+  "compositor_checks": {
+    "final_vs_C_plus_fill_max_abs": 0.0,
+    "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+  },
+  "scope": "one known-time heldout-camera diagnostic; not real-world or multi-view generalization",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "method_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/m2_repair_r1/method_receipt.json"
+}

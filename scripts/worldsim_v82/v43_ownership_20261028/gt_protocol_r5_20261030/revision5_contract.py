@@ -47,6 +47,7 @@ DESIGN_HTML = '''<section id="v43-design-scope"><h2>Revision 5：世界表面真
 <p>每格存浮点C<sub>G</sub>、α、回填、最终RGB，另存E／B与裁剪显示。<strong>环境参数冻结不等于回填贡献冻结。</strong>白洞不是补好道路。当前不重训环境；如成为主要瓶颈，再做固定高斯、仅改环境的单因素对照。</p></section>
 <section id="v43-evidence-boundary"><h2>历史诊断保留；运行结果须另有凭据</h2>
 <p><a href="gpu_v43/sim_mechanism_20261030/index.html">M0：最小场景原生10K重建与独立编辑核验</a>：16帧r2／r3适配，实际完成原生分支编辑基线与一个留出视角；新V43联合模块未训练，具体结论见独立运行报告。</p>
+<p><a href="gpu_v43/sim_m1m2_20261030/index.html">M1/M2：固定归属与分步表示修复</a>已完成首轮3锚点＋留出视角：实际贡献高召回、同候选位置／尺度／拆分，以及同为200步的局部外观控制。仍有明显车形残影；部分删车误差下降，none与横移仍退化。条件贡献不是物理身份GT，不能称理想上界；16帧时序未验收。</p>
 <p><a href="gpu_v43/bounded_white_v1/index.html">R2限定白底</a>、<a href="gpu_v43/unknown_white_20261030/index.html">unknown白材质六组204帧</a>、<a href="gpu_v43/editable_ownership_20261030/index.html">三锚点＋200步child refit</a>均不修改。旧短探针未显示编辑分离改善，但不能否定联合学习或建立串行必经顺序。旧49帧／三锚点不冒充新机制集；人工verdict保持空。</p>
 <p>独立表面／深度、删车／横移／转向、旧位残留、新位完整度、保留域损伤、效应和任务完成率共同核验。无完整GT的真实数据只报告证据范围，不报告完整真召回。设计状态不代表实验完成。</p></section>
 <section id="v43-primary-sources"><h2>直接相关工作与强基线</h2>
@@ -201,9 +202,9 @@ def experiment_plan():
                                           'independent_surface_depth_edits', 'actual_contamination_or_absence_report']),
                   task('ENV', 'scene1 fixed original environment versus constant-fill paired diagnosis'),
                   task('DATA', 'extend to three-to-five mechanism scenes after the minimal actual-reconstruction gate', ['M0']),
-                  task('M1', 'truth-assisted ownership reference on fixed actual reconstruction', ['DATA'],
+                  task('M1', 'truth-assisted ownership reference on fixed actual reconstruction; minimal scene probe before expansion', ['M0'],
                        mathematical_upper_bound=False),
-                  task('M2', 'truth-assisted geometry/split/effect repair reference with disclosed budget', ['DATA'],
+                  task('M2', 'truth-assisted geometry/split/effect repair reference with disclosed budget; share M1 candidates', ['M0', 'M1'],
                        mathematical_upper_bound=False),
                   task('M3', 'fixed target coverage plus added confirmed background candidates', ['M1']),
                   task('M4', 'small shared-model learning using legal training supervision and isolated tests', ['DATA', 'M1', 'M2'])],
@@ -246,7 +247,7 @@ def upgrade_state(s):
     s.update(architecture_revision=5,
         scope='world_gt_data_and_evaluation_contract_revision_only',
         first_experiment_order=['one_minimal_ordinary_scene_actual_reconstruction_and_contamination_audit',
-            'three_to_five_mechanism_scenes', 'truth_assisted_ownership_and_representation_references',
+            'truth_assisted_ownership_and_representation_references', 'three_to_five_mechanism_scenes',
             'candidate_expansion', 'small_joint_learning_before_batch_generation'],
         training_update_count_scope='revision5_document_generator_only_historical_and_new_run_receipts_separate',
         new_scene_renders_this_revision=0,
@@ -259,5 +260,6 @@ def upgrade_state(s):
         human_or_subagent_review_is_perfect_gt=False,
         minimal_actual_reconstruction_run_receipt='gpu_v43/sim_mechanism_20261030/report_state.json',
         mechanism_dataset_run_receipt='gpu_v43/sim_mechanism_20261030/evidence/dataset_r2/validation.json',
+        truth_assisted_reference_run_receipt='gpu_v43/sim_m1m2_20261030/report_state.json',
         experiment_status_source='separate_run_receipts_not_document_generation')
     return s
