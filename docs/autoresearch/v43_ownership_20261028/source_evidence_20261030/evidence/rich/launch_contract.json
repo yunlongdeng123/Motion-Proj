@@ -1,0 +1,64 @@
+{
+  "status": "AUTHORIZED_REAL_SMOKE_THEN_FRESH_10K",
+  "source_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/export_baseline_gauge.py": "664cc1e47f591ace7dc5221bbc4cf2ede010afa21e7f9551ffe78bd13eecb00b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/generate_trajectory_control.py": "e7602086f98f09560f618c7b054fe4bd274bcf3d58883d99e8ffe0005e1f18e4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/native_shared_entry.py": "d35f60e9ee1e684de5d2bc1f25744507b132f904836ca75c00924b470f7515ff",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/run_smoke_shared.py": "1ea331cda1185c648eb44bbfab50c17a4e4aa438d241b4ce72ef53b8337a0f8f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/shared_gauge.py": "dd97440022846b76f091880de9df2a60bcb45f9de6ca34c462b99a60e7258e3c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/test_shared_gauge.py": "1e60cf72019bedb673f571bb74e1340d56b746d8a7664b4614afee0e7fcf4ec3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/run_control_pipeline.py": "7817680dcbdd1537da9641df72aaf8ea38f1893e487402d5bfa9e65f7ca334e2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/canonicalize_calibration.py": "7d2284ac44956c062168354219c4742b0e3d7835b051fa3ef79640fe6ff64028",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/score_observed_road.py": "152538d591379d7af771d4a5e668968329dd26daad794db06393d47d3f1e1960",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/trajectory_cameras.json": "e6752e657613c2fc24814020c9915e88ce3120c5394b3a1ecda4f96a291b9d3e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/code/baseline_gauge.json": "62b9f268f50597766d5d96cecbd33c3b7657a3cf8486e38a24913deaa4c9e977",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/code/reconstruction/gn11_base.json": "f66cc64159ef58e74d56398ade706d975a825ee01b2acc4dc8600fa2e82c005e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/code/reconstruction/native_worker.py": "e5d7d942919f7008eeed7d9d41ecf8209a22c88756261bbc2950e4d81b8b9030",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/code/reconstruction/adapt_scene.py": "5fd669d182a60aaf1b997216f437453d68cafdf07468dc44d49dc639af51abcc"
+  },
+  "trajectory": "hybrid8_z3.5, preserve original0/8/15 cameras",
+  "reference_reuse": "same world/time and anchors with recorded tiny finite-render differences",
+  "formal_steps": 10000,
+  "engine_LR_horizon": 30000,
+  "seed": 0,
+  "smoke_extra": "300s fresh+300s exact resume+2step next entry, separate from formal",
+  "training_inputs": "new restricted observations only, no privileged mesh/depth/owner/reference",
+  "shared_baseline_gauge": {
+    "world_to_model": [
+      [
+        0.09805806746991697,
+        0.01961161400969368,
+        3.051060287584915e-11,
+        0.32163046344723184
+      ],
+      [
+        1.2586153642127727e-08,
+        -6.308634071130239e-08,
+        0.09999999999997931,
+        -0.22356801474704835
+      ],
+      [
+        0.019611614009689634,
+        -0.09805806746989666,
+        -6.432959440995167e-08,
+        -0.20592179688662157
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "native_spatial_lr_scale": 1.0,
+    "native_camera_extent": 5.092908100662823,
+    "scale_provenance": "Current Scene initializes both models with spatial_lr_scale=1; camera extent is a separate calibration-derived native field",
+    "provenance": "baseline legal calibration + saved native optimizer-scale metadata, no GT geometry or semantic labels",
+    "source_transform_sha256": "3047720bc5e4c7930cf14ef6d1df268d3d9347e4053ee96c616713400b643e6d",
+    "source_cameras_sha256": "d38feca87556f1ee9fdbc53a0b2eb64d18b4cc65a9e2073ce939ea3c4bc895cf"
+  },
+  "parent_authorized": true,
+  "recorded_unix": 1793372595.2326787,
+  "no_shutdown": true,
+  "no_git_commit": true
+}

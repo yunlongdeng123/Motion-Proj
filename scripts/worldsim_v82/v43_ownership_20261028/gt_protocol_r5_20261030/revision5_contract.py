@@ -47,7 +47,8 @@ DESIGN_HTML = '''<section id="v43-design-scope"><h2>Revision 5：世界表面真
 <p>每格存浮点C<sub>G</sub>、α、回填、最终RGB，另存E／B与裁剪显示。<strong>环境参数冻结不等于回填贡献冻结。</strong>白洞不是补好道路。当前不重训环境；如成为主要瓶颈，再做固定高斯、仅改环境的单因素对照。</p></section>
 <section id="v43-evidence-boundary"><h2>历史诊断保留；运行结果须另有凭据</h2>
 <p><a href="gpu_v43/sim_mechanism_20261030/index.html">M0：最小场景原生10K重建与独立编辑核验</a>：16帧r2／r3适配，实际完成原生分支编辑基线与一个留出视角；新V43联合模块未训练，具体结论见独立运行报告。</p>
-<p><a href="gpu_v43/sim_m1m2_20261030/index.html">M1/M2：固定归属与分步表示修复</a>已完成首轮3锚点＋留出视角：实际贡献高召回、同候选位置／尺度／拆分，以及同为200步的局部外观控制。仍有明显车形残影；部分删车误差下降，none与横移仍退化。条件贡献不是物理身份GT，不能称理想上界；16帧时序未验收。</p>
+<p><a href="gpu_v43/sim_m1m2_20261030/index.html">M1/M2：选点规则与启发式修复首轮</a>完成3锚点＋留出视角，仍有明显残影。M1未提供准确归属，M2未提供充分修复，因此尚未回答“归属准确时能改善多少”或“联合修复能否有效”。99.9%只是删前贡献覆盖；位置重心、统一尺度上限、继承父色和单帧200步外观拟合均是有限具体实现，不能据其失败否定研究方向。</p>
+<p><a href="gpu_v43/source_evidence_20261030/index.html">继续追查：逐行来源与同世界观测证据控制</a>记录删后新显露贡献、原16视图回放、稀疏测量与损失路径，并以同世界更充分观测重新重建。身份不确定与显露表面证据不足分别记录；范围内unknown不能直接等于car，GT颜色敏感性不作为部署算法。</p>
 <p><a href="gpu_v43/bounded_white_v1/index.html">R2限定白底</a>、<a href="gpu_v43/unknown_white_20261030/index.html">unknown白材质六组204帧</a>、<a href="gpu_v43/editable_ownership_20261030/index.html">三锚点＋200步child refit</a>均不修改。旧短探针未显示编辑分离改善，但不能否定联合学习或建立串行必经顺序。旧49帧／三锚点不冒充新机制集；人工verdict保持空。</p>
 <p>独立表面／深度、删车／横移／转向、旧位残留、新位完整度、保留域损伤、效应和任务完成率共同核验。无完整GT的真实数据只报告证据范围，不报告完整真召回。设计状态不代表实验完成。</p></section>
 <section id="v43-primary-sources"><h2>直接相关工作与强基线</h2>
@@ -60,9 +61,23 @@ def upgrade_schema(s):
     s = upgrade_schema_r4(s)
     s['schema_version'] = 'v43-joint-editable-decomposition-design-5'
     s['evidence']['unknown_reason_vocabulary'] = list(dict.fromkeys(
-        s['evidence']['unknown_reason_vocabulary'] + ['wrong_depth', 'no_correspondence']))
+        s['evidence']['unknown_reason_vocabulary'] + ['wrong_depth', 'no_correspondence',
+            'weak_observed_visibility', 'newly_exposed_unverified_support', 'appearance_support_conflict']))
     s['evidence']['record_fields'] = list(dict.fromkeys(
-        s['evidence']['record_fields'] + ['input_role', 'partition', 'correspondence_valid_domain_ref']))
+        s['evidence']['record_fields'] + ['input_role', 'partition', 'correspondence_valid_domain_ref',
+            'observed_view_contribution_refs', 'post_edit_contribution_refs', 'sparse_measurement_support_ref']))
+    s['observability_contract'] = {
+        'identity_and_edit_visibility_separate': True,
+        'pre_edit_contribution_coverage_is_identity_recall': False,
+        'post_edit_contribution_requires_recomputed_transmittance': True,
+        'record': ['observed_view_alphaT', 'edit_view_alphaT', 'actual_sparse_measurement_support',
+                   'unseen_surface_domain', 'angular_coverage', 'environment_fill'],
+        'low_alphaT_meaning': 'weak_direct_visible_evidence_at_frozen_replay_not_proof_of_no_training_constraint',
+        'background_identity_implies_geometry_and_appearance_reliable': False,
+        'geometric_visibility_implies_unshadowed_radiance_known': False,
+        'reconstruction_row_ids_transfer_across_models': False,
+        'unknown_does_not_imply_car_or_delete': True,
+    }
     s['evidence']['input_role_vocabulary'] = ['deployment_legal_evidence', 'training_supervision',
                                             'isolated_evaluation_gt', 'truth_assisted_diagnostic']
     s['ground_truth_contract'] = {
@@ -261,5 +276,8 @@ def upgrade_state(s):
         minimal_actual_reconstruction_run_receipt='gpu_v43/sim_mechanism_20261030/report_state.json',
         mechanism_dataset_run_receipt='gpu_v43/sim_mechanism_20261030/evidence/dataset_r2/validation.json',
         truth_assisted_reference_run_receipt='gpu_v43/sim_m1m2_20261030/report_state.json',
+        source_and_observation_control_receipt='gpu_v43/source_evidence_20261030/report_state.json',
+        accurate_ownership_reference_completed=False,
+        ideal_representation_repair_completed=False,
         experiment_status_source='separate_run_receipts_not_document_generation')
     return s

@@ -1,0 +1,35 @@
+{
+  "task_id": "WS-V43-SIM-SOURCE-EVIDENCE-20261030",
+  "questions": [
+    "Which retained rows and environment terms actually cause the post-deletion residue?",
+    "Does the same reconstruction recipe still fail when the same world's revealed road has been observed?"
+  ],
+  "correction": "M1/M2 are concrete imperfect selection/repair attempts, not accurate-ownership or ideal-repair controls. 99.9% is original-view pre-deletion contribution coverage, not identity recall.",
+  "source_control": {
+    "checkpoint": "formal_r3_10k iteration_010000",
+    "selection": "reuse original recall_verified, no new ownership claim",
+    "queries": [0, 8, 15],
+    "roi": "independent original-body firsthit AND independent delete-road firsthit",
+    "records": "each retained static row before/after actual alphaT, view color, geometry, error attribution, original 16-view replay and sparse measurement support",
+    "causal_tests": "fixed top32/128/512 removals; fixed-alpha privileged color sensitivity; environment replacements separately",
+    "reference_used": "independent edit RGB only in explicitly privileged evaluation/source diagnosis; no classifier or reconstruction fitting",
+    "training_updates": 0
+  },
+  "evidence_control": {
+    "world": "same procedural vehicle, road, lights, materials and object trajectory",
+    "sensor_bundle": "16 times, same K/resolution, original cameras 0/8/15; other13 hybrid8_z3.5",
+    "selection_reason": "exact world-ray firsthit precheck: old-anchor revealed road all at least once visible; 98.954% in 2+ views",
+    "fixed": "baseline world-to-model gauge, camera extent, native recipe, seed, 30K LR horizon and formal 10K updates",
+    "changed": "legal RGB/LiDAR observations and resulting initialization; not a pure RGB-only or identical-capacity intervention",
+    "input_isolation": "no dense GT geometry/material or delete/edited RGB passed to native training; oracle masks/tracks inherited disclosed sensor controls",
+    "smoke": "real native600s loop, checkpoint/eval/full restore/next delete stage; updates and retries separate",
+    "formal": "fresh10000 updates, no warm start from smoke",
+    "evaluation": "same original0/8/15 and heldout query cameras, native dynamic-delete/shift/rotate; stratify original observed vs never-seen road",
+    "no_guarantee": "world geometric visibility does not guarantee unshadowed radiance, finite-pixel evidence or identifiable Gaussian ownership"
+  },
+  "scope": "one mechanism scene, no transferable module trained, no full shadow GT, no bulk data generation",
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01"],
+  "failure_ledger_delta": "none",
+  "autodl_auto_shutdown": false
+}

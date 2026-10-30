@@ -1,0 +1,133 @@
+{
+  "schema": "v43_world_surface_visibility_v1",
+  "target_definition": "original vehicle first-hit AND independently deleted road/lane first-hit at original anchor camera; world XYZ fixed across all observations",
+  "visibility_definition": "point in calibrated camera FOV AND exact original-world BVH firsthit within 5mm and same object and road/lane semantic; surface triangle match not required at shared edges",
+  "pixel_sampling_caveat": "continuous projected surface visibility; nearest actual original pixel world discrepancy exported separately; does not guarantee texture resolution or appearance identifiability",
+  "train_input": false,
+  "trajectory_selection_scope": "world geometry privileged only diagnostic control; same world/times/16 single cameras; no edited RGB used",
+  "trajectories": {
+    "hybrid8_z3.5": {
+      "points": 10995,
+      "visible_any": 1.0,
+      "visible_2plus": 0.9895407003183265,
+      "visible_counts": [
+        0,
+        115,
+        387,
+        979,
+        1545,
+        1111,
+        769,
+        1156,
+        1382,
+        948,
+        1128,
+        1124,
+        322,
+        29,
+        0,
+        0,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 10.827040976367048,
+      "native_scale_estimate": 0.09236133881665093,
+      "camera_radius_world_max_center": 11.42212248204595,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 1.0
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 1.0
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 1.0
+        }
+      }
+    },
+    "hybrid10_z3.5": {
+      "points": 10995,
+      "visible_any": 1.0,
+      "visible_2plus": 0.994724874943156,
+      "visible_counts": [
+        0,
+        58,
+        103,
+        541,
+        1409,
+        989,
+        684,
+        947,
+        1224,
+        911,
+        1261,
+        1796,
+        837,
+        176,
+        59,
+        0,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 12.18696435748556,
+      "native_scale_estimate": 0.08205488837634724,
+      "camera_radius_world_max_center": 12.18890042384173,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 1.0
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 1.0
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 1.0
+        }
+      }
+    },
+    "hybrid8_z5": {
+      "points": 10995,
+      "visible_any": 1.0,
+      "visible_2plus": 0.9747157798999545,
+      "visible_counts": [
+        0,
+        278,
+        367,
+        815,
+        1260,
+        1144,
+        916,
+        1078,
+        1186,
+        910,
+        830,
+        705,
+        672,
+        634,
+        183,
+        17,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 10.971769556954916,
+      "native_scale_estimate": 0.09114300066265137,
+      "camera_radius_world_max_center": 11.598876383803168,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 1.0
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 1.0
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 1.0
+        }
+      }
+    }
+  }
+}

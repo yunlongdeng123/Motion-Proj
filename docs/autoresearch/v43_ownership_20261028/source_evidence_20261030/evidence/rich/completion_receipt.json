@@ -1,0 +1,823 @@
+{
+  "status": "COMPLETED_SAME_WORLD_RICHER_OBSERVATION_RECONSTRUCTION_CONTROL",
+  "formal_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/formal_hybrid8_10k/checkpoint_events/iteration_010000.json",
+  "formal_updates": 10000,
+  "engine_and_LR_horizon": 30000,
+  "seed": 0,
+  "training_scope": "same native GN11, full static/dynamic/environment, no new classifier or M2, no extra formal updates",
+  "runtime": {
+    "acquisition_seconds": 95.78455819748342,
+    "formal_seconds": 1475.5369586348534,
+    "formal_native_timing": {
+      "native_invocation_wall_seconds": 1467.6484511662275,
+      "initialization_and_restore_wall_seconds_before_first_record": 3.319389745593071,
+      "wall_seconds_since_first_record": 1464.3290614206344,
+      "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 1314.9218898788095,
+      "measured_loop_eval_checkpoint_seconds": 149.40717154182494,
+      "phase_wall_seconds": {
+        "evaluation": 142.00631820224226,
+        "component_save": 7.381244519725442,
+        "continuation_capture": 0.003377346321940422,
+        "checkpoint_publish": 0.0162314735352993
+      },
+      "loop_phase_wall_seconds": {
+        "evaluation": 142.00631820224226,
+        "component_save": 7.381244519725442,
+        "continuation_capture": 0.003377346321940422,
+        "checkpoint_publish": 0.0162314735352993
+      },
+      "stop_trigger": {
+        "reason": "budget",
+        "iteration": 10000,
+        "requested_smoke_loop_wall_seconds": 0,
+        "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 1314.1163430437446,
+        "wall_seconds_since_first_record": 1421.641807448119,
+        "measured_loop_eval_checkpoint_seconds": 107.52546440437436
+      },
+      "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+      "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+    },
+    "smoke_loop_seconds": 600.0322359763086,
+    "scope": "actual host wall time, not pure GPU kernels; native snapshot separates training-loop proxy from measured evaluation/checkpoint/publication, and initialization/restore diagnostic subsets are not additive",
+    "concurrent_workload": "short frozen-old-checkpoint/new-camera bridge diagnosis can overlap formal training; no training-speed superiority claim"
+  },
+  "separate_extra_budget": {
+    "smoke_updates": 5400,
+    "entry_updates": 2,
+    "formal_extra_updates": 0
+  },
+  "smoke": {
+    "real_CUDA": true,
+    "save_evaluate_restore_next_entry_passed": true,
+    "complete_restore": true,
+    "none_identity_max_abs": 0.0
+  },
+  "parity": {
+    "world_identity": {
+      "status": "PASS_EXACT_WORLD_IDENTITY",
+      "all16_object_pose_max_abs": 0.0,
+      "mesh_arrays_equal": {
+        "vertices_local": true,
+        "vertex_object_id": true,
+        "triangles": true,
+        "surface_id": true,
+        "triangle_object_id": true,
+        "triangle_semantic_id": true
+      },
+      "evaluation_audit_only_not_training_input": true
+    },
+    "anchor_sensor_parity": {
+      "status": "PASS_SHARED_WORLD_FIXED_ANCHORS_WITH_RECORDED_RGB_NUMERICAL_DIFFERENCES",
+      "checks": [
+        {
+          "frame": 0,
+          "camera_max_abs": 6.863422541414366e-08,
+          "K_max_abs": 0.0,
+          "world_object_pose_max_abs": 0.0,
+          "RGB_max_uint8": 3,
+          "RGB_MAE_uint8": 6.293402777777778e-05,
+          "RGB_changed_channels": 23
+        },
+        {
+          "frame": 8,
+          "camera_max_abs": 2.4586915969848633e-07,
+          "K_max_abs": 0.0,
+          "world_object_pose_max_abs": 0.0,
+          "RGB_max_uint8": 9,
+          "RGB_MAE_uint8": 0.0007769097222222222,
+          "RGB_changed_channels": 241
+        },
+        {
+          "frame": 15,
+          "camera_max_abs": 1.341104507446289e-07,
+          "K_max_abs": 0.0,
+          "world_object_pose_max_abs": 0.0,
+          "RGB_max_uint8": 4,
+          "RGB_MAE_uint8": 0.00020833333333333335,
+          "RGB_changed_channels": 87
+        }
+      ],
+      "reference_reuse": "original independent0/8/15 edit references; tiny finite-sample RGB differences disclosed, no pixel identity claim",
+      "GT_audit_only": true
+    },
+    "native_recipe": {
+      "status": "PASS_IDENTICAL_NATIVE_RECIPE",
+      "phase": "actual_formal10k",
+      "changed_keys": [
+        "followup_scene_spec",
+        "model_path",
+        "source_path"
+      ],
+      "seed": 0,
+      "updates": 10000,
+      "LR_horizon": 30000
+    },
+    "shared_gauge": {
+      "all_passed": true,
+      "world_to_model_max_abs": 0.0,
+      "model_spatial_lr_scales": {
+        "static": 1.0,
+        "dynamic": 1.0
+      },
+      "shared_camera_extent": 5.092908100662823
+    },
+    "common_none_identity_max_abs": 0.0,
+    "checkpoint_unchanged": true
+  },
+  "initialization": {
+    "original": {
+      "schema_version": 1,
+      "scene_id": "dataset_r2",
+      "observations": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/observations",
+      "frames": [
+        {
+          "id": "000000",
+          "source_frame_id": 0,
+          "source_index": 0,
+          "model_time": -0.15,
+          "lidar_returns": 3052,
+          "body_pixels": 5238,
+          "sky_pixels": 61899,
+          "projected_body_points": 196,
+          "before_component": 196,
+          "dynamic_seed_points": 191
+        },
+        {
+          "id": "000001",
+          "source_frame_id": 1,
+          "source_index": 1,
+          "model_time": -0.13,
+          "lidar_returns": 3052,
+          "body_pixels": 5177,
+          "sky_pixels": 61880,
+          "projected_body_points": 197,
+          "before_component": 197,
+          "dynamic_seed_points": 191
+        },
+        {
+          "id": "000002",
+          "source_frame_id": 2,
+          "source_index": 2,
+          "model_time": -0.11,
+          "lidar_returns": 3052,
+          "body_pixels": 5127,
+          "sky_pixels": 61865,
+          "projected_body_points": 193,
+          "before_component": 193,
+          "dynamic_seed_points": 186
+        },
+        {
+          "id": "000003",
+          "source_frame_id": 3,
+          "source_index": 3,
+          "model_time": -0.09,
+          "lidar_returns": 3053,
+          "body_pixels": 5053,
+          "sky_pixels": 61835,
+          "projected_body_points": 191,
+          "before_component": 191,
+          "dynamic_seed_points": 185
+        },
+        {
+          "id": "000004",
+          "source_frame_id": 4,
+          "source_index": 4,
+          "model_time": -0.07,
+          "lidar_returns": 3058,
+          "body_pixels": 5001,
+          "sky_pixels": 61813,
+          "projected_body_points": 190,
+          "before_component": 190,
+          "dynamic_seed_points": 184
+        },
+        {
+          "id": "000005",
+          "source_frame_id": 5,
+          "source_index": 5,
+          "model_time": -0.05,
+          "lidar_returns": 3059,
+          "body_pixels": 4931,
+          "sky_pixels": 61807,
+          "projected_body_points": 187,
+          "before_component": 187,
+          "dynamic_seed_points": 180
+        },
+        {
+          "id": "000006",
+          "source_frame_id": 6,
+          "source_index": 6,
+          "model_time": -0.03,
+          "lidar_returns": 3055,
+          "body_pixels": 4897,
+          "sky_pixels": 61822,
+          "projected_body_points": 185,
+          "before_component": 185,
+          "dynamic_seed_points": 180
+        },
+        {
+          "id": "000007",
+          "source_frame_id": 7,
+          "source_index": 7,
+          "model_time": -0.01,
+          "lidar_returns": 3045,
+          "body_pixels": 4848,
+          "sky_pixels": 61859,
+          "projected_body_points": 183,
+          "before_component": 183,
+          "dynamic_seed_points": 178
+        },
+        {
+          "id": "000008",
+          "source_frame_id": 8,
+          "source_index": 8,
+          "model_time": 0.01,
+          "lidar_returns": 3035,
+          "body_pixels": 4804,
+          "sky_pixels": 61913,
+          "projected_body_points": 182,
+          "before_component": 182,
+          "dynamic_seed_points": 177
+        },
+        {
+          "id": "000009",
+          "source_frame_id": 9,
+          "source_index": 9,
+          "model_time": 0.03,
+          "lidar_returns": 3036,
+          "body_pixels": 4783,
+          "sky_pixels": 61966,
+          "projected_body_points": 181,
+          "before_component": 181,
+          "dynamic_seed_points": 175
+        },
+        {
+          "id": "000010",
+          "source_frame_id": 10,
+          "source_index": 10,
+          "model_time": 0.05,
+          "lidar_returns": 3038,
+          "body_pixels": 4756,
+          "sky_pixels": 62051,
+          "projected_body_points": 178,
+          "before_component": 178,
+          "dynamic_seed_points": 173
+        },
+        {
+          "id": "000011",
+          "source_frame_id": 11,
+          "source_index": 11,
+          "model_time": 0.07,
+          "lidar_returns": 3038,
+          "body_pixels": 4745,
+          "sky_pixels": 62165,
+          "projected_body_points": 178,
+          "before_component": 178,
+          "dynamic_seed_points": 173
+        },
+        {
+          "id": "000012",
+          "source_frame_id": 12,
+          "source_index": 12,
+          "model_time": 0.09,
+          "lidar_returns": 3042,
+          "body_pixels": 4737,
+          "sky_pixels": 62333,
+          "projected_body_points": 177,
+          "before_component": 177,
+          "dynamic_seed_points": 172
+        },
+        {
+          "id": "000013",
+          "source_frame_id": 13,
+          "source_index": 13,
+          "model_time": 0.11,
+          "lidar_returns": 3045,
+          "body_pixels": 4726,
+          "sky_pixels": 62424,
+          "projected_body_points": 178,
+          "before_component": 178,
+          "dynamic_seed_points": 174
+        },
+        {
+          "id": "000014",
+          "source_frame_id": 14,
+          "source_index": 14,
+          "model_time": 0.13,
+          "lidar_returns": 3043,
+          "body_pixels": 4727,
+          "sky_pixels": 62528,
+          "projected_body_points": 179,
+          "before_component": 179,
+          "dynamic_seed_points": 175
+        },
+        {
+          "id": "000015",
+          "source_frame_id": 15,
+          "source_index": 15,
+          "model_time": 0.15,
+          "lidar_returns": 3042,
+          "body_pixels": 4715,
+          "sky_pixels": 62704,
+          "projected_body_points": 179,
+          "before_component": 179,
+          "dynamic_seed_points": 175
+        }
+      ],
+      "model_frame_interval": 0.02,
+      "original_wh": [
+        480,
+        320
+      ],
+      "render_wh": [
+        480,
+        320
+      ],
+      "render_scale": 1.0,
+      "training_ready": true,
+      "mask_input": "simulator sensor oracle body/sky, authorized mechanism condition",
+      "independent_reference_used_for_training": false,
+      "simulator_owner_id_used_for_training": false,
+      "static_seed_points": 600000,
+      "unique_source_lidar_returns": 48745,
+      "dynamic_seed_points": 2869,
+      "static_seed_sampling": "inherited RandomState(0).choice(all sparse world LiDAR, count, replace=True)",
+      "dynamic_seed_recipe": "simulator corner-coordinate floor(uv) body lookup; inherited actor_cpu 2x2 nearest depth +0.5m, 0.5m dominant component",
+      "pixel_coordinate_contract": {
+        "simulator_origin": "upper-left image corner (0,0)",
+        "simulator_pixel_centers": "(column+0.5,row+0.5)",
+        "mask_lookup": "floor(projected_uv)",
+        "intrinsics": "unchanged simulator K; no principal-point shift",
+        "engineering_delta": "legacy actor_cpu floor(uv+0.5) corrected only for simulator mask lookup; depth/component thresholds unchanged"
+      },
+      "static_exclusion": "unchanged loader strict nearest dynamic distance <0.1m",
+      "shadow_supervision": "absent; body mask only",
+      "ideal_track_input": "explicit simulator sensor oracle; copied for downstream, not used for seed point filtering",
+      "extra_conditions": [
+        "single simulated camera",
+        "simulator sensor oracle body/sky masks",
+        "non-photoreal renderer",
+        "finite sparse LiDAR rays"
+      ],
+      "followup_scene_spec": {
+        "scene_id": "dataset_r2",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+        "frame_ids": [
+          "000000",
+          "000001",
+          "000002",
+          "000003",
+          "000004",
+          "000005",
+          "000006",
+          "000007",
+          "000008",
+          "000009",
+          "000010",
+          "000011",
+          "000012",
+          "000013",
+          "000014",
+          "000015"
+        ],
+        "camera_directory": "image_0",
+        "frame_ids_with_camera": [
+          "image_0/000000",
+          "image_0/000001",
+          "image_0/000002",
+          "image_0/000003",
+          "image_0/000004",
+          "image_0/000005",
+          "image_0/000006",
+          "image_0/000007",
+          "image_0/000008",
+          "image_0/000009",
+          "image_0/000010",
+          "image_0/000011",
+          "image_0/000012",
+          "image_0/000013",
+          "image_0/000014",
+          "image_0/000015"
+        ],
+        "raw_frame_range": [
+          0,
+          15
+        ],
+        "model_timestamps": [
+          -0.15,
+          -0.13,
+          -0.11,
+          -0.09,
+          -0.07,
+          -0.05,
+          -0.03,
+          -0.01,
+          0.01,
+          0.03,
+          0.05,
+          0.07,
+          0.09,
+          0.11,
+          0.13,
+          0.15
+        ],
+        "original_wh": [
+          480,
+          320
+        ],
+        "render_wh": [
+          480,
+          320
+        ],
+        "anchor_frame": "000008",
+        "anchor_index": 8,
+        "anchor_timestamp": 0.01,
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/points3d_dynamic_0.ply"
+        ]
+      }
+    },
+    "richer": {
+      "schema_version": 1,
+      "scene_id": "dataset_hybrid8",
+      "observations": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/dataset_hybrid8/observations",
+      "frames": [
+        {
+          "id": "000000",
+          "source_frame_id": 0,
+          "source_index": 0,
+          "model_time": -0.15,
+          "lidar_returns": 3052,
+          "body_pixels": 5238,
+          "sky_pixels": 61899,
+          "projected_body_points": 196,
+          "before_component": 196,
+          "dynamic_seed_points": 191
+        },
+        {
+          "id": "000001",
+          "source_frame_id": 1,
+          "source_index": 1,
+          "model_time": -0.13,
+          "lidar_returns": 3840,
+          "body_pixels": 11540,
+          "sky_pixels": 24986,
+          "projected_body_points": 426,
+          "before_component": 426,
+          "dynamic_seed_points": 412
+        },
+        {
+          "id": "000002",
+          "source_frame_id": 2,
+          "source_index": 2,
+          "model_time": -0.11,
+          "lidar_returns": 3840,
+          "body_pixels": 13171,
+          "sky_pixels": 27407,
+          "projected_body_points": 489,
+          "before_component": 489,
+          "dynamic_seed_points": 475
+        },
+        {
+          "id": "000003",
+          "source_frame_id": 3,
+          "source_index": 3,
+          "model_time": -0.09,
+          "lidar_returns": 3840,
+          "body_pixels": 13746,
+          "sky_pixels": 29814,
+          "projected_body_points": 515,
+          "before_component": 515,
+          "dynamic_seed_points": 501
+        },
+        {
+          "id": "000004",
+          "source_frame_id": 4,
+          "source_index": 4,
+          "model_time": -0.07,
+          "lidar_returns": 3840,
+          "body_pixels": 13841,
+          "sky_pixels": 30893,
+          "projected_body_points": 510,
+          "before_component": 510,
+          "dynamic_seed_points": 449
+        },
+        {
+          "id": "000005",
+          "source_frame_id": 5,
+          "source_index": 5,
+          "model_time": -0.05,
+          "lidar_returns": 3840,
+          "body_pixels": 13780,
+          "sky_pixels": 30652,
+          "projected_body_points": 516,
+          "before_component": 516,
+          "dynamic_seed_points": 508
+        },
+        {
+          "id": "000006",
+          "source_frame_id": 6,
+          "source_index": 6,
+          "model_time": -0.03,
+          "lidar_returns": 3840,
+          "body_pixels": 13361,
+          "sky_pixels": 29018,
+          "projected_body_points": 496,
+          "before_component": 496,
+          "dynamic_seed_points": 496
+        },
+        {
+          "id": "000007",
+          "source_frame_id": 7,
+          "source_index": 7,
+          "model_time": -0.01,
+          "lidar_returns": 3840,
+          "body_pixels": 11971,
+          "sky_pixels": 27254,
+          "projected_body_points": 451,
+          "before_component": 451,
+          "dynamic_seed_points": 451
+        },
+        {
+          "id": "000008",
+          "source_frame_id": 8,
+          "source_index": 8,
+          "model_time": 0.01,
+          "lidar_returns": 3035,
+          "body_pixels": 4804,
+          "sky_pixels": 61913,
+          "projected_body_points": 182,
+          "before_component": 182,
+          "dynamic_seed_points": 177
+        },
+        {
+          "id": "000009",
+          "source_frame_id": 9,
+          "source_index": 9,
+          "model_time": 0.03,
+          "lidar_returns": 3840,
+          "body_pixels": 11511,
+          "sky_pixels": 26737,
+          "projected_body_points": 433,
+          "before_component": 433,
+          "dynamic_seed_points": 431
+        },
+        {
+          "id": "000010",
+          "source_frame_id": 10,
+          "source_index": 10,
+          "model_time": 0.05,
+          "lidar_returns": 3840,
+          "body_pixels": 13175,
+          "sky_pixels": 28105,
+          "projected_body_points": 487,
+          "before_component": 487,
+          "dynamic_seed_points": 467
+        },
+        {
+          "id": "000011",
+          "source_frame_id": 11,
+          "source_index": 11,
+          "model_time": 0.07,
+          "lidar_returns": 3840,
+          "body_pixels": 13758,
+          "sky_pixels": 29535,
+          "projected_body_points": 518,
+          "before_component": 518,
+          "dynamic_seed_points": 508
+        },
+        {
+          "id": "000012",
+          "source_frame_id": 12,
+          "source_index": 12,
+          "model_time": 0.09,
+          "lidar_returns": 3840,
+          "body_pixels": 13846,
+          "sky_pixels": 29317,
+          "projected_body_points": 504,
+          "before_component": 504,
+          "dynamic_seed_points": 503
+        },
+        {
+          "id": "000013",
+          "source_frame_id": 13,
+          "source_index": 13,
+          "model_time": 0.11,
+          "lidar_returns": 3840,
+          "body_pixels": 13771,
+          "sky_pixels": 28543,
+          "projected_body_points": 514,
+          "before_component": 514,
+          "dynamic_seed_points": 499
+        },
+        {
+          "id": "000014",
+          "source_frame_id": 14,
+          "source_index": 14,
+          "model_time": 0.13,
+          "lidar_returns": 3840,
+          "body_pixels": 13243,
+          "sky_pixels": 26601,
+          "projected_body_points": 489,
+          "before_component": 489,
+          "dynamic_seed_points": 476
+        },
+        {
+          "id": "000015",
+          "source_frame_id": 15,
+          "source_index": 15,
+          "model_time": 0.15,
+          "lidar_returns": 3042,
+          "body_pixels": 4715,
+          "sky_pixels": 62704,
+          "projected_body_points": 179,
+          "before_component": 179,
+          "dynamic_seed_points": 175
+        }
+      ],
+      "model_frame_interval": 0.02,
+      "original_wh": [
+        480,
+        320
+      ],
+      "render_wh": [
+        480,
+        320
+      ],
+      "render_scale": 1.0,
+      "training_ready": true,
+      "mask_input": "simulator sensor oracle body/sky, authorized mechanism condition",
+      "independent_reference_used_for_training": false,
+      "simulator_owner_id_used_for_training": false,
+      "static_seed_points": 600000,
+      "unique_source_lidar_returns": 59049,
+      "dynamic_seed_points": 6719,
+      "static_seed_sampling": "inherited RandomState(0).choice(all sparse world LiDAR, count, replace=True)",
+      "dynamic_seed_recipe": "simulator corner-coordinate floor(uv) body lookup; inherited actor_cpu 2x2 nearest depth +0.5m, 0.5m dominant component",
+      "pixel_coordinate_contract": {
+        "simulator_origin": "upper-left image corner (0,0)",
+        "simulator_pixel_centers": "(column+0.5,row+0.5)",
+        "mask_lookup": "floor(projected_uv)",
+        "intrinsics": "unchanged simulator K; no principal-point shift",
+        "engineering_delta": "legacy actor_cpu floor(uv+0.5) corrected only for simulator mask lookup; depth/component thresholds unchanged"
+      },
+      "static_exclusion": "unchanged loader strict nearest dynamic distance <0.1m",
+      "shadow_supervision": "absent; body mask only",
+      "ideal_track_input": "explicit simulator sensor oracle; copied for downstream, not used for seed point filtering",
+      "extra_conditions": [
+        "single simulated camera",
+        "simulator sensor oracle body/sky masks",
+        "non-photoreal renderer",
+        "finite sparse LiDAR rays"
+      ],
+      "followup_scene_spec": {
+        "scene_id": "dataset_hybrid8",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/native_scene_hybrid8",
+        "frame_ids": [
+          "000000",
+          "000001",
+          "000002",
+          "000003",
+          "000004",
+          "000005",
+          "000006",
+          "000007",
+          "000008",
+          "000009",
+          "000010",
+          "000011",
+          "000012",
+          "000013",
+          "000014",
+          "000015"
+        ],
+        "camera_directory": "image_0",
+        "frame_ids_with_camera": [
+          "image_0/000000",
+          "image_0/000001",
+          "image_0/000002",
+          "image_0/000003",
+          "image_0/000004",
+          "image_0/000005",
+          "image_0/000006",
+          "image_0/000007",
+          "image_0/000008",
+          "image_0/000009",
+          "image_0/000010",
+          "image_0/000011",
+          "image_0/000012",
+          "image_0/000013",
+          "image_0/000014",
+          "image_0/000015"
+        ],
+        "raw_frame_range": [
+          0,
+          15
+        ],
+        "model_timestamps": [
+          -0.15,
+          -0.13,
+          -0.11,
+          -0.09,
+          -0.07,
+          -0.05,
+          -0.03,
+          -0.01,
+          0.01,
+          0.03,
+          0.05,
+          0.07,
+          0.09,
+          0.11,
+          0.13,
+          0.15
+        ],
+        "original_wh": [
+          480,
+          320
+        ],
+        "render_wh": [
+          480,
+          320
+        ],
+        "anchor_frame": "000008",
+        "anchor_index": 8,
+        "anchor_timestamp": 0.01,
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/native_scene_hybrid8/points3d_dynamic_0.ply"
+        ]
+      }
+    },
+    "actual_native_initial_counts": {
+      "original": [
+        564213,
+        2869
+      ],
+      "richer": [
+        528958,
+        6719
+      ]
+    }
+  },
+  "parameter_capacity": {
+    "M0": {
+      "static": {
+        "gaussians": 667559,
+        "model_parameter_elements": 42723776,
+        "spatial_lr_scale": 1.0
+      },
+      "dynamic": {
+        "gaussians": 1133268,
+        "model_parameter_elements": 72529152,
+        "spatial_lr_scale": 1.0
+      },
+      "environment": {
+        "model_parameter_elements": 18874368,
+        "shape": [
+          6,
+          1024,
+          1024,
+          3
+        ]
+      }
+    },
+    "richer_observations": {
+      "static": {
+        "gaussians": 1157894,
+        "model_parameter_elements": 74105216,
+        "spatial_lr_scale": 1.0
+      },
+      "dynamic": {
+        "gaussians": 302428,
+        "model_parameter_elements": 19355392,
+        "spatial_lr_scale": 1.0
+      },
+      "environment": {
+        "model_parameter_elements": 18874368,
+        "shape": [
+          6,
+          1024,
+          1024,
+          3
+        ]
+      }
+    }
+  },
+  "formal_peak_memory": {
+    "allocated_bytes": 5592877568,
+    "reserved_bytes": 7572815872,
+    "scope": "native initialization, training, evaluation and checkpoint"
+  },
+  "common_keyframe_renders": 12,
+  "heldout_edit_renders": 4,
+  "interpretation": "trajectory changes legal RGB+LiDAR observations and their lawful initialization; same-world observation-bundle mechanism control, not pure RGB causality or real-driving generalization",
+  "trajectory_scope": "13 orbit-like changed viewpoints plus3 original anchors; some camera jumps, not a feasible continuous driving policy",
+  "operational_fixes": [
+    "new camera inverse metadata canonicalized in float64; original c2w/RGB/LiDAR preserved",
+    "anchor RGB numerical microdifferences recorded, not pixel identity"
+  ],
+  "GT_isolation": "privileged geometry only used for preflight/world audit/evaluation, never adapter/model initialization/training",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "power_actions": 0,
+  "git_actions": 0
+}

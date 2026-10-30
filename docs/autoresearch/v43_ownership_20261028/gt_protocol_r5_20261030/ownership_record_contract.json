@@ -43,7 +43,10 @@
       "reviewer",
       "input_role",
       "partition",
-      "correspondence_valid_domain_ref"
+      "correspondence_valid_domain_ref",
+      "observed_view_contribution_refs",
+      "post_edit_contribution_refs",
+      "sparse_measurement_support_ref"
     ],
     "unknown_reason_vocabulary": [
       "missing_observation",
@@ -53,7 +56,10 @@
       "unverified_geometry",
       "unverified_effect",
       "wrong_depth",
-      "no_correspondence"
+      "no_correspondence",
+      "weak_observed_visibility",
+      "newly_exposed_unverified_support",
+      "appearance_support_conflict"
     ],
     "input_role_vocabulary": [
       "deployment_legal_evidence",
@@ -304,6 +310,24 @@
     "support_separation": "unknown",
     "independently_verified_identity_is_retained": true,
     "evidence_refs": []
+  },
+  "observability_contract": {
+    "identity_and_edit_visibility_separate": true,
+    "pre_edit_contribution_coverage_is_identity_recall": false,
+    "post_edit_contribution_requires_recomputed_transmittance": true,
+    "record": [
+      "observed_view_alphaT",
+      "edit_view_alphaT",
+      "actual_sparse_measurement_support",
+      "unseen_surface_domain",
+      "angular_coverage",
+      "environment_fill"
+    ],
+    "low_alphaT_meaning": "weak_direct_visible_evidence_at_frozen_replay_not_proof_of_no_training_constraint",
+    "background_identity_implies_geometry_and_appearance_reliable": false,
+    "geometric_visibility_implies_unshadowed_radiance_known": false,
+    "reconstruction_row_ids_transfer_across_models": false,
+    "unknown_does_not_imply_car_or_delete": true
   },
   "ground_truth_contract": {
     "primary_truth_space": "independent_simulated_world_surfaces_objects_and_interventions",

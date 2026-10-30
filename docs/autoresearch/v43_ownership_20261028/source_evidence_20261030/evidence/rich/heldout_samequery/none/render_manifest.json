@@ -1,0 +1,49 @@
+{
+  "status": "NATIVE_SINGLE_HELDOUT_VIEW_RENDERED",
+  "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/formal_hybrid8_10k/checkpoint_events/iteration_010000.json",
+  "iteration": 10000,
+  "heldout_views": 1,
+  "edit": "none",
+  "frame": "000008",
+  "view_id": "lateral_y_plus_1m",
+  "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/heldout_common_10k/heldout_none.npz",
+  "query_camera": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/heldout_common_10k/query_camera.json",
+  "actual_camera_reconstruction_max_abs": 2.917401087376703e-08,
+  "native_none_identity_max_abs": 0.0,
+  "original_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "compositor": "native premultiplied C; fill=(1-alpha)*E; final=C+fill; white=C+(1-alpha)",
+  "required_fp32_arrays": [
+    "C",
+    "alpha",
+    "E",
+    "fill",
+    "final",
+    "white",
+    "depth_sum_model"
+  ],
+  "camera_image_input": "all-zero placeholder; no reference RGB",
+  "ground_truth_rgb_or_geometry_used_for_forward": false,
+  "environment": {
+    "min": -2.1221907138824463,
+    "max": 4.887975215911865,
+    "channel_fraction_outside_0_1": 0.01939453125
+  },
+  "environment_fill": {
+    "min": -0.06795082986354828,
+    "max": 0.506527841091156,
+    "channel_fraction_outside_0_1": 0.003671875
+  },
+  "alpha": {
+    "min": 0.43321672081947327,
+    "max": 0.9999016523361206,
+    "fraction_outside_0_1": 0.0
+  },
+  "compositor_checks": {
+    "final_vs_C_plus_fill_max_abs": 0.0,
+    "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+  },
+  "scope": "one known-time heldout-camera diagnostic; not real-world or multi-view generalization",
+  "quality_accepted": false,
+  "human_verdict": null
+}

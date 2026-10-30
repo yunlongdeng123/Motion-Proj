@@ -1,0 +1,118 @@
+{
+  "status": "COMPLETE_ALL_STATIC_ROWS_ORIGINAL16_REPLAY_WEIGHTED_MID_POSTDELETE",
+  "static_rows": 667559,
+  "retained_static_rows": 654881,
+  "frames": 16,
+  "total_postdelete_body_alphaT": 3406.5142824139148,
+  "total_shared_pixel_error_weighted_alphaT": 753.1557183356088,
+  "bins": [
+    {
+      "bin": "<1e-4",
+      "retained_rows": 364885,
+      "postdelete_body_alphaT": 372.95805113309757,
+      "postdelete_body_alphaT_fraction": 0.10948377731996857,
+      "shared_pixel_error_weighted_alphaT": 66.84211986378367,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.08874940233010166,
+      "original16_category_alphaT_sum": [
+        0.25459467903411337,
+        0.2944998492587274,
+        0.004225339476874979
+      ]
+    },
+    {
+      "bin": "[1e-4,.01)",
+      "retained_rows": 45471,
+      "postdelete_body_alphaT": 1327.7272756154118,
+      "postdelete_body_alphaT_fraction": 0.38976125315833443,
+      "shared_pixel_error_weighted_alphaT": 297.9861650754198,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.3956501395673347,
+      "original16_category_alphaT_sum": [
+        11.030942758951255,
+        107.17846333116088,
+        21.340983369009223
+      ]
+    },
+    {
+      "bin": "[.01,.1)",
+      "retained_rows": 131509,
+      "postdelete_body_alphaT": 959.0406134316036,
+      "postdelete_body_alphaT_fraction": 0.2815313642988782,
+      "shared_pixel_error_weighted_alphaT": 235.95396657300284,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.31328709432683477,
+      "original16_category_alphaT_sum": [
+        25.779869397985323,
+        4829.38425179638,
+        1509.731311632534
+      ]
+    },
+    {
+      "bin": "[.1,1)",
+      "retained_rows": 80708,
+      "postdelete_body_alphaT": 499.2654919431153,
+      "postdelete_body_alphaT_fraction": 0.14656198405524581,
+      "shared_pixel_error_weighted_alphaT": 103.79754659634429,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.137816847259323,
+      "original16_category_alphaT_sum": [
+        60.66063303771111,
+        15965.277620402101,
+        5950.790546834814
+      ]
+    },
+    {
+      "bin": ">=1",
+      "retained_rows": 32308,
+      "postdelete_body_alphaT": 247.52285029068594,
+      "postdelete_body_alphaT_fraction": 0.07266162116757278,
+      "shared_pixel_error_weighted_alphaT": 48.57592022705816,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.06449651651640594,
+      "original16_category_alphaT_sum": [
+        1060.300810759904,
+        788389.7642963317,
+        247672.0575482187
+      ]
+    }
+  ],
+  "categories": [
+    "original_vehicle_firsthit",
+    "original_road_firsthit",
+    "other_including_nohit"
+  ],
+  "category_composition": {
+    "postdelete_body_alphaT": {
+      "weak_original_visibility_fraction": 0.10948377731996857,
+      "original_category_mixture_fractions": [
+        0.2934757368274568,
+        0.5819293092333191,
+        0.015111176619258935
+      ],
+      "definition": "Each sufficiently visible row divides its original16 exposure across vehicle/road/other, then row fractions are weighted by its postdelete contribution; weak rows remain separate. Not identity labels."
+    },
+    "shared_pixel_error_weighted_alphaT": {
+      "weak_original_visibility_fraction": 0.08874940233010166,
+      "original_category_mixture_fractions": [
+        0.3265610924945754,
+        0.5680352059473205,
+        0.01665429922799842
+      ],
+      "definition": "Each sufficiently visible row divides its original16 exposure across vehicle/road/other, then row fractions are weighted by its postdelete contribution; weak rows remain separate. Not identity labels."
+    }
+  },
+  "top_subsets": {
+    "top8": {
+      "rows": 8,
+      "postdelete_body_alphaT_fraction": 0.06735092490616788,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.09377484202349282,
+      "original16_sum_alphaT": 0.5332516670427765
+    },
+    "top128": {
+      "rows": 128,
+      "postdelete_body_alphaT_fraction": 0.25395779885525216,
+      "shared_pixel_error_weighted_alphaT_fraction": 0.3159995035448454,
+      "original16_sum_alphaT": 28.153152418019232
+    }
+  },
+  "max_featuregradient_conservation_relative_error": 3.3868932874597453e-07,
+  "scope": "All retained static rows, fixed original M0 checkpoint; denominator is actual midframe original-body AND independent delete-road ROI after fixed recall deletion. Original16 visibility is frozen final-model replay, not optimizer history. Error-weighted alphaT is a ranking statistic, not per-row causal error.",
+  "no_identity_gt": true,
+  "training_updates": 0
+}

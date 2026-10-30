@@ -1,0 +1,532 @@
+{
+  "schema": "v43_visibility_control_final_r1",
+  "human_verdict": null,
+  "train_input": false,
+  "point_weighting": "counts are old-anchor revealed-road pixel samples; overlaps across anchors not deduplicated; not area-weighted",
+  "scope": "geometric evidence sufficiency control; visibility cannot prove appearance identifiability or clean unshadowed radiance",
+  "selected_trajectory": "hybrid8_z3.5",
+  "anchors": {
+    "0": {
+      "original": {
+        "pixels": 3764,
+        "observed_0_frames": 1271,
+        "observed_1_frame": 107,
+        "observed_2plus_frames": 2386,
+        "observed_1plus_fraction": 0.6623273113708821,
+        "median_visible_frames": 5.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          0.6670828199765604,
+          3.4428740565875247,
+          6.7419315323654425
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          0.47653384355377054,
+          2.1423482182982907,
+          3.331383007687581
+        ],
+        "angle_10deg_and_2plus_fraction": 0.0,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.29861849096705634,
+            "supported_2plus_sensor_frames_fraction": 0.10812964930924548
+          },
+          "0.1": {
+            "supported_fraction": 0.5066418703506907,
+            "supported_2plus_sensor_frames_fraction": 0.25717321997874604
+          },
+          "0.25": {
+            "supported_fraction": 0.6118490967056323,
+            "supported_2plus_sensor_frames_fraction": 0.5526036131774708
+          },
+          "0.5": {
+            "supported_fraction": 0.6764080765143464,
+            "supported_2plus_sensor_frames_fraction": 0.6437300743889479
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.023567176253920342,
+          0.09772272909292068,
+          1.687311048954084
+        ],
+        "visible_projected_point_to_nearest_actual_pixel_world_error_m_p50_p90_p99": [
+          0.03311575949192047,
+          0.07174175679683686,
+          0.14408423066139212
+        ],
+        "visible_ray_support_with_nearest_pixel_within10cm_fraction": 0.6578108395324124
+      },
+      "hybrid8_z3.5": {
+        "pixels": 3764,
+        "observed_0_frames": 0,
+        "observed_1_frame": 43,
+        "observed_2plus_frames": 3721,
+        "observed_1plus_fraction": 1.0,
+        "median_visible_frames": 8.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          50.46505682578826,
+          131.5138291652448,
+          145.94332752865424
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          12.991506843355957,
+          17.620758412560086,
+          19.640670750174916
+        ],
+        "angle_10deg_and_2plus_fraction": 0.9662592986184909,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.29861849096705634,
+            "supported_2plus_sensor_frames_fraction": 0.10812964930924548
+          },
+          "0.1": {
+            "supported_fraction": 0.5066418703506907,
+            "supported_2plus_sensor_frames_fraction": 0.25717321997874604
+          },
+          "0.25": {
+            "supported_fraction": 0.6118490967056323,
+            "supported_2plus_sensor_frames_fraction": 0.5526036131774708
+          },
+          "0.5": {
+            "supported_fraction": 0.6764080765143464,
+            "supported_2plus_sensor_frames_fraction": 0.6437300743889479
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.023567176253920342,
+          0.09772272909292068,
+          1.687311048954084
+        ]
+      },
+      "limited_shadow_proxy": {
+        "target_fraction_visible_in_any_of_3_proxy_keyframes": 0.6522316684378321,
+        "target_fraction_with_any_effect_contrast_proxy_hit": 0.16764080765143463,
+        "not_available": "no off-shadow render for other 13 frames; a below-threshold proxy is not proof of unshadowed radiance"
+      }
+    },
+    "8": {
+      "original": {
+        "pixels": 3567,
+        "observed_0_frames": 1785,
+        "observed_1_frame": 174,
+        "observed_2plus_frames": 1608,
+        "observed_1plus_fraction": 0.49957947855340623,
+        "median_visible_frames": 0.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          0.27044116785482897,
+          1.1981473342131768,
+          3.5100010368896286
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          0.2382810096433901,
+          1.1909054277240019,
+          3.3313827739005695
+        ],
+        "angle_10deg_and_2plus_fraction": 0.0,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.10933557611438183,
+            "supported_2plus_sensor_frames_fraction": 0.015419119708438464
+          },
+          "0.1": {
+            "supported_fraction": 0.2601626016260163,
+            "supported_2plus_sensor_frames_fraction": 0.05326604990187833
+          },
+          "0.25": {
+            "supported_fraction": 0.383515559293524,
+            "supported_2plus_sensor_frames_fraction": 0.29520605550883094
+          },
+          "0.5": {
+            "supported_fraction": 0.49144939725259323,
+            "supported_2plus_sensor_frames_fraction": 0.4418278665545276
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.04744569319274689,
+          0.5322786325914788,
+          2.102515560551672
+        ],
+        "visible_projected_point_to_nearest_actual_pixel_world_error_m_p50_p90_p99": [
+          0.045590247958898544,
+          0.13383192420005793,
+          1.841865134239199
+        ],
+        "visible_ray_support_with_nearest_pixel_within10cm_fraction": 0.4735071488645921
+      },
+      "hybrid8_z3.5": {
+        "pixels": 3567,
+        "observed_0_frames": 0,
+        "observed_1_frame": 72,
+        "observed_2plus_frames": 3495,
+        "observed_1plus_fraction": 1.0,
+        "median_visible_frames": 7.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          31.75599817166668,
+          126.19902585882618,
+          140.67480285147914
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          9.441630612533963,
+          16.953204290309326,
+          18.003464792574405
+        ],
+        "angle_10deg_and_2plus_fraction": 0.9271096159237454,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.10933557611438183,
+            "supported_2plus_sensor_frames_fraction": 0.015419119708438464
+          },
+          "0.1": {
+            "supported_fraction": 0.2601626016260163,
+            "supported_2plus_sensor_frames_fraction": 0.05326604990187833
+          },
+          "0.25": {
+            "supported_fraction": 0.383515559293524,
+            "supported_2plus_sensor_frames_fraction": 0.29520605550883094
+          },
+          "0.5": {
+            "supported_fraction": 0.49144939725259323,
+            "supported_2plus_sensor_frames_fraction": 0.4418278665545276
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.04744569319274689,
+          0.5322786325914788,
+          2.102515560551672
+        ]
+      },
+      "limited_shadow_proxy": {
+        "target_fraction_visible_in_any_of_3_proxy_keyframes": 0.4841603588449678,
+        "target_fraction_with_any_effect_contrast_proxy_hit": 0.1328847771236333,
+        "not_available": "no off-shadow render for other 13 frames; a below-threshold proxy is not proof of unshadowed radiance"
+      }
+    },
+    "15": {
+      "original": {
+        "pixels": 3664,
+        "observed_0_frames": 2382,
+        "observed_1_frame": 45,
+        "observed_2plus_frames": 1237,
+        "observed_1plus_fraction": 0.34989082969432317,
+        "median_visible_frames": 0.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          0.3044393210501034,
+          0.7192342544297702,
+          2.0549894090457586
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          0.476533796857383,
+          2.6178764870805273,
+          3.3313827739005695
+        ],
+        "angle_10deg_and_2plus_fraction": 0.0,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.04967248908296943,
+            "supported_2plus_sensor_frames_fraction": 0.007368995633187773
+          },
+          "0.1": {
+            "supported_fraction": 0.14246724890829696,
+            "supported_2plus_sensor_frames_fraction": 0.019923580786026202
+          },
+          "0.25": {
+            "supported_fraction": 0.2336244541484716,
+            "supported_2plus_sensor_frames_fraction": 0.1793122270742358
+          },
+          "0.5": {
+            "supported_fraction": 0.3395196506550218,
+            "supported_2plus_sensor_frames_fraction": 0.29585152838427947
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.07744534007518636,
+          0.8416974246196032,
+          2.291855450336801
+        ],
+        "visible_projected_point_to_nearest_actual_pixel_world_error_m_p50_p90_p99": [
+          0.11302082985639572,
+          0.3573181390762329,
+          1.3914329814910666
+        ],
+        "visible_ray_support_with_nearest_pixel_within10cm_fraction": 0.3356986899563319
+      },
+      "hybrid8_z3.5": {
+        "pixels": 3664,
+        "observed_0_frames": 0,
+        "observed_1_frame": 0,
+        "observed_2plus_frames": 3664,
+        "observed_1plus_fraction": 1.0,
+        "median_visible_frames": 6.0,
+        "baseline_angle_2plus_deg_quantiles_10_50_90": [
+          8.413003585419247,
+          88.13077578054445,
+          131.56007970583502
+        ],
+        "baseline_m_2plus_quantiles_10_50_90": [
+          5.7991648685822685,
+          15.762029832683835,
+          19.82308939296304
+        ],
+        "angle_10deg_and_2plus_fraction": 0.8979257641921398,
+        "original_sparse_lidar_support": {
+          "0.05": {
+            "supported_fraction": 0.04967248908296943,
+            "supported_2plus_sensor_frames_fraction": 0.007368995633187773
+          },
+          "0.1": {
+            "supported_fraction": 0.14246724890829696,
+            "supported_2plus_sensor_frames_fraction": 0.019923580786026202
+          },
+          "0.25": {
+            "supported_fraction": 0.2336244541484716,
+            "supported_2plus_sensor_frames_fraction": 0.1793122270742358
+          },
+          "0.5": {
+            "supported_fraction": 0.3395196506550218,
+            "supported_2plus_sensor_frames_fraction": 0.29585152838427947
+          }
+        },
+        "original_lidar_nearest_m_quantiles_10_50_90": [
+          0.07744534007518636,
+          0.8416974246196032,
+          2.291855450336801
+        ]
+      },
+      "limited_shadow_proxy": {
+        "target_fraction_visible_in_any_of_3_proxy_keyframes": 0.3288755458515284,
+        "target_fraction_with_any_effect_contrast_proxy_hit": 0.017740174672489083,
+        "not_available": "no off-shadow render for other 13 frames; a below-threshold proxy is not proof of unshadowed radiance"
+      }
+    }
+  },
+  "visibility_threshold_m": 0.005,
+  "lidar_proximity_thresholds_m": [
+    0.05,
+    0.1,
+    0.25,
+    0.5
+  ],
+  "shadow_scope": "32sample shadow toggles at 0/8/15 only; per-pixel difference is finite-sample effect-contrast proxy, never shadow GT or training label",
+  "environment_scope": "all evaluated target points have actual independent road/lane firsthit. Simulator nohit environment is not a road surface; learned environment/alpha fill remains a separate rendering diagnosis.",
+  "shadow_proxy_source_regions": [
+    {
+      "frame": 0,
+      "original_visible_road_lane_pixels": 69421,
+      "effect_contrast_proxy_pixels_threshold02": 811
+    },
+    {
+      "frame": 8,
+      "original_visible_road_lane_pixels": 69404,
+      "effect_contrast_proxy_pixels_threshold02": 757
+    },
+    {
+      "frame": 15,
+      "original_visible_road_lane_pixels": 68612,
+      "effect_contrast_proxy_pixels_threshold02": 750
+    }
+  ],
+  "trajectory_preflight": {
+    "status": "PASS_GEOMETRIC_COVERAGE_ONLY",
+    "camera_count": 16,
+    "unchanged_anchor_camera_matrix_max_abs": {
+      "0": 0.0,
+      "8": 0.0,
+      "15": 0.0
+    },
+    "trajectory_sha256": "e6752e657613c2fc24814020c9915e88ce3120c5394b3a1ecda4f96a291b9d3e",
+    "source_world_unchanged": true,
+    "same_time_object_motion": true,
+    "visibility_1plus_all_target_fraction": 1.0,
+    "visibility_2plus_all_target_fraction": 0.9895407003183265,
+    "not_completed": [
+      "new trajectory actual RGB rendering",
+      "new trajectory actual sparse LiDAR acquisition",
+      "native initializer integration smoke",
+      "reconstruction"
+    ],
+    "gauge_requirement": "use common original world-to-model gauge and original spatial_lr_scale/radius; hybrid PCA would otherwise change normalization",
+    "trajectory_interpretation": "16 single-camera observations at original timestamps; 13 varied viewpoints and 3 original anchors, not additional cameras per frame; diagnostic acquisition can jump viewpoints, not physically constrained car-mounted path"
+  },
+  "sensor_validation": {
+    "validation": [
+      {
+        "frame": 0,
+        "lidar_points": 3052,
+        "lidar_world_replay_max_error_m": 0.00037629742291755974,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 4.584667196468208e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.0003124728100374341,
+        "road_lane_hits": 2313
+      },
+      {
+        "frame": 1,
+        "lidar_points": 3052,
+        "lidar_world_replay_max_error_m": 0.0007634770590811968,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.1877511387865493e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.00018153096607420594,
+        "road_lane_hits": 2318
+      },
+      {
+        "frame": 2,
+        "lidar_points": 3052,
+        "lidar_world_replay_max_error_m": 0.00038317189319059253,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.1577942850635722e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 1.181796415039571e-05,
+        "road_lane_hits": 2321
+      },
+      {
+        "frame": 3,
+        "lidar_points": 3053,
+        "lidar_world_replay_max_error_m": 0.0003434595710132271,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.2288530706428014e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 7.896659553807694e-06,
+        "road_lane_hits": 2321
+      },
+      {
+        "frame": 4,
+        "lidar_points": 3058,
+        "lidar_world_replay_max_error_m": 0.0008325685048475862,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.8621645031089038e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 6.87212377670221e-05,
+        "road_lane_hits": 2321
+      },
+      {
+        "frame": 5,
+        "lidar_points": 3059,
+        "lidar_world_replay_max_error_m": 0.0006518482696264982,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.9042257627006993e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.00018407890456728637,
+        "road_lane_hits": 2318
+      },
+      {
+        "frame": 6,
+        "lidar_points": 3055,
+        "lidar_world_replay_max_error_m": 0.001840398064814508,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.1805933354480658e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.0001665991439949721,
+        "road_lane_hits": 2318
+      },
+      {
+        "frame": 7,
+        "lidar_points": 3045,
+        "lidar_world_replay_max_error_m": 0.0013494252925738692,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.4026786739123041e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 4.421812991495244e-05,
+        "road_lane_hits": 2316
+      },
+      {
+        "frame": 8,
+        "lidar_points": 3035,
+        "lidar_world_replay_max_error_m": 0.0010487197432667017,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 2.5057713319256436e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 6.0406535340007395e-05,
+        "road_lane_hits": 2315
+      },
+      {
+        "frame": 9,
+        "lidar_points": 3036,
+        "lidar_world_replay_max_error_m": 0.00020229587971698493,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.79162269887457e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 4.8261950723826885e-05,
+        "road_lane_hits": 2314
+      },
+      {
+        "frame": 10,
+        "lidar_points": 3038,
+        "lidar_world_replay_max_error_m": 0.00021745081176050007,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 2.632523039210386e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.0003173378936480731,
+        "road_lane_hits": 2312
+      },
+      {
+        "frame": 11,
+        "lidar_points": 3038,
+        "lidar_world_replay_max_error_m": 0.0005689942627213895,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.4471029353444701e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 0.001867408398538828,
+        "road_lane_hits": 2307
+      },
+      {
+        "frame": 12,
+        "lidar_points": 3042,
+        "lidar_world_replay_max_error_m": 0.0010619496461004019,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 1.4611884726037016e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 6.254251638893038e-05,
+        "road_lane_hits": 2302
+      },
+      {
+        "frame": 13,
+        "lidar_points": 3045,
+        "lidar_world_replay_max_error_m": 0.0020627137273550034,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 3.262496669776738e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 131,
+        "dense_replay_max_error_m": 4.734935282613151e-05,
+        "road_lane_hits": 2295
+      },
+      {
+        "frame": 14,
+        "lidar_points": 3043,
+        "lidar_world_replay_max_error_m": 0.0007256235112436116,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 2.4651974053995145e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 130,
+        "dense_replay_max_error_m": 0.00024821559782139957,
+        "road_lane_hits": 2292
+      },
+      {
+        "frame": 15,
+        "lidar_points": 3042,
+        "lidar_world_replay_max_error_m": 0.00043353132787160575,
+        "lidar_replay_above_1cm_count": 0,
+        "lidar_replay_p99_m": 2.380576188443236e-05,
+        "sensor_camera_max_abs": 0,
+        "dense_replay_samples": 130,
+        "dense_replay_max_error_m": 0.0001105974442907609,
+        "road_lane_hits": 2274
+      }
+    ],
+    "lidar_support_definition": "actual sparse sensor returns, same static road/lane firsthit from original world replay; world Euclidean point proximity reported downstream",
+    "camera_coordinate_parity": "original 16 c2w/K replay checked against original observations metadata",
+    "note": "surface geometry visibility is not appearance/shadow-free evidence"
+  }
+}

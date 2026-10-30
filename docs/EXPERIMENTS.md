@@ -232,3 +232,5 @@
 - WS-V43-SIM-RECON-M0-20261030：[最小普通场景实际重建与独立参考核验](autoresearch/v43_ownership_20261028/sim_mechanism_20261030/index.html)；具体状态、预算和边界以该报告及运行记录为准。
 
 - WS-V43-SIM-M1-M2-20261030：[真值辅助归属与同集合表示修复实际对照](autoresearch/v43_ownership_20261028/sim_m1m2_20261030/index.html)；3关键帧、1留出相机、两臂各200步局部拟合；有限删除收益，未编辑/横移仍失败，不是数学上界或泛化证明。
+
+- WS-V43-SIM-SOURCE-EVIDENCE-20261030：[删后来源与同世界观测控制](autoresearch/v43_ownership_20261028/source_evidence_20261030/index.html)；全行αT、16观测回查、固定旧模型桥接及新观测10K重建。区分选点、表示与观测缺口；不将旧M1/M2实现失败推广为方向失败。

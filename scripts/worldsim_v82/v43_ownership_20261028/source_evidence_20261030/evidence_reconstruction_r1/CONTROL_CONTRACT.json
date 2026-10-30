@@ -1,0 +1,92 @@
+{
+  "status": "COMPLETED_FRESH_10000_AND_SAME_QUERY_EVALUATION",
+  "question": "Does a better observed legal RGB+LiDAR bundle from the same moving world improve the native editable reconstruction under the same training recipe?",
+  "not_identified": [
+    "pure RGB view-coverage effect separated from LiDAR initialization",
+    "mathematical upper bound",
+    "new ownership classifier",
+    "appearance-independent geometry sufficiency"
+  ],
+  "baseline": "dataset_r2 + native_scene_r3 + formal_r3_10k",
+  "paired_control": {
+    "world_seed": 431030,
+    "reconstruction_seed": 0,
+    "frames": 16,
+    "frame_ids": "0..15",
+    "simulator_fps": 5.0,
+    "model_frame_interval": 0.02,
+    "image_wh": [
+      480,
+      320
+    ],
+    "horizontal_fov_deg": 67.0,
+    "samples": 32,
+    "render_device": "CPU",
+    "lidar_beams": 24,
+    "lidar_horizontal_samples": 160,
+    "lidar_max_range_m": 70.0,
+    "static_seed_count": 600000,
+    "static_seed_rule": "same RandomState(0) sampling with replacement from all observed sparse ray returns",
+    "dynamic_seed_rule": "same observed body-mask projection, nearest-depth/component filters; count follows real observed returns and is reported, never padded from GT",
+    "training_updates": 10000,
+    "engine_and_LR_horizon": 30000,
+    "checkpoint_steps": [
+      5000,
+      10000
+    ],
+    "hyperparameters": "exact original gn11_base.json plus the same native scene binding deltas",
+    "changed_factor": "camera extrinsics over the same 16 times; keep one camera per time",
+    "trajectory": "hybrid8_z3.5: original0/8/15 camera,13 richer orbit views"
+  },
+  "preflight_required": [
+    "exact trajectory c2w/K export",
+    "same-world car poses and mesh identity",
+    "old newly exposed road world-point visibility coverage via BVH",
+    "body pixels and sparse actor LiDAR sufficient for adapter",
+    "camera PCA scale and native derived radius disclosed"
+  ],
+  "normalization_audit": "Explicit shared baseline world-to-model T (.1 scale), baseline camera extent5.092908100662823, unchanged native static/dynamic spatial_lr_scale=1. Gauge math checked and actual Scene extent asserted; saved-model scales checked after smoke and formal.",
+  "evaluation": {
+    "primary": "same original baseline keyframe cameras0/8/15 and same original heldout8 camera, each none/delete/shift/rotate",
+    "references": "same independent original-world references; no edited RGB/GT geometry used in initialization or training",
+    "native_richer_training_view_score": "secondary reconstruction diagnostic only; not directly comparable to original-view M0 score",
+    "outputs": [
+      "C",
+      "alpha",
+      "E",
+      "fill",
+      "final",
+      "white",
+      "correct recomputed depth_sum_model"
+    ],
+    "metrics": [
+      "raw and clamped MAE/MSE",
+      "same original footprint/newly exposed road regions",
+      "unchanged-world environment collateral"
+    ]
+  },
+  "smoke": {
+    "recommended": "reuse real CUDA300s fresh +300s full-resume +2-step next entry; preserve original10000/30000 formal budget",
+    "required_paths": [
+      "finite forward/backward",
+      "real data loading",
+      "memory",
+      "checkpoint save",
+      "evaluation",
+      "optimizer/RNG/sampler/runtime exact restore",
+      "generic same-query camera render entry"
+    ],
+    "cost_accounting": "smoke, entry, preflight and any retries separate from fresh formal10000 updates"
+  },
+  "resource_policy": {
+    "no_shutdown": true,
+    "no_git_commit": true,
+    "no_background_formal_controller": false,
+    "minimum_free_disk_GiB": 25,
+    "authorized_sequential_pipeline": "run_control_pipeline.py only; no unrelated tasks, no shutdown"
+  },
+  "launch_gate": "Parent explicitly authorized same-world acquisition,600s real smoke, fresh10K and same-query evaluation. Formal begins only after data/adapter/smoke/save-resume/next-render gates pass.",
+  "completion_receipt": "evidence/completion_receipt.json",
+  "local_delivery_verified_files": 132,
+  "formal_extra_updates": 0
+}

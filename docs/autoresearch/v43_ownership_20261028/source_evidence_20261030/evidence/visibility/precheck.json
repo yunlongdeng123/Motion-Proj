@@ -1,0 +1,174 @@
+{
+  "schema": "v43_world_surface_visibility_v1",
+  "target_definition": "original vehicle first-hit AND independently deleted road/lane first-hit at original anchor camera; world XYZ fixed across all observations",
+  "visibility_definition": "point in calibrated camera FOV AND exact original-world BVH firsthit within 5mm and same object and road/lane semantic; surface triangle match not required at shared edges",
+  "pixel_sampling_caveat": "continuous projected surface visibility; nearest actual original pixel world discrepancy exported separately; does not guarantee texture resolution or appearance identifiability",
+  "train_input": false,
+  "trajectory_selection_scope": "world geometry privileged only diagnostic control; same world/times/16 single cameras; no edited RGB used",
+  "trajectories": {
+    "original": {
+      "points": 10995,
+      "visible_any": 0.5054115507048659,
+      "visible_2plus": 0.4757617098681219,
+      "visible_counts": [
+        5438,
+        326,
+        393,
+        409,
+        371,
+        409,
+        453,
+        474,
+        294,
+        314,
+        349,
+        322,
+        343,
+        341,
+        369,
+        390,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 1.7846568475729738,
+      "native_scale_estimate": 0.1,
+      "camera_radius_world_max_center": 1.7850134561259068,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 0.6623273113708821
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 0.49957947855340623
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 0.34989082969432317
+        }
+      }
+    },
+    "orbit8_z3.5": {
+      "points": 10995,
+      "visible_any": 0.9929968167348795,
+      "visible_2plus": 0.9857207821737153,
+      "visible_counts": [
+        77,
+        80,
+        73,
+        154,
+        966,
+        1530,
+        1711,
+        1101,
+        772,
+        1152,
+        722,
+        695,
+        750,
+        833,
+        379,
+        0,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 9.22690145394835,
+      "native_scale_estimate": 0.1,
+      "camera_radius_world_max_center": 10.000452590667424,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 0.9922954303931987
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 0.9868236613400617
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 0.9997270742358079
+        }
+      }
+    },
+    "orbit10_z3.5": {
+      "points": 10995,
+      "visible_any": 0.9980900409276944,
+      "visible_2plus": 0.9924511141427922,
+      "visible_counts": [
+        21,
+        62,
+        36,
+        89,
+        496,
+        1112,
+        1630,
+        1104,
+        592,
+        902,
+        811,
+        626,
+        1140,
+        1189,
+        1109,
+        76,
+        0
+      ],
+      "camera_origin_PCA_max_abs": 11.132829043368346,
+      "native_scale_estimate": 0.0898244279243365,
+      "camera_radius_world_max_center": 12.000377070554865,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 0.9981402763018066
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 0.9963554807961873
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 0.9997270742358079
+        }
+      }
+    },
+    "orbit8_z5": {
+      "points": 10995,
+      "visible_any": 0.9802637562528422,
+      "visible_2plus": 0.9709868121873579,
+      "visible_counts": [
+        217,
+        102,
+        127,
+        165,
+        930,
+        1243,
+        1220,
+        1076,
+        955,
+        951,
+        786,
+        652,
+        575,
+        541,
+        596,
+        265,
+        594
+      ],
+      "camera_origin_PCA_max_abs": 9.22690145394835,
+      "native_scale_estimate": 0.1,
+      "camera_radius_world_max_center": 10.000452590667424,
+      "anchors": {
+        "0": {
+          "pixels": 3764,
+          "visible_any": 0.9776833156216791
+        },
+        "8": {
+          "pixels": 3567,
+          "visible_any": 0.9629941126997477
+        },
+        "15": {
+          "pixels": 3664,
+          "visible_any": 0.9997270742358079
+        }
+      }
+    }
+  }
+}
