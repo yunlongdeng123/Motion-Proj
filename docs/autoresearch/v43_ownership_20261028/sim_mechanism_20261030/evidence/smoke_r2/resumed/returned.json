@@ -1,0 +1,48 @@
+{
+  "reason": "smoke_saved",
+  "iteration": 6702,
+  "first_iteration": 3737,
+  "observed_finite_step_calls": 2966,
+  "checked_backward_components": 64,
+  "wall_seconds": 404.06222665309906,
+  "timing": {
+    "native_invocation_wall_seconds": 404.06160830147564,
+    "initialization_and_restore_wall_seconds_before_first_record": 4.84430630505085,
+    "wall_seconds_since_first_record": 399.2173019964248,
+    "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.1635801810771,
+    "measured_loop_eval_checkpoint_seconds": 99.05372181534767,
+    "phase_wall_seconds": {
+      "component_restore": 0.01535901241004467,
+      "continuation_capture": 0.009501563385128975,
+      "continuation_restore_and_verification": 1.4309962689876556,
+      "evaluation": 94.6452746707946,
+      "component_save": 4.390543749555945,
+      "checkpoint_publish": 0.01486988179385662
+    },
+    "loop_phase_wall_seconds": {
+      "evaluation": 94.6452746707946,
+      "component_save": 4.390543749555945,
+      "continuation_capture": 0.0030335132032632828,
+      "checkpoint_publish": 0.01486988179385662
+    },
+    "stop_trigger": {
+      "reason": "smoke",
+      "iteration": 6702,
+      "requested_smoke_loop_wall_seconds": 300.0,
+      "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.0849616229534,
+      "wall_seconds_since_first_record": 361.01965185441077,
+      "measured_loop_eval_checkpoint_seconds": 60.93469023145735
+    },
+    "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+    "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+  },
+  "native_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "formal_config_budget": 10000,
+  "inherited_engine_and_learning_rate_horizon": 30000,
+  "extra_smoke": true,
+  "extra_entry": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "scientific_contamination_claim": false,
+  "real_scene_generalization_claim": false
+}

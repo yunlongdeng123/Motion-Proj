@@ -1,0 +1,46 @@
+{
+  "reason": "budget_saved",
+  "iteration": 10000,
+  "first_iteration": 1,
+  "observed_finite_step_calls": 10000,
+  "checked_backward_components": 202,
+  "wall_seconds": 1193.8437071945518,
+  "timing": {
+    "native_invocation_wall_seconds": 1193.84311796166,
+    "initialization_and_restore_wall_seconds_before_first_record": 2.6701985709369183,
+    "wall_seconds_since_first_record": 1191.172919390723,
+    "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 1044.0390404984355,
+    "measured_loop_eval_checkpoint_seconds": 147.1338788922876,
+    "phase_wall_seconds": {
+      "evaluation": 140.80471737869084,
+      "component_save": 6.310519158840179,
+      "continuation_capture": 0.0034798327833414078,
+      "checkpoint_publish": 0.015162521973252296
+    },
+    "loop_phase_wall_seconds": {
+      "evaluation": 140.80471737869084,
+      "component_save": 6.310519158840179,
+      "continuation_capture": 0.0034798327833414078,
+      "checkpoint_publish": 0.015162521973252296
+    },
+    "stop_trigger": {
+      "reason": "budget",
+      "iteration": 10000,
+      "requested_smoke_loop_wall_seconds": 0,
+      "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 1043.2957476247102,
+      "wall_seconds_since_first_record": 1150.2433743160218,
+      "measured_loop_eval_checkpoint_seconds": 106.9476266913116
+    },
+    "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+    "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+  },
+  "native_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "formal_config_budget": 10000,
+  "inherited_engine_and_learning_rate_horizon": 30000,
+  "extra_smoke": false,
+  "extra_entry": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "scientific_contamination_claim": false,
+  "real_scene_generalization_claim": false
+}

@@ -1,0 +1,1147 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "iteration": 10000,
+  "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k",
+  "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+  "checkpoints": {
+    "static": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/chkpnt10000.pth",
+      "bytes": 529387224
+    },
+    "dynamic": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/dynamic_chkpnt10000.pth",
+      "bytes": 888494430
+    },
+    "environment": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/env_light_chkpnt10000.pth",
+      "bytes": 226494608
+    },
+    "training_state": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/training_state10000.pth",
+      "bytes": 35544
+    }
+  },
+  "checkpoint_paths": {
+    "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/chkpnt10000.pth",
+    "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/dynamic_chkpnt10000.pth",
+    "env": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/env_light_chkpnt10000.pth"
+  },
+  "config": {
+    "test_iterations": [
+      5000,
+      10000
+    ],
+    "save_iterations": [
+      5000,
+      10000
+    ],
+    "checkpoint_iterations": [
+      5000,
+      10000
+    ],
+    "exhaust_test": false,
+    "test_interval": 5000,
+    "render_static": false,
+    "vis_step": 100,
+    "start_checkpoint": null,
+    "seed": 0,
+    "sh_degree": 3,
+    "scene_type": "Waymo",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+    "start_frame": 0,
+    "end_frame": 15,
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k",
+    "resolution_scales": [
+      1.0
+    ],
+    "resolution": -1,
+    "white_background": false,
+    "data_device": "cuda",
+    "eval": false,
+    "debug_cuda": false,
+    "cam_num": 4,
+    "t_init": 0.1,
+    "cycle": 0.2,
+    "velocity_decay": 1.0,
+    "random_init_point": 0,
+    "dynamic_random_init_point": 0,
+    "fix_radius": 0.0,
+    "time_duration": [
+      -0.15,
+      0.15
+    ],
+    "num_pts": 600000,
+    "frame_interval": 0.02,
+    "testhold": 4,
+    "env_map_res": 1024,
+    "separate_scaling_t": 0.2,
+    "neg_fov": true,
+    "convert_SHs_python": false,
+    "compute_cov3D_python": false,
+    "debug": false,
+    "depth_blend_mode": 0,
+    "env_optimize_until": 1000000000,
+    "env_optimize_from": 0,
+    "iterations": 30000,
+    "position_lr_init": 0.00016,
+    "position_lr_final": 1.6e-06,
+    "position_lr_delay_mult": 0.01,
+    "t_lr_init": 0.0008,
+    "position_lr_max_steps": 30000,
+    "feature_lr": 0.0025,
+    "opacity_lr": 0.005,
+    "scaling_lr": 0.005,
+    "scaling_t_lr": 0.002,
+    "velocity_lr": 0.001,
+    "rotation_lr": 0.001,
+    "envmap_lr": 0.01,
+    "time_split_frac": 0.5,
+    "percent_dense": 0.01,
+    "thresh_opa_prune": 0.005,
+    "densification_interval": 100,
+    "opacity_reset_interval": 3000,
+    "densify_from_iter": 500,
+    "densify_until_iter": 15000,
+    "densify_grad_threshold": 0.00017,
+    "densify_grad_t_threshold": 0.002,
+    "densify_until_num_points": 3000000,
+    "dynamic_densify_until_num_points": 1000000,
+    "sh_increase_interval": 2000,
+    "scale_increase_interval": 5000,
+    "prune_big_point": 1,
+    "size_threshold": 20,
+    "big_point_threshold": 0.1,
+    "t_grad": true,
+    "no_time_split": true,
+    "contract": true,
+    "lambda_dssim": 0.2,
+    "lambda_opa": 0.0,
+    "lambda_sky_opa": 0.05,
+    "lambda_opacity_entropy": 0.05,
+    "static_lambda_opacity_entropy": 0.05,
+    "lambda_inv_depth": 0.1,
+    "lambda_self_supervision": 0.5,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "lambda_lidar": 0.1,
+    "lidar_decay": 1.0,
+    "lambda_v_smooth": 0.1,
+    "fisheye_cam_num": 2,
+    "long_cam_num": 1,
+    "is_fisheye": false,
+    "long_focus": true,
+    "initialization": false,
+    "pos_shift": false,
+    "pos_rotation": false,
+    "reg3d_interval": 10,
+    "reg3d_k": 5,
+    "reg3d_lambda_val": 2,
+    "reg3d_max_points": 100000,
+    "reg3d_sample_size": 1000,
+    "is_training": true,
+    "require_boundingbox": false,
+    "nuscenes": false,
+    "paper_eval_train_each_checkpoint": true,
+    "including_dynamic": true,
+    "adding": false,
+    "dynamic_densify_until_iter": 15000,
+    "paper_method": true,
+    "paper_lambda_sky": 0.05,
+    "paper_lambda_nps": 0.01,
+    "paper_lambda_depth": 0.1,
+    "paper_weight_provenance": "2024 active weights retained; Eq7=.05, Eq16=.1, NPS=.01 are declared unverified author coefficients",
+    "paper_nps_sampling": "Both checkerboard parities; four axial one-pixel neighbors; omit image-edge neighbors; Euclidean nearest-static-pixel-center distance; sum, not mean.",
+    "paper_opacity_domain": "full raw-alpha MSE against binary Md; coefficient100 inherited control",
+    "paper_sgcm_enabled": true,
+    "sgcm_dr_m": 0.5,
+    "sgcm_interval": 100,
+    "sgcm_offset": 50,
+    "sgcm_start": 500,
+    "sgcm_end": 15000,
+    "sgcm_max_new_points": 10000,
+    "sgcm_split_radius_px": 20,
+    "sgcm_ground_margin_m": 3.0,
+    "sgcm_ground_cell_m": 0.5,
+    "sgcm_plane_inlier_m": 0.15,
+    "sgcm_ground_min_cells": 30,
+    "sgcm_ground_min_fraction": 0.35,
+    "sgcm_ground_max_tilt_deg": 20,
+    "sgcm_ground_max_rmse_m": 0.1,
+    "hybrid_method": true,
+    "hybrid_nps_enabled": true,
+    "sgcm_guard_enabled": true,
+    "hybrid_lambda_dynamic_rgb": 5.0,
+    "hybrid_lambda_sky_rgb": 5.0,
+    "hybrid_lambda_static_rgb": 1.0,
+    "hybrid_lambda_dynamic_opacity": 100.0,
+    "hybrid_time_reg_eps": 1e-08,
+    "hybrid_gradient_nodes": [
+      1,
+      1000,
+      10000,
+      15000,
+      20000,
+      30000
+    ],
+    "hybrid_opacity_reset_policy": "densification_only",
+    "hybrid_arm": "GN11",
+    "followup_scene_spec": {
+      "scene_id": "dataset_r2",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+      "frame_ids": [
+        "000000",
+        "000001",
+        "000002",
+        "000003",
+        "000004",
+        "000005",
+        "000006",
+        "000007",
+        "000008",
+        "000009",
+        "000010",
+        "000011",
+        "000012",
+        "000013",
+        "000014",
+        "000015"
+      ],
+      "camera_directory": "image_0",
+      "frame_ids_with_camera": [
+        "image_0/000000",
+        "image_0/000001",
+        "image_0/000002",
+        "image_0/000003",
+        "image_0/000004",
+        "image_0/000005",
+        "image_0/000006",
+        "image_0/000007",
+        "image_0/000008",
+        "image_0/000009",
+        "image_0/000010",
+        "image_0/000011",
+        "image_0/000012",
+        "image_0/000013",
+        "image_0/000014",
+        "image_0/000015"
+      ],
+      "raw_frame_range": [
+        0,
+        15
+      ],
+      "model_timestamps": [
+        -0.15,
+        -0.13,
+        -0.11,
+        -0.09,
+        -0.07,
+        -0.05,
+        -0.03,
+        -0.01,
+        0.01,
+        0.03,
+        0.05,
+        0.07,
+        0.09,
+        0.11,
+        0.13,
+        0.15
+      ],
+      "original_wh": [
+        480,
+        320
+      ],
+      "render_wh": [
+        480,
+        320
+      ],
+      "anchor_frame": "000008",
+      "anchor_index": 8,
+      "anchor_timestamp": 0.01,
+      "actor_ply_paths": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/points3d_dynamic_0.ply"
+      ]
+    },
+    "followup_static_anchor_frame": "000008",
+    "v43_update_budget": 10000
+  },
+  "config_sha256": "2405c7dd6372786ffeb0d9219ecb9974b6952399ba0d5239a35f66c59d77ea4e",
+  "camera_manifest": [
+    {
+      "uid": 10,
+      "frame_id": "image_0/000010",
+      "camera": "image_0",
+      "image_name": "000010",
+      "timestamp": 0.05000000000000002,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000010.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 14,
+      "frame_id": "image_0/000014",
+      "camera": "image_0",
+      "image_name": "000014",
+      "timestamp": 0.13000000000000003,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000014.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 5,
+      "frame_id": "image_0/000005",
+      "camera": "image_0",
+      "image_name": "000005",
+      "timestamp": -0.04999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000005.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 1,
+      "frame_id": "image_0/000001",
+      "camera": "image_0",
+      "image_name": "000001",
+      "timestamp": -0.13,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000001.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 9,
+      "frame_id": "image_0/000009",
+      "camera": "image_0",
+      "image_name": "000009",
+      "timestamp": 0.03,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000009.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 2,
+      "frame_id": "image_0/000002",
+      "camera": "image_0",
+      "image_name": "000002",
+      "timestamp": -0.10999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000002.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 3,
+      "frame_id": "image_0/000003",
+      "camera": "image_0",
+      "image_name": "000003",
+      "timestamp": -0.09,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000003.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 11,
+      "frame_id": "image_0/000011",
+      "camera": "image_0",
+      "image_name": "000011",
+      "timestamp": 0.07,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000011.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 13,
+      "frame_id": "image_0/000013",
+      "camera": "image_0",
+      "image_name": "000013",
+      "timestamp": 0.11000000000000001,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000013.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 7,
+      "frame_id": "image_0/000007",
+      "camera": "image_0",
+      "image_name": "000007",
+      "timestamp": -0.009999999999999981,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000007.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 8,
+      "frame_id": "image_0/000008",
+      "camera": "image_0",
+      "image_name": "000008",
+      "timestamp": 0.010000000000000009,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000008.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 4,
+      "frame_id": "image_0/000004",
+      "camera": "image_0",
+      "image_name": "000004",
+      "timestamp": -0.06999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000004.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 0,
+      "frame_id": "image_0/000000",
+      "camera": "image_0",
+      "image_name": "000000",
+      "timestamp": -0.15,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000000.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 6,
+      "frame_id": "image_0/000006",
+      "camera": "image_0",
+      "image_name": "000006",
+      "timestamp": -0.030000000000000013,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000006.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 15,
+      "frame_id": "image_0/000015",
+      "camera": "image_0",
+      "image_name": "000015",
+      "timestamp": 0.15,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000015.png",
+      "width": 480,
+      "height": 320
+    },
+    {
+      "uid": 12,
+      "frame_id": "image_0/000012",
+      "camera": "image_0",
+      "image_name": "000012",
+      "timestamp": 0.08999999999999997,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000012.png",
+      "width": 480,
+      "height": 320
+    }
+  ],
+  "evaluations": [
+    {
+      "split": "train",
+      "iteration": 10000,
+      "eval_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render",
+      "metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/metrics.json",
+      "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/paper_region_metrics.json",
+      "frames": [
+        {
+          "uid": 0,
+          "frame_id": "image_0/000000",
+          "camera": "image_0",
+          "image_name": "000000",
+          "timestamp": -0.15,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000000.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000000.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000000.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000000.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000000.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000000.json"
+        },
+        {
+          "uid": 1,
+          "frame_id": "image_0/000001",
+          "camera": "image_0",
+          "image_name": "000001",
+          "timestamp": -0.13,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000001.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000001.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000001.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000001.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000001.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000001.json"
+        },
+        {
+          "uid": 2,
+          "frame_id": "image_0/000002",
+          "camera": "image_0",
+          "image_name": "000002",
+          "timestamp": -0.10999999999999999,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000002.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000002.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000002.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000002.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000002.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000002.json"
+        },
+        {
+          "uid": 3,
+          "frame_id": "image_0/000003",
+          "camera": "image_0",
+          "image_name": "000003",
+          "timestamp": -0.09,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000003.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000003.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000003.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000003.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000003.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000003.json"
+        },
+        {
+          "uid": 4,
+          "frame_id": "image_0/000004",
+          "camera": "image_0",
+          "image_name": "000004",
+          "timestamp": -0.06999999999999999,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000004.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000004.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000004.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000004.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000004.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000004.json"
+        },
+        {
+          "uid": 5,
+          "frame_id": "image_0/000005",
+          "camera": "image_0",
+          "image_name": "000005",
+          "timestamp": -0.04999999999999999,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000005.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000005.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000005.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000005.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000005.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000005.json"
+        },
+        {
+          "uid": 6,
+          "frame_id": "image_0/000006",
+          "camera": "image_0",
+          "image_name": "000006",
+          "timestamp": -0.030000000000000013,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000006.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000006.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000006.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000006.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000006.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000006.json"
+        },
+        {
+          "uid": 7,
+          "frame_id": "image_0/000007",
+          "camera": "image_0",
+          "image_name": "000007",
+          "timestamp": -0.009999999999999981,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000007.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000007.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000007.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000007.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000007.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000007.json"
+        },
+        {
+          "uid": 8,
+          "frame_id": "image_0/000008",
+          "camera": "image_0",
+          "image_name": "000008",
+          "timestamp": 0.010000000000000009,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000008.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000008.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000008.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000008.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000008.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000008.json"
+        },
+        {
+          "uid": 9,
+          "frame_id": "image_0/000009",
+          "camera": "image_0",
+          "image_name": "000009",
+          "timestamp": 0.03,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000009.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000009.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000009.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000009.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000009.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000009.json"
+        },
+        {
+          "uid": 10,
+          "frame_id": "image_0/000010",
+          "camera": "image_0",
+          "image_name": "000010",
+          "timestamp": 0.05000000000000002,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000010.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000010.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000010.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000010.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000010.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000010.json"
+        },
+        {
+          "uid": 11,
+          "frame_id": "image_0/000011",
+          "camera": "image_0",
+          "image_name": "000011",
+          "timestamp": 0.07,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000011.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000011.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000011.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000011.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000011.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000011.json"
+        },
+        {
+          "uid": 12,
+          "frame_id": "image_0/000012",
+          "camera": "image_0",
+          "image_name": "000012",
+          "timestamp": 0.08999999999999997,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000012.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000012.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000012.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000012.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000012.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000012.json"
+        },
+        {
+          "uid": 13,
+          "frame_id": "image_0/000013",
+          "camera": "image_0",
+          "image_name": "000013",
+          "timestamp": 0.11000000000000001,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000013.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000013.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000013.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000013.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000013.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000013.json"
+        },
+        {
+          "uid": 14,
+          "frame_id": "image_0/000014",
+          "camera": "image_0",
+          "image_name": "000014",
+          "timestamp": 0.13000000000000003,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000014.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000014.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000014.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000014.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000014.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000014.json"
+        },
+        {
+          "uid": 15,
+          "frame_id": "image_0/000015",
+          "camera": "image_0",
+          "image_name": "000015",
+          "timestamp": 0.15,
+          "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000015.png",
+          "width": 480,
+          "height": 320,
+          "channels": {
+            "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000015.png",
+            "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000015.png",
+            "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000015.png",
+            "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000015.png"
+          },
+          "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000015.json"
+        }
+      ]
+    }
+  ],
+  "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+  "resume_state": {
+    "rng": [
+      "python",
+      "numpy",
+      "torch",
+      "cuda_if_initialized"
+    ],
+    "camera_sampler": true,
+    "scale": true,
+    "optimizer": true,
+    "sgcm_geometry": true,
+    "bitwise_cuda_equivalence_claimed": false
+  },
+  "sgcm": {
+    "status": "validated",
+    "paper_reference": "Eq8,printed1701/PDF6",
+    "config": {
+      "dr_m": 0.5,
+      "interval": 100,
+      "offset": 50,
+      "start": 500,
+      "end": 15000,
+      "max_new_points": 10000,
+      "split_radius_px": 20,
+      "ground_margin_m": 3.0,
+      "ground_cell_m": 0.5,
+      "plane_inlier_m": 0.15,
+      "ground_min_cells": 30,
+      "ground_min_fraction": 0.35,
+      "ground_max_tilt_deg": 20,
+      "ground_max_rmse_m": 0.1,
+      "region_margin_m": 0.25,
+      "max_points": 3000000,
+      "guard_enabled": true
+    },
+    "meter_to_model_scale": 0.09999999999999999,
+    "dr_model": 0.049999999999999996,
+    "transform_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/transform_matrix.txt",
+    "transform_validation": "finite_isotropic_similarity",
+    "world_to_model": [
+      [
+        0.09805806746991697,
+        0.01961161400969368,
+        3.051060287584915e-11,
+        0.32163046344723184
+      ],
+      [
+        1.2586153642127727e-08,
+        -6.308634071130239e-08,
+        0.09999999999997931,
+        -0.22356801474704835
+      ],
+      [
+        0.019611614009689634,
+        -0.09805806746989666,
+        -6.432959440995167e-08,
+        -0.20592179688662157
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "anchor_pose": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/pose/000000.txt",
+    "plane_model": [
+      -3.25770776013822e-06,
+      0.9999999997334177,
+      -2.2859400105918868e-05,
+      0.22356270644741078
+    ],
+    "ground_fit": {
+      "candidate_points": 290861,
+      "lower_envelope_cells": 414,
+      "inlier_cells": 414,
+      "inlier_fraction": 1.0,
+      "rmse_m": 0.0005424623923389448,
+      "tilt_from_first_vehicle_up_deg": 0.0012865038882394775,
+      "inlier_xy_span_m": [
+        13.759179830551147,
+        7.9721972942352295
+      ],
+      "plane_anchor": [
+        -7.55168105099707e-06,
+        2.1145733500647846e-05,
+        0.999999999747915,
+        2.1999541047998616
+      ]
+    },
+    "regions_anchor": [
+      [
+        [
+          8.021936416625977,
+          2.555499792098999,
+          -2.4500004169655014
+        ],
+        [
+          16.303847312927246,
+          5.054954290390015,
+          -0.19749987125396729
+        ]
+      ]
+    ],
+    "assumptions": [
+      "First vehicle up defines local vertical; low-tilt ground required.",
+      "Hd is the union of actor time-aggregated LiDAR AABBs in the first vehicle frame; extends vertically to fitted ground.",
+      "Ground support includes a3m XY margin around actor support;0.5m grid10th-percentile lower envelope; deterministic256trial RANSAC and least-squares.",
+      "SGCM executes after optimizer on an offset schedule avoiding generic densification;20px radius is the undeclared projected-footprint threshold choice.",
+      "Resource cap limits additions per step; large projected footprints prioritized.",
+      "Clone copies parameters; split uses symmetric two-child largest-axis moment-matched spatial subdivision and unchanged temporal fields."
+    ],
+    "unknown_author_details": [
+      "Region shape/update",
+      "Ground extraction/fit",
+      "Schedule",
+      "Footprint threshold",
+      "Clone/split policy/budget"
+    ],
+    "addition_guard": {
+      "enabled": true,
+      "training_view_count": 16,
+      "training_time_range": [
+        -0.15,
+        0.15
+      ],
+      "training_view_ids": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000010.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000014.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000005.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000001.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000009.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000002.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000003.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000011.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000013.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000007.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000008.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000004.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000000.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000006.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000015.png",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000012.png"
+      ],
+      "temporal_prefilter_strict_gt": 0.05,
+      "effective_alpha_min": 0.00392156862745098,
+      "view_depth_strict_gt_model": 0.2,
+      "projection": "Camera row-vector world_view/full_proj; center NDC x,y in [-1,1]",
+      "semantics": "training-view support proxy; no occlusion or exact per-Gaussian contribution",
+      "clone_limit": "one SGCM clone per initial source lineage; all descendants inherit spent state",
+      "split_children": "both proposed children need support in at least one training view",
+      "checkpoint": "legacy 18-field capture tuple; optional optimizer.sgcm_lineage_v1 payload"
+    }
+  },
+  "eval_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render",
+  "metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/metrics.json",
+  "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/paper_region_metrics.json",
+  "frames": [
+    {
+      "uid": 0,
+      "frame_id": "image_0/000000",
+      "camera": "image_0",
+      "image_name": "000000",
+      "timestamp": -0.15,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000000.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000000.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000000.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000000.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000000.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000000.json"
+    },
+    {
+      "uid": 1,
+      "frame_id": "image_0/000001",
+      "camera": "image_0",
+      "image_name": "000001",
+      "timestamp": -0.13,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000001.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000001.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000001.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000001.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000001.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000001.json"
+    },
+    {
+      "uid": 2,
+      "frame_id": "image_0/000002",
+      "camera": "image_0",
+      "image_name": "000002",
+      "timestamp": -0.10999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000002.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000002.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000002.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000002.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000002.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000002.json"
+    },
+    {
+      "uid": 3,
+      "frame_id": "image_0/000003",
+      "camera": "image_0",
+      "image_name": "000003",
+      "timestamp": -0.09,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000003.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000003.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000003.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000003.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000003.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000003.json"
+    },
+    {
+      "uid": 4,
+      "frame_id": "image_0/000004",
+      "camera": "image_0",
+      "image_name": "000004",
+      "timestamp": -0.06999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000004.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000004.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000004.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000004.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000004.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000004.json"
+    },
+    {
+      "uid": 5,
+      "frame_id": "image_0/000005",
+      "camera": "image_0",
+      "image_name": "000005",
+      "timestamp": -0.04999999999999999,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000005.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000005.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000005.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000005.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000005.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000005.json"
+    },
+    {
+      "uid": 6,
+      "frame_id": "image_0/000006",
+      "camera": "image_0",
+      "image_name": "000006",
+      "timestamp": -0.030000000000000013,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000006.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000006.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000006.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000006.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000006.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000006.json"
+    },
+    {
+      "uid": 7,
+      "frame_id": "image_0/000007",
+      "camera": "image_0",
+      "image_name": "000007",
+      "timestamp": -0.009999999999999981,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000007.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000007.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000007.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000007.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000007.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000007.json"
+    },
+    {
+      "uid": 8,
+      "frame_id": "image_0/000008",
+      "camera": "image_0",
+      "image_name": "000008",
+      "timestamp": 0.010000000000000009,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000008.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000008.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000008.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000008.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000008.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000008.json"
+    },
+    {
+      "uid": 9,
+      "frame_id": "image_0/000009",
+      "camera": "image_0",
+      "image_name": "000009",
+      "timestamp": 0.03,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000009.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000009.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000009.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000009.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000009.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000009.json"
+    },
+    {
+      "uid": 10,
+      "frame_id": "image_0/000010",
+      "camera": "image_0",
+      "image_name": "000010",
+      "timestamp": 0.05000000000000002,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000010.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000010.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000010.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000010.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000010.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000010.json"
+    },
+    {
+      "uid": 11,
+      "frame_id": "image_0/000011",
+      "camera": "image_0",
+      "image_name": "000011",
+      "timestamp": 0.07,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000011.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000011.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000011.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000011.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000011.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000011.json"
+    },
+    {
+      "uid": 12,
+      "frame_id": "image_0/000012",
+      "camera": "image_0",
+      "image_name": "000012",
+      "timestamp": 0.08999999999999997,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000012.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000012.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000012.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000012.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000012.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000012.json"
+    },
+    {
+      "uid": 13,
+      "frame_id": "image_0/000013",
+      "camera": "image_0",
+      "image_name": "000013",
+      "timestamp": 0.11000000000000001,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000013.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000013.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000013.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000013.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000013.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000013.json"
+    },
+    {
+      "uid": 14,
+      "frame_id": "image_0/000014",
+      "camera": "image_0",
+      "image_name": "000014",
+      "timestamp": 0.13000000000000003,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000014.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000014.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000014.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000014.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000014.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000014.json"
+    },
+    {
+      "uid": 15,
+      "frame_id": "image_0/000015",
+      "camera": "image_0",
+      "image_name": "000015",
+      "timestamp": 0.15,
+      "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/image/image_0/000015.png",
+      "width": 480,
+      "height": 320,
+      "channels": {
+        "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/gt/image_0_000015.png",
+        "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/composite/image_0_000015.png",
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/static/image_0_000015.png",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/dynamic/image_0_000015.png"
+      },
+      "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/eval/train_10000_render/hybrid_raw/image_0_000015.json"
+    }
+  ]
+}

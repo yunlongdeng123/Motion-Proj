@@ -1,0 +1,229 @@
+{
+  "task_id": "WS-V43-WORLD-GT-PROTOCOL-R5-20261030",
+  "architecture_revision": 5,
+  "artifact_kind": "design_not_job_queue",
+  "execution_count_scope": "document_generator_only_separate_experiment_receipts_required",
+  "jobs_started": 0,
+  "auto_schedule": false,
+  "new_training_updates": 0,
+  "new_scene_renders": 0,
+  "primary_data_route": [
+    "ordinary_existing_or_procedural_world",
+    "restricted_rgb_and_sparse_lidar_along_registered_trajectory",
+    "actual_current_code_reconstruction_training",
+    "natural_contamination_audit",
+    "v43_with_deployment_legal_inputs",
+    "independent_surface_depth_edit_references"
+  ],
+  "minimal_first_gate": {
+    "scene_count": 1,
+    "actual_reconstruction_required": true,
+    "natural_contamination_guaranteed": false,
+    "if_target_error_absent": "preserve_and_report_zero_or_insufficient_evidence_before_justified_next_step"
+  },
+  "mechanism_scenes": {
+    "count_range": [
+      3,
+      5
+    ],
+    "after_minimal_actual_reconstruction": true,
+    "role": "mechanism_not_generalization_claim",
+    "templates": [
+      "single_vehicle_road_shadow",
+      "overlapping_vehicles",
+      "wide_view_occlusion_reveal",
+      "lighting_and_dark_road"
+    ],
+    "reference_source": "independent_world_surface_object_and_intervention_renderer",
+    "edits": [
+      "none",
+      "delete",
+      "translate",
+      "rotate",
+      "lighting_change",
+      "body_shadow_2x2"
+    ],
+    "primary_pollution_source": "actual_reconstruction_from_restricted_observations",
+    "auxiliary_controls": [
+      "label_dropout",
+      "wrong_assignment",
+      "wrong_depth",
+      "known_component_mixture",
+      "baked_shadow",
+      "temporal_identity_error"
+    ],
+    "auxiliary_controls_replace_natural_pollution_evidence": false,
+    "split_keys": [
+      "physical_scene",
+      "vehicle_donor",
+      "road_lighting_layout",
+      "trajectory",
+      "perturbation_ancestor"
+    ],
+    "unique_gaussian_class_gt_required": false
+  },
+  "tasks": [
+    {
+      "id": "M0",
+      "purpose": "one minimal ordinary scene: actual reconstruction, independent GT interface and natural-pollution audit",
+      "depends_on": [],
+      "status": "planned_without_run_receipt",
+      "required_evidence": [
+        "observation_manifest",
+        "reconstruction_config_and_checkpoint",
+        "loss_and_budget_record",
+        "independent_surface_depth_edits",
+        "actual_contamination_or_absence_report"
+      ]
+    },
+    {
+      "id": "ENV",
+      "purpose": "scene1 fixed original environment versus constant-fill paired diagnosis",
+      "depends_on": [],
+      "status": "planned_without_run_receipt"
+    },
+    {
+      "id": "DATA",
+      "purpose": "extend to three-to-five mechanism scenes after the minimal actual-reconstruction gate",
+      "depends_on": [
+        "M0"
+      ],
+      "status": "planned_without_run_receipt"
+    },
+    {
+      "id": "M1",
+      "purpose": "truth-assisted ownership reference on fixed actual reconstruction",
+      "depends_on": [
+        "DATA"
+      ],
+      "status": "planned_without_run_receipt",
+      "mathematical_upper_bound": false
+    },
+    {
+      "id": "M2",
+      "purpose": "truth-assisted geometry/split/effect repair reference with disclosed budget",
+      "depends_on": [
+        "DATA"
+      ],
+      "status": "planned_without_run_receipt",
+      "mathematical_upper_bound": false
+    },
+    {
+      "id": "M3",
+      "purpose": "fixed target coverage plus added confirmed background candidates",
+      "depends_on": [
+        "M1"
+      ],
+      "status": "planned_without_run_receipt"
+    },
+    {
+      "id": "M4",
+      "purpose": "small shared-model learning using legal training supervision and isolated tests",
+      "depends_on": [
+        "DATA",
+        "M1",
+        "M2"
+      ],
+      "status": "planned_without_run_receipt"
+    }
+  ],
+  "parallel_groups": [
+    [
+      "M0",
+      "ENV"
+    ],
+    [
+      "M1",
+      "M2"
+    ]
+  ],
+  "ablations": [
+    "feature_threshold",
+    "probability_decision_only",
+    "representation_repair_only",
+    "joint"
+  ],
+  "coupling_controls": [
+    "sequential_freeze",
+    "joint_gradients",
+    "cross_head_stop_gradient"
+  ],
+  "comparison_contract": {
+    "match_candidate_recall": true,
+    "match_edit_coverage": true,
+    "abstained_targets_remain_in_denominator": true,
+    "report_capacity_and_compute": true,
+    "truth_assisted_M1_M2_are_mathematical_upper_bounds": false,
+    "disclose_extra_information": true,
+    "disclose_reference_capacity_new_points_updates_runtime_memory": true,
+    "heldout_truth_for_actual_method_tuning": false,
+    "complete_clean_surface_reference_is_fair_method": false
+  },
+  "gt_input_isolation": {
+    "deployment_receives_world_gt": false,
+    "separate_method_and_evaluation_manifests": true,
+    "training_truth_supervision": "training_partition_only",
+    "heldout_edit_pairs": "independently_generated_evaluation_only",
+    "derived_alphaT_semantics_is_gaussian_gt": false,
+    "ambiguity_classes": [
+      "wrong_depth",
+      "mixed_support",
+      "no_correspondence",
+      "missing_observation"
+    ]
+  },
+  "shadow": {
+    "receiver_frame": "world",
+    "effect_owner": "vehicle",
+    "body_and_cast_shadow_controls_independent": true,
+    "vehicle_present_minus_absent_is_pure_shadow_gt": false,
+    "check_occlusion_reflection_and_indirect_lighting": true
+  },
+  "real_scenes": {
+    "count": 3,
+    "complete_gt": false,
+    "human_or_subagent_reference_is_perfect_gt": false
+  },
+  "scene1": {
+    "role": "inference_and_development_diagnostics",
+    "train_new_transferable_modules": false,
+    "test_time_state_optimization_report_separately": true
+  },
+  "environment": {
+    "train_environment": false,
+    "paired_fill": [
+      "frozen_original",
+      "constant_linear_white"
+    ],
+    "factorial_gaussians": [
+      "baseline",
+      "treated"
+    ],
+    "save_float": [
+      "gaussian_color",
+      "alpha",
+      "fill_contribution",
+      "final_rgb",
+      "raw_E_or_B"
+    ]
+  },
+  "session_execution": {
+    "autodl_auto_shutdown": false,
+    "shutdown_requires_explicit_user_request": true,
+    "allowed_subagent_models": [
+      "gpt-6.1-sol",
+      "gpt-6.1-terra"
+    ],
+    "long_run_real_smoke_minutes": 10,
+    "smoke_paths": [
+      "forward_backward_finite_loss",
+      "memory_data_loading",
+      "checkpoint_save",
+      "evaluation",
+      "complete_state_restore",
+      "next_stage_entry"
+    ],
+    "smoke_and_replay_accounted_separately": true
+  },
+  "human_verdict": null
+}

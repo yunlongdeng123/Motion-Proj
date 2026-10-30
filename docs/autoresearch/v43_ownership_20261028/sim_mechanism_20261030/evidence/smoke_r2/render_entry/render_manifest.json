@@ -1,0 +1,95 @@
+{
+  "status": "NATIVE_BRANCH_ROUTING_EDIT_RENDERED",
+  "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/next_stage_entry/checkpoint_events/iteration_006704.json",
+  "iteration": 6704,
+  "frames": [
+    {
+      "frame": "000000",
+      "edit": "none",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/render_entry/none/000000.npz",
+      "environment": {
+        "min": -3.1273703575134277,
+        "max": 8.326114654541016,
+        "channel_fraction_outside_0_1": 0.030653211805555556
+      },
+      "environment_fill": {
+        "min": -0.18216656148433685,
+        "max": 0.7400761246681213,
+        "channel_fraction_outside_0_1": 0.005013020833333334
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.9999009370803833,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.002593315972222222
+    },
+    {
+      "frame": "000000",
+      "edit": "delete",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/render_entry/delete/000000.npz",
+      "environment": {
+        "min": -3.1273703575134277,
+        "max": 8.326114654541016,
+        "channel_fraction_outside_0_1": 0.030653211805555556
+      },
+      "environment_fill": {
+        "min": -0.1875384896993637,
+        "max": 0.7400761246681213,
+        "channel_fraction_outside_0_1": 0.005013020833333334
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_times_E_max_abs": 0.0
+      },
+      "alpha": {
+        "min": 0.0,
+        "max": 0.9999016523361206,
+        "fraction_outside_0_1": 0.0
+      },
+      "final_channel_fraction_outside_0_1": 0.002734375
+    }
+  ],
+  "keyframes": [
+    "000000"
+  ],
+  "edits": [
+    "none",
+    "delete"
+  ],
+  "same_camera_for_all_edits": true,
+  "compositor": "native premultiplied C; fill=(1-alpha)*E; final=C+fill; white=C+(1-alpha)",
+  "required_fp32_arrays": [
+    "C",
+    "alpha",
+    "E",
+    "fill",
+    "final",
+    "white",
+    "depth_sum_model"
+  ],
+  "native_none_identity_max_abs": 0.0,
+  "native_none_identity_checked_frames": [
+    "000000"
+  ],
+  "original_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "routing": "entire learned dynamic branch is omitted/transformed; no per-Gaussian GT owner or correct V43 attribution claimed",
+  "operation": {
+    "shift_world_m": [
+      0,
+      1.5,
+      0
+    ],
+    "rotate_world_z_deg": 30,
+    "rotation_center": "legal ideal-track object root; same XY as body center",
+    "rotate_SH_frame": "inherited world-space SH; no relighting, no object-frame SH superiority claim"
+  },
+  "privileged_reference_used_for_training": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

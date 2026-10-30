@@ -1,0 +1,135 @@
+{
+  "base": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/code/reconstruction/gn11_base.json",
+  "changes": {
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+    "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k",
+    "start_checkpoint": null,
+    "start_frame": 0,
+    "end_frame": 15,
+    "resolution_scales": [
+      1.0
+    ],
+    "frame_interval": 0.02,
+    "time_duration": [
+      -0.15,
+      0.15
+    ],
+    "v43_update_budget": 10000,
+    "test_iterations": [
+      5000,
+      10000
+    ],
+    "save_iterations": [
+      5000,
+      10000
+    ],
+    "checkpoint_iterations": [
+      5000,
+      10000
+    ],
+    "followup_scene_spec": {
+      "scene_id": "dataset_r2",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+      "frame_ids": [
+        "000000",
+        "000001",
+        "000002",
+        "000003",
+        "000004",
+        "000005",
+        "000006",
+        "000007",
+        "000008",
+        "000009",
+        "000010",
+        "000011",
+        "000012",
+        "000013",
+        "000014",
+        "000015"
+      ],
+      "camera_directory": "image_0",
+      "frame_ids_with_camera": [
+        "image_0/000000",
+        "image_0/000001",
+        "image_0/000002",
+        "image_0/000003",
+        "image_0/000004",
+        "image_0/000005",
+        "image_0/000006",
+        "image_0/000007",
+        "image_0/000008",
+        "image_0/000009",
+        "image_0/000010",
+        "image_0/000011",
+        "image_0/000012",
+        "image_0/000013",
+        "image_0/000014",
+        "image_0/000015"
+      ],
+      "raw_frame_range": [
+        0,
+        15
+      ],
+      "model_timestamps": [
+        -0.15,
+        -0.13,
+        -0.11,
+        -0.09,
+        -0.07,
+        -0.05,
+        -0.03,
+        -0.01,
+        0.01,
+        0.03,
+        0.05,
+        0.07,
+        0.09,
+        0.11,
+        0.13,
+        0.15
+      ],
+      "original_wh": [
+        480,
+        320
+      ],
+      "render_wh": [
+        480,
+        320
+      ],
+      "anchor_frame": "000008",
+      "anchor_index": 8,
+      "anchor_timestamp": 0.01,
+      "actor_ply_paths": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/points3d_dynamic_0.ply"
+      ]
+    },
+    "followup_static_anchor_frame": "000008"
+  },
+  "initialization": "600K sampled sparse LiDAR static prior; dynamic projection/depth/component prior",
+  "training_algorithm_changed": false,
+  "losses_sampling_distribution_lr_densification_inherited": true,
+  "adapter_delta": [
+    "49-view cardinality guard generalized to declared unique observed view count",
+    "scene binding metadata reads simulator manifest",
+    "input resolution scale reflects actual480x320 pixels"
+  ],
+  "smoke_extra_not_formal": false,
+  "entry_extra_not_formal": false,
+  "observations": {
+    "frames": 16,
+    "original_wh": [
+      480,
+      320
+    ],
+    "render_wh": [
+      480,
+      320
+    ],
+    "masks": "simulator sensor oracle body/sky, authorized mechanism condition",
+    "gt_mesh_used_for_initialization": false,
+    "gt_owner_used_for_initialization": false
+  },
+  "scientific_contamination_claim": false,
+  "real_scene_generalization_claim": false
+}

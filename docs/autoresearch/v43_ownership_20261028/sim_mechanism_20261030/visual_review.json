@@ -1,0 +1,63 @@
+{
+  "schema": "v43_sim_independent_visual_review_v1",
+  "review_type": "agent_visual_observations",
+  "reviewed_checkpoint_role": "formal_10k",
+  "evidence_root": "outputs/V43_Ownership_20261027/gpu_v43/sim_mechanism_20261030/evidence",
+  "human_verdict": null,
+  "pixel_or_gaussian_gt_classification_performed": false,
+  "contamination_proportions_estimated": false,
+  "image_pairs": [
+    {
+      "case": "delete_frame_000008",
+      "images_viewed": [
+        "edit_r3_10k/delete/000008_final.png",
+        "edit_r3_10k/delete/000008_white.png",
+        "dataset_r2/privileged/references/delete/shadow_on/rgb/000008.png"
+      ],
+      "observations": [
+        "删除输出在原车辆位置仍有明显车形残留，呈粉紫、青色的模糊色块，下方保留深色底部结构和暗斑。",
+        "白色环境替换主要改变上部背景；上述彩色车形与暗底仍在，位置和大致外形一致。",
+        "独立删除参考在该位置是连续道路和车道线，没有对应的车形色块或暗底。"
+      ],
+      "supported_interpretation": "当前删除输出未达到独立参考要求；残留不能仅归因于被替换的环境背景。仅凭这些图像不能给单个Gaussian分配三维GT所有权。"
+    },
+    {
+      "case": "shift_frame_000008",
+      "images_viewed": [
+        "edit_r3_10k/shift/000008_final.png",
+        "dataset_r2/privileged/references/shift/shadow_on/rgb/000008.png"
+      ],
+      "observations": [
+        "平移输出左侧可见移动后的红车，同时旧位置仍有彩色车形与深色底部，形成明显双结构。",
+        "移动后车体边缘模糊，并有绿色亮边或重影；新车体与旧位置残留局部叠接。",
+        "独立平移参考只有左侧的一辆清晰红车，旧位置恢复为道路。"
+      ],
+      "supported_interpretation": "本次分支平移没有带走原位置全部可见车形结构，尚未实现参考所要求的完整对象编辑。"
+    },
+    {
+      "case": "heldout_camera",
+      "images_viewed": [
+        "heldout_r3_10k/final.png",
+        "heldout_r3_10k/reference_rgb.png"
+      ],
+      "observations": [
+        "留出视角重建中的车体轮廓较参考模糊，左缘有显著绿色亮边和重影。",
+        "车旁与近处道路的车道线可见拖影或双线，路面结构较参考模糊。",
+        "画面右边界出现竖向色带或条纹，独立参考没有相同结构。"
+      ],
+      "supported_interpretation": "此处留出视角呈现车体和道路结构伪影，说明当前10K重建尚未满足该单一留出视角的一致性要求。"
+    }
+  ],
+  "supported_research_conclusions": [
+    "在本受限前向、非写实仿真、明确oracle输入和10K训练预算下，当前真实重建及分支编辑产生了可由独立参考核验的残留与结构问题。",
+    "删除、平移与留出视角形成了可重复审查的失败案例，可用于后续所有权方法的独立评价。",
+    "白色环境对照未消除可见车形残留，支持继续核查重建分支中的对象支持与所有权；该对照本身不提供逐Gaussian真值分类。"
+  ],
+  "unsupported_claims": [
+    "未训练的学习模块已经改善所有权、编辑或新视角质量。",
+    "从本次目视审查得到污染比例、逐像素纯阴影标签或逐Gaussian GT所有权。",
+    "仅凭当前失败案例已证明一般性不可辨识、方法必然失败或真实道路泛化性能。"
+  ],
+  "reference_scope": "shadow_on/off属于有限Monte Carlo采样的条件渲染参考；本审查不把其逐像素差分当作纯阴影标签。",
+  "review_scope": "仅查看上述七张本地证据图像；未修改evidence、未访问远端、未运行实验。"
+}

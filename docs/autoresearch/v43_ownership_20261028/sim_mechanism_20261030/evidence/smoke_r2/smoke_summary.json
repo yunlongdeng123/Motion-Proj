@@ -1,0 +1,226 @@
+{
+  "status": "PASS_REAL_NATIVE_SMOKE",
+  "approximately_ten_minutes_contract": true,
+  "timed_leg_training_loop_wall_seconds_excluding_measured_eval_checkpoint": 600.1593230850995,
+  "each_leg_reached_requested_loop_wall_seconds": true,
+  "stop_trigger_timing": {
+    "fresh": {
+      "reason": "smoke",
+      "iteration": 3736,
+      "requested_smoke_loop_wall_seconds": 300.0,
+      "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.07436146214604,
+      "wall_seconds_since_first_record": 325.241222448647,
+      "measured_loop_eval_checkpoint_seconds": 25.16686098650098
+    },
+    "resumed": {
+      "reason": "smoke",
+      "iteration": 6702,
+      "requested_smoke_loop_wall_seconds": 300.0,
+      "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.0849616229534,
+      "wall_seconds_since_first_record": 361.01965185441077,
+      "measured_loop_eval_checkpoint_seconds": 60.93469023145735
+    }
+  },
+  "phase_wall_seconds": {
+    "evaluation": 190.94503946602345,
+    "component_save": 9.512863976880908,
+    "continuation_capture": 0.015427932143211365,
+    "checkpoint_publish": 0.031049521639943123,
+    "component_restore": 0.029248077422380447,
+    "continuation_restore_and_verification": 3.1308226846158504
+  },
+  "phases": {
+    "fresh": {
+      "reason": "smoke_saved",
+      "iteration": 3736,
+      "first_iteration": 1,
+      "observed_finite_step_calls": 3736,
+      "checked_backward_components": 78,
+      "wall_seconds": 366.0635124668479,
+      "timing": {
+        "native_invocation_wall_seconds": 366.06281283311546,
+        "initialization_and_restore_wall_seconds_before_first_record": 3.115629080682993,
+        "wall_seconds_since_first_record": 362.94718375243247,
+        "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.1395881026983,
+        "measured_loop_eval_checkpoint_seconds": 62.80759564973414,
+        "phase_wall_seconds": {
+          "evaluation": 60.786248261108994,
+          "component_save": 2.0125204641371965,
+          "continuation_capture": 0.0017685331404209137,
+          "checkpoint_publish": 0.007058391347527504
+        },
+        "loop_phase_wall_seconds": {
+          "evaluation": 60.786248261108994,
+          "component_save": 2.0125204641371965,
+          "continuation_capture": 0.0017685331404209137,
+          "checkpoint_publish": 0.007058391347527504
+        },
+        "stop_trigger": {
+          "reason": "smoke",
+          "iteration": 3736,
+          "requested_smoke_loop_wall_seconds": 300.0,
+          "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.07436146214604,
+          "wall_seconds_since_first_record": 325.241222448647,
+          "measured_loop_eval_checkpoint_seconds": 25.16686098650098
+        },
+        "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+        "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+      },
+      "native_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+      "formal_config_budget": 10000,
+      "inherited_engine_and_learning_rate_horizon": 30000,
+      "extra_smoke": true,
+      "extra_entry": false,
+      "quality_accepted": false,
+      "human_verdict": null,
+      "scientific_contamination_claim": false,
+      "real_scene_generalization_claim": false
+    },
+    "resumed": {
+      "reason": "smoke_saved",
+      "iteration": 6702,
+      "first_iteration": 3737,
+      "observed_finite_step_calls": 2966,
+      "checked_backward_components": 64,
+      "wall_seconds": 404.06222665309906,
+      "timing": {
+        "native_invocation_wall_seconds": 404.06160830147564,
+        "initialization_and_restore_wall_seconds_before_first_record": 4.84430630505085,
+        "wall_seconds_since_first_record": 399.2173019964248,
+        "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.1635801810771,
+        "measured_loop_eval_checkpoint_seconds": 99.05372181534767,
+        "phase_wall_seconds": {
+          "component_restore": 0.01535901241004467,
+          "continuation_capture": 0.009501563385128975,
+          "continuation_restore_and_verification": 1.4309962689876556,
+          "evaluation": 94.6452746707946,
+          "component_save": 4.390543749555945,
+          "checkpoint_publish": 0.01486988179385662
+        },
+        "loop_phase_wall_seconds": {
+          "evaluation": 94.6452746707946,
+          "component_save": 4.390543749555945,
+          "continuation_capture": 0.0030335132032632828,
+          "checkpoint_publish": 0.01486988179385662
+        },
+        "stop_trigger": {
+          "reason": "smoke",
+          "iteration": 6702,
+          "requested_smoke_loop_wall_seconds": 300.0,
+          "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 300.0849616229534,
+          "wall_seconds_since_first_record": 361.01965185441077,
+          "measured_loop_eval_checkpoint_seconds": 60.93469023145735
+        },
+        "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+        "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+      },
+      "native_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+      "formal_config_budget": 10000,
+      "inherited_engine_and_learning_rate_horizon": 30000,
+      "extra_smoke": true,
+      "extra_entry": false,
+      "quality_accepted": false,
+      "human_verdict": null,
+      "scientific_contamination_claim": false,
+      "real_scene_generalization_claim": false
+    },
+    "entry": {
+      "reason": "entry_saved",
+      "iteration": 6704,
+      "first_iteration": 6703,
+      "observed_finite_step_calls": 2,
+      "checked_backward_components": 4,
+      "wall_seconds": 44.212912591174245,
+      "timing": {
+        "native_invocation_wall_seconds": 44.21234953776002,
+        "initialization_and_restore_wall_seconds_before_first_record": 5.151207868009806,
+        "wall_seconds_since_first_record": 39.061141669750214,
+        "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 0.42704516649246216,
+        "measured_loop_eval_checkpoint_seconds": 38.63409650325775,
+        "phase_wall_seconds": {
+          "component_restore": 0.013889065012335777,
+          "continuation_capture": 0.004157835617661476,
+          "continuation_restore_and_verification": 1.6998264156281948,
+          "evaluation": 35.513516534119844,
+          "component_save": 3.109799763187766,
+          "checkpoint_publish": 0.009121248498558998
+        },
+        "loop_phase_wall_seconds": {
+          "evaluation": 35.513516534119844,
+          "component_save": 3.109799763187766,
+          "continuation_capture": 0.001658957451581955,
+          "checkpoint_publish": 0.009121248498558998
+        },
+        "stop_trigger": {
+          "reason": "entry",
+          "iteration": 6704,
+          "requested_smoke_loop_wall_seconds": 0,
+          "training_loop_wall_seconds_excluding_measured_eval_checkpoint": 0.33111416548490524,
+          "wall_seconds_since_first_record": 0.3409847803413868,
+          "measured_loop_eval_checkpoint_seconds": 0.009870614856481552
+        },
+        "scope": "host wall time starts at first loss record; excludes measured native evaluation/component-save/continuation-capture/checkpoint-publication; includes forward/backward/optimizer/densification/logging; not GPU kernel time; first forward precedes timer",
+        "restore_phase_scope": "component_restore and continuation_restore_and_verification occur inside pre-first-record initialization and are diagnostic subsets, not extra additive wall time"
+      },
+      "native_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+      "formal_config_budget": 10000,
+      "inherited_engine_and_learning_rate_horizon": 30000,
+      "extra_smoke": false,
+      "extra_entry": true,
+      "quality_accepted": false,
+      "human_verdict": null,
+      "scientific_contamination_claim": false,
+      "real_scene_generalization_claim": false
+    }
+  },
+  "timing_scope": "host training-loop wall proxy; measured evaluation/checkpoint overhead excluded; not pure GPU kernel seconds; restore is a subset of initialization, not added to it",
+  "extra_smoke_updates": 6702,
+  "extra_entry_updates": 2,
+  "formal_updates": 0,
+  "formal_must_start_fresh": true,
+  "complete_restore": {
+    "iteration": 3736,
+    "checks": {
+      "static_parameters_and_optimizer": true,
+      "dynamic_parameters_and_optimizer": true,
+      "environment_parameters_and_optimizer": true,
+      "python_rng": true,
+      "numpy_rng": true,
+      "torch_rng": true,
+      "cuda_rng": true,
+      "sampler": true,
+      "scale": true,
+      "camera_orders": true,
+      "viewpoint_stack": true,
+      "model_runtime": true,
+      "ema": true,
+      "sgcm": true
+    },
+    "all_passed": true,
+    "cuda_trajectory_bitwise_claimed": false
+  },
+  "next_stage_entry": {
+    "status": "PASS_NATIVE_BUNDLE_AND_NEXT_STAGE_ENTRY",
+    "iteration": 6704,
+    "event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/next_stage_entry/checkpoint_events/iteration_006704.json",
+    "frames": 16,
+    "checked_finite_raw_arrays": 112,
+    "complete_components": [
+      "static",
+      "dynamic",
+      "environment",
+      "training_state"
+    ],
+    "next_stage_entry": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/next_stage_entry/next_stage_entry.json",
+    "independent_reference_used_for_training": false,
+    "scientific_contamination_claim": false,
+    "scope": "CPU artifact/readability acceptance; exact model/optimizer/RNG restore is verified by real resumed CUDA worker"
+  },
+  "actual_next_stage_render": {
+    "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/render_entry/render_manifest.json",
+    "native_none_identity_max_abs": 0.0,
+    "training_updates": 0
+  },
+  "scientific_contamination_claim": false,
+  "real_scene_generalization_claim": false
+}

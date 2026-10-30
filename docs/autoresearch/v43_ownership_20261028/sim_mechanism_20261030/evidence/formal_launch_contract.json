@@ -1,0 +1,114 @@
+{
+  "command": [
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "-u",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/code/reconstruction/native_worker.py",
+    "--scene",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3",
+    "--output",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k",
+    "--steps",
+    "10000",
+    "--checkpoint-every",
+    "5000"
+  ],
+  "source_sha256": {
+    "adapt_scene.py": "5fd669d182a60aaf1b997216f437453d68cafdf07468dc44d49dc639af51abcc",
+    "evaluate_edits.py": "92189f6f6f4b6ebb83bd1bc30b630ad36a9e07d3f390f53c7e94e822ef193615",
+    "inspect_bundle.py": "41aaf69c69e3a13b42c4431d91e94fbfa16b338d2eaa95c9dbbe5f5070920f2c",
+    "native_worker.py": "e5d7d942919f7008eeed7d9d41ecf8209a22c88756261bbc2950e4d81b8b9030",
+    "run_smoke.py": "077d5e3beb3db34f543a475ffe44b5f82d96676c2d2a621fec3dd6b73ce58161",
+    "test_pixel_convention.py": "a39627c30cc69727ebbf9d31b36f449c183bc78e21e9d1d33fe095298385c25a"
+  },
+  "contract": {
+    "task_id": "WS-V43-SIM-RECON-M0-20261030",
+    "scope": "one_minimal_independent_scene_acquisition_native_reconstruction_and_reference_audit",
+    "seeds": {
+      "simulator": 431030,
+      "reconstruction": 0
+    },
+    "purpose": "验证独立场景→受限观测→当前完整重建→独立编辑参考的实际接口，并检查自然污染；不预设一定复现残影",
+    "scene_role": "procedural_vehicle_mechanism_and_interface_validation_not_real_world_generalization",
+    "primary_error_source": "actual_native_training_from_sparse_observations",
+    "manual_gaussian_corruption": false,
+    "method_input": {
+      "rgb": "restricted_camera_sequence",
+      "lidar": "sparse_world_space_ray_hits_no_surface_or_instance_id",
+      "calibration": "known_simulator_camera_intrinsics_and_extrinsics",
+      "body_and_sky_mask_condition": "explicit_simulator_sensor_oracle_control",
+      "oracle_mask_is_deployable_pipeline_claim": false,
+      "mesh_dense_depth_hidden_surfaces_to_training": false,
+      "gaussian_owner_gt_to_training": false
+    },
+    "privileged_reference": {
+      "allowed_for": [
+        "independent_evaluation",
+        "explicit_truth_assisted_diagnostic_only"
+      ],
+      "contents": [
+        "surface_and_instance_id",
+        "depth",
+        "geometry",
+        "none_delete_shift_rotate_images",
+        "shadow_toggle_control",
+        "held_out_camera"
+      ],
+      "gaussian_unique_label_gt_exists": false,
+      "alphaT_pixel_label_is_identity_gt": false,
+      "shadow_is_road_receiver_plus_vehicle_associated_effect": true
+    },
+    "reconstruction": {
+      "method": "existing_GN11_native_train_training",
+      "train_static_dynamic_environment": true,
+      "actor_only_probe_is_not_substitute": true,
+      "preserve_mask_alpha_inside_outside": true,
+      "preserve_inherited_static_RGB_depth_motion_and_lifetime_losses": true,
+      "observation_count_and_render_size_adapter": "explicit_config_delta",
+      "initial_run": "engineering_smoke_then_first_reconstruction_checkpoint",
+      "formal_budget": {
+        "updates": 10000,
+        "start": "fresh",
+        "inherited_engine_iterations_and_LR_horizon": 30000,
+        "checkpoint_steps": [
+          5000,
+          10000
+        ],
+        "scene": "native_scene_r3",
+        "dataset": "dataset_r2",
+        "reason": "first ordinary-scene reconstruction mechanism baseline; no new V43 classifier training"
+      },
+      "long_run_smoke_minutes": 10,
+      "required_smoke_paths": [
+        "finite_forward_backward",
+        "memory",
+        "data_loading",
+        "checkpoint_save",
+        "evaluation",
+        "full_state_restore",
+        "next_stage_render_entry"
+      ]
+    },
+    "assessment": {
+      "natural_pollution": "measure_and_visualize_do_not_assume",
+      "full_ghost_removal_or_new_V43_model_claimed": false,
+      "training_views_are_not_generalization_test": true,
+      "truth_assisted_reference_is_mathematical_upper_bound": false,
+      "human_verdict": null
+    },
+    "resources": {
+      "autodl_auto_shutdown": false,
+      "explicit_user_shutdown_request_required": true,
+      "minimum_free_disk_GiB": 25,
+      "subagent_models": [
+        "gpt-6.1-sol",
+        "gpt-6.1-terra"
+      ]
+    },
+    "failure_ledger_refs": [
+      "V82-F01"
+    ],
+    "failure_ledger_delta": "none"
+  },
+  "smoke": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/smoke_r2/smoke_summary.json",
+  "started_unix": 1793362540.155673
+}

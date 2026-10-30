@@ -227,3 +227,6 @@
 - WS-V82-PERSISTENT-WORLD-20261027：[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二按场景交错30K训练与多操作诊断，CPU准备异步，5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。
 
 - WS-V43-JOINT-DIRECTION-R4-20261030：[联合分解方向、机制上界及环境固定控制](autoresearch/v43_ownership_20261028/joint_direction_r4_20261030/index.html)；design-only，新增训练/渲染0，机制实验待执行。
+
+- WS-V43-WORLD-GT-PROTOCOL-R5-20261030：[世界表面GT、真实重建污染与部署输入隔离](autoresearch/v43_ownership_20261028/gt_protocol_r5_20261030/index.html)；R5设计修订，文档生成训练/场景渲染0，M1/M2为真值辅助参考。
+- WS-V43-SIM-RECON-M0-20261030：[最小普通场景实际重建与独立参考核验](autoresearch/v43_ownership_20261028/sim_mechanism_20261030/index.html)；具体状态、预算和边界以该报告及运行记录为准。

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="m0-title m0-desc">
+<title id="m0-title">V43 M0：实际重建与独立表面编辑参考</title>
+<desc id="m0-desc">普通程序车道路灯光世界生成受限观测，含显式登记的oracle body和sky masks；这些白名单输入通过适配器进入当前GN11整场景训练的静态动态环境分支。完整保存恢复和下一阶段真实渲染之后，分支编辑baseline与隔离的独立表面深度编辑参考比较。r2十六帧数据验证已报告通过，GPU smoke已通过，不宣称方法成功。GT不在每颗Gaussian，shadow差分不是纯阴影GT。</desc>
+<rect width="1600" height="980" fill="#f5f9fc"/>
+<g font-family="Microsoft YaHei,Arial,sans-serif" fill="#203f51" text-anchor="middle">
+<text x="35" y="45" text-anchor="start" font-size="29" font-weight="bold">V43 M0：受限观测 → 当前代码真实重建 → 完整恢复 → 独立核验</text>
+<text x="35" y="82" text-anchor="start" font-size="20">r2 16帧数据验证已报告通过；GPU smoke已通过。程序车仅用于接口 / 机制验证。</text>
+<g fill="#fff1dc" stroke="#a5bfce" stroke-width="1.5">
+<rect x="35" y="125" width="440" height="215" rx="12"/>
+<rect x="535" y="125" width="480" height="215" rx="12"/>
+<rect x="1075" y="125" width="490" height="215" rx="12" fill="#eee5f3"/>
+</g>
+<text x="255" y="163" font-size="23" font-weight="bold">独立普通世界</text>
+<text x="255" y="207" font-size="19">程序车 / 道路 / 灯光 / 相机轨迹</text>
+<text x="255" y="240" font-size="19">对象 / 表面 / 干预参数可重放</text>
+<text x="255" y="273" font-size="19">不手造主评测的错误 Gaussian</text>
+<text x="255" y="306" font-size="18">不承诺指定自然污染必出现</text>
+<text x="775" y="163" font-size="23" font-weight="bold">登记的训练白名单</text>
+<text x="775" y="207" font-size="19">16帧 RGB / 有限稀疏 LiDAR</text>
+<text x="775" y="240" font-size="19">标定 / 时间 / oracle body+sky masks</text>
+<text x="775" y="273" font-size="19">ideal tracks；非可部署预测管线</text>
+<text x="775" y="306" font-size="18">body mask不含车辆投影阴影</text>
+<text x="1320" y="163" font-size="23" font-weight="bold">隔离的独立参考</text>
+<text x="1320" y="207" font-size="19">mesh / surface IDs / depth / visibility</text>
+<text x="1320" y="240" font-size="19">世界干预的 delete / shift / rotate</text>
+<text x="1320" y="273" font-size="19">surface GT ≠ 每颗 Gaussian GT</text>
+<text x="1320" y="306" font-size="18">不进入训练或实际方法调优</text>
+<g fill="none" stroke="#527c91" stroke-width="2.5">
+<path d="M475 220H535"/>
+<path d="M255 125V105H1320V125"/>
+<path d="M775 340V395"/>
+<path d="M1320 340V395"/>
+</g>
+<g fill="#527c91"><path d="M535 220L523 214L523 226Z"/><path d="M1320 125L1314 113L1326 113Z"/><path d="M775 395L769 383L781 383Z"/><path d="M1320 395L1314 383L1326 383Z"/></g>
+<rect x="35" y="395" width="980" height="230" rx="12" fill="#e0f1ea" stroke="#a5bfce" stroke-width="1.5"/>
+<text x="525" y="435" font-size="24" font-weight="bold">适配器 → 当前 GN11 原生整场景重建</text>
+<text x="525" y="472" font-size="19">保留完整 mask alpha 内外域、静态 RGB / 寿命 / 速度、LiDAR 深度等继承约束</text>
+<g fill="#f1faf5" stroke="#a5bfce" stroke-width="1.5">
+<rect x="60" y="505" width="285" height="90" rx="9"/>
+<rect x="380" y="505" width="285" height="90" rx="9"/>
+<rect x="700" y="505" width="285" height="90" rx="9"/>
+</g>
+<text x="202" y="541" font-size="21" font-weight="bold">static</text><text x="202" y="574" font-size="18">同一完整训练器</text>
+<text x="522" y="541" font-size="21" font-weight="bold">dynamic</text><text x="522" y="574" font-size="18">原生种子 / 增密 / optimizer</text>
+<text x="842" y="541" font-size="21" font-weight="bold">environment</text><text x="842" y="574" font-size="18">本轮重建共同训练</text>
+<rect x="1075" y="395" width="490" height="230" rx="12" fill="#eee5f3" stroke="#a5bfce" stroke-width="1.5"/>
+<text x="1320" y="435" font-size="24" font-weight="bold">独立评价</text>
+<text x="1320" y="481" font-size="19">原位残留 / 新位完整 / 保留域 / 深度</text>
+<text x="1320" y="516" font-size="19">错深度 / mixed / 无对应 / 缺测分开</text>
+<text x="1320" y="551" font-size="19">world road receiver + vehicle effect</text>
+<text x="1320" y="586" font-size="18">shadow差分仅关联效果代理，非纯阴影GT</text>
+<rect x="35" y="690" width="980" height="155" rx="12" fill="#eaf1f7" stroke="#a5bfce" stroke-width="1.5"/>
+<text x="525" y="730" font-size="24" font-weight="bold">真实 smoke：保存 / 评价 / 完整恢复 / 下一阶段入口</text>
+<text x="525" y="773" font-size="19">参数、optimizer、sampler、RNG、静态 / 动态 / 环境状态核验</text>
+<text x="525" y="808" font-size="19">已通过约10分钟及恢复入口；正式10K；额外开销单列</text>
+<rect x="1075" y="690" width="490" height="155" rx="12" fill="#eaf1f7" stroke="#a5bfce" stroke-width="1.5"/>
+<text x="1320" y="730" font-size="24" font-weight="bold">实际分支编辑 baseline</text>
+<text x="1320" y="773" font-size="19">none / delete / shift / rotate + FP32分量</text>
+<text x="1320" y="808" font-size="19">不把原分支当 owner GT 或V43成功</text>
+<g fill="none" stroke="#527c91" stroke-width="2.5">
+<path d="M525 625V690"/>
+<path d="M1015 770H1075"/>
+<path d="M1320 690V625"/>
+</g>
+<g fill="#527c91"><path d="M525 690L519 678L531 678Z"/><path d="M1075 770L1063 764L1063 776Z"/><path d="M1320 625L1314 637L1326 637Z"/></g>
+<rect x="35" y="890" width="1530" height="60" rx="10" fill="#fff" stroke="#a5bfce" stroke-width="1.5"/>
+<text x="800" y="929" font-size="21">先看一次实际重建是否暴露污染，再3–5机制场景；无完整GT的真实三场景不由人工 / subagent补成完美真值。</text>
+</g></svg>
