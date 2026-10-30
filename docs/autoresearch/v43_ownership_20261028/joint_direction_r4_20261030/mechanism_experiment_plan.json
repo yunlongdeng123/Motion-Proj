@@ -1,0 +1,148 @@
+{
+  "task_id": "WS-V43-JOINT-DIRECTION-R4-20261030",
+  "artifact_kind": "design_not_job_queue",
+  "jobs_started": 0,
+  "auto_schedule": false,
+  "new_training_updates": 0,
+  "mechanism_scenes": {
+    "count_range": [
+      3,
+      5
+    ],
+    "role": "mechanism_not_generalization_claim",
+    "templates": [
+      "single_vehicle_road_shadow",
+      "overlapping_vehicles",
+      "wide_view_occlusion_reveal",
+      "lighting_and_dark_road"
+    ],
+    "reference_source": "independent_clean_object_surface_renderer",
+    "edits": [
+      "none",
+      "delete",
+      "translate",
+      "rotate",
+      "lighting_change",
+      "body_shadow_2x2"
+    ],
+    "perturbations": [
+      "missing_assignment",
+      "wrong_depth",
+      "cross_boundary_mixed_support",
+      "baked_shadow",
+      "temporal_identity_error"
+    ],
+    "split_keys": [
+      "physical_scene",
+      "vehicle_donor",
+      "road_lighting_layout",
+      "perturbation_ancestor"
+    ],
+    "unique_gaussian_class_gt_required": false
+  },
+  "tasks": [
+    {
+      "id": "M0",
+      "purpose": "validate independent references and rendering interface",
+      "depends_on": [],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "ENV",
+      "purpose": "scene1 fixed original environment versus constant fill paired diagnosis",
+      "depends_on": [],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "M1",
+      "purpose": "ideal ownership on fixed corrupted representation",
+      "depends_on": [
+        "M0"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "M2",
+      "purpose": "ideal geometry/split/effect repair with independent references",
+      "depends_on": [
+        "M0"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "M3",
+      "purpose": "full target coverage plus added true background candidates",
+      "depends_on": [
+        "M1"
+      ],
+      "status": "planned_not_executed"
+    },
+    {
+      "id": "M4",
+      "purpose": "small shared-model learning on separate scenes",
+      "depends_on": [
+        "M1",
+        "M2"
+      ],
+      "status": "planned_not_executed"
+    }
+  ],
+  "parallel_groups": [
+    [
+      "M0",
+      "ENV"
+    ],
+    [
+      "M1",
+      "M2"
+    ]
+  ],
+  "ablations": [
+    "feature_threshold",
+    "probability_decision_only",
+    "representation_repair_only",
+    "joint"
+  ],
+  "coupling_controls": [
+    "sequential_freeze",
+    "joint_gradients",
+    "cross_head_stop_gradient"
+  ],
+  "comparison_contract": {
+    "match_candidate_recall": true,
+    "match_edit_coverage": true,
+    "abstained_targets_remain_in_denominator": true,
+    "report_capacity_and_compute": true,
+    "oracle_truth_for_actual_method_tuning": false,
+    "reference_unlimited_capacity_is_fair_baseline": false
+  },
+  "scene1": {
+    "role": "inference_and_development_diagnostics",
+    "train_new_transferable_modules": false,
+    "test_time_state_optimization_report_separately": true
+  },
+  "environment": {
+    "train_environment": false,
+    "paired_fill": [
+      "frozen_original",
+      "constant_linear_white"
+    ],
+    "save_float": [
+      "gaussian_color",
+      "alpha",
+      "fill_contribution",
+      "final_rgb",
+      "raw_E_or_B"
+    ]
+  },
+  "session_execution": {
+    "autodl_auto_shutdown": false,
+    "shutdown_requires_explicit_user_request": true,
+    "allowed_subagent_models": [
+      "gpt-6.1-sol",
+      "gpt-6.1-terra"
+    ],
+    "long_run_real_smoke_minutes": 10
+  },
+  "human_verdict": null
+}

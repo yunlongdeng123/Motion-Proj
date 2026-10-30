@@ -225,3 +225,5 @@
 - WS-V82-GN11-V42-SELECTED-C-MECHANISM-20261026：[用户选定保背景C的正确归因](../scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v42_20261024/controlled_smoke_20261026/C_MECHANISM.md)；纠正前条C绑定，新增训练0，强透射仅保留为未选对照。
 
 - WS-V82-PERSISTENT-WORLD-20261027：[4D编辑评测驱动研究](autoresearch/persistent_world_20261027/PLAN.md)；阶段二按场景交错30K训练与多操作诊断，CPU准备异步，5K保存、多编辑复用；质量未接受，周剩余<20%快速保存关机。
+
+- WS-V43-JOINT-DIRECTION-R4-20261030：[联合分解方向、机制上界及环境固定控制](autoresearch/v43_ownership_20261028/joint_direction_r4_20261030/index.html)；design-only，新增训练/渲染0，机制实验待执行。

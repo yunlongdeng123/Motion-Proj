@@ -1,0 +1,256 @@
+{
+  "schema_version": "v43-joint-editable-decomposition-design-4",
+  "implementation_status": "design_sidecar_not_full_checkpoint_migration",
+  "gaussian_key": [
+    "scene_id",
+    "checkpoint_sha256",
+    "branch",
+    "row_id",
+    "lineage_id"
+  ],
+  "semantic": {
+    "class_id": null,
+    "status": "unknown",
+    "candidates": []
+  },
+  "ownership": {
+    "kind": null,
+    "instance_or_surface_id": null,
+    "status": "unknown",
+    "candidates": [],
+    "stable_across_frames": true
+  },
+  "motion": {
+    "model": null,
+    "frame_id": null,
+    "valid_time_interval": null,
+    "status": "unknown"
+  },
+  "evidence": {
+    "status": "unreviewed",
+    "records": [],
+    "confidence": null,
+    "calibration_version": null,
+    "unknown_reason": [],
+    "record_fields": [
+      "source_kind",
+      "source_frame",
+      "source_row_or_pixel",
+      "visibility",
+      "support_weight",
+      "correlation_group",
+      "version",
+      "reviewer"
+    ],
+    "unknown_reason_vocabulary": [
+      "missing_observation",
+      "ambiguous_instance",
+      "conflicting_observations",
+      "mixed_spatial_support",
+      "unverified_geometry",
+      "unverified_effect"
+    ]
+  },
+  "support_type": {
+    "value": "unknown",
+    "vocabulary": [
+      "pure",
+      "spatial_mixed",
+      "unknown"
+    ],
+    "evidence_refs": []
+  },
+  "effect": {
+    "type": "unknown",
+    "vocabulary": [
+      "none",
+      "shadow",
+      "unknown"
+    ],
+    "effect_owner_id": null,
+    "receiver_surface_id": null,
+    "receiver_frame": null,
+    "confidence": null,
+    "evidence_refs": [],
+    "shadow_contract": "car-owned appearance effect on a world-bound road receiver; road geometry is retained"
+  },
+  "time_state": {
+    "timestamp": null,
+    "visibility": "unknown",
+    "occlusion": "unknown",
+    "observation_confidence": null,
+    "evidence_refs": []
+  },
+  "lineage": {
+    "parent_keys": [],
+    "child_keys": [],
+    "operation": null,
+    "operation_version": null,
+    "two_sided_support_refs": [],
+    "initialization_record": null,
+    "local_refit_run_id": null,
+    "original_parameters_preserved": true,
+    "before_after_contribution_refs": []
+  },
+  "legacy_render_assignment": {
+    "branch": null,
+    "actor_id": null,
+    "verified_complete": false
+  },
+  "target_query": {
+    "one": "confirmed ownership matches requested target",
+    "zero": "confirmed ownership excludes requested target; may be another actor",
+    "unknown": "ownership not established or mixed/conflicting"
+  },
+  "routing": {
+    "policy": "joint_state_to_instruction_conditioned_decision_no_hard_serial_prerequisite",
+    "projected_dual_domain": "evidence_for_joint_support_and_geometry_inference_not_spatial_mix_gt",
+    "mixed": "retain_component_responsibilities; jointly propose geometry/split/keep/defer",
+    "spatially_incompatible": "inform_geometry_or_surface_proposal_not_universal_3sigma_veto",
+    "shadow": "vehicle_owned_effect_with_world_receiver_geometry",
+    "uncertain": "keep_or_defer; unexecuted_target_counts_as_edit_incompletion"
+  },
+  "shadow4": [
+    {
+      "body": true,
+      "shadow": true,
+      "role": "original reconstruction"
+    },
+    {
+      "body": false,
+      "shadow": true,
+      "role": "body off, shadow retained"
+    },
+    {
+      "body": true,
+      "shadow": false,
+      "role": "shadow off, car and unshadowed road retained"
+    },
+    {
+      "body": false,
+      "shadow": false,
+      "role": "target deletion"
+    }
+  ],
+  "invariants": [
+    "semantic unknown does not erase independently verified instance identity",
+    "stationary or occluded actor retains stable owner; visibility and confidence are separate",
+    "render batch static does not imply background semantic class",
+    "legacy renderer owner is prior operational assignment, not verified provenance",
+    "unknown is field-level abstention, not a new background class",
+    "spatial support and appearance effect may coexist and are not interchangeable",
+    "both sides of a mixed Gaussian are retained and independently checked after refit",
+    "no-edit radiometric fidelity does not establish two-side separation under after-edit transmittance",
+    "failed or unverified separation makes editability/support-separation unknown; independently verified semantic/owner/motion are retained",
+    "moment matching does not imply exact pixelwise alpha or RGB conservation",
+    "original checkpoint and parent Gaussian parameters are preserved",
+    "GT boxes remain proposal/read-only audit, never point or mask filtering labels",
+    "after-render diagnostics and generated images do not recursively become GT",
+    "R2 ROI whitening, unknown SH whitening, classifier learning and editing benefit are separate",
+    "scene 1 is classifier inference/development only, not whole-method unseen testing",
+    "candidate set and action set and contribution weights are separate",
+    "scene judgment is independent of requested delete/shift/rotate operation",
+    "joint inference is permitted; self-prediction cannot become independent GT",
+    "mixed responsibility and epistemic identity probability are separate",
+    "all new transferable heads remain untrained on scene1",
+    "constant-fill diagnosis does not claim completed background repair"
+  ],
+  "human_verdict": null,
+  "model_contract": {
+    "shared_evidence_encoder": true,
+    "joint_heads": [
+      "semantic_instance_motion_evidence",
+      "geometry_and_support",
+      "split_or_new_surface",
+      "vehicle_associated_effect",
+      "uncertainty"
+    ],
+    "scene_judgment_receives_edit_instruction": false,
+    "editor_receives_instruction": true,
+    "stage_training_is_not_independent_model_pipeline": true,
+    "action_vocabulary": [
+      "keep",
+      "reassign",
+      "correct_geometry",
+      "split_retain_both",
+      "new_surface_with_budget",
+      "defer"
+    ],
+    "implemented": false
+  },
+  "candidate_selection": {
+    "high_recall_within_existing_allowed_domain": true,
+    "background_false_candidates": "record_only_not_veto_at_candidate_stage",
+    "candidate_is_action_set": false,
+    "outside_domain": "record_missed_evidence_do_not_silently_expand",
+    "environment_contamination_has_no_required_gaussian_id": true
+  },
+  "responsibility": {
+    "components": [],
+    "unassigned_mass": null,
+    "total_contribution_W": null,
+    "measurement": "visible_alpha_times_transmittance_contribution",
+    "component_value_kind": "normalized_responsibility_share",
+    "normalization": "if W>0: sum(component_shares)+unassigned_mass=1; absolute_contribution=W*share",
+    "zero_contribution": "unobservable; shares=null, not zero ownership responsibility",
+    "multiple_visibility_states": "separate W and shares per state; never sum into identity probability",
+    "domain": {
+      "camera_ids": [],
+      "timestamps": [],
+      "pixel_support_ref": null,
+      "visibility_state": null
+    },
+    "independent_surface_label_refs": [],
+    "is_identity_probability": false,
+    "is_spatial_mass_fraction": false,
+    "multiple_supports_do_not_require_unique_row_gt": true
+  },
+  "identity_posterior": {
+    "hypotheses": [],
+    "calibration_dataset_ref": null,
+    "calibration_version": null,
+    "uncalibrated_scores_are_probabilities": false
+  },
+  "repair_proposal": {
+    "operations": [],
+    "geometry_residual": null,
+    "topology_budget": null,
+    "evidence_refs": [],
+    "jointly_inferred": true,
+    "applied": false
+  },
+  "environment_control": {
+    "current_mode": "frozen_original_environment_no_retraining",
+    "factorial": {
+      "gaussians": [
+        "baseline",
+        "treated"
+      ],
+      "fill": [
+        "original_E",
+        "constant_linear_white"
+      ]
+    },
+    "shared": [
+      "camera",
+      "timestamp",
+      "edit_request",
+      "display_transform"
+    ],
+    "float_outputs": [
+      "gaussian_color",
+      "alpha",
+      "fill_contribution",
+      "final_rgb",
+      "raw_E_or_B"
+    ],
+    "frozen_parameters_imply_frozen_contribution": false,
+    "source_diagnosis_is_causal_training_explanation": false
+  },
+  "editability": {
+    "status": "unknown",
+    "support_separation": "unknown",
+    "independently_verified_identity_is_retained": true,
+    "evidence_refs": []
+  }
+}

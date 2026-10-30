@@ -1,0 +1,153 @@
+"""Revision 4设计合同；不调度训练，不改变历史实验产物。"""
+from pathlib import Path
+
+DESIGN = Path(__file__).with_name('design_revision4.md').read_text(encoding='utf8')
+DESIGN_HTML = '''<section id="v43-design-scope"><h2>Revision 4：一个共享模型，联合分解与修复</h2>
+<p>语义身份、几何支撑、混合责任与车辆关联效应共同解释多帧观测；可分阶段训练，但不再要求各问题分别彻底解决后才能联合。诊断拆项用于监督与消融。保留 V1 无编辑原生直出及 V42 的编辑、背景修复、按需生成架构。</p>
+<p><strong>本次仅设计修订，新增训练／渲染为0。</strong>旧三锚点短探针未显示编辑分离改善，尚无完整编辑质量验收；不能据此否定联合学习或建立串行必经顺序。</p>
+<p><a href="V43_DESIGN.md">完整设计与实验合同</a> · <a href="architecture.svg">SVG框图</a> · <a href="architecture.png">PNG框图</a> · <a href="ownership_record_contract.json">表示合同</a> · <a href="mechanism_experiment_plan.json">待办实验矩阵</a></p></section>
+<section id="v43-joint-model"><h2>共享证据 → 联合场景判断 → 编辑决策</h2>
+<table><tr><th>联合输出</th><th>用途与边界</th></tr>
+<tr><td>语义／实例或表面／运动／证据四字段</td><td>稳定身份与当前可见性分开；场景判断不接收delete／shift等指令</td></tr>
+<tr><td>混合责任、几何可靠性与修正</td><td>允许只改归属、修位置尺度、双侧拆分、有限新增或保持；mixed不硬塞单一类别</td></tr>
+<tr><td>车辆关联阴影效应</td><td>world道路receiver与车辆effect owner分开；阴影单独着色与验收</td></tr>
+<tr><td>不确定性与补证据需求</td><td>归属后验、真实混合责任、当前可见性分别存储；score不直接称校准概率</td></tr></table>
+<p><strong>unknown候选 ≠ 实际操作集合。</strong>在既有允许域内优先召回，正常道路进入候选只记成本和误召回，不否决扩候选。模型可将其判回road并保持。相同观察换指令时身份应一致，执行动作可以不同。</p>
+<p>联合训练允许几何与归属相互约束；模型自己的预测、删点图和after暗像素不得循环成为GT。独立编辑参考可反传监督共享模型。暖启动与梯度启用是训练日程，不是把多个独立模型依次解决。</p></section>
+<section id="v43-experiment-order"><h2>下一阶段：3–5个机制小场景＋理想上界</h2>
+<p>对象级独立渲染生成车辆／道路／阴影和删除、横移、旋转、光照参考，逐项施加漏归属、错深度、混合支撑等扰动。它首先是机制验证集；合成对象真值不等于每颗重建高斯都有唯一类别。</p>
+<table><tr><th>实验</th><th>回答的问题</th></tr>
+<tr><td>M0 参考与接口核验</td><td>独立真值、effect干预和合成接口是否有效？可与场景1环境诊断并行</td></tr>
+<tr><td>M1 理想归属</td><td>固定原表示，只把判断做对能带来多少收益？</td></tr>
+<tr><td>M2 理想表示修复</td><td>固定理想归属，修几何／双侧拆分／效应是否消除剩余瓶颈？与M1可并行</td></tr>
+<tr><td>M3 候选范围</td><td>目标保持全覆盖，增加正常背景后，最终编辑与计算如何变化？</td></tr>
+<tr><td>M4 小规模联合学习</td><td>在独立场景中能否学会有效操作？不先批量造训练数据</td></tr></table>
+<p>强消融：<strong>特征阈值／仅概率决策／仅表示修复／两者联合</strong>；再比顺序冻结、联合梯度、跨头stop-gradient。匹配候选召回和编辑覆盖，未执行目标仍计入残留，不能靠大量暂缓获胜。</p>
+<p><strong>场景1不训练新的共享模型及判断／修复／效应模块。</strong>固定模型迁移推理；如做连续状态优化，单列test-time adaptation。既有重建和人工反馈已使用场景1，它是开发诊断对象，不是整个方法的未见测试。</p></section>
+<section id="v43-environment"><h2>环境进入研究边界：固定分支、四路配对</h2>
+<p>C = C<sub>G</sub> + (1−α)E。当前Actor路径无天空门控；原环境与静态在Actor10K冻结。部分黑带已定位到环境回填，但训练成因尚未证明。</p>
+<table><tr><th>相同相机／时刻／请求</th><th>基线高斯</th><th>待测分解后高斯</th></tr>
+<tr><td>原环境冻结</td><td>原生最终RGB</td><td>完整系统效果与残留</td></tr>
+<tr><td>统一常量底色，仅诊断</td><td>原始覆盖／空洞</td><td>分解残影／几何／背景误改</td></tr></table>
+<p>每格存浮点C<sub>G</sub>、α、回填贡献、最终RGB，另存E或常量B与裁剪显示。<strong>环境参数冻结不等于回填贡献冻结。</strong>白洞不是补好道路。当前不重训环境；确认它成为主要瓶颈后，另做固定高斯、仅改环境的单因素对照。</p></section>
+<section id="v43-evidence-boundary"><h2>历史诊断保留，当前不宣布方法成功</h2>
+<p><a href="gpu_v43/bounded_white_v1/index.html">原R2限定白底</a>、<a href="gpu_v43/unknown_white_20261030/index.html">unknown白材质六组204帧</a>、<a href="gpu_v43/editable_ownership_20261030/index.html">三锚点＋200步child refit</a>均不修改。R2显示、SH涂白、学习判断和最终编辑收益分别验收。旧49帧/三锚点不冒充新机制集；人工verdict保持空。</p>
+<p>车身与关联阴影残留、横移后旧位重影、车体完整性、保留域损伤、时间一致性和任务完成率共同报告。没有独立GT时只报证据覆盖，不报告语义真召回。</p></section>
+<section id="v43-primary-sources"><h2>直接相关工作与强基线</h2>
+<p><a href="https://arxiv.org/html/2503.10437v1">4D LangSplat</a>作为语义／时间选择基线；<a href="https://arxiv.org/html/2411.19290v2">TRASE</a>作为动态实例分组与编辑强基线。<a href="https://arxiv.org/abs/2403.12722">HUGS</a>和<a href="https://emernerf.github.io/">EmerNeRF</a>支持联合建模思路，不证明本任务已解决。<a href="https://docs.typesafe.ai/introduction">Jev</a>仅启发判断与执行分离，不是高斯方法。</p>
+<p>TRASE已提出概率对应及联合重建／分割方向。V43应证明相近覆盖下残影更少、误改更少、结构更稳定；不能把“联合／概率化”本身当创新。新基线尚未运行。</p></section>
+<section id="v43-session-rules"><h2>本对话执行规则</h2><p><strong>禁止自动AutoDL关机；完成或空闲均保留实例，只有用户明确要求才关机。</strong>此规则覆盖旧自动关机约定。subagent仅使用6.1 sol或6.1 terra。本次不启动GPU任务，不从历史报告恢复队列。</p></section>'''
+
+def upgrade_schema(s):
+    s['schema_version'] = 'v43-joint-editable-decomposition-design-4'
+    s['model_contract'] = {
+        'shared_evidence_encoder': True,
+        'joint_heads': ['semantic_instance_motion_evidence', 'geometry_and_support', 'split_or_new_surface', 'vehicle_associated_effect', 'uncertainty'],
+        'scene_judgment_receives_edit_instruction': False,
+        'editor_receives_instruction': True,
+        'stage_training_is_not_independent_model_pipeline': True,
+        'action_vocabulary': ['keep', 'reassign', 'correct_geometry', 'split_retain_both', 'new_surface_with_budget', 'defer'],
+        'implemented': False,
+    }
+    s['candidate_selection'] = {
+        'high_recall_within_existing_allowed_domain': True,
+        'background_false_candidates': 'record_only_not_veto_at_candidate_stage',
+        'candidate_is_action_set': False,
+        'outside_domain': 'record_missed_evidence_do_not_silently_expand',
+        'environment_contamination_has_no_required_gaussian_id': True,
+    }
+    s['responsibility'] = {
+        'components': [], 'unassigned_mass': None, 'total_contribution_W': None,
+        'measurement': 'visible_alpha_times_transmittance_contribution',
+        'component_value_kind': 'normalized_responsibility_share',
+        'normalization': 'if W>0: sum(component_shares)+unassigned_mass=1; absolute_contribution=W*share',
+        'zero_contribution': 'unobservable; shares=null, not zero ownership responsibility',
+        'multiple_visibility_states': 'separate W and shares per state; never sum into identity probability',
+        'domain': {'camera_ids': [], 'timestamps': [], 'pixel_support_ref': None, 'visibility_state': None},
+        'independent_surface_label_refs': [],
+        'is_identity_probability': False, 'is_spatial_mass_fraction': False,
+        'multiple_supports_do_not_require_unique_row_gt': True,
+    }
+    s['identity_posterior'] = {'hypotheses': [], 'calibration_dataset_ref': None, 'calibration_version': None,
+        'uncalibrated_scores_are_probabilities': False}
+    s['repair_proposal'] = {'operations': [], 'geometry_residual': None, 'topology_budget': None,
+        'evidence_refs': [], 'jointly_inferred': True, 'applied': False}
+    s['routing'] = {
+        'policy': 'joint_state_to_instruction_conditioned_decision_no_hard_serial_prerequisite',
+        'projected_dual_domain': 'evidence_for_joint_support_and_geometry_inference_not_spatial_mix_gt',
+        'mixed': 'retain_component_responsibilities; jointly propose geometry/split/keep/defer',
+        'spatially_incompatible': 'inform_geometry_or_surface_proposal_not_universal_3sigma_veto',
+        'shadow': 'vehicle_owned_effect_with_world_receiver_geometry',
+        'uncertain': 'keep_or_defer; unexecuted_target_counts_as_edit_incompletion',
+    }
+    s['environment_control'] = {
+        'current_mode': 'frozen_original_environment_no_retraining',
+        'factorial': {'gaussians': ['baseline', 'treated'], 'fill': ['original_E', 'constant_linear_white']},
+        'shared': ['camera', 'timestamp', 'edit_request', 'display_transform'],
+        'float_outputs': ['gaussian_color', 'alpha', 'fill_contribution', 'final_rgb', 'raw_E_or_B'],
+        'frozen_parameters_imply_frozen_contribution': False,
+        'source_diagnosis_is_causal_training_explanation': False,
+    }
+    s['invariants'] += [
+        'candidate set and action set and contribution weights are separate',
+        'scene judgment is independent of requested delete/shift/rotate operation',
+        'joint inference is permitted; self-prediction cannot become independent GT',
+        'mixed responsibility and epistemic identity probability are separate',
+        'all new transferable heads remain untrained on scene1',
+        'constant-fill diagnosis does not claim completed background repair',
+    ]
+    s['invariants'] = [x.replace(
+        'failed or unverified after-edit separation retains unknown and does not establish editable ownership',
+        'failed or unverified separation makes editability/support-separation unknown; independently verified semantic/owner/motion are retained')
+        for x in s['invariants']]
+    s['editability'] = {'status': 'unknown', 'support_separation': 'unknown',
+        'independently_verified_identity_is_retained': True, 'evidence_refs': []}
+    return s
+
+def experiment_plan():
+    def task(id, purpose, depends=()):
+        return {'id': id, 'purpose': purpose, 'depends_on': list(depends), 'status': 'planned_not_executed'}
+    return {
+        'task_id': 'WS-V43-JOINT-DIRECTION-R4-20261030', 'artifact_kind': 'design_not_job_queue',
+        'jobs_started': 0, 'auto_schedule': False, 'new_training_updates': 0,
+        'mechanism_scenes': {'count_range': [3, 5], 'role': 'mechanism_not_generalization_claim',
+            'templates': ['single_vehicle_road_shadow', 'overlapping_vehicles', 'wide_view_occlusion_reveal', 'lighting_and_dark_road'],
+            'reference_source': 'independent_clean_object_surface_renderer',
+            'edits': ['none', 'delete', 'translate', 'rotate', 'lighting_change', 'body_shadow_2x2'],
+            'perturbations': ['missing_assignment', 'wrong_depth', 'cross_boundary_mixed_support', 'baked_shadow', 'temporal_identity_error'],
+            'split_keys': ['physical_scene', 'vehicle_donor', 'road_lighting_layout', 'perturbation_ancestor'],
+            'unique_gaussian_class_gt_required': False},
+        'tasks': [task('M0', 'validate independent references and rendering interface'),
+                  task('ENV', 'scene1 fixed original environment versus constant fill paired diagnosis'),
+                  task('M1', 'ideal ownership on fixed corrupted representation', ['M0']),
+                  task('M2', 'ideal geometry/split/effect repair with independent references', ['M0']),
+                  task('M3', 'full target coverage plus added true background candidates', ['M1']),
+                  task('M4', 'small shared-model learning on separate scenes', ['M1', 'M2'])],
+        'parallel_groups': [['M0', 'ENV'], ['M1', 'M2']],
+        'ablations': ['feature_threshold', 'probability_decision_only', 'representation_repair_only', 'joint'],
+        'coupling_controls': ['sequential_freeze', 'joint_gradients', 'cross_head_stop_gradient'],
+        'comparison_contract': {'match_candidate_recall': True, 'match_edit_coverage': True,
+            'abstained_targets_remain_in_denominator': True, 'report_capacity_and_compute': True,
+            'oracle_truth_for_actual_method_tuning': False, 'reference_unlimited_capacity_is_fair_baseline': False},
+        'scene1': {'role': 'inference_and_development_diagnostics',
+            'train_new_transferable_modules': False, 'test_time_state_optimization_report_separately': True},
+        'environment': {'train_environment': False, 'paired_fill': ['frozen_original', 'constant_linear_white'],
+            'save_float': ['gaussian_color', 'alpha', 'fill_contribution', 'final_rgb', 'raw_E_or_B']},
+        'session_execution': {'autodl_auto_shutdown': False, 'shutdown_requires_explicit_user_request': True,
+            'allowed_subagent_models': ['gpt-6.1-sol', 'gpt-6.1-terra'], 'long_run_real_smoke_minutes': 10},
+        'human_verdict': None,
+    }
+
+def upgrade_state(s):
+    s.update(architecture_revision=4, priority='high_recall_local_joint_editable_decomposition',
+        scope='design_and_experiment_contract_revision_only',
+        shared_joint_decomposition_implemented=False,
+        first_experiment_order=['small_independent_mechanism_set_and_environment_control',
+            'ideal_ownership_and_representation_upper_bounds_parallel', 'candidate_expansion', 'small_joint_learning'],
+        scene1_classifier_role='inference_development_only_no_new_transferable_module_training',
+        automatic_autodl_shutdown_allowed=False, shutdown_requires_explicit_user_request=True,
+        allowed_subagent_models=['gpt-6.1-sol', 'gpt-6.1-terra'],
+        new_training_updates_this_revision=0, remote_compute_this_revision=False,
+        training_update_count_scope='revision4_design_only; current_short_probe_is_historical_revision3')
+    s['historical_probe_interpretation'] = 'specific_initializer_and_radiometric_refit_negative_result_not_joint_learning_impossibility'
+    return s
