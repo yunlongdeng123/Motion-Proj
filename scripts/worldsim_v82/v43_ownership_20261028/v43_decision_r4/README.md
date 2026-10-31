@@ -16,6 +16,7 @@ flowchart LR
 - `isolated_reference_scorer.py`：参考只在此进程读取；先校验真实掩码语义及冻结上下文，再算联合操作目标、逐操作硬约束及分母。真实场景无完整反事实时不填 D/C。
 - `audit_development_scores.py`：独立核对有限域、目标归一化及约束算术。
 - `freeze_legal_responsibility.py`：合法 none 贡献探针。旧候选上的历史探针不是有效主比较；新动作域必须先重新冻结，并按实际非空组数评价。
+- `actor_diagnostics_20261101/`：[逐车完整时序、真实LiDAR与编辑前证据核查](../../../../docs/autoresearch/v43_ownership_20261028/actor_diagnostics_20261101/report.html)，准备候选不等于正式资格。
 - `actor_screen/`：全片注释辅助车辆登记、49 帧准备窗口与可视候选导入；准备顺序不等于正式资格、掩码或编辑成功。
 
 ```bash

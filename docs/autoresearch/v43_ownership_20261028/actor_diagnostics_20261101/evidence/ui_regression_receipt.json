@@ -1,0 +1,185 @@
+{
+  "schema": "actor_diagnostics_ui_regression_v1",
+  "passed": true,
+  "source_sha256": {
+    "shared": {
+      "index.html": "17c31e0917054677f7842722876f5cf215c1e451e96ac2c2db95f3c423c334ff",
+      "data.js": "8f818692921d0a1f9b921c6bd2b1733fed26ca6d43af7d5eac36233b905ee97c",
+      "actor_names.js": "9b91c3c5a4fa92969a34816809a0d839e15fd42e1e6ee1baac094b555ce0d89e",
+      "actor_annotations.js": "45172696754c9186a53011591a3f56dd29e4de9997c3f62060f20ac174b2653f",
+      "actor_eligibility.js": "16915e71cc7009c4cf4f35edb2c4b116e53e700d33294b1ade12b046d60d6b86",
+      "viewer.js": "f2cdcea65d56e42ba0c0dd2da9b32a751cc177fbea5b6f8aab8f7c67f901f795",
+      "sync_panel.js": "606e10a36bbbc94e67d7efca9764160d180d0df9e2db3340e7b0664ed68e88ad",
+      "sync_panel.css": "3f730f06444d07b4e80a9572380a3cc12b153aae45cb33f0ad7c0cff3dcc7935",
+      "geometry/gs_evidence.js": "99427a2ade1e303b3629bf763690eef5ea5ed76d164e61b39a643ca221432856"
+    },
+    "mirror": {
+      "index.html": "ae82b52cf59469e9da3aea04fcbcb6e84b210693b3765fdd8988dfc533a2eb07",
+      "data.js": "8f818692921d0a1f9b921c6bd2b1733fed26ca6d43af7d5eac36233b905ee97c",
+      "actor_names.js": "9b91c3c5a4fa92969a34816809a0d839e15fd42e1e6ee1baac094b555ce0d89e",
+      "actor_annotations.js": "45172696754c9186a53011591a3f56dd29e4de9997c3f62060f20ac174b2653f",
+      "actor_eligibility.js": "16915e71cc7009c4cf4f35edb2c4b116e53e700d33294b1ade12b046d60d6b86",
+      "viewer.js": "f2cdcea65d56e42ba0c0dd2da9b32a751cc177fbea5b6f8aab8f7c67f901f795",
+      "sync_panel.js": "606e10a36bbbc94e67d7efca9764160d180d0df9e2db3340e7b0664ed68e88ad",
+      "sync_panel.css": "3f730f06444d07b4e80a9572380a3cc12b153aae45cb33f0ad7c0cff3dcc7935",
+      "geometry/gs_evidence.js": "99427a2ade1e303b3629bf763690eef5ea5ed76d164e61b39a643ca221432856"
+    }
+  },
+  "pages": [
+    {
+      "page": "shared",
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\outputs\\GS_Scene_Diagnostics_20261027\\actor_candidates",
+      "duplicate_ids": [],
+      "missing_static_refs": [],
+      "syntax": {
+        "data.js": true,
+        "actor_names.js": true,
+        "actor_annotations.js": true,
+        "actor_eligibility.js": true,
+        "viewer.js": true,
+        "sync_panel.js": true,
+        "geometry/gs_evidence.js": true
+      },
+      "overlay_canvas_transparent": true,
+      "report_links": []
+    },
+    {
+      "page": "mirror",
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\outputs\\V43_R4_GPU_20261031\\actor_candidates",
+      "duplicate_ids": [],
+      "missing_static_refs": [],
+      "syntax": {
+        "data.js": true,
+        "actor_names.js": true,
+        "actor_annotations.js": true,
+        "actor_eligibility.js": true,
+        "viewer.js": true,
+        "sync_panel.js": true,
+        "geometry/gs_evidence.js": true
+      },
+      "overlay_canvas_transparent": true,
+      "report_links": []
+    }
+  ],
+  "root_navigation": {
+    "scenario_card_count": 4,
+    "actor_candidates_link_count": 1
+  },
+  "shared_mirror_source_parity": {
+    "data.js": true,
+    "actor_names.js": true,
+    "actor_annotations.js": true,
+    "actor_eligibility.js": true,
+    "viewer.js": true,
+    "sync_panel.js": true,
+    "sync_panel.css": true,
+    "geometry/gs_evidence.js": true
+  },
+  "tests": [
+    {
+      "page": "shared",
+      "test": "test_sync.js",
+      "passed": true,
+      "output": "PASS: frame stepping/current trajectory sync, GS anchor, async actor race, current-frame LiDAR, zero/missing LiDAR and absent-scene fallback.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_hash.js",
+      "passed": true,
+      "output": "PASS: stable hash selection for waymo-train-212/a0 and waymo-train-537/a148.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_trajectory_full.js",
+      "passed": true,
+      "output": "PASS complete 212/a0 raw1/2/3 markers; two actual track gaps are not connected and missing frames have no marker.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_212_gs_media.js",
+      "passed": true,
+      "output": "PASS: actual 212/a0 GS data and full media, three anchors, synchronized raw101.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_537_real.js",
+      "passed": true,
+      "output": "PASS actual 537/a148: initial raw194, raw35 no FRONT projection, jump returns raw194.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_frame_failure.js",
+      "passed": true,
+      "output": "PASS real frame 0 → missing probe frame 1 → real frame 2 → displayed-image failure frame 3 → real frame 0; stale image hidden in both error paths.",
+      "error": ""
+    },
+    {
+      "page": "shared",
+      "test": "test_zero_actor.js",
+      "passed": true,
+      "output": "PASS real 212/a13 aggregate zero: independent frame mode distinguishes measured zero from no annotation.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_sync.js",
+      "passed": true,
+      "output": "PASS: frame stepping/current trajectory sync, GS anchor, async actor race, current-frame LiDAR, zero/missing LiDAR and absent-scene fallback.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_hash.js",
+      "passed": true,
+      "output": "PASS: stable hash selection for waymo-train-212/a0 and waymo-train-537/a148.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_trajectory_full.js",
+      "passed": true,
+      "output": "PASS complete 212/a0 raw1/2/3 markers; two actual track gaps are not connected and missing frames have no marker.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_212_gs_media.js",
+      "passed": true,
+      "output": "PASS: actual 212/a0 GS data and full media, three anchors, synchronized raw101.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_537_real.js",
+      "passed": true,
+      "output": "PASS actual 537/a148: initial raw194, raw35 no FRONT projection, jump returns raw194.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_frame_failure.js",
+      "passed": true,
+      "output": "PASS real frame 0 → missing probe frame 1 → real frame 2 → displayed-image failure frame 3 → real frame 0; stale image hidden in both error paths.",
+      "error": ""
+    },
+    {
+      "page": "mirror",
+      "test": "test_zero_actor.js",
+      "passed": true,
+      "output": "PASS real 212/a13 aggregate zero: independent frame mode distinguishes measured zero from no annotation.",
+      "error": ""
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Node tests simulate DOM and field loading; no browser interaction is claimed.",
+    "frame/image/LiDAR comparisons use actual source data where indicated in test output; gap and zero cases remain source-bound.",
+    "File URL browser restrictions were not bypassed.",
+    "The 212 cross-runtime strict 2e-5 coordinate check separately failed (approximately 0.976 mm); these UI tests do not assert geometric parity or formal eligibility."
+  ]
+}

@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-ACTOR-DIAGNOSTICS-20261101 / fullclip-source-r1 | 15场2975帧、1228车辆的完整RGB/3D框与真实LiDAR；45准备车独立源证据，9车27锚26有效1缺pose，正式资格未知；零训练，展示修复F09/F10 | [独立说明与组件图](autoresearch/v43_ownership_20261028/actor_diagnostics_20261101/report.html) |
 | WS-V43-R4-GPU-SMALL-20261031 / maskfix-coarse + actor-screen | 15 Waymo context、1,228车辆、45准备候选；修正RGBA输入后288原生主输出，M0/hybrid有限域改善0.000466/0.005754，保留rotate恶化与C未知；零训练，旧仿真192无效；失败V82-F07/F08 | [报告与组件图](autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/report.html) |
 | WS-V43-HF-SOURCE-TRACE-20261031 / source-r1 | 11/11 展示场景原始首帧→具体 validation context，035 四锚时序；121 对比较、50 完整 raw 库存盘点、10 首记录共 57.318 MiB；未训练/重建 | [来源与库存报告](autoresearch/v43_ownership_20261028/HorizonForge_Waymo_Source_Trace_20261031/report.html) |
 | WS-V43-R4-CPU-20261031 / run_r1 | 3 配置 / 2 已有祖先 / 12 任务；合法 LiDAR 邻域候选、三组八方案共享动作域与 CPU 完整输入合同；13 结构检查通过；GPU续验发现仿真RGBA候选错误，已勘误并由maskfix新域替代，真实候选不受影响；当时原生渲染/训练0 | [报告与组件图](autoresearch/v43_ownership_20261028/decision_r4_cpu_20261031/report.html) |

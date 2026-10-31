@@ -1,0 +1,78 @@
+{
+  "schema": "independent_actor_media_scene_audit_v1",
+  "status": "PASS_STORED_POINT_IDENTITIES_AND_THREE_ORIGINAL_RECORD_CONTROLS",
+  "context_id": "13299463771883949918_4240_000_4260_000",
+  "scene_key": "waymo-val-035",
+  "full_frames": 198,
+  "actors": 83,
+  "box_filtered_measured_rows": 2231948,
+  "aggregate_display_rows": 539868,
+  "independent_frame_display_rows": 1048595,
+  "labelled_actor_frame_observations": 6202,
+  "all_nonzero_measured_frames_have_nonempty_independent_display": true,
+  "per_frame_voxel_and_cap_recomputed": true,
+  "source_identity_tuple_unique_within_actor": true,
+  "max_OBB_excess_m": 7.684249877737415e-06,
+  "max_display_rounding_m": 5.054473876953125e-05,
+  "original_control_records": [
+    {
+      "raw": 0,
+      "decoded_sensor_points": 177589,
+      "reconstructed_actor_rows": 16661
+    },
+    {
+      "raw": 99,
+      "decoded_sensor_points": 179562,
+      "reconstructed_actor_rows": 10098
+    },
+    {
+      "raw": 197,
+      "decoded_sensor_points": 180844,
+      "reconstructed_actor_rows": 2686
+    }
+  ],
+  "original_control_frames_required": [
+    0,
+    99,
+    197
+  ],
+  "original_control_frames_checked": [
+    0,
+    99,
+    197
+  ],
+  "original_control_actor_rows": 29445,
+  "original_control_local_reconstruction_max_abs_m": 2.3793673964433992e-07,
+  "original_full_record_CRC_context_reread": true,
+  "CRC_checked_records_local": 198,
+  "controls_source_paths": [
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\raw\\segment-13299463771883949918_4240_000_4260_000_with_camera_labels.tfrecord"
+  ],
+  "GPU_queries": 0,
+  "remote_queries": 0,
+  "human_quality_verdict": null,
+  "limits": [
+    "algebra/identity consistency is not sensor absolute accuracy",
+    "box-filtered rows are not instance segmentation or complete surface",
+    "TOP ego-motion compensation does not compensate within-scan actor motion",
+    "color has FOV guard but no occlusion zbuffer",
+    "projection is image-pose approximation without row rolling shutter/actor exposure motion correction",
+    "three-control subset reread is distinguished from full-original TFRecord reread",
+    "formal geometry/view/background/motion eligibility remains unknown"
+  ],
+  "source_files": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\build_media.py",
+      "sha256": "a8a840e261b7f9798ea428fbcaae10eb3a64f9a43512b14497e14fd074eadf94"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\media.json",
+      "sha256": "561ec3d9a4d210ad09e73a1e700f92785cbf04666c3e20c5a3c99987dc02c524"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\manifest.json",
+      "sha256": "6351810103ba912044ee0e704b0639889431fe2fd1f7a4d809be9731dc3444d4"
+    }
+  ],
+  "wall_seconds": 16.557228000019677
+}

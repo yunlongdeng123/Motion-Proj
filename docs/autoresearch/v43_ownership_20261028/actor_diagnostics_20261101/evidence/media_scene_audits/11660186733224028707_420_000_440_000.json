@@ -1,0 +1,86 @@
+{
+  "schema": "independent_actor_media_scene_audit_v1",
+  "status": "PASS_STORED_POINT_IDENTITIES_AND_THREE_ORIGINAL_RECORD_CONTROLS",
+  "context_id": "11660186733224028707_420_000_440_000",
+  "scene_key": "waymo-val-020",
+  "full_frames": 197,
+  "actors": 91,
+  "box_filtered_measured_rows": 5634814,
+  "aggregate_display_rows": 487164,
+  "independent_frame_display_rows": 1959273,
+  "labelled_actor_frame_observations": 9010,
+  "all_nonzero_measured_frames_have_nonempty_independent_display": true,
+  "per_frame_voxel_and_cap_recomputed": true,
+  "source_identity_tuple_unique_within_actor": true,
+  "max_OBB_excess_m": 9.589195251513694e-06,
+  "max_display_rounding_m": 5.030632019042969e-05,
+  "original_control_records": [
+    {
+      "raw": 0,
+      "decoded_sensor_points": 188871,
+      "reconstructed_actor_rows": 18588
+    },
+    {
+      "raw": 98,
+      "decoded_sensor_points": 184177,
+      "reconstructed_actor_rows": 30999
+    },
+    {
+      "raw": 196,
+      "decoded_sensor_points": 194135,
+      "reconstructed_actor_rows": 30349
+    }
+  ],
+  "original_control_frames_required": [
+    0,
+    98,
+    196
+  ],
+  "original_control_frames_checked": [
+    0,
+    98,
+    196
+  ],
+  "original_control_actor_rows": 79936,
+  "original_control_local_reconstruction_max_abs_m": 2.3112280267412189e-07,
+  "original_control_actors_represented": 66,
+  "strict_original_control_tolerance_m": 2e-05,
+  "strict_original_control_coordinate_and_color_parity_pass": true,
+  "original_control_coordinate_median_m": 2.5646899437514747e-08,
+  "original_control_coordinate_p99_m": 1.1377729176587082e-07,
+  "original_control_rows_over_strict_tolerance": 0,
+  "original_control_color_flag_mismatches": 0,
+  "source_row_reassignment_or_nearest_neighbor_used": false,
+  "original_full_record_CRC_context_reread": true,
+  "CRC_checked_records_local": 197,
+  "controls_source_paths": [
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\raw\\segment-11660186733224028707_420_000_440_000_with_camera_labels.tfrecord"
+  ],
+  "GPU_queries": 0,
+  "remote_queries": 0,
+  "human_quality_verdict": null,
+  "limits": [
+    "algebra/identity consistency is not sensor absolute accuracy",
+    "box-filtered rows are not instance segmentation or complete surface",
+    "TOP ego-motion compensation does not compensate within-scan actor motion",
+    "color has FOV guard but no occlusion zbuffer",
+    "projection is image-pose approximation without row rolling shutter/actor exposure motion correction",
+    "three-control subset reread is distinguished from full-original TFRecord reread",
+    "formal geometry/view/background/motion eligibility remains unknown"
+  ],
+  "source_files": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\build_media.py",
+      "sha256": "81ba35be1c3c613503d473d8cbab5c052929145c26f9b040d8d4d3147a65ffa5"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\11660186733224028707_420_000_440_000\\media.json",
+      "sha256": "61d9b709bfa802ee8ce6f9009b9881bdad65ef12c8ed17712e6b48c598dae413"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\11660186733224028707_420_000_440_000\\manifest.json",
+      "sha256": "7b75c2d680bf41115c76a3ced7bd0249c3c6bc1c3d3d21720922422e50c6ac4c"
+    }
+  ],
+  "wall_seconds": 35.24391309998464
+}

@@ -1,0 +1,5204 @@
+{
+  "schema": "read_only_xlsx_source_extraction_v1",
+  "source": "C:\\Users\\dengyunlong\\Downloads\\editor_badcase_analysis.xlsx",
+  "sha256": "52d17630cfb66375dc8fd049a64129c99dd5544c26026f591e9e6cf0a5a4b032",
+  "sheets": [
+    {
+      "name": "V43",
+      "xml": "xl/worksheets/sheet1.xml",
+      "cells": [
+        {
+          "cell": "A1",
+          "value": "大类",
+          "formula": null
+        },
+        {
+          "cell": "B1",
+          "value": "情况",
+          "formula": null
+        },
+        {
+          "cell": "C1",
+          "value": "具体例子",
+          "formula": null
+        },
+        {
+          "cell": "D1",
+          "value": "当前证据",
+          "formula": null
+        },
+        {
+          "cell": "E1",
+          "value": "通俗理解",
+          "formula": null
+        },
+        {
+          "cell": "F1",
+          "value": "V43 理论覆盖",
+          "formula": null
+        },
+        {
+          "cell": "G1",
+          "value": "需要具备的能力",
+          "formula": null
+        },
+        {
+          "cell": "H1",
+          "value": "V43 建议覆盖（收敛版）",
+          "formula": null
+        },
+        {
+          "cell": "A2",
+          "value": "身份与高斯选择问题",
+          "formula": null
+        },
+        {
+          "cell": "B2",
+          "value": "1. 身份或对象归属错误",
+          "formula": null
+        },
+        {
+          "cell": "C2",
+          "value": "本该随目标车运动的高斯被留在静态分支；删除目标车时没有处理它。也可能把相邻车辆的点绑到目标车。",
+          "formula": null
+        },
+        {
+          "cell": "D2",
+          "value": "新仿真中，删除动态分支后仍有车形残留；哪些行确属车辆，尚未逐一确认。",
+          "formula": null
+        },
+        {
+          "cell": "E2",
+          "value": "汽车的高斯被错误地当成了道路高斯。本质是高斯分错了组。",
+          "formula": null
+        },
+        {
+          "cell": "F2",
+          "value": "核心目标",
+          "formula": null
+        },
+        {
+          "cell": "G2",
+          "value": "判断高斯应该跟车还是留在静态场景",
+          "formula": null
+        },
+        {
+          "cell": "H2",
+          "value": "核心研究，编辑感知的高斯归属与候选召回",
+          "formula": null
+        },
+        {
+          "cell": "B3",
+          "value": "2. 候选检测漏选",
+          "formula": null
+        },
+        {
+          "cell": "C3",
+          "value": "高斯位置在车体附近，却因为深度不匹配、贡献太小或不在掩码内，没有进入 unknown。",
+          "formula": null
+        },
+        {
+          "cell": "D3",
+          "value": "**已实测。**严格几何选点在后两锚点只覆盖约 1.4%–7.6% 的删前静态车像素贡献。",
+          "formula": null
+        },
+        {
+          "cell": "E3",
+          "value": "有问题的高斯存在，但你的检测算法根本没找到它。",
+          "formula": null
+        },
+        {
+          "cell": "F3",
+          "value": "核心前提",
+          "formula": null
+        },
+        {
+          "cell": "G3",
+          "value": "不只检测删前可见高斯，还要覆盖潜在残影来源",
+          "formula": null
+        },
+        {
+          "cell": "H3",
+          "value": "核心研究，编辑感知的高斯归属与候选召回",
+          "formula": null
+        },
+        {
+          "cell": "B4",
+          "value": "3. 删除后显露新来源",
+          "formula": null
+        },
+        {
+          "cell": "C4",
+          "value": "删掉前面一层，后面原本几乎不可见的错误高斯露出来，接着形成车影。",
+          "formula": null
+        },
+        {
+          "cell": "D4",
+          "value": "**已实测。**旧模型中，约 78% 的删后区域贡献来自原观测下极弱可见的行。",
+          "formula": null
+        },
+        {
+          "cell": "E4",
+          "value": "原来有些错误高斯被汽车挡住了，删车后才露出来。不是新生成了高斯，而是旧高斯变得可见了。",
+          "formula": null
+        },
+        {
+          "cell": "F4",
+          "value": "核心前提",
+          "formula": null
+        },
+        {
+          "cell": "G4",
+          "value": "重新计算编辑后的可见性，识别新显露高斯",
+          "formula": null
+        },
+        {
+          "cell": "H4",
+          "value": "核心研究，编辑感知的高斯归属与候选召回",
+          "formula": null
+        },
+        {
+          "cell": "A5",
+          "value": "高斯本身的表示问题",
+          "formula": null
+        },
+        {
+          "cell": "B5",
+          "value": "4. 几何位置或尺度错误",
+          "formula": null
+        },
+        {
+          "cell": "C5",
+          "value": "一个高斯在车后方，却靠很宽的投影足迹参与拼车；换视角或移动车辆后露馅。",
+          "formula": null
+        },
+        {
+          "cell": "D5",
+          "value": "行 461782 的中心深度约 11.56m，原车表面约 9.23m，深度差已测得，但不能仅据此确定正确身份和位置。",
+          "formula": null
+        },
+        {
+          "cell": "E5",
+          "value": "高斯的位置不对，或者体积太大。本质是高斯的空间表示不准确。",
+          "formula": null
+        },
+        {
+          "cell": "F5",
+          "value": "核心目标",
+          "formula": null
+        },
+        {
+          "cell": "G5",
+          "value": "局部调整位置、尺度、旋转",
+          "formula": null
+        },
+        {
+          "cell": "H5",
+          "value": "条件性扩展，只有颜色修复不足时，才引入几何优化与拆分",
+          "formula": null
+        },
+        {
+          "cell": "B6",
+          "value": "5. 表面身份正确，外观错误",
+          "formula": null
+        },
+        {
+          "cell": "C6",
+          "value": "真正对应道路的高斯学到了红色车身颜色。分类为 road 正确，保留下来仍会呈现红色残影。",
+          "formula": null
+        },
+        {
+          "cell": "D6",
+          "value": "**这是待验证的具体解释。**颜色替换敏感性实验已有改善，但尚未证明相关行都是纯道路。",
+          "formula": null
+        },
+        {
+          "cell": "E6",
+          "value": "本质是几何正确，但颜色学错了。",
+          "formula": null
+        },
+        {
+          "cell": "F6",
+          "value": "核心目标",
+          "formula": null
+        },
+        {
+          "cell": "G6",
+          "value": "保留几何，修正外观参数",
+          "formula": null
+        },
+        {
+          "cell": "H6",
+          "value": "必须验证，按需开发，如果归属正确仍有颜色污染，就必须支持外观修复",
+          "formula": null
+        },
+        {
+          "cell": "B7",
+          "value": "6. 一颗高斯承担多个表面",
+          "formula": null
+        },
+        {
+          "cell": "C7",
+          "value": "一个宽高斯同时拼车门和后方道路；整颗删除伤道路，整颗保留留车影。",
+          "formula": null
+        },
+        {
+          "cell": "D7",
+          "value": "双域贡献已实测；双域投影不等于真实混合支撑。当前拆分尚未成功验证分离。",
+          "formula": null
+        },
+        {
+          "cell": "E7",
+          "value": "一颗高斯同时被用来拼汽车和道路。",
+          "formula": null
+        },
+        {
+          "cell": "F7",
+          "value": "核心目标",
+          "formula": null
+        },
+        {
+          "cell": "G7",
+          "value": "必要时局部拆分高斯",
+          "formula": null
+        },
+        {
+          "cell": "H7",
+          "value": "条件性扩展，只有颜色修复不足时，才引入几何优化与拆分",
+          "formula": null
+        },
+        {
+          "cell": "A8",
+          "value": "遮挡、阴影与背景问题",
+          "formula": null
+        },
+        {
+          "cell": "B8",
+          "value": "7. 车辆关联效应留在其他表面",
+          "formula": null
+        },
+        {
+          "cell": "C8",
+          "value": "车被删了，路面上的车底阴影还在；横移后旧阴影没消失。反射、间接光变化也属于这一类关联效应。",
+          "formula": null
+        },
+        {
+          "cell": "D8",
+          "value": "车底暗区已有观察；仿真有阴影开关对照，但还没有精确阴影标签或完整效应分解。",
+          "formula": null
+        },
+        {
+          "cell": "E8",
+          "value": "车删了，但车制造的阴影、反射还在。这是编辑光照一致性问题。",
+          "formula": null
+        },
+        {
+          "cell": "F8",
+          "value": "部分覆盖",
+          "formula": null
+        },
+        {
+          "cell": "G8",
+          "value": "可修复烘焙的暗色，但不负责完整光照重算",
+          "formula": null
+        },
+        {
+          "cell": "H8",
+          "value": "作为能力边界，精确区分阴影、缺失观测、环境残影，不承诺全部解决",
+          "formula": null
+        },
+        {
+          "cell": "B9",
+          "value": "8. 背景本来就没重建好或没被看见",
+          "formula": null
+        },
+        {
+          "cell": "C9",
+          "value": "车下面的道路一直被遮挡；删车后那里缺几何、缺颜色，只剩空洞或错误补偿。",
+          "formula": null
+        },
+        {
+          "cell": "D9",
+          "value": "**观测缺失已确认。**旧输入对目标道路采样只有约 50.5% 至少看见过一次；不能据此断言所有空洞都由它造成。",
+          "formula": null
+        },
+        {
+          "cell": "E9",
+          "value": "模型根本不知道车底下的道路长什么样。本质是缺少观测，而不只是分类错误。",
+          "formula": null
+        },
+        {
+          "cell": "F9",
+          "value": "不覆盖",
+          "formula": null
+        },
+        {
+          "cell": "G9",
+          "value": "需要额外的道路补全能力",
+          "formula": null
+        },
+        {
+          "cell": "H9",
+          "value": "作为能力边界，精确区分阴影、缺失观测、环境残影，不承诺全部解决",
+          "formula": null
+        },
+        {
+          "cell": "B10",
+          "value": "9. 环境层参与形成残影",
+          "formula": null
+        },
+        {
+          "cell": "C10",
+          "value": "高斯已删空，但环境贴图回填出一条黑带。此时没有对应高斯可继续标 unknown。",
+          "formula": null
+        },
+        {
+          "cell": "D10",
+          "value": "**已有实测案例。**真实场景一后期剥离中，指定区域高斯 alpha 为 0，暗带来自环境项。",
+          "formula": null
+        },
+        {
+          "cell": "E10",
+          "value": "删车后，露出来的不是道路，而是背景贴图里的错误颜色。与前面不同，这种残影可能已经没有任何高斯贡献。",
+          "formula": null
+        },
+        {
+          "cell": "F10",
+          "value": "不覆盖",
+          "formula": null
+        },
+        {
+          "cell": "G10",
+          "value": "需要独立环境回填处理",
+          "formula": null
+        },
+        {
+          "cell": "H10",
+          "value": "作为能力边界，精确区分阴影、缺失观测、环境残影，不承诺全部解决",
+          "formula": null
+        },
+        {
+          "cell": "A11",
+          "value": "渲染数值与编辑问题",
+          "formula": null
+        },
+        {
+          "cell": "B11",
+          "value": "10. 数值与合成放大异常",
+          "formula": null
+        },
+        {
+          "cell": "C11",
+          "value": "高斯颜色大于 1、环境颜色为负，原图中相互补偿；删除后补偿关系改变，PNG 截断成彩色噪声、白块或黑块。",
+          "formula": null
+        },
+        {
+          "cell": "D11",
+          "value": "**越界数值已测得。**例如某行视向颜色约 [0, 2.04, 2.38]；但越界存在不等于已解释全部训练成因。",
+          "formula": null
+        },
+        {
+          "cell": "E11",
+          "value": "原图依靠两层错误颜色互相抵消，看起来才正常。本质是渲染的数值不稳定或存在异常补偿。",
+          "formula": null
+        },
+        {
+          "cell": "F11",
+          "value": "工程前提",
+          "formula": null
+        },
+        {
+          "cell": "G11",
+          "value": "修正数值范围、合成与诊断机制",
+          "formula": null
+        },
+        {
+          "cell": "H11",
+          "value": "作为工程门禁，必须排除，但不作为科研贡献",
+          "formula": null
+        },
+        {
+          "cell": "B12",
+          "value": "11. 编辑后的覆盖、遮挡或视向外观改变",
+          "formula": null
+        },
+        {
+          "cell": "C12",
+          "value": "转向时高斯数量、opacity 参数没有变，但投影覆盖变稀、静态遮挡增加，车看起来更淡；或者外观方向处理与几何旋转不一致。",
+          "formula": null
+        },
+        {
+          "cell": "D12",
+          "value": "此前场景一转向诊断支持覆盖与遮挡变化；不能一律靠增大 opacity 修复。",
+          "formula": null
+        },
+        {
+          "cell": "E12",
+          "value": "同一辆车的高斯没变，但换个方向看，拼出来的汽车却变淡了。本质是高斯表示在编辑后的新姿态下不够稳定。",
+          "formula": null
+        },
+        {
+          "cell": "F12",
+          "value": "部分覆盖",
+          "formula": null
+        },
+        {
+          "cell": "G12",
+          "value": "几何修复可能改善，但不保证解决",
+          "formula": null
+        },
+        {
+          "cell": "H12",
+          "value": "作为验收条件，检查删除、横移、转向后的效果",
+          "formula": null
+        },
+        {
+          "cell": "B13",
+          "value": "12. 时间状态或跨帧绑定不稳定",
+          "formula": null
+        },
+        {
+          "cell": "C13",
+          "value": "同一车辆的某部分在这一帧被当作车，下一帧又被留作背景；或者轨迹、时间映射不一致，产生拖尾和跳动。",
+          "formula": null
+        },
+        {
+          "cell": "D13",
+          "value": "**待完整时序验收。**目前不能把三个锚点通过当作逐帧稳定。",
+          "formula": null
+        },
+        {
+          "cell": "E13",
+          "value": "同一辆车，在不同时间帧里，高斯身份或位置不一致。本质是跨时间的身份、运动或渲染状态不一致。",
+          "formula": null
+        },
+        {
+          "cell": "F13",
+          "value": "核心目标",
+          "formula": null
+        },
+        {
+          "cell": "G13",
+          "value": "同一对象跨帧共享身份及运动绑定",
+          "formula": null
+        },
+        {
+          "cell": "H13",
+          "value": "必须满足一致性，跨帧共享实例身份；不必重新发明整套运动模型",
+          "formula": null
+        },
+        {
+          "cell": "A14",
+          "value": "工程问题",
+          "formula": null
+        },
+        {
+          "cell": "B14",
+          "value": "13. 工程或可视化接线错误",
+          "formula": null
+        },
+        {
+          "cell": "C14",
+          "value": "右侧 3D 已改 unknown，左侧仍显示旧 RGB；或像素查询、相机、编辑参数没有同步。",
+          "formula": null
+        },
+        {
+          "cell": "D14",
+          "value": "曾出现仅改变预览而未重渲染的展示状态；仿真适配也修过半像素查询问题。这些应先排除，不能当科研机制解释。",
+          "formula": null
+        },
+        {
+          "cell": "E14",
+          "value": "本质是实验展示或数据传递出了问题。",
+          "formula": null
+        },
+        {
+          "cell": "F14",
+          "value": "工程前提",
+          "formula": null
+        },
+        {
+          "cell": "G14",
+          "value": "保证真实重渲染和结果一致",
+          "formula": null
+        },
+        {
+          "cell": "H14",
+          "value": "作为工程门禁，必须排除，但不作为科研贡献",
+          "formula": null
+        }
+      ],
+      "hyperlinks": []
+    },
+    {
+      "name": "DIAL-GS",
+      "xml": "xl/worksheets/sheet2.xml",
+      "cells": [
+        {
+          "cell": "A1",
+          "value": "V43 编号",
+          "formula": null
+        },
+        {
+          "cell": "B1",
+          "value": "我们的错误类型",
+          "formula": null
+        },
+        {
+          "cell": "C1",
+          "value": "DIAL-GS 对应的发现或处理",
+          "formula": null
+        },
+        {
+          "cell": "D1",
+          "value": "对应程度",
+          "formula": null
+        },
+        {
+          "cell": "A2",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B2",
+          "value": "身份或对象归属错误",
+          "formula": null
+        },
+        {
+          "cell": "C2",
+          "value": "发现车辆高斯残留在静态区域，也发现道路等静态内容被错误分到动态区域；通过实例身份与运动联合学习改善",
+          "formula": null
+        },
+        {
+          "cell": "D2",
+          "value": "明确研究",
+          "formula": null
+        },
+        {
+          "cell": "A3",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B3",
+          "value": "候选检测漏选",
+          "formula": null
+        },
+        {
+          "cell": "C3",
+          "value": "远处、小目标、慢速目标容易误判；仅靠二维监督会遗漏车辆边界身份；使用时序不一致性和三维身份约束",
+          "formula": null
+        },
+        {
+          "cell": "D3",
+          "value": "部分涉及",
+          "formula": null
+        },
+        {
+          "cell": "A4",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B4",
+          "value": "删除后显露新来源",
+          "formula": null
+        },
+        {
+          "cell": "C4",
+          "value": "涉及隐藏的归属不完整问题，但没有专项测量删前弱可见、删后突然显露的高斯贡献",
+          "formula": null
+        },
+        {
+          "cell": "D4",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A5",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B5",
+          "value": "几何位置或尺度错误",
+          "formula": null
+        },
+        {
+          "cell": "C5",
+          "value": "使用深度监督、时变位置和运动属性优化，但不专门诊断或修复混入车辆的错误几何",
+          "formula": null
+        },
+        {
+          "cell": "D5",
+          "value": "部分涉及",
+          "formula": null
+        },
+        {
+          "cell": "A6",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B6",
+          "value": "道路身份正确、外观错误",
+          "formula": null
+        },
+        {
+          "cell": "C6",
+          "value": "没有专门研究道路高斯学到车身颜色后，怎样保留几何、修复颜色",
+          "formula": null
+        },
+        {
+          "cell": "D6",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A7",
+          "value": "6",
+          "formula": null
+        },
+        {
+          "cell": "B7",
+          "value": "一颗高斯承担多个表面",
+          "formula": null
+        },
+        {
+          "cell": "C7",
+          "value": "使用三维身份聚类，但没有明确的高斯拆分和混合表面修复机制",
+          "formula": null
+        },
+        {
+          "cell": "D7",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A8",
+          "value": "7",
+          "formula": null
+        },
+        {
+          "cell": "B8",
+          "value": "车辆阴影、反射残留",
+          "formula": null
+        },
+        {
+          "cell": "C8",
+          "value": "没有独立的车辆关联光照分解与修复机制",
+          "formula": null
+        },
+        {
+          "cell": "D8",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A9",
+          "value": "8",
+          "formula": null
+        },
+        {
+          "cell": "B9",
+          "value": "道路未被充分观测",
+          "formula": null
+        },
+        {
+          "cell": "C9",
+          "value": "指出远处、小目标因为观测有限而容易误判，但没有解决删除车辆后的遮挡道路补全",
+          "formula": null
+        },
+        {
+          "cell": "D9",
+          "value": "部分涉及",
+          "formula": null
+        },
+        {
+          "cell": "A10",
+          "value": "9",
+          "formula": null
+        },
+        {
+          "cell": "B10",
+          "value": "环境层产生残影",
+          "formula": null
+        },
+        {
+          "cell": "C10",
+          "value": "没有针对环境立方体贴图的残影来源分析或修复",
+          "formula": null
+        },
+        {
+          "cell": "D10",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A11",
+          "value": "10",
+          "formula": null
+        },
+        {
+          "cell": "B11",
+          "value": "数值与合成异常",
+          "formula": null
+        },
+        {
+          "cell": "C11",
+          "value": "讨论运动参数异常增大、过拟合，但没有专项研究我们发现的颜色越界和环境数值补偿",
+          "formula": null
+        },
+        {
+          "cell": "D11",
+          "value": "未专项研究",
+          "formula": null
+        },
+        {
+          "cell": "A12",
+          "value": "11",
+          "formula": null
+        },
+        {
+          "cell": "B12",
+          "value": "编辑后的覆盖、遮挡、视向变化",
+          "formula": null
+        },
+        {
+          "cell": "C12",
+          "value": "优化运动表示和重建一致性，但没有专门验证车辆转向后的投影覆盖与视向颜色异常",
+          "formula": null
+        },
+        {
+          "cell": "D12",
+          "value": "部分涉及",
+          "formula": null
+        },
+        {
+          "cell": "A13",
+          "value": "12",
+          "formula": null
+        },
+        {
+          "cell": "B13",
+          "value": "时间状态或跨帧绑定不稳定",
+          "formula": null
+        },
+        {
+          "cell": "C13",
+          "value": "明确指出同一辆车的不同高斯可能具有不一致的速度、生命周期；提出运动一致性约束",
+          "formula": null
+        },
+        {
+          "cell": "D13",
+          "value": "明确研究",
+          "formula": null
+        },
+        {
+          "cell": "A14",
+          "value": "13",
+          "formula": null
+        },
+        {
+          "cell": "B14",
+          "value": "工程或可视化接线错误",
+          "formula": null
+        },
+        {
+          "cell": "C14",
+          "value": "承认外部二维追踪器可能出错，但没有专门研究编辑界面、缓存或渲染接线错误",
+          "formula": null
+        },
+        {
+          "cell": "D14",
+          "value": "未专项研究",
+          "formula": null
+        }
+      ],
+      "hyperlinks": []
+    },
+    {
+      "name": "13类坏例证据",
+      "xml": "xl/worksheets/sheet3.xml",
+      "cells": [
+        {
+          "cell": "A2",
+          "value": "13类编辑坏例：Waymo实景与仿真证据分开看",
+          "formula": null
+        },
+        {
+          "cell": "A3",
+          "value": "项目要解决什么：把街景重建成可编辑三维；删车、移车或转向后，车辆应完整变化，原位置不留车影，背景尽量保持。",
+          "formula": null
+        },
+        {
+          "cell": "I3",
+          "value": "阅读说明 ↘",
+          "formula": null
+        },
+        {
+          "cell": "A4",
+          "value": "先认三个词：高斯＝组成三维场景的小椭球点；对象归属＝哪些点跟哪辆车一起编辑；候选＝先圈出的待检查点，还不是已判定车点。",
+          "formula": null
+        },
+        {
+          "cell": "A5",
+          "value": "参考有区别：Waymo多用同路段其他时刻露出的道路；仿真可独立生成同视角的删车答案。目前仿真只含一个程序化世界。",
+          "formula": null
+        },
+        {
+          "cell": "I5",
+          "value": "场景范围 ↘",
+          "formula": null
+        },
+        {
+          "cell": "A6",
+          "value": "读法：C看Waymo存在证据，D看仿真证据；F/G分别看优化结果；点击证据单元格可跳转。绿色只表示存在证据，不表示已经解决。",
+          "formula": null
+        },
+        {
+          "cell": "A7",
+          "value": "坏例号",
+          "formula": null
+        },
+        {
+          "cell": "B7",
+          "value": "白话问题（编号沿用原表）",
+          "formula": null
+        },
+        {
+          "cell": "C7",
+          "value": "Waymo实景：存在证据",
+          "formula": null
+        },
+        {
+          "cell": "D7",
+          "value": "仿真：存在证据",
+          "formula": null
+        },
+        {
+          "cell": "E7",
+          "value": "已经尝试什么（标明来源）",
+          "formula": null
+        },
+        {
+          "cell": "F7",
+          "value": "在Waymo上：有效／无效",
+          "formula": null
+        },
+        {
+          "cell": "G7",
+          "value": "在仿真上：有效／无效",
+          "formula": null
+        },
+        {
+          "cell": "H7",
+          "value": "为何没解决／还不能证明什么",
+          "formula": null
+        },
+        {
+          "cell": "I7",
+          "value": "对应实验明细",
+          "formula": null
+        },
+        {
+          "cell": "A8",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B8",
+          "value": "该随车一起删/移/转的点，是否被留在背景？",
+          "formula": null
+        },
+        {
+          "cell": "C8",
+          "value": "部分证实：真实删除后有车形残留；尚无可靠逐点归属真值。",
+          "formula": null
+        },
+        {
+          "cell": "D8",
+          "value": "部分证实：独立无车参考确认残影真实；仍不能给每颗高斯唯一身份。",
+          "formula": null
+        },
+        {
+          "cell": "E8",
+          "value": "Waymo：按贡献阈值移除、约束归属、编辑遮挡权重。\n仿真：固定点参数，只换随车编辑的集合。",
+          "formula": null
+        },
+        {
+          "cell": "F8",
+          "value": "局部遮挡优化能显著改善有参考区域；可靠共享归属与完整多编辑未通过。",
+          "formula": null
+        },
+        {
+          "cell": "G8",
+          "value": "严格选点漏掉主要来源，放宽又误改背景；尚未回答“准确归属能有多大收益”。",
+          "formula": null
+        },
+        {
+          "cell": "H8",
+          "value": "现象明确；把原因唯一归为身份错分仍是待验证解释，错几何、错颜色和缺观测都可能参与。",
+          "formula": null
+        },
+        {
+          "cell": "I8",
+          "value": "01 · 02 · 05 · 13 · 24 · 25 · 27",
+          "formula": null
+        },
+        {
+          "cell": "A9",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B9",
+          "value": "需要处理的点，有没有在第一轮就漏掉？",
+          "formula": null
+        },
+        {
+          "cell": "C9",
+          "value": "部分证实：严格规则几乎不动残影，放宽会伤背景；初始化也有候选留存路径。",
+          "formula": null
+        },
+        {
+          "cell": "D9",
+          "value": "已证实：严格规则只覆盖约1.4%–7.6%的删前贡献；扩到99.9%仍不够。",
+          "formula": null
+        },
+        {
+          "cell": "E9",
+          "value": "Waymo：严格/宽松阈值、逐帧剥离、初始化回放。\n仿真：扩候选并追查删后贡献。",
+          "formula": null
+        },
+        {
+          "cell": "F9",
+          "value": "找到阈值两难和候选变化；仍缺真正车辆点全集，不能报完整语义召回率。",
+          "formula": null
+        },
+        {
+          "cell": "G9",
+          "value": "扩大范围确实补到来源，但删前高覆盖不能保证删后来源全覆盖。",
+          "formula": null
+        },
+        {
+          "cell": "H9",
+          "value": "已测的是可见贡献覆盖；“哪些点实际属于车”和“最终哪些该编辑”仍需分开判断。",
+          "formula": null
+        },
+        {
+          "cell": "I9",
+          "value": "02 · 03 · 23 · 24 · 27",
+          "formula": null
+        },
+        {
+          "cell": "A10",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B10",
+          "value": "删掉前层后，原来藏着的错误来源会不会露出来？",
+          "formula": null
+        },
+        {
+          "cell": "C10",
+          "value": "未找到同等级专项验证：有残影，但不能直接拿残影当作这条机制的证据。",
+          "formula": null
+        },
+        {
+          "cell": "D10",
+          "value": "已证实：删后来源贡献猛增，约78.08%来自原输入中极弱可见的点。",
+          "formula": null
+        },
+        {
+          "cell": "E10",
+          "value": "仿真：重算删除后的所有保留点贡献；依次移除贡献靠前的32或512个点。",
+          "formula": null
+        },
+        {
+          "cell": "F10",
+          "value": "本表尚无相应的Waymo来源闭环优化结论。",
+          "formula": null
+        },
+        {
+          "cell": "G10",
+          "value": "来源已定位一大部分，但多删并不稳定更好，仍会伤正确背景。",
+          "formula": null
+        },
+        {
+          "cell": "H10",
+          "value": "78.08%是来源贡献占比，不是错误成因占比；也不表示这些点都应跟车删除。",
+          "formula": null
+        },
+        {
+          "cell": "I10",
+          "value": "03 · 05",
+          "formula": null
+        },
+        {
+          "cell": "A11",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B11",
+          "value": "点的位置、大小或覆盖范围是否不可靠？",
+          "formula": null
+        },
+        {
+          "cell": "C11",
+          "value": "部分证实：车辆点过度外扩可测；约束后外扩数能降到0。",
+          "formula": null
+        },
+        {
+          "cell": "D11",
+          "value": "部分证实：独立道路参考与删后深度/空间支撑不一致；正确逐点位置仍未建立。",
+          "formula": null
+        },
+        {
+          "cell": "E11",
+          "value": "Waymo：限制位移、尺度与增密。\n仿真：移点、缩小、拆分，再做短程外观拟合。",
+          "formula": null
+        },
+        {
+          "cell": "F11",
+          "value": "几何外扩受控，但碎片和车影仍在；不能当成恢复了真实表面。",
+          "formula": null
+        },
+        {
+          "cell": "G11",
+          "value": "拆分后的删除误差有下降；无编辑和横移反而变差，整体未通过。",
+          "formula": null
+        },
+        {
+          "cell": "H11",
+          "value": "框外中心不自动等于错误身份；深度不同也不能唯一决定某颗高斯该移到哪里。",
+          "formula": null
+        },
+        {
+          "cell": "I11",
+          "value": "02 · 06 · 07 · 08 · 25",
+          "formula": null
+        },
+        {
+          "cell": "A12",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B12",
+          "value": "已经确认是道路且几何正确，却只学错了颜色吗？",
+          "formula": null
+        },
+        {
+          "cell": "C12",
+          "value": "尚未独立证实完整前提；做过固定几何、归属的137点颜色拟合。",
+          "formula": null
+        },
+        {
+          "cell": "D12",
+          "value": "尚未独立证实完整前提；借独立无车答案改128个点的颜色能改善图像。",
+          "formula": null
+        },
+        {
+          "cell": "E12",
+          "value": "Waymo：只拟合少量有参考点的颜色。\n仿真：固定形状与透明度，直接用无车答案替换颜色。",
+          "formula": null
+        },
+        {
+          "cell": "F12",
+          "value": "137点误差降98.18%，但整片车影基本没变；只能说小范围颜色可优化。",
+          "formula": null
+        },
+        {
+          "cell": "G12",
+          "value": "目标区域误差约0.213→0.144；这是读答案的诊断，不是可部署修复算法。",
+          "formula": null
+        },
+        {
+          "cell": "H12",
+          "value": "颜色参与错误已见到；“身份和几何都正确，剩下只有颜色问题”仍未证明。",
+          "formula": null
+        },
+        {
+          "cell": "I12",
+          "value": "04 · 09 · 13 · 21",
+          "formula": null
+        },
+        {
+          "cell": "A13",
+          "value": "6",
+          "formula": null
+        },
+        {
+          "cell": "B13",
+          "value": "一颗高斯是否真的同时表示了车与道路？",
+          "formula": null
+        },
+        {
+          "cell": "C13",
+          "value": "尚未独立证实：跨车/路像素贡献存在，但两侧几何支撑未成立。",
+          "formula": null
+        },
+        {
+          "cell": "D13",
+          "value": "尚未独立证实：做过拆分原型，未证明原点物理上确实混合多表面。",
+          "formula": null
+        },
+        {
+          "cell": "E13",
+          "value": "Waymo：检查双侧支撑，7个父点拆成14个子点并拟合。\n仿真：几何修补/拆分两条短程对照。",
+          "formula": null
+        },
+        {
+          "cell": "F13",
+          "value": "未通过空间分离，不能称为已解决混合高斯。",
+          "formula": null
+        },
+        {
+          "cell": "G13",
+          "value": "删除有局部收益，但无编辑/横移退化；不能据此认定必须拆分。",
+          "formula": null
+        },
+        {
+          "cell": "H13",
+          "value": "同一个点投影到两类像素，不等于真的对应两个表面；先确认前提，再评价如何拆。",
+          "formula": null
+        },
+        {
+          "cell": "I13",
+          "value": "06 · 07",
+          "formula": null
+        },
+        {
+          "cell": "A14",
+          "value": "7",
+          "formula": null
+        },
+        {
+          "cell": "B14",
+          "value": "删车后，阴影或反射等关联影响是否还留着？",
+          "formula": null
+        },
+        {
+          "cell": "C14",
+          "value": "部分证实：有旧影区代理参考和时间显隐诊断；并非所有暗区都是阴影。",
+          "formula": null
+        },
+        {
+          "cell": "D14",
+          "value": "未专项验证：有仿真阴影差分代理，尚未用它完成本条优化验收。",
+          "formula": null
+        },
+        {
+          "cell": "E14",
+          "value": "Waymo：先恢复可信道路，再让阴影随车状态变化；另做时间显隐因素对照。",
+          "formula": null
+        },
+        {
+          "cell": "F14",
+          "value": "同片段21个有效帧旧影区误差约降97.6%；仅对有支持区域和代理参考成立。",
+          "formula": null
+        },
+        {
+          "cell": "G14",
+          "value": "本表没有相应仿真阴影方法的验收结论。",
+          "formula": null
+        },
+        {
+          "cell": "H14",
+          "value": "遮挡、真实阴影、反射、错几何和环境回填仍可能混在一起，缺精确分离标签。",
+          "formula": null
+        },
+        {
+          "cell": "I14",
+          "value": "17 · 18 · 19 · 20",
+          "formula": null
+        },
+        {
+          "cell": "A15",
+          "value": "8",
+          "formula": null
+        },
+        {
+          "cell": "B15",
+          "value": "删车后，道路是不是根本没被看见或建出来？",
+          "formula": null
+        },
+        {
+          "cell": "C15",
+          "value": "已证实：有无道路参考、无有效支撑以及补片被原背景挡住的实际案例。",
+          "formula": null
+        },
+        {
+          "cell": "D15",
+          "value": "已证实：原16视图仅50.54%的道路采样点至少可见一次。",
+          "formula": null
+        },
+        {
+          "cell": "E15",
+          "value": "Waymo：道路补层、199帧真实输入、离线道路预测、生成候选、视频修补。\n仿真：同一世界增加观测后重新训练。",
+          "formula": null
+        },
+        {
+          "cell": "F15",
+          "value": "可信观测区域可改善；旧道路合成曾明显变差，生成三维候选未过几何门槛，未知区未整体解决。",
+          "formula": null
+        },
+        {
+          "cell": "G15",
+          "value": "可见率扩到100%仍有残影；选点删除有改善，原生直接删车反而更差。",
+          "formula": null
+        },
+        {
+          "cell": "H15",
+          "value": "没有观测、观测没被规则用到、没建出几何、建出来却被遮住，是四种不同情况。",
+          "formula": null
+        },
+        {
+          "cell": "I15",
+          "value": "05 · 10 · 11 · 12 · 13 · 14 · 15 · 16 · 28",
+          "formula": null
+        },
+        {
+          "cell": "A16",
+          "value": "9",
+          "formula": null
+        },
+        {
+          "cell": "B16",
+          "value": "暗带是否来自环境回填，而不是任何高斯？",
+          "formula": null
+        },
+        {
+          "cell": "C16",
+          "value": "已证实：一个后删状态160个暗像素的高斯贡献为0，暗色全来自环境。",
+          "formula": null
+        },
+        {
+          "cell": "D16",
+          "value": "未专项定位：换白底是诊断，不能自动说明仿真暗区具体来自哪里。",
+          "formula": null
+        },
+        {
+          "cell": "E16",
+          "value": "Waymo：逐分量保存高斯颜色、透明度、环境和最终图像；核对相加结果。",
+          "formula": null
+        },
+        {
+          "cell": "F16",
+          "value": "来源定位有效；尚未完成专门环境修复，继续删高斯不能修这部分。",
+          "formula": null
+        },
+        {
+          "cell": "G16",
+          "value": "本表没有同等级的仿真环境残影修复结论。",
+          "formula": null
+        },
+        {
+          "cell": "H16",
+          "value": "环境层已经定位清楚；正确道路应是什么仍未知，白底不等于道路恢复。",
+          "formula": null
+        },
+        {
+          "cell": "I16",
+          "value": "20",
+          "formula": null
+        },
+        {
+          "cell": "A17",
+          "value": "10",
+          "formula": null
+        },
+        {
+          "cell": "B17",
+          "value": "数值计算或颜色合成是否把问题放大？",
+          "formula": null
+        },
+        {
+          "cell": "C17",
+          "value": "已证实：颜色越界、负环境值、阴影精度错误与合成退化均有实测。",
+          "formula": null
+        },
+        {
+          "cell": "D17",
+          "value": "有源码路径核查：颜色无上界、环境直接学习；尚未单独证明它是残影根因。",
+          "formula": null
+        },
+        {
+          "cell": "E17",
+          "value": "Waymo/数值：双精度积分、梯度/计时核验、道路合成对照。\n仿真：固定颜色干预和渲染/损失路径审计。",
+          "formula": null
+        },
+        {
+          "cell": "F17",
+          "value": "阴影数值与速度修复有效；道路合成、颜色越界的完整成因和修复仍未闭环。",
+          "formula": null
+        },
+        {
+          "cell": "G17",
+          "value": "借无车答案改颜色有局部改善；没有验证正常输入下的完整数值/颜色修复。",
+          "formula": null
+        },
+        {
+          "cell": "H17",
+          "value": "算得准、显示截断和修好编辑是三件事；数值修复有效不代表归属或道路已正确。",
+          "formula": null
+        },
+        {
+          "cell": "I17",
+          "value": "03 · 04 · 10 · 11 · 19 · 20 · 21",
+          "formula": null
+        },
+        {
+          "cell": "A18",
+          "value": "11",
+          "formula": null
+        },
+        {
+          "cell": "B18",
+          "value": "车辆转向后为什么变淡、被挡住或出现新侧面缺陷？",
+          "formula": null
+        },
+        {
+          "cell": "C18",
+          "value": "已证实：同一车辆资产参数完全不变，覆盖下降、静态遮挡增加。",
+          "formula": null
+        },
+        {
+          "cell": "D18",
+          "value": "未做同等级专项量化：仿真跑过转向，变淡原因的详细数字来自Waymo。",
+          "formula": null
+        },
+        {
+          "cell": "E18",
+          "value": "Waymo：固定点与参数，比较原姿态/横移/转向，并提高不透明度作诊断。",
+          "formula": null
+        },
+        {
+          "cell": "F18",
+          "value": "确认参数不变仍会变淡；加不透明度不能证明新侧面结构或旧位残留被修好。",
+          "formula": null
+        },
+        {
+          "cell": "G18",
+          "value": "没有同等级仿真覆盖/遮挡修复验收。",
+          "formula": null
+        },
+        {
+          "cell": "H18",
+          "value": "已量到覆盖和遮挡变化；未观测侧面、视向外观是否还贡献错误，需要分开检验。",
+          "formula": null
+        },
+        {
+          "cell": "I18",
+          "value": "22",
+          "formula": null
+        },
+        {
+          "cell": "A19",
+          "value": "12",
+          "formula": null
+        },
+        {
+          "cell": "B19",
+          "value": "跨帧是否把同一部分一会儿当车、一会儿当背景？",
+          "formula": null
+        },
+        {
+          "cell": "C19",
+          "value": "部分证实：3个真实路段逐帧候选变化、时间显隐已测；身份跳变未独立证实。",
+          "formula": null
+        },
+        {
+          "cell": "D19",
+          "value": "未专项验证：只检查少量时刻，未做16帧完整时序归属验收。",
+          "formula": null
+        },
+        {
+          "cell": "E19",
+          "value": "Waymo：3场景各49帧逐帧独立重置并剥离；另做时间显隐因素对照。",
+          "formula": null
+        },
+        {
+          "cell": "F19",
+          "value": "147帧审计完成，但没有共享身份算法，也不能把集合变化等同画面闪烁。",
+          "formula": null
+        },
+        {
+          "cell": "G19",
+          "value": "没有完整仿真时序稳定性结果。",
+          "formula": null
+        },
+        {
+          "cell": "H19",
+          "value": "可见性、投影范围和掩码都会改变候选；需要真正共享身份和顺序/跳帧对照。",
+          "formula": null
+        },
+        {
+          "cell": "I19",
+          "value": "18 · 23",
+          "formula": null
+        },
+        {
+          "cell": "A20",
+          "value": "13",
+          "formula": null
+        },
+        {
+          "cell": "B20",
+          "value": "是不是界面、相机、状态恢复或渲染接错了？",
+          "formula": null
+        },
+        {
+          "cell": "C20",
+          "value": "已证实：出现过左右视图不同步、入口默认隐藏车辆等接线问题。",
+          "formula": null
+        },
+        {
+          "cell": "D20",
+          "value": "已证实：出现过像素查询和相机恢复问题，已修并复核。",
+          "formula": null
+        },
+        {
+          "cell": "E20",
+          "value": "Waymo：统一预览和真实渲染状态。\n仿真：核对相机、查询与完整状态恢复；数值通路另有检查。",
+          "formula": null
+        },
+        {
+          "cell": "F20",
+          "value": "多项接线故障已修复并验证；属于工程正确性。",
+          "formula": null
+        },
+        {
+          "cell": "G20",
+          "value": "相关查询/恢复故障已修复并验证；属于工程正确性。",
+          "formula": null
+        },
+        {
+          "cell": "H20",
+          "value": "工程门禁必须先过，但这些修复不能记成新归属/背景算法的科学收益。",
+          "formula": null
+        },
+        {
+          "cell": "I20",
+          "value": "19 · 26",
+          "formula": null
+        },
+        {
+          "cell": "A22",
+          "value": "阅读说明：这三种“验证”回答的是不同问题",
+          "formula": null
+        },
+        {
+          "cell": "A23",
+          "value": "序",
+          "formula": null
+        },
+        {
+          "cell": "B23",
+          "value": "验证类型",
+          "formula": null
+        },
+        {
+          "cell": "C23",
+          "value": "数据来自哪里",
+          "formula": null
+        },
+        {
+          "cell": "D23",
+          "value": "比较的“答案”是什么",
+          "formula": null
+        },
+        {
+          "cell": "E23",
+          "value": "能说明什么",
+          "formula": null
+        },
+        {
+          "cell": "F23",
+          "value": "暂时不能证明什么",
+          "formula": null
+        },
+        {
+          "cell": "G23",
+          "value": "读本表时怎样判断",
+          "formula": null
+        },
+        {
+          "cell": "H23",
+          "value": "样本范围",
+          "formula": null
+        },
+        {
+          "cell": "I23",
+          "value": "跳转到明细",
+          "formula": null
+        },
+        {
+          "cell": "A24",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B24",
+          "value": "Waymo实景案例",
+          "formula": null
+        },
+        {
+          "cell": "C24",
+          "value": "真实拍摄图像、稀疏激光、相机与轨迹；重建后实际删/移/转车辆。",
+          "formula": null
+        },
+        {
+          "cell": "D24",
+          "value": "无编辑可比真实照片；删车通常比同路段其他时刻看见的道路，只覆盖可核验部分。",
+          "formula": null
+        },
+        {
+          "cell": "E24",
+          "value": "真实案例是否有问题；某种改法在有参考区域是否改善，是否损伤其他区域。",
+          "formula": null
+        },
+        {
+          "cell": "F24",
+          "value": "其他时刻的道路参考并非同一时刻真实删车照片；拟合训练域不等于新场景泛化。",
+          "formula": null
+        },
+        {
+          "cell": "G24",
+          "value": "先看现象，再看参考覆盖、是否参与优化；未覆盖区域单列未知。",
+          "formula": null
+        },
+        {
+          "cell": "H24",
+          "value": "早期固定路段，以及后续场景一、二、三；不是每项方法都跑过三场景。",
+          "formula": null
+        },
+        {
+          "cell": "I24",
+          "value": "Waymo明细",
+          "formula": null
+        },
+        {
+          "cell": "A25",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B25",
+          "value": "程序化仿真",
+          "formula": null
+        },
+        {
+          "cell": "C25",
+          "value": "独立构建普通车、道路与灯光，生成16个受限观测，再用原生方法重建。",
+          "formula": null
+        },
+        {
+          "cell": "D25",
+          "value": "独立仿真器可生成同相机下删车、横移、转向参考；不是待测高斯自己删点所得的图。",
+          "formula": null
+        },
+        {
+          "cell": "E25",
+          "value": "受控条件下是否出现坏例；改选点、颜色、几何或输入观测有何影响。",
+          "formula": null
+        },
+        {
+          "cell": "F25",
+          "value": "目前只有一个世界；更多相机仍是同一场景。世界表面真值也不自动给每颗高斯唯一身份。",
+          "formula": null
+        },
+        {
+          "cell": "G25",
+          "value": "读答案改颜色只算敏感性诊断；不能写成部署算法成功或Waymo验证。",
+          "formula": null
+        },
+        {
+          "cell": "H25",
+          "value": "同一世界的旧16视角与较充分观测版本；3个共同诊断时刻。",
+          "formula": null
+        },
+        {
+          "cell": "I25",
+          "value": "仿真明细",
+          "formula": null
+        },
+        {
+          "cell": "A26",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B26",
+          "value": "数值／工程核查",
+          "formula": null
+        },
+        {
+          "cell": "C26",
+          "value": "真实模型参数、算子特例、界面状态、相机、像素查询与保存/恢复。",
+          "formula": null
+        },
+        {
+          "cell": "D26",
+          "value": "高精度数值参照、原模型配对、恢复前后逐项一致性。",
+          "formula": null
+        },
+        {
+          "cell": "E26",
+          "value": "算子是否算对、接线是否一致、修复是否生效。",
+          "formula": null
+        },
+        {
+          "cell": "F26",
+          "value": "通过工程检查不等于车辆归属正确、道路补好或论文方法成立。",
+          "formula": null
+        },
+        {
+          "cell": "G26",
+          "value": "小型合成算例是算子检查，与完整程序化街景仿真分开登记。",
+          "formula": null
+        },
+        {
+          "cell": "H26",
+          "value": "部分取自Waymo模型，部分是仿真接线；每条分别注明。",
+          "formula": null
+        },
+        {
+          "cell": "I26",
+          "value": "工程明细",
+          "formula": null
+        },
+        {
+          "cell": "A27",
+          "value": "“未专项验证”指本次整理的记录未提供该项结论；不是证明问题不存在。一个方法的局部收益，也不等于整类坏例已被解决。",
+          "formula": null
+        },
+        {
+          "cell": "A29",
+          "value": "名词对照：不用先记住项目代号",
+          "formula": null
+        },
+        {
+          "cell": "A30",
+          "value": "序",
+          "formula": null
+        },
+        {
+          "cell": "B30",
+          "value": "名词",
+          "formula": null
+        },
+        {
+          "cell": "C30",
+          "value": "白话解释",
+          "formula": null
+        },
+        {
+          "cell": "D30",
+          "value": "读这张表时要注意什么",
+          "formula": null
+        },
+        {
+          "cell": "A31",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B31",
+          "value": "静态层／背景分支",
+          "formula": null
+        },
+        {
+          "cell": "C31",
+          "value": "原模型存放背景的一组点。",
+          "formula": null
+        },
+        {
+          "cell": "D31",
+          "value": "里面可能也学到车辆或车影；名字叫背景并不能证明它确实是背景。",
+          "formula": null
+        },
+        {
+          "cell": "A32",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B32",
+          "value": "对象归属／随车编辑集合",
+          "formula": null
+        },
+        {
+          "cell": "C32",
+          "value": "判断一个点跟哪辆车运动，以及编辑时哪些点该一起改变。",
+          "formula": null
+        },
+        {
+          "cell": "D32",
+          "value": "点投影到车上，不自动表示它属于车；先圈成候选也不是最终身份。",
+          "formula": null
+        },
+        {
+          "cell": "A33",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B33",
+          "value": "可见贡献",
+          "formula": null
+        },
+        {
+          "cell": "C33",
+          "value": "一个点经过前后遮挡后，实际对某个像素贡献了多少。",
+          "formula": null
+        },
+        {
+          "cell": "D33",
+          "value": "删除前后会变；贡献覆盖不是车辆身份准确率，也不是错误原因占比。",
+          "formula": null
+        },
+        {
+          "cell": "A34",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B34",
+          "value": "参考／真值／代理参考",
+          "formula": null
+        },
+        {
+          "cell": "C34",
+          "value": "用来判断结果的比较答案。独立生成的编辑图与同片段道路参考不是一回事。",
+          "formula": null
+        },
+        {
+          "cell": "D34",
+          "value": "本表逐条交代来源；同片段参考有用，但不足以宣称未知道路或三维表面已经正确。",
+          "formula": null
+        },
+        {
+          "cell": "A35",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B35",
+          "value": "模型快照、局部拟合、封存验收",
+          "formula": null
+        },
+        {
+          "cell": "C35",
+          "value": "模型快照是保存参数；局部拟合只改少量变量；封存集仅用于最终验收。",
+          "formula": null
+        },
+        {
+          "cell": "D35",
+          "value": "旧原型已做过，不代表新版方法闭环已完成；本轮整理未启动任何新实验。",
+          "formula": null
+        },
+        {
+          "cell": "A36",
+          "value": "6",
+          "formula": null
+        },
+        {
+          "cell": "B36",
+          "value": "环境回填",
+          "formula": null
+        },
+        {
+          "cell": "C36",
+          "value": "高斯没有完全挡住像素时，露出的环境贴图颜色。",
+          "formula": null
+        },
+        {
+          "cell": "D36",
+          "value": "它是另一种颜色来源；换成白底只是诊断，不表示新建出了道路。",
+          "formula": null
+        },
+        {
+          "cell": "A37",
+          "value": "场景登记：样本数、输出数和独立场景数分开记",
+          "formula": null
+        },
+        {
+          "cell": "A38",
+          "value": "序",
+          "formula": null
+        },
+        {
+          "cell": "B38",
+          "value": "本表简称",
+          "formula": null
+        },
+        {
+          "cell": "C38",
+          "value": "来源类型",
+          "formula": null
+        },
+        {
+          "cell": "D38",
+          "value": "规模／片段",
+          "formula": null
+        },
+        {
+          "cell": "E38",
+          "value": "主要用于什么",
+          "formula": null
+        },
+        {
+          "cell": "F38",
+          "value": "参考与局限",
+          "formula": null
+        },
+        {
+          "cell": "G38",
+          "value": "如何理解场景范围",
+          "formula": null
+        },
+        {
+          "cell": "H38",
+          "value": "原始标识（仅追溯用）",
+          "formula": null
+        },
+        {
+          "cell": "I38",
+          "value": "原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A39",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B39",
+          "value": "早期Waymo案例",
+          "formula": null
+        },
+        {
+          "cell": "C39",
+          "value": "Waymo真实路段",
+          "formula": null
+        },
+        {
+          "cell": "D39",
+          "value": "多数为49帧窗口；道路来源另有199帧扩展。",
+          "formula": null
+        },
+        {
+          "cell": "E39",
+          "value": "旧版多车、道路补层、跨帧道路参考、阴影与视频修补。",
+          "formula": null
+        },
+        {
+          "cell": "F39",
+          "value": "大部分是同路段训练/开发参考；缺同一时刻的独立删车照片。",
+          "formula": null
+        },
+        {
+          "cell": "G39",
+          "value": "历史单路段实验，不与后续场景一/二/三自动合并计算。",
+          "formula": null
+        },
+        {
+          "cell": "H39",
+          "value": "历史目录编号0008；完整Waymo段名在本次记录中未恢复。",
+          "formula": null
+        },
+        {
+          "cell": "I39",
+          "value": "打开原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A40",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B40",
+          "value": "Waymo场景一",
+          "formula": null
+        },
+        {
+          "cell": "C40",
+          "value": "Waymo真实路段",
+          "formula": null
+        },
+        {
+          "cell": "D40",
+          "value": "时序候选审计第77–125帧；转向对照第86–116帧。",
+          "formula": null
+        },
+        {
+          "cell": "E40",
+          "value": "残影来源、初始化留存、候选审计、少量拆分、转向变淡、白材质。",
+          "formula": null
+        },
+        {
+          "cell": "F40",
+          "value": "各实验用的帧和参考不同，不能把所有输出直接相加算独立样本。",
+          "formula": null
+        },
+        {
+          "cell": "G40",
+          "value": "白材质204条是本场景6组输出；不是3个场景。",
+          "formula": null
+        },
+        {
+          "cell": "H40",
+          "value": "14705303724557273004_3105_000_3125_000",
+          "formula": null
+        },
+        {
+          "cell": "I40",
+          "value": "打开原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A41",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B41",
+          "value": "Waymo场景二",
+          "formula": null
+        },
+        {
+          "cell": "C41",
+          "value": "Waymo真实路段",
+          "formula": null
+        },
+        {
+          "cell": "D41",
+          "value": "候选时序审计第149–197帧，49帧。",
+          "formula": null
+        },
+        {
+          "cell": "E41",
+          "value": "同一固定查询规则在第二路段的逐帧剥离诊断。",
+          "formula": null
+        },
+        {
+          "cell": "F41",
+          "value": "没有独立的逐点真实身份；未代表所有旧修复方法都迁移验证过。",
+          "formula": null
+        },
+        {
+          "cell": "G41",
+          "value": "属于3路段时序审计之一；不是白材质204条交付的一部分。",
+          "formula": null
+        },
+        {
+          "cell": "H41",
+          "value": "4295449061847708198_3769_000_3789_000",
+          "formula": null
+        },
+        {
+          "cell": "I41",
+          "value": "打开原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A42",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B42",
+          "value": "Waymo场景三",
+          "formula": null
+        },
+        {
+          "cell": "C42",
+          "value": "Waymo真实路段",
+          "formula": null
+        },
+        {
+          "cell": "D42",
+          "value": "候选时序审计第13–61帧，49帧。",
+          "formula": null
+        },
+        {
+          "cell": "E42",
+          "value": "同一固定查询规则在第三路段的逐帧剥离诊断。",
+          "formula": null
+        },
+        {
+          "cell": "F42",
+          "value": "没有独立的逐点真实身份；未代表所有旧修复方法都迁移验证过。",
+          "formula": null
+        },
+        {
+          "cell": "G42",
+          "value": "与场景一/二合计147帧审计，尚无共享身份方法完整验收。",
+          "formula": null
+        },
+        {
+          "cell": "H42",
+          "value": "473735159277431842_630_095_650_095",
+          "formula": null
+        },
+        {
+          "cell": "I42",
+          "value": "打开原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A43",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B43",
+          "value": "程序化单车道路世界",
+          "formula": null
+        },
+        {
+          "cell": "C43",
+          "value": "独立仿真世界",
+          "formula": null
+        },
+        {
+          "cell": "D43",
+          "value": "16个输入视角；3个共同诊断时刻＋额外相机。",
+          "formula": null
+        },
+        {
+          "cell": "E43",
+          "value": "从受限观测重建，自然复现残影；测试选点、颜色、拆分和增加观测。",
+          "formula": null
+        },
+        {
+          "cell": "F43",
+          "value": "能独立渲染编辑参考；轨迹/掩码理想，仍缺逐高斯唯一归属。",
+          "formula": null
+        },
+        {
+          "cell": "G43",
+          "value": "增加/替换相机后仍是同一世界；当前不计作多场景泛化。",
+          "formula": null
+        },
+        {
+          "cell": "H43",
+          "value": "程序化车、道路与灯光；不是Waymo实景。",
+          "formula": null
+        },
+        {
+          "cell": "I43",
+          "value": "打开原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A45",
+          "value": "Waymo实景案例：20项记录，注明路段、参考和有效范围",
+          "formula": null
+        },
+        {
+          "cell": "A46",
+          "value": "数字读法：平均颜色误差/均方误差越低越好，PSNR越高越好；参考和覆盖范围不同，不横向比较。20条记录不等于20个独立场景。",
+          "formula": null
+        },
+        {
+          "cell": "A47",
+          "value": "证据号",
+          "formula": null
+        },
+        {
+          "cell": "B47",
+          "value": "实验具体做了什么",
+          "formula": null
+        },
+        {
+          "cell": "C47",
+          "value": "验证类型＋数据范围",
+          "formula": null
+        },
+        {
+          "cell": "D47",
+          "value": "比较答案从哪来／控制了什么",
+          "formula": null
+        },
+        {
+          "cell": "E47",
+          "value": "实际执行状态＋结果",
+          "formula": null
+        },
+        {
+          "cell": "F47",
+          "value": "没解决的原因／有效范围",
+          "formula": null
+        },
+        {
+          "cell": "G47",
+          "value": "读结论时的关键限制",
+          "formula": null
+        },
+        {
+          "cell": "H47",
+          "value": "图文报告",
+          "formula": null
+        },
+        {
+          "cell": "I47",
+          "value": "原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A48",
+          "value": "7",
+          "formula": null
+        },
+        {
+          "cell": "B48",
+          "value": "检查同一点是否真的覆盖车与路，再试少量拆分",
+          "formula": null
+        },
+        {
+          "cell": "C48",
+          "value": "Waymo实景案例\nWaymo场景一｜3个诊断时刻，7个父点拆成14个子点",
+          "formula": null
+        },
+        {
+          "cell": "D48",
+          "value": "实际点贡献与道路参考位置；检查两侧重心是否落在原高斯空间范围。\n控制：保留父子来源及原检查点；不把投影跨车与路当作真实混合真值。",
+          "formula": null
+        },
+        {
+          "cell": "E48",
+          "value": "实际完成，分离未通过\nWaymo场景一3个时刻，分别有452/777/810个点同时投到车与背景区域；但两侧重心同时落在原点空间范围（3倍标准差内）的数量均为0。7个父点拆14个子点、拟合200步，未证明空间分离。",
+          "formula": null
+        },
+        {
+          "cell": "F48",
+          "value": "双域贡献不是一颗高斯确实对应两表面；当前拆法与来源证据不足，不能推出必须拆分或所有拆分均无用。",
+          "formula": null
+        },
+        {
+          "cell": "G48",
+          "value": "对应坏例：4、6\n没有逐高斯真实身份/多表面标签；200步短原型不等于完整方法。",
+          "formula": null
+        },
+        {
+          "cell": "H48",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I48",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A49",
+          "value": "8",
+          "formula": null
+        },
+        {
+          "cell": "B49",
+          "value": "限制车辆高斯的位移、尺度和框外扩张",
+          "formula": null
+        },
+        {
+          "cell": "C49",
+          "value": "Waymo实景案例\n早期Waymo路段｜5辆车，4千步几何对照",
+          "formula": null
+        },
+        {
+          "cell": "D49",
+          "value": "真实输入、车辆框与初始化点；比较几何限位前后的外扩计数。\n控制：从原始观测重初始化，限制位移≤0.25米、尺度≤初始1.5倍并限制增密。",
+          "formula": null
+        },
+        {
+          "cell": "E49",
+          "value": "实际完成，几何约束局部有效\n五车扩框外中心数均降到0；例如近车原为11,748个。车身点数明显收缩，但近车碎片、前车静态残影仍未解决。",
+          "formula": null
+        },
+        {
+          "cell": "F49",
+          "value": "多项工程修改一起使用，只能确认外扩受控；不能把几何合规当成身份正确或画质成功。",
+          "formula": null
+        },
+        {
+          "cell": "G49",
+          "value": "对应坏例：1、4\n车辆框是空间约束，不是每个高斯应有位置的精确答案。",
+          "formula": null
+        },
+        {
+          "cell": "H49",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I49",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A50",
+          "value": "9",
+          "formula": null
+        },
+        {
+          "cell": "B50",
+          "value": "只拟合有参考的137个点的颜色",
+          "formula": null
+        },
+        {
+          "cell": "C50",
+          "value": "Waymo实景案例\n早期Waymo路段｜49帧，137个有参考点",
+          "formula": null
+        },
+        {
+          "cell": "D50",
+          "value": "从同片段观测构造的137个颜色参考点；固定位置、归属、透明度、光照。\n控制：几何、归属、透明度和光照固定；75道路点、62非道路点，参考只覆盖137/71,746个静态候选。",
+          "formula": null
+        },
+        {
+          "cell": "E50",
+          "value": "实际完成，小范围有效\n200步后参考点均方误差下降98.18%；但49帧删除图仅314/556,034个原车身像素发生可见变化，区域车影基本未变。",
+          "formula": null
+        },
+        {
+          "cell": "F50",
+          "value": "已证明小范围颜色可优化，不能证明整块残影来自纯道路颜色污染；监督覆盖过窄，尚无完整“原路由/改路由×颜色开/关”四格。",
+          "formula": null
+        },
+        {
+          "cell": "G50",
+          "value": "对应坏例：5\n不是整片删车后的独立干净图；75道路点、62非道路点，覆盖很窄。",
+          "formula": null
+        },
+        {
+          "cell": "H50",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I50",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A51",
+          "value": "10",
+          "formula": null
+        },
+        {
+          "cell": "B51",
+          "value": "保留原模型，另训固定几何的道路补层",
+          "formula": null
+        },
+        {
+          "cell": "C51",
+          "value": "Waymo实景案例\n早期Waymo路段｜49帧，同一3万步模型",
+          "formula": null
+        },
+        {
+          "cell": "D51",
+          "value": "无编辑画质对照真实拍摄图；道路分量与最终合成在同一模型下比较。\n控制：道路位置、尺度和数量固定，只学颜色与透明度；原模型训练路径分开。",
+          "formula": null
+        },
+        {
+          "cell": "E51",
+          "value": "实际完成，合成明显退化\n同一检查点49帧保存图：原输出PSNR36.80→加道路28.38；受影响区域颜色误差0.0065→0.0606。",
+          "formula": null
+        },
+        {
+          "cell": "F51",
+          "value": "训练只约束独立道路图，输出却按真实深度联合合成；新增低频道路遮住原纹理，透明度和颜色累积关系改变。",
+          "formula": null
+        },
+        {
+          "cell": "G51",
+          "value": "对应坏例：8、10\n无编辑原图可作直接参考；删车后的隐藏道路没有同一时刻真实照片。",
+          "formula": null
+        },
+        {
+          "cell": "H51",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I51",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A52",
+          "value": "11",
+          "formula": null
+        },
+        {
+          "cell": "B52",
+          "value": "让道路也为最终合成图负责，正式训练3万步",
+          "formula": null
+        },
+        {
+          "cell": "C52",
+          "value": "Waymo实景案例\n早期Waymo路段｜49帧，正式3万步训练",
+          "formula": null
+        },
+        {
+          "cell": "D52",
+          "value": "无编辑看真实拍摄图；删车道路看其他观测帧几何核验后的颜色参考。\n控制：保留原模型独立更新，道路接收最终合成监督；49帧原生浮点评价。",
+          "formula": null
+        },
+        {
+          "cell": "E52",
+          "value": "实际完成，局部改善但整体未通过\n同检查点加入道路，全图PSNR36.6206→33.7581。前车有标签区域误差0.07801→0.07162，但53.89%有标签像素退化；近车没有标签、道路贡献为0。",
+          "formula": null
+        },
+        {
+          "cell": "F52",
+          "value": "完整前车区域76.29%无参考；近车支撑缺口和原静态遮挡仍在。仅靠道路损失不能消除原静态中的车影。",
+          "formula": null
+        },
+        {
+          "cell": "G52",
+          "value": "对应坏例：1、8、10\n多数删车参考也参加训练；76.29%完整目标像素没有可靠参考。",
+          "formula": null
+        },
+        {
+          "cell": "H52",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I52",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A53",
+          "value": "12",
+          "formula": null
+        },
+        {
+          "cell": "B53",
+          "value": "把真实道路来源从49帧扩展到199帧",
+          "formula": null
+        },
+        {
+          "cell": "C53",
+          "value": "Waymo实景案例\n早期Waymo路段｜道路输入49→199帧，3帧优化",
+          "formula": null
+        },
+        {
+          "cell": "D53",
+          "value": "更多真实相机/激光道路来源；删车颜色参考来自同片段其他时刻。\n控制：相同网格与几何门限；新增199帧为额外真实输入，单列数据增量。",
+          "formula": null
+        },
+        {
+          "cell": "E53",
+          "value": "实际完成，补了证据但未单独补好编辑\n近车核心的独立道路覆盖0→95.56%，但放回原静态场景后，真正可见贡献仅26/19,313像素（0.135%）。",
+          "formula": null
+        },
+        {
+          "cell": "F53",
+          "value": "道路供给存在与最终能看见是两回事；前方原静态高斯仍遮住补层，部分资格规则也漏掉可用来源。",
+          "formula": null
+        },
+        {
+          "cell": "G53",
+          "value": "对应坏例：8\n增加了真实输入；49帧核查与建面输入重叠，不是跨场景测试。",
+          "formula": null
+        },
+        {
+          "cell": "H53",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I53",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A54",
+          "value": "13",
+          "formula": null
+        },
+        {
+          "cell": "B54",
+          "value": "只在编辑版中减弱背景遮挡，再加入道路补片",
+          "formula": null
+        },
+        {
+          "cell": "C54",
+          "value": "Waymo实景案例\n早期Waymo路段｜3帧优化，49帧同片段核查",
+          "formula": null
+        },
+        {
+          "cell": "D54",
+          "value": "其他时刻露出的同位置道路提供颜色参考；比较原静态、仅调遮挡、加道路。\n控制：冻结原完整重建，独立编辑副本；3个视图优化，检查49帧；位置、尺度固定。",
+          "formula": null
+        },
+        {
+          "cell": "E54",
+          "value": "实际完成，参考域明显有效\n同一帧7,000个可信参考像素：原静态误差0.19989→只调权重0.05535→再加道路0.00879。部分位置完全靠原静态重组合，另一些位置确需补片。",
+          "formula": null
+        },
+        {
+          "cell": "F54",
+          "value": "三个视图参与优化，9,021/16,021个目标像素无参考；颜色好不证明三维表面正确，也未建立归属准确性的独立收益。",
+          "formula": null
+        },
+        {
+          "cell": "G54",
+          "value": "对应坏例：1、5、8\n三帧参与优化；仅对有参考区域有结论，不能代表所有隐藏道路。",
+          "formula": null
+        },
+        {
+          "cell": "H54",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I54",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A55",
+          "value": "14",
+          "formula": null
+        },
+        {
+          "cell": "B55",
+          "value": "更强地压低原背景遮挡，让补建道路露出来",
+          "formula": null
+        },
+        {
+          "cell": "C55",
+          "value": "Waymo实景案例\n早期Waymo路段｜3帧优化，49帧同片段核查",
+          "formula": null
+        },
+        {
+          "cell": "D55",
+          "value": "与保背景版本使用相同真实道路与参考域，额外加让道路可见的约束。\n控制：同一真实道路输入，另加透射约束的短程解；与保背景版本分开登记。",
+          "formula": null
+        },
+        {
+          "cell": "E55",
+          "value": "实际完成，有收益也有代价\n两个标记点道路贡献约0.912/0.928，确实让补片露出；但三帧同参考域误差0.01336，差于保背景版本0.00760；目标外变化也更大。",
+          "formula": null
+        },
+        {
+          "cell": "F55",
+          "value": "提高道路贡献不是最终目标；强让路会损伤有效背景，不能拿贡献升高替代画质和几何验收。",
+          "formula": null
+        },
+        {
+          "cell": "G55",
+          "value": "对应坏例：8、10\n道路贡献变大不等于图像更好或几何正确；不是独立场景验收。",
+          "formula": null
+        },
+        {
+          "cell": "H55",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I55",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A56",
+          "value": "15",
+          "formula": null
+        },
+        {
+          "cell": "B56",
+          "value": "用外部预训练模型生成缺失三维道路",
+          "formula": null
+        },
+        {
+          "cell": "C56",
+          "value": "Waymo实景案例\n早期Waymo路段｜3视图输入（第102、109、116帧）",
+          "formula": null
+        },
+        {
+          "cell": "D56",
+          "value": "冻结外部生成模型；用可见非车辆激光点做对齐，再用未拟合可见点核查。\n控制：固定预训练权重、三视图推理；仅可见非车辆激光点做对齐，不拿隐藏中心答案对齐。",
+          "formula": null
+        },
+        {
+          "cell": "E56",
+          "value": "实际跑过，未通过接入\n可见道路核查点的三维误差中位数约0.763/0.764米，90分位约3.49/3.45米；未达到米制对齐门槛，候选未写回场景。",
+          "formula": null
+        },
+        {
+          "cell": "F56",
+          "value": "当前输入与适配下，生成几何和坐标接入不够可靠；不是所有生成模型都无效，也不能说只是下载权重尚未试验。",
+          "formula": null
+        },
+        {
+          "cell": "G56",
+          "value": "对应坏例：8\n核查的是生成几何能否接入真实坐标；隐藏车底没有独立真值。",
+          "formula": null
+        },
+        {
+          "cell": "H56",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I56",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A57",
+          "value": "16",
+          "formula": null
+        },
+        {
+          "cell": "B57",
+          "value": "用真实锚点引导视频修补，保护已有可信结果",
+          "formula": null
+        },
+        {
+          "cell": "C57",
+          "value": "Waymo实景案例\n早期Waymo路段｜3个参考时刻，49帧视频核查",
+          "formula": null
+        },
+        {
+          "cell": "D57",
+          "value": "同路段其他时刻的道路颜色参考；同一视频后端比较不同锚点/保护策略。\n控制：固定同一视频修补后端；三锚帧与同片段来源已被使用。",
+          "formula": null
+        },
+        {
+          "cell": "E57",
+          "value": "实际完成，二维参考域有效\n49帧参考域误差：原静态0.19592，原生修复0.08015，整洞视频补全0.06722，证据引导0.01172；仅把同来源RGB锚点给后端也达0.01400。",
+          "formula": null
+        },
+        {
+          "cell": "F57",
+          "value": "大部分收益可由直接参考锚点解释；不是独立编辑真值或新三维方法泛化，不能用视频变好证明高斯归属被修好。",
+          "formula": null
+        },
+        {
+          "cell": "G57",
+          "value": "对应坏例：8\n46个其他视图仍是同路段；二维修补收益不是三维高斯归属或泛化证据。",
+          "formula": null
+        },
+        {
+          "cell": "H57",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I57",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A58",
+          "value": "17",
+          "formula": null
+        },
+        {
+          "cell": "B58",
+          "value": "恢复有观测依据的道路，再让阴影随车变化",
+          "formula": null
+        },
+        {
+          "cell": "C58",
+          "value": "Waymo实景案例\n早期Waymo路段｜49帧；旧影区21个有效帧",
+          "formula": null
+        },
+        {
+          "cell": "D58",
+          "value": "其他时刻看见的道路作为代理参考，评价有来源支持的道路与旧影区。\n控制：受置信支持道路、跨时刻参考；有删车、平移和转向输出，原参数保留。",
+          "formula": null
+        },
+        {
+          "cell": "E58",
+          "value": "实际完成，局部代理参考有效\n49帧同片段复验：支持道路加权误差约下降69.6%；21个有效帧删车旧影区平均误差0.10607→0.00249（约97.6%）。",
+          "formula": null
+        },
+        {
+          "cell": "F58",
+          "value": "参考来自同一重建训练片段，没有独立配对编辑真值；只证明该局部原型与代理参考一致，不证明真实阴影/反射已被完整分离。",
+          "formula": null
+        },
+        {
+          "cell": "G58",
+          "value": "对应坏例：7、8、12\n不是独立的无影拍摄真值；只对该路段和可信道路区域成立。",
+          "formula": null
+        },
+        {
+          "cell": "H58",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I58",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A59",
+          "value": "18",
+          "formula": null
+        },
+        {
+          "cell": "B59",
+          "value": "固定场景，分别关闭位置变化和随时间的显现/消失",
+          "formula": null
+        },
+        {
+          "cell": "C59",
+          "value": "Waymo实景案例\n早期Waymo路段｜一个模型、一辆车，49帧训练窗口",
+          "formula": null
+        },
+        {
+          "cell": "D59",
+          "value": "固定相机/时刻，分别冻结位置或时间显隐；与原模型结果比较。\n控制：固定相机/参考时刻做只读参数因素对照；不新增训练。",
+          "formula": null
+        },
+        {
+          "cell": "E59",
+          "value": "实际完成，机制诊断\n关闭点随时间的显现/消失，对图像的影响约为关闭位置变化的30倍；说明背景分支可依靠点按时出现/消失来拼出车影。",
+          "formula": null
+        },
+        {
+          "cell": "F59",
+          "value": "说明某种时间表示参与问题，不等于已证明跨帧对象身份标签跳变；不能把所有后段变差解释为累计误差。",
+          "formula": null
+        },
+        {
+          "cell": "G59",
+          "value": "对应坏例：7、12\n因素消融可说明时间表示参与成像；没有每帧真实身份/阴影标签。",
+          "formula": null
+        },
+        {
+          "cell": "H59",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I59",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A60",
+          "value": "20",
+          "formula": null
+        },
+        {
+          "cell": "B60",
+          "value": "把高斯颜色与环境回填拆开，追查删后的暗区",
+          "formula": null
+        },
+        {
+          "cell": "C60",
+          "value": "Waymo实景案例\nWaymo场景一｜3个诊断帧，冻结模型",
+          "formula": null
+        },
+        {
+          "cell": "D60",
+          "value": "同帧原生输出拆成高斯颜色、不透明度与环境回填，检查分量相加闭合。\n控制：同帧同删行状态保留浮点高斯、alpha、环境和最终RGB；环境参数不改。",
+          "formula": null
+        },
+        {
+          "cell": "E60",
+          "value": "实际完成，来源已定位\n例如某后删状态车底160个暗像素的高斯alpha和颜色贡献均为0，完整暗色全来自环境；另有负环境采样，逐分量积分闭合。",
+          "formula": null
+        },
+        {
+          "cell": "F60",
+          "value": "这部分没有高斯可继续分类或删除；换白底只是诊断，不是恢复了真实道路，也未完成专门环境修复。",
+          "formula": null
+        },
+        {
+          "cell": "G60",
+          "value": "对应坏例：7、9、10\n不需无车照片也能定位数值来源；但不能据此知道正确道路应是什么。",
+          "formula": null
+        },
+        {
+          "cell": "H60",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I60",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A61",
+          "value": "21",
+          "formula": null
+        },
+        {
+          "cell": "B61",
+          "value": "把同一Waymo场景中待核查的点改白，检查颜色影响",
+          "formula": null
+        },
+        {
+          "cell": "C61",
+          "value": "Waymo实景案例\nWaymo场景一｜6组输出，204条帧记录",
+          "formula": null
+        },
+        {
+          "cell": "D61",
+          "value": "原生颜色与同点改白结果成对；检查不透明度、深度和未改点保持一致。\n控制：同模型、同相机、同一帧配对原生颜色与白色材质；不是与干净道路真值比较。",
+          "formula": null
+        },
+        {
+          "cell": "E61",
+          "value": "实际完成，仅诊断\n同一场景6组输出共204条记录：49帧重建＋5组各31帧编辑。只改待核查点的颜色，不透明度、深度、其他点及模型参数保持一致。",
+          "formula": null
+        },
+        {
+          "cell": "F61",
+          "value": "只是颜色敏感性诊断，不是道路修复；场景二、三未迁移到这份交付。前版“三场景204帧”的表述不正确，现按原始回执改正。",
+          "formula": null
+        },
+        {
+          "cell": "G61",
+          "value": "对应坏例：5、10\n同一场景：49帧重建＋5组各31帧编辑。不是204个独立时刻，也不是3场景。",
+          "formula": null
+        },
+        {
+          "cell": "H61",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I61",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A62",
+          "value": "22",
+          "formula": null
+        },
+        {
+          "cell": "B62",
+          "value": "保持点和参数不变，检查车辆转向后为何变淡",
+          "formula": null
+        },
+        {
+          "cell": "C62",
+          "value": "Waymo实景案例\nWaymo场景一｜31帧（第86–116帧），同一车辆资产",
+          "formula": null
+        },
+        {
+          "cell": "D62",
+          "value": "无编辑、横移和转向共用同一组点；比较覆盖和静态遮挡，逐项核对参数未变。\n控制：31帧对照原姿态、横移与转向；另做增大不透明度的诊断。",
+          "formula": null
+        },
+        {
+          "cell": "E62",
+          "value": "实际完成，原因部分量化\n同一6,241点车辆资产，独立渲染的平均不透明覆盖约0.860→0.799，静态遮挡损失约0.075→0.373；编辑期间点参数最大变化为0。",
+          "formula": null
+        },
+        {
+          "cell": "F62",
+          "value": "参数不变不代表投影覆盖和遮挡不变。提高不透明度可让车更实，但没有证明能恢复新侧面结构或消除旧位残留。",
+          "formula": null
+        },
+        {
+          "cell": "G62",
+          "value": "对应坏例：11\n没有独立的新姿态车体真值；指标解释变淡来源，不证明新侧面已重建好。",
+          "formula": null
+        },
+        {
+          "cell": "H62",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I62",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A63",
+          "value": "23",
+          "formula": null
+        },
+        {
+          "cell": "B63",
+          "value": "在3个Waymo路段逐帧找点并移除，检查一致性",
+          "formula": null
+        },
+        {
+          "cell": "C63",
+          "value": "Waymo实景案例\nWaymo场景一至三｜每场景49帧，共147帧",
+          "formula": null
+        },
+        {
+          "cell": "D63",
+          "value": "同一规则逐帧重置；核对候选点、实际贡献、范围外像素与相邻帧集合。\n控制：三场景同一规则、独立逐帧候选；保留行号、可见贡献与框外一致性检查。",
+          "formula": null
+        },
+        {
+          "cell": "E63",
+          "value": "实际完成，147帧诊断齐全\n3场景各49帧都真实渲染与复核。场景一相邻两帧共同可选范围内有1,213行进入、3,191行退出；每帧都重置，无前帧删除积累。",
+          "formula": null
+        },
+        {
+          "cell": "F63",
+          "value": "候选集合变化不等于RGB闪烁或真实身份改变；这一轮不是跨编辑共享归属算法，也未通过完整身份稳定性验收。",
+          "formula": null
+        },
+        {
+          "cell": "G63",
+          "value": "对应坏例：2、12\n有3个真实路段，但没有逐点身份真值；集合变动不是画面闪烁真值。",
+          "formula": null
+        },
+        {
+          "cell": "H63",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I63",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A64",
+          "value": "24",
+          "formula": null
+        },
+        {
+          "cell": "B64",
+          "value": "按“像不像车”的阈值移除背景分支中的点",
+          "formula": null
+        },
+        {
+          "cell": "C64",
+          "value": "Waymo实景案例\nWaymo场景一｜原49帧贡献统计，阈值抑制对照",
+          "formula": null
+        },
+        {
+          "cell": "D64",
+          "value": "固定模型；按原车身外观相似度选点后移除，核对残影和目标外变化。\n控制：冻结原检查点、只读移除重渲染；统计原49帧贡献。",
+          "formula": null
+        },
+        {
+          "cell": "E64",
+          "value": "实际完成，阈值两难\n严格阈值只选1行，车影几乎不变；放宽后选1,501行，目标外也有数千像素变化，均未接受为修复。",
+          "formula": null
+        },
+        {
+          "cell": "F64",
+          "value": "外观相似可落在背景几何上，阈值严格就漏、放宽就误伤；尚未得到可靠对象身份。",
+          "formula": null
+        },
+        {
+          "cell": "G64",
+          "value": "对应坏例：1、2\n没有完整车辆高斯真值；阈值失败不能证明所有归属方法都无效。",
+          "formula": null
+        },
+        {
+          "cell": "H64",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I64",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A65",
+          "value": "25",
+          "formula": null
+        },
+        {
+          "cell": "B65",
+          "value": "同时做归属约束与道路恢复，训练四组对照",
+          "formula": null
+        },
+        {
+          "cell": "C65",
+          "value": "Waymo实景案例\n早期Waymo路段｜4组各3万步，49帧删除比较",
+          "formula": null
+        },
+        {
+          "cell": "D65",
+          "value": "真实原图和跨时刻道路参考；比较完整、仅观测、仅先验和仅归属四条训练路线。\n控制：比较完整方案、仅真实观测、仅先验和仅归属修复；额外失败重放单列。",
+          "formula": null
+        },
+        {
+          "cell": "E65",
+          "value": "实际完成，编辑质量未通过\n四组各正式3万步、49帧删除对照齐全；完整图能拟合，但删除后仍有车形和彩色条带。",
+          "formula": null
+        },
+        {
+          "cell": "F65",
+          "value": "联合改了多项监督与表示，不能把失败唯一归因于归属或道路；已有正确图像拟合不保证可编辑分解。",
+          "formula": null
+        },
+        {
+          "cell": "G65",
+          "value": "对应坏例：1、4、8\n4组训练不是4个独立场景；多项监督同时变化，不能唯一归因。",
+          "formula": null
+        },
+        {
+          "cell": "H65",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I65",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A66",
+          "value": "27",
+          "formula": null
+        },
+        {
+          "cell": "B66",
+          "value": "重放初始点筛选，追查哪些点留进了背景",
+          "formula": null
+        },
+        {
+          "cell": "C66",
+          "value": "Waymo实景案例\nWaymo场景一｜49帧输入，60万静态初始化点",
+          "formula": null
+        },
+        {
+          "cell": "D66",
+          "value": "逐行重放真实输入点、掩码、深度过滤和静态排除规则；误差为0。\n控制：核对真实输入点、掩码、深度与静态排除代码，不修改模型。",
+          "formula": null
+        },
+        {
+          "cell": "E66",
+          "value": "实际完成，只读审计\n600,000行静态种子回放误差为0。已接纳的1,487个目标副本均排除；另有134个命中车掩码但被深度/连通性拒绝的候选留在静态。",
+          "formula": null
+        },
+        {
+          "cell": "F66",
+          "value": "留存路径确实存在，但134行不等于134个错分车身点；边界、遮挡和真实背景仍可能混入。",
+          "formula": null
+        },
+        {
+          "cell": "G66",
+          "value": "对应坏例：1、2\n说明点确实如何留存；134个被拒点不等于134个确定错分车辆点。",
+          "formula": null
+        },
+        {
+          "cell": "H66",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I66",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A67",
+          "value": "28",
+          "formula": null
+        },
+        {
+          "cell": "B67",
+          "value": "用周围道路预测被挖掉区域的形状和颜色",
+          "formula": null
+        },
+        {
+          "cell": "C67",
+          "value": "Waymo实景案例\n早期Waymo道路观测｜人工挖洞的CPU离线对照",
+          "formula": null
+        },
+        {
+          "cell": "D67",
+          "value": "先撤掉已观测道路内部的颜色/几何，再预测；保留观测仅用于核查预测。\n控制：有现成道路上下文；补点与直接道路监督入口做CPU检查。",
+          "formula": null
+        },
+        {
+          "cell": "E67",
+          "value": "CPU原型已验证，最终编辑未验\n整块遮挡控制中，高度误差约1.20厘米，普通插值6.97厘米；颜色优势很小且开发区域有退化。",
+          "formula": null
+        },
+        {
+          "cell": "F67",
+          "value": "这是监督与补点原型，不是最终三维合成成功；不能把伪标签覆盖当作道路已补好。",
+          "formula": null
+        },
+        {
+          "cell": "G67",
+          "value": "对应坏例：8\n这是实景数据上的遮挡控制，不是程序化街景仿真；未验最终GPU编辑画面。",
+          "formula": null
+        },
+        {
+          "cell": "H67",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I67",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A69",
+          "value": "程序化仿真：6项记录，全部来自同一个世界",
+          "formula": null
+        },
+        {
+          "cell": "A70",
+          "value": "证据号",
+          "formula": null
+        },
+        {
+          "cell": "B70",
+          "value": "实验具体做了什么",
+          "formula": null
+        },
+        {
+          "cell": "C70",
+          "value": "验证类型＋数据范围",
+          "formula": null
+        },
+        {
+          "cell": "D70",
+          "value": "比较答案从哪来／控制了什么",
+          "formula": null
+        },
+        {
+          "cell": "E70",
+          "value": "实际执行状态＋结果",
+          "formula": null
+        },
+        {
+          "cell": "F70",
+          "value": "没解决的原因／有效范围",
+          "formula": null
+        },
+        {
+          "cell": "G70",
+          "value": "读结论时的关键限制",
+          "formula": null
+        },
+        {
+          "cell": "H70",
+          "value": "图文报告",
+          "formula": null
+        },
+        {
+          "cell": "I70",
+          "value": "原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A71",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B71",
+          "value": "在可控场景中重建，再直接删掉动态车辆",
+          "formula": null
+        },
+        {
+          "cell": "C71",
+          "value": "程序化仿真\n同一个单车道路世界｜16帧输入，从零重建1万步",
+          "formula": null
+        },
+        {
+          "cell": "D71",
+          "value": "独立仿真器分别渲染无编辑、删车、横移、转向；完整世界表面仅供诊断/评价。\n控制：有独立世界表面和独立删车参考；3个时刻×4种编辑及一个留出视角。",
+          "formula": null
+        },
+        {
+          "cell": "E71",
+          "value": "实际完成\n16帧输入、从零训练1万步。删车后仍有彩色车形；换白底也存在，横移后新车与旧车影同时出现。",
+          "formula": null
+        },
+        {
+          "cell": "F71",
+          "value": "证明编辑失败真实存在，不能据车形直接确认每一行属于汽车；未训练新归属算法。",
+          "formula": null
+        },
+        {
+          "cell": "G71",
+          "value": "对应坏例：1、3、5、6\n有独立编辑参考；输入有理想轨迹和车身掩码。只有一个世界，不是Waymo验证。",
+          "formula": null
+        },
+        {
+          "cell": "H71",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I71",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A72",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B72",
+          "value": "固定高斯，只改变哪些点随车编辑",
+          "formula": null
+        },
+        {
+          "cell": "C72",
+          "value": "程序化仿真\n同一仿真世界｜3个时刻＋1个额外相机",
+          "formula": null
+        },
+        {
+          "cell": "D72",
+          "value": "用未编辑世界表面/深度辅助选点；与独立仿真编辑图比较。\n控制：固定表示与环境；对照严格几何规则和高贡献覆盖规则。",
+          "formula": null
+        },
+        {
+          "cell": "E72",
+          "value": "实际完成，未解决\n靠近车表面的严格规则，在后两锚点只覆盖约1.4%–7.6%的删前静态车像素贡献；放宽规则后覆盖约99.9%，仍有残影和背景误改。",
+          "formula": null
+        },
+        {
+          "cell": "F72",
+          "value": "错深度来源可被漏掉，背景尾部也会投影到车上。99.9%是删前贡献覆盖，不是准确车辆身份召回。",
+          "formula": null
+        },
+        {
+          "cell": "G72",
+          "value": "对应坏例：1、2、3、4\n理想几何辅助的规则诊断，不是已知准确的逐高斯归属，也不是部署算法。",
+          "formula": null
+        },
+        {
+          "cell": "H72",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I72",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A73",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B73",
+          "value": "按删后真实贡献找来源，再移除少量高贡献点",
+          "formula": null
+        },
+        {
+          "cell": "C73",
+          "value": "程序化仿真\n同一仿真世界｜16个输入视角，3个诊断时刻",
+          "formula": null
+        },
+        {
+          "cell": "D73",
+          "value": "来源权重来自实际高斯渲染；移除结果与独立无车图比较。另有同现场渲染源码审计。\n控制：回放全部静态行、重新计算删后遮挡；分别移除排序前32和512行。",
+          "formula": null
+        },
+        {
+          "cell": "E73",
+          "value": "实际完成，非单调改善\n中帧删除后，保留行贡献由删前约0.242增至3406.5；原16视图中累计贡献低于0.1的行，占删后贡献78.08%。移除更多点不一定更好。",
+          "formula": null
+        },
+        {
+          "cell": "F73",
+          "value": "来源排序不是单点因果误差分解；扩大移除会伤背景，尚未得到跨编辑共享的可靠集合。",
+          "formula": null
+        },
+        {
+          "cell": "G73",
+          "value": "对应坏例：2、3、10\n观测贡献和编辑误差分别算；贡献最多不等于错误最多，更不等于属于车。",
+          "formula": null
+        },
+        {
+          "cell": "H73",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I73",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A74",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B74",
+          "value": "形状与透明度不动，只用正确删车参考替换少量颜色",
+          "formula": null
+        },
+        {
+          "cell": "C74",
+          "value": "程序化仿真\n同一仿真世界｜中间时刻，128个高斯",
+          "formula": null
+        },
+        {
+          "cell": "D74",
+          "value": "直接读取独立无车答案替换颜色；形状、透明度、归属固定。\n控制：固定几何与透明度；读取独立删车参考，0训练更新。",
+          "formula": null
+        },
+        {
+          "cell": "E74",
+          "value": "实际完成，仅诊断\n只校正中帧128行颜色，显露道路区域颜色误差约0.21308→0.14412；仍有残影。",
+          "formula": null
+        },
+        {
+          "cell": "F74",
+          "value": "说明颜色参与错误；不证明这些行全是纯道路，也不是可部署的颜色修复算法。",
+          "formula": null
+        },
+        {
+          "cell": "G74",
+          "value": "对应坏例：5、10\n这是借答案检验颜色敏感性；不是正常输入下学出的修复方法。",
+          "formula": null
+        },
+        {
+          "cell": "H74",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I74",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A75",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B75",
+          "value": "让同一块道路被更多相机看见，再按原方法重建",
+          "formula": null
+        },
+        {
+          "cell": "C75",
+          "value": "程序化仿真\n同一世界换观测｜16个相机；两次各重建1万步",
+          "formula": null
+        },
+        {
+          "cell": "D75",
+          "value": "3个共同相机、相同道路世界与独立无车参考；改变其余13个观测相机。\n控制：同一世界、保留3个共同相机、相同1万步与学习率周期。",
+          "formula": null
+        },
+        {
+          "cell": "E75",
+          "value": "实际完成，改善有限\n10,995个道路样本至少一次可见率50.54%→100%。原生删车三锚误差0.17231→0.19854；同规则选点删除中帧0.21308→0.12203，但残影仍在。",
+          "formula": null
+        },
+        {
+          "cell": "F75",
+          "value": "同时改变RGB、激光覆盖、初始化与最终点数，不是纯视角或准确归属的单因素证明。新模型仍有72.69%的删后贡献来自输入弱可见行。",
+          "formula": null
+        },
+        {
+          "cell": "G75",
+          "value": "对应坏例：1、3、8\n不是第二个仿真场景；图像、激光覆盖、初始化与点数一起改变，不是单因素。",
+          "formula": null
+        },
+        {
+          "cell": "H75",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I75",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A76",
+          "value": "6",
+          "formula": null
+        },
+        {
+          "cell": "B76",
+          "value": "移动、缩小并拆分候选高斯，再短程拟合",
+          "formula": null
+        },
+        {
+          "cell": "C76",
+          "value": "程序化仿真\n同一仿真世界｜3个时刻＋1个额外相机",
+          "formula": null
+        },
+        {
+          "cell": "D76",
+          "value": "只用原16帧未编辑图做局部拟合；独立编辑图仅评价，每条优化臂200步。\n控制：同一候选集合；直接几何修补、拆分、等步数局部拟合；拆分增加容量。",
+          "formula": null
+        },
+        {
+          "cell": "E76",
+          "value": "实际完成，未整体有效\n两臂各200步外观拟合后，拆分臂删除误差约改善16%，留出删除约10%；但无编辑与横移退化。",
+          "formula": null
+        },
+        {
+          "cell": "F76",
+          "value": "位置重心、统一缩小、父颜色继承均是有限启发式；拟合还更新透明度。若被改的行最终整颗删除，提前改其形状本就不影响删除结果。",
+          "formula": null
+        },
+        {
+          "cell": "G76",
+          "value": "对应坏例：1、4、6\n新增点数与容量不同；不是充分联合优化或拆分必要性的检验。",
+          "formula": null
+        },
+        {
+          "cell": "H76",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I76",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A78",
+          "value": "数值与工程：2项记录，单列正确性检查",
+          "formula": null
+        },
+        {
+          "cell": "A79",
+          "value": "证据号",
+          "formula": null
+        },
+        {
+          "cell": "B79",
+          "value": "实验具体做了什么",
+          "formula": null
+        },
+        {
+          "cell": "C79",
+          "value": "验证类型＋数据范围",
+          "formula": null
+        },
+        {
+          "cell": "D79",
+          "value": "比较答案从哪来／控制了什么",
+          "formula": null
+        },
+        {
+          "cell": "E79",
+          "value": "实际执行状态＋结果",
+          "formula": null
+        },
+        {
+          "cell": "F79",
+          "value": "没解决的原因／有效范围",
+          "formula": null
+        },
+        {
+          "cell": "G79",
+          "value": "读结论时的关键限制",
+          "formula": null
+        },
+        {
+          "cell": "H79",
+          "value": "图文报告",
+          "formula": null
+        },
+        {
+          "cell": "I79",
+          "value": "原始记录",
+          "formula": null
+        },
+        {
+          "cell": "A80",
+          "value": "19",
+          "formula": null
+        },
+        {
+          "cell": "B80",
+          "value": "修正阴影计算的精度与重复计算",
+          "formula": null
+        },
+        {
+          "cell": "C80",
+          "value": "数值/工程核查\nWaymo模型真实参数＋小型合成数值特例",
+          "formula": null
+        },
+        {
+          "cell": "D80",
+          "value": "双精度物理协方差、数值积分和梯度作为参考；真实GPU测前后向耗时。\n控制：物理协方差用双精度重建、数值积分和梯度对照；真实GPU计时。",
+          "formula": null
+        },
+        {
+          "cell": "E80",
+          "value": "实际完成，工程修复有效\n原FP32路径11个协方差、8个逆矩阵对称部分失去正定；仅换分块可把透射率从1算到近0。修复后误差约2.97e−8，同帧前后向18.53→2.51秒。",
+          "formula": null
+        },
+        {
+          "cell": "F80",
+          "value": "修好了这一数值路径和性能瓶颈，车身碎片与残影仍未解决；工程正确不等于研究方法成功。",
+          "formula": null
+        },
+        {
+          "cell": "G80",
+          "value": "对应坏例：7、10、13\n小合成特例是算子测试，不是完整街景仿真；数值通过不代表编辑通过。",
+          "formula": null
+        },
+        {
+          "cell": "H80",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I80",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A81",
+          "value": "26",
+          "formula": null
+        },
+        {
+          "cell": "B81",
+          "value": "修正预览与真实渲染不一致、相机与查询接线",
+          "formula": null
+        },
+        {
+          "cell": "C81",
+          "value": "数值/工程核查\nWaymo界面接线＋仿真查询/相机恢复",
+          "formula": null
+        },
+        {
+          "cell": "D81",
+          "value": "Waymo核对界面和真实渲染状态；仿真核对查询坐标、恢复参数与原相机。\n控制：核对同帧参数、原生重渲染、恢复前后状态与来源文件；保留失败现场。",
+          "formula": null
+        },
+        {
+          "cell": "E81",
+          "value": "实际修复，多项检查通过\n历史出现左侧仍是原RGB、右侧已编辑，默认剥离视图隐藏车辆；仿真还修正过像素查询、相机恢复等问题。",
+          "formula": null
+        },
+        {
+          "cell": "F81",
+          "value": "这些能修、也必须先修；不能拿界面或接线修好当作归属算法、背景补全的科研收益。",
+          "formula": null
+        },
+        {
+          "cell": "G81",
+          "value": "对应坏例：13\n两类工程记录合并登记，不能计作同一个算法的跨域成功。",
+          "formula": null
+        },
+        {
+          "cell": "H81",
+          "value": "查看图文对照",
+          "formula": null
+        },
+        {
+          "cell": "I81",
+          "value": "打开指标/回执",
+          "formula": null
+        },
+        {
+          "cell": "A83",
+          "value": "研究进度：坏例框架已形成，新的方法闭环仍未完成",
+          "formula": null
+        },
+        {
+          "cell": "A84",
+          "value": "阶段",
+          "formula": null
+        },
+        {
+          "cell": "B84",
+          "value": "阶段名称",
+          "formula": null
+        },
+        {
+          "cell": "C84",
+          "value": "当前状态",
+          "formula": null
+        },
+        {
+          "cell": "D84",
+          "value": "接下来要解决什么",
+          "formula": null
+        },
+        {
+          "cell": "E84",
+          "value": "已有工作与边界",
+          "formula": null
+        },
+        {
+          "cell": "A85",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B85",
+          "value": "发现问题",
+          "formula": null
+        },
+        {
+          "cell": "C85",
+          "value": "已完成",
+          "formula": null
+        },
+        {
+          "cell": "D85",
+          "value": "保留可复核坏例与参考。",
+          "formula": null
+        },
+        {
+          "cell": "E85",
+          "value": "存在可复核的删除残影、背景代价和转向退化样本。",
+          "formula": null
+        },
+        {
+          "cell": "A86",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B86",
+          "value": "分析失败机制",
+          "formula": null
+        },
+        {
+          "cell": "C86",
+          "value": "基本完成：诊断框架",
+          "formula": null
+        },
+        {
+          "cell": "D86",
+          "value": "用可靠诊断区分竞争解释。",
+          "formula": null
+        },
+        {
+          "cell": "E86",
+          "value": "13类足以组织当前诊断；并非13类因果都已坐实，尤其1/5/6仍需实验区分。",
+          "formula": null
+        },
+        {
+          "cell": "A87",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B87",
+          "value": "提出算法假设",
+          "formula": null
+        },
+        {
+          "cell": "C87",
+          "value": "当前主缺口",
+          "formula": null
+        },
+        {
+          "cell": "D87",
+          "value": "给出可证伪、跨编辑共享的算法假设。",
+          "formula": null
+        },
+        {
+          "cell": "E87",
+          "value": "已有多种旧原型和局部收益；对选定机制建立可证伪、跨编辑共享的有效算法假设仍需补齐。",
+          "formula": null
+        },
+        {
+          "cell": "A88",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B88",
+          "value": "实现并验证方法",
+          "formula": null
+        },
+        {
+          "cell": "C88",
+          "value": "尚未完成新方法闭环",
+          "formula": null
+        },
+        {
+          "cell": "D88",
+          "value": "原型、消融、强基线、留出验收。",
+          "formula": null
+        },
+        {
+          "cell": "E88",
+          "value": "旧原型和诊断工具确实做过；严格消融、强基线及封存留出还不足。",
+          "formula": null
+        },
+        {
+          "cell": "A89",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B89",
+          "value": "扩大训练与泛化",
+          "formula": null
+        },
+        {
+          "cell": "C89",
+          "value": "新方法尚未开始",
+          "formula": null
+        },
+        {
+          "cell": "D89",
+          "value": "先完成方法，再做批量与泛化。",
+          "formula": null
+        },
+        {
+          "cell": "E89",
+          "value": "多场景基座训练不等于新归属/修复共享模型的跨场景训练与泛化验证。",
+          "formula": null
+        },
+        {
+          "cell": "A90",
+          "value": "新版R6实验仍为计划：开发/校准结果决定推进，封存集只作最终验收。本轮只是查证和整理，没有启动新实验。",
+          "formula": null
+        },
+        {
+          "cell": "A91",
+          "value": "核查来源与范围",
+          "formula": null
+        },
+        {
+          "cell": "A92",
+          "value": "序",
+          "formula": null
+        },
+        {
+          "cell": "B92",
+          "value": "来源",
+          "formula": null
+        },
+        {
+          "cell": "C92",
+          "value": "范围",
+          "formula": null
+        },
+        {
+          "cell": "D92",
+          "value": "记录数量",
+          "formula": null
+        },
+        {
+          "cell": "E92",
+          "value": "核查内容",
+          "formula": null
+        },
+        {
+          "cell": "F92",
+          "value": "判读边界",
+          "formula": null
+        },
+        {
+          "cell": "G92",
+          "value": "执行说明",
+          "formula": null
+        },
+        {
+          "cell": "H92",
+          "value": "来源索引",
+          "formula": null
+        },
+        {
+          "cell": "I92",
+          "value": "补充核验",
+          "formula": null
+        },
+        {
+          "cell": "A93",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B93",
+          "value": "AutoDL实验现场",
+          "formula": null
+        },
+        {
+          "cell": "C93",
+          "value": "10月中旬至30日",
+          "formula": null
+        },
+        {
+          "cell": "D93",
+          "value": "21个目录，1,584份元数据记录",
+          "formula": null
+        },
+        {
+          "cell": "E93",
+          "value": "读取已完成回执、指标和报告；支持上方28项实验/诊断归纳。",
+          "formula": null
+        },
+        {
+          "cell": "F93",
+          "value": "目录/文件数不是独立实验数，也不等于独立场景数；没有逐帧重评所有视频。",
+          "formula": null
+        },
+        {
+          "cell": "G93",
+          "value": "仅只读访问，没有训练、写回或资源操作。",
+          "formula": null
+        },
+        {
+          "cell": "H93",
+          "value": "远端清单",
+          "formula": null
+        },
+        {
+          "cell": "I93",
+          "value": "关键记录",
+          "formula": null
+        },
+        {
+          "cell": "A94",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B94",
+          "value": "远端与本地副本",
+          "formula": null
+        },
+        {
+          "cell": "C94",
+          "value": "14份关键原始记录",
+          "formula": null
+        },
+        {
+          "cell": "D94",
+          "value": "13份字节一致",
+          "formula": null
+        },
+        {
+          "cell": "E94",
+          "value": "保留远端原文与SHA256，核对本地副本。",
+          "formula": null
+        },
+        {
+          "cell": "F94",
+          "value": "另1份保留远端原文，不伪称本地哈希一致；哈希一致不等于方法成立。",
+          "formula": null
+        },
+        {
+          "cell": "G94",
+          "value": "历史结果保留。",
+          "formula": null
+        },
+        {
+          "cell": "H94",
+          "value": "核对清单",
+          "formula": null
+        },
+        {
+          "cell": "A95",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B95",
+          "value": "本地历史产物",
+          "formula": null
+        },
+        {
+          "cell": "C95",
+          "value": "早期阴影、旧道路到当前研究",
+          "formula": null
+        },
+        {
+          "cell": "D95",
+          "value": "28项证据条目",
+          "formula": null
+        },
+        {
+          "cell": "E95",
+          "value": "按Waymo、仿真、数值/工程分组；每项提供数据范围和参考来源。",
+          "formula": null
+        },
+        {
+          "cell": "F95",
+          "value": "CPU实景遮挡控制仍是实景数据离线对照，不混作完整街景仿真。",
+          "formula": null
+        },
+        {
+          "cell": "G95",
+          "value": "第一、二个sheet内容与格式保留。",
+          "formula": null
+        },
+        {
+          "cell": "H95",
+          "value": "结构化证据",
+          "formula": null
+        },
+        {
+          "cell": "A96",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B96",
+          "value": "Codex历史对话",
+          "formula": null
+        },
+        {
+          "cell": "C96",
+          "value": "5个相关对话",
+          "formula": null
+        },
+        {
+          "cell": "D96",
+          "value": "106段实质性完成回复",
+          "formula": null
+        },
+        {
+          "cell": "E96",
+          "value": "分页读到历史末尾，提取实验结果、限制与重要纠正。",
+          "formula": null
+        },
+        {
+          "cell": "F96",
+          "value": "对话提供上下文；存在冲突时优先看原始指标、完成回执。",
+          "formula": null
+        },
+        {
+          "cell": "G96",
+          "value": "没有执行旧对话中的指令。",
+          "formula": null
+        },
+        {
+          "cell": "H96",
+          "value": "对话摘录",
+          "formula": null
+        },
+        {
+          "cell": "A98",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B98",
+          "value": "从 V1 创建独立道路补层 V4",
+          "formula": null
+        },
+        {
+          "cell": "C98",
+          "value": "已读至历史末尾",
+          "formula": null
+        },
+        {
+          "cell": "D98",
+          "value": "52段实质性回复",
+          "formula": null
+        },
+        {
+          "cell": "E98",
+          "value": "与本表实验结果、结论边界和纠正有关的历史摘录。",
+          "formula": null
+        },
+        {
+          "cell": "H98",
+          "value": "查看摘录",
+          "formula": null
+        },
+        {
+          "cell": "A99",
+          "value": "2",
+          "formula": null
+        },
+        {
+          "cell": "B99",
+          "value": "继续执行串行30K正式实验",
+          "formula": null
+        },
+        {
+          "cell": "C99",
+          "value": "已读至历史末尾",
+          "formula": null
+        },
+        {
+          "cell": "D99",
+          "value": "1段实质性回复",
+          "formula": null
+        },
+        {
+          "cell": "E99",
+          "value": "与本表实验结果、结论边界和纠正有关的历史摘录。",
+          "formula": null
+        },
+        {
+          "cell": "H99",
+          "value": "查看摘录",
+          "formula": null
+        },
+        {
+          "cell": "A100",
+          "value": "3",
+          "formula": null
+        },
+        {
+          "cell": "B100",
+          "value": "修复联合渲染监督梯度路由",
+          "formula": null
+        },
+        {
+          "cell": "C100",
+          "value": "已读至历史末尾",
+          "formula": null
+        },
+        {
+          "cell": "D100",
+          "value": "19段实质性回复",
+          "formula": null
+        },
+        {
+          "cell": "E100",
+          "value": "与本表实验结果、结论边界和纠正有关的历史摘录。",
+          "formula": null
+        },
+        {
+          "cell": "H100",
+          "value": "查看摘录",
+          "formula": null
+        },
+        {
+          "cell": "A101",
+          "value": "4",
+          "formula": null
+        },
+        {
+          "cell": "B101",
+          "value": "评估训练回退与速度",
+          "formula": null
+        },
+        {
+          "cell": "C101",
+          "value": "已读至历史末尾",
+          "formula": null
+        },
+        {
+          "cell": "D101",
+          "value": "23段实质性回复",
+          "formula": null
+        },
+        {
+          "cell": "E101",
+          "value": "与本表实验结果、结论边界和纠正有关的历史摘录。",
+          "formula": null
+        },
+        {
+          "cell": "H101",
+          "value": "查看摘录",
+          "formula": null
+        },
+        {
+          "cell": "A102",
+          "value": "5",
+          "formula": null
+        },
+        {
+          "cell": "B102",
+          "value": "诊断黑车黑块成因",
+          "formula": null
+        },
+        {
+          "cell": "C102",
+          "value": "已读至历史末尾",
+          "formula": null
+        },
+        {
+          "cell": "D102",
+          "value": "11段实质性回复",
+          "formula": null
+        },
+        {
+          "cell": "E102",
+          "value": "与本表实验结果、结论边界和纠正有关的历史摘录。",
+          "formula": null
+        },
+        {
+          "cell": "H102",
+          "value": "查看摘录",
+          "formula": null
+        },
+        {
+          "cell": "A104",
+          "value": "本轮纠正：白材质诊断的204条记录属于一个Waymo场景",
+          "formula": null
+        },
+        {
+          "cell": "A105",
+          "value": "序",
+          "formula": null
+        },
+        {
+          "cell": "B105",
+          "value": "条目",
+          "formula": null
+        },
+        {
+          "cell": "C105",
+          "value": "原表述",
+          "formula": null
+        },
+        {
+          "cell": "D105",
+          "value": "核对依据",
+          "formula": null
+        },
+        {
+          "cell": "E105",
+          "value": "正确范围",
+          "formula": null
+        },
+        {
+          "cell": "F105",
+          "value": "为什么要纠正",
+          "formula": null
+        },
+        {
+          "cell": "G105",
+          "value": "结论限制",
+          "formula": null
+        },
+        {
+          "cell": "H105",
+          "value": "说明",
+          "formula": null
+        },
+        {
+          "cell": "I105",
+          "value": "原始回执",
+          "formula": null
+        },
+        {
+          "cell": "A106",
+          "value": "1",
+          "formula": null
+        },
+        {
+          "cell": "B106",
+          "value": "待核查点白材质诊断",
+          "formula": null
+        },
+        {
+          "cell": "C106",
+          "value": "前版写成“三场景204帧”。",
+          "formula": null
+        },
+        {
+          "cell": "D106",
+          "value": "原始回执明确只列Waymo场景一；6组输出。",
+          "formula": null
+        },
+        {
+          "cell": "E106",
+          "value": "49帧重建＋5组各31帧编辑＝204条输出记录。",
+          "formula": null
+        },
+        {
+          "cell": "F106",
+          "value": "多个操作会重复同一时刻，不能算204个独立时刻，也不能算3场景验证。",
+          "formula": null
+        },
+        {
+          "cell": "G106",
+          "value": "只说明颜色干预配对与不变量检查通过；不是修复质量通过。",
+          "formula": null
+        },
+        {
+          "cell": "H106",
+          "value": "前版文件及证据索引已留备份。",
+          "formula": null
+        },
+        {
+          "cell": "I106",
+          "value": "打开原始回执",
+          "formula": null
+        },
+        {
+          "cell": "A108",
+          "value": "判读规则",
+          "formula": null
+        },
+        {
+          "cell": "A109",
+          "value": "已证实=针对该行定义有实测，不代表所有根因都确认。",
+          "formula": null
+        },
+        {
+          "cell": "A110",
+          "value": "局部有效不等于整个方法成功；参考域、独立测试和三维正确性分别判断。",
+          "formula": null
+        },
+        {
+          "cell": "A111",
+          "value": "未做严格实验不等于实验失败；启发式失败不等于研究方向无效。",
+          "formula": null
+        },
+        {
+          "cell": "A112",
+          "value": "实验代号只留在点击后的原始文件中，主表按做法命名。",
+          "formula": null
+        }
+      ],
+      "hyperlinks": [
+        {
+          "ref": "I3",
+          "display": "阅读说明 ↘",
+          "location": "'13类坏例证据'!A22"
+        },
+        {
+          "ref": "I5",
+          "display": "场景范围 ↘",
+          "location": "'13类坏例证据'!A37"
+        },
+        {
+          "ref": "C8",
+          "display": "部分证实：真实删除后有车形残留；尚无可靠逐点归属真值。",
+          "location": "'13类坏例证据'!A54"
+        },
+        {
+          "ref": "D8",
+          "display": "部分证实：独立无车参考确认残影真实；仍不能给每颗高斯唯一身份。",
+          "location": "'13类坏例证据'!A71"
+        },
+        {
+          "ref": "I8",
+          "display": "01 · 02 · 05 · 13 · 24 · 25 · 27",
+          "location": "'13类坏例证据'!A54"
+        },
+        {
+          "ref": "C9",
+          "display": "部分证实：严格规则几乎不动残影，放宽会伤背景；初始化也有候选留存路径。",
+          "location": "'13类坏例证据'!A64"
+        },
+        {
+          "ref": "D9",
+          "display": "已证实：严格规则只覆盖约1.4%–7.6%的删前贡献；扩到99.9%仍不够。",
+          "location": "'13类坏例证据'!A72"
+        },
+        {
+          "ref": "I9",
+          "display": "02 · 03 · 23 · 24 · 27",
+          "location": "'13类坏例证据'!A64"
+        },
+        {
+          "ref": "D10",
+          "display": "已证实：删后来源贡献猛增，约78.08%来自原输入中极弱可见的点。",
+          "location": "'13类坏例证据'!A73"
+        },
+        {
+          "ref": "I10",
+          "display": "03 · 05",
+          "location": "'13类坏例证据'!A73"
+        },
+        {
+          "ref": "C11",
+          "display": "部分证实：车辆点过度外扩可测；约束后外扩数能降到0。",
+          "location": "'13类坏例证据'!A49"
+        },
+        {
+          "ref": "D11",
+          "display": "部分证实：独立道路参考与删后深度/空间支撑不一致；正确逐点位置仍未建立。",
+          "location": "'13类坏例证据'!A72"
+        },
+        {
+          "ref": "I11",
+          "display": "02 · 06 · 07 · 08 · 25",
+          "location": "'13类坏例证据'!A49"
+        },
+        {
+          "ref": "C12",
+          "display": "尚未独立证实完整前提；做过固定几何、归属的137点颜色拟合。",
+          "location": "'13类坏例证据'!A50"
+        },
+        {
+          "ref": "D12",
+          "display": "尚未独立证实完整前提；借独立无车答案改128个点的颜色能改善图像。",
+          "location": "'13类坏例证据'!A74"
+        },
+        {
+          "ref": "I12",
+          "display": "04 · 09 · 13 · 21",
+          "location": "'13类坏例证据'!A50"
+        },
+        {
+          "ref": "C13",
+          "display": "尚未独立证实：跨车/路像素贡献存在，但两侧几何支撑未成立。",
+          "location": "'13类坏例证据'!A48"
+        },
+        {
+          "ref": "D13",
+          "display": "尚未独立证实：做过拆分原型，未证明原点物理上确实混合多表面。",
+          "location": "'13类坏例证据'!A76"
+        },
+        {
+          "ref": "I13",
+          "display": "06 · 07",
+          "location": "'13类坏例证据'!A48"
+        },
+        {
+          "ref": "C14",
+          "display": "部分证实：有旧影区代理参考和时间显隐诊断；并非所有暗区都是阴影。",
+          "location": "'13类坏例证据'!A58"
+        },
+        {
+          "ref": "I14",
+          "display": "17 · 18 · 19 · 20",
+          "location": "'13类坏例证据'!A58"
+        },
+        {
+          "ref": "C15",
+          "display": "已证实：有无道路参考、无有效支撑以及补片被原背景挡住的实际案例。",
+          "location": "'13类坏例证据'!A51"
+        },
+        {
+          "ref": "D15",
+          "display": "已证实：原16视图仅50.54%的道路采样点至少可见一次。",
+          "location": "'13类坏例证据'!A75"
+        },
+        {
+          "ref": "I15",
+          "display": "05 · 10 · 11 · 12 · 13 · 14 · 15 · 16 · 28",
+          "location": "'13类坏例证据'!A51"
+        },
+        {
+          "ref": "C16",
+          "display": "已证实：一个后删状态160个暗像素的高斯贡献为0，暗色全来自环境。",
+          "location": "'13类坏例证据'!A60"
+        },
+        {
+          "ref": "I16",
+          "display": "20",
+          "location": "'13类坏例证据'!A60"
+        },
+        {
+          "ref": "C17",
+          "display": "已证实：颜色越界、负环境值、阴影精度错误与合成退化均有实测。",
+          "location": "'13类坏例证据'!A51"
+        },
+        {
+          "ref": "D17",
+          "display": "有源码路径核查：颜色无上界、环境直接学习；尚未单独证明它是残影根因。",
+          "location": "'13类坏例证据'!A73"
+        },
+        {
+          "ref": "I17",
+          "display": "03 · 04 · 10 · 11 · 19 · 20 · 21",
+          "location": "'13类坏例证据'!A51"
+        },
+        {
+          "ref": "C18",
+          "display": "已证实：同一车辆资产参数完全不变，覆盖下降、静态遮挡增加。",
+          "location": "'13类坏例证据'!A62"
+        },
+        {
+          "ref": "I18",
+          "display": "22",
+          "location": "'13类坏例证据'!A62"
+        },
+        {
+          "ref": "C19",
+          "display": "部分证实：3个真实路段逐帧候选变化、时间显隐已测；身份跳变未独立证实。",
+          "location": "'13类坏例证据'!A59"
+        },
+        {
+          "ref": "I19",
+          "display": "18 · 23",
+          "location": "'13类坏例证据'!A59"
+        },
+        {
+          "ref": "C20",
+          "display": "已证实：出现过左右视图不同步、入口默认隐藏车辆等接线问题。",
+          "location": "'13类坏例证据'!A80"
+        },
+        {
+          "ref": "D20",
+          "display": "已证实：出现过像素查询和相机恢复问题，已修并复核。",
+          "location": "'13类坏例证据'!A81"
+        },
+        {
+          "ref": "I20",
+          "display": "19 · 26",
+          "location": "'13类坏例证据'!A80"
+        },
+        {
+          "ref": "I24",
+          "display": "Waymo明细",
+          "location": "'13类坏例证据'!A45"
+        },
+        {
+          "ref": "I25",
+          "display": "仿真明细",
+          "location": "'13类坏例证据'!A69"
+        },
+        {
+          "ref": "I26",
+          "display": "工程明细",
+          "location": "'13类坏例证据'!A78"
+        },
+        {
+          "ref": "I39",
+          "display": "打开原始记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId1"
+        },
+        {
+          "ref": "I40",
+          "display": "打开原始记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId2"
+        },
+        {
+          "ref": "I41",
+          "display": "打开原始记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId3"
+        },
+        {
+          "ref": "I42",
+          "display": "打开原始记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId4"
+        },
+        {
+          "ref": "I43",
+          "display": "打开原始记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId5"
+        },
+        {
+          "ref": "H48",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId6"
+        },
+        {
+          "ref": "I48",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId7"
+        },
+        {
+          "ref": "H49",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId8"
+        },
+        {
+          "ref": "I49",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId9"
+        },
+        {
+          "ref": "H50",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId10"
+        },
+        {
+          "ref": "I50",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId11"
+        },
+        {
+          "ref": "H51",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId12"
+        },
+        {
+          "ref": "I51",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId13"
+        },
+        {
+          "ref": "H52",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId14"
+        },
+        {
+          "ref": "I52",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId15"
+        },
+        {
+          "ref": "H53",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId16"
+        },
+        {
+          "ref": "I53",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId17"
+        },
+        {
+          "ref": "H54",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId18"
+        },
+        {
+          "ref": "I54",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId19"
+        },
+        {
+          "ref": "H55",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId20"
+        },
+        {
+          "ref": "I55",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId21"
+        },
+        {
+          "ref": "H56",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId22"
+        },
+        {
+          "ref": "I56",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId23"
+        },
+        {
+          "ref": "H57",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId24"
+        },
+        {
+          "ref": "I57",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId25"
+        },
+        {
+          "ref": "H58",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId26"
+        },
+        {
+          "ref": "I58",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId27"
+        },
+        {
+          "ref": "H59",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId28"
+        },
+        {
+          "ref": "I59",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId29"
+        },
+        {
+          "ref": "H60",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId30"
+        },
+        {
+          "ref": "I60",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId31"
+        },
+        {
+          "ref": "H61",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId32"
+        },
+        {
+          "ref": "I61",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId33"
+        },
+        {
+          "ref": "H62",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId34"
+        },
+        {
+          "ref": "I62",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId35"
+        },
+        {
+          "ref": "H63",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId36"
+        },
+        {
+          "ref": "I63",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId37"
+        },
+        {
+          "ref": "H64",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId38"
+        },
+        {
+          "ref": "I64",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId39"
+        },
+        {
+          "ref": "H65",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId40"
+        },
+        {
+          "ref": "I65",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId41"
+        },
+        {
+          "ref": "H66",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId42"
+        },
+        {
+          "ref": "I66",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId43"
+        },
+        {
+          "ref": "H67",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId44"
+        },
+        {
+          "ref": "I67",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId45"
+        },
+        {
+          "ref": "H71",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId46"
+        },
+        {
+          "ref": "I71",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId47"
+        },
+        {
+          "ref": "H72",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId48"
+        },
+        {
+          "ref": "I72",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId49"
+        },
+        {
+          "ref": "H73",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId50"
+        },
+        {
+          "ref": "I73",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId51"
+        },
+        {
+          "ref": "H74",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId52"
+        },
+        {
+          "ref": "I74",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId53"
+        },
+        {
+          "ref": "H75",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId54"
+        },
+        {
+          "ref": "I75",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId55"
+        },
+        {
+          "ref": "H76",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId56"
+        },
+        {
+          "ref": "I76",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId57"
+        },
+        {
+          "ref": "H80",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId58"
+        },
+        {
+          "ref": "I80",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId59"
+        },
+        {
+          "ref": "H81",
+          "display": "查看图文对照",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId60"
+        },
+        {
+          "ref": "I81",
+          "display": "打开指标/回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId61"
+        },
+        {
+          "ref": "H93",
+          "display": "远端清单",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId62"
+        },
+        {
+          "ref": "I93",
+          "display": "关键记录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId63"
+        },
+        {
+          "ref": "H94",
+          "display": "核对清单",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId64"
+        },
+        {
+          "ref": "H95",
+          "display": "结构化证据",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId65"
+        },
+        {
+          "ref": "H96",
+          "display": "对话摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId66"
+        },
+        {
+          "ref": "H98",
+          "display": "查看摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId67"
+        },
+        {
+          "ref": "H99",
+          "display": "查看摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId68"
+        },
+        {
+          "ref": "H100",
+          "display": "查看摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId69"
+        },
+        {
+          "ref": "H101",
+          "display": "查看摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId70"
+        },
+        {
+          "ref": "H102",
+          "display": "查看摘录",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId71"
+        },
+        {
+          "ref": "I106",
+          "display": "打开原始回执",
+          "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId72"
+        }
+      ]
+    }
+  ],
+  "media": [],
+  "relationships": [
+    {
+      "path": "_rels/.rels",
+      "entries": [
+        {
+          "Id": "rId1",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+          "Target": "xl/workbook.xml"
+        },
+        {
+          "Id": "rId3",
+          "Type": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
+          "Target": "docProps/core.xml"
+        },
+        {
+          "Id": "rId2",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
+          "Target": "docProps/app.xml"
+        },
+        {
+          "Id": "rId4",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties",
+          "Target": "docProps/custom.xml"
+        }
+      ]
+    },
+    {
+      "path": "xl/worksheets/_rels/sheet3.xml.rels",
+      "entries": [
+        {
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "Target": "/xl/tables/table1.xml",
+          "Id": "Rd1b5ebab38604e25"
+        },
+        {
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "Target": "/xl/tables/table2.xml",
+          "Id": "R393b8d57c3984f39"
+        },
+        {
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "Target": "/xl/tables/table3.xml",
+          "Id": "Rb2cc12735cc14c58"
+        },
+        {
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "Target": "/xl/tables/table4.xml",
+          "Id": "R9d3ed24d9a394cd1"
+        },
+        {
+          "Id": "rId1",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/GS_Scene_Diagnostics_20261027/legacy_scene0008/manifest.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId2",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/unknown_white_20261030/summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId3",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/audit_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId4",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/audit_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId5",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_mechanism_20261030/report_state.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId6",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/editable_ownership_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId7",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/direction_state.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId8",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId9",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/r15_evidence/geometry_comparison.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId10",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-17/c-users-dengyunlong-documents-codex-2026/outputs/r15_closure_report_20261018.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId11",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-17/c-users-dengyunlong-documents-codex-2026/outputs/r15_closure_results_20261018/appearance_control.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId12",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V4_R_road_diagnosis_20261023/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId13",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V4_R_road_diagnosis_20261023/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId14",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V41_Formal30K_Final_20261024/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId15",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V41_Formal30K_Final_20261024/FINAL30K.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId16",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId17",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/EXPERIMENT_REPORT.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId18",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_selected_mechanism/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId19",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_selected_mechanism/REPORT.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId20",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_mechanism/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId21",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/c_mechanism/REPORT.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId22",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId23",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Fullclip_Controlled_Smoke_20261026/EXPERIMENT_REPORT.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId24",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/Persistent_World_Autoresearch_20261027/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId25",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/Persistent_World_Autoresearch_20261027/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId26",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-16/checkpoint-gpu-drivingeditor-mask-rgb-rgb/outputs/DrivingEditor_shadow_sequence_comparison.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId27",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-16/checkpoint-gpu-drivingeditor-mask-rgb-rgb/outputs/shadow_sequence_v2/final49_repair_v1/summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId28",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-16/checkpoint-gpu-drivingeditor-mask-rgb-rgb/outputs/shadow_diagnosis/diagnosis.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId29",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-16/checkpoint-gpu-drivingeditor-mask-rgb-rgb/outputs/shadow_diagnosis/measured_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId30",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/recall_ceiling_v1/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId31",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/recall_ceiling_v1/evidence/dark/summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId32",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/unknown_white_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId33",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/unknown_white_20261030/summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId34",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId35",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/first_badcase_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId36",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId37",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/temporal_multiscene_20261029/audit_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId38",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId39",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/first_badcase_delivery_v1/ghost_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId40",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-20/file-c-users-dengyunlong-documents-codex-2/outputs/V3_Four_Arms_HTML_20261021_final/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId41",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-20/file-c-users-dengyunlong-documents-codex-2/outputs/V3_Four_Arms_HTML_20261021_final/report-data.js",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId42",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId43",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/STATIC_LEAKAGE_AND_OWNERSHIP.md",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId44",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Interior_Road_Teacher_20261024/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId45",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V42_Interior_Road_Teacher_20261024/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId46",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_mechanism_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId47",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_mechanism_20261030/report_state.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId48",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_m1m2_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId49",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_m1m2_20261030/report_state.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId50",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId51",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/evidence/source/allrow_observed16_r1/weighted_visibility_bins.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId52",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId53",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/evidence/source/run_r2_color_maps/source_000008/source_receipt.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId54",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId55",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/evidence/source/source/comparison_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId56",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_m1m2_20261030/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId57",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/sim_m1m2_20261030/report_state.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId58",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-17/c-users-dengyunlong-documents-codex-2026/outputs/r15_closure_report_20261018.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId59",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-17/c-users-dengyunlong-documents-codex-2026/outputs/r15_closure_results_20261018/closure_summary.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId60",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/GS_Scene_Diagnostics_20261027/index.html",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId61",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/source_evidence_20261030/evidence/source/run_r2_color_maps/training_camera_restore_verification.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId62",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/remote_inventory.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId63",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/remote_selected.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId64",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/provenance_verification.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId65",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/evidence_data.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId66",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId67",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId68",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId69",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId70",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId71",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/work/badcase_evidence_20261031/thread_review.json",
+          "TargetMode": "External"
+        },
+        {
+          "Id": "rId72",
+          "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+          "Target": "file:///C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V43_Ownership_20261027/gpu_v43/unknown_white_20261030/summary.json",
+          "TargetMode": "External"
+        }
+      ]
+    }
+  ]
+}

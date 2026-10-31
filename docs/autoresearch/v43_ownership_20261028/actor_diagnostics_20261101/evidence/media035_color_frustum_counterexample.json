@@ -1,0 +1,30 @@
+{
+  "schema": "independent_original_sensor_color_projection_counterexample_v1",
+  "context_id": "13299463771883949918_4240_000_4260_000",
+  "raw_frame": 0,
+  "source": "complete original local TFRecord, CRC/context checked",
+  "actual_decoded_sensor_rows": 177589,
+  "front_color_valid_by_current_distorted_uv_bounds": 23802,
+  "color_valid_but_outside_undistorted_pinhole_15percent_margin_frustum": 5888,
+  "undistorted_raw_pixel_u_range_for_those_rows": [
+    -1992.1467005729583,
+    3895.231198810002
+  ],
+  "raw_camera_width": 1920,
+  "cause": "Brown radial polynomial is extrapolated outside the supported camera direction; some rays fold back into image bounds",
+  "impact": "display RGB/front_color_valid only; no change to measured xyz, raw/source-cloud-row identity, counts, OBB selection or formal unknown gates",
+  "required_fix": "apply a pre-distortion camera-frustum/direction-validity mask to color association, retain excluded points in gray and false color validity; keep original evidence",
+  "GPU_calls": 0,
+  "edit_reference_or_result_used": false,
+  "status": "RESOLVED_SOURCE_COLOR_FRUSTUM_CHECK_PASS",
+  "not_a_method_or_capability_failure": true,
+  "resolution": {
+    "status": "PASS_INDEPENDENT_RECEIPT_AND_POINTWISE_CHECK",
+    "old_valid": 173837,
+    "new_valid": 97509,
+    "invalid_color_rows_grayed": 76328,
+    "all83_actor_XYZ_raw_source_exactly_unchanged": true,
+    "sampled_color_flags_recomputed_for_3_raw_frames": true
+  },
+  "resolution_evidence": "media035_independent_audit.json"
+}

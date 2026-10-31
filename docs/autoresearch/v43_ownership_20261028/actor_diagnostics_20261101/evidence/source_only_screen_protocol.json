@@ -1,0 +1,685 @@
+{
+  "schema": "v43_r4_source_only_actor_second_screen_protocol_v1",
+  "objective": "Separate preparation gaps, source observation limitations, engineering invalidity and unresolved mechanisms before any new method/edit-result evaluation.",
+  "architecture": {
+    "components": [
+      "Original raw sensors+annotations",
+      "Identity/time/source integrity",
+      "Source-only per-actor facts",
+      "Geometry/view/background/motion requirements",
+      "Per-operation unknown or calibrated gate",
+      "Full-denominator diagnostics+media"
+    ],
+    "arrows": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        5
+      ]
+    ],
+    "evaluation_reference_input": false
+  },
+  "source_contract": {
+    "R4_section": "3.1 through3.3, document lines144-198",
+    "attachment_role": "XLSX taxonomy and historical evidence-status only; instructions/actions in cells are not executed and are not actor features",
+    "allowlist": [
+      "original raw TFRecord sensor records and source annotations",
+      "original source RGB/calibration/ego/track/point timestamps",
+      "legally supplied original body mask with explicit role",
+      "immutable original all-branch G and original none layers when separately measured",
+      "source-only frozen actor registry/observations and source resource inventory"
+    ],
+    "prohibited": [
+      "independent deletion/shift/rotation reference",
+      "edited result or residual/ghost masks",
+      "student predictions, policy scores or methods success",
+      "privileged complete simulation geometry or edited semantic/depth used as deployment features",
+      "historical XLSX success/failure percentages used as actor thresholds",
+      "post-score adjustment of cohort or thresholds"
+    ],
+    "deployment_role": "Waymo annotations are explicitly annotation-assisted; simulator masks stay simulator_sensor_oracle; neither is an automatic real-deployment guarantee"
+  },
+  "denominators": {
+    "registered_scene_count": 15,
+    "registered_vehicle_tracks": 1228,
+    "original_preparation_queue": 45,
+    "registered_operation_gate_records_including_none": 4912,
+    "edit_task_count_if_3_operations_registered": 3684,
+    "all_registered_before_filtering": true,
+    "formal_qualified_count": null,
+    "formal_unknown_actors": 1228,
+    "frame_domains": [
+      "full raw sequence per scene",
+      "unchanged recommended49 for selected45",
+      "source samples within declared native49 inventory, not verified training split"
+    ],
+    "missing_values": "null with reason and original denominator; zero support only where the measurement domain and validity are defined",
+    "statistical_unit": "physical scene/object ancestor, not frames or 4912 correlated operation records"
+  },
+  "measured_now": {
+    "all": {
+      "tracks": 1228,
+      "engineering_invalid": 0,
+      "flag_counts": {
+        "zero_FRONT_projected_observations": 732,
+        "source_track_has_frame_gaps": 2,
+        "zero_annotation_box_LiDAR_count_on_FRONT_observed_frames": 7
+      },
+      "observed_FRONT_sector_count_histogram": {
+        "0": 732,
+        "1": 296,
+        "2": 184,
+        "3": 10,
+        "4": 3,
+        "5": 3
+      },
+      "rotate30_missing_bin_proxy_tracks": 494,
+      "declared_native_G_window_inventory_registered": 369,
+      "native_dynamic_asset_mapping_inventory": 8,
+      "mask_evidence_inventory": 8,
+      "mask_inventory_median_pixels_positive": 7,
+      "mask_inventory_median_pixels_zero": 1,
+      "preparation49_missing_fixed_anchor_tracks": 3,
+      "formal_qualification_known": 0,
+      "formal_qualification_unknown": 1228,
+      "full_G_geometry_unknown": 1228,
+      "surface_view_unknown": 1228,
+      "background_support_unknown": 1228
+    },
+    "preparation45": {
+      "tracks": 45,
+      "engineering_invalid": 0,
+      "flag_counts": {},
+      "observed_FRONT_sector_count_histogram": {
+        "1": 16,
+        "2": 25,
+        "3": 3,
+        "5": 1
+      },
+      "rotate30_missing_bin_proxy_tracks": 43,
+      "declared_native_G_window_inventory_registered": 12,
+      "native_dynamic_asset_mapping_inventory": 6,
+      "mask_evidence_inventory": 6,
+      "mask_inventory_median_pixels_positive": 5,
+      "mask_inventory_median_pixels_zero": 1,
+      "preparation49_missing_fixed_anchor_tracks": 3,
+      "formal_qualification_known": 0,
+      "formal_qualification_unknown": 45,
+      "full_G_geometry_unknown": 45,
+      "surface_view_unknown": 45,
+      "background_support_unknown": 45
+    },
+    "actual_range_image_layer": {
+      "schema": "additive_decoded_box_measurement_layer_v1",
+      "complete_scenes": 15,
+      "complete_actors": 1228,
+      "pending_actors": 0,
+      "actual_measured_box_rows": 44046945,
+      "actors_measured_zero_box_rows": 30,
+      "annotation_fields_unchanged": true,
+      "formal_P": null,
+      "source_snapshots": [
+        {
+          "context_id": "10094743350625019937_3420_000_3440_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\media.json",
+          "media_sha256": "f7b96abb5e208dd80f982eb4d10b7b55bcf542fedbce08a18d6a3a2d77bd11bf",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\manifest.json",
+          "manifest_sha256": "946db7bf0e0b2956500e86ab5275f5b58751128f88e16b41455b8baba8ec90f7",
+          "frames": 199,
+          "actors": 60
+        },
+        {
+          "context_id": "10335539493577748957_1372_870_1392_870",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10335539493577748957_1372_870_1392_870\\media.json",
+          "media_sha256": "b9b1aad7d143aaeefdca5a1e943e9e936be4db56139592398ff945e99ad6b9f1",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10335539493577748957_1372_870_1392_870\\manifest.json",
+          "manifest_sha256": "373fe6ef4e808c28507d117a535eab4d7968421e592a429942fcbeaf9bfeac99",
+          "frames": 198,
+          "actors": 22
+        },
+        {
+          "context_id": "11660186733224028707_420_000_440_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\11660186733224028707_420_000_440_000\\media.json",
+          "media_sha256": "61d9b709bfa802ee8ce6f9009b9881bdad65ef12c8ed17712e6b48c598dae413",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\11660186733224028707_420_000_440_000\\manifest.json",
+          "manifest_sha256": "7b75c2d680bf41115c76a3ced7bd0249c3c6bc1c3d3d21720922422e50c6ac4c",
+          "frames": 197,
+          "actors": 91
+        },
+        {
+          "context_id": "12820461091157089924_5202_916_5222_916",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\12820461091157089924_5202_916_5222_916\\media.json",
+          "media_sha256": "aa9b0d96fdae3c4ac77986e09cca90b40333c80c275f25d16e2355cdf2526925",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\12820461091157089924_5202_916_5222_916\\manifest.json",
+          "manifest_sha256": "23c7e6091eba4bb5e2027ee6b9044e7028f96d09054b426a735d03f2fcce6140",
+          "frames": 198,
+          "actors": 86
+        },
+        {
+          "context_id": "13299463771883949918_4240_000_4260_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\media.json",
+          "media_sha256": "561ec3d9a4d210ad09e73a1e700f92785cbf04666c3e20c5a3c99987dc02c524",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\manifest.json",
+          "manifest_sha256": "f67b695acd3d82a789b187da3bc664da72a7cea19a4bf2275911c7edf07ab63c",
+          "frames": 198,
+          "actors": 83
+        },
+        {
+          "context_id": "14705303724557273004_3105_000_3125_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\14705303724557273004_3105_000_3125_000\\media.json",
+          "media_sha256": "261f3ddb239f64a44605a8685f5d8c0975ec3a8271df40039cb0f644b8ca8993",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\14705303724557273004_3105_000_3125_000\\manifest.json",
+          "manifest_sha256": "e2aa4288a32b0f873b17494e3a2bc494d8bd472287d8d87346f8919f1c7038de",
+          "frames": 199,
+          "actors": 75
+        },
+        {
+          "context_id": "15021599536622641101_556_150_576_150",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\15021599536622641101_556_150_576_150\\media.json",
+          "media_sha256": "55e00d4bec912f1ac18efb54debd3ce2d747c31543f561df0ce788d837b2c711",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\15021599536622641101_556_150_576_150\\manifest.json",
+          "manifest_sha256": "35e5b51edc4d1469e57d8dfba91e9156bf3596bd8ed22b697305f1de12e5e341",
+          "frames": 199,
+          "actors": 29
+        },
+        {
+          "context_id": "1505698981571943321_1186_773_1206_773",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\1505698981571943321_1186_773_1206_773\\media.json",
+          "media_sha256": "ae4a8e79b1d3d0941ddf5ef7f95f57a4edd8f1ecb4500ef0286bef59b18a896e",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\1505698981571943321_1186_773_1206_773\\manifest.json",
+          "manifest_sha256": "52da2d3bc235e2203d1a80576027dd8d01d39f350a5f6bb132725475238e3a10",
+          "frames": 198,
+          "actors": 48
+        },
+        {
+          "context_id": "16229547658178627464_380_000_400_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\16229547658178627464_380_000_400_000\\media.json",
+          "media_sha256": "d12f657efc0393db1464d84794793c2fea50567a69fca6fdf7b009194c616e9d",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\16229547658178627464_380_000_400_000\\manifest.json",
+          "manifest_sha256": "c100fc25b80fde045a065bc2d3e9a35e88be42aaa0496499b14f7b0076b59566",
+          "frames": 197,
+          "actors": 181
+        },
+        {
+          "context_id": "16767575238225610271_5185_000_5205_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\16767575238225610271_5185_000_5205_000\\media.json",
+          "media_sha256": "6f9d4f1deaac24b3dbc9ccb9b4da61e9d08f0a68740c38d79d6d07e1e2de3510",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\16767575238225610271_5185_000_5205_000\\manifest.json",
+          "manifest_sha256": "c7127d016f859313d5b64fe8cf1ca7712467329fdf15adacd8e7754af01dcbb5",
+          "frames": 199,
+          "actors": 54
+        },
+        {
+          "context_id": "17152649515605309595_3440_000_3460_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\17152649515605309595_3440_000_3460_000\\media.json",
+          "media_sha256": "1d86a31edd1b26641869ab5cd0eb28578114a6e70fe6ef5750b920bf8842bd5b",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\17152649515605309595_3440_000_3460_000\\manifest.json",
+          "manifest_sha256": "7e6ee62c723e615841c62049462059453d3b3415f1e68e639440535d0fcf639c",
+          "frames": 199,
+          "actors": 87
+        },
+        {
+          "context_id": "2506799708748258165_6455_000_6475_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\2506799708748258165_6455_000_6475_000\\media.json",
+          "media_sha256": "1a59c424b80760be1115a4f455e37af821408fb054850c5940769d468cfd0122",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\2506799708748258165_6455_000_6475_000\\manifest.json",
+          "manifest_sha256": "bf748da9c694b6628d40f64e73a79662228a78597644c5c1f93327aecec1d120",
+          "frames": 199,
+          "actors": 11
+        },
+        {
+          "context_id": "4295449061847708198_3769_000_3789_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4295449061847708198_3769_000_3789_000\\media.json",
+          "media_sha256": "3deceeb171f59de42bfeee83a72e8eb78a78b1d9aadda9af02db4d7b7c59b178",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4295449061847708198_3769_000_3789_000\\manifest.json",
+          "manifest_sha256": "9930b4f2655dd10e62e9e81aa1f0a8b9ea4feca6d9b199b100951f35530562d2",
+          "frames": 198,
+          "actors": 164
+        },
+        {
+          "context_id": "4575389405178805994_4900_000_4920_000",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4575389405178805994_4900_000_4920_000\\media.json",
+          "media_sha256": "bba61ae8c76821b40cad8d4512d62099d3fe3a6d7865044c9eb2c6650d8761c9",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4575389405178805994_4900_000_4920_000\\manifest.json",
+          "manifest_sha256": "8d4ec3a6112d7f938088485d7096bacd73762f249a726ac8d1372b0cdc9c94e4",
+          "frames": 199,
+          "actors": 167
+        },
+        {
+          "context_id": "473735159277431842_630_095_650_095",
+          "media_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\473735159277431842_630_095_650_095\\media.json",
+          "media_sha256": "b05dcddfcf4798389030823ad1b7a42b7812073d0f5439bd99084852e3374992",
+          "manifest_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\473735159277431842_630_095_650_095\\manifest.json",
+          "manifest_sha256": "1cded02c92b2f98a1bf5bdb40202c3ded035522ce41afc84abcc8458c46ee64f",
+          "frames": 198,
+          "actors": 70
+        }
+      ],
+      "meaning": "actual decoded range-image rows inside same-frame source annotation box; not a semantic/body-surface completeness measure"
+    },
+    "no_FRONT_but_other_camera_projected_annotation": 563,
+    "no_any_camera_projected_annotation": 169,
+    "source_integrity_scope": "finite exported world box center+heading+lwh, positive sizes, timestamp ordering and frame identity only; not full camera/ego transforms or native restore",
+    "formal_P": null
+  },
+  "disposition_classes": [
+    {
+      "code": "ENGINEERING_INVALID",
+      "meaning": "measured source identity/index/nonfinite/units or deterministic wiring error",
+      "action": "block execution, preserve record and repair; not a D/C method failure",
+      "current_measured_count": 0
+    },
+    {
+      "code": "OBSERVATION_EMPTY_OR_WEAK",
+      "meaning": "known source-domain lack/proxy weakness, e.g. no FRONT projection; other cameras remain available",
+      "action": "retain in diagnostic/acquisition queue; no formal P decision without frozen requirements"
+    },
+    {
+      "code": "INPUT_NOT_PREPARED",
+      "meaning": "missing scene G, actor association, legal body mask or frozen U/H0",
+      "action": "prepare inputs or explicit restricted alternative scope; not evidence of physical inability"
+    },
+    {
+      "code": "UNKNOWN_REQUIRED_CHECK",
+      "meaning": "required reconstruction/surface/background/motion evidence unmeasured or threshold uncalibrated",
+      "action": "formal gate null; do not display pass/fail"
+    },
+    {
+      "code": "FORMAL_OUT_OF_DOMAIN",
+      "meaning": "only after source features and calibration-locked thresholds determine P=0",
+      "action": "retain all original tasks for coverage/refusal/capability boundary; current count unavailable"
+    },
+    {
+      "code": "FORMAL_P1",
+      "meaning": "all required measured features satisfy prelocked calibrated thresholds for this q",
+      "action": "eligible primary D cohort; not proof of complete car or successful editing; none currently asserted"
+    }
+  ],
+  "feature_specifications": {
+    "geometry": {
+      "inputs": "legal original body mask, trusted sparse depth, exact camera/time/gauge, complete static+dynamic G",
+      "function": "Within valid original visible-body/depth pixels, count pixels with sufficient front-to-back accumulated all-branch contribution near measured depth; record original none RGB error separately.",
+      "numerator": "trusted-depth body pixels with accepted accumulated near-depth support",
+      "denominators": [
+        "all legal body-mask pixels",
+        "trusted-depth body-mask pixels",
+        "valid views/frames"
+      ],
+      "unknown": "No trusted depth does not mean consistent depth; no body mask gives no formal f_geom. Candidate/dynamic branch alone is forbidden.",
+      "current_status": "unmeasured; full-cloud/LiDAR-center plots are diagnostic geometry resources only"
+    },
+    "view": {
+      "inputs": "actual requested q pose, original camera/actor full poses, measured actor-local points/surface samples, color/depth visibility",
+      "function": "For actual q-required source-estimable visible surface samples, test historical actual depth-visible/color-supported observation directions. Track out-of-sample and unobservable surfaces explicitly.",
+      "denominators": [
+        "registered q-required view/surface samples",
+        "trusted surface samples",
+        "time and camera bank"
+      ],
+      "unknown": "A complete visible 2D box, many points, 12 sectors or many frames never proves complete hidden surfaces. Surface locations absent from source cannot be silently omitted from completeness denominator.",
+      "current_proxy": "full/raw and recommended49 per-camera projected annotation counts and 30degree bearings; illustrative previous +30degree yaw only; not qualification"
+    },
+    "background": {
+      "inputs": "original masks, registered q reveal-domain estimate, original historical calibrated rays and valid measured background depth",
+      "function": "Map registered reveal pixels/estimated world samples to historical source views. Count only same-world, depth-consistent directly observed returns outside target/other moving occluders; record color/illumination validity.",
+      "denominators": [
+        "all predeclared reveal-domain pixels/rays or world samples",
+        "samples with known surface depth",
+        "historically valid observed samples"
+      ],
+      "unknown": "If reveal domain or world surface cannot be established, f_bg=null with counts. Never use observed-only points as the full reveal denominator. Road-plane interpolation is a geometric hypothesis, not direct observation.",
+      "separation": [
+        "never observed",
+        "measured but unused by a candidate rule",
+        "G lacks support",
+        "support exists but source occluded"
+      ],
+      "delete_vs_shift": "delete reveals original footprint; shift registers vacated and new-location constraints separately; no independent no-car GT"
+    },
+    "motion": {
+      "inputs": "source timestamps/poses/track ID plus original model time map, world-model gauge, camera and actor transforms and native active interval",
+      "function": "Validate bijective raw/model time linkage, transform inverse/roundtrip and full actor pose mapping on every registered frame; cross-check observed trajectory continuity descriptively.",
+      "denominators": [
+        "all registered raw frames",
+        "labelled track frames",
+        "native supported time frames",
+        "validated transform/camera frames"
+      ],
+      "unknown": "Monotone source timestamps and finite positive boxes are necessary exported-field checks, not full native f_motion. Annotation jitter or track gaps are diagnostic without calibrated tolerance."
+    }
+  },
+  "threshold_policy": {
+    "formal_thresholds": null,
+    "all_formal_gates": null,
+    "diagnostic_rules_are_not_calibration": true,
+    "no_new_threshold_loop": true,
+    "development": "Freeze feature functions and source bank on a separate development/calibration ancestry before sealed evaluation; no method/edit-outcome criterion.",
+    "existing_queue": "keep original45 and priorities unchanged; deliver facts/reasons rather than45-pass label",
+    "zero_support_policy": "known zero within a defined observed domain is recorded as zero; unmeasured depth/visibility or missing source is unknown, not zero"
+  },
+  "freeze_and_leakage_checks": [
+    "exact allowlisted source paths and hashes; no recursive result harvesting",
+    "feature values identical with reference/edited/student directories inaccessible",
+    "identical G/O yields identical actor features for different student methods",
+    "q changes predeclared view/background requirements only; source row binding h remains shared",
+    "record all actor/q frames before screening; preserve rejected/unknown denominator and reasons",
+    "all geometry displays explicitly record branch scope, crop/opacity filters and source/modeled time; no center-NN to f_geom promotion"
+  ],
+  "existing_resources": {
+    "source_observations": "all1228 per-frame source box/time/camera projection and annotation LiDAR counts available locally",
+    "reconstructed_scene_inventory": "four existing scene checkpoint/window inventories;369 registered tracks lie in these scenes, only8 mapped dynamic assets",
+    "mask_inventory": "8 target mask summaries,7 positive medians and1 medianzero;45queue has6 summaries,5 positive medians and1 medianzero; positive mask frame counts unknown",
+    "root_complete_G_cache": "three scenes have local all-row static+dynamic exports plus temporal fields and same-gauge local_from_world; root owns G/LiDAR comparison",
+    "capability_of_cache": "supports source-center/ellipsoid diagnostics at exact model time; not an opacity-composited f_geom or owner/complete-surface truth",
+    "native_model_modification_or_GPU_by_this_review": false
+  },
+  "badcase_mapping": [
+    {
+      "id": 1,
+      "key": "identity_or_binding",
+      "workbook_cells": {
+        "category": "V43!B2",
+        "summary_evidence": "V43!D2",
+        "real_evidence": "13类坏例证据!C8",
+        "simulation_evidence": "13类坏例证据!D8",
+        "causal_limits": "13类坏例证据!H8"
+      },
+      "title": "1. 身份或对象归属错误",
+      "attachment_evidence_real": "部分证实：真实删除后有车形残留；尚无可靠逐点归属真值。",
+      "attachment_evidence_sim": "部分证实：独立无车参考确认残影真实；仍不能给每颗高斯唯一身份。",
+      "attachment_causal_limit": "现象明确；把原因唯一归为身份错分仍是待验证解释，错几何、错颜色和缺观测都可能参与。",
+      "screening_role": "research_target_not_preexcluded",
+      "source_only_check": "Only legal original full-scene body/depth/motion conflicts can flag ambiguity; static-branch membership is not a failure or exclusion.",
+      "next_action": "Prepare actor-independent U and source-row map using full static+dynamic G; keep other actors. No unique physical Gaussian owner can be inferred from a box.",
+      "unknown": "physical_owner_and_causal_residual_source",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 2,
+      "key": "candidate_omission",
+      "workbook_cells": {
+        "category": "V43!B3",
+        "summary_evidence": "V43!D3",
+        "real_evidence": "13类坏例证据!C9",
+        "simulation_evidence": "13类坏例证据!D9",
+        "causal_limits": "13类坏例证据!H9"
+      },
+      "title": "2. 候选检测漏选",
+      "attachment_evidence_real": "部分证实：严格规则几乎不动残影，放宽会伤背景；初始化也有候选留存路径。",
+      "attachment_evidence_sim": "已证实：严格规则只覆盖约1.4%–7.6%的删前贡献；扩到99.9%仍不够。",
+      "attachment_causal_limit": "已测的是可见贡献覆盖；“哪些点实际属于车”和“最终哪些该编辑”仍需分开判断。",
+      "screening_role": "research_target_not_preexcluded",
+      "source_only_check": "Preedit full-scene alpha*T contribution covered by U may measure visible contribution recall, never semantic recall.",
+      "next_action": "Record sum_U alpha*T / sum_full_static alpha*T in legal original body ROI, denominators and candidate-external support; no edit-result filtering.",
+      "unknown": "hidden_or_semantic_complete_candidate_recall",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 3,
+      "key": "newly_exposed_latent_sources",
+      "workbook_cells": {
+        "category": "V43!B4",
+        "summary_evidence": "V43!D4",
+        "real_evidence": "13类坏例证据!C10",
+        "simulation_evidence": "13类坏例证据!D10",
+        "causal_limits": "13类坏例证据!H10"
+      },
+      "title": "3. 删除后显露新来源",
+      "attachment_evidence_real": "未找到同等级专项验证：有残影，但不能直接拿残影当作这条机制的证据。",
+      "attachment_evidence_sim": "已证实：删后来源贡献猛增，约78.08%来自原输入中极弱可见的点。",
+      "attachment_causal_limit": "78.08%是来源贡献占比，不是错误成因占比；也不表示这些点都应跟车删除。",
+      "screening_role": "unknown_mechanism",
+      "source_only_check": "Original weak contribution does not prove irrelevant ownership; hidden source membership cannot be established by a front image.",
+      "next_action": "Retain uncertainty and candidate-external ledger. Any later controlled visibility intervention needs a separately frozen analysis domain, not an actor pass label.",
+      "unknown": "latent_source_identity_and_edit_failure_cause",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 4,
+      "key": "geometry_position_scale",
+      "workbook_cells": {
+        "category": "V43!B5",
+        "summary_evidence": "V43!D5",
+        "real_evidence": "13类坏例证据!C11",
+        "simulation_evidence": "13类坏例证据!D11",
+        "causal_limits": "13类坏例证据!H11"
+      },
+      "title": "4. 几何位置或尺度错误",
+      "attachment_evidence_real": "部分证实：车辆点过度外扩可测；约束后外扩数能降到0。",
+      "attachment_evidence_sim": "部分证实：独立道路参考与删后深度/空间支撑不一致；正确逐点位置仍未建立。",
+      "attachment_causal_limit": "框外中心不自动等于错误身份；深度不同也不能唯一决定某颗高斯该移到哪里。",
+      "screening_role": "source_geometry_diagnostic",
+      "source_only_check": "Original measured LiDAR vs all-branch Gaussian centers/ellipsoids may reveal distance or footprint anomalies, without proving ownership.",
+      "next_action": "Use full source G time/gauge, exact 3D actor pose, actual sparse returns and per-frame depth consistency; center NN/OBB plots remain proxies.",
+      "unknown": "rendered_visible_body_depth_coverage_until_alphaT_measurement",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 5,
+      "key": "appearance_error_with_correct_identity",
+      "workbook_cells": {
+        "category": "V43!B6",
+        "summary_evidence": "V43!D6",
+        "real_evidence": "13类坏例证据!C12",
+        "simulation_evidence": "13类坏例证据!D12",
+        "causal_limits": "13类坏例证据!H12"
+      },
+      "title": "5. 表面身份正确，外观错误",
+      "attachment_evidence_real": "尚未独立证实完整前提；做过固定几何、归属的137点颜色拟合。",
+      "attachment_evidence_sim": "尚未独立证实完整前提；借独立无车答案改128个点的颜色能改善图像。",
+      "attachment_causal_limit": "颜色参与错误已见到；“身份和几何都正确，剩下只有颜色问题”仍未证明。",
+      "screening_role": "unknown_cause_H1_outside_scope",
+      "source_only_check": "Original RGB/SH directional support and residual can be described; pure-road identity and correct geometry are not established by color fitting improvements.",
+      "next_action": "Retain original color evidence and raw radiance range; do not open color optimization or label a causal appearance-only failure.",
+      "unknown": "identity_and_geometry_premise",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 6,
+      "key": "single_Gaussian_multi_surface",
+      "workbook_cells": {
+        "category": "V43!B7",
+        "summary_evidence": "V43!D7",
+        "real_evidence": "13类坏例证据!C13",
+        "simulation_evidence": "13类坏例证据!D13",
+        "causal_limits": "13类坏例证据!H13"
+      },
+      "title": "6. 一颗高斯承担多个表面",
+      "attachment_evidence_real": "尚未独立证实：跨车/路像素贡献存在，但两侧几何支撑未成立。",
+      "attachment_evidence_sim": "尚未独立证实：做过拆分原型，未证明原点物理上确实混合多表面。",
+      "attachment_causal_limit": "同一个点投影到两类像素，不等于真的对应两个表面；先确认前提，再评价如何拆。",
+      "screening_role": "unknown_cause_H1_outside_scope",
+      "source_only_check": "Body/keep dual projection or contribution is a conflict proxy, not proof of two physical support surfaces.",
+      "next_action": "Require independent depth support on both sides to investigate; preserve conflicts, do not split Gaussians or exclude the actor as proven mixed support.",
+      "unknown": "physical_mixed_surface_support",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 7,
+      "key": "shadow_reflection_associated_effect",
+      "workbook_cells": {
+        "category": "V43!B8",
+        "summary_evidence": "V43!D8",
+        "real_evidence": "13类坏例证据!C14",
+        "simulation_evidence": "13类坏例证据!D14",
+        "causal_limits": "13类坏例证据!H14"
+      },
+      "title": "7. 车辆关联效应留在其他表面",
+      "attachment_evidence_real": "部分证实：有旧影区代理参考和时间显隐诊断；并非所有暗区都是阴影。",
+      "attachment_evidence_sim": "未专项验证：有仿真阴影差分代理，尚未用它完成本条优化验收。",
+      "attachment_causal_limit": "遮挡、真实阴影、反射、错几何和环境回填仍可能混在一起，缺精确分离标签。",
+      "screening_role": "capability_boundary_unknown",
+      "source_only_check": "Dark source pixels, temporal change and shadow on/off Monte Carlo differences do not supply exact shadow labels.",
+      "next_action": "Separate measured illumination/visibility variation from geometry/env uncertainty; no dark-pixel threshold for actor acceptance.",
+      "unknown": "effect_decomposition_and_relighting_capability",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 8,
+      "key": "unobserved_or_unbuilt_background",
+      "workbook_cells": {
+        "category": "V43!B9",
+        "summary_evidence": "V43!D9",
+        "real_evidence": "13类坏例证据!C15",
+        "simulation_evidence": "13类坏例证据!D15",
+        "causal_limits": "13类坏例证据!H15"
+      },
+      "title": "8. 背景本来就没重建好或没被看见",
+      "attachment_evidence_real": "已证实：有无道路参考、无有效支撑以及补片被原背景挡住的实际案例。",
+      "attachment_evidence_sim": "已证实：原16视图仅50.54%的道路采样点至少可见一次。",
+      "attachment_causal_limit": "没有观测、观测没被规则用到、没建出几何、建出来却被遮住，是四种不同情况。",
+      "screening_role": "source_observation_check_required",
+      "source_only_check": "Historical measured rays can establish support for particular registered world points; missing history and unbuilt geometry are distinct.",
+      "next_action": "Freeze reveal-domain estimates from legal original masks/poses; test same-world historical depth-visible, non-target returns; retain every unknown reveal ray in denominator.",
+      "unknown": "reveal_domain_or_surface_depth_when_not_observed",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 9,
+      "key": "environment_fill_residue",
+      "workbook_cells": {
+        "category": "V43!B10",
+        "summary_evidence": "V43!D10",
+        "real_evidence": "13类坏例证据!C16",
+        "simulation_evidence": "13类坏例证据!D16",
+        "causal_limits": "13类坏例证据!H16"
+      },
+      "title": "9. 环境层参与形成残影",
+      "attachment_evidence_real": "已证实：一个后删状态160个暗像素的高斯贡献为0，暗色全来自环境。",
+      "attachment_evidence_sim": "未专项定位：换白底是诊断，不能自动说明仿真暗区具体来自哪里。",
+      "attachment_causal_limit": "环境层已经定位清楚；正确道路应是什么仍未知，白底不等于道路恢复。",
+      "screening_role": "layer_diagnostic_not_causal_edit_filter",
+      "source_only_check": "Original C_G, alpha, E and fill=(1-alpha)E can show layer dependence; no deletion result may enter qualification.",
+      "next_action": "If original native layers are available, retain raw layer contribution and compositor identities; env dominance is not restored-road evidence.",
+      "unknown": "correct_counterfactual_background_and_edit_residue_cause",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 10,
+      "key": "numeric_compositor",
+      "workbook_cells": {
+        "category": "V43!B11",
+        "summary_evidence": "V43!D11",
+        "real_evidence": "13类坏例证据!C17",
+        "simulation_evidence": "13类坏例证据!D17",
+        "causal_limits": "13类坏例证据!H17"
+      },
+      "title": "10. 数值与合成放大异常",
+      "attachment_evidence_real": "已证实：颜色越界、负环境值、阴影精度错误与合成退化均有实测。",
+      "attachment_evidence_sim": "有源码路径核查：颜色无上界、环境直接学习；尚未单独证明它是残影根因。",
+      "attachment_causal_limit": "算得准、显示截断和修好编辑是三件事；数值修复有效不代表归属或道路已正确。",
+      "screening_role": "engineering_gate",
+      "source_only_check": "Nonfinite inputs/compositor identity errors are engineering invalidity. HDR/out-of-[0,1] radiance alone is a measured warning, not automatically a bug.",
+      "next_action": "Check FP32 C+fill and fill identities, source color conventions, alpha/depth units; preserve raw values before display clamping.",
+      "unknown": "unmeasured_original_native_numeric_identity",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 11,
+      "key": "new_pose_coverage_occlusion_appearance",
+      "workbook_cells": {
+        "category": "V43!B12",
+        "summary_evidence": "V43!D12",
+        "real_evidence": "13类坏例证据!C18",
+        "simulation_evidence": "13类坏例证据!D18",
+        "causal_limits": "13类坏例证据!H18"
+      },
+      "title": "11. 编辑后的覆盖、遮挡或视向外观改变",
+      "attachment_evidence_real": "已证实：同一车辆资产参数完全不变，覆盖下降、静态遮挡增加。",
+      "attachment_evidence_sim": "未做同等级专项量化：仿真跑过转向，变淡原因的详细数字来自Waymo。",
+      "attachment_causal_limit": "已量到覆盖和遮挡变化；未观测侧面、视向外观是否还贡献错误，需要分开检验。",
+      "screening_role": "operation_specific_observation_check",
+      "source_only_check": "Box bearings are coarse direction proxies. Required surfaces, visibility, footprints and color directions must be measured for the actual requested q.",
+      "next_action": "Use camera/actor source poses and measured actor-local surface samples; compare q-required visible samples to legal observation bank with occlusion and depth checks.",
+      "unknown": "unseen_surfaces_and_view_dependent_appearance",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 12,
+      "key": "temporal_binding",
+      "workbook_cells": {
+        "category": "V43!B13",
+        "summary_evidence": "V43!D13",
+        "real_evidence": "13类坏例证据!C19",
+        "simulation_evidence": "13类坏例证据!D19",
+        "causal_limits": "13类坏例证据!H19"
+      },
+      "title": "12. 时间状态或跨帧绑定不稳定",
+      "attachment_evidence_real": "部分证实：3个真实路段逐帧候选变化、时间显隐已测；身份跳变未独立证实。",
+      "attachment_evidence_sim": "未专项验证：只检查少量时刻，未做16帧完整时序归属验收。",
+      "attachment_causal_limit": "可见性、投影范围和掩码都会改变候选；需要真正共享身份和顺序/跳帧对照。",
+      "screening_role": "source_motion_and_engineering_check",
+      "source_only_check": "Timestamp monotonicity, positive boxes and track gaps are measurable now; they do not validate native time/gauge/shared binding.",
+      "next_action": "Validate raw-to-model time, full pose transforms and actor identity on all registered frames. Same source row binding h remains shared across q and time.",
+      "unknown": "native_runtime_binding_and_full_sequence_render_stability",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    },
+    {
+      "id": 13,
+      "key": "engineering_UI_wiring",
+      "workbook_cells": {
+        "category": "V43!B14",
+        "summary_evidence": "V43!D14",
+        "real_evidence": "13类坏例证据!C20",
+        "simulation_evidence": "13类坏例证据!D20",
+        "causal_limits": "13类坏例证据!H20"
+      },
+      "title": "13. 工程或可视化接线错误",
+      "attachment_evidence_real": "已证实：出现过左右视图不同步、入口默认隐藏车辆等接线问题。",
+      "attachment_evidence_sim": "已证实：出现过像素查询和相机恢复问题，已修并复核。",
+      "attachment_causal_limit": "工程门禁必须先过，但这些修复不能记成新归属/背景算法的科学收益。",
+      "screening_role": "engineering_gate",
+      "source_only_check": "Context/track/raw frame/camera consistency and source checksum mismatches are engineering issues, not scientific method failures.",
+      "next_action": "Verify frame-synchronized RGB+3D-box+LiDAR views and explicit source metadata; missing media gets a visible unavailable state.",
+      "unknown": "browser_interaction_and_native_state_if_not_exercised",
+      "current_actor_causal_failure_label": null,
+      "used_to_remove_actors_from_denominator": false
+    }
+  ],
+  "artifacts": {
+    "ui": "actor_eligibility.js",
+    "json": "actor_eligibility.json",
+    "selected45": "preparation45_source_diagnostics.csv",
+    "all_source_facts": "source_only_second_screen_facts.json",
+    "source_extract": "badcase_workbook_extract.json"
+  },
+  "source_hashes": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Downloads\\editor_badcase_analysis.xlsx",
+      "sha256": "e6ced4f3cebd0fdfc5c613cb1777146ff7281cb772aa3eb2841fbb47339901e5"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Downloads\\V43_METHOD_PROPOSAL_R4.md",
+      "sha256": "bb4fa6533b4bdde4e8a1d284631379263322ae47f5cee9f78c758fe0227bea93"
+    }
+  ],
+  "current_causal_failure_assertions": null,
+  "current_formal_pass_assertions": null
+}

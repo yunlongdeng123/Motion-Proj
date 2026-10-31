@@ -1,0 +1,84 @@
+{
+  "schema": "independent_source_media035_audit_v1",
+  "status": "PASS_SOURCE_IDENTITY_AND_COORDINATE_CHECKS",
+  "context_id": "13299463771883949918_4240_000_4260_000",
+  "full_raw_frames": 198,
+  "actors": 83,
+  "all_sensor_measurements": 35211590,
+  "box_filtered_actor_rows_checked": 2231948,
+  "display_rows_checked": 539868,
+  "duplicate_tuple_within_actor": 0,
+  "point_identity_key": "context + raw_frame + deterministic decoder source_cloud_row; not physical surface ID",
+  "OBB_max_excess_m": 7.684249877737415e-06,
+  "display_rounding_max_abs_m": 5.054473876953125e-05,
+  "sampled_source_redecode": [
+    {
+      "raw": 0,
+      "decoded_sensor_points": 177589,
+      "actor_rows_reconstructed": 16661
+    },
+    {
+      "raw": 99,
+      "decoded_sensor_points": 179562,
+      "actor_rows_reconstructed": 10098
+    },
+    {
+      "raw": 197,
+      "decoded_sensor_points": 180844,
+      "actor_rows_reconstructed": 2686
+    }
+  ],
+  "reconstructed_actor_rows": 29445,
+  "reconstructed_local_coordinate_max_abs_m": 2.3793673964433992e-07,
+  "full_original_TFRecord_CRC_and_context_reread": true,
+  "color_projection_fix": {
+    "status": "PASS_INDEPENDENT_RECEIPT_AND_POINTWISE_CHECK",
+    "old_valid": 173837,
+    "new_valid": 97509,
+    "invalid_color_rows_grayed": 76328,
+    "all83_actor_XYZ_raw_source_exactly_unchanged": true,
+    "sampled_color_flags_recomputed_for_3_raw_frames": true
+  },
+  "camera_projection_review": "source math reviewed: inverse(image_pose@camera_extrinsic), camera xforward and negative y/z image axes, nine-intrinsic Brown-Conrady, cuboid near-plane/image clipping",
+  "original_native_model_or_GPU_calls": 0,
+  "human_quality_verdict": null,
+  "limitations": [
+    "one completed035scene audited; other scenes require matching receipts",
+    "TOP per-pixel ego pose compensation does not compensate actor motion within the range scan",
+    "actor local aggregation uses each frame original box pose, not a completed or rigidly exact vehicle surface",
+    "box returns can include ground/occluders, and the same sensor return can belong to overlapping box diagnostics",
+    "projected FRONT color has no visibility zbuffer, so color validity means image bounds, not true visible surface color",
+    "image-mid-pose cuboid projection does not implement row rolling shutter or actor motion compensation; no exact official projection parity asserted",
+    "no complete-surface, f_geom, f_view, f_bg or edit-success inference"
+  ],
+  "source_files": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\build_media.py",
+      "sha256": "a8a840e261b7f9798ea428fbcaae10eb3a64f9a43512b14497e14fd074eadf94"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\waymo_numpy_cpu.py",
+      "sha256": "f584f24ef31c4f32928e861528e4aa95a8cabb04f236627d7a3d8b9b7f1b3382"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\fast_range_matrix.py",
+      "sha256": "6d07d45ed9304ca134ebe0e52f3aca0382193cd115e0cafcacf64df9db1455b1"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\media.json",
+      "sha256": "561ec3d9a4d210ad09e73a1e700f92785cbf04666c3e20c5a3c99987dc02c524"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\manifest.json",
+      "sha256": "6351810103ba912044ee0e704b0639889431fe2fd1f7a4d809be9731dc3444d4"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\source_receipts.json",
+      "sha256": "a50cc4840ca2e6acd0c16a8920a0690fac007d36850f716b8e58d619367c28fb"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\13299463771883949918_4240_000_4260_000\\lidar_decode_receipts.json",
+      "sha256": "134e600bd88aa85a7af889d36e811def9bd02db4ad5bb79ad5083eccb3adb7dc"
+    }
+  ]
+}
