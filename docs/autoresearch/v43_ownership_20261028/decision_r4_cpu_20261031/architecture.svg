@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="300" viewBox="0 0 1050 300" role="img" aria-labelledby="title desc">
+<title id="title">V43 R4 CPU 入口与候选准备</title>
+<desc id="desc">固定场景与合法观测进入CPU校验，输出共享候选和任务登记。后续原生编辑评分另有独立参考输入，当前未执行。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#425b77"/></marker></defs>
+<rect width="1050" height="300" rx="18" fill="#f5f8fc"/>
+<g font-family="Microsoft YaHei,Arial,sans-serif" text-anchor="middle" fill="#1f344d">
+<g stroke="#b8c9dc" fill="white" stroke-width="1.5"><rect x="20" y="45" width="200" height="100" rx="10"/><rect x="280" y="45" width="200" height="100" rx="10"/><rect x="540" y="45" width="210" height="100" rx="10"/><rect x="810" y="45" width="220" height="100" rx="10" stroke-dasharray="6 4"/><rect x="810" y="210" width="220" height="60" rx="10" stroke-dasharray="6 4"/></g>
+<g stroke="#425b77" stroke-width="2" marker-end="url(#arrow)"><path d="M220 95H278"/><path d="M480 95H538"/><path d="M750 95H808" stroke-dasharray="6 4"/><path d="M920 210V147" stroke-dasharray="6 4"/></g>
+<text x="120" y="80" font-size="19">固定场景 + 合法观测</text><text x="120" y="112" font-size="14">高斯 / 相机 / 轨迹 / LiDAR</text>
+<text x="380" y="80" font-size="19">CPU 输入与来源校验</text><text x="380" y="112" font-size="14">原始行映射 / 资格待校准</text>
+<text x="645" y="80" font-size="19">共享候选 + 任务登记</text><text x="645" y="112" font-size="14">同一路由跨帧、跨编辑复用</text>
+<text x="920" y="80" font-size="19">原生编辑与独立评分</text><text x="920" y="112" font-size="14">后续：决策差距 / 能力残余</text>
+<text x="920" y="246" font-size="17">独立训练或评价参考</text>
+<text x="380" y="196" font-size="16">本轮实线：CPU 校验与候选生成</text><text x="380" y="228" font-size="15" fill="#536d88">虚线：待完成的原生渲染与评分，不回流资格筛选</text>
+</g></svg>

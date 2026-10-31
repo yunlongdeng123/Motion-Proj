@@ -1,0 +1,30 @@
+{
+  "command": "env CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /root/autodl-tmp/envs/motionproj/bin/python /root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/prepare_cpu.py --output /root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1",
+  "exit_code": 0,
+  "run_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1",
+  "checkpoint_and_observation_inputs_unchanged": true,
+  "timed_main_wall_seconds": 106.63902738504112,
+  "timing_scope": "main preparation; excludes interpreter/library import startup and test/packaging",
+  "cpu_max": "50000 100000",
+  "cpu_threads": 1,
+  "cuda_visible_devices": "",
+  "max_rss_mib": 590.890625,
+  "native_render_calls": 0,
+  "reward_queries": 0,
+  "training_updates": 0,
+  "tests": {
+    "schema": "r4_cpu_contract_tests_v1",
+    "tests_run": 13,
+    "success": true,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "actual_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1",
+    "isolation_scope": "frozen real evidence pure-function invariance; source whitelist and optional diagnostic design; not full adapter replay after deleting original reference directories",
+    "failure_details": []
+  },
+  "code_snapshot": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/source",
+  "isolation_scope": "frozen real evidence pure-function invariance; source whitelist and optional diagnostic design; not full adapter replay after deleting original reference directories",
+  "native_E0_status": "GPU gate pending; no full native Scene/runtime restoration or render claim",
+  "human_verdict": null
+}

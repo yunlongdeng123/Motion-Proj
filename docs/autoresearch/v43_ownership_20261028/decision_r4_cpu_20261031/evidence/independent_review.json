@@ -1,0 +1,78 @@
+{
+  "schema": "v43_r4_independent_cpu_review_v1",
+  "status": "PASS_CPU_CONTRACT_AND_ARTIFACT_AUDIT",
+  "scope": "read-only source/provenance review and independent assertions over actual remote run JSON artifacts; no native rendering or model training",
+  "remote_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1",
+  "facts": {
+    "registered_tasks": 12,
+    "reconstruction_configurations": 3,
+    "independent_ancestors": 2,
+    "cpu_max": "50000 100000",
+    "run_wall_seconds": 106.63902738504112,
+    "native_render_calls": 0,
+    "reward_queries": 0,
+    "training_updates": 0,
+    "eligibility_passed_count": 0,
+    "eligibility_unknown_count": 12,
+    "eligibility_coverage": null,
+    "scenes": [
+      {
+        "scene_id": "sim_m0_original10k",
+        "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+        "static_rows": 667559,
+        "candidate_rows": 392468,
+        "groups": 3,
+        "shared_routes": 8,
+        "tasks": 4,
+        "finite_preview_points": 99
+      },
+      {
+        "scene_id": "sim_natural_hybrid8_10k",
+        "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+        "static_rows": 1157894,
+        "candidate_rows": 490823,
+        "groups": 3,
+        "shared_routes": 8,
+        "tasks": 4,
+        "finite_preview_points": 99
+      },
+      {
+        "scene_id": "real_first_scene_native30k",
+        "scene_ancestor": "waymo_context_14705303724557273004_3105_000_3125_000",
+        "static_rows": 918850,
+        "candidate_rows": 2703,
+        "groups": 3,
+        "shared_routes": 8,
+        "tasks": 4,
+        "finite_preview_points": 99,
+        "recorded_native_coordinate_diagnostic": {
+          "compared_rows": 100,
+          "maximum_abs_world_error_m": 0.0,
+          "recomputed_by_independent_reviewer": false
+        }
+      }
+    ]
+  },
+  "passed_checks": [
+    "candidate JSON hash matches frozen H0; original static row IDs are unique, disjoint and in range",
+    "each three-group binary domain has eight unique sealed route assignments",
+    "all four operations reference the same route hash sequence; none/delete/shift/rotate are registered",
+    "task frozen context matches CPU checkpoint receipts for static/dynamic/environment/training_state plus event/gauge/camera/preparation identities",
+    "shared context hash independently recomputed from candidate, legal evidence, full frozen context and family",
+    "all actual action rows remain unrendered with null loss and constraint status; D gap and C residual remain unavailable",
+    "all preview points are finite original-world coordinates and refer to registered candidate rows",
+    "simulator candidate adapter reads registered observation mask plus only xyz_world/uv sparse LiDAR arrays; no independent semantic/surface/edit reference values enter candidate selection",
+    "real target LiDAR indices trace to original DEVA association reviewed on original frames with annotation-assisted target tracking, not edit outcome selection",
+    "historical GT/probe mappings are optional diagnostics and do not filter candidates or eligibility",
+    "independent malformed-input reproductions confirmed operation-metric validation and incomplete-route registration bugs were fixed"
+  ],
+  "limitations": [
+    "This is CPU engineering acceptance, not completion of native E0 rendering/restoration gates or scientific D/C validation.",
+    "M0 and hybrid8 are reconstruction configurations of one procedural world; no unseen-world generalization result is available.",
+    "Three binary groups give a small action domain, while candidate row populations are large; this is not a row-level exhaustive optimum or verified ownership.",
+    "Sim masks/tracks are explicitly registered simulator sensor oracles; real association uses annotations and reviewed DEVA predictions.",
+    "f_geom and f_bg remain unknown; f_view is an azimuth-sector proxy and f_motion is a CPU field consistency check. No eligibility threshold was calibrated.",
+    "Frozen-evidence pure-function isolation was inspected; the full real adapter was not replayed after deleting its actual reference/student directories.",
+    "Native coordinate-diagnostic receipts were read, and preview finiteness/membership were independently checked; native coordinate export/render was not rerun."
+  ]
+}
