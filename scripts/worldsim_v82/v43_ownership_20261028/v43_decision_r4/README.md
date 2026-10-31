@@ -1,28 +1,30 @@
-# V43 R4 CPU入口
+# V43 R4 候选与共享绑定入口
 
-本包只做真实检查点CPU读取、合法候选冻结、任务登记与共享动作域结构枚举。没有原生渲染、奖励查询、模型训练或编辑成功结论。
+当前研究结果见 [研究状态](../../../../docs/RESEARCH_STATUS.md)，逐项数值及边界见 [独立报告](../../../../docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/report.html)。此目录的工具只在显式指定的新输出目录运行，不覆盖旧现场。
 
 ```mermaid
 flowchart LR
-  A[原检查点与训练gauge] --> C[CPU map_location与时间位置]
-  B[合法掩码 稀疏LiDAR 相机 轨迹] --> D[3锚小域候选与原行映射]
-  C --> D
-  D --> E[共享 keep/rebind H0]
-  E --> F[none delete shift rotate任务登记]
-  B --> G[资格指标与未知分母]
-  G --> F
-  F --> H[冻结JSON与GPU待验收入口]
+  O[合法观测与冻结检查点] --> C[CPU候选及共享动作域]
+  C --> R[原生GPU绑定与四种操作]
+  R --> S[保存 恢复 重放]
+  S --> E[隔离参考评价]
+  W[原始Waymo全片] --> A[全部车辆及准备队列]
 ```
 
-候选半径固定0.25m，为本次局部域工程定义，不是校准过的资格阈值。最多3个首次命中来源组，每组二元动作；组外和原生动态行保持原绑定。`defer`只在查询层。
-
-仿真保留原合同的`simulator_sensor_oracle`角色；原M0和hybrid8属于同一个已有开发世界。真实首场来自reviewed DEVA关联、注释辅助目标轨迹与实际LiDAR行，不能称无注释部署方案。历史GT类别账本只验证原始行映射，不进入候选筛选或资格。
-
-资格阈值均为null。`f_geom`需要完整静态+动态原生贡献，`f_bg`需要历史世界射线对应；本轮均unknown。`f_view`仅是12扇区合法视向代理，`f_motion`仅检查CPU相机/轨迹字段。原生Scene恢复、两种none与编辑渲染仍为E0 GPU gate pending。
+- `prepare_cpu.py`：只读完整检查点、合法 mask／LiDAR／轨迹，冻结原行候选与任务。`legal_mask.py` 忽略 alpha，仿真逐帧核对训练准备记录；未校准资格保留未知。
+- `native_shared_route.py`：继承 V42 原生光栅。一份共享绑定跨时间与全部操作，先运行 `smoke` 保存推理状态，再用新进程 `enumerate --resume` 重放和完整枚举。Scene 在完整私有输入副本中加载，防止写回原 gauge。
+- `isolated_reference_scorer.py`：参考只在此进程读取；先校验真实掩码语义及冻结上下文，再算联合操作目标、逐操作硬约束及分母。真实场景无完整反事实时不填 D/C。
+- `audit_development_scores.py`：独立核对有限域、目标归一化及约束算术。
+- `freeze_legal_responsibility.py`：合法 none 贡献探针。旧候选上的历史探针不是有效主比较；新动作域必须先重新冻结，并按实际非空组数评价。
+- `actor_screen/`：全片注释辅助车辆登记、49 帧准备窗口与可视候选导入；准备顺序不等于正式资格、掩码或编辑成功。
 
 ```bash
-env CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 \
- /root/autodl-tmp/envs/motionproj/bin/python scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/prepare_cpu.py --output NEW_RUN_DIRECTORY
+# CPU：使用 motionproj 环境；每次指定未存在目录。
+/root/autodl-tmp/envs/motionproj/bin/python scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/prepare_cpu.py --output NEW_CPU_RUN
+
+# 原生推理：使用已验证的 drivingeditor 环境。
+/root/autodl-tmp/envs/drivingeditor/bin/python scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/native_shared_route.py --cpu-scene-dir NEW_CPU_RUN/SCENE --output NEW_SMOKE_RUN --phase smoke
+/root/autodl-tmp/envs/drivingeditor/bin/python scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/native_shared_route.py --cpu-scene-dir NEW_CPU_RUN/SCENE --output NEW_ENUM_RUN --phase enumerate --resume NEW_SMOKE_RUN/inference_state.pt
 ```
 
-输出目录必须不存在，重复运行使用新run ID；不会覆盖旧现场。相同环境下运行`test_cpu_contract.py --run NEW_RUN_DIRECTORY -v`验收合同和真实冻结结果。所有未渲染loss、D/C数值和人工结论保留null。
+仿真沿用显式 sensor-oracle 掩码／轨迹与无噪稀疏 LiDAR 角色；真实输入为已有 DEVA 关联及标注辅助轨迹。它们不代表无注释部署或高斯身份真值。查询恢复保留原检查点及优化器状态引用，没有启动训练；小时级训练仍须另做真实训练约十分钟的保存、评价、参数与优化器完整恢复 smoke。

@@ -1,0 +1,1207 @@
+{
+  "schema": "r4_original_sim_training_mask_impact_audit_v1",
+  "status": "ORIGINAL_SIM_TRAINING_MASK_PATHS_NOT_AFFECTED_BY_R4_RGBA_READ_BUG",
+  "frames_verified": 32,
+  "prepared_mask_PNGs_verified": 96,
+  "actual_paper_mask_loader_CPU_calls": 32,
+  "training_mask_module": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py",
+  "training_mask_module_sha256": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483",
+  "evidence": [
+    "adapt_scene.py:117 reads original body PNG with convertL before seed filtering and mask writing",
+    "all three saved native mask paths are actual L PNGs with correct body counts",
+    "paper_method config is true for both saved training events",
+    "train.py:331 calls load_dynamic_mask; paper_masks.py:16 convertsL and nearest-resizes",
+    "actual inherited _read_mask executed onCPU for32frames and matches original preparation count exactly"
+  ],
+  "rows": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000000",
+      "expected_body_pixels": 5238,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5238
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5238
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5238
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5238,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000001",
+      "expected_body_pixels": 5177,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5177
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5177
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5177
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5177,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000002",
+      "expected_body_pixels": 5127,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5127
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5127
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5127
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5127,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000003",
+      "expected_body_pixels": 5053,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5053
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5053
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5053
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5053,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000004",
+      "expected_body_pixels": 5001,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5001
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5001
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5001
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5001,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000005",
+      "expected_body_pixels": 4931,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4931
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4931
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4931
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4931,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000006",
+      "expected_body_pixels": 4897,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4897
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4897
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4897
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4897,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000007",
+      "expected_body_pixels": 4848,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4848
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4848
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4848
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4848,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000008",
+      "expected_body_pixels": 4804,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4804
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4804
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4804
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4804,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000009",
+      "expected_body_pixels": 4783,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4783
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4783
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4783
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4783,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000010",
+      "expected_body_pixels": 4756,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4756
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4756
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4756
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4756,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000011",
+      "expected_body_pixels": 4745,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4745
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4745
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4745
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4745,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000012",
+      "expected_body_pixels": 4737,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4737
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4737
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4737
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4737,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000013",
+      "expected_body_pixels": 4726,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4726
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4726
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4726
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4726,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000014",
+      "expected_body_pixels": 4727,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4727
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4727
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4727
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4727,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "frame": "000015",
+      "expected_body_pixels": 4715,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4715
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4715
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4715
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4715,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000000",
+      "expected_body_pixels": 5238,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 5238
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5238
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000000.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 5238
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 5238,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000001",
+      "expected_body_pixels": 11540,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 11540
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11540
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000001.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11540
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 11540,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000002",
+      "expected_body_pixels": 13171,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13171
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13171
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000002.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13171
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13171,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000003",
+      "expected_body_pixels": 13746,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13746
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13746
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000003.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13746
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13746,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000004",
+      "expected_body_pixels": 13841,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13841
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13841
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000004.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13841
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13841,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000005",
+      "expected_body_pixels": 13780,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13780
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13780
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000005.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13780
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13780,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000006",
+      "expected_body_pixels": 13361,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13361
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13361
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000006.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13361
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13361,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000007",
+      "expected_body_pixels": 11971,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 11971
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11971
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000007.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11971
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 11971,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000008",
+      "expected_body_pixels": 4804,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4804
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4804
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000008.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4804
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4804,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000009",
+      "expected_body_pixels": 11511,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 11511
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11511
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000009.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 11511
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 11511,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000010",
+      "expected_body_pixels": 13175,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13175
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13175
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000010.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13175
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13175,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000011",
+      "expected_body_pixels": 13758,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13758
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13758
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000011.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13758
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13758,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000012",
+      "expected_body_pixels": 13846,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13846
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13846
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000012.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13846
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13846,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000013",
+      "expected_body_pixels": 13771,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13771
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13771
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000013.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13771
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13771,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000014",
+      "expected_body_pixels": 13243,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 13243
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13243
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000014.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 13243
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 13243,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "frame": "000015",
+      "expected_body_pixels": 4715,
+      "input_files": [
+        {
+          "relative_path": "mask/mask_0/Annotations/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            1
+          ],
+          "foreground_pixels": 4715
+        },
+        {
+          "relative_path": "dynamic_masks/dynamic_mask_0/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4715
+        },
+        {
+          "relative_path": "dynamic_actor_assets/actor_0/body_masks/000015.png",
+          "mode": "L",
+          "values": [
+            0,
+            255
+          ],
+          "foreground_pixels": 4715
+        }
+      ],
+      "actual_training_loader_foreground_pixels": 4715,
+      "paper_method": true,
+      "shadow_mask_exists": false
+    }
+  ],
+  "limits": [
+    "did not replay historical optimizer steps; based on saved training configuration, actual persisted input PNGs and inherited active loader",
+    "does not imply other unrelated training errors are absent",
+    "Waymo raw RGB and annotation box screening use separate input formats; this audit does not change their status"
+  ]
+}

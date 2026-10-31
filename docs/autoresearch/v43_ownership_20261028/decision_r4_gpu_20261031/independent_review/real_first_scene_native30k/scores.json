@@ -1,0 +1,2108 @@
+{
+  "schema": "v43_r4_isolated_development_scores_v1",
+  "scene_id": "real_first_scene_native30k",
+  "status": "REAL_NATIVE_VALIDITY_AND_NONE_ONLY",
+  "contract_sha256": "abbc7a80f6c7fd6c3e13497418114845bedfa6a3cd0f2ea3807d7f13636a7f62",
+  "contract_source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/evaluation_contract_pre_score.json",
+  "contract_content_hash": "fcc24c984d570a13fa8ed6ad00da54146f722c72c944af139b765f3d00fb5b74",
+  "source_native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/gpu_manifest.json",
+  "cpu_frozen_scene_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/real_first_scene_native30k",
+  "shared_route_context_hash": "a0643fd6e4a99a1c8cb5dc61f07f882c225e377e2431b0120b569001fdeb4eb6",
+  "checkpoint_bundle_sha256": "e8ab7202017afdb072994d5156edfc60300bdbddeae7941691535e3e66159cf2",
+  "reference_role": "none",
+  "isolated_reference_receipts": [],
+  "evaluated_anchor_frames": [
+    "9001077",
+    "9001101",
+    "9001125"
+  ],
+  "registered_frame_denominator": 49,
+  "evaluated_route_count": 8,
+  "expected_route_count": 8,
+  "native_rendered_rows": 96,
+  "all_frozen_routes_native_evaluated": true,
+  "evaluation_domain": "3 registered real anchors, no counterfactual edit GT",
+  "max_compositor_identity_error": 5.960464477539063e-08,
+  "oracle_status": "safe_oracle_unavailable",
+  "decision_gap_kind": "unavailable",
+  "best_safe_shared_action_id": null,
+  "best_verified_shared_residual": null,
+  "best_shared_route_per_operation_losses": null,
+  "capability_bin": "C?",
+  "task_completion_threshold": null,
+  "student_policy_evaluated": false,
+  "learned_generalization_result": null,
+  "preedit_eligibility": "unknown_not_assigned_from_evaluation_GT",
+  "baseline_action_id": "h000",
+  "baseline_joint_target_loss": null,
+  "baseline_finite_decision_gap": null,
+  "development_safe_action_count": null,
+  "none_preservation_pass_count": 8,
+  "constraint_sensitivity": [],
+  "counterexamples": [],
+  "actions": [
+    {
+      "action_id": "h000",
+      "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "keep",
+          "binding": "static"
+        }
+      ],
+      "is_allkeep": true,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "none_raw_rgb_change_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "none_raw_rgb_change_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "none_raw_rgb_change_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "69e547121bf466458360115bf40e871a777aeccd9e77fd5535607d8f44f38989",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h000/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h001",
+      "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "rebind",
+          "binding": "actor_0"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.030060150608835e-05,
+          "none_raw_rgb_change_mae": 9.030060150608835e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 8.789715098424091e-06,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00012975865190027335,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011293658191991401,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00015727575031633024,
+          "none_raw_rgb_change_mae": 0.00015727575031633024,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 1.8744011564801138e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002014393992996904,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00020281933246426182,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 1.0032737110224035e-11,
+          "none_raw_rgb_change_mae": 1.0032737110224035e-11,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011246662305590386,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 7.521834343303151e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "fc560bc963b2fd0bd208e17970cb837faabf48b661d3d776d5c7d09ec31ac1d7",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h001/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011731286390891506,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h002",
+      "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "keep",
+          "binding": "static"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00010699299189986454,
+          "none_raw_rgb_change_mae": 0.00010699299189986454,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 4.603338322744498e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00014306327306258027,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00012311485429462561,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 2.108410828643375e-11,
+          "none_raw_rgb_change_mae": 2.108410828643375e-11,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00010839633425348438,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001477868108567135,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001783527009926426,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.564056058782929e-05,
+          "none_raw_rgb_change_mae": 9.564056058782929e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001230575650859262,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "6c2f7eeeb178800ca2a9a48be93ce14e9307ce108540317912e73e2a637fb2ae",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h002/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00016907098800503364,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h003",
+      "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "rebind",
+          "binding": "actor_0"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00018139559835415436,
+          "none_raw_rgb_change_mae": 0.00018139559835415436,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 5.482426914063075e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002510621532484139,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00020744339631669897,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00015727574669452022,
+          "none_raw_rgb_change_mae": 0.00015727574669452022,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00012714091023857086,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00030541736884818723,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.000349864534186458,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.564056142052221e-05,
+          "none_raw_rgb_change_mae": 9.564056142052221e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011246662305590386,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00016839638548844958,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "d32a85366e0383da013babf01a746e109ee37e01ab21a71c9077393beefeef42",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h003/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002456631608179628,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h004",
+      "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "keep",
+          "binding": "static"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 5.5119421126114e-11,
+          "none_raw_rgb_change_mae": 5.5119421126114e-11,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.75350017607626e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.587417258040255e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00014822808579386523,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001966815699092371,
+          "none_raw_rgb_change_mae": 0.0001966815699092371,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 4.749748026370071e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00023803800948775866,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00026274015152012,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 8.042916415433865e-05,
+          "none_raw_rgb_change_mae": 8.042916415433865e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.629939414379705e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "aeb7cc28eacd2905545cbd17d48c37c23c06c9319cdb60aa14c6f6b6e89ae923",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h004/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001158277339507347,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h005",
+      "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "keep",
+          "binding": "static"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "rebind",
+          "binding": "actor_0"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 9.030063112732023e-05,
+          "none_raw_rgb_change_mae": 9.030063112732023e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00010632471685918668,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00019906995808317637,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002341597485954278,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00029678622576789673,
+          "none_raw_rgb_change_mae": 0.00029678622576789673,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 6.624149182850184e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00037802229170160395,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0004151469800045662,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 8.042916507595995e-05,
+          "none_raw_rgb_change_mae": 8.042916507595995e-05,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011246662305590386,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00014856852507768458,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "4ac5b63555b2d704ceb75e40b722caf2610a109b1add9732b38d1ca971ff2ae5",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h005/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00019622433276203486,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h006",
+      "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "keep",
+          "binding": "static"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00010699301980720419,
+          "none_raw_rgb_change_mae": 0.00010699301980720419,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0001435716837457019,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00020848044117479327,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00023564263869452082,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00019668157653844295,
+          "none_raw_rgb_change_mae": 0.00019668157653844295,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00015589381451718508,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00032408844784691205,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0003776279870766707,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00016511643176878957,
+          "none_raw_rgb_change_mae": 0.00016511643176878957,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002016973856532584,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "5e2dab0c905330e9af3983bf03da0211894a582596d5a7bd968138f9211b8bf8",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h006/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0002630688246265183,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    },
+    {
+      "action_id": "h007",
+      "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+      "assignments": [
+        {
+          "group_id": "g00_9001077",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g01_9001101",
+          "action": "rebind",
+          "binding": "actor_0"
+        },
+        {
+          "group_id": "g02_9001125",
+          "action": "rebind",
+          "binding": "actor_0"
+        }
+      ],
+      "is_allkeep": false,
+      "reference_available": false,
+      "joint_target_loss": null,
+      "per_operation_target_losses": {
+        "delete": null,
+        "shift": null,
+        "rotate": null
+      },
+      "observations": [
+        {
+          "frame": "9001077",
+          "edit": "none",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/none/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00018139562223546413,
+          "none_raw_rgb_change_mae": 0.00018139562223546413,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "delete",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/delete/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00015236256965888768,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "shift",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/shift/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0003053345575042638,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001077",
+          "edit": "rotate",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/rotate/9001077.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00030670236995825284,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "none",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/none/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00029678623152398765,
+          "none_raw_rgb_change_mae": 0.00029678623152398765,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "delete",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/delete/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00017463839050227154,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "shift",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/shift/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.000463839188483285,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001101",
+          "edit": "rotate",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/rotate/9001101.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0005401294373910383,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "none",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/none/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00016511643280359243,
+          "none_raw_rgb_change_mae": 0.00016511643280359243,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "delete",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/delete/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00011246662305590386,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "shift",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/shift/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.00023794623349709178,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        },
+        {
+          "frame": "9001125",
+          "edit": "rotate",
+          "route_assignment_hash": "bcba55300800de51f381d5fbf3b4adca0937035cd64780c2b99b06ea1128655f",
+          "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/routes/h007/rotate/9001125.npz",
+          "compositor_max_errors": {
+            "fill": 0.0,
+            "final": 5.960464477539063e-08,
+            "white": 5.960464477539063e-08
+          },
+          "full_frame_pixels": 153600,
+          "raw_change_vs_allkeep_mae": 0.0003285008639229798,
+          "reference_role": "none_no_independent_real_counterfactual",
+          "regions": null,
+          "normalized_target_loss": null,
+          "keep_mae_increase": null,
+          "keep_worsened_fraction": null
+        }
+      ],
+      "finite_decision_gap": null,
+      "depth_metric": null,
+      "temporal_metric": null,
+      "development_constraint_pass": null,
+      "none_preservation_constraint_pass": true,
+      "constraint_violations": [],
+      "counterfactual_safety_evaluated": false
+    }
+  ],
+  "scientific_claim_limits": [
+    "fixed group domain only; no row-level/global optimum",
+    "existing development ancestry; no sealed-test or learned generalization claim",
+    "no task completion/C0-C1 label without calibrated task threshold",
+    "real-scene none check is not counterfactual edit safety"
+  ],
+  "wall_seconds": 7.666194060817361
+}

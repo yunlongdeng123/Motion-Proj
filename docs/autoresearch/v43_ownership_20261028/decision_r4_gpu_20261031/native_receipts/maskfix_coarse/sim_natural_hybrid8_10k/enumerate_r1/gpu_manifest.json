@@ -1,0 +1,2884 @@
+{
+  "schema": "r4_native_shared_route_render_v1",
+  "status": "NATIVE_SHARED_ROUTE_RENDERED",
+  "phase": "complete_8_route_enumeration",
+  "scene_id": "sim_natural_hybrid8_10k",
+  "cpu_frozen_scene_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_natural_hybrid8_10k",
+  "frozen_scene_context": {
+    "component_sha256": {
+      "static": "66a74b711ab449bd82796c9ccb2be8f4ded7285c3cda5eb102e5eb68f2a8d213",
+      "dynamic": "c5dca79b02b00415f67dc36c963d73cf58685e5cab61293cc35d0c4f50a4f945",
+      "environment": "584bf0ad130c9ae28fdba43072a36d894db794a03ee0568c97cde5a0937cba45",
+      "training_state": "1976c253102d67277a9179299499c9bb6ef472a3212ca22e43f8c0a8279ed692"
+    },
+    "checkpoint_bundle_sha256": "524c6f5731d400ab1ab2c8d005701e568100d48efe8fd49e128dd4629d4c5b29",
+    "event_sha256": "ecf8c250bb9da90c3f922dc9d66667bdd34a75e1232609894d8bca3b193a164b",
+    "gauge_sha256": "3047720bc5e4c7930cf14ef6d1df268d3d9347e4053ee96c616713400b643e6d",
+    "camera_sha256": "c95b48bfd0fd634a027226624323bafc05d1f67c9573239896cb26fcb766eaad",
+    "preparation_sha256": "ea35222da4f7dde82f9034570a853269e5ec22890551e2fa52b4afbaec964bef"
+  },
+  "candidate_hash": "ad72bb587079ec418f306f86fd1e1e5c9ff8cbf66f4050e5290a2461386b0ada",
+  "shared_route_context_hash": "598ce58ee931b4b4a0668057a7310c7c984b59498cfd7b56129bd976d0a7ee95",
+  "checkpoint_bundle_sha256": "524c6f5731d400ab1ab2c8d005701e568100d48efe8fd49e128dd4629d4c5b29",
+  "source_checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/formal_hybrid8_10k/checkpoint_events/iteration_010000.json",
+  "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+  "frame_total_denominator": 16,
+  "registered_frame_ids": [
+    "000000",
+    "000001",
+    "000002",
+    "000003",
+    "000004",
+    "000005",
+    "000006",
+    "000007",
+    "000008",
+    "000009",
+    "000010",
+    "000011",
+    "000012",
+    "000013",
+    "000014",
+    "000015"
+  ],
+  "evaluated_anchor_frames": [
+    "000000",
+    "000008",
+    "000015"
+  ],
+  "remaining_frames_status": "unmeasured_null",
+  "edits": [
+    "none",
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "action_count": 8,
+  "allkeep_action_id": "h000",
+  "allrebind_action_id": "h007",
+  "none_uses_actual_route": true,
+  "allkeep_native_none_parity_max_abs": 0.0,
+  "native_original_none": [
+    {
+      "frame": "000000",
+      "camera_id": "image_0/000000",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/native_original_none/000000.npz",
+      "native_none_identity_max_abs": 0.0
+    },
+    {
+      "frame": "000008",
+      "camera_id": "image_0/000008",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/native_original_none/000008.npz",
+      "native_none_identity_max_abs": 0.0
+    },
+    {
+      "frame": "000015",
+      "camera_id": "image_0/000015",
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/native_original_none/000015.npz",
+      "native_none_identity_max_abs": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03640513867139816
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1157894,
+        "query_omitted_rows": 302428
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03364253789186478
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.040369847789406776
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03188997693359852
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 1.0722156167030334
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1134057,
+        "query_omitted_rows": 326265
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03382441587746143
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.874079804867506
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.2976607717573643
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.3645442835986614
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154678,
+        "query_omitted_rows": 305644
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5167883392423391
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.15204822830855846
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5175536703318357
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.14318690076470375
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1130841,
+        "query_omitted_rows": 329481
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5224441532045603
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.14768431708216667
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5273731220513582
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.13422919623553753
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154923,
+        "query_omitted_rows": 305399
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5322153195738792
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.13716400600969791
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5358012802898884
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.12105626240372658
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1131086,
+        "query_omitted_rows": 329236
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.547189062461257
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.12495786510407925
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5442693457007408
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.13296930864453316
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1151707,
+        "query_omitted_rows": 308615
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5314300544559956
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.16163026168942451
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.507182938978076
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000000",
+      "edit": "none",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/none/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.14704423397779465
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000000",
+      "edit": "delete",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/delete/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1127870,
+        "query_omitted_rows": 332452
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5108888205140829
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000000",
+      "edit": "shift",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/shift/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.1610808800905943
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000000",
+      "edit": "rotate",
+      "camera_id": "image_0/000000",
+      "model_time": -0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/rotate/000000.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5190377905964851
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03397798724472523
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1157894,
+        "query_omitted_rows": 302428
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.029199570417404175
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.030051767826080322
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03133980557322502
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6112393401563168
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1134057,
+        "query_omitted_rows": 326265
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04029310494661331
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6403398867696524
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03615923598408699
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6331220641732216
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154678,
+        "query_omitted_rows": 305644
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.0415386576205492
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6321057472378016
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04661881737411022
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6213935632258654
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1130841,
+        "query_omitted_rows": 329481
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.056563353165984154
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6192549411207438
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05276654474437237
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6153675932437181
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154923,
+        "query_omitted_rows": 305399
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05475141294300556
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6217140927910805
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05332087352871895
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6147629264742136
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1131086,
+        "query_omitted_rows": 329236
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05732013285160065
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6160450484603643
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05653274618089199
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6097257677465677
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1151707,
+        "query_omitted_rows": 308615
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05768504738807678
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6198060102760792
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.056742267683148384
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000008",
+      "edit": "none",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/none/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6190913002938032
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000008",
+      "edit": "delete",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/delete/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1127870,
+        "query_omitted_rows": 332452
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05064705014228821
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000008",
+      "edit": "shift",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/shift/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6195256840437651
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000008",
+      "edit": "rotate",
+      "camera_id": "image_0/000008",
+      "model_time": 0.010000000000000009,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/rotate/000008.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05504153296351433
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.035459721460938454
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1157894,
+        "query_omitted_rows": 302428
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03133435547351837
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03232625499367714
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h000",
+      "route_assignment_hash": "819600d35973c3278dfedac173a5dd0319552250f0999de6665437a6bd04718c",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h000/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1157894,
+        "rebound_static_rows": 0,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03379207290709019
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.5924078021198511
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1134057,
+        "query_omitted_rows": 326265
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.031046591699123383
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6464344169944525
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h001",
+      "route_assignment_hash": "60dd844c9d363f3c294c111061d0d0258c01896fd17657bf06eef15115f84127",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h001/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1134057,
+        "rebound_static_rows": 23837,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03364795073866844
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6416706368327141
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154678,
+        "query_omitted_rows": 305644
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.033831169828772545
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6421003974974155
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h002",
+      "route_assignment_hash": "08dfff133c3cc5211cc8d1681a27c163fc01314a31743912adf746fd59aa1f82",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h002/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154678,
+        "rebound_static_rows": 3216,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.037707824259996414
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.631987975910306
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1130841,
+        "query_omitted_rows": 329481
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.0362528320401907
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6415763590484858
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h003",
+      "route_assignment_hash": "68a237cfea533a103db5d5704a62c1c3804d28ef762f7f5977c37d0df58b3d54",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h003/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1130841,
+        "rebound_static_rows": 27053,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.039850423112511635
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6384567879140377
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1154923,
+        "query_omitted_rows": 305399
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.03602658025920391
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6426093429327011
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h004",
+      "route_assignment_hash": "6d819e38c9eacf0121a66c1f0864f2cdac55940eef82c80aeab9067c8220b720",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h004/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1154923,
+        "rebound_static_rows": 2971,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04098893143236637
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6291777677834034
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1131086,
+        "query_omitted_rows": 329236
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.051009656861424446
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6368482559919357
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h005",
+      "route_assignment_hash": "a0c0005f53bb712236fd28dbfa69384d1cd9a3e1b0ccfafbc12c615a2d3bf8e7",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h005/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1131086,
+        "rebound_static_rows": 26808,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.0399246234446764
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6286001987755299
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1151707,
+        "query_omitted_rows": 308615
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.05063599906861782
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6275502536445856
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h006",
+      "route_assignment_hash": "e02c998e3d4286cc056fa95b44160223a010ce1b24ecd2e391758594e4e135a4",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h006/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1151707,
+        "rebound_static_rows": 6187,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04998478479683399
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000015",
+      "edit": "none",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/none/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.624302463606
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000015",
+      "edit": "delete",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/delete/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1127870,
+        "query_omitted_rows": 332452
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04776017926633358
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000015",
+      "edit": "shift",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/shift/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.6298935320228338
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "action_id": "h007",
+      "route_assignment_hash": "4081c20e84217f37e774999472d22bac3ffc63b6cf646c04f48fcdc97ea4df4f",
+      "frame": "000015",
+      "edit": "rotate",
+      "camera_id": "image_0/000015",
+      "model_time": 0.15,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/routes/h007/rotate/000015.npz",
+      "actual_shared_route_applied": true,
+      "none_is_checkpoint_bypass": false,
+      "row_conservation": {
+        "original_static_rows": 1157894,
+        "kept_static_rows": 1127870,
+        "rebound_static_rows": 30024,
+        "native_dynamic_prepared_rows": 302428,
+        "preedit_total_rows": 1460322,
+        "unique_original_static_partition": true,
+        "rows_added": 0,
+        "rows_duplicated": 0,
+        "query_rows": 1460322,
+        "query_omitted_rows": 0
+      },
+      "compositor_checks": {
+        "final_vs_C_plus_fill_max_abs": 0.0,
+        "fill_vs_one_minus_alpha_E_max_abs": 0.0
+      },
+      "gpu_render_and_readback_wall_seconds": 0.04726599343121052
+    }
+  ],
+  "route_edit_render_calls": 96,
+  "baseline_helper_control_render_calls": 3,
+  "actual_native_control_render_calls": 3,
+  "route_semantics": "frozen per-group anchor-to-current legal rigid actor transform composed with original native SHM row state; query is applied only after shared binding",
+  "inherited_SH_frame": "world-space native SH, no new relighting",
+  "geometry_color_opacity_capacity_environment_parameters_frozen": true,
+  "target_selection": "current CPU registered actor0, not a global ranking or all actors in scene",
+  "original_checkpoint_unchanged": true,
+  "training_updates": 0,
+  "independent_reference_files_read_by_renderer": false,
+  "human_verdict": null,
+  "wall_seconds": 34.576569048687816,
+  "cuda_max_memory_allocated_bytes": 2707243520,
+  "cuda_device_name": "NVIDIA GeForce RTX 4080 SUPER",
+  "eligibility_status": "CPU_legal_preedit_uncalibrated_unknown",
+  "decision_gap": null,
+  "capability_residual": null
+}

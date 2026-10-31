@@ -35,6 +35,9 @@ def scene_context():
 
 
 class ContractTests(unittest.TestCase):
+    def test_opaque_alpha_does_not_change_foreground(self):
+        from legal_mask import validate_RGBA_equivalence
+        self.assertTrue(validate_RGBA_equivalence()['actual_PNG_roundtrip_and_shared_decoder'])
     def test_uncalibrated_is_unknown(self):
         e,_=fixture()
         self.assertIsNone(eligibility(e,'rotate',{m:None for m in METRICS})['passed'])
@@ -143,6 +146,23 @@ class ContractTests(unittest.TestCase):
                 self.assertEqual(before,after_student);self.assertEqual(before,after_delete)
         frozen=json.loads((RUN/'frozen_inputs.json').read_text())
         self.assertTrue(all('/privileged/' not in r['path'] and 'student_output' not in r['path'] for r in frozen['inputs']))
+
+    def test_actual_sim_body_denominators_match_native_preparation(self):
+        if RUN is None:self.skipTest('requires actual run')
+        from legal_mask import read_body_mask
+        contract=json.loads((RUN/'run_contract.json').read_text())
+        for scene in contract['checkpoint_inputs']:
+            if scene['kind']!='sim':continue
+            event=json.loads(Path(scene['event']).read_text())
+            prep=json.loads((Path(event['source_path'])/'preparation_manifest.json').read_text())
+            obs=Path(prep['observations']);manifest=json.loads((obs/'manifest.json').read_text())
+            expected={r['id']:r['body_pixels'] for r in prep['frames']}
+            actual=0
+            for row in manifest['frames']:
+                fid=str(row['id']).zfill(6);mask,_=read_body_mask(obs/row['body_mask'])
+                self.assertEqual(int(mask.sum()),expected[fid]);actual+=int(mask.sum())
+            evidence=json.loads((RUN/scene['id']/'legal_preedit_evidence.json').read_text())
+            self.assertEqual(evidence['metrics']['f_geom']['denominator'],actual)
 
 
 if __name__=='__main__':

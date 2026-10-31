@@ -1,0 +1,67 @@
+{
+  "task_id": "WS-V43-R4-GPU-SMALL-20261031",
+  "actor_scenes": 15,
+  "vehicle_tracks": 1228,
+  "preparation_candidates": 45,
+  "downloaded_missing_full_raw_files": 10,
+  "downloaded_missing_raw_bytes": 9843128477,
+  "horizonforge_crc_context_checked_records": 2181,
+  "native_enumerated_domains": 3,
+  "main_enumeration_route_edit_outputs": 288,
+  "score_domains": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "domain": "修正掩码后的原候选域",
+      "source_scores": "gpu_runs/run_r1/maskfix_coarse/sim_m0_original10k/isolated_scores_r1/scores.json",
+      "reference_available": true,
+      "baseline_joint_target_loss": 0.18531125841681573,
+      "best_safe_shared_action_id": "h002",
+      "best_verified_shared_residual": 0.1848454841183992,
+      "baseline_to_best_safe_improvement": 0.00046577429841651585,
+      "development_safe_action_count": 2,
+      "evaluated_route_count": 8
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "domain": "修正掩码后的原候选域",
+      "source_scores": "gpu_runs/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/isolated_scores_r1/scores.json",
+      "reference_available": true,
+      "baseline_joint_target_loss": 0.15723624819424856,
+      "best_safe_shared_action_id": "h006",
+      "best_verified_shared_residual": 0.15148271759913542,
+      "baseline_to_best_safe_improvement": 0.005753530595113132,
+      "development_safe_action_count": 4,
+      "evaluated_route_count": 8
+    },
+    {
+      "scene_id": "real_first_scene_native30k",
+      "domain": "原候选域（真实掩码未受影响）",
+      "source_scores": "gpu_runs/run_r1/real_first_scene_native30k/isolated_scores_r2/scores.json",
+      "reference_available": false,
+      "baseline_joint_target_loss": null,
+      "best_safe_shared_action_id": null,
+      "best_verified_shared_residual": null,
+      "baseline_to_best_safe_improvement": null,
+      "development_safe_action_count": null,
+      "evaluated_route_count": 8
+    }
+  ],
+  "input_mask_invalid_old_simulation_domains": 2,
+  "input_mask_invalid_old_simulation_outputs": 192,
+  "formal_eligibility": null,
+  "task_completion_threshold": null,
+  "learned_generalization_result": null,
+  "training_updates": 0,
+  "human_verdict": null,
+  "shared_platform": "visual_diagnostics_and_actor_browser_only",
+  "browser_interactive_QA": false,
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F07",
+    "V82-F08"
+  ],
+  "failure_ledger_delta": [
+    "V82-F07",
+    "V82-F08"
+  ]
+}

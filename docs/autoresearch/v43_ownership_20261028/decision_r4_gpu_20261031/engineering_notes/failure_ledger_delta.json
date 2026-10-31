@@ -1,0 +1,55 @@
+{
+  "schema": "v82_r4_engineering_failure_ledger_delta_v1",
+  "failure_ledger_refs": [],
+  "failure_ledger_delta": [
+    "V82-F07",
+    "V82-F08"
+  ],
+  "human_verdict": null,
+  "entries": [
+    {
+      "id": "V82-F07",
+      "type": "engineering_input_semantics",
+      "card": "docs/research_failures/entries/V82-F07.md",
+      "scope": "new R4 CPU/probe RGBA foreground handling; not the original sim training path",
+      "invalid_sim_route_edit_outputs": 192,
+      "corrected_candidate_rows": {
+        "sim_m0_original10k": 4445,
+        "sim_natural_hybrid8_10k": 30024,
+        "real_first_scene_native30k": 2703
+      },
+      "original_training_audit": {
+        "frames": 32,
+        "native_mask_pngs": 96,
+        "actual_loader_calls": 32
+      },
+      "failure_is_D_or_C_method_failure": false,
+      "evidence": [
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/input_validity_and_supersession.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/independent_review/input_mask_independent_correction.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/independent_review/input_mask_erratum.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/independent_review/original_sim_training_mask_impact_audit.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/engineering_failures.json"
+      ]
+    },
+    {
+      "id": "V82-F08",
+      "type": "engineering_input_immutability",
+      "card": "docs/research_failures/entries/V82-F08.md",
+      "scope": "inherited Scene loader source gauge write during R4 read-only query",
+      "source_was_touched": true,
+      "restored_original_sha_and_mtime": true,
+      "private_copy_protects_source": true,
+      "final_frozen_input_count": 250,
+      "final_all_hashes_and_sizes_match": true,
+      "final_mtime_differences": [],
+      "failure_is_D_or_C_method_failure": false,
+      "evidence": [
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/engineering_failures.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/frozen_input_immutability_audit.json",
+        "docs/autoresearch/v43_ownership_20261028/decision_r4_gpu_20261031/input_validity_and_supersession.json"
+      ]
+    }
+  ],
+  "note": "Evidence files are installed separately under the repository docs path; original evidence and older failures remain unchanged."
+}

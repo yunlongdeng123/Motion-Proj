@@ -1,0 +1,36 @@
+{
+  "schema": "r4_correct_mask_direct_fp32_metric_audit_v1",
+  "status": "PASS",
+  "cases": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "action_id": "h002",
+      "development_constraint_pass": true,
+      "frame": "000015",
+      "edit": "rotate",
+      "old_roi_pixels": 907,
+      "new_body_pixels": 4576,
+      "keep_pixels": 148117,
+      "keep_mae_increase_recomputed": 4.476341564291009e-05,
+      "keep_worsened_fraction_recomputed": 0.0009249444695747281,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1/routes/h002/rotate/000015.npz",
+      "reference_role": "isolated_evaluation_only"
+    },
+    {
+      "scene_id": "sim_m0_original10k",
+      "action_id": "h007",
+      "development_constraint_pass": false,
+      "frame": "000008",
+      "edit": "rotate",
+      "old_roi_pixels": 926,
+      "new_body_pixels": 4669,
+      "keep_pixels": 148005,
+      "keep_mae_increase_recomputed": 0.0010141025188785578,
+      "keep_worsened_fraction_recomputed": 0.015377858856119725,
+      "fp32": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1/routes/h007/rotate/000008.npz",
+      "reference_role": "isolated_evaluation_only"
+    }
+  ],
+  "new_render_calls": 0,
+  "scope": "posthoc diagnostic representatives; no threshold or candidate selection changes"
+}

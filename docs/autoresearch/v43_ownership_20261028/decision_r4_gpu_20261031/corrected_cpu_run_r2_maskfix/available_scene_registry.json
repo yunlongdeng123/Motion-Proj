@@ -1,0 +1,81 @@
+{
+  "schema": "r4_available_scene_registry_v1",
+  "rows": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+      "status": "CPU_prepared_this_run",
+      "task_registration": "12 tasks total across 3 configurations",
+      "checkpoint_cpu_loaded": true
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+      "status": "CPU_prepared_this_run",
+      "task_registration": "12 tasks total across 3 configurations",
+      "checkpoint_cpu_loaded": true
+    },
+    {
+      "scene_id": "real_first_scene_native30k",
+      "scene_ancestor": "waymo_context_14705303724557273004_3105_000_3125_000",
+      "status": "CPU_prepared_this_run",
+      "task_registration": "12 tasks total across 3 configurations",
+      "checkpoint_cpu_loaded": true
+    },
+    {
+      "scene_id": "real_context_4295449061847708198_3769_000_3789_000",
+      "scene_ancestor": "waymo_context_4295449061847708198_3769_000_3789_000",
+      "status": "available_unprepared",
+      "dataset_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/datasets/4295449061847708198_3769_000_3789_000/manifest.json",
+      "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/4295449061847708198_3769_000_3789_000/formal30k/checkpoint_events/iteration_030000.json",
+      "checkpoint_paths": {
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/4295449061847708198_3769_000_3789_000/formal30k/chkpnt30000.pth",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/4295449061847708198_3769_000_3789_000/formal30k/dynamic_chkpnt30000.pth",
+        "environment": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/4295449061847708198_3769_000_3789_000/formal30k/env_light_chkpnt30000.pth",
+        "training_state": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/4295449061847708198_3769_000_3789_000/formal30k/training_state30000.pth"
+      },
+      "frame_denominator": 49,
+      "target_track": "RF9xTqqMA8m9Ds5-cQOu7Q",
+      "checkpoint_cpu_loaded": false,
+      "task_registration": "not_prepared_this_run",
+      "eligibility": null,
+      "reason": "CPU scope limited to first real scene; preserve availability denominator"
+    },
+    {
+      "scene_id": "real_context_473735159277431842_630_095_650_095",
+      "scene_ancestor": "waymo_context_473735159277431842_630_095_650_095",
+      "status": "available_unprepared",
+      "dataset_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/datasets/473735159277431842_630_095_650_095/manifest.json",
+      "checkpoint_event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/checkpoint_events/iteration_030000.json",
+      "checkpoint_paths": {
+        "static": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/chkpnt30000.pth",
+        "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/dynamic_chkpnt30000.pth",
+        "environment": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/env_light_chkpnt30000.pth",
+        "training_state": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/training_state30000.pth"
+      },
+      "frame_denominator": 49,
+      "target_track": "1OSdwBN_kmTeyfJc0NYl0Q",
+      "checkpoint_cpu_loaded": false,
+      "task_registration": "not_prepared_this_run",
+      "eligibility": null,
+      "reason": "CPU scope limited to first real scene; preserve availability denominator"
+    },
+    {
+      "scene_id": "legacy_scene0008",
+      "scene_ancestor": "legacy_scene0008_ancestor_unverified",
+      "status": "available_source_unprepared_checkpoint_identity_unknown",
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+      "source_directory_exists": true,
+      "checkpoint_event": null,
+      "checkpoint_cpu_loaded": false,
+      "task_registration": "not_prepared_this_run",
+      "reason": "current native engine source exists; shared-platform checkpoint identity needs explicit mapping; not inferred from directory name"
+    }
+  ],
+  "cpu_prepared_configurations": 3,
+  "cpu_prepared_independent_ancestors": 2,
+  "additional_available_unprepared_real_contexts": 2,
+  "legacy_checkpoint_mapping_unknown": 1,
+  "actual_registered_task_denominator": 12,
+  "note": "available/unprepared scenes are not silently counted as qualified, trained or CPU-accepted"
+}

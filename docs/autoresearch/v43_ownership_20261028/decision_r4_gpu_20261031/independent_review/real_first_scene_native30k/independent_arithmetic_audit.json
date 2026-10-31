@@ -1,0 +1,21 @@
+{
+  "schema": "v43_r4_independent_score_arithmetic_audit_v1",
+  "status": "PASS",
+  "score_path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/isolated_scores_r2/scores.json",
+  "scene_id": "real_first_scene_native30k",
+  "actions_checked": 8,
+  "native_observation_rows_checked": 96,
+  "safe_actions_checked": null,
+  "checks": [
+    "exact12 frame-operation pairs per route",
+    "one shared route hash across q",
+    "perROI normalization and equal frame/operation weighting",
+    "per-anchor hard constraints and unsafe-gap exclusion",
+    "same shared-domain argmin and nonnegative finite gap arithmetic",
+    "no GT-derived eligibility or task-completion/generalization label"
+  ],
+  "limits": [
+    "arithmetic and contract audit, not re-rendering",
+    "native renderer identity and reference pixels require separate source/output inspection"
+  ]
+}

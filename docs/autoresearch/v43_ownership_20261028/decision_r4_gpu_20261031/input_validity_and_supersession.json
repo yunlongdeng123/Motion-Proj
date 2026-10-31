@@ -1,0 +1,125 @@
+{
+  "schema": "r4_input_validity_and_supersession_v1",
+  "artifacts": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/sim_m0_original10k",
+      "artifact_type": "CPU_candidate_domain",
+      "status": "INPUT_MASK_INVALID",
+      "reason": "RGBA alpha erroneously counted as foreground",
+      "old_candidate_hash": "984cd9b6f93cdd5d891a5ab484a4107a70a0ac03d7f0a151e2e97e39e9e44aec",
+      "new_candidate_hash": "da5b19d08bfff5149f58aaf6ea4ef49559497ed0f37a9eee8acb5cae1b88a0d5",
+      "candidate_unchanged": false,
+      "shared_context_unchanged": false,
+      "superseded_by": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_m0_original10k",
+      "original_training_checkpoint_valid": true
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/sim_m0_original10k/enumerate_r1",
+      "artifact_type": "GPU_route_enumeration",
+      "route_edit_outputs": 96,
+      "scientific_status": "INPUT_MASK_INVALID",
+      "E0_native_recovery_and_parity_independently_valid": true,
+      "D_C_claims_allowed": "none_from_invalid_sim_input",
+      "superseded_by": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_m0_original10k",
+      "artifact_type": "corrected_CPU_domain",
+      "status": "VALID_INPUT",
+      "parent_cpu_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/sim_m0_original10k",
+      "candidate_rows": 4445,
+      "mask_semantics": "RGB/gray only ignoring RGBA/LA alpha; sim per-frame preparation counts asserted"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1",
+      "artifact_type": "corrected_GPU_coarse",
+      "status": "VALID_INPUT_DOMAIN",
+      "rendering_complete": true,
+      "parent": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_m0_original10k"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/sim_natural_hybrid8_10k",
+      "artifact_type": "CPU_candidate_domain",
+      "status": "INPUT_MASK_INVALID",
+      "reason": "RGBA alpha erroneously counted as foreground",
+      "old_candidate_hash": "a799dbe57cd569068274d614f34bfea6bcb6e193bb1bcc311de5d0b929f7ee11",
+      "new_candidate_hash": "ad72bb587079ec418f306f86fd1e1e5c9ff8cbf66f4050e5290a2461386b0ada",
+      "candidate_unchanged": false,
+      "shared_context_unchanged": false,
+      "superseded_by": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_natural_hybrid8_10k",
+      "original_training_checkpoint_valid": true
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/sim_natural_hybrid8_10k/enumerate_r3",
+      "artifact_type": "GPU_route_enumeration",
+      "route_edit_outputs": 96,
+      "scientific_status": "INPUT_MASK_INVALID",
+      "E0_native_recovery_and_parity_independently_valid": true,
+      "D_C_claims_allowed": "none_from_invalid_sim_input",
+      "superseded_by": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_natural_hybrid8_10k",
+      "artifact_type": "corrected_CPU_domain",
+      "status": "VALID_INPUT",
+      "parent_cpu_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/sim_natural_hybrid8_10k",
+      "candidate_rows": 30024,
+      "mask_semantics": "RGB/gray only ignoring RGBA/LA alpha; sim per-frame preparation counts asserted"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1",
+      "artifact_type": "corrected_GPU_coarse",
+      "status": "VALID_INPUT_DOMAIN",
+      "rendering_complete": true,
+      "parent": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_natural_hybrid8_10k"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/real_first_scene_native30k",
+      "artifact_type": "CPU_candidate_domain",
+      "status": "VALID_UNAFFECTED",
+      "reason": "real body is2D boolean; no alpha path",
+      "old_candidate_hash": "d96d90a362c73812c7e030bc6458a4220cb79e4c665de47807d632444946a1ce",
+      "new_candidate_hash": "d96d90a362c73812c7e030bc6458a4220cb79e4c665de47807d632444946a1ce",
+      "candidate_unchanged": true,
+      "shared_context_unchanged": true,
+      "superseded_by": null,
+      "original_training_checkpoint_valid": true
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1",
+      "artifact_type": "GPU_route_enumeration",
+      "route_edit_outputs": 96,
+      "scientific_status": "VALID_UNAFFECTED",
+      "E0_native_recovery_and_parity_independently_valid": true,
+      "D_C_claims_allowed": "real_no_independent_edit_GT_unavailable",
+      "superseded_by": null
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/real_first_scene_native30k",
+      "artifact_type": "corrected_CPU_domain",
+      "status": "VALID_INPUT",
+      "parent_cpu_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/real_first_scene_native30k",
+      "candidate_rows": 2703,
+      "mask_semantics": "RGB/gray only ignoring RGBA/LA alpha; sim per-frame preparation counts asserted"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/legal_purity095_m0_r1",
+      "artifact_type": "purity_probe",
+      "status": "INPUT_MASK_INVALID",
+      "reason": "RGBA alpha produced all-image body and zero keep; never enumerated or scientifically scored"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/legal_purity095_m0_r2",
+      "artifact_type": "purity_probe",
+      "status": "DIAGNOSTIC_ONLY_INVALID_PARENT_U",
+      "reason": "mask fixed and adjoint valid, but parent U came from invalid CPUr1; no formal enumeration/scoring"
+    }
+  ],
+  "original_native_G_training_mask_status": "UNAFFECTED_TRAINING_MASKS_ARE_GRAYSCALE",
+  "training_mask_evidence": "original adapt_scene and paper_masks convertL; independently audited32 sim source masks and96 native training masks by review agent",
+  "old_sim192_scientific_outputs_invalid": true,
+  "old_real96_unchanged": true,
+  "frozen_inputs_current_content_integrity": true,
+  "source_gauge_mutation_history_preserved": true,
+  "note": "Do not use pre-maskfix sim scores as D/C negative conclusions; never erase previous evidence"
+}

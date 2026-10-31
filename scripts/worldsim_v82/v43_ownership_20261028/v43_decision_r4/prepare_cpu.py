@@ -16,6 +16,7 @@ import time
 
 import numpy as np
 from PIL import Image
+from legal_mask import read_body_mask
 from scipy.spatial import cKDTree
 import torch
 
@@ -145,8 +146,9 @@ def sim_inputs(event, source):
         mask_path=obs/row['body_mask']; lidar_path=obs/row['lidar']
         receipt(mask_path,'legal_sensor_oracle_original_body_mask')
         receipt(lidar_path,'legal_noise_free_sparse_lidar_no_owner_labels')
-        mask=np.asarray(Image.open(mask_path))>0
-        if mask.ndim==3:mask=mask.any(axis=2)
+        mask,mask_decode=read_body_mask(mask_path)
+        if int(mask.sum())!=int(prepared[fid]['body_pixels']):
+            raise ValueError('body mask解码与原训练准备分母不一致，拒绝把RGBA alpha当作前景')
         with np.load(lidar_path,allow_pickle=False) as data:
             # 严格只读许可数组；没有访问semantic/surface/dense depth。
             xyz=data['xyz_world'].copy();uv=data['uv'].copy()

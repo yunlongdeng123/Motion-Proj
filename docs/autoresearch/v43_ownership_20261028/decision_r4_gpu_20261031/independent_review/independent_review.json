@@ -1,0 +1,755 @@
+{
+  "schema": "v43_r4_independent_evaluation_review_v1",
+  "generated_utc": "2026-10-31T15:07:52.849117+00:00",
+  "scope": "corrected-mask coarse domain plus original valid real none-only domain",
+  "acceptance_status": "ENGINEERING_AND_FINITE_DEVELOPMENT_DOMAIN_CHECKS_PASS",
+  "scientific_result_type": "fixed-domain exhaustive development comparison, no learned policy",
+  "human_quality_review": null,
+  "sealed_test_performed": false,
+  "development_constraints": {
+    "keep_MAE_increase_per_anchor_operation_max": 0.005,
+    "keep_pixel_MAE_increase_cutoff": 0.02,
+    "fraction_keep_pixels_over_cutoff_max": 0.01,
+    "none_raw_MAE_to_allkeep_per_anchor_max": 0.005,
+    "keep_MAE_and_none_tolerance_sensitivity": [
+      0.001,
+      0.005,
+      0.01
+    ],
+    "calibrated_deployment_safety": false,
+    "thresholds_changed_after_score": false
+  },
+  "valid_main_native_rows": 288,
+  "GPU_calls_by_independent_reviewer": 0,
+  "additional_render_cost_boundary": "288 excludes smoke, separate-process restore replay, controls and superseded invalid-domain renders; native run receipts are authoritative for overhead",
+  "checks": [
+    "32 original simulation body PNG color channels independently agree with original preparation counts; opaque alpha ignored",
+    "corrected CPU contexts and checkpoint bundle identities match each native/scorer scene",
+    "all 8 shared routes x 3 anchors x 4 operations present per scene; one route hash across all q",
+    "actual none path used for every route; allkeep original-native none parity exactly zero",
+    "stored separate-process replay receipts contain 8 queries per scene with FP32 maximum difference zero",
+    "288 row-conservation records contain no additions or duplications and preserve query-specific deletion counts",
+    "FP32 arrays finite and compositor identities independently checked",
+    "ROI pixel/channel denominators and equal frame/operation averaging independently recomputed",
+    "per-anchor constraints enforced before finite-domain argmin; violations retained and unsafe gaps null",
+    "four direct FP32 cases recomputed independently in float64, including safe and violating examples",
+    "real native source raw track exactly equals CPU target and original review track"
+  ],
+  "scenes": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "status": "COMPLETE_NATIVE_DOMAIN_SCORED",
+      "source_native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1/gpu_manifest.json",
+      "cpu_frozen_scene_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_m0_original10k",
+      "shared_route_context_hash": "fdfa6087852a305744f08351fee6ace1c1978e3d5f17642831ba5f38f7ab5a15",
+      "checkpoint_bundle_sha256": "dec637184f32d35a4a066dee21f4d8650a759f3149caf3a27babb06e69fb8dfc",
+      "contract_sha256": "adaecc6e4d89dc5ae0fe89da6b43ac3b5f90570fb6c66a5e41aa0e867a863c55",
+      "evaluated_anchor_frames": [
+        "000000",
+        "000008",
+        "000015"
+      ],
+      "registered_frame_denominator": 16,
+      "native_rendered_rows": 96,
+      "expected_route_count": 8,
+      "baseline_joint_target_loss": 0.18531125841681573,
+      "best_safe_shared_action_id": "h002",
+      "best_verified_shared_residual": 0.1848454841183992,
+      "baseline_finite_decision_gap": 0.00046577429841651585,
+      "development_safe_action_count": 2,
+      "none_preservation_pass_count": 8,
+      "best_shared_route_per_operation_losses": {
+        "delete": 0.15454782239683731,
+        "shift": 0.15687992587198105,
+        "rotate": 0.24310870408637933
+      },
+      "constraint_sensitivity": [
+        {
+          "tolerance": 0.001,
+          "safe_count": 2,
+          "best_action_id": "h002",
+          "best_joint_loss": 0.1848454841183992
+        },
+        {
+          "tolerance": 0.005,
+          "safe_count": 2,
+          "best_action_id": "h002",
+          "best_joint_loss": 0.1848454841183992
+        },
+        {
+          "tolerance": 0.01,
+          "safe_count": 2,
+          "best_action_id": "h002",
+          "best_joint_loss": 0.1848454841183992
+        }
+      ],
+      "capability_bin": "C?",
+      "task_completion_threshold": null,
+      "preedit_eligibility": "unknown_not_assigned_from_evaluation_GT",
+      "counterexamples": [
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h001",
+          "joint_gain": 0.0014405007586025531,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.0119693627616818,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.011675281240498632,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h003",
+          "joint_gain": 0.0011114455890097463,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.01240239793225706,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.011891490152359718,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h004",
+          "joint_gain": 0.000678574466770776,
+          "violations": [
+            {
+              "frame": "000015",
+              "edit": "delete",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.010806998690264299,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.011213417764846825,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.011301876219475145,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h005",
+          "joint_gain": 0.002154486397714872,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.010220131185823688,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013721801967603557,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014236995644670885,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.015256241343197864,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "delete",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.010847298250327434,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.011500941297278796,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.01304374244684945,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h006",
+          "joint_gain": 0.0010236592350216511,
+          "violations": [
+            {
+              "frame": "000015",
+              "edit": "delete",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.012103301205628506,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.012815334588396371,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013178770836568389,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h007",
+          "joint_gain": 0.0016809844614852354,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.010275078127682956,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013958618076511902,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014278083655189415,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.015377858856119725,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "delete",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.012150317359035497,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013061783330480917,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000015",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014846371449597278,
+              "threshold": 0.01
+            }
+          ]
+        }
+      ],
+      "arithmetic_audit": "maskfix_coarse/sim_m0_original10k/independent_arithmetic_audit.json",
+      "mask_semantic_gate": "PASS_INDEPENDENT_COLOR_CHANNEL_AND_PREPARATION_COUNT_CHECK"
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "status": "COMPLETE_NATIVE_DOMAIN_SCORED",
+      "source_native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/gpu_manifest.json",
+      "cpu_frozen_scene_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/sim_natural_hybrid8_10k",
+      "shared_route_context_hash": "598ce58ee931b4b4a0668057a7310c7c984b59498cfd7b56129bd976d0a7ee95",
+      "checkpoint_bundle_sha256": "524c6f5731d400ab1ab2c8d005701e568100d48efe8fd49e128dd4629d4c5b29",
+      "contract_sha256": "adaecc6e4d89dc5ae0fe89da6b43ac3b5f90570fb6c66a5e41aa0e867a863c55",
+      "evaluated_anchor_frames": [
+        "000000",
+        "000008",
+        "000015"
+      ],
+      "registered_frame_denominator": 16,
+      "native_rendered_rows": 96,
+      "expected_route_count": 8,
+      "baseline_joint_target_loss": 0.15723624819424856,
+      "best_safe_shared_action_id": "h006",
+      "best_verified_shared_residual": 0.15148271759913542,
+      "baseline_finite_decision_gap": 0.005753530595113132,
+      "development_safe_action_count": 4,
+      "none_preservation_pass_count": 8,
+      "best_shared_route_per_operation_losses": {
+        "delete": 0.1739742047829246,
+        "shift": 0.11896288867150162,
+        "rotate": 0.16151105934298007
+      },
+      "constraint_sensitivity": [
+        {
+          "tolerance": 0.001,
+          "safe_count": 4,
+          "best_action_id": "h006",
+          "best_joint_loss": 0.15148271759913542
+        },
+        {
+          "tolerance": 0.005,
+          "safe_count": 4,
+          "best_action_id": "h006",
+          "best_joint_loss": 0.15148271759913542
+        },
+        {
+          "tolerance": 0.01,
+          "safe_count": 4,
+          "best_action_id": "h006",
+          "best_joint_loss": 0.15148271759913542
+        }
+      ],
+      "capability_bin": "C?",
+      "task_completion_threshold": null,
+      "preedit_eligibility": "unknown_not_assigned_from_evaluation_GT",
+      "counterexamples": [
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h001",
+          "joint_gain": 0.0019345954375237229,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.023153267625948694,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.02662489681583826,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014332867669214122,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013026586939630418,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h003",
+          "joint_gain": 0.006907289408665168,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.02324255640647,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.026665493863079693,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014326019667461035,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013256308908482822,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h005",
+          "joint_gain": 0.0034089742410007284,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.023572238057625605,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.026597832117677307,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.015695620018078723,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.013803587716631194,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "target_gain_violates_preservation",
+          "action_id": "h007",
+          "joint_gain": 0.008662935006516492,
+          "violations": [
+            {
+              "frame": "000000",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.02341426559978021,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000000",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.02664519533945898,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "shift",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.015702468019831814,
+              "threshold": 0.01
+            },
+            {
+              "frame": "000008",
+              "edit": "rotate",
+              "kind": "keep_worsened_fraction",
+              "measured": 0.014046822742474917,
+              "threshold": 0.01
+            }
+          ]
+        },
+        {
+          "kind": "best_joint_route_worsens_one_operation",
+          "action_id": "h006",
+          "edit": "rotate",
+          "target_loss_increase": 0.0009127945697226525
+        }
+      ],
+      "arithmetic_audit": "maskfix_coarse/sim_natural_hybrid8_10k/independent_arithmetic_audit.json",
+      "mask_semantic_gate": "PASS_INDEPENDENT_COLOR_CHANNEL_AND_PREPARATION_COUNT_CHECK"
+    },
+    {
+      "scene_id": "real_first_scene_native30k",
+      "status": "REAL_NATIVE_VALIDITY_AND_NONE_ONLY",
+      "source_native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/gpu_manifest.json",
+      "cpu_frozen_scene_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r1/real_first_scene_native30k",
+      "shared_route_context_hash": "a0643fd6e4a99a1c8cb5dc61f07f882c225e377e2431b0120b569001fdeb4eb6",
+      "checkpoint_bundle_sha256": "e8ab7202017afdb072994d5156edfc60300bdbddeae7941691535e3e66159cf2",
+      "contract_sha256": "abbc7a80f6c7fd6c3e13497418114845bedfa6a3cd0f2ea3807d7f13636a7f62",
+      "evaluated_anchor_frames": [
+        "9001077",
+        "9001101",
+        "9001125"
+      ],
+      "registered_frame_denominator": 49,
+      "native_rendered_rows": 96,
+      "expected_route_count": 8,
+      "baseline_joint_target_loss": null,
+      "best_safe_shared_action_id": null,
+      "best_verified_shared_residual": null,
+      "baseline_finite_decision_gap": null,
+      "development_safe_action_count": null,
+      "none_preservation_pass_count": 8,
+      "best_shared_route_per_operation_losses": null,
+      "constraint_sensitivity": [],
+      "capability_bin": "C?",
+      "task_completion_threshold": null,
+      "preedit_eligibility": "unknown_not_assigned_from_evaluation_GT",
+      "counterexamples": [],
+      "arithmetic_audit": "real_first_scene_native30k/independent_arithmetic_audit.json",
+      "mask_semantic_gate": "not_applicable_boolean_NPZ_source"
+    }
+  ],
+  "input_mask_erratum": {
+    "status": "OLD_SIM_CANDIDATE_DOMAINS_INPUT_MASK_INVALID",
+    "cause": "old candidate/probe reader counted opaque RGBA alpha as foreground",
+    "affected_use": "old sim coarse route scores and both old-U purity probes are invalid for D/C inference, retained as engineering diagnostics only",
+    "corrected_candidate_rows": {
+      "sim_m0_original10k": 4445,
+      "sim_natural_hybrid8_10k": 30024,
+      "real_first_scene_native30k": 2703
+    },
+    "evidence": [
+      "input_mask_independent_correction.json",
+      "input_mask_erratum.json"
+    ],
+    "standalone_old_plot": "m0_pareto_counterexample.png has explicit INPUT MASK INVALID banner; untouched original preserved with before_mask_erratum suffix"
+  },
+  "original_training_mask_impact": {
+    "status": "ORIGINAL_SIM_TRAINING_MASK_PATHS_NOT_AFFECTED_BY_R4_RGBA_READ_BUG",
+    "frames_verified": 32,
+    "actual_prepared_L_mask_files_verified": 96,
+    "actual_inherited_loader_CPU_calls": 32,
+    "evidence": "original_sim_training_mask_impact_audit.json",
+    "limit": "active saved preparation/loader path audited; historical 10K optimization not replayed"
+  },
+  "original_input_immutability": {
+    "receipt": "../frozen_input_immutability_audit.json",
+    "rows_independently_checked_for_internal_equality": 250,
+    "all_expected_current_SHA_and_size_pairs_match": true,
+    "mtime_difference_count": 0,
+    "boundary": "reviewed actual post-recovery hash receipt; this reviewer did not perform a second complete remote file rehash",
+    "originals_never_touched": false
+  },
+  "limits": [
+    "constraints are explicit provisional development conditions, not calibrated deployment safety or a sealed test",
+    "sim body masks are simulator_sensor_oracle training observations; no deployment mask guarantee",
+    "only the three originally available independent-edit-GT keyframes are scored; total frame denominators remain 16/16/49",
+    "decision gap is exact only within each fixed eight-action, three-anchor shared domain, not a global or row-level optimum",
+    "best joint route can worsen a particular edit; hybrid rotate counterexample is retained",
+    "best residual is reported separately from D; task completion threshold absent, so C stays unknown",
+    "real edit safety, counterfactual D and C remain unavailable; 8/8 refers solely to none preservation",
+    "two sim reconstructions have one physical ancestor; current three reconstruction configurations cover only two physical ancestors",
+    "no student learning, independent-world generalization, or population confidence claim",
+    "hybrid inherited loader input gauge write and exact restoration are engineering incidents retained in separate native receipts; not described as never touched"
+  ],
+  "next_learning_boundary": {
+    "available_now": "same-world held-out time/camera wiring or explicitly same-world cross-reconstruction diagnostic only",
+    "minimal_independent_world_expansion": "two additional procedural world/vehicle-asset ancestors, assigned to development/calibration and untouched small holdout before first action scoring; existing world for training",
+    "qualification": "preedit legal observations only; all unknown fields and actor denominators retained, no test/reference-derived P=1",
+    "long_training_gate": "real approximately 10-minute smoke must cover training, finite loss, memory/data loading, save/eval/full restore and next entry; present short inference replay does not satisfy that future gate"
+  },
+  "formal_new_purity_domain": {
+    "status": "not_started_this_round",
+    "requirement_if_later_authorized": "corrected parent U, new pre-score freeze, per-original-anchor intersection, low/unknown rows fixed keep, exhaustive actual 2**nonempty_groups enumeration and separate score domain"
+  },
+  "evidence_files": [
+    {
+      "relative_path": "corrected_native_domain_independent_audit.json",
+      "sha256": "105cb24f375f9be72a22ad36b85bccb764cb52744b6339696583b342ed2ae8ad",
+      "bytes": 3918
+    },
+    {
+      "relative_path": "input_mask_erratum.json",
+      "sha256": "4a80d480579e439fe20e43c55e7f534782f59827c32799cc6ea8720f174c6512",
+      "bytes": 1070
+    },
+    {
+      "relative_path": "input_mask_independent_correction.json",
+      "sha256": "ed721054563d37f8034aabdb511be46e49990554175bedd12903391943f428df",
+      "bytes": 16608
+    },
+    {
+      "relative_path": "m0_pareto_points.json",
+      "sha256": "daaf8464bc4a664f50944abf622b1aca56a1592db7a01280bd3d258e72f666ce",
+      "bytes": 2314
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_m0_original10k/direct_fp32_metric_audit.json",
+      "sha256": "e57811f8e6fd0dfd654768251441eeaa3492614494b7be52248dd140b00fce58",
+      "bytes": 1494
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_m0_original10k/evaluation_contract.json",
+      "sha256": "bb9f143d42e8298739f213ab192fe404e0f1ca669eba3660aa6377d1c3929ff7",
+      "bytes": 6419
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_m0_original10k/independent_arithmetic_audit.json",
+      "sha256": "9bd83516f6d5a953935731e25744c06d97dc55c7f4b7e676029cb7e0a9ff9297",
+      "bytes": 941
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_m0_original10k/scores.json",
+      "sha256": "0b5edef2e66f65f9d79a84de11534c5e28edc3daed33a6529d89d54934b72c71",
+      "bytes": 237636
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_m0_original10k/summary.json",
+      "sha256": "4e75cd934866bcbdc4bc4c7dcc0c6c0765b4b5c5a3f67174e6f176ecd6c76814",
+      "bytes": 18831
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_natural_hybrid8_10k/direct_fp32_metric_audit.json",
+      "sha256": "48b41c5dd786a1135021e884d9f40a1c297fc17a19c3efab7be3052db430d7a4",
+      "bytes": 2789
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_natural_hybrid8_10k/evaluation_contract.json",
+      "sha256": "bb9f143d42e8298739f213ab192fe404e0f1ca669eba3660aa6377d1c3929ff7",
+      "bytes": 6419
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_natural_hybrid8_10k/independent_arithmetic_audit.json",
+      "sha256": "1dc65030fabd537e8e57c2bf6aaf62501f02280ad65c276145e77655a5badb69",
+      "bytes": 951
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_natural_hybrid8_10k/scores.json",
+      "sha256": "80e8d3f00585031418ecdcf3198d9b0aa8908e5df87afbd38e0b1710c26cd269",
+      "bytes": 234872
+    },
+    {
+      "relative_path": "maskfix_coarse/sim_natural_hybrid8_10k/summary.json",
+      "sha256": "813267b125a5ce5dd291a50342d6035863f638f457b2db2673fb0f23749150f0",
+      "bytes": 17152
+    },
+    {
+      "relative_path": "maskfix_coarse_pareto_points.json",
+      "sha256": "1475de7e9db3fe08616ab05042337595f1f6bc1bac138cd59b3eaa9151d695fa",
+      "bytes": 3736
+    },
+    {
+      "relative_path": "original_sim_training_mask_impact_audit.json",
+      "sha256": "9d8511ace1b93100c1946bba2abc1317e2ed81be95c238a47fdadeb0428e0bf1",
+      "bytes": 30773
+    },
+    {
+      "relative_path": "real_first_scene_native30k/evaluation_contract.json",
+      "sha256": "c405a44159167c482ea61371a469d76e740deec090fcd8a344535e75c71e0c32",
+      "bytes": 6048
+    },
+    {
+      "relative_path": "real_first_scene_native30k/independent_arithmetic_audit.json",
+      "sha256": "54dfa5dad03272d01add15c666cad4f32c2d0e5146734d01c460de9c4cd08551",
+      "bytes": 945
+    },
+    {
+      "relative_path": "real_first_scene_native30k/scores.json",
+      "sha256": "ecb56ab3ce380ea4edcd765ae759806e1fd879a50ed8e965951e7951876a6d24",
+      "bytes": 94418
+    },
+    {
+      "relative_path": "real_first_scene_native30k/summary.json",
+      "sha256": "bd8426212c52f3b34578d22f2d2b6105596f5b47b1cbae1a30fcdcac7001f050",
+      "bytes": 2529
+    },
+    {
+      "relative_path": "../frozen_input_immutability_audit.json",
+      "sha256": "5dcb7fcc7c72d3ab7237567473a4d87cfe24a17447e4dedfee834448e4db07ed",
+      "bytes": 150833
+    }
+  ],
+  "final_report_audit": {
+    "status": "PASS_READONLY_SOURCE_AND_VALUE_CHECK",
+    "reports": [
+      {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\outputs\\V43_R4_GPU_20261031\\report.html",
+        "sha256": "e8c08ef598f0b6ad00ebc707fcce29cf499cea91203251563ecdc14a97cbaf66",
+        "HF_needs_preparation_rows": 11,
+        "existing_model_rows": 4,
+        "scope_and_counterexamples_retained": true
+      },
+      {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\r4_gpu\\root\\repo_stage\\content\\docs\\autoresearch\\v43_ownership_20261028\\decision_r4_gpu_20261031\\report.html",
+        "sha256": "4342c6492d111e4364ddf0ed0f3564ad7bbdcee3fe6dab94a9102c3c032bf972",
+        "HF_needs_preparation_rows": 11,
+        "existing_model_rows": 4,
+        "scope_and_counterexamples_retained": true
+      }
+    ],
+    "report_summary_sha256": "5158b2d89915f4096453e3250f54681cb88aa56e9f5fc5dedfc942feef3cc2dd",
+    "failure_delta_sha256": "b3ef99c179573970477c3c43c547cec770a512ffd3320e8f6990f9cf46c22053",
+    "engineering_failures_not_method_failures": [
+      "V82-F07",
+      "V82-F08"
+    ],
+    "fixes_confirmed": [
+      "HF11 preparation status and source labels corrected",
+      "repo media-free report retains observed residue and completion limitations"
+    ],
+    "browser_interactive_or_human_quality_acceptance": null
+  },
+  "forward_call_count_audit": {
+    "status": "RECONSTRUCTED_FROM_SOURCE_AND_ACTUAL_RECEIPTS",
+    "route_or_edit_API_calls": 564,
+    "helper_baseline_control_API_calls": 25,
+    "original_native_control_API_calls": 26,
+    "probe_forward_API_calls": 6,
+    "render_API_forwards": 621,
+    "actual_GaussianRasterizer_forwards": 673,
+    "feature_adjoint_backwards": 12,
+    "actual_native_rasterizers_per_control": 3,
+    "explanation": "each original-native control calls composite, dynamic and static rasterization at source lines 103/107/109; helper route paths call one rasterizer",
+    "limit": "receipt/source reconstruction, not independent CUDA profiler instrumentation; 288 valid main outputs remain the scientific comparison denominator",
+    "reconciliation_sha256": "ec364d6a82739e8c4f688f50cdca7c8dc4135aac70dfdd688ced3e39a1b6e716",
+    "source_files": [
+      {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\outputs\\V43_R4_GPU_20261031\\gpu_runs\\run_r1\\source_snapshot\\native_shared_route.py",
+        "sha256": "aa94f10d336d3d237f559f056e4ad5eaa0d1ffd9aaa5f95b72fd8c8e98e74397"
+      },
+      {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\outputs\\V43_R4_GPU_20261031\\gpu_runs\\run_r1\\source_snapshot\\inherited_native_engine\\gaussian_renderer\\__init__.py",
+        "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+      },
+      {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\outputs\\V43_R4_GPU_20261031\\gpu_runs\\run_r1\\source_snapshot\\inherited_native_engine\\v4_road_render.py",
+        "sha256": "888dbe0c49eff4fa0fcf0e3999b49d2b6a44c746f806d45df869c22e8520e943"
+      }
+    ]
+  }
+}

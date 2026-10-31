@@ -1,0 +1,16 @@
+{
+  "schema": "v43_r4_sim_body_mask_decode_erratum_v1",
+  "discovered_during": "WS-V43-R4-GPU-SMALL-20261031 native legal alphaT responsibility validation",
+  "cause": "Opaque alpha of RGBA simulator body PNG was treated as foreground by any-channel>0; full image became body in CPU preparation and first legal responsibility probe.",
+  "old_cpu_run": "v43_decision_r4_cpu_20261031/run_r1",
+  "affected_cpu_scenes": ["sim_m0_original10k", "sim_natural_hybrid8_10k"],
+  "affected_old_candidate_counts_not_scientifically_valid": [392468, 490823],
+  "old_body_pixel_count_wrong": 153600,
+  "affected_scientific_status": "INPUT_MASK_INVALID: do not use old simulation candidates or their action scores for D/C conclusions",
+  "unaffected_specific_paths": ["real boolean 2D body masks and real candidate preparation", "Waymo raw-RGB source correspondence", "raw annotation-assisted all-actor inventory"],
+  "old_e0_scope_still_valid": "native checkpoint/camera/renderer restoration, compositor identity and saved inference-state replay; this does not validate candidate semantics",
+  "prior_test_limitation": "13 contract checks did not cover opaque RGBA foreground decoding or compare simulator body pixel count with original native preparation",
+  "correction": "Ignore alpha when decoding body PNG; assert RGB/RGBA/LA/grayscale foreground consistency and exact per-frame original preparation body_pixels; prepare fresh CPU/run and re-render frozen corrected domains.",
+  "current_followup": "../../V43_R4_GPU_20261031/report.html",
+  "human_verdict": null
+}

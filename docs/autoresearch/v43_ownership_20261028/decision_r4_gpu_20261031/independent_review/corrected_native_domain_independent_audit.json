@@ -1,0 +1,90 @@
+{
+  "schema": "r4_corrected_native_domain_independent_audit_v1",
+  "status": "PASS",
+  "scenes": [
+    {
+      "scene_id": "sim_m0_original10k",
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_m0_original10k/enumerate_r1/gpu_manifest.json",
+      "native_rows_checked": 96,
+      "full_registered_frames": 16,
+      "anchors": [
+        "000000",
+        "000008",
+        "000015"
+      ],
+      "allkeep_native_none_parity_max_abs": 0.0,
+      "separate_process_replay_rows": 8,
+      "separate_process_replay_max_abs": 0,
+      "row_conservation_checked": true,
+      "actual_none_route_checked": true,
+      "actor_source_check": {
+        "native_dynamic_actor_source_count": 1,
+        "target_id": "actor_0",
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/native_scene_r3/points3d_dynamic_0.ply"
+        ],
+        "role": "inherited_single_actor_branch_binding_not_per_Gaussian_owner_GT"
+      }
+    },
+    {
+      "scene_id": "sim_natural_hybrid8_10k",
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/maskfix_coarse/sim_natural_hybrid8_10k/enumerate_r1/gpu_manifest.json",
+      "native_rows_checked": 96,
+      "full_registered_frames": 16,
+      "anchors": [
+        "000000",
+        "000008",
+        "000015"
+      ],
+      "allkeep_native_none_parity_max_abs": 0.0,
+      "separate_process_replay_rows": 8,
+      "separate_process_replay_max_abs": 0,
+      "row_conservation_checked": true,
+      "actual_none_route_checked": true,
+      "actor_source_check": {
+        "native_dynamic_actor_source_count": 1,
+        "target_id": "actor_0",
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/native_scene_hybrid8/points3d_dynamic_0.ply"
+        ],
+        "role": "inherited_single_actor_branch_binding_not_per_Gaussian_owner_GT"
+      }
+    },
+    {
+      "scene_id": "real_first_scene_native30k",
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_gpu_20261031/run_r1/real_first_scene_native30k/enumerate_r1/gpu_manifest.json",
+      "native_rows_checked": 96,
+      "full_registered_frames": 49,
+      "anchors": [
+        "9001077",
+        "9001101",
+        "9001125"
+      ],
+      "allkeep_native_none_parity_max_abs": 0.0,
+      "separate_process_replay_rows": 8,
+      "separate_process_replay_max_abs": 0,
+      "row_conservation_checked": true,
+      "actual_none_route_checked": true,
+      "actor_source_check": {
+        "native_dynamic_actor_source_count": 1,
+        "target_id": "actor_0",
+        "actor_ply_paths": [
+          "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/motion_scene_inputs_v1/14705303724557273004_3105_000_3125_000/points3d_dynamic_0.ply"
+        ],
+        "role": "inherited_single_actor_branch_binding_not_per_Gaussian_owner_GT",
+        "source_preparation": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/motion_scene_inputs_v1/14705303724557273004_3105_000_3125_000/dynamic_multi_actor_preparation.json",
+        "raw_track_id": "gTriXsyDrbzzU6apS1WErQ",
+        "cpu_legal_target_track": "gTriXsyDrbzzU6apS1WErQ",
+        "original_review_track": "gTriXsyDrbzzU6apS1WErQ",
+        "exact_target_track_assertion_passed": true
+      }
+    }
+  ],
+  "valid_main_native_rows": 288,
+  "old_sim_invalid_mask_rows_excluded_from_main": true,
+  "new_GPU_calls_by_this_audit": 0,
+  "limits": [
+    "checks stored native row/replay/restore receipts and independent scorer FP32 array identities; no new rendering",
+    "real has no independent editGT, so this is engineering acceptance only"
+  ]
+}

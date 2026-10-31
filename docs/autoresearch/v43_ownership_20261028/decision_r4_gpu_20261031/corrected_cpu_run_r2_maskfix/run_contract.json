@@ -1,0 +1,55 @@
+{
+  "schema": "v43_R4_CPU_preparation_v1",
+  "created_utc": "2026-10-31T14:46:17.143681+00:00",
+  "checkpoint_inputs": [
+    {
+      "id": "sim_m0_original10k",
+      "kind": "sim",
+      "ancestor": "procedural_world_dataset_r2_vehicle0",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/formal_r3_10k/checkpoint_events/iteration_010000.json"
+    },
+    {
+      "id": "sim_natural_hybrid8_10k",
+      "kind": "sim",
+      "ancestor": "procedural_world_dataset_r2_vehicle0",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/evidence_reconstruction_r1/formal_hybrid8_10k/checkpoint_events/iteration_010000.json"
+    },
+    {
+      "id": "real_first_scene_native30k",
+      "kind": "real",
+      "ancestor": "waymo_context_14705303724557273004_3105_000_3125_000",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/14705303724557273004_3105_000_3125_000/formal30k/checkpoint_events/iteration_030000.json"
+    }
+  ],
+  "cpu_threads": 1,
+  "cuda_visible_devices": "",
+  "training": false,
+  "rendering": false,
+  "candidate_scope_radius_world_m": 0.25,
+  "anchors": "first/middle/last original registered frames",
+  "maximum_groups": 3,
+  "choices": [
+    "keep",
+    "rebind"
+  ],
+  "defer": "query_layer_only",
+  "frozen_operations": [
+    "none",
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "eligibility_thresholds": {
+    "f_geom": null,
+    "f_view": null,
+    "f_bg": null,
+    "f_motion": null
+  },
+  "scientific_conclusion": "none_CPU_engineering_and_candidate_preparation_only",
+  "split_policy": "existing development only; original10k and hybrid8 same ancestor/split; real first scene no new transferable head training",
+  "failure_ledger_refs": [
+    "V82-F01"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}

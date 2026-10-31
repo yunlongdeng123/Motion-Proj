@@ -1,0 +1,104 @@
+{
+  "schema": "v43_r4_isolated_development_evaluation_v1",
+  "created_utc": "2026-10-31T14:52:58.803021+00:00",
+  "role": "preregistered_existing_development_feasibility_not_sealed_test",
+  "registered_cpu_run": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix",
+  "operations": [
+    "none",
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "scored_edit_operations": [
+    "delete",
+    "shift",
+    "rotate"
+  ],
+  "simulation_frames": [
+    "000000",
+    "000008",
+    "000015"
+  ],
+  "real_frames": [
+    "9001077",
+    "9001101",
+    "9001125"
+  ],
+  "frame_selection": "Inherited independent edit reference manifest contains keyframes0/8/15 before R4 scoring. These are all existing independent edit-GT anchors, not selected using candidate outcomes.",
+  "registered_frame_denominators": {
+    "sim_m0_original10k": 16,
+    "sim_natural_hybrid8_10k": 16,
+    "real_first_scene_native30k": 49
+  },
+  "evaluation_unit": "each reconstruction configuration separately; M0 and hybrid8 share one physical ancestor",
+  "route_contract": "one frozen route hash reused across every frame, camera and operation; q read only by executor",
+  "reference_root": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/sim_mechanism_20261030/dataset_r2/privileged",
+  "reference_role": "independent_existing_development_gt_isolated_scorer_only",
+  "reference_variant": {
+    "vehicle_shadow": true,
+    "RGB": "independent uint8 PNG decoded to [0,1]",
+    "geometry": "independent first-hit semantic used for evaluation ROI only; single controlled vehicle semantic10"
+  },
+  "reference_masks": {
+    "old_vacated": "original_body AND NOT edited_body",
+    "new_body": "edited_body; includes overlap with original body",
+    "keep": "NOT(original_body OR edited_body), all image pixels including environment/no-hit",
+    "none": "all original image pixels",
+    "validity": "zero-area ROIs are unavailable and are omitted from that per-frame target mean with denominators recorded; all expected frames/operations still mandatory"
+  },
+  "primary_target": {
+    "pixel_metric": "mean absolute RGB error after clipping prediction to [0,1]",
+    "normalization": "each nonempty old_vacated/new_body ROI separately over pixels and3channels; equal ROI weights; equal frame weights; equal delete/shift/rotate weights",
+    "none_role": "hard preservation constraint only, not a target gain",
+    "raw_metrics": "parallel unclipped RGB errors retained; no raw-range guarantee inferred"
+  },
+  "development_constraints": {
+    "keep_mae_increase_max": 0.005,
+    "keep_pixel_error_increase_threshold": 0.02,
+    "keep_fraction_above_increase_threshold_max": 0.01,
+    "none_raw_rgb_change_mae_max": 0.005,
+    "definitions": "At every anchor and edited q separately: keep MAE(h,GTq)-keep MAE(allkeep,GTq), and fraction of keep pixels whose mean-channel absolute-error increase exceeds0.02. At every anchor: raw-RGB mean absolute change of actual-route none versus actual allkeep none.",
+    "calibration_status": "explicit provisional development constraint, not calibrated deployment safety or sealed-test threshold",
+    "invalid_outputs": "missing expected row, mismatched frozen route/context, nonfinite arrays or compositor failure invalidate complete-domain oracle"
+  },
+  "constraint_sensitivity": {
+    "shared_tolerances": [
+      0.001,
+      0.005,
+      0.01
+    ],
+    "fixed_keep_pixel_error_increase_threshold": 0.02,
+    "fixed_keep_fraction_max": 0.01,
+    "selection": "descriptive only; do not replace primary0.005 according to outcomes"
+  },
+  "finite_gap": {
+    "requires": "all 2**len(groups) frozen routes and all3anchors x4operations valid in same native evaluation domain; at least one safe route; allkeep parity and actual modified-route none validated",
+    "definition": "J(route)-min_safe_shared_route J",
+    "unsafe_route": "gap unavailable; separate violations and unconstrained objective delta reported",
+    "name": "finite-domain decision gap under declared development constraints on3existingGTanchors",
+    "not_claimed": "global optimum; full16/49frame optimality; learned policy generalization"
+  },
+  "capability": {
+    "best_verified_shared_residual": "report J of same best safe shared route and its per-operation losses",
+    "completion_threshold": null,
+    "completion_bin": "C?; no calibrated task completion threshold",
+    "single_operation_optima": "optional posthoc diagnostic only; cannot splice route states across operations"
+  },
+  "real_scene": "No independent complete counterfactual edit GT. Report actual none preservation and output validity; D finite regret and C counterfactual residual unavailable. Require verified target-to-native-dynamic-row mapping before editing; no all-dynamic fallback.",
+  "eligibility": {
+    "formal_preedit_passed": null,
+    "f_geom": "unknown until legal full-scene contribution near measured-depth support is implemented",
+    "f_bg": "unknown until legal historical revealed-domain ray matching",
+    "other": "legal azimuth support and field consistency are proxies; do not fill formal P=1 from scorer GT"
+  },
+  "depth_and_temporal_metrics": "unavailable until explicit native-depth and correspondence contracts; not silently zero-filled",
+  "learning_boundary": {
+    "current": "two observed physical ancestors; only one procedural world has complete independent edited reference",
+    "allowed_small_check": "same-world held-out time/camera engineering signal check labeled G0, or fully transparent leave-configuration-out diagnostic; no cross-world claim",
+    "minimal_independent_expansion": "add at least two separately generated procedural world/asset ancestors for train and calibration alongside existing world as held-out development. Lock splits before reconstruction and action scoring; same renderer/sensors/checkpoint budget and frozen H0 recipe. This3-ancestor result is only a small feasibility check, no population-level generalization claim."
+  },
+  "no_new_training_in_this_contract": true,
+  "domain_id": "RGBA_maskfix_coarse_v1",
+  "parent_contract_sha256": "abbc7a80f6c7fd6c3e13497418114845bedfa6a3cd0f2ea3807d7f13636a7f62",
+  "engineering_amendment": "Correct RGBA alpha-ignoring body masks and corresponding CPUU; same metrics,3anchors,operations and development constraints; old invalid-U scores excluded from scientific inference."
+}

@@ -50,3 +50,5 @@
 | [V82-F04](entries/V82-F04.md) | 评价入口的GT与SSIM设备不一致 |
 | [V82-F05](entries/V82-F05.md) | R15逐块高斯阴影调度过碎且FP32求逆使遮挡依赖分块 |
 | [V82-F06](entries/V82-F06.md) | opacity reset后审计与有限候选使R15归属修正空转 |
+| [V82-F07](entries/V82-F07.md) | RGBA透明度被误判为车身前景 |
+| [V82-F08](entries/V82-F08.md) | 只读查询调用继承加载器时写回源坐标矩阵 |
