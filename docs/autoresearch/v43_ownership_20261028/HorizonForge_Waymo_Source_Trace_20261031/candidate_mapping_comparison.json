@@ -1,0 +1,216 @@
+{
+  "schema": "horizonforge_sorted_val_and_drivestudio_train_candidates_v1",
+  "scope": "eleven scene labels; each row has separate source-index and HorizonForge identity status",
+  "sorted_val_source": {
+    "path": "/root/autodl-tmp/waymo_val_list.txt",
+    "sha256": "75a40c570237985b0a1ac6c33923141c4faae8bde80359731e562d8d64762919",
+    "context_entry_count": 202,
+    "ordering": "local sorted-val order; source inventory says file order was preserved, not re-sorted by this extraction",
+    "index_rule": "zero-based candidate index, source line = index+1",
+    "source_inventory": "horizon_waymo_inventory_20261031_r1/list_sources_and_mapping.json",
+    "public_origin_and_version": "not established by local file path alone"
+  },
+  "drivestudio_source": {
+    "commit": "e59bda4fa681f829dbb1d65f0de582b0f633c450",
+    "entry_count": 798,
+    "index_rule": "official documented and implemented zero-based train-list indexing",
+    "source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/docs/Waymo.md"
+  },
+  "status_counts": {
+    "sorted_val_first_frame_verified": 11,
+    "sorted_val_with_four_temporal_anchors": 1,
+    "remaining_unverified_in_this_11": 0
+  },
+  "verified_scene035": {
+    "context_id": "13299463771883949918_4240_000_4260_000",
+    "evidence_file": "visual_verification/matching_metrics.json",
+    "pixel_match_scope": "two corresponding original front-camera frames, 0 and 89; direct resize, no crop",
+    "metrics": [
+      {
+        "query_frame": 0,
+        "raw_frame": 0,
+        "mae_rgb_0_255": 2.6430604457855225,
+        "ssim_gray": 0.9625864842904737,
+        "ncc_gray": 0.9988581395163773,
+        "ransac_inliers": 1907,
+        "ransac_inlier_fraction": 0.9953027139874739,
+        "ransac_median_reprojection_px": 0.012887310236692429
+      },
+      {
+        "query_frame": 89,
+        "raw_frame": 89,
+        "mae_rgb_0_255": 3.1200478076934814,
+        "ssim_gray": 0.9399555098299349,
+        "ncc_gray": 0.9980737312037787,
+        "ransac_inliers": 1716,
+        "ransac_inlier_fraction": 0.9924812030075187,
+        "ransac_median_reprojection_px": 0.034542717039585114
+      }
+    ],
+    "full_sequence_verification": "in_progress_not_included_here"
+  },
+  "rows": [
+    {
+      "scene_number": "004",
+      "index_zero_based": 4,
+      "source_line_one_based": 5,
+      "sorted_val_context_id": "10335539493577748957_1372_870_1392_870",
+      "sorted_val_tfrecord": "segment-10335539493577748957_1372_870_1392_870_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "10072140764565668044_4060_000_4080_000",
+      "drivestudio_train_tfrecord": "segment-10072140764565668044_4060_000_4080_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L5"
+    },
+    {
+      "scene_number": "020",
+      "index_zero_based": 20,
+      "source_line_one_based": 21,
+      "sorted_val_context_id": "11660186733224028707_420_000_440_000",
+      "sorted_val_tfrecord": "segment-11660186733224028707_420_000_440_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "10327752107000040525_1120_000_1140_000",
+      "drivestudio_train_tfrecord": "segment-10327752107000040525_1120_000_1140_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L21"
+    },
+    {
+      "scene_number": "029",
+      "index_zero_based": 29,
+      "source_line_one_based": 30,
+      "sorted_val_context_id": "12820461091157089924_5202_916_5222_916",
+      "sorted_val_tfrecord": "segment-12820461091157089924_5202_916_5222_916_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "10526338824408452410_5714_660_5734_660",
+      "drivestudio_train_tfrecord": "segment-10526338824408452410_5714_660_5734_660_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L30"
+    },
+    {
+      "scene_number": "035",
+      "index_zero_based": 35,
+      "source_line_one_based": 36,
+      "sorted_val_context_id": "13299463771883949918_4240_000_4260_000",
+      "sorted_val_tfrecord": "segment-13299463771883949918_4240_000_4260_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "10664823084372323928_4360_000_4380_000",
+      "drivestudio_train_tfrecord": "segment-10664823084372323928_4360_000_4380_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L36"
+    },
+    {
+      "scene_number": "065",
+      "index_zero_based": 65,
+      "source_line_one_based": 66,
+      "sorted_val_context_id": "15021599536622641101_556_150_576_150",
+      "sorted_val_tfrecord": "segment-15021599536622641101_556_150_576_150_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "11252086830380107152_1540_000_1560_000",
+      "drivestudio_train_tfrecord": "segment-11252086830380107152_1540_000_1560_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L66"
+    },
+    {
+      "scene_number": "067",
+      "index_zero_based": 67,
+      "source_line_one_based": 68,
+      "sorted_val_context_id": "1505698981571943321_1186_773_1206_773",
+      "sorted_val_tfrecord": "segment-1505698981571943321_1186_773_1206_773_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "11343624116265195592_5910_530_5930_530",
+      "drivestudio_train_tfrecord": "segment-11343624116265195592_5910_530_5930_530_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L68"
+    },
+    {
+      "scene_number": "079",
+      "index_zero_based": 79,
+      "source_line_one_based": 80,
+      "sorted_val_context_id": "16229547658178627464_380_000_400_000",
+      "sorted_val_tfrecord": "segment-16229547658178627464_380_000_400_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "11674150664140226235_680_000_700_000",
+      "drivestudio_train_tfrecord": "segment-11674150664140226235_680_000_700_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L80"
+    },
+    {
+      "scene_number": "081",
+      "index_zero_based": 81,
+      "source_line_one_based": 82,
+      "sorted_val_context_id": "16767575238225610271_5185_000_5205_000",
+      "sorted_val_tfrecord": "segment-16767575238225610271_5185_000_5205_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "1172406780360799916_1660_000_1680_000",
+      "drivestudio_train_tfrecord": "segment-1172406780360799916_1660_000_1680_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L82"
+    },
+    {
+      "scene_number": "086",
+      "index_zero_based": 86,
+      "source_line_one_based": 87,
+      "sorted_val_context_id": "17152649515605309595_3440_000_3460_000",
+      "sorted_val_tfrecord": "segment-17152649515605309595_3440_000_3460_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "1191788760630624072_3880_000_3900_000",
+      "drivestudio_train_tfrecord": "segment-1191788760630624072_3880_000_3900_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L87"
+    },
+    {
+      "scene_number": "113",
+      "index_zero_based": 113,
+      "source_line_one_based": 114,
+      "sorted_val_context_id": "2506799708748258165_6455_000_6475_000",
+      "sorted_val_tfrecord": "segment-2506799708748258165_6455_000_6475_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "12473470522729755785_4000_000_4020_000",
+      "drivestudio_train_tfrecord": "segment-12473470522729755785_4000_000_4020_000_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L114"
+    },
+    {
+      "scene_number": "140",
+      "index_zero_based": 140,
+      "source_line_one_based": 141,
+      "sorted_val_context_id": "4575389405178805994_4900_000_4920_000",
+      "sorted_val_tfrecord": "segment-4575389405178805994_4900_000_4920_000_with_camera_labels.tfrecord",
+      "sorted_val_horizonforge_status": "pixel_verified_original_FRONT_frame0",
+      "sorted_val_evidence": "visual_verification/final_all11/scene_context_mapping.json",
+      "drivestudio_train_context_id": "13142190313715360621_3888_090_3908_090",
+      "drivestudio_train_tfrecord": "segment-13142190313715360621_3888_090_3908_090_with_camera_labels.tfrecord",
+      "drivestudio_train_index_mapping_status": "confirmed_official_DriveStudio_mapping",
+      "drivestudio_train_horizonforge_status": "not_the_verified_HorizonForge_context",
+      "drivestudio_train_source_url": "https://github.com/ziyc/drivestudio/blob/e59bda4fa681f829dbb1d65f0de582b0f633c450/data/waymo_train_list.txt#L141"
+    }
+  ],
+  "limitations": [
+    "One confirmed scene does not establish the index convention for all eleven HorizonForge labels.",
+    "Sorted-val contexts for the remaining ten scenes require individual original-video/context verification.",
+    "DriveStudio source-index mappings are official, but do not establish HorizonForge identity; its scene035 candidate is contradicted by the verified context.",
+    "No independent official HorizonForge context manifest or author-confirmed common numbering rule has been found.",
+    "Status is a two-frame verification snapshot; later full-sequence or additional-scene evidence should update per-row identity states explicitly."
+  ],
+  "current_evidence": "scene_source_registry.json"
+}

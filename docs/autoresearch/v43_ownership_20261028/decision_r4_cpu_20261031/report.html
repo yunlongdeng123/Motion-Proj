@@ -24,8 +24,9 @@
 <p>场景 1 的高级设置新增折叠的“本轮候选点”：参考帧 raw101，来源组三组分别 1,013 / 1,596 / 94 行，共 2,703 行，显示其中 99 个均匀采样点。只读预览使用原生 30K 同一静态行空间；100 个历史原行坐标核对误差为 0，没有将候选点标成编辑结果或身份真值。</p>
 <p>五页本地静态引用、必需控件和 ID 检查通过，共享脚本语法检查通过。浏览器工具因安全策略阻止本地 <code>file://</code> 打开，未进行浏览器交互验收，也未改用替代浏览器或本地服务绕过。</p>
 <p><a href="workbench_cleanup/static_qa.json">页面检查记录</a> · <a href="workbench_cleanup/workbench_cleanup_patch.zip">小型页面补丁包</a> · <a href="workbench_cleanup/AGENTS.md">平台维护规则</a></p></section>
-<section class="panel"><h2>HorizonForge 场景来源核查</h2><p>用户提供的压缩包共 148 个文件，包含 128 个 MP4、32 个编辑演示案例；没有相机标定、轨迹数值、原始传感器数据或三维检查点文件。核查时<a href="https://horizonforge.github.io/">官方项目页</a>仍显示代码稍后开放，没有提供场景包下载链接。该页面未给链接不代表其他位置绝无资源。</p>
-<p>本轮不把生成视频当作可编辑场景或独立编辑真值，不重复下载。后续若要加入这些场景，须先获取原始场景标识、合法 RGB / 相机 / 轨迹 / LiDAR 与重建来源，再按新祖先登记。<a href="evidence/horizonforge_source_check.json">压缩包与官方来源检查</a></p></section>
+<section class="panel"><h2>HorizonForge 场景来源核查（已补充追踪）</h2><p>用户提供的压缩包共 148 个文件，包含 128 个 MP4、32 个演示任务。虽然包内没有直接可用的三维输入，论文 §3.3 / §3.5 与网页脚本已经明确指出 Waymo 来源，并给出 11 个可追踪的场景编号。上一轮仅凭缺少原始数据便停止追查，范围不足。</p>
+<p>后续已将全部 11 个演示编号通过实际 FRONT 图像匹配到具体 Waymo validation context；035 额外核对了四个时间锚点。库存已有 035 完整原始记录；其余十场仅新读首条记录确认身份，合计 57.318 MiB，尚未完整下载。未定位到这 11 场的完整标准预处理缓存或高斯检查点，来源确认不代表具备 R4 编辑能力。</p>
+<p><a href="../HorizonForge_Waymo_Source_Trace_20261031/report.html">11 场景来源、库存与下载清单报告</a> · <a href="evidence/horizonforge_source_check.json">已修正的来源检查记录</a></p></section>
 <section class="panel"><h2>下一步的明确入口</h2><ol><li>在真实 GPU 环境完成原生恢复、FP32 合成、原检查点直通与实际修改共享绑定两种 none，核对相机、运动和环境恢复。</li><li>在开发 / 校准分区落实完整场景贡献、目标新视向与历史背景支持，锁定资格阈值、保持域硬约束和联合操作权重。</li><li>对冻结小域方案逐个运行全部登记操作，保存浮点输出和有效区域分母；只有安全候选完整评价后才计算有限域决策差距。当前 loss、constraint、D/C 结果均为空，human_verdict=null。</li><li>在多个独立祖先上证明合法证据含有稳定动作排序信号后，再做轻量学习和训练范式比较。任何小时级训练先完成约 10 分钟真实保存、评价、完整恢复及下一阶段入口 smoke，额外开销单列。</li></ol>
 <p>本轮完成 CPU 入口与候选准备；没有运行新增训练或宣布编辑成功。CPU 模式实例保持开启。</p></section>
 </main></body></html>

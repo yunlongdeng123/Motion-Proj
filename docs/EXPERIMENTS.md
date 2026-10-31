@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| WS-V43-HF-SOURCE-TRACE-20261031 / source-r1 | 11/11 展示场景原始首帧→具体 validation context，035 四锚时序；121 对比较、50 完整 raw 库存盘点、10 首记录共 57.318 MiB；未训练/重建 | [来源与库存报告](autoresearch/v43_ownership_20261028/HorizonForge_Waymo_Source_Trace_20261031/report.html) |
 | WS-V43-R4-CPU-20261031 / run_r1 | 3 配置 / 2 已有祖先 / 12 任务；合法 LiDAR 邻域候选、三组八方案共享动作域与 CPU 完整输入合同；13 检查通过，资格全 unknown、原生渲染/训练 0；共享平台单独治理 | [报告与组件图](autoresearch/v43_ownership_20261028/decision_r4_cpu_20261031/report.html) |
 | WS-V43-EDITABLE-OWNERSHIP-20261030 / probe-anchors-r1 + child-refit-r2 | 49帧证据审计、3锚帧after贡献与空间支撑、7父14子保留双侧及200步短拟合；编辑后分离未改善，分类器/原模型训练0 | [报告与组件图](autoresearch/v43_ownership_20261028/editable_ownership_20261030/index.html)、[设计](autoresearch/v43_ownership_20261028/editable_ownership_20261030/V43_DESIGN.md) |
 | WS-V43-UNKNOWN-WHITE-20261030 / native-color-r1 | 场景1六组204帧unknown白材质原生对照；原参数/几何保持，完整float审计和24次真实Canvas切换通过，训练0 | [报告与组件图](autoresearch/v43_ownership_20261028/unknown_white_20261030/index.html) |

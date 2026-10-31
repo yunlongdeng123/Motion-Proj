@@ -53,7 +53,11 @@
   "raw_scene_or_checkpoint_files": [],
   "official_project": "https://horizonforge.github.io/",
   "official_page_observation": "Code · Check back later; no code or raw scene download link shown on the checked project page.",
-  "decision": "Not added to the R4 three-dimensional candidate queue. The supplied archive provides video demonstrations, not calibrated sensor observations or an editable Gaussian checkpoint.",
-  "future_requirement": "Acquire original scene identifiers, RGB/camera calibration/poses/tracks/LiDAR and reconstruction provenance, then register separate scene ancestors before use.",
-  "inference_boundary": "Absence of a download link on the checked project page does not prove the assets are unavailable elsewhere."
+  "decision": "The archive itself lacks raw three-dimensional inputs, but its 11 demo scenes are now traced by original RGB to exact Waymo validation contexts. One complete raw context (035) exists locally; ten others have verified first records and an exact download manifest.",
+  "future_requirement": "Reuse existing full scene035 for standard camera/pose/LiDAR/annotation preprocessing, then freeze legal inputs before reconstruction; use the verified registry to select any additional complete scenes.",
+  "inference_boundary": "No R4 rendering, Gaussian capability, eligibility or edit-ground-truth claim follows from source matching.",
+  "assessment_revision": "Source follow-up completed; original archive-only assessment was insufficient as a stopping rationale.",
+  "source_origin": "Waymo; paper sections3.3/3.5 and local gallery JS explicitly identify it.",
+  "verified_demo_context_count": 11,
+  "source_trace_report": "../../HorizonForge_Waymo_Source_Trace_20261031/report.html"
 }

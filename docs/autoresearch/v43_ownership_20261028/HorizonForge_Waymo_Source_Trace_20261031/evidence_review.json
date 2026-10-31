@@ -1,0 +1,174 @@
+{
+  "schema": "horizonforge_source_evidence_independent_review_v1",
+  "status": "PASS_SOURCE_CONTEXT_MAPPING_WITH_EXPLICIT_SCOPE",
+  "inputs_reviewed": [
+    "range_sorted_val.py",
+    "range_sorted_val_extend.py",
+    "masked CRC32C implementation in original waymo_numpy_cpu.py",
+    "matching/cross_candidates.py",
+    "matching/dense_035.py",
+    "11 scene_context_mapping rows and 121 cross comparisons",
+    "10 first-record source receipts and final network receipt",
+    "035 original-source manifest and four-anchor dense matching",
+    "sorted_val_source_coverage.json"
+  ],
+  "verified_facts": {
+    "scene_context_mappings": 11,
+    "first_frame_pixel_matches": 11,
+    "cross_candidate_comparisons": 121,
+    "additional_035_temporal_anchors": [
+      0,
+      30,
+      60,
+      89
+    ],
+    "source035_records_decoded_for_search": 198,
+    "new_range_contexts": 10,
+    "new_range_requests": 20,
+    "new_range_http_payload_bytes": 60103165,
+    "new_range_http_payload_mib": 57.31884479522705,
+    "new_range_budget_bytes": 83886080,
+    "new_full_segments_downloaded": 0,
+    "preexisting_full_raw_contexts_located": [
+      "13299463771883949918_4240_000_4260_000"
+    ],
+    "confirmed_context_prepared_cache_roots_located": 0,
+    "confirmed_context_GS_checkpoints_located": 0
+  },
+  "independent_checks": [
+    "Recomputed all eleven corresponding first-frame MAE, SSIM and NCC from saved original JPEGs and source query PNGs; values agree with table.",
+    "Verified each query PNG equals its decoded original video first frame, and matching candidate JPEG hashes equal the provenance JPEG files.",
+    "Recomputed matrix ranking and runner-up SSIM gaps; every scene has its corresponding sorted-val candidate as unique highest-SSIM entry.",
+    "Verified all table context IDs against the sorted-val inventory and decoded-protobuf source receipts.",
+    "Reconciled all twenty HTTP Range receipts, byte intervals, response206, Content-Range totals and cumulative reserved/read accounting.",
+    "Audited correct masked CRC32C formula and its known-vector validation; no new network requests or raw-record decoding were performed during this review.",
+    "Checked source035 dense manifest context consistency/record CRC receipts and four best temporal-anchor correspondences.",
+    "Checked separate full-raw, first-record-only, prepared-component and checkpoint inventory meanings."
+  ],
+  "per_scene": [
+    {
+      "scene": "004",
+      "context_id": "10335539493577748957_1372_870_1392_870",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 4.363849639892578,
+      "frame0_ssim": 0.9211946035439227,
+      "frame0_ncc": 0.9903812750654245,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "020",
+      "context_id": "11660186733224028707_420_000_440_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 4.1104960441589355,
+      "frame0_ssim": 0.9376984381013842,
+      "frame0_ncc": 0.9950497824676723,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "029",
+      "context_id": "12820461091157089924_5202_916_5222_916",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 2.1669816970825195,
+      "frame0_ssim": 0.97077437384229,
+      "frame0_ncc": 0.9992103772797676,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "035",
+      "context_id": "13299463771883949918_4240_000_4260_000",
+      "source_kind": "preexisting_full_raw_located; source_four_anchor_comparison",
+      "frame0_mae_rgb_0_255": 2.6430604457855225,
+      "frame0_ssim": 0.9625864842904737,
+      "frame0_ncc": 0.9988580697371001,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "065",
+      "context_id": "15021599536622641101_556_150_576_150",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 2.144855260848999,
+      "frame0_ssim": 0.974602190078978,
+      "frame0_ncc": 0.997688045390142,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "067",
+      "context_id": "1505698981571943321_1186_773_1206_773",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 1.9557969570159912,
+      "frame0_ssim": 0.9720567829804527,
+      "frame0_ncc": 0.9963693260852514,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "079",
+      "context_id": "16229547658178627464_380_000_400_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 2.487013816833496,
+      "frame0_ssim": 0.9650036786478361,
+      "frame0_ncc": 0.9987924500884885,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "081",
+      "context_id": "16767575238225610271_5185_000_5205_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 2.0485026836395264,
+      "frame0_ssim": 0.9714313054525651,
+      "frame0_ncc": 0.9994222977550815,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "086",
+      "context_id": "17152649515605309595_3440_000_3460_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 2.639897108078003,
+      "frame0_ssim": 0.9626749882565834,
+      "frame0_ncc": 0.9988866671405322,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "113",
+      "context_id": "2506799708748258165_6455_000_6475_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 1.5809085369110107,
+      "frame0_ssim": 0.9793784431873622,
+      "frame0_ncc": 0.9977372604164817,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    },
+    {
+      "scene": "140",
+      "context_id": "4575389405178805994_4900_000_4920_000",
+      "source_kind": "new_range_first_record_only",
+      "frame0_mae_rgb_0_255": 3.0415701866149902,
+      "frame0_ssim": 0.9787668709861607,
+      "frame0_ncc": 0.9990334696365625,
+      "query_png_equals_decoded_video_first_frame": true,
+      "candidate_jpeg_equals_provenance_jpeg_sha256": true
+    }
+  ],
+  "limitations": [
+    "This verifies source context identity for the displayed original footage; it is not an author-released HorizonForge context manifest.",
+    "Only the first corresponding frame was matched for ten scenes. Scene035 additionally has four temporal anchors; none of this establishes frame-by-frame agreement for every video.",
+    "The ten partial sources are first TFRecord records from a pinned third-party public Waymo mirror. No full remote object was downloaded, and no complete-file publisher hash was verified.",
+    "Record CRC32C checks integrity of received records, not publisher authenticity. First-record payload bytes were not retained for independent re-computation here; CRC evidence is audited code plus saved execution receipts.",
+    "035 full raw was already located in inspected storage; its full-file SHA256 was not recomputed by this review.",
+    "Prepared RGB/camera/pose/LiDAR and GS checkpoint absence means not located in the documented inspected roots, not proof of absence everywhere. Extracted preview JPEGs are not prepared training caches.",
+    "The 49-frame train029 processed alias belongs to a rejected alternative context and must not be counted as confirmed HorizonForge029 input coverage.",
+    "No conclusions are made about the full109 HorizonSuite tasks, edit quality, learned decisions or GPU readiness. HTTP payload accounting excludes protocol overhead and previous unrelated downloads."
+  ],
+  "report_requirements": [
+    "Keep full-raw location, new first-record-only retrieval, prepared-component cache availability and GS checkpoint availability as distinct table fields or clearly labeled component tables.",
+    "Replace or label earlier candidate-only snapshots so final verified mapping is unambiguous."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "langtraj_chatsim_numbering_trace_v1",
+  "result": "no_new_confirmed_HorizonForge_context_mapping",
+  "scopes_checked": [
+    "HorizonForge arXiv v1 section 3.5 and reference 8",
+    "LangTraj official website and complete official GitHub tree at f7e452411998f15f47562028b256d18c940f126e",
+    "Inter-Drive official Hugging Face tree and one small example JSON at ab8563a0eddc8062a4f119daaa84a83ced42fa9c",
+    "ChatSim official README, complete config/data_utils path inventory, static32 scene list, download script and preprocessing scripts at 204c9728f880060868a63481a5abcbc488b5ff75"
+  ],
+  "facts": [
+    "HorizonForge reference 8 identifies LangTraj by Chang et al., arXiv:2504.11521.",
+    "Official LangTraj code repository currently contains only README.md and DATASET.md; no inference/scene-index conversion source exists in inspected tree.",
+    "Inter-Drive uses WOMD v1.2 scenario IDs of sixteen hexadecimal characters as JSON filenames; released example JSON stores agent track IDs and interaction descriptions, not Perception segment/context IDs.",
+    "Official Inter-Drive release tree contains fifteen annotation JSON examples under val_interactive plus README and gitattributes.",
+    "ChatSim uses complete segment basenames as source/output scene names. process_waymo.py lines 94-98 strips file extension/prefix through segment and retains full segment name.",
+    "ChatSim static32 list has explicit segment names; download script tries each exact name in both v1.4.2 training and validation buckets. No 004..140 ordinal contract is defined.",
+    "No official evidence found in this bounded search that LangTraj inherits ChatSim numbering or that HorizonSuite labels are derived from ChatSim list positions."
+  ],
+  "sources": [
+    "https://arxiv.org/html/2602.21333v1#S3.SS5",
+    "https://langtraj.github.io/",
+    "https://github.com/jxmmy7777/langtraj/tree/f7e452411998f15f47562028b256d18c940f126e",
+    "https://github.com/jxmmy7777/langtraj/blob/f7e452411998f15f47562028b256d18c940f126e/DATASET.md",
+    "https://huggingface.co/datasets/wjchang/inter-drive/tree/ab8563a0eddc8062a4f119daaa84a83ced42fa9c",
+    "https://github.com/yifanlu0227/ChatSim/blob/204c9728f880060868a63481a5abcbc488b5ff75/data_utils/waymo_static_32.lst",
+    "https://github.com/yifanlu0227/ChatSim/blob/204c9728f880060868a63481a5abcbc488b5ff75/data_utils/download_waymo.sh",
+    "https://github.com/yifanlu0227/ChatSim/blob/204c9728f880060868a63481a5abcbc488b5ff75/data_utils/process_waymo.py#L94"
+  ],
+  "chatsim_set_overlap_with_prior_drivestudio_candidates": [
+    {
+      "horizonforge_scene_id": "081",
+      "candidate_context": "1172406780360799916_1660_000_1680_000",
+      "meaning": "public ChatSim scene-set overlap only; does not confirm HorizonForge numbering"
+    },
+    {
+      "horizonforge_scene_id": "140",
+      "candidate_context": "13142190313715360621_3888_090_3908_090",
+      "meaning": "public ChatSim scene-set overlap only; does not confirm HorizonForge numbering"
+    }
+  ],
+  "stopping_point": "Official LangTraj tree has no executable conversion or numbering manifest; official Inter-Drive example release has no scenario-to-Perception crosswalk; ChatSim retains full segment names. Further numbered hypotheses would be unsupported, so no broader search or media/raw-data download was performed.",
+  "evidence_grade": "A for observed official file formats/naming; unavailable for a HorizonForge-to-context join"
+}
