@@ -11,7 +11,7 @@ flowchart LR
   M --> G[有效域与禁用标签门禁]
 ```
 
-脚本含本次AutoDL物理路径，原始bundle、完整FP32与inference_state保留在 `/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1`。它们是as-run复现入口，迁移环境须显式适配ROOT和来源路径。不要同时启动多个历史控制器；后期队列全局最多2个GPU进程。历史多控制器重叠造成一次OOM，失败及精确恢复分别记账。
+脚本含本次AutoDL物理路径，原始输入引用见合同，当前产物保留范围见[清理记录](../../../../../docs/autoresearch/v43_ownership_20261028/fivecase_gpu_20261101/cleanup_20261101.json)。它们是as-run复现入口，迁移环境须显式适配ROOT和来源路径。不要同时启动多个历史控制器；后期队列全局最多2个GPU进程。历史多控制器重叠造成一次OOM，失败及精确恢复分别记账。
 
 主要顺序：`collect_inputs.py` 导出已存在传感器观测；`prepare_five.py` 使用motionproj CPU环境冻结初始域；`run_five.py` 在drivingeditor环境实际audit/smoke/enumerate/sequence；`prepare_fullsource.py` 根据实际原生来源贡献冻结完整来源域。`mechanism_gpu.py`/`mechanisms_real.py` 执行真实机制证据核对，`sim_factor_controls.py` 是独立E1控制，不能混入主要H0方法或维修结果。`summarize_five.py`与交付脚本只读浮点结果，不选择事后最优路由。
 
