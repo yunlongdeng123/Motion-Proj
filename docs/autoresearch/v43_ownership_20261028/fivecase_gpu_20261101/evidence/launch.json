@@ -1,0 +1,23 @@
+{
+  "task_id": "WS-V43-R4-FIVECASE-GPU-20261101-R1",
+  "cases": [
+    "waymo-train-008_a37",
+    "waymo-train-212_a0",
+    "waymo-train-212_a35",
+    "waymo-train-564_a0",
+    "waymo-train-564_a22"
+  ],
+  "bootstrap_pid": 1620,
+  "bootstrap_kind": "existing212 frozen-bundle native CUDA restore and saved-inference-state smoke, extra engineering cost",
+  "command": [
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/v43_ownership_20261028/v43_decision_r4/native_shared_route.py",
+    "--cpu-scene-dir",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/v43_decision_r4_cpu_20261031/run_r2_maskfix/real_first_scene_native30k",
+    "--output",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/bootstrap212_smoke",
+    "--phase",
+    "smoke"
+  ],
+  "new_training_updates": 0
+}

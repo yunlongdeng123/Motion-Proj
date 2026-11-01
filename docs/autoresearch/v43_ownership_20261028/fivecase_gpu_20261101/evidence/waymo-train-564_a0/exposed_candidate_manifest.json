@@ -1,0 +1,59 @@
+{
+  "schema": "r4_frozen_group_candidates_v1",
+  "scene_id": "waymo-train-564_a0",
+  "scene_ancestor": "waymo_context_473735159277431842_630_095_650_095",
+  "target_id": "actor_0",
+  "checkpoint_static_sha256": "d961f2316b73a287c8f14e7100fa4d555ed93f597fe6e298f17b7edc045cf25e",
+  "row_namespace": "d961f2316b73a287c8f14e7100fa4d555ed93f597fe6e298f17b7edc045cf25e:static_original_row",
+  "static_row_count": 1218622,
+  "legal_input_role": "reviewed_measured_real_observations",
+  "legal_input_role_detail": "annotated track + fixed provisional DEVA mask + decoded measured OBB returns",
+  "scope_rule": {
+    "radius_world_m": 0.25,
+    "anchors": [
+      "9003013",
+      "9003037",
+      "9003061"
+    ],
+    "selected_before_edit": true,
+    "first_anchor_disjoint_grouping": true,
+    "max_groups": 3,
+    "radius_role": "predeclared_local_candidate_scope_not_calibrated_eligibility_threshold",
+    "positions": "native_static_SHM_at_anchor_using_original_cycle_and_velocity",
+    "lifetime": "record_effective_opacity_no_identity_or_coverage_veto",
+    "untouched_fields": "all stored geometry covariance SH opacity lifetime velocity counts environment"
+  },
+  "groups": [],
+  "anchor_denominators": [
+    {
+      "frame_id": "9003013",
+      "measured_target_return_denominator": 811,
+      "first_hit_group_rows": 11919,
+      "original_static_row_denominator": 1218622,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    },
+    {
+      "frame_id": "9003037",
+      "measured_target_return_denominator": 390,
+      "first_hit_group_rows": 1283,
+      "original_static_row_denominator": 1218622,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    },
+    {
+      "frame_id": "9003061",
+      "measured_target_return_denominator": 269,
+      "first_hit_group_rows": 27,
+      "original_static_row_denominator": 1218622,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    }
+  ],
+  "limitations": [
+    "neighbourhood candidates are not verified ownership or physical Gaussian GT",
+    "candidate support is not native composited contribution/representation coverage",
+    "all other rows fixed; 2^groups domain not full row-level or global domain"
+  ],
+  "source_feature_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/gpu_exposed/waymo-train-564_a0/source_peel49/pre_feature_contract.json"
+}

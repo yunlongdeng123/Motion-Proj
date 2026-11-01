@@ -1,0 +1,1025 @@
+{
+  "rows": [
+    {
+      "case": "waymo-train-008_a37",
+      "category": 4,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "原始none的稀疏目标深度与原生平均深度逐帧对照；不是首交面、完整形状或几何因果鉴定",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "深度不一致/无可信深度的车体区不能作为归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 5,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "在平均深度近似一致的观测像素另记RGB误差；仍可能有光照、反射、遮挡与SH外观影响",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "颜色残差不能单独生成错误归属或换绑定能修色的标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 6,
+      "check_state": "projective_conflict_checked_physical_cause_unresolved",
+      "checks_actually_executed": "实际原生伴随证明有行同时影响车身与其外域；未证明两独立物理表面",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "跨域行及其影响区保持歧义，不能从二元带走/留下失效断言选择器选错",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 7,
+      "check_state": "not_causally_tested",
+      "checks_actually_executed": "未完成真实阴影/反射来源识别，也无物理受控光照验证",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "车身外暗影/反射待核包围域不生成漏删车身标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 8,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "实际跨时地面实测点、注册车辆盒射线遮挡与稀疏历史见证；非稠密道路或辐射真值",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "无经核实历史见证的显露区禁用于正确/错误删车奖励；有地面代理见证也未获完整RGB监督",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 9,
+      "check_state": "components_numerically_separated_semantics_unresolved",
+      "checks_actually_executed": "三维C_G、环境E、透射fill逐项拆开并核对合成；未自动鉴别车形语义",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "环境填充造成的差异不算归属错误；点贡献内的残留仍需进一步辨因",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 11,
+      "check_state": "view_support_checked_surface_completeness_unresolved",
+      "checks_actually_executed": "实际49帧观察方向与请求方向距离已测；无完整新面的独立证据",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "旋转/平移新显露面无可靠支持时，不把缺面/外观错误用于归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-008_a37",
+      "category": 12,
+      "check_state": "technical_execution_checked_binding_correctness_in_scope",
+      "checks_actually_executed": "实际样本行的跨帧/跨操作变换、删除及上下文保留核对；未证明登记身份本身正确",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "只有坐标/时间接线无效才作工程排除；同批点跟错车辆仍属本轮核心责任，不能免责",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-008_a37/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 4,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "原始none的稀疏目标深度与原生平均深度逐帧对照；不是首交面、完整形状或几何因果鉴定",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "深度不一致/无可信深度的车体区不能作为归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 5,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "在平均深度近似一致的观测像素另记RGB误差；仍可能有光照、反射、遮挡与SH外观影响",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "颜色残差不能单独生成错误归属或换绑定能修色的标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 6,
+      "check_state": "projective_conflict_checked_physical_cause_unresolved",
+      "checks_actually_executed": "实际原生伴随证明有行同时影响车身与其外域；未证明两独立物理表面",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "跨域行及其影响区保持歧义，不能从二元带走/留下失效断言选择器选错",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 7,
+      "check_state": "not_causally_tested",
+      "checks_actually_executed": "未完成真实阴影/反射来源识别，也无物理受控光照验证",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "车身外暗影/反射待核包围域不生成漏删车身标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 8,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "实际跨时地面实测点、注册车辆盒射线遮挡与稀疏历史见证；非稠密道路或辐射真值",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "无经核实历史见证的显露区禁用于正确/错误删车奖励；有地面代理见证也未获完整RGB监督",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 9,
+      "check_state": "components_numerically_separated_semantics_unresolved",
+      "checks_actually_executed": "三维C_G、环境E、透射fill逐项拆开并核对合成；未自动鉴别车形语义",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "环境填充造成的差异不算归属错误；点贡献内的残留仍需进一步辨因",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 11,
+      "check_state": "view_support_checked_surface_completeness_unresolved",
+      "checks_actually_executed": "实际49帧观察方向与请求方向距离已测；无完整新面的独立证据",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "旋转/平移新显露面无可靠支持时，不把缺面/外观错误用于归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "category": 12,
+      "check_state": "technical_execution_checked_binding_correctness_in_scope",
+      "checks_actually_executed": "实际样本行的跨帧/跨操作变换、删除及上下文保留核对；未证明登记身份本身正确",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "只有坐标/时间接线无效才作工程排除；同批点跟错车辆仍属本轮核心责任，不能免责",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 4,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "原始none的稀疏目标深度与原生平均深度逐帧对照；不是首交面、完整形状或几何因果鉴定",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "深度不一致/无可信深度的车体区不能作为归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 5,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "在平均深度近似一致的观测像素另记RGB误差；仍可能有光照、反射、遮挡与SH外观影响",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "颜色残差不能单独生成错误归属或换绑定能修色的标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 6,
+      "check_state": "projective_conflict_checked_physical_cause_unresolved",
+      "checks_actually_executed": "实际原生伴随证明有行同时影响车身与其外域；未证明两独立物理表面",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "跨域行及其影响区保持歧义，不能从二元带走/留下失效断言选择器选错",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 7,
+      "check_state": "not_causally_tested",
+      "checks_actually_executed": "未完成真实阴影/反射来源识别，也无物理受控光照验证",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "车身外暗影/反射待核包围域不生成漏删车身标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 8,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "实际跨时地面实测点、注册车辆盒射线遮挡与稀疏历史见证；非稠密道路或辐射真值",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "无经核实历史见证的显露区禁用于正确/错误删车奖励；有地面代理见证也未获完整RGB监督",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 9,
+      "check_state": "components_numerically_separated_semantics_unresolved",
+      "checks_actually_executed": "三维C_G、环境E、透射fill逐项拆开并核对合成；未自动鉴别车形语义",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "环境填充造成的差异不算归属错误；点贡献内的残留仍需进一步辨因",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 11,
+      "check_state": "view_support_checked_surface_completeness_unresolved",
+      "checks_actually_executed": "实际49帧观察方向与请求方向距离已测；无完整新面的独立证据",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "旋转/平移新显露面无可靠支持时，不把缺面/外观错误用于归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "category": 12,
+      "check_state": "technical_execution_checked_binding_correctness_in_scope",
+      "checks_actually_executed": "实际样本行的跨帧/跨操作变换、删除及上下文保留核对；未证明登记身份本身正确",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "只有坐标/时间接线无效才作工程排除；同批点跟错车辆仍属本轮核心责任，不能免责",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-212_a35/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 4,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "原始none的稀疏目标深度与原生平均深度逐帧对照；不是首交面、完整形状或几何因果鉴定",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "深度不一致/无可信深度的车体区不能作为归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 5,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "在平均深度近似一致的观测像素另记RGB误差；仍可能有光照、反射、遮挡与SH外观影响",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "颜色残差不能单独生成错误归属或换绑定能修色的标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 6,
+      "check_state": "projective_conflict_checked_physical_cause_unresolved",
+      "checks_actually_executed": "实际原生伴随证明有行同时影响车身与其外域；未证明两独立物理表面",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "跨域行及其影响区保持歧义，不能从二元带走/留下失效断言选择器选错",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 7,
+      "check_state": "not_causally_tested",
+      "checks_actually_executed": "未完成真实阴影/反射来源识别，也无物理受控光照验证",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "车身外暗影/反射待核包围域不生成漏删车身标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 8,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "实际跨时地面实测点、注册车辆盒射线遮挡与稀疏历史见证；非稠密道路或辐射真值",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "无经核实历史见证的显露区禁用于正确/错误删车奖励；有地面代理见证也未获完整RGB监督",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 9,
+      "check_state": "components_numerically_separated_semantics_unresolved",
+      "checks_actually_executed": "三维C_G、环境E、透射fill逐项拆开并核对合成；未自动鉴别车形语义",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "环境填充造成的差异不算归属错误；点贡献内的残留仍需进一步辨因",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 11,
+      "check_state": "view_support_checked_surface_completeness_unresolved",
+      "checks_actually_executed": "实际49帧观察方向与请求方向距离已测；无完整新面的独立证据",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "旋转/平移新显露面无可靠支持时，不把缺面/外观错误用于归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "category": 12,
+      "check_state": "technical_execution_checked_binding_correctness_in_scope",
+      "checks_actually_executed": "实际样本行的跨帧/跨操作变换、删除及上下文保留核对；未证明登记身份本身正确",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "只有坐标/时间接线无效才作工程排除；同批点跟错车辆仍属本轮核心责任，不能免责",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a0/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 4,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "原始none的稀疏目标深度与原生平均深度逐帧对照；不是首交面、完整形状或几何因果鉴定",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "深度不一致/无可信深度的车体区不能作为归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 5,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "在平均深度近似一致的观测像素另记RGB误差；仍可能有光照、反射、遮挡与SH外观影响",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "颜色残差不能单独生成错误归属或换绑定能修色的标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 6,
+      "check_state": "projective_conflict_checked_physical_cause_unresolved",
+      "checks_actually_executed": "实际原生伴随证明有行同时影响车身与其外域；未证明两独立物理表面",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "跨域行及其影响区保持歧义，不能从二元带走/留下失效断言选择器选错",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 7,
+      "check_state": "not_causally_tested",
+      "checks_actually_executed": "未完成真实阴影/反射来源识别，也无物理受控光照验证",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "车身外暗影/反射待核包围域不生成漏删车身标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 8,
+      "check_state": "partially_checked",
+      "checks_actually_executed": "实际跨时地面实测点、注册车辆盒射线遮挡与稀疏历史见证；非稠密道路或辐射真值",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "无经核实历史见证的显露区禁用于正确/错误删车奖励；有地面代理见证也未获完整RGB监督",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 9,
+      "check_state": "components_numerically_separated_semantics_unresolved",
+      "checks_actually_executed": "三维C_G、环境E、透射fill逐项拆开并核对合成；未自动鉴别车形语义",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "环境填充造成的差异不算归属错误；点贡献内的残留仍需进一步辨因",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 11,
+      "check_state": "view_support_checked_surface_completeness_unresolved",
+      "checks_actually_executed": "实际49帧观察方向与请求方向距离已测；无完整新面的独立证据",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "旋转/平移新显露面无可靠支持时，不把缺面/外观错误用于归属好坏标签",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "category": 12,
+      "check_state": "technical_execution_checked_binding_correctness_in_scope",
+      "checks_actually_executed": "实际样本行的跨帧/跨操作变换、删除及上下文保留核对；未证明登记身份本身正确",
+      "unresolved": "见逐例原始证据与本类状态；不能把unknown记作已完成",
+      "excluded_from_ownership_judgement": "只有坐标/时间接线无效才作工程排除；同批点跟错车辆仍属本轮核心责任，不能免责",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/evidence.json",
+      "region_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/mechanisms_real/waymo-train-564_a22/regions",
+      "ownership_training_label_permission": false,
+      "repair_required_this_round": false
+    }
+  ],
+  "case_count": 5,
+  "category_count": 8,
+  "record_count": 40,
+  "all_mechanisms_isolated": false,
+  "controlled_simulation_validation": {
+    "scene_ancestor": "procedural_world_dataset_r2_vehicle0",
+    "frame": "000008",
+    "native_control_outputs": 28,
+    "records": [
+      {
+        "factor": "pure_binding_wrong",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.0,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "binding only: prepared native target rows treated as fixed context for all q"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_binding_wrong",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 1.3372644186019897,
+          "alpha": 0.01614224910736084,
+          "E": 0.0,
+          "fill": 0.016580848023295403,
+          "final": 1.3409141302108765,
+          "depth_sum_model": 1.8304388523101807
+        },
+        "known_control": {
+          "changed_fields": [
+            "binding only: prepared native target rows treated as fixed context for all q"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_binding_wrong",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 1.7436810731887817,
+          "alpha": 0.03875735402107239,
+          "E": 0.0,
+          "fill": 0.04600194841623306,
+          "final": 1.743618130683899,
+          "depth_sum_model": 1.811504602432251
+        },
+        "known_control": {
+          "changed_fields": [
+            "binding only: prepared native target rows treated as fixed context for all q"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_binding_wrong",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 3.0405895709991455,
+          "alpha": 0.05516868829727173,
+          "E": 0.0,
+          "fill": 0.1078014150261879,
+          "final": 3.040585994720459,
+          "depth_sum_model": 2.594456672668457
+        },
+        "known_control": {
+          "changed_fields": [
+            "binding only: prepared native target rows treated as fixed context for all q"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_geometry_offset",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.9188134670257568,
+          "alpha": 0.6215436458587646,
+          "E": 0.0,
+          "fill": 0.4361778199672699,
+          "final": 0.9188824892044067,
+          "depth_sum_model": 1.6389801502227783
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic means3D and derived depth features"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_geometry_offset",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.0,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic means3D and derived depth features"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_geometry_offset",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 1.494581937789917,
+          "alpha": 0.3617119789123535,
+          "E": 0.0,
+          "fill": 0.2651899456977844,
+          "final": 1.494580626487732,
+          "depth_sum_model": 1.4348108768463135
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic means3D and derived depth features"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_geometry_offset",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 2.876819610595703,
+          "alpha": 0.6261833906173706,
+          "E": 0.0,
+          "fill": 0.43935948610305786,
+          "final": 2.876725435256958,
+          "depth_sum_model": 1.5603973865509033
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic means3D and derived depth features"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.1995599865913391,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.1995599865913391,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic SH DC only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.0,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic SH DC only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 0.19802749156951904,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.19802749156951904,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic SH DC only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 0.19850373268127441,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.19850373268127441,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "dynamic SH DC only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "environment_only",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.2500004768371582,
+          "fill": 0.2500000298023224,
+          "final": 0.2500000298023224,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "environment radiance only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "environment_only",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.2500004768371582,
+          "fill": 0.2500000298023224,
+          "final": 0.2500000298023224,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "environment radiance only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "environment_only",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.2500004768371582,
+          "fill": 0.2500000298023224,
+          "final": 0.2500000298023224,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "environment radiance only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "environment_only",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.2500004768371582,
+          "fill": 0.2500000298023224,
+          "final": 0.2500000298023224,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "environment radiance only"
+          ]
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "timestamp_miswire",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.8688355088233948,
+          "alpha": 0.701627790927887,
+          "E": 0.0,
+          "fill": 0.4890933036804199,
+          "final": 0.8693718910217285,
+          "depth_sum_model": 2.8273401260375977
+        },
+        "known_control": {
+          "changed_fields": [
+            "query timestamp only; restored before next control"
+          ],
+          "registered_time_mismatch": true
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "timestamp_miswire",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 1.0595113039016724,
+          "alpha": 0.701627790927887,
+          "E": 0.0,
+          "fill": 0.4890933036804199,
+          "final": 1.0595111846923828,
+          "depth_sum_model": 2.8273401260375977
+        },
+        "known_control": {
+          "changed_fields": [
+            "query timestamp only; restored before next control"
+          ],
+          "registered_time_mismatch": true
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "timestamp_miswire",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 2.1910767555236816,
+          "alpha": 0.701627790927887,
+          "E": 0.0,
+          "fill": 0.4890933036804199,
+          "final": 2.1910667419433594,
+          "depth_sum_model": 2.8273401260375977
+        },
+        "known_control": {
+          "changed_fields": [
+            "query timestamp only; restored before next control"
+          ],
+          "registered_time_mismatch": true
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "timestamp_miswire",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 4.056463241577148,
+          "alpha": 0.701627790927887,
+          "E": 0.0,
+          "fill": 0.4890933036804199,
+          "final": 4.056468963623047,
+          "depth_sum_model": 2.8273401260375977
+        },
+        "known_control": {
+          "changed_fields": [
+            "query timestamp only; restored before next control"
+          ],
+          "registered_time_mismatch": true
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "missing_front_population",
+        "operation": "none",
+        "field_max_abs_delta": {
+          "C_G": 0.536537766456604,
+          "alpha": 0.015893012285232544,
+          "E": 0.0,
+          "fill": 0.011211752891540527,
+          "final": 0.5403580665588379,
+          "depth_sum_model": 1.0672760009765625
+        },
+        "known_control": {
+          "changed_fields": [
+            "target row population only"
+          ],
+          "removed_rows": 566634
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "missing_front_population",
+        "operation": "delete",
+        "field_max_abs_delta": {
+          "C_G": 0.0,
+          "alpha": 0.0,
+          "E": 0.0,
+          "fill": 0.0,
+          "final": 0.0,
+          "depth_sum_model": 0.0
+        },
+        "known_control": {
+          "changed_fields": [
+            "target row population only"
+          ],
+          "removed_rows": 566634
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "missing_front_population",
+        "operation": "shift",
+        "field_max_abs_delta": {
+          "C_G": 1.357832908630371,
+          "alpha": 0.020902162417769432,
+          "E": 0.0,
+          "fill": 0.0325448140501976,
+          "final": 1.3563742637634277,
+          "depth_sum_model": 0.7998689413070679
+        },
+        "known_control": {
+          "changed_fields": [
+            "target row population only"
+          ],
+          "removed_rows": 566634
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      },
+      {
+        "factor": "missing_front_population",
+        "operation": "rotate",
+        "field_max_abs_delta": {
+          "C_G": 2.6293389797210693,
+          "alpha": 0.02027183771133423,
+          "E": 0.0,
+          "fill": 0.04200709983706474,
+          "final": 2.6291096210479736,
+          "depth_sum_model": 1.069473147392273
+        },
+        "known_control": {
+          "changed_fields": [
+            "target row population only"
+          ],
+          "removed_rows": 566634
+        },
+        "may_generate_ownership_label": false,
+        "interpretation": "known controlled source factor; not learned automatic cause identification"
+      }
+    ],
+    "invariance_checks": [
+      {
+        "factor": "pure_binding_wrong",
+        "operation": "none",
+        "passed": true
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "none",
+        "passed": true
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "delete",
+        "passed": true
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "shift",
+        "passed": true
+      },
+      {
+        "factor": "pure_color_DC",
+        "operation": "rotate",
+        "passed": true
+      },
+      {
+        "factor": "environment_only",
+        "operation": "none",
+        "passed": true
+      },
+      {
+        "factor": "environment_only",
+        "operation": "delete",
+        "passed": true
+      },
+      {
+        "factor": "environment_only",
+        "operation": "shift",
+        "passed": true
+      },
+      {
+        "factor": "environment_only",
+        "operation": "rotate",
+        "passed": true
+      }
+    ],
+    "all_invariance_checks_passed": true,
+    "classification_accuracy": null,
+    "controlled_validation_is_partial": true,
+    "unvalidated_categories": [
+      6,
+      7,
+      8
+    ],
+    "category11_limit": "known population removal tests capacity confounding, not complete physical front-surface validation",
+    "no_independent_edited_reference_scored": true,
+    "no_training_labels_generated": true,
+    "original_unchanged": true
+  },
+  "gate": {
+    "training_good_bad_answers_allowed": false,
+    "reason": "uncalibrated validity domains, unresolved real confounds and incomplete controlled validation",
+    "generated_training_preference_pairs": 0,
+    "generated_ownership_labels": 0
+  },
+  "human_verdict": null
+}

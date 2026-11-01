@@ -1,0 +1,171 @@
+{
+  "schema": "r4_frozen_group_candidates_v1",
+  "scene_id": "waymo-train-212_a35",
+  "scene_ancestor": "waymo_context_14705303724557273004_3105_000_3125_000",
+  "target_id": "actor_0",
+  "checkpoint_static_sha256": "7b54c86dc3fcae3ccbf43a72ad834a6c144be37f96e0746a7b20200c303fa188",
+  "row_namespace": "7b54c86dc3fcae3ccbf43a72ad834a6c144be37f96e0746a7b20200c303fa188:static_original_row",
+  "static_row_count": 918850,
+  "legal_input_role": "reviewed_measured_real_observations",
+  "legal_input_role_detail": "annotated track + fixed provisional DEVA mask + decoded measured OBB returns",
+  "scope_rule": {
+    "radius_world_m": 0.25,
+    "anchors": [
+      "9001077",
+      "9001101",
+      "9001125"
+    ],
+    "selected_before_edit": true,
+    "first_anchor_disjoint_grouping": true,
+    "max_groups": 3,
+    "radius_role": "predeclared_local_candidate_scope_not_calibrated_eligibility_threshold",
+    "positions": "native_static_SHM_at_anchor_using_original_cycle_and_velocity",
+    "lifetime": "record_effective_opacity_no_identity_or_coverage_veto",
+    "untouched_fields": "all stored geometry covariance SH opacity lifetime velocity counts environment"
+  },
+  "groups": [
+    {
+      "group_id": "g00_9001077",
+      "original_binding": "static",
+      "rebind_target": "actor_0",
+      "anchor_frame_id": "9001077",
+      "anchor_model_time": -0.48,
+      "original_static_rows": [
+        54144,
+        141080,
+        214697,
+        758188,
+        794835
+      ],
+      "evidence_ref": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/sensor_inputs/waymo-train-212_a35.npz",
+      "scope_rule": "first_anchor_within_fixed_measured_target_lidar_radius",
+      "anchor_actor_center_world": [
+        7042.97823513,
+        -1085.7812665,
+        554.88363149
+      ],
+      "anchor_actor_rotation_world": [
+        [
+          -0.0190189549,
+          0.9998164568,
+          0.0023091168
+        ],
+        [
+          -0.9998165951,
+          -0.0190136622,
+          -0.0022927865
+        ],
+        [
+          -0.0022484609,
+          -0.0023522997,
+          0.9999947055
+        ]
+      ],
+      "selection_ref": "original_or_target_source_peel_alphaT_body_ratio095"
+    },
+    {
+      "group_id": "g01_9001101",
+      "original_binding": "static",
+      "rebind_target": "actor_0",
+      "anchor_frame_id": "9001101",
+      "anchor_model_time": 0.0,
+      "original_static_rows": [
+        5444,
+        17406,
+        17652,
+        33176,
+        81191,
+        103864,
+        121590,
+        165872,
+        175044,
+        177259,
+        180886,
+        202761,
+        246542,
+        261714,
+        291561,
+        299928,
+        338737,
+        348034,
+        351221,
+        352838,
+        377853,
+        383773,
+        386967,
+        397706,
+        401021,
+        404054,
+        409796,
+        411773,
+        441000,
+        461612,
+        469116,
+        497202,
+        505717,
+        514151,
+        530633,
+        539308,
+        644073,
+        651501
+      ],
+      "evidence_ref": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/sensor_inputs/waymo-train-212_a35.npz",
+      "scope_rule": "first_anchor_within_fixed_measured_target_lidar_radius",
+      "anchor_actor_center_world": [
+        7042.95568069,
+        -1090.68207463,
+        554.86112712
+      ],
+      "anchor_actor_rotation_world": [
+        [
+          -0.0007703908,
+          0.9999302145,
+          0.0117886627
+        ],
+        [
+          -0.9999857109,
+          -0.0008326888,
+          0.0052805806
+        ],
+        [
+          0.0052900283,
+          -0.0117844262,
+          0.999916568
+        ]
+      ],
+      "selection_ref": "original_or_target_source_peel_alphaT_body_ratio095"
+    }
+  ],
+  "anchor_denominators": [
+    {
+      "frame_id": "9001077",
+      "measured_target_return_denominator": 130,
+      "first_hit_group_rows": 594,
+      "original_static_row_denominator": 918850,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    },
+    {
+      "frame_id": "9001101",
+      "measured_target_return_denominator": 582,
+      "first_hit_group_rows": 754,
+      "original_static_row_denominator": 918850,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    },
+    {
+      "frame_id": "9001125",
+      "measured_target_return_denominator": 27,
+      "first_hit_group_rows": 10,
+      "original_static_row_denominator": 918850,
+      "scope_radius_world_m": 0.25,
+      "no_hit_interpretation": "outside_this_finite_measured_neighbourhood_not_no_error_or_no_owner"
+    }
+  ],
+  "limitations": [
+    "neighbourhood candidates are not verified ownership or physical Gaussian GT",
+    "candidate support is not native composited contribution/representation coverage",
+    "all other rows fixed; 2^groups domain not full row-level or global domain"
+  ],
+  "source_feature_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/v43_ownership_20261028/r4_fivecase_gpu_20261101_r1/gpu_exposed/waymo-train-212_a35/source_peel49/pre_feature_contract.json"
+}

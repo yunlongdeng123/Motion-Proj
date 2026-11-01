@@ -1,0 +1,57 @@
+{
+  "task_id": "WS-V43-R4-FIVECASE-GPU-20261101-R1",
+  "checkpoint_inputs": [
+    {
+      "id": "waymo-train-008_a37",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k/checkpoint_events/iteration_030000.json"
+    },
+    {
+      "id": "waymo-train-212_a0",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/14705303724557273004_3105_000_3125_000/formal30k/checkpoint_events/iteration_030000.json"
+    },
+    {
+      "id": "waymo-train-564_a0",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/checkpoint_events/iteration_030000.json"
+    },
+    {
+      "id": "waymo-train-212_a35",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/14705303724557273004_3105_000_3125_000/formal30k/checkpoint_events/iteration_030000.json"
+    },
+    {
+      "id": "waymo-train-564_a22",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/persistent_world_20261027/native_scene_training_v1/473735159277431842_630_095_650_095/formal30k/checkpoint_events/iteration_030000.json"
+    }
+  ],
+  "cases": [
+    "waymo-train-008_a37",
+    "waymo-train-212_a0",
+    "waymo-train-564_a0",
+    "waymo-train-212_a35",
+    "waymo-train-564_a22"
+  ],
+  "input_role": "seen real-world development; provisional masks; no counterfactual GT",
+  "stage": "E0 and E2 fixed representation; no new geometry/color/opacity/model training",
+  "candidate_radius_m": 0.25,
+  "groups": "first/middle/last anchor first-hit-disjoint",
+  "responsibility_refinement": {
+    "min_total_alphaT": 0.0001,
+    "body_ratio": 0.95,
+    "role": "inherited development scope, not admission or owner truth"
+  },
+  "operations": {
+    "none": true,
+    "delete": true,
+    "shift_world_m": [
+      0,
+      1.5,
+      0
+    ],
+    "rotate_world_z_deg": 30
+  },
+  "formal_eligibility": "unknown, no independently calibrated thresholds",
+  "legacy_dynamic_association": "must freeze legal contribution/motion subset; never edit entire five-car layer",
+  "planned_native_route_outputs": 480,
+  "full_sequence_control": "two fixed endpoint routes x49frames x4q, extra separately counted",
+  "learning_gate": "no transferable real-data head without valid reference roles and independently identifiable paired signal",
+  "human_verdict": null
+}

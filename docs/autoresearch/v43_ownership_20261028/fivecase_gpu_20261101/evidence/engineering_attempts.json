@@ -1,0 +1,25 @@
+{
+  "engineering_attempts": [
+    {
+      "kind": "CPU_torch_mmap_Path",
+      "evidence": "prepare.log",
+      "status": "replayed in compatible CPU environment"
+    },
+    {
+      "kind": "strict_FP32_adjoint_mass",
+      "evidence": "gpu_r2/waymo-train-564_a0/audit49/conservation_failure.json",
+      "status": "strict FAIL retained; forward rendering continues independently; no threshold relaxed to PASS"
+    },
+    {
+      "kind": "overlapping_controllers_OOM",
+      "evidence": "logs/waymo-train-212_a35_refined_sequence_OOM_failed.log",
+      "status": "fresh-directory exact saved-state replay queued at maximum2workers"
+    },
+    {
+      "kind": "duplicate564_a22_audit_scope",
+      "status": "redundant attempt stopped at existing frozen directory; valid independently completed output retained"
+    }
+  ],
+  "log_limit": "Initial controller used shared phase-log names, so some earlier stdout logs were replaced by later attempts. Events, partial outputs and original executable snapshots retained. Do not claim all stdout logs survived.",
+  "method_model_updates": 0
+}
