@@ -1,0 +1,3396 @@
+{
+  "schema": "case15_measured_LiDAR_research_boundary_screen_v1",
+  "GPU_required": false,
+  "new_GPU_queries": 0,
+  "screen_type": "conservative research-sample selection, not formal physical capability or algorithm qualification",
+  "limitations": [
+    "Unvoxelized actual measured points inside source annotation boxes may include road/occluders. Counts do not equal pure vehicle surface samples.",
+    "First/mid/last panels draw every point in that frame; aggregation is a separate row. Same point size and equal metric aspect are used.",
+    "Aggregated actor-local points assume same-frame rigid boxes; no within-scan actor-motion compensation; not full surface GT.",
+    "No point-count threshold is calibrated or used as a formal rejection gate."
+  ],
+  "viewer_screenshot_source": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\outputs\\GS_Scene_Diagnostics_20261027\\viewer.js",
+    "bottom_label": "EDIT STATE · grid 10 m · Gaussian samples · no RGB backdrop",
+    "note": "The label is fixed. Same canvas can show sampled Gaussian centers and an optional cyan true-LiDAR overlay. Screenshot alone cannot establish which layers were enabled. Actual NPZ counts below are independent of viewer caps/voxel display."
+  },
+  "rows": [
+    {
+      "case": "waymo-train-008_a37",
+      "raw_window": [
+        89,
+        137
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 89,
+          "points": 2909
+        },
+        {
+          "raw": 90,
+          "points": 2859
+        },
+        {
+          "raw": 91,
+          "points": 2944
+        },
+        {
+          "raw": 92,
+          "points": 2847
+        },
+        {
+          "raw": 93,
+          "points": 2889
+        },
+        {
+          "raw": 94,
+          "points": 2751
+        },
+        {
+          "raw": 95,
+          "points": 2900
+        },
+        {
+          "raw": 96,
+          "points": 2866
+        },
+        {
+          "raw": 97,
+          "points": 2915
+        },
+        {
+          "raw": 98,
+          "points": 2793
+        },
+        {
+          "raw": 99,
+          "points": 2867
+        },
+        {
+          "raw": 100,
+          "points": 2807
+        },
+        {
+          "raw": 101,
+          "points": 2783
+        },
+        {
+          "raw": 102,
+          "points": 2894
+        },
+        {
+          "raw": 103,
+          "points": 2866
+        },
+        {
+          "raw": 104,
+          "points": 2753
+        },
+        {
+          "raw": 105,
+          "points": 2869
+        },
+        {
+          "raw": 106,
+          "points": 2863
+        },
+        {
+          "raw": 107,
+          "points": 2882
+        },
+        {
+          "raw": 108,
+          "points": 2792
+        },
+        {
+          "raw": 109,
+          "points": 2769
+        },
+        {
+          "raw": 110,
+          "points": 2825
+        },
+        {
+          "raw": 111,
+          "points": 2755
+        },
+        {
+          "raw": 112,
+          "points": 2788
+        },
+        {
+          "raw": 113,
+          "points": 2684
+        },
+        {
+          "raw": 114,
+          "points": 2615
+        },
+        {
+          "raw": 115,
+          "points": 2569
+        },
+        {
+          "raw": 116,
+          "points": 2595
+        },
+        {
+          "raw": 117,
+          "points": 2488
+        },
+        {
+          "raw": 118,
+          "points": 2524
+        },
+        {
+          "raw": 119,
+          "points": 2559
+        },
+        {
+          "raw": 120,
+          "points": 2221
+        },
+        {
+          "raw": 121,
+          "points": 2130
+        },
+        {
+          "raw": 122,
+          "points": 2143
+        },
+        {
+          "raw": 123,
+          "points": 2087
+        },
+        {
+          "raw": 124,
+          "points": 2018
+        },
+        {
+          "raw": 125,
+          "points": 1912
+        },
+        {
+          "raw": 126,
+          "points": 1879
+        },
+        {
+          "raw": 127,
+          "points": 1778
+        },
+        {
+          "raw": 128,
+          "points": 1634
+        },
+        {
+          "raw": 129,
+          "points": 1603
+        },
+        {
+          "raw": 130,
+          "points": 1504
+        },
+        {
+          "raw": 131,
+          "points": 1504
+        },
+        {
+          "raw": 132,
+          "points": 1434
+        },
+        {
+          "raw": 133,
+          "points": 1371
+        },
+        {
+          "raw": 134,
+          "points": 1317
+        },
+        {
+          "raw": 135,
+          "points": 1332
+        },
+        {
+          "raw": 136,
+          "points": 1323
+        },
+        {
+          "raw": 137,
+          "points": 1265
+        }
+      ],
+      "per_frame_min": 1265,
+      "per_frame_median": 2684.0,
+      "per_frame_max": 2944,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 116675,
+      "aggregate49_6cm_voxels": 7613,
+      "aggregate49_q01_q99_extent_m": [
+        3.0204696655273438,
+        1.8087717294692993,
+        1.4901007413864136
+      ],
+      "median_annotation_box_lwh_m": [
+        4.13868,
+        1.97938,
+        1.79
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\lidar\\actor_a37.npz",
+      "plot": "assets/waymo-train-008_a37_lidar.png"
+    },
+    {
+      "case": "waymo-train-008_a26",
+      "raw_window": [
+        89,
+        137
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 89,
+          "points": 46
+        },
+        {
+          "raw": 90,
+          "points": 46
+        },
+        {
+          "raw": 91,
+          "points": 38
+        },
+        {
+          "raw": 92,
+          "points": 43
+        },
+        {
+          "raw": 93,
+          "points": 61
+        },
+        {
+          "raw": 94,
+          "points": 64
+        },
+        {
+          "raw": 95,
+          "points": 58
+        },
+        {
+          "raw": 96,
+          "points": 68
+        },
+        {
+          "raw": 97,
+          "points": 81
+        },
+        {
+          "raw": 98,
+          "points": 67
+        },
+        {
+          "raw": 99,
+          "points": 64
+        },
+        {
+          "raw": 100,
+          "points": 78
+        },
+        {
+          "raw": 101,
+          "points": 93
+        },
+        {
+          "raw": 102,
+          "points": 82
+        },
+        {
+          "raw": 103,
+          "points": 88
+        },
+        {
+          "raw": 104,
+          "points": 105
+        },
+        {
+          "raw": 105,
+          "points": 97
+        },
+        {
+          "raw": 106,
+          "points": 124
+        },
+        {
+          "raw": 107,
+          "points": 127
+        },
+        {
+          "raw": 108,
+          "points": 118
+        },
+        {
+          "raw": 109,
+          "points": 137
+        },
+        {
+          "raw": 110,
+          "points": 145
+        },
+        {
+          "raw": 111,
+          "points": 157
+        },
+        {
+          "raw": 112,
+          "points": 170
+        },
+        {
+          "raw": 113,
+          "points": 199
+        },
+        {
+          "raw": 114,
+          "points": 199
+        },
+        {
+          "raw": 115,
+          "points": 208
+        },
+        {
+          "raw": 116,
+          "points": 238
+        },
+        {
+          "raw": 117,
+          "points": 266
+        },
+        {
+          "raw": 118,
+          "points": 285
+        },
+        {
+          "raw": 119,
+          "points": 300
+        },
+        {
+          "raw": 120,
+          "points": 338
+        },
+        {
+          "raw": 121,
+          "points": 374
+        },
+        {
+          "raw": 122,
+          "points": 394
+        },
+        {
+          "raw": 123,
+          "points": 467
+        },
+        {
+          "raw": 124,
+          "points": 529
+        },
+        {
+          "raw": 125,
+          "points": 555
+        },
+        {
+          "raw": 126,
+          "points": 622
+        },
+        {
+          "raw": 127,
+          "points": 770
+        },
+        {
+          "raw": 128,
+          "points": 827
+        },
+        {
+          "raw": 129,
+          "points": 993
+        },
+        {
+          "raw": 130,
+          "points": 1226
+        },
+        {
+          "raw": 131,
+          "points": 1461
+        },
+        {
+          "raw": 132,
+          "points": 1663
+        },
+        {
+          "raw": 133,
+          "points": 2103
+        },
+        {
+          "raw": 134,
+          "points": 2801
+        },
+        {
+          "raw": 135,
+          "points": 3154
+        },
+        {
+          "raw": 136,
+          "points": 3481
+        },
+        {
+          "raw": 137,
+          "points": 3845
+        }
+      ],
+      "per_frame_min": 38,
+      "per_frame_median": 199.0,
+      "per_frame_max": 3845,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 29455,
+      "aggregate49_6cm_voxels": 7909,
+      "aggregate49_q01_q99_extent_m": [
+        3.632904529571533,
+        1.809349536895752,
+        1.5119556188583374
+      ],
+      "median_annotation_box_lwh_m": [
+        4.08257,
+        2.04848,
+        1.8
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\lidar\\actor_a26.npz",
+      "plot": "assets/waymo-train-008_a26_lidar.png"
+    },
+    {
+      "case": "waymo-train-212_a0",
+      "raw_window": [
+        77,
+        125
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 77,
+          "points": 434
+        },
+        {
+          "raw": 78,
+          "points": 461
+        },
+        {
+          "raw": 79,
+          "points": 428
+        },
+        {
+          "raw": 80,
+          "points": 437
+        },
+        {
+          "raw": 81,
+          "points": 429
+        },
+        {
+          "raw": 82,
+          "points": 450
+        },
+        {
+          "raw": 83,
+          "points": 445
+        },
+        {
+          "raw": 84,
+          "points": 445
+        },
+        {
+          "raw": 85,
+          "points": 455
+        },
+        {
+          "raw": 86,
+          "points": 431
+        },
+        {
+          "raw": 87,
+          "points": 447
+        },
+        {
+          "raw": 88,
+          "points": 463
+        },
+        {
+          "raw": 89,
+          "points": 446
+        },
+        {
+          "raw": 90,
+          "points": 458
+        },
+        {
+          "raw": 91,
+          "points": 430
+        },
+        {
+          "raw": 92,
+          "points": 441
+        },
+        {
+          "raw": 93,
+          "points": 451
+        },
+        {
+          "raw": 94,
+          "points": 388
+        },
+        {
+          "raw": 95,
+          "points": 388
+        },
+        {
+          "raw": 96,
+          "points": 356
+        },
+        {
+          "raw": 97,
+          "points": 387
+        },
+        {
+          "raw": 98,
+          "points": 388
+        },
+        {
+          "raw": 99,
+          "points": 466
+        },
+        {
+          "raw": 100,
+          "points": 447
+        },
+        {
+          "raw": 101,
+          "points": 457
+        },
+        {
+          "raw": 102,
+          "points": 452
+        },
+        {
+          "raw": 103,
+          "points": 471
+        },
+        {
+          "raw": 104,
+          "points": 480
+        },
+        {
+          "raw": 105,
+          "points": 464
+        },
+        {
+          "raw": 106,
+          "points": 458
+        },
+        {
+          "raw": 107,
+          "points": 464
+        },
+        {
+          "raw": 108,
+          "points": 472
+        },
+        {
+          "raw": 109,
+          "points": 493
+        },
+        {
+          "raw": 110,
+          "points": 504
+        },
+        {
+          "raw": 111,
+          "points": 497
+        },
+        {
+          "raw": 112,
+          "points": 471
+        },
+        {
+          "raw": 113,
+          "points": 490
+        },
+        {
+          "raw": 114,
+          "points": 504
+        },
+        {
+          "raw": 115,
+          "points": 506
+        },
+        {
+          "raw": 116,
+          "points": 521
+        },
+        {
+          "raw": 117,
+          "points": 562
+        },
+        {
+          "raw": 118,
+          "points": 503
+        },
+        {
+          "raw": 119,
+          "points": 546
+        },
+        {
+          "raw": 120,
+          "points": 522
+        },
+        {
+          "raw": 121,
+          "points": 499
+        },
+        {
+          "raw": 122,
+          "points": 544
+        },
+        {
+          "raw": 123,
+          "points": 536
+        },
+        {
+          "raw": 124,
+          "points": 539
+        },
+        {
+          "raw": 125,
+          "points": 579
+        }
+      ],
+      "per_frame_min": 356,
+      "per_frame_median": 461.0,
+      "per_frame_max": 579,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 22905,
+      "aggregate49_6cm_voxels": 8554,
+      "aggregate49_q01_q99_extent_m": [
+        4.189878940582275,
+        1.9835879802703857,
+        1.853893518447876
+      ],
+      "median_annotation_box_lwh_m": [
+        4.68442,
+        2.20723,
+        1.91
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\14705303724557273004_3105_000_3125_000\\lidar\\actor_a0.npz",
+      "plot": "assets/waymo-train-212_a0_lidar.png"
+    },
+    {
+      "case": "waymo-train-537_a0",
+      "raw_window": [
+        149,
+        197
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 149,
+          "points": 174
+        },
+        {
+          "raw": 150,
+          "points": 183
+        },
+        {
+          "raw": 151,
+          "points": 176
+        },
+        {
+          "raw": 152,
+          "points": 187
+        },
+        {
+          "raw": 153,
+          "points": 171
+        },
+        {
+          "raw": 154,
+          "points": 183
+        },
+        {
+          "raw": 155,
+          "points": 188
+        },
+        {
+          "raw": 156,
+          "points": 179
+        },
+        {
+          "raw": 157,
+          "points": 159
+        },
+        {
+          "raw": 158,
+          "points": 161
+        },
+        {
+          "raw": 159,
+          "points": 160
+        },
+        {
+          "raw": 160,
+          "points": 168
+        },
+        {
+          "raw": 161,
+          "points": 163
+        },
+        {
+          "raw": 162,
+          "points": 175
+        },
+        {
+          "raw": 163,
+          "points": 158
+        },
+        {
+          "raw": 164,
+          "points": 149
+        },
+        {
+          "raw": 165,
+          "points": 149
+        },
+        {
+          "raw": 166,
+          "points": 156
+        },
+        {
+          "raw": 167,
+          "points": 157
+        },
+        {
+          "raw": 168,
+          "points": 155
+        },
+        {
+          "raw": 169,
+          "points": 168
+        },
+        {
+          "raw": 170,
+          "points": 161
+        },
+        {
+          "raw": 171,
+          "points": 164
+        },
+        {
+          "raw": 172,
+          "points": 146
+        },
+        {
+          "raw": 173,
+          "points": 165
+        },
+        {
+          "raw": 174,
+          "points": 137
+        },
+        {
+          "raw": 175,
+          "points": 140
+        },
+        {
+          "raw": 176,
+          "points": 161
+        },
+        {
+          "raw": 177,
+          "points": 141
+        },
+        {
+          "raw": 178,
+          "points": 142
+        },
+        {
+          "raw": 179,
+          "points": 132
+        },
+        {
+          "raw": 180,
+          "points": 138
+        },
+        {
+          "raw": 181,
+          "points": 132
+        },
+        {
+          "raw": 182,
+          "points": 152
+        },
+        {
+          "raw": 183,
+          "points": 156
+        },
+        {
+          "raw": 184,
+          "points": 150
+        },
+        {
+          "raw": 185,
+          "points": 158
+        },
+        {
+          "raw": 186,
+          "points": 160
+        },
+        {
+          "raw": 187,
+          "points": 154
+        },
+        {
+          "raw": 188,
+          "points": 155
+        },
+        {
+          "raw": 189,
+          "points": 150
+        },
+        {
+          "raw": 190,
+          "points": 161
+        },
+        {
+          "raw": 191,
+          "points": 160
+        },
+        {
+          "raw": 192,
+          "points": 175
+        },
+        {
+          "raw": 193,
+          "points": 182
+        },
+        {
+          "raw": 194,
+          "points": 171
+        },
+        {
+          "raw": 195,
+          "points": 164
+        },
+        {
+          "raw": 196,
+          "points": 170
+        },
+        {
+          "raw": 197,
+          "points": 177
+        }
+      ],
+      "per_frame_min": 132,
+      "per_frame_median": 160.0,
+      "per_frame_max": 188,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 7873,
+      "aggregate49_6cm_voxels": 3071,
+      "aggregate49_q01_q99_extent_m": [
+        3.871321678161621,
+        1.6971728801727295,
+        1.3697125911712646
+      ],
+      "median_annotation_box_lwh_m": [
+        4.36149,
+        1.86234,
+        1.51
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4295449061847708198_3769_000_3789_000\\lidar\\actor_a0.npz",
+      "plot": "assets/waymo-train-537_a0_lidar.png"
+    },
+    {
+      "case": "waymo-train-564_a0",
+      "raw_window": [
+        13,
+        61
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 13,
+          "points": 997
+        },
+        {
+          "raw": 14,
+          "points": 978
+        },
+        {
+          "raw": 15,
+          "points": 923
+        },
+        {
+          "raw": 16,
+          "points": 910
+        },
+        {
+          "raw": 17,
+          "points": 891
+        },
+        {
+          "raw": 18,
+          "points": 846
+        },
+        {
+          "raw": 19,
+          "points": 817
+        },
+        {
+          "raw": 20,
+          "points": 813
+        },
+        {
+          "raw": 21,
+          "points": 790
+        },
+        {
+          "raw": 22,
+          "points": 742
+        },
+        {
+          "raw": 23,
+          "points": 714
+        },
+        {
+          "raw": 24,
+          "points": 695
+        },
+        {
+          "raw": 25,
+          "points": 685
+        },
+        {
+          "raw": 26,
+          "points": 674
+        },
+        {
+          "raw": 27,
+          "points": 621
+        },
+        {
+          "raw": 28,
+          "points": 604
+        },
+        {
+          "raw": 29,
+          "points": 590
+        },
+        {
+          "raw": 30,
+          "points": 566
+        },
+        {
+          "raw": 31,
+          "points": 543
+        },
+        {
+          "raw": 32,
+          "points": 526
+        },
+        {
+          "raw": 33,
+          "points": 517
+        },
+        {
+          "raw": 34,
+          "points": 498
+        },
+        {
+          "raw": 35,
+          "points": 497
+        },
+        {
+          "raw": 36,
+          "points": 459
+        },
+        {
+          "raw": 37,
+          "points": 467
+        },
+        {
+          "raw": 38,
+          "points": 460
+        },
+        {
+          "raw": 39,
+          "points": 439
+        },
+        {
+          "raw": 40,
+          "points": 442
+        },
+        {
+          "raw": 41,
+          "points": 420
+        },
+        {
+          "raw": 42,
+          "points": 427
+        },
+        {
+          "raw": 43,
+          "points": 419
+        },
+        {
+          "raw": 44,
+          "points": 398
+        },
+        {
+          "raw": 45,
+          "points": 389
+        },
+        {
+          "raw": 46,
+          "points": 383
+        },
+        {
+          "raw": 47,
+          "points": 387
+        },
+        {
+          "raw": 48,
+          "points": 372
+        },
+        {
+          "raw": 49,
+          "points": 360
+        },
+        {
+          "raw": 50,
+          "points": 367
+        },
+        {
+          "raw": 51,
+          "points": 361
+        },
+        {
+          "raw": 52,
+          "points": 353
+        },
+        {
+          "raw": 53,
+          "points": 347
+        },
+        {
+          "raw": 54,
+          "points": 329
+        },
+        {
+          "raw": 55,
+          "points": 323
+        },
+        {
+          "raw": 56,
+          "points": 337
+        },
+        {
+          "raw": 57,
+          "points": 347
+        },
+        {
+          "raw": 58,
+          "points": 339
+        },
+        {
+          "raw": 59,
+          "points": 307
+        },
+        {
+          "raw": 60,
+          "points": 298
+        },
+        {
+          "raw": 61,
+          "points": 319
+        }
+      ],
+      "per_frame_min": 298,
+      "per_frame_median": 460.0,
+      "per_frame_max": 997,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 26286,
+      "aggregate49_6cm_voxels": 7413,
+      "aggregate49_q01_q99_extent_m": [
+        4.16168737411499,
+        1.8059567213058472,
+        1.4583122730255127
+      ],
+      "median_annotation_box_lwh_m": [
+        4.61436,
+        2.05387,
+        1.55
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\473735159277431842_630_095_650_095\\lidar\\actor_a0.npz",
+      "plot": "assets/waymo-train-564_a0_lidar.png"
+    },
+    {
+      "case": "waymo-train-008_a6",
+      "raw_window": [
+        89,
+        137
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 89,
+          "points": 348
+        },
+        {
+          "raw": 90,
+          "points": 368
+        },
+        {
+          "raw": 91,
+          "points": 369
+        },
+        {
+          "raw": 92,
+          "points": 345
+        },
+        {
+          "raw": 93,
+          "points": 365
+        },
+        {
+          "raw": 94,
+          "points": 365
+        },
+        {
+          "raw": 95,
+          "points": 379
+        },
+        {
+          "raw": 96,
+          "points": 353
+        },
+        {
+          "raw": 97,
+          "points": 371
+        },
+        {
+          "raw": 98,
+          "points": 366
+        },
+        {
+          "raw": 99,
+          "points": 395
+        },
+        {
+          "raw": 100,
+          "points": 411
+        },
+        {
+          "raw": 101,
+          "points": 390
+        },
+        {
+          "raw": 102,
+          "points": 409
+        },
+        {
+          "raw": 103,
+          "points": 396
+        },
+        {
+          "raw": 104,
+          "points": 370
+        },
+        {
+          "raw": 105,
+          "points": 355
+        },
+        {
+          "raw": 106,
+          "points": 383
+        },
+        {
+          "raw": 107,
+          "points": 395
+        },
+        {
+          "raw": 108,
+          "points": 338
+        },
+        {
+          "raw": 109,
+          "points": 339
+        },
+        {
+          "raw": 110,
+          "points": 331
+        },
+        {
+          "raw": 111,
+          "points": 358
+        },
+        {
+          "raw": 112,
+          "points": 376
+        },
+        {
+          "raw": 113,
+          "points": 359
+        },
+        {
+          "raw": 114,
+          "points": 343
+        },
+        {
+          "raw": 115,
+          "points": 312
+        },
+        {
+          "raw": 116,
+          "points": 323
+        },
+        {
+          "raw": 117,
+          "points": 330
+        },
+        {
+          "raw": 118,
+          "points": 284
+        },
+        {
+          "raw": 119,
+          "points": 273
+        },
+        {
+          "raw": 120,
+          "points": 289
+        },
+        {
+          "raw": 121,
+          "points": 278
+        },
+        {
+          "raw": 122,
+          "points": 281
+        },
+        {
+          "raw": 123,
+          "points": 279
+        },
+        {
+          "raw": 124,
+          "points": 269
+        },
+        {
+          "raw": 125,
+          "points": 240
+        },
+        {
+          "raw": 126,
+          "points": 215
+        },
+        {
+          "raw": 127,
+          "points": 217
+        },
+        {
+          "raw": 128,
+          "points": 204
+        },
+        {
+          "raw": 129,
+          "points": 179
+        },
+        {
+          "raw": 130,
+          "points": 198
+        },
+        {
+          "raw": 131,
+          "points": 202
+        },
+        {
+          "raw": 132,
+          "points": 201
+        },
+        {
+          "raw": 133,
+          "points": 184
+        },
+        {
+          "raw": 134,
+          "points": 177
+        },
+        {
+          "raw": 135,
+          "points": 175
+        },
+        {
+          "raw": 136,
+          "points": 168
+        },
+        {
+          "raw": 137,
+          "points": 166
+        }
+      ],
+      "per_frame_min": 166,
+      "per_frame_median": 338.0,
+      "per_frame_max": 411,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 15021,
+      "aggregate49_6cm_voxels": 3088,
+      "aggregate49_q01_q99_extent_m": [
+        3.8888049125671387,
+        1.8357303142547607,
+        0.8467566967010498
+      ],
+      "median_annotation_box_lwh_m": [
+        4.33404,
+        2.07754,
+        1.44
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\lidar\\actor_a6.npz",
+      "plot": "assets/waymo-train-008_a6_lidar.png"
+    },
+    {
+      "case": "waymo-train-008_a18",
+      "raw_window": [
+        89,
+        137
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 89,
+          "points": 0
+        },
+        {
+          "raw": 90,
+          "points": 11
+        },
+        {
+          "raw": 91,
+          "points": 22
+        },
+        {
+          "raw": 92,
+          "points": 19
+        },
+        {
+          "raw": 93,
+          "points": 20
+        },
+        {
+          "raw": 94,
+          "points": 20
+        },
+        {
+          "raw": 95,
+          "points": 20
+        },
+        {
+          "raw": 96,
+          "points": 20
+        },
+        {
+          "raw": 97,
+          "points": 21
+        },
+        {
+          "raw": 98,
+          "points": 25
+        },
+        {
+          "raw": 99,
+          "points": 24
+        },
+        {
+          "raw": 100,
+          "points": 29
+        },
+        {
+          "raw": 101,
+          "points": 30
+        },
+        {
+          "raw": 102,
+          "points": 31
+        },
+        {
+          "raw": 103,
+          "points": 31
+        },
+        {
+          "raw": 104,
+          "points": 29
+        },
+        {
+          "raw": 105,
+          "points": 29
+        },
+        {
+          "raw": 106,
+          "points": 36
+        },
+        {
+          "raw": 107,
+          "points": 40
+        },
+        {
+          "raw": 108,
+          "points": 40
+        },
+        {
+          "raw": 109,
+          "points": 39
+        },
+        {
+          "raw": 110,
+          "points": 39
+        },
+        {
+          "raw": 111,
+          "points": 35
+        },
+        {
+          "raw": 112,
+          "points": 41
+        },
+        {
+          "raw": 113,
+          "points": 45
+        },
+        {
+          "raw": 114,
+          "points": 43
+        },
+        {
+          "raw": 115,
+          "points": 45
+        },
+        {
+          "raw": 116,
+          "points": 46
+        },
+        {
+          "raw": 117,
+          "points": 55
+        },
+        {
+          "raw": 118,
+          "points": 57
+        },
+        {
+          "raw": 119,
+          "points": 54
+        },
+        {
+          "raw": 120,
+          "points": 61
+        },
+        {
+          "raw": 121,
+          "points": 80
+        },
+        {
+          "raw": 122,
+          "points": 66
+        },
+        {
+          "raw": 123,
+          "points": 83
+        },
+        {
+          "raw": 124,
+          "points": 71
+        },
+        {
+          "raw": 125,
+          "points": 82
+        },
+        {
+          "raw": 126,
+          "points": 88
+        },
+        {
+          "raw": 127,
+          "points": 98
+        },
+        {
+          "raw": 128,
+          "points": 95
+        },
+        {
+          "raw": 129,
+          "points": 111
+        },
+        {
+          "raw": 130,
+          "points": 127
+        },
+        {
+          "raw": 131,
+          "points": 137
+        },
+        {
+          "raw": 132,
+          "points": 155
+        },
+        {
+          "raw": 133,
+          "points": 160
+        },
+        {
+          "raw": 134,
+          "points": 182
+        },
+        {
+          "raw": 135,
+          "points": 194
+        },
+        {
+          "raw": 136,
+          "points": 212
+        },
+        {
+          "raw": 137,
+          "points": 222
+        }
+      ],
+      "per_frame_min": 0,
+      "per_frame_median": 43.0,
+      "per_frame_max": 222,
+      "zero_return_frames": [
+        89
+      ],
+      "aggregate49_actual_rows": 3220,
+      "aggregate49_6cm_voxels": 2146,
+      "aggregate49_q01_q99_extent_m": [
+        3.489142656326294,
+        1.8417279720306396,
+        1.409119725227356
+      ],
+      "median_annotation_box_lwh_m": [
+        4.08917,
+        2.07448,
+        1.74
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10094743350625019937_3420_000_3440_000\\lidar\\actor_a18.npz",
+      "plot": "assets/waymo-train-008_a18_lidar.png"
+    },
+    {
+      "case": "waymo-train-212_a35",
+      "raw_window": [
+        77,
+        125
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 77,
+          "points": 173
+        },
+        {
+          "raw": 78,
+          "points": 174
+        },
+        {
+          "raw": 79,
+          "points": 216
+        },
+        {
+          "raw": 80,
+          "points": 223
+        },
+        {
+          "raw": 81,
+          "points": 260
+        },
+        {
+          "raw": 82,
+          "points": 305
+        },
+        {
+          "raw": 83,
+          "points": 312
+        },
+        {
+          "raw": 84,
+          "points": 357
+        },
+        {
+          "raw": 85,
+          "points": 362
+        },
+        {
+          "raw": 86,
+          "points": 366
+        },
+        {
+          "raw": 87,
+          "points": 379
+        },
+        {
+          "raw": 88,
+          "points": 413
+        },
+        {
+          "raw": 89,
+          "points": 412
+        },
+        {
+          "raw": 90,
+          "points": 435
+        },
+        {
+          "raw": 91,
+          "points": 471
+        },
+        {
+          "raw": 92,
+          "points": 462
+        },
+        {
+          "raw": 93,
+          "points": 488
+        },
+        {
+          "raw": 94,
+          "points": 509
+        },
+        {
+          "raw": 95,
+          "points": 532
+        },
+        {
+          "raw": 96,
+          "points": 550
+        },
+        {
+          "raw": 97,
+          "points": 600
+        },
+        {
+          "raw": 98,
+          "points": 612
+        },
+        {
+          "raw": 99,
+          "points": 617
+        },
+        {
+          "raw": 100,
+          "points": 653
+        },
+        {
+          "raw": 101,
+          "points": 690
+        },
+        {
+          "raw": 102,
+          "points": 677
+        },
+        {
+          "raw": 103,
+          "points": 767
+        },
+        {
+          "raw": 104,
+          "points": 714
+        },
+        {
+          "raw": 105,
+          "points": 749
+        },
+        {
+          "raw": 106,
+          "points": 745
+        },
+        {
+          "raw": 107,
+          "points": 815
+        },
+        {
+          "raw": 108,
+          "points": 801
+        },
+        {
+          "raw": 109,
+          "points": 843
+        },
+        {
+          "raw": 110,
+          "points": 842
+        },
+        {
+          "raw": 111,
+          "points": 844
+        },
+        {
+          "raw": 112,
+          "points": 881
+        },
+        {
+          "raw": 113,
+          "points": 889
+        },
+        {
+          "raw": 114,
+          "points": 896
+        },
+        {
+          "raw": 115,
+          "points": 923
+        },
+        {
+          "raw": 116,
+          "points": 909
+        },
+        {
+          "raw": 117,
+          "points": 945
+        },
+        {
+          "raw": 118,
+          "points": 989
+        },
+        {
+          "raw": 119,
+          "points": 1025
+        },
+        {
+          "raw": 120,
+          "points": 1030
+        },
+        {
+          "raw": 121,
+          "points": 1021
+        },
+        {
+          "raw": 122,
+          "points": 1091
+        },
+        {
+          "raw": 123,
+          "points": 1153
+        },
+        {
+          "raw": 124,
+          "points": 1202
+        },
+        {
+          "raw": 125,
+          "points": 1197
+        }
+      ],
+      "per_frame_min": 173,
+      "per_frame_median": 677.0,
+      "per_frame_max": 1202,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 32519,
+      "aggregate49_6cm_voxels": 8224,
+      "aggregate49_q01_q99_extent_m": [
+        4.3018293380737305,
+        1.6789979934692383,
+        1.4435794353485107
+      ],
+      "median_annotation_box_lwh_m": [
+        4.79656,
+        2.21859,
+        1.5
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\14705303724557273004_3105_000_3125_000\\lidar\\actor_a35.npz",
+      "plot": "assets/waymo-train-212_a35_lidar.png"
+    },
+    {
+      "case": "waymo-train-212_a56",
+      "raw_window": [
+        77,
+        125
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 77,
+          "points": 5155
+        },
+        {
+          "raw": 78,
+          "points": 5203
+        },
+        {
+          "raw": 79,
+          "points": 5261
+        },
+        {
+          "raw": 80,
+          "points": 5173
+        },
+        {
+          "raw": 81,
+          "points": 5089
+        },
+        {
+          "raw": 82,
+          "points": 4922
+        },
+        {
+          "raw": 83,
+          "points": 5016
+        },
+        {
+          "raw": 84,
+          "points": 4845
+        },
+        {
+          "raw": 85,
+          "points": 4951
+        },
+        {
+          "raw": 86,
+          "points": 4841
+        },
+        {
+          "raw": 87,
+          "points": 4675
+        },
+        {
+          "raw": 88,
+          "points": 4640
+        },
+        {
+          "raw": 89,
+          "points": 4832
+        },
+        {
+          "raw": 90,
+          "points": 4736
+        },
+        {
+          "raw": 91,
+          "points": 4715
+        },
+        {
+          "raw": 92,
+          "points": 4809
+        },
+        {
+          "raw": 93,
+          "points": 4916
+        },
+        {
+          "raw": 94,
+          "points": 4618
+        },
+        {
+          "raw": 95,
+          "points": 4702
+        },
+        {
+          "raw": 96,
+          "points": 4640
+        },
+        {
+          "raw": 97,
+          "points": 4540
+        },
+        {
+          "raw": 98,
+          "points": 4682
+        },
+        {
+          "raw": 99,
+          "points": 4693
+        },
+        {
+          "raw": 100,
+          "points": 4718
+        },
+        {
+          "raw": 101,
+          "points": 4624
+        },
+        {
+          "raw": 102,
+          "points": 4568
+        },
+        {
+          "raw": 103,
+          "points": 4574
+        },
+        {
+          "raw": 104,
+          "points": 4471
+        },
+        {
+          "raw": 105,
+          "points": 4521
+        },
+        {
+          "raw": 106,
+          "points": 4526
+        },
+        {
+          "raw": 107,
+          "points": 4636
+        },
+        {
+          "raw": 108,
+          "points": 4816
+        },
+        {
+          "raw": 109,
+          "points": 4727
+        },
+        {
+          "raw": 110,
+          "points": 4763
+        },
+        {
+          "raw": 111,
+          "points": 4809
+        },
+        {
+          "raw": 112,
+          "points": 4757
+        },
+        {
+          "raw": 113,
+          "points": 4611
+        },
+        {
+          "raw": 114,
+          "points": 4685
+        },
+        {
+          "raw": 115,
+          "points": 4787
+        },
+        {
+          "raw": 116,
+          "points": 4705
+        },
+        {
+          "raw": 117,
+          "points": 5004
+        },
+        {
+          "raw": 118,
+          "points": 4888
+        },
+        {
+          "raw": 119,
+          "points": 5049
+        },
+        {
+          "raw": 120,
+          "points": 4944
+        },
+        {
+          "raw": 121,
+          "points": 4824
+        },
+        {
+          "raw": 122,
+          "points": 4999
+        },
+        {
+          "raw": 123,
+          "points": 5018
+        },
+        {
+          "raw": 124,
+          "points": 5072
+        },
+        {
+          "raw": 125,
+          "points": 4918
+        }
+      ],
+      "per_frame_min": 4471,
+      "per_frame_median": 4787.0,
+      "per_frame_max": 5261,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 235668,
+      "aggregate49_6cm_voxels": 13265,
+      "aggregate49_q01_q99_extent_m": [
+        4.063538551330566,
+        1.6173280477523804,
+        1.4556753635406494
+      ],
+      "median_annotation_box_lwh_m": [
+        4.96057,
+        2.18559,
+        1.52
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\14705303724557273004_3105_000_3125_000\\lidar\\actor_a56.npz",
+      "plot": "assets/waymo-train-212_a56_lidar.png"
+    },
+    {
+      "case": "waymo-train-564_a1",
+      "raw_window": [
+        13,
+        61
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 13,
+          "points": 9863
+        },
+        {
+          "raw": 14,
+          "points": 9638
+        },
+        {
+          "raw": 15,
+          "points": 9360
+        },
+        {
+          "raw": 16,
+          "points": 8983
+        },
+        {
+          "raw": 17,
+          "points": 8592
+        },
+        {
+          "raw": 18,
+          "points": 8207
+        },
+        {
+          "raw": 19,
+          "points": 7777
+        },
+        {
+          "raw": 20,
+          "points": 7359
+        },
+        {
+          "raw": 21,
+          "points": 6954
+        },
+        {
+          "raw": 22,
+          "points": 6574
+        },
+        {
+          "raw": 23,
+          "points": 6247
+        },
+        {
+          "raw": 24,
+          "points": 6034
+        },
+        {
+          "raw": 25,
+          "points": 5820
+        },
+        {
+          "raw": 26,
+          "points": 5315
+        },
+        {
+          "raw": 27,
+          "points": 5086
+        },
+        {
+          "raw": 28,
+          "points": 4916
+        },
+        {
+          "raw": 29,
+          "points": 4720
+        },
+        {
+          "raw": 30,
+          "points": 4428
+        },
+        {
+          "raw": 31,
+          "points": 4415
+        },
+        {
+          "raw": 32,
+          "points": 4241
+        },
+        {
+          "raw": 33,
+          "points": 4075
+        },
+        {
+          "raw": 34,
+          "points": 3775
+        },
+        {
+          "raw": 35,
+          "points": 3616
+        },
+        {
+          "raw": 36,
+          "points": 3442
+        },
+        {
+          "raw": 37,
+          "points": 3247
+        },
+        {
+          "raw": 38,
+          "points": 3110
+        },
+        {
+          "raw": 39,
+          "points": 2923
+        },
+        {
+          "raw": 40,
+          "points": 2782
+        },
+        {
+          "raw": 41,
+          "points": 2755
+        },
+        {
+          "raw": 42,
+          "points": 2743
+        },
+        {
+          "raw": 43,
+          "points": 2697
+        },
+        {
+          "raw": 44,
+          "points": 2610
+        },
+        {
+          "raw": 45,
+          "points": 2574
+        },
+        {
+          "raw": 46,
+          "points": 2602
+        },
+        {
+          "raw": 47,
+          "points": 2583
+        },
+        {
+          "raw": 48,
+          "points": 2532
+        },
+        {
+          "raw": 49,
+          "points": 2478
+        },
+        {
+          "raw": 50,
+          "points": 2334
+        },
+        {
+          "raw": 51,
+          "points": 2199
+        },
+        {
+          "raw": 52,
+          "points": 1994
+        },
+        {
+          "raw": 53,
+          "points": 1973
+        },
+        {
+          "raw": 54,
+          "points": 1895
+        },
+        {
+          "raw": 55,
+          "points": 1910
+        },
+        {
+          "raw": 56,
+          "points": 1892
+        },
+        {
+          "raw": 57,
+          "points": 2164
+        },
+        {
+          "raw": 58,
+          "points": 2078
+        },
+        {
+          "raw": 59,
+          "points": 2089
+        },
+        {
+          "raw": 60,
+          "points": 2070
+        },
+        {
+          "raw": 61,
+          "points": 2056
+        }
+      ],
+      "per_frame_min": 1892,
+      "per_frame_median": 3247.0,
+      "per_frame_max": 9863,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 209727,
+      "aggregate49_6cm_voxels": 18292,
+      "aggregate49_q01_q99_extent_m": [
+        4.6520490646362305,
+        1.8764457702636719,
+        1.784205675125122
+      ],
+      "median_annotation_box_lwh_m": [
+        5.49684,
+        2.25703,
+        2.07
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\473735159277431842_630_095_650_095\\lidar\\actor_a1.npz",
+      "plot": "assets/waymo-train-564_a1_lidar.png"
+    },
+    {
+      "case": "waymo-train-564_a22",
+      "raw_window": [
+        13,
+        61
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 13,
+          "points": 910
+        },
+        {
+          "raw": 14,
+          "points": 883
+        },
+        {
+          "raw": 15,
+          "points": 864
+        },
+        {
+          "raw": 16,
+          "points": 800
+        },
+        {
+          "raw": 17,
+          "points": 798
+        },
+        {
+          "raw": 18,
+          "points": 796
+        },
+        {
+          "raw": 19,
+          "points": 734
+        },
+        {
+          "raw": 20,
+          "points": 730
+        },
+        {
+          "raw": 21,
+          "points": 725
+        },
+        {
+          "raw": 22,
+          "points": 690
+        },
+        {
+          "raw": 23,
+          "points": 623
+        },
+        {
+          "raw": 24,
+          "points": 610
+        },
+        {
+          "raw": 25,
+          "points": 606
+        },
+        {
+          "raw": 26,
+          "points": 610
+        },
+        {
+          "raw": 27,
+          "points": 520
+        },
+        {
+          "raw": 28,
+          "points": 514
+        },
+        {
+          "raw": 29,
+          "points": 513
+        },
+        {
+          "raw": 30,
+          "points": 481
+        },
+        {
+          "raw": 31,
+          "points": 475
+        },
+        {
+          "raw": 32,
+          "points": 450
+        },
+        {
+          "raw": 33,
+          "points": 443
+        },
+        {
+          "raw": 34,
+          "points": 430
+        },
+        {
+          "raw": 35,
+          "points": 434
+        },
+        {
+          "raw": 36,
+          "points": 415
+        },
+        {
+          "raw": 37,
+          "points": 410
+        },
+        {
+          "raw": 38,
+          "points": 392
+        },
+        {
+          "raw": 39,
+          "points": 373
+        },
+        {
+          "raw": 40,
+          "points": 370
+        },
+        {
+          "raw": 41,
+          "points": 358
+        },
+        {
+          "raw": 42,
+          "points": 348
+        },
+        {
+          "raw": 43,
+          "points": 353
+        },
+        {
+          "raw": 44,
+          "points": 355
+        },
+        {
+          "raw": 45,
+          "points": 344
+        },
+        {
+          "raw": 46,
+          "points": 335
+        },
+        {
+          "raw": 47,
+          "points": 332
+        },
+        {
+          "raw": 48,
+          "points": 329
+        },
+        {
+          "raw": 49,
+          "points": 333
+        },
+        {
+          "raw": 50,
+          "points": 318
+        },
+        {
+          "raw": 51,
+          "points": 317
+        },
+        {
+          "raw": 52,
+          "points": 316
+        },
+        {
+          "raw": 53,
+          "points": 303
+        },
+        {
+          "raw": 54,
+          "points": 310
+        },
+        {
+          "raw": 55,
+          "points": 316
+        },
+        {
+          "raw": 56,
+          "points": 312
+        },
+        {
+          "raw": 57,
+          "points": 299
+        },
+        {
+          "raw": 58,
+          "points": 302
+        },
+        {
+          "raw": 59,
+          "points": 291
+        },
+        {
+          "raw": 60,
+          "points": 271
+        },
+        {
+          "raw": 61,
+          "points": 278
+        }
+      ],
+      "per_frame_min": 271,
+      "per_frame_median": 410.0,
+      "per_frame_max": 910,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 23319,
+      "aggregate49_6cm_voxels": 6474,
+      "aggregate49_q01_q99_extent_m": [
+        3.3596177101135254,
+        1.9868314266204834,
+        1.6658923625946045
+      ],
+      "median_annotation_box_lwh_m": [
+        4.49687,
+        2.14572,
+        1.91
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\473735159277431842_630_095_650_095\\lidar\\actor_a22.npz",
+      "plot": "assets/waymo-train-564_a22_lidar.png"
+    },
+    {
+      "case": "waymo-train-537_a148",
+      "raw_window": [
+        149,
+        197
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 149,
+          "points": 12100
+        },
+        {
+          "raw": 150,
+          "points": 11820
+        },
+        {
+          "raw": 151,
+          "points": 11865
+        },
+        {
+          "raw": 152,
+          "points": 12122
+        },
+        {
+          "raw": 153,
+          "points": 12018
+        },
+        {
+          "raw": 154,
+          "points": 12006
+        },
+        {
+          "raw": 155,
+          "points": 11769
+        },
+        {
+          "raw": 156,
+          "points": 11766
+        },
+        {
+          "raw": 157,
+          "points": 11551
+        },
+        {
+          "raw": 158,
+          "points": 11773
+        },
+        {
+          "raw": 159,
+          "points": 11634
+        },
+        {
+          "raw": 160,
+          "points": 11425
+        },
+        {
+          "raw": 161,
+          "points": 11470
+        },
+        {
+          "raw": 162,
+          "points": 11486
+        },
+        {
+          "raw": 163,
+          "points": 11449
+        },
+        {
+          "raw": 164,
+          "points": 11401
+        },
+        {
+          "raw": 165,
+          "points": 11158
+        },
+        {
+          "raw": 166,
+          "points": 11015
+        },
+        {
+          "raw": 167,
+          "points": 10816
+        },
+        {
+          "raw": 168,
+          "points": 10835
+        },
+        {
+          "raw": 169,
+          "points": 10719
+        },
+        {
+          "raw": 170,
+          "points": 10825
+        },
+        {
+          "raw": 171,
+          "points": 10776
+        },
+        {
+          "raw": 172,
+          "points": 10503
+        },
+        {
+          "raw": 173,
+          "points": 10460
+        },
+        {
+          "raw": 174,
+          "points": 10159
+        },
+        {
+          "raw": 175,
+          "points": 10056
+        },
+        {
+          "raw": 176,
+          "points": 10380
+        },
+        {
+          "raw": 177,
+          "points": 10295
+        },
+        {
+          "raw": 178,
+          "points": 10052
+        },
+        {
+          "raw": 179,
+          "points": 9938
+        },
+        {
+          "raw": 180,
+          "points": 9839
+        },
+        {
+          "raw": 181,
+          "points": 9739
+        },
+        {
+          "raw": 182,
+          "points": 9632
+        },
+        {
+          "raw": 183,
+          "points": 9587
+        },
+        {
+          "raw": 184,
+          "points": 9417
+        },
+        {
+          "raw": 185,
+          "points": 9343
+        },
+        {
+          "raw": 186,
+          "points": 9621
+        },
+        {
+          "raw": 187,
+          "points": 9558
+        },
+        {
+          "raw": 188,
+          "points": 9516
+        },
+        {
+          "raw": 189,
+          "points": 9435
+        },
+        {
+          "raw": 190,
+          "points": 9273
+        },
+        {
+          "raw": 191,
+          "points": 9245
+        },
+        {
+          "raw": 192,
+          "points": 9334
+        },
+        {
+          "raw": 193,
+          "points": 9281
+        },
+        {
+          "raw": 194,
+          "points": 8945
+        },
+        {
+          "raw": 195,
+          "points": 8809
+        },
+        {
+          "raw": 196,
+          "points": 8694
+        },
+        {
+          "raw": 197,
+          "points": 8827
+        }
+      ],
+      "per_frame_min": 8694,
+      "per_frame_median": 10460.0,
+      "per_frame_max": 12122,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 513737,
+      "aggregate49_6cm_voxels": 16263,
+      "aggregate49_q01_q99_extent_m": [
+        3.8696651458740234,
+        1.7178480625152588,
+        1.8900649547576904
+      ],
+      "median_annotation_box_lwh_m": [
+        4.61539,
+        2.13033,
+        1.96
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\4295449061847708198_3769_000_3789_000\\lidar\\actor_a148.npz",
+      "plot": "assets/waymo-train-537_a148_lidar.png"
+    },
+    {
+      "case": "waymo-val-004_a11",
+      "raw_window": [
+        90,
+        138
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 90,
+          "points": 4246
+        },
+        {
+          "raw": 91,
+          "points": 4218
+        },
+        {
+          "raw": 92,
+          "points": 4177
+        },
+        {
+          "raw": 93,
+          "points": 4141
+        },
+        {
+          "raw": 94,
+          "points": 4141
+        },
+        {
+          "raw": 95,
+          "points": 4131
+        },
+        {
+          "raw": 96,
+          "points": 4086
+        },
+        {
+          "raw": 97,
+          "points": 4077
+        },
+        {
+          "raw": 98,
+          "points": 4118
+        },
+        {
+          "raw": 99,
+          "points": 4114
+        },
+        {
+          "raw": 100,
+          "points": 4079
+        },
+        {
+          "raw": 101,
+          "points": 4049
+        },
+        {
+          "raw": 102,
+          "points": 4044
+        },
+        {
+          "raw": 103,
+          "points": 4046
+        },
+        {
+          "raw": 104,
+          "points": 4031
+        },
+        {
+          "raw": 105,
+          "points": 4019
+        },
+        {
+          "raw": 106,
+          "points": 3981
+        },
+        {
+          "raw": 107,
+          "points": 3959
+        },
+        {
+          "raw": 108,
+          "points": 3905
+        },
+        {
+          "raw": 109,
+          "points": 3869
+        },
+        {
+          "raw": 110,
+          "points": 3897
+        },
+        {
+          "raw": 111,
+          "points": 3873
+        },
+        {
+          "raw": 112,
+          "points": 3855
+        },
+        {
+          "raw": 113,
+          "points": 3842
+        },
+        {
+          "raw": 114,
+          "points": 3832
+        },
+        {
+          "raw": 115,
+          "points": 3790
+        },
+        {
+          "raw": 116,
+          "points": 3780
+        },
+        {
+          "raw": 117,
+          "points": 3769
+        },
+        {
+          "raw": 118,
+          "points": 3709
+        },
+        {
+          "raw": 119,
+          "points": 3639
+        },
+        {
+          "raw": 120,
+          "points": 3583
+        },
+        {
+          "raw": 121,
+          "points": 3543
+        },
+        {
+          "raw": 122,
+          "points": 3527
+        },
+        {
+          "raw": 123,
+          "points": 3366
+        },
+        {
+          "raw": 124,
+          "points": 3346
+        },
+        {
+          "raw": 125,
+          "points": 3381
+        },
+        {
+          "raw": 126,
+          "points": 3444
+        },
+        {
+          "raw": 127,
+          "points": 3461
+        },
+        {
+          "raw": 128,
+          "points": 3489
+        },
+        {
+          "raw": 129,
+          "points": 3490
+        },
+        {
+          "raw": 130,
+          "points": 3457
+        },
+        {
+          "raw": 131,
+          "points": 3468
+        },
+        {
+          "raw": 132,
+          "points": 3527
+        },
+        {
+          "raw": 133,
+          "points": 3602
+        },
+        {
+          "raw": 134,
+          "points": 3729
+        },
+        {
+          "raw": 135,
+          "points": 3846
+        },
+        {
+          "raw": 136,
+          "points": 3973
+        },
+        {
+          "raw": 137,
+          "points": 4123
+        },
+        {
+          "raw": 138,
+          "points": 4259
+        }
+      ],
+      "per_frame_min": 3346,
+      "per_frame_median": 3869.0,
+      "per_frame_max": 4259,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 188031,
+      "aggregate49_6cm_voxels": 11139,
+      "aggregate49_q01_q99_extent_m": [
+        4.2018842697143555,
+        1.7881736755371094,
+        1.491603136062622
+      ],
+      "median_annotation_box_lwh_m": [
+        4.86605,
+        2.00914,
+        1.53
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\10335539493577748957_1372_870_1392_870\\lidar\\actor_a11.npz",
+      "plot": "assets/waymo-val-004_a11_lidar.png"
+    },
+    {
+      "case": "waymo-val-020_a68",
+      "raw_window": [
+        148,
+        196
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 148,
+          "points": 2279
+        },
+        {
+          "raw": 149,
+          "points": 2257
+        },
+        {
+          "raw": 150,
+          "points": 2309
+        },
+        {
+          "raw": 151,
+          "points": 2212
+        },
+        {
+          "raw": 152,
+          "points": 2132
+        },
+        {
+          "raw": 153,
+          "points": 2169
+        },
+        {
+          "raw": 154,
+          "points": 2180
+        },
+        {
+          "raw": 155,
+          "points": 2164
+        },
+        {
+          "raw": 156,
+          "points": 2236
+        },
+        {
+          "raw": 157,
+          "points": 2222
+        },
+        {
+          "raw": 158,
+          "points": 2182
+        },
+        {
+          "raw": 159,
+          "points": 2193
+        },
+        {
+          "raw": 160,
+          "points": 2171
+        },
+        {
+          "raw": 161,
+          "points": 2299
+        },
+        {
+          "raw": 162,
+          "points": 2316
+        },
+        {
+          "raw": 163,
+          "points": 2391
+        },
+        {
+          "raw": 164,
+          "points": 2329
+        },
+        {
+          "raw": 165,
+          "points": 2346
+        },
+        {
+          "raw": 166,
+          "points": 2395
+        },
+        {
+          "raw": 167,
+          "points": 2473
+        },
+        {
+          "raw": 168,
+          "points": 2509
+        },
+        {
+          "raw": 169,
+          "points": 2613
+        },
+        {
+          "raw": 170,
+          "points": 2662
+        },
+        {
+          "raw": 171,
+          "points": 2781
+        },
+        {
+          "raw": 172,
+          "points": 2829
+        },
+        {
+          "raw": 173,
+          "points": 2919
+        },
+        {
+          "raw": 174,
+          "points": 2987
+        },
+        {
+          "raw": 175,
+          "points": 2957
+        },
+        {
+          "raw": 176,
+          "points": 3039
+        },
+        {
+          "raw": 177,
+          "points": 3138
+        },
+        {
+          "raw": 178,
+          "points": 3186
+        },
+        {
+          "raw": 179,
+          "points": 3279
+        },
+        {
+          "raw": 180,
+          "points": 3468
+        },
+        {
+          "raw": 181,
+          "points": 3465
+        },
+        {
+          "raw": 182,
+          "points": 3611
+        },
+        {
+          "raw": 183,
+          "points": 3674
+        },
+        {
+          "raw": 184,
+          "points": 3650
+        },
+        {
+          "raw": 185,
+          "points": 3890
+        },
+        {
+          "raw": 186,
+          "points": 3877
+        },
+        {
+          "raw": 187,
+          "points": 3897
+        },
+        {
+          "raw": 188,
+          "points": 4078
+        },
+        {
+          "raw": 189,
+          "points": 4031
+        },
+        {
+          "raw": 190,
+          "points": 4161
+        },
+        {
+          "raw": 191,
+          "points": 4287
+        },
+        {
+          "raw": 192,
+          "points": 4285
+        },
+        {
+          "raw": 193,
+          "points": 4416
+        },
+        {
+          "raw": 194,
+          "points": 4525
+        },
+        {
+          "raw": 195,
+          "points": 4480
+        },
+        {
+          "raw": 196,
+          "points": 4425
+        }
+      ],
+      "per_frame_min": 2132,
+      "per_frame_median": 2829.0,
+      "per_frame_max": 4525,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 148374,
+      "aggregate49_6cm_voxels": 9916,
+      "aggregate49_q01_q99_extent_m": [
+        1.4074000120162964,
+        2.0214667320251465,
+        2.640737533569336
+      ],
+      "median_annotation_box_lwh_m": [
+        5.11005,
+        2.33822,
+        3.0
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\11660186733224028707_420_000_440_000\\lidar\\actor_a68.npz",
+      "plot": "assets/waymo-val-020_a68_lidar.png"
+    },
+    {
+      "case": "waymo-val-065_a9",
+      "raw_window": [
+        124,
+        172
+      ],
+      "measured_frame_counts": [
+        {
+          "raw": 124,
+          "points": 2652
+        },
+        {
+          "raw": 125,
+          "points": 2619
+        },
+        {
+          "raw": 126,
+          "points": 2642
+        },
+        {
+          "raw": 127,
+          "points": 2645
+        },
+        {
+          "raw": 128,
+          "points": 2660
+        },
+        {
+          "raw": 129,
+          "points": 2661
+        },
+        {
+          "raw": 130,
+          "points": 2605
+        },
+        {
+          "raw": 131,
+          "points": 2580
+        },
+        {
+          "raw": 132,
+          "points": 2512
+        },
+        {
+          "raw": 133,
+          "points": 2598
+        },
+        {
+          "raw": 134,
+          "points": 2619
+        },
+        {
+          "raw": 135,
+          "points": 2629
+        },
+        {
+          "raw": 136,
+          "points": 2641
+        },
+        {
+          "raw": 137,
+          "points": 2626
+        },
+        {
+          "raw": 138,
+          "points": 2590
+        },
+        {
+          "raw": 139,
+          "points": 2585
+        },
+        {
+          "raw": 140,
+          "points": 2579
+        },
+        {
+          "raw": 141,
+          "points": 2550
+        },
+        {
+          "raw": 142,
+          "points": 2583
+        },
+        {
+          "raw": 143,
+          "points": 2547
+        },
+        {
+          "raw": 144,
+          "points": 2561
+        },
+        {
+          "raw": 145,
+          "points": 2569
+        },
+        {
+          "raw": 146,
+          "points": 2545
+        },
+        {
+          "raw": 147,
+          "points": 2597
+        },
+        {
+          "raw": 148,
+          "points": 2567
+        },
+        {
+          "raw": 149,
+          "points": 2581
+        },
+        {
+          "raw": 150,
+          "points": 2571
+        },
+        {
+          "raw": 151,
+          "points": 2573
+        },
+        {
+          "raw": 152,
+          "points": 2585
+        },
+        {
+          "raw": 153,
+          "points": 2586
+        },
+        {
+          "raw": 154,
+          "points": 2581
+        },
+        {
+          "raw": 155,
+          "points": 2552
+        },
+        {
+          "raw": 156,
+          "points": 2557
+        },
+        {
+          "raw": 157,
+          "points": 2555
+        },
+        {
+          "raw": 158,
+          "points": 2585
+        },
+        {
+          "raw": 159,
+          "points": 2570
+        },
+        {
+          "raw": 160,
+          "points": 2542
+        },
+        {
+          "raw": 161,
+          "points": 2570
+        },
+        {
+          "raw": 162,
+          "points": 2549
+        },
+        {
+          "raw": 163,
+          "points": 2576
+        },
+        {
+          "raw": 164,
+          "points": 2546
+        },
+        {
+          "raw": 165,
+          "points": 2580
+        },
+        {
+          "raw": 166,
+          "points": 2574
+        },
+        {
+          "raw": 167,
+          "points": 2583
+        },
+        {
+          "raw": 168,
+          "points": 2581
+        },
+        {
+          "raw": 169,
+          "points": 2560
+        },
+        {
+          "raw": 170,
+          "points": 2568
+        },
+        {
+          "raw": 171,
+          "points": 2582
+        },
+        {
+          "raw": 172,
+          "points": 2568
+        }
+      ],
+      "per_frame_min": 2512,
+      "per_frame_median": 2580.0,
+      "per_frame_max": 2661,
+      "zero_return_frames": [],
+      "aggregate49_actual_rows": 126637,
+      "aggregate49_6cm_voxels": 4167,
+      "aggregate49_q01_q99_extent_m": [
+        2.7755045890808105,
+        1.879009485244751,
+        1.4625380039215088
+      ],
+      "median_annotation_box_lwh_m": [
+        4.6275,
+        2.09931,
+        1.6
+      ],
+      "native_geometry_verified_by_LiDAR": null,
+      "plot_semantics": "All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.",
+      "source_npz": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-31\\g\\work\\actor_diagnostics_20261101\\media\\generated\\scenes\\15021599536622641101_556_150_576_150\\lidar\\actor_a9.npz",
+      "plot": "assets/waymo-val-065_a9_lidar.png"
+    }
+  ]
+}

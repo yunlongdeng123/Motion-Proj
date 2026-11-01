@@ -1,0 +1,22 @@
+import os
+for k in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS'):os.environ[k]='1'
+import pathlib,json,collections
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+W=pathlib.Path(__file__).resolve().parent;H=W/'case15';O=W.parent/'outputs/机制隔离15例_20261101';A=O/'assets';B=pathlib.Path(r'C:\Users\dengyunlong\Documents\Codex\2026-10-31\g\work\actor_diagnostics_20261101\media/generated');ss=json.loads((H/'shortlist.json').read_text(encoding='utf8'));out={'schema':'case15_measured_LiDAR_research_boundary_screen_v1','GPU_required':False,'new_GPU_queries':0,'screen_type':'conservative research-sample selection, not formal physical capability or algorithm qualification','limitations':['Unvoxelized actual measured points inside source annotation boxes may include road/occluders. Counts do not equal pure vehicle surface samples.','First/mid/last panels draw every point in that frame; aggregation is a separate row. Same point size and equal metric aspect are used.','Aggregated actor-local points assume same-frame rigid boxes; no within-scan actor-motion compensation; not full surface GT.','No point-count threshold is calibrated or used as a formal rejection gate.'],'viewer_screenshot_source':{'path':r'C:\Users\dengyunlong\Documents\Codex\2026-10-22\ni-x-a\outputs\GS_Scene_Diagnostics_20261027\viewer.js','bottom_label':'EDIT STATE · grid 10 m · Gaussian samples · no RGB backdrop','note':'The label is fixed. Same canvas can show sampled Gaussian centers and an optional cyan true-LiDAR overlay. Screenshot alone cannot establish which layers were enabled. Actual NPZ counts below are independent of viewer caps/voxel display.'},'rows':[]}
+plt.rcParams.update({'font.family':'Microsoft YaHei','axes.unicode_minus':False,'font.size':10})
+for r in ss:
+ d=json.loads((B/'scenes'/r['context_id']/'media.json').read_text(encoding='utf8'));a=d['actors'][r['track_id']];z=np.load(B/a['lidar']['npz']);w=r['native_window'] or r['recommended49'];raws=list(range(w['first_raw_frame'],w['last_raw_frame']+1));poses={x['raw']:x for x in a['trajectory']};counts=[int((z['raw_frame']==k).sum()) for k in raws];anchors=[raws[0],raws[len(raws)//2],raws[-1]];keep=np.isin(z['raw_frame'],raws);aggregate=z['actor_local_xyz'][keep];dims=np.median([poses[k]['dimensions'] for k in raws],axis=0);key=r['scene_key']+'_'+r['alias']
+ extent=(np.quantile(aggregate,.99,axis=0)-np.quantile(aggregate,.01,axis=0)) if len(aggregate) else None
+ row={'case':key,'raw_window':[raws[0],raws[-1]],'measured_frame_counts':[{'raw':k,'points':n} for k,n in zip(raws,counts)],'per_frame_min':min(counts),'per_frame_median':float(np.median(counts)),'per_frame_max':max(counts),'zero_return_frames':[k for k,n in zip(raws,counts) if n==0],'aggregate49_actual_rows':len(aggregate),'aggregate49_6cm_voxels':len(np.unique(np.floor(aggregate/.06).astype(np.int32),axis=0)),'aggregate49_q01_q99_extent_m':extent.tolist() if extent is not None else None,'median_annotation_box_lwh_m':dims.tolist(),'native_geometry_verified_by_LiDAR':None,'plot_semantics':'All actual same-frame points at3 fixed anchors, no display sampling or voxel filter; 49-frame aggregate row drawn separately.','source_npz':str(B/a['lidar']['npz'])}
+ fig,axes=plt.subplots(4,3,figsize=(11.5,10),layout='constrained');fig.suptitle(key+'  实测LiDAR（非高斯中心，CPU绘图）',fontsize=15)
+ points=[z['actor_local_xyz'][z['raw_frame']==k] for k in anchors]+[aggregate];labels=[f'raw{k} · {len(p):,}点' for k,p in zip(anchors,points[:3])]+[f'49帧汇聚 · {len(aggregate):,}行（不是单帧）']
+ for i,(p,label) in enumerate(zip(points,labels)):
+  for j,(u,v,title) in enumerate([(0,1,'俯视 x/y'),(0,2,'侧视 x/z'),(1,2,'正视 y/z')]):
+   ax=axes[i,j];ax.scatter(p[:,u],p[:,v],s=.55,c='#096b83',linewidths=0,alpha=.8,rasterized=True);ax.add_patch(Rectangle((-dims[u]/2,-dims[v]/2),dims[u],dims[v],fill=False,edgecolor='#ae7f36',linewidth=1));span=max(dims[u],dims[v])+1.;ax.set_xlim(-span/2,span/2);ax.set_ylim(-span/2,span/2);ax.set_aspect('equal');ax.grid(alpha=.15);ax.set_title(label+'\n'+title);ax.set_xlabel('米');ax.set_ylabel('米')
+ fig.savefig(A/(key+'_lidar.png'),dpi=125);plt.close(fig);row['plot']='assets/'+key+'_lidar.png';out['rows'].append(row)
+ print(key,counts[0],np.median(counts),counts[-1],flush=True)
+(H/'lidar_screen.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf8')

@@ -1,0 +1,69 @@
+{
+  "task_id": "WS-V43-CASE15-ISOLATION-20261101-R1",
+  "scope": "15 frozen cases from prior screening; CPU mechanism isolation; no subagents; user confirmed keep CPU results and remaining todos",
+  "case_identity": "scene_key+alias with raw context/track IDs in shortlist.json",
+  "data_roles": [
+    "original 30K parameters and eval layers",
+    "raw annotated trajectories and measured box-contained LiDAR",
+    "pre-existing predicted DEVA masks as provisional associated input",
+    "existing R4 native float arrays as diagnostic evaluation only, no independent edited GT"
+  ],
+  "read_only_originals": true,
+  "new_training_updates": 0,
+  "new_native_GPU_queries": 0,
+  "reused_native_float_records": 24,
+  "source_case_frames": 735,
+  "full_G_case_frames": 588,
+  "prepared_source_mask_frames": 147,
+  "remote_work_root": "/root/autodl-tmp/codex_tmp/v43_case15_isolation_20261101_r1",
+  "local_cwd": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-01\\new-chat",
+  "local_analysis_python": "C:/Program Files/Python311/python.exe",
+  "remote_python": "/root/autodl-tmp/envs/motionproj/bin/python; legacy mmap export uses /root/autodl-tmp/envs/drivingeditor/bin/python",
+  "thread_limits": {
+    "OMP_NUM_THREADS": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "CUDA_VISIBLE_DEVICES": ""
+  },
+  "repro_steps": [
+    "case15_remote.py: metadata, masks and native source inventory",
+    "case15_export_legacy.py: mmap original 30K fields only; stat unchanged; no native class restore",
+    "case15_source_audit.py: 15x49 poses and fixed three-anchor contact evidence",
+    "case15_geometry_audit.py --skip-legacy then --only-legacy: 12x49 support/footprint and fixed row-pool diagnostics",
+    "case15_r4_existing.py: read two fixed routes x4 operations x3 anchors, G/environment closure",
+    "case15_build_mask_probe.py and case15_mask_proposals.py: official projection box and inherited score, no admission",
+    "case15_freeze_source_masks.py: fixed source IDs79/145/82, 147 provisional masks in new directories",
+    "case15_report.py and case15_verify.py: 195 mechanism entries, per-case todos, masks and source counts",
+    "case15_lidar_screen.py: actual unvoxelized per-frame counts and fixed-anchor plots, aggregate separated",
+    "case15_patch_ui.py: original local page backed up then extended; one-shot patch",
+    "ui/test_lidar3d.mjs: Node vm and @napi-rs/canvas actual-data integration; test paths must be adapted outside original Windows workspace"
+  ],
+  "engineering_replays": "r1 raw-corner boxes invalid at truncation; r2 IoU-only masks may select road/adjacent car; r3 inherited ranking used only for proposals; all versions retained remotely/locally",
+  "formal_eligibility": "60 case-operation records unknown; no scientific failure or physical impossibility assigned",
+  "remaining": "source masks for564/a1 and537/a148; frozenG/mask registration for3 HF cases; native contributor/depth/reveal/shared binding controls",
+  "failure_ledger_refs": [
+    "V82-F09",
+    "V82-F10"
+  ],
+  "failure_ledger_delta": "none",
+  "human_verdict": null,
+  "measured_LiDAR_screen": {
+    "cases": 15,
+    "case_frames": 735,
+    "mainline_priority": 5,
+    "reveal_paired": 1,
+    "boundary_controls": 4,
+    "input_blocked": 5,
+    "point_count_threshold": null,
+    "note": "conservative sample selection, not formal qualification"
+  },
+  "candidate_page_3D": {
+    "original_page_updated": true,
+    "default_scope": "current image frame",
+    "GPU_required": false,
+    "source_data_modified": false,
+    "same_code_actual_data_checks": 8,
+    "browser_interaction_QA": "not performed; file URL policy block retained",
+    "dependencies": "existing actor_candidates viewer/scenes/geometry data; ui snapshots alone are not standalone"
+  }
+}

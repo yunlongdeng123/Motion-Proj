@@ -238,3 +238,5 @@
 - WS-V43-SIM-M1-M2-20261030：[真值辅助归属与同集合表示修复实际对照](autoresearch/v43_ownership_20261028/sim_m1m2_20261030/index.html)；3关键帧、1留出相机、两臂各200步局部拟合；有限删除收益，未编辑/横移仍失败，不是数学上界或泛化证明。
 
 - WS-V43-SIM-SOURCE-EVIDENCE-20261030：[删后来源与同世界观测控制](autoresearch/v43_ownership_20261028/source_evidence_20261030/index.html)；全行αT、16观测回查、固定旧模型桥接及新观测10K重建。区分选点、表示与观测缺口；不将旧M1/M2实现失败推广为方向失败。
+
+- WS-V43-CASE15-ISOLATION-20261101-R1：[15例机制隔离、CPU证据与剩余待办](autoresearch/v43_ownership_20261028/case15_isolation_20261101/index.html)；735源case-frame、588完整G case-frame、复用24原生浮点记录、147候选mask；新增训练/GPU查询0。输入与资源见同目录run_contract.json，正式资格仍unknown。

@@ -1,0 +1,2271 @@
+{
+  "task_id": "WS-V43-CASE15-ISOLATION-20261101-R1",
+  "new_GPU_queries": 0,
+  "rows": [
+    {
+      "scene_key": "waymo-train-008",
+      "alias": "a37",
+      "case": "waymo-train-008_a37",
+      "raw_window": [
+        89,
+        137
+      ],
+      "source_track_id": "vBOasuXpjI7h7d-X_VEQdA",
+      "source_context": "10094743350625019937_3420_000_3440_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0662182248211138e-10,
+      "source_speed_mps": {
+        "median": 1.274037472128631,
+        "max": 3.8076677011136484
+      },
+      "source_abs_yaw_rate_degps_max": 0.6658016033014452,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 3.293821822368587,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.58724607720161,
+        "max": 29.7436551322643
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 1.2019385645605902,
+        "max": 1.9438727010237185
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 4.0816583057258505e-12,
+        "median": 2.0368671433935693e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "10094743350625019937_3420_000_3440_000",
+        "scene_key": "waymo-train-008",
+        "track_id": "vBOasuXpjI7h7d-X_VEQdA",
+        "actor_alias": "a37",
+        "measured_box_rows": 425894,
+        "aggregate_unique_6cm_voxels": 9463,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.049783,
+            -0.839751,
+            -0.885846
+          ],
+          [
+            0.971877,
+            0.915513,
+            0.594491
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.02166,
+          1.755264,
+          1.480337
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.13868,
+          1.97938,
+          1.79
+        ],
+        "measured_extent_over_median_box": [
+          0.730102,
+          0.886774,
+          0.827004
+        ],
+        "frames_with_at_least_20_measured_points": 199,
+        "official_FRONT_frames_with_at_least_20_measured_points": 199,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          18,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          181
+        ],
+        "trusted_finite_FOV_color_rows": 404019,
+        "view_vector_count": 199,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "downsampled_nonzero_pixels": 58880,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            390,
+            406,
+            681,
+            639
+          ],
+          "projected_box_pixels": [
+            343.067,
+            352.815,
+            735.624,
+            640
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 113,
+          "downsampled_nonzero_pixels": 51496,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            398,
+            400,
+            661,
+            635
+          ],
+          "projected_box_pixels": [
+            357.546,
+            353.464,
+            710.217,
+            640
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 137,
+          "downsampled_nonzero_pixels": 18912,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            416,
+            378,
+            575,
+            521
+          ],
+          "projected_box_pixels": [
+            397.373,
+            350.006,
+            600.813,
+            547.03
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 14720,
+          "native_composite_vs_source_GT_MAE": 0.004745932793407218,
+          "static_with_env_vs_composite_MAE": 0.17827951832907077,
+          "dynamic_layer_RGB_absolute_mean": 0.33080988917306053,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 113,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 12874,
+          "native_composite_vs_source_GT_MAE": 0.006003892935145162,
+          "static_with_env_vs_composite_MAE": 0.15604719853867705,
+          "dynamic_layer_RGB_absolute_mean": 0.2964436605774825,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 137,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 4728,
+          "native_composite_vs_source_GT_MAE": 0.008116850801234199,
+          "static_with_env_vs_composite_MAE": 0.2523285004921314,
+          "dynamic_layer_RGB_absolute_mean": 0.28840919898698336,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "native_preparation_source_index_timestamp_matches": 49,
+      "native_preparation_source_index_timestamp_denominator": 49,
+      "contact_sheet": "assets/waymo-train-008_a37_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-008",
+      "alias": "a26",
+      "case": "waymo-train-008_a26",
+      "raw_window": [
+        89,
+        137
+      ],
+      "source_track_id": "mSiVqee7l7dfkt8HQhXZZw",
+      "source_context": "10094743350625019937_3420_000_3440_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0442802178545207e-10,
+      "source_speed_mps": {
+        "median": 8.84523806328252,
+        "max": 8.976003953324101
+      },
+      "source_abs_yaw_rate_degps_max": 3.127511293670777,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 31.879859657240168,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 27.03829769926537,
+        "max": 29.99800006690925
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.17265548214074164,
+        "max": 10.396997510129506
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 4.0816583057258505e-12,
+        "median": 2.0368671433935693e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "10094743350625019937_3420_000_3440_000",
+        "scene_key": "waymo-train-008",
+        "track_id": "mSiVqee7l7dfkt8HQhXZZw",
+        "actor_alias": "a26",
+        "measured_box_rows": 96090,
+        "aggregate_unique_6cm_voxels": 15976,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -1.942023,
+            -0.795115,
+            -0.878488
+          ],
+          [
+            1.972186,
+            0.935322,
+            0.631032
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.914209,
+          1.730438,
+          1.50952
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.08257,
+          2.04848,
+          1.8
+        ],
+        "measured_extent_over_median_box": [
+          0.958761,
+          0.844742,
+          0.838622
+        ],
+        "frames_with_at_least_20_measured_points": 122,
+        "official_FRONT_frames_with_at_least_20_measured_points": 63,
+        "labelled_frame_denominator": 141,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          81,
+          1,
+          0,
+          0
+        ],
+        "trusted_finite_FOV_color_rows": 20308,
+        "view_vector_count": 141,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "downsampled_nonzero_pixels": 1104,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            398,
+            328,
+            435,
+            361
+          ],
+          "projected_box_pixels": [
+            392.414,
+            324.147,
+            441.311,
+            363.871
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 113,
+          "downsampled_nonzero_pixels": 4112,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            324,
+            336,
+            399,
+            401
+          ],
+          "projected_box_pixels": [
+            314.164,
+            330.955,
+            408.311,
+            404.354
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 137,
+          "downsampled_nonzero_pixels": 12524,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            0,
+            438,
+            75,
+            639
+          ],
+          "projected_box_pixels": [
+            0,
+            378.772,
+            129.965,
+            640
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 276,
+          "native_composite_vs_source_GT_MAE": 0.014506962205171925,
+          "static_with_env_vs_composite_MAE": 0.21091692715733634,
+          "dynamic_layer_RGB_absolute_mean": 0.40447096713081365,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 113,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 1028,
+          "native_composite_vs_source_GT_MAE": 0.014723684545153989,
+          "static_with_env_vs_composite_MAE": 0.2500966404720124,
+          "dynamic_layer_RGB_absolute_mean": 0.3382416520434373,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 137,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 3131,
+          "native_composite_vs_source_GT_MAE": 0.01666697979095822,
+          "static_with_env_vs_composite_MAE": 0.2142930801619061,
+          "dynamic_layer_RGB_absolute_mean": 0.1540496364626975,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "native_preparation_source_index_timestamp_matches": 49,
+      "native_preparation_source_index_timestamp_denominator": 49,
+      "contact_sheet": "assets/waymo-train-008_a26_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-008",
+      "alias": "a6",
+      "case": "waymo-train-008_a6",
+      "raw_window": [
+        89,
+        137
+      ],
+      "source_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+      "source_context": "10094743350625019937_3420_000_3440_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0164580288574143e-10,
+      "source_speed_mps": {
+        "median": 3.2263580097496787,
+        "max": 6.08628164531881
+      },
+      "source_abs_yaw_rate_degps_max": 1.4774972043867405,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 2.1561136754011643,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.24612787894996,
+        "max": 29.953609344615405
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.2119633892622925,
+        "max": 0.3991969606290298
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 4.0816583057258505e-12,
+        "median": 2.0368671433935693e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "10094743350625019937_3420_000_3440_000",
+        "scene_key": "waymo-train-008",
+        "track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+        "actor_alias": "a6",
+        "measured_box_rows": 54715,
+        "aggregate_unique_6cm_voxels": 4085,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.099446,
+            -0.916534,
+            -0.118736
+          ],
+          [
+            1.867394,
+            0.938663,
+            0.696635
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.96684,
+          1.855197,
+          0.815372
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.33404,
+          2.07754,
+          1.44
+        ],
+        "measured_extent_over_median_box": [
+          0.915275,
+          0.892978,
+          0.56623
+        ],
+        "frames_with_at_least_20_measured_points": 199,
+        "official_FRONT_frames_with_at_least_20_measured_points": 199,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 1,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          199
+        ],
+        "trusted_finite_FOV_color_rows": 54715,
+        "view_vector_count": 199,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "downsampled_nonzero_pixels": 4596,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            450,
+            362,
+            579,
+            405
+          ],
+          "projected_box_pixels": [
+            439.988,
+            354.472,
+            608.538,
+            483.153
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 113,
+          "downsampled_nonzero_pixels": 4048,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            462,
+            352,
+            565,
+            399
+          ],
+          "projected_box_pixels": [
+            453.001,
+            347.772,
+            578.128,
+            441.678
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 137,
+          "downsampled_nonzero_pixels": 1860,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            464,
+            346,
+            531,
+            377
+          ],
+          "projected_box_pixels": [
+            456.1,
+            344.165,
+            536.411,
+            403.855
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 1149,
+          "native_composite_vs_source_GT_MAE": 0.008639510344317593,
+          "static_with_env_vs_composite_MAE": 0.16269219611256164,
+          "dynamic_layer_RGB_absolute_mean": 0.5263650688009466,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 113,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 1012,
+          "native_composite_vs_source_GT_MAE": 0.01048205843602263,
+          "static_with_env_vs_composite_MAE": 0.17032343899351574,
+          "dynamic_layer_RGB_absolute_mean": 0.4408535482704281,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 137,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 465,
+          "native_composite_vs_source_GT_MAE": 0.01862112586970272,
+          "static_with_env_vs_composite_MAE": 0.1825595614589922,
+          "dynamic_layer_RGB_absolute_mean": 0.42167404596247104,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "native_preparation_source_index_timestamp_matches": 49,
+      "native_preparation_source_index_timestamp_denominator": 49,
+      "contact_sheet": "assets/waymo-train-008_a6_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-008",
+      "alias": "a18",
+      "case": "waymo-train-008_a18",
+      "raw_window": [
+        89,
+        137
+      ],
+      "source_track_id": "Umybpe6eOenVBgQ_zgdVtw",
+      "source_context": "10094743350625019937_3420_000_3440_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0213141443671248e-10,
+      "source_speed_mps": {
+        "median": 9.450297821751162,
+        "max": 9.61944934693236
+      },
+      "source_abs_yaw_rate_degps_max": 0.28344677961002945,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 4.440378999568159,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.01278701274256,
+        "max": 30.024045123842853
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.08223004123827735,
+        "max": 0.4952503539076186
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 4.0816583057258505e-12,
+        "median": 2.0368671433935693e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "10094743350625019937_3420_000_3440_000",
+        "scene_key": "waymo-train-008",
+        "track_id": "Umybpe6eOenVBgQ_zgdVtw",
+        "actor_alias": "a18",
+        "measured_box_rows": 84195,
+        "aggregate_unique_6cm_voxels": 15325,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -1.964625,
+            -0.77186,
+            -0.848738
+          ],
+          [
+            1.965289,
+            0.958391,
+            0.613008
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.929914,
+          1.730251,
+          1.461746
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.08917,
+          2.07448,
+          1.74
+        ],
+        "measured_extent_over_median_box": [
+          0.961054,
+          0.834065,
+          0.840084
+        ],
+        "frames_with_at_least_20_measured_points": 107,
+        "official_FRONT_frames_with_at_least_20_measured_points": 67,
+        "labelled_frame_denominator": 110,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 1,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          69,
+          0,
+          0,
+          0
+        ],
+        "trusted_finite_FOV_color_rows": 18934,
+        "view_vector_count": 109,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "downsampled_nonzero_pixels": 380,
+          "mask_inside_projected_box_fraction": 0.9157894736842105,
+          "mask_bbox_resized_pixels": [
+            430,
+            324,
+            451,
+            343
+          ],
+          "projected_box_pixels": [
+            424.813,
+            326.601,
+            454.535,
+            350.76
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 113,
+          "downsampled_nonzero_pixels": 864,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            406,
+            330,
+            441,
+            357
+          ],
+          "projected_box_pixels": [
+            401.579,
+            328.341,
+            444.832,
+            362.91
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 137,
+          "downsampled_nonzero_pixels": 3000,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            328,
+            346,
+            397,
+            399
+          ],
+          "projected_box_pixels": [
+            316.915,
+            337.136,
+            403.474,
+            403.272
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 89,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 95,
+          "native_composite_vs_source_GT_MAE": 0.042614379084967326,
+          "static_with_env_vs_composite_MAE": 0.147547299621603,
+          "dynamic_layer_RGB_absolute_mean": 0.5389611283109735,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 113,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 216,
+          "native_composite_vs_source_GT_MAE": 0.022143548777535705,
+          "static_with_env_vs_composite_MAE": 0.24133986928104573,
+          "dynamic_layer_RGB_absolute_mean": 0.48146937787460664,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 137,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 750,
+          "native_composite_vs_source_GT_MAE": 0.017535511982570806,
+          "static_with_env_vs_composite_MAE": 0.23335424836601304,
+          "dynamic_layer_RGB_absolute_mean": 0.45516339869281053,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "native_preparation_source_index_timestamp_matches": 49,
+      "native_preparation_source_index_timestamp_denominator": 49,
+      "contact_sheet": "assets/waymo-train-008_a18_contact.png"
+    },
+    {
+      "scene_key": "waymo-val-004",
+      "alias": "a11",
+      "case": "waymo-val-004_a11",
+      "raw_window": [
+        90,
+        138
+      ],
+      "source_track_id": "ZNn2Ay8hA4lh-bx-PLqV8g",
+      "source_context": "10335539493577748957_1372_870_1392_870",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.887335394864749e-11,
+      "source_speed_mps": {
+        "median": 18.26383463710823,
+        "max": 19.02617039191868
+      },
+      "source_abs_yaw_rate_degps_max": 1.9766671214377936,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 3.7367864848568133,
+      "view_bank_role": "planned preparation-window source proxy, no frozen G training support",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 28.24344079015041,
+        "max": 29.740139679939848
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 1.7508050790169791,
+        "max": 2.9616670349591354
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": null,
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "10335539493577748957_1372_870_1392_870",
+        "scene_key": "waymo-val-004",
+        "track_id": "ZNn2Ay8hA4lh-bx-PLqV8g",
+        "actor_alias": "a11",
+        "measured_box_rows": 918244,
+        "aggregate_unique_6cm_voxels": 20168,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.366243,
+            -0.91971,
+            -0.757438
+          ],
+          [
+            2.028741,
+            0.752711,
+            0.731971
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.394984,
+          1.672421,
+          1.489409
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.86605,
+          2.00914,
+          1.53
+        ],
+        "measured_extent_over_median_box": [
+          0.903193,
+          0.832406,
+          0.97347
+        ],
+        "frames_with_at_least_20_measured_points": 198,
+        "official_FRONT_frames_with_at_least_20_measured_points": 158,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          157,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "trusted_finite_FOV_color_rows": 221474,
+        "view_vector_count": 198,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-val-004_a11_contact.png"
+    },
+    {
+      "scene_key": "waymo-val-020",
+      "alias": "a68",
+      "case": "waymo-val-020_a68",
+      "raw_window": [
+        148,
+        196
+      ],
+      "source_track_id": "kYYKRxr4uWJekE0t7HNNzA",
+      "source_context": "11660186733224028707_420_000_440_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0926171079006508e-10,
+      "source_speed_mps": {
+        "median": 1.8655518242164852,
+        "max": 3.1924748166332835
+      },
+      "source_abs_yaw_rate_degps_max": 0.43221202504233597,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 1.290530478785951,
+      "view_bank_role": "planned preparation-window source proxy, no frozen G training support",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.909815850787584,
+        "max": 29.968356999949638
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.8908578371782234,
+        "max": 1.3663625033033608
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": null,
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "11660186733224028707_420_000_440_000",
+        "scene_key": "waymo-val-020",
+        "track_id": "kYYKRxr4uWJekE0t7HNNzA",
+        "actor_alias": "a68",
+        "measured_box_rows": 406497,
+        "aggregate_unique_6cm_voxels": 14884,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.460598,
+            -1.030291,
+            -1.391988
+          ],
+          [
+            -0.97596,
+            1.012028,
+            1.297634
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          1.484639,
+          2.042319,
+          2.689622
+        ],
+        "median_annotation_box_dimensions_m": [
+          5.11005,
+          2.33822,
+          3.0
+        ],
+        "measured_extent_over_median_box": [
+          0.290533,
+          0.87345,
+          0.896541
+        ],
+        "frames_with_at_least_20_measured_points": 197,
+        "official_FRONT_frames_with_at_least_20_measured_points": 197,
+        "labelled_frame_denominator": 197,
+        "raw_scene_frame_denominator": 197,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          193,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4
+        ],
+        "trusted_finite_FOV_color_rows": 406497,
+        "view_vector_count": 197,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-val-020_a68_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-212",
+      "alias": "a0",
+      "case": "waymo-train-212_a0",
+      "raw_window": [
+        77,
+        125
+      ],
+      "source_track_id": "gTriXsyDrbzzU6apS1WErQ",
+      "source_context": "14705303724557273004_3105_000_3125_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.974920889277428e-11,
+      "source_speed_mps": {
+        "median": 8.602032737565295,
+        "max": 12.640108673288378
+      },
+      "source_abs_yaw_rate_degps_max": 4.106882159891937,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 2.9902595689965983,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 27.828450308148035,
+        "max": 29.95956523955155
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.21711412715211453,
+        "max": 0.6056205269242738
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 2.0368671433935693e-12,
+        "median": 9.374856803373542e-13
+      },
+      "native_target_center_source_parity_max_abs_m": 4.966179023568884e-09,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "14705303724557273004_3105_000_3125_000",
+        "scene_key": "waymo-train-212",
+        "track_id": "gTriXsyDrbzzU6apS1WErQ",
+        "actor_alias": "a0",
+        "measured_box_rows": 185674,
+        "aggregate_unique_6cm_voxels": 16849,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.255787,
+            -0.929048,
+            -0.951557
+          ],
+          [
+            1.891315,
+            0.987637,
+            0.878262
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.147102,
+          1.916685,
+          1.829819
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.68442,
+          2.20723,
+          1.91
+        ],
+        "measured_extent_over_median_box": [
+          0.885297,
+          0.868367,
+          0.95802
+        ],
+        "frames_with_at_least_20_measured_points": 199,
+        "official_FRONT_frames_with_at_least_20_measured_points": 199,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 1,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          199
+        ],
+        "trusted_finite_FOV_color_rows": 183552,
+        "view_vector_count": 199,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 77,
+          "downsampled_nonzero_pixels": 7072,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            585,
+            333,
+            691,
+            417
+          ],
+          "projected_box_pixels": [
+            578.905,
+            329.44,
+            702.492,
+            420.823
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 101,
+          "downsampled_nonzero_pixels": 8180,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            584,
+            343,
+            697,
+            433
+          ],
+          "projected_box_pixels": [
+            575.557,
+            338.36,
+            707.499,
+            437.334
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 125,
+          "downsampled_nonzero_pixels": 9996,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            569,
+            347,
+            698,
+            444
+          ],
+          "projected_box_pixels": [
+            560.479,
+            341.404,
+            711.138,
+            449.817
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 77,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 1765,
+          "native_composite_vs_source_GT_MAE": 0.01796293210390861,
+          "static_with_env_vs_composite_MAE": 0.12885852357940342,
+          "dynamic_layer_RGB_absolute_mean": 0.1991208872595308,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 101,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 2053,
+          "native_composite_vs_source_GT_MAE": 0.01165518975896902,
+          "static_with_env_vs_composite_MAE": 0.20117666160472955,
+          "dynamic_layer_RGB_absolute_mean": 0.21209389097415227,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 125,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 2517,
+          "native_composite_vs_source_GT_MAE": 0.016593568959831315,
+          "static_with_env_vs_composite_MAE": 0.32974829979667675,
+          "dynamic_layer_RGB_absolute_mean": 0.19893170882443825,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-212_a0_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-212",
+      "alias": "a35",
+      "case": "waymo-train-212_a35",
+      "raw_window": [
+        77,
+        125
+      ],
+      "source_track_id": "PnZL3Lm8jQTGBPRD8a3MVA",
+      "source_context": "14705303724557273004_3105_000_3125_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0111089743247703e-10,
+      "source_speed_mps": {
+        "median": 4.269242766835768,
+        "max": 10.482753840773508
+      },
+      "source_abs_yaw_rate_degps_max": 4.164858306975689,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 24.163074939953102,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 15.411919250209438,
+        "max": 29.832285595778497
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.21041728542037047,
+        "max": 3.916043995329617
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 3.703120790965461e-12,
+        "median": 1.8471924715040497e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "14705303724557273004_3105_000_3125_000",
+        "scene_key": "waymo-train-212",
+        "track_id": "PnZL3Lm8jQTGBPRD8a3MVA",
+        "actor_alias": "a35",
+        "measured_box_rows": 188977,
+        "aggregate_unique_6cm_voxels": 20123,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.309544,
+            -0.766392,
+            -0.728503
+          ],
+          [
+            2.269814,
+            0.963027,
+            0.717913
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.579358,
+          1.729419,
+          1.446416
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.79656,
+          2.21859,
+          1.5
+        ],
+        "measured_extent_over_median_box": [
+          0.954717,
+          0.779513,
+          0.964277
+        ],
+        "frames_with_at_least_20_measured_points": 180,
+        "official_FRONT_frames_with_at_least_20_measured_points": 111,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 1,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          129
+        ],
+        "trusted_finite_FOV_color_rows": 24474,
+        "view_vector_count": 198,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 77,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 1222,
+          "native_composite_vs_source_GT_MAE": 0.014805900538065743,
+          "static_with_env_vs_composite_MAE": 0.04819378924510339,
+          "dynamic_layer_RGB_absolute_mean": 0.07309243391846645,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 101,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 5000,
+          "native_composite_vs_source_GT_MAE": 0.007966797385620915,
+          "static_with_env_vs_composite_MAE": 3.1372549019607804e-06,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 125,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 2323,
+          "native_composite_vs_source_GT_MAE": 0.00856847833120908,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-212_a35_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-212",
+      "alias": "a56",
+      "case": "waymo-train-212_a56",
+      "raw_window": [
+        77,
+        125
+      ],
+      "source_track_id": "kGWL6fDMqgKVnj8u6BwkgQ",
+      "source_context": "14705303724557273004_3105_000_3125_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.931988564915173e-11,
+      "source_speed_mps": {
+        "median": 9.597510045389747,
+        "max": 12.713904955642269
+      },
+      "source_abs_yaw_rate_degps_max": 4.789354562945826,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 13.529735885115295,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 19.06889115609309,
+        "max": 29.034580728023304
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 1.1280890839179587,
+        "max": 13.53611742413546
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 3.703120790965461e-12,
+        "median": 1.8471924715040497e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "14705303724557273004_3105_000_3125_000",
+        "scene_key": "waymo-train-212",
+        "track_id": "kGWL6fDMqgKVnj8u6BwkgQ",
+        "actor_alias": "a56",
+        "measured_box_rows": 784269,
+        "aggregate_unique_6cm_voxels": 27082,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.339213,
+            -0.695111,
+            -0.74957
+          ],
+          [
+            2.323179,
+            0.987526,
+            0.717671
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.662392,
+          1.682638,
+          1.467241
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.96057,
+          2.18559,
+          1.52
+        ],
+        "measured_extent_over_median_box": [
+          0.93989,
+          0.769878,
+          0.96529
+        ],
+        "frames_with_at_least_20_measured_points": 199,
+        "official_FRONT_frames_with_at_least_20_measured_points": 81,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          10,
+          71
+        ],
+        "trusted_finite_FOV_color_rows": 39745,
+        "view_vector_count": 199,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 77,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 5989,
+          "native_composite_vs_source_GT_MAE": 0.0072640800072464,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 101,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 12862,
+          "native_composite_vs_source_GT_MAE": 0.00869582892504952,
+          "static_with_env_vs_composite_MAE": 4.776699463281921e-06,
+          "dynamic_layer_RGB_absolute_mean": 1.2195828416890002e-06,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 125,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 9879,
+          "native_composite_vs_source_GT_MAE": 0.008249227416444864,
+          "static_with_env_vs_composite_MAE": 1.0056322019309455e-05,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-212_a56_contact.png"
+    },
+    {
+      "scene_key": "waymo-val-065",
+      "alias": "a9",
+      "case": "waymo-val-065_a9",
+      "raw_window": [
+        124,
+        172
+      ],
+      "source_track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "source_context": "15021599536622641101_556_150_576_150",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 1.0060885458074154e-10,
+      "source_speed_mps": {
+        "median": 0.0005976005699437134,
+        "max": 0.0005976820451886453
+      },
+      "source_abs_yaw_rate_degps_max": 0.006704365350980937,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 0.10720789608818997,
+      "view_bank_role": "planned preparation-window source proxy, no frozen G training support",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.628152661754257,
+        "max": 29.647609421598553
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 9.870136636249434,
+        "max": 9.902672983502123
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": null,
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "15021599536622641101_556_150_576_150",
+        "scene_key": "waymo-val-065",
+        "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "actor_alias": "a9",
+        "measured_box_rows": 311420,
+        "aggregate_unique_6cm_voxels": 9706,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.233713,
+            -0.926758,
+            -0.797778
+          ],
+          [
+            0.583132,
+            0.944801,
+            0.663857
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          2.816845,
+          1.87156,
+          1.461635
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.6275,
+          2.09931,
+          1.6
+        ],
+        "measured_extent_over_median_box": [
+          0.608719,
+          0.891512,
+          0.913522
+        ],
+        "frames_with_at_least_20_measured_points": 199,
+        "official_FRONT_frames_with_at_least_20_measured_points": 199,
+        "labelled_frame_denominator": 199,
+        "raw_scene_frame_denominator": 199,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          35,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          164
+        ],
+        "trusted_finite_FOV_color_rows": 280700,
+        "view_vector_count": 199,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-val-065_a9_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-537",
+      "alias": "a0",
+      "case": "waymo-train-537_a0",
+      "raw_window": [
+        149,
+        197
+      ],
+      "source_track_id": "RF9xTqqMA8m9Ds5-cQOu7Q",
+      "source_context": "4295449061847708198_3769_000_3789_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.958744939808639e-11,
+      "source_speed_mps": {
+        "median": 16.14502026868947,
+        "max": 17.284552717930914
+      },
+      "source_abs_yaw_rate_degps_max": 0.4744883617334689,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 0.6570460185061844,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.85775477557025,
+        "max": 29.9748435826167
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.11739811567913684,
+        "max": 0.24923573319283032
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 1.3752673502208269e-12,
+        "median": 4.726177557341027e-13
+      },
+      "native_target_center_source_parity_max_abs_m": 4.986536739082226e-09,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "4295449061847708198_3769_000_3789_000",
+        "scene_key": "waymo-train-537",
+        "track_id": "RF9xTqqMA8m9Ds5-cQOu7Q",
+        "actor_alias": "a0",
+        "measured_box_rows": 55450,
+        "aggregate_unique_6cm_voxels": 8766,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.14003,
+            -0.872902,
+            -0.746971
+          ],
+          [
+            1.670142,
+            0.833489,
+            0.694972
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.810172,
+          1.706392,
+          1.441942
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.36149,
+          1.86234,
+          1.51
+        ],
+        "measured_extent_over_median_box": [
+          0.873594,
+          0.916262,
+          0.954929
+        ],
+        "frames_with_at_least_20_measured_points": 198,
+        "official_FRONT_frames_with_at_least_20_measured_points": 198,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 1,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          198
+        ],
+        "trusted_finite_FOV_color_rows": 55450,
+        "view_vector_count": 198,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 149,
+          "downsampled_nonzero_pixels": 2094,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            568,
+            334,
+            627,
+            379
+          ],
+          "projected_box_pixels": [
+            563.99,
+            332.749,
+            629.71,
+            380.509
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 173,
+          "downsampled_nonzero_pixels": 1944,
+          "mask_inside_projected_box_fraction": 0.9963991769547325,
+          "mask_bbox_resized_pixels": [
+            562,
+            329,
+            619,
+            371
+          ],
+          "projected_box_pixels": [
+            560.768,
+            330.235,
+            621.842,
+            373.886
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 197,
+          "downsampled_nonzero_pixels": 2258,
+          "mask_inside_projected_box_fraction": 0.9946855624446412,
+          "mask_bbox_resized_pixels": [
+            570,
+            326,
+            630,
+            372
+          ],
+          "projected_box_pixels": [
+            567.558,
+            327.108,
+            632.088,
+            373.489
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 149,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 524,
+          "native_composite_vs_source_GT_MAE": 0.01929601357082273,
+          "static_with_env_vs_composite_MAE": 0.07466197674998751,
+          "dynamic_layer_RGB_absolute_mean": 0.43351544180012974,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 173,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 489,
+          "native_composite_vs_source_GT_MAE": 0.008891027440287635,
+          "static_with_env_vs_composite_MAE": 0.08354785677052005,
+          "dynamic_layer_RGB_absolute_mean": 0.42781453412994375,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 197,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 566,
+          "native_composite_vs_source_GT_MAE": 0.011473706090209935,
+          "static_with_env_vs_composite_MAE": 0.11096330169287973,
+          "dynamic_layer_RGB_absolute_mean": 0.42708838541305805,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-537_a0_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-537",
+      "alias": "a148",
+      "case": "waymo-train-537_a148",
+      "raw_window": [
+        149,
+        197
+      ],
+      "source_track_id": "sHBKnTLsCTLjv07myyk-zQ",
+      "source_context": "4295449061847708198_3769_000_3789_000",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.722533889089391e-11,
+      "source_speed_mps": {
+        "median": 16.16712077843426,
+        "max": 16.221285859022725
+      },
+      "source_abs_yaw_rate_degps_max": 0.19517444703080625,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 13.922927237412068,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 23.230382065435794,
+        "max": 29.13648018850216
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.38713677194745916,
+        "max": 5.406946848777247
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 1.824394577346153e-12,
+        "median": 4.77506393721677e-13
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "4295449061847708198_3769_000_3789_000",
+        "scene_key": "waymo-train-537",
+        "track_id": "sHBKnTLsCTLjv07myyk-zQ",
+        "actor_alias": "a148",
+        "measured_box_rows": 2418376,
+        "aggregate_unique_6cm_voxels": 27689,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.2002,
+            -0.717728,
+            -0.966528
+          ],
+          [
+            1.731035,
+            0.91552,
+            0.911346
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.931235,
+          1.633248,
+          1.877875
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.61539,
+          2.13033,
+          1.96
+        ],
+        "measured_extent_over_median_box": [
+          0.851767,
+          0.766664,
+          0.958099
+        ],
+        "frames_with_at_least_20_measured_points": 198,
+        "official_FRONT_frames_with_at_least_20_measured_points": 97,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          31,
+          66
+        ],
+        "trusted_finite_FOV_color_rows": 34001,
+        "view_vector_count": 198,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 149,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 3278,
+          "native_composite_vs_source_GT_MAE": 0.004432800169081259,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 173,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 7448,
+          "native_composite_vs_source_GT_MAE": 0.005399001705945536,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 197,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 13923,
+          "native_composite_vs_source_GT_MAE": 0.005769641525120187,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-537_a148_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-564",
+      "alias": "a0",
+      "case": "waymo-train-564_a0",
+      "raw_window": [
+        13,
+        61
+      ],
+      "source_track_id": "1OSdwBN_kmTeyfJc0NYl0Q",
+      "source_context": "473735159277431842_630_095_650_095",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.993328387025713e-11,
+      "source_speed_mps": {
+        "median": 9.683130003829506,
+        "max": 13.364789947365663
+      },
+      "source_abs_yaw_rate_degps_max": 7.73059722760647,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 5.456760785041588,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 26.29168362071309,
+        "max": 29.905627276834558
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.11950325901680012,
+        "max": 1.1907907143156107
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 4.088208757941675e-12,
+        "median": 1.8590166292392537e-12
+      },
+      "native_target_center_source_parity_max_abs_m": 5.079711762334682e-09,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "473735159277431842_630_095_650_095",
+        "scene_key": "waymo-train-564",
+        "track_id": "1OSdwBN_kmTeyfJc0NYl0Q",
+        "actor_alias": "a0",
+        "measured_box_rows": 58758,
+        "aggregate_unique_6cm_voxels": 10591,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.269763,
+            -0.882592,
+            -0.74507
+          ],
+          [
+            1.868255,
+            0.946516,
+            0.726025
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.138019,
+          1.829109,
+          1.471095
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.61436,
+          2.05387,
+          1.55
+        ],
+        "measured_extent_over_median_box": [
+          0.89677,
+          0.890567,
+          0.949094
+        ],
+        "frames_with_at_least_20_measured_points": 177,
+        "official_FRONT_frames_with_at_least_20_measured_points": 177,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          28,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          161
+        ],
+        "trusted_finite_FOV_color_rows": 58758,
+        "view_vector_count": 189,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [
+        {
+          "raw": 13,
+          "downsampled_nonzero_pixels": 13100,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            668,
+            378,
+            834,
+            480
+          ],
+          "projected_box_pixels": [
+            656.702,
+            371.263,
+            850.845,
+            495.973
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 37,
+          "downsampled_nonzero_pixels": 5681,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            608,
+            370,
+            712,
+            435
+          ],
+          "projected_box_pixels": [
+            599.806,
+            368.041,
+            718.856,
+            447.943
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        },
+        {
+          "raw": 61,
+          "downsampled_nonzero_pixels": 3436,
+          "mask_inside_projected_box_fraction": 1.0,
+          "mask_bbox_resized_pixels": [
+            577,
+            358,
+            654,
+            409
+          ],
+          "projected_box_pixels": [
+            572.042,
+            358.626,
+            661.33,
+            418.972
+          ],
+          "meaning": "box is source projected cuboid, not independent instance mask; outside pixels are engineering review triggers, not semantic failure labels"
+        }
+      ],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 13,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 3279,
+          "native_composite_vs_source_GT_MAE": 0.028032219292108425,
+          "static_with_env_vs_composite_MAE": 0.06102330736096412,
+          "dynamic_layer_RGB_absolute_mean": 0.35083428512199843,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 37,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 1425,
+          "native_composite_vs_source_GT_MAE": 0.014723999541337001,
+          "static_with_env_vs_composite_MAE": 0.1610916179337232,
+          "dynamic_layer_RGB_absolute_mean": 0.29385529182433207,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 61,
+          "ROI_semantics": "associated native body-mask ROI, not independent GT",
+          "ROI_pixels": 853,
+          "native_composite_vs_source_GT_MAE": 0.017312216015753702,
+          "static_with_env_vs_composite_MAE": 0.15369667992245745,
+          "dynamic_layer_RGB_absolute_mean": 0.30379667302638136,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-564_a0_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-564",
+      "alias": "a1",
+      "case": "waymo-train-564_a1",
+      "raw_window": [
+        13,
+        61
+      ],
+      "source_track_id": "--dPicxGnJBRxknAfgA-AA",
+      "source_context": "473735159277431842_630_095_650_095",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.993328387025713e-11,
+      "source_speed_mps": {
+        "median": 8.51373309425298,
+        "max": 12.86040016394948
+      },
+      "source_abs_yaw_rate_degps_max": 8.82750657139141,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 33.44939200638284,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 7.557897691151571,
+        "max": 29.237855432666144
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.2580454475989279,
+        "max": 14.675011087897554
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 3.76542065207086e-12,
+        "median": 1.850687635408088e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "473735159277431842_630_095_650_095",
+        "scene_key": "waymo-train-564",
+        "track_id": "--dPicxGnJBRxknAfgA-AA",
+        "actor_alias": "a1",
+        "measured_box_rows": 442324,
+        "aggregate_unique_6cm_voxels": 28459,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.614116,
+            -0.896158,
+            -1.031025
+          ],
+          [
+            2.098428,
+            1.011603,
+            0.756798
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          4.712544,
+          1.907761,
+          1.787822
+        ],
+        "median_annotation_box_dimensions_m": [
+          5.49684,
+          2.25703,
+          2.07
+        ],
+        "measured_extent_over_median_box": [
+          0.857319,
+          0.845253,
+          0.863682
+        ],
+        "frames_with_at_least_20_measured_points": 198,
+        "official_FRONT_frames_with_at_least_20_measured_points": 188,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 3,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          57,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          127
+        ],
+        "trusted_finite_FOV_color_rows": 184994,
+        "view_vector_count": 198,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 13,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 4320,
+          "native_composite_vs_source_GT_MAE": 0.005744371822803196,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 37,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 20155,
+          "native_composite_vs_source_GT_MAE": 0.009610680623857911,
+          "static_with_env_vs_composite_MAE": 0.0029421006805103586,
+          "dynamic_layer_RGB_absolute_mean": 0.004534011735844589,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 61,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 14790,
+          "native_composite_vs_source_GT_MAE": 0.010495432791101565,
+          "static_with_env_vs_composite_MAE": 0.0032222796713907557,
+          "dynamic_layer_RGB_absolute_mean": 0.0046997839027429775,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-564_a1_contact.png"
+    },
+    {
+      "scene_key": "waymo-train-564",
+      "alias": "a22",
+      "case": "waymo-train-564_a22",
+      "raw_window": [
+        13,
+        61
+      ],
+      "source_track_id": "MKmN9ZyVumjGMg8UinoM_g",
+      "source_context": "473735159277431842_630_095_650_095",
+      "source_pose_frames": 49,
+      "source_track_gap_count": 0,
+      "timestamps_strictly_increasing": true,
+      "box_records_finite_positive": true,
+      "rotation_orthogonality_max_abs": 9.993328387025713e-11,
+      "source_speed_mps": {
+        "median": 9.997109073672224,
+        "max": 13.362186034781539
+      },
+      "source_abs_yaw_rate_degps_max": 1.3492029179809144,
+      "source_dimension_max_minus_min_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibrated_original_view_pair_max_deg": 2.219251764481786,
+      "view_bank_role": "native-window FRONT pose-bearing proxy",
+      "rotate30_worldZ_nearest_original_direction_deg": {
+        "median": 29.307347411215957,
+        "max": 29.96848726281183
+      },
+      "shift_worldY1p5m_nearest_original_direction_deg": {
+        "median": 0.1103239399229791,
+        "max": 0.38754185507454936
+      },
+      "request_semantics": "Inherited R4 query convention: +30deg world Z; +1.5m world Y. Source direction probe only; no edited image generated.",
+      "native_camera_origin_vs_source_pose_distance_m": {
+        "max": 3.76542065207086e-12,
+        "median": 1.850687635408088e-12
+      },
+      "native_target_center_source_parity_max_abs_m": null,
+      "native_visualization_checkpoints": "original 30K eval for four existing scenes; repaired10k platform legacy RGB explicitly excluded",
+      "source_spatial_full_sequence": {
+        "context_id": "473735159277431842_630_095_650_095",
+        "scene_key": "waymo-train-564",
+        "track_id": "MKmN9ZyVumjGMg8UinoM_g",
+        "actor_alias": "a22",
+        "measured_box_rows": 53432,
+        "aggregate_unique_6cm_voxels": 9980,
+        "actor_local_q01_q99_bounds_m": [
+          [
+            -2.213279,
+            -0.991897,
+            -0.934498
+          ],
+          [
+            1.247215,
+            0.984087,
+            0.751601
+          ]
+        ],
+        "actor_local_q01_q99_extent_m": [
+          3.460494,
+          1.975984,
+          1.6861
+        ],
+        "median_annotation_box_dimensions_m": [
+          4.49687,
+          2.14572,
+          1.91
+        ],
+        "measured_extent_over_median_box": [
+          0.769534,
+          0.920896,
+          0.882775
+        ],
+        "frames_with_at_least_20_measured_points": 180,
+        "official_FRONT_frames_with_at_least_20_measured_points": 180,
+        "labelled_frame_denominator": 198,
+        "raw_scene_frame_denominator": 198,
+        "FRONT_visible_supported_camera_azimuth_sector_count": 2,
+        "FRONT_visible_supported_camera_azimuth_sector_frame_counts": [
+          115,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          81
+        ],
+        "trusted_finite_FOV_color_rows": 53432,
+        "view_vector_count": 196,
+        "complete_body": null,
+        "closed_surface": null,
+        "edit_capability": null,
+        "human_verdict": null
+      },
+      "mask_anchor_diagnostics": [],
+      "render_layer_anchor_diagnostics": [
+        {
+          "raw": 13,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 5616,
+          "native_composite_vs_source_GT_MAE": 0.010810615794275924,
+          "static_with_env_vs_composite_MAE": 0.0,
+          "dynamic_layer_RGB_absolute_mean": 0.0,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 37,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 2350,
+          "native_composite_vs_source_GT_MAE": 0.009088582950910862,
+          "static_with_env_vs_composite_MAE": 5.785009039076623e-05,
+          "dynamic_layer_RGB_absolute_mean": 0.0001507439855374774,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        },
+        {
+          "raw": 61,
+          "ROI_semantics": "projected box ROI includes background, not a body mask",
+          "ROI_pixels": 1404,
+          "native_composite_vs_source_GT_MAE": 0.00942870975550714,
+          "static_with_env_vs_composite_MAE": 9.310466826806695e-06,
+          "dynamic_layer_RGB_absolute_mean": 4.189710072063013e-05,
+          "warning": "static image contains environment contribution; cannot infer road-G color pollution or ownership from this layer alone"
+        }
+      ],
+      "human_verdict": null,
+      "contact_sheet": "assets/waymo-train-564_a22_contact.png"
+    }
+  ]
+}
