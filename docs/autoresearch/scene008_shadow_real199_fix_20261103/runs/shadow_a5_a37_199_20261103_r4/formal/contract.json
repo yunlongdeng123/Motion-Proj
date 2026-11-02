@@ -1,0 +1,20 @@
+{
+  "parent": "native v41 B 30k",
+  "updates": 1000,
+  "source_frames": 199,
+  "native_frames": 49,
+  "method": "fixed measured road recovery + all-view native contributor opacity gates; corrected deleted-actor guard",
+  "selection": "exact all49 raster alpha*T, no semantic ownership claim",
+  "gate_init": 2.0,
+  "LR_opacity": 0.06,
+  "Adam_eps": 1e-15,
+  "road_colour_and_opacity_fixed": true,
+  "only_road_branch_time_stable": true,
+  "native_time_state_preserved": true,
+  "independent_shadow_layer": false,
+  "hard_route": false,
+  "inferred_colours_explicit": true,
+  "metric_reference_unchanged": true,
+  "smoke_updates": 0,
+  "loss": "confidence weighted road L1 + .25 outside coherent domain L1 +1 corrected other-vehicle L1 + gate prior"
+}

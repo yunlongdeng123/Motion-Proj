@@ -1,0 +1,1029 @@
+{
+  "updates": 1000,
+  "previous_failed_updates": {
+    "R1": 1000,
+    "R2_native": 1000,
+    "R3_native": 1000
+  },
+  "total_engineering_updates": 4000,
+  "legacy_replay": {
+    "optimizer_updates": 0,
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/shadow_BC_20261016_v1/runs/pilot_1000_v1/R2/addon_001000.pt",
+    "parent_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/rigid_runs/scene0008_089_137/full30k/checkpoint_030000.pt",
+    "historical_parent_not_v41_B": true,
+    "expected_footprint_MAE": 0.006653157528489828,
+    "actual_footprint_MAE": 0.006653157528489828,
+    "absolute_difference": 0.0,
+    "reproduced": true,
+    "metrics": {
+      "clean_reference_linear_MAE": 0.00509225856512785,
+      "diagnostic_footprint_clean_linear_MAE": 0.006653157528489828,
+      "observed_shadow_linear_MAE": 0.10566145181655884,
+      "observed_clean_linear_MAE": 0.006028423085808754,
+      "outside_control_sRGB_MAE_vs_parent": 0.0006300060776993632,
+      "static_alpha_footprint_mean": 0.9998170733451843,
+      "evaluated_raw101_shadow_pseudo_pixels": 442,
+      "not_unseen_test": true,
+      "not_independent_shadow_GT": true,
+      "road_color_mean": [
+        0.15088507533073425,
+        0.15584370493888855,
+        0.16847623884677887
+      ],
+      "artifact_retained_opacity_factor_mean": 0.3230757713317871,
+      "delete_all_shadow_equals_unshaded_static_max_abs": 0.0,
+      "fixed_camera_temporal": [
+        {
+          "frame": "0008089",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.012509549036622047
+        },
+        {
+          "frame": "0008095",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.01046176441013813
+        },
+        {
+          "frame": "0008101",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.0
+        },
+        {
+          "frame": "0008107",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.009904234670102596
+        },
+        {
+          "frame": "0008113",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.009702631272375584
+        },
+        {
+          "frame": "0008125",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.010731223970651627
+        },
+        {
+          "frame": "0008137",
+          "fixed_camera_footprint_sRGB_MAE_vs_anchor": 0.011787757277488708
+        }
+      ],
+      "fixed_camera_mean_nonanchor_time_MAE": 0.010849526772896448,
+      "addon_restore_RGB_bitwise": true
+    }
+  },
+  "smoke_updates": 0,
+  "restore_updates": 0,
+  "saved_optimizer_steps": [
+    1000
+  ],
+  "finite_loss_rows": 1000,
+  "restored_anchor_PNGs_exact": {
+    "101": true,
+    "105": true,
+    "113": true
+  },
+  "frames_decoded": 49,
+  "CUDA_peak_allocated": 4355664896,
+  "CUDA_peak_reserved": 12379488256,
+  "NVML_observed_peak_MiB": 20242,
+  "training_seconds": 129.13983416557312,
+  "actors": {
+    "5": {
+      "road_MAE": {
+        "before": 0.02905746027311649,
+        "after": 0.008439341903400108,
+        "reduction": 0.7095636774832639,
+        "frames": 25,
+        "samples": 125606,
+        "improved_frames": 25,
+        "frame_macro_after": 0.009688446205109358
+      },
+      "shadow_MAE": {
+        "before": 0.08082622210776176,
+        "after": 0.00870324607139678,
+        "reduction": 0.8923215035363999,
+        "frames": 18,
+        "samples": 3712,
+        "improved_frames": 18,
+        "frame_macro_after": 0.01579954141440491
+      }
+    },
+    "37": {
+      "road_MAE": {
+        "before": 0.029551768020577678,
+        "after": 0.010403214973462574,
+        "reduction": 0.64796641046253,
+        "frames": 49,
+        "samples": 834891,
+        "improved_frames": 49,
+        "frame_macro_after": 0.010387030753250025
+      },
+      "shadow_MAE": {
+        "before": 0.07945004936988004,
+        "after": 0.010694657345660157,
+        "reduction": 0.8653914323467423,
+        "frames": 49,
+        "samples": 20813,
+        "improved_frames": 49,
+        "frame_macro_after": 0.02009822862526896
+      }
+    }
+  },
+  "outside_MAE_mean": 0.001374750093994092,
+  "outside_MAE_max": 0.0016373337712138891,
+  "other_vehicle_MAE_mean": 0.0014688904190493025,
+  "invariants": {
+    "bypass_maxabs": 0.0,
+    "road_fixed_camera_time_maxabs": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "native_fixed_camera_time_MAE": [
+      0.0,
+      0.03307299688458443,
+      0.040059737861156464
+    ],
+    "native_time_envelope_and_position_preserved": true,
+    "global_timestamp_override": false,
+    "hard_image_route": false,
+    "only_road_representation_has_no_time_degrees": true,
+    "parent_unchanged": true
+  },
+  "input_summary": {
+    "source_frames": 199,
+    "native_frames": 49,
+    "contributor_rows": 480282,
+    "guard_overlap_deleted_before": 136840,
+    "guard_overlap_deleted_after": 0,
+    "rows": [
+      {
+        "raw": 89,
+        "guard_on_deleted_labels_before": 3408,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6692,
+        "repair_pixels": 42531
+      },
+      {
+        "raw": 90,
+        "guard_on_deleted_labels_before": 2719,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5891,
+        "repair_pixels": 42490
+      },
+      {
+        "raw": 91,
+        "guard_on_deleted_labels_before": 2787,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6070,
+        "repair_pixels": 42493
+      },
+      {
+        "raw": 92,
+        "guard_on_deleted_labels_before": 2862,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6255,
+        "repair_pixels": 42530
+      },
+      {
+        "raw": 93,
+        "guard_on_deleted_labels_before": 2701,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5893,
+        "repair_pixels": 42587
+      },
+      {
+        "raw": 94,
+        "guard_on_deleted_labels_before": 2702,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5939,
+        "repair_pixels": 42605
+      },
+      {
+        "raw": 95,
+        "guard_on_deleted_labels_before": 2915,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6386,
+        "repair_pixels": 42614
+      },
+      {
+        "raw": 96,
+        "guard_on_deleted_labels_before": 2843,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6242,
+        "repair_pixels": 42682
+      },
+      {
+        "raw": 97,
+        "guard_on_deleted_labels_before": 2901,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6295,
+        "repair_pixels": 42651
+      },
+      {
+        "raw": 98,
+        "guard_on_deleted_labels_before": 2862,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6289,
+        "repair_pixels": 42664
+      },
+      {
+        "raw": 99,
+        "guard_on_deleted_labels_before": 3181,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6850,
+        "repair_pixels": 42641
+      },
+      {
+        "raw": 100,
+        "guard_on_deleted_labels_before": 3183,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7058,
+        "repair_pixels": 42661
+      },
+      {
+        "raw": 101,
+        "guard_on_deleted_labels_before": 4068,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 8269,
+        "repair_pixels": 42662
+      },
+      {
+        "raw": 102,
+        "guard_on_deleted_labels_before": 3515,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7691,
+        "repair_pixels": 42662
+      },
+      {
+        "raw": 103,
+        "guard_on_deleted_labels_before": 3337,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7210,
+        "repair_pixels": 42679
+      },
+      {
+        "raw": 104,
+        "guard_on_deleted_labels_before": 3502,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7392,
+        "repair_pixels": 42674
+      },
+      {
+        "raw": 105,
+        "guard_on_deleted_labels_before": 3516,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7585,
+        "repair_pixels": 42638
+      },
+      {
+        "raw": 106,
+        "guard_on_deleted_labels_before": 3682,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 8014,
+        "repair_pixels": 42506
+      },
+      {
+        "raw": 107,
+        "guard_on_deleted_labels_before": 3659,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7423,
+        "repair_pixels": 42542
+      },
+      {
+        "raw": 108,
+        "guard_on_deleted_labels_before": 3437,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7089,
+        "repair_pixels": 42534
+      },
+      {
+        "raw": 109,
+        "guard_on_deleted_labels_before": 3373,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6905,
+        "repair_pixels": 42526
+      },
+      {
+        "raw": 110,
+        "guard_on_deleted_labels_before": 2895,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5718,
+        "repair_pixels": 42534
+      },
+      {
+        "raw": 111,
+        "guard_on_deleted_labels_before": 3354,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6629,
+        "repair_pixels": 42540
+      },
+      {
+        "raw": 112,
+        "guard_on_deleted_labels_before": 3407,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7089,
+        "repair_pixels": 42501
+      },
+      {
+        "raw": 113,
+        "guard_on_deleted_labels_before": 3470,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7509,
+        "repair_pixels": 42269
+      },
+      {
+        "raw": 114,
+        "guard_on_deleted_labels_before": 2707,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6012,
+        "repair_pixels": 42358
+      },
+      {
+        "raw": 115,
+        "guard_on_deleted_labels_before": 2296,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5114,
+        "repair_pixels": 42460
+      },
+      {
+        "raw": 116,
+        "guard_on_deleted_labels_before": 2213,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 4921,
+        "repair_pixels": 42381
+      },
+      {
+        "raw": 117,
+        "guard_on_deleted_labels_before": 2312,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5056,
+        "repair_pixels": 42361
+      },
+      {
+        "raw": 118,
+        "guard_on_deleted_labels_before": 2619,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5816,
+        "repair_pixels": 42371
+      },
+      {
+        "raw": 119,
+        "guard_on_deleted_labels_before": 2520,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5806,
+        "repair_pixels": 42255
+      },
+      {
+        "raw": 120,
+        "guard_on_deleted_labels_before": 2499,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5769,
+        "repair_pixels": 42178
+      },
+      {
+        "raw": 121,
+        "guard_on_deleted_labels_before": 2253,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5151,
+        "repair_pixels": 42092
+      },
+      {
+        "raw": 122,
+        "guard_on_deleted_labels_before": 2224,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5231,
+        "repair_pixels": 42001
+      },
+      {
+        "raw": 123,
+        "guard_on_deleted_labels_before": 2632,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5870,
+        "repair_pixels": 41935
+      },
+      {
+        "raw": 124,
+        "guard_on_deleted_labels_before": 2114,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5011,
+        "repair_pixels": 41794
+      },
+      {
+        "raw": 125,
+        "guard_on_deleted_labels_before": 3193,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 7132,
+        "repair_pixels": 41662
+      },
+      {
+        "raw": 126,
+        "guard_on_deleted_labels_before": 2382,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5419,
+        "repair_pixels": 41640
+      },
+      {
+        "raw": 127,
+        "guard_on_deleted_labels_before": 2210,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5274,
+        "repair_pixels": 41582
+      },
+      {
+        "raw": 128,
+        "guard_on_deleted_labels_before": 2219,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5392,
+        "repair_pixels": 41465
+      },
+      {
+        "raw": 129,
+        "guard_on_deleted_labels_before": 2504,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5821,
+        "repair_pixels": 41313
+      },
+      {
+        "raw": 130,
+        "guard_on_deleted_labels_before": 2596,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6076,
+        "repair_pixels": 41249
+      },
+      {
+        "raw": 131,
+        "guard_on_deleted_labels_before": 2667,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 6399,
+        "repair_pixels": 41066
+      },
+      {
+        "raw": 132,
+        "guard_on_deleted_labels_before": 2392,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5722,
+        "repair_pixels": 40847
+      },
+      {
+        "raw": 133,
+        "guard_on_deleted_labels_before": 2252,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5433,
+        "repair_pixels": 40814
+      },
+      {
+        "raw": 134,
+        "guard_on_deleted_labels_before": 2501,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 5788,
+        "repair_pixels": 40634
+      },
+      {
+        "raw": 135,
+        "guard_on_deleted_labels_before": 1759,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 4315,
+        "repair_pixels": 40317
+      },
+      {
+        "raw": 136,
+        "guard_on_deleted_labels_before": 1820,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 4346,
+        "repair_pixels": 40016
+      },
+      {
+        "raw": 137,
+        "guard_on_deleted_labels_before": 1677,
+        "guard_on_deleted_labels_after": 0,
+        "removed_guard_pixels": 3911,
+        "repair_pixels": 39791
+      }
+    ],
+    "road_colour_and_opacity": "fixed full199 reference colour and opacity=.99005; no optimization can erase the recovery surface",
+    "reference_provenance": {
+      "source_frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198
+      ],
+      "native_frames": [
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137
+      ],
+      "strong_cells": 18773,
+      "measured_cells": 21068,
+      "weak_measured_cells": 2295,
+      "inferred_cells": 5421,
+      "active_cells": 26489,
+      "unknown_cells": 8648,
+      "contributor_rows": 438030,
+      "selection": "exact raster alpha*T > 1e-4 pixel-sum in at least one of all49 road masks; no ownership label",
+      "weak_policy": ">=3 colour-agreeing real views; consecutive observations retained; all199 searched",
+      "inferred_policy": "8-neighbour inverse-distance interpolation, nearest measured<=1.2m, linearRGB range<.10; excluded from factual reference metrics",
+      "rows": [
+        {
+          "raw": 89,
+          "road_pixels": 20954,
+          "contributors": 72839
+        },
+        {
+          "raw": 90,
+          "road_pixels": 21830,
+          "contributors": 75453
+        },
+        {
+          "raw": 91,
+          "road_pixels": 21854,
+          "contributors": 79053
+        },
+        {
+          "raw": 92,
+          "road_pixels": 22279,
+          "contributors": 83452
+        },
+        {
+          "raw": 93,
+          "road_pixels": 22870,
+          "contributors": 86776
+        },
+        {
+          "raw": 94,
+          "road_pixels": 23237,
+          "contributors": 89008
+        },
+        {
+          "raw": 95,
+          "road_pixels": 23365,
+          "contributors": 90815
+        },
+        {
+          "raw": 96,
+          "road_pixels": 24380,
+          "contributors": 91489
+        },
+        {
+          "raw": 97,
+          "road_pixels": 25008,
+          "contributors": 98462
+        },
+        {
+          "raw": 98,
+          "road_pixels": 25881,
+          "contributors": 95161
+        },
+        {
+          "raw": 99,
+          "road_pixels": 25839,
+          "contributors": 99136
+        },
+        {
+          "raw": 100,
+          "road_pixels": 26349,
+          "contributors": 101658
+        },
+        {
+          "raw": 101,
+          "road_pixels": 25990,
+          "contributors": 100578
+        },
+        {
+          "raw": 102,
+          "road_pixels": 27786,
+          "contributors": 103170
+        },
+        {
+          "raw": 103,
+          "road_pixels": 28013,
+          "contributors": 98506
+        },
+        {
+          "raw": 104,
+          "road_pixels": 27101,
+          "contributors": 92114
+        },
+        {
+          "raw": 105,
+          "road_pixels": 26074,
+          "contributors": 86266
+        },
+        {
+          "raw": 106,
+          "road_pixels": 25169,
+          "contributors": 78782
+        },
+        {
+          "raw": 107,
+          "road_pixels": 24572,
+          "contributors": 80365
+        },
+        {
+          "raw": 108,
+          "road_pixels": 24351,
+          "contributors": 75096
+        },
+        {
+          "raw": 109,
+          "road_pixels": 24119,
+          "contributors": 77145
+        },
+        {
+          "raw": 110,
+          "road_pixels": 22923,
+          "contributors": 76943
+        },
+        {
+          "raw": 111,
+          "road_pixels": 22146,
+          "contributors": 79051
+        },
+        {
+          "raw": 112,
+          "road_pixels": 21003,
+          "contributors": 80405
+        },
+        {
+          "raw": 113,
+          "road_pixels": 19674,
+          "contributors": 80203
+        },
+        {
+          "raw": 114,
+          "road_pixels": 21268,
+          "contributors": 81708
+        },
+        {
+          "raw": 115,
+          "road_pixels": 22047,
+          "contributors": 82517
+        },
+        {
+          "raw": 116,
+          "road_pixels": 22554,
+          "contributors": 82020
+        },
+        {
+          "raw": 117,
+          "road_pixels": 22887,
+          "contributors": 88802
+        },
+        {
+          "raw": 118,
+          "road_pixels": 22432,
+          "contributors": 84668
+        },
+        {
+          "raw": 119,
+          "road_pixels": 22353,
+          "contributors": 89019
+        },
+        {
+          "raw": 120,
+          "road_pixels": 22755,
+          "contributors": 92542
+        },
+        {
+          "raw": 121,
+          "road_pixels": 23570,
+          "contributors": 97543
+        },
+        {
+          "raw": 122,
+          "road_pixels": 23608,
+          "contributors": 103230
+        },
+        {
+          "raw": 123,
+          "road_pixels": 23390,
+          "contributors": 102562
+        },
+        {
+          "raw": 124,
+          "road_pixels": 24070,
+          "contributors": 103766
+        },
+        {
+          "raw": 125,
+          "road_pixels": 22553,
+          "contributors": 94714
+        },
+        {
+          "raw": 126,
+          "road_pixels": 24416,
+          "contributors": 101631
+        },
+        {
+          "raw": 127,
+          "road_pixels": 24297,
+          "contributors": 109255
+        },
+        {
+          "raw": 128,
+          "road_pixels": 24289,
+          "contributors": 103903
+        },
+        {
+          "raw": 129,
+          "road_pixels": 24071,
+          "contributors": 111407
+        },
+        {
+          "raw": 130,
+          "road_pixels": 23487,
+          "contributors": 120143
+        },
+        {
+          "raw": 131,
+          "road_pixels": 22280,
+          "contributors": 122829
+        },
+        {
+          "raw": 132,
+          "road_pixels": 21076,
+          "contributors": 129322
+        },
+        {
+          "raw": 133,
+          "road_pixels": 19780,
+          "contributors": 127107
+        },
+        {
+          "raw": 134,
+          "road_pixels": 18521,
+          "contributors": 122290
+        },
+        {
+          "raw": 135,
+          "road_pixels": 17514,
+          "contributors": 114779
+        },
+        {
+          "raw": 136,
+          "road_pixels": 16804,
+          "contributors": 110245
+        },
+        {
+          "raw": 137,
+          "road_pixels": 16203,
+          "contributors": 120752
+        }
+      ],
+      "updates": 0,
+      "parent_unchanged": true,
+      "seconds": 22.73275899887085
+    },
+    "updates": 0,
+    "seconds": 25.34039545059204,
+    "parent_unchanged": true
+  },
+  "all_199_are_build_inputs": true,
+  "metric_reference_is_proxy": true,
+  "inferred_excluded_from_truth": true,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "needs_visual_review": true,
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none"
+}
