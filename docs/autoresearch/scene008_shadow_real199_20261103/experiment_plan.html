@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>a5 / a37 · 199 帧道路修复实验单</title>
+    <style>body{font:16px/1.7 "Microsoft YaHei",sans-serif;color:#213547;background:#eef3f7;margin:0}main{max-width:1120px;margin:auto;padding:30px}section{background:white;border-radius:14px;padding:24px;margin:18px 0}h1{font-size:29px;margin-bottom:4px}h2{font-size:21px}.status{background:#d9ecff;padding:14px 18px;border-radius:10px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border-bottom:1px solid #dbe3eb;text-align:left}code{font-size:12px;overflow-wrap:anywhere}img{max-width:100%;border-radius:8px}.small{font-size:14px;color:#566b7d}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f0f4f7;padding:16px}a{color:#1464b4}</style>
+    <main><h1>scene-008 · a5 / a37 阴影去除实验单</h1><p>2026-11-03 · 从 v41 B 30k 出发 · 只做已见收益的道路恢复路线</p>
+    <p class="status"><b>用户已开启 GPU 并授权直接跑正式 1,000 步。</b>按最新指示跳过 smoke 与恢复重放，总优化预算为 1,000 步。实时结果和完成状态以本目录的结果报告为准。</p>
+    <section><h2>本次实现边界</h2><img src="architecture.svg" alt="实验组件与数据流"/>
+    <p>保留原 B 静态分支的当前时间求值。新增局部 3D 道路修复分支只学习道路颜色与 opacity，其位置、形状和颜色状态不随时间切换；不添加独立阴影层。</p>
+    <p>局部修复渲染中，用新道路替换有实测支撑位置的薄道路表达；高于道路的原静态前景仍参加深度排序。只在合格道路内部使用该结果，范围外精确返回 B(t)。原 B 的四份 30k 权重只读。</p></section>
+    <section><h2>输入与身份</h2><p>仍删除五车：<b>a5、a26、a18、a6、a37</b>。主要评价 a5 与 a37。已核验 B 实际训练输入中的五个原始 track ID；删除沿用 B 原生 all_dynamic 口径。</p>
+    <table><tr><th>沟通代号</th><th>原资产索引</th><th>Waymo track ID</th></tr><tr><td>a5</td><td>0</td><td><code>3S_GJHyCGGK4ypFPVKOOqA</code></td></tr><tr><td>a26</td><td>1</td><td><code>mSiVqee7l7dfkt8HQhXZZw</code></td></tr><tr><td>a18</td><td>2</td><td><code>Umybpe6eOenVBgQ_zgdVtw</code></td></tr><tr><td>a6</td><td>3</td><td><code>7MxwK9zTRZ9g5lc_ZC0z6A</code></td></tr><tr><td>a37</td><td>4</td><td><code>vBOasuXpjI7h7d-X_VEQdA</code></td></tr></table>
+    <p>道路证据使用 raw0–198 全部 199 帧。原 B 的有效编辑时间范围保持 raw89–137，共 49 帧；扩充道路证据不会被表述成扩充了 B 的动态时间支持。</p></section>
+    <section><h2>199 帧道路证据已重建</h2><p>输入预览发现旧网格未覆盖 a5 近端阴影，因此已从原始缓存实测回波扩展近端查询范围，并使用旧局部修复方案的 8cm 网格。新查询共 <b>45,769</b> 个单元；保留三角几何核验、遮挡检查、至少三份颜色一致观测和至少六帧时间跨度。</p>
+    <table><tr><th>目标</th><th>合格 / 范围内道路单元</th><th>提供干净证据的帧数*</th><th>raw105 阴影代理像素</th><th>raw105 道路修复域像素</th></tr><tr><td>a5</td><td>13335 / 28513</td><td>179</td><td>852</td><td>7436</td></tr><tr><td>a37</td><td>8845 / 13478</td><td>161</td><td>248</td><td>11476</td></tr></table>
+    <p>raw105 合格阴影代理中，a5 的 852 个像素有 753 个落在修复域；a37 的 248 个有 207 个落在修复域。这里只核对输入覆盖，实际去影收益由 GPU 渲染验证。<a href="target_shadow_coverage.json">逐帧覆盖分母</a></p>
+    <p class="small">* 两车均搜索全部 199 帧，可用帧数由真实可见性决定。道路参考和阴影区域是可审计代理标签；没有可靠参考的区域保持未知并单列。两车道路范围可能重叠。</p>
+    <img src="input_evidence_raw105_final.png" alt="raw105 输入证据与道路修复资格预览"/><p class="small">这是输入证据预览，尚未执行编辑。绿色为可使用的道路内部，黄色为合格边缘；下右图显示分车阴影评价代理。</p></section>
+    <section><h2>运行队列与预算</h2><table><tr><th>阶段</th><th>实际工作</th><th>更新记账</th></tr>
+    <tr><td>原模型基线</td><td>原 B 删五车；记录两处阴影与完整 49 帧。另保存零步道路初始化结果。</td><td>0</td></tr>
+    <tr><td>GPU smoke</td><td>按用户最新明确要求取消；正式过程保留 finite loss/gradient 和显存检查。</td><td>0</td></tr>
+    <tr><td>恢复重放</td><td>不追加训练步；最终评价独立进程读取保存的 checkpoint。</td><td>0</td></tr>
+    <tr><td>正式单一方案</td><td>从初始道路分支直接训练；均匀采样 49 个原 B 相机，使用完整199帧参考。</td><td><b>1000，全部训练预算</b></td></tr>
+    <tr><td>完整验收</td><td>49帧删车对比、两处阴影裁切与视频、逐车指标和最坏帧；输入/源权重 hash 复核。</td><td>0</td></tr></table>
+    <p>只训练道路 DC/opacity，学习率分别为 0.0025 / 0.05，seed=0。损失为合格道路线性 RGB L1、实际道路贡献不足项及轻量颜色/opacity 锚定。没有重新训练原 B，没有忽略阴影监督、投影阴影或放开道路时间自由度的额外消融。</p>
+    <p>正式更新、耗时和 NVML/CUDA 显存峰单独记录，未额外训练 smoke。旧实验的 0.00665 用于选择路线；本次使用 v41 B 和新的双车199帧范围，需要重测基线和收益。</p></section>
+    <section><h2>验收必须回答的事</h2><ol><li>a5、a37 分别报告道路 MAE、阴影代理 MAE、暗残留比例、有效覆盖、实际道路贡献与最坏帧；同时给帧平均和像素加权平均。</li>
+    <li>固定相机切换原 B 时间：道路修复分支的 RGB 应保持一致，原静态分支继续使用当前时间。修复范围外与当时刻 B 的最大误差须为 0。</li>
+    <li>检查完整49帧的道路接缝、车道线与其他车辆，不能只凭训练误差认定去影成功。四份 B 权重 SHA256 必须保持不变。</li>
+    <li>质量评价失败时保留结果和失败原因；不自动增加新的研究分支。完成取回与依赖检查后再处理 GPU 资源收尾。</li></ol></section>
+    <section><h2>启动与可复查资产</h2><p>远端独立目录：</p><pre>/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103</pre>
+    <p>正式运行入口：</p><pre>/root/autodl-tmp/envs/drivingeditor/bin/python \
+/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/source/run_experiment.py --execute</pre>
+    <p><a href="contract.json">封存实验配置与 source hash</a> · <a href="preflight.json">原权重与199帧文件预检查</a> · <a href="reference_summary_final.json">双车证据计数</a> · <a href="view_summary_final.json">49帧评价域</a> · <a href="source_package.zip">启动源码包</a> · <a href="cpu_ready_receipt.json">CPU 就绪凭据</a></p>
+    <details><summary>原 B30k 四份文件指纹</summary><table><tr><th>文件</th><th>SHA256</th><th>字节</th></tr><tr><td>chkpnt</td><td><code>0787e40b069775c2c83a19f215d48119fa8adb28689e2c158379739f4e1bda3e</code></td><td>1,604,034,968</td></tr><tr><td>dynamic_chkpnt</td><td><code>4c5cbcced1686aae4d834000394a64ded036dadd0b0963dd4f483261ef92c607</code></td><td>807,923,678</td></tr><tr><td>env_light_chkpnt</td><td><code>417c0760f69fbbbf103ef84711f3540fa15c652ef943a887ba1dcb4ea2348328</code></td><td>226,494,608</td></tr><tr><td>training_state</td><td><code>f6764f0bd39cf8fbfd297a33a3d2e51a153f21fb6da38ce1de77169ee8b6012c</code></td><td>47,384</td></tr></table></details></section></main></html>

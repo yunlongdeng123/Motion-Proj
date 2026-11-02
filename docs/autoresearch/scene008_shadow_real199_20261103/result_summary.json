@@ -1,0 +1,143 @@
+{
+  "experiment": "SCENE008_V41_B30K_A5_A37_SHADOW_REAL199_20261103",
+  "optimizer_updates": 1000,
+  "smoke_updates": 0,
+  "restore_replay_updates": 0,
+  "diagnostic_updates": 0,
+  "saved_optimizer_steps": [
+    1000,
+    1000
+  ],
+  "finite_loss_rows": 1000,
+  "sampled_raw_frames": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "mean_loss_first100": 0.08804885357618332,
+  "mean_loss_last100": 0.07714473508298397,
+  "training_seconds": 236.9420988559723,
+  "NVML_peak_MiB": 14484,
+  "training_CUDA_peak_allocated": 4602603008,
+  "training_CUDA_peak_reserved": 7467958272,
+  "saved_checkpoint_reloaded_three_anchor_PNGs_exact": {
+    "101": true,
+    "105": true,
+    "113": true
+  },
+  "outside_maxabs": 0.0,
+  "actors": {
+    "5": {
+      "shadow_MAE_before": 0.08082622210776176,
+      "shadow_MAE_after": 0.04846986344812743,
+      "shadow_MAE_relative_reduction": 0.4003200671249379,
+      "shadow_valid_frames": 18,
+      "shadow_samples": 3712,
+      "shadow_improved_frames": 16,
+      "dark_residual_before": 0.8208512933924794,
+      "dark_residual_after": 0.4463900829131458,
+      "road_MAE_before": 0.028954364960119914,
+      "road_MAE_after": 0.022938983983005676,
+      "frame_macro_shadow_before": 0.07347688575585683,
+      "frame_macro_shadow_after": 0.04527049066705836,
+      "worst_shadow_raw": 96,
+      "worst_shadow_MAE": 0.08988320827484131
+    },
+    "37": {
+      "shadow_MAE_before": 0.07945004936988004,
+      "shadow_MAE_after": 0.06098653143846805,
+      "shadow_MAE_relative_reduction": 0.23239152244519073,
+      "shadow_valid_frames": 49,
+      "shadow_samples": 20813,
+      "shadow_improved_frames": 49,
+      "dark_residual_before": 0.8327968186328213,
+      "dark_residual_after": 0.5867006309616487,
+      "road_MAE_before": 0.029408395174491946,
+      "road_MAE_after": 0.025216596245448027,
+      "frame_macro_shadow_before": 0.06775924396149967,
+      "frame_macro_shadow_after": 0.03909629514935065,
+      "worst_shadow_raw": 137,
+      "worst_shadow_MAE": 0.08027447760105133
+    }
+  },
+  "temporal_audit": {
+    "fixed_camera_raw": 105,
+    "timestamps_raw": [
+      89,
+      105,
+      137
+    ],
+    "road_branch_RGB_maxabs_vs_first": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "original_static_full_MAE_vs_first": [
+      0.0,
+      0.03307299688458443,
+      0.040059737861156464
+    ],
+    "final_vs_current_native_outside_maxabs": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "global_static_timestamp_override": false,
+    "original_time_parameters_updated": false
+  },
+  "parent_SHA256_unchanged": true,
+  "metric_scope": "Fixed qualified shadow proxies; sample-weighted linear RGB MAE; all199 used for BUILD, no heldout GT claim.",
+  "human_verdict": null,
+  "quality_accepted": false,
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none"
+}

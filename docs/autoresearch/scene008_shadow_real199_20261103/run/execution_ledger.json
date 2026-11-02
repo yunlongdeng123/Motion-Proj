@@ -1,0 +1,34 @@
+[
+  {
+    "name": "formal",
+    "command": [
+      "/root/autodl-tmp/envs/drivingeditor/bin/python",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/source/road_runtime.py",
+      "train",
+      "--steps",
+      "1000",
+      "--output",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/formal"
+    ],
+    "exit_code": 0,
+    "seconds": 252.80205249786377,
+    "planned_updates": 1000,
+    "account": "formal"
+  },
+  {
+    "name": "final_evaluation",
+    "command": [
+      "/root/autodl-tmp/envs/drivingeditor/bin/python",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/source/road_runtime.py",
+      "evaluate",
+      "--checkpoint",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/formal/checkpoint001000.pth",
+      "--output",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/shadow_a5_a37_199_20261103/final_evaluation"
+    ],
+    "exit_code": 0,
+    "seconds": 25.551915407180786,
+    "planned_updates": 0,
+    "account": "evaluation"
+  }
+]
