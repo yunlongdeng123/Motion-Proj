@@ -1,0 +1,51 @@
+{
+  "source_frames": 199,
+  "updates": 0,
+  "old_active_cells": 26489,
+  "active_cells": 11595,
+  "marking_cells": 706,
+  "observed_shadow_cells": 2269,
+  "observed_shadow_core_coverage": 1.0,
+  "core_cells": 7879,
+  "taper_cells": 3716,
+  "parent_unchanged": true,
+  "seconds": 45.59369206428528,
+  "seed_rule": "native luminance deficit>0.025 and ratio<.78 in >18% observed pixels, chroma<.6; >=2 dark samples",
+  "envelope": "3D chart closing/opening, 0.16m halo +0.24m taper; connected yellow marking exclusion; original observed-shadow BUILD witnesses retain full coverage",
+  "calibration": "clean native minus real199 atlas; spatial sigma0.32m; capped0.012 linearRGB",
+  "no_hard_image_route": true,
+  "only_road_time_stable": true,
+  "settings": {
+    "detail": {
+      "cell_m": 0.02,
+      "normal_sigma_m": 0.003,
+      "colour_source": "best_clean_projected_resolution"
+    },
+    "coverage": {
+      "longitudinal_outer_m": 0.4,
+      "lateral_outer_m": 0.4,
+      "core_fraction": 0.4,
+      "preserve_observed_shadow_core": true
+    },
+    "adaptive_rgb": {
+      "enabled": true,
+      "sigma_longitudinal_m": 0.32,
+      "sigma_lateral_m": 0.32,
+      "max_linear_delta": 0.012,
+      "strength": 1.0
+    },
+    "markings": {
+      "connected_yellow_min_pixels": 40,
+      "world_vote_fraction": 0.12,
+      "protect_white_native_ghosts": false
+    }
+  },
+  "coarse_active_cells": 11595,
+  "refined_cells": 185520,
+  "detail_cell_m": 0.02,
+  "normal_sigma_m": 0.003,
+  "real_colour_subcells": 164280,
+  "inherited_fallback_cells": 21240,
+  "detail_source_policy": "highest projected resolution real source within clean upper radiance cluster; source image guard rechecked",
+  "geometry_policy": "tangent-plane interpolation inside measured 8cm parent patch, parent visibility eligibility inherited; not new measured LiDAR points"
+}

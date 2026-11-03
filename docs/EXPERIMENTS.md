@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| SCENE008_SHADOW_QUALITY_SINGLE_20261103 | a5/a37分别fresh1k也使黄线劣化；确认道路覆盖/表示迁移问题；2cm+RGB自适应候选改善黄线/接缝但阴影指标回升；本请求6204更新；GPU保持开启 | [组件、单车因果检查与49帧](autoresearch/scene008_shadow_quality_single_20261103/result_report.html) |
 | SCENE008_V41_B30K_A5_A37_SHADOW_REAL199_FIX_20261103 | 修正保护域与道路覆盖接线；旧a5零更新精确复现；原生B最终1k，a5/a37阴影代理MAE降89.2%/86.5%；失败3k单列、累计4k；保留中央车形残影限制 | [修正版证据、组件图与49帧对比](autoresearch/scene008_shadow_real199_fix_20261103/result_report.html) |
 | SCENE008_V41_B30K_A5_A37_SHADOW_REAL199_20261103 | 完整199帧证据、局部时间稳定道路、删五车；用户取消smoke，正式1000步；代理阴影MAE下降40.0%/23.2%，大块残影仍在，未通过去影；原静态时间保留 | [结果、49帧视频与组件](autoresearch/scene008_shadow_real199_20261103/result_report.html) |
 | WS-V43-R4-FIVECASE-GPU-20261101-R1 | 5辆/3真实场景，1392三锚输出、7056登记整段输出；40项机制记录、28份E1控制，隔离未全完成、训练标签0；用户停止该方向并清理中间输出；F11/F12 | [实验与组件图](autoresearch/v43_ownership_20261028/fivecase_gpu_20261101/report.html)、[机制与禁用域](autoresearch/v43_ownership_20261028/fivecase_gpu_20261101/mechanisms/index.html) |
