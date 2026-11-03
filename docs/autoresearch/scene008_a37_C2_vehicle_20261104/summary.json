@@ -1,0 +1,169 @@
+{
+  "config": {
+    "actor_subset": "all",
+    "legacy_replacement": "native",
+    "colour_source": "observed_initial",
+    "road_policy": "delete_only",
+    "completion_state": "delete_only",
+    "replacement_corridor": true,
+    "corridor_replace_whole_a6": true,
+    "corridor_road_protect_m": 0.0,
+    "protected_static_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_vehicle_20261104_r1/inputs/retained_static_protection.npz"
+  },
+  "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_vehicle_20261104_r1/formal_r1/checkpoint001000.pt",
+  "step": 1000,
+  "frames": 3,
+  "rows": [
+    {
+      "raw": 105,
+      "a6_visible_pixels": 869,
+      "measured_depth_pixels": 869,
+      "fixed_lower_domain_pixels": 976,
+      "methods": {
+        "r3": {
+          "a6_visible_MAE": 0.03099605068564415,
+          "measured_depth_MAE_m": 1.521323561668396,
+          "measured_depth_median_m": 1.2473230361938477,
+          "other_change_from_r3": 0.0
+        },
+        "oldC2": {
+          "a6_visible_MAE": 0.0471620075404644,
+          "measured_depth_MAE_m": 0.7715063095092773,
+          "measured_depth_median_m": 0.6523361206054688,
+          "other_change_from_r3": 0.0003152447461616248
+        },
+        "new": {
+          "a6_visible_MAE": 0.05293096601963043,
+          "measured_depth_MAE_m": 0.42529556155204773,
+          "measured_depth_median_m": 0.3101387023925781,
+          "other_change_from_r3": 3.732777281717503e-11
+        }
+      },
+      "proposal_domain": {
+        "actor_alpha_mean": 0.45359763503074646,
+        "generated_lower_alpha_mean": 0.4104083180427551,
+        "static_alpha_mean": 0.4954725503921509,
+        "road_alpha_mean": 0.04886237531900406,
+        "oldC2_actor_alpha_mean": 0.0008794264867901802
+      },
+      "noedit_native_maxabs": 0.0
+    },
+    {
+      "raw": 113,
+      "a6_visible_pixels": 729,
+      "measured_depth_pixels": 729,
+      "fixed_lower_domain_pixels": 776,
+      "methods": {
+        "r3": {
+          "a6_visible_MAE": 0.03330189362168312,
+          "measured_depth_MAE_m": 1.08260178565979,
+          "measured_depth_median_m": 0.9588069915771484,
+          "other_change_from_r3": 0.0
+        },
+        "oldC2": {
+          "a6_visible_MAE": 0.06737878918647766,
+          "measured_depth_MAE_m": 1.2584489583969116,
+          "measured_depth_median_m": 1.1564006805419922,
+          "other_change_from_r3": 9.532766853226349e-05
+        },
+        "new": {
+          "a6_visible_MAE": 0.06198527663946152,
+          "measured_depth_MAE_m": 0.8788725137710571,
+          "measured_depth_median_m": 0.7112483978271484,
+          "other_change_from_r3": 0.0
+        }
+      },
+      "proposal_domain": {
+        "actor_alpha_mean": 0.5408418774604797,
+        "generated_lower_alpha_mean": 0.4984210133552551,
+        "static_alpha_mean": 0.3948444724082947,
+        "road_alpha_mean": 0.050970908254384995,
+        "oldC2_actor_alpha_mean": 0.0057060606777668
+      },
+      "noedit_native_maxabs": 0.0
+    },
+    {
+      "raw": 130,
+      "a6_visible_pixels": 366,
+      "measured_depth_pixels": 366,
+      "fixed_lower_domain_pixels": 436,
+      "methods": {
+        "r3": {
+          "a6_visible_MAE": 0.032003577798604965,
+          "measured_depth_MAE_m": 6.816908836364746,
+          "measured_depth_median_m": 7.157243728637695,
+          "other_change_from_r3": 0.0
+        },
+        "oldC2": {
+          "a6_visible_MAE": 0.05370018258690834,
+          "measured_depth_MAE_m": 4.940252304077148,
+          "measured_depth_median_m": 4.951393127441406,
+          "other_change_from_r3": 6.956183369766222e-06
+        },
+        "new": {
+          "a6_visible_MAE": 0.07854970544576645,
+          "measured_depth_MAE_m": 2.9611151218414307,
+          "measured_depth_median_m": 2.880270004272461,
+          "other_change_from_r3": 2.120859737830827e-11
+        }
+      },
+      "proposal_domain": {
+        "actor_alpha_mean": 0.6045392155647278,
+        "generated_lower_alpha_mean": 0.5665901303291321,
+        "static_alpha_mean": 0.361455500125885,
+        "road_alpha_mean": 0.0,
+        "oldC2_actor_alpha_mean": 0.34160521626472473
+      },
+      "noedit_native_maxabs": 0.0
+    }
+  ],
+  "pooled": {
+    "r3/a6_visible_MAE": {
+      "mean": 0.03203969218661327,
+      "count": 5892
+    },
+    "r3/measured_depth_MAE_m": {
+      "mean": 2.3453338374431167,
+      "count": 1964
+    },
+    "oldC2/a6_visible_MAE": {
+      "mean": 0.055884515357033704,
+      "count": 5892
+    },
+    "oldC2/measured_depth_MAE_m": {
+      "mean": 1.7291143537781632,
+      "count": 1964
+    },
+    "new/a6_visible_MAE": {
+      "mean": 0.061065919854085784,
+      "count": 5892
+    },
+    "new/measured_depth_MAE_m": {
+      "mean": 1.0662159346757256,
+      "count": 1964
+    },
+    "new_actor/fixed_lower_adoption": {
+      "mean": 0.5146177804448269,
+      "count": 2188
+    },
+    "new_lower/fixed_lower_adoption": {
+      "mean": 0.4727452224089851,
+      "count": 2188
+    },
+    "old_actor/fixed_lower_adoption": {
+      "mean": 0.07048725038494445,
+      "count": 2188
+    }
+  },
+  "noedit_maxabs": 0.0,
+  "parent_unchanged": true,
+  "seconds": 17.383721631020308,
+  "geometry_fixed": true,
+  "road_fixed": true,
+  "unknown_geometry_GT": false,
+  "unknown_RGB_GT": false,
+  "depth_reference": "Original actual a6 LiDAR zbuffer/point footprints intersect strict visible mask; observed-data alignment, not heldout amodal GT",
+  "noedit_policy": "Native bypass by explicit edit-conditioned representation replacement; equality is by construction and not scientific reconstruction improvement",
+  "quality_accepted": false,
+  "human_verdict": null
+}
