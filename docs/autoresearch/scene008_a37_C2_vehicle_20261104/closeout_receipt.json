@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-11-03T21:29:15Z",
+  "updated_utc": "2026-11-03T23:54:20.301912+00:00",
   "run": "scene008_a37_C2_vehicle_20261104_r1",
   "scientific_work_complete": true,
   "formal_updates": 1000,
@@ -41,7 +41,7 @@
       "ssh_transport_exit_code": 1,
       "ssh_disconnected_during_command": true,
       "subsequent_ssh": "connection refused through live manner jump; exit1",
-      "cloud_power_state": "unverified"
+      "cloud_power_state": "off_confirmed_by_user"
     },
     "manner-3090-1023": {
       "endpoint": "connect.nmb2.seetacloud.com:25913",
@@ -53,12 +53,20 @@
       "ssh_transport_exit_code": 1,
       "ssh_disconnected_during_command": true,
       "subsequent_ssh": "connection closed; exit1",
-      "cloud_power_state": "unverified"
+      "cloud_power_state": "off_confirmed_by_user"
     }
   },
   "weekly_quota_remaining_percent": 11,
   "quota_reset_performed": false,
-  "state": "results_delivered_shutdown_issued_platform_confirmation_pending",
-  "note": "Provider shutdown was invoked in order and both SSH connections closed. Remote shutdown exit codes were not returned; SSH failure alone is not independent cloud power/billing confirmation. No restart is requested.",
-  "user_unrelated_file_preserved_unstaged": true
+  "state": "complete",
+  "note": "Provider shutdown was invoked in order. SSH closed before shutdown exit codes returned; codes remain null. User subsequently confirmed both instances are powered off in AutoDL console. Results and complete latest checkpoint were already retrieved and verified. No pending work.",
+  "user_unrelated_file_preserved_unstaged": true,
+  "power_confirmation": {
+    "source": "user_report_from_AutoDL_console",
+    "confirmed_at_recorded_utc": "2026-11-03T23:54:20.301912+00:00",
+    "user_reply": "两台均已关机",
+    "both_instances_off": true,
+    "independently_verified_by_agent": false
+  },
+  "monitor_status": "PAUSED"
 }
