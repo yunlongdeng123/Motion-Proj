@@ -1,0 +1,64 @@
+{
+  "updated_utc": "2026-11-03T21:29:15Z",
+  "run": "scene008_a37_C2_vehicle_20261104_r1",
+  "scientific_work_complete": true,
+  "formal_updates": 1000,
+  "extra_smoke_restore_updates": 34,
+  "final_evaluation_frames": 49,
+  "data_role": "BUILD",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "conclusion": "Vehicle readout and observed-depth alignment improved; RGB and visible quality failed to beat the strong baseline. Baseline retained.",
+  "report_commit": "8a213843b561dbb6800a968bec4309e0d382a1b2",
+  "branch": "research/worldsim-v8.2-drivingeditor-v42",
+  "report_push_verified": true,
+  "latest_checkpoint_retrieved": true,
+  "optimizer_rng_retrieved": true,
+  "delivery_archive": {
+    "bytes": 19320921,
+    "sha256": "e62adc9f9561278f60226e79d9ca53ac448b68e7d51f08655f9a875052a9e475",
+    "verified": true,
+    "scope": "necessary replay files; not an entire RUN/dataset/environment mirror"
+  },
+  "latest_archive": {
+    "bytes": 1899546,
+    "sha256": "26bb879a21863717b21c1b09c341f39c45f4556da4c5849c7f069db7108fb480",
+    "verified": true
+  },
+  "shutdown_order": [
+    "wm-vgpu-1011",
+    "manner-3090-1023"
+  ],
+  "instances": {
+    "wm-vgpu-1011": {
+      "endpoint": "connect.nmb1.seetacloud.com:38300",
+      "no_active_or_queued_experiment_found": true,
+      "gpu": "RTX 4080 SUPER",
+      "initial_python_exec_attempt": "Exec format error; no shebang in provider shell script",
+      "shutdown_command": "/bin/bash /usr/bin/shutdown",
+      "started_utc": "2026-11-03T21:28:08.414962Z",
+      "shutdown_command_exit_code": null,
+      "ssh_transport_exit_code": 1,
+      "ssh_disconnected_during_command": true,
+      "subsequent_ssh": "connection refused through live manner jump; exit1",
+      "cloud_power_state": "unverified"
+    },
+    "manner-3090-1023": {
+      "endpoint": "connect.nmb2.seetacloud.com:25913",
+      "no_active_or_queued_experiment_found": true,
+      "gpu": "none; explicit user shutdown authorization",
+      "shutdown_command": "/bin/bash /usr/bin/shutdown",
+      "started_utc": "2026-11-03T21:28:39.957831Z",
+      "shutdown_command_exit_code": null,
+      "ssh_transport_exit_code": 1,
+      "ssh_disconnected_during_command": true,
+      "subsequent_ssh": "connection closed; exit1",
+      "cloud_power_state": "unverified"
+    }
+  },
+  "weekly_quota_remaining_percent": 11,
+  "quota_reset_performed": false,
+  "state": "results_delivered_shutdown_issued_platform_confirmation_pending",
+  "note": "Provider shutdown was invoked in order and both SSH connections closed. Remote shutdown exit codes were not returned; SSH failure alone is not independent cloud power/billing confirmation. No restart is requested.",
+  "user_unrelated_file_preserved_unstaged": true
+}
