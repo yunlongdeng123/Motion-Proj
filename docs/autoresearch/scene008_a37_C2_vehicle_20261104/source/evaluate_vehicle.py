@@ -10,14 +10,11 @@ RUN=Path(__file__).resolve().parent.parent
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--checkpoint',type=Path,required=True);p.add_argument('--output',required=True)
-    p.add_argument('--road-protect-m',type=float);p.add_argument('--anchors',action='store_true')
-    p.add_argument('--disable-protection',action='store_true');p.add_argument('--corridor-margin-m',type=float,default=0.);args=p.parse_args()
+    p.add_argument('--road-protect-m',type=float);p.add_argument('--anchors',action='store_true');args=p.parse_args()
     dest=RUN/args.output;dest.mkdir(exist_ok=False);torch.set_num_threads(1);start=time.monotonic()
     shutil.copy2(Path(__file__),dest/'evaluation_source.py')
     ck=torch.load(args.checkpoint,map_location='cpu',weights_only=False);cfg=dict(ck['config'])
     if args.road_protect_m is not None:cfg['corridor_road_protect_m']=args.road_protect_m
-    if args.disable_protection:cfg.pop('protected_static_file',None)
-    cfg['corridor_margin_m']=args.corridor_margin_m
     e=VehicleExperiment(cfg);e.old.actor.load_state_dict(ck['actor']);e.old.actor.requires_grad_(False)
     rows=[];totals={};raws=[105,113,130] if args.anchors else list(range(89,138))
     new_colour=e.old.actor.colour_logit.detach().clone()
@@ -50,7 +47,6 @@ def main():
                     measured_depth_median_m=float(de.median()) if de.numel() else None,other_change_from_r3=float((rgb-baseline['rgb'].clamp(0,1)).abs()[:,other].mean()) if other.any() else 0.)
                 add(name,'a6_visible_MAE',err);add(name,'measured_depth_MAE_m',de)
                 save(folder/(name+'_delete.png'),rgb)
-            rec['new_actor_visible_alpha_mean']=float(new['actor_alpha'][0,visible].mean())
             rec['proposal_domain']=dict(actor_alpha_mean=float(new['actor_alpha'][0,domain].mean()) if domain.any() else None,
                 generated_lower_alpha_mean=float(new['component_alpha_T'][5,domain].mean()) if domain.any() else None,
                 static_alpha_mean=float(new['component_alpha_T'][0,domain].mean()) if domain.any() else None,

@@ -79,8 +79,7 @@ class VehicleExperiment:
             planes = ConvexHull(np.concatenate((target,rear))).equations
             with torch.no_grad():
                 p = old.tensor(planes)
-                support_margin = self.config.get('corridor_margin_m',0.) * self.old.visibility.scale
-                inside = (means @ p[:,:3].T + p[:,3] <= support_margin+1e-6).all(1)
+                inside = (means @ p[:,:3].T + p[:,3] <= 1e-6).all(1)
                 inv = old.tensor(np.linalg.inv(T))
                 local = means @ inv[:3,:3].T + inv[:3,3]
                 keep_a6 = (local.abs() <= old.tensor(half+np.array([.20,.10,.10]))).all(1)

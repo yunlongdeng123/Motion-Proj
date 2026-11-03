@@ -3,11 +3,10 @@
 ## scene008 C2车辆分支局部替换（2026-11-04）
 
 - task/run：`scene008_a37_C2_vehicle_20261104_r1`；只删除a37、保留a6与其余车辆。
-- [报告、架构与车辆对照](autoresearch/scene008_a37_C2_vehicle_20261104/index.html)。固定PVD/道路/几何，仅局部RGB正式1k；额外32＋2更新，完整状态恢复通过。199帧观测核查与原生分层/深度诊断保留。
-- 三锚帧几何读出与已观测深度对齐改善；RGB仍弱于强基线。未知隐藏几何无GT；全199为BUILD。无编辑相等来自明确Native分支，不计重建算法提升。
-- 完整49帧最终验收、远端新checkpoint取回和两实例电源状态以交付回执为准；SSH断开不等于已关机。quality_accepted=false、human_verdict=null。
-- failure_ledger_refs=[V82-F01,V82-F06]；failure_ledger_delta=none。
-
+- [完整49帧报告、视频与组件图](autoresearch/scene008_a37_C2_vehicle_20261104/index.html)。固定PVD/道路/几何，仅局部RGB正式1k；额外32＋2更新，完整状态恢复通过。199帧观测核查与原生分层/深度诊断保留。
+- 49帧读出采用率和已观测深度对齐指标改善；RGB仍弱于强基线，后段白斑/孔洞明显，质量未通过。未知隐藏几何无GT；全部输入BUILD。无编辑相等来自明确Native分支，不计重建算法提升。
+- 最新checkpoint完整Adam/RNG、49帧新结果与必要诊断已取回核验；原场景和强基线保留。双机关机记录见本地交付回执。quality_accepted=false、human_verdict=null。
+- failure_ledger_refs=[V82-F01,V82-F06]；failure_ledger_delta=更新V82-F06证据，无新增ID。
 
 本页按实验定位报告和原始证据；当前执行状态只见 [RESEARCH_STATUS](RESEARCH_STATUS.md)。完整历史过程保留在 [V7.4 实验历史](archive/2026-09/v74-0920/EXPERIMENT_HISTORY.md)及[V7.3 完整台账](archive/2026-09/pre-v74/V73_EXPERIMENTS.md)。
 
