@@ -4,6 +4,7 @@
 
 | task / run 或阶段 | 记录内容 | 入口 |
 |---|---|---|
+| SCENE008-A37-B10K-ROAD-20261103-R3 | 冻结单a37 B10k，2cm道路+RGB校准+投影范围修正；红框黑块消退，左车与标线固定域核对；最终1k，三版共3102新增更新，F06追加证据，GPU保持 | [组件、红框/保车与49帧](autoresearch/scene008_a37_only_B10k_road_20261103/result_report.html) |
 | SCENE008-A37-ONLY-B10K-20261103-R1 | 输入仅a37，原B设置fresh10k；原30k LR时间表截断，完整49帧分层/仅删a37；smoke3k+恢复2步，新增13002更新；未叠加道路补丁，GPU保持开启 | [组件与49帧结果](autoresearch/scene008_a37_only_B10k_20261103/result_report.html) |
 | SCENE008_A37_A6_R4_JOINT_20261103 | 冻结R4，a37/a6联合1k；补齐真实道路参考与残影贡献；有效参考域MAE降77.1%/83.1%，a5保持；后段缺参考仍有残留；新增1034更新，GPU保持开启 | [组件、原R4对照与49帧](autoresearch/scene008_a37_a6_r4_joint_20261103/result_report.html) |
 | SCENE008_SHADOW_QUALITY_SINGLE_20261103 | a5/a37分别fresh1k也使黄线劣化；确认道路覆盖/表示迁移问题；2cm+RGB自适应候选改善黄线/接缝但阴影指标回升；本请求6204更新；GPU保持开启 | [组件、单车因果检查与49帧](autoresearch/scene008_shadow_quality_single_20261103/result_report.html) |

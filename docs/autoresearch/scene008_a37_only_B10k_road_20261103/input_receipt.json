@@ -1,0 +1,53 @@
+{
+  "target": 37,
+  "parent": "fresh single-a37 B10k",
+  "source_frames": 199,
+  "source_role": "BUILD, not independent clean-road GT",
+  "coarse_domain_cells": 10724,
+  "coarse_envelope_cells": 8777,
+  "mandatory_cells": 5102,
+  "fine_cells": 140432,
+  "active_real_reference_cells": 135733,
+  "inferred_cells": 4699,
+  "unknown_fine_cells": 0,
+  "no_new_colour_interpolation": false,
+  "inferred_policy": "up to0.6m, eight measured-asphalt neighbours IDW; separate labels/confidence; excluded from real-reference metrics",
+  "geometry": "2cm tangent-plane subcells; unknown parents use nearest measured plane within0.6m; not new LiDAR measurements",
+  "calibration": "world-stable anisotropic clean-neighbour native-minus-real RGB offset; recomputed on B10k; capped per channel",
+  "settings": {
+    "target_alias": 37,
+    "detail_cell_m": 0.02,
+    "normal_sigma_m": 0.003,
+    "coverage": {
+      "longitudinal_outer_m": 0.7,
+      "lateral_outer_m": 0.45,
+      "core_fraction": 0.4
+    },
+    "adaptive_rgb": {
+      "enabled": true,
+      "sigma_longitudinal_m": 0.8,
+      "sigma_lateral_m": 0.4,
+      "max_linear_delta": 0.025,
+      "strength": 1.0
+    },
+    "source_policy": "at least3 geometrically eligible real199 colour samples; best projected-resolution source inside upper radiance cluster; no new colour interpolation",
+    "formal_steps": 1000,
+    "learning_rate": 0.06,
+    "gate_init": 2.0,
+    "inference": {
+      "max_neighbour_distance_m": 0.6,
+      "loss_confidence": 0.25,
+      "material": "asphalt_only; world marking cells excluded; explicit inferred samples"
+    },
+    "loss_weights": {
+      "road": 1.0,
+      "native": 2.0,
+      "yellow": 4.0,
+      "other_vehicle": 3.0,
+      "left_road": 2.0,
+      "keep_native_gate_prior": 0.0005
+    }
+  },
+  "seconds": 53.97120547294617,
+  "updates": 0
+}
