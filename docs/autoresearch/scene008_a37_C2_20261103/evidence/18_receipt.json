@@ -1,0 +1,342 @@
+{
+  "geometry_sha256": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+  "cameras_sha256": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455",
+  "protocol_sha256": "1690c5219beff2f07390f98d01b0f3e7a3a8eb9761b201a6018c6124755bc9ca",
+  "domain_sha256": "ce1f2b90df3f33bf26ad67b7496f223ea65dced2364606118a8ba5f9363af321",
+  "source_geometry": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz",
+  "source_camera": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/cameras.json",
+  "protocol": {
+    "schema": "c2.conservative_road_measurement.v1",
+    "registration_phase": "Geometry-based correction requested by root before formal1k; written while formal was running; frozen before final scoring, without choosing the domain from final results",
+    "clock_observed_at_initial_write_utc": "2026-11-03T08:49:39Z",
+    "chronology_correction": "The initial written phase label incorrectly inferred that formal had not started. Root subsequently clarified formal was already running at disk write. This record corrects that label; the correction affects measurement only, not training.",
+    "purpose": "Do not assign clean-road RGB truth to pixels possibly occupied by retained a6 after a37 removal.",
+    "source_geometry": "inputs/a6_geometry_minimal.npz: raw-track-bound model_from_canonical[raw] and same-frame box_lwh_per_raw; fallback box_lwh_m only if per-frame sizes absent",
+    "source_camera": "Original B10k cameras.json image_0 camera pose and intrinsics, downsample4",
+    "projection": "Eight physical OBB corners, near-plane edge clipping, convex hull in native pixel-center convention K projection minus0.5; dilate2px",
+    "possible_domain_is_body_GT": false,
+    "uses_PVD_or_Omni_or_C2_outputs": false,
+    "uses_C2_RGB_to_choose_domain": false,
+    "matched_road_domain": "For each unchanged r3 fit/new_dark/original_shadow domain D: D & ~possible_a6_OBB_projection; same mask, same reference, same denominator for r3 and C2",
+    "report_required": [
+      "old full r3 proxies unchanged",
+      "matched conservative-road MAE",
+      "original/matched/excluded pixel-frame counts and excluded fractions",
+      "possible-domain coverage and visible-label containment"
+    ],
+    "road_numeric_gate": "Matched conservative domains only; C2/r3 MAE<=1.05. Five percent is numerical tolerance, not an improvement target.",
+    "old_full_proxy_role": "Historical fit diagnostic; no failure verdict from potential new retained-a6 body covering presumed road",
+    "hidden_a6_RGB_GT": "Unavailable; bbox is conservative possible occupancy, not completed-body RGB or silhouette truth",
+    "full_native_gate_unchanged": {
+      "PSNR_delta_min": -0.05,
+      "SSIM_delta_min": -0.001,
+      "LPIPS_delta_max": 0.002,
+      "visual_review_required": true
+    },
+    "legacy_binding_caveat": "legacy bundle.actors order and selected_boxes_model list order are not reliable paired identifiers; never use actors.index(alias) for this a6 domain",
+    "optimizer_updates": 0,
+    "human_verdict": null,
+    "quality_accepted": false
+  },
+  "domain_is_body_GT": false,
+  "uses_proposal_or_C2_output": false,
+  "optimizer_updates": 0,
+  "GPU_used": false,
+  "raw_frames": 49,
+  "rows": [
+    {
+      "raw": 89,
+      "possible_pixels": 6040,
+      "visible_a6_pixels": 1149,
+      "visible_a6_inside_possible": 1149
+    },
+    {
+      "raw": 90,
+      "possible_pixels": 6040,
+      "visible_a6_pixels": 1153,
+      "visible_a6_inside_possible": 1153
+    },
+    {
+      "raw": 91,
+      "possible_pixels": 6040,
+      "visible_a6_pixels": 1153,
+      "visible_a6_inside_possible": 1153
+    },
+    {
+      "raw": 92,
+      "possible_pixels": 6040,
+      "visible_a6_pixels": 1151,
+      "visible_a6_inside_possible": 1151
+    },
+    {
+      "raw": 93,
+      "possible_pixels": 5962,
+      "visible_a6_pixels": 1156,
+      "visible_a6_inside_possible": 1156
+    },
+    {
+      "raw": 94,
+      "possible_pixels": 5967,
+      "visible_a6_pixels": 1161,
+      "visible_a6_inside_possible": 1161
+    },
+    {
+      "raw": 95,
+      "possible_pixels": 5811,
+      "visible_a6_pixels": 1188,
+      "visible_a6_inside_possible": 1188
+    },
+    {
+      "raw": 96,
+      "possible_pixels": 5675,
+      "visible_a6_pixels": 1174,
+      "visible_a6_inside_possible": 1174
+    },
+    {
+      "raw": 97,
+      "possible_pixels": 5589,
+      "visible_a6_pixels": 1171,
+      "visible_a6_inside_possible": 1171
+    },
+    {
+      "raw": 98,
+      "possible_pixels": 5405,
+      "visible_a6_pixels": 1172,
+      "visible_a6_inside_possible": 1172
+    },
+    {
+      "raw": 99,
+      "possible_pixels": 5227,
+      "visible_a6_pixels": 1168,
+      "visible_a6_inside_possible": 1168
+    },
+    {
+      "raw": 100,
+      "possible_pixels": 5125,
+      "visible_a6_pixels": 1180,
+      "visible_a6_inside_possible": 1180
+    },
+    {
+      "raw": 101,
+      "possible_pixels": 4940,
+      "visible_a6_pixels": 1166,
+      "visible_a6_inside_possible": 1166
+    },
+    {
+      "raw": 102,
+      "possible_pixels": 4878,
+      "visible_a6_pixels": 1175,
+      "visible_a6_inside_possible": 1175
+    },
+    {
+      "raw": 103,
+      "possible_pixels": 4739,
+      "visible_a6_pixels": 1176,
+      "visible_a6_inside_possible": 1176
+    },
+    {
+      "raw": 104,
+      "possible_pixels": 4605,
+      "visible_a6_pixels": 1191,
+      "visible_a6_inside_possible": 1191
+    },
+    {
+      "raw": 105,
+      "possible_pixels": 4420,
+      "visible_a6_pixels": 1184,
+      "visible_a6_inside_possible": 1184
+    },
+    {
+      "raw": 106,
+      "possible_pixels": 4409,
+      "visible_a6_pixels": 1182,
+      "visible_a6_inside_possible": 1182
+    },
+    {
+      "raw": 107,
+      "possible_pixels": 4220,
+      "visible_a6_pixels": 1193,
+      "visible_a6_inside_possible": 1193
+    },
+    {
+      "raw": 108,
+      "possible_pixels": 4028,
+      "visible_a6_pixels": 1178,
+      "visible_a6_inside_possible": 1178
+    },
+    {
+      "raw": 109,
+      "possible_pixels": 3958,
+      "visible_a6_pixels": 1163,
+      "visible_a6_inside_possible": 1163
+    },
+    {
+      "raw": 110,
+      "possible_pixels": 3815,
+      "visible_a6_pixels": 1126,
+      "visible_a6_inside_possible": 1126
+    },
+    {
+      "raw": 111,
+      "possible_pixels": 3720,
+      "visible_a6_pixels": 1113,
+      "visible_a6_inside_possible": 1113
+    },
+    {
+      "raw": 112,
+      "possible_pixels": 3550,
+      "visible_a6_pixels": 1084,
+      "visible_a6_inside_possible": 1084
+    },
+    {
+      "raw": 113,
+      "possible_pixels": 3480,
+      "visible_a6_pixels": 1012,
+      "visible_a6_inside_possible": 1012
+    },
+    {
+      "raw": 114,
+      "possible_pixels": 3361,
+      "visible_a6_pixels": 1029,
+      "visible_a6_inside_possible": 1029
+    },
+    {
+      "raw": 115,
+      "possible_pixels": 3206,
+      "visible_a6_pixels": 993,
+      "visible_a6_inside_possible": 993
+    },
+    {
+      "raw": 116,
+      "possible_pixels": 3091,
+      "visible_a6_pixels": 962,
+      "visible_a6_inside_possible": 962
+    },
+    {
+      "raw": 117,
+      "possible_pixels": 2982,
+      "visible_a6_pixels": 927,
+      "visible_a6_inside_possible": 927
+    },
+    {
+      "raw": 118,
+      "possible_pixels": 2826,
+      "visible_a6_pixels": 888,
+      "visible_a6_inside_possible": 888
+    },
+    {
+      "raw": 119,
+      "possible_pixels": 2743,
+      "visible_a6_pixels": 857,
+      "visible_a6_inside_possible": 857
+    },
+    {
+      "raw": 120,
+      "possible_pixels": 2614,
+      "visible_a6_pixels": 816,
+      "visible_a6_inside_possible": 816
+    },
+    {
+      "raw": 121,
+      "possible_pixels": 2521,
+      "visible_a6_pixels": 791,
+      "visible_a6_inside_possible": 791
+    },
+    {
+      "raw": 122,
+      "possible_pixels": 2448,
+      "visible_a6_pixels": 722,
+      "visible_a6_inside_possible": 722
+    },
+    {
+      "raw": 123,
+      "possible_pixels": 2378,
+      "visible_a6_pixels": 708,
+      "visible_a6_inside_possible": 708
+    },
+    {
+      "raw": 124,
+      "possible_pixels": 2279,
+      "visible_a6_pixels": 704,
+      "visible_a6_inside_possible": 704
+    },
+    {
+      "raw": 125,
+      "possible_pixels": 2238,
+      "visible_a6_pixels": 613,
+      "visible_a6_inside_possible": 613
+    },
+    {
+      "raw": 126,
+      "possible_pixels": 2183,
+      "visible_a6_pixels": 650,
+      "visible_a6_inside_possible": 650
+    },
+    {
+      "raw": 127,
+      "possible_pixels": 2050,
+      "visible_a6_pixels": 634,
+      "visible_a6_inside_possible": 634
+    },
+    {
+      "raw": 128,
+      "possible_pixels": 2009,
+      "visible_a6_pixels": 601,
+      "visible_a6_inside_possible": 601
+    },
+    {
+      "raw": 129,
+      "possible_pixels": 1944,
+      "visible_a6_pixels": 580,
+      "visible_a6_inside_possible": 580
+    },
+    {
+      "raw": 130,
+      "possible_pixels": 1915,
+      "visible_a6_pixels": 547,
+      "visible_a6_inside_possible": 547
+    },
+    {
+      "raw": 131,
+      "possible_pixels": 1832,
+      "visible_a6_pixels": 540,
+      "visible_a6_inside_possible": 540
+    },
+    {
+      "raw": 132,
+      "possible_pixels": 1751,
+      "visible_a6_pixels": 526,
+      "visible_a6_inside_possible": 526
+    },
+    {
+      "raw": 133,
+      "possible_pixels": 1751,
+      "visible_a6_pixels": 509,
+      "visible_a6_inside_possible": 509
+    },
+    {
+      "raw": 134,
+      "possible_pixels": 1667,
+      "visible_a6_pixels": 490,
+      "visible_a6_inside_possible": 490
+    },
+    {
+      "raw": 135,
+      "possible_pixels": 1631,
+      "visible_a6_pixels": 479,
+      "visible_a6_inside_possible": 479
+    },
+    {
+      "raw": 136,
+      "possible_pixels": 1631,
+      "visible_a6_pixels": 468,
+      "visible_a6_inside_possible": 468
+    },
+    {
+      "raw": 137,
+      "possible_pixels": 1505,
+      "visible_a6_pixels": 465,
+      "visible_a6_inside_possible": 465
+    }
+  ]
+}

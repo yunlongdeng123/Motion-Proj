@@ -1,0 +1,108 @@
+{
+  "schema_version": "c2.pvd_fixed_fullbox_training_stats_transform.v1",
+  "whole_box_lwh_m": [
+    4.33404016494751,
+    2.0775399208068848,
+    1.440000057220459
+  ],
+  "partial_bounds_scaled": false,
+  "partial_bounds_centered": false,
+  "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+  "training_stats_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json",
+  "training_stats_sha256": "057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c",
+  "training_shapes": 2458,
+  "training_npy_crc_verified": 2458,
+  "source_split": "train",
+  "training_mean_xyz": [
+    0.0013179273810237646,
+    0.007349051535129547,
+    0.023509424179792404
+  ],
+  "training_scalar_std": 0.16349221765995026,
+  "training_mean_full_bbox_span_xyz": [
+    0.3736966279626311,
+    0.2702367117519428,
+    0.8653240163921946
+  ],
+  "training_mean_full_bbox_center_xyz": [
+    0.0015711266132031072,
+    0.02641026573529883,
+    0.013171462331391928
+  ],
+  "native_axis": "x length/forward, y width/left, z height/up",
+  "pvd_axis": "X width/right, Y height/up, Z length/back",
+  "front_sign_assumption": "Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used",
+  "training_reference_axis_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png",
+  "native_to_training_raw_rotation": [
+    [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "model_formula": "q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std",
+  "inverse_formula": "native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)",
+  "pvd_to_actor_native_4x4": [
+    [
+      0.0,
+      0.0,
+      -0.8188630207547728,
+      -0.051778456423143396
+    ],
+    [
+      -0.9089233980558168,
+      0.0,
+      0.0,
+      0.001407643188107219
+    ],
+    [
+      0.0,
+      0.8711947435237231,
+      0.0,
+      -0.10157076498225952
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "actor_native_to_pvd_4x4": [
+    [
+      0.0,
+      -1.100202725707134,
+      0.0,
+      0.0015486928723786421
+    ],
+    [
+      0.0,
+      0.0,
+      1.1478489825998008,
+      0.11658789924677007
+    ],
+    [
+      -1.221205469845576,
+      0.0,
+      0.0,
+      -0.06323213420410352
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "application_adaptation": "Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used."
+}

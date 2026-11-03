@@ -1,0 +1,323 @@
+{
+  "status": "PROPOSAL_VALID_FOR_CONTROLLED_OPTIMIZATION",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+  "sha256": "dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455",
+  "quality_accepted": false,
+  "formal_eligible": true,
+  "source_type": "actual pretrained PVD DDPM complete point output; local PCA patch representation",
+  "input_point_cloud": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/candidate_points_actor_native.npz",
+  "input_point_cloud_sha256": "1d1b7e20ca389c184f54094674d40d1aa842e61da708b34f8b1ff2911d731562",
+  "transform_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/transform_contract.json",
+  "transform_contract_sha256": "84121bdacabac4eee9652ef04c9a1bc8d9a5e84ce585cd905a7a24d2b2552b31",
+  "producer_contract": {
+    "schema_version": "c2.pvd_fixed_fullbox_training_stats_transform.v1",
+    "whole_box_lwh_m": [
+      4.33404016494751,
+      2.0775399208068848,
+      1.440000057220459
+    ],
+    "partial_bounds_scaled": false,
+    "partial_bounds_centered": false,
+    "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+    "training_stats_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json",
+    "training_stats_sha256": "057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c",
+    "training_shapes": 2458,
+    "training_npy_crc_verified": 2458,
+    "source_split": "train",
+    "training_mean_xyz": [
+      0.0013179273810237646,
+      0.007349051535129547,
+      0.023509424179792404
+    ],
+    "training_scalar_std": 0.16349221765995026,
+    "training_mean_full_bbox_span_xyz": [
+      0.3736966279626311,
+      0.2702367117519428,
+      0.8653240163921946
+    ],
+    "training_mean_full_bbox_center_xyz": [
+      0.0015711266132031072,
+      0.02641026573529883,
+      0.013171462331391928
+    ],
+    "native_axis": "x length/forward, y width/left, z height/up",
+    "pvd_axis": "X width/right, Y height/up, Z length/back",
+    "front_sign_assumption": "Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used",
+    "training_reference_axis_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png",
+    "native_to_training_raw_rotation": [
+      [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "model_formula": "q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std",
+    "inverse_formula": "native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)",
+    "pvd_to_actor_native_4x4": [
+      [
+        0.0,
+        0.0,
+        -0.8188630207547728,
+        -0.051778456423143396
+      ],
+      [
+        -0.9089233980558168,
+        0.0,
+        0.0,
+        0.001407643188107219
+      ],
+      [
+        0.0,
+        0.8711947435237231,
+        0.0,
+        -0.10157076498225952
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "actor_native_to_pvd_4x4": [
+      [
+        0.0,
+        -1.100202725707134,
+        0.0,
+        0.0015486928723786421
+      ],
+      [
+        0.0,
+        0.0,
+        1.1478489825998008,
+        0.11658789924677007
+      ],
+      [
+        -1.221205469845576,
+        0.0,
+        0.0,
+        -0.06323213420410352
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "application_adaptation": "Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used.",
+    "seed": 0,
+    "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+    "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+    "normalization_sha256": "988d6aa8beca7c097a4b4d78b1b1706ed85537e46fa54caa2062a46cbb6ba8ce",
+    "partial_count": 200,
+    "new_noise_points": 1848,
+    "total_points": 2048,
+    "ddpm_steps": 1000,
+    "input_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_prior_contract.json",
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights/car_completion_3199.pth"
+  },
+  "coordinate_contract": {
+    "point_space": "actor_native_m",
+    "producer_transform": [
+      [
+        0.0,
+        0.0,
+        -0.8188630207547728,
+        -0.051778456423143396
+      ],
+      [
+        -0.9089233980558168,
+        0.0,
+        0.0,
+        0.001407643188107219
+      ],
+      [
+        0.0,
+        0.8711947435237231,
+        0.0,
+        -0.10157076498225952
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "raw_native_inverse_max_abs_error_m": 1.1862409543539343e-07,
+    "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+    "normalization_policy": "producer-supplied official training normalization + fixed annotated whole box; adapter never infers axes, scale, or center from partial points"
+  },
+  "completion_points": 2048,
+  "complete_unique_5mm_points": 2048,
+  "fixed_conditioning_count": 200,
+  "generated_model_point_count": 1848,
+  "conditioning_actual_source_max_abs_error_m": 1.1920928955078125e-07,
+  "complete_bounds_native_m": [
+    [
+      -2.1131668090820312,
+      -1.0376337766647339,
+      -0.8318876624107361
+    ],
+    [
+      2.410184144973755,
+      1.0484800338745117,
+      0.7156797647476196
+    ]
+  ],
+  "complete_extent_native_m": [
+    4.523350954055786,
+    2.0861138105392456,
+    1.5475674271583557
+  ],
+  "complete_points_inside_full_box_fraction": 0.95361328125,
+  "fixed_real_anchor_count": 5976,
+  "retained_prior_patch_count": 1527,
+  "all_anchor_count": 7503,
+  "prior_rejected_outside_full_box": 95,
+  "fixed_conditioning_points_not_marked_prior": 200,
+  "prior_rejected_degenerate_local_PCA": 8,
+  "prior_removed_near_fixed_real": 218,
+  "actual_point_positions_changed": false,
+  "manual_shape_or_upsampling": false,
+  "mesh_constructed": false,
+  "patch_normal_policy": "PCA16 on actual complete points within min(0.25m,max(4*kNNspacing,0.03m)); require4 neighbors and second covariance eigenvalue>1e-7; reject degenerate patches; sign relative fixed actor origin",
+  "sigma_tangent_policy": "min(0.60 * median physical distance to nearest3 other complete points,0.060m,0.45*normal-radius); no artificial positive lower scale",
+  "sigma_tangent_prior_stats_m": {
+    "min": 0.011161999244757888,
+    "median": 0.05682686894570436,
+    "max": 0.06
+  },
+  "patch_geometry_limit": "tangent patches approximate only local actual completion support; no connectivity, watertightness, mesh area, or closed wheels asserted",
+  "observed_geometry_fixed": true,
+  "observed_anchor_policy": "same5cm real voxel centroids and mapping, bytewise-comparable to existing Omni adapter real block",
+  "measured_color_anchor_count": 3586,
+  "inferred_color_anchor_count": 3917,
+  "color_policy": {
+    "unknown_body_srgb": [
+      0.28333333134651184,
+      0.31078431010246277,
+      0.36274510622024536
+    ],
+    "neutral_evidence_rows": 2249,
+    "measured_color_policy": "observed anchor within0.06m actual clean color samples; >=2 raw frames; per-sample RGB MAE to median<=0.10",
+    "inferred_color_policy": "all unobserved/prior surfaces start at robust neutral observed body median; no invented red tail-light detail"
+  },
+  "observed_to_actual_PVD_complete_point_distance_m": {
+    "mean": 0.08533170481634926,
+    "p50": 0.07379380972063813,
+    "p90": 0.14683427003081473,
+    "p95": 0.18607340181126042,
+    "max": 0.39828305090579375,
+    "fraction_le_004m": 0.14876171352074966,
+    "fraction_le_010m": 0.7167001338688086,
+    "fraction_le_020m": 0.9586680053547524
+  },
+  "distance_semantics": "point-to-point nearest distances; NOT point-to-surface distances",
+  "observed_to_completion_AABB_distance_lower_bound_m": {
+    "mean": 0.0002677020491163067,
+    "p50": 0.0,
+    "p90": 0.0,
+    "p95": 0.0,
+    "max": 0.05280113220214844,
+    "fraction_le_004m": 0.9973226238286479,
+    "fraction_le_010m": 1.0,
+    "fraction_le_020m": 1.0
+  },
+  "bottom_coverage": {
+    "raw_box_bottom_m": -0.72,
+    "lowest_measured_m": -0.21044833958148956,
+    "no_measurement_band_m": [
+      -0.72,
+      -0.21044833958148956
+    ],
+    "prior_patch_count_in_unobserved_lower_band": 856,
+    "policy": "all completion geometry and neutral color in this missing lower band remain inferred"
+  },
+  "view_plot": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_views.png",
+  "GPU_used": false,
+  "training_updates": 0,
+  "wall_seconds": 2.3195594884455204,
+  "old_assets_modified": false,
+  "human_verdict": null,
+  "formal_eligibility_scope": "root-authorized engineering/controlled optimization entry only; NOT rendered quality acceptance or exact complete geometry",
+  "proposal_usability_review": {
+    "reviewer": "a6_observations CPU adapter branch, root-authorized",
+    "plot": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_views.png",
+    "plot_sha256": "b3b8379dc9dc3f123cda8877b1d49315a794e5505474e355989d84b4aec719ba",
+    "visual_result": "Three canonical projections show car-scale length/width, roof/cabin, lower body and wheel-region support; no global collapse or large separated shell comparable to rejected Omni proposals. Coarse point sampling is not a watertight complete surface claim.",
+    "integrity": {
+      "status": "PASS_ACTUAL_PVD_SURFACE_INTEGRITY_AND_FIXED_REAL_IDENTITY",
+      "rows": 7503,
+      "observed": 5976,
+      "prior": 1527,
+      "ZIP_CRC": "passed",
+      "normals_unit_finite": true,
+      "all_prior_in_box": true,
+      "all_prior_sigma_le006m": true,
+      "fixed_real_geometry_bytewise_equal_to_Omni": true,
+      "connectivity_radius_diagnostics": [
+        {
+          "radius_m": 0.15,
+          "component_count": 126,
+          "largest_point_counts": [
+            1103,
+            258,
+            197,
+            58,
+            30,
+            29,
+            18,
+            17
+          ],
+          "largest_fraction": 0.53857421875,
+          "isolated_points": 59
+        },
+        {
+          "radius_m": 0.2,
+          "component_count": 11,
+          "largest_point_counts": [
+            2031,
+            4,
+            3,
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "largest_fraction": 0.99169921875,
+          "isolated_points": 6
+        },
+        {
+          "radius_m": 0.25,
+          "component_count": 2,
+          "largest_point_counts": [
+            2047,
+            1
+          ],
+          "largest_fraction": 0.99951171875,
+          "isolated_points": 1
+        }
+      ],
+      "connectivity_note": "radius point graph, not proven surface or semantic connectivity; legitimate sparse wheels can separate at short radius",
+      "GPU_used": false,
+      "training_updates": 0
+    },
+    "known_geometry": "5976 real positions/normals and raw-to-anchor mapping bytewise unchanged",
+    "clipping": "95 out-of-box actual completion points rejected,8 insufficient-PCA supports rejected,218 near-real generated duplicates removed; no point moved/resized/upsampled",
+    "bottom": "856 actual generated patch centers in measured-missing lower band; all remain inferred, no GT or new red detail",
+    "limitations": "PVD ShapeNet train-stat/fullbox adaptation and explicit front-sign assumption are recorded in producer contract; uniform5cm-anchor point distances differ from raw-return-weighted proposal distances; no unknown complete target or sign/seed search used"
+  }
+}

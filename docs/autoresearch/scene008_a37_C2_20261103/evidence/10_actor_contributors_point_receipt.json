@@ -1,0 +1,84 @@
+{
+  "contract": {
+    "optimizer_updates": 0,
+    "static_rows": 1520544,
+    "parent_identity": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth": [
+        1205804824,
+        1793685138678879826
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth": [
+        796288990,
+        1793685141363133667
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth": [
+        226494608,
+        1793685142603250932
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth": [
+        43800,
+        1793685263574663844
+      ]
+    },
+    "frozen_parent": "single-a37 B10k static plus frozen r3 gate/road and current-time a37 dynamic",
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic.npz",
+    "asset_formal_eligible": false,
+    "observed_mask": "a6_views actor_labels==4, all49 observed visible-label construction",
+    "amodal_mask": "standalone initial diagnostic ActorSurface raster alpha>0.10, without other scene objects",
+    "full_guard": "labels1..3 OR a37body(label5) OR outside standalone actor amodal mask",
+    "delete_guard": "labels1..3 OR outside standalone actor amodal mask",
+    "score": "Exact static alpha*T by zero-valued per-row feature gradient; sum full/delete within each frame, maximum over49 frames",
+    "candidate": "fit_score>1e-4 only; guard conflict never rejects or silently narrows candidates",
+    "candidate_is_not_ownership_GT": true,
+    "candidates_are_not_deleted": true,
+    "raw_range": [
+      89,
+      137
+    ],
+    "geometry_and_native_time_unchanged": true,
+    "all_inputs_BUILD": true,
+    "independent_test": false
+  },
+  "frame_count": 49,
+  "candidate_rows": 102807,
+  "candidate_fraction": 0.06761198623650483,
+  "guard_fit_conflicts": {
+    "0": {
+      "rows": 99684,
+      "fraction": 0.9696226716041565
+    },
+    "0.1": {
+      "rows": 98444,
+      "fraction": 0.9575612545013428
+    },
+    "1": {
+      "rows": 94229,
+      "fraction": 0.9165620803833008
+    },
+    "20": {
+      "rows": 10123,
+      "fraction": 0.09846605360507965
+    }
+  },
+  "guard_fit_ratio_quantiles": {
+    "0.0": 0.0,
+    "0.5": 2.00580096244812,
+    "0.9": 19.52460479736328,
+    "0.99": 483.48388671875,
+    "1.0": 588248.4375
+  },
+  "fit_alpha_T_flow_total": 194579.24814728062,
+  "fit_alpha_T_flow_on_candidates": 194577.71980341137,
+  "fit_flow_retained_fraction": 0.9999921453912285,
+  "guard_alpha_T_flow_total": 10236879.10428845,
+  "guard_alpha_T_flow_on_candidates": 1487135.2500172616,
+  "guard_flow_candidate_fraction": 0.14527232712890675,
+  "parent_unchanged": true,
+  "rgb_marker_maxabs": 0.0,
+  "optimizer_updates": 0,
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_point.npz",
+  "seconds": 13.396457547321916,
+  "candidate_is_not_ownership_GT": true,
+  "candidates_are_not_deleted": true,
+  "output_sha256": "b3f95848a1e4574a5ee2facb0f085beaa2b0b98cfe03ee0b569191c45a670d9e"
+}

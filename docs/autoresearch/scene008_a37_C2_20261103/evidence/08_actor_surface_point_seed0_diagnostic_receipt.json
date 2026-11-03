@@ -1,0 +1,256 @@
+{
+  "status": "DIAGNOSTIC_ONLY_LEARNED_SURFACE_UNACCEPTED",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic.npz",
+  "output_sha256": "428a62e77cf9238022f4b711222fa0ca944d197f5f16aedb9922a718b91aa0ef",
+  "formal_eligible": false,
+  "quality_accepted": false,
+  "geometric_reject": false,
+  "diagnostic_only": true,
+  "input_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000/candidate_omni.glb",
+  "input_mesh_sha256": "91ea4298f845f1dc8d27e5b27ec50b31c63484182fa2a58d781728718a869357",
+  "mesh_space": "omni_normalized",
+  "input_geometry_sha256": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+  "input_colour_evidence_sha256": "e29d3cdcfe66e8a0b026d70682b560d5442963a574ed64fd04e69e306ec7b6a4",
+  "normalization": {
+    "whole_box_lwh_m": [
+      4.33404,
+      2.07754,
+      1.44
+    ],
+    "half_span_m": 2.16702,
+    "transform": "Omni normalized (x_length,y_height,z_width) -> native[:,[0,2,1]] * fixed half_span; reverse face winding",
+    "partial_bounds_recenter_or_stretch": false
+  },
+  "seed": 0,
+  "prior_requested_samples": 14000,
+  "prior_retained_samples": 6694,
+  "prior_rejected_outside_full_box": 6035,
+  "prior_removed_near_observed": 1271,
+  "prior_observed_distance_threshold_m": 0.04,
+  "prior_box_clipping": "retain only actual learned triangle samples inside fixed raw full box +1e-6m; no stretch/recenter, no caps, no programmed car replacement",
+  "connected_component_sample_retention": [
+    {
+      "component_id": 0,
+      "faces": 620303,
+      "area_m2": 72.67400434655265,
+      "sampled": 13975,
+      "inside_full_box_samples": 7948,
+      "retained_samples": 6677,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 5,
+      "faces": 264,
+      "area_m2": 0.02626505185203454,
+      "sampled": 11,
+      "inside_full_box_samples": 11,
+      "retained_samples": 11,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 11,
+      "faces": 156,
+      "area_m2": 0.012559716396822794,
+      "sampled": 4,
+      "inside_full_box_samples": 4,
+      "retained_samples": 4,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 8,
+      "faces": 120,
+      "area_m2": 0.00947161491311694,
+      "sampled": 2,
+      "inside_full_box_samples": 2,
+      "retained_samples": 2,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 6,
+      "faces": 96,
+      "area_m2": 0.009361381976084025,
+      "sampled": 2,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": true
+    },
+    {
+      "component_id": 9,
+      "faces": 68,
+      "area_m2": 0.005517795425528405,
+      "sampled": 2,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": true
+    },
+    {
+      "component_id": 4,
+      "faces": 32,
+      "area_m2": 0.001707604528228939,
+      "sampled": 1,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": true
+    },
+    {
+      "component_id": 3,
+      "faces": 28,
+      "area_m2": 0.0015060670867686813,
+      "sampled": 2,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": true
+    },
+    {
+      "component_id": 10,
+      "faces": 16,
+      "area_m2": 0.0006132235327150749,
+      "sampled": 1,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": true
+    },
+    {
+      "component_id": 7,
+      "faces": 16,
+      "area_m2": 0.0003651771110232741,
+      "sampled": 0,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 2,
+      "faces": 8,
+      "area_m2": 0.00014371735085370825,
+      "sampled": 0,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": false
+    },
+    {
+      "component_id": 1,
+      "faces": 8,
+      "area_m2": 2.5290983104896153e-05,
+      "sampled": 0,
+      "inside_full_box_samples": 0,
+      "retained_samples": 0,
+      "entirely_rejected_in_sample": false
+    }
+  ],
+  "projection_diagnostics": {
+    "surface_area_inside_full_box_fraction_mc": 0.562255859375,
+    "samples": 65536,
+    "plot": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic_legal_views.png",
+    "method": "uniform actual learned triangle samples; exact point-depth zbuffer splats; no generated replacement geometry"
+  },
+  "observed_anchor_count": 5976,
+  "observed_measurement_count": 54715,
+  "all_anchor_count": 12670,
+  "observed_geometry_fixed": true,
+  "observed_voxel_m": 0.05,
+  "measured_colour_anchor_count": 3586,
+  "inferred_colour_anchor_count": 9084,
+  "color_policy": {
+    "unknown_body_srgb": [
+      0.28333333134651184,
+      0.31078431010246277,
+      0.36274510622024536
+    ],
+    "neutral_evidence_rows": 2249,
+    "measured_color_policy": "observed anchor within0.06m actual clean color samples; >=2 raw frames; per-sample RGB MAE to median<=0.10",
+    "inferred_color_policy": "all unobserved/prior surfaces start at robust neutral observed body median; no invented red tail-light detail"
+  },
+  "observed_normals": "local PCA16 neighbors within0.18m, oriented outward from annotated-box origin; degenerate fallback radial; estimated normals, not GT",
+  "observed_nearest_anchor_policy": "index into first real-voxel-anchor block, preserves each actual row assigned5cm voxel; optional nearest-any field separately",
+  "mesh": {
+    "vertices": 310497,
+    "faces": 621115,
+    "area_m2": 72.74154098770893,
+    "native_bounds_m": [
+      [
+        -2.16331117177248,
+        -2.1624825817787645,
+        -0.6924758427679538
+      ],
+      [
+        2.1612075994205475,
+        2.162601800572872,
+        0.7036906759393216
+      ]
+    ],
+    "native_extent_m": [
+      4.324518771193027,
+      4.325084382351637,
+      1.3961665187072754
+    ],
+    "is_watertight": false,
+    "is_winding_consistent": true,
+    "prior_samples_outside_annotated_box_plus005m": 0,
+    "outside_fraction": 0.0
+  },
+  "point_to_learned_surface_residual_m": {
+    "mean": 0.04074393559966444,
+    "p50": 0.03087029503590369,
+    "p90": 0.09111435495903838,
+    "p95": 0.11501631527805392,
+    "max": 0.2534636072095089,
+    "fraction_le_004m": 0.6054216867469879,
+    "fraction_le_010m": 0.9221887550200804,
+    "fraction_le_020m": 0.9983266398929049
+  },
+  "point_to_learned_surface_method": {
+    "method": "exact triangle closest point, complete centroid-sphere candidate bound; observed5cm anchor centroids",
+    "exact": true,
+    "queries": 5976,
+    "candidate_pairs": 314109,
+    "max_candidates_per_point": 454,
+    "max_triangle_centroid_radius_m": 0.01958606606353481
+  },
+  "observed_anchor_to_mesh_AABB_distance_lower_bound_m": {
+    "mean": 0.00025579004350815144,
+    "p50": 0.0,
+    "p90": 0.0,
+    "p95": 0.0,
+    "max": 0.016139002596139873,
+    "fraction_le_004m": 1.0,
+    "fraction_le_010m": 1.0,
+    "fraction_le_020m": 1.0
+  },
+  "legal_prior_bounds_m": [
+    [
+      -2.163113537643098,
+      -1.0382851642315654,
+      -0.6910967569815454
+    ],
+    [
+      2.160452499596679,
+      1.038636339396399,
+      0.7033614683407141
+    ]
+  ],
+  "geometry_rejection_policy": "If p90 observed-anchor distance to even mesh AABB exceeds0.30m, metre-scale misalignment is certified; no scale/recenter correction or small-offset fit can create missing car body.",
+  "bottom_coverage": {
+    "raw_box_bottom_m": -0.72,
+    "lowest_measured_m": -0.21044833958148956,
+    "no_measurement_band_m": [
+      -0.72,
+      -0.21044833958148956
+    ],
+    "measured_anchor_count_below_band": 0,
+    "learned_prior_anchor_count_in_unobserved_lower_band": 2232,
+    "learned_prior_min_z_m": -0.6910967569815454,
+    "policy": "Lower approximately0.51m/wheels have no measured geometry; all added lower geometry and color explicitly prior/inferred"
+  },
+  "sigma_tangent_observed_range_m": [
+    0.02,
+    0.06
+  ],
+  "sigma_tangent_prior_m": 0.0468533434294921,
+  "GPU_used": false,
+  "training_updates": 0,
+  "wall_seconds": 6.187821134924889,
+  "generated_mesh_modified": false,
+  "manual_replacement_mesh_used": false,
+  "old_assets_modified": false
+}

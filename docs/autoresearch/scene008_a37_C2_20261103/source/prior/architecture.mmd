@@ -1,0 +1,9 @@
+flowchart LR
+  I[Original 199 RGB + LiDAR] --> C[Canonical a6 visible observations]
+  C --> P[Frozen Omni point prior]
+  P --> S[3D shape proposal]
+  C --> O[Local a6 3D optimization]
+  S --> O
+  B[Original scene + recovered road] --> R[Render with only a37 removed]
+  O --> R
+  R --> Q[Preserved quality + exposed a6 evaluation]

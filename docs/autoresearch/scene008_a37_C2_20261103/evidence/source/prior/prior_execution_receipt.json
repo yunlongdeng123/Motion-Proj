@@ -1,0 +1,208 @@
+{
+  "schema_version": "c2.frozen_prior_execution_receipt.v1",
+  "final_family": "PVD official car partial-to-full completion",
+  "root_task": "scene008 remove only a37; retain/reveal a6",
+  "attempts": [
+    {
+      "report_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000/proposal_report.json",
+      "report": {
+        "schema_version": "c2.frozen_omni_proposal.v1",
+        "prior_type": "pretrained_learned_3d_shape",
+        "model_repo": "tencent/Hunyuan3D-Omni",
+        "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+        "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+        "worker_sha256": "dc6bc1a69225bdc4bac6bae0b63617bb5d9a72954004108d036480031c3427d2",
+        "verification_sha256": "c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8",
+        "seed": 0,
+        "new_diffusion_steps": 50,
+        "training_steps": 0,
+        "frozen": true,
+        "trainable_prior_parameters": 0,
+        "control": "point",
+        "point_count": 2048,
+        "observed_count": 54715,
+        "vertices": 310497,
+        "faces": 621118,
+        "mesh_bounds_native_m": [
+          [
+            -2.163311254105082,
+            -2.162482664079832,
+            -0.6924758691226174
+          ],
+          [
+            2.1612076816730905,
+            2.1626018828784765,
+            0.7036907027208059
+          ]
+        ],
+        "observed_to_surface_approx_m": {
+          "mean": 0.039119398565898016,
+          "p50": 0.032918311345306144,
+          "p90": 0.0716065307904423,
+          "p99": 0.13638394989857372
+        },
+        "generation_seconds": 23.561160925775766,
+        "decode_seconds": 10.225805167108774,
+        "total_wall_seconds": 70.93801767192781,
+        "peak_allocated_gib": 7.686236381530762,
+        "peak_reserved_gib": 7.9765625,
+        "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+        "torch": "2.4.1+cu121",
+        "cuda": "12.1",
+        "input_contract_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+        "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000",
+        "quality_status": "proposal only; original RGB/LiDAR optimization and matched renders remain required",
+        "resumed_from": null
+      }
+    },
+    {
+      "report_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/bbox_seed000/proposal_report.json",
+      "report": {
+        "schema_version": "c2.frozen_omni_proposal.v1",
+        "prior_type": "pretrained_learned_3d_shape",
+        "model_repo": "tencent/Hunyuan3D-Omni",
+        "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+        "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+        "worker_sha256": "d33f6f438eeabc8384f7155439ecc72c77e65f8c28f453506bbdc83489e8566b",
+        "verification_sha256": "c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8",
+        "seed": 0,
+        "new_diffusion_steps": 50,
+        "training_steps": 0,
+        "frozen": true,
+        "trainable_prior_parameters": 0,
+        "control": "bbox",
+        "point_count": 0,
+        "bbox_control_lhw": [
+          1.0,
+          0.33225351572036743,
+          0.4793541133403778
+        ],
+        "observed_count": 54715,
+        "vertices": 51564,
+        "faces": 103188,
+        "mesh_bounds_native_m": [
+          [
+            -0.8360498541845303,
+            -0.5894539065490108,
+            -0.7695048398978841
+          ],
+          [
+            0.8655723294957269,
+            0.5667944557743141,
+            0.7500795380931393
+          ]
+        ],
+        "observed_to_surface_approx_m": {
+          "mean": 0.7550281997292223,
+          "p50": 0.7594882332936802,
+          "p90": 1.2430007670739032,
+          "p99": 1.3324516610272974
+        },
+        "generation_seconds": 21.356370436027646,
+        "decode_seconds": 9.806478798389435,
+        "total_wall_seconds": 71.77474096417427,
+        "peak_allocated_gib": 7.678417205810547,
+        "peak_reserved_gib": 7.9765625,
+        "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+        "torch": "2.4.1+cu121",
+        "cuda": "12.1",
+        "input_contract_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+        "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/bbox_seed000",
+        "quality_status": "proposal only; original RGB/LiDAR optimization and matched renders remain required",
+        "resumed_from": null
+      }
+    },
+    {
+      "report_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/proposal_report.json",
+      "report": {
+        "schema_version": "c2.frozen_pvd_car_completion.v1",
+        "model": "PVD car_completion_3199",
+        "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+        "source_commit": "9747265a5f141e5546fd4f862bfa66aa59f1bd33",
+        "seed": 0,
+        "diffusion_steps_this_run": 1000,
+        "official_total_diffusion_steps": 1000,
+        "total_points": 2048,
+        "fixed_original_points": 200,
+        "new_diffused_points": 1848,
+        "training_steps": 0,
+        "trainable_prior_parameters": 0,
+        "partial_coordinate_max_error_m": 9.720820770553473e-08,
+        "all_points_finite": true,
+        "native_bounds_m": [
+          [
+            -2.113166870762787,
+            -1.037633748124835,
+            -0.8318876494345664
+          ],
+          [
+            2.4101841757548614,
+            1.0484799847302766,
+            0.7156797669540541
+          ]
+        ],
+        "inside_whole_box_fraction": 0.95361328125,
+        "generated_inside_whole_box_fraction": 0.9485930735930735,
+        "observed_to_complete_approx_m": {
+          "mean": 0.06570924608786079,
+          "p50": 0.057312433361987644,
+          "p90": 0.11671383778177288
+        },
+        "total_wall_seconds": 26.583829060196877,
+        "sampling_wall_seconds": 25.545124273747206,
+        "peak_allocated_gib": 0.2606196403503418,
+        "peak_reserved_gib": 0.3046875,
+        "torch": "2.2.2+cu118",
+        "cuda": "11.8",
+        "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+        "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+        "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+        "worker_sha256": "bdf5dc1faeeb2b37181b33b4c80eb3bf80f3ddec944dc2fec5d52cd6a047e7cf",
+        "resumed_from": null,
+        "quality_status": "Actual frozen partial-to-complete proposal; downstream legal-box/observed constraints and RGB fit still required"
+      }
+    }
+  ],
+  "total_prior_diffusion_steps": 1100,
+  "total_prior_training_updates": 0,
+  "total_reported_prior_worker_wall_seconds": 169.29658769629896,
+  "total_formal_gaussian_fit_updates_by_this_agent": 0,
+  "omni_status": "closed after two mismatched controls; not used as evidence that learned priors are universally ineffective",
+  "pvd_status": "one seed0/1000 step actual point diffusion complete; CPU surface and downstream full RGB/legal observation verification owned by root and observations agent",
+  "model_weight_download_bytes": 15064253912,
+  "car_train_stats_range_bytes": 402612686,
+  "official_training_npy_crc_passed": 2458,
+  "checkpoint_state_reload": {
+    "initial_shape": [
+      1,
+      3,
+      2048
+    ],
+    "initial_fixed_partial_exact": true,
+    "initial_noise_points": 1848,
+    "initial_noise_mean": -0.002131369197741151,
+    "initial_noise_std": 0.9957050681114197,
+    "mid_fixed_partial_exact": true,
+    "final_fixed_partial_exact": true,
+    "final_next_t": -1,
+    "final_npz_bit_exact": true,
+    "cpu_rng_bytes": 5056,
+    "cuda_rng_bytes": 16,
+    "checkpoint_signatures_identical": true,
+    "gpu_initialized": false,
+    "actual_sampling_repeated": false
+  },
+  "authoritative_pvd_source": "https://github.com/alexzhou907/PVD",
+  "pvd_checkpoint_drive": "https://drive.google.com/file/d/18WhIKXWPFjg0RisewiEZjL-JXfQvirJN/view",
+  "pvd_checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+  "pvd_code_commit": "9747265a5f141e5546fd4f862bfa66aa59f1bd33",
+  "normalization_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/normalization_contract.json",
+  "statistics_source": "Official PointFlow ShapeNetCore.v2.PC15k.zip car/train only; every NPY matched ZIP CRC",
+  "pointcloud": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/candidate_points_actor_native.npz",
+  "transform_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/transform_contract.json",
+  "architecture": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/architecture_pvd.mmd",
+  "gpu_released_after_prior": true,
+  "keep_original_repositories_unchanged": true,
+  "shared_environment_modified": false,
+  "created_epoch": 1793695405.6677356
+}

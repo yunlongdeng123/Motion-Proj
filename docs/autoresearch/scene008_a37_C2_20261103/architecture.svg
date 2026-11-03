@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="330" viewBox="0 0 1100 330">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#496879"/></marker></defs>
+<rect width="1100" height="330" fill="#f8fbfd"/>
+<g fill="#e6f1f7" stroke="#7a9eb1" stroke-width="1.5">
+<rect x="20" y="25" width="210" height="75" rx="9"/><rect x="20" y="130" width="210" height="75" rx="9"/>
+<rect x="285" y="25" width="230" height="75" rx="9"/><rect x="285" y="130" width="230" height="75" rx="9"/>
+<rect x="565" y="25" width="245" height="75" rx="9"/><rect x="565" y="130" width="245" height="75" rx="9"/>
+<rect x="865" y="60" width="215" height="135" rx="9"/></g>
+<g font-family="Microsoft YaHei,Noto Sans CJK SC,sans-serif" font-size="18" fill="#193b4c" text-anchor="middle">
+<text x="125" y="53">原始 RGB / LiDAR</text><text x="125" y="79" font-size="15">199帧 BUILD · 固定身份/位姿</text>
+<text x="125" y="158">冻结三维先验候选</text><text x="125" y="184" font-size="15">几何准入与失败凭据</text>
+<text x="400" y="53">持久 a6 表面</text><text x="400" y="79" font-size="15">共享材质/局部门控 · 位移≤3cm</text>
+<text x="400" y="158">冻结 B10k + 道路 r3</text><text x="400" y="184" font-size="15">原静态时间与环境光保持</text>
+<text x="688" y="53">真实轨迹与物体存在集</text><text x="688" y="79" font-size="15">保留a6 · a37决定直接光可见性</text>
+<text x="688" y="158">同一次深度排序合成</text><text x="688" y="184" font-size="15">可选道路遮光 · C2始终启用</text>
+<text x="973" y="93">完整图：保留 a37</text><text x="973" y="126">编辑图：仅删 a37</text><text x="973" y="163" font-size="15">49帧重建 / 保车 / 道路验收</text>
+<text x="550" y="276" font-size="17">参考颜色是固定观测辐射代理，非已知 albedo；没有独立可学习阴影图。</text>
+<text x="550" y="306" font-size="16">BUILD 指标不能替代独立真值或人工视觉验收。</text></g>
+<g fill="none" stroke="#496879" stroke-width="2" marker-end="url(#a)">
+<path d="M230 63H285"/><path d="M230 168H258V89H285"/><path d="M515 63H565"/>
+<path d="M515 168H565"/><path d="M688 100V130"/><path d="M810 168H865"/>
+<path d="M400 100V118H540V149H565"/></g></svg>

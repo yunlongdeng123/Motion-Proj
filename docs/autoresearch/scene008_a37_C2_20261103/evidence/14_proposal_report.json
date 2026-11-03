@@ -1,0 +1,47 @@
+{
+  "schema_version": "c2.frozen_pvd_car_completion.v1",
+  "model": "PVD car_completion_3199",
+  "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+  "source_commit": "9747265a5f141e5546fd4f862bfa66aa59f1bd33",
+  "seed": 0,
+  "diffusion_steps_this_run": 1000,
+  "official_total_diffusion_steps": 1000,
+  "total_points": 2048,
+  "fixed_original_points": 200,
+  "new_diffused_points": 1848,
+  "training_steps": 0,
+  "trainable_prior_parameters": 0,
+  "partial_coordinate_max_error_m": 9.720820770553473e-08,
+  "all_points_finite": true,
+  "native_bounds_m": [
+    [
+      -2.113166870762787,
+      -1.037633748124835,
+      -0.8318876494345664
+    ],
+    [
+      2.4101841757548614,
+      1.0484799847302766,
+      0.7156797669540541
+    ]
+  ],
+  "inside_whole_box_fraction": 0.95361328125,
+  "generated_inside_whole_box_fraction": 0.9485930735930735,
+  "observed_to_complete_approx_m": {
+    "mean": 0.06570924608786079,
+    "p50": 0.057312433361987644,
+    "p90": 0.11671383778177288
+  },
+  "total_wall_seconds": 26.583829060196877,
+  "sampling_wall_seconds": 25.545124273747206,
+  "peak_allocated_gib": 0.2606196403503418,
+  "peak_reserved_gib": 0.3046875,
+  "torch": "2.2.2+cu118",
+  "cuda": "11.8",
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+  "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+  "worker_sha256": "bdf5dc1faeeb2b37181b33b4c80eb3bf80f3ddec944dc2fec5d52cd6a047e7cf",
+  "resumed_from": null,
+  "quality_status": "Actual frozen partial-to-complete proposal; downstream legal-box/observed constraints and RGB fit still required"
+}

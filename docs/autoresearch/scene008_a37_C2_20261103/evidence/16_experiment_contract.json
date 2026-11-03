@@ -1,0 +1,60 @@
+{
+  "task_id": "scene008_a37_C2_20261103_r1",
+  "scene": "Waymo train scene008 / 10094743350625019937_3420_000_3440_000",
+  "edit": "delete only a37; retain a6 and all other vehicles",
+  "baseline": {
+    "identity": "scene008_a37_only_B10k_20261103_r1/formal10k",
+    "road": "scene008_a37_only_B10k_road_20261103_r3/formal/checkpoint001000.pt",
+    "native_full_PSNR": 30.45497766,
+    "native_full_SSIM": 0.93640836,
+    "native_full_LPIPS_VGG": 0.08610765,
+    "baseline_repaired_full_PSNR": 28.10177616,
+    "baseline_repaired_full_is_not_a_quality_floor": true
+  },
+  "method": {
+    "prior": "Frozen official PVD car_completion_3199, one seed0, official 1000 DDPM sampling steps",
+    "prior_training_updates": 0,
+    "proposal_inputs": "200 fixed real a6 canonical points, class car, annotated whole-box pose and dimensions, exact official car-train normalization",
+    "proposal_material_generation": false,
+    "local_surface": "5976 fixed measured anchors + 1527 actually generated PVD point patches; no hand-built vehicle mesh",
+    "appearance": "persistent canonical effective RGB fitted to visibility-checked real observations, not a physical BRDF claim",
+    "geometry": "observed geometry fixed; generated patches have at most 3cm normal offset",
+    "opacity": "new surface opacity fixed at0.995, no independent lifetime",
+    "replacement": "physical a6-box interior plus optimized native contribution multipliers; candidate rows are not ownership ground truth",
+    "time": "parent native time unchanged; road no time parameters; a6 only follows measured rigid poses",
+    "lighting": "fixed low-dimensional ambient/direct-light approximation with ray-OBB visibility from current retained a6/a37; no independent learned shadow layer",
+    "formal_optimizer_updates": 1000,
+    "formal_starts_from": "initial frozen-prior proposal, not smoke checkpoint"
+  },
+  "input_roles": {
+    "recovery": "all199 original observation frames are BUILD",
+    "gradient_views": "raw89..137 excluding101,113,125; exclusions are not independent test",
+    "evaluation": "all49 native observed views, same original OpenCV-resized RGB",
+    "masks": "reviewed instance masks plus sensor-depth visibility, not official per-pixel object ground truth",
+    "unknown": "no independent RGB or material truth for newly revealed previously unseen a6 body"
+  },
+  "acceptance": {
+    "noedit": "new actor and road branches enabled with a37 retained; never bypass to original renderer",
+    "mean_PSNR_drop_max_dB_vs_native_full": 0.05,
+    "mean_SSIM_drop_max_vs_native_full": 0.001,
+    "mean_LPIPS_increase_max_vs_native_full": 0.002,
+    "visible_a6": "improve relative to the user-specified identity10k+road1k baseline",
+    "road": "compare both methods on identical conservative road domain excluding possible retained-a6 volume; <=5% increase numerical tolerance",
+    "road_measurement_correction": "raw annotated a6 OBB projection only, independent of all learned proposals and C2 outputs; OBB is a possible-occupancy exclusion, not vehicle surface GT",
+    "historical_road_proxy": "retain unchanged full r3 masks/references and show those fitting metrics separately",
+    "visual": "no obvious whole-scene degradation, all49 and worst frames reviewed"
+  },
+  "engineering_ledger_before_formal": {
+    "Omni_sampling_steps": 100,
+    "PVD_sampling_steps": 1000,
+    "point_smoke_and_pilot_updates": 256,
+    "point_gate_pilot_updates": 256,
+    "PVD_smoke_updates": 32,
+    "PVD_restore_next_stage_updates": 2,
+    "total_extra_optimizer_updates": 546,
+    "all_old_runs_preserved": true
+  },
+  "quality_accepted": false,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F01", "V82-F06"]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "c2.conservative_road_measurement.v1",
+  "registration_phase": "Geometry-based correction requested by root before formal1k; written while formal was running; frozen before final scoring, without choosing the domain from final results",
+  "clock_observed_at_initial_write_utc": "2026-11-03T08:49:39Z",
+  "chronology_correction": "The initial written phase label incorrectly inferred that formal had not started. Root subsequently clarified formal was already running at disk write. This record corrects that label; the correction affects measurement only, not training.",
+  "purpose": "Do not assign clean-road RGB truth to pixels possibly occupied by retained a6 after a37 removal.",
+  "source_geometry": "inputs/a6_geometry_minimal.npz: raw-track-bound model_from_canonical[raw] and same-frame box_lwh_per_raw; fallback box_lwh_m only if per-frame sizes absent",
+  "source_camera": "Original B10k cameras.json image_0 camera pose and intrinsics, downsample4",
+  "projection": "Eight physical OBB corners, near-plane edge clipping, convex hull in native pixel-center convention K projection minus0.5; dilate2px",
+  "possible_domain_is_body_GT": false,
+  "uses_PVD_or_Omni_or_C2_outputs": false,
+  "uses_C2_RGB_to_choose_domain": false,
+  "matched_road_domain": "For each unchanged r3 fit/new_dark/original_shadow domain D: D & ~possible_a6_OBB_projection; same mask, same reference, same denominator for r3 and C2",
+  "report_required": ["old full r3 proxies unchanged", "matched conservative-road MAE", "original/matched/excluded pixel-frame counts and excluded fractions", "possible-domain coverage and visible-label containment"],
+  "road_numeric_gate": "Matched conservative domains only; C2/r3 MAE<=1.05. Five percent is numerical tolerance, not an improvement target.",
+  "old_full_proxy_role": "Historical fit diagnostic; no failure verdict from potential new retained-a6 body covering presumed road",
+  "hidden_a6_RGB_GT": "Unavailable; bbox is conservative possible occupancy, not completed-body RGB or silhouette truth",
+  "full_native_gate_unchanged": {"PSNR_delta_min": -0.05, "SSIM_delta_min": -0.001, "LPIPS_delta_max": 0.002, "visual_review_required": true},
+  "legacy_binding_caveat": "legacy bundle.actors order and selected_boxes_model list order are not reliable paired identifiers; never use actors.index(alias) for this a6 domain",
+  "optimizer_updates": 0,
+  "human_verdict": null,
+  "quality_accepted": false
+}

@@ -1,0 +1,479 @@
+{
+  "contract": {
+    "optimizer_updates": 0,
+    "baseline": "single-a37 B10k plus frozen r3 road1k",
+    "road_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_road_20261103_r3/formal/checkpoint001000.pt",
+    "road_inputs": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_road_20261103_r3/inputs",
+    "road_inputs_and_masks_unchanged": true,
+    "frame_range": [
+      89,
+      137
+    ],
+    "frame_count": 49,
+    "resolution": [
+      480,
+      320
+    ],
+    "camera": "image_0",
+    "ground_truth": "Original uint8 RGB -> float64 /255 -> cv2.resize INTER_LINEAR -> float32, matching native loadCam",
+    "full_render": "static opacity gate -> retained target dynamic -> fixed road, common raster and environment",
+    "noedit_repair_enabled": true,
+    "target_dynamic_in_repaired_full": true,
+    "full_metrics": "clamped float sRGB, per-frame PSNR/SSIM/LPIPS-vgg then arithmetic mean",
+    "local_metrics": "pixel-weighted sRGB MAE plus maxima; 8bit difference is channel-rounded comparison",
+    "proxy_reference": "Unchanged r3 linear recovery reference; original_shadow uses unchanged older reference_linear",
+    "input_role": "49 observed train / all199 BUILD, no independent clean-road ground truth",
+    "lpips_enabled": true,
+    "lpips_error": null,
+    "parent_identity": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth": [
+        1205804824,
+        1793685138678879826
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth": [
+        796288990,
+        1793685141363133667
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth": [
+        226494608,
+        1793685142603250932
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth": [
+        43800,
+        1793685263574663844
+      ]
+    },
+    "torch_version": "2.2.2+cu118",
+    "cv2_version": "4.10.0"
+  },
+  "frame_count": 49,
+  "optimizer_updates": 0,
+  "methods": {
+    "native_full": {
+      "psnr": 30.45497765833018,
+      "ssim": 0.9364083628265225,
+      "lpips_vgg": 0.08610765369875091
+    },
+    "repaired_full": {
+      "psnr": 28.101776161972357,
+      "ssim": 0.916425917829786,
+      "lpips_vgg": 0.10861991741219346
+    },
+    "repaired_delete37": {
+      "psnr": 24.316523610329142,
+      "ssim": 0.879693404752381,
+      "lpips_vgg": 0.1472528637671957
+    }
+  },
+  "masks": {
+    "target_a37": {
+      "samples": 555950,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.01739957758109326,
+          "gt_srgb_maxabs": 0.6854364275932312,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.025483757051081336,
+          "gt_srgb_maxabs": 0.6854364275932312,
+          "native_full_srgb_change": 0.010942004795106399,
+          "native_full_srgb_maxabs": 0.47596681118011475,
+          "native_full_change_MAE_8bit": 2.7904547771082533,
+          "native_full_change_max_8bit": 122,
+          "native_full_pixels_changed_over1": 127445
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.14476250447097663,
+          "gt_srgb_maxabs": 0.7147058844566345,
+          "native_full_srgb_change": 0.14250690635617705,
+          "native_full_srgb_maxabs": 0.7068395018577576,
+          "native_full_change_MAE_8bit": 36.3392289474473,
+          "native_full_change_max_8bit": 180,
+          "native_full_pixels_changed_over1": 555704
+        }
+      }
+    },
+    "retained_a6": {
+      "samples": 45418,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.032318347278342464,
+          "gt_srgb_maxabs": 0.5543816685676575,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.03230397780341979,
+          "gt_srgb_maxabs": 0.5543557405471802,
+          "native_full_srgb_change": 0.0006243058660663838,
+          "native_full_srgb_maxabs": 0.0620538592338562,
+          "native_full_change_MAE_8bit": 0.1594301818662205,
+          "native_full_change_max_8bit": 16,
+          "native_full_pixels_changed_over1": 1481
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.030942267815178618,
+          "gt_srgb_maxabs": 0.545811653137207,
+          "native_full_srgb_change": 0.01010070412047642,
+          "native_full_srgb_maxabs": 0.3099696636199951,
+          "native_full_change_MAE_8bit": 2.5751317392516917,
+          "native_full_change_max_8bit": 79,
+          "native_full_pixels_changed_over1": 23597
+        }
+      }
+    },
+    "retained_all": {
+      "samples": 295914,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.04396977842130703,
+          "gt_srgb_maxabs": 0.850761890411377,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.04411134290277897,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.0003014513241301698,
+          "native_full_srgb_maxabs": 0.26688826084136963,
+          "native_full_change_MAE_8bit": 0.07694465283832466,
+          "native_full_change_max_8bit": 68,
+          "native_full_pixels_changed_over1": 2429
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.04392774899466378,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.0021259067373744956,
+          "native_full_srgb_maxabs": 0.3099696636199951,
+          "native_full_change_MAE_8bit": 0.5422284853031624,
+          "native_full_change_max_8bit": 79,
+          "native_full_pixels_changed_over1": 32036
+        }
+      }
+    },
+    "other_vehicle_guard": {
+      "samples": 573749,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.03232252237880564,
+          "gt_srgb_maxabs": 0.850761890411377,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.032483233901830444,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.0002872224251077777,
+          "native_full_srgb_maxabs": 0.39417269825935364,
+          "native_full_change_MAE_8bit": 0.07321784729327051,
+          "native_full_change_max_8bit": 101,
+          "native_full_pixels_changed_over1": 3848
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.03258282247396602,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.0020293239717844897,
+          "native_full_srgb_maxabs": 0.39417269825935364,
+          "native_full_change_MAE_8bit": 0.5175898636279398,
+          "native_full_change_max_8bit": 101,
+          "native_full_pixels_changed_over1": 54818
+        }
+      }
+    },
+    "road_boundary_outer": {
+      "samples": 68071,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.012247437292467536,
+          "gt_srgb_maxabs": 0.2413707673549652,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.02654116442687948,
+          "gt_srgb_maxabs": 0.3206205368041992,
+          "native_full_srgb_change": 0.022780079963050866,
+          "native_full_srgb_maxabs": 0.327361524105072,
+          "native_full_change_MAE_8bit": 5.80715233604129,
+          "native_full_change_max_8bit": 83,
+          "native_full_pixels_changed_over1": 46378
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.02633476975752344,
+          "gt_srgb_maxabs": 0.3338387608528137,
+          "native_full_srgb_change": 0.023606671762507848,
+          "native_full_srgb_maxabs": 0.32012587785720825,
+          "native_full_change_MAE_8bit": 6.018133027770023,
+          "native_full_change_max_8bit": 81,
+          "native_full_pixels_changed_over1": 48222
+        }
+      }
+    },
+    "road_boundary_band": {
+      "samples": 410172,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.011240604831766685,
+          "gt_srgb_maxabs": 0.6011751890182495,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.02312235039088324,
+          "gt_srgb_maxabs": 0.6070740222930908,
+          "native_full_srgb_change": 0.018666583318595158,
+          "native_full_srgb_maxabs": 0.47596681118011475,
+          "native_full_change_MAE_8bit": 4.759650423074548,
+          "native_full_change_max_8bit": 122,
+          "native_full_pixels_changed_over1": 263681
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.03170210018888568,
+          "gt_srgb_maxabs": 0.6574451923370361,
+          "native_full_srgb_change": 0.029191682992707343,
+          "native_full_srgb_maxabs": 0.6462817788124084,
+          "native_full_change_MAE_8bit": 7.443488747809861,
+          "native_full_change_max_8bit": 165,
+          "native_full_pixels_changed_over1": 297260
+        }
+      }
+    },
+    "outside_repair": {
+      "samples": 6460246,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.016477173346844416,
+          "gt_srgb_maxabs": 0.850761890411377,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.016896604042593067,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.0008450069827458401,
+          "native_full_srgb_maxabs": 0.39417269825935364,
+          "native_full_change_MAE_8bit": 0.21543121835711318,
+          "native_full_change_max_8bit": 101,
+          "native_full_pixels_changed_over1": 240979
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.018392517272308468,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.003128848518169426,
+          "native_full_srgb_maxabs": 0.7068395018577576,
+          "native_full_change_MAE_8bit": 0.7977951613607284,
+          "native_full_change_max_8bit": 180,
+          "native_full_pixels_changed_over1": 490749
+        }
+      }
+    },
+    "marking": {
+      "samples": 69656,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.015417983293805759,
+          "gt_srgb_maxabs": 0.19426265358924866,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.01724113648673052,
+          "gt_srgb_maxabs": 0.2751096785068512,
+          "native_full_srgb_change": 0.0035822869113218423,
+          "native_full_srgb_maxabs": 0.26065632700920105,
+          "native_full_change_MAE_8bit": 0.9136805635312585,
+          "native_full_change_max_8bit": 66,
+          "native_full_pixels_changed_over1": 6675
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.017468706687722595,
+          "gt_srgb_maxabs": 0.2621402442455292,
+          "native_full_srgb_change": 0.005245847590693704,
+          "native_full_srgb_maxabs": 0.2552918791770935,
+          "native_full_change_MAE_8bit": 1.3368841162283216,
+          "native_full_change_max_8bit": 65,
+          "native_full_pixels_changed_over1": 15257
+        }
+      }
+    },
+    "left_road": {
+      "samples": 42062,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.010097513216258543,
+          "gt_srgb_maxabs": 0.1953517198562622,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.011261837334357002,
+          "gt_srgb_maxabs": 0.19531208276748657,
+          "native_full_srgb_change": 0.002272047691437516,
+          "native_full_srgb_maxabs": 0.104124516248703,
+          "native_full_change_MAE_8bit": 0.5782099440508456,
+          "native_full_change_max_8bit": 27,
+          "native_full_pixels_changed_over1": 7819
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.011151441513829468,
+          "gt_srgb_maxabs": 0.19531208276748657,
+          "native_full_srgb_change": 0.0027289049148619443,
+          "native_full_srgb_maxabs": 0.104124516248703,
+          "native_full_change_MAE_8bit": 0.694554070974593,
+          "native_full_change_max_8bit": 27,
+          "native_full_pixels_changed_over1": 9550
+        }
+      }
+    },
+    "retained_a5": {
+      "samples": 121128,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.06209627892109742,
+          "gt_srgb_maxabs": 0.850761890411377,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.06209531468468743,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 6.294464263179568e-05,
+          "native_full_srgb_maxabs": 0.03731358051300049,
+          "native_full_change_MAE_8bit": 0.015851000594412523,
+          "native_full_change_max_8bit": 10,
+          "native_full_pixels_changed_over1": 255
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.06211005288669733,
+          "gt_srgb_maxabs": 0.8507635593414307,
+          "native_full_srgb_change": 0.00010467415249832776,
+          "native_full_srgb_maxabs": 0.03731358051300049,
+          "native_full_change_MAE_8bit": 0.026506395438434274,
+          "native_full_change_max_8bit": 10,
+          "native_full_pixels_changed_over1": 538
+        }
+      }
+    },
+    "retained_a26": {
+      "samples": 116261,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.029767046752188935,
+          "gt_srgb_maxabs": 0.8180122375488281,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.030134479178367916,
+          "gt_srgb_maxabs": 0.8180142641067505,
+          "native_full_srgb_change": 0.0004557656587438355,
+          "native_full_srgb_maxabs": 0.26688826084136963,
+          "native_full_change_MAE_8bit": 0.1164850351077891,
+          "native_full_change_max_8bit": 68,
+          "native_full_pixels_changed_over1": 691
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.03015753839628723,
+          "gt_srgb_maxabs": 0.8180142641067505,
+          "native_full_srgb_change": 0.0009828803705145344,
+          "native_full_srgb_maxabs": 0.26688826084136963,
+          "native_full_change_MAE_8bit": 0.2513109870607225,
+          "native_full_change_max_8bit": 68,
+          "native_full_pixels_changed_over1": 4501
+        }
+      }
+    },
+    "retained_a18": {
+      "samples": 13107,
+      "methods": {
+        "native_full": {
+          "gt_srgb_MAE": 0.04280870496184191,
+          "gt_srgb_maxabs": 0.6161569356918335,
+          "native_full_srgb_change": 0.0,
+          "native_full_srgb_maxabs": 0.0,
+          "native_full_change_MAE_8bit": 0.0,
+          "native_full_change_max_8bit": 0,
+          "native_full_pixels_changed_over1": 0
+        },
+        "repaired_full": {
+          "gt_srgb_MAE": 0.042804266822024775,
+          "gt_srgb_maxabs": 0.6161422729492188,
+          "native_full_srgb_change": 1.806762029021296e-05,
+          "native_full_srgb_maxabs": 0.00743451714515686,
+          "native_full_change_MAE_8bit": 0.004984613819587498,
+          "native_full_change_max_8bit": 2,
+          "native_full_pixels_changed_over1": 2
+        },
+        "repaired_delete37": {
+          "gt_srgb_MAE": 0.04303710745293552,
+          "gt_srgb_maxabs": 0.6109181046485901,
+          "native_full_srgb_change": 0.003309846729368031,
+          "native_full_srgb_maxabs": 0.15214896202087402,
+          "native_full_change_MAE_8bit": 0.8443834083568577,
+          "native_full_change_max_8bit": 39,
+          "native_full_pixels_changed_over1": 3400
+        }
+      }
+    }
+  },
+  "delete_proxy": {
+    "fit": {
+      "samples": 1004985,
+      "linear_MAE": 0.007425946338484941
+    },
+    "new_dark": {
+      "samples": 346235,
+      "linear_MAE": 0.008403186676744966
+    },
+    "original_shadow": {
+      "samples": 20813,
+      "linear_MAE": 0.017729984490276143
+    },
+    "inferred": {
+      "samples": 61169,
+      "linear_MAE": 0.0071068385236573535
+    }
+  },
+  "replay_delete_max_uint8": 1,
+  "replay_native_full_max_uint8": 0,
+  "helper_legacy_maxabs": 0.0,
+  "parent_unchanged": true,
+  "seconds": 40.726135797798634,
+  "peak_allocated_bytes": 2935193088,
+  "peak_reserved_bytes": 19218300928
+}

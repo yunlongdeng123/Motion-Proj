@@ -247,3 +247,5 @@
 - WS-V43-SIM-SOURCE-EVIDENCE-20261030：[删后来源与同世界观测控制](autoresearch/v43_ownership_20261028/source_evidence_20261030/index.html)；全行αT、16观测回查、固定旧模型桥接及新观测10K重建。区分选点、表示与观测缺口；不将旧M1/M2实现失败推广为方向失败。
 
 - WS-V43-CASE15-ISOLATION-20261101-R1：[15例机制隔离、CPU证据与剩余待办](autoresearch/v43_ownership_20261028/case15_isolation_20261101/index.html)；735源case-frame、588完整G case-frame、复用24原生浮点记录、147候选mask；新增训练/GPU查询0。输入与资源见同目录run_contract.json，正式资格仍unknown。
+
+- `scene008_a37_C2_20261103_r1` — [冻结PVD补全＋局部优化1k，未超过身份10k＋道路1k基线](autoresearch/scene008_a37_C2_20261103/result_report.html)：a6可见域误差与完整重建均未过门槛，完整状态/49帧/成像阻挡诊断保留。

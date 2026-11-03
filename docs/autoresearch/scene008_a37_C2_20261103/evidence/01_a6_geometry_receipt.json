@@ -1,0 +1,23 @@
+{
+  "status": "READY_MEASURED_GEOMETRY_RGB_PENDING_VISIBILITY",
+  "point_count": 54715,
+  "full_box_lwh_m": [
+    4.33404,
+    2.07754,
+    1.44
+  ],
+  "raw_frames": 199,
+  "geometry_npz": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz",
+  "geometry_sha256": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+  "omni_npz": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_omni_pointcloud.npz",
+  "omni_sha256": "36341844831cce615c6de0b086ae0a6db4b9b523b459e47ea2fc2ffbfb3357ee",
+  "omni_axes": "x_length,y_height,z_width; native[:,[0,2,1]]/(max(full_box_lwh)/2)",
+  "source": "exact real measured rows from original raw TFRecord via CPU five LiDAR/two return decoder; per-frame annotated OBB actor-local coordinates",
+  "geometry_limit": "OBB selection may contain ground or other object returns; not an exact semantic surface or completed mesh",
+  "rgb_policy": "NO original diagnostic colors accepted: their front_color_valid has no visibility zbuffer",
+  "transforms": "canonical->raw-world->B-model; authoritative native49 raw89..137 cameras will be audited against raw calibration",
+  "model_time_note": "native49 exact; outside49 extrapolated at0.02 per raw frame for metadata only",
+  "GPU_used": false,
+  "training_updates": 0,
+  "old_assets_modified": false
+}

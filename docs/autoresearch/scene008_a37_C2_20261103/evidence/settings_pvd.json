@@ -1,0 +1,46 @@
+{
+  "seed": 0,
+  "formal_steps": 1000,
+  "colour_lr": 0.035,
+  "geometry_lr": 0.002,
+  "replacement_margin_m": 0.05,
+  "road_visibility": true,
+  "actor_gates": true,
+  "gate_lr": 0.06,
+  "actor_contributors": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz",
+  "loss_weights": {
+    "evidence_rgb": 1.0,
+    "full_rgb": 0.5,
+    "alpha_inside": 0.05,
+    "alpha_outside": 0.05,
+    "native_keep": 1.0
+  },
+  "prior_label": "PVD official car_completion_3199: frozen partial-to-complete 3D point diffusion",
+  "road_visibility_settings": {
+    "schema": "c2.road_visibility.v1",
+    "retained_geometry": [
+      37
+    ],
+    "camera_visibility": false,
+    "sun_visibility": true,
+    "ambient": 0.15,
+    "sun_direction_anchor": [
+      0,
+      0,
+      1
+    ],
+    "calibration_domain": "BUILD raw105,113,118",
+    "colour_interpretation": "fixed observed/calibrated radiance proxy, not physical albedo",
+    "method": "road-row camera segment OBB visibility plus ambient+(1-ambient)*direct-sun OBB visibility in linear RGB",
+    "native_time_state_preserved": true,
+    "native_static_gate_still_enabled": true,
+    "optimizer_updates": 0,
+    "candidate": "top_ambient0.15",
+    "calibration_score": 28.81903012593587,
+    "selection": "max mean per-frame PSNR over three explicit BUILD calibration frames; no independent validation",
+    "frozen_before_all49_evaluation": true,
+    "retained_aliases_always": [
+      6
+    ]
+  }
+}

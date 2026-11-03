@@ -1,0 +1,837 @@
+{
+  "optimizer_updates": 0,
+  "frame_count": 49,
+  "raw_range": [
+    89,
+    137
+  ],
+  "camera": "image_0",
+  "resolution": [
+    480,
+    320
+  ],
+  "ground_truth": "Original RGB float64/255 then OpenCV INTER_LINEAR then float32",
+  "aggregation": "Arithmetic mean of per-frame full-image PSNR/SSIM/LPIPS-vgg; mask MAE pixel-weighted across frames",
+  "C2_branch_enabled_in_full_and_delete": true,
+  "full_keeps_target_a37": true,
+  "delete_removes_only_a37": true,
+  "deletion_full_image_metrics_are_diagnostic_only": true,
+  "deletion_metric_warning": "Observed RGB contains deleted a37; delete PSNR/SSIM/LPIPS are not edit-quality truth or acceptance gates",
+  "fixed_road_reference": "Unchanged r3 inputs/views/*.npz; inferred cells excluded from fit/new_dark and reported separately",
+  "paired_protection_reference": "C2.render(enabled=False), with the same sun visibility; only a reference, C2 scored outputs always enabled=True",
+  "evidence_role": "All199 BUILD; no independent completed-actor or clean-road test ground truth",
+  "thresholds": {
+    "full_PSNR_delta_min": -0.05,
+    "full_SSIM_delta_min": -0.001,
+    "full_LPIPS_delta_max": 0.002,
+    "road_core_ratio_max": 1.05,
+    "a6_observed_delete_MAE_must_improve": true,
+    "visual_review_required": true,
+    "tolerance_is_not_an_improvement_target": true
+  },
+  "checkpoint_contract": {
+    "task_id": "scene008_a37_C2_20261103_r1",
+    "baseline": "single-a37 B10k + r3 road1k",
+    "frozen_base": "editor_common",
+    "target": [
+      37
+    ],
+    "retained_actor": 6,
+    "formal_steps": 1000,
+    "diagnostic_only": false,
+    "proposal_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_receipt.json",
+    "actor_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+    "settings": {
+      "seed": 0,
+      "formal_steps": 1000,
+      "colour_lr": 0.035,
+      "geometry_lr": 0.002,
+      "replacement_margin_m": 0.05,
+      "road_visibility": true,
+      "actor_gates": true,
+      "gate_lr": 0.06,
+      "actor_contributors": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz",
+      "loss_weights": {
+        "evidence_rgb": 1.0,
+        "full_rgb": 0.5,
+        "alpha_inside": 0.05,
+        "alpha_outside": 0.05,
+        "native_keep": 1.0
+      },
+      "prior_label": "PVD official car_completion_3199: frozen partial-to-complete 3D point diffusion",
+      "road_visibility_settings": {
+        "schema": "c2.road_visibility.v1",
+        "retained_geometry": [
+          37
+        ],
+        "camera_visibility": false,
+        "sun_visibility": true,
+        "ambient": 0.15,
+        "sun_direction_anchor": [
+          0,
+          0,
+          1
+        ],
+        "calibration_domain": "BUILD raw105,113,118",
+        "colour_interpretation": "fixed observed/calibrated radiance proxy, not physical albedo",
+        "method": "road-row camera segment OBB visibility plus ambient+(1-ambient)*direct-sun OBB visibility in linear RGB",
+        "native_time_state_preserved": true,
+        "native_static_gate_still_enabled": true,
+        "optimizer_updates": 0,
+        "candidate": "top_ambient0.15",
+        "calibration_score": 28.81903012593587,
+        "selection": "max mean per-frame PSNR over three explicit BUILD calibration frames; no independent validation",
+        "frozen_before_all49_evaluation": true,
+        "retained_aliases_always": [
+          6
+        ]
+      }
+    },
+    "prior": "PVD official car_completion_3199: frozen partial-to-complete 3D point diffusion",
+    "trainable": "canonical colour + bounded missing-surface normal offsets + local static contribution gates (candidate, not ownership GT)",
+    "fixed": "B10k, road-r3 state, camera, pose, environment, learned prior, observed geometry, surface opacity",
+    "alpha_supervision": "actual a6 visible alpha*T in noedit full scene; reviewed visible mask positive and negative domains separately normalized, excluding 1px uncertain boundary",
+    "noedit_branch_enabled": true,
+    "no_per_frame_material": true,
+    "independent_shadow_layer": false,
+    "all_199_BUILD": true,
+    "reference_is_proxy": true,
+    "quality_accepted": false,
+    "human_verdict": null,
+    "optimizer_raws": [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137
+    ],
+    "excluded_optimizer_anchors_are_not_independent_test": true,
+    "replacement_selection": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz"
+  },
+  "actor_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+  "actor_asset_sha256": "dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455",
+  "proposal_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_receipt.json",
+  "asset_receipt": {
+    "status": "PROPOSAL_VALID_FOR_CONTROLLED_OPTIMIZATION",
+    "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+    "sha256": "dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455",
+    "quality_accepted": false,
+    "formal_eligible": true,
+    "source_type": "actual pretrained PVD DDPM complete point output; local PCA patch representation",
+    "input_point_cloud": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/candidate_points_actor_native.npz",
+    "input_point_cloud_sha256": "1d1b7e20ca389c184f54094674d40d1aa842e61da708b34f8b1ff2911d731562",
+    "transform_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/transform_contract.json",
+    "transform_contract_sha256": "84121bdacabac4eee9652ef04c9a1bc8d9a5e84ce585cd905a7a24d2b2552b31",
+    "producer_contract": {
+      "schema_version": "c2.pvd_fixed_fullbox_training_stats_transform.v1",
+      "whole_box_lwh_m": [
+        4.33404016494751,
+        2.0775399208068848,
+        1.440000057220459
+      ],
+      "partial_bounds_scaled": false,
+      "partial_bounds_centered": false,
+      "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+      "training_stats_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json",
+      "training_stats_sha256": "057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c",
+      "training_shapes": 2458,
+      "training_npy_crc_verified": 2458,
+      "source_split": "train",
+      "training_mean_xyz": [
+        0.0013179273810237646,
+        0.007349051535129547,
+        0.023509424179792404
+      ],
+      "training_scalar_std": 0.16349221765995026,
+      "training_mean_full_bbox_span_xyz": [
+        0.3736966279626311,
+        0.2702367117519428,
+        0.8653240163921946
+      ],
+      "training_mean_full_bbox_center_xyz": [
+        0.0015711266132031072,
+        0.02641026573529883,
+        0.013171462331391928
+      ],
+      "native_axis": "x length/forward, y width/left, z height/up",
+      "pvd_axis": "X width/right, Y height/up, Z length/back",
+      "front_sign_assumption": "Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used",
+      "training_reference_axis_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png",
+      "native_to_training_raw_rotation": [
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "model_formula": "q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std",
+      "inverse_formula": "native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)",
+      "pvd_to_actor_native_4x4": [
+        [
+          0.0,
+          0.0,
+          -0.8188630207547728,
+          -0.051778456423143396
+        ],
+        [
+          -0.9089233980558168,
+          0.0,
+          0.0,
+          0.001407643188107219
+        ],
+        [
+          0.0,
+          0.8711947435237231,
+          0.0,
+          -0.10157076498225952
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor_native_to_pvd_4x4": [
+        [
+          0.0,
+          -1.100202725707134,
+          0.0,
+          0.0015486928723786421
+        ],
+        [
+          0.0,
+          0.0,
+          1.1478489825998008,
+          0.11658789924677007
+        ],
+        [
+          -1.221205469845576,
+          0.0,
+          0.0,
+          -0.06323213420410352
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "application_adaptation": "Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used.",
+      "seed": 0,
+      "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+      "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+      "normalization_sha256": "988d6aa8beca7c097a4b4d78b1b1706ed85537e46fa54caa2062a46cbb6ba8ce",
+      "partial_count": 200,
+      "new_noise_points": 1848,
+      "total_points": 2048,
+      "ddpm_steps": 1000,
+      "input_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_prior_contract.json",
+      "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights/car_completion_3199.pth"
+    },
+    "coordinate_contract": {
+      "point_space": "actor_native_m",
+      "producer_transform": [
+        [
+          0.0,
+          0.0,
+          -0.8188630207547728,
+          -0.051778456423143396
+        ],
+        [
+          -0.9089233980558168,
+          0.0,
+          0.0,
+          0.001407643188107219
+        ],
+        [
+          0.0,
+          0.8711947435237231,
+          0.0,
+          -0.10157076498225952
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_native_inverse_max_abs_error_m": 1.1862409543539343e-07,
+      "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+      "normalization_policy": "producer-supplied official training normalization + fixed annotated whole box; adapter never infers axes, scale, or center from partial points"
+    },
+    "completion_points": 2048,
+    "complete_unique_5mm_points": 2048,
+    "fixed_conditioning_count": 200,
+    "generated_model_point_count": 1848,
+    "conditioning_actual_source_max_abs_error_m": 1.1920928955078125e-07,
+    "complete_bounds_native_m": [
+      [
+        -2.1131668090820312,
+        -1.0376337766647339,
+        -0.8318876624107361
+      ],
+      [
+        2.410184144973755,
+        1.0484800338745117,
+        0.7156797647476196
+      ]
+    ],
+    "complete_extent_native_m": [
+      4.523350954055786,
+      2.0861138105392456,
+      1.5475674271583557
+    ],
+    "complete_points_inside_full_box_fraction": 0.95361328125,
+    "fixed_real_anchor_count": 5976,
+    "retained_prior_patch_count": 1527,
+    "all_anchor_count": 7503,
+    "prior_rejected_outside_full_box": 95,
+    "fixed_conditioning_points_not_marked_prior": 200,
+    "prior_rejected_degenerate_local_PCA": 8,
+    "prior_removed_near_fixed_real": 218,
+    "actual_point_positions_changed": false,
+    "manual_shape_or_upsampling": false,
+    "mesh_constructed": false,
+    "patch_normal_policy": "PCA16 on actual complete points within min(0.25m,max(4*kNNspacing,0.03m)); require4 neighbors and second covariance eigenvalue>1e-7; reject degenerate patches; sign relative fixed actor origin",
+    "sigma_tangent_policy": "min(0.60 * median physical distance to nearest3 other complete points,0.060m,0.45*normal-radius); no artificial positive lower scale",
+    "sigma_tangent_prior_stats_m": {
+      "min": 0.011161999244757888,
+      "median": 0.05682686894570436,
+      "max": 0.06
+    },
+    "patch_geometry_limit": "tangent patches approximate only local actual completion support; no connectivity, watertightness, mesh area, or closed wheels asserted",
+    "observed_geometry_fixed": true,
+    "observed_anchor_policy": "same5cm real voxel centroids and mapping, bytewise-comparable to existing Omni adapter real block",
+    "measured_color_anchor_count": 3586,
+    "inferred_color_anchor_count": 3917,
+    "color_policy": {
+      "unknown_body_srgb": [
+        0.28333333134651184,
+        0.31078431010246277,
+        0.36274510622024536
+      ],
+      "neutral_evidence_rows": 2249,
+      "measured_color_policy": "observed anchor within0.06m actual clean color samples; >=2 raw frames; per-sample RGB MAE to median<=0.10",
+      "inferred_color_policy": "all unobserved/prior surfaces start at robust neutral observed body median; no invented red tail-light detail"
+    },
+    "observed_to_actual_PVD_complete_point_distance_m": {
+      "mean": 0.08533170481634926,
+      "p50": 0.07379380972063813,
+      "p90": 0.14683427003081473,
+      "p95": 0.18607340181126042,
+      "max": 0.39828305090579375,
+      "fraction_le_004m": 0.14876171352074966,
+      "fraction_le_010m": 0.7167001338688086,
+      "fraction_le_020m": 0.9586680053547524
+    },
+    "distance_semantics": "point-to-point nearest distances; NOT point-to-surface distances",
+    "observed_to_completion_AABB_distance_lower_bound_m": {
+      "mean": 0.0002677020491163067,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.05280113220214844,
+      "fraction_le_004m": 0.9973226238286479,
+      "fraction_le_010m": 1.0,
+      "fraction_le_020m": 1.0
+    },
+    "bottom_coverage": {
+      "raw_box_bottom_m": -0.72,
+      "lowest_measured_m": -0.21044833958148956,
+      "no_measurement_band_m": [
+        -0.72,
+        -0.21044833958148956
+      ],
+      "prior_patch_count_in_unobserved_lower_band": 856,
+      "policy": "all completion geometry and neutral color in this missing lower band remain inferred"
+    },
+    "view_plot": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_views.png",
+    "GPU_used": false,
+    "training_updates": 0,
+    "wall_seconds": 2.3195594884455204,
+    "old_assets_modified": false,
+    "human_verdict": null,
+    "formal_eligibility_scope": "root-authorized engineering/controlled optimization entry only; NOT rendered quality acceptance or exact complete geometry",
+    "proposal_usability_review": {
+      "reviewer": "a6_observations CPU adapter branch, root-authorized",
+      "plot": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0_views.png",
+      "plot_sha256": "b3b8379dc9dc3f123cda8877b1d49315a794e5505474e355989d84b4aec719ba",
+      "visual_result": "Three canonical projections show car-scale length/width, roof/cabin, lower body and wheel-region support; no global collapse or large separated shell comparable to rejected Omni proposals. Coarse point sampling is not a watertight complete surface claim.",
+      "integrity": {
+        "status": "PASS_ACTUAL_PVD_SURFACE_INTEGRITY_AND_FIXED_REAL_IDENTITY",
+        "rows": 7503,
+        "observed": 5976,
+        "prior": 1527,
+        "ZIP_CRC": "passed",
+        "normals_unit_finite": true,
+        "all_prior_in_box": true,
+        "all_prior_sigma_le006m": true,
+        "fixed_real_geometry_bytewise_equal_to_Omni": true,
+        "connectivity_radius_diagnostics": [
+          {
+            "radius_m": 0.15,
+            "component_count": 126,
+            "largest_point_counts": [
+              1103,
+              258,
+              197,
+              58,
+              30,
+              29,
+              18,
+              17
+            ],
+            "largest_fraction": 0.53857421875,
+            "isolated_points": 59
+          },
+          {
+            "radius_m": 0.2,
+            "component_count": 11,
+            "largest_point_counts": [
+              2031,
+              4,
+              3,
+              2,
+              2,
+              1,
+              1,
+              1
+            ],
+            "largest_fraction": 0.99169921875,
+            "isolated_points": 6
+          },
+          {
+            "radius_m": 0.25,
+            "component_count": 2,
+            "largest_point_counts": [
+              2047,
+              1
+            ],
+            "largest_fraction": 0.99951171875,
+            "isolated_points": 1
+          }
+        ],
+        "connectivity_note": "radius point graph, not proven surface or semantic connectivity; legitimate sparse wheels can separate at short radius",
+        "GPU_used": false,
+        "training_updates": 0
+      },
+      "known_geometry": "5976 real positions/normals and raw-to-anchor mapping bytewise unchanged",
+      "clipping": "95 out-of-box actual completion points rejected,8 insufficient-PCA supports rejected,218 near-real generated duplicates removed; no point moved/resized/upsampled",
+      "bottom": "856 actual generated patch centers in measured-missing lower band; all remain inferred, no GT or new red detail",
+      "limitations": "PVD ShapeNet train-stat/fullbox adaptation and explicit front-sign assumption are recorded in producer contract; uniform5cm-anchor point distances differ from raw-return-weighted proposal distances; no unknown complete target or sign/seed search used"
+    }
+  },
+  "prior_label": "PVD official car_completion_3199: frozen partial-to-complete 3D point diffusion",
+  "contributor_binding": {
+    "enabled": true,
+    "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz",
+    "sha256": "7c5f4a27906cd513f3f5d945f0ce28fd6941bcf2a9c3eee17cf647e1b1555a45",
+    "static_rows": 1520544,
+    "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+    "parent_matches": true,
+    "ids_match_checkpoint": true,
+    "candidate_is_not_ownership_GT": true,
+    "source_asset_differs_from_actor_asset": false
+  },
+  "road_measurement_correction": {
+    "geometry_sha256": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+    "cameras_sha256": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455",
+    "protocol_sha256": "1690c5219beff2f07390f98d01b0f3e7a3a8eb9761b201a6018c6124755bc9ca",
+    "domain_sha256": "ce1f2b90df3f33bf26ad67b7496f223ea65dced2364606118a8ba5f9363af321",
+    "source_geometry": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz",
+    "source_camera": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/cameras.json",
+    "protocol": {
+      "schema": "c2.conservative_road_measurement.v1",
+      "registration_phase": "Geometry-based correction requested by root before formal1k; written while formal was running; frozen before final scoring, without choosing the domain from final results",
+      "clock_observed_at_initial_write_utc": "2026-11-03T08:49:39Z",
+      "chronology_correction": "The initial written phase label incorrectly inferred that formal had not started. Root subsequently clarified formal was already running at disk write. This record corrects that label; the correction affects measurement only, not training.",
+      "purpose": "Do not assign clean-road RGB truth to pixels possibly occupied by retained a6 after a37 removal.",
+      "source_geometry": "inputs/a6_geometry_minimal.npz: raw-track-bound model_from_canonical[raw] and same-frame box_lwh_per_raw; fallback box_lwh_m only if per-frame sizes absent",
+      "source_camera": "Original B10k cameras.json image_0 camera pose and intrinsics, downsample4",
+      "projection": "Eight physical OBB corners, near-plane edge clipping, convex hull in native pixel-center convention K projection minus0.5; dilate2px",
+      "possible_domain_is_body_GT": false,
+      "uses_PVD_or_Omni_or_C2_outputs": false,
+      "uses_C2_RGB_to_choose_domain": false,
+      "matched_road_domain": "For each unchanged r3 fit/new_dark/original_shadow domain D: D & ~possible_a6_OBB_projection; same mask, same reference, same denominator for r3 and C2",
+      "report_required": [
+        "old full r3 proxies unchanged",
+        "matched conservative-road MAE",
+        "original/matched/excluded pixel-frame counts and excluded fractions",
+        "possible-domain coverage and visible-label containment"
+      ],
+      "road_numeric_gate": "Matched conservative domains only; C2/r3 MAE<=1.05. Five percent is numerical tolerance, not an improvement target.",
+      "old_full_proxy_role": "Historical fit diagnostic; no failure verdict from potential new retained-a6 body covering presumed road",
+      "hidden_a6_RGB_GT": "Unavailable; bbox is conservative possible occupancy, not completed-body RGB or silhouette truth",
+      "full_native_gate_unchanged": {
+        "PSNR_delta_min": -0.05,
+        "SSIM_delta_min": -0.001,
+        "LPIPS_delta_max": 0.002,
+        "visual_review_required": true
+      },
+      "legacy_binding_caveat": "legacy bundle.actors order and selected_boxes_model list order are not reliable paired identifiers; never use actors.index(alias) for this a6 domain",
+      "optimizer_updates": 0,
+      "human_verdict": null,
+      "quality_accepted": false
+    },
+    "domain_is_body_GT": false,
+    "uses_proposal_or_C2_output": false,
+    "optimizer_updates": 0,
+    "GPU_used": false,
+    "raw_frames": 49,
+    "rows": [
+      {
+        "raw": 89,
+        "possible_pixels": 6040,
+        "visible_a6_pixels": 1149,
+        "visible_a6_inside_possible": 1149
+      },
+      {
+        "raw": 90,
+        "possible_pixels": 6040,
+        "visible_a6_pixels": 1153,
+        "visible_a6_inside_possible": 1153
+      },
+      {
+        "raw": 91,
+        "possible_pixels": 6040,
+        "visible_a6_pixels": 1153,
+        "visible_a6_inside_possible": 1153
+      },
+      {
+        "raw": 92,
+        "possible_pixels": 6040,
+        "visible_a6_pixels": 1151,
+        "visible_a6_inside_possible": 1151
+      },
+      {
+        "raw": 93,
+        "possible_pixels": 5962,
+        "visible_a6_pixels": 1156,
+        "visible_a6_inside_possible": 1156
+      },
+      {
+        "raw": 94,
+        "possible_pixels": 5967,
+        "visible_a6_pixels": 1161,
+        "visible_a6_inside_possible": 1161
+      },
+      {
+        "raw": 95,
+        "possible_pixels": 5811,
+        "visible_a6_pixels": 1188,
+        "visible_a6_inside_possible": 1188
+      },
+      {
+        "raw": 96,
+        "possible_pixels": 5675,
+        "visible_a6_pixels": 1174,
+        "visible_a6_inside_possible": 1174
+      },
+      {
+        "raw": 97,
+        "possible_pixels": 5589,
+        "visible_a6_pixels": 1171,
+        "visible_a6_inside_possible": 1171
+      },
+      {
+        "raw": 98,
+        "possible_pixels": 5405,
+        "visible_a6_pixels": 1172,
+        "visible_a6_inside_possible": 1172
+      },
+      {
+        "raw": 99,
+        "possible_pixels": 5227,
+        "visible_a6_pixels": 1168,
+        "visible_a6_inside_possible": 1168
+      },
+      {
+        "raw": 100,
+        "possible_pixels": 5125,
+        "visible_a6_pixels": 1180,
+        "visible_a6_inside_possible": 1180
+      },
+      {
+        "raw": 101,
+        "possible_pixels": 4940,
+        "visible_a6_pixels": 1166,
+        "visible_a6_inside_possible": 1166
+      },
+      {
+        "raw": 102,
+        "possible_pixels": 4878,
+        "visible_a6_pixels": 1175,
+        "visible_a6_inside_possible": 1175
+      },
+      {
+        "raw": 103,
+        "possible_pixels": 4739,
+        "visible_a6_pixels": 1176,
+        "visible_a6_inside_possible": 1176
+      },
+      {
+        "raw": 104,
+        "possible_pixels": 4605,
+        "visible_a6_pixels": 1191,
+        "visible_a6_inside_possible": 1191
+      },
+      {
+        "raw": 105,
+        "possible_pixels": 4420,
+        "visible_a6_pixels": 1184,
+        "visible_a6_inside_possible": 1184
+      },
+      {
+        "raw": 106,
+        "possible_pixels": 4409,
+        "visible_a6_pixels": 1182,
+        "visible_a6_inside_possible": 1182
+      },
+      {
+        "raw": 107,
+        "possible_pixels": 4220,
+        "visible_a6_pixels": 1193,
+        "visible_a6_inside_possible": 1193
+      },
+      {
+        "raw": 108,
+        "possible_pixels": 4028,
+        "visible_a6_pixels": 1178,
+        "visible_a6_inside_possible": 1178
+      },
+      {
+        "raw": 109,
+        "possible_pixels": 3958,
+        "visible_a6_pixels": 1163,
+        "visible_a6_inside_possible": 1163
+      },
+      {
+        "raw": 110,
+        "possible_pixels": 3815,
+        "visible_a6_pixels": 1126,
+        "visible_a6_inside_possible": 1126
+      },
+      {
+        "raw": 111,
+        "possible_pixels": 3720,
+        "visible_a6_pixels": 1113,
+        "visible_a6_inside_possible": 1113
+      },
+      {
+        "raw": 112,
+        "possible_pixels": 3550,
+        "visible_a6_pixels": 1084,
+        "visible_a6_inside_possible": 1084
+      },
+      {
+        "raw": 113,
+        "possible_pixels": 3480,
+        "visible_a6_pixels": 1012,
+        "visible_a6_inside_possible": 1012
+      },
+      {
+        "raw": 114,
+        "possible_pixels": 3361,
+        "visible_a6_pixels": 1029,
+        "visible_a6_inside_possible": 1029
+      },
+      {
+        "raw": 115,
+        "possible_pixels": 3206,
+        "visible_a6_pixels": 993,
+        "visible_a6_inside_possible": 993
+      },
+      {
+        "raw": 116,
+        "possible_pixels": 3091,
+        "visible_a6_pixels": 962,
+        "visible_a6_inside_possible": 962
+      },
+      {
+        "raw": 117,
+        "possible_pixels": 2982,
+        "visible_a6_pixels": 927,
+        "visible_a6_inside_possible": 927
+      },
+      {
+        "raw": 118,
+        "possible_pixels": 2826,
+        "visible_a6_pixels": 888,
+        "visible_a6_inside_possible": 888
+      },
+      {
+        "raw": 119,
+        "possible_pixels": 2743,
+        "visible_a6_pixels": 857,
+        "visible_a6_inside_possible": 857
+      },
+      {
+        "raw": 120,
+        "possible_pixels": 2614,
+        "visible_a6_pixels": 816,
+        "visible_a6_inside_possible": 816
+      },
+      {
+        "raw": 121,
+        "possible_pixels": 2521,
+        "visible_a6_pixels": 791,
+        "visible_a6_inside_possible": 791
+      },
+      {
+        "raw": 122,
+        "possible_pixels": 2448,
+        "visible_a6_pixels": 722,
+        "visible_a6_inside_possible": 722
+      },
+      {
+        "raw": 123,
+        "possible_pixels": 2378,
+        "visible_a6_pixels": 708,
+        "visible_a6_inside_possible": 708
+      },
+      {
+        "raw": 124,
+        "possible_pixels": 2279,
+        "visible_a6_pixels": 704,
+        "visible_a6_inside_possible": 704
+      },
+      {
+        "raw": 125,
+        "possible_pixels": 2238,
+        "visible_a6_pixels": 613,
+        "visible_a6_inside_possible": 613
+      },
+      {
+        "raw": 126,
+        "possible_pixels": 2183,
+        "visible_a6_pixels": 650,
+        "visible_a6_inside_possible": 650
+      },
+      {
+        "raw": 127,
+        "possible_pixels": 2050,
+        "visible_a6_pixels": 634,
+        "visible_a6_inside_possible": 634
+      },
+      {
+        "raw": 128,
+        "possible_pixels": 2009,
+        "visible_a6_pixels": 601,
+        "visible_a6_inside_possible": 601
+      },
+      {
+        "raw": 129,
+        "possible_pixels": 1944,
+        "visible_a6_pixels": 580,
+        "visible_a6_inside_possible": 580
+      },
+      {
+        "raw": 130,
+        "possible_pixels": 1915,
+        "visible_a6_pixels": 547,
+        "visible_a6_inside_possible": 547
+      },
+      {
+        "raw": 131,
+        "possible_pixels": 1832,
+        "visible_a6_pixels": 540,
+        "visible_a6_inside_possible": 540
+      },
+      {
+        "raw": 132,
+        "possible_pixels": 1751,
+        "visible_a6_pixels": 526,
+        "visible_a6_inside_possible": 526
+      },
+      {
+        "raw": 133,
+        "possible_pixels": 1751,
+        "visible_a6_pixels": 509,
+        "visible_a6_inside_possible": 509
+      },
+      {
+        "raw": 134,
+        "possible_pixels": 1667,
+        "visible_a6_pixels": 490,
+        "visible_a6_inside_possible": 490
+      },
+      {
+        "raw": 135,
+        "possible_pixels": 1631,
+        "visible_a6_pixels": 479,
+        "visible_a6_inside_possible": 479
+      },
+      {
+        "raw": 136,
+        "possible_pixels": 1631,
+        "visible_a6_pixels": 468,
+        "visible_a6_inside_possible": 468
+      },
+      {
+        "raw": 137,
+        "possible_pixels": 1505,
+        "visible_a6_pixels": 465,
+        "visible_a6_inside_possible": 465
+      }
+    ]
+  },
+  "runtime_sha256": "6acb92f7219883e34493878955676ded2a4a20d184ae773c8910486bfe6a1021",
+  "lpips_available": true,
+  "lpips_error": null,
+  "human_verdict": null,
+  "quality_accepted": false
+}

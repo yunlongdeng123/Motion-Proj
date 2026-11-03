@@ -1,0 +1,2520 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C2未通过：没有超过身份10k+道路修复1k基线</title><style>body{font:16px/1.6 system-ui,"Microsoft YaHei",sans-serif;color:#173445;background:#f4f7fa;margin:0}main{max-width:1250px;margin:auto;padding:28px}h1{font-size:28px}h2{font-size:21px;margin-top:32px}table{border-collapse:collapse;background:white;width:100%;font-size:14px}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid #dae3ea}th{background:#e6eff5}.alert{border-left:6px solid #b54c2d;background:#fff0e9;padding:16px 20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid img{width:100%;display:block}.panel{background:white;padding:10px}.caption{font-weight:600}.controls{position:sticky;top:0;background:#e4eef5;padding:12px;z-index:2}.controls input{width:65%;vertical-align:middle}button{padding:8px 18px;border:0;background:#285d79;color:white;border-radius:5px}figure{margin:10px 0}figure img{max-width:100%}pre{white-space:pre-wrap;word-break:break-all;background:white;padding:12px;font-size:12px}details{margin:12px 0}a{color:#235d7c}.small{font-size:13px;color:#536c7b}</style><main>
+<h1>C2未通过：没有超过身份10k+道路修复1k基线</h1><div class="alert"><b>C2未通过：没有超过身份10k+道路修复1k基线</b><p>完整重建未达预登记门槛。C2 相对原 Native：PSNR -1.7038 dB，SSIM -0.019294，LPIPS 0.022940。</p><p>旧r3 always-on full=28.10只是将删除后处理直接常驻的压力测试，不是原baseline不编辑流程bug；真正不编辑基线是Native30.45。本轮保留原基线，不以该压力测试降低门槛。</p><p>human_verdict=null；quality_accepted=false。所有输入属于 BUILD，尚无独立完整车身或清洁道路真值。</p></div><p>Scene008：仅删a37，保留a6及其他车。</p><p>完整图门槛：PSNR 下降≤0.05dB、SSIM 下降≤0.001、LPIPS 增加≤0.002，并且无明显可见退化；a6 真实可见域优于强组合基线；matched conservative-road核心指标不明显退化。5%仅为数值容差，不是改善目标。</p>
+<img src="architecture.svg" alt="输入、冻结组件、a6持久表面、几何遮光与完整/删车输出" style="width:100%"/>
+<h2>49帧同步视觉核对</h2><p>四画面共享同一 raw 帧号。上排检查不编辑完整重建，下排检查道路与 a6 保留；不能靠关闭 C2 或修复分支通过上排验收。</p><div class="controls"><button id="play">播放49帧</button> <input id="frame" type="range" min="89" max="137" value="105"/> <b id="frameLabel">raw105</b></div>
+<div class="grid"><div class="panel"><div class="caption">原 Native：保留 a37</div><img id="native_full"/></div><div class="panel"><div class="caption">C2 始终启用：保留 a37</div><img id="C2_full"/></div><div class="panel"><div class="caption">强组合 r3：仅删 a37</div><img id="r3_delete37"/></div><div class="panel"><div class="caption">C2：仅删 a37，保留 a6</div><img id="C2_delete37"/></div></div>
+<script>const slider=document.getElementById('frame'),button=document.getElementById('play');let timer=null;function show(){let raw=String(slider.value).padStart(3,'0');document.getElementById('frameLabel').textContent='raw'+raw;for(let id of ['native_full','C2_full','r3_delete37','C2_delete37'])document.getElementById(id).src='frames/'+raw+'/'+id+'.png';}slider.addEventListener('input',show);button.onclick=()=>{if(timer){clearInterval(timer);timer=null;button.textContent='播放49帧';}else{timer=setInterval(()=>{slider.value=Number(slider.value)>=137?89:Number(slider.value)+1;show();},100);button.textContent='暂停';}};show();</script><p>导出49帧视频：<a href="native_full_all49.mp4">native_full</a> · <a href="C2_full_all49.mp4">C2_full</a> · <a href="r3_delete37_all49.mp4">r3_delete37</a> · <a href="C2_delete37_all49.mp4">C2_delete37</a></p>
+<details><summary>完整49帧contactsheet（点击可放大）</summary><figure><a href="full_contactsheet_all49.png"><img src="full_contactsheet_all49.png" alt="49帧contact sheet"/></a><figcaption>完整图：每格上为原基线、下为C2，覆盖全部49帧。</figcaption></figure><figure><a href="delete_contactsheet_all49.png"><img src="delete_contactsheet_all49.png" alt="49帧contact sheet"/></a><figcaption>删a37图：每格上为原基线、下为C2，覆盖全部49帧。</figcaption></figure></details>
+<h2>完整重建：必须维持原 Native</h2><table><tr><th>方法</th><th>PSNR ↑</th><th>SSIM ↑</th><th>LPIPS-VGG ↓</th></tr><tr><td>原基线不编辑流程：Native（强制比较）</td><td>30.454978</td><td>0.936408</td><td>0.086108</td></tr><tr><td>删除后处理直接常驻的压力测试</td><td>28.101776</td><td>0.916426</td><td>0.108620</td></tr><tr><td>C2 始终启用 + a37</td><td>28.751205</td><td>0.917114</td><td>0.109048</td></tr></table>
+<p>原始 RGB 先归一化为浮点，再以 OpenCV INTER_LINEAR 缩放至480×320；三个指标先逐帧计算再49帧平均。a6训练缓存GT与本次原生GT最大差为 0.000000。</p>
+<h2>a6：真实可见观测域</h2><p>固定 visible_evidence_mask，共 31,610 像素帧。Native_full为真正原基线不编辑；r3_full为常驻压力测试；r3_delete37为用户指定的身份10k+道路修复1k编辑基线。未知/被遮挡车身不作观测真值；可见域改善也不能证明完整隐藏表面正确。</p><table><tr><th>方法</th><th>sRGB MAE ↓</th></tr><tr><td>native_full</td><td>0.031410</td></tr><tr><td>r3_full</td><td>0.031446</td></tr><tr><td>C2_full</td><td>0.057657</td></tr><tr><td>r3_delete37</td><td>0.030819</td></tr><tr><td>C2_delete37</td><td>0.059412</td></tr></table>
+<h2>道路核心：保守匹配域与旧全proxy并列</h2><p>真实a6全盒轨迹投影至原Native相机，凸包+2px构成可能被保留a6占据的域；不用PVD/Omni输出或C2图选域，也不把OBB当真实body GT。双方从同一r3道路域排除此possible域，仍使用同一参考、同一分母。未知显露body没有独立RGB真值，不应被安排成road GT。</p>
+<p>测量修正由root在正式前提出；凭据在formal进行中落盘，final评分前冻结，未根据final结果调域，不影响训练。legacy actor-list和box-list的顺序关联不可靠，本次依据真实raw track的a6几何，而非actors.index。</p>
+<table><tr><th>匹配域</th><th>原像素帧</th><th>有效像素帧</th><th>排除数/比例</th><th>r3 MAE</th><th>C2 MAE</th><th>C2/r3</th></tr><tr><td>fit</td><td>1,004,985</td><td>966,832</td><td>38,153 (3.80%)</td><td>0.007438</td><td>0.007492</td><td>1.0072</td></tr><tr><td>new_dark</td><td>346,235</td><td>320,101</td><td>26,134 (7.55%)</td><td>0.008544</td><td>0.008639</td><td>1.0112</td></tr><tr><td>original_shadow</td><td>20,813</td><td>20,813</td><td>0 (0.00%)</td><td>0.017730</td><td>0.017760</td><td>1.0017</td></tr><tr><td>inferred</td><td>61,169</td><td>61,010</td><td>159 (0.26%)</td><td>0.007108</td><td>0.007112</td><td>未测</td></tr></table>
+<p><b>旧全r3 proxy完整保留：仅历史拟合诊断，不用潜在新a6 body遮路造成的误差上升判失败。</b>误差在线性RGB计算；inferred单列，不当实测真值。</p><table><tr><th>旧全域</th><th>像素帧</th><th>r3删a37 MAE</th><th>C2删a37 MAE</th></tr><tr><td>fit</td><td>1,004,985</td><td>0.007426</td><td>0.007490</td></tr><tr><td>new_dark</td><td>346,235</td><td>0.008403</td><td>0.008495</td></tr><tr><td>original_shadow</td><td>20,813</td><td>0.017730</td><td>0.017760</td></tr><tr><td>inferred</td><td>61,169</td><td>0.007107</td><td>0.007111</td></tr></table>
+<h2>其他保留车与边界改动</h2><p>下表相对同编辑状态、同道路sun visibility的配对基线（仅关闭新a6分支作为参考；C2评价始终启用），单位8bit。旧r3原组合改动保留在JSON；边界为r3 repair_mask的2px带。合理新a6 body可能改变旧边界，须结合possible域与视觉判断，不能把所有改动自动叫损伤。</p><table><tr><th>保护域</th><th>状态</th><th>像素帧</th><th>MAE</th><th>最大差</th><th>差&gt;1像素数</th></tr><tr><td>other_retained</td><td>C2_full</td><td>250,496</td><td>0.0795</td><td>16</td><td>4,528</td></tr><tr><td>other_retained</td><td>C2_delete37</td><td>250,496</td><td>0.0797</td><td>15</td><td>4,535</td></tr><tr><td>retained_a5</td><td>C2_full</td><td>121,128</td><td>0.0277</td><td>2</td><td>62</td></tr><tr><td>retained_a5</td><td>C2_delete37</td><td>121,128</td><td>0.0278</td><td>2</td><td>63</td></tr><tr><td>retained_a26</td><td>C2_full</td><td>116,261</td><td>0.0646</td><td>6</td><td>2,127</td></tr><tr><td>retained_a26</td><td>C2_delete37</td><td>116,261</td><td>0.0648</td><td>6</td><td>2,122</td></tr><tr><td>retained_a18</td><td>C2_full</td><td>13,107</td><td>0.6901</td><td>16</td><td>2,339</td></tr><tr><td>retained_a18</td><td>C2_delete37</td><td>13,107</td><td>0.6910</td><td>15</td><td>2,350</td></tr><tr><td>marking</td><td>C2_full</td><td>69,656</td><td>0.0073</td><td>2</td><td>9</td></tr><tr><td>marking</td><td>C2_delete37</td><td>69,656</td><td>0.0073</td><td>2</td><td>10</td></tr><tr><td>road_boundary</td><td>C2_full</td><td>410,172</td><td>0.0087</td><td>2</td><td>21</td></tr><tr><td>road_boundary</td><td>C2_delete37</td><td>410,172</td><td>0.0659</td><td>15</td><td>7,407</td></tr></table>
+<h2>候选可信性与科研限制</h2><p>先验：PVD official car_completion_3199: frozen partial-to-complete 3D point diffusion。资产：/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz。正式准入：True；当前为诊断：False；checkpoint step=1000。候选推理成功、网格完整或latent可恢复，均不能替代与真实点云、可见轮廓及多视角原始RGB的一致性验收。</p>
+<p>共享材质和≤3cm缺失面法向位移用于局部拟合；没有逐帧材质，新a6表面opacity固定。旧静态贡献候选的局部opacity multiplier本次拟合：True；候选不是ownership GT，保护域冲突须单列。贡献候选与当前资产的来源记录见JSON。 道路直接光遮挡模块本次启用：True。固定观测道路颜色不是已知物理albedo，低维直接光可见性只是一项受限标定。全部199帧用于BUILD，排除优化的三个锚帧也不是独立测试。</p>
+<h2>工程状态与科研结论分开</h2><p>新进程完整状态恢复：True；评价优化更新：0。freeze/restore 凭据验证参数、Adam、采样器及全部RNG；基线文件、道路参数和评价期间actor状态分别核对。工程接线通过不能覆盖候选几何失败或完整重建质量下降。</p>
+<p>计算记账：正式 1000 更新；smoke/恢复/pilot额外 546 更新，单列。冻结先验采样步数与优化更新不同：Omni=100，PVD=1000。</p><p>先验共 1100 denoise步、0训练更新；正式优化耗时 124.92 秒。正式1000从初始PVD proposal开始，未接着smoke权重训练。完整父源权重未修改。</p><h2>冻结状态读出诊断：覆盖、混合与颜色范围</h2><p>仅raw105/113/130的严格真实可见域，0优化更新；几何、opacity、门控均固定。临时把全部actor颜色logit设为−30/+30得到逐像素合法RGB范围[L,U]，随后逐张量精确恢复。三个锚standalone α均接近1，joint αT显著较低，主要存在静态混合阻挡；a37存在还会小幅降低贡献。本次可见域road贡献为0。</p><table><tr><th>raw</th><th>可见像素</th><th>standalone α</th><th>delete αT</th><th>full αT</th><th>static αT</th><th>实际C2删车MAE</th><th>强r3 MAE</th><th>条件颜色L1下界</th></tr><tr><td>105</td><td>869</td><td>0.9997</td><td>0.8005</td><td>0.7961</td><td>0.1993</td><td>0.047162</td><td>0.030996</td><td>0.000704</td></tr><tr><td>113</td><td>729</td><td>0.9997</td><td>0.6294</td><td>0.6042</td><td>0.3703</td><td>0.067379</td><td>0.033302</td><td>0.013950</td></tr><tr><td>130</td><td>366</td><td>0.9997</td><td>0.3889</td><td>0.3768</td><td>0.6107</td><td>0.053700</td><td>0.032004</td><td>0.012599</td></tr></table><p>下界只条件于当前冻结几何/混合，忽略共享多视角材质的更强耦合，是乐观逐像素界。实际误差仍明显高于此界；不能据此断言整个方法全局不可达，也不能把“先验看起来正常”当作成像接线通过。临时oracle颜色不是方法结果。</p>
+<details><summary>冻结与恢复凭据</summary><pre>{
+  &quot;parent_unchanged&quot;: true,
+  &quot;parent_identity_unchanged&quot;: true,
+  &quot;road_state_unchanged&quot;: true,
+  &quot;actor_no_eval_updates&quot;: true,
+  &quot;opacity_fixed_min&quot;: 0.9950000047683716,
+  &quot;opacity_fixed_max&quot;: 0.9950000047683716,
+  &quot;observed_geometry_max_displacement_m&quot;: 0.0,
+  &quot;missing_geometry_max_displacement_m&quot;: 0.022471958771348,
+  &quot;full_state_restored&quot;: true,
+  &quot;optimizer_updates&quot;: 0,
+  &quot;actor_gate_candidates&quot;: 90369,
+  &quot;actor_gate_min_mean_max&quot;: [
+    0.010228924453258514,
+    0.9373095035552979,
+    0.999970555305481
+  ],
+  &quot;contributor_parent_matches&quot;: true
+}</pre></details>
+<details><summary>删除图全图指标：仅诊断，不能判编辑好坏</summary><p>原观测含已删除a37，没有相应清洁道路真值；以下PSNR/SSIM/LPIPS不参与通过判定。</p><table><tr><th>输出</th><th>PSNR</th><th>SSIM</th><th>LPIPS</th></tr><tr><td>r3_delete37</td><td>24.316524</td><td>0.879693</td><td>0.147253</td></tr><tr><td>C2_delete37</td><td>24.114987</td><td>0.877817</td><td>0.148840</td></tr></table></details>
+<details><summary>全部数值检查与测量时序</summary><pre>{
+  &quot;full_vs_original_native_delta&quot;: {
+    &quot;psnr&quot;: -1.7037729535784045,
+    &quot;ssim&quot;: -0.01929415002161139,
+    &quot;lpips_vgg&quot;: 0.022940127901276752
+  },
+  &quot;full_numeric_checks&quot;: {
+    &quot;psnr&quot;: false,
+    &quot;ssim&quot;: false,
+    &quot;lpips&quot;: false
+  },
+  &quot;full_numeric_pass&quot;: false,
+  &quot;a6_observed_delete_improves&quot;: false,
+  &quot;road_core_checks&quot;: {
+    &quot;fit&quot;: {
+      &quot;ratio&quot;: 1.0072329883894022,
+      &quot;samples&quot;: 966832,
+      &quot;domain&quot;: &quot;matched_conservative_road&quot;,
+      &quot;numeric_tolerance_pass&quot;: true
+    },
+    &quot;new_dark&quot;: {
+      &quot;ratio&quot;: 1.0111976946965138,
+      &quot;samples&quot;: 320101,
+      &quot;domain&quot;: &quot;matched_conservative_road&quot;,
+      &quot;numeric_tolerance_pass&quot;: true
+    },
+    &quot;original_shadow&quot;: {
+      &quot;ratio&quot;: 1.001713028716624,
+      &quot;samples&quot;: 20813,
+      &quot;domain&quot;: &quot;matched_conservative_road&quot;,
+      &quot;numeric_tolerance_pass&quot;: true
+    }
+  },
+  &quot;freeze_restore_pass&quot;: true,
+  &quot;automatic_numeric_checks_pass&quot;: false,
+  &quot;human_visual_verdict&quot;: null,
+  &quot;visual_review_pending&quot;: true,
+  &quot;quality_accepted&quot;: false,
+  &quot;engineering_evaluation_complete&quot;: true,
+  &quot;missing_required_metrics&quot;: [],
+  &quot;scientific_failed_full_metrics&quot;: [
+    &quot;psnr&quot;,
+    &quot;ssim&quot;,
+    &quot;lpips&quot;
+  ],
+  &quot;formal_candidate_eligible&quot;: true
+}</pre></details>
+<h2>候选、实验与工程原始凭据</h2><details><summary>actor_surface_pvd_seed0_receipt.json</summary><p><a href="evidence/00_actor_surface_pvd_seed0_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;PROPOSAL_VALID_FOR_CONTROLLED_OPTIMIZATION&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz&quot;,
+  &quot;sha256&quot;: &quot;dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455&quot;,
+  &quot;quality_accepted&quot;: false,
+  &quot;formal_eligible&quot;: true,
+  &quot;source_type&quot;: &quot;actual pretrained PVD DDPM complete point output; local PCA patch representation&quot;,
+  &quot;input_point_cloud&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/candidate_points_actor_native.npz&quot;,
+  &quot;input_point_cloud_sha256&quot;: &quot;1d1b7e20ca389c184f54094674d40d1aa842e61da708b34f8b1ff2911d731562&quot;,
+  &quot;transform_contract&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/pvd_seed000/transform_contract.json&quot;,
+  &quot;transform_contract_sha256&quot;: &quot;84121bdacabac4eee9652ef04c9a1bc8d9a5e84ce585cd905a7a24d2b2552b31&quot;,
+  &quot;producer_contract&quot;: {
+    &quot;schema_version&quot;: &quot;c2.pvd_fixed_fullbox_training_stats_transform.v1&quot;,
+    &quot;whole_box_lwh_m&quot;: [
+      4.33404016494751,
+      2.0775399208068848,
+      1.440000057220459
+    ],
+    &quot;partial_bounds_scaled&quot;: false,
+    &quot;partial_bounds_centered&quot;: false,
+    &quot;normalization_source&quot;: &quot;fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics&quot;,
+    &quot;training_stats_file&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json&quot;,
+    &quot;training_stats_sha256&quot;: &quot;057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c&quot;,
+    &quot;training_shapes&quot;: 2458,
+    &quot;training_npy_crc_verified&quot;: 2458,
+    &quot;source_split&quot;: &quot;train&quot;,
+    &quot;training_mean_xyz&quot;: [
+      0.0013179273810237646,
+      0.007349051535129547,
+      0.023509424179792404
+    ],
+    &quot;training_scalar_std&quot;: 0.16349221765995026,
+    &quot;training_mean_full_bbox_span_xyz&quot;: [
+      0.3736966279626311,
+      0.2702367117519428,
+      0.8653240163921946
+    ],
+    &quot;training_mean_full_bbox_center_xyz&quot;: [
+      0.0015711266132031072,
+      0.02641026573529883,
+      0.013171462331391928
+    ],
+    &quot;native_axis&quot;: &quot;x length/forward, y width/left, z height/up&quot;,
+    &quot;pvd_axis&quot;: &quot;X width/right, Y height/up, Z length/back&quot;,
+    &quot;front_sign_assumption&quot;: &quot;Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used&quot;,
+    &quot;training_reference_axis_image&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png&quot;,
+    &quot;native_to_training_raw_rotation&quot;: [
+      [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    ],
+    &quot;model_formula&quot;: &quot;q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std&quot;,
+    &quot;inverse_formula&quot;: &quot;native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)&quot;,
+    &quot;pvd_to_actor_native_4x4&quot;: [
+      [
+        0.0,
+        0.0,
+        -0.8188630207547728,
+        -0.051778456423143396
+      ],
+      [
+        -0.9089233980558168,
+        0.0,
+        0.0,
+        0.001407643188107219
+      ],
+      [
+        0.0,
+        0.8711947435237231,
+        0.0,
+        -0.10157076498225952
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    &quot;actor_native_to_pvd_4x4&quot;: [
+      [
+        0.0,
+        -1.100202725707134,
+        0.0,
+        0.0015486928723786421
+      ],
+      [
+        0.0,
+        0.0,
+        1.1478489825998008,
+        0.11658789924677007
+      ],
+      [
+        -1.221205469845576,
+        0.0,
+        0.0,
+        -0.06323213420410352
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    &quot;application_adaptation&quot;: &quot;Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used.&quot;,
+    &quot;seed&quot;: 0,
+    &quot;checkpoint_sha256&quot;: &quot;567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a&quot;,
+    &quot;input_sha256&quot;: &quot;7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637&quot;,
+    &quot;normalization_sha256&quot;: &quot;988d6aa8beca7c097a4b4d78b1b1706ed85537e46fa54caa2062a46cbb6ba8ce&quot;,
+    &quot;partial_count&quot;: 200,
+    &quot;new_noise_points&quot;: 1848,
+    &quot;total_points&quot;: 2048,
+    &quot;ddpm_steps&quot;: 1000,
+    &quot;input_contract&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_prior_contract.json&quot;,
+    &quot;checkpoint&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights/car_completion_3199.pth&quot;
+  },
+  &quot;coordinate_contract&quot;: {
+    &quot;point_space&quot;: &quot;actor_native_m&quot;,
+    &quot;producer_transform&quot;: [
+      [
+        0.0,
+        0.0,
+        -0.8188630207547728,
+        -0.051778456423143396
+      ],
+      [
+        -0.9089233980558168,
+        0.0,
+        0.0,
+        0.001407643188107219
+      ],
+      [
+        0.0,
+        0.8711947435237231,
+        0.0,
+        -0.10157076498225952
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    &quot;raw_native_inverse_max_abs_error_m&quot;: 1.1862409543539343e-07,
+    &quot;normalization_source&quot;: &quot;fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics&quot;,
+    &quot;normalization_policy&quot;: &quot;producer-supplied official training normalization + fixed annotated whole box; adapter never infers axes, scale, or center from partial points&quot;
+  },
+  &quot;completion_points&quot;: 2048,
+  &quot;complete_unique_5mm_points&quot;: 2048,
+  &quot;fixed_conditioning_count&quot;: 200,
+  &quot;generated_model_point_count&quot;: 1848,
+  &quot;conditioning_actual_source_max_abs_error_m&quot;: 1.1920928955078125e-07,
+  &quot;complete_bounds_native_m&quot;: [
+    [
+      -2.1131668090820312,
+      -1.0376337766647339,
+      -0.8318876624107361
+    ],
+    [
+      2.410184144973755,
+      1.04848
+…详见完整JSON</pre></details><details><summary>a6_geometry_receipt.json</summary><p><a href="evidence/01_a6_geometry_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;READY_MEASURED_GEOMETRY_RGB_PENDING_VISIBILITY&quot;,
+  &quot;point_count&quot;: 54715,
+  &quot;full_box_lwh_m&quot;: [
+    4.33404,
+    2.07754,
+    1.44
+  ],
+  &quot;raw_frames&quot;: 199,
+  &quot;geometry_npz&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz&quot;,
+  &quot;geometry_sha256&quot;: &quot;c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2&quot;,
+  &quot;omni_npz&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_omni_pointcloud.npz&quot;,
+  &quot;omni_sha256&quot;: &quot;36341844831cce615c6de0b086ae0a6db4b9b523b459e47ea2fc2ffbfb3357ee&quot;,
+  &quot;omni_axes&quot;: &quot;x_length,y_height,z_width; native[:,[0,2,1]]/(max(full_box_lwh)/2)&quot;,
+  &quot;source&quot;: &quot;exact real measured rows from original raw TFRecord via CPU five LiDAR/two return decoder; per-frame annotated OBB actor-local coordinates&quot;,
+  &quot;geometry_limit&quot;: &quot;OBB selection may contain ground or other object returns; not an exact semantic surface or completed mesh&quot;,
+  &quot;rgb_policy&quot;: &quot;NO original diagnostic colors accepted: their front_color_valid has no visibility zbuffer&quot;,
+  &quot;transforms&quot;: &quot;canonical-&gt;raw-world-&gt;B-model; authoritative native49 raw89..137 cameras will be audited against raw calibration&quot;,
+  &quot;model_time_note&quot;: &quot;native49 exact; outside49 extrapolated at0.02 per raw frame for metadata only&quot;,
+  &quot;GPU_used&quot;: false,
+  &quot;training_updates&quot;: 0,
+  &quot;old_assets_modified&quot;: false
+}</pre></details><details><summary>a6_native49_receipt.json</summary><p><a href="evidence/02_a6_native49_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;READY_NATIVE49_A6_OBSERVATIONS&quot;,
+  &quot;raw_range&quot;: [
+    89,
+    137
+  ],
+  &quot;views&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_views&quot;,
+  &quot;rows&quot;: [
+    {
+      &quot;raw&quot;: 89,
+      &quot;visible_evidence_pixels&quot;: 723,
+      &quot;known_silhouette_pixels&quot;: 1000,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4423,
+      &quot;unknown_pixels&quot;: 4735,
+      &quot;point_rgb_valid&quot;: 184,
+      &quot;measured_obb_rows&quot;: 348,
+      &quot;camera_max_abs_error&quot;: 1.8189963424397604e-13
+    },
+    {
+      &quot;raw&quot;: 90,
+      &quot;visible_evidence_pixels&quot;: 753,
+      &quot;known_silhouette_pixels&quot;: 1007,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4414,
+      &quot;unknown_pixels&quot;: 4705,
+      &quot;point_rgb_valid&quot;: 195,
+      &quot;measured_obb_rows&quot;: 368,
+      &quot;camera_max_abs_error&quot;: 1.8189963424397604e-13
+    },
+    {
+      &quot;raw&quot;: 91,
+      &quot;visible_evidence_pixels&quot;: 754,
+      &quot;known_silhouette_pixels&quot;: 1008,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4413,
+      &quot;unknown_pixels&quot;: 4704,
+      &quot;point_rgb_valid&quot;: 198,
+      &quot;measured_obb_rows&quot;: 369,
+      &quot;camera_max_abs_error&quot;: 1.8189269535007213e-13
+    },
+    {
+      &quot;raw&quot;: 92,
+      &quot;visible_evidence_pixels&quot;: 760,
+      &quot;known_silhouette_pixels&quot;: 1006,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4415,
+      &quot;unknown_pixels&quot;: 4698,
+      &quot;point_rgb_valid&quot;: 191,
+      &quot;measured_obb_rows&quot;: 345,
+      &quot;camera_max_abs_error&quot;: 1.3642559304472002e-13
+    },
+    {
+      &quot;raw&quot;: 93,
+      &quot;visible_evidence_pixels&quot;: 755,
+      &quot;known_silhouette_pixels&quot;: 1012,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4303,
+      &quot;unknown_pixels&quot;: 4627,
+      &quot;point_rgb_valid&quot;: 200,
+      &quot;measured_obb_rows&quot;: 365,
+      &quot;camera_max_abs_error&quot;: 1.8189963424397604e-13
+    },
+    {
+      &quot;raw&quot;: 94,
+      &quot;visible_evidence_pixels&quot;: 767,
+      &quot;known_silhouette_pixels&quot;: 1017,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4267,
+      &quot;unknown_pixels&quot;: 4624,
+      &quot;point_rgb_valid&quot;: 209,
+      &quot;measured_obb_rows&quot;: 365,
+      &quot;camera_max_abs_error&quot;: 1.02318151238949e-13
+    },
+    {
+      &quot;raw&quot;: 95,
+      &quot;visible_evidence_pixels&quot;: 799,
+      &quot;known_silhouette_pixels&quot;: 1040,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4108,
+      &quot;unknown_pixels&quot;: 4444,
+      &quot;point_rgb_valid&quot;: 225,
+      &quot;measured_obb_rows&quot;: 379,
+      &quot;camera_max_abs_error&quot;: 2.7285118608944003e-13
+    },
+    {
+      &quot;raw&quot;: 96,
+      &quot;visible_evidence_pixels&quot;: 748,
+      &quot;known_silhouette_pixels&quot;: 1029,
+      &quot;a37_occlusion_unknown_pixels&quot;: 4054,
+      &quot;unknown_pixels&quot;: 4363,
+      &quot;point_rgb_valid&quot;: 209,
+      &quot;measured_obb_rows&quot;: 353,
+      &quot;camera_max_abs_error&quot;: 3.637992684879521e-13
+    },
+    {
+      &quot;raw&quot;: 97,
+      &quot;visible_evidence_pixels&quot;: 741,
+      &quot;known_silhouette_pixels&quot;: 1027,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3936,
+      &quot;unknown_pixels&quot;: 4288,
+      &quot;point_rgb_valid&quot;: 217,
+      &quot;measured_obb_rows&quot;: 371,
+      &quot;camera_max_abs_error&quot;: 1.4779289716961713e-13
+    },
+    {
+      &quot;raw&quot;: 98,
+      &quot;visible_evidence_pixels&quot;: 765,
+      &quot;known_silhouette_pixels&quot;: 1026,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3795,
+      &quot;unknown_pixels&quot;: 4090,
+      &quot;point_rgb_valid&quot;: 218,
+      &quot;measured_obb_rows&quot;: 366,
+      &quot;camera_max_abs_error&quot;: 2.273702059962801e-13
+    },
+    {
+      &quot;raw&quot;: 99,
+      &quot;visible_evidence_pixels&quot;: 817,
+      &quot;known_silhouette_pixels&quot;: 1023,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3632,
+      &quot;unknown_pixels&quot;: 3870,
+      &quot;point_rgb_valid&quot;: 223,
+      &quot;measured_obb_rows&quot;: 395,
+      &quot;camera_max_abs_error&quot;: 2.273702059962801e-13
+    },
+    {
+      &quot;raw&quot;: 100,
+      &quot;visible_evidence_pixels&quot;: 810,
+      &quot;known_silhouette_pixels&quot;: 1034,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3550,
+      &quot;unknown_pixels&quot;: 3781,
+      &quot;point_rgb_valid&quot;: 236,
+      &quot;measured_obb_rows&quot;: 411,
+      &quot;camera_max_abs_error&quot;: 5.457023721788801e-13
+    },
+    {
+      &quot;raw&quot;: 101,
+      &quot;visible_evidence_pixels&quot;: 807,
+      &quot;known_silhouette_pixels&quot;: 1020,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3367,
+      &quot;unknown_pixels&quot;: 3609,
+      &quot;point_rgb_valid&quot;: 230,
+      &quot;measured_obb_rows&quot;: 390,
+      &quot;camera_max_abs_error&quot;: 4.0926984024025614e-13
+    },
+    {
+      &quot;raw&quot;: 102,
+      &quot;visible_evidence_pixels&quot;: 839,
+      &quot;known_silhouette_pixels&quot;: 1032,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3228,
+      &quot;unknown_pixels&quot;: 3519,
+      &quot;point_rgb_valid&quot;: 236,
+      &quot;measured_obb_rows&quot;: 409,
+      &quot;camera_max_abs_error&quot;: 4.548098009315993e-14
+    },
+    {
+      &quot;raw&quot;: 103,
+      &quot;visible_evidence_pixels&quot;: 843,
+      &quot;known_silhouette_pixels&quot;: 1032,
+      &quot;a37_occlusion_unknown_pixels&quot;: 3128,
+      &quot;unknown_pixels&quot;: 3384,
+      &quot;point_rgb_valid&quot;: 224,
+      &quot;measured_obb_rows&quot;: 396,
+      &quot;camera_max_abs_error&quot;: 9.0951551845464e-14
+    },
+    {
+      &quot;raw&quot;: 104,
+      &quot;visible_evidence_pixels&quot;: 839,
+      &quot;known_silhouette_pixels&quot;: 1050,
+      &quot;a37_occlusion_unknown_pixels&quot;: 2958,
+      &quot;unknown_pixels&quot;: 3262,
+      &quot;point_rgb_valid&quot;: 235,
+      &quot;measured_obb_rows&quot;: 370,
+      &quot;camera_max_abs_error&quot;: 2.728477166424881e-13
+    },
+    {
+      &quot;raw&quot;: 105,
+      &quot;visible_evidence_pixels&quot;: 869,
+      &quot;known_silhouette_pixels&quot;: 1044,
+      &quot;a37_occlusion_unknown_pixels&quot;: 2820,
+      &quot;unknown_pixels&quot;: 3055,
+      &quot;point_rgb_valid&quot;: 228,
+      &quot;measured_obb_rows&quot;: 355,
+      &quot;camera_max_abs_error&quot;: 5.456954332849762e-13
+    },
+    {
+      &quot;raw&quot;: 106,
+      &quot;visible_evidence_pixels&quot;: 890,
+      &quot;known_silhouette_pixels&quot;: 1043,
+      &quot;a37_occlusion_unknown_pixels&quot;: 2696,
+      &quot;unknown_pixels&quot;: 3027,
+      &quot;point_rgb_valid&quot;: 255,
+      &quot;measured_obb_rows&quot;: 383,
+      &quot;camera_max_abs_error&quot;: 2.728477166424881e-13
+    },
+    {
+      &quot;raw&quot;: 107,
+      &quot;visible_evidence_pixels&quot;: 885,
+      &quot;known_silhouette_pixels&quot;: 1055,
+      &quot;a37_occlusion_unknown_pixels&quot;: 2529,
+      &quot;unknown_pixels&quot;: 2851,
+      &quot;point_rgb_valid&quot;: 254,
+      &quot;measured_obb_rows&quot;: 395,
+      &quot;camera_max_abs_error&quot;: 1.2505553775681022e-13
+    },
+    {
+      &quot;raw&quot;: 108,
+      &quot;visible_evidence_pixels&quot;: 785,
+      &quot;known_silhouette_pixels&quot;: 1040,
+      &quot;a37_occlusion_unknown_pixels&quot;: 2398,
+      &quot;unknown_pixels&quot;: 2771,
+
+…详见完整JSON</pre></details><details><summary>a6_views_integrity_receipt.json</summary><p><a href="evidence/03_a6_views_integrity_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;PASS_ALL49_ZIP_CRC_FIELDS_AND_NO_A37_OVERLAP&quot;,
+  &quot;frames&quot;: 49,
+  &quot;rows&quot;: [
+    [
+      &quot;089&quot;,
+      723
+    ],
+    [
+      &quot;090&quot;,
+      753
+    ],
+    [
+      &quot;091&quot;,
+      754
+    ],
+    [
+      &quot;092&quot;,
+      760
+    ],
+    [
+      &quot;093&quot;,
+      755
+    ],
+    [
+      &quot;094&quot;,
+      767
+    ],
+    [
+      &quot;095&quot;,
+      799
+    ],
+    [
+      &quot;096&quot;,
+      748
+    ],
+    [
+      &quot;097&quot;,
+      741
+    ],
+    [
+      &quot;098&quot;,
+      765
+    ],
+    [
+      &quot;099&quot;,
+      817
+    ],
+    [
+      &quot;100&quot;,
+      810
+    ],
+    [
+      &quot;101&quot;,
+      807
+    ],
+    [
+      &quot;102&quot;,
+      839
+    ],
+    [
+      &quot;103&quot;,
+      843
+    ],
+    [
+      &quot;104&quot;,
+      839
+    ],
+    [
+      &quot;105&quot;,
+      869
+    ],
+    [
+      &quot;106&quot;,
+      890
+    ],
+    [
+      &quot;107&quot;,
+      885
+    ],
+    [
+      &quot;108&quot;,
+      785
+    ],
+    [
+      &quot;109&quot;,
+      795
+    ],
+    [
+      &quot;110&quot;,
+      782
+    ],
+    [
+      &quot;111&quot;,
+      752
+    ],
+    [
+      &quot;112&quot;,
+      758
+    ],
+    [
+      &quot;113&quot;,
+      729
+    ],
+    [
+      &quot;114&quot;,
+      750
+    ],
+    [
+      &quot;115&quot;,
+      694
+    ],
+    [
+      &quot;116&quot;,
+      675
+    ],
+    [
+      &quot;117&quot;,
+      679
+    ],
+    [
+      &quot;118&quot;,
+      677
+    ],
+    [
+      &quot;119&quot;,
+      659
+    ],
+    [
+      &quot;120&quot;,
+      613
+    ],
+    [
+      &quot;121&quot;,
+      579
+    ],
+    [
+      &quot;122&quot;,
+      517
+    ],
+    [
+      &quot;123&quot;,
+      513
+    ],
+    [
+      &quot;124&quot;,
+      517
+    ],
+    [
+      &quot;125&quot;,
+      457
+    ],
+    [
+      &quot;126&quot;,
+      455
+    ],
+    [
+      &quot;127&quot;,
+      428
+    ],
+    [
+      &quot;128&quot;,
+      427
+    ],
+    [
+      &quot;129&quot;,
+      425
+    ],
+    [
+      &quot;130&quot;,
+      366
+    ],
+    [
+      &quot;131&quot;,
+      346
+    ],
+    [
+      &quot;132&quot;,
+      360
+    ],
+    [
+      &quot;133&quot;,
+      376
+    ],
+    [
+      &quot;134&quot;,
+      370
+    ],
+    [
+      &quot;135&quot;,
+      348
+    ],
+    [
+      &quot;136&quot;,
+      317
+    ],
+    [
+      &quot;137&quot;,
+      297
+    ]
+  ]
+}</pre></details><details><summary>a6_full199_receipt.json</summary><p><a href="evidence/04_a6_full199_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;PASS_REAL199_A6_GEOMETRY_AND_TIERED_RGB_EVIDENCE&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_full199_observations.npz&quot;,
+  &quot;sha256&quot;: &quot;4b91afca11abc5013365d8fc9763a2da63d65aac996307ad8c947562e59e8ea7&quot;,
+  &quot;frames&quot;: 199,
+  &quot;point_count&quot;: 54715,
+  &quot;voxel5cm_count&quot;: 5976,
+  &quot;voxel_two_or_more_source_frames&quot;: 4343,
+  &quot;geometry_point_range_m&quot;: [
+    [
+      -2.1659679412841797,
+      -1.0363516807556152,
+      -0.21044833958148956
+    ],
+    [
+      2.0848424434661865,
+      1.0377053022384644,
+      0.7198296785354614
+    ]
+  ],
+  &quot;full_box_lwh_m&quot;: [
+    4.33404,
+    2.07754,
+    1.44
+  ],
+  &quot;lower_geometry_unobserved_band_m&quot;: [
+    -0.72,
+    -0.21044833958148956
+  ],
+  &quot;reviewed_native49_rgb_points&quot;: 9705,
+  &quot;sparse_all199_geometric_rgb_hint_points&quot;: 903,
+  &quot;sparse_two_frame_color_consensus_points&quot;: 8085,
+  &quot;a37_ray_occluded_point_count&quot;: 53802,
+  &quot;canonical_source_max_abs_error_m&quot;: 2.9802322387695312e-08,
+  &quot;rgb_strict_policy&quot;: &quot;rgb_valid is ONLY native49 reviewed visible silhouette AND full measured zbuffer. Reviewed depth-visible a6 positive evidence overrides raw cuboid candidate intersections. Outside49 rgb_valid=False.&quot;,
+  &quot;rgb_hint_policy&quot;: &quot;rgb_valid_sparse_geometric_hint uses same measured zbuffer, raw projected FRONT a6 bbox and all-other-OBB ray exclusion; NO outside49 silhouette. Hints are not dense GT.&quot;,
+  &quot;RGB_projection&quot;: &quot;original1920x1280 RGB, Brown-Conrady9 intrinsic and image pose; finite undistorted frustum first; nearest full5-sensor2-return depth min9x9, tolerance0.20m&quot;,
+  &quot;geometry_limit&quot;: &quot;measured OBB rows only, may include road/occluders; bottom/wheels and any space without points unknown; no learned completion enters observations&quot;,
+  &quot;cuboid_warning&quot;: &quot;a37_ray_occluded is a conservative possible-occlusion CANDIDATE ONLY: raw a37 cuboid envelopes overlap many actually visible a6 points; not actual surface visibility or silhouette GT&quot;,
+  &quot;rolling_shutter_limit&quot;: &quot;provided image pose only, no per-row rolling shutter or within-scan actor motion compensation&quot;,
+  &quot;raw_TFRecord_CRC&quot;: &quot;all199 record length and payload CRC32C passed&quot;,
+  &quot;raw_source_size_mtime_unchanged&quot;: true,
+  &quot;occupancy_10bins&quot;: {
+    &quot;length_x&quot;: {
+      &quot;edges_m&quot;: [
+        -2.16702,
+        -1.733616,
+        -1.300212,
+        -0.8668079999999998,
+        -0.4334039999999999,
+        0.0,
+        0.43340400000000034,
+        0.8668080000000002,
+        1.3002120000000001,
+        1.733616,
+        2.16702
+      ],
+      &quot;measured_rows&quot;: [
+        21514,
+        5777,
+        10123,
+        7255,
+        5262,
+        2241,
+        239,
+        1211,
+        420,
+        673
+      ],
+      &quot;occupied5cm_voxels&quot;: [
+        1923,
+        896,
+        1032,
+        729,
+        571,
+        304,
+        98,
+        194,
+        126,
+        103
+      ]
+    },
+    &quot;width_y&quot;: {
+      &quot;edges_m&quot;: [
+        -1.03877,
+        -0.831016,
+        -0.623262,
+        -0.415508,
+        -0.207754,
+        0.0,
+        0.207754,
+        0.415508,
+        0.623262,
+        0.831016,
+        1.03877
+      ],
+      &quot;measured_rows&quot;: [
+        1218,
+        3264,
+        6398,
+        8600,
+        6372,
+        6552,
+        8316,
+        6542,
+        5668,
+        1785
+      ],
+      &quot;occupied5cm_voxels&quot;: [
+        239,
+        564,
+        653,
+        726,
+        537,
+        545,
+        773,
+        721,
+        854,
+        364
+      ]
+    },
+    &quot;height_z&quot;: {
+      &quot;edges_m&quot;: [
+        -0.72,
+        -0.576,
+        -0.432,
+        -0.28800000000000003,
+        -0.14400000000000002,
+        0.0,
+        0.1439999999999999,
+        0.28800000000000003,
+        0.43199999999999994,
+        0.5759999999999998,
+        0.72
+      ],
+      &quot;measured_rows&quot;: [
+        0,
+        0,
+        0,
+        191,
+        2652,
+        4959,
+        14329,
+        14515,
+        4954,
+        13115
+      ],
+      &quot;occupied5cm_voxels&quot;: [
+        0,
+        0,
+        0,
+        109,
+        572,
+        752,
+        1201,
+        1635,
+        615,
+        1092
+      ]
+    }
+  },
+  &quot;frame_rows&quot;: [
+    {
+      &quot;raw&quot;: 0,
+      &quot;point_count&quot;: 374,
+      &quot;canonical_source_max_abs_error_m&quot;: 0.0,
+      &quot;depth_visible&quot;: 323,
+      &quot;rgb_sparse_geometric_hint&quot;: 0,
+      &quot;rgb_reviewed_native49&quot;: 0,
+      &quot;a37_ray_blocked_points&quot;: 374,
+      &quot;any_other_box_ray_blocked_points&quot;: 374,
+      &quot;projected_a6_front_bbox&quot;: [
+        879.0780350770463,
+        709.0521956299169,
+        1219.4361997617204,
+        968.9282756361374
+      ],
+      &quot;reused_cloud&quot;: null,
+      &quot;crc&quot;: {
+        &quot;header_offset&quot;: 0,
+        &quot;payload_length&quot;: 5020489,
+        &quot;length_crc32c&quot;: &quot;passed&quot;,
+        &quot;payload_crc32c&quot;: &quot;passed&quot;
+      }
+    },
+    {
+      &quot;raw&quot;: 1,
+      &quot;point_count&quot;: 361,
+      &quot;canonical_source_max_abs_error_m&quot;: 0.0,
+      &quot;depth_visible&quot;: 316,
+      &quot;rgb_sparse_geometric_hint&quot;: 0,
+      &quot;rgb_reviewed_native49&quot;: 0,
+      &quot;a37_ray_blocked_points&quot;: 361,
+      &quot;any_other_box_ray_blocked_points&quot;: 361,
+      &quot;projected_a6_front_bbox&quot;: [
+        879.0320702652716,
+        709.0581149265167,
+        1219.4893956765936,
+        968.9511433242201
+      ],
+      &quot;reused_cloud&quot;: null,
+      &quot;crc&quot;: {
+        &quot;header_offset&quot;: 5020505,
+        &quot;payload_length&quot;: 4561068,
+        &quot;length_crc32c&quot;: &quot;passed&quot;,
+        &quot;payload_crc32c&quot;: &quot;passed&quot;
+      }
+    },
+    {
+      &quot;raw&quot;: 2,
+      &quot;point_count&quot;: 369,
+      &quot;canonical_source_max_abs_error_m&quot;: 0.0,
+      &quot;depth_visible&quot;: 312,
+      &quot;rgb_sparse_geometric_hint&quot;: 0,
+      &quot;rgb_reviewed_native49&quot;: 0,
+      &quot;a37_ray_blocked_points&quot;: 369,
+      &quot;any_other_box_ray_blocked_points&quot;: 369,
+      &quot;projected_a6_front_bbox&quot;: [
+        878.7754353969451,
+        709.0538645546219,
+        1219.0868908166706,
+        968.9339109350665
+      ],
+      &quot;reused_cloud&quot;: null,
+      &quot;crc&quot;: {
+        &quot;header_offset&quot;: 9581589,
+        &quot;payload_length&quot;: 4598892,
+        &quot;length_crc32c&quot;: &quot;passed&quot;,
+        &quot;payload_crc32c&quot;: &quot;passed&quot;
+      }
+    },
+    {
+      &quot;raw&quot;: 3,
+
+…详见完整JSON</pre></details><details><summary>a6_colour_evidence_receipt.json</summary><p><a href="evidence/05_a6_colour_evidence_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;READY_MASKED_ACTUAL_LIDAR_COLOR_EVIDENCE&quot;,
+  &quot;file&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_colour_evidence.npz&quot;,
+  &quot;sha256&quot;: &quot;e29d3cdcfe66e8a0b026d70682b560d5442963a574ed64fd04e69e306ec7b6a4&quot;,
+  &quot;rows&quot;: 15021,
+  &quot;valid_rows&quot;: 8930,
+  &quot;raw_range&quot;: [
+    89,
+    137
+  ],
+  &quot;visibility&quot;: &quot;original RGB only; reviewed a6 silhouette erode1 and a37 label5 dilate1 exclusion; full 5LiDAR 2return camera zbuffer min3x3 tolerance0.20m; point support actual OBB rows; no predicted colors&quot;,
+  &quot;coordinates&quot;: &quot;a6 canonical xforward length,yleft width,zup height; metres&quot;,
+  &quot;bottom_unobserved_band_m&quot;: [
+    -0.72,
+    -0.21044833958148956
+  ],
+  &quot;limitation&quot;: &quot;bottom approximate0.51m has no real LiDAR observations; not completed surface, any fill inferred by frozen prior&quot;,
+  &quot;GPU_used&quot;: false,
+  &quot;training_updates&quot;: 0
+}</pre></details><details><summary>point_prior_rejection_receipt.json</summary><p><a href="evidence/06_point_prior_rejection_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;POINT_CANDIDATE_UNACCEPTED_DIAGNOSTIC_SMOKE_AUTHORIZED&quot;,
+  &quot;proposal&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000/candidate_omni.glb&quot;,
+  &quot;original_geometry_retained&quot;: true,
+  &quot;formal_surface_asset_created&quot;: false,
+  &quot;reason&quot;: &quot;Dominant connected learned component is width4.325m vs legal2.07754m; cannot fix by removing floaters or global stretching. Legal-box surface filtering would cut the dominant shell, no caps or repair allowed.&quot;,
+  &quot;geometry_audit&quot;: {
+    &quot;vertices&quot;: 310497,
+    &quot;faces&quot;: 621118,
+    &quot;components&quot;: 12,
+    &quot;bounds_native_m&quot;: [
+      [
+        -2.163311243057251,
+        -2.162482738494873,
+        -0.6924758553504944
+      ],
+      [
+        2.161207675933838,
+        2.162601947784424,
+        0.7036907076835632
+      ]
+    ],
+    &quot;vertex_inside_bbox_fraction&quot;: 0.5687269120152529,
+    &quot;surface_area_m2&quot;: 72.74154664520393,
+    &quot;area_inside_bbox_fraction&quot;: 0.573241519057552,
+    &quot;bbox_margin_m&quot;: 0.02,
+    &quot;largest_components&quot;: [
+      {
+        &quot;faces&quot;: 620306,
+        &quot;face_fraction&quot;: 0.9986926799738536,
+        &quot;area_m2&quot;: 72.67400999183398,
+        &quot;bounds_native_m&quot;: [
+          [
+            -2.163311243057251,
+            -2.162482738494873,
+            -0.6924758553504944
+          ],
+          [
+            2.161207675933838,
+            2.162601947784424,
+            0.7036907076835632
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.5731026733978041
+      },
+      {
+        &quot;faces&quot;: 264,
+        &quot;face_fraction&quot;: 0.00042504000850080017,
+        &quot;area_m2&quot;: 0.02626505486648541,
+        &quot;bounds_native_m&quot;: [
+          [
+            -0.35633981227874756,
+            0.5078810453414917,
+            -0.16110506653785706
+          ],
+          [
+            -0.2888011038303375,
+            0.5521093010902405,
+            0.04383821040391922
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 1.0
+      },
+      {
+        &quot;faces&quot;: 156,
+        &quot;face_fraction&quot;: 0.0002511600050232001,
+        &quot;area_m2&quot;: 0.01255971981856442,
+        &quot;bounds_native_m&quot;: [
+          [
+            1.634029746055603,
+            0.2590143382549286,
+            0.1691679060459137
+          ],
+          [
+            1.6523334980010986,
+            0.5416988730430603,
+            0.196865051984787
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 1.0
+      },
+      {
+        &quot;faces&quot;: 120,
+        &quot;face_fraction&quot;: 0.00019320000386400008,
+        &quot;area_m2&quot;: 0.009471614718210727,
+        &quot;bounds_native_m&quot;: [
+          [
+            0.5605548024177551,
+            -0.9644203782081604,
+            0.057959042489528656
+          ],
+          [
+            0.5656284689903259,
+            -0.8001255393028259,
+            0.10338881611824036
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 1.0
+      },
+      {
+        &quot;faces&quot;: 96,
+        &quot;face_fraction&quot;: 0.00015456000309120005,
+        &quot;area_m2&quot;: 0.009361381855529271,
+        &quot;bounds_native_m&quot;: [
+          [
+            -0.15888796746730804,
+            -1.2515894174575806,
+            -0.04729738086462021
+          ],
+          [
+            -0.020756741985678673,
+            -1.2141470909118652,
+            -0.027933523058891296
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 68,
+        &quot;face_fraction&quot;: 0.00010948000218960004,
+        &quot;area_m2&quot;: 0.005517799218058803,
+        &quot;bounds_native_m&quot;: [
+          [
+            0.8112139105796814,
+            1.3938089609146118,
+            -0.21004386246204376
+          ],
+          [
+            0.845110297203064,
+            1.4564751386642456,
+            -0.1737360954284668
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 32,
+        &quot;face_fraction&quot;: 5.1520001030400023e-05,
+        &quot;area_m2&quot;: 0.001707606627186306,
+        &quot;bounds_native_m&quot;: [
+          [
+            -0.7071407437324524,
+            -2.035703420639038,
+            -0.12263017892837524
+          ],
+          [
+            -0.6717767119407654,
+            -2.000304937362671,
+            -0.11658131331205368
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 28,
+        &quot;face_fraction&quot;: 4.508000090160002e-05,
+        &quot;area_m2&quot;: 0.0015060661159584402,
+        &quot;bounds_native_m&quot;: [
+          [
+            -1.5433473587036133,
+            -1.1315819025039673,
+            0.1328340619802475
+          ],
+          [
+            -1.5170978307724,
+            -1.1058520078659058,
+            0.14501631259918213
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 16,
+        &quot;face_fraction&quot;: 2.5760000515200012e-05,
+        &quot;area_m2&quot;: 0.00036517691887126726,
+        &quot;bounds_native_m&quot;: [
+          [
+            0.4774693548679352,
+            -1.0386638641357422,
+            -0.07256738096475601
+          ],
+          [
+            0.4820047914981842,
+            -1.0027002096176147,
+            -0.06631201505661011
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 1.0
+      },
+      {
+        &quot;faces&quot;: 16,
+        &quot;face_fraction&quot;: 2.5760000515200012e-05,
+        &quot;area_m2&quot;: 0.0006132236731145654,
+        &quot;bounds_native_m&quot;: [
+          [
+            1.4235209226608276,
+            1.9241093397140503,
+            -0.2940130829811096
+          ],
+          [
+            1.4372515678405762,
+            1.9331766366958618,
+            -0.26919540762901306
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 8,
+        &quot;face_fraction&quot;: 1.2880000257600006e-05,
+        &quot;area_m2&quot;: 2.5291246438707086e-05,
+        &quot;bounds_native_m&quot;: [
+          [
+            -1.987952709197998,
+            1.0725210905075073,
+            -0.39338400959968567
+          ],
+          [
+            -1.9833300113677979,
+            1.0779507160186768,
+            -0.3931836187839508
+          ]
+        ],
+        &quot;inside_area_fraction&quot;: 0.0
+      },
+      {
+        &quot;faces&quot;: 8,
+
+…详见完整JSON</pre></details><details><summary>actor_surface_bbox_seed0_receipt.json</summary><p><a href="evidence/07_actor_surface_bbox_seed0_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;REJECTED_LEARNED_PROPOSAL_DIAGNOSTIC_SURFACE&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_bbox_seed0.npz&quot;,
+  &quot;output_sha256&quot;: &quot;079e1f9c19da61114db0af4498c17889701dc2083e7186ee123f83abac97d125&quot;,
+  &quot;formal_eligible&quot;: false,
+  &quot;quality_accepted&quot;: false,
+  &quot;geometric_reject&quot;: true,
+  &quot;diagnostic_only&quot;: true,
+  &quot;input_mesh&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/bbox_seed000/candidate_omni.glb&quot;,
+  &quot;input_mesh_sha256&quot;: &quot;50d75dbd487bc5d93c02e15016351630505c1bb1f45e925b09024ba558c7cdab&quot;,
+  &quot;mesh_space&quot;: &quot;omni_normalized&quot;,
+  &quot;input_geometry_sha256&quot;: &quot;c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2&quot;,
+  &quot;input_colour_evidence_sha256&quot;: &quot;e29d3cdcfe66e8a0b026d70682b560d5442963a574ed64fd04e69e306ec7b6a4&quot;,
+  &quot;normalization&quot;: {
+    &quot;whole_box_lwh_m&quot;: [
+      4.33404,
+      2.07754,
+      1.44
+    ],
+    &quot;half_span_m&quot;: 2.16702,
+    &quot;transform&quot;: &quot;Omni normalized (x_length,y_height,z_width) -&gt; native[:,[0,2,1]] * fixed half_span; reverse face winding&quot;,
+    &quot;partial_bounds_recenter_or_stretch&quot;: false
+  },
+  &quot;seed&quot;: 0,
+  &quot;prior_requested_samples&quot;: 14000,
+  &quot;prior_retained_samples&quot;: 13621,
+  &quot;prior_rejected_outside_full_box&quot;: 123,
+  &quot;prior_removed_near_observed&quot;: 256,
+  &quot;prior_observed_distance_threshold_m&quot;: 0.04,
+  &quot;prior_box_clipping&quot;: &quot;retain only actual learned triangle samples inside fixed raw full box +1e-6m; no stretch/recenter, no caps, no programmed car replacement&quot;,
+  &quot;connected_component_sample_retention&quot;: [
+    {
+      &quot;component_id&quot;: 0,
+      &quot;faces&quot;: 97430,
+      &quot;area_m2&quot;: 11.2657772554551,
+      &quot;sampled&quot;: 13256,
+      &quot;inside_full_box_samples&quot;: 13134,
+      &quot;retained_samples&quot;: 12985,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 2,
+      &quot;faces&quot;: 1660,
+      &quot;area_m2&quot;: 0.18691985922306376,
+      &quot;sampled&quot;: 241,
+      &quot;inside_full_box_samples&quot;: 240,
+      &quot;retained_samples&quot;: 158,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 6,
+      &quot;faces&quot;: 1068,
+      &quot;area_m2&quot;: 0.11571696368026306,
+      &quot;sampled&quot;: 135,
+      &quot;inside_full_box_samples&quot;: 135,
+      &quot;retained_samples&quot;: 135,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 7,
+      &quot;faces&quot;: 956,
+      &quot;area_m2&quot;: 0.10481395904900001,
+      &quot;sampled&quot;: 132,
+      &quot;inside_full_box_samples&quot;: 132,
+      &quot;retained_samples&quot;: 107,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 8,
+      &quot;faces&quot;: 536,
+      &quot;area_m2&quot;: 0.05948164512150602,
+      &quot;sampled&quot;: 70,
+      &quot;inside_full_box_samples&quot;: 70,
+      &quot;retained_samples&quot;: 70,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 15,
+      &quot;faces&quot;: 440,
+      &quot;area_m2&quot;: 0.045269375457891656,
+      &quot;sampled&quot;: 56,
+      &quot;inside_full_box_samples&quot;: 56,
+      &quot;retained_samples&quot;: 56,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 17,
+      &quot;faces&quot;: 340,
+      &quot;area_m2&quot;: 0.03479604169875372,
+      &quot;sampled&quot;: 47,
+      &quot;inside_full_box_samples&quot;: 47,
+      &quot;retained_samples&quot;: 47,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 12,
+      &quot;faces&quot;: 244,
+      &quot;area_m2&quot;: 0.022790402435345868,
+      &quot;sampled&quot;: 28,
+      &quot;inside_full_box_samples&quot;: 28,
+      &quot;retained_samples&quot;: 28,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 5,
+      &quot;faces&quot;: 192,
+      &quot;area_m2&quot;: 0.019120041775472368,
+      &quot;sampled&quot;: 20,
+      &quot;inside_full_box_samples&quot;: 20,
+      &quot;retained_samples&quot;: 20,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 4,
+      &quot;faces&quot;: 52,
+      &quot;area_m2&quot;: 0.0029213667810123957,
+      &quot;sampled&quot;: 7,
+      &quot;inside_full_box_samples&quot;: 7,
+      &quot;retained_samples&quot;: 7,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 3,
+      &quot;faces&quot;: 48,
+      &quot;area_m2&quot;: 0.00173734284479634,
+      &quot;sampled&quot;: 1,
+      &quot;inside_full_box_samples&quot;: 1,
+      &quot;retained_samples&quot;: 1,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 14,
+      &quot;faces&quot;: 48,
+      &quot;area_m2&quot;: 0.00043930900177470666,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 10,
+      &quot;faces&quot;: 44,
+      &quot;area_m2&quot;: 0.0025350541577013595,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 2,
+      &quot;retained_samples&quot;: 2,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 13,
+      &quot;faces&quot;: 40,
+      &quot;area_m2&quot;: 0.0014263001829414223,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 2,
+      &quot;retained_samples&quot;: 2,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 9,
+      &quot;faces&quot;: 40,
+      &quot;area_m2&quot;: 0.003181616797786897,
+      &quot;sampled&quot;: 3,
+      &quot;inside_full_box_samples&quot;: 3,
+      &quot;retained_samples&quot;: 3,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 16,
+      &quot;faces&quot;: 24,
+      &quot;area_m2&quot;: 0.00022709285262178332,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 1,
+      &quot;faces&quot;: 16,
+      &quot;area_m2&quot;: 0.00014667468347235587,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 11,
+      &quot;faces&quot;: 8,
+      &quot;area_m2&quot;: 1.6955290252752385e-05,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    }
+  ],
+  &quot;projection_diagnostics&quot;: {
+    &quot;surface_area_inside_full_box_fraction_mc&quot;: 0.9920654296875,
+    &quot;samples&quot;: 65536,
+    &quot;plot&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_bbox_seed0_legal_views.png&quot;,
+    &quot;method&quot;: &quot;uniform actual learned triangle samples; exact point
+…详见完整JSON</pre></details><details><summary>actor_surface_point_seed0_diagnostic_receipt.json</summary><p><a href="evidence/08_actor_surface_point_seed0_diagnostic_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;DIAGNOSTIC_ONLY_LEARNED_SURFACE_UNACCEPTED&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic.npz&quot;,
+  &quot;output_sha256&quot;: &quot;428a62e77cf9238022f4b711222fa0ca944d197f5f16aedb9922a718b91aa0ef&quot;,
+  &quot;formal_eligible&quot;: false,
+  &quot;quality_accepted&quot;: false,
+  &quot;geometric_reject&quot;: false,
+  &quot;diagnostic_only&quot;: true,
+  &quot;input_mesh&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000/candidate_omni.glb&quot;,
+  &quot;input_mesh_sha256&quot;: &quot;91ea4298f845f1dc8d27e5b27ec50b31c63484182fa2a58d781728718a869357&quot;,
+  &quot;mesh_space&quot;: &quot;omni_normalized&quot;,
+  &quot;input_geometry_sha256&quot;: &quot;c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2&quot;,
+  &quot;input_colour_evidence_sha256&quot;: &quot;e29d3cdcfe66e8a0b026d70682b560d5442963a574ed64fd04e69e306ec7b6a4&quot;,
+  &quot;normalization&quot;: {
+    &quot;whole_box_lwh_m&quot;: [
+      4.33404,
+      2.07754,
+      1.44
+    ],
+    &quot;half_span_m&quot;: 2.16702,
+    &quot;transform&quot;: &quot;Omni normalized (x_length,y_height,z_width) -&gt; native[:,[0,2,1]] * fixed half_span; reverse face winding&quot;,
+    &quot;partial_bounds_recenter_or_stretch&quot;: false
+  },
+  &quot;seed&quot;: 0,
+  &quot;prior_requested_samples&quot;: 14000,
+  &quot;prior_retained_samples&quot;: 6694,
+  &quot;prior_rejected_outside_full_box&quot;: 6035,
+  &quot;prior_removed_near_observed&quot;: 1271,
+  &quot;prior_observed_distance_threshold_m&quot;: 0.04,
+  &quot;prior_box_clipping&quot;: &quot;retain only actual learned triangle samples inside fixed raw full box +1e-6m; no stretch/recenter, no caps, no programmed car replacement&quot;,
+  &quot;connected_component_sample_retention&quot;: [
+    {
+      &quot;component_id&quot;: 0,
+      &quot;faces&quot;: 620303,
+      &quot;area_m2&quot;: 72.67400434655265,
+      &quot;sampled&quot;: 13975,
+      &quot;inside_full_box_samples&quot;: 7948,
+      &quot;retained_samples&quot;: 6677,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 5,
+      &quot;faces&quot;: 264,
+      &quot;area_m2&quot;: 0.02626505185203454,
+      &quot;sampled&quot;: 11,
+      &quot;inside_full_box_samples&quot;: 11,
+      &quot;retained_samples&quot;: 11,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 11,
+      &quot;faces&quot;: 156,
+      &quot;area_m2&quot;: 0.012559716396822794,
+      &quot;sampled&quot;: 4,
+      &quot;inside_full_box_samples&quot;: 4,
+      &quot;retained_samples&quot;: 4,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 8,
+      &quot;faces&quot;: 120,
+      &quot;area_m2&quot;: 0.00947161491311694,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 2,
+      &quot;retained_samples&quot;: 2,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 6,
+      &quot;faces&quot;: 96,
+      &quot;area_m2&quot;: 0.009361381976084025,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: true
+    },
+    {
+      &quot;component_id&quot;: 9,
+      &quot;faces&quot;: 68,
+      &quot;area_m2&quot;: 0.005517795425528405,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: true
+    },
+    {
+      &quot;component_id&quot;: 4,
+      &quot;faces&quot;: 32,
+      &quot;area_m2&quot;: 0.001707604528228939,
+      &quot;sampled&quot;: 1,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: true
+    },
+    {
+      &quot;component_id&quot;: 3,
+      &quot;faces&quot;: 28,
+      &quot;area_m2&quot;: 0.0015060670867686813,
+      &quot;sampled&quot;: 2,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: true
+    },
+    {
+      &quot;component_id&quot;: 10,
+      &quot;faces&quot;: 16,
+      &quot;area_m2&quot;: 0.0006132235327150749,
+      &quot;sampled&quot;: 1,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: true
+    },
+    {
+      &quot;component_id&quot;: 7,
+      &quot;faces&quot;: 16,
+      &quot;area_m2&quot;: 0.0003651771110232741,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 2,
+      &quot;faces&quot;: 8,
+      &quot;area_m2&quot;: 0.00014371735085370825,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    },
+    {
+      &quot;component_id&quot;: 1,
+      &quot;faces&quot;: 8,
+      &quot;area_m2&quot;: 2.5290983104896153e-05,
+      &quot;sampled&quot;: 0,
+      &quot;inside_full_box_samples&quot;: 0,
+      &quot;retained_samples&quot;: 0,
+      &quot;entirely_rejected_in_sample&quot;: false
+    }
+  ],
+  &quot;projection_diagnostics&quot;: {
+    &quot;surface_area_inside_full_box_fraction_mc&quot;: 0.562255859375,
+    &quot;samples&quot;: 65536,
+    &quot;plot&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic_legal_views.png&quot;,
+    &quot;method&quot;: &quot;uniform actual learned triangle samples; exact point-depth zbuffer splats; no generated replacement geometry&quot;
+  },
+  &quot;observed_anchor_count&quot;: 5976,
+  &quot;observed_measurement_count&quot;: 54715,
+  &quot;all_anchor_count&quot;: 12670,
+  &quot;observed_geometry_fixed&quot;: true,
+  &quot;observed_voxel_m&quot;: 0.05,
+  &quot;measured_colour_anchor_count&quot;: 3586,
+  &quot;inferred_colour_anchor_count&quot;: 9084,
+  &quot;color_policy&quot;: {
+    &quot;unknown_body_srgb&quot;: [
+      0.28333333134651184,
+      0.31078431010246277,
+      0.36274510622024536
+    ],
+    &quot;neutral_evidence_rows&quot;: 2249,
+    &quot;measured_color_policy&quot;: &quot;observed anchor within0.06m actual clean color samples; &gt;=2 raw frames; per-sample RGB MAE to median&lt;=0.10&quot;,
+    &quot;inferred_color_policy&quot;: &quot;all unobserved/prior surfaces start at robust neutral observed body median; no invented red tail-light detail&quot;
+  },
+  &quot;observed_normals&quot;: &quot;local PCA16 neighbors within0.18m, oriented outward from annotated-box origin; degenerate fallback radial; estimated normals, not GT&quot;,
+  &quot;observed_nearest_anchor_policy&quot;: &quot;index into first real-voxel-anchor block, preserves each actual row assigned5cm voxel; optional nearest-any field separately&quot;,
+  &quot;mesh&quot;: {
+    &quot;vertices&quot;: 310497,
+    &quot;faces&quot;: 621115,
+    &quot;area_m2&quot;: 72.74154098770893,
+    &quot;native_bounds_m&quot;: [
+      [
+        -2.16331117177248,
+        -2.1624825817787645,
+        -0.6924758427679538
+      ],
+      [
+        2.1612075994205475,
+        2.162601800572872,
+        0.70
+…详见完整JSON</pre></details><details><summary>actor_surface_integrity_receipt.json</summary><p><a href="evidence/09_actor_surface_integrity_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;status&quot;: &quot;PASS_BOTH_DIAGNOSTIC_SURFACE_ASSET_INTEGRITY&quot;,
+  &quot;rows&quot;: [
+    {
+      &quot;asset&quot;: &quot;actor_surface_bbox_seed0&quot;,
+      &quot;anchors&quot;: 19597,
+      &quot;real&quot;: 5976,
+      &quot;prior&quot;: 13621,
+      &quot;known_color&quot;: 3586,
+      &quot;ZIP_CRC&quot;: &quot;passed&quot;,
+      &quot;finite_and_unit_normals&quot;: true,
+      &quot;all_prior_in_legal_box&quot;: true
+    },
+    {
+      &quot;asset&quot;: &quot;actor_surface_point_seed0_diagnostic&quot;,
+      &quot;anchors&quot;: 12670,
+      &quot;real&quot;: 5976,
+      &quot;prior&quot;: 6694,
+      &quot;known_color&quot;: 3586,
+      &quot;ZIP_CRC&quot;: &quot;passed&quot;,
+      &quot;finite_and_unit_normals&quot;: true,
+      &quot;all_prior_in_legal_box&quot;: true
+    }
+  ],
+  &quot;GPU_used&quot;: false
+}</pre></details><details><summary>actor_contributors_point_receipt.json</summary><p><a href="evidence/10_actor_contributors_point_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;contract&quot;: {
+    &quot;optimizer_updates&quot;: 0,
+    &quot;static_rows&quot;: 1520544,
+    &quot;parent_identity&quot;: {
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;: [
+        1205804824,
+        1793685138678879826
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth&quot;: [
+        796288990,
+        1793685141363133667
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth&quot;: [
+        226494608,
+        1793685142603250932
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth&quot;: [
+        43800,
+        1793685263574663844
+      ]
+    },
+    &quot;frozen_parent&quot;: &quot;single-a37 B10k static plus frozen r3 gate/road and current-time a37 dynamic&quot;,
+    &quot;asset&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_point_seed0_diagnostic.npz&quot;,
+    &quot;asset_formal_eligible&quot;: false,
+    &quot;observed_mask&quot;: &quot;a6_views actor_labels==4, all49 observed visible-label construction&quot;,
+    &quot;amodal_mask&quot;: &quot;standalone initial diagnostic ActorSurface raster alpha&gt;0.10, without other scene objects&quot;,
+    &quot;full_guard&quot;: &quot;labels1..3 OR a37body(label5) OR outside standalone actor amodal mask&quot;,
+    &quot;delete_guard&quot;: &quot;labels1..3 OR outside standalone actor amodal mask&quot;,
+    &quot;score&quot;: &quot;Exact static alpha*T by zero-valued per-row feature gradient; sum full/delete within each frame, maximum over49 frames&quot;,
+    &quot;candidate&quot;: &quot;fit_score&gt;1e-4 only; guard conflict never rejects or silently narrows candidates&quot;,
+    &quot;candidate_is_not_ownership_GT&quot;: true,
+    &quot;candidates_are_not_deleted&quot;: true,
+    &quot;raw_range&quot;: [
+      89,
+      137
+    ],
+    &quot;geometry_and_native_time_unchanged&quot;: true,
+    &quot;all_inputs_BUILD&quot;: true,
+    &quot;independent_test&quot;: false
+  },
+  &quot;frame_count&quot;: 49,
+  &quot;candidate_rows&quot;: 102807,
+  &quot;candidate_fraction&quot;: 0.06761198623650483,
+  &quot;guard_fit_conflicts&quot;: {
+    &quot;0&quot;: {
+      &quot;rows&quot;: 99684,
+      &quot;fraction&quot;: 0.9696226716041565
+    },
+    &quot;0.1&quot;: {
+      &quot;rows&quot;: 98444,
+      &quot;fraction&quot;: 0.9575612545013428
+    },
+    &quot;1&quot;: {
+      &quot;rows&quot;: 94229,
+      &quot;fraction&quot;: 0.9165620803833008
+    },
+    &quot;20&quot;: {
+      &quot;rows&quot;: 10123,
+      &quot;fraction&quot;: 0.09846605360507965
+    }
+  },
+  &quot;guard_fit_ratio_quantiles&quot;: {
+    &quot;0.0&quot;: 0.0,
+    &quot;0.5&quot;: 2.00580096244812,
+    &quot;0.9&quot;: 19.52460479736328,
+    &quot;0.99&quot;: 483.48388671875,
+    &quot;1.0&quot;: 588248.4375
+  },
+  &quot;fit_alpha_T_flow_total&quot;: 194579.24814728062,
+  &quot;fit_alpha_T_flow_on_candidates&quot;: 194577.71980341137,
+  &quot;fit_flow_retained_fraction&quot;: 0.9999921453912285,
+  &quot;guard_alpha_T_flow_total&quot;: 10236879.10428845,
+  &quot;guard_alpha_T_flow_on_candidates&quot;: 1487135.2500172616,
+  &quot;guard_flow_candidate_fraction&quot;: 0.14527232712890675,
+  &quot;parent_unchanged&quot;: true,
+  &quot;rgb_marker_maxabs&quot;: 0.0,
+  &quot;optimizer_updates&quot;: 0,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_point.npz&quot;,
+  &quot;seconds&quot;: 13.396457547321916,
+  &quot;candidate_is_not_ownership_GT&quot;: true,
+  &quot;candidates_are_not_deleted&quot;: true,
+  &quot;output_sha256&quot;: &quot;b3f95848a1e4574a5ee2facb0f085beaa2b0b98cfe03ee0b569191c45a670d9e&quot;
+}</pre></details><details><summary>actor_contributors_pvd_receipt.json</summary><p><a href="evidence/11_actor_contributors_pvd_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;contract&quot;: {
+    &quot;optimizer_updates&quot;: 0,
+    &quot;static_rows&quot;: 1520544,
+    &quot;parent_identity&quot;: {
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;: [
+        1205804824,
+        1793685138678879826
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth&quot;: [
+        796288990,
+        1793685141363133667
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth&quot;: [
+        226494608,
+        1793685142603250932
+      ],
+      &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth&quot;: [
+        43800,
+        1793685263574663844
+      ]
+    },
+    &quot;frozen_parent&quot;: &quot;single-a37 B10k static plus frozen r3 gate/road and current-time a37 dynamic&quot;,
+    &quot;asset&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz&quot;,
+    &quot;asset_formal_eligible&quot;: true,
+    &quot;source_asset_sha256&quot;: &quot;dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455&quot;,
+    &quot;observed_mask&quot;: &quot;a6_views actor_labels==4, all49 observed visible-label construction&quot;,
+    &quot;amodal_mask&quot;: &quot;standalone initial ActorSurface proposal raster alpha&gt;0.10, without other scene objects; proposal-dependent domain, not truth&quot;,
+    &quot;full_guard&quot;: &quot;labels1..3 OR a37body(label5) OR outside standalone actor amodal mask&quot;,
+    &quot;delete_guard&quot;: &quot;labels1..3 OR outside standalone actor amodal mask&quot;,
+    &quot;score&quot;: &quot;Exact static alpha*T by zero-valued per-row feature gradient; sum full/delete within each frame, maximum over49 frames&quot;,
+    &quot;candidate&quot;: &quot;fit_score&gt;1e-4 only; guard conflict never rejects or silently narrows candidates&quot;,
+    &quot;candidate_is_not_ownership_GT&quot;: true,
+    &quot;candidates_are_not_deleted&quot;: true,
+    &quot;raw_range&quot;: [
+      89,
+      137
+    ],
+    &quot;geometry_and_native_time_unchanged&quot;: true,
+    &quot;all_inputs_BUILD&quot;: true,
+    &quot;independent_test&quot;: false
+  },
+  &quot;frame_count&quot;: 49,
+  &quot;candidate_rows&quot;: 90369,
+  &quot;candidate_fraction&quot;: 0.059432019066860284,
+  &quot;guard_fit_conflicts&quot;: {
+    &quot;0&quot;: {
+      &quot;rows&quot;: 87695,
+      &quot;fraction&quot;: 0.9704102277755737
+    },
+    &quot;0.1&quot;: {
+      &quot;rows&quot;: 86511,
+      &quot;fraction&quot;: 0.9573084115982056
+    },
+    &quot;1&quot;: {
+      &quot;rows&quot;: 82521,
+      &quot;fraction&quot;: 0.9131560921669006
+    },
+    &quot;20&quot;: {
+      &quot;rows&quot;: 9836,
+      &quot;fraction&quot;: 0.1088426411151886
+    }
+  },
+  &quot;guard_fit_ratio_quantiles&quot;: {
+    &quot;0.0&quot;: 0.0,
+    &quot;0.5&quot;: 1.9312537908554077,
+    &quot;0.9&quot;: 22.880634307861328,
+    &quot;0.99&quot;: 489.9881896972656,
+    &quot;1.0&quot;: 572964.75
+  },
+  &quot;fit_alpha_T_flow_total&quot;: 164987.11751479201,
+  &quot;fit_alpha_T_flow_on_candidates&quot;: 164985.92397504998,
+  &quot;fit_flow_retained_fraction&quot;: 0.9999927658609956,
+  &quot;guard_alpha_T_flow_total&quot;: 10276227.600288402,
+  &quot;guard_alpha_T_flow_on_candidates&quot;: 1339638.6992448978,
+  &quot;guard_flow_candidate_fraction&quot;: 0.13036288717537756,
+  &quot;parent_unchanged&quot;: true,
+  &quot;rgb_marker_maxabs&quot;: 0.0,
+  &quot;optimizer_updates&quot;: 0,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz&quot;,
+  &quot;seconds&quot;: 12.882855262607336,
+  &quot;candidate_is_not_ownership_GT&quot;: true,
+  &quot;candidates_are_not_deleted&quot;: true,
+  &quot;output_sha256&quot;: &quot;7c5f4a27906cd513f3f5d945f0ce28fd6941bcf2a9c3eee17cf647e1b1555a45&quot;
+}</pre></details><details><summary>proposal_report.json</summary><p><a href="evidence/12_proposal_report.json">完整JSON凭据</a></p><pre>{
+  &quot;schema_version&quot;: &quot;c2.frozen_omni_proposal.v1&quot;,
+  &quot;prior_type&quot;: &quot;pretrained_learned_3d_shape&quot;,
+  &quot;model_repo&quot;: &quot;tencent/Hunyuan3D-Omni&quot;,
+  &quot;model_revision&quot;: &quot;70e803bfb4e127d534049d8ab8c8cb511780d485&quot;,
+  &quot;dino_revision&quot;: &quot;47b73eefe95e8d44ec3623f8890bd894b6ea2d6c&quot;,
+  &quot;worker_sha256&quot;: &quot;dc6bc1a69225bdc4bac6bae0b63617bb5d9a72954004108d036480031c3427d2&quot;,
+  &quot;verification_sha256&quot;: &quot;c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8&quot;,
+  &quot;seed&quot;: 0,
+  &quot;new_diffusion_steps&quot;: 50,
+  &quot;training_steps&quot;: 0,
+  &quot;frozen&quot;: true,
+  &quot;trainable_prior_parameters&quot;: 0,
+  &quot;control&quot;: &quot;point&quot;,
+  &quot;point_count&quot;: 2048,
+  &quot;observed_count&quot;: 54715,
+  &quot;vertices&quot;: 310497,
+  &quot;faces&quot;: 621118,
+  &quot;mesh_bounds_native_m&quot;: [
+    [
+      -2.163311254105082,
+      -2.162482664079832,
+      -0.6924758691226174
+    ],
+    [
+      2.1612076816730905,
+      2.1626018828784765,
+      0.7036907027208059
+    ]
+  ],
+  &quot;observed_to_surface_approx_m&quot;: {
+    &quot;mean&quot;: 0.039119398565898016,
+    &quot;p50&quot;: 0.032918311345306144,
+    &quot;p90&quot;: 0.0716065307904423,
+    &quot;p99&quot;: 0.13638394989857372
+  },
+  &quot;generation_seconds&quot;: 23.561160925775766,
+  &quot;decode_seconds&quot;: 10.225805167108774,
+  &quot;total_wall_seconds&quot;: 70.93801767192781,
+  &quot;peak_allocated_gib&quot;: 7.686236381530762,
+  &quot;peak_reserved_gib&quot;: 7.9765625,
+  &quot;gpu&quot;: &quot;NVIDIA GeForce RTX 4080 SUPER&quot;,
+  &quot;torch&quot;: &quot;2.4.1+cu121&quot;,
+  &quot;cuda&quot;: &quot;12.1&quot;,
+  &quot;input_contract_sha256&quot;: &quot;7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/seed000&quot;,
+  &quot;quality_status&quot;: &quot;proposal only; original RGB/LiDAR optimization and matched renders remain required&quot;,
+  &quot;resumed_from&quot;: null
+}</pre></details><details><summary>proposal_report.json</summary><p><a href="evidence/13_proposal_report.json">完整JSON凭据</a></p><pre>{
+  &quot;schema_version&quot;: &quot;c2.frozen_omni_proposal.v1&quot;,
+  &quot;prior_type&quot;: &quot;pretrained_learned_3d_shape&quot;,
+  &quot;model_repo&quot;: &quot;tencent/Hunyuan3D-Omni&quot;,
+  &quot;model_revision&quot;: &quot;70e803bfb4e127d534049d8ab8c8cb511780d485&quot;,
+  &quot;dino_revision&quot;: &quot;47b73eefe95e8d44ec3623f8890bd894b6ea2d6c&quot;,
+  &quot;worker_sha256&quot;: &quot;d33f6f438eeabc8384f7155439ecc72c77e65f8c28f453506bbdc83489e8566b&quot;,
+  &quot;verification_sha256&quot;: &quot;c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8&quot;,
+  &quot;seed&quot;: 0,
+  &quot;new_diffusion_steps&quot;: 50,
+  &quot;training_steps&quot;: 0,
+  &quot;frozen&quot;: true,
+  &quot;trainable_prior_parameters&quot;: 0,
+  &quot;control&quot;: &quot;bbox&quot;,
+  &quot;point_count&quot;: 0,
+  &quot;bbox_control_lhw&quot;: [
+    1.0,
+    0.33225351572036743,
+    0.4793541133403778
+  ],
+  &quot;observed_count&quot;: 54715,
+  &quot;vertices&quot;: 51564,
+  &quot;faces&quot;: 103188,
+  &quot;mesh_bounds_native_m&quot;: [
+    [
+      -0.8360498541845303,
+      -0.5894539065490108,
+      -0.7695048398978841
+    ],
+    [
+      0.8655723294957269,
+      0.5667944557743141,
+      0.7500795380931393
+    ]
+  ],
+  &quot;observed_to_surface_approx_m&quot;: {
+    &quot;mean&quot;: 0.7550281997292223,
+    &quot;p50&quot;: 0.7594882332936802,
+    &quot;p90&quot;: 1.2430007670739032,
+    &quot;p99&quot;: 1.3324516610272974
+  },
+  &quot;generation_seconds&quot;: 21.356370436027646,
+  &quot;decode_seconds&quot;: 9.806478798389435,
+  &quot;total_wall_seconds&quot;: 71.77474096417427,
+  &quot;peak_allocated_gib&quot;: 7.678417205810547,
+  &quot;peak_reserved_gib&quot;: 7.9765625,
+  &quot;gpu&quot;: &quot;NVIDIA GeForce RTX 4080 SUPER&quot;,
+  &quot;torch&quot;: &quot;2.4.1+cu121&quot;,
+  &quot;cuda&quot;: &quot;12.1&quot;,
+  &quot;input_contract_sha256&quot;: &quot;7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637&quot;,
+  &quot;output&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/proposals/bbox_seed000&quot;,
+  &quot;quality_status&quot;: &quot;proposal only; original RGB/LiDAR optimization and matched renders remain required&quot;,
+  &quot;resumed_from&quot;: null
+}</pre></details><details><summary>proposal_report.json</summary><p><a href="evidence/14_proposal_report.json">完整JSON凭据</a></p><pre>{
+  &quot;schema_version&quot;: &quot;c2.frozen_pvd_car_completion.v1&quot;,
+  &quot;model&quot;: &quot;PVD car_completion_3199&quot;,
+  &quot;checkpoint_sha256&quot;: &quot;567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a&quot;,
+  &quot;source_commit&quot;: &quot;9747265a5f141e5546fd4f862bfa66aa59f1bd33&quot;,
+  &quot;seed&quot;: 0,
+  &quot;diffusion_steps_this_run&quot;: 1000,
+  &quot;official_total_diffusion_steps&quot;: 1000,
+  &quot;total_points&quot;: 2048,
+  &quot;fixed_original_points&quot;: 200,
+  &quot;new_diffused_points&quot;: 1848,
+  &quot;training_steps&quot;: 0,
+  &quot;trainable_prior_parameters&quot;: 0,
+  &quot;partial_coordinate_max_error_m&quot;: 9.720820770553473e-08,
+  &quot;all_points_finite&quot;: true,
+  &quot;native_bounds_m&quot;: [
+    [
+      -2.113166870762787,
+      -1.037633748124835,
+      -0.8318876494345664
+    ],
+    [
+      2.4101841757548614,
+      1.0484799847302766,
+      0.7156797669540541
+    ]
+  ],
+  &quot;inside_whole_box_fraction&quot;: 0.95361328125,
+  &quot;generated_inside_whole_box_fraction&quot;: 0.9485930735930735,
+  &quot;observed_to_complete_approx_m&quot;: {
+    &quot;mean&quot;: 0.06570924608786079,
+    &quot;p50&quot;: 0.057312433361987644,
+    &quot;p90&quot;: 0.11671383778177288
+  },
+  &quot;total_wall_seconds&quot;: 26.583829060196877,
+  &quot;sampling_wall_seconds&quot;: 25.545124273747206,
+  &quot;peak_allocated_gib&quot;: 0.2606196403503418,
+  &quot;peak_reserved_gib&quot;: 0.3046875,
+  &quot;torch&quot;: &quot;2.2.2+cu118&quot;,
+  &quot;cuda&quot;: &quot;11.8&quot;,
+  &quot;gpu&quot;: &quot;NVIDIA GeForce RTX 4080 SUPER&quot;,
+  &quot;normalization_source&quot;: &quot;fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics&quot;,
+  &quot;input_sha256&quot;: &quot;7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637&quot;,
+  &quot;worker_sha256&quot;: &quot;bdf5dc1faeeb2b37181b33b4c80eb3bf80f3ddec944dc2fec5d52cd6a047e7cf&quot;,
+  &quot;resumed_from&quot;: null,
+  &quot;quality_status&quot;: &quot;Actual frozen partial-to-complete proposal; downstream legal-box/observed constraints and RGB fit still required&quot;
+}</pre></details><details><summary>experiment_contract.json</summary><p><a href="evidence/15_experiment_contract.json">完整JSON凭据</a></p><pre>{
+  &quot;task_id&quot;: &quot;scene008_a37_C2_20261103_r1&quot;,
+  &quot;scene&quot;: &quot;Waymo train scene008 / 10094743350625019937_3420_000_3440_000&quot;,
+  &quot;edit&quot;: &quot;delete only a37; retain a6 and all other vehicles&quot;,
+  &quot;baseline&quot;: {
+    &quot;identity&quot;: &quot;scene008_a37_only_B10k_20261103_r1/formal10k&quot;,
+    &quot;road&quot;: &quot;scene008_a37_only_B10k_road_20261103_r3/formal/checkpoint001000.pt&quot;,
+    &quot;native_full_PSNR&quot;: 30.45497766,
+    &quot;native_full_SSIM&quot;: 0.93640836,
+    &quot;native_full_LPIPS_VGG&quot;: 0.08610765,
+    &quot;baseline_repaired_full_PSNR&quot;: 28.10177616,
+    &quot;baseline_repaired_full_is_not_a_quality_floor&quot;: true
+  },
+  &quot;method&quot;: {
+    &quot;prior&quot;: &quot;Frozen official PVD car_completion_3199, one seed0, official 1000 DDPM sampling steps&quot;,
+    &quot;prior_training_updates&quot;: 0,
+    &quot;proposal_inputs&quot;: &quot;200 fixed real a6 canonical points, class car, annotated whole-box pose and dimensions, exact official car-train normalization&quot;,
+    &quot;proposal_material_generation&quot;: false,
+    &quot;local_surface&quot;: &quot;5976 fixed measured anchors + 1527 actually generated PVD point patches; no hand-built vehicle mesh&quot;,
+    &quot;appearance&quot;: &quot;persistent canonical effective RGB fitted to visibility-checked real observations, not a physical BRDF claim&quot;,
+    &quot;geometry&quot;: &quot;observed geometry fixed; generated patches have at most 3cm normal offset&quot;,
+    &quot;opacity&quot;: &quot;new surface opacity fixed at0.995, no independent lifetime&quot;,
+    &quot;replacement&quot;: &quot;physical a6-box interior plus optimized native contribution multipliers; candidate rows are not ownership ground truth&quot;,
+    &quot;time&quot;: &quot;parent native time unchanged; road no time parameters; a6 only follows measured rigid poses&quot;,
+    &quot;lighting&quot;: &quot;fixed low-dimensional ambient/direct-light approximation with ray-OBB visibility from current retained a6/a37; no independent learned shadow layer&quot;,
+    &quot;formal_optimizer_updates&quot;: 1000,
+    &quot;formal_starts_from&quot;: &quot;initial frozen-prior proposal, not smoke checkpoint&quot;
+  },
+  &quot;input_roles&quot;: {
+    &quot;recovery&quot;: &quot;all199 original observation frames are BUILD&quot;,
+    &quot;gradient_views&quot;: &quot;raw89..137 excluding101,113,125; exclusions are not independent test&quot;,
+    &quot;evaluation&quot;: &quot;all49 native observed views, same original OpenCV-resized RGB&quot;,
+    &quot;masks&quot;: &quot;reviewed instance masks plus sensor-depth visibility, not official per-pixel object ground truth&quot;,
+    &quot;unknown&quot;: &quot;no independent RGB or material truth for newly revealed previously unseen a6 body&quot;
+  },
+  &quot;acceptance&quot;: {
+    &quot;noedit&quot;: &quot;new actor and road branches enabled with a37 retained; never bypass to original renderer&quot;,
+    &quot;mean_PSNR_drop_max_dB_vs_native_full&quot;: 0.05,
+    &quot;mean_SSIM_drop_max_vs_native_full&quot;: 0.001,
+    &quot;mean_LPIPS_increase_max_vs_native_full&quot;: 0.002,
+    &quot;visible_a6&quot;: &quot;improve relative to the user-specified identity10k+road1k baseline&quot;,
+    &quot;road&quot;: &quot;compare both methods on identical conservative road domain excluding possible retained-a6 volume; &lt;=5% increase numerical tolerance&quot;,
+    &quot;road_measurement_correction&quot;: &quot;raw annotated a6 OBB projection only, independent of all learned proposals and C2 outputs; OBB is a possible-occupancy exclusion, not vehicle surface GT&quot;,
+    &quot;historical_road_proxy&quot;: &quot;retain unchanged full r3 masks/references and show those fitting metrics separately&quot;,
+    &quot;visual&quot;: &quot;no obvious whole-scene degradation, all49 and worst frames reviewed&quot;
+  },
+  &quot;engineering_ledger_before_formal&quot;: {
+    &quot;Omni_sampling_steps&quot;: 100,
+    &quot;PVD_sampling_steps&quot;: 1000,
+    &quot;point_smoke_and_pilot_updates&quot;: 256,
+    &quot;point_gate_pilot_updates&quot;: 256,
+    &quot;PVD_smoke_updates&quot;: 32,
+    &quot;PVD_restore_next_stage_updates&quot;: 2,
+    &quot;total_extra_optimizer_updates&quot;: 546,
+    &quot;all_old_runs_preserved&quot;: true
+  },
+  &quot;quality_accepted&quot;: false,
+  &quot;human_verdict&quot;: null,
+  &quot;failure_ledger_refs&quot;: [
+    &quot;V82-F01&quot;,
+    &quot;V82-F06&quot;
+  ]
+}</pre></details><details><summary>summary.json</summary><p><a href="evidence/16_summary.json">完整JSON凭据</a></p><pre>{
+  &quot;optimizer_updates&quot;: 0,
+  &quot;checkpoint&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/formal/checkpoint001000.pt&quot;,
+  &quot;raws&quot;: [
+    105,
+    113,
+    130
+  ],
+  &quot;all_actor_tensors_restored_exactly&quot;: true,
+  &quot;parent_and_road_unchanged&quot;: true,
+  &quot;geometry_opacity_gates_fixed&quot;: true,
+  &quot;oracle&quot;: &quot;Only temporary actor colour logits -30/+30; same full/delete depth-sorted renderer; original logits restored after each raw&quot;,
+  &quot;interpretation&quot;: &quot;Per-pixel bounded-RGB colour fitting L1 lower bound conditional on current fixed geometry/opacity/gates. Shared multiview material constraints can make the attainable error larger.&quot;,
+  &quot;not_a_method_colour_change&quot;: true,
+  &quot;not_a_global_method_impossibility_proof&quot;: true,
+  &quot;hidden_a6_GT_unavailable&quot;: true,
+  &quot;human_verdict&quot;: null,
+  &quot;quality_accepted&quot;: false,
+  &quot;seconds&quot;: 4.961873644962907,
+  &quot;rows&quot;: [
+    {
+      &quot;raw&quot;: 105,
+      &quot;visible_evidence_pixels&quot;: 869,
+      &quot;visible_overlap_label_a37&quot;: 0,
+      &quot;actor_alpha&quot;: {
+        &quot;standalone&quot;: {
+          &quot;mean&quot;: 0.9996686577796936,
+          &quot;min&quot;: 0.9889934659004211,
+          &quot;max&quot;: 0.9999001026153564,
+          &quot;median&quot;: 0.9998486042022705,
+          &quot;p05&quot;: 0.9990056157112122,
+          &quot;p95&quot;: 0.9998983144760132,
+          &quot;fraction_below01&quot;: 0.0,
+          &quot;fraction_below05&quot;: 0.0,
+          &quot;fraction_below09&quot;: 0.0
+        },
+        &quot;C2_delete&quot;: {
+          &quot;mean&quot;: 0.8004605770111084,
+          &quot;min&quot;: 0.38076144456863403,
+          &quot;max&quot;: 0.9583706855773926,
+          &quot;median&quot;: 0.8284333944320679,
+          &quot;p05&quot;: 0.5793472528457642,
+          &quot;p95&quot;: 0.9261026382446289,
+          &quot;fraction_below01&quot;: 0.0,
+          &quot;fraction_below05&quot;: 0.01956271566450596,
+          &quot;fraction_below09&quot;: 0.8734177350997925
+        },
+        &quot;C2_full&quot;: {
+          &quot;mean&quot;: 0.7960920333862305,
+          &quot;min&quot;: 0.37755313515663147,
+          &quot;max&quot;: 0.9534110426902771,
+          &quot;median&quot;: 0.8220744132995605,
+          &quot;p05&quot;: 0.5776578783988953,
+          &quot;p95&quot;: 0.9223436117172241,
+          &quot;fraction_below01&quot;: 0.0,
+          &quot;fraction_below05&quot;: 0.02071346342563629,
+          &quot;fraction_below09&quot;: 0.88377445936203
+        }
+      },
+      &quot;static_road_blocking&quot;: {
+        &quot;standalone_minus_delete_mean&quot;: 0.1992081105709076,
+        &quot;standalone_over09_joint_below05_pixels&quot;: 17,
+        &quot;static_alpha_T_mean&quot;: 0.19926075637340546,
+        &quot;road_alpha_T_mean&quot;: 0.0
+      },
+      &quot;a37_presence_effect&quot;: {
+        &quot;delete_minus_full_actor_alpha_T_mean&quot;: 0.004368527326732874,
+        &quot;actor_contribution_reduced_over01_pixels&quot;: 87
+      },
+      &quot;colour_range&quot;: {
+        &quot;full&quot;: {
+          &quot;actual_C2_srgb_MAE&quot;: 0.04740335792303085,
+          &quot;strong_r3_srgb_MAE&quot;: 0.031375057995319366,
+          &quot;conditional_colour_L1_lower_bound&quot;: 0.000700164120644331,
+          &quot;fraction_channels_target_below_L&quot;: 0.0007671653293073177,
+          &quot;fraction_channels_target_above_U&quot;: 0.026083622127771378,
+          &quot;fraction_pixels_any_channel_below_L&quot;: 0.002301495987921953,
+          &quot;fraction_pixels_any_channel_above_U&quot;: 0.05638665333390236,
+          &quot;mean_RGB_range_width&quot;: 0.7960920333862305,
+          &quot;affine_range_width_vs_actor_alpha_maxabs&quot;: 2.980232238769531e-07
+        },
+        &quot;delete&quot;: {
+          &quot;actual_C2_srgb_MAE&quot;: 0.0471620075404644,
+          &quot;strong_r3_srgb_MAE&quot;: 0.03099605068564415,
+          &quot;conditional_colour_L1_lower_bound&quot;: 0.0007041869102977216,
+          &quot;fraction_channels_target_below_L&quot;: 0.0007671653293073177,
+          &quot;fraction_channels_target_above_U&quot;: 0.026467204093933105,
+          &quot;fraction_pixels_any_channel_below_L&quot;: 0.002301495987921953,
+          &quot;fraction_pixels_any_channel_above_U&quot;: 0.05753739923238754,
+          &quot;mean_RGB_range_width&quot;: 0.8004605174064636,
+          &quot;affine_range_width_vs_actor_alpha_maxabs&quot;: 2.980232238769531e-07
+        }
+      }
+    },
+    {
+      &quot;raw&quot;: 113,
+      &quot;visible_evidence_pixels&quot;: 729,
+      &quot;visible_overlap_label_a37&quot;: 0,
+      &quot;actor_alpha&quot;: {
+        &quot;standalone&quot;: {
+          &quot;mean&quot;: 0.9997047781944275,
+          &quot;min&quot;: 0.9900720119476318,
+          &quot;max&quot;: 0.9998999834060669,
+          &quot;median&quot;: 0.9998528957366943,
+          &quot;p05&quot;: 0.9992770552635193,
+          &quot;p95&quot;: 0.9998980760574341,
+          &quot;fraction_below01&quot;: 0.0,
+          &quot;fraction_below05&quot;: 0.0,
+          &quot;fraction_below09&quot;: 0.0
+        },
+        &quot;C2_delete&quot;: {
+          &quot;mean&quot;: 0.6293802857398987,
+          &quot;min&quot;: 0.023987432941794395,
+          &quot;max&quot;: 0.7910470366477966,
+          &quot;median&quot;: 0.6496487855911255,
+          &quot;p05&quot;: 0.39658719301223755,
+          &quot;p95&quot;: 0.7734432816505432,
+          &quot;fraction_below01&quot;: 0.0054869684390723705,
+          &quot;fraction_below05&quot;: 0.0973936915397644,
+          &quot;fraction_below09&quot;: 1.0
+        },
+        &quot;C2_full&quot;: {
+          &quot;mean&quot;: 0.6042447090148926,
+          &quot;min&quot;: 0.023591024801135063,
+          &quot;max&quot;: 0.7718725800514221,
+          &quot;median&quot;: 0.6244969964027405,
+          &quot;p05&quot;: 0.38428929448127747,
+          &quot;p95&quot;: 0.7366493940353394,
+          &quot;fraction_below01&quot;: 0.0054869684390723705,
+          &quot;fraction_below05&quot;: 0.10836762934923172,
+          &quot;fraction_below09&quot;: 1.0
+        }
+      },
+      &quot;static_road_blocking&quot;: {
+        &quot;standalone_minus_delete_mean&quot;: 0.3703244924545288,
+        &quot;standalone_over09_joint_below05_pixels&quot;: 71,
+        &quot;static_alpha_T_mean&quot;: 0.37033772468566895,
+        &quot;road_alpha_T_mean&quot;: 0.0
+      },
+      &quot;a37_presence_effect&quot;: {
+        &quot;delete_minus_full_actor_alpha_T_mean&quot;: 0.025135615840554237,
+        &quot;actor_contribution_reduced_over01_pixels&quot;: 642
+      },
+      &quot;colour_range&quot;: {
+        &quot;full&quot;: {
+          &quot;actual_C2_srgb_MAE&quot;: 0.06042517349123955,
+          &quot;strong_r3_srgb_MAE&quot;: 0.030265532433986664,
+          &quot;conditional_colour_L1_lower_bound&quot;: 0.013412152417004108,
+          &quot;fraction_channels_target_below_L&quot;: 0.0036579789593815804,
+          &quot;fraction_channels_target_above_U&quot;: 0.1426611840724945,
+          &quot;fraction_pixels_any_channel_below_L&quot;: 0.008230452425777912,
+          &quot;fraction_pixels_any_channel_ab
+…详见完整JSON</pre></details><details><summary>receipt.json</summary><p><a href="evidence/17_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;updates&quot;: 1000,
+  &quot;step&quot;: 1000,
+  &quot;seconds&quot;: 124.92270190827549,
+  &quot;parent_unchanged&quot;: true,
+  &quot;quality_accepted&quot;: false,
+  &quot;human_verdict&quot;: null
+}</pre></details><details><summary>road_measurement_correction_preformal.json</summary><p><a href="evidence/18_road_measurement_correction_preformal.json">完整JSON凭据</a></p><pre>{
+  &quot;schema&quot;: &quot;c2.conservative_road_measurement.v1&quot;,
+  &quot;registration_phase&quot;: &quot;Geometry-based correction requested by root before formal1k; written while formal was running; frozen before final scoring, without choosing the domain from final results&quot;,
+  &quot;clock_observed_at_initial_write_utc&quot;: &quot;2026-11-03T08:49:39Z&quot;,
+  &quot;chronology_correction&quot;: &quot;The initial written phase label incorrectly inferred that formal had not started. Root subsequently clarified formal was already running at disk write. This record corrects that label; the correction affects measurement only, not training.&quot;,
+  &quot;purpose&quot;: &quot;Do not assign clean-road RGB truth to pixels possibly occupied by retained a6 after a37 removal.&quot;,
+  &quot;source_geometry&quot;: &quot;inputs/a6_geometry_minimal.npz: raw-track-bound model_from_canonical[raw] and same-frame box_lwh_per_raw; fallback box_lwh_m only if per-frame sizes absent&quot;,
+  &quot;source_camera&quot;: &quot;Original B10k cameras.json image_0 camera pose and intrinsics, downsample4&quot;,
+  &quot;projection&quot;: &quot;Eight physical OBB corners, near-plane edge clipping, convex hull in native pixel-center convention K projection minus0.5; dilate2px&quot;,
+  &quot;possible_domain_is_body_GT&quot;: false,
+  &quot;uses_PVD_or_Omni_or_C2_outputs&quot;: false,
+  &quot;uses_C2_RGB_to_choose_domain&quot;: false,
+  &quot;matched_road_domain&quot;: &quot;For each unchanged r3 fit/new_dark/original_shadow domain D: D &amp; ~possible_a6_OBB_projection; same mask, same reference, same denominator for r3 and C2&quot;,
+  &quot;report_required&quot;: [
+    &quot;old full r3 proxies unchanged&quot;,
+    &quot;matched conservative-road MAE&quot;,
+    &quot;original/matched/excluded pixel-frame counts and excluded fractions&quot;,
+    &quot;possible-domain coverage and visible-label containment&quot;
+  ],
+  &quot;road_numeric_gate&quot;: &quot;Matched conservative domains only; C2/r3 MAE&lt;=1.05. Five percent is numerical tolerance, not an improvement target.&quot;,
+  &quot;old_full_proxy_role&quot;: &quot;Historical fit diagnostic; no failure verdict from potential new retained-a6 body covering presumed road&quot;,
+  &quot;hidden_a6_RGB_GT&quot;: &quot;Unavailable; bbox is conservative possible occupancy, not completed-body RGB or silhouette truth&quot;,
+  &quot;full_native_gate_unchanged&quot;: {
+    &quot;PSNR_delta_min&quot;: -0.05,
+    &quot;SSIM_delta_min&quot;: -0.001,
+    &quot;LPIPS_delta_max&quot;: 0.002,
+    &quot;visual_review_required&quot;: true
+  },
+  &quot;legacy_binding_caveat&quot;: &quot;legacy bundle.actors order and selected_boxes_model list order are not reliable paired identifiers; never use actors.index(alias) for this a6 domain&quot;,
+  &quot;optimizer_updates&quot;: 0,
+  &quot;human_verdict&quot;: null,
+  &quot;quality_accepted&quot;: false
+}</pre></details><details><summary>receipt.json</summary><p><a href="evidence/19_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;geometry_sha256&quot;: &quot;c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2&quot;,
+  &quot;cameras_sha256&quot;: &quot;6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455&quot;,
+  &quot;protocol_sha256&quot;: &quot;1690c5219beff2f07390f98d01b0f3e7a3a8eb9761b201a6018c6124755bc9ca&quot;,
+  &quot;domain_sha256&quot;: &quot;ce1f2b90df3f33bf26ad67b7496f223ea65dced2364606118a8ba5f9363af321&quot;,
+  &quot;source_geometry&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz&quot;,
+  &quot;source_camera&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/cameras.json&quot;,
+  &quot;protocol&quot;: {
+    &quot;schema&quot;: &quot;c2.conservative_road_measurement.v1&quot;,
+    &quot;registration_phase&quot;: &quot;Geometry-based correction requested by root before formal1k; written while formal was running; frozen before final scoring, without choosing the domain from final results&quot;,
+    &quot;clock_observed_at_initial_write_utc&quot;: &quot;2026-11-03T08:49:39Z&quot;,
+    &quot;chronology_correction&quot;: &quot;The initial written phase label incorrectly inferred that formal had not started. Root subsequently clarified formal was already running at disk write. This record corrects that label; the correction affects measurement only, not training.&quot;,
+    &quot;purpose&quot;: &quot;Do not assign clean-road RGB truth to pixels possibly occupied by retained a6 after a37 removal.&quot;,
+    &quot;source_geometry&quot;: &quot;inputs/a6_geometry_minimal.npz: raw-track-bound model_from_canonical[raw] and same-frame box_lwh_per_raw; fallback box_lwh_m only if per-frame sizes absent&quot;,
+    &quot;source_camera&quot;: &quot;Original B10k cameras.json image_0 camera pose and intrinsics, downsample4&quot;,
+    &quot;projection&quot;: &quot;Eight physical OBB corners, near-plane edge clipping, convex hull in native pixel-center convention K projection minus0.5; dilate2px&quot;,
+    &quot;possible_domain_is_body_GT&quot;: false,
+    &quot;uses_PVD_or_Omni_or_C2_outputs&quot;: false,
+    &quot;uses_C2_RGB_to_choose_domain&quot;: false,
+    &quot;matched_road_domain&quot;: &quot;For each unchanged r3 fit/new_dark/original_shadow domain D: D &amp; ~possible_a6_OBB_projection; same mask, same reference, same denominator for r3 and C2&quot;,
+    &quot;report_required&quot;: [
+      &quot;old full r3 proxies unchanged&quot;,
+      &quot;matched conservative-road MAE&quot;,
+      &quot;original/matched/excluded pixel-frame counts and excluded fractions&quot;,
+      &quot;possible-domain coverage and visible-label containment&quot;
+    ],
+    &quot;road_numeric_gate&quot;: &quot;Matched conservative domains only; C2/r3 MAE&lt;=1.05. Five percent is numerical tolerance, not an improvement target.&quot;,
+    &quot;old_full_proxy_role&quot;: &quot;Historical fit diagnostic; no failure verdict from potential new retained-a6 body covering presumed road&quot;,
+    &quot;hidden_a6_RGB_GT&quot;: &quot;Unavailable; bbox is conservative possible occupancy, not completed-body RGB or silhouette truth&quot;,
+    &quot;full_native_gate_unchanged&quot;: {
+      &quot;PSNR_delta_min&quot;: -0.05,
+      &quot;SSIM_delta_min&quot;: -0.001,
+      &quot;LPIPS_delta_max&quot;: 0.002,
+      &quot;visual_review_required&quot;: true
+    },
+    &quot;legacy_binding_caveat&quot;: &quot;legacy bundle.actors order and selected_boxes_model list order are not reliable paired identifiers; never use actors.index(alias) for this a6 domain&quot;,
+    &quot;optimizer_updates&quot;: 0,
+    &quot;human_verdict&quot;: null,
+    &quot;quality_accepted&quot;: false
+  },
+  &quot;domain_is_body_GT&quot;: false,
+  &quot;uses_proposal_or_C2_output&quot;: false,
+  &quot;optimizer_updates&quot;: 0,
+  &quot;GPU_used&quot;: false,
+  &quot;raw_frames&quot;: 49,
+  &quot;rows&quot;: [
+    {
+      &quot;raw&quot;: 89,
+      &quot;possible_pixels&quot;: 6040,
+      &quot;visible_a6_pixels&quot;: 1149,
+      &quot;visible_a6_inside_possible&quot;: 1149
+    },
+    {
+      &quot;raw&quot;: 90,
+      &quot;possible_pixels&quot;: 6040,
+      &quot;visible_a6_pixels&quot;: 1153,
+      &quot;visible_a6_inside_possible&quot;: 1153
+    },
+    {
+      &quot;raw&quot;: 91,
+      &quot;possible_pixels&quot;: 6040,
+      &quot;visible_a6_pixels&quot;: 1153,
+      &quot;visible_a6_inside_possible&quot;: 1153
+    },
+    {
+      &quot;raw&quot;: 92,
+      &quot;possible_pixels&quot;: 6040,
+      &quot;visible_a6_pixels&quot;: 1151,
+      &quot;visible_a6_inside_possible&quot;: 1151
+    },
+    {
+      &quot;raw&quot;: 93,
+      &quot;possible_pixels&quot;: 5962,
+      &quot;visible_a6_pixels&quot;: 1156,
+      &quot;visible_a6_inside_possible&quot;: 1156
+    },
+    {
+      &quot;raw&quot;: 94,
+      &quot;possible_pixels&quot;: 5967,
+      &quot;visible_a6_pixels&quot;: 1161,
+      &quot;visible_a6_inside_possible&quot;: 1161
+    },
+    {
+      &quot;raw&quot;: 95,
+      &quot;possible_pixels&quot;: 5811,
+      &quot;visible_a6_pixels&quot;: 1188,
+      &quot;visible_a6_inside_possible&quot;: 1188
+    },
+    {
+      &quot;raw&quot;: 96,
+      &quot;possible_pixels&quot;: 5675,
+      &quot;visible_a6_pixels&quot;: 1174,
+      &quot;visible_a6_inside_possible&quot;: 1174
+    },
+    {
+      &quot;raw&quot;: 97,
+      &quot;possible_pixels&quot;: 5589,
+      &quot;visible_a6_pixels&quot;: 1171,
+      &quot;visible_a6_inside_possible&quot;: 1171
+    },
+    {
+      &quot;raw&quot;: 98,
+      &quot;possible_pixels&quot;: 5405,
+      &quot;visible_a6_pixels&quot;: 1172,
+      &quot;visible_a6_inside_possible&quot;: 1172
+    },
+    {
+      &quot;raw&quot;: 99,
+      &quot;possible_pixels&quot;: 5227,
+      &quot;visible_a6_pixels&quot;: 1168,
+      &quot;visible_a6_inside_possible&quot;: 1168
+    },
+    {
+      &quot;raw&quot;: 100,
+      &quot;possible_pixels&quot;: 5125,
+      &quot;visible_a6_pixels&quot;: 1180,
+      &quot;visible_a6_inside_possible&quot;: 1180
+    },
+    {
+      &quot;raw&quot;: 101,
+      &quot;possible_pixels&quot;: 4940,
+      &quot;visible_a6_pixels&quot;: 1166,
+      &quot;visible_a6_inside_possible&quot;: 1166
+    },
+    {
+      &quot;raw&quot;: 102,
+      &quot;possible_pixels&quot;: 4878,
+      &quot;visible_a6_pixels&quot;: 1175,
+      &quot;visible_a6_inside_possible&quot;: 1175
+    },
+    {
+      &quot;raw&quot;: 103,
+      &quot;possible_pixels&quot;: 4739,
+      &quot;visible_a6_pixels&quot;: 1176,
+      &quot;visible_a6_inside_possible&quot;: 1176
+    },
+    {
+      &quot;raw&quot;: 104,
+      &quot;possible_pixels&quot;: 4605,
+      &quot;visible_a6_pixels&quot;: 1191,
+      &quot;visible_a6_inside_possible&quot;: 1191
+    },
+    {
+      &quot;raw&quot;: 105,
+      &quot;possible_pixels&quot;: 4420,
+      &quot;visible_a6_pixels&quot;: 1184,
+      &quot;visible_a6_inside_possible&quot;: 1184
+    },
+    {
+      &quot;raw&quot;: 106,
+      &quot;possible_pixels&quot;: 4409,
+      &quot;visible_a6_pixels&quot;: 1182,
+      &quot;visible_a6_inside_possible&quot;: 1182
+    },
+    {
+      &quot;raw&quot;: 107,
+      &quot;possible_pixels&quot;: 4220,
+      &quot;visible_a6_pixels&quot;: 1193,
+      &quot;visible_a6_inside_possible&quot;: 1193
+    },
+    {
+      &quot;raw&quot;: 108,
+      &quot;possible_pixels&quot;: 4028,
+      &quot;visible_a6_pixels&quot;: 1178,
+      &quot;visibl
+…详见完整JSON</pre></details><details><summary>cpu_check.json</summary><p><a href="evidence/20_cpu_check.json">完整JSON凭据</a></p><pre>{
+  &quot;optimizer_updates&quot;: 0,
+  &quot;GPU_initialized&quot;: false,
+  &quot;retained_full&quot;: [
+    6,
+    37
+  ],
+  &quot;retained_delete&quot;: [
+    6
+  ],
+  &quot;camera_mask_unchanged&quot;: true,
+  &quot;joint_shadow_linear_ratio&quot;: 0.15000000596046448,
+  &quot;expected_ambient&quot;: 0.15,
+  &quot;forbidden_squared_ambient&quot;: 0.0225,
+  &quot;default_delete_tensor_identity_preserved&quot;: true,
+  &quot;occluder_cache_entries&quot;: 2,
+  &quot;real_a6_vs_V3_max_model_error&quot;: [
+    3.4267773920732907,
+    1.9999845391493034,
+    0.01800000000295865
+  ],
+  &quot;legacy_lookup_correction&quot;: &quot;The large reported V3 comparison error used actors.index(6), but bundle actors and selected_boxes_model lists are not in reliable corresponding order. The real a6 geometry is track-bound and correct; the legacy ordering lookup was invalid.&quot;,
+  &quot;actual_a6_geometry_vs_raw_track_metadata_center_max_model_error&quot;: 2.2737367544323206e-13
+}</pre></details><details><summary>pointflow_car_train_stats.json</summary><p><a href="evidence/21_pointflow_car_train_stats.json">完整JSON凭据</a></p><pre>{
+  &quot;source&quot;: &quot;Official PointFlow ShapeNetCore.v2.PC15k.zip, car/train only; PVD official normalization formula&quot;,
+  &quot;official_drive_id&quot;: &quot;1sw9gdk_igiyyt7MqALyxZhRrtPvAn0sX&quot;,
+  &quot;car_training_shapes&quot;: 2458,
+  &quot;points_per_shape&quot;: 15000,
+  &quot;verified_npy_crc_count&quot;: 2458,
+  &quot;raw_npy_dtype&quot;: &quot;float32&quot;,
+  &quot;archive_range_sha256&quot;: &quot;268590801e74260ad2e9ca4ae9c39f6c3dcc4edea07fdefab9556266bd447127&quot;,
+  &quot;training_mean_xyz&quot;: [
+    0.0013179273810237646,
+    0.007349051535129547,
+    0.023509424179792404
+  ],
+  &quot;training_scalar_std&quot;: 0.16349221765995026,
+  &quot;float64_mean_xyz&quot;: [
+    0.0013180784476218978,
+    0.007341902761220042,
+    0.02350123445951011
+  ],
+  &quot;float64_variance_xyz&quot;: [
+    0.012806712972123716,
+    0.005076613010077295,
+    0.062042707206532405
+  ],
+  &quot;float64_scalar_std&quot;: 0.16349230441866053,
+  &quot;mean_full_bbox_span_xyz&quot;: [
+    0.3736966279626311,
+    0.2702367117519428,
+    0.8653240163921946
+  ],
+  &quot;median_full_bbox_span_xyz&quot;: [
+    0.37867914140224457,
+    0.2660680264234543,
+    0.8789806365966797
+  ],
+  &quot;mean_full_bbox_center_xyz&quot;: [
+    0.0015711266132031072,
+    0.02641026573529883,
+    0.013171462331391928
+  ],
+  &quot;coordinate_axis_evidence&quot;: &quot;Use per-axis variance and full shape span, plus original ShapeNet up convention; no test/target complete shape used&quot;,
+  &quot;no_partial_bounds&quot;: true,
+  &quot;no_partial_centering&quot;: true,
+  &quot;total_wall_seconds&quot;: 84.85999999998603,
+  &quot;download_bytes&quot;: 402612686
+}</pre></details><details><summary>normalization_contract.json</summary><p><a href="evidence/22_normalization_contract.json">完整JSON凭据</a></p><pre>{
+  &quot;schema_version&quot;: &quot;c2.pvd_fixed_fullbox_training_stats_transform.v1&quot;,
+  &quot;whole_box_lwh_m&quot;: [
+    4.33404016494751,
+    2.0775399208068848,
+    1.440000057220459
+  ],
+  &quot;partial_bounds_scaled&quot;: false,
+  &quot;partial_bounds_centered&quot;: false,
+  &quot;normalization_source&quot;: &quot;fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics&quot;,
+  &quot;training_stats_file&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json&quot;,
+  &quot;training_stats_sha256&quot;: &quot;057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c&quot;,
+  &quot;training_shapes&quot;: 2458,
+  &quot;training_npy_crc_verified&quot;: 2458,
+  &quot;source_split&quot;: &quot;train&quot;,
+  &quot;training_mean_xyz&quot;: [
+    0.0013179273810237646,
+    0.007349051535129547,
+    0.023509424179792404
+  ],
+  &quot;training_scalar_std&quot;: 0.16349221765995026,
+  &quot;training_mean_full_bbox_span_xyz&quot;: [
+    0.3736966279626311,
+    0.2702367117519428,
+    0.8653240163921946
+  ],
+  &quot;training_mean_full_bbox_center_xyz&quot;: [
+    0.0015711266132031072,
+    0.02641026573529883,
+    0.013171462331391928
+  ],
+  &quot;native_axis&quot;: &quot;x length/forward, y width/left, z height/up&quot;,
+  &quot;pvd_axis&quot;: &quot;X width/right, Y height/up, Z length/back&quot;,
+  &quot;front_sign_assumption&quot;: &quot;Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used&quot;,
+  &quot;training_reference_axis_image&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png&quot;,
+  &quot;native_to_training_raw_rotation&quot;: [
+    [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0
+    ]
+  ],
+  &quot;model_formula&quot;: &quot;q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std&quot;,
+  &quot;inverse_formula&quot;: &quot;native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)&quot;,
+  &quot;pvd_to_actor_native_4x4&quot;: [
+    [
+      0.0,
+      0.0,
+      -0.8188630207547728,
+      -0.051778456423143396
+    ],
+    [
+      -0.9089233980558168,
+      0.0,
+      0.0,
+      0.001407643188107219
+    ],
+    [
+      0.0,
+      0.8711947435237231,
+      0.0,
+      -0.10157076498225952
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  &quot;actor_native_to_pvd_4x4&quot;: [
+    [
+      0.0,
+      -1.100202725707134,
+      0.0,
+      0.0015486928723786421
+    ],
+    [
+      0.0,
+      0.0,
+      1.1478489825998008,
+      0.11658789924677007
+    ],
+    [
+      -1.221205469845576,
+      0.0,
+      0.0,
+      -0.06323213420410352
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  &quot;application_adaptation&quot;: &quot;Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used.&quot;
+}</pre></details><details><summary>checkpoint_download_receipt.json</summary><p><a href="evidence/23_checkpoint_download_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;pid&quot;: 33267,
+  &quot;started_epoch&quot;: 1793693390.40647,
+  &quot;official_repo&quot;: &quot;https://github.com/alexzhou907/PVD&quot;,
+  &quot;drive_id&quot;: &quot;18WhIKXWPFjg0RisewiEZjL-JXfQvirJN&quot;,
+  &quot;file&quot;: &quot;car_completion_3199.pth&quot;,
+  &quot;expected_bytes&quot;: 331963658,
+  &quot;download_url&quot;: &quot;https://drive.usercontent.google.com/download?id=18WhIKXWPFjg0RisewiEZjL-JXfQvirJN&amp;export=download&amp;confirm=t&quot;,
+  &quot;source&quot;: &quot;Official README -&gt; Drive PVD/ckpt/completion&quot;,
+  &quot;args&quot;: [
+    &quot;aria2c&quot;,
+    &quot;--continue=true&quot;,
+    &quot;--auto-file-renaming=false&quot;,
+    &quot;--file-allocation=none&quot;,
+    &quot;--max-connection-per-server=16&quot;,
+    &quot;--split=16&quot;,
+    &quot;--min-split-size=1M&quot;,
+    &quot;--summary-interval=10&quot;,
+    &quot;--auto-save-interval=10&quot;,
+    &quot;--all-proxy=http://127.0.0.1:45957&quot;,
+    &quot;--retry-wait=5&quot;,
+    &quot;--max-tries=10&quot;,
+    &quot;--connect-timeout=10&quot;,
+    &quot;--timeout=30&quot;,
+    &quot;--dir=/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights&quot;,
+    &quot;--out=car_completion_3199.pth&quot;,
+    &quot;https://drive.usercontent.google.com/download?id=18WhIKXWPFjg0RisewiEZjL-JXfQvirJN&amp;export=download&amp;confirm=t&quot;
+  ]
+}</pre></details><details><summary>car_stats_download_receipt.json</summary><p><a href="evidence/24_car_stats_download_receipt.json">完整JSON凭据</a></p><pre>{
+  &quot;official_archive_drive_id&quot;: &quot;1sw9gdk_igiyyt7MqALyxZhRrtPvAn0sX&quot;,
+  &quot;archive_bytes&quot;: 7650585133,
+  &quot;first_byte&quot;: 1855147716,
+  &quot;end_exclusive&quot;: 2257760402,
+  &quot;payload_bytes&quot;: 402612686,
+  &quot;chunk_count&quot;: 96,
+  &quot;workers&quot;: 16,
+  &quot;contains&quot;: &quot;only 02958343/car/train local ZIP headers and compressed NPY payloads&quot;,
+  &quot;source_split&quot;: &quot;train&quot;,
+  &quot;target_scene_observations_used&quot;: false
+}</pre></details><p class="small">人工最终视觉结论尚未填写。human_verdict=null；quality_accepted=false。</p></main></html>

@@ -1,0 +1,85 @@
+{
+  "contract": {
+    "optimizer_updates": 0,
+    "static_rows": 1520544,
+    "parent_identity": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth": [
+        1205804824,
+        1793685138678879826
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth": [
+        796288990,
+        1793685141363133667
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth": [
+        226494608,
+        1793685142603250932
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth": [
+        43800,
+        1793685263574663844
+      ]
+    },
+    "frozen_parent": "single-a37 B10k static plus frozen r3 gate/road and current-time a37 dynamic",
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_surface_pvd_seed0.npz",
+    "asset_formal_eligible": true,
+    "source_asset_sha256": "dce5189884dde9cea3716db8f6fc1d28fbb0a71eebc228bd394ceaf0ce87e455",
+    "observed_mask": "a6_views actor_labels==4, all49 observed visible-label construction",
+    "amodal_mask": "standalone initial ActorSurface proposal raster alpha>0.10, without other scene objects; proposal-dependent domain, not truth",
+    "full_guard": "labels1..3 OR a37body(label5) OR outside standalone actor amodal mask",
+    "delete_guard": "labels1..3 OR outside standalone actor amodal mask",
+    "score": "Exact static alpha*T by zero-valued per-row feature gradient; sum full/delete within each frame, maximum over49 frames",
+    "candidate": "fit_score>1e-4 only; guard conflict never rejects or silently narrows candidates",
+    "candidate_is_not_ownership_GT": true,
+    "candidates_are_not_deleted": true,
+    "raw_range": [
+      89,
+      137
+    ],
+    "geometry_and_native_time_unchanged": true,
+    "all_inputs_BUILD": true,
+    "independent_test": false
+  },
+  "frame_count": 49,
+  "candidate_rows": 90369,
+  "candidate_fraction": 0.059432019066860284,
+  "guard_fit_conflicts": {
+    "0": {
+      "rows": 87695,
+      "fraction": 0.9704102277755737
+    },
+    "0.1": {
+      "rows": 86511,
+      "fraction": 0.9573084115982056
+    },
+    "1": {
+      "rows": 82521,
+      "fraction": 0.9131560921669006
+    },
+    "20": {
+      "rows": 9836,
+      "fraction": 0.1088426411151886
+    }
+  },
+  "guard_fit_ratio_quantiles": {
+    "0.0": 0.0,
+    "0.5": 1.9312537908554077,
+    "0.9": 22.880634307861328,
+    "0.99": 489.9881896972656,
+    "1.0": 572964.75
+  },
+  "fit_alpha_T_flow_total": 164987.11751479201,
+  "fit_alpha_T_flow_on_candidates": 164985.92397504998,
+  "fit_flow_retained_fraction": 0.9999927658609956,
+  "guard_alpha_T_flow_total": 10276227.600288402,
+  "guard_alpha_T_flow_on_candidates": 1339638.6992448978,
+  "guard_flow_candidate_fraction": 0.13036288717537756,
+  "parent_unchanged": true,
+  "rgb_marker_maxabs": 0.0,
+  "optimizer_updates": 0,
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_contributors_pvd.npz",
+  "seconds": 12.882855262607336,
+  "candidate_is_not_ownership_GT": true,
+  "candidates_are_not_deleted": true,
+  "output_sha256": "7c5f4a27906cd513f3f5d945f0ce28fd6941bcf2a9c3eee17cf647e1b1555a45"
+}

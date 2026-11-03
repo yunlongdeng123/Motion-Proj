@@ -1,0 +1,108 @@
+{
+  "schema_version": "c2.prior_download_receipt.v1",
+  "status": "COMPLETE_ALL_PINNED_SIZES_AND_SHA256_VERIFIED",
+  "model_identity": "tencent/Hunyuan3D-Omni@70e803bfb4e127d534049d8ab8c8cb511780d485",
+  "dino_identity": "facebook/dinov2-large@47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+  "expected_total_bytes": 14732290254,
+  "identity_changes": 0,
+  "precision_changes": 0,
+  "ema_downloaded": false,
+  "gpu_used_for_download_or_probes": false,
+  "endpoint_benchmarks": [
+    {
+      "endpoint": "huggingface.co, remote direct",
+      "probe": "HEAD pinned model/config.json",
+      "status": 0,
+      "seconds": 2.710434,
+      "result": "connection failed"
+    },
+    {
+      "endpoint": "huggingface.co via current LocalTUN remote proxy45957",
+      "probe": "HEAD pinned model/config.json",
+      "status": 200,
+      "seconds": 1.330698
+    },
+    {
+      "endpoint": "huggingface.co via current LocalTUN remote proxy45957",
+      "probe": "actual resumed aria2 aggregate over three pinned weights",
+      "aggregate_mib_per_second_observed": [
+        0.17,
+        0.46
+      ],
+      "result": "usable but too slow; checkpoints preserved and resumed"
+    },
+    {
+      "endpoint": "huggingface.co via local proxy10808",
+      "probe": "1MiB range of pinned Omni model",
+      "status": 206,
+      "bytes": 1048576,
+      "bytes_per_second": 178200,
+      "seconds": 5.884261
+    },
+    {
+      "endpoint": "hf-mirror.com remote direct",
+      "probe": "1MiB range of pinned Omni model",
+      "status": 206,
+      "bytes": 1048576,
+      "bytes_per_second": 432173,
+      "seconds": 2.426287,
+      "subsequent_result": "aria2 HTTP429; stopped this endpoint and preserved downloaded segments"
+    },
+    {
+      "endpoint": "official HF public signed us.aws.cdn.hf.co remote direct",
+      "probe": "1MiB range of same pinned Omni model",
+      "status": 206,
+      "bytes": 1048576,
+      "bytes_per_second": 637627,
+      "seconds": 1.644495
+    },
+    {
+      "endpoint": "official HF public signed us.aws.cdn.hf.co remote direct",
+      "probe": "actual resumed aria2, 16 connections per file",
+      "aggregate_mib_per_second_observed": [
+        16,
+        17
+      ],
+      "omni_model_mib_per_second_after_other_files_finish": 16,
+      "result": "selected fastest measured route; official identities and original SHA256 unchanged"
+    },
+    {
+      "endpoint": "modelscope.cn/Tencent-Hunyuan/Hunyuan3D-Omni remote direct",
+      "probe": "HEAD model/pytorch_model.bin",
+      "status": 0,
+      "seconds": 5.313089,
+      "result": "connection failed; not selected"
+    }
+  ],
+  "resume_state": {
+    "omni_model": "/root/autodl-tmp/models/c2_hunyuan_omni_70e803/model/pytorch_model.bin.aria2",
+    "omni_vae": "/root/autodl-tmp/models/c2_hunyuan_omni_70e803/vae/pytorch_model.bin.aria2",
+    "dino": "/root/autodl-tmp/models/c2_dinov2_large_47b73/model.safetensors.aria2",
+    "logs": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/aria2_console.log",
+    "download_manifest": "download_manifest.json",
+    "attempts": "download_attempts.jsonl",
+    "signed_url_metadata": "signed_cdn_urls.json",
+    "note": "aria2 control files disappear after completed transfer; size and SHA256 verification must pass before GPU inference"
+  },
+  "resource_accounting": {
+    "prior_training_updates": 0,
+    "prior_gpu_inference_calls": 0,
+    "small_range_test_bytes": 3145728,
+    "official_torchdiffeq_overlay_wheel_bytes_approx": 32768,
+    "download_started_utc_epoch": 1793691138.4976523,
+    "first_slow_proxy_pid": 26874,
+    "first_fast_cdn_pid": 28116,
+    "probe_and_download_overhead": "recorded separately; not part of formal optimization steps",
+    "cpu_image_encoder_forwards": 1
+  },
+  "finished_epoch": 1793692343,
+  "payload_verified_bytes": 14732290254,
+  "verification_wall_seconds": 17.917378643527627,
+  "final_aria2_average_mib_per_second": {
+    "omni_model": 14,
+    "omni_vae": 5.2,
+    "dino": 6.1
+  },
+  "download_wall_seconds_including_slow_route_overhead": 1204.5023477077484,
+  "fast_cdn_wall_seconds": 813.5553817749023
+}

@@ -1,0 +1,13 @@
+flowchart LR
+  I[Original 199 RGB + LiDAR] --> O[a6 visible observations]
+  O --> P[Fixed 200 real points]
+  S[Whole actor box + car train statistics] --> P
+  P --> D[Frozen PVD car completion]
+  N[1848 noise points] --> D
+  D --> C[2048 actual completed points]
+  C --> A[Legal thin surface anchors]
+  A --> F[Local actor 3D fit]
+  O --> F
+  F --> R[Render retained a6]
+  B[Original scene + recovered road] --> R
+  R --> Q[Remove only a37 + quality verification]
