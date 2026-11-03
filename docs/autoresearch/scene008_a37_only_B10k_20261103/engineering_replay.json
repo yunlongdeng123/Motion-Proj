@@ -1,0 +1,13 @@
+{
+  "stage": "smoke_next_entry",
+  "failure": "PyTorch mmap loader requires str filename; pathlib.Path was rejected before model loading",
+  "fix": "Pass str(checkpoint_path) to torch.load; no model, optimizer, loss or sampling change",
+  "failed_entry_optimizer_updates": 0,
+  "retry_optimizer_updates": 0,
+  "smoke_training_repeated": false,
+  "completed_smoke_updates": 3000,
+  "resume_extra_updates": 2,
+  "failed_namespace_preserved": "smoke_next_entry and smoke_next_entry.log",
+  "successful_retry_namespace": "smoke_next_entry_retry1",
+  "native_png_replay_max_uint8_difference": 0
+}
