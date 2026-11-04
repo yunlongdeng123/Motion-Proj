@@ -1,0 +1,132 @@
+{
+  "task_id": "SCENE008-A37-ONLY-B10K-20261103-R1",
+  "dynamic_aliases": [
+    37
+  ],
+  "retained_aliases": [
+    5,
+    26,
+    18,
+    6
+  ],
+  "formal_updates": 10000,
+  "smoke_updates": 3000,
+  "resume_extra_updates": 2,
+  "total_new_updates": 13002,
+  "prior_updates": 11238,
+  "native_metrics": {
+    "split": "train",
+    "iteration": 10000,
+    "psnr": 30.454977658330176,
+    "ssim": 0.9364083628265224,
+    "lpips": 0.0861035910796146
+  },
+  "identity_metrics": {
+    "status": "PASS_NATIVE_LAYER_RELOAD",
+    "iteration": 10000,
+    "frame_count": 49,
+    "updates": 0,
+    "dynamic_input_aliases": [
+      37
+    ],
+    "retained_aliases": [
+      5,
+      26,
+      18,
+      6
+    ],
+    "static_rows": 1520544,
+    "dynamic_rows": 1015659,
+    "identity_binding": "single canonical a37 PLY/mask before initialization; no posthoc ownership partition",
+    "alpha_inside_mean": 0.9888780834747954,
+    "alpha_outside_mean": 0.004002829443071118,
+    "retained_weighted": {
+      "5": {
+        "pixels": 121128,
+        "dynamic_alpha_mean": 9.798118643183157e-05,
+        "deletion_MAE": 4.2415910870724766e-05,
+        "delete_vs_observed_RGB_MAE": 0.05992924677961799
+      },
+      "26": {
+        "pixels": 116261,
+        "dynamic_alpha_mean": 0.0019316695259947107,
+        "deletion_MAE": 0.0005305919017131626,
+        "delete_vs_observed_RGB_MAE": 0.0253588992043089
+      },
+      "18": {
+        "pixels": 13107,
+        "dynamic_alpha_mean": 0.009956071981078037,
+        "deletion_MAE": 0.0036385903536973268,
+        "delete_vs_observed_RGB_MAE": 0.03778712268203739
+      },
+      "6": {
+        "pixels": 45418,
+        "dynamic_alpha_mean": 0.028948768588173652,
+        "deletion_MAE": 0.009805925703252383,
+        "delete_vs_observed_RGB_MAE": 0.03133950807560389
+      }
+    },
+    "native_png_replay_max_uint8_difference": 0,
+    "seconds": 26.282972550019622,
+    "road_repair_updates": 0,
+    "quality_accepted": false,
+    "human_verdict": null,
+    "evaluation_domain": "49observedtrain BUILD; no independent test",
+    "native_engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "torch_version": "2.2.2+cu118",
+    "cuda_runtime": "11.8",
+    "caveat": "Only a37 is a dynamic identity input; boundary/opacity leakage is measured, not assumed zero."
+  },
+  "formal": {
+    "status": "PASS_COMPLETE_BOUNDARY",
+    "mode": "formal",
+    "iteration": 10000,
+    "actual_updates": 10000,
+    "elapsed_seconds": 1730.1949629131705,
+    "learning_rate_horizon": 30000,
+    "formal_stop": 10000,
+    "max_allocated_bytes": 8840149504,
+    "max_reserved_bytes": 14816378880,
+    "quality_accepted": false,
+    "human_verdict": null
+  },
+  "smoke": {
+    "status": "PASS_REAL_GPU_SMOKE_SAVE_EVAL_RESTORE_NEXT_ENTRY",
+    "smoke_updates": 3000,
+    "resume_extra_updates": 2,
+    "smoke_train_wall_seconds": 664.2782678417861,
+    "formal_updates": 0,
+    "identity_dynamic_aliases": [
+      37
+    ],
+    "restored_full_state": true,
+    "next_entry": "fresh process checkpoint load; native dynamic/composite/static-only render",
+    "formal_lr_horizon": 30000,
+    "formal_stop": 10000
+  },
+  "learning_rate_horizon": 30000,
+  "checkpoint_nodes_completed": [
+    10000
+  ],
+  "original_B_unchanged": true,
+  "native_video_frames": {
+    "all49_layers": 49,
+    "dynamic_a37_all49": 49,
+    "delete_a37_all49": 49
+  },
+  "checkpoint_state_iteration": 10000,
+  "saved_sampler_steps": 10000,
+  "road_repair_updates": 0,
+  "R4_or_a6_addon_loaded": false,
+  "no_subagents": true,
+  "GPU_shutdown": false,
+  "human_verdict": null,
+  "quality_accepted": false,
+  "input_role": "49observedtrain BUILD; no independent test",
+  "failure_ledger_refs": [
+    "V82-F01",
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "none",
+  "cumulative_updates": 24240
+}
