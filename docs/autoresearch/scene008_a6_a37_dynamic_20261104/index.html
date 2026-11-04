@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scene008 · a6 与 a37 双动态对象 10K 对照</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f5f8;color:#172535;font:16px/1.65 system-ui,sans-serif}
+main{max-width:1050px;margin:auto;padding:28px 24px 48px}section{background:white;border:1px solid #dce4ec;border-radius:10px;padding:20px;margin:18px 0}
+h1,h2{line-height:1.3;margin-top:0}h1{font-size:clamp(24px,4vw,36px)}h2{font-size:21px}
+.meta,figcaption{color:#4c6176;font-size:.9rem}.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.step{flex:1 1 165px;min-height:88px;border:1px solid #bfd5e7;border-radius:8px;background:#edf5fc;padding:12px}
+.arrow{color:#47667f;font-size:1.4em}img,video{max-width:100%;height:auto;display:block;border-radius:6px}
+figure{margin:16px 0}figcaption{margin-top:6px}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid #dce4ec;padding:7px 10px;text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+.scroll{overflow-x:auto}a{color:#164e86}code{overflow-wrap:anywhere}strong{color:#102d49}
+</style>
+<main>
+<p class="meta">2026-11-04 · Scene008 · FRONT raw089–137 · 49 帧 BUILD 训练视角</p>
+<h1>a6 与 a37 双动态对象 10K 对照</h1>
+<p><strong>把 a6 分到独立动态对象后，49 帧实测 a6 表面前的静态遮挡都下降，但车形残留仍在，删除 a37 后 a6 可见区的颜色误差在 49 帧都上升。</strong> 此组未达到删车质量验收条件。</p>
+
+<section>
+<h2>训练和评估组件</h2>
+<div class="flow" role="img" aria-label="确认的静态 a6 参数迁移至 ID 6，与原 ID 37 独立训练。渲染关闭 ID 37，随后比较 RGB 和静态遮挡。">
+<div class="step"><strong>原始参数</strong><br>1023 行确认属于 a6</div><span class="arrow" aria-hidden="true">→</span>
+<div class="step"><strong>10K 联合训练</strong><br>静态层 + 动态 ID 6、37<br>动态监督用两车 mask 的并集</div><span class="arrow" aria-hidden="true">→</span>
+<div class="step"><strong>联合深度渲染</strong><br>屏蔽 ID 37 的透明度<br>保留 ID 6 和静态层</div><span class="arrow" aria-hidden="true">→</span>
+<div class="step"><strong>对照原 SGCM 基线</strong><br>同一固定深度探针<br>raw113 和完整 49 帧</div>
+</div>
+<p>初始化时逐行迁移 1023 个 a6 高斯，保留全部 9 类参数值和原有 34 个重复样本。31 个身份未确认的候选留在静态层。三组初始行数分别为静态 590,649、ID 6 为 1,023、ID 37 为 98,452，总计 690,124。full199 只用于佐证身份，训练仍用原 49 帧。两车 mask 无重叠，动态监督采用并集。两组均采用原生损失、普通增密、静态 SGCM 和原 30K 学习率周期，实际更新 10,000 步。</p>
+</section>
+
+<section>
+<h2>raw113</h2>
+<figure><img src="raw113.jpg" alt="raw113 的原图、两组删车图、双对象完整图和 ID 6、37 分对象图"><figcaption>上排依次是原图、基线删车和双对象删车。下排依次是双对象完整渲染、仅 ID 6、仅 ID 37。</figcaption></figure>
+<p>双对象组在近处 a37 位置仍有深色车形，远处 a6 出现蓝紫色偏色。仅渲染 ID 37 时，远处 a6 的位置可见一段车身。仅渲染 ID 6 时，近处 a37 的位置也出现车形贡献。对象编号能独立开关，但训练后的外观贡献有跨车混叠。</p>
+</section>
+
+<section>
+<h2>49 帧对照</h2>
+<figure><video src="baseline_dual49.mp4" controls preload="metadata" poster="raw113.jpg"></video><figcaption>左为原 SGCM 基线，右为双动态对象组。两侧均删除 a37，按 raw089–137 顺序播放。</figcaption></figure>
+<figure><a href="all49_detail.jpg"><img src="all49_detail.jpg" alt="49 帧前景局部逐帧对照，每对图左基线右双对象"></a><figcaption>49 帧前景裁剪。两组近处车形贯穿序列，双对象组在远处 a6 上仍有偏色，后段可见亮斑。</figcaption></figure>
+<div class="scroll"><table>
+<thead><tr><th>像素加权均值</th><th>raw113 基线</th><th>raw113 双对象</th><th>49 帧基线</th><th>49 帧双对象</th></tr></thead>
+<tbody>
+<tr><td>同帧实测 a6 静态遮挡</td><td>0.70654</td><td>0.12511</td><td>0.51917</td><td>0.16528</td></tr>
+<tr><td>跨帧实测重投影 a6 静态遮挡</td><td>0.66271</td><td>0.26016</td><td>0.82673</td><td>0.59397</td></tr>
+<tr><td>PVD 候选 a6 静态遮挡</td><td>0.95720</td><td>0.81940</td><td>0.92990</td><td>0.85440</td></tr>
+<tr><td>a37 下方道路代理静态遮挡</td><td>0.84237</td><td>0.84648</td><td>0.84786</td><td>0.84090</td></tr>
+<tr><td>完整渲染的可见 a6 RGB MAE</td><td>0.02616</td><td>0.03159</td><td>0.02723</td><td>0.03289</td></tr>
+<tr><td>删车后的可见 a6 RGB MAE</td><td>0.02707</td><td>0.13083</td><td>0.02644</td><td>0.16728</td></tr>
+<tr><td>删车后的已观测道路 RGB MAE</td><td>0.01145</td><td>0.00775</td><td>0.01082</td><td>0.00813</td></tr>
+</tbody></table></div>
+<p>同帧实测 a6 探针覆盖 31,610 像素。以固定参考深度前 0.20 m 为界测量累计静态遮挡，基线里 a6 自身的静态表示也可能计入。跨帧重投影、PVD 候选和 a37 下方道路代理分别衡量对应参考区域。RGB MAE 使用同视角已观测像素，可见 a6 为 45,418 像素，已观测道路保护区为 1,051,478 像素。被遮住的道路和 a6 表面没有编辑后真值。</p>
+<p>可见 a6 的删车前后 RGB 差值均值从基线 0.00834 升至双对象组 0.16156。已观测道路的删车后误差在 48 帧下降。a37 原位置的道路代理仍接近 0.84，和近处车形仍可见的逐帧结果一致。</p>
+<p><a href="metrics.json">逐帧指标与像素数</a></p>
+</section>
+
+<section>
+<h2>检查点</h2>
+<p>10,000 步训练用时 29 分 56 秒。最终静态层 1,590,314 行，ID 6 有 353,345 行，ID 37 有 714,821 行。静态层无已迁移的 a6 来源重复。1000 步恢复点及 10000 步静态、动态、环境光与训练状态文件均保存在远端。</p>
+<p><code>wm-vgpu-1011:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/formal_dual_actor_r1/</code></p>
+<p>raw113 探针首次因模块搜索路径缺失而退出。补上原评估模块路径后，复用已保存的 10K 检查点完成 raw113 和 49 帧评估。GPU 实例保持开机。</p>
+</section>
+</main>
+</html>
