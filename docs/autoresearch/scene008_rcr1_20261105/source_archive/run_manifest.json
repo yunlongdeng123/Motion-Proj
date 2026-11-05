@@ -2,9 +2,9 @@
   "code": "RCR-1",
   "english": "RGB Constraint Restoration",
   "chinese": "RGB约束恢复",
-  "status": "FINAL_RESEARCH_ARCHIVE_NOT_ADOPTED",
+  "status": "ADOPTED_FOR_ABNORMAL_BLUE_RGB_FIX",
   "generated_at_utc": "2026-11-05T14:19:22.006825+00:00",
-  "reported_visual_disposition": "去蓝成立，但raw130/137新增银灰亮片，未达当前floor，研究候选不采用；保留当前M2",
+  "reported_visual_disposition": "2026-11-05用户采用RCR-1 delete用于异常蓝色RGB修复；完整画质无回退未作新结论，raw130/137亮片仍为开放项。",
   "native_method": "Only restore1x full-image joint global RGB; original static2/other terms/growth/SGCM/sampling/LR unchanged",
   "candidate": {
     "native": "scene008_blue_global_rgb_probe_20261105_r1/global_10k",
@@ -214,14 +214,13 @@
     "unexecuted_backgroundJoint1_updates": 0,
     "automatic_next_queue": false,
     "source_receipts": "evidence/receipts.json",
-    "disposition": "Research archive; candidate not adopted; original M2 retained"
+    "disposition": "User adopted RCR-1 delete for abnormal_blue_RGB_fix; update counts and prior computational evidence remain unchanged."
   },
   "unadopted": [
     "hide64",
     "cleanSH",
     "oldEnv swap",
-    "half_rgb growth",
-    "full RCR-1 candidate"
+    "half_rgb growth"
   ],
   "backgroundJoint1": {
     "status": "CPU_PREPARED_ONLY_NOT_UPLOADED_NOT_GPU_NOT_VALIDATED",
@@ -252,5 +251,40 @@
     "manifest": "actual_sources/source_manifest.json",
     "files_including_manifest": 599,
     "full_model_backup": false
-  }
+  },
+  "historical_disposition": {
+    "record_status": "FINAL_RESEARCH_ARCHIVE_NOT_ADOPTED",
+    "reported_visual_disposition": "去蓝成立，但raw130/137新增银灰亮片，未达当前floor，研究候选不采用；保留当前M2",
+    "budget_disposition": "Research archive; candidate not adopted; original M2 retained",
+    "unadopted_at_that_review": [
+      "hide64",
+      "cleanSH",
+      "oldEnv swap",
+      "half_rgb growth",
+      "full RCR-1 candidate"
+    ],
+    "context": "Pre-acceptance review retained as history. The current user decision adopts RCR-1 delete specifically for abnormal-blue RGB correction; original experiment receipts are unchanged."
+  },
+  "current_disposition": {
+    "decision_date": "2026-11-05",
+    "adopted": true,
+    "current_delete_pipeline": "RCR-1",
+    "quality_accepted": true,
+    "quality_acceptance_scope": "abnormal_blue_RGB_fix",
+    "overall_quality_no_regression_verified": false,
+    "reference_pipeline_role": "reference_only",
+    "fixed_M2_asset_unchanged": true,
+    "silver_patch_status": "OPEN",
+    "user_decision_record": "../evidence/user_acceptance_20261105.json",
+    "a5_investigation": {
+      "independent_of_RCR1_RGB_acceptance": true,
+      "scope": "earlier-version/code-commit investigation",
+      "status": "pending",
+      "specific_causal_commit": null,
+      "report": "../followup_a5/index.html"
+    },
+    "historical_engineering_acceptance_fields": "Per-run receipt quality_accepted/human_verdict values remain unchanged as original execution records.",
+    "update_execution": "Local current-disposition HTML/metadata only; no SSH, Git, GPU, training or shutdown."
+  },
+  "failure_ledger_context": "V82-F13 preserves the review before user acceptance; this disposition update does not create or rewrite a failure card."
 }

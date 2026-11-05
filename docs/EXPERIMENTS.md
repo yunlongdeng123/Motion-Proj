@@ -330,6 +330,6 @@
 
 - `scene008_a6_appearance_formal_20261105`：[冻结PVD的车体外观补全、正式资产与49帧对照](autoresearch/scene008_a6_appearance_formal_20261105/README.md)；配置、资源、完整指标和边界均在报告；failure_ledger_delta=none。
 
-- `RCR-1 / scene008_rcr1_20261105`：[完整delete交互验收](autoresearch/scene008_rcr1_20261105/index.html)、[机制与资源账本](autoresearch/scene008_rcr1_20261105/research/index.html)、[实际源码与运行清单](autoresearch/scene008_rcr1_20261105/source_archive/index.html)；去蓝成立但新增亮片，候选未采用，保留M2；HELD9仅道路RGB校准target留出。failure_ledger_refs=[V82-F13]，failure_ledger_delta=V82-F13。
+- `RCR-1 / scene008_rcr1_20261105`：[当前delete交互报告](autoresearch/scene008_rcr1_20261105/index.html)、[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)、[机制与原始账本](autoresearch/scene008_rcr1_20261105/research/index.html)、[源码归档](autoresearch/scene008_rcr1_20261105/source_archive/index.html)；用户采用异常蓝色RGB修复，亮片保留开放，完整画质无回退未作新结论；a5更早代码提交独立待查。HELD9仅道路RGB校准target留出。failure_ledger_refs=[V82-F13]（历史），本次failure_ledger_delta=none。
 
 - `a5 followup / scene008_rcr1_20261105`：[a5车体完整性定位与六阶段对照](autoresearch/scene008_rcr1_20261105/followup_a5/index.html)；只读诊断、零训练，未修复，不新增失败卡；failure_ledger_delta=none。

@@ -93,9 +93,14 @@ data = dict(
     method_code="RCR-1",
     method_name="RGB Constraint Restoration / RGB 约束恢复",
     created_at=datetime.now(ZoneInfo("Asia/Singapore")).isoformat(timespec="seconds"),
-    scope="Existing complete final candidate versus the accepted-current M2/delete reference; four saved delete frames only.",
-    quality_accepted=False,
-    acceptance="NOT_ACCEPTED_VISUAL_REGRESSION",
+    scope="User-adopted RCR-1/delete for abnormal-blue RGB correction versus the previous M2/delete reference; four saved delete frames only.",
+    adopted=True,
+    quality_accepted=True,
+    quality_acceptance_scope="abnormal_blue_RGB_correction_only",
+    overall_quality_no_regression_verified=False,
+    acceptance="ACCEPTED_BY_USER_FOR_ABNORMAL_BLUE_RGB_FIX",
+    current_delete_pipeline="RCR-1 delete",
+    acceptance_record="evidence/user_acceptance_20261105.json",
     regression="raw130/raw137: silver residual. Net brightening is native-static dominated; environment*T still carries car-shaped structure. Exact static rows and training cause remain unisolated.",
     reference="Original ownership native10K + original road1K/gates/fine + fixed complete M2",
     candidate="Native10K with only the missing global RGB coefficient1 restored + fresh road1K/gates + fresh coarse6x5/fine11x9 + the same fixed complete M2",
@@ -128,12 +133,14 @@ silver = load(evidence / "rcr1_silver315_contributions.json")
 data["silver315"] = {key: silver[key] for key in (
     "pixels", "mask_definition", "component_premultiplied_RGB", "output_delta_mean_RGB",
     "confirmed_source", "unresolved", "spatial_structure_observation", "validation")}
-data["closeout"] = dict(status="ARCHIVED_NOT_ADOPTED", native_updates=10000,
+data["closeout"] = dict(status="ADOPTED_FOR_ABNORMAL_BLUE_RGB_FIX", native_updates=10000,
     road_updates=1000, task_total_updates=26609, formal_linear_solves=54,
-    preflight_linear_solves=54, original_M2_retained=True, human_verdict=None,
+    preflight_linear_solves=54, fixed_complete_M2_asset_retained=True,
+    previous_pipeline_retained_as_reference=True,
+    human_verdict=load(evidence / "user_acceptance_20261105.json"),
     next_RCR_training_controller=False, automatic_shutdown_executed=False,
     prepared_not_executed="backgroundJoint1: CPU-only gradient-domain check, no GPU run",
-    pending_followup="a5 damage localized to full5->single-a37 native retraining, before deletion/road/M2; component cause not yet isolated",
+    pending_followup="a5 damage is an independent earlier-version/code-commit investigation; the exact responsible commit remains unidentified",
     a5_diagnosis="followup_a5/index.html")
 data["holdout_scope"] = "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization."
 for source, name in ((ANALYSIS / "final_cpu_comparison.json", "final_cpu_comparison.json"),
@@ -144,12 +151,12 @@ dump(OUT / "report_data.json", data)
 # Lossless full-frame overview: no colour or exposure changes.
 overview = Image.new("RGB", (1020, 1576), "white")
 draw = ImageDraw.Draw(overview)
-draw.text((22, 15), "RCR-1 完整 delete 对照：原版 / 去蓝候选（未采用）", font=font(24), fill="#192936")
+draw.text((22, 15), "RCR-1 完整 delete 对照：原版 / 已采用去蓝版", font=font(24), fill="#192936")
 draw.text((22, 50), "两端均已接道路层，使用同一完整 M2。PNG 原图；未调色。", font=font(16), fill="#52616c")
 for i, raw in enumerate(RAWS):
     y = 90 + i * 365
     draw.text((24, y), f"raw{raw} · 原版 delete", font=font(18), fill="#192936")
-    draw.text((516, y), f"raw{raw} · RCR-1 delete · 未采用", font=font(18), fill="#9a421b")
+    draw.text((516, y), f"raw{raw} · RCR-1 delete · 已采用", font=font(18), fill="#17654b")
     overview.paste(images["reference", raw], (24, y + 30))
     overview.paste(images["candidate", raw], (516, y + 30))
 overview.save(OUT / "delete_overview.png")
@@ -158,11 +165,11 @@ overview.save(OUT / "delete_overview.png")
 tails = Image.new("RGB", (1016, 656), "white")
 draw = ImageDraw.Draw(tails)
 draw.text((22, 14), "车尾亮残影：原版 delete / 去蓝版 delete", font=font(24), fill="#192936")
-draw.text((22, 50), "同坐标局部 4× 最近邻放大；去蓝候选尚未通过质量验收。", font=font(16), fill="#52616c")
+draw.text((22, 50), "同坐标局部 4× 最近邻放大；已采用去蓝修复，亮片作为保留问题。", font=font(16), fill="#52616c")
 for i, raw in enumerate((130, 137)):
     y = 88 + i * 278
     draw.text((24, y), f"raw{raw} · 原版", font=font(18), fill="#192936")
-    draw.text((516, y), f"raw{raw} · 去蓝候选", font=font(18), fill="#9a421b")
+    draw.text((516, y), f"raw{raw} · RCR-1 delete", font=font(18), fill="#17654b")
     for state, x in (("reference", 24), ("candidate", 516)):
         crop = images[state, raw].crop((202, 192, 298, 244)).resize((384, 208), Image.Resampling.NEAREST)
         tails.paste(crop, (x + 45, y + 32))
@@ -172,5 +179,6 @@ template = (OUT / "report_template.html").read_text(encoding="utf-8")
 html = template.replace("__REPORT_DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
 (OUT / "index.html").write_text(html, encoding="utf-8")
 print(json.dumps(dict(report=str(OUT / "index.html"), frames=list(RAWS),
-                      verified_images=len(verified), quality_accepted=False,
+                      verified_images=len(verified), adopted=True,
+                      quality_accepted=True, acceptance_scope="abnormal_blue_RGB_correction_only",
                       source_native_iteration=10000, source_road_iteration=1000), ensure_ascii=False))

@@ -1,10 +1,15 @@
 {
   "method_code": "RCR-1",
   "method_name": "RGB Constraint Restoration / RGB 约束恢复",
-  "created_at": "2026-11-05T22:58:25+08:00",
-  "scope": "Existing complete final candidate versus the accepted-current M2/delete reference; four saved delete frames only.",
-  "quality_accepted": false,
-  "acceptance": "NOT_ACCEPTED_VISUAL_REGRESSION",
+  "created_at": "2026-11-05T23:50:30+08:00",
+  "scope": "User-adopted RCR-1/delete for abnormal-blue RGB correction versus the previous M2/delete reference; four saved delete frames only.",
+  "adopted": true,
+  "quality_accepted": true,
+  "quality_acceptance_scope": "abnormal_blue_RGB_correction_only",
+  "overall_quality_no_regression_verified": false,
+  "acceptance": "ACCEPTED_BY_USER_FOR_ABNORMAL_BLUE_RGB_FIX",
+  "current_delete_pipeline": "RCR-1 delete",
+  "acceptance_record": "evidence/user_acceptance_20261105.json",
   "regression": "raw130/raw137: silver residual. Net brightening is native-static dominated; environment*T still carries car-shaped structure. Exact static rows and training cause remain unisolated.",
   "reference": "Original ownership native10K + original road1K/gates/fine + fixed complete M2",
   "candidate": "Native10K with only the missing global RGB coefficient1 restored + fresh road1K/gates + fresh coarse6x5/fine11x9 + the same fixed complete M2",
@@ -390,6 +395,21 @@
       }
     }
   },
+  "actor_identity_scope": {
+    "actor_alias": 5,
+    "confirmed_visible_raw_range": [
+      89,
+      112
+    ],
+    "raw105_original_actor_labels1_pixels": 10773,
+    "raw113_137_original_label1_empty": true,
+    "reviewed_later_left_cars_not_identified_as_a5": [
+      113,
+      130,
+      137
+    ],
+    "note": "a5 身份仅在有原始标签的帧确认；raw89–112 可见，raw113–137 的 label1 为空；raw113/130/137 的左侧车辆不视作 a5。"
+  },
   "silver315": {
     "pixels": 315,
     "mask_definition": "Candidate meanRGB - current reference meanRGB >.08 within x210:290,y213:233; all pixels included",
@@ -517,34 +537,46 @@
     }
   },
   "closeout": {
-    "status": "ARCHIVED_NOT_ADOPTED",
+    "status": "ADOPTED_FOR_ABNORMAL_BLUE_RGB_FIX",
     "native_updates": 10000,
     "road_updates": 1000,
     "task_total_updates": 26609,
     "formal_linear_solves": 54,
     "preflight_linear_solves": 54,
-    "original_M2_retained": true,
-    "human_verdict": null,
+    "fixed_complete_M2_asset_retained": true,
+    "previous_pipeline_retained_as_reference": true,
+    "human_verdict": {
+      "decision_date": "2026-11-05",
+      "timezone": "Asia/Singapore",
+      "method": "RCR-1",
+      "pipeline": "RCR-1 delete",
+      "status": "ADOPTED_BY_USER",
+      "adopted": true,
+      "abnormal_blue_RGB_fix_success": true,
+      "acceptance_scope": "abnormal_blue_RGB_fix",
+      "overall_quality_no_regression_verified": false,
+      "user_statement": "可以采用吧，RCR-1 delete 至少在去蓝色rgb异常这个事情上是成功的，更新html。至于a5缺损应该是更早版本的代码提交导致的，需要额外再排查",
+      "current_delete_pipeline": "RCR-1 delete",
+      "accepted_binding": "scene008_blue_global_M2_final_20261105_r1",
+      "previous_pipeline_role": "Historical M2/delete comparison; original files remain preserved",
+      "fixed_complete_M2_asset_unchanged": true,
+      "retained_issue": "raw130/raw137 silver residual remains documented; exact training cause unisolated",
+      "a5_followup": {
+        "status": "INDEPENDENT_EARLIER_VERSION_COMMIT_INVESTIGATION_PENDING",
+        "known_bracket": "full5 native10K -> single-a37 native10K",
+        "responsible_commit": null,
+        "note": "User suspects an earlier code commit; the precise commit and individual mechanism are not yet established."
+      },
+      "new_training_updates": 0,
+      "model_parameters_changed": false,
+      "automatic_shutdown_executed": false,
+      "historical_receipts_and_metrics_preserved": true
+    },
     "next_RCR_training_controller": false,
     "automatic_shutdown_executed": false,
     "prepared_not_executed": "backgroundJoint1: CPU-only gradient-domain check, no GPU run",
-    "pending_followup": "a5 damage localized to full5->single-a37 native retraining, before deletion/road/M2; component cause not yet isolated",
+    "pending_followup": "a5 damage is an independent earlier-version/code-commit investigation; the exact responsible commit remains unidentified",
     "a5_diagnosis": "followup_a5/index.html"
   },
-  "holdout_scope": "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization.",
-  "actor_identity_scope": {
-    "actor_alias": 5,
-    "confirmed_visible_raw_range": [
-      89,
-      112
-    ],
-    "raw105_original_actor_labels1_pixels": 10773,
-    "raw113_137_original_label1_empty": true,
-    "reviewed_later_left_cars_not_identified_as_a5": [
-      113,
-      130,
-      137
-    ],
-    "note": "a5 身份仅在有原始标签的帧确认；raw89–112 可见，raw113–137 的 label1 为空；raw113/130/137 的左侧车辆不视作 a5。"
-  }
+  "holdout_scope": "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization."
 }

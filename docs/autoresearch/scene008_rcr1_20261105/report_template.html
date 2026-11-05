@@ -6,40 +6,40 @@
 <title>RCR-1 · RGB 约束恢复 · 完整 delete 对照与研究归档</title>
 <style>
 :root{color-scheme:light;--ink:#1e2e3b;--muted:#526472;--line:#dce2e8;--accent:#a33d1b;--focus:#b84f2a;--surface:#f4f6f8}
-*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1160px;margin:auto;padding:30px 24px 56px}h1{font-size:28px;line-height:1.3;margin:0 0 10px;font-weight:600}h2{font-size:21px;margin:32px 0 12px;font-weight:600}h3{font-size:16px;margin:0 0 8px;font-weight:500}p{margin:8px 0 16px}.muted{color:var(--muted)}.status{display:inline-block;color:var(--accent);background:#fff1e8;padding:3px 10px;margin-bottom:12px;border-radius:4px;font-weight:600}.notice{padding:10px 0;color:var(--accent);font-weight:500}.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0 12px}.frame-buttons{display:flex;gap:8px;flex-wrap:wrap}button,select,input{font:inherit}button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 14px;border-radius:5px;cursor:pointer}button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #7295b2;outline-offset:3px}select{border:1px solid var(--line);padding:7px 10px;border-radius:5px;max-width:100%;background:#fff;color:var(--ink)}.control-right{display:flex;gap:8px;align-items:center;margin-left:auto;flex-wrap:wrap}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}.pair figure{margin:0;min-width:0}.pair figcaption{font-weight:500;margin:0 0 8px}.candidate-title{color:var(--accent)}.frame{position:relative;width:100%;aspect-ratio:3/2;background:var(--surface)}.frame img{display:block;width:100%;height:100%;object-fit:contain}.roi-mark{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.roi-mark rect{fill:none;stroke:var(--focus);stroke-width:1.5;vector-effect:non-scaling-stroke}.crop-wrap{display:flex;justify-content:center;align-items:flex-start;min-height:238px;background:var(--surface);padding:12px 0}.crop-wrap canvas{display:block;max-width:100%;max-height:300px;width:auto;height:auto;image-rendering:pixelated}.caption{font-size:14px;color:var(--muted);margin-top:8px}.viewer-note{min-height:28px}.compare-wipe{position:relative;width:100%;aspect-ratio:3/2;background:var(--surface);overflow:hidden}.compare-wipe img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.compare-wipe .new-side{clip-path:inset(0 0 0 50%)}.wipe-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 0 1px #222}.wipe-labels{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:6px}.wipe-range{display:flex;gap:12px;align-items:center;margin:8px 0}.wipe-range input{width:100%}.wipe-container{max-width:960px;margin:20px auto}.metric-table{width:100%;border-collapse:collapse;font-size:14px}.metric-table td,.metric-table th{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.metric-table td.num{font-variant-numeric:tabular-nums;white-space:nowrap}.table-wrap{overflow-x:auto}.legend{font-size:14px;color:var(--muted)}.diagram{display:block;width:100%;height:auto;margin:16px 0}.diagram text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:var(--ink)}.diagram rect{fill:var(--surface);stroke:var(--line)}.diagram path{stroke:#687c8b;fill:none}.evidence-links{display:flex;gap:12px;flex-wrap:wrap}a{color:#225f8d}details{margin-top:18px}summary{cursor:pointer;font-weight:500}footer{border-top:1px solid var(--line);padding-top:18px;margin-top:30px;color:var(--muted);font-size:14px}ul{padding-left:22px}li{margin:6px 0}.snapshot{font-size:13px;word-break:break-word}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1160px;margin:auto;padding:30px 24px 56px}h1{font-size:28px;line-height:1.3;margin:0 0 10px;font-weight:600}h2{font-size:21px;margin:32px 0 12px;font-weight:600}h3{font-size:16px;margin:0 0 8px;font-weight:500}p{margin:8px 0 16px}.muted{color:var(--muted)}.status{display:inline-block;color:#17654b;background:#e8f6ed;padding:3px 10px;margin-bottom:12px;border-radius:4px;font-weight:600}.notice{padding:10px 0;color:var(--accent);font-weight:500}.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0 12px}.frame-buttons{display:flex;gap:8px;flex-wrap:wrap}button,select,input{font:inherit}button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:7px 14px;border-radius:5px;cursor:pointer}button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #7295b2;outline-offset:3px}select{border:1px solid var(--line);padding:7px 10px;border-radius:5px;max-width:100%;background:#fff;color:var(--ink)}.control-right{display:flex;gap:8px;align-items:center;margin-left:auto;flex-wrap:wrap}.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}.pair figure{margin:0;min-width:0}.pair figcaption{font-weight:500;margin:0 0 8px}.candidate-title{color:var(--accent)}.frame{position:relative;width:100%;aspect-ratio:3/2;background:var(--surface)}.frame img{display:block;width:100%;height:100%;object-fit:contain}.roi-mark{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.roi-mark rect{fill:none;stroke:var(--focus);stroke-width:1.5;vector-effect:non-scaling-stroke}.crop-wrap{display:flex;justify-content:center;align-items:flex-start;min-height:238px;background:var(--surface);padding:12px 0}.crop-wrap canvas{display:block;max-width:100%;max-height:300px;width:auto;height:auto;image-rendering:pixelated}.caption{font-size:14px;color:var(--muted);margin-top:8px}.viewer-note{min-height:28px}.compare-wipe{position:relative;width:100%;aspect-ratio:3/2;background:var(--surface);overflow:hidden}.compare-wipe img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.compare-wipe .new-side{clip-path:inset(0 0 0 50%)}.wipe-line{position:absolute;top:0;bottom:0;left:50%;width:2px;background:#fff;box-shadow:0 0 0 1px #222}.wipe-labels{display:flex;justify-content:space-between;gap:12px;font-size:14px;margin-bottom:6px}.wipe-range{display:flex;gap:12px;align-items:center;margin:8px 0}.wipe-range input{width:100%}.wipe-container{max-width:960px;margin:20px auto}.metric-table{width:100%;border-collapse:collapse;font-size:14px}.metric-table td,.metric-table th{padding:10px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.metric-table td.num{font-variant-numeric:tabular-nums;white-space:nowrap}.table-wrap{overflow-x:auto}.legend{font-size:14px;color:var(--muted)}.diagram{display:block;width:100%;height:auto;margin:16px 0}.diagram text{font-family:system-ui,"Microsoft YaHei",sans-serif;fill:var(--ink)}.diagram rect{fill:var(--surface);stroke:var(--line)}.diagram path{stroke:#687c8b;fill:none}.evidence-links{display:flex;gap:12px;flex-wrap:wrap}a{color:#225f8d}details{margin-top:18px}summary{cursor:pointer;font-weight:500}footer{border-top:1px solid var(--line);padding-top:18px;margin-top:30px;color:var(--muted);font-size:14px}ul{padding-left:22px}li{margin:6px 0}.snapshot{font-size:13px;word-break:break-word}
 @media(max-width:700px){main{padding:22px 15px 40px}h1{font-size:24px}.pair{grid-template-columns:1fr;gap:20px}.control-right{margin-left:0}.crop-wrap{min-height:0}.diagram{min-width:780px}.diagram-scroll{overflow-x:auto}.metric-table{min-width:570px}}
 </style>
 </head>
 <body><main>
-<span class="status">RCR-1 · 研究归档 · 完整候选未采用</span>
+<span class="status">RCR-1 delete · 已采用 · 异常蓝色 RGB 修复成功</span>
 <h1>RCR-1：RGB 约束恢复与完整 delete 对照</h1>
 <p><strong>Repo 代号：RCR-1</strong>（RGB Constraint Restoration）。原生训练补回联合 RGB ×1，重新绑定道路接管与颜色校准，同一完整 M2 保持冻结。</p>
 <p class="muted">两端都是完整组合：原生 10K、道路 1K、道路颜色校准、同一完整 M2 车体。删除对象均为 a37。</p>
-<p class="notice">去蓝收益已验证；raw130、raw137 的银灰亮片使整体质量未通过。净亮化由静态背景贡献主导，环境×T层仍有车形结构；具体静态行与训练原因尚未隔离。当前 M2 不替换。</p>
+<p class="notice"><strong>用户已采用 RCR-1 delete：异常蓝色 RGB 修复成功。</strong>raw130、raw137 的银灰亮片保留为后续问题；其净亮化由静态背景贡献主导，环境×T层仍有车形结构，具体训练原因尚未隔离。a5 缺损作为更早版本与代码提交的独立问题继续排查。<a href="evidence/user_acceptance_20261105.json">查看本次采用决定与范围</a>。</p>
 
 <div class="controls">
  <div class="frame-buttons" aria-label="选择同帧对照">
   <button type="button" data-raw="105" aria-pressed="false">raw105</button>
-  <button type="button" data-raw="113" aria-pressed="false">raw113</button>
+  <button type="button" data-raw="113" aria-pressed="true">raw113</button>
   <button type="button" data-raw="130" aria-pressed="false">raw130</button>
-  <button type="button" data-raw="137" aria-pressed="true">raw137</button>
+  <button type="button" data-raw="137" aria-pressed="false">raw137</button>
  </div>
- <div class="control-right"><label for="roi-choice">放大位置</label><select id="roi-choice"><option value="tail">车尾银灰亮残影</option></select></div>
+ <div class="control-right"><label for="roi-choice">放大位置</label><select id="roi-choice"><option value="blue">用户原框：白线旁偏蓝</option></select></div>
 </div>
-<p class="viewer-note" id="frame-note" aria-live="polite">raw137：车尾下方的银灰矩形亮残影更加明显。</p>
+<p class="viewer-note" id="frame-note" aria-live="polite">raw113：原框内异常偏蓝显著减轻；RCR-1 delete 已采用。</p>
 <div class="pair">
- <figure><figcaption>原版 delete · 当前 M2 基准</figcaption><div class="frame"><img id="reference-image" src="assets/reference_137.png" alt="原版 raw137 delete 原始PNG"><svg class="roi-mark" viewBox="0 0 480 320" aria-hidden="true"><rect id="reference-roi" x="202" y="192" width="96" height="52"/></svg></div><div class="caption"><a id="reference-link" href="assets/reference_137.png" target="_blank" rel="noopener">打开原始 PNG</a></div></figure>
- <figure><figcaption class="candidate-title">RCR-1 delete · 未采用候选</figcaption><div class="frame"><img id="candidate-image" src="assets/candidate_137.png" alt="RCR-1 raw137 delete 原始PNG"><svg class="roi-mark" viewBox="0 0 480 320" aria-hidden="true"><rect id="candidate-roi" x="202" y="192" width="96" height="52"/></svg></div><div class="caption"><a id="candidate-link" href="assets/candidate_137.png" target="_blank" rel="noopener">打开原始 PNG</a></div></figure>
+ <figure><figcaption>原版 delete · 采用前 M2 对照</figcaption><div class="frame"><img id="reference-image" src="assets/reference_113.png" alt="原版 raw113 delete 原始PNG"><svg class="roi-mark" viewBox="0 0 480 320" aria-hidden="true"><rect id="reference-roi" x="276" y="175" width="33" height="45"/></svg></div><div class="caption"><a id="reference-link" href="assets/reference_113.png" target="_blank" rel="noopener">打开原始 PNG</a></div></figure>
+ <figure><figcaption class="candidate-title">RCR-1 delete · 已采用（去蓝 RGB）</figcaption><div class="frame"><img id="candidate-image" src="assets/candidate_113.png" alt="RCR-1 raw113 delete 原始PNG"><svg class="roi-mark" viewBox="0 0 480 320" aria-hidden="true"><rect id="candidate-roi" x="276" y="175" width="33" height="45"/></svg></div><div class="caption"><a id="candidate-link" href="assets/candidate_113.png" target="_blank" rel="noopener">打开原始 PNG</a></div></figure>
 </div>
 <h2>同坐标局部放大</h2>
 <div class="pair">
  <figure><figcaption>原版局部</figcaption><div class="crop-wrap"><canvas id="reference-crop" width="480" height="260" role="img" aria-label="原版相同坐标区域的最近邻放大"></canvas></div></figure>
- <figure><figcaption class="candidate-title">去蓝候选局部</figcaption><div class="crop-wrap"><canvas id="candidate-crop" width="480" height="260" role="img" aria-label="去蓝候选相同坐标区域的最近邻放大"></canvas></div></figure>
+ <figure><figcaption class="candidate-title">RCR-1 去蓝版局部</figcaption><div class="crop-wrap"><canvas id="candidate-crop" width="480" height="260" role="img" aria-label="RCR-1 去蓝版相同坐标区域的最近邻放大"></canvas></div></figure>
 </div>
-<p id="crop-coordinates" class="caption">原图坐标 x202:298，y192:244；最近邻放大。原始 PNG 未进行颜色或曝光修改。</p>
+<p id="crop-coordinates" class="caption">原图坐标 x276:309，y175:220；最近邻放大。原始 PNG 未进行颜色或曝光修改。</p>
 
 <details><summary>拖动分界，在同一位置比较两版</summary>
- <div class="wipe-container"><div class="wipe-labels"><span>左：原版 delete</span><span>右：去蓝候选</span></div><div class="compare-wipe"><img id="wipe-reference" src="assets/reference_137.png" alt="叠图原版"><img id="wipe-candidate" class="new-side" src="assets/candidate_137.png" alt="叠图去蓝候选"><div id="wipe-line" class="wipe-line"></div></div><div class="wipe-range"><label for="wipe-position">分界</label><input id="wipe-position" type="range" min="0" max="100" value="50" aria-label="移动原版与候选的比较分界"></div></div>
+ <div class="wipe-container"><div class="wipe-labels"><span>左：原版 delete</span><span>右：RCR-1 去蓝版</span></div><div class="compare-wipe"><img id="wipe-reference" src="assets/reference_113.png" alt="叠图原版"><img id="wipe-candidate" class="new-side" src="assets/candidate_113.png" alt="叠图RCR-1 去蓝版"><div id="wipe-line" class="wipe-line"></div></div><div class="wipe-range"><label for="wipe-position">分界</label><input id="wipe-position" type="range" min="0" max="100" value="50" aria-label="移动原版与候选的比较分界"></div></div>
 </details>
 
 <h2>当前进展与验收状态</h2>
@@ -47,10 +47,11 @@
  <li>已完成：只补回全图 RGB 监督的新原生 10K；新道路正式 1K；重新计算 6×5 → 11×9 道路颜色校准。</li>
  <li>完整 M2 的 27 项张量逐位不变。两个版本各自使用同帧相机与时间；以上 8 张 PNG 均已与远端最新保存文件核对 SHA256。</li>
  <li>已保存 49 帧 keep 与 4 帧 delete。此报告展示 raw105、113、130、137 的完整 delete；不把这 4 帧当作全部 49 帧 delete 验收。</li>
- <li>尚未通过：“质量不低于当前 M2/delete”。主要视觉回退是 raw130、137 的车尾银灰亮残影。M2 参数不变，仍可能因遮挡与背景变化而显露不同部分。</li>
+ <li><strong>采用决定：</strong>用户确认采用 RCR-1 delete，异常蓝色 RGB 修复目标已成功。当前采用的是图示的 RCR-1 完整 delete 组合；同一完整 M2 资产仍保持不变。</li>
+ <li>保留问题：raw130、137 的银灰亮片继续保留图像和归因证据。本次采用不新增“全部区域画质均无回退”的实验结论。</li>
  <li>已完成真实共享深度下的逐层 RGB 贡献归因：亮片的净增亮由静态背景主导，M2/a37贡献为零、道路贡献接近零；环境×T仍携带车形结构。</li>
  <li>本轮实验停止并保留现场。未采用隐藏64点、替换旧环境图或减半增长梯度等诊断对照；backgroundJoint1 仅有 CPU 初稿，尚未运行 GPU。</li>
- <li><a href="followup_a5/index.html">a5 车体完整性诊断与六阶段对照</a>：已定位 Full5 → Single-a37 原生重训区间就有缺损，早于删车、道路和 M2。查看项“左侧车辆（a5 排查）”仅供目视；raw105 的 actor_labels1 有10773像素，raw113/130/137 的左侧车辆不视作 a5。</li>
+ <li><a href="followup_a5/index.html">a5 车体完整性诊断与六阶段对照</a>：a5 缺损独立追查更早版本的代码提交；现有证据只把最早可见回退定位到 Full5 → Single-a37 原生重训区间，尚未确定具体提交。查看项“左侧车辆（a5 排查）”仅供目视；raw105 的 actor_labels1 有10773像素，raw113/130/137 的左侧车辆不视作 a5。</li>
 </ul>
 
 <h2>新增亮片：已确认的成像来源</h2>
@@ -70,29 +71,29 @@
 </details>
 
 <h2>数值改善与视觉回退分别检查</h2>
-<div class="table-wrap"><table class="metric-table"><thead><tr><th>检查范围</th><th>原版</th><th>去蓝候选</th><th>能说明什么</th></tr></thead><tbody>
+<div class="table-wrap"><table class="metric-table"><thead><tr><th>检查范围</th><th>原版</th><th>RCR-1 去蓝版</th><th>能说明什么</th></tr></thead><tbody>
  <tr><td>raw113 / delete / 原框绝对蓝色误差</td><td class="num">0.084625</td><td class="num">0.003897</td><td>原框偏蓝显著减轻</td></tr>
  <tr><td>raw137 / delete / 右侧蓝斑绝对蓝色误差</td><td class="num">0.074090</td><td class="num">0.004888</td><td>右侧偏蓝显著减轻</td></tr>
  <tr><td>4 帧 delete / 道路目标 RGB MAE</td><td class="num">0.016533</td><td class="num">0.009478</td><td>重观测道路代理目标误差降低约 42.7%</td></tr>
  <tr><td>4 帧 delete / 原可见 a6 RGB MAE</td><td class="num">0.035532</td><td class="num">0.035614</td><td>略增约 0.23%；不覆盖车体新显露部分</td></tr>
  <tr><td>49 帧 keep / 真实天空 RGB MAE</td><td class="num">0.023176</td><td class="num">0.020519</td><td>同一真实天空掩码，未做整图去色；天空误差下降约 11.5%</td></tr>
- <tr><td>raw130、137 / 车尾下方亮残影</td><td>见原版图</td><td>银灰亮残影更明显</td><td>视觉回退，整体质量仍未通过</td></tr>
+ <tr><td>raw130、137 / 车尾下方亮残影</td><td>见原版图</td><td>银灰亮残影更明显</td><td>保留亮片问题；不改变本次去蓝修复的采用决定</td></tr>
 </tbody></table></div>
 <p class="legend">蓝色误差在两端共同的已观测背景掩码上计算，排除原车辆和任一端 M2 支持区域；道路目标是其他帧重观测的代理，不是真实删车后的 RGB GT。可见 a6 指标不覆盖新显露的补全部分。上述均值不能替代局部残影检查。</p>
 <p class="legend">49 帧属于同一训练 clip 的内部诊断。HELD9 只留出道路 RGB 校准目标；原生训练、道路门控选择与优化都使用了这些帧，不是独立 native 泛化测试。</p>
 
 <h2>这次比较包含哪些组件</h2>
-<div class="diagram-scroll"><svg class="diagram" viewBox="0 0 1080 235" role="img" aria-label="原版与去蓝候选的数据流：各自的原生10K和道路1K颜色校准，与同一固定M2进入共享深度排序，删除a37后输出图像">
+<div class="diagram-scroll"><svg class="diagram" viewBox="0 0 1080 235" role="img" aria-label="原版与RCR-1 去蓝版的数据流：各自的原生10K和道路1K颜色校准，与同一固定M2进入共享深度排序，删除a37后输出图像">
  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#687c8b" stroke="none"/></marker></defs>
  <text x="12" y="25" font-size="16">原版</text><rect x="12" y="40" width="180" height="58" rx="5"/><text x="102" y="65" text-anchor="middle" font-size="15">原 native 10K</text><text x="102" y="85" text-anchor="middle" font-size="13">静态 / 动态 / 环境</text>
  <rect x="230" y="40" width="225" height="58" rx="5"/><text x="342" y="65" text-anchor="middle" font-size="15">原 road 1K + 颜色校准</text><text x="342" y="85" text-anchor="middle" font-size="13">原门控与接管</text>
- <text x="12" y="143" font-size="16">去蓝候选</text><rect x="12" y="158" width="180" height="58" rx="5"/><text x="102" y="183" text-anchor="middle" font-size="15">新 native 10K</text><text x="102" y="203" text-anchor="middle" font-size="13">只补 global RGB ×1</text>
+ <text x="12" y="143" font-size="16">RCR-1 去蓝版</text><rect x="12" y="158" width="180" height="58" rx="5"/><text x="102" y="183" text-anchor="middle" font-size="15">新 native 10K</text><text x="102" y="203" text-anchor="middle" font-size="13">只补 global RGB ×1</text>
  <rect x="230" y="158" width="225" height="58" rx="5"/><text x="342" y="183" text-anchor="middle" font-size="15">新 road 1K + 颜色校准</text><text x="342" y="203" text-anchor="middle" font-size="13">重新匹配新原生模型</text>
  <rect x="525" y="77" width="155" height="66" rx="5"/><text x="602" y="105" text-anchor="middle" font-size="15">同一完整 M2</text><text x="602" y="127" text-anchor="middle" font-size="13">27 项张量固定</text>
  <rect x="732" y="40" width="155" height="58" rx="5"/><text x="810" y="65" text-anchor="middle" font-size="15">原版共享深度排序</text><text x="810" y="85" text-anchor="middle" font-size="13">delete：移除 a37</text>
- <rect x="732" y="158" width="155" height="58" rx="5"/><text x="810" y="183" text-anchor="middle" font-size="15">候选共享深度排序</text><text x="810" y="203" text-anchor="middle" font-size="13">delete：移除 a37</text>
+ <rect x="732" y="158" width="155" height="58" rx="5"/><text x="810" y="183" text-anchor="middle" font-size="15">RCR-1 共享深度排序</text><text x="810" y="203" text-anchor="middle" font-size="13">delete：移除 a37</text>
  <rect x="930" y="40" width="138" height="58" rx="5"/><text x="999" y="75" text-anchor="middle" font-size="15">原版 delete 图</text>
- <rect x="930" y="158" width="138" height="58" rx="5"/><text x="999" y="193" text-anchor="middle" font-size="15">候选 delete 图</text>
+ <rect x="930" y="158" width="138" height="58" rx="5"/><text x="999" y="193" text-anchor="middle" font-size="15">RCR-1 delete 图</text>
  <path d="M192 69H230 M192 187H230 M455 69H732 M455 187H732 M680 100L732 69 M680 121L732 187 M887 69H930 M887 187H930" marker-end="url(#arrow)"/>
 </svg></div>
 
@@ -100,7 +101,7 @@
  <p class="evidence-links"><a href="delete_overview.png">4 帧完整对照总览</a><a href="delete_tail_130_137.png">raw130 / 137 车尾局部对照</a><a href="report_data.json">版本与图像哈希</a><a href="evidence/analysis_summary.txt">数值分析及范围说明</a><a href="evidence/candidate_receipt.json">完整组合收据</a><a href="evidence/reference_render_manifest.json">原版绑定记录</a></p>
 </details>
 <p><a href="research/index.html">RCR-1 完整研究报告、单变量实验与资源账本</a> · <a href="source_archive/index.html">实际源码、运行清单与证据归档</a> · <a href="evidence/final_cpu_comparison.json">49 帧 / 4 帧完整数值对照</a></p>
-<footer><div>RCR-1 阶段研究归档：去蓝有效，完整质量尚未通过，保留当前 M2。模型、输入、日志和失败证据均保留；未执行自动关机。<a href="followup_a5/index.html">a5 独立诊断</a>已定位最早可见回退区间，具体单项原因仍待隔离。</div><div class="snapshot" id="snapshot-time"></div></footer>
+<footer><div>RCR-1 delete 已由用户采用：异常蓝色 RGB 修复成功。亮片问题与完整质量检查边界继续保留，模型、输入、日志和历史证据均保留；未执行自动关机。<a href="followup_a5/index.html">a5 独立诊断</a>作为独立的更早版本与代码提交排查事项；具体提交与单项原因尚未确定。</div><div class="snapshot" id="snapshot-time"></div></footer>
 </main>
 <script id="report-data" type="application/json">__REPORT_DATA__</script>
 <script>
@@ -108,7 +109,7 @@
  'use strict';
  const data=JSON.parse(document.getElementById('report-data').textContent);
  const byId=id=>document.getElementById(id);
- const selection={raw:'137',roi:'tail'};
+ const selection={raw:'113',roi:'blue'};
  const oldImage=byId('reference-image'),newImage=byId('candidate-image'),roiSelect=byId('roi-choice');
  function selectedROI(){return data.frames[selection.raw].rois[selection.roi];}
  function crop(image,canvas){
@@ -131,7 +132,7 @@
   byId('frame-note').textContent=`raw${selection.raw}：${frame.note}`;
   for(const [state,image] of [['reference',oldImage],['candidate',newImage]]){
    const url=`assets/${state}_${selection.raw}.png`;image.dataset.raw=selection.raw;image.src=url;
-   image.alt=`${state==='reference'?'原版':'去蓝候选'} raw${selection.raw} delete 原始PNG`;
+   image.alt=`${state==='reference'?'原版':'RCR-1 去蓝版'} raw${selection.raw} delete 原始PNG`;
    byId(`${state}-link`).href=url;byId(`wipe-${state}`).src=url;
   }
   updateCrop();
@@ -140,8 +141,8 @@
  document.querySelectorAll('[data-raw]').forEach(button=>button.addEventListener('click',()=>updateFrame(button.dataset.raw)));
  roiSelect.addEventListener('change',()=>{selection.roi=roiSelect.value;updateCrop();});
  byId('wipe-position').addEventListener('input',event=>{const p=Number(event.target.value);byId('wipe-candidate').style.clipPath=`inset(0 0 0 ${p}%)`;byId('wipe-line').style.left=`${p}%`;});
- byId('snapshot-time').textContent=`报告生成时间：${data.created_at}（新加坡时区）。完整候选：${data.source_candidate}。`;
- updateFrame('137');
+ byId('snapshot-time').textContent=`报告生成时间：${data.created_at}（新加坡时区）。已采用的 RCR-1 delete：${data.source_candidate}。`;
+ updateFrame('113');
  window.deleteReportReview={getState:()=>({...selection}),data};
 })();
 </script>

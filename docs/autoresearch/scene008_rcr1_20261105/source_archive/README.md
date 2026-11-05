@@ -1,6 +1,10 @@
 # RCR-1：RGB Constraint Restoration（RGB约束恢复）
 
-本轮研究归档，候选不采用，保留当前 M2。full-joint native10K + 新 road1K + fresh6×5→11×9 + 固定完整 M2 已完成，原框去蓝成立，但 raw130/137 车尾新增银灰亮片，未达当前 floor。工程 PASS 和局部误差改善不能替代最终画质要求。
+**2026-11-05当前处置：用户采用RCR-1 delete，范围为异常蓝色RGB修复（`abnormal_blue_RGB_fix`）。** 当前delete管线使用full-joint native10K + 新road1K + fresh6×5→11×9 + 固定完整M2；原管线仅作reference，固定M2资产不变。完整画质无回退未作新结论，raw130/137银灰亮片保留为开放项。详见[唯一用户采用决定](../evidence/user_acceptance_20261105.json)。
+
+> 此前评审结论（历史）：本轮研究归档，候选不采用，保留当前 M2。full-joint native10K + 新 road1K + fresh6×5→11×9 + 固定完整 M2 已完成，原框去蓝成立，但 raw130/137 车尾新增银灰亮片，未达当前 floor。工程 PASS 和局部误差改善不能替代最终画质要求。
+
+此前“未采用”处置由本次用户限定范围采用决定更新；原始实验收据、指标和图像继续保留原样。a5属于独立的更早版本/代码提交排查，尚未找到具体引入commit，见[a5诊断](../followup_a5/index.html)。
 
 ![RCR-1组件图](architecture.svg)
 
@@ -41,10 +45,11 @@ hide64、cleanSH、oldEnv交换、half均未采用。backgroundJoint1只有本�
 
 ## 交接文件
 
-- [运行清单](run_manifest.json)：方法、实际节点、账本与未采用状态。
+- [运行清单](run_manifest.json)：方法、实际节点、原账本，以及当前用户采用范围与历史处置。
+- [用户采用决定](../evidence/user_acceptance_20261105.json)：异常蓝色RGB修复已采用，整体质量范围另行明确。
 - [最终数值对照](evidence/comparison.json)：固定域、HELD9/BUILD40、四delete、天空RGB均值与逐帧回退。
 - [实际收据](evidence/receipts.json)：10K完整发布、10002恢复、新road与正式校色。
 - [315像素真实贡献](evidence/rcr1_silver315_contributions.json)：RGB分量和支持域边界。
-- [V82-F13草稿](V82-F13.md)：供根代理合入repo；本子任务未修改remote/Git。
+- [V82-F13历史评审卡](V82-F13.md)：保留用户采用决定前的评审记录，现行处置见用户决定。
 
-归档包含交互验收页面、机制研究子页、实际执行源码和轻量证据。原始checkpoint、数据与失败分支继续保留于AutoDL campaign；源码包不是完整模型备份。RCR-1是研究代号，未重命名仓库目录或部署候选。Git发布结果在交付回执中单列；这里不把待交接动作写作研究结论。
+归档包含交互验收页面、机制研究子页、实际执行源码和轻量证据。原始checkpoint、数据与失败分支继续保留于AutoDL campaign；源码包不是完整模型备份。RCR-1是研究代号。当前用户采用范围为异常蓝色RGB修复；本次只更新本地HTML与处置记录，不新增训练、改写模型或执行SSH/Git。此前Git发布结果仍在原交付回执中保留。
