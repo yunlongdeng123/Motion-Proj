@@ -1,0 +1,40 @@
+{
+  "status": "FROZEN_BEFORE_BUILD_REGISTRATION",
+  "objective": "Test whether joint rendering-center and cropped-support depth consistency improves safe native-a6 handoff on the complete fixed lower PVD domain.",
+  "source_parent": "scene008_a6_depth_order_20261105/delivery/support_accepted.npz",
+  "domain": {"fixed_lower_PVD_rows":431,"fixed_target_pixels_all49":26229,"source":"original fixed lower evidence, no new masks"},
+  "action": "Exact conditional native-a6 mass crop inside the existing 36-cell lower-body corridor; persistent native-ID coefficients; all components jointly composite in their native order",
+  "reference": "Frozen lower-PVD independent alpha-weighted camera depth, unbinned and computed without parent occlusion; a proposal reference, not hidden ground truth",
+  "qualification": {
+    "construction":"40 BUILD frames; all contributions use parent joint alpha*T times physical crop fraction",
+    "minimum_target_mass":0.05,
+    "minimum_distinct_BUILD_frames":2,
+    "distinct_frame_definition":"Frames with corresponding C or CM front contribution; each rule counted separately",
+    "minimum_target_front_fraction":0.8,
+    "max_protected_fraction":0.02,
+    "protected_domain":"(observed a6 RGB OR fixed original outside domain OR valid measured a6 depth) excluding fixed target",
+    "front_margin_m":0.12,
+    "C":"at least 80% of target crop contribution has native rendered center depth < proposal depth - 12cm",
+    "CM":"at least 80% has both rendered center and conditional mode after inherited halfspace AND physical crop in front of the same reference",
+    "protection":"qualification uses only the part being cropped; a mixed native row can retain its support outside the physical corridor",
+    "limits":"Missing observations are not free space. No semantic identity truth, opaque first hit, new surface/color fitting or learned policy."
+  },
+  "arms": {
+    "parent":"zero operation",
+    "corridor":"all native IDs, relative retirement 0.5",
+    "center":"C-qualified native IDs, relative retirement 0.5",
+    "dual":"CM-qualified native IDs, relative retirement 0.5",
+    "center_matched":"C-qualified IDs at coefficient 0.5 * BUILD target crop mass(CM) / BUILD target crop mass(C), equal first-order BUILD target retirement to dual"
+  },
+  "no_strength_or_threshold_sweep":true,
+  "primary_comparison":"dual versus center_matched: same physical operator and first-order BUILD target dose; protected-domain/RGB/depth damage per actual lower visibility gain. Only dual is the predeclared deployment candidate; no post-hoc winner selection among controls.",
+  "dose_limit":"Dose matching uses parent first-order contribution, not equal post-intervention transmittance or reveal. Raw center and unqualified corridor are diagnostics.",
+  "held":[89,95,101,105,113,121,125,130,137],
+  "held_scope":"Repeated mechanism diagnostics, not untouched validation. Coefficients BUILD-only; full49 guards veto deployment.",
+  "acceptance": ["positive incremental full49 lower contribution in black and delete-a37 street", "all inherited per-frame black and both street RGB/alpha/road/seam guards", "fixed measured a6 group-exterior depth mean absolute parent change <= 0.005m per frame/state", "no protected-domain per-pixel RGB change above 0.05 (a6/outside and inherited street road/other/a37 masks)", "explicit saved zero fallback when any full49 guard fails"],
+  "falsification":"If no nonzero qualified dose exists, label inapplicable. If dual removes center-mode disagreements but has no better protection than dose-matched center, do not claim consistency solved mixed support; stop scalar tuning and examine retained/replaced geometry.",
+  "smoke":["real GPU no-op output parity all states", "constant per-row strength equals existing volume renderer", "saved qualification/state reload", "full fixed-domain reference alpha parity", "finite depth and native-lineage assertions"],
+  "training_updates":0,
+  "autodl":"keep on",
+  "subagents":"gpt-6.1-sol / max only"
+}

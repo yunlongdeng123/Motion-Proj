@@ -307,3 +307,5 @@
 2026-11-05，Scene008完成三组实测表面薄壳/贡献登记成对接管。两套规则均未通过，216分支重放及独立审计通过；全部登记行mixed且法线范围近2–3m，下一步先区分深度层。保留父资产，AutoDL开机。[实验与代码](autoresearch/scene008_a6_coupled_handoff_20261105/README.md)。
 
 2026-11-05，Scene008完成近/同/远物理法向支撑9个对照，0个通过全部方法验收；324个保存指标重放及81条实际选择状态重载。物理支撑位置与原生中心排序深度需区分。AutoDL保持开机。[实验与代码](autoresearch/scene008_a6_layered_handoff_20261105/README.md)。
+
+2026-11-05，Scene008完整下部C/CM资格与剂量匹配五臂验证未采用；mode增量很小，raw97略超累计outside预算。预检显示corridor仅覆盖7.97%原生前方责任；1502个双侧观测候选覆盖40.26%，转向完整重表达无退役控制。[实验/预检/下一步合同](autoresearch/scene008_a6_depth_consistency_20261105/README.md)。

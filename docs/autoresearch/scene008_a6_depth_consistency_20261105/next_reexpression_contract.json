@@ -1,0 +1,29 @@
+{
+  "status":"DESIGN_ONLY_NOT_EXECUTED",
+  "question":"Can mixed native support first be re-expressed without changing protected imaging, then relinquish the proposal-facing part while retaining observed surfaces?",
+  "motivation":"Depth-consistency qualification reaches only 2.8% of BUILD target crop contribution. Preserve the major mixed-support problem; do not widen thresholds or select an easier tiny subset.",
+  "frozen":["PVD geometry/color/opacity","road and remaining scene","original native temporal parameters and trajectories","full fixed lower domain and original protection references"],
+  "stage0":{
+    "scope":"Audit full mixed UID coverage in target crop, full native foreground contribution and PVD visibility deficit before choosing an implementation subset",
+    "measurements":"True BUILD LiDAR points in the a6 frame anchor the retained side; PVD independent proposal points define replacement-side requests; parent contribution associates observations, not semantic truth",
+    "plane":"One persistent car-frame separator per mixed UID from retained-observation and proposal-responsibility centroids; no view-specific plane or post-hoc threshold sweep",
+    "clip_coverage":"Report clipped/unclipped source contributions. Do not silently drop clipped parents and generalize an easy subset. Existing halfspaces must be included in moment calculations; old precision metadata cannot be copied to new centers/covariances."
+  },
+  "stage1":{
+    "action":"Parent Gaussian -> two children for both separator sides; parent exits, neither child retires",
+    "moments":"Conditional interval moments for untruncated parents; verified intersection moments for inherited clipped parents. Report probability, mean and covariance conservation against the correct clipped parent distribution.",
+    "opacity":"Projected peak opacity is not 3D probability mass. q*sqrt(det(old covariance)/det(child covariance)) is an initialization, not a rendering conservation proof. No per-view normalization or silent opacity clipping to manufacture acceptance.",
+    "gate":"Actual native-render RGB/alpha/depth and lower contribution must pass fixed preservation in BUILD and full49 states before any retirement arm",
+    "time":"Children are deterministic derivatives of each prepared native parent at its true time, with shared car-frame separators and lineage. They are not yet immutable object assets; freezing temporal behavior requires a separate fit."
+  },
+  "stage2":{
+    "arms":["P: current parent","R: full children, no retirement","S: R with replacement-side children retired 50%","U: R with both children retired at BUILD dose matched to S"],
+    "contrasts":["R-P: representation-change cost","S-R: retirement effect","S-U: spatial selectivity beyond dose","S-P: final preservation and visibility"],
+    "quality":"Retained child tails can still cross into replacement regions and vice versa; actual protected contributions and RGB/depth are required, not center labels alone",
+    "fallback":"Saved parent state on any failed required gate"
+  },
+  "stop":"If R cannot preserve imaging or S adds no safe benefit over U, stop zero-training scalar retirement and moment-only re-expression. Consider bounded local geometric/opacity refitting using raw object observations plus preservation constraints, with colors/PVD still frozen; keep this a separate method experiment.",
+  "scope_limits":["Repeated scene mechanism frames are not independent generalization","No opaque-surface first-hit guarantee","No hidden texture or geometric accuracy claim from PVD contribution"],
+  "autodl":"keep on",
+  "subagents":"gpt-6.1-sol / max only"
+}
