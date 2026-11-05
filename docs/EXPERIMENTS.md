@@ -1,5 +1,11 @@
 # 实验索引
 
+## Scene008 双实例恢复与局部替换（2026-11-05）
+
+- `scene008_instances_20261105_r1`。[实验合同、组件图和 CPU 回执](autoresearch/scene008_instances_20261105/README.md)。
+- 199 帧建库、49 帧固定评价域与旧行候选准备完成。GPU smoke 和正式实验待启动。
+- `failure_ledger_refs=[V82-F01,V82-F06]`，`failure_ledger_delta=none`。
+
 ## scene008 C2车辆分支局部替换（2026-11-04）
 
 - task/run：`scene008_a37_C2_vehicle_20261104_r1`；只删除a37、保留a6与其余车辆。

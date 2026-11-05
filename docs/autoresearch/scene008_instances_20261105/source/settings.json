@@ -1,0 +1,32 @@
+{
+  "task_id": "scene008_instances_20261105_r1",
+  "seed": 0,
+  "steps_b": 1200,
+  "b_isolated_steps": 200,
+  "steps_c": 800,
+  "checkpoint_every": 200,
+  "lr_b_colour": 0.012,
+  "lr_b_shape": 0.008,
+  "lr_c": 0.015,
+  "fixed_probe": true,
+  "loss_b": {
+    "rgb": 1.0,
+    "coverage": 0.8,
+    "free": 0.8,
+    "depth": 0.4,
+    "anchor": 0.04,
+    "joint": 0.18,
+    "joint_depth": 0.2
+  },
+  "loss_c": {
+    "joint": 0.45,
+    "joint_depth": 0.3,
+    "reveal": 0.18,
+    "reveal_depth": 0.12,
+    "protect": 3.0,
+    "road": 2.0,
+    "road_edit": 0.8,
+    "gate_prior": 0.02,
+    "old_a37": 0.05
+  }
+}
