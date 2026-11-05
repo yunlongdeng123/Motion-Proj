@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 局部接管（2026-11-05）
+
+- [同域黑底显露和两种编辑状态复核](autoresearch/scene008_a6_continuous_takeover_20261105/README.md)。
+
 ## Scene008 道路颜色校正（2026-11-05）
 
 - [共享世界坐标颜色场与 49 帧双状态复核](autoresearch/scene008_ray_road_quality_20261105/README.md)。
