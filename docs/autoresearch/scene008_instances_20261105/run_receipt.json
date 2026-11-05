@@ -1,0 +1,140 @@
+{
+  "engineering_status": "PASS",
+  "smoke": {
+    "status": "PASS",
+    "scope": "engineering_smoke",
+    "raw_ids": [
+      105,
+      113,
+      130
+    ],
+    "updates_b": 4,
+    "updates_c": 800,
+    "restored_b": true,
+    "restored_c": true,
+    "d_entry": true,
+    "elapsed_s": 104.99672432802618,
+    "peak_cuda_bytes": 5119606784,
+    "settings": {
+      "task_id": "scene008_instances_20261105_r1",
+      "seed": 0,
+      "steps_b": 1200,
+      "b_isolated_steps": 200,
+      "steps_c": 800,
+      "checkpoint_every": 200,
+      "lr_b_colour": 0.012,
+      "lr_b_shape": 0.008,
+      "lr_c": 0.015,
+      "fixed_probe": true,
+      "loss_b": {
+        "rgb": 1.0,
+        "coverage": 0.8,
+        "free": 0.8,
+        "depth": 0.4,
+        "anchor": 0.04,
+        "joint": 0.18,
+        "joint_depth": 0.2
+      },
+      "loss_c": {
+        "joint": 0.45,
+        "joint_depth": 0.3,
+        "reveal": 0.18,
+        "reveal_depth": 0.12,
+        "protect": 3.0,
+        "road": 2.0,
+        "road_edit": 0.8,
+        "gate_prior": 0.02,
+        "old_a37": 0.05
+      }
+    },
+    "formal_updates": 0,
+    "quality_accepted": false
+  },
+  "baseline_replay": {
+    "105": 0,
+    "113": 0,
+    "130": 0
+  },
+  "formal": {
+    "b": {
+      "updates": 1200,
+      "elapsed_s": 185.639858847484,
+      "peak_cuda_bytes": 3611354112,
+      "raw_count": 49
+    },
+    "c": {
+      "updates": 800,
+      "elapsed_s": 118.43486467003822,
+      "peak_cuda_bytes": 5219099648,
+      "raw_count": 49
+    },
+    "d_updates": 0,
+    "attribute": {
+      "raw_ids": [
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137
+      ],
+      "candidates": 823054,
+      "eligible": 18209,
+      "mixed": 67299,
+      "elapsed_s": 15.515948195010424
+    },
+    "eval_frames": 49,
+    "metric_rows": 30031,
+    "max_group_conservation_error": {
+      "strong_baseline": 2.384185791015625e-06,
+      "objects": 2.0265579223632812e-06,
+      "replacement": 2.3245811462402344e-06,
+      "pvd": 2.3245811462402344e-06
+    }
+  },
+  "human_verdict": null,
+  "quality_accepted": false
+}
