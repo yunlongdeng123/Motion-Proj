@@ -1,5 +1,5 @@
 """Package measured asset controls and the separate inherited road-tint diagnosis."""
-import csv,gzip,json,shutil,hashlib
+import argparse,csv,gzip,json,shutil,hashlib
 from pathlib import Path
 import numpy as np
 from PIL import Image,ImageDraw
@@ -20,7 +20,8 @@ def strip(values,labels,crop,height=240):
     return result
 
 def main():
-    dest=RUN/'delivery';dest.mkdir(exist_ok=False);(dest/'frames').mkdir();(dest/'assets').mkdir();(dest/'evidence').mkdir()
+    parser=argparse.ArgumentParser();parser.add_argument('--output',default='delivery');args=parser.parse_args()
+    dest=RUN/args.output;dest.mkdir(exist_ok=False);(dest/'frames').mkdir();(dest/'assets').mkdir();(dest/'evidence').mkdir()
     summaries={arm:read(RUN/arm/'evaluation/summary.json') for arm in ('m1','m2','m3')}
     original=read(PARENT/'delivery/summary.json');evaluations={arm:read(RUN/arm/'evaluation/metrics.json') for arm in summaries}
     assert all(v['all49_complete'] for v in evaluations.values())
@@ -33,7 +34,10 @@ def main():
                 values.append(saved['solo'].astype(float));alpha=np.maximum(alpha,saved['alpha'][0])
             shutil.copyfile(RUN/arm/'evaluation/frames'/f'{raw:03d}_street.jpg',dest/'frames'/f'{raw:03d}_{arm}_street.jpg')
         with np.load(RUN.parent/'scene008_instances_20261105_r1/observations/frames'/f'{raw:03d}.npz') as obs:
-            rgb=obs['rgb'].astype(float)/255.;mask=obs['visible'][0];truth=rgb*mask[:,:,None]
+            rgb=obs['rgb'].astype(float)
+            if rgb.max()>1:rgb=rgb/255.
+            assert .1<float(rgb.max())<=1.,'Daylight Scene008 display must use correctly normalized RGB'
+            mask=obs['visible'][0];truth=rgb*mask[:,:,None]
         support=(alpha>.01)|(native.max(0)>.01)|mask;y,x=np.where(support)
         crop=(max(0,int(x.min())-10),max(0,int(y.min())-10),min(480,int(x.max())+11),min(320,int(y.max())+11))
         strip([truth,native,m0]+values,['Observed RGB','Native a6','M0 2048 SH0','M1 2048 SH3','M2 18432 SH0','M3 measured SH0'],crop).save(dest/'frames'/f'{raw:03d}_objects.jpg',quality=95)

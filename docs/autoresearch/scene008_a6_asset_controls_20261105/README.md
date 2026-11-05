@@ -39,3 +39,5 @@ M3 standalone metadata includes current geometry/provenance hashes, exact source
 Reproduction uses the existing campaign sibling data/environment layout. Copy `source/` into a new campaign run first; the source defaults depend on the saved native, road and observation directories. Compile `deterministic_csr.cu` with `nvcc -O3 -std=c++14 -shared -Xcompiler -fPIC -o libdeterministic_csr.so source/deterministic_csr.cu`. Standalone object loading only needs the explicit NPZ path plus sh_asset.py/full_pvd.py and standard NumPy/SciPy/Torch.
 
 No source checkpoint was overwritten. Unrelated repository changes were preserved. AutoDL remains on; no shutdown was performed.
+
+The observed-RGB report preview was corrected to avoid dividing already normalized RGB by255. All three model assets remain byte-identical and all49 numeric metrics are identical to the preceding report. Browser/layout and actual gallery handlers are checked after retrieval.
