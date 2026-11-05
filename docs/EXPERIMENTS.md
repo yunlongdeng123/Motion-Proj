@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 剩余遮挡复查（2026-11-05）
+
+- [scene008_a6_residual_replay_20261105](autoresearch/scene008_a6_residual_replay_20261105/README.md)。零训练共享退役、双重保护与 49 帧街景复核。
+
 ## Scene008 a6 下部局部融合（2026-11-05）
 
 - `scene008_a6_local_fusion_20261105`。[零训练黑底对照及逐帧保护检查](autoresearch/scene008_a6_local_fusion_20261105/README.md)。
