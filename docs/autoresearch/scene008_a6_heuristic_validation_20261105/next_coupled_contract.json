@@ -1,0 +1,61 @@
+{
+  "status": "PLANNED_NOT_RUN",
+  "objective": "couple measured surface handoff to old-support retirement before learned policy",
+  "split": "same 40 BUILD / 9 HELD as first experiment",
+  "constants": {
+    "source_voxel_m": 0.05,
+    "max_normal_angle_degrees": 20,
+    "neighbor_distance_m": 0.08,
+    "measured_depth_match_m": 0.12,
+    "transfer_levels": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ]
+  },
+  "rules": [
+    {
+      "id": "R1",
+      "action": "create measured surface groups from BUILD-only raw anchors",
+      "eligibility": "actual RGB-valid associations and support in at least two distinct BUILD frames; source identifiers retained",
+      "shape": "tangent size derived from local spacing and capped; thickness limited to measured-surface band"
+    },
+    {
+      "id": "R2",
+      "action": "link old support to measured group using actual joint alpha*T and depth-consistent measurements",
+      "ambiguous": "large kernels touching multiple groups remain mixed until split; no pointwise identity truth inferred"
+    },
+    {
+      "id": "R3",
+      "action": "fit shared group handoff parameters for old and new representations together",
+      "constraint": "in the rendered result, old-plus-new measured-group coverage must track pre-handoff coverage, while original measured RGB and depth constrain placement",
+      "rendering": "all physical rows join one depth sort; no view mask used to paste imagery"
+    },
+    {
+      "id": "R4",
+      "action": "keep unknown lower support distinct from measured transfer",
+      "negative_evidence": "first-return segments are witnesses with finite pose uncertainty; no whole-cell empty label from a ray hit"
+    },
+    {
+      "id": "R5",
+      "action": "freeze all candidate groups and transfer coefficients before HELD evaluation",
+      "appearance": "only a6 measured BUILD RGB; no colors from a37 or road"
+    }
+  ],
+  "arms": [
+    "parent",
+    "fixed retirement only",
+    "new measured assets without retirement",
+    "coupled handoff with identical retirement request"
+  ],
+  "primary_gate": {
+    "held_panel": "both RGB and measured depth improve relative to the retirement-only control",
+    "original_view": "no-edit quality is checked in the new scene",
+    "other_surfaces": "a37, measured road, seam and non-target local changes remain within fixed previous guards",
+    "coverage": "measured old-plus-new group alpha*T deviation explicitly bounded; scalar opacity sum is not a conservation claim",
+    "reveal": "same fixed PVD denominator; no hidden-geometry accuracy claim"
+  },
+  "learning_entry": "only after positive-control and actual-scene heuristic gates pass; compare learned action ranking on frozen candidate/action interface"
+}

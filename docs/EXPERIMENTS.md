@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 启发式接管验证（2026-11-05）
+
+- [固定裁剪、实测面正对照及原始第一回波核查](autoresearch/scene008_a6_heuristic_validation_20261105/README.md)。方法未通过保护验收。
+
 ## Scene008 a6 射线排序与局部接管（2026-11-05）
 
 - [深度顺序对照、逐行接管和 49 帧复核](autoresearch/scene008_a6_depth_order_20261105/README.md)。

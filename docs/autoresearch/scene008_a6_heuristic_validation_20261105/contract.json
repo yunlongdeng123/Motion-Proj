@@ -1,0 +1,91 @@
+{
+  "task": "Scene008 heuristic-rule validation",
+  "version": 2,
+  "scene": "Scene008",
+  "fixed_parent": "scene008_a6_depth_order_20261105/delivery",
+  "no_new_training_updates": true,
+  "actors": {
+    "retain": "a6",
+    "delete_only": "a37"
+  },
+  "splits": {
+    "heldout": [
+      89,
+      95,
+      101,
+      105,
+      113,
+      121,
+      125,
+      130,
+      137
+    ],
+    "build": "other native49 frames",
+    "scope": "new surfel construction/appearance holdout only; parent/PVD/masks have full-scene context"
+  },
+  "tests": [
+    {
+      "id": "E0",
+      "hypothesis": "existing free mask contains direct evidence relevant to lower conflict support",
+      "measurement": "separate padded-box misses, reviewed measured-through, strict occlusion and unknown"
+    },
+    {
+      "id": "E1",
+      "hypothesis": "measured-anchor rescue can protect imaging for same real lower retirement",
+      "action": "fixed canonical whole-corridor volume 25 percent",
+      "arms": [
+        "parent",
+        "same retirement",
+        "proxy only",
+        "same retirement plus proxy"
+      ]
+    },
+    {
+      "id": "E2",
+      "hypothesis": "measured-surface rescue can restore an observed panel after controlled support withdrawal",
+      "action": "BUILD-geometry rear measured panel, fixed 60 percent volume retirement",
+      "arms": [
+        "parent",
+        "same retirement",
+        "proxy only",
+        "same retirement plus proxy"
+      ]
+    },
+    {
+      "id": "E3",
+      "hypothesis": "first-return beam segments provide independent object-space free witnesses",
+      "source": "first valid return only, actual side sensor or TOP per-pixel origin, raw0..198",
+      "endpoint_margin_m": 0.15,
+      "interpretation": "beam-segment witnesses; whole-cell emptiness not inferred"
+    }
+  ],
+  "rescue_v1": {
+    "trigger": "native visible contribution loss > .005",
+    "prefix_T_min": 0.05,
+    "opacity_cap": 0.35,
+    "min_distinct_build_views": 2
+  },
+  "rescue_v2": {
+    "trigger": "v1 or raw-a6 RGB MAE increase > .002",
+    "opacity": "positive least-squares one-step insertion toward measured RGB at measured depth, no neural training",
+    "prefix_T_min": 0.05,
+    "opacity_cap": 0.35,
+    "min_distinct_build_views": 2
+  },
+  "acceptance": {
+    "same_retirement_between_arms": true,
+    "no_heldout_RGB_in_proxy": true,
+    "all49_black_and_both_street_states": true,
+    "protect_existing_surface_and_non_target": true,
+    "local_tail_checks": [
+      0.02,
+      0.05
+    ],
+    "hidden_truth": "absent; reveal is fixed PVD visibility proxy",
+    "automatic_adoption": false
+  },
+  "resource": {
+    "autodl": "keep running",
+    "subagents": "gpt-6.1-sol max only"
+  }
+}
