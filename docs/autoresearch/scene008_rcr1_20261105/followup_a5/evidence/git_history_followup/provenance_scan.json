@@ -1,0 +1,255 @@
+{
+  "repo": "/root/autodl-tmp/motion_proj_v82_gn11_v42",
+  "head_at_read": "16074dccd32e2a58babbf2846367d09430193614",
+  "relevant_pre_single_git_paths": [
+    "scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v41_20261023/tools/run_v41_baseline.py",
+    "scripts/worldsim_v82/drivingeditor_shadow_rebuild_20261017/r15/gn11_stage1_v41_20261023/tools/run_v41_formal_serial.py"
+  ],
+  "zip_members": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/V41_source_r7_final.zip",
+      "matching_members": []
+    }
+  ],
+  "metadata": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/plan.json": {
+      "keys": [
+        "task",
+        "version",
+        "V1_source",
+        "baseline_config",
+        "road_bundle",
+        "dense_manifest",
+        "campaign",
+        "arms",
+        "iterations_each",
+        "formal_checkpoint_steps",
+        "stage",
+        "V4_execution",
+        "GPU_used",
+        "optimizer_updates",
+        "quality_accepted",
+        "human_verdict",
+        "failure_ledger_refs",
+        "failure_ledger_delta",
+        "deferred",
+        "revision",
+        "engineering_V1_updates",
+        "engineering_road_updates",
+        "formal_updates",
+        "shutdown_requested_by_user",
+        "formal_authorization"
+      ],
+      "selected": {
+        "task": "WS-V82-R15-GN11-V41-PAIRED30K-20261024",
+        "version": "GN11_V41_DENSE_COMPOSITE_ROAD_R7_20261024",
+        "V1_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+        "baseline_config": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_configs/scene0008_089_137_GN11.json",
+        "road_bundle": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json",
+        "dense_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023_dense_r7/manifest.json",
+        "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023",
+        "iterations_each": 30000,
+        "stage": "FORMAL_PAIRED30K_USER_AUTHORIZED",
+        "V4_execution": "old RP remains user-paused; no old controller reused",
+        "GPU_used": true,
+        "optimizer_updates": "see smoke per-phase returned records; formal=0",
+        "quality_accepted": false,
+        "human_verdict": null,
+        "failure_ledger_delta": "none",
+        "revision": "incremental blocked-consensus sources, legacy targets and fixed R geometry preserved",
+        "engineering_V1_updates": 2000,
+        "engineering_road_updates": 2000,
+        "formal_updates": 0,
+        "shutdown_requested_by_user": false,
+        "formal_authorization": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/formal_authorization.json"
+      }
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/formal_authorization.json": {
+      "keys": [
+        "status",
+        "authorized_utc",
+        "campaign",
+        "user_request",
+        "interpretation",
+        "arms",
+        "iterations_each",
+        "checkpoint_steps",
+        "R_config",
+        "B_config",
+        "strict_trajectory_passed",
+        "quality_accepted",
+        "smoke_status_preserved",
+        "actual_restore_passed",
+        "no_method_changes",
+        "engineering_updates_before_launch",
+        "formal_updates_before_launch",
+        "deferred",
+        "failure_ledger_refs",
+        "failure_ledger_delta"
+      ],
+      "selected": {
+        "status": "USER_AUTHORIZED_FORMAL_30K_WITH_REPORTED_SMOKE_LIMITS",
+        "authorized_utc": "2026-10-24T01:47:16.340468+00:00",
+        "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023",
+        "user_request": "\u76f4\u63a5\u8dd1\u5b8c30k\uff0c\u8dd1\u5b8c\u6211\u4eec\u518d\u770b\u770b\u6307\u6807\u3002\u5b8c\u6574\u662f\u8981\u8dd1\u51e0\u4e2a\u5b9e\u9a8c\uff0c\u6309\u7167\u4f60\u8fd9\u4e2a\u62a5\u544a\u6765\u770b\u5e94\u8be5\u81f3\u5c112\u4e2a\uff0c\u590d\u73b0\u539fv1+v4\uff1f",
+        "interpretation": "Two fresh arms: current V4.1-R, original V1-B; old V4 result retained as historical reference.",
+        "iterations_each": 30000,
+        "strict_trajectory_passed": false,
+        "quality_accepted": false,
+        "smoke_status_preserved": true,
+        "actual_restore_passed": true,
+        "no_method_changes": true,
+        "formal_updates_before_launch": 0,
+        "failure_ledger_delta": "none"
+      }
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/phase_0_30000_returned.json": {
+      "keys": [
+        "status",
+        "iteration",
+        "phase_V1_updates",
+        "phase_road_updates",
+        "wall_seconds",
+        "source",
+        "quality_accepted",
+        "human_verdict"
+      ],
+      "selected": {
+        "status": "RETURNED_AT_COMPLETE_NODE",
+        "iteration": 30000,
+        "phase_V1_updates": 30000,
+        "phase_road_updates": 0,
+        "wall_seconds": 8838.328638672829,
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/returned.json": {
+      "keys": [
+        "status",
+        "mode",
+        "iteration",
+        "actual_updates",
+        "elapsed_seconds",
+        "learning_rate_horizon",
+        "formal_stop",
+        "max_allocated_bytes",
+        "max_reserved_bytes",
+        "quality_accepted",
+        "human_verdict"
+      ],
+      "selected": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "formal",
+        "iteration": 10000,
+        "actual_updates": 10000,
+        "elapsed_seconds": 1730.1949629131705,
+        "learning_rate_horizon": 30000,
+        "formal_stop": 10000,
+        "max_allocated_bytes": 8840149504,
+        "max_reserved_bytes": 14816378880,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json": {
+      "keys": [
+        "schema_version",
+        "status",
+        "iteration",
+        "model_path",
+        "source_path",
+        "checkpoints",
+        "checkpoint_paths",
+        "config",
+        "config_sha256",
+        "camera_manifest",
+        "evaluations",
+        "parameters_evaluated",
+        "resume_state",
+        "sgcm",
+        "eval_dir",
+        "metrics",
+        "paper_metrics",
+        "frames"
+      ],
+      "selected": {
+        "schema_version": 1,
+        "status": "complete",
+        "iteration": 10000,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+        "config_sha256": "86ba85009250529d2cbd801381705ceeaddae4dfaf1130fd020b97c981248bbf",
+        "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+        "eval_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render",
+        "metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/metrics.json",
+        "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/paper_region_metrics.json"
+      }
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/checkpoint_events/iteration_010000.json": {
+      "keys": [
+        "schema_version",
+        "status",
+        "iteration",
+        "model_path",
+        "source_path",
+        "checkpoints",
+        "checkpoint_paths",
+        "config",
+        "config_sha256",
+        "camera_manifest",
+        "evaluations",
+        "parameters_evaluated",
+        "resume_state",
+        "sgcm",
+        "eval_dir",
+        "metrics",
+        "paper_metrics",
+        "frames"
+      ],
+      "selected": {
+        "schema_version": 1,
+        "status": "complete",
+        "iteration": 10000,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+        "config_sha256": "b883ce0d096047e6d1d7bea7296fb330c0d52f6bcfc1615a5c47592b704962fc",
+        "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+        "eval_dir": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_10000_render",
+        "metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_10000_render/metrics.json",
+        "paper_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_10000_render/paper_region_metrics.json"
+      }
+    }
+  },
+  "single_archived_vs_actual": [
+    {
+      "relative": "source/prepare_single_input.py",
+      "archive_commit": "3fefd98ecf5dfd5a73898bf46717cc8afe4ca147",
+      "archive_sha256": "ffb0b1853db6aea720b5b78044ca8a0aa7ec70cde0dedcc4a99934229095cf99",
+      "active_sha256": "ffb0b1853db6aea720b5b78044ca8a0aa7ec70cde0dedcc4a99934229095cf99",
+      "exact_bytes": true
+    },
+    {
+      "relative": "source/train_single.py",
+      "archive_commit": "3fefd98ecf5dfd5a73898bf46717cc8afe4ca147",
+      "archive_sha256": "508317bcb1e2e796f8e3e7b4f9b83c3aca64af1761ea345e1600c003924ac370",
+      "active_sha256": "508317bcb1e2e796f8e3e7b4f9b83c3aca64af1761ea345e1600c003924ac370",
+      "exact_bytes": true
+    },
+    {
+      "relative": "config.json",
+      "archive_commit": "3fefd98ecf5dfd5a73898bf46717cc8afe4ca147",
+      "archive_sha256": "8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc",
+      "active_sha256": "8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc",
+      "exact_bytes": true
+    },
+    {
+      "relative": "identity_contract.json",
+      "archive_commit": "3fefd98ecf5dfd5a73898bf46717cc8afe4ca147",
+      "archive_sha256": "81a90619c245ebad0d26f3f4bd24cc8f219ff63709cdb6f0184d51f4d16f383c",
+      "active_sha256": "81a90619c245ebad0d26f3f4bd24cc8f219ff63709cdb6f0184d51f4d16f383c",
+      "exact_bytes": true
+    }
+  ]
+}

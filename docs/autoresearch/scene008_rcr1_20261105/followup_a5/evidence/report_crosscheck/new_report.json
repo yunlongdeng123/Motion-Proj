@@ -1,0 +1,301 @@
+{
+  "status": "PASS_READ_ONLY_ACTUAL_DELIVERY_REPORT_CROSSCHECK",
+  "recorded_at_utc": "2026-11-05T16:09:43.482529+00:00",
+  "report": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\index.html",
+  "report_title": "Scene008：完整a6的材质、采样与实测校正",
+  "raw": 105,
+  "main_finding": "在这份实际报告内，a5上部缺失在M0参考列已经存在；tint对照中更早的Native10K原生控制列也已存在。M1/M2资产对照使用同一个已经有缺损的ownership双身份native10K上下文。",
+  "earliest_displayed_stage_in_this_report": "Native10K control, before frozen static gates, inserted road, fine road colour and complete a6 asset/M0 replacement",
+  "native_identity": {
+    "classification": "ownership native10K, dynamic actors6+37",
+    "not_direct_single37_or_full5": true,
+    "checkpoint_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal",
+    "iteration": 10000,
+    "checkpoint_paths": [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/chkpnt10000.pth",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/dynamic_chkpnt10000.pth",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/env_light_chkpnt10000.pth",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/training_state10000.pth"
+    ],
+    "original_recorded_parent_identity": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/chkpnt10000.pth": [
+        850149464,
+        1793845554989709460
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/dynamic_chkpnt10000.pth": [
+        822966680,
+        1793845557250917532
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/env_light_chkpnt10000.pth": [
+        226494608,
+        1793845558531572807
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/training_state10000.pth": [
+        44312,
+        1793845673909006282
+      ]
+    },
+    "native_actor_rows": {
+      "6": 100358,
+      "37": 937415
+    },
+    "identity_basis": [
+      "Actual report tint/metrics.json runtime_off.native_parent and runtime_fine.native_parent",
+      "Actual report evidence/m1_all49_metrics.json.gz and m2_all49_metrics.json.gz runtime.native_parent match exactly"
+    ],
+    "PNG_identity_limit": "RGB byte equality corroborates the same displayed result; it alone does not uniquely prove model identity. Exact checkpoint paths come from the actual report runtime metadata."
+  },
+  "road_and_colour_context": {
+    "road_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/formal/checkpoint001000.pt",
+    "fine_coefficients": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_ray_road_colour_fine_20261105/coefficients.npz",
+    "M1_M2_runtime_checks": {
+      "m1": {
+        "runtime_native_parent_matches_tint": true,
+        "native_actor_rows": {
+          "6": 100358,
+          "37": 937415
+        },
+        "fine_road": true,
+        "native_a6_rows_in_replacement_scene": 0,
+        "all49_complete": true
+      },
+      "m2": {
+        "runtime_native_parent_matches_tint": true,
+        "native_actor_rows": {
+          "6": 100358,
+          "37": 937415
+        },
+        "fine_road": true,
+        "native_a6_rows_in_replacement_scene": 0,
+        "all49_complete": true
+      }
+    },
+    "asset_replaced": "native a6 only; complete M0/M1/M2 a6 replaces native a6, while shared static/a37/road context is retained"
+  },
+  "street_images": [
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\frames\\105_m1_street.jpg",
+      "size": [
+        1920,
+        350
+      ],
+      "columns": [
+        {
+          "column": 1,
+          "label": "SH0/M0 + a37 present",
+          "a5_upper_body": "already missing"
+        },
+        {
+          "column": 2,
+          "label": "M1 + a37 present",
+          "a5_upper_body": "missing"
+        },
+        {
+          "column": 3,
+          "label": "SH0/M0 + delete a37",
+          "a5_upper_body": "already missing"
+        },
+        {
+          "column": 4,
+          "label": "M1 + delete a37",
+          "a5_upper_body": "missing"
+        }
+      ],
+      "image_panel_xyxy_relative_to_each_column": [
+        0,
+        30,
+        480,
+        350
+      ]
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\frames\\105_m2_street.jpg",
+      "size": [
+        1920,
+        350
+      ],
+      "columns": [
+        {
+          "column": 1,
+          "label": "SH0/M0 + a37 present",
+          "a5_upper_body": "already missing"
+        },
+        {
+          "column": 2,
+          "label": "M2 + a37 present",
+          "a5_upper_body": "missing"
+        },
+        {
+          "column": 3,
+          "label": "SH0/M0 + delete a37",
+          "a5_upper_body": "already missing"
+        },
+        {
+          "column": 4,
+          "label": "M2 + delete a37",
+          "a5_upper_body": "missing"
+        }
+      ],
+      "image_panel_xyxy_relative_to_each_column": [
+        0,
+        30,
+        480,
+        350
+      ]
+    }
+  ],
+  "M0_file_clarification": {
+    "literal_105_m0_street_exists": false,
+    "meaning": "No standalone105_m0_street.jpg in this delivery. M0/SH0 is the reference column1 and3 embedded in105_m1_street.jpg and105_m2_street.jpg. M3 instead compares toM2.",
+    "M0_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/complete_a6_fitted.npz",
+    "M0_description": "Complete2048-point a6 SH0; not the old full5 native scene"
+  },
+  "tint_images": [
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\tint\\105_keep_controls.png",
+      "size": [
+        1920,
+        1044
+      ],
+      "tile_size_with_header": [
+        480,
+        348
+      ],
+      "first_row": [
+        "Raw RGB / identical camera",
+        "Native10K",
+        "Native + frozen static gates",
+        "Road1K / fine off"
+      ],
+      "second_row": [
+        "Road1K / fine on",
+        "Complete asset / fine off",
+        "Complete asset / fine on",
+        "Fine color absolute delta x8"
+      ],
+      "third_row": [
+        "Native environment contribution",
+        "Asset environment contribution",
+        "Road alpha*T",
+        "Legacy-static alpha*T"
+      ],
+      "visual_observation": "Raw RGB shows the a5 blue foreground car upper body; Native10K already lacks that upper body and later scene-control columns retain the deficit."
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\tint\\105_delete_controls.png",
+      "size": [
+        1920,
+        1044
+      ],
+      "tile_size_with_header": [
+        480,
+        348
+      ],
+      "first_row": [
+        "Raw RGB / identical camera",
+        "Native10K",
+        "Native + frozen static gates",
+        "Road1K / fine off"
+      ],
+      "second_row": [
+        "Road1K / fine on",
+        "Complete asset / fine off",
+        "Complete asset / fine on",
+        "Fine color absolute delta x8"
+      ],
+      "third_row": [
+        "Native environment contribution",
+        "Asset environment contribution",
+        "Road alpha*T",
+        "Legacy-static alpha*T"
+      ],
+      "visual_observation": "Raw RGB shows the a5 blue foreground car upper body; Native10K already lacks that upper body and later scene-control columns retain the deficit."
+    }
+  ],
+  "existing_PNG_rechecks": [
+    {
+      "state": "keep",
+      "actual_report_image": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\tint\\105_keep_controls.png",
+      "tile_xyxy": [
+        480,
+        28,
+        960,
+        348
+      ],
+      "existing_native_image": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\a5_diagnosis\\current\\raw105_native_keep.png",
+      "max_uint8_absdiff": 0,
+      "mean_uint8_absdiff": 0.0,
+      "all_RGB_bytes_equal": true
+    },
+    {
+      "state": "delete",
+      "actual_report_image": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\tint\\105_delete_controls.png",
+      "tile_xyxy": [
+        480,
+        28,
+        960,
+        348
+      ],
+      "existing_native_image": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\a5_diagnosis\\current\\raw105_native_delete.png",
+      "max_uint8_absdiff": 0,
+      "mean_uint8_absdiff": 0.0,
+      "all_RGB_bytes_equal": true
+    }
+  ],
+  "source_evidence": [
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\evaluate_control.py",
+      "line_start": 47,
+      "line_end": 56,
+      "text": "47:     p=argparse.ArgumentParser();p.add_argument('arm',choices=['m1','m2','m3']);p.add_argument('--asset',required=True);p.add_argument('--compare');args=p.parse_args()\n48:     start=time.time();dest=RUN/args.arm/'evaluation';dest.mkdir(exist_ok=False);frames=dest/'frames';frames.mkdir()\n49:     compare=Path(args.compare) if args.compare else PARENT/'appearance/complete_a6_fitted.npz'\n50:     rt=Runtime();asset=SHAsset.from_geometry(Path(args.asset)).cuda();parent=SHAsset.from_geometry(compare).cuda()\n51:     records=[];conservation=0.;alpha_delta=0.;depth_delta=0.\n52:     for raw in range(89,138):\n53:         d=rt.raw(raw);native=rt.native_reference(raw);base=solo(rt,raw,parent);new=solo(rt,raw,asset)\n54:         bk=rt.render_scene(raw,baseline=True);bd=rt.render_scene(raw,baseline=True,delete=True)\n55:         pk=rt.render_scene(raw,parent);pd=rt.render_scene(raw,parent,delete=True)\n56:         nk=rt.render_scene(raw,asset);nd=rt.render_scene(raw,asset,delete=True)"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\evaluate_control.py",
+      "line_start": 71,
+      "line_end": 77,
+      "text": "71:         strip([d['rgb']*d['a6_visible'][None],native['rgb'],base['rgb'],new['rgb']],\n72:           ['Observed a6','Native a6','Complete / SH0',args.arm+' complete asset'],crop).save(frames/f'{raw:03d}_objects.jpg',quality=94)\n73:         strip([pk['rgb'],nk['rgb'],pd['rgb'],nd['rgb']],\n74:           ['SH0 / a37 present',args.arm+' / a37 present','SH0 / delete a37',args.arm+' / delete a37'],None,height=320).save(frames/f'{raw:03d}_street.jpg',quality=92)\n75:         np.savez_compressed(frames/f'{raw:03d}_replay.npz',solo=cpu(new['rgb']).astype(np.float16),alpha=cpu(new['alpha']).astype(np.float16),\n76:           keep=cpu(nk['rgb']).astype(np.float16),delete=cpu(nd['rgb']).astype(np.float16),\n77:           keep_groups=cpu(nk['component_alpha_T']).astype(np.float16),delete_groups=cpu(nd['component_alpha_T']).astype(np.float16))"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\report_controls.py",
+      "line_start": 28,
+      "line_end": 43,
+      "text": "28:     for raw in range(89,138):\n29:         with np.load(PARENT/'evaluation/frames'/f'{raw:03d}_replay.npz') as old:\n30:             native=old['native_solo'].astype(float);m0=old['asset_solo'].astype(float);alpha=old['alpha'][0].astype(float)\n31:         values=[]\n32:         for arm in summaries:\n33:             with np.load(RUN/arm/'evaluation/frames'/f'{raw:03d}_replay.npz') as saved:\n34:                 values.append(saved['solo'].astype(float));alpha=np.maximum(alpha,saved['alpha'][0])\n35:             shutil.copyfile(RUN/arm/'evaluation/frames'/f'{raw:03d}_street.jpg',dest/'frames'/f'{raw:03d}_{arm}_street.jpg')\n36:         with np.load(RUN.parent/'scene008_instances_20261105_r1/observations/frames'/f'{raw:03d}.npz') as obs:\n37:             rgb=obs['rgb'].astype(float)\n38:             if rgb.max()>1:rgb=rgb/255.\n39:             assert .1<float(rgb.max())<=1.,'Daylight Scene008 display must use correctly normalized RGB'\n40:             mask=obs['visible'][0];truth=rgb*mask[:,:,None]\n41:         support=(alpha>.01)|(native.max(0)>.01)|mask;y,x=np.where(support)\n42:         crop=(max(0,int(x.min())-10),max(0,int(y.min())-10),min(480,int(x.max())+11),min(320,int(y.max())+11))\n43:         strip([truth,native,m0]+values,['Observed RGB','Native a6','M0 2048 SH0','M1 2048 SH3','M2 18432 SH0','M3 measured SH0'],crop).save(dest/'frames'/f'{raw:03d}_objects.jpg',quality=95)"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\road_tint_diagnose.py",
+      "line_start": 85,
+      "line_end": 105,
+      "text": "85:     off, fine = Runtime(fine_road=False), Runtime(fine_road=True)\n86:     assert off.parent_identity == fine.parent_identity\n87:     assert off.repair_state_sha256 == fine.repair_state_sha256\n88:     road_delta = cpu(fine.road_colors - off.road_colors)\n89:     records = []\n90:     for raw in RAWS:\n91:         d = fine.raw(raw)\n92:         reference = cpu(d['rgb'])\n93:         as_image(reference).save(output / f'{raw:03d}_raw.png')\n94:         for delete in (False, True):\n95:             state = 'delete' if delete else 'keep'\n96:             packages = dict(native=off.n.render(off.raw(raw)['cam'], dynamic=not delete))\n97:             scene = off.scene(raw, baseline=True, delete=delete)\n98:             road_rows = scene['rows']['features'][:, 2 + GROUPS.index('road')] > 0\n99:             gated = dict(scene, rows=select_rows(scene['rows'], ~road_rows))\n100:             packages.update(gated_no_road=off.render_rows(raw, gated),\n101:                             road_off=off.render_rows(raw, scene),\n102:                             road_fine=fine.render_scene(raw, baseline=True, delete=delete),\n103:                             asset_off=off.render_scene(raw, asset, delete=delete),\n104:                             asset_fine=fine.render_scene(raw, asset, delete=delete))\n105:             assert torch.allclose(packages['road_off']['rgb'], off.exp.render(raw, keep=not delete)['rgb'], atol=5e-6, rtol=0)"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\road_tint_diagnose.py",
+      "line_start": 149,
+      "line_end": 174,
+      "text": "149:             panel(output / f'{raw:03d}_{state}_controls.png', [\n150:                 ('Raw RGB / identical camera', reference), ('Native10K', images['native']),\n151:                 ('Native + frozen static gates', images['gated_no_road']), ('Road1K / fine off', images['road_off']),\n152:                 ('Road1K / fine on', images['road_fine']), ('Complete asset / fine off', images['asset_off']),\n153:                 ('Complete asset / fine on', images['asset_fine']), ('Fine color absolute delta x8', np.abs(images['asset_fine'] - images['asset_off']) * 8),\n154:                 ('Native environment contribution', environment['native']), ('Asset environment contribution', environment['asset_fine']),\n155:                 ('Road alpha*T', road_alpha), ('Legacy-static alpha*T', static_alpha)])\n156:             np.savez_compressed(output / f'{raw:03d}_{state}_exact.npz', raw_RGB=reference,\n157:                                 **images, native_environment=environment['native'],\n158:                                 asset_environment=environment['asset_fine'], road_alpha_T=road_alpha,\n159:                                 legacy_static_alpha_T=static_alpha, road_seam=seam)\n160:             print(json.dumps(dict(raw=raw, state=state, seconds=time.monotonic() - start)), flush=True)\n161:         off._data.clear()\n162:         fine._data.clear()\n163:     assert off.modelunchanged() and fine.modelunchanged() and asset.assert_geometry_unchanged()\n164:     assert sha_file(asset_path) == source_hash == rgb_hash\n165:     report = dict(status='PASS_DIAGNOSTIC', raw_ids=RAWS, training_updates=0, rows=records,\n166:                   seconds=time.monotonic() - start, same_asset_file=str(asset_path), asset_sha256=source_hash,\n167:                   frozen_scene_unchanged=True, geometry_hash=asset.geometry_hash,\n168:                   runtime_off=off.meta, runtime_fine=fine.meta,\n169:                   road_field=dict(rgb_delta_mean=road_delta.mean(0).tolist(),\n170:                                   rgb_delta_min=road_delta.min(0).tolist(), rgb_delta_max=road_delta.max(0).tolist()),\n171:                   source_evidence=dict(runtime=str(OLD / 'source/scene_runtime.py'),\n172:                                        native_interface=str(RUN.parent / 'scene008_native_road1k_20261105_r1/source/native_binding.py'),\n173:                                        static_gates=str(RUN.parent / 'scene008_native_road1k_20261105_r1/source/repair37.py'),\n174:                                        fine_solver=str(RUN.parent / 'scene008_ray_road_colour_fine_20261105/source/refine_colour.py')),"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\scene_runtime.py",
+      "line_start": 80,
+      "line_end": 102,
+      "text": "80:     def __init__(self, fine_road=True):\n81:         import json\n82:         self.exp = Experiment()\n83:         self.n = self.exp.n\n84:         self.pipe = self.n.args\n85:         self.scale = float(self.exp.meta['meter_to_model'])\n86:         self.road_checkpoint = ROAD / 'formal/checkpoint001000.pt'\n87:         checkpoint = torch.load(self.road_checkpoint, map_location='cpu', weights_only=False)\n88:         if checkpoint['step'] != 1000 or checkpoint['parent_identity'] != self.n.before:\n89:             raise ValueError('Road1K checkpoint/native10K identity mismatch')\n90:         self.exp.repair.load_state_dict(checkpoint['repair'], strict=True)\n91:         self.exp.repair.requires_grad_(False)\n92:         self.n.env.requires_grad_(False)\n93:         self._versions = self._tensor_versions()\n94:         self.parent_identity = dict(self.n.before)\n95:         self.repair_state_sha256 = self.repair_hash()\n96:         self._data = {}\n97:         self.road_colors = self.exp.repair.road.colors().detach().clone()\n98:         self.meta = dict(native_parent=self.n.before, road_checkpoint=str(self.road_checkpoint),\n99:                          road_checkpoint_sha256=sha256(self.road_checkpoint), groups=GROUPS,\n100:                          repair_state_sha256=self.repair_state_sha256,\n101:                          native_actor_rows=dict(self.n.rows), fine_road=bool(fine_road),\n102:                          replacement_native_a6_rows=0, renderer='original editor_common.raster')"
+    },
+    {
+      "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_asset_controls\\delivery\\source\\scene_runtime.py",
+      "line_start": 212,
+      "line_end": 240,
+      "text": "212:     def scene(self, raw, asset=None, delete=False, baseline=False):\n213:         self.assert_unchanged()\n214:         data = self.raw(raw)\n215:         static = self._static(data['cam'])\n216:         dynamic = self.n.actor_kwargs(data['cam'], delete_a37=False)\n217:         channels = static['shs'].shape[1] if static['shs'] is not None else 1\n218:         precomputed = static['colors_precomp'] is not None\n219:         if baseline:\n220:             # Preserve original packed row order and the parent's deletion mask.\n221:             dynamic = dict(dynamic, mask=dynamic['mask'] & (self.n.keep_a6 if delete else True))\n222:             rows = merge_rows(static, tagged(dynamic, owners=self.n.keep_a6))\n223:             asset_rows, native_a6 = None, int(self.n.keep_a6.sum())\n224:             a37_rows = int((~self.n.keep_a6).sum())\n225:         else:\n226:             if asset is None:\n227:                 raise ValueError('A complete asset is required for replacement scenes')\n228:             # Physical row selection removes ALL native-a6 primitives before raster input.\n229:             a37 = select_rows(dynamic, ~self.n.keep_a6)\n230:             if delete:\n231:                 a37 = select_rows(a37, torch.zeros_like(a37['mask']))\n232:             asset_rows = asset.rows(data['pose'], data['cam'], self.pipe, channels,\n233:                                     precomputed=precomputed)\n234:             if len(asset_rows['means3D']) != len(asset.xyz) or len(asset.xyz)==0:\n235:                 raise ValueError('Replacement must use every row of one complete asset')\n236:             rows = merge_rows(merge_rows(static, tagged(asset_rows, 'asset')), tagged(a37, 'a37'))\n237:             native_a6, a37_rows = 0, len(a37['mask'])\n238:         rows = merge_rows(rows, self._road(data['cam'], channels, precomputed))\n239:         assert bool((rows['features'][:, 6:] == 0).all()), 'Unexpected old clip metadata'\n240:         meta = dict(raw=raw, delete_a37=bool(delete), native_baseline=bool(baseline),"
+    }
+  ],
+  "summary_scope": "delivery/summary.json holdsM1/M2/M3 all49/BUILD/HELD evaluation aggregates; native model identity is explicitly recorded in the underlying all49 metrics runtime metadata.",
+  "limits": [
+    "This local report is downstream of the already-deficient native control; it cannot establish which earlier code commit first introduced the deficit.",
+    "No inference that a complete a5 body first formed and was subsequently destroyed, and no unique loss/initialization/densification cause is isolated.",
+    "The Native a6 black-background object column is an isolateda6 reference, not an old full5 scene and not an a5 completeness test.",
+    "Only existing saved images and small JSON/source files were read. No native checkpoint or large model was loaded."
+  ],
+  "new_GPU_render_or_training": false,
+  "old_outputs_modified": false,
+  "Git_modified": false,
+  "SSH_used": false,
+  "shutdown": false
+}

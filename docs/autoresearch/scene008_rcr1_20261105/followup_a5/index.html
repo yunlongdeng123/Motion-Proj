@@ -1,10 +1,23 @@
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>a5 车体完整性诊断</title>
-<style>body{max-width:1200px;margin:36px auto;padding:0 20px;color:#203543;font:17px/1.65 system-ui,sans-serif}h1{line-height:1.3}img{max-width:100%;height:auto}.notice{padding:16px;background:#fff0e4;border-left:4px solid #bc4c12}table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid #dce3e7;padding:7px;text-align:left}a{color:#0966a0}code{font-size:.9em}</style>
-<p><a href="../index.html">返回 RCR-1 对照与归档</a></p><h1>a5 的缺损早于删车与 M2</h1>
+<style>body{max-width:1200px;margin:36px auto;padding:0 20px;color:#203543;font:17px/1.65 system-ui,sans-serif}h1{line-height:1.3}img{max-width:100%;height:auto}.notice{padding:16px;background:#fff0e4;border-left:4px solid #bc4c12}table{border-collapse:collapse;width:100%;font-size:15px}td,th{border:1px solid #dce3e7;padding:7px;text-align:left}a{color:#0966a0}code{font-size:.9em;overflow-wrap:anywhere}</style>
+<p><a href="../index.html">返回 RCR-1 对照与归档</a></p><h1>a5 的缺损早于删车与 M2</h1><p><a href="#report-crosscheck">新核验：直接查看用户指出的旧／新报告同帧对照</a></p>
 <p class="notice">已把最早可见回退定位在 <b>Full5 原生 10K → Single-a37 原生 10K</b>。a5 是真实蓝车；当前尚未做修复，也没有把异常蓝斑的处理套到它身上。该诊断新增训练更新为 0。</p>
 <p>下面全部是 raw105、同一相机与时刻。Full5 的车身仍模糊，但车顶和挡风玻璃较完整；Single-a37 的原生 keep 图已明显缺损。随后 ownership、道路和 M2 延续了这一问题。</p>
 <img src="architecture.svg" alt="输入、原生模型、删车道路与M2输出的排查组件图">
 <a href="assets/raw105_stage_grid.png"><img src="assets/raw105_stage_grid.png" alt="raw105 六阶段同坐标放大对照"></a>
+<section id="report-crosscheck"><h2>直接复核用户指出的两份报告</h2>
+<p class="notice"><b>旧五身份方案在只删 a6＋a37 时，a5 的蓝色车顶和挡风玻璃仍完整。</b>新“完整 a6 的材质、采样与实测校正”报告里，M0、M2、keep、delete 的 a5 均已缺损；更早的 <b>Native10K</b> 控制列也已经缺损。</p>
+<a href="assets/report_crosscheck_raw105.png"><img src="assets/report_crosscheck_raw105.png" alt="实际旧报告GT与五身份选择性删除，及新报告原生、M0、M2同坐标raw105对照"></a>
+<p>上排：原图、旧 Full5 保留、旧 Full5 只删 a6＋a37。下排：新报告 Native10K（资产之前）、M0 keep、M2 delete。均为 raw105 的同坐标裁切；旧30K和新10K的预算、原图编码格式不同，本图用于定位完整性问题出现的阶段，不作为单变量训练优劣比较。</p>
+<table><tr><th>项目</th><th>旧选择性删除</th><th>新完整 a6 报告</th></tr>
+<tr><td>原生父模型</td><td>Full5 V41 B30K</td><td>ownership/run_r3/formal 10K</td></tr>
+<tr><td>动态表示</td><td>a5、a26、a18、a6、a37</td><td>仅 a6、a37；a5 留在时间静态层</td></tr>
+<tr><td>“指定身份”的操作</td><td>保留五身份模型，临时 raster mask 仅关 owner3/4（a6/a37）</td><td>原生重训输入／表示已缩为 a6+a37，再做资产替换</td></tr>
+<tr><td>a5 可见结构</td><td>raw105 车顶／挡风完整</td><td>Native10K 就已缺损；M0/M2 都延续缺损</td></tr></table>
+<p>新报告 Native10K 的 keep/delete 图块与本次已有原生输出逐像素 uint8 差均为 0；底层父模型身份由原报告 runtime 元数据确认，图像相同只作交叉印证。该报告的 M2 采样、材质与实测校正步骤不是这项既存缺损的起点。</p>
+<p><b>身份选择与训练输入需要区分：</b>旧方案是“保留五身份，再只删目标”，a5 仍有动态高斯；single-a37／ownership 配方是改变原生动态输入，a5 不再保留独立动态表示。已经核实旧 a37＋a6 选择性删除；本地尚未找到现成 only-a37 图，不把记忆当作已重现证据。</p>
+<details><summary>Git 线索与证明边界</summary><p><code>3fefd98ecf5dfd5a73898bf46717cc8afe4ca147</code>（11月3日）首次将 single-a37 配方及完成结果归档：只取 actor4=a37，a5 等保留在时间静态层，fresh 重训。它是配方首次入库证据，并非已证明的运行时 HEAD 或唯一 bug 提交。</p><p>当前保存的7个核心文件与10月19日源包逐字节一致，其中5个也与同日明文提交一致。未找到核心实现回退证据；旧检查点只保存 config SHA，没有运行时源码 SHA，因此不能排除未记录的临时改动。初始化、表示、RGB分项和运动正则仍未做单变量隔离。</p><p><a href="evidence/git_history_followup/summary.json">Git 溯源摘要</a> · <a href="evidence/git_history_followup/trace.md">提交、源码与哈希证据</a></p></details>
+<p>报告证据：<a href="evidence/report_crosscheck/old_report.json">旧报告与选择性删除合同</a> · <a href="evidence/report_crosscheck/new_report.json">新报告原生父模型／列定义核验</a> · <a href="evidence/report_crosscheck/image_manifest.json">图像原路径、裁切与 SHA256</a>。没有修改两份原报告，没有新增 GPU 渲染或训练。</p></section>
 <h2>哪些阶段已排除为 raw105 缺损的起点</h2>
 <p>本次重新加载旧 single 和当前 ownership 模型，使用原生 CUDA 渲染器逐组件渲染，保持 checkpoint 与模型参数不变。旧 single 的 raw105 重放与原先发布 PNG 的最大 8-bit 差为 0。</p>
 <ul><li>当前 ownership：native keep → delete a37，在 a5 原始标签域上的 RGB 最大差为 <b>0</b>。</li>
@@ -22,5 +35,5 @@
 <p>证据：<a href="evidence/summary.json">诊断摘要</a> · <a href="evidence/current_stage_receipt.json">当前模型消融回执</a> · <a href="evidence/old_single_stage_receipt.json">旧 single 回执</a> · <a href="evidence/mask_audit_49.json">49 帧身份核验</a> · <a href="evidence/initial_source_proximity_reconcile_cpu.json">初始点口径核验</a> · <a href="evidence/supervision_regularization_audit.json">监督与正则核验</a> · <a href="evidence/code_inventory.md">源码入口与行号</a> · <a href="evidence/render_stage_ablation.py">实际渲染脚本</a>。</p>
 <h2>现行处置与 a5 后续状态</h2>
 <p class="notice">用户已采用 <b>RCR-1 DELETE</b>，作为异常蓝 RGB 的成功修复结果。a5 真蓝车的既存缺损作为独立问题继续待查。</p>
-<p><b>a5 status：</b><code>independent earlier-version/commit investigation pending</code>。后续针对更早版本及相关代码提交独立核查。已知的 <b>Full5 → Single-a37</b> 是最早可见退化区间，尚未确定具体 commit 或单一机制的因果。</p>
-<p>本页既有诊断摘要与 Git 回执保留为历史记录，现行 RCR-1 采用状态以本节为准。本次仅更新页面说明，未修改模型、未新增诊断或训练。</p></html>
+<p><b>a5 status：</b><code>independent earlier-version/commit investigation pending</code>。两份实际报告已复核，并找到 single-a37 配方首次入库的 <code>3fefd98</code>。当前排查点是资产步骤之前的原生身份表示切换；尚未确定唯一致因 commit 或单一机制。</p>
+<p>本页既有诊断摘要与 Git 回执保留为历史记录，现行 RCR-1 采用状态以本节为准。本次新增已有报告与 Git 的只读核验，未修改模型、未新增 GPU 渲染或训练。</p></html>
