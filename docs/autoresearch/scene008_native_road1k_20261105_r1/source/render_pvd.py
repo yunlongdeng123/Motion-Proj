@@ -35,7 +35,7 @@ def append_tags(rows, values):
     return rows
 
 
-def draw(exp, camera, pvd, pose, delete):
+def draw(exp, camera, pvd, pose, delete, *, patch_rgb=False, hide_native_a6=False):
     native=exp.n
     static=prepare_rasterization(camera,native.static,native.args)
     static['means2D']=torch.zeros_like(static['means3D'])
@@ -43,21 +43,28 @@ def draw(exp, camera, pvd, pose, delete):
     static['opacities']=static['opacities'].index_copy(
         0,ids,static['opacities'][ids]*exp.repair.gate_raw.sigmoid()[:,None])
     dynamic=native.actor_kwargs(camera,delete_a37=delete)
+    if hide_native_a6:
+        dynamic['mask']=dynamic['mask'] & ~native.keep_a6
     dtype=static['features'].dtype
     actors=native.keep_a6
     zero=torch.zeros_like(actors)
     tags=torch.stack((zero,actors,~actors,zero),1).to(dtype)
-    append_tags(static,static['features'].new_zeros((len(static['features']),4)))
+    tag_count=7 if patch_rgb else 4
+    if patch_rgb:
+        tags=torch.cat((tags,tags.new_zeros((len(tags),3))),1)
+    append_tags(static,static['features'].new_zeros((len(static['features']),tag_count)))
     merged=merge_rows(static,append_tags(dynamic,tags))
     channels=merged['shs'].shape[1] if merged['shs'] is not None else 1
     precomputed=merged['colors_precomp'] is not None
     road=road_kwargs(camera,exp.repair.road,native.args,channels,precomputed_color=precomputed)
-    road_tag=road['features'].new_zeros((len(road['features']),4))
+    road_tag=road['features'].new_zeros((len(road['features']),tag_count))
     road_tag[:,0]=1
     merged=merge_rows(merged,append_tags(road,road_tag))
     patch=pvd.raster_rows(pose,camera,native.args,channels,precomputed)
-    patch_tag=patch['features'].new_zeros((len(patch['features']),4))
+    patch_tag=patch['features'].new_zeros((len(patch['features']),tag_count))
     patch_tag[:,3]=1
+    if patch_rgb:
+        patch_tag[:,4:7]=pvd.geometry()[3]
     merged=merge_rows(merged,append_tags(patch,patch_tag))
     out=raster(camera,native.args,native.static.active_sh_degree,merged,native.bg)
     env=native.env(camera.get_world_directions(False).permute(1,2,0)).permute(2,0,1)
