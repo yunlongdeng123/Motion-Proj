@@ -1,0 +1,41 @@
+{
+  "status": "FROZEN_BEFORE_LAYER_RENDERING",
+  "hypothesis": "Retiring near-side old support while preserving same-plane and far-side support can improve measured surface depth without damaging parent RGB or other surfaces.",
+  "groups": "The same three BUILD-measured groups; no new geometry, color or scale fitting",
+  "source_run": "scene008_a6_registered_handoff_20261105",
+  "parent": "scene008_a6_depth_order_20261105/delivery/support_accepted.npz",
+  "layers": {
+    "definition": "Persistent object-reference normal slabs relative to each measured plane; not image-space gating",
+    "near": "camera-side signed normal distance > 0.12m",
+    "same": "absolute normal distance <= 0.12m",
+    "far": "opposite-camera-side signed normal distance < -0.12m",
+    "range": "Fixed measured car box plus 0.28m, projected onto the normal; original tangent bounds unchanged",
+    "eligibility": "Same BUILD-registered native a6 rows; no other components may retire",
+    "camera_check": "BUILD camera origins must have consistent plane side; otherwise abstain",
+    "limit": "Normal slabs are a physical support decomposition, not per-ray depth reordering or an opaque first hit"
+  },
+  "retirement": 0.5,
+  "proxy_fit": {
+    "scope": "One shared opacity multiplier per group/layer, BUILD only",
+    "range": [0, 0.35],
+    "rule": "10 bisection iterations on pooled old-plus-new alphaT budget",
+    "no_parameter_sweep": true
+  },
+  "arms_per_layer": ["parent", "retirement only", "proxy only", "coupled"],
+  "acceptance": {
+    "no_op": "Explicit asset fallback; exact output parity required",
+    "build": "Group RGB no worse than parent (1e-7 numeric allowance), group depth strictly better than parent by >1e-5m, no worse than retirement, coverage abs error <=0.01, all inherited black guards pass",
+    "held": "Frozen coefficients; same parent RGB/depth requirement, both RGB/depth better than same retirement, coverage abs error <=0.01",
+    "scene": "All49 black/keep/delete inherited guards and road/seam pooled guards",
+    "non_target_depth": "Same fixed measured depth pixels outside group; mean absolute rendered depth change <=0.005m per frame in each state",
+    "intervention": "Report removed group alphaT; a zero-mass layer is inapplicable rather than evidence against hypothesis",
+    "selection": "If BUILD or HELD fails, final selected asset is zero operation; all diagnostic arms remain reported"
+  },
+  "build": "40 native49 frames outside internal HELD",
+  "held": [89,95,101,105,113,121,125,130,137],
+  "held_limit": "Repeated mechanism diagnostics; not an untouched test set or independent generalization",
+  "smoke": ["real renderer no-op in all states", "near+same+far conditional mass equals full physical column", "saved ledger reload", "physical proxy opacity parity", "one fit/evaluate entry"],
+  "training_updates": 0,
+  "autodl": "keep on",
+  "subagents": "gpt-6.1-sol / max only"
+}

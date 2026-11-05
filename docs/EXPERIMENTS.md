@@ -305,3 +305,5 @@
 - `scene008_a37_C2_20261103_r1` — [冻结PVD补全＋局部优化1k，未超过身份10k＋道路1k基线](autoresearch/scene008_a37_C2_20261103/result_report.html)：a6可见域误差与完整重建均未过门槛，完整状态/49帧/成像阻挡诊断保留。
 
 2026-11-05，Scene008完成三组实测表面薄壳/贡献登记成对接管。两套规则均未通过，216分支重放及独立审计通过；全部登记行mixed且法线范围近2–3m，下一步先区分深度层。保留父资产，AutoDL开机。[实验与代码](autoresearch/scene008_a6_coupled_handoff_20261105/README.md)。
+
+2026-11-05，Scene008完成近/同/远物理法向支撑9个对照，0个通过全部方法验收；324个保存指标重放及81条实际选择状态重载。物理支撑位置与原生中心排序深度需区分。AutoDL保持开机。[实验与代码](autoresearch/scene008_a6_layered_handoff_20261105/README.md)。
