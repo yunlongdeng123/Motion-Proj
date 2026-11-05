@@ -41,3 +41,5 @@ raw113 与 raw130 的删车路面大暗块大幅减轻，修复区边缘仍有�
 [49 帧指标与回执](summary.json) · [1K 回放校验](checkpoint_receipt.json) · [R3 训练入口](source/repair37.py) · [完整队列](source/run_road_queue.py)。
 
 工程审计通过，人工验收字段 `human_verdict=null`。AutoDL 电源由用户控制。没有新增跨版本失败条目。
+
+[固定 PVD 第四列和 49 帧指标](pvd_compare.md)。
