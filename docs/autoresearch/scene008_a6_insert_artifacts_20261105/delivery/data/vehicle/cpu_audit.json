@@ -1,0 +1,298 @@
+{
+  "status": "PASS_LOCAL_READ_ONLY_AUDIT",
+  "network_calls": 0,
+  "GPU_calls": 0,
+  "asset_mutations": 0,
+  "actual_input": {
+    "candidate_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_vehicle_appearance\\delivery\\data\\inputs\\raw106\\strong_candidate_v2_512.png",
+    "candidate_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+    "receipt_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+    "hosted_candidate_same_bytes": true,
+    "SD_board_is_a_different_batch": true,
+    "SD_board_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_vehicle_appearance\\delivery\\data\\candidates_raw106\\candidate_board.png",
+    "candidate_reference_note": "The final chart consumed hosted strongv2; the SD candidate board was not this asset input"
+  },
+  "backprojection": {
+    "reprojection_HR_px_max": 2.0706034661344597e-05,
+    "camera_z_model_roundtrip_maxabs": 1.2906342217178235e-08,
+    "conclusion": "Transform/pixel-centre units are internally consistent; this does not validate the prior expected-depth surface"
+  },
+  "depth_surface": {
+    "adjacent_HR_depth_difference_m": {
+      "count": 94521,
+      "min": 0.0,
+      "median": 0.015009641647338867,
+      "p90": 0.077667236328125,
+      "p99": 0.23532342910766602,
+      "max": 0.6426703929901105,
+      "mean": 0.03123843148135521
+    },
+    "interior_adjacent_depth_difference_m": {
+      "count": 84393,
+      "min": 1.1920928955078125e-06,
+      "median": 0.015385150909423828,
+      "p90": 0.07774233818054199,
+      "p99": 0.23694677352905325,
+      "max": 0.6426703929901105,
+      "mean": 0.03158581772023253
+    },
+    "interior_adjacent_pairs_gt5cm": 14824,
+    "interior_adjacent_pairs_gt10cm": 5697,
+    "interior_adjacent_pairs_gt25cm": 728,
+    "sigma_local_m": {
+      "count": 47544,
+      "min": 0.004430924542248249,
+      "median": 0.004563560010865331,
+      "p90": 0.004795321635901928,
+      "p99": 0.00513635559938848,
+      "max": 0.005393619649112225,
+      "mean": 0.0046092546316565475
+    },
+    "note": "Raw per-pixel expected-depth means include unresolved layer variation; the pipeline does not reconstruct a connected smooth surface"
+  },
+  "sampling": {
+    "exact_bilinear_vs_saved_generated_RGB_maxabs": 5.960464477539063e-08,
+    "generated_rows": 30388,
+    "generated_rows_with_bilinear_background_mask_tap": 158,
+    "generated_rows_with_bilinear_known_mask_tap": 373,
+    "foreground_coverage_on_mixed_taps": {
+      "count": 158,
+      "min": 0.6894736842104976,
+      "median": 0.7947368421052943,
+      "p90": 0.9257423822714554,
+      "p99": 0.9946578947368804,
+      "max": 0.9986426592797981,
+      "mean": 0.8122888249939008
+    },
+    "generated_sample_dark_rows": 4020,
+    "generated_nearest_connected_to_black_canvas": 3832,
+    "dark_foreground_candidate_pixels": 8849,
+    "outside_connected_dark_foreground_pixels": 8107,
+    "caveat": "Dark-source counts include valid tires/seams; segmentation and isolated rendering are needed for attribution"
+  },
+  "observed_fit": {
+    "group_changes": {
+      "real_seed": {
+        "rows": 16672,
+        "formal_seed_RGB_L1_delta": {
+          "count": 16672,
+          "min": 0.0,
+          "median": 0.022690171375870705,
+          "p90": 0.11590456441044807,
+          "p99": 0.36911399304866854,
+          "max": 0.7620914578437805,
+          "mean": 0.047422983493497155
+        },
+        "initially_dark": 0,
+        "formally_dark": 60,
+        "newly_dark_after_observed_fit": 60
+      },
+      "generated_seed": {
+        "rows": 30388,
+        "formal_seed_RGB_L1_delta": {
+          "count": 30388,
+          "min": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "p99": 0.22524053320288728,
+          "max": 0.7619141936302185,
+          "mean": 0.008879737057305978
+        },
+        "initially_dark": 4021,
+        "formally_dark": 4030,
+        "newly_dark_after_observed_fit": 9
+      },
+      "prior_seed": {
+        "rows": 484,
+        "formal_seed_RGB_L1_delta": {
+          "count": 484,
+          "min": 0.0,
+          "median": 0.0,
+          "p90": 0.0,
+          "p99": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "initially_dark": 317,
+        "formally_dark": 317,
+        "newly_dark_after_observed_fit": 0
+      }
+    },
+    "retained_prior_RGB_delta": {
+      "count": 2778,
+      "min": 0.0,
+      "median": 0.0,
+      "p90": 0.07262187898159042,
+      "p99": 0.5819574707746507,
+      "max": 1.0,
+      "mean": 0.03514297862945296
+    },
+    "initial_vs_formal_geometry_hash_equal": true,
+    "note": "Prototype seed provenance flags remain initial-source flags; final BUILD participation is in formal_observed/inputs.npz unknown"
+  },
+  "normalization": {
+    "106_projective_prototype": {
+      "mean_alpha_core": 0.9996190201164316,
+      "black_pixels_core_opaque": 1881,
+      "black_pixels_edge": 2597,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 44392,
+        "min": 0.0,
+        "median": 0.00015856453377910418,
+        "p90": 0.00029274820598990114,
+        "p99": 0.00038080613974001543,
+        "max": 0.0004567829727825841,
+        "mean": 0.00015186372264829984
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 4285,
+        "min": 0.0,
+        "median": 2.1552014861356272e-05,
+        "p90": 0.007606533632558488,
+        "p99": 0.21390702079744778,
+        "max": 0.5776350984262629,
+        "mean": 0.009460941755504968
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    },
+    "106_projective_surface": {
+      "mean_alpha_core": 0.9996190201164316,
+      "black_pixels_core_opaque": 1881,
+      "black_pixels_edge": 2597,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 44392,
+        "min": 0.0,
+        "median": 0.0001553294094779334,
+        "p90": 0.000289156203797362,
+        "p99": 0.00037296958828999486,
+        "max": 0.00045738163981468016,
+        "mean": 0.00015026315310446818
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 4285,
+        "min": 0.0,
+        "median": 2.1552014861356272e-05,
+        "p90": 0.007606533632558488,
+        "p99": 0.21390702079744778,
+        "max": 0.5776350984262629,
+        "mean": 0.009460941755504968
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    },
+    "113_projective_prototype": {
+      "mean_alpha_core": 0.9984316713775057,
+      "black_pixels_core_opaque": 1412,
+      "black_pixels_edge": 2312,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 35121,
+        "min": 0.0,
+        "median": 0.0004323413743110664,
+        "p90": 0.0013027531420325051,
+        "p99": 0.003072616135721227,
+        "max": 0.01155969441349495,
+        "mean": 0.0005980973920147733
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 3822,
+        "min": 0.0,
+        "median": 9.706234462909859e-05,
+        "p90": 0.012403201182740955,
+        "p99": 0.26898486739601474,
+        "max": 0.655946876425361,
+        "mean": 0.011881172306015299
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    },
+    "113_projective_surface": {
+      "mean_alpha_core": 0.9984316713775057,
+      "black_pixels_core_opaque": 1412,
+      "black_pixels_edge": 2312,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 35121,
+        "min": 0.0,
+        "median": 0.00042919870732377463,
+        "p90": 0.00128674943359323,
+        "p99": 0.003059259451736851,
+        "max": 0.01155969441349495,
+        "mean": 0.0005927325170694249
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 3822,
+        "min": 0.0,
+        "median": 9.706234462909859e-05,
+        "p90": 0.012403201182740955,
+        "p99": 0.26898486739601474,
+        "max": 0.655946876425361,
+        "mean": 0.011881172306015299
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    },
+    "130_projective_prototype": {
+      "mean_alpha_core": 0.9996159399173635,
+      "black_pixels_core_opaque": 536,
+      "black_pixels_edge": 1525,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 18137,
+        "min": 0.0,
+        "median": 5.673545013360851e-05,
+        "p90": 0.00018610577510606388,
+        "p99": 0.0023559304554403248,
+        "max": 0.026890274732635555,
+        "mean": 0.00015672721816547842
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 2783,
+        "min": 0.0,
+        "median": 1.4243275882230844e-05,
+        "p90": 0.007608788774871813,
+        "p99": 0.22243509644430234,
+        "max": 0.6673901172482396,
+        "mean": 0.00871695164295328
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    },
+    "130_projective_surface": {
+      "mean_alpha_core": 0.9996159399173635,
+      "black_pixels_core_opaque": 536,
+      "black_pixels_edge": 1525,
+      "premul_vs_normalized_RGB_L1_core": {
+        "count": 18137,
+        "min": 0.0,
+        "median": 5.6176015545435685e-05,
+        "p90": 0.0001829153110680733,
+        "p99": 0.0023749496219616396,
+        "max": 0.02779668841027076,
+        "mean": 0.00015529195273459123
+      },
+      "premul_vs_normalized_RGB_L1_edge": {
+        "count": 2783,
+        "min": 0.0,
+        "median": 1.4243275882230844e-05,
+        "p90": 0.007608788774871813,
+        "p99": 0.22243509644430234,
+        "max": 0.6673901172482396,
+        "mean": 0.00871695164295328
+      },
+      "note": "Saved8bitRGB/16bitalpha; approximate display audit, not exact raw float reconstruction"
+    }
+  },
+  "retained_prior": {
+    "rows": 2778,
+    "centres_project_inside_chart": 2778,
+    "centre_depth_minus_chart_m": {
+      "count": 2778,
+      "min": 0.6929860709982769,
+      "median": 3.4341392651466123,
+      "p90": 3.8337932177809155,
+      "p99": 4.153984688780892,
+      "max": 4.364769098051225,
+      "mean": 3.137945980900092
+    },
+    "centres_in_front_of_chart_by1cm": 0,
+    "caveat": "Zero contribution in the original sphere reference does not guarantee zero contribution after replacement; isolate2778 rows using the new asset native operator"
+  },
+  "saved_diagnostics": [
+    "source106_stages.png",
+    "depth_and_sampling.png"
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "status": "PASS_CPU_C2_DEPTH_POSTERIOR",
+  "contract": {
+    "method": "Observed-anchored tensor cubic B-spline C2 depth",
+    "reference_raw": 106,
+    "original_prototype_sha256": "6a2ccf78b1d95e904702627d9e45cd62222b451e2eaa552b342ca368f0d41703",
+    "original_chart_sha256": "3b7fee2f3adc951d8979b19c79d95e53978fc4bf62d32b018a21f9d9a0a2f0b9",
+    "matte_sha256": "ae46b66309a8959d23671908fa3b7f671b321ec3e7bbf2ec260d224cb91ba87d",
+    "physical_control_pitch_m": 0.0902228066447675,
+    "control_spacing_HR_pixels": [
+      11.862160747236834,
+      11.862160747236834
+    ],
+    "sigma_prior_m": 0.2,
+    "sigma_LiDAR_m": 0.05,
+    "sigma_D2_curvature_m": 0.05,
+    "term_normalization": "Each prior/LiDAR/curvature term divided by its own row count",
+    "Huber_delta_sigma": 1.0,
+    "IRLS_solves": 5,
+    "ridge": 1e-08,
+    "curvature": "Second differences of depth control coefficients per u/v knot cell; residual units metres",
+    "geometry_changed": true,
+    "only_reference_ray_depths_fitted": true,
+    "sigma_reference_HR_pixels": 0.6,
+    "no_free_pose_or_xy_or_scale_adjustment": true,
+    "old_formal_compensation_colours_used": false,
+    "matte_prior_and_query_filter": true,
+    "real106_known_always_retained": true,
+    "PVD_updates": 0,
+    "colour_fit_updates": 0,
+    "source_distance_arrays": "Original resampling ancestry descriptors retained, not reassigned to posterior positions"
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/projective_surface_asset.npz": "6a2ccf78b1d95e904702627d9e45cd62222b451e2eaa552b342ca368f0d41703",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/reference_chart.npz": "3b7fee2f3adc951d8979b19c79d95e53978fc4bf62d32b018a21f9d9a0a2f0b9",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/a6.npz": "ab2a88253cde28856c5618fc1444cbdbcd9bbd1dbf1ee589ad4deb40b183dd0e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/vehicle/matte_contract/matte_texture_samples_filled_v2.npz": "ae46b66309a8959d23671908fa3b7f671b321ec3e7bbf2ec260d224cb91ba87d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/sphere_strong_v2/complete_a6.npz": "ca846b0546cace46fb0cbd35e4c3c3dd53ad6a2dada3de5a28481d536c185bd5",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz": "4606b4a99ae7de06ec64a9192165e70d3bda83e6142dd3d5f92e77e9649aab03"
+  },
+  "source_PVD_mother_rows": 2048,
+  "PVD_median_nearest3_m": 0.0902228066447675,
+  "BUILD_per_frame_median_nearest3_m": 0.0758937159046151,
+  "reference_depth_for_spacing_m": 15.669307708740236,
+  "control_shape": [
+    30,
+    24
+  ],
+  "control_coefficients": 720,
+  "prior_fit_samples": 42536,
+  "curvature_rows": 1332,
+  "all_measured_samples": 54715,
+  "BUILD_visible_samples": 7311,
+  "reference_supported_samples": 7311,
+  "frontmost_reference_pixels": 5747,
+  "association_certain_samples": 5063,
+  "association_uncertain_over075m": 684,
+  "association_uncertain_not_forced_into_fit": true,
+  "accepted_samples_outside_matte_query_support": 1,
+  "initial_chart_rows": 47544,
+  "matte_retained_chart_rows": 42536,
+  "real106_rows_protected": 16672,
+  "measured_training_camera_z_abs_error_m": {
+    "prior": {
+      "count": 5063,
+      "min": 2.556774260575878e-05,
+      "p10": 0.018359963002634674,
+      "median": 0.10805280050615274,
+      "p90": 0.38713090008979406,
+      "p99": 0.7028867331274566,
+      "max": 0.749609477004217,
+      "mean": 0.16148478447384199
+    },
+    "posterior": {
+      "count": 5063,
+      "min": 4.483690355883141e-06,
+      "p10": 0.00849241285132365,
+      "median": 0.0444629856568195,
+      "p90": 0.1345536658152338,
+      "p99": 0.7847790212792861,
+      "max": 2.62045130981711,
+      "mean": 0.07293199803042466
+    }
+  },
+  "measured_training_camera_z_signed_error_m": {
+    "prior": {
+      "count": 5063,
+      "min": -0.749609477004217,
+      "p10": -0.321372787662877,
+      "median": -0.034949483349477006,
+      "p90": 0.18610572771520606,
+      "p99": 0.5483258214424869,
+      "max": 0.7459532808363001,
+      "mean": -0.05224794778797712
+    },
+    "posterior": {
+      "count": 5063,
+      "min": -2.62045130981711,
+      "p10": -0.11781798571184651,
+      "median": 0.0023857342423099226,
+      "p90": 0.07541544037632981,
+      "p99": 0.1574687417595365,
+      "max": 0.31767541374492403,
+      "mean": -0.023013168588023252
+    }
+  },
+  "posterior_minus_prior_z_m": {
+    "count": 42536,
+    "min": -2.7012392171604134,
+    "p10": -0.3614076628985101,
+    "median": 0.01096364297037944,
+    "p90": 0.2812513297181951,
+    "p99": 0.5611087738794145,
+    "max": 0.809745465827417,
+    "mean": -0.03801045330166513
+  },
+  "neighbors": {
+    "prior_matched_support": {
+      "same_query_support": {
+        "abs_adjacent_z_difference_m": {
+          "count": 84508,
+          "min": 1.1920928955078125e-06,
+          "p10": 0.0022089481353759766,
+          "median": 0.015264749526977539,
+          "p90": 0.07874512672424318,
+          "p99": 0.23964718580245814,
+          "max": 0.6426703929901105,
+          "mean": 0.03174035927324775
+        },
+        "pairs_gt_01m": 5808
+      },
+      "same_support_eroded1": {
+        "abs_adjacent_z_difference_m": {
+          "count": 82735,
+          "min": 1.1920928955078125e-06,
+          "p10": 0.002232789993286133,
+          "median": 0.015264749526977539,
+          "p90": 0.07884931564331055,
+          "p99": 0.23721926212310795,
+          "max": 0.6426703929901105,
+          "mean": 0.031718264160944656
+        },
+        "pairs_gt_01m": 5684
+      }
+    },
+    "posterior_matched_support": {
+      "same_query_support": {
+        "abs_adjacent_z_difference_m": {
+          "count": 84508,
+          "min": 8.048127497772839e-09,
+          "p10": 0.00042353809649569034,
+          "median": 0.003943668042440507,
+          "p90": 0.01575224059929497,
+          "p99": 0.027026418188754044,
+          "max": 0.032839291466300935,
+          "mean": 0.006120567967932571
+        },
+        "pairs_gt_01m": 0
+      },
+      "same_support_eroded1": {
+        "abs_adjacent_z_difference_m": {
+          "count": 82735,
+          "min": 8.048127497772839e-09,
+          "p10": 0.0004235152141379928,
+          "median": 0.003897067820032518,
+          "p90": 0.01582961178003757,
+          "p99": 0.027086510309050786,
+          "max": 0.032839291466300935,
+          "mean": 0.0061016898143143065
+        },
+        "pairs_gt_01m": 0
+      }
+    }
+  },
+  "reference_reprojection_error_HR_pixels_max": 2.2737367544323206e-13,
+  "IRLS_trace": [
+    {
+      "iteration": 1,
+      "objective": {
+        "prior": 0.6732530733092488,
+        "BUILD_visible_LiDAR": 1.3433753973454075,
+        "D2_control_curvature": 0.09025322856233958
+      },
+      "coefficient_maxabs": 1.665116066220846
+    },
+    {
+      "iteration": 2,
+      "objective": {
+        "prior": 0.6807173823569678,
+        "BUILD_visible_LiDAR": 1.1412348897528306,
+        "D2_control_curvature": 0.11693820247304379
+      },
+      "coefficient_maxabs": 1.5912732744365778
+    },
+    {
+      "iteration": 3,
+      "objective": {
+        "prior": 0.6888830604013856,
+        "BUILD_visible_LiDAR": 1.0930498267255797,
+        "D2_control_curvature": 0.13303570858489408
+      },
+      "coefficient_maxabs": 1.5754969664045146
+    },
+    {
+      "iteration": 4,
+      "objective": {
+        "prior": 0.692896615218375,
+        "BUILD_visible_LiDAR": 1.0717359564209037,
+        "D2_control_curvature": 0.1439047272452067
+      },
+      "coefficient_maxabs": 1.6016319371024568
+    },
+    {
+      "iteration": 5,
+      "objective": {
+        "prior": 0.6951928402343458,
+        "BUILD_visible_LiDAR": 1.057953128067261,
+        "D2_control_curvature": 0.15211241179885832
+      },
+      "coefficient_maxabs": 1.6255221045869184
+    }
+  ],
+  "assets": {
+    "masked_prototype": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/masked_prototype.npz",
+      "sha256": "9b2548321f0813418ba6516aec3c3eabe572ea6667e9ad4ecd87148d3ca8a3fa",
+      "geometry_hash": "02f6ddcab707ddf4df3f2047c625faba084e4377a2008f92e754f4ec3bb8f6bc",
+      "provenance_hash": "a68121ff890a537f80193f459c36ad42a533b99ea293d270f1445983ba905caa",
+      "rows": 45314
+    },
+    "smooth_depth_only": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/smooth_depth_only.npz",
+      "sha256": "d3038b3c87ab10977c7505fd3bf536294edbc976ddd53e32879a33c4413b8674",
+      "geometry_hash": "1bfff50dfb47c296f42d5a890c9e3aa90abfb37ab125a8b165cee8236bda2912",
+      "provenance_hash": "a68121ff890a537f80193f459c36ad42a533b99ea293d270f1445983ba905caa",
+      "rows": 45314
+    },
+    "masked_matte_initialization": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/masked_matte_initialization.npz",
+      "sha256": "b341745f279aceea58117303f4fb2b440df77448457c5470540876974e0d5b20",
+      "geometry_hash": "02f6ddcab707ddf4df3f2047c625faba084e4377a2008f92e754f4ec3bb8f6bc",
+      "provenance_hash": "a68121ff890a537f80193f459c36ad42a533b99ea293d270f1445983ba905caa",
+      "rows": 45314
+    },
+    "smooth_depth_matte_initialization": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/smooth_depth_matte_initialization.npz",
+      "sha256": "fec54c9b3e272435b1f53b4f9f38791eda24a03ae3c1a5b25e84474d48a785f9",
+      "geometry_hash": "1bfff50dfb47c296f42d5a890c9e3aa90abfb37ab125a8b165cee8236bda2912",
+      "provenance_hash": "a68121ff890a537f80193f459c36ad42a533b99ea293d270f1445983ba905caa",
+      "rows": 45314
+    }
+  },
+  "camera_z_measurement_error_is_training_fit_not_HELD_generalization": true,
+  "no_HELD_data_used": true,
+  "PVD_training_updates": 0,
+  "colour_optimization_updates": 0,
+  "old_sources_unchanged": true,
+  "seconds": 4.440803050994873,
+  "source_sha256": "df96e49c6274f95f0c2e68cdedefe0d24d0b3e1e5435638acb66975f6cbcec73"
+}

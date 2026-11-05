@@ -1,0 +1,52 @@
+{
+  "status": "SINGLE_FROZEN_SAM2_RESULT_PENDING_PARENT_VISUAL_QA",
+  "model": "SAM2.1 hiera large",
+  "checkpoint": "/root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt",
+  "checkpoint_sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318",
+  "config": "configs/sam2.1/sam2.1_hiera_l.yaml",
+  "env_python": "/root/autodl-tmp/envs/worldsim-v77-sam2/bin/python",
+  "source_RGB": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/strong_candidate_v2_512.png",
+  "source_RGB_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+  "source_weights_unchanged": true,
+  "source_RGB_unchanged": true,
+  "downloads": 0,
+  "model_training_updates": 0,
+  "single_predict_call": true,
+  "multimask_output": false,
+  "dynamic_multimask_postprocessing": false,
+  "custom_hole_fill": false,
+  "prompt_box": [
+    63.0,
+    111.0,
+    448.0,
+    405.0
+  ],
+  "positive_known_points": [
+    [
+      195.0,
+      194.0
+    ],
+    [
+      258.0,
+      194.0
+    ],
+    [
+      322.0,
+      194.0
+    ]
+  ],
+  "sam_quality_score": 0.98046875,
+  "raw_mask_pixels": 77267,
+  "matte_pixels": 77270,
+  "known_protection_pixels": 30291,
+  "known_pixels_added_to_SAM": 3,
+  "dark_foreground_pixels_protected": 1905,
+  "old_PVD_mask_dark_canvas_excluded": 6960,
+  "old_PVD_mask_all_pixels_excluded": 9742,
+  "matte_outside_PVD_pixels": 100,
+  "alpha_definition": "Binary candidate-specific foreground; texture filtering yields fractional coverage. SAM logits are retained but not treated as physical opacity.",
+  "colour_sampling_contract": "Bilinear premultiplied_RGB=RGB*alpha and alpha separately, then unpremultiply only alpha>epsilon; real/observed rows protected.",
+  "dark_RGB_rule": "Luminance is only used to DISPLAY preservation/exclusion, never to decide the SAM foreground or delete wheels.",
+  "seconds": 10.390195846557617,
+  "peak_vram_bytes": 1353750016
+}

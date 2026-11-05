@@ -1,0 +1,310 @@
+{
+  "status": "SOURCE_ATTRIBUTION_COMPLETE_FOR_SELECTED_SAME_CAMERA_PATCHES",
+  "root_run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/shadow/native_road_layers_v1",
+  "actual_GPU_seconds": 12.37080430984497,
+  "model_updates": 0,
+  "parent_parameters_unchanged": true,
+  "source_formula": "C = sum_groups(sum_i alpha_i*T_i*RGB_i) + (1-alpha_scene)*environment + (1-alpha_scene)*constant_background",
+  "explicit_shadow_layer_found": false,
+  "a37_active_and_packed_rows_after_physical_removal": [
+    {
+      "raw": 105,
+      "packed": 0,
+      "active": 0,
+      "masked_vs_physical_delete_RGB_maxabs": 0.0
+    },
+    {
+      "raw": 113,
+      "packed": 0,
+      "active": 0,
+      "masked_vs_physical_delete_RGB_maxabs": 0.0
+    },
+    {
+      "raw": 130,
+      "packed": 0,
+      "active": 0,
+      "masked_vs_physical_delete_RGB_maxabs": 0.0
+    }
+  ],
+  "joint_RGB_additivity_maxabs": 8.344650268554688e-07,
+  "ROI_summary": [
+    {
+      "raw": 105,
+      "roi_xyxy": [
+        239,
+        256,
+        294,
+        291
+      ],
+      "dark_core_pixels": 293,
+      "alpha_T": {
+        "asset": 0,
+        "a37": 0,
+        "road": 0.6279715299606323,
+        "legacy_static": 0.3716469705104828
+      },
+      "T": 0.0003814640222117305,
+      "neutral_static_luma_delta": 0.14865880653459465,
+      "neutral_road_luma_delta": 0.027590333127263462,
+      "fine_off_luma_delta": -0.007270928780251395
+    },
+    {
+      "raw": 113,
+      "roi_xyxy": [
+        281,
+        301,
+        336,
+        320
+      ],
+      "dark_core_pixels": 44,
+      "alpha_T": {
+        "asset": 0,
+        "a37": 0,
+        "road": 0.9932210445404053,
+        "legacy_static": 0.006581999361515045
+      },
+      "T": 0.00019698115647770464,
+      "neutral_static_luma_delta": 0.0026327974843707957,
+      "neutral_road_luma_delta": 0.15024044938907027,
+      "fine_off_luma_delta": 0.002781203551590444
+    },
+    {
+      "raw": 130,
+      "roi_xyxy": [
+        281,
+        301,
+        336,
+        320
+      ],
+      "dark_core_pixels": 0,
+      "alpha_T": null,
+      "T": null,
+      "neutral_static_luma_delta": null,
+      "neutral_road_luma_delta": null,
+      "fine_off_luma_delta": null
+    }
+  ],
+  "conclusions": [
+    "The inherited raw105 centre patch is carried by black legacy-static opacity in front of the recovered road. In its 293-pixel visual dark core static alpha*T is .371647 with zero joint static RGB, attenuating road alpha*T=.627972. Recolouring static alone at unchanged opacity/order raises the luma index .148659; env contributes .000149 and actor groups contribute zero.",
+    "The inherited raw113 lower-border patch has a different immediate carrier: road1K base RGB. Its 44-pixel visual dark core has road alpha*T=.993221 and static=.006582. Road-only neutral RGB raises the luma index .150240; static-only neutral is .002633 and fine-field-off is .002781. Recovered-road base RGB stays dark when fine is disabled.",
+    "The same image-coordinate raw130 control has no pixels below .25; it is not asserted to be the same world patch. Whole-road dark statistics must not be substituted for a visually selected patch.",
+    "No explicit light-transport shadow layer is present. Learned/static or road RGB can carry baked dark appearance. These diagnostics establish the rendered carrier, not whether a source photograph contained a real cast shadow or a genuine asphalt mark.",
+    "Direct lingering a37 geometry is excluded in these delete renders: both packed and active rows are zero and physical removal matches the original masked deletion exactly. Baked information in static/road can remain.",
+    "Environment is an additive residual-ray background, not multiplicative road illumination. Selected patches have tiny residual T, so missing environment coverage is not the immediate carrier there.",
+    "The oldest native10K delete images are already dark at these pixels. Later recovery changes the carrier and repairs most of the old hole; the two current dark patches are not one universal shadow mechanism.",
+    "Raw105 conditional geometry places the dark static carrier near the road: z8.9648m, road z9.2204m, centre height about5.76cm. Kept a37 is z5.4296m and same-core measured a37 is mean5.4222m. Image position coincidence does not establish a floating current-tail/plate geometry, actor identity, historical birth or physical-shadow semantics."
+  ],
+  "scope_limits": [
+    "Three same-camera frames only; fixed native480x320 raster.",
+    "Visual ROIs and diagnostic luma thresholds are fixed across interventions, not independent quality evaluation or model selection.",
+    "Neutral RGB .4 and layer removal are diagnostics, not proposed repairs; layer removal changes T/depth.",
+    "Deleted actor pixels have no factual same-camera counterfactual road RGB. Road reference is reobserved/proxy evidence.",
+    "Original physical lighting, clean-road source sample identity and the semantic correctness of the dark road mark remain unverified.",
+    "Historical road_runtime torch.where routing is not the active Runtime/repair37 assembly path."
+  ],
+  "evidence": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_asset_controls\\scene_runtime.py",
+      "sha256": "76f2aeb66feda3ccf4ecc02246cc2f3789f34f3bf06c3c4bca2651b93df97d25",
+      "matched_lines": [
+        {
+          "line": 120,
+          "text": "self.road_colors = (self.road_colors + basis @ basis.new_tensor(coefficients)).clamp(0, 1)"
+        },
+        {
+          "line": 194,
+          "text": "def _static(self, camera):"
+        },
+        {
+          "line": 199,
+          "text": "0, ids, rows['opacities'][ids]*self.exp.repair.gate_raw.sigmoid()[:, None])"
+        },
+        {
+          "line": 230,
+          "text": "if delete:"
+        },
+        {
+          "line": 231,
+          "text": "a37 = select_rows(a37, torch.zeros_like(a37['mask']))"
+        },
+        {
+          "line": 256,
+          "text": "out['rgb'] = out['rgb']+(1-out['alpha'])*environment"
+        },
+        {
+          "line": 257,
+          "text": "out['component_alpha_T'] = out['extra'][:4]"
+        },
+        {
+          "line": 258,
+          "text": "assert float((out['component_alpha_T'].sum(0)-out['alpha'][0]).detach().abs().max()) < 2e-5"
+        },
+        {
+          "line": 279,
+          "text": "out['component_alpha_T'] = out['extra'][:4]"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\native_road1k\\native_binding.py",
+      "sha256": "062f17748d3ef7c7cf9a97ede4a046261fd8f2253c92899b1746a6c95da226f1",
+      "matched_lines": [
+        {
+          "line": 32,
+          "text": "def actor_kwargs(self, camera, delete_a37):"
+        },
+        {
+          "line": 35,
+          "text": "if delete_a37:"
+        },
+        {
+          "line": 46,
+          "text": "0, ids, kw['opacities'][ids] * gates[:, None])"
+        },
+        {
+          "line": 47,
+          "text": "dy = self.actor_kwargs(camera, delete_a37=not dynamic)"
+        },
+        {
+          "line": 66,
+          "text": "out['rgb'] = out['rgb'] + (1 - out['alpha']) * env"
+        },
+        {
+          "line": 86,
+          "text": "common.save(d/'delete_a37.png', image)"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\native_road1k\\repair37.py",
+      "sha256": "dc4eb1bedbe6447c605782587cd468584df2ffec01cb3739d6c30f1efbe20349",
+      "matched_lines": [
+        {
+          "line": 18,
+          "text": "class Repair(torch.nn.Module):"
+        },
+        {
+          "line": 22,
+          "text": "self.road.requires_grad_(False)"
+        },
+        {
+          "line": 24,
+          "text": "self.gate_raw=torch.nn.Parameter(torch.full((len(self.ids),),2.,device='cuda'))"
+        },
+        {
+          "line": 34,
+          "text": "gates=self.repair.gate_raw.sigmoid(),dynamic=keep)"
+        },
+        {
+          "line": 46,
+          "text": "cfg=self.settings['loss_weights'];prior=cfg['keep_native_gate_prior']*(1-self.repair.gate_raw.sigmoid()).mean()"
+        },
+        {
+          "line": 56,
+          "text": "masks={'fit':d['repair_mask']&~d['inferred_fine'],'inferred':d['inferred_fine'],'new_dark':d['new_shadow_proxy']&d['repair_mask']&~d['inferred_fine'],'original_shadow':d['shadow_proxy']&d['domain_a37'],"
+        },
+        {
+          "line": 60,
+          "text": "mask=torch.as_tensor(m,device='cuda');target=original if name=='original_shadow' else ref"
+        },
+        {
+          "line": 117,
+          "text": "e=Experiment();opt=torch.optim.Adam([e.repair.gate_raw],lr=e.settings['learning_rate'],eps=1e-15);startstep=0"
+        },
+        {
+          "line": 139,
+          "text": "raw=sampler.choice(fit);opt.zero_grad(set_to_none=True);loss,rec=e.loss(raw);assert torch.isfinite(loss);loss.backward();assert torch.isfinite(e.repair.gate_raw.grad).all();opt.step()"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\native_road1k\\road_runtime.py",
+      "sha256": "3baa4b0ede164baa19663dbaa8698adb3257b13765409fd23226196ea61134b5",
+      "matched_lines": [
+        {
+          "line": 3,
+          "text": "No shadow component, no parent update, no global timestamp substitution."
+        },
+        {
+          "line": 60,
+          "text": "self.dark=cpu(.5+.28209479177387814*self.n.static.get_features[:,0]).max(1)<.05"
+        },
+        {
+          "line": 87,
+          "text": "thin|=self.dark&(np.abs(height)<.40)&(3*sigma<.50)"
+        },
+        {
+          "line": 109,
+          "text": "result=torch.where(route[None],branch,base)"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\native10k\\prepare_native_publish.py",
+      "sha256": "bcebc8ce7d7e84769ce8286ca0b9387df1d84ce4ebc37ddc90437546f2acbe00",
+      "matched_lines": [
+        {
+          "line": 75,
+          "text": "本轮在已观测 a6 上同时改善了静态遮挡、实例串扰、删车 RGB 与实测深度。全场景及道路画质退化。raw113 和 raw130 的无编辑图仍有 a37 轮廓溢出，删除图中仍有后车未观测下部的灰块和深色道路缺口。道路代理域中，环境分量约占 {edit_new['pooled']['road_depth_proxy']['mean'][2]:.1%}。这部分是缺失背景读出，不能归入已测 a6 前方的静态遮挡。工程验收通过，整图画质尚未达到旧并集对照。"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\native_road1k\\prepare_road37.py",
+      "sha256": "4905b78157ab202918e57d67bd1a28bee26ca14aaaa23da291a6fa9522e8068d",
+      "matched_lines": [
+        {
+          "line": 51,
+          "text": "d['other_vehicle_guard']=other;d['marking_mask']=binary_dilation(yy,iterations=1);d['new_shadow_proxy']=deficit"
+        },
+        {
+          "line": 105,
+          "text": "good&=(np.abs(bl-reference[index]).max(2)<.05)&(d['unit_id']>=0)&~d['new_shadow_proxy']&~d['shadow_proxy']"
+        },
+        {
+          "line": 116,
+          "text": "reference_linear=reference,reference_srgb=srgb(reference),uncalibrated_linear=uncalibrated,native_correction_linear=correction[parent],"
+        },
+        {
+          "line": 117,
+          "text": "road_opacity=opacity,parent_coarse_id=parent,edit_weight=weight[parent],source_valid_count=valid.sum(0),agree_count=agree.sum(0),inferred=inferred,real_active=real_active,"
+        },
+        {
+          "line": 121,
+          "text": "index,inside=pixel_map[raw];view_scope=d['domain_a37']|(d['actor_labels']==5)|d['new_shadow_proxy']"
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    "visual_ROI_attribution": "visual_ROI_attribution.json",
+    "actual_receipt": "results/receipt.json",
+    "same_camera_controls": "shadow_source_controls.png",
+    "architecture": "architecture.png",
+    "diagnostic_source": "diagnose_shadow_layers.py"
+  },
+  "road1K_RGB_training_scope": {
+    "road_RGB_frozen": true,
+    "road_geometry_opacity_frozen": true,
+    "only_static_opacity_gate_trainable": true,
+    "conclusion": "The dark road base colour was present in road input; do not call it a shadow learned by the 1K gate optimizer. The later fine colour-field calibration is separate."
+  },
+  "conditional_geometry_evidence": {
+    "same_ROI_dark_core_pixels": 293,
+    "delete_static_camera_z_m": 8.964765548706055,
+    "delete_road_camera_z_m": 9.220388412475586,
+    "delete_static_height_above_existing_road_plane_m": 0.057565849274396896,
+    "keep_a37_camera_z_m": 5.429647445678711,
+    "same_mask_a37_associated_LiDAR_z_m": {
+      "count": 50,
+      "min": 5.3915324211120605,
+      "median": 5.419845342636108,
+      "p90": 5.440263891220093,
+      "p99": 5.446147031784058,
+      "max": 5.447879314422607,
+      "mean": 5.422195949554443
+    },
+    "feature_instrumentation_RGB_alpha_depth_bitwise_unchanged": true,
+    "scope": "Weighted Gaussian centres/nearest road tangent plane; not actor identity or historical source truth"
+  }
+}

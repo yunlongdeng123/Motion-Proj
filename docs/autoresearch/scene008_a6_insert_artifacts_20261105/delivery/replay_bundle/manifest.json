@@ -1,0 +1,77 @@
+{
+  "status": "PERSISTENT_SURFACE_MATERIAL_PLUS_VIEWPORT_SAMPLER_BUNDLE",
+  "canonical_NPZ_alone_uses_dense_default_rows": true,
+  "naked_NPZ_does_not_reproduce_LOD": true,
+  "canonical_asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+  "posterior_sha256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+  "persistent_S": "posterior cubic depth coefficients, knots, reference_K and reference_camera_from_local_m",
+  "persistent_F": "final canonical SH0 RGB and chart opacity/.99 on resample_reference_pixel_xy; outside zero alpha",
+  "material_filter": "Fixed 2x2 area mip pyramid of premultRGB+coverage; bilinear per level then trilinear; unpremultiply valid coverage",
+  "view_sampling": "du=1/sqrt(median(abs(det d(screenXY)/d(UV)))); UV=(integer+.5)*du-.5; sigma=.6*du*S_z/reference_fx",
+  "opacity": "Peak .99 times filtered material coverage, no determinant-area attenuation",
+  "retained_source_rows": 2778,
+  "retained_all_parameters_unchanged": true,
+  "edit_states_share_same_SF_and_camera_rows": true,
+  "screen_space_overlay": false,
+  "source_surface_is_reference106_conditioned": true,
+  "complete360_or_hidden_geometry_accuracy_claim": false,
+  "nonDC_material_contract": "Canonical declares SH3 but actual all/chart/retained nonDC terms are exact0; wrapper refuses nonzero nonDC inputs",
+  "existing_host_dependencies": {
+    "ssh_alias": "wm-vgpu-1011",
+    "python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "Runtime_and_SHAsset_source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source",
+    "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "frozen_scene_observations": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames",
+    "native_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal",
+    "road_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/formal/checkpoint001000.pt",
+    "fine_road": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_ray_road_colour_fine_20261105",
+    "active_SO_SHA256": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+    "legacy_neg_fov": true,
+    "shared_SO_modified": false
+  },
+  "software": "Use the existing torch/numpy/scipy/Pillow/native CUDA environment; no model download or weight update.",
+  "command_file": "REPLAY_COMMAND.txt",
+  "files": {
+    "complete_a6.npz": {
+      "bytes": 2780990,
+      "sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d"
+    },
+    "posterior.npz": {
+      "bytes": 2656257,
+      "sha256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06"
+    },
+    "material_SH_contract.json": {
+      "bytes": 911,
+      "sha256": "1ede90807ede9484c9873c9e809832d964f2f2294e61cd4d373438e4bb361c25"
+    },
+    "threeview_receipt.json": {
+      "bytes": 39704,
+      "sha256": "974ba24cb691112f304d7e67204c376eeaf900a24a2725adca8ae035bf590776"
+    },
+    "surface_lod_asset.py": {
+      "bytes": 11898,
+      "sha256": "fb3c746a04bf17b1f84b127e44769b4ff294567e98aec744131ddc3f3c4d76ca"
+    },
+    "replay_surface_lod.py": {
+      "bytes": 2961,
+      "sha256": "ceccece8656a98e9c7a73e179ce0ff43568f4373f3a43252bae7ef72fd519aec"
+    },
+    "probe_surface_lod.py": {
+      "bytes": 11022,
+      "sha256": "e84e7535f76b436183d1cac101c061478f2f1e859358ff0186612f3747de1b1e"
+    },
+    "relative_area_asset.py": {
+      "bytes": 6274,
+      "sha256": "62fb356cb7808c5284212e7efc182ed3ac37c3521d5c7dd9c86a0c4847bb4586"
+    },
+    "scale_probe.py": {
+      "bytes": 19264,
+      "sha256": "498402676d2317084cc685d307dbb3896c7fad60640578cca58451cefce000a9"
+    },
+    "replay_smoke_receipt.json": {
+      "bytes": 4021,
+      "sha256": "6deec707bc1bb1ba0cd308ffcc1838f9d32f92099afbbf8ba0739f8cc65011fc"
+    }
+  },
+  "automatic_adoption": false
+}

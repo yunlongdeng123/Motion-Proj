@@ -1,0 +1,638 @@
+{
+  "status": "PASS_DIAGNOSTIC_NOT_ADOPTED",
+  "receipt_sha256": "56cd3592916f7b1170f4bbd533368b6f1cf826ec71a7246f0afc5d88099e265c",
+  "source_sha256": "498402676d2317084cc685d307dbb3896c7fad60640578cca58451cefce000a9",
+  "asset_sha256": "70826fc7c9c011ee073f7ffea4f22501a57f39ffa2cd0d52cd5ebd9c37b14e53",
+  "question": "Does the native 480px operator reproduce the same-view 1920px actual 3D asset after 4x4 area downsampling?",
+  "conclusion": "Resolution adds a substantial appearance discrepancy. One fixed chart-only area normalization reduces three-view RGB disagreement with the HR actual-render reference; it does not resolve source colours, depth, occlusion, or independently establish geometry accuracy.",
+  "adoption": "No asset or production renderer was changed. Keep this as a diagnostic control pending broader preservation and multiview checks.",
+  "reference": {
+    "kind": "same-asset actual HR render, not a 2D generated image and not hidden RGB truth",
+    "raw_ids": [
+      106,
+      113,
+      130
+    ],
+    "mapping": "x_L=(x_H+0.5)/4-0.5; exact 4x4 area means of premultiplied RGB and alpha separately",
+    "mask": "D4(HR solo alpha)>0.01; fixed per view across both LR arms",
+    "normalized_mask": "additional D4(HR state-specific asset alpha)>0.5"
+  },
+  "fairness": {
+    "same_physical_asset_rows": 50322,
+    "chart_rows": 47544,
+    "retained_rows": 2778,
+    "camera_pose_and_projection_same": true,
+    "resolutions": [
+      [
+        480,
+        320
+      ],
+      [
+        1920,
+        1280
+      ]
+    ],
+    "same_A_rows_and_order_solo_joint": true,
+    "zero_native_a6_rows": true,
+    "a37_deletion": "mask false in the same packed rows; no physical packed-row deletion claim",
+    "black_RGB": "native premultiplied RGB with zero raster background",
+    "street_RGB": "native joint premultiplied RGB + (1-joint alpha)*same frozen environment",
+    "joint_A_RGB": "native diagnostic feature accumulation sum_i(alpha_i*T_joint*c_i) over A rows; not jointRGB minus backgroundSoloRGB",
+    "auxiliary_RGB_vs_solo_native_RGB_maxabs": 0.0,
+    "group_alpha_sum_vs_total_maxabs": 1.8477439880371094e-06
+  },
+  "control": {
+    "formula": "k_R=sqrt(det(G_R)/det(G_R+0.3I))/sqrt(det(G_1920)/det(G_1920+0.3I))",
+    "chart_only": true,
+    "HR_factor_strictly_one": true,
+    "reference": "1920x1280 at the same view; not full Mip-Splatting",
+    "methods_reference": "https://niujinshuchong.github.io/mip-splatting/",
+    "official_code": "https://github.com/autonomousvision/mip-splatting/blob/main/submodules/diff-gaussian-rasterization/cuda_rasterizer/forward.cu"
+  },
+  "binding": {
+    "files": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/scale_probe.py": "498402676d2317084cc685d307dbb3896c7fad60640578cca58451cefce000a9",
+      "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+      "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py": "0bb23302ab3e980430d028a77c5aea8da63c2e741923ffa2a26a59e369dbd53f",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/cuda_rasterizer/forward.cu": "732e8cec40d00e93ce9959428c8e451148c791c0eaea351b8eeff9db759d7a8d",
+      "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization/build/lib.linux-x86_64-3.9/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py": "76f2aeb66feda3ccf4ecc02246cc2f3789f34f3bf06c3c4bca2651b93df97d25",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py": "ff9ee4b0f6a0bc90fccedfd4be17404d2df129072d6da1562b211a8aa6469bd4",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/formal_observed/formal/complete_a6.npz": "70826fc7c9c011ee073f7ffea4f22501a57f39ffa2cd0d52cd5ebd9c37b14e53"
+    },
+    "active_extension_matches_deps_build_byte_exact": true,
+    "native_filter_variance_px2": 0.3,
+    "opacity_area_compensation_in_native": false,
+    "prefiltered": false,
+    "feature_channels": 24,
+    "feature_RGB_is_auxiliary_and_does_not_change_RGB_alpha": true,
+    "pipe_neg_fov": true,
+    "pipe_compute_cov3D_python": false,
+    "native_background": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "SH_degree": 3
+  },
+  "rows": [
+    {
+      "raw": 106,
+      "state": "solo",
+      "fixed_object_pixels": 3155,
+      "chart_factor_mean": 0.11164498575885509,
+      "baseline_rgb_MAE": 0.06479740887880325,
+      "compensated_rgb_MAE": 0.02576003223657608,
+      "relative_drop_rgb_MAE": 0.6024527418255641,
+      "baseline_alpha_MAE": 0.04475495591759682,
+      "compensated_alpha_MAE": 0.03587391600012779,
+      "relative_drop_alpha_MAE": 0.19843701631213462,
+      "baseline_asset_rgb_MAE": 0.06479740887880325,
+      "compensated_asset_rgb_MAE": 0.02576003223657608,
+      "relative_drop_asset_rgb_MAE": 0.6024527418255641,
+      "baseline_asset_alpha_MAE": 0.04475495591759682,
+      "compensated_asset_alpha_MAE": 0.03587391600012779,
+      "relative_drop_asset_alpha_MAE": 0.19843701631213462,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06409116834402084,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.0246015302836895,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.6161478887132097
+    },
+    {
+      "raw": 106,
+      "state": "joint",
+      "fixed_object_pixels": 3155,
+      "chart_factor_mean": 0.11164498575885509,
+      "baseline_rgb_MAE": 0.04190816357731819,
+      "compensated_rgb_MAE": 0.02545350231230259,
+      "relative_drop_rgb_MAE": 0.392636180171858,
+      "baseline_alpha_MAE": 0.006648391485214233,
+      "compensated_alpha_MAE": 0.01094422023743391,
+      "relative_drop_alpha_MAE": -0.6461455769825581,
+      "baseline_asset_rgb_MAE": 0.029284708201885223,
+      "compensated_asset_rgb_MAE": 0.013321124948561192,
+      "relative_drop_asset_rgb_MAE": 0.5451166917311597,
+      "baseline_asset_alpha_MAE": 0.01746768318116665,
+      "compensated_asset_alpha_MAE": 0.01994078978896141,
+      "relative_drop_asset_alpha_MAE": -0.141581833271468,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06076283007860184,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.022853156551718712,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.6238957842787074
+    },
+    {
+      "raw": 106,
+      "state": "delete",
+      "fixed_object_pixels": 3155,
+      "chart_factor_mean": 0.11164498575885509,
+      "baseline_rgb_MAE": 0.06726495176553726,
+      "compensated_rgb_MAE": 0.029038842767477036,
+      "relative_drop_rgb_MAE": 0.5682916287713018,
+      "baseline_alpha_MAE": 0.015530746430158615,
+      "compensated_alpha_MAE": 0.019757576286792755,
+      "relative_drop_alpha_MAE": -0.2721588350979838,
+      "baseline_asset_rgb_MAE": 0.06349945813417435,
+      "compensated_asset_rgb_MAE": 0.02582194283604622,
+      "relative_drop_asset_rgb_MAE": 0.5933517608688179,
+      "baseline_asset_alpha_MAE": 0.041149578988552094,
+      "compensated_asset_alpha_MAE": 0.04002783074975014,
+      "relative_drop_asset_alpha_MAE": 0.027260260405435277,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06520312279462814,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.02500653825700283,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.6164825059718915
+    },
+    {
+      "raw": 113,
+      "state": "solo",
+      "fixed_object_pixels": 2544,
+      "chart_factor_mean": 0.10225378634461711,
+      "baseline_rgb_MAE": 0.06929228454828262,
+      "compensated_rgb_MAE": 0.02583836019039154,
+      "relative_drop_rgb_MAE": 0.6271105743037313,
+      "baseline_alpha_MAE": 0.056455984711647034,
+      "compensated_alpha_MAE": 0.03255894407629967,
+      "relative_drop_alpha_MAE": 0.4232862247891558,
+      "baseline_asset_rgb_MAE": 0.06929228454828262,
+      "compensated_asset_rgb_MAE": 0.02583836019039154,
+      "relative_drop_asset_rgb_MAE": 0.6271105743037313,
+      "baseline_asset_alpha_MAE": 0.056455984711647034,
+      "compensated_asset_alpha_MAE": 0.03255894407629967,
+      "relative_drop_asset_alpha_MAE": 0.4232862247891558,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06742323189973831,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.02568499930202961,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.619048233400848
+    },
+    {
+      "raw": 113,
+      "state": "joint",
+      "fixed_object_pixels": 2544,
+      "chart_factor_mean": 0.10225378634461711,
+      "baseline_rgb_MAE": 0.04559037461876869,
+      "compensated_rgb_MAE": 0.024190174415707588,
+      "relative_drop_rgb_MAE": 0.46940171871829817,
+      "baseline_alpha_MAE": 0.008997655473649502,
+      "compensated_alpha_MAE": 0.009558504447340965,
+      "relative_drop_alpha_MAE": -0.06233279050681184,
+      "baseline_asset_rgb_MAE": 0.03557630628347397,
+      "compensated_asset_rgb_MAE": 0.014561724849045277,
+      "relative_drop_asset_rgb_MAE": 0.5906903675435935,
+      "baseline_asset_alpha_MAE": 0.023493703454732895,
+      "compensated_asset_alpha_MAE": 0.01834920421242714,
+      "relative_drop_asset_alpha_MAE": 0.21897353272624953,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06748639047145844,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.02524213306605816,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.6259670595846485
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "fixed_object_pixels": 2544,
+      "chart_factor_mean": 0.10225378634461711,
+      "baseline_rgb_MAE": 0.07029566913843155,
+      "compensated_rgb_MAE": 0.028509734198451042,
+      "relative_drop_rgb_MAE": 0.5944311428018771,
+      "baseline_alpha_MAE": 0.0273703895509243,
+      "compensated_alpha_MAE": 0.021306626498699188,
+      "relative_drop_alpha_MAE": 0.22154463826476078,
+      "baseline_asset_rgb_MAE": 0.06793198734521866,
+      "compensated_asset_rgb_MAE": 0.025916483253240585,
+      "relative_drop_asset_rgb_MAE": 0.6184936689465967,
+      "baseline_asset_alpha_MAE": 0.05211944133043289,
+      "compensated_asset_alpha_MAE": 0.03709821403026581,
+      "relative_drop_asset_alpha_MAE": 0.2882077573497721,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.06869623064994812,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.02625330723822117,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.6178348216512954
+    },
+    {
+      "raw": 130,
+      "state": "solo",
+      "fixed_object_pixels": 1369,
+      "chart_factor_mean": 0.0843506838352832,
+      "baseline_rgb_MAE": 0.08868522942066193,
+      "compensated_rgb_MAE": 0.03882026672363281,
+      "relative_drop_rgb_MAE": 0.5622690838460136,
+      "baseline_alpha_MAE": 0.05873126909136772,
+      "compensated_alpha_MAE": 0.03672685846686363,
+      "relative_drop_alpha_MAE": 0.37466261098959086,
+      "baseline_asset_rgb_MAE": 0.08868522942066193,
+      "compensated_asset_rgb_MAE": 0.03882026672363281,
+      "relative_drop_asset_rgb_MAE": 0.5622690838460136,
+      "baseline_asset_alpha_MAE": 0.05873126909136772,
+      "compensated_asset_alpha_MAE": 0.03672685846686363,
+      "relative_drop_asset_alpha_MAE": 0.37466261098959086,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.08574923872947693,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.03876291960477829,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.5479502771206148
+    },
+    {
+      "raw": 130,
+      "state": "joint",
+      "fixed_object_pixels": 1369,
+      "chart_factor_mean": 0.0843506838352832,
+      "baseline_rgb_MAE": 0.055904604494571686,
+      "compensated_rgb_MAE": 0.027591746300458908,
+      "relative_drop_rgb_MAE": 0.5064494856923984,
+      "baseline_alpha_MAE": 0.009658838622272015,
+      "compensated_alpha_MAE": 0.008225101046264172,
+      "relative_drop_alpha_MAE": 0.14843788493389176,
+      "baseline_asset_rgb_MAE": 0.049925677478313446,
+      "compensated_asset_rgb_MAE": 0.021659977734088898,
+      "relative_drop_asset_rgb_MAE": 0.5661555570578389,
+      "baseline_asset_alpha_MAE": 0.02435416914522648,
+      "compensated_asset_alpha_MAE": 0.017557764425873756,
+      "relative_drop_asset_alpha_MAE": 0.27906534929707694,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.09259810298681259,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.03992658853530884,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.5688185044028925
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "fixed_object_pixels": 1369,
+      "chart_factor_mean": 0.0843506838352832,
+      "baseline_rgb_MAE": 0.08801063150167465,
+      "compensated_rgb_MAE": 0.038761209696531296,
+      "relative_drop_rgb_MAE": 0.5595849156497218,
+      "baseline_alpha_MAE": 0.03796456754207611,
+      "compensated_alpha_MAE": 0.02577325887978077,
+      "relative_drop_alpha_MAE": 0.3211233381964307,
+      "baseline_asset_rgb_MAE": 0.08837728947401047,
+      "compensated_asset_rgb_MAE": 0.038689859211444855,
+      "relative_drop_asset_rgb_MAE": 0.5622194407441907,
+      "baseline_asset_alpha_MAE": 0.05825372040271759,
+      "compensated_asset_alpha_MAE": 0.036414917558431625,
+      "relative_drop_asset_alpha_MAE": 0.3748911261514408,
+      "baseline_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.08564600348472595,
+      "compensated_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.038758307695388794,
+      "relative_drop_asset_straight_RGB_MAE_fixed_ref_alpha_gt05": 0.5474592378113601
+    }
+  ],
+  "covariance_calibration_review": {
+    "status": "PASS_CPU_CALIBRATION_AND_GENERIC_WRAPPER_CONTRACT",
+    "GPU_calls": 0,
+    "cuda_initialized": false,
+    "source_asset_sha256": "70826fc7c9c011ee073f7ffea4f22501a57f39ffa2cd0d52cd5ebd9c37b14e53",
+    "wrapper_sha256": "62fb356cb7808c5284212e7efc182ed3ac37c3521d5c7dd9c86a0c4847bb4586",
+    "views": [
+      {
+        "raw": 106,
+        "chart_rows": 47544,
+        "source_sigma_HR_pixels": 0.6,
+        "physical_pinhole_HR_unfiltered_sigma_minor": {
+          "min": 0.599999893857568,
+          "p10": 0.5999999859826919,
+          "median": 0.6000000229056133,
+          "p90": 0.60000005923942,
+          "max": 0.6000001351175154,
+          "mean": 0.6000000226099964
+        },
+        "physical_pinhole_HR_unfiltered_sigma_major": {
+          "min": 0.6003973632787433,
+          "p10": 0.6010249136969288,
+          "median": 0.6028489410895475,
+          "p90": 0.6051869269806153,
+          "max": 0.607789750572448,
+          "mean": 0.6030088369031501
+        },
+        "active_legacy_HR_unfiltered_sigma_minor": {
+          "min": 0.3795972569731914,
+          "p10": 0.37959732376651945,
+          "median": 0.3795973610999389,
+          "p90": 0.3795973976409968,
+          "max": 0.37959746098838426,
+          "mean": 0.37959736086057716
+        },
+        "active_legacy_HR_unfiltered_sigma_major": {
+          "min": 0.6519771175299212,
+          "p10": 0.6519772098338974,
+          "median": 0.6519772559276245,
+          "p90": 0.6519773018464173,
+          "max": 0.6519773865762133,
+          "mean": 0.6519772558082143
+        },
+        "active_legacy_HR_filtered_sigma_minor": {
+          "min": 0.6664038396509815,
+          "p10": 0.6664038776978296,
+          "median": 0.6664038989637121,
+          "p90": 0.6664039197782506,
+          "max": 0.6664039558622292,
+          "mean": 0.6664038988273671
+        },
+        "active_legacy_HR_filtered_sigma_major": {
+          "min": 0.851512866480962,
+          "p10": 0.8515129371552694,
+          "median": 0.8515129724478161,
+          "p90": 0.851513007606422,
+          "max": 0.8515130724814206,
+          "mean": 0.8515129723563877
+        },
+        "active_legacy_LR_filtered_sigma_minor": {
+          "min": 0.5558829731551851,
+          "p10": 0.5558829760058936,
+          "median": 0.5558829775992671,
+          "p90": 0.5558829791588231,
+          "max": 0.5558829818624615,
+          "mean": 0.5558829775890514
+        },
+        "active_legacy_LR_filtered_sigma_major": {
+          "min": 0.5714605280432009,
+          "p10": 0.5714605346250297,
+          "median": 0.5714605379117899,
+          "p90": 0.5714605411860765,
+          "max": 0.571460547227822,
+          "mean": 0.5714605379032752
+        },
+        "native_over_pinhole_unfiltered_ellipse_area": {
+          "min": 0.6786579896149121,
+          "p10": 0.6815768192629997,
+          "median": 0.6842201651702955,
+          "p90": 0.6862966131933566,
+          "max": 0.6870140645104841,
+          "mean": 0.6840434151807286
+        },
+        "relative_LR_factor": {
+          "min": 0.11164496093988419,
+          "p10": 0.11164496839046478,
+          "median": 0.11164497584104538,
+          "p90": 0.11164498329162598,
+          "max": 0.11164499819278717,
+          "mean": 0.11164497584104538
+        },
+        "unfiltered_HR_vs_16LR_maxabs": 0.0,
+        "source_pose_and_view_float32": true,
+        "calibration_uses_known_camera": true,
+        "native_focal_HR": [
+          -1757.268212843954,
+          -1171.5121418959693
+        ],
+        "physical_pinhole_focal_HR": [
+          2060.142593112,
+          2060.142593112
+        ]
+      },
+      {
+        "raw": 113,
+        "chart_rows": 47544,
+        "source_sigma_HR_pixels": 0.6,
+        "physical_pinhole_HR_unfiltered_sigma_minor": {
+          "min": 0.5320636482727151,
+          "p10": 0.532543731370922,
+          "median": 0.5338147140178612,
+          "p90": 0.5366803222266986,
+          "max": 0.5430109819583966,
+          "mean": 0.534350490898886
+        },
+        "physical_pinhole_HR_unfiltered_sigma_major": {
+          "min": 0.5331861711802555,
+          "p10": 0.5341630364340711,
+          "median": 0.5363302300493014,
+          "p90": 0.5393371728079968,
+          "max": 0.5447837650416656,
+          "mean": 0.5365432092170479
+        },
+        "active_legacy_HR_unfiltered_sigma_minor": {
+          "min": 0.33661659020204837,
+          "p10": 0.3369203011294553,
+          "median": 0.3377244099265469,
+          "p90": 0.3395373591958868,
+          "max": 0.3435425363870252,
+          "mean": 0.33806337801588854
+        },
+        "active_legacy_HR_unfiltered_sigma_major": {
+          "min": 0.5781556487318259,
+          "p10": 0.5786772979311051,
+          "median": 0.5800583947509186,
+          "p90": 0.583172238550161,
+          "max": 0.5900513217949384,
+          "mean": 0.5806405892310288
+        },
+        "active_legacy_HR_filtered_sigma_minor": {
+          "min": 0.6428924706350618,
+          "p10": 0.6430515448338203,
+          "median": 0.6434732139415242,
+          "p90": 0.6444265809925481,
+          "max": 0.6465458021727699,
+          "mean": 0.6436519026600318
+        },
+        "active_legacy_HR_filtered_sigma_major": {
+          "min": 0.796406902381263,
+          "p10": 0.7967856770429831,
+          "median": 0.797789283784267,
+          "p90": 0.8000561604135422,
+          "max": 0.8050841958155395,
+          "mean": 0.7982137964372268
+        },
+        "active_legacy_LR_filtered_sigma_minor": {
+          "min": 0.5541497275556069,
+          "p10": 0.554161263155476,
+          "median": 0.5541918540237349,
+          "p90": 0.5542610857196361,
+          "max": 0.5544153155750677,
+          "mean": 0.5542048411652596
+        },
+        "active_legacy_LR_filtered_sigma_major": {
+          "min": 0.5664728564856681,
+          "p10": 0.5665061459916413,
+          "median": 0.5665944174032811,
+          "p90": 0.5667941568492764,
+          "max": 0.567238957712706,
+          "mean": 0.5666318808889971
+        },
+        "native_over_pinhole_unfiltered_ellipse_area": {
+          "min": 0.6802548786913144,
+          "p10": 0.6826668217315915,
+          "median": 0.6848048184635284,
+          "p90": 0.6864848130041031,
+          "max": 0.6870781635782676,
+          "mean": 0.6846617783523691
+        },
+        "relative_LR_factor": {
+          "min": 0.1019405871629715,
+          "p10": 0.10200618952512741,
+          "median": 0.10218008607625961,
+          "p90": 0.10257326364517212,
+          "max": 0.10344734787940979,
+          "mean": 0.10225377976894379
+        },
+        "unfiltered_HR_vs_16LR_maxabs": 0.0,
+        "source_pose_and_view_float32": true,
+        "calibration_uses_known_camera": true,
+        "native_focal_HR": [
+          -1757.268212843954,
+          -1171.5121418959693
+        ],
+        "physical_pinhole_focal_HR": [
+          2060.142593112,
+          2060.142593112
+        ]
+      },
+      {
+        "raw": 130,
+        "chart_rows": 47544,
+        "source_sigma_HR_pixels": 0.6,
+        "physical_pinhole_HR_unfiltered_sigma_minor": {
+          "min": 0.3825766965597772,
+          "p10": 0.38374834775404354,
+          "median": 0.38674982643253875,
+          "p90": 0.3934958713739943,
+          "max": 0.40933578954142974,
+          "mean": 0.3880273346964017
+        },
+        "physical_pinhole_HR_unfiltered_sigma_major": {
+          "min": 0.38359924472387735,
+          "p10": 0.38461940737064654,
+          "median": 0.38783392425898977,
+          "p90": 0.3941667700781775,
+          "max": 0.40978941540399044,
+          "mean": 0.3890090221149722
+        },
+        "active_legacy_HR_unfiltered_sigma_minor": {
+          "min": 0.24204183597583465,
+          "p10": 0.2427830934665221,
+          "median": 0.2446820011128462,
+          "p90": 0.2489499857669887,
+          "max": 0.2589712924629894,
+          "mean": 0.2454902516727384
+        },
+        "active_legacy_HR_unfiltered_sigma_major": {
+          "min": 0.4157188243675472,
+          "p10": 0.41699197346219274,
+          "median": 0.42025345850291296,
+          "p90": 0.4275839154824023,
+          "max": 0.44479601678721625,
+          "mean": 0.42164164684574185
+        },
+        "active_legacy_HR_filtered_sigma_minor": {
+          "min": 0.5988190464260074,
+          "p10": 0.599119045326698,
+          "median": 0.5998910581670047,
+          "p90": 0.6016444925480364,
+          "max": 0.605859827286767,
+          "mean": 0.60022618949506
+        },
+        "active_legacy_HR_filtered_sigma_major": {
+          "min": 0.6876206373673899,
+          "p10": 0.6883910995443608,
+          "median": 0.6903716168731019,
+          "p90": 0.6948582623666952,
+          "max": 0.7055802552153607,
+          "mean": 0.6912271836942364
+        },
+        "active_legacy_LR_filtered_sigma_minor": {
+          "min": 0.5510549116446196,
+          "p10": 0.5510752915025073,
+          "median": 0.5511277801964778,
+          "p90": 0.5512472276241728,
+          "max": 0.551535704324749,
+          "mean": 0.5511506493831837
+        },
+        "active_legacy_LR_filtered_sigma_major": {
+          "min": 0.5574956356854698,
+          "p10": 0.5575550592728429,
+          "median": 0.5577080872522018,
+          "p90": 0.558056225033557,
+          "max": 0.5588964291658705,
+          "mean": 0.557774722898529
+        },
+        "native_over_pinhole_unfiltered_ellipse_area": {
+          "min": 0.6832157936064621,
+          "p10": 0.6845848239995526,
+          "median": 0.6858096710750702,
+          "p90": 0.6867862680057852,
+          "max": 0.6871424635916776,
+          "mean": 0.6857336097363858
+        },
+        "relative_LR_factor": {
+          "min": 0.08376993238925934,
+          "p10": 0.08389376848936081,
+          "median": 0.08421241119503975,
+          "p90": 0.08493600338697434,
+          "max": 0.08667495846748352,
+          "mean": 0.08435068279504776
+        },
+        "unfiltered_HR_vs_16LR_maxabs": 0.0,
+        "source_pose_and_view_float32": true,
+        "calibration_uses_known_camera": true,
+        "native_focal_HR": [
+          -1757.268212843954,
+          -1171.5121418959693
+        ],
+        "physical_pinhole_focal_HR": [
+          2060.142593112,
+          2060.142593112
+        ]
+      }
+    ],
+    "generic_contract": [
+      {
+        "n": 9,
+        "nonprefix_chart_mask": true,
+        "general_anisotropic_covariance_numpy_maxabs": 8.673617379884035e-19,
+        "packed_vs_scales_factors_exact": true,
+        "HR_rows_object_identity": true,
+        "nonchart_opacity_exact": true,
+        "source_opacity_exact": true,
+        "all_other_fields_object_identity": true
+      },
+      {
+        "n": 23,
+        "nonprefix_chart_mask": true,
+        "general_anisotropic_covariance_numpy_maxabs": 8.673617379884035e-19,
+        "packed_vs_scales_factors_exact": true,
+        "HR_rows_object_identity": true,
+        "nonchart_opacity_exact": true,
+        "source_opacity_exact": true,
+        "all_other_fields_object_identity": true
+      }
+    ],
+    "conclusion": "Legacy native footprint projection and the PVD-derived new-chart sigma calibration are inconsistent; no global projection/camera/.so change was made.",
+    "scope": "CPU diagnostic only; positive-focal pinhole covariance is an analytic comparison, not an adopted renderer or an extra GPU experiment.",
+    "neg_fov_semantics": "tan_fovx=tan_fovy=tan(-0.5); negative focal lengths and native min(lim,max(-lim,q)) clamp order preserved for active footprint.",
+    "neural_weight_updates": 0,
+    "geometry_updates": 0,
+    "colour_updates": 0,
+    "source_opacity_updates": 0,
+    "automatic_adoption": false
+  },
+  "caveats": [
+    "This is not full Mip-Splatting: no 3D smoothing filter, representation refit, or kernel replacement was implemented.",
+    "The bound legacy operator uses neg_fov=True and unconditional +0.3I. Covariance factors reproduce that current operator rather than changing camera conventions.",
+    "Joint alpha disagreement does not improve in every view/state; raw106 keep-joint alpha MAE increases from 0.00664839 to 0.01094422.",
+    "Near-black opaque pixel counts include legitimate windows/tyres and cannot, by themselves, identify a semantic black-body defect.",
+    "Source dark colours, projected chart depth, retained source rows, and a37/static ordering remain independent causes. No claim that alpha alone explains all black edges.",
+    "raw113 and raw130 are internal development diagnostics; they are not an untouched final confirmation set.",
+    "The actual chart teacher is the persistent 3D asset: hosted strongv2 proposal + true BUILD106 known RGB/source fallback, then 40-BUILD observed fit. SD prompt2_seed3 is a separate baseline and is not the chart teacher."
+  ],
+  "compute": {
+    "native_raster_calls": 40,
+    "timed_main_wall_seconds": 14.640102863311768,
+    "wall_time_includes_loading_CPU_and_saving": true,
+    "CUDA_only_time_not_measured": true,
+    "peak_cuda_allocated_bytes": 7248361472,
+    "peak_cuda_reserved_bytes": 12555649024,
+    "model_weight_updates": 0,
+    "geometry_updates": 0,
+    "colour_updates": 0,
+    "source_opacity_updates": 0,
+    "shared_kernel_edits": 0,
+    "render_copy_opacity_control_only": true
+  },
+  "engineering_retries": [
+    {
+      "stage": "metadata command quoting",
+      "GPU_calls": 0,
+      "optimization_steps": 0
+    },
+    {
+      "stage": "local torch import missing typing_extensions; used existing remote CPU environment",
+      "GPU_calls": 0,
+      "optimization_steps": 0
+    },
+    {
+      "stage": "CPU generic test closure correction",
+      "GPU_calls": 0,
+      "optimization_steps": 0
+    }
+  ],
+  "immutable_asset_and_kernel_hashes_checked_before_after": true,
+  "automatic_adoption": false
+}

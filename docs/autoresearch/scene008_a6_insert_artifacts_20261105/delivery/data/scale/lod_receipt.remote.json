@@ -1,0 +1,1039 @@
+{
+  "status": "PASS_FIXED_THREE_VIEW_LOD_TEST_NOT_AUTOMATIC_ADOPTION",
+  "raws": [
+    106,
+    113,
+    130
+  ],
+  "sources": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/formal_observed/formal/complete_a6.npz": "70826fc7c9c011ee073f7ffea4f22501a57f39ffa2cd0d52cd5ebd9c37b14e53",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/probe_surface_lod.py": "e84e7535f76b436183d1cac101c061478f2f1e859358ff0186612f3747de1b1e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py": "fb3c746a04bf17b1f84b127e44769b4ff294567e98aec744131ddc3f3c4d76ca",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/relative_area_asset.py": "62fb356cb7808c5284212e7efc182ed3ac37c3521d5c7dd9c86a0c4847bb4586",
+    "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e"
+  },
+  "views": [
+    {
+      "raw": 106,
+      "variants": {
+        "HR_default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          }
+        },
+        "HR_LOD_reference_replay": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "LOD": {
+            "du": 1.0,
+            "median_screen_area_per_source_UV": 0.9999999548275091,
+            "area": {
+              "count": 42536,
+              "min": 0.999999938118904,
+              "p10": 0.9999999486336937,
+              "median": 0.9999999548275091,
+              "p90": 0.999999961045392,
+              "max": 0.9999999720353043,
+              "mean": 0.9999999548260456
+            },
+            "invalid_differentials": 0,
+            "viewport": [
+              1920,
+              1280
+            ],
+            "retained_rows": 2778,
+            "canonical_chart_rows": 42536,
+            "persistent_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+            "pose_or_edit_state_patch": false,
+            "peak_opacity": 0.99,
+            "opacity_area_compensation": false,
+            "sigma_formula": ".6 * du * S_camera_z_reference / reference_fx",
+            "grid_formula": "UV=(integer_index+.5)*du-.5",
+            "spline_source_local_maxabs_m": 0.0,
+            "spline_source_sigma_maxabs_m": 0.0,
+            "canonical_grid_reused_exact": true,
+            "chart_rows": 42536,
+            "render_rows": 45314,
+            "mip_low": 0,
+            "mip_high": 0,
+            "mip_fraction": 0.0
+          },
+          "canonical_grid_replay_maxabs": {
+            "solo": {
+              "rgb": 0.0,
+              "alpha": 0.0,
+              "asset_rgb": 0.0,
+              "asset_alpha": 0.0,
+              "depth_sum": 0.0
+            },
+            "keep": {
+              "rgb": 0.0,
+              "alpha": 0.0,
+              "asset_rgb": 0.0,
+              "asset_alpha": 0.0,
+              "depth_sum": 0.0
+            },
+            "delete": {
+              "rgb": 0.0,
+              "alpha": 0.0,
+              "asset_rgb": 0.0,
+              "asset_alpha": 0.0,
+              "depth_sum": 0.0
+            }
+          }
+        },
+        "default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.08098290115594864,
+              "alpha_MAE_vs_D4HR": 0.04797792807221413,
+              "asset_rgb_MAE_vs_D4HR": 0.08098290115594864,
+              "asset_alpha_MAE_vs_D4HR": 0.04797792807221413,
+              "expected_depth_MAE_vs_D4HR_m": 0.039069149643182755,
+              "interior_alpha_mean": 0.9998275637626648,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.0438523031771183,
+              "alpha_MAE_vs_D4HR": 0.007945715449750423,
+              "asset_rgb_MAE_vs_D4HR": 0.03318733721971512,
+              "asset_alpha_MAE_vs_D4HR": 0.018651938065886497,
+              "expected_depth_MAE_vs_D4HR_m": 0.13779498636722565,
+              "interior_alpha_mean": 0.5015578269958496,
+              "interior_alpha_below09": 1121,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.07960956543684006,
+              "alpha_MAE_vs_D4HR": 0.01815878041088581,
+              "asset_rgb_MAE_vs_D4HR": 0.07964910566806793,
+              "asset_alpha_MAE_vs_D4HR": 0.04289969429373741,
+              "expected_depth_MAE_vs_D4HR_m": 0.040894486010074615,
+              "interior_alpha_mean": 0.9942342042922974,
+              "interior_alpha_below09": 13,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.07711610198020935,
+              "alpha_mean": 0.9998253583908081,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.1544812172651291
+            },
+            "keep": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.07714161276817322,
+              "alpha_mean": 0.9998252391815186,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.1544812172651291
+            },
+            "delete": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.07711610198020935,
+              "alpha_mean": 0.9998253583908081,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.1544812172651291
+            }
+          }
+        },
+        "area": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.02987796813249588,
+              "alpha_MAE_vs_D4HR": 0.03436022624373436,
+              "asset_rgb_MAE_vs_D4HR": 0.02987796813249588,
+              "asset_alpha_MAE_vs_D4HR": 0.03436022624373436,
+              "expected_depth_MAE_vs_D4HR_m": 0.02806936949491501,
+              "interior_alpha_mean": 0.97984778881073,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.025469714775681496,
+              "alpha_MAE_vs_D4HR": 0.011371712200343609,
+              "asset_rgb_MAE_vs_D4HR": 0.014736156910657883,
+              "asset_alpha_MAE_vs_D4HR": 0.01924603432416916,
+              "expected_depth_MAE_vs_D4HR_m": 0.1685684323310852,
+              "interior_alpha_mean": 0.4904896318912506,
+              "interior_alpha_below09": 1121,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.030658287927508354,
+              "alpha_MAE_vs_D4HR": 0.019721556454896927,
+              "asset_rgb_MAE_vs_D4HR": 0.029825305566191673,
+              "asset_alpha_MAE_vs_D4HR": 0.035961590707302094,
+              "expected_depth_MAE_vs_D4HR_m": 0.0966576412320137,
+              "interior_alpha_mean": 0.9733586311340332,
+              "interior_alpha_below09": 17,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.04925424978137016,
+              "alpha_mean": 0.9768191576004028,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.13745173811912537
+            },
+            "keep": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.04897371307015419,
+              "alpha_mean": 0.982345700263977,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.2246461808681488
+            },
+            "delete": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.04893111065030098,
+              "alpha_mean": 0.9823328256607056,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.2246461808681488
+            }
+          }
+        },
+        "LOD": {
+          "asset_rows": 5942,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 5942,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 5942,
+            "delete": true
+          },
+          "LOD": {
+            "du": 4.000000090344985,
+            "median_screen_area_per_source_UV": 0.06249999717671932,
+            "area": {
+              "count": 42536,
+              "min": 0.0624999961324315,
+              "p10": 0.062499996789605855,
+              "median": 0.06249999717671932,
+              "p90": 0.062499997565337,
+              "max": 0.06249999825220652,
+              "mean": 0.06249999717662785
+            },
+            "invalid_differentials": 0,
+            "viewport": [
+              480,
+              320
+            ],
+            "retained_rows": 2778,
+            "canonical_chart_rows": 42536,
+            "persistent_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+            "pose_or_edit_state_patch": false,
+            "peak_opacity": 0.99,
+            "opacity_area_compensation": false,
+            "sigma_formula": ".6 * du * S_camera_z_reference / reference_fx",
+            "grid_formula": "UV=(integer_index+.5)*du-.5",
+            "spline_source_local_maxabs_m": 0.0,
+            "spline_source_sigma_maxabs_m": 0.0,
+            "mip_low": 2,
+            "mip_high": 3,
+            "mip_fraction": 3.258506486858437e-08,
+            "canonical_grid_reused_exact": false,
+            "chart_rows": 3164,
+            "render_rows": 5942,
+            "coverage": {
+              "count": 3164,
+              "min": 1.6245661066394135e-11,
+              "p10": 8.634499863546813e-07,
+              "median": 1.0,
+              "p90": 1.0,
+              "max": 1.0,
+              "mean": 0.839044988155365
+            },
+            "texture_positive_outside_spline_count": 0
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.04150129482150078,
+              "alpha_MAE_vs_D4HR": 0.026099354028701782,
+              "asset_rgb_MAE_vs_D4HR": 0.04150129482150078,
+              "asset_alpha_MAE_vs_D4HR": 0.026099354028701782,
+              "expected_depth_MAE_vs_D4HR_m": 0.019181743264198303,
+              "interior_alpha_mean": 0.9996522068977356,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.02916661836206913,
+              "alpha_MAE_vs_D4HR": 0.0054203541949391365,
+              "asset_rgb_MAE_vs_D4HR": 0.018181443214416504,
+              "asset_alpha_MAE_vs_D4HR": 0.012425552122294903,
+              "expected_depth_MAE_vs_D4HR_m": 0.12424099445343018,
+              "interior_alpha_mean": 0.5013796091079712,
+              "interior_alpha_below09": 1121,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.04166964441537857,
+              "alpha_MAE_vs_D4HR": 0.011725946329534054,
+              "asset_rgb_MAE_vs_D4HR": 0.04119277372956276,
+              "asset_alpha_MAE_vs_D4HR": 0.026086652651429176,
+              "expected_depth_MAE_vs_D4HR_m": 0.01990000158548355,
+              "interior_alpha_mean": 0.9935356378555298,
+              "interior_alpha_below09": 14,
+              "interior_pixels": 2155,
+              "object_pixels": 2835
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.05518600344657898,
+              "alpha_mean": 0.9996182322502136,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.14171102643013
+            },
+            "keep": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.055251847952604294,
+              "alpha_mean": 0.9997047781944275,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.1416117250919342
+            },
+            "delete": {
+              "fixed_visible_pixels": 1042,
+              "RGB_MAE": 0.05518435686826706,
+              "alpha_mean": 0.9997045397758484,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 255,
+              "measured_camera_z_MAE_m": 0.1416117250919342
+            }
+          }
+        }
+      },
+      "dataset_role": "internal development diagnostic",
+      "source_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+      "crop_HR_xyxy": [
+        848,
+        656,
+        1212,
+        968
+      ],
+      "crop_LR_xyxy": [
+        212,
+        164,
+        303,
+        242
+      ]
+    },
+    {
+      "raw": 113,
+      "variants": {
+        "HR_default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          }
+        },
+        "default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.08728670328855515,
+              "alpha_MAE_vs_D4HR": 0.05610274523496628,
+              "asset_rgb_MAE_vs_D4HR": 0.08728670328855515,
+              "asset_alpha_MAE_vs_D4HR": 0.05610274523496628,
+              "expected_depth_MAE_vs_D4HR_m": 0.04620511457324028,
+              "interior_alpha_mean": 0.9998457431793213,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.050819993019104004,
+              "alpha_MAE_vs_D4HR": 0.011223695240914822,
+              "asset_rgb_MAE_vs_D4HR": 0.04253930225968361,
+              "asset_alpha_MAE_vs_D4HR": 0.02629966475069523,
+              "expected_depth_MAE_vs_D4HR_m": 0.16555827856063843,
+              "interior_alpha_mean": 0.5652664303779602,
+              "interior_alpha_below09": 767,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.08566779643297195,
+              "alpha_MAE_vs_D4HR": 0.030010711401700974,
+              "asset_rgb_MAE_vs_D4HR": 0.08628668636083603,
+              "asset_alpha_MAE_vs_D4HR": 0.05227433890104294,
+              "expected_depth_MAE_vs_D4HR_m": 0.05208934471011162,
+              "interior_alpha_mean": 0.9941373467445374,
+              "interior_alpha_below09": 11,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.06769805401563644,
+              "alpha_mean": 0.9998463988304138,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.17816324532032013
+            },
+            "keep": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.06771061569452286,
+              "alpha_mean": 0.9998463988304138,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.17855115234851837
+            },
+            "delete": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.06769805401563644,
+              "alpha_mean": 0.9998463988304138,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.17816324532032013
+            }
+          }
+        },
+        "area": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.03154575824737549,
+              "alpha_MAE_vs_D4HR": 0.03328916057944298,
+              "asset_rgb_MAE_vs_D4HR": 0.03154575824737549,
+              "asset_alpha_MAE_vs_D4HR": 0.03328916057944298,
+              "expected_depth_MAE_vs_D4HR_m": 0.019616052508354187,
+              "interior_alpha_mean": 0.9873037934303284,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.026069341227412224,
+              "alpha_MAE_vs_D4HR": 0.01099438313394785,
+              "asset_rgb_MAE_vs_D4HR": 0.017650382593274117,
+              "asset_alpha_MAE_vs_D4HR": 0.019535277038812637,
+              "expected_depth_MAE_vs_D4HR_m": 0.16631478071212769,
+              "interior_alpha_mean": 0.5576689839363098,
+              "interior_alpha_below09": 772,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.03223511204123497,
+              "alpha_MAE_vs_D4HR": 0.02277461066842079,
+              "asset_rgb_MAE_vs_D4HR": 0.031789373606443405,
+              "asset_alpha_MAE_vs_D4HR": 0.03598635643720627,
+              "expected_depth_MAE_vs_D4HR_m": 0.05837992578744888,
+              "interior_alpha_mean": 0.9809530973434448,
+              "interior_alpha_below09": 14,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.03757898509502411,
+              "alpha_mean": 0.9856863021850586,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.14495787024497986
+            },
+            "keep": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.03744420409202576,
+              "alpha_mean": 0.9899839758872986,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.16891375184059143
+            },
+            "delete": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.0374145582318306,
+              "alpha_mean": 0.9899822473526001,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.16852010786533356
+            }
+          }
+        },
+        "LOD": {
+          "asset_rows": 5285,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 5285,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 5285,
+            "delete": true
+          },
+          "LOD": {
+            "du": 4.490058504030847,
+            "median_screen_area_per_source_UV": 0.049601635944632516,
+            "area": {
+              "count": 42536,
+              "min": 0.0482793483776157,
+              "p10": 0.04888515029830899,
+              "median": 0.049601635944632516,
+              "p90": 0.05031430180925255,
+              "max": 0.050814763441142816,
+              "mean": 0.04957981461281818
+            },
+            "invalid_differentials": 0,
+            "viewport": [
+              480,
+              320
+            ],
+            "retained_rows": 2778,
+            "canonical_chart_rows": 42536,
+            "persistent_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+            "pose_or_edit_state_patch": false,
+            "peak_opacity": 0.99,
+            "opacity_area_compensation": false,
+            "sigma_formula": ".6 * du * S_camera_z_reference / reference_fx",
+            "grid_formula": "UV=(integer_index+.5)*du-.5",
+            "spline_source_local_maxabs_m": 0.0,
+            "spline_source_sigma_maxabs_m": 0.0,
+            "mip_low": 2,
+            "mip_high": 3,
+            "mip_fraction": 0.16673424294533046,
+            "canonical_grid_reused_exact": false,
+            "chart_rows": 2507,
+            "render_rows": 5285,
+            "coverage": {
+              "count": 2507,
+              "min": 1.0360804481024388e-05,
+              "p10": 0.06406338661909108,
+              "median": 1.0,
+              "p90": 1.0,
+              "max": 1.0,
+              "mean": 0.8404656648635864
+            },
+            "texture_positive_outside_spline_count": 0
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.04514269903302193,
+              "alpha_MAE_vs_D4HR": 0.03361488878726959,
+              "asset_rgb_MAE_vs_D4HR": 0.045142702758312225,
+              "asset_alpha_MAE_vs_D4HR": 0.03361488878726959,
+              "expected_depth_MAE_vs_D4HR_m": 0.019914843142032623,
+              "interior_alpha_mean": 0.9977459907531738,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.03254836052656174,
+              "alpha_MAE_vs_D4HR": 0.008580127730965614,
+              "asset_rgb_MAE_vs_D4HR": 0.024112163111567497,
+              "asset_alpha_MAE_vs_D4HR": 0.018016377463936806,
+              "expected_depth_MAE_vs_D4HR_m": 0.141209214925766,
+              "interior_alpha_mean": 0.5640157461166382,
+              "interior_alpha_below09": 768,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.0451846607029438,
+              "alpha_MAE_vs_D4HR": 0.02051982842385769,
+              "asset_rgb_MAE_vs_D4HR": 0.045070864260196686,
+              "asset_alpha_MAE_vs_D4HR": 0.035061463713645935,
+              "expected_depth_MAE_vs_D4HR_m": 0.01655019260942936,
+              "interior_alpha_mean": 0.9914308786392212,
+              "interior_alpha_below09": 11,
+              "interior_pixels": 1674,
+              "object_pixels": 2270
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.04894303157925606,
+              "alpha_mean": 0.9974480271339417,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.15388323366641998
+            },
+            "keep": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.04895954206585884,
+              "alpha_mean": 0.9981943368911743,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.14444735646247864
+            },
+            "delete": {
+              "fixed_visible_pixels": 879,
+              "RGB_MAE": 0.048936255276203156,
+              "alpha_mean": 0.9981939196586609,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 226,
+              "measured_camera_z_MAE_m": 0.14405633509159088
+            }
+          }
+        }
+      },
+      "dataset_role": "internal development diagnostic",
+      "source_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+      "crop_HR_xyxy": [
+        860,
+        652,
+        1196,
+        940
+      ],
+      "crop_LR_xyxy": [
+        215,
+        163,
+        299,
+        235
+      ]
+    },
+    {
+      "raw": 130,
+      "variants": {
+        "HR_default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          }
+        },
+        "default": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.11548928916454315,
+              "alpha_MAE_vs_D4HR": 0.07320152968168259,
+              "asset_rgb_MAE_vs_D4HR": 0.11548928916454315,
+              "asset_alpha_MAE_vs_D4HR": 0.07320152968168259,
+              "expected_depth_MAE_vs_D4HR_m": 0.06542908400297165,
+              "interior_alpha_mean": 0.999870240688324,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.06212196499109268,
+              "alpha_MAE_vs_D4HR": 0.014498558826744556,
+              "asset_rgb_MAE_vs_D4HR": 0.05748897045850754,
+              "asset_alpha_MAE_vs_D4HR": 0.035760972648859024,
+              "expected_depth_MAE_vs_D4HR_m": 0.19187168776988983,
+              "interior_alpha_mean": 0.5519426465034485,
+              "interior_alpha_below09": 398,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.11259649693965912,
+              "alpha_MAE_vs_D4HR": 0.04582161828875542,
+              "asset_rgb_MAE_vs_D4HR": 0.11530537158250809,
+              "asset_alpha_MAE_vs_D4HR": 0.07291948050260544,
+              "expected_depth_MAE_vs_D4HR_m": 0.06542087346315384,
+              "interior_alpha_mean": 0.9998509883880615,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.0653453841805458,
+              "alpha_mean": 0.9998687505722046,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.14641787111759186
+            },
+            "keep": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.06538745015859604,
+              "alpha_mean": 0.999868631362915,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.15355436503887177
+            },
+            "delete": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.0653453841805458,
+              "alpha_mean": 0.9998687505722046,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.14641787111759186
+            }
+          }
+        },
+        "area": {
+          "asset_rows": 45314,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 45314,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 45314,
+            "delete": true
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.048282600939273834,
+              "alpha_MAE_vs_D4HR": 0.04330519586801529,
+              "asset_rgb_MAE_vs_D4HR": 0.048282600939273834,
+              "asset_alpha_MAE_vs_D4HR": 0.04330519586801529,
+              "expected_depth_MAE_vs_D4HR_m": 0.023338597267866135,
+              "interior_alpha_mean": 0.9983870983123779,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.03184593468904495,
+              "alpha_MAE_vs_D4HR": 0.011825536377727985,
+              "asset_rgb_MAE_vs_D4HR": 0.026626311242580414,
+              "asset_alpha_MAE_vs_D4HR": 0.021854188293218613,
+              "expected_depth_MAE_vs_D4HR_m": 0.15891268849372864,
+              "interior_alpha_mean": 0.5511022806167603,
+              "interior_alpha_below09": 398,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.04649699479341507,
+              "alpha_MAE_vs_D4HR": 0.03126209229230881,
+              "asset_rgb_MAE_vs_D4HR": 0.04816802963614464,
+              "asset_alpha_MAE_vs_D4HR": 0.043102409690618515,
+              "expected_depth_MAE_vs_D4HR_m": 0.016281260177493095,
+              "interior_alpha_mean": 0.9983673691749573,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.03843744844198227,
+              "alpha_mean": 0.9982960224151611,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.09652187675237656
+            },
+            "keep": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.0386124886572361,
+              "alpha_mean": 0.9992746710777283,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.09326926618814468
+            },
+            "delete": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.038424622267484665,
+              "alpha_mean": 0.9992735981941223,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.08611571043729782
+            }
+          }
+        },
+        "LOD": {
+          "asset_rows": 4092,
+          "keep_delete_A_rows_bitwise_exact": true,
+          "meta_keep": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 937415,
+            "asset_rows": 4092,
+            "delete": false
+          },
+          "meta_delete": {
+            "native_a6_rows_input": 0,
+            "native_a37_packed_rows": 0,
+            "asset_rows": 4092,
+            "delete": true
+          },
+          "LOD": {
+            "du": 6.176197141486155,
+            "median_screen_area_per_source_UV": 0.026215473116250727,
+            "area": {
+              "count": 42536,
+              "min": 0.02431094576875042,
+              "p10": 0.025112268906399643,
+              "median": 0.026215473116250727,
+              "p90": 0.02728280949524945,
+              "max": 0.028277252418517574,
+              "mean": 0.02618959966294305
+            },
+            "invalid_differentials": 0,
+            "viewport": [
+              480,
+              320
+            ],
+            "retained_rows": 2778,
+            "canonical_chart_rows": 42536,
+            "persistent_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+            "pose_or_edit_state_patch": false,
+            "peak_opacity": 0.99,
+            "opacity_area_compensation": false,
+            "sigma_formula": ".6 * du * S_camera_z_reference / reference_fx",
+            "grid_formula": "UV=(integer_index+.5)*du-.5",
+            "spline_source_local_maxabs_m": 0.0,
+            "spline_source_sigma_maxabs_m": 0.0,
+            "mip_low": 2,
+            "mip_high": 3,
+            "mip_fraction": 0.6267188035297595,
+            "canonical_grid_reused_exact": false,
+            "chart_rows": 1314,
+            "render_rows": 4092,
+            "coverage": {
+              "count": 1314,
+              "min": 0.0004361788451205939,
+              "p10": 0.19346864521503448,
+              "median": 1.0,
+              "p90": 1.0,
+              "max": 1.0,
+              "mean": 0.8464285731315613
+            },
+            "texture_positive_outside_spline_count": 0
+          },
+          "vs_D4HR": {
+            "solo": {
+              "rgb_MAE_vs_D4HR": 0.056437812745571136,
+              "alpha_MAE_vs_D4HR": 0.04685445874929428,
+              "asset_rgb_MAE_vs_D4HR": 0.05643782019615173,
+              "asset_alpha_MAE_vs_D4HR": 0.04685445874929428,
+              "expected_depth_MAE_vs_D4HR_m": 0.02415851689875126,
+              "interior_alpha_mean": 0.9977399110794067,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "keep": {
+              "rgb_MAE_vs_D4HR": 0.034366801381111145,
+              "alpha_MAE_vs_D4HR": 0.012178661301732063,
+              "asset_rgb_MAE_vs_D4HR": 0.029207034036517143,
+              "asset_alpha_MAE_vs_D4HR": 0.024164285510778427,
+              "expected_depth_MAE_vs_D4HR_m": 0.15739311277866364,
+              "interior_alpha_mean": 0.5506238341331482,
+              "interior_alpha_below09": 398,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            },
+            "delete": {
+              "rgb_MAE_vs_D4HR": 0.05469142273068428,
+              "alpha_MAE_vs_D4HR": 0.03234821557998657,
+              "asset_rgb_MAE_vs_D4HR": 0.056316062808036804,
+              "asset_alpha_MAE_vs_D4HR": 0.04664323851466179,
+              "expected_depth_MAE_vs_D4HR_m": 0.014185330830514431,
+              "interior_alpha_mean": 0.9977198839187622,
+              "interior_alpha_below09": 0,
+              "interior_pixels": 825,
+              "object_pixels": 1235
+            }
+          },
+          "real_observation": {
+            "solo": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.04863271862268448,
+              "alpha_mean": 0.9972432851791382,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.09677041321992874
+            },
+            "keep": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.048820484429597855,
+              "alpha_mean": 0.9990208148956299,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.08755713701248169
+            },
+            "delete": {
+              "fixed_visible_pixels": 455,
+              "RGB_MAE": 0.04862355813384056,
+              "alpha_mean": 0.9990193843841553,
+              "alpha_below09": 0,
+              "fixed_depth_pixels": 115,
+              "measured_camera_z_MAE_m": 0.08040613681077957
+            }
+          }
+        }
+      },
+      "dataset_role": "internal development diagnostic",
+      "source_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+      "crop_HR_xyxy": [
+        876,
+        644,
+        1148,
+        880
+      ],
+      "crop_LR_xyxy": [
+        219,
+        161,
+        287,
+        220
+      ]
+    }
+  ],
+  "source_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+  "render_calls": 40,
+  "seconds": 15.605051755905151,
+  "peak_cuda_allocated": 6353772544,
+  "peak_cuda_reserved": 7876902912,
+  "kernel_and_global_neg_fov_unchanged": true,
+  "training_steps": 0,
+  "PVD_weight_updates": 0,
+  "geometry_fit_steps": 0,
+  "colour_fit_steps": 0,
+  "source_asset_opacity_updates": 0,
+  "source_retained_rows_unchanged": true,
+  "keep_delete_sampling_independent": true,
+  "method": "Only camera-frequency sampling and fixed premultRGBA mip filtering of persistent S/F; .99 peak opacity, no area attenuation",
+  "self_consistency_reference": "D4 actual canonical HR premultRGB/alpha, not hidden appearance/geometry truth",
+  "dataset_role": "internal development diagnostics, not independent final confirmation",
+  "automatic_adoption": false
+}

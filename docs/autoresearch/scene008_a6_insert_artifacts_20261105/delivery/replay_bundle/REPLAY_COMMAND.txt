@@ -1,0 +1,5 @@
+# Extract this bundle into a NEW directory on the existing AutoDL host.
+# Run from that directory. Choose an output path that does not yet exist.
+PYTHONDONTWRITEBYTECODE=1 /root/autodl-tmp/envs/drivingeditor/bin/python replay_surface_lod.py \
+  --asset complete_a6.npz --surface posterior.npz --raw 113 --width 480 \
+  --output /root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/user_lod_replay_113

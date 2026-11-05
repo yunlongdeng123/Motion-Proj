@@ -1,0 +1,65 @@
+{
+  "status": "COMPLETE_DIAGNOSIS_NO_REPAIR_APPLIED",
+  "local_root": "work/a6_artifact_diagnosis/vehicle",
+  "remote_run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/vehicle",
+  "runtime": {"GPU_diagnosis_seconds": 8.864476203918457, "PVD_updates": 0, "colour_optimizer_updates": 0, "old_asset_mutations": 0},
+  "verified_transfer": {"files": 24, "SHA256_mismatches": 0},
+  "conclusions": [
+    {
+      "finding": "Artifacts already exist at reference106, before a camera change;40BUILD colour fit adds grain but is not the first cause.",
+      "evidence": ["gpu_result/vehicle/matched_teachers_106.png", "source106_stages.png", "gpu_result/vehicle/raw106/depth_oracle.png"],
+      "scope": "Observed actual native reference rendering, not inferred from novel-view screenshots."
+    },
+    {
+      "finding": "The actual teacher was hosted strongv2, not the SD board candidate.",
+      "candidate_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+      "SD_comparison": "prompt2_seed3/composed.png is shown at the same reference1061920-pixel mapping only as a separate teacher."
+    },
+    {
+      "finding": "PVD object silhouette selects a3D surfel for candidate black canvas; each selected chart surfel gets opacity.99. This creates an opaque dark outer rim in reference106.",
+      "source_positions": ["prepare_projective_surface.py:52", "prepare_projective_surface.py:92-100", "prepare_projective_surface.py:110"],
+      "evidence": "gpu_result/vehicle/raw106/decomposition.png source-dark-to-magenta panel shows a roof/side rim as well as legal tires.",
+      "metrics_106": {"alpha_gt098_dark_output_pixels": 3682, "dark_pixels_with_source_dark_generated_mass_gt09": 2776, "source_dark_mass_mean_on_dark_pixels": 0.8709660114436869},
+      "limit": "These counts include valid dark tires and seams. They are not a deletion mask. Candidate-specific foreground/alpha is needed to separate exterior black from true dark material."
+    },
+    {
+      "finding": "Alpha-normalized expected depth was treated as a connected3D surface although it contains large pixel-to-pixel depth changes. Native depth ordering bends texture lines even at106.",
+      "source_positions": ["prepare_projective_surface.py:51-75"],
+      "metrics": {"adjacent_depth_median_m": 0.015009641647338867, "interior_adjacent_depth_p99_m": 0.23694677352905325, "interior_adjacent_pairs_gt10cm": 5697, "surfel_sigma_local_median_m": 0.004563560010865331},
+      "controlled_test": "Flat-depth proto preserves106 xy, angular sigma, colours, opacity and point count. Only depth/sort changes; tailgate and bumper lines become visibly straighter.",
+      "evidence": ["gpu_result/vehicle/raw106/depth_oracle.png", "gpu_result/vehicle/raw113/depth_oracle.png"],
+      "limit": "The plane is a nonphysical oracle, not an approved repair or360-degree geometry."
+    },
+    {
+      "finding": "The retained2778 prior rows are not the dominant artifact source in106/113/130.",
+      "source_positions": ["prepare_projective_surface.py:79-83"],
+      "actual_max_alphaT": {"106": 0.00037107596290297806, "113": 0.005185360088944435, "130": 0.015615737065672874},
+      "chart_only_vs_full_RGB_mean_L1": {"106": 0.00002726977264894246, "113": 0.0001315403913000944, "130": 0.000012663690320308846}
+    },
+    {
+      "finding": "A general premultiplied-versus-straight RGB error is not the main interior defect.",
+      "source_positions": ["fit_projective.py:59-60", "evaluate_projective_formal.py:70-76"],
+      "metrics_106": {"mean_alpha_core": 0.9996190201164316, "mean_abs_RGB_change_from_dividing_alpha_core": 0.00015026315310446818},
+      "limit": "Black background can still contaminate bilinear texture taps at edges:158 generated chart samples mix foreground/exterior taps. This is smaller than the4020 near-black generated chart rows, and must be handled separately from output transmittance."
+    },
+    {
+      "finding": "40BUILD SH0 colour fitting compensates for the original rough depth ordering; it adds high-frequency colour variation.",
+      "source_positions": ["fit_projective.py:91-103"],
+      "metrics": {"real_seed_rows_newly_dark_after_fit": 60, "generated_seed_rows_newly_dark_after_fit": 9},
+      "evidence": "Flat oracle with prototype colours is clean; the same flat oracle with formal colours reveals grain already stored in per-surfel colours."
+    }
+  ],
+  "minimal_experiments_executed": [
+    "Matched hostedstrongv2 and SD prompt2seed3 at the exact recorded reference106 affine versus mixed point colours and native proto/formal render.",
+    "Native full/chart-only/retained-only and real/gen/fallback isolation in106/113/130, plus actual joint per-group alpha*T and RGB contribution conservation.",
+    "Source-dark-colour-to-magenta marker with opacity and geometry unchanged, preserving rather than deleting tires.",
+    "Prior-depth versus flat-depth ORACLE, using identical reference106 point centres, angular sigma, point count, opacity and colours.",
+    "Premultiplied native RGB versus RGB/alpha diagnostic at all three saved views."
+  ],
+  "replay": {
+    "source": "gpu_decompose.py",
+    "command_after_upload": "/root/autodl-tmp/envs/drivingeditor/bin/python gpu_decompose_cli.py --output /root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/vehicle_r2",
+    "requires_new_output_path": true
+  },
+  "repair_contract_left_for_parent": "Separate candidate foreground from RGB darkness; preserve genuine dark tires. Address surface depth consistency before another colour fit. Do not deploy the plane oracle or delete all black pixels."
+}

@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 插入成像诊断与连续表面（2026-11-05）
+
+- `scene008_a6_insert_artifacts_20261105`：[实际颜色载体、C2 深度与前景 RGBA、viewport 和固定域评价](autoresearch/scene008_a6_insert_artifacts_20261105/README.md)。配置、资源、完整结果与输入角色见报告；failure_ledger_delta=none。
+
 ## Scene008 启发式接管验证（2026-11-05）
 
 - [固定裁剪、实测面正对照及原始第一回波核查](autoresearch/scene008_a6_heuristic_validation_20261105/README.md)。方法未通过保护验收。
@@ -332,4 +336,4 @@
 
 - `RCR-1 / scene008_rcr1_20261105`：[当前delete交互报告](autoresearch/scene008_rcr1_20261105/index.html)、[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)、[机制与原始账本](autoresearch/scene008_rcr1_20261105/research/index.html)、[源码归档](autoresearch/scene008_rcr1_20261105/source_archive/index.html)；用户采用异常蓝色RGB修复，亮片保留开放，完整画质无回退未作新结论；a5更早代码提交独立待查。HELD9仅道路RGB校准target留出。failure_ledger_refs=[V82-F13]（历史），本次failure_ledger_delta=none。
 
-- `a5 followup / scene008_rcr1_20261105`：[a5车体完整性定位与六阶段对照](autoresearch/scene008_rcr1_20261105/followup_a5/index.html)；只读诊断、零训练，未修复，不新增失败卡；failure_ledger_delta=none。
+- `a5 followup / scene008_rcr1_20261105`：[实际报告直接复核](autoresearch/scene008_rcr1_20261105/followup_a5/index.html#report-crosscheck)、[原生六阶段对照](autoresearch/scene008_rcr1_20261105/followup_a5/index.html)；旧Full5选择性删除a6/a37仍保留a5，新报告Native10K已缺、M0/M2非起点；3fefd98仅首次归档配方，不是唯一因果提交。本次追加0GPU/0SGD、未修复，不新增失败卡；failure_ledger_delta=none。
