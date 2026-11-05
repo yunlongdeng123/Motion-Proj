@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 下部局部融合（2026-11-05）
+
+- `scene008_a6_local_fusion_20261105`。[零训练黑底对照及逐帧保护检查](autoresearch/scene008_a6_local_fusion_20261105/README.md)。
+
 ## Scene008 原生 10K + 道路恢复 1K（2026-11-05）
 
 - `scene008_native_road1k_20261105_r1`。[R3 接线与 49 帧固定域对照](autoresearch/scene008_native_road1k_20261105_r1/README.md)。

@@ -1,7 +1,7 @@
 # 当前研究状态
 
-2026-11-05，Scene008 已完成实例监督原生 10K 后接 R3 道路恢复 1K，以及完整状态恢复和 49 帧评价。[接线、配对指标与回执](autoresearch/scene008_native_road1k_20261105_r1/README.md)
+2026-11-05，Scene008 已完成黑底 a6 局部融合和 49 帧配对，固定 PVD 参数，新增训练 0 步。[黑底对照、冻结域及逐帧保护检查](autoresearch/scene008_a6_local_fusion_20261105/README.md)
 
-删 a37 后，固定显露道路 RGB MAE 0.2025 → 0.0221，旧强编辑 R3 为 0.0138。已观测 a6 的 RGB MAE 0.0187 → 0.0187。无编辑质量使用同一份道路和门控重算。人工验收尚未登记，AutoDL 电源由用户控制。
+在固定的 26,229 个下部候选像素上，显露率从直接叠加 29.87% 升到 38.32%。与原生 a6 相比，已观测 RGB MAE 0.01873 → 0.01874，实测深度 MAE 0.2686 → 0.2699 m。通过了逐帧保护门槛，下部仍未完整显露。
 
-[原生 10K 的早期验收与对照](autoresearch/scene008_native_ownership_20261105/README.md)
+[原生 10K + 道路 1K 与 PVD 遮挡诊断](autoresearch/scene008_native_road1k_20261105_r1/README.md)。本轮的街景诊断与主实验单独归档。AutoDL 电源由用户控制。
