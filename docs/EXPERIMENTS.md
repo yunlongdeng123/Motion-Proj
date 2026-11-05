@@ -326,3 +326,6 @@
 
 
 2026-11-05，Scene008车辆外观严格伪遮挡完成：3case/5规则，HELD宏RGB误差默认色.17327、细图调和.17429、父面调和.17919，四候选未过质量门，不采用；49帧保护门均通过、alpha/depth/groups逐位不变。原200点均实测来源、199跨帧自洽，无大规模他车实体重叠证据。交付4个隔离的显式mask/米制camera外观模型输入包，PVD未训练，M2保留，AutoDL开机。[报告与重放](autoresearch/scene008_a6_material_validation_20261105/README.md)。
+
+
+- `scene008_a6_appearance_formal_20261105`：[冻结PVD的车体外观补全、正式资产与49帧对照](autoresearch/scene008_a6_appearance_formal_20261105/README.md)；配置、资源、完整指标和边界均在报告；failure_ledger_delta=none。

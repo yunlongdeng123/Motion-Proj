@@ -1,0 +1,124 @@
+{
+  "status": "PASS_PROJECTIVE_PROTOTYPE_3D_CHART_UNITS_AND_PROVENANCE",
+  "scope": "Independent CPU-only source and saved-array review; no GPU, fitting, sampling, rendering or source edits",
+  "representation": "Single-reference-view conditioned persistent local3D chart, plus unchanged unreferenced source rows",
+  "backprojection": {
+    "reference_raw": 106,
+    "reference_split": "BUILD",
+    "highres_wh": [
+      1920,
+      1280
+    ],
+    "depth_source": "Frozen sphere prior alpha-normalized expected camera-z; not LiDAR or measured hidden depth",
+    "meter_to_model": 0.09999999999999999,
+    "pose_uniform_scale": 0.09999999823707136,
+    "fx_HR": 2060.142593112,
+    "expected_depth_m_vs_model_div_scale_maxabs": 0.0,
+    "local_to_reference_reprojection_HR_pixels_max": 2.0706034661344597e-05,
+    "camera_z_roundtrip_model_maxabs": 1.2906342217178235e-08,
+    "sigma_formula": "local_sigma=.6*camera_z_model/fx_HR/actor_pose_uniform_scale",
+    "sigma_formula_maxabs_m": 0.0,
+    "pixel_center_NDC": "x_ndc=(2*x+1)/W-1; inverse full projection uses row-vector convention"
+  },
+  "persistent_3D_not_2D_overlay": {
+    "saved_a6_local_xyz": true,
+    "moves_with_actual_actor_pose": true,
+    "native_scene_joint_depth_sort_in_source": true,
+    "native_component_alpha_T_conservation_check_in_source": true,
+    "actual_evaluation_receipt_available": true,
+    "actual_native_joint_sort": true,
+    "actual_group_conservation_maxabs": 1.8477439880371094e-06,
+    "image_paste_calls_in_evaluator": "PIL strip() only lays out report panels; scene RGB comes from native raster plus transmittance-weighted environment"
+  },
+  "source_retirement": {
+    "source_rows": 18432,
+    "retired_rows_positive_native_reference_contribution": 15654,
+    "retained_rows": 2778,
+    "new_chart_rows": 47544,
+    "output_rows": 50322,
+    "retirement_exactly_matches_W_column_positive_mass": true,
+    "retained_original_geometry_material_flags_bytes_exact": true,
+    "nearest_source_row_parent_distance_arrays_recomputed_exact": true,
+    "source_file_unchanged_sha256": "ca846b0546cace46fb0cbd35e4c3c3dd53ad6a2dada3de5a28481d536c185bd5",
+    "important_scope": "Original source is preserved on disk; this output representation changes point count, positions, scales and opacity for new chart rows. It is not the same frozen-geometry material-only asset."
+  },
+  "colour_provenance": {
+    "real_BUILD106_HR_RGB_rows": 16672,
+    "generated_strongv2_rows": 30388,
+    "source_prior_fallback_chart_rows": 484,
+    "three_chart_colour_masks_disjoint_and_exhaustive": true,
+    "real_RGB_from_original_visible_mask_nearest_lifted4": true,
+    "real_RGB_source_file_sha256": "d1cd5ec37cf733764d47d9ee5141bf910d322334b1edcc834bb969cd4023cd18",
+    "generated_RGB_recomputed_with_exact_affine_and_bilinear_sampling": true,
+    "exported_SH0_decoded_RGB_float32_roundtrip_maxabs": 5.960464477539063e-08,
+    "proposal_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+    "unknown_RGB_marked_inferred": true,
+    "HELD_RGB_read_by_prepare": false,
+    "reference_RAW_assignment_is_106_only": true,
+    "HELD_use_in_evaluator": "Actual HELD RGB is read for fixed-domain evaluation only, never chart construction or candidate selection"
+  },
+  "budget": {
+    "PVD_weight_updates": 0,
+    "pretrained_weight_updates": 0,
+    "prototype_colour_optimization_updates": 0,
+    "output_resampling_inference_seconds": 3.655536413192749,
+    "prototype_budget_not_equal_to_40BUILD_observed_fits": true,
+    "formal_40BUILD_observed_fit": "Separate follow-up; include its actual32 smoke+1000 formal receipts once complete, not as part of this zero-optimization prototype"
+  },
+  "files": {
+    "prepare_source": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/prepare_projective_surface.py",
+      "sha256": "ce28ebc713adb1673aed550f541276280c5459c4933bd77edf4ec8cd2bf94ff1"
+    },
+    "evaluate_source": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py",
+      "sha256": "6844822feb383c24a7d0954fecc7c36e4c5432fd89752ab6998dee89cfdf9038"
+    },
+    "prepare_receipt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/prepare_receipt.json",
+      "sha256": "9aa4a2ec88a86fc7780ed96a8e042f6ada6eda30a2c18f51e451c53e57a511ec"
+    },
+    "chart": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/reference_chart.npz",
+      "sha256": "3b7fee2f3adc951d8979b19c79d95e53978fc4bf62d32b018a21f9d9a0a2f0b9"
+    },
+    "asset": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/projective_surface_asset.npz",
+      "sha256": "6a2ccf78b1d95e904702627d9e45cd62222b451e2eaa552b342ca368f0d41703"
+    }
+  },
+  "claim_limits": [
+    "Not360-degree reconstruction or independently held-out geometry truth.",
+    "Reference-camera texture clarity is not evidence of more accurate geometry or novel-view consistency.",
+    "No assertion that this changed representation preserves the thin/sphere whole-image RGB/depth predictions.",
+    "Real upper RGB and inferred lower material have explicit separate provenance."
+  ],
+  "formal_40BUILD_observed_colour_fit": {
+    "status": "PASS_FIXED_GEOMETRY_AND_EXACT_UNKNOWN_COEFFICIENT_PROTECTION",
+    "base_prototype_sha256": "6a2ccf78b1d95e904702627d9e45cd62222b451e2eaa552b342ca368f0d41703",
+    "formal_asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/projective_surface/formal_observed/formal/complete_a6.npz",
+    "formal_asset_sha256": "70826fc7c9c011ee073f7ffea4f22501a57f39ffa2cd0d52cd5ebd9c37b14e53",
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/fit_projective.py",
+    "source_sha256": "8322fda6ce6692344058f99f1949f9222c2faf38cc2d40d59e1a5b6809bf6492",
+    "same_original_HR_target_RGB_and_raw_order_bitwise": true,
+    "BUILD_frames": 40,
+    "HELD_in_fit_raws": false,
+    "operator_shape": [
+      394206,
+      50322
+    ],
+    "operator_nnz": 9332019,
+    "unknown_columns": 30190,
+    "all_original_geometry_opacity_source_and_resample_arrays_bitwise_exact": true,
+    "unknown_columns_all_16x3_SH_RGB_inferred_flags_bitwise_exact": true,
+    "new_generated_colour_optimization_steps": 0,
+    "observed_colour_smoke_steps_separate": 32,
+    "observed_colour_formal_steps": 1000,
+    "formal_fit_seconds": 7.2643067836761475,
+    "neural_weight_training_updates": 0,
+    "PVD_weight_updates": 0,
+    "full_state_nextstep_replay_exact": true,
+    "receipt_sha256": "17c6d8532bd7094dde70feb7b64b4d133cc1acb33af0b5e98e148adaabfa73ea",
+    "scope": "Observed colour calibration on the same40BUILD real-RGB domain; no new generated-colour1000 run and no new geometry. The surface remains conditioned on a single reference view."
+  }
+}

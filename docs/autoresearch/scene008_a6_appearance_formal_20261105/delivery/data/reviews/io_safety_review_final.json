@@ -1,0 +1,353 @@
+{
+  "status": "PASS_REVIEWED_PIXEL_MAPPING_ALPHA_AND_ASSET_PROTECTION",
+  "scope": "Independent read-only CPU review; no GPU, renderer import, sampling, training, download or remote writes",
+  "selection": {
+    "candidate": "prompt2_seed3",
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/candidates_raw106/prompt2_seed3/composed.png",
+    "sha256": "73b1a6c49761a754ab6aff8ed082d37af4d5af19603271069354a273ad9f757a",
+    "decision_by": "root after BUILD-only candidate board inspection",
+    "reason": "seed3 more usable lower-body silhouette; seed1 block-like lower corners, seed2 bright outline, seed0 central seam",
+    "held_rgb_used": false,
+    "hyperparameter_search_after_selection": false,
+    "not_a_measurement": true
+  },
+  "architecture": [
+    "HR1920 native operator rays -> exact pixel-center affine -> fixed 512 proposal sampling",
+    "native W and alpha -> A=W/alpha -> straight-sRGB proposal target",
+    "original-zero AND HR-zero Gaussian columns -> update only inferred SH0 -> frozen geometry asset",
+    "protected BUILD-contributing columns -> byte-exact SH/RGB/inferred flags -> export audit"
+  ],
+  "pixel_center_rule": "low=(hr+.5)/4-.5; generated=old480_to_512_affine(low)",
+  "frames": [
+    {
+      "raw": 106,
+      "pixel_rows": 45305,
+      "hr_shape": [
+        1280,
+        1920
+      ],
+      "candidate_shape": [
+        512,
+        512
+      ],
+      "pixel_center_matrix_maxabs_error": 0.0,
+      "generated_xy_maxabs_error": 0.0,
+      "inverse_maxabs_error": 0.0,
+      "naive_hr_divide_by_4_error_candidate_pixels": 2.021052631578982,
+      "generated_xy_range": [
+        [
+          67.54210526315796,
+          114.69999999999993
+        ],
+        [
+          442.11052631578946,
+          396.30000000000007
+        ]
+      ],
+      "normalized_A_vs_W_div_alpha_maxabs": 5.6131328363129285e-08,
+      "A_row_sum_maxabs": 6.083799016787239e-07,
+      "W_sum_vs_alpha_maxabs": 5.962345098753374e-07,
+      "A_rgb_vs_straight_maxabs": 4.91644014499748e-07,
+      "W_rgb_vs_premultiplied_maxabs": 4.789644553193639e-07,
+      "eligible_generated_hr_rows_before_fraction": 22261,
+      "eligible_generated_hr_rows_safe_fraction_ge_025": 17203,
+      "generated_rows_touching_known_hr_mask": 0,
+      "actual_HR_RGB_available_as_observation_only": true,
+      "packet_hashes": {
+        "transform.npz": "9dfa4f66772c1a3595bd4ae2ba4d560be8e6722a04b8bc67ada1547b3dbffee6",
+        "operator_samples.npz": "c8608483b0fa598c96095e021c421e8e9d4662626a9063b68820db4b5a0aeb67",
+        "design_A_normalized.npz": "d20dea3e91869743fbf3526f17ef16520929a3c48aae340223bec4512252378b",
+        "design_W_premultiplied.npz": "b6fd483888f1610aa04bf6cf1533ff461f0059e6722505e2ff3c213f0784681d"
+      },
+      "selected_candidate_bilinear_targets": {
+        "finite": true,
+        "shape": [
+          45305,
+          3
+        ],
+        "admitted_target_minmax": [
+          0.019607843137254898,
+          1.0
+        ],
+        "target_is_straight_srgb": true,
+        "divide_candidate_by_alpha": false,
+        "sampling": "bilinear generated[y,x] at exact recorded generated_xy; no resize"
+      }
+    },
+    {
+      "raw": 114,
+      "pixel_rows": 34812,
+      "hr_shape": [
+        1280,
+        1920
+      ],
+      "candidate_shape": [
+        512,
+        512
+      ],
+      "pixel_center_matrix_maxabs_error": 0.0,
+      "generated_xy_maxabs_error": 0.0,
+      "inverse_maxabs_error": 1.1368683772161603e-13,
+      "naive_hr_divide_by_4_error_candidate_pixels": 2.341463414634177,
+      "generated_xy_range": [
+        [
+          67.40243902439033,
+          111.10975609756099
+        ],
+        [
+          448.28048780487825,
+          396.7682926829267
+        ]
+      ],
+      "normalized_A_vs_W_div_alpha_maxabs": 5.226834920435408e-08,
+      "A_row_sum_maxabs": 5.9387639117503e-07,
+      "W_sum_vs_alpha_maxabs": 5.461552794461255e-07,
+      "A_rgb_vs_straight_maxabs": 5.866258395714752e-07,
+      "W_rgb_vs_premultiplied_maxabs": 5.428986474820263e-07,
+      "eligible_generated_hr_rows_before_fraction": 15832,
+      "eligible_generated_hr_rows_safe_fraction_ge_025": 13454,
+      "generated_rows_touching_known_hr_mask": 0,
+      "actual_HR_RGB_available_as_observation_only": true,
+      "packet_hashes": {
+        "transform.npz": "189c5f75ca28c6519a6ef75acbb980ce56d967ed387e356794a712c8a2990b69",
+        "operator_samples.npz": "b66dcd29c169ede30e704e64403cec77efb3a1615a6c25deb3f66d79cd779aec",
+        "design_A_normalized.npz": "22573f90803b1e53ff6ae6f5be18ab5acb9d0762554e88e2c6de2e61e2ba5fc5",
+        "design_W_premultiplied.npz": "52e35d9d41af73011348d52ee474b6be75248bf39f3382661a78b88caf09b5d0"
+      }
+    },
+    {
+      "raw": 129,
+      "pixel_rows": 20099,
+      "hr_shape": [
+        1280,
+        1920
+      ],
+      "candidate_shape": [
+        512,
+        512
+      ],
+      "pixel_center_matrix_maxabs_error": 0.0,
+      "generated_xy_maxabs_error": 0.0,
+      "inverse_maxabs_error": 0.0,
+      "naive_hr_divide_by_4_error_candidate_pixels": 3.047619047619037,
+      "generated_xy_range": [
+        [
+          71.6269841269841,
+          120.38888888888891
+        ],
+        [
+          445.46825396825375,
+          398.7380952380952
+        ]
+      ],
+      "normalized_A_vs_W_div_alpha_maxabs": 5.617039289251835e-08,
+      "A_row_sum_maxabs": 6.110699342087855e-07,
+      "W_sum_vs_alpha_maxabs": 5.663295492563947e-07,
+      "A_rgb_vs_straight_maxabs": 4.774053928846556e-07,
+      "W_rgb_vs_premultiplied_maxabs": 4.533728652500457e-07,
+      "eligible_generated_hr_rows_before_fraction": 9849,
+      "eligible_generated_hr_rows_safe_fraction_ge_025": 8136,
+      "generated_rows_touching_known_hr_mask": 0,
+      "actual_HR_RGB_available_as_observation_only": true,
+      "packet_hashes": {
+        "transform.npz": "7af621da242992289ec3e739d68870a1ad7c019a98769e9bbbaf1bf9e0751472",
+        "operator_samples.npz": "cbe02ca89c231abcfdd0ef8321e951e09829635c71b0705ef9c1426c43f72fc2",
+        "design_A_normalized.npz": "81861c5ca8d6aa8f6865520540fdfb66a0b79d87006dd7d1ba4399ed9131e3b6",
+        "design_W_premultiplied.npz": "e1185702b68088fb1a82a7016ce6de5230e4d1d9e70b48e39bd67e643319e61f"
+      }
+    }
+  ],
+  "protected_column_contract": {
+    "gaussian_count": 18432,
+    "original_BUILD_zero_columns": 10557,
+    "HR_BUILD_zero_columns": 9770,
+    "safe_intersection_zero_columns": 9630,
+    "original_zero_but_HR_contributing_columns_to_protect": 927,
+    "HR_zero_but_original_contributing_columns_to_protect": 140,
+    "all_known_union_columns_to_protect": 8802,
+    "preserve_all_16x3_SH_bytes_and_RGB_and_colour_inferred_relative_to_input_asset": true,
+    "highres_control_asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/highres/formal/complete_a6.npz",
+    "highres_control_asset_sha256": "e8fc46ceadfabd0efc199689dba4c798591e15a814b06c09f07fcd04cd12ee57",
+    "geometry_and_provenance_fields_original_vs_HR_control_exact": true,
+    "source_asset_has_SH0_only": true,
+    "required_prediction_checks": [
+      "original_BUILD_A @ rgb exactly unchanged",
+      "HR_BUILD_A @ rgb exactly unchanged"
+    ]
+  },
+  "inspected_source_hashes": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/fit_adapter/adapter.py": "83b03c1f642d8d0b658a2bbd13d9e82926e29bcc22c09ffe95251d179a52b408",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/fit_adapter/bridge_packet.py": "fac4124da89b0c93af1b02bb3236039465379ef65d03700ecc38f1a82cf254d4"
+  },
+  "adapter_final_output_checks": [
+    {
+      "branch": "sd_hr_hrfit",
+      "status": "PASS_INDEPENDENT_CPU_BRIDGE_AND_ASSET_CHECKS",
+      "candidate_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/candidates_raw106/prompt2_seed3/composed.png",
+      "candidate_sha256": "73b1a6c49761a754ab6aff8ed082d37af4d5af19603271069354a273ad9f757a",
+      "asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/generated_fit/sd_hr_hrfit/complete_a6.npz",
+      "asset_sha256": "907feb117ec520ca9507642d1bc99f451022c1eb9271eb030e24ae50f7930113",
+      "base_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/highres/formal/complete_a6.npz",
+      "uses_HR1920_operator": true,
+      "native_ray_count": 28635,
+      "W_bridge_vs_packet_maxabs": 0.0,
+      "bilinear_target_stored_float32_maxabs": 2.980109237160633e-08,
+      "permitted_columns": 9630,
+      "protected_union_columns": 8802,
+      "updated_rows_in_replay": 8905,
+      "changed_RGB_rows": 8905,
+      "changed_SH_rows": 8905,
+      "protected_all_16x3_SH_RGB_inferred_flags_bitwise_exact": true,
+      "all_geometry_opacity_and_provenance_arrays_bitwise_exact": true,
+      "original_BUILD_prediction_maxabs": 0.0,
+      "HR_BUILD_prediction_maxabs": 0.0,
+      "HR_prediction_preservation_required_for_primary": true,
+      "generated_colour_inferred_flags_true": true,
+      "metadata_labels_inferred_appearance": true,
+      "native_render_validation_still_required": true,
+      "source_hashes_verified": true,
+      "receipt_sha256": "d95e6270b1d6fdff78fef15b813614f1510b0331e49a5b56a90ec19d5dbda992",
+      "bridge_receipt_sha256": "fbee12178b282dd026590ed7c61c1b1f9b79f615a2875edf0b2527d2dff7609f"
+    },
+    {
+      "branch": "strong_hr_hrfit",
+      "status": "PASS_INDEPENDENT_CPU_BRIDGE_AND_ASSET_CHECKS",
+      "candidate_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/strong_candidate_v2_512.png",
+      "candidate_sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0",
+      "asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/generated_fit/strong_hr_hrfit/complete_a6.npz",
+      "asset_sha256": "1ed51d27124eac6dad07b9b2aec5e0c5e95dd6eebc67743f9478b99426d48259",
+      "base_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/highres/formal/complete_a6.npz",
+      "uses_HR1920_operator": true,
+      "native_ray_count": 28635,
+      "W_bridge_vs_packet_maxabs": 0.0,
+      "bilinear_target_stored_float32_maxabs": 2.9797465606051787e-08,
+      "permitted_columns": 9630,
+      "protected_union_columns": 8802,
+      "updated_rows_in_replay": 8905,
+      "changed_RGB_rows": 8905,
+      "changed_SH_rows": 8905,
+      "protected_all_16x3_SH_RGB_inferred_flags_bitwise_exact": true,
+      "all_geometry_opacity_and_provenance_arrays_bitwise_exact": true,
+      "original_BUILD_prediction_maxabs": 0.0,
+      "HR_BUILD_prediction_maxabs": 0.0,
+      "HR_prediction_preservation_required_for_primary": true,
+      "generated_colour_inferred_flags_true": true,
+      "metadata_labels_inferred_appearance": true,
+      "native_render_validation_still_required": true,
+      "source_hashes_verified": true,
+      "receipt_sha256": "60ad3ca6dd522aed0ea44ff4ce00b58b2bf40ed575810be5c206606d919884f8",
+      "bridge_receipt_sha256": "bf354c42ec09560eeaa0d4d39e2a24adfa15a2e7c35b038fd31e4ed61f768ef6"
+    },
+    {
+      "branch": "strong_m2",
+      "status": "PASS_INDEPENDENT_CPU_BRIDGE_AND_ASSET_CHECKS",
+      "candidate_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/strong_candidate_v1_512.png",
+      "candidate_sha256": "04c9d55e3edf9e72b542c20b630f1747065b4e1c2172b43d9fe755dcba43bd2c",
+      "asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/generated_fit/strong_m2/complete_a6.npz",
+      "asset_sha256": "c90466bd1379d49acf16621697b72946ac524f2089565087830318af7016de55",
+      "base_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/complete_a6.npz",
+      "uses_HR1920_operator": false,
+      "native_ray_count": 1948,
+      "W_bridge_vs_packet_maxabs": 0.0,
+      "bilinear_target_stored_float32_maxabs": 2.97928810510939e-08,
+      "permitted_columns": 10557,
+      "protected_union_columns": 7875,
+      "updated_rows_in_replay": 6766,
+      "changed_RGB_rows": 6766,
+      "changed_SH_rows": 6766,
+      "protected_all_16x3_SH_RGB_inferred_flags_bitwise_exact": true,
+      "all_geometry_opacity_and_provenance_arrays_bitwise_exact": true,
+      "original_BUILD_prediction_maxabs": 0.0,
+      "HR_BUILD_prediction_maxabs": 0.01022770174866916,
+      "HR_prediction_preservation_required_for_primary": false,
+      "generated_colour_inferred_flags_true": true,
+      "metadata_labels_inferred_appearance": true,
+      "native_render_validation_still_required": true,
+      "source_hashes_verified": true,
+      "receipt_sha256": "25e9effcd77b07ca6a3ad49e5a3f8ae80b492738d2112a065f7628fb568f70f5",
+      "bridge_receipt_sha256": "2e960eab6890da4a9f81c39d4d7c43624301c9f29a275255f51107764eb0f757"
+    }
+  ],
+  "offline_SD_selected_baseline_asset_review": "PASS; sd_hr_hrfit included in adapter_final_output_checks",
+  "strong_candidate": {
+    "status": "REVIEWED_LOCAL_PROPOSAL_AND_EXACT_ADAPTER_INPUT_IDENTITY",
+    "provider": "Built-in ImageGen hosted image generation, per parent task context",
+    "classification": "Inferred material proposal; not measured RGB, hidden ground truth, verified geometry or a complete 3D asset",
+    "hosted_checkpoint_hash": null,
+    "hosted_checkpoint_note": "A provider checkpoint hash was not exposed to this independent reviewer; the exact returned image files are hashed instead.",
+    "local_original": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\strong_candidate106_v2_original.png",
+      "bytes": 1177356,
+      "sha256": "7330967a5fc1a9d4b2b7f4e47604bc30705244457b17d2a5204e8f7d805e3086"
+    },
+    "local_candidate_512": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\strong_candidate106_v2_512.png",
+      "bytes": 198121,
+      "sha256": "ef4dea1e6cff36587104f5a8e5f8d046929e3db6afc5aba06eb6e1bb2e2e9ce0"
+    },
+    "conditioning": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\conditioning.json",
+      "bytes": 458,
+      "sha256": "b22b210ad76156a6766091f3f54d352be8ff4203c1eff4993dced99ddf474d38"
+    },
+    "source_conditioning_image": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\strong_input106.png",
+      "bytes": 62607,
+      "sha256": "bbc85b67e57bc7db35224685b9b7134993a2b8c0545aa135516362a8d2c490c9"
+    },
+    "source_observed_upper_reference": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\strong_observed106.png",
+      "bytes": 41426,
+      "sha256": "be23e0ee66ee8a9cb49e5f6675426a9b313ba4e98698c398da3f635ef2ca03a1"
+    },
+    "source_real_BUILD106_RGB": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_appearance_formal\\generation\\observed106.png",
+      "bytes": 2685658,
+      "sha256": "d1cd5ec37cf733764d47d9ee5141bf910d322334b1edcc834bb969cd4023cd18"
+    },
+    "original_shape_wh": [
+      1254,
+      1254
+    ],
+    "candidate_shape_hw": [
+      512,
+      512
+    ],
+    "output_resize": "Pillow LANCZOS entire square image, no crop; exact independently reproduced",
+    "output_resize_pixel_center_rule": "x512=(x_hosted+.5)*512/1254-.5, y analogous",
+    "reference_identity_source": "Only a6 known/visible BUILD106 mask from original 1920x1280 RGB; M2 unknown surface is a declared placeholder",
+    "closer_car_user_reference_used": false,
+    "held_RGB_used": false,
+    "raw_proposal_known_pixels_bitwise_preserved": false,
+    "raw_proposal_known_changed_pixels": 30285,
+    "raw_proposal_known_maxabs_RGB_u8": 149,
+    "raw_proposal_outside_inpaint_changed_pixels": 65701,
+    "why_asset_bridge_still_passes": "The adapter samples only explicitly unknown foreground rays, then updates only the old-zero AND HR-zero primitive columns. Observed-contributing SH/RGB/flags remain bitwise exact regardless of proposal changes outside its fit domain.",
+    "semantic_alignment_to_input_is_verified": false,
+    "semantic_alignment_note": "The hosted model may alter its 2D layout. The bridge accurately samples that proposal in the declared frame; this is not proof of pixel-accurate identity or 3D consistency."
+  },
+  "limitations": [
+    "Candidate silhouette masking and 2D alignment do not prove multi-view 3D consistency.",
+    "True HR input supplies additional observed-upper detail; it does not turn generated lower-body pixels into ground truth.",
+    "Preserving original/HR BUILD operators does not claim every image pixel is unchanged outside those defined supports."
+  ],
+  "reporting_corrections": [
+    "The strong raw proposal must not be described as preserving known image pixels; exact known-pixel preservation was established for SD composed candidates, and protected SH preservation was established separately for final material assets.",
+    "strong_m2 is a low-resolution diagnostic branch: original BUILD predictions remain exact, but HR BUILD prediction maxabs is about .01023. The formal HR branches protect both designs.",
+    "The adapter receipt protected_columns=7875 counts original BUILD contributors only. The independently verified original-plus-HR union has 8802 protected columns; all remain exact."
+  ],
+  "overall_verdict": {
+    "interface_wiring_defect_found": false,
+    "fixed_SD_baseline": "prompt2_seed3, selected using BUILD-only visual shape usability",
+    "HR_primary_branches_passed": [
+      "sd_hr_hrfit",
+      "strong_hr_hrfit"
+    ],
+    "no_model_weight_training": true,
+    "no_new_prompts_or_seeds_in_review": true,
+    "no_GPU_work_in_review": true,
+    "remote_files_modified_by_review": false,
+    "shutdown_performed": false,
+    "remaining_acceptance": "Native render checks, same-scene insertion and qualitative/material-consistency acceptance remain separate; this review does not grant 3D quality acceptance."
+  }
+}

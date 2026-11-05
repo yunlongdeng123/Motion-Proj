@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FIXED_CROSS_KERNEL_PRESERVATION_AUDIT",
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/output_adapter/sphere_strong_v2/complete_a6.npz",
+  "source_asset_sha256": "ca846b0546cace46fb0cbd35e4c3c3dd53ad6a2dada3de5a28481d536c185bd5",
+  "comparators": {
+    "thin_m2": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/complete_a6.npz",
+      "sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6"
+    },
+    "thin_hr": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/highres/formal/complete_a6.npz",
+      "sha256": "e8fc46ceadfabd0efc199689dba4c798591e15a814b06c09f07fcd04cd12ee57"
+    }
+  },
+  "source_sha256": "cc3578c08a6ea930e6cede6607e9be59e4237c0e2c38b85c52b2a3410ae771ac",
+  "frames": 49,
+  "geometry_checks": {
+    "thin_m2": {
+      "thickness_is_sigma": true,
+      "changed_thickness_rows": 18432,
+      "points_normals_tangent_sigma_opacity_provenance_bitwise_unchanged": true,
+      "source_geometry_hash": "b7403c780e3d432c043c0aeb5bbf00d220cacda8d717328e826abeb6ad5c816a",
+      "comparator_geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912"
+    },
+    "thin_hr": {
+      "thickness_is_sigma": true,
+      "changed_thickness_rows": 18432,
+      "points_normals_tangent_sigma_opacity_provenance_bitwise_unchanged": true,
+      "source_geometry_hash": "b7403c780e3d432c043c0aeb5bbf00d220cacda8d717328e826abeb6ad5c816a",
+      "comparator_geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912"
+    }
+  },
+  "alpha_depth_equality_required": false,
+  "one_prespecified_kernel_only": true,
+  "masks_and_denominators": "Original observation bank only; no predicted-alpha mask shrinking",
+  "scene_depth_reference": "Original observation-bank scene_depth_m, finite positive fixed pixels",
+  "a37_depth_reference": "Original associated actor37 depth_m/depth_valid in keep state",
+  "deleted_road_depth_reference": "Original reobserved road_edit_depth_m on fixed road_edit pixels",
+  "frozen_background_a37_road_environment_parameters_unchanged": true,
+  "occlusion_effects_measured_not_assumed_unchanged": true,
+  "generated_teacher_is_not_hidden_RGB_or_depth_truth": true,
+  "HELD_only_final_evaluation": true,
+  "model_updates": 0,
+  "seconds": 27.072277545928955
+}

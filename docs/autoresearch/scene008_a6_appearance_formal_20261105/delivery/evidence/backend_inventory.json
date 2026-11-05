@@ -1,0 +1,90 @@
+{
+  "inspection_time": "2026-11-05 18:29-18:40 Asia/Singapore",
+  "host": "wm-vgpu-1011",
+  "selected_route": "Offline frozen StableDiffusionInpaintPipeline + optional h94 IP-Adapter sd15; compose only inferred-mask pixels onto exact BUILD observations",
+  "architecture": [
+    "BUILD a6 RGB + frozen PVD silhouette -> unknown mask / exact known pixels",
+    "BUILD a6 observed-upper crop -> frozen CLIP vision encoder -> frozen IP-Adapter",
+    "RGB + unknown mask + fixed prompt/seed -> frozen SD1.5 9-channel inpainting UNet/VAE -> candidate RGB",
+    "candidate RGB + unknown mask + exact known pixels -> composed candidate -> BUILD-only shape/preservation ranking"
+  ],
+  "environment": {
+    "python": "/root/autodl-tmp/envs/v42-freeinpaint/bin/python",
+    "python_version": "3.12.15",
+    "torch": "2.9.1",
+    "diffusers": "0.36.0",
+    "transformers": "5.2.0",
+    "accelerate": "1.1.0",
+    "safetensors": "0.7.0",
+    "huggingface_hub": "1.5.0",
+    "xformers": "absent; PyTorch attention available",
+    "pillow": "13.0.0",
+    "numpy": "2.2.6",
+    "modifications": "none"
+  },
+  "sd15_snapshot": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "ip_adapter_snapshot": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--h94--IP-Adapter/snapshots/018e402774aeeddd60609b4ecdb7e298259dc729",
+  "other_inventory": [
+    {
+      "name": "FreeInpaint / PowerPaint ppt-v1 / LCM LoRA",
+      "directory": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024",
+      "bytes_approx": "19 GiB directory including duplicate precision files and partial files",
+      "status": "Available; SD15/IPAdapter components loaded successfully offline. FreeInpaint scene-geometry replacement excluded by frozen-PVD requirement; PowerPaint/LCM not used in selected route."
+    },
+    {
+      "name": "DiffuEraser",
+      "directory": "/root/autodl-tmp/models/persistent_world_diffueraser_20261027",
+      "bytes_approx": "11 GiB",
+      "status": "UNetMotionModel, BrushNet, VAE and text-encoder files present. Its video object-removal interface is less direct for single fixed car geometry; not loaded or run."
+    },
+    {
+      "name": "Hunyuan3D 2.1 Paint",
+      "directory": "/root/autodl-tmp/models/worldsim_v77_poc_hunyuan3d21",
+      "bytes_approx": "1.8 MiB",
+      "status": "Configs/tokenizers/source only; paint model weights missing. Not runnable from this directory without download."
+    },
+    {
+      "name": "Hunyuan Omni shape",
+      "directory": "/root/autodl-tmp/models/c2_hunyuan_omni_70e803",
+      "bytes_approx": "13 GiB",
+      "status": "Shape prior present; not an appearance model and excluded by frozen PVD geometry."
+    },
+    {
+      "name": "SVD XT 1.1",
+      "directory": "/root/autodl-tmp/models/worldsim_v81/svd_xt_1_1",
+      "bytes_approx": "4.3 GiB",
+      "status": "Generic video model; not a direct fixed-shape car texture completion interface."
+    },
+    {
+      "name": "FLUX / Qwen image edit / SDXL",
+      "status": "No matching model-weight filenames or complete snapshot directories found in inspected /root/autodl-tmp/models, drivingeditor_repro/weights, or /root/.cache/huggingface. Existing code mentions SDXL but no downloaded SDXL inpainting or depth ControlNet weights were found. Requires a separate download/environment validation; none performed."
+    },
+    {
+      "name": "LaMa",
+      "directory": "/root/autodl-tmp/models/worldsim_v6/r8_lama",
+      "status": "Source and config present; no useful-size main checkpoint in inspected directory."
+    }
+  ],
+  "storage": {
+    "autodl_tmp_free": "94 GiB at first inspection",
+    "root_free": "2.8 GiB at first inspection"
+  },
+  "gpu_initial_read_only_inspection": {
+    "time": "2026-11-05T18:29:43+08:00",
+    "name": "NVIDIA GeForce RTX 4080 SUPER",
+    "total_memory_mib": 32760,
+    "used_memory_mib": 1,
+    "compute_processes": [],
+    "later_activity": "Other authorized a6 input/high-resolution collection briefly occupied approximately 5908 MiB. No process was stopped."
+  },
+  "limitations": [
+    "The silhouette constrains writable pixels and final compositing; it is not an internal depth/normal ControlNet constraint.",
+    "Generated lower-car RGB is inferred, not recovered hidden truth.",
+    "The existing 512 crop comes from low-resolution distant BUILD106 evidence; upscaling cannot create identity evidence absent from that observation.",
+    "Reference provenance must be BUILD/a6 only; the closer vehicle in the user comparison image cannot supply a6 identity.",
+    "No HELD RGB is used to choose prompts, seeds, candidates or hyperparameters."
+  ],
+  "downloads_performed": 0,
+  "model_training_updates": 0,
+  "shutdown_performed": false
+}

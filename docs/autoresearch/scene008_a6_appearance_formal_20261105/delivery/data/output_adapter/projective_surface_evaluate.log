@@ -1,0 +1,67 @@
+{"stage": "projective_eval", "raw": 89, "complete": 1}
+{"stage": "projective_eval", "raw": 90, "complete": 2}
+{"stage": "projective_eval", "raw": 91, "complete": 3}
+{"stage": "projective_eval", "raw": 92, "complete": 4}
+{"stage": "projective_eval", "raw": 93, "complete": 5}
+{"stage": "projective_eval", "raw": 94, "complete": 6}
+{"stage": "projective_eval", "raw": 95, "complete": 7}
+{"stage": "projective_eval", "raw": 96, "complete": 8}
+{"stage": "projective_eval", "raw": 97, "complete": 9}
+{"stage": "projective_eval", "raw": 98, "complete": 10}
+{"stage": "projective_eval", "raw": 99, "complete": 11}
+{"stage": "projective_eval", "raw": 100, "complete": 12}
+{"stage": "projective_eval", "raw": 101, "complete": 13}
+{"stage": "projective_eval", "raw": 102, "complete": 14}
+{"stage": "projective_eval", "raw": 103, "complete": 15}
+{"stage": "projective_eval", "raw": 104, "complete": 16}
+{"stage": "projective_eval", "raw": 105, "complete": 17}
+{"stage": "projective_eval", "raw": 106, "complete": 18}
+{"stage": "projective_eval", "raw": 107, "complete": 19}
+{"stage": "projective_eval", "raw": 108, "complete": 20}
+{"stage": "projective_eval", "raw": 109, "complete": 21}
+{"stage": "projective_eval", "raw": 110, "complete": 22}
+{"stage": "projective_eval", "raw": 111, "complete": 23}
+{"stage": "projective_eval", "raw": 112, "complete": 24}
+{"stage": "projective_eval", "raw": 113, "complete": 25}
+{"stage": "projective_eval", "raw": 114, "complete": 26}
+{"stage": "projective_eval", "raw": 115, "complete": 27}
+{"stage": "projective_eval", "raw": 116, "complete": 28}
+{"stage": "projective_eval", "raw": 117, "complete": 29}
+{"stage": "projective_eval", "raw": 118, "complete": 30}
+{"stage": "projective_eval", "raw": 119, "complete": 31}
+{"stage": "projective_eval", "raw": 120, "complete": 32}
+{"stage": "projective_eval", "raw": 121, "complete": 33}
+{"stage": "projective_eval", "raw": 122, "complete": 34}
+{"stage": "projective_eval", "raw": 123, "complete": 35}
+{"stage": "projective_eval", "raw": 124, "complete": 36}
+{"stage": "projective_eval", "raw": 125, "complete": 37}
+{"stage": "projective_eval", "raw": 126, "complete": 38}
+{"stage": "projective_eval", "raw": 127, "complete": 39}
+{"stage": "projective_eval", "raw": 128, "complete": 40}
+{"stage": "projective_eval", "raw": 129, "complete": 41}
+{"stage": "projective_eval", "raw": 130, "complete": 42}
+{"stage": "projective_eval", "raw": 131, "complete": 43}
+{"stage": "projective_eval", "raw": 132, "complete": 44}
+{"stage": "projective_eval", "raw": 133, "complete": 45}
+{"stage": "projective_eval", "raw": 134, "complete": 46}
+{"stage": "projective_eval", "raw": 135, "complete": 47}
+{"stage": "projective_eval", "raw": 136, "complete": 48}
+{"stage": "projective_eval", "raw": 137, "complete": 49}
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py", line 131, in <module>
+    if __name__=='__main__':main()
+  File "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py", line 113, in main
+    pooled={split:{name:{key:pool(r['methods'][name][key] for r in rows) for key in keys} for name in assets}
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py", line 113, in <dictcomp>
+    pooled={split:{name:{key:pool(r['methods'][name][key] for r in rows) for key in keys} for name in assets}
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py", line 113, in <dictcomp>
+    pooled={split:{name:{key:pool(r['methods'][name][key] for r in rows) for key in keys} for name in assets}
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/output_adapter/projective_surface/evaluate_projective_surface.py", line 113, in <dictcomp>
+    pooled={split:{name:{key:pool(r['methods'][name][key] for r in rows) for key in keys} for name in assets}
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/metrics.py", line 74, in pool
+    max=max((item['max'] for item in items), default=0.),
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/metrics.py", line 74, in <genexpr>
+    max=max((item['max'] for item in items), default=0.),
+KeyError: 'max'

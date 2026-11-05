@@ -1,0 +1,52 @@
+{
+  "mode": "built-in image_gen tool, frozen hosted pretrained generation; no researcher model weight updates",
+  "checkpoint_hash": null,
+  "deterministic_rerun_claim": false,
+  "reference_raw": 106,
+  "split": "BUILD",
+  "input": "strong_input106.png",
+  "calls": [
+    {
+      "version": 1,
+      "prompt": "Use case: precise-object-edit. This is a scientific vehicle texture completion candidate, not a finished street photograph. Edit the supplied 512x512 rear-view vehicle crop. Keep exactly the same canvas, car position, camera, overall silhouette, roof, rear window and upper red tail lights. The flat grey lower half is missing texture, NOT a rectangular object. Complete that missing lower half as the natural continuation of THIS SAME silver four-door sedan: a realistic silver trunk lid below the lights, centered license plate recess with unreadable plate, shaped silver rear bumper with realistic highlights and shadows, dark lower valance, dark rear tires at the two bottom corners, a small realistic exhaust if plausible. Maintain the existing compact sedan proportions and bumper extent within the input silhouette. Match the actual upper silver paint and daylight. Do not redesign the visible upper car. Preserve the solid pure black background without ground or street or cast shadow. One vehicle, no labels, no border, no inset, no extra objects. Output the identical framing at 1024x1024 (uniform2x of the input), car pixel bounding rectangle approximately x132..894,y228..804 in the1024 canvas; no zoom or recentering. Prioritize believable bumper, license-plate recess, dark underbody and tires instead of featureless grey fill. The generated missing texture will be treated as inference, never measurement.",
+      "transparent_background": false,
+      "tool_response": {
+        "output_hint": "Generated images are saved to C:\\Users\\dengyunlong\\.codex\\generated_images\\01a1a90b-52fb-7881-bdc2-457e8c5e726c as C:\\Users\\dengyunlong\\.codex\\generated_images\\01a1a90b-52fb-7881-bdc2-457e8c5e726c\\exec-7c6f9e47-2930-48fa-9bbf-113fb66f8f16.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "actual_output_size": [
+        1254,
+        1254
+      ],
+      "normalized_candidate_size": [
+        512,
+        512
+      ],
+      "normalization": "Explicit uniform full-canvas Pillow LANCZOS",
+      "generated_RGB_is_inferred": true
+    },
+    {
+      "version": 2,
+      "prompt": "Edit this image for a 3D vehicle texture experiment. Complete the missing texture of the silver sedan itself. Use the entire existing car silhouette as the target: the wide flat grey lower region belongs to the same car body and must ALL become realistic silver bumper/side panels/dark tires, with no ghost car, no surrounding grey halo, no second silhouette or smaller inserted vehicle. Do not place a smaller new car inside it. Preserve the exact car position, scale, rear camera and visible roof/window/tail-light locations. Continue the same silver sedan naturally downward: trunk and plate recess, bumper with crisp horizontal creases, small red lower reflectors, dark lower bumper trim, rubber tires in the two lower corners. Keep pure black everywhere outside the original silhouette, including the gap beneath the bumper. Match realistic street daylight. Improve realistic material detail while keeping the upper body the same vehicle, not a different model. Single rear-view car on black; no text, no street or ground. Same square canvas and framing; image is a texture proposal to be fitted to fixed existing geometry, so silhouette/framing preservation is critical.",
+      "transparent_background": false,
+      "tool_response": {
+        "output_hint": "Generated images are saved to C:\\Users\\dengyunlong\\.codex\\generated_images\\01a1a90b-52fb-7881-bdc2-457e8c5e726c as C:\\Users\\dengyunlong\\.codex\\generated_images\\01a1a90b-52fb-7881-bdc2-457e8c5e726c\\exec-59565c5e-f6dc-49a0-a4ad-27505c5de47f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      },
+      "actual_output_size": [
+        1254,
+        1254
+      ],
+      "normalized_candidate_size": [
+        512,
+        512
+      ],
+      "normalization": "Explicit uniform full-canvas Pillow LANCZOS",
+      "generated_RGB_is_inferred": true
+    }
+  ],
+  "selection": {
+    "chosen": "v2",
+    "basis": "BUILD input silhouette fit and absence of v1 surrounding grey ghost; no HELD RGB or metrics used",
+    "not_measured_hidden_texture": true
+  },
+  "upper_pixels": "Hosted proposals may alter real upper pixels. Final3D material adapters preserve measured coefficients, independently audited."
+}

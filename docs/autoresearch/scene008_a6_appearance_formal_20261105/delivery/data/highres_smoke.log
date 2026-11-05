@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/highres_fit.py", line 120, in <module>
+    else:fit(a.stage=='smoke')
+  File "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/highres_fit.py", line 99, in fit
+    state=s.step(state)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/highres_fit.py", line 77, in step
+    x,y,t=s['x'],s['y'],s['t'];z=(y-self.gradient(y)/self.D).clamp(0,1);loss=self.objective(z);restarts=s['restarts']
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/source/highres_fit.py", line 72, in objective
+    def objective(self,x):return float((self.A(x)-self.target).double().square().sum()/self.M+RIDGE*(x-self.prior).double().square().sum()/self.N)
+  File "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/deterministic_csr.py", line 17, in __call__
+    assert x.is_cuda and x.dtype==torch.float32 and x.shape==(self.cols,3)
+AssertionError

@@ -1,0 +1,4 @@
+# Retain published artifact bytes, including valid Windows line endings.
+delivery/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Raw execution logs contain original progress bars and padded model tables.
+delivery/**/*.log -diff

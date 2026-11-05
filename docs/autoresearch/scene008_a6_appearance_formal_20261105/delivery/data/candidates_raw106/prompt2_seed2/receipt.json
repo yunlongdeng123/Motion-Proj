@@ -1,0 +1,236 @@
+{
+  "status": "FROZEN_INFERENCE_COMPLETE",
+  "job": {
+    "id": "prompt2_seed2",
+    "image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/input_512.png",
+    "mask": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/inpaint_mask_512.png",
+    "silhouette": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/object_mask_512.png",
+    "known_mask": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/known_mask_512.png",
+    "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/reference_build_a6_upper_512.png",
+    "reference_contract": {
+      "split": "BUILD",
+      "actor_id": "a6",
+      "raw_frame": 106,
+      "held_rgb_used": false,
+      "user_reference_used": false,
+      "native_a6_rgb_used": false,
+      "source": "Original observations/frames/106.npz rgb masked by original visible[0] (real visible a6 upper surface), tight square crop+black pad+512bilinear resize",
+      "source_rgb_dtype": "float32",
+      "source_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "known_bbox_xyxy": [
+        230,
+        179,
+        285,
+        202
+      ],
+      "reference_crop_xyxy": [
+        226,
+        159,
+        289,
+        222
+      ],
+      "mask_source": "Original observation visible[0], without predicted native-a6 content",
+      "reference_sha256": "a1d20a1158c30557ca223e285e9d0d3144d542339254690f490803c4540881e1"
+    },
+    "prompt": "Photorealistic rear view of the same silver four-door sedan. Complete the missing trunk-lid license-plate recess, silver bumper, dark lower valance, rear tires and a small exhaust. Match existing taillights, proportions, camera and daylight. Single car on pure black background.",
+    "seed": 2
+  },
+  "parameters": {
+    "scheduler": "DDIMScheduler",
+    "num_inference_steps": 30,
+    "guidance_scale": 7.5,
+    "strength": 1.0,
+    "eta": 0.0,
+    "ip_adapter_scale": 0.65,
+    "negative_prompt": "blurry, low quality, distorted vehicle, extra wheels, duplicate car, text, watermark",
+    "dtype": "float16",
+    "variant": "fp16",
+    "generator_device": "cpu",
+    "mask_white_means": "generate",
+    "mask_threshold": 128,
+    "resize": "none; dimensions must be multiples of 8",
+    "lcm_lora": false,
+    "training_updates": 0
+  },
+  "inputs": {
+    "files": {
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/input_512.png",
+        "bytes": 28939,
+        "sha256": "bef66d58b55f1ae7854f9e21d32eb0b35c7d6b359b2691919586f2c858edb653"
+      },
+      "mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/inpaint_mask_512.png",
+        "bytes": 1282,
+        "sha256": "fd7ebf4244546338cc412d588938e89bd81f1479c16442e00a2574be3a72a4b0"
+      },
+      "silhouette": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/object_mask_512.png",
+        "bytes": 1184,
+        "sha256": "5e2319363717ab74232e991bce5223fe08e02ea0eefc566fbe0fa58cb539e38b"
+      },
+      "known_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/known_mask_512.png",
+        "bytes": 704,
+        "sha256": "01e4e9318d127f956c77e2bbcf16ee4d696531af0c7777b221658d6fabb9a9dc"
+      },
+      "reference": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/inputs/raw106/reference_build_a6_upper_512.png",
+        "bytes": 50931,
+        "sha256": "a1d20a1158c30557ca223e285e9d0d3144d542339254690f490803c4540881e1"
+      }
+    },
+    "width": 512,
+    "height": 512,
+    "original_mask_pixels": 56621,
+    "effective_mask_pixels": 56621,
+    "mask_pixels_clipped_by_silhouette": 0,
+    "mask_pixels_protected_by_known_mask": 0,
+    "reference_contract": {
+      "split": "BUILD",
+      "actor_id": "a6",
+      "raw_frame": 106,
+      "held_rgb_used": false,
+      "user_reference_used": false,
+      "native_a6_rgb_used": false,
+      "source": "Original observations/frames/106.npz rgb masked by original visible[0] (real visible a6 upper surface), tight square crop+black pad+512bilinear resize",
+      "source_rgb_dtype": "float32",
+      "source_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "known_bbox_xyxy": [
+        230,
+        179,
+        285,
+        202
+      ],
+      "reference_crop_xyxy": [
+        226,
+        159,
+        289,
+        222
+      ],
+      "mask_source": "Original observation visible[0], without predicted native-a6 content",
+      "reference_sha256": "a1d20a1158c30557ca223e285e9d0d3144d542339254690f490803c4540881e1"
+    }
+  },
+  "prompt_encoding": {
+    "full_token_count": 60,
+    "model_max_length": 77,
+    "truncated": false,
+    "effective_token_ids": [
+      49406,
+      1153,
+      16157,
+      10223,
+      1093,
+      539,
+      518,
+      2208,
+      3467,
+      2721,
+      268,
+      2489,
+      24237,
+      269,
+      3263,
+      518,
+      3423,
+      18347,
+      268,
+      17678,
+      10337,
+      268,
+      5135,
+      38182,
+      267,
+      3467,
+      17881,
+      267,
+      3144,
+      4909,
+      1214,
+      884,
+      267,
+      10223,
+      15533,
+      537,
+      320,
+      2442,
+      21812,
+      269,
+      2439,
+      12886,
+      648,
+      1086,
+      1259,
+      267,
+      39391,
+      267,
+      3934,
+      537,
+      20809,
+      269,
+      2688,
+      1615,
+      525,
+      5979,
+      1449,
+      5994,
+      269,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407,
+      49407
+    ],
+    "effective_text": "photorealistic rear view of the same silver four - door sedan . complete the missing trunk - lid license - plate recess , silver bumper , dark lower valance , rear tires and a small exhaust . match existing taillights , proportions , camera and daylight . single car on pure black background ."
+  },
+  "model_manifest_sha256": "8a1ec225f27fe888ea1c5accde37f98e08aa6ad14018d05a0cde6f5adfda7f12",
+  "seconds": 1.418117804452777,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "peak_allocated_bytes": 4147078144,
+  "peak_reserved_bytes": 4502585344,
+  "training_updates": 0,
+  "ranking_or_selection_performed": false,
+  "finite_output": true,
+  "known_pixels_preserved_exactly": true,
+  "outside_effective_mask_max_abs_rgb_u8": 0,
+  "generated_image_is_inferred_appearance": true,
+  "outputs": {
+    "generated_raw.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/candidates_raw106/prompt2_seed2/generated_raw.png",
+      "bytes": 211497,
+      "sha256": "40e0b27b90f14e7e969b813e137c967b3d62099d49100004908f009e8379082a"
+    },
+    "composed.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/candidates_raw106/prompt2_seed2/composed.png",
+      "bytes": 95012,
+      "sha256": "22bd658a834ea21020970c5024ba3ca9e3dffe45d55c840a93291d432a18e8f4"
+    },
+    "effective_mask.png": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_appearance_formal_20261105/candidates_raw106/prompt2_seed2/effective_mask.png",
+      "bytes": 1282,
+      "sha256": "fd7ebf4244546338cc412d588938e89bd81f1479c16442e00a2574be3a72a4b0"
+    }
+  }
+}
