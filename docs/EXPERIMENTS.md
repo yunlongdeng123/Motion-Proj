@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 车体半空间裁剪（2026-11-05）
+
+- [scene008_a6_ray_switch_20261105](autoresearch/scene008_a6_ray_switch_20261105/README.md)。隔离 CUDA 前向、同位替换、49 帧黑底及街景。
+
 ## Scene008 a6 保留侧高斯重表达（2026-11-05）
 
 - [scene008_a6_truncated_support_20261105](autoresearch/scene008_a6_truncated_support_20261105/README.md)。单高斯与三片配对、逐帧保护及街景复核。
