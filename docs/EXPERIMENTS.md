@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 射线排序与局部接管（2026-11-05）
+
+- [深度顺序对照、逐行接管和 49 帧复核](autoresearch/scene008_a6_depth_order_20261105/README.md)。
+
 ## Scene008 a6 局部接管（2026-11-05）
 
 - [同域黑底显露和两种编辑状态复核](autoresearch/scene008_a6_continuous_takeover_20261105/README.md)。
