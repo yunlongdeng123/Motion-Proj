@@ -122,7 +122,8 @@ data = dict(
     },
 )
 for frame in data["frames"].values():
-    frame["rois"]["a5"] = dict(label="a5 左侧蓝车（待追溯）", xyxy=[0, 160, 175, 320])
+    frame["rois"]["a5"] = dict(label="左侧车辆（a5 排查）", xyxy=[0, 160, 175, 320])
+data["actor_identity_scope"] = {'actor_alias': 5, 'confirmed_visible_raw_range': [89, 112], 'raw105_original_actor_labels1_pixels': 10773, 'raw113_137_original_label1_empty': True, 'reviewed_later_left_cars_not_identified_as_a5': [113, 130, 137], 'note': 'a5 身份仅在有原始标签的帧确认；raw89–112 可见，raw113–137 的 label1 为空；raw113/130/137 的左侧车辆不视作 a5。'}
 silver = load(evidence / "rcr1_silver315_contributions.json")
 data["silver315"] = {key: silver[key] for key in (
     "pixels", "mask_definition", "component_premultiplied_RGB", "output_delta_mean_RGB",
@@ -132,7 +133,8 @@ data["closeout"] = dict(status="ARCHIVED_NOT_ADOPTED", native_updates=10000,
     preflight_linear_solves=54, original_M2_retained=True, human_verdict=None,
     next_RCR_training_controller=False, automatic_shutdown_executed=False,
     prepared_not_executed="backgroundJoint1: CPU-only gradient-domain check, no GPU run",
-    pending_followup="a5 blue-car damage may already exist in reference; trace earliest affected stage separately")
+    pending_followup="a5 damage localized to full5->single-a37 native retraining, before deletion/road/M2; component cause not yet isolated",
+    a5_diagnosis="followup_a5/index.html")
 data["holdout_scope"] = "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization."
 for source, name in ((ANALYSIS / "final_cpu_comparison.json", "final_cpu_comparison.json"),
                      (ROOT / "work/native_lineage_counterfactual/code_audit/inference_code_audit.json", "inference_code_audit.json")):

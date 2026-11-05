@@ -1,0 +1,67 @@
+{
+  "status": "DIAGNOSIS_STAGE_LOCALIZED_CAUSAL_COMPONENTS_NOT_ISOLATED",
+  "training_updates": 0,
+  "actor_alias": 5,
+  "raw105_original_mask_pixels": 10773,
+  "PNG_metrics": [
+    {
+      "stage": "GT",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.0,
+      "source": "current\\raw105_gt.png"
+    },
+    {
+      "stage": "Full5 native 10K / KEEP",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.03128845989704132,
+      "source": "existing_images\\raw105_full5_keep.png"
+    },
+    {
+      "stage": "Single-a37 native 10K / KEEP",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.08343128114938736,
+      "source": "oldclean\\raw105_native_keep.png"
+    },
+    {
+      "stage": "Ownership native 10K / KEEP",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.08554355055093765,
+      "source": "current\\raw105_native_keep.png"
+    },
+    {
+      "stage": "Native + road fine / DELETE",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.08768580853939056,
+      "source": "current\\raw105_road_fine_delete.png"
+    },
+    {
+      "stage": "Current M2 + road / DELETE",
+      "raw": 105,
+      "original_a5_pixels": 10773,
+      "observed_RGB_PNG_MAE": 0.08768580853939056,
+      "source": "current\\raw105_M2_delete.png"
+    }
+  ],
+  "prior_old_single_reload_max_uint8_difference": 0,
+  "current_raw105_delete_a37_RGB_change_maxabs_on_a5": 0.0,
+  "current_raw105_M2_replacement_RGB_change_maxabs_on_a5": 0.0,
+  "current_raw105_native_to_full_M2_RGB_MAE_delta": 0.002152763307094574,
+  "earliest_bracket": "full5 native10K -> single-a37 native10K, before ownership/delete/road/M2/RCR",
+  "candidate_mechanisms": [
+    "a5 independent dynamic representation removed",
+    "a5 unique initialized source positions 21358 -> 1442 (1496 static source rows)",
+    "RGB branch coefficient5 dynamic ->1 static, global1 retained",
+    "static-only duration and velocity-magnitude regularizers now include a5"
+  ],
+  "not_proven": "No same-initialization single-factor retraining; unique triggering regularizer or density event is not isolated.",
+  "a5_visible_raw_frames": [
+    89,
+    112
+  ],
+  "frames113_137_not_a5": true
+}

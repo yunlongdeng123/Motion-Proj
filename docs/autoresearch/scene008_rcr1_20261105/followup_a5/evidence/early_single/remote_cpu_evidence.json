@@ -1,0 +1,134 @@
+{
+  "remote_read_only": true,
+  "GPU_work": false,
+  "loaded_checkpoints": false,
+  "log_initialization": {
+    "smoke.log": [
+      "Number of points at initialization :  591672",
+      "Number of points at initialization :  98452"
+    ],
+    "formal10k.log": [
+      "Number of points at initialization :  591672",
+      "Number of points at initialization :  98452"
+    ]
+  },
+  "source_evidence": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py": [
+      {
+        "line_start": 684,
+        "line_end": 732,
+        "text": "684:                     v_color = visualize_depth(v_norm_map, near=0.01, far=1)\n685:                     other_img.append(et_color)\n686:                     other_img.append(v_color)\n687: \n688:                     if viewpoint_cam.pts_depth is not None:\n689:                         pts_depth_vis = visualize_depth(viewpoint_cam.pts_depth)\n690:                         other_img.append(pts_depth_vis)\n691: \n692:                     grid = make_grid([\n693:                                          image,\n694:                                          gt_image,\n695:                                          alpha.repeat(3, 1, 1),\n696:                                          torch.logical_not(sky_mask[:1]).float().repeat(3, 1, 1),\n697:                                          visualize_depth(depth),\n698:                                      ] + other_img, nrow=4)\n699: \n700:                     save_image(grid, os.path.join(vis_path, f\"{iteration:05d}_{viewpoint_cam.colmap_id:03d}.png\"))\n701:             if iteration % args.scale_increase_interval == 0:\n702:                 scene.upScale()\n703: \n704:             if paper_method:\n705:                 from utils.paper_checkpoint import (save_components, capture_training_state,\n706:                                                     publish_checkpoint_event)\n707:                 # In the paper path, either explicit save schedule requests a\n708:                 # full resumable bundle. PLY-only export is not a checkpoint.\n709:                 checkpoint_due = iteration in set(args.checkpoint_iterations) | set(args.save_iterations)\n710:                 models_for_checkpoint = {\"static\": gaussians, \"dynamic\": dynamic_gaussians,\n711:                                          \"environment\": env_map}\n712:                 components = save_components(scene.model_path, iteration, models_for_checkpoint) if checkpoint_due else None\n713:                 eval_iterations = set(args.test_iterations)\n714:                 if checkpoint_due and args.get(\"paper_eval_train_each_checkpoint\", False):\n715:                     eval_iterations.add(iteration)\n716:                 # This is after optimizer/SGCM/scale changes. Eval and serialized\n717:                 # components therefore refer to exactly the same parameters.\n718:                 evaluations = complete_eval(tb_writer, iteration, eval_iterations, scene, render,\n719:                                             (args, background), log_dict, env_map=env_map,\n720:                                             including_dynamic=args.including_dynamic)\n721:                 if checkpoint_due:\n722:                     continuation = capture_training_state(iteration, scene, viewpoint_stack,\n723:                                                           models_for_checkpoint, args,\n724:                                                           sgcm=paper_sgcm, ema=ema_dict_for_log)\n725:                     publish_checkpoint_event(scene.model_path, iteration, components,\n726:                                              continuation, evaluations, args, scene)\n727:             elif iteration in args.checkpoint_iterations:\n728:                 print(\"\\n[ITER {}] Saving Checkpoint\".format(iteration))\n729:                 torch.save((gaussians.capture(), iteration), scene.model_path + \"/chkpnt\" + str(iteration) + \".pth\")\n730:                 if dynamic_gaussians is not None:\n731:                     torch.save((dynamic_gaussians.capture(), iteration), scene.model_path + \"/dynamic_chkpnt\" + str(iteration) + \".pth\")\n732:                 if env_map is not None:"
+      },
+      {
+        "line_start": 786,
+        "line_end": 930,
+        "text": "786: def complete_eval(tb_writer, iteration, test_iterations, scene : Scene, renderFunc, renderArgs, log_dict,\n787:                   env_map=None, including_dynamic=False):\n788:     from lpipsPyTorch import lpips\n789:     args = renderArgs[0]\n790:     evaluation_records = []\n791:     if tb_writer:\n792:         for key, value in log_dict.items():\n793:             tb_writer.add_scalar(f'train/{key}', value, iteration)\n794: \n795:     if iteration in test_iterations:\n796:         scale = scene.resolution_scales[scene.scale_index]\n797:         if args.get(\"paper_method\", False) and args.get(\"paper_eval_train_each_checkpoint\", False):\n798:             from utils.paper_checkpoint import paper_evaluation_configs\n799:             validation_configs = paper_evaluation_configs(scene)\n800:         elif iteration < args.iterations:\n801:             validation_configs = ({'name': 'test', 'cameras': scene.getTestCameras(scale=scale)},)\n802:         else:\n803:             if \"kitti\" in args.model_path:\n804:                 # follow NSG: https://github.com/princeton-computational-imaging/neural-scene-graphs/blob/8d3d9ce9064ded8231a1374c3866f004a4a281f8/data_loader/load_kitti.py#L766\n805:                 num = len(scene.getTrainCameras())//2\n806:                 eval_train_frame = num//5\n807:                 traincamera = sorted(scene.getTrainCameras(), key =lambda x: x.colmap_id)\n808:                 validation_configs = ({'name': 'test', 'cameras': scene.getTestCameras(scale=scale)},\n809:                                     {'name': 'train', 'cameras': traincamera[:num][-eval_train_frame:]+traincamera[num:][-eval_train_frame:]})\n810:             else:\n811:                 validation_configs = ({'name': 'test', 'cameras': scene.getTestCameras(scale=scale)},\n812:                                 {'name': 'train', 'cameras': scene.getTrainCameras()})\n813: \n814: \n815: \n816:         for config in validation_configs:\n817:             if config['cameras'] and len(config['cameras']) > 0:\n818:                 l1_test = 0.0\n819:                 psnr_test = 0.0\n820:                 ssim_test = 0.0\n821:                 lpips_test = 0.0\n822:                 paper_rows = []\n823:                 frame_records = []\n824:                 outdir = os.path.join(args.model_path, \"eval\", config['name'] + f\"_{iteration}\" + \"_render\")\n825:                 os.makedirs(outdir,exist_ok=True)\n826:                 for idx, viewpoint in enumerate(tqdm(config['cameras'])):\n827:                     if including_dynamic:\n828:                         render_pkg = render(viewpoint, scene.gaussians, scene.dynamic_gaussians, *renderArgs,\n829:                                             env_map=env_map)\n830:                         image = torch.clamp(render_pkg[\"render\"], 0.0, 1.0)\n831:                         gt_image = torch.clamp(viewpoint.original_image.to(\"cuda\"), 0.0, 1.0)\n832:                         depth = render_pkg['depth']\n833:                         alpha = render_pkg['alpha']\n834:                         static_image = render_pkg['render_s']\n835:                         dynamic_image = render_pkg['render_d']\n836:                         sky_depth = 900\n837:                         depth = depth / alpha.clamp_min(EPS)\n838:                         if env_map is not None:\n839:                             if args.depth_blend_mode == 0:  # harmonic mean\n840:                                 depth = 1 / (alpha / depth.clamp_min(EPS) + (1 - alpha) / sky_depth).clamp_min(EPS)\n841:                             elif args.depth_blend_mode == 1:\n842:                                 depth = alpha * depth + (1 - alpha) * sky_depth\n843: \n844:                         depth = visualize_depth(depth)\n845:                         alpha = alpha.repeat(3, 1, 1)\n846: \n847:                         grid = [gt_image, image, static_image, dynamic_image]\n848:                         grid = make_grid(grid, nrow=2)\n849: \n850:                         save_image(grid, os.path.join(outdir, f\"{viewpoint.colmap_id:03d}.png\"))\n851:                     else:\n852:                         render_pkg = render(viewpoint, scene.gaussians, None, *renderArgs,\n853:                                             env_map=env_map)\n854:                         image = torch.clamp(render_pkg[\"render\"], 0.0, 1.0)\n855:                         gt_image = torch.clamp(viewpoint.original_image.to(\"cuda\"), 0.0, 1.0)\n856:                         depth = render_pkg['depth']\n857:                         alpha = render_pkg['alpha']\n858:                         sky_depth = 900\n859:                         depth = depth / alpha.clamp_min(EPS)\n860:                         if env_map is not None:\n861:                             if args.depth_blend_mode == 0:  # harmonic mean\n862:                                 depth = 1 / (alpha / depth.clamp_min(EPS) + (1 - alpha) / sky_depth).clamp_min(EPS)\n863:                             elif args.depth_blend_mode == 1:\n864:                                 depth = alpha * depth + (1 - alpha) * sky_depth\n865: \n866:                         depth = visualize_depth(depth)\n867:                         depth = alpha.repeat(3, 1, 1)\n868: \n869:                         grid = [gt_image, image, depth, depth]\n870:                         grid = make_grid(grid, nrow=2)\n871: \n872:                         save_image(grid, os.path.join(outdir, f\"{viewpoint.colmap_id:03d}.png\"))\n873: \n874:                     if args.get(\"paper_method\", False):\n875:                         from utils.paper_checkpoint import camera_record\n876:                         record = camera_record(viewpoint)\n877:                         # Separate channels avoid grid-padding/cropping ambiguity.\n878:                         channels = {\"gt\": gt_image, \"composite\": image,\n879:                                     \"static\": render_pkg.get(\"render_s\", image),\n880:                                     \"dynamic\": render_pkg.get(\"render_d\", torch.zeros_like(image))}\n881:                         record[\"channels\"] = {}\n882:                         filename = record[\"camera\"] + \"_\" + viewpoint.image_name + \".png\"\n883:                         for channel, channel_image in channels.items():\n884:                             channel_dir = os.path.join(outdir, channel)\n885:                             os.makedirs(channel_dir, exist_ok=True)\n886:                             destination = os.path.abspath(os.path.join(channel_dir, filename))\n887:                             save_image(channel_image.clamp(0, 1), destination)\n888:                             record[\"channels\"][channel] = destination\n889:                         from utils.hybrid30k_metrics import save_frame\n890:                         from utils.paper_masks import load_dynamic_mask\n891:                         record[\"hybrid_metrics\"] = save_frame(outdir, record[\"frame_id\"], render_pkg, gt_image, load_dynamic_mask(args.source_path, viewpoint), viewpoint.sky_mask)\n892:                         frame_records.append(record)\n893:                         from utils.paper_masks import load_dynamic_mask\n894:                         from utils.paper_metrics import measure_frame\n895:                         paper_rows.append(measure_frame(image, render_pkg.get('render_s'), gt_image,\n896:                                                         load_dynamic_mask(args.source_path, viewpoint),\n897:                                                         os.path.join(os.path.basename(os.path.dirname(viewpoint.image_path)),\n898:                                                                      viewpoint.image_name)))\n899:                     l1_test += F.l1_loss(image, gt_image).double()\n900:                     psnr_test += psnr(image, gt_image).double()\n901:                     ssim_test += ssim(image, gt_image).double()\n902:                     lpips_test += lpips(image, gt_image, net_type='vgg').double()  # very slow\n903: \n904:                 psnr_test /= len(config['cameras'])\n905:                 l1_test /= len(config['cameras'])\n906:                 ssim_test /= len(config['cameras'])\n907:                 lpips_test /= len(config['cameras'])\n908: \n909:                 print(\"\\n[ITER {}] Evaluating {}: L1 {} PSNR {} SSIM {} LPIPS {}\".format(iteration, config['name'],\n910:                                                                                          l1_test, psnr_test,\n911:                                                                                          ssim_test, lpips_test))\n912:                 if tb_writer:\n913:                     tb_writer.add_scalar(config['name'] + '/loss_viewpoint - l1_loss', l1_test, iteration)\n914:                     tb_writer.add_scalar(config['name'] + '/loss_viewpoint - psnr', psnr_test, iteration)\n915:                     tb_writer.add_scalar(config['name'] + '/loss_viewpoint - ssim', ssim_test, iteration)\n916:                 with open(os.path.join(outdir, \"metrics.json\"), \"w\") as f:\n917:                     json.dump({\"split\": config['name'], \"iteration\": iteration, \"psnr\": psnr_test.item(),\n918:                                \"ssim\": ssim_test.item(), \"lpips\": lpips_test.item()}, f)\n919:                 if args.get(\"paper_method\", False):\n920:                     from utils.paper_metrics import save_metrics\n921:                     save_metrics(paper_rows, outdir, config['name'], iteration)\n922:                     evaluation_records.append({\"split\": config['name'], \"iteration\": int(iteration),\n923:                                                \"eval_dir\": os.path.abspath(outdir),\n924:                                                \"metrics\": os.path.abspath(os.path.join(outdir, \"metrics.json\")),\n925:                                                \"paper_metrics\": os.path.abspath(os.path.join(outdir, \"paper_region_metrics.json\")),\n926:                                                \"frames\": frame_records})\n927:             torch.cuda.empty_cache()\n928:     if iteration in test_iterations:\n929:         from utils.hybrid30k_static_time import run_static_time_check\n930:         run_static_time_check(scene, renderFunc, renderArgs, env_map, iteration)"
+      }
+    ],
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py": [
+      {
+        "line_start": 70,
+        "line_end": 94,
+        "text": "70:     return OmegaConf.to_container(args, resolve=True) if OmegaConf.is_config(args) else dict(args)\n71: \n72: \n73: def capture_training_state(iteration, scene, viewpoint_stack, models, args, sgcm=None, ema=None):\n74:     camera_orders = [{\"scale\": float(scale), \"ids\": [camera_id(c) for c in cameras]}\n75:                      for scale, cameras in scene.train_cameras.items()]\n76:     state = {\"schema_version\": 1, \"iteration\": int(iteration),\n77:              \"config\": _config_dict(args), \"scale_index\": int(scene.scale_index),\n78:              \"camera_orders\": camera_orders, \"viewpoint_stack\": list(viewpoint_stack or []),\n79:              \"python_rng\": random.getstate(), \"numpy_rng\": np.random.get_state(),\n80:              \"torch_rng\": torch.get_rng_state(),\n81:              \"cuda_rng\": torch.cuda.get_rng_state_all() if torch.cuda.is_initialized() else None,\n82:              \"model_runtime\": {name: {\"no_time_split\": bool(model.no_time_split)}\n83:                                for name, model in models.items() if model is not None and hasattr(model, \"no_time_split\")},\n84:              \"ema\": {key: float(value) for key, value in (ema or {}).items()},\n85:              \"sgcm\": None}\n86:     if hasattr(scene, \"hybrid_sampler\"):\n87:         state[\"hybrid_sampler\"] = scene.hybrid_sampler.capture()\n88:     if sgcm is not None:\n89:         from dataclasses import asdict\n90:         state[\"sgcm\"] = {\"config\": asdict(sgcm.config), \"metadata\": sgcm.metadata,\n91:                          \"model_scale\": sgcm.model_scale, \"plane_model\": sgcm.plane_model,\n92:                          \"model_to_anchor\": sgcm.model_to_anchor, \"regions_anchor\": sgcm.regions_anchor}\n93:     return state\n94: "
+      },
+      {
+        "line_start": 324,
+        "line_end": 331,
+        "text": "324:     event.update({key: train_eval[key] if train_eval else ( [] if key == \"frames\" else None)\n325:                   for key in (\"eval_dir\", \"metrics\", \"paper_metrics\", \"frames\")})\n326:     event_path = root / \"checkpoint_events\" / f\"iteration_{iteration:06d}.json\"\n327:     if event_path.exists():\n328:         raise FileExistsError(\"Checkpoint event already published\")\n329:     atomic_json(event_path, event)\n330:     print(\"CHECKPOINT_EVENT \" + str(event_path), flush=True)\n331:     return event"
+      }
+    ]
+  },
+  "earlier_full5_locations": [
+    {
+      "arm": "continuous_R",
+      "iteration": 200,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_200_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_000200.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "continuous_R",
+      "iteration": 500,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_500_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_000500.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "continuous_R",
+      "iteration": 1000,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_1000_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_001000.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 200,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_200_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_000200.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 500,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_500_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_000500.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 1000,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_1000_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_001000.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    }
+  ],
+  "RNG_audit": {
+    "complete_eval_explicit_RNG_preservation_tokens": [],
+    "render_before_checkpoint_capture": true,
+    "assessment": "The retained training source evaluates after optimizer/SGCM and captures continuation state after complete_eval. No explicit RNG save/restore wrapper is visible around complete_eval. No bitwise trajectory identity is claimed for the independently fresh smoke/formal runs, especially after extra smoke evaluations."
+  },
+  "earlier_full5_config": {
+    "continuous_R": {
+      "seed": 0,
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+      "hybrid_arm": "GN11",
+      "hybrid_lambda_static_rgb": 1.0,
+      "hybrid_lambda_dynamic_rgb": 5.0,
+      "iterations": 30000,
+      "position_lr_max_steps": 30000
+    },
+    "split_R": {
+      "seed": 0,
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+      "hybrid_arm": "GN11",
+      "hybrid_lambda_static_rgb": 1.0,
+      "hybrid_lambda_dynamic_rgb": 5.0,
+      "iterations": 30000,
+      "position_lr_max_steps": 30000
+    }
+  },
+  "full5_B_earliest_located": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_10000_render/composite/image_0_0008105.png",
+  "search_scope": [
+    "r15_gn11_stage1_v41_20261023 (depth <=7; omit inputs/velodyne/point_cloud)",
+    "r15_baseline_owner5_20261018 (same bound)",
+    "nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline (same bound)"
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "status": "PASS_READ_ONLY_EXISTING_EVIDENCE_RETRIEVAL",
+  "question": "Earliest already-saved single training output in which raw105 a5 upper body/roof is not reconstructed",
+  "earliest_saved_single_image_iteration": 1000,
+  "visual_observation": "At raw105, the blue foreground a5 upper-body/roof region present in GT and existing full5 B10K is not reconstructed in single smoke1K; single smoke2K and formal single10K also show the deficit. Low-step underfitting cannot be called a destruction event.",
+  "causal_limit": "This records failure to reconstruct at the saved smoke1K output. It does not establish that a complete body ever formed and was then destroyed, locate a triggering update, or prove identical intermediate tensors in the independent formal run. The directly supported workflow bracket remains full5 to single.",
+  "comparability": {
+    "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+    "seed": 0,
+    "start_checkpoint": null,
+    "same_49_cameras": true,
+    "same_actual_scene_binding": true,
+    "same_loss_sampling_LR_densification_initialization_config": true,
+    "all_effective_config_differences": {
+      "checkpoint_iterations": {
+        "smoke": [
+          1000,
+          2000,
+          3000,
+          4000,
+          5000,
+          6000,
+          7000,
+          8000,
+          9000,
+          10000
+        ],
+        "formal10k": [
+          10000,
+          20000,
+          30000
+        ]
+      },
+      "test_iterations": {
+        "smoke": [
+          1000,
+          2000,
+          3000,
+          4000,
+          5000,
+          6000,
+          7000,
+          8000,
+          9000,
+          10000
+        ],
+        "formal10k": [
+          10000,
+          20000,
+          30000
+        ]
+      },
+      "save_iterations": {
+        "smoke": [
+          1000,
+          2000,
+          3000,
+          4000,
+          5000,
+          6000,
+          7000,
+          8000,
+          9000,
+          10000
+        ],
+        "formal10k": [
+          10000,
+          20000,
+          30000
+        ]
+      },
+      "model_path": {
+        "smoke": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke",
+        "formal10k": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k"
+      }
+    },
+    "formal_LR_horizon": 30000,
+    "formal_requested_iterations": 30000,
+    "separate_fresh_runs": true,
+    "exact_trajectory_claimed": false,
+    "reason": "Only output directory and save/evaluation/checkpoint cadence differ. At1K, the extra smoke checkpoint evaluation occurs after optimizer/SGCM, so the existing1K render is an early same-contract comparison. Later2K/3K have additional evaluation/checkpoint boundaries; no bitwise replay was done.",
+    "source_entry": "source/train_single.py",
+    "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "source_snapshot_limit": "A shared source entry is retained, not a per-smoke immutable source snapshot; historical effective configs, camera manifests and completed events are the direct run evidence.",
+    "initialization_log_matches": {
+      "smoke.log": [
+        "Number of points at initialization :  591672",
+        "Number of points at initialization :  98452"
+      ],
+      "formal10k.log": [
+        "Number of points at initialization :  591672",
+        "Number of points at initialization :  98452"
+      ]
+    },
+    "same_initial_static_and_dynamic_row_counts": {
+      "static": 591672,
+      "dynamic": 98452
+    }
+  },
+  "RNG_audit": {
+    "complete_eval_explicit_RNG_preservation_tokens": [],
+    "render_before_checkpoint_capture": true,
+    "assessment": "The retained training source evaluates after optimizer/SGCM and captures continuation state after complete_eval. No explicit RNG save/restore wrapper is visible around complete_eval. No bitwise trajectory identity is claimed for the independently fresh smoke/formal runs, especially after extra smoke evaluations.",
+    "consumption_measured": false,
+    "conclusion": "No explicit complete_eval RNG preservation found in retained source. Extra smoke evaluations/checkpoints may perturb later RNG or diagnostics; actual RNG changes were not measured. Same-contract comparability is supported, not bitwise equivalence."
+  },
+  "identity": {
+    "a5_dynamic_in_single": false,
+    "single_dynamic_aliases": [
+      37
+    ],
+    "retained_aliases": [
+      5,
+      26,
+      18,
+      6
+    ],
+    "retained_representation": "original B temporal static/background; initialized and trained fresh",
+    "raw105_original_label1_pixels": 10773
+  },
+  "events": [
+    {
+      "iteration": 1000,
+      "run": "smoke",
+      "status": "complete",
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "source_event": "smoke/checkpoint_events/iteration_001000.json",
+      "frame": {
+        "uid": 16,
+        "frame_id": "image_0/0008105",
+        "camera": "image_0",
+        "image_name": "0008105",
+        "timestamp": -0.15999999999999998,
+        "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/image/image_0/0008105.png",
+        "width": 480,
+        "height": 320,
+        "channels": {
+          "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_1000_render/gt/image_0_0008105.png",
+          "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_1000_render/composite/image_0_0008105.png",
+          "static": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_1000_render/static/image_0_0008105.png",
+          "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_1000_render/dynamic/image_0_0008105.png"
+        },
+        "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_1000_render/hybrid_raw/image_0_0008105.json"
+      },
+      "local_composite": "smoke/eval/train_1000_render/composite/image_0_0008105.png"
+    },
+    {
+      "iteration": 2000,
+      "run": "smoke",
+      "status": "complete",
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "source_event": "smoke/checkpoint_events/iteration_002000.json",
+      "frame": {
+        "uid": 16,
+        "frame_id": "image_0/0008105",
+        "camera": "image_0",
+        "image_name": "0008105",
+        "timestamp": -0.15999999999999998,
+        "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/image/image_0/0008105.png",
+        "width": 480,
+        "height": 320,
+        "channels": {
+          "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_2000_render/gt/image_0_0008105.png",
+          "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_2000_render/composite/image_0_0008105.png",
+          "static": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_2000_render/static/image_0_0008105.png",
+          "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_2000_render/dynamic/image_0_0008105.png"
+        },
+        "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_2000_render/hybrid_raw/image_0_0008105.json"
+      },
+      "local_composite": "smoke/eval/train_2000_render/composite/image_0_0008105.png"
+    },
+    {
+      "iteration": 3000,
+      "run": "smoke",
+      "status": "complete",
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "source_event": "smoke/checkpoint_events/iteration_003000.json",
+      "frame": {
+        "uid": 16,
+        "frame_id": "image_0/0008105",
+        "camera": "image_0",
+        "image_name": "0008105",
+        "timestamp": -0.15999999999999998,
+        "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/image/image_0/0008105.png",
+        "width": 480,
+        "height": 320,
+        "channels": {
+          "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_3000_render/gt/image_0_0008105.png",
+          "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_3000_render/composite/image_0_0008105.png",
+          "static": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_3000_render/static/image_0_0008105.png",
+          "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_3000_render/dynamic/image_0_0008105.png"
+        },
+        "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/smoke/eval/train_3000_render/hybrid_raw/image_0_0008105.json"
+      },
+      "local_composite": "smoke/eval/train_3000_render/composite/image_0_0008105.png"
+    },
+    {
+      "iteration": 10000,
+      "run": "formal10k",
+      "status": "complete",
+      "parameters_evaluated": "after_optimizer_and_sgcm_same_as_checkpoint",
+      "source_event": "formal10k/checkpoint_events/iteration_010000.json",
+      "frame": {
+        "uid": 16,
+        "frame_id": "image_0/0008105",
+        "camera": "image_0",
+        "image_name": "0008105",
+        "timestamp": -0.15999999999999998,
+        "source_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/image/image_0/0008105.png",
+        "width": 480,
+        "height": 320,
+        "channels": {
+          "gt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/gt/image_0_0008105.png",
+          "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/composite/image_0_0008105.png",
+          "static": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/static/image_0_0008105.png",
+          "dynamic": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/dynamic/image_0_0008105.png"
+        },
+        "hybrid_metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/eval/train_10000_render/hybrid_raw/image_0_0008105.json"
+      },
+      "local_composite": "formal10k/eval/train_10000_render/composite/image_0_0008105.png"
+    }
+  ],
+  "opacity_reset_context": {
+    "interval": 3000,
+    "3000_image_limitation": "Native post-update/SGCM checkpoint readout coincides with the reset boundary and is visibly washed out; do not interpret it as roof recovery or a final quality metric. Reset-only causation is not separately tested."
+  },
+  "earlier_full5_evidence": [
+    {
+      "arm": "continuous_R",
+      "iteration": 200,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_200_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_000200.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "continuous_R",
+      "iteration": 500,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_500_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_000500.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "continuous_R",
+      "iteration": 1000,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/eval/train_1000_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/continuous_R/checkpoint_events/iteration_001000.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 200,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_200_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_000200.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 500,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_500_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_000500.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    },
+    {
+      "arm": "split_R",
+      "iteration": 1000,
+      "raw": 105,
+      "composite": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/eval/train_1000_render/composite/image_0_0008105.png",
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/smoke/split_R/checkpoint_events/iteration_001000.json",
+      "event_exists": true,
+      "paired_B_control": false,
+      "limitation": "Full5 R smoke, not full5 B; located only, not retrieved or assessed"
+    }
+  ],
+  "full5_B_earliest_located": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_10000_render/composite/image_0_0008105.png",
+  "earlier_full5_limitation": "Located full5 R smoke200/500/1000, not paired full5 B. No earlier B image found within the bounded searched roots; this is not an exhaustive absence claim.",
+  "images": {
+    "existing_grid": "raw105_early_roof_grid.png",
+    "full_view_grid": "raw105_early_full_view_grid.png"
+  },
+  "remote_writes": false,
+  "Git_changes": false,
+  "new_GPU_render_or_training": false,
+  "loaded_large_model": false,
+  "shutdown": false
+}

@@ -50,7 +50,7 @@
  <li>尚未通过：“质量不低于当前 M2/delete”。主要视觉回退是 raw130、137 的车尾银灰亮残影。M2 参数不变，仍可能因遮挡与背景变化而显露不同部分。</li>
  <li>已完成真实共享深度下的逐层 RGB 贡献归因：亮片的净增亮由静态背景主导，M2/a37贡献为零、道路贡献接近零；环境×T仍携带车形结构。</li>
  <li>本轮实验停止并保留现场。未采用隐藏64点、替换旧环境图或减半增长梯度等诊断对照；backgroundJoint1 仅有 CPU 初稿，尚未运行 GPU。</li>
- <li>用户新指出左侧车辆疑似破损，查看项为“左侧车辆（a5 排查）”，仅供目视、不是评测掩码。a5 身份仅在有原始标签的帧确认；raw105 的 actor_labels1 有10773像素，raw113/130/137 的左侧车辆不视作 a5。损坏起点另行追溯。</li>
+ <li><a href="followup_a5/index.html">a5 车体完整性诊断与六阶段对照</a>：已定位 Full5 → Single-a37 原生重训区间就有缺损，早于删车、道路和 M2。查看项“左侧车辆（a5 排查）”仅供目视；raw105 的 actor_labels1 有10773像素，raw113/130/137 的左侧车辆不视作 a5。</li>
 </ul>
 
 <h2>新增亮片：已确认的成像来源</h2>
@@ -100,7 +100,7 @@
  <p class="evidence-links"><a href="delete_overview.png">4 帧完整对照总览</a><a href="delete_tail_130_137.png">raw130 / 137 车尾局部对照</a><a href="report_data.json">版本与图像哈希</a><a href="evidence/analysis_summary.txt">数值分析及范围说明</a><a href="evidence/candidate_receipt.json">完整组合收据</a><a href="evidence/reference_render_manifest.json">原版绑定记录</a></p>
 </details>
 <p><a href="research/index.html">RCR-1 完整研究报告、单变量实验与资源账本</a> · <a href="source_archive/index.html">实际源码、运行清单与证据归档</a> · <a href="evidence/final_cpu_comparison.json">49 帧 / 4 帧完整数值对照</a></p>
-<footer><div>RCR-1 阶段研究归档：去蓝有效，完整质量尚未通过，保留当前 M2。模型、输入、日志和失败证据均保留；未执行自动关机。a5 损坏起点为后续独立诊断任务。</div><div class="snapshot" id="snapshot-time"></div></footer>
+<footer><div>RCR-1 阶段研究归档：去蓝有效，完整质量尚未通过，保留当前 M2。模型、输入、日志和失败证据均保留；未执行自动关机。<a href="followup_a5/index.html">a5 独立诊断</a>已定位最早可见回退区间，具体单项原因仍待隔离。</div><div class="snapshot" id="snapshot-time"></div></footer>
 </main>
 <script id="report-data" type="application/json">__REPORT_DATA__</script>
 <script>

@@ -1,7 +1,7 @@
 {
   "method_code": "RCR-1",
   "method_name": "RGB Constraint Restoration / RGB 约束恢复",
-  "created_at": "2026-11-05T22:23:09+08:00",
+  "created_at": "2026-11-05T22:58:25+08:00",
   "scope": "Existing complete final candidate versus the accepted-current M2/delete reference; four saved delete frames only.",
   "quality_accepted": false,
   "acceptance": "NOT_ACCEPTED_VISUAL_REGRESSION",
@@ -528,8 +528,23 @@
     "next_RCR_training_controller": false,
     "automatic_shutdown_executed": false,
     "prepared_not_executed": "backgroundJoint1: CPU-only gradient-domain check, no GPU run",
-    "pending_followup": "Left-side vehicle damage / a5 identity tracing is a separate follow-up; only labeled frames confirm a5 identity, not raw113/130/137 left vehicles."
+    "pending_followup": "a5 damage localized to full5->single-a37 native retraining, before deletion/road/M2; component cause not yet isolated",
+    "a5_diagnosis": "followup_a5/index.html"
   },
   "holdout_scope": "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization.",
-  "actor_identity_scope": "a5 身份仅在有原始标签的帧确认；raw105 actor_labels1为10773像素。raw113/130/137的左侧车辆不视作a5。"
+  "actor_identity_scope": {
+    "actor_alias": 5,
+    "confirmed_visible_raw_range": [
+      89,
+      112
+    ],
+    "raw105_original_actor_labels1_pixels": 10773,
+    "raw113_137_original_label1_empty": true,
+    "reviewed_later_left_cars_not_identified_as_a5": [
+      113,
+      130,
+      137
+    ],
+    "note": "a5 身份仅在有原始标签的帧确认；raw89–112 可见，raw113–137 的 label1 为空；raw113/130/137 的左侧车辆不视作 a5。"
+  }
 }

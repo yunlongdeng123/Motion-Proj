@@ -1,0 +1,53 @@
+{
+  "status": "CPU_READ_ONLY_CONFIG_SUPERVISION_AUDIT",
+  "configs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/config.json",
+      "values": {
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+        "hybrid_lambda_dynamic_rgb": 5.0,
+        "hybrid_lambda_static_rgb": 1.0,
+        "hybrid_lambda_sky_rgb": 5.0,
+        "hybrid_lambda_dynamic_opacity": 100.0,
+        "lambda_t_reg": 0.1,
+        "lambda_v_reg": 0.01,
+        "lambda_v_smooth": 0.1,
+        "hybrid_nps_enabled": true,
+        "lambda_dssim": 0.2,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k",
+        "time_duration": [
+          -0.5,
+          0.5
+        ],
+        "frame_interval": 0.02
+      }
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/effective_config.json",
+      "values": {
+        "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+        "hybrid_lambda_dynamic_rgb": 5.0,
+        "hybrid_lambda_static_rgb": 1.0,
+        "hybrid_lambda_sky_rgb": 5.0,
+        "hybrid_lambda_dynamic_opacity": 100.0,
+        "lambda_t_reg": 0.1,
+        "lambda_v_reg": 0.01,
+        "lambda_v_smooth": 0.1,
+        "hybrid_nps_enabled": true,
+        "lambda_dssim": 0.2,
+        "model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+        "time_duration": [
+          -0.5,
+          0.5
+        ],
+        "frame_interval": 0.02
+      }
+    }
+  ],
+  "static_regularizer_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+  "static_duration": "1 / mean(abs(rendered_clamped_duration / combined_alpha)); encourages longer lifetime, not center-time zero",
+  "static_velocity": "mean(abs(rendered_static_inst_velocity / combined_alpha)); encourages lower static motion, no actor-specific exemption",
+  "dynamic_exemption": "No corresponding dynamic_duration/dynamic_velocity magnitude terms in compose_hybrid_loss; combined velocity_smoothness still applies",
+  "mask_audit": "mask_audit_49.json proves appearance Md does not overlap a5 label1 in all49 views",
+  "scope": "Code/config establishes active supervision and regularizer asymmetry; no measured per-a5 gradient or counterfactual causal isolation."
+}
