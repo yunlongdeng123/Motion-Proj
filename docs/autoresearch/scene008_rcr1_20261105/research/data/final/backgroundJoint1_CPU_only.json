@@ -1,0 +1,51 @@
+{
+  "status": "LOCAL_READY_FOR_ROOT_REVIEW_SOURCE_FROZEN",
+  "task": "scene008_blue_jointbg_probe_20261105_r1",
+  "entry": "run_jointbg.py (Linux runner: fresh formal1000 then exact resume2)",
+  "direct_entry": "source/train_loss_probe.py --loss-probe-mode global_background",
+  "display_name": "backgroundJoint1",
+  "extra_term": "joint_background_rgb",
+  "coefficient": 1,
+  "mask": "~max_pool2d(visible_reviewed.any(0), kernel5,stride1,pad2) & (dynamic_union==0), exactly original Ownership.terms:191-192",
+  "loss": "Original photometric_rgb_loss(guarded(joint_render,background), guarded(target,background), original ssim, lambda_dssim); no mask-count renormalization",
+  "training_budget": {
+    "fresh_start": 0,
+    "formal_stop": 1000,
+    "resume_updates": 2,
+    "family_RGB_period": 100,
+    "full_state_nodes": [
+      100,
+      500,
+      1000
+    ]
+  },
+  "unchanged": [
+    "Original static2 and background",
+    "all other native terms",
+    "initialization and seed",
+    "sampler/time shift/LR horizon",
+    "ordinary XY/time growth source",
+    "SGCM/thresholds",
+    "fixed external assignment/body masks",
+    "M2 (not loaded or modified by this native probe)",
+    "full checkpoint/RNG-neutral readout/exact restore machinery"
+  ],
+  "cfg_probe_parameters_added": false,
+  "source_changes": [
+    "global_rgb_probe.py",
+    "train_loss_probe.py"
+  ],
+  "original_full_global_package_preserved": true,
+  "source_sha256": {
+    "global_rgb_probe.py": "d8e84d15536a41c8176c1ecd033160f6d6e5239ee0f79bdcf4f481467fc7b958",
+    "train_loss_probe.py": "6c8a04fd36a1a988ec3f04f25dfa332871825cfdc73730bb3e1ef01c3b43e111"
+  },
+  "cpu_audit": "PASS_CPU_BACKGROUND_JOINT1_MASK_AND_GRADIENT",
+  "CPU_only": true,
+  "uploaded": false,
+  "GPU_run_performed": false,
+  "training_updates_performed": 0,
+  "adopted_as_repair": false,
+  "hypothesis": "A one-variable domain control for full-joint-RGB actor-texture supervision leaking into static; first inspect1K blue lineage. Does not assert causality or disappearance of the130/137 silver rectangle.",
+  "gate_or_old_road_freeze_research_added": false
+}

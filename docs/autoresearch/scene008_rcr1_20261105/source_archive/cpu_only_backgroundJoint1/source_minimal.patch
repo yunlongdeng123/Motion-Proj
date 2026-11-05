@@ -1,0 +1,84 @@
+--- original_source/global_rgb_probe.py
++++ source/global_rgb_probe.py
+@@ -1,18 +1,30 @@
+-"""Single-term probe: add the omitted unit-weight joint full-image RGB loss."""
+-from native_ownership import Ownership
++"""One joint RGB term; backgroundJoint1 uses the original Ownership background."""
++import torch.nn.functional as F
++from native_ownership import Ownership, guarded
++
++
++def ownership_background(evidence, union):
++    collar = F.max_pool2d(evidence['visible_reviewed'].any(0)[None, None].float(), 5, 1, 2)[0].bool()
++    background = ~collar & (union == 0)
++    return background
+ 
+ 
+ class LossProbeOwnership(Ownership):
+     def __init__(self, mode):
+-        if mode not in ('control', 'global'):
++        if mode not in ('control', 'global', 'global_background'):
+             raise ValueError(mode)
+         super().__init__()
+         self.loss_probe_mode = mode
+ 
+     def terms(self, result, evidence, target, native_depth, sky_mask, union, args, iteration):
+         terms = super().terms(result, evidence, target, native_depth, sky_mask, union, args, iteration)
+-        if self.loss_probe_mode == 'global':
++        if self.loss_probe_mode in ('global', 'global_background'):
+             from utils.hybrid30k_losses import photometric_rgb_loss
+             from utils.loss_utils import ssim
+-            terms['global_rgb'] = photometric_rgb_loss(result['render'], target, ssim, args.lambda_dssim)
++            if self.loss_probe_mode == 'global':
++                terms['global_rgb'] = photometric_rgb_loss(result['render'], target, ssim, args.lambda_dssim)
++            else:
++                background = ownership_background(evidence, union)
++                terms['joint_background_rgb'] = photometric_rgb_loss(
++                    guarded(result['render'], background), guarded(target, background), ssim, args.lambda_dssim)
+         return terms
+--- original_source/train_loss_probe.py
++++ source/train_loss_probe.py
+@@ -1,4 +1,4 @@
+-"""Fresh paired 1K native probe: control versus one joint global-RGB term.
++"""Fresh 1K native supervision-domain probe: backgroundJoint1 versus full joint RGB.
+ 
+ The native static RGB weight, all remaining losses, ordinary XY/time growth,
+ SGCM, initialization and sampling stay unchanged. Resume is an exact complete
+@@ -30,7 +30,7 @@
+     ap.add_argument('--checkpoint', type=Path)
+     ap.add_argument('--assignment', type=Path, required=True)
+     ap.add_argument('--a6-masks', type=Path, required=True)
+-    ap.add_argument('--loss-probe-mode', choices=['control', 'global'], required=True)
++    ap.add_argument('--loss-probe-mode', choices=['control', 'global', 'global_background'], required=True)
+     ap.add_argument('--extra-updates', type=int, default=2)
+     opt = ap.parse_args()
+     if opt.extra_updates <= 0:
+@@ -64,8 +64,15 @@
+         original_checkpoint_cadence_unchanged=False, PVD_changed=False, road_prior_changed=False,
+         quality_accepted=False, human_verdict=None))
+     write(out/'loss_probe_contract.json', dict(
+-        schema='scene008.one_joint_global_RGB_term.v1', native_arm='native_ownership',
+-        loss_probe_mode=opt.loss_probe_mode, global_RGB_coefficient=1 if opt.loss_probe_mode=='global' else 0,
++        schema='scene008.one_joint_RGB_domain_probe.v2', native_arm='native_ownership',
++        task='scene008_blue_jointbg_probe_20261105_r1',
++        loss_probe_mode=opt.loss_probe_mode,
++        display_name={'control':'nativeOwnershipControl','global':'jointFullImage1',
++                      'global_background':'backgroundJoint1'}[opt.loss_probe_mode],
++        global_RGB_coefficient=1 if opt.loss_probe_mode=='global' else 0,
++        joint_background_RGB_coefficient=1 if opt.loss_probe_mode=='global_background' else 0,
++        joint_RGB_domain=('Original Ownership.terms background: NOT 5x5-dilated visible_reviewed union AND dynamic union==0; prediction and target both guarded with zero; original photometric loss, no active-pixel renormalization'
++                          if opt.loss_probe_mode=='global_background' else 'full image' if opt.loss_probe_mode=='global' else 'no extra joint RGB term'),
+         initialization='same seed and original dual transfer; formal starts at zero',
+         source_iteration=start_iteration, stop_iteration=stop_iteration,
+         additional_updates=stop_iteration-start_iteration,
+@@ -74,8 +81,8 @@
+                    'SGCM', 'thresholds', 'initialization', 'camera/time-shift sampler', 'resolved cfg'],
+         growth_aux_present=False, native_readout='original readout_native defaults',
+         early_quality_gate='reported externally; no inherited unrelated 1K acceptance abort in this diagnostic',
+-        interpretation='tests initial color learning, not the whole former loss or growth source',
+-        deliberate_new_global_path='joint static/dynamic SH and geometry; original named-term routing checks remain unchanged'))
++        interpretation='Single extra-joint-RGB supervision-domain control; tests whether backgroundJoint1 still suppresses persistent blue learning without supervising actor RGB through this term; not an adopted repair',
++        deliberate_new_joint_path='joint static/dynamic SH and geometry within the selected image domain; original named-term routing checks remain unchanged; M2 is not modified'))
+     diag = BASE.parent / 'scene008_static_origin_diag_20261104_r1/source'
+     sys.path[:0] = [str(SOURCE), str(ENGINE), str(TOOLS), str(diag)]
+     import numpy as np

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="410" viewBox="0 0 1480 410" role="img" aria-label="黑点源经颜色监督与clamp学习SH材质，普通clone复制材质；增长统计作为独立信号决定新增数量">
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#526579"/></marker></defs>
+  <style>text{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172d43;font-size:21px}.small{font-size:17px;fill:#526a7e}.title{font-weight:700}.box{fill:#f8fafc;stroke:#bac8d4;stroke-width:2;rx:12}.flow{fill:none;stroke:#526579;stroke-width:2.5;marker-end:url(#arrow)}</style>
+  <rect width="1480" height="410" fill="white"/>
+  <rect class="box" x="24" y="52" width="190" height="146"/>
+  <text class="title" x="119" y="91" text-anchor="middle">输入：黑色点源</text><text x="119" y="125" text-anchor="middle">RGB = 0,0,0</text><text class="small" x="119" y="158" text-anchor="middle">lineage 64990</text>
+  <rect class="box" x="260" y="29" width="295" height="192"/>
+  <text class="title" x="407" y="65" text-anchor="middle">颜色监督</text><text class="small" x="407" y="99" text-anchor="middle">旧：global1 + static1 + sky5</text><text class="small" x="407" y="129" text-anchor="middle">新：static2，缺global/sky RGB</text><text x="407" y="166" text-anchor="middle" fill="#237765">正式候选：仅补global1</text><text class="small" x="407" y="196" text-anchor="middle">100步B仍正，记录200步后转负</text>
+  <rect class="box" x="601" y="52" width="232" height="146"/>
+  <text class="title" x="717" y="91" text-anchor="middle">SH材质 + 下限clamp</text><text x="717" y="125" text-anchor="middle">负通道停止学习</text><text class="small" x="717" y="158" text-anchor="middle">颜色状态单独判定</text>
+  <rect class="box" x="881" y="52" width="236" height="146"/>
+  <text class="title" x="999" y="91" text-anchor="middle">ordinary clone</text><text x="999" y="125" text-anchor="middle">原样复制SH与参数</text><text class="small" x="999" y="158" text-anchor="middle">黑色也能被复制</text>
+  <rect class="box" x="1167" y="52" width="289" height="146"/>
+  <text class="title" x="1311" y="91" text-anchor="middle">局部输出</text><text x="1311" y="125" text-anchor="middle">正B材质叠加可形成蓝条</text><text class="small" x="1311" y="158" text-anchor="middle">颜色改善不代表增长已恢复</text>
+  <rect class="box" x="602" y="268" width="515" height="100"/>
+  <text class="title" x="859" y="301" text-anchor="middle">增长统计：独立决定是否新增</text><text class="small" x="859" y="332" text-anchor="middle">旧joint含1×global；新static含2×static与非RGB项</text><text class="small" x="859" y="355" text-anchor="middle">普通空间门槛：normalized gXY ≥ 0.00017</text>
+  <path class="flow" d="M214 125 H260"/><path class="flow" d="M555 125 H601"/><path class="flow" d="M833 125 H881"/><path class="flow" d="M1117 125 H1167"/>
+  <path class="flow" d="M999 268 V198"/><text class="small" x="1023" y="239">增长信号</text>
+  <text class="small" x="24" y="395">反事实：同权RGB来源替换→2K仍9颗；RGB增长分量减半→2K降至5颗，但均未复现旧版1颗。</text>
+</svg>

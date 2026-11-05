@@ -329,3 +329,5 @@
 
 
 - `scene008_a6_appearance_formal_20261105`：[冻结PVD的车体外观补全、正式资产与49帧对照](autoresearch/scene008_a6_appearance_formal_20261105/README.md)；配置、资源、完整指标和边界均在报告；failure_ledger_delta=none。
+
+- `RCR-1 / scene008_rcr1_20261105`：[完整delete交互验收](autoresearch/scene008_rcr1_20261105/index.html)、[机制与资源账本](autoresearch/scene008_rcr1_20261105/research/index.html)、[实际源码与运行清单](autoresearch/scene008_rcr1_20261105/source_archive/index.html)；去蓝成立但新增亮片，候选未采用，保留M2；HELD9仅道路RGB校准target留出。failure_ledger_refs=[V82-F13]，failure_ledger_delta=V82-F13。

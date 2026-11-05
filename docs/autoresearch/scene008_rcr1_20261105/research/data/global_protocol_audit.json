@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "requested_steps": 1000,
+  "source_exactly_unchanged": {
+    "executed_native_ownership.py": true,
+    "executed_integrate_native.py": true,
+    "executed_dual_actor_runtime.py": true,
+    "executed_readout_native.py": true,
+    "executed_training_function.py": true
+  },
+  "config_differences": {
+    "model_path": {
+      "history": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal",
+      "new": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_1k"
+    }
+  },
+  "unexpected_protocol_differences": {},
+  "paired_step_count": 1000,
+  "all_requested_steps_present": true,
+  "sampling_mismatch_steps": [],
+  "learning_rate_mismatch_steps": [],
+  "new_loss_keys": [
+    "global_rgb"
+  ],
+  "expected_new_loss_keys": [
+    "global_rgb"
+  ],
+  "expected_method_difference": "only one unit-weight full-image joint global RGB term",
+  "expected_numeric_differences": "global arm parameters and all later numeric losses may differ; these are outcomes, not configuration or sampling mismatches"
+}

@@ -1,0 +1,47 @@
+最终组合的CPU数值对照（仅数值，不填写人审或画质PASS）
+参考：原ownership native10K + 原road1K/gate/fine + 固定完整M2。
+候选：仅补global1的完整native10K + fresh road1K + fresh6x5→11x9 + 同固定完整M2。
+数据来自保存的PNG编码前float_metrics.json；本分析没有导入模型、渲染或训练。
+范围组件图见pooling_architecture.svg。
+
+固定域汇总：按逐帧sum/count作像素加权，不作帧均值的平均。delta>0表示误差回退。
+keep49           road_target      n=1075281  0.03168865 -> 0.01645815  delta=-0.01523050 (-48.063%)  回退帧=0/49
+keep49           a6_visible_RGB   n=  39308  0.03757664 -> 0.03753720  delta=-0.00003944 (-0.105%)  回退帧=23/49
+keep49           a37_visible_RGB  n= 536128  0.01472654 -> 0.01491633  delta=+0.00018979 (+1.289%)  回退帧=32/49
+keep_HELD9       road_target      n= 201766  0.03108010 -> 0.01613025  delta=-0.01494985 (-48.101%)  回退帧=0/9
+keep_HELD9       a6_visible_RGB   n=   7009  0.03753578 -> 0.03752459  delta=-0.00001119 (-0.030%)  回退帧=6/9
+keep_HELD9       a37_visible_RGB  n=  95766  0.01498079 -> 0.01500940  delta=+0.00002860 (+0.191%)  回退帧=4/9
+keep_BUILD40     road_target      n= 873515  0.03182921 -> 0.01653389  delta=-0.01529532 (-48.054%)  回退帧=0/40
+keep_BUILD40     a6_visible_RGB   n=  32299  0.03758551 -> 0.03753994  delta=-0.00004557 (-0.121%)  回退帧=17/40
+keep_BUILD40     a37_visible_RGB  n= 440362  0.01467125 -> 0.01489609  delta=+0.00022484 (+1.533%)  回退帧=28/40
+delete4_HELD     road_target      n=  19956  0.01653273 -> 0.00947815  delta=-0.00705458 (-42.670%)  回退帧=0/4
+delete4_HELD     a6_visible_RGB   n=   2760  0.03553222 -> 0.03561446  delta=+0.00008224 (+0.231%)  回退帧=3/4
+
+逐帧最大回退（完整排序在max_per_frame_regressions.json与CSV中）：
+keep49 road_target: 无正回退
+keep49 a6_visible_RGB: raw129 0.03710398 -> 0.03762816 delta=+0.00052418
+keep49 a37_visible_RGB: raw122 0.02133878 -> 0.02336416 delta=+0.00202537
+delete4_HELD road_target: 无正回退
+delete4_HELD a6_visible_RGB: raw137 0.05636111 -> 0.05665021 delta=+0.00028910
+
+天空：49keep逐raw/timestamp/maskSHA/count/GT通道sum与mean严格一致；delete4只报告候选自身天空GT误差，不与reference keep配对。
+keep49 n=1948391 MAE 0.02317623 -> 0.02051919, 回退帧0/49
+  prediction RGB reference=[0.56968429, 0.65480034, 0.799582] candidate=[0.56969915, 0.65464037, 0.79895743] GT=[0.57377298, 0.6596077, 0.80404071]
+keep_HELD9 n=358668 MAE 0.02509978 -> 0.02240890, 回退帧0/9
+  prediction RGB reference=[0.56973842, 0.65483287, 0.79962983] candidate=[0.56966554, 0.65457392, 0.79889782] GT=[0.57561188, 0.66169881, 0.80629103]
+keep_BUILD40 n=1589723 MAE 0.02274224 -> 0.02009284, 回退帧0/40
+  prediction RGB reference=[0.56967208, 0.65479299, 0.79957121] candidate=[0.56970674, 0.65465536, 0.79897088] GT=[0.57335809, 0.65913592, 0.80353301]
+
+重点原框与细条（现成compare_roi共同mask，排除原actor及两端M2 alphaT>.01；不是只看固定8点）：
+raw113 keep user_box n=800 MAE 0.14146128->0.00873068; absblue 0.02351603->0.00359092; blue>.05 43->0
+raw113 keep white_line n=253 MAE 0.16622575->0.00627033; absblue 0.02583277->0.00289958; blue>.05 2->0
+raw113 delete user_box n=799 MAE 0.04099277->0.00873568; absblue 0.08462493->0.00389655; blue>.05 462->0
+raw113 delete white_line n=253 MAE 0.05407315->0.00794313; absblue 0.11904781->0.00319410; blue>.05 224->0
+raw137 keep right_patch n=1329 MAE 0.07921623->0.01045191; absblue 0.03389926->0.00457945; blue>.05 232->0
+raw137 keep environment_band n=66 MAE 0.11955555->0.01957527; absblue 0.03275554->0.01262330; blue>.05 0->0
+raw137 delete right_patch n=1329 MAE 0.04189390->0.01009650; absblue 0.07409018->0.00488819; blue>.05 664->0
+raw137 delete environment_band n=66 MAE 0.06217552->0.01964469; absblue 0.03572836->0.00508460; blue>.05 8->0
+
+工程收据：native10K经native_publish_checkpoint_event完成完整状态发布，真实10000→10002恢复PASS_EXACT_FULL_RESTORE；新road1000正式+32smoke+2restore，合计1034；fresh coarse/fine均80个design文件、alpha/depth/extra parity为0、系数round-trip exact。均为工程验收，不代表画质接受。
+边界：delete道路目标是重观测proxy，不是真实删物RGB GT；road_affected/seam/observed_background条件掩码未用于端点pooled公平对照。固定road/a6/a37掩码由同一evidence源码/同一观测与独立ground参考构造，逐帧count及evaluator对照完全一致；原JSON未保存这些区域的逐mask SHA，不冒称已比对其SHA。天空严格SHA已验证。
+源头训练仍只补global1；hide64、cleanSH、oldEnv交换、half不采纳。human_verdict与最终画质结论由根代理/用户看图决定。

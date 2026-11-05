@@ -1,0 +1,70 @@
+{
+  "status": "PASS_CPU_BACKGROUND_JOINT1_MASK_AND_GRADIENT",
+  "changed_source_files": [
+    "global_rgb_probe.py",
+    "train_loss_probe.py"
+  ],
+  "all_other_source_files_byte_identical": [
+    "audit_native.py",
+    "build_native_report.draft.py",
+    "build_native_report.py",
+    "compare_control.py",
+    "controller_dual.py",
+    "diag_hooks.py",
+    "dual_actor_runtime.py",
+    "early_accept.pre_road.py",
+    "early_accept.py",
+    "evaluate_a6_probe.py",
+    "evaluate_dual.py",
+    "inspect_edit.py",
+    "inspect_road.py",
+    "integrate_native.py",
+    "lineage_probe.py",
+    "native_ownership.py",
+    "native_ownership.r1.py",
+    "native_ownership.r2.py",
+    "prepare_native_publish.py",
+    "readout_native.preflight.py",
+    "readout_native.py",
+    "road_panel_audit.py",
+    "train_dual.py",
+    "train_dual.r3_smoke.py",
+    "train_dual.smoke_launch.py"
+  ],
+  "original_global_full_package_byte_unchanged": true,
+  "Ownership_background_two_assignments_AST_exact": true,
+  "actual_original_photometric_loss_and_SSIM": true,
+  "coefficient": 1,
+  "active_pixel_renormalization": false,
+  "original_term_tensor_identities_preserved": true,
+  "cfg_mutations_exact_original": true,
+  "all_nested_runner_functions_AST_exact_original": true,
+  "runner_algorithm_AST_exact_except_mode_argument_and_contract": true,
+  "snapshots_100_500_1000_resume2_familyRGB_every100_unchanged": true,
+  "growth_aux_present": false,
+  "all_private_python_sources_compile": true,
+  "RNG_unchanged": true,
+  "tests": {
+    "mixed_mask": {
+      "background_pixels": 1340,
+      "excluded_pixels": 196,
+      "added_prediction_gradient_outside_maxabs": 0.0,
+      "added_target_gradient_outside_maxabs": 0.0,
+      "inside_nonzero_prediction_gradient_channels": 4020,
+      "total_prediction_tensor_gradient_exact_explicit_reference": true
+    },
+    "all_background": {
+      "loss_and_prediction_gradient_exact_full_global": true
+    },
+    "no_background": {
+      "loss": 0.0,
+      "prediction_gradient_zero": true,
+      "target_gradient_zero": true
+    }
+  },
+  "CUDA_initialized": false,
+  "GPU_run_performed": false,
+  "uploaded": false,
+  "training_updates": 0,
+  "limitation": "Only the added term RGB image-gradient domain is masked. Shared Gaussian parameters can still receive background-pixel gradients through their footprints; this test is not a guarantee the silver remnant disappears or a quality acceptance."
+}

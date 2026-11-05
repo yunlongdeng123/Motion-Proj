@@ -1,0 +1,535 @@
+{
+  "method_code": "RCR-1",
+  "method_name": "RGB Constraint Restoration / RGB 约束恢复",
+  "created_at": "2026-11-05T22:23:09+08:00",
+  "scope": "Existing complete final candidate versus the accepted-current M2/delete reference; four saved delete frames only.",
+  "quality_accepted": false,
+  "acceptance": "NOT_ACCEPTED_VISUAL_REGRESSION",
+  "regression": "raw130/raw137: silver residual. Net brightening is native-static dominated; environment*T still carries car-shaped structure. Exact static rows and training cause remain unisolated.",
+  "reference": "Original ownership native10K + original road1K/gates/fine + fixed complete M2",
+  "candidate": "Native10K with only the missing global RGB coefficient1 restored + fresh road1K/gates + fresh coarse6x5/fine11x9 + the same fixed complete M2",
+  "M2_sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+  "M2_all_27_tensors_bitwise_unchanged_CPU": true,
+  "source_candidate": "scene008_blue_global_M2_final_20261105_r1",
+  "source_reference": "scene008_blue_current_M2_reference_20261105_r1",
+  "image_verification": "All eight PNG SHA256 hashes match a fresh read-only remote check on 2026-11-05.",
+  "images": [
+    {
+      "state": "reference",
+      "raw": 105,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\reference\\raw105_delete.png",
+      "file": "assets/reference_105.png",
+      "sha256": "995c29c9c33e6db924c851c7584d90104d8185b98ab979c72eaa55574c8fa3d2"
+    },
+    {
+      "state": "reference",
+      "raw": 113,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\reference\\raw113_delete.png",
+      "file": "assets/reference_113.png",
+      "sha256": "91049c0d03b25aca3e76e0f2c6da26fa256e705d13188c580734060b6842c0f2"
+    },
+    {
+      "state": "reference",
+      "raw": 130,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\reference\\raw130_delete.png",
+      "file": "assets/reference_130.png",
+      "sha256": "027da08df22e1d65ad07ab092954f9b730f88f18014acf8e6a15bc55ab21ea7f"
+    },
+    {
+      "state": "reference",
+      "raw": 137,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\reference\\raw137_delete.png",
+      "file": "assets/reference_137.png",
+      "sha256": "e43f1cf1eca7793a268cdb13d69dda27f31cb96551735c4e5fc756037c8dc228"
+    },
+    {
+      "state": "candidate",
+      "raw": 105,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\render\\raw105_delete.png",
+      "file": "assets/candidate_105.png",
+      "sha256": "b61a482952e1ab2b81c2b1ae763bca3b1d4e6c76a017a59e4b24cb2a1b944e29"
+    },
+    {
+      "state": "candidate",
+      "raw": 113,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\render\\raw113_delete.png",
+      "file": "assets/candidate_113.png",
+      "sha256": "28ecdcdff00fded584579a36b2588c55cbf33d80218eddbf70747fced2d2049c"
+    },
+    {
+      "state": "candidate",
+      "raw": 130,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\render\\raw130_delete.png",
+      "file": "assets/candidate_130.png",
+      "sha256": "1980fe61b8608f7f388dbf22091c4bfc38d7c3b4135e51a0b74a0890ccb11b80"
+    },
+    {
+      "state": "candidate",
+      "raw": 137,
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_final_acceptance\\render\\raw137_delete.png",
+      "file": "assets/candidate_137.png",
+      "sha256": "27e71db947a58ecc9e0d92231f905f3cbba9cc7963880de65453eea8a2292efa"
+    }
+  ],
+  "blue_rows": [
+    {
+      "raw": "113",
+      "state": "delete",
+      "region": "user_box",
+      "pixels": "799",
+      "reference_rgb_mae": "0.040992770344018936",
+      "candidate_rgb_mae": "0.008735676296055317",
+      "reference_signed_blue_error": "0.07845574617385864",
+      "candidate_signed_blue_error": "-0.00036538668791763484",
+      "reference_absolute_blue_error": "0.08462493121623993",
+      "candidate_absolute_blue_error": "0.0038965526036918163",
+      "reference_positive_blue_error_gt_05_pixels": "462",
+      "candidate_positive_blue_error_gt_05_pixels": "0",
+      "reference_positive_blue_error_max": "0.22075147926807404",
+      "candidate_positive_blue_error_max": "0.016860276460647583",
+      "delta_rgb_mae": "-0.03225709404796362"
+    },
+    {
+      "raw": "113",
+      "state": "delete",
+      "region": "white_line",
+      "pixels": "253",
+      "reference_rgb_mae": "0.05407314747571945",
+      "candidate_rgb_mae": "0.007943127304315567",
+      "reference_signed_blue_error": "0.11897547543048859",
+      "candidate_signed_blue_error": "-0.00010008156095864251",
+      "reference_absolute_blue_error": "0.11904780566692352",
+      "candidate_absolute_blue_error": "0.0031941013876348734",
+      "reference_positive_blue_error_gt_05_pixels": "224",
+      "candidate_positive_blue_error_gt_05_pixels": "0",
+      "reference_positive_blue_error_max": "0.22075147926807404",
+      "candidate_positive_blue_error_max": "0.013799577951431274",
+      "delta_rgb_mae": "-0.046130020171403885"
+    },
+    {
+      "raw": "137",
+      "state": "delete",
+      "region": "right_patch",
+      "pixels": "1329",
+      "reference_rgb_mae": "0.04189389944076538",
+      "candidate_rgb_mae": "0.01009649783372879",
+      "reference_signed_blue_error": "0.0682566687464714",
+      "candidate_signed_blue_error": "-6.853328522993252e-05",
+      "reference_absolute_blue_error": "0.07409018278121948",
+      "candidate_absolute_blue_error": "0.004888187628239393",
+      "reference_positive_blue_error_gt_05_pixels": "664",
+      "candidate_positive_blue_error_gt_05_pixels": "0",
+      "reference_positive_blue_error_max": "0.23438747227191925",
+      "candidate_positive_blue_error_max": "0.04118232801556587",
+      "delta_rgb_mae": "-0.03179740160703659"
+    },
+    {
+      "raw": "137",
+      "state": "delete",
+      "region": "environment_band",
+      "pixels": "66",
+      "reference_rgb_mae": "0.06217551976442337",
+      "candidate_rgb_mae": "0.019644685089588165",
+      "reference_signed_blue_error": "-0.0019011144759133458",
+      "candidate_signed_blue_error": "0.004722315352410078",
+      "reference_absolute_blue_error": "0.03572836145758629",
+      "candidate_absolute_blue_error": "0.005084596108645201",
+      "reference_positive_blue_error_gt_05_pixels": "8",
+      "candidate_positive_blue_error_gt_05_pixels": "0",
+      "reference_positive_blue_error_max": "0.2318207025527954",
+      "candidate_positive_blue_error_max": "0.0312088280916214",
+      "delta_rgb_mae": "-0.042530834674835205"
+    }
+  ],
+  "fixed_domain_rows": [
+    {
+      "raw": "105",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "road_target",
+      "pixels": "7284",
+      "reference_sum": "149.02252855508414",
+      "candidate_sum": "74.56256148479588",
+      "reference_mae": "0.020458886402400348",
+      "candidate_mae": "0.010236485651399764",
+      "delta_candidate_minus_reference": "-0.010222400751000584",
+      "target": "Reobserved-road proxy, not deleted-object RGB GT"
+    },
+    {
+      "raw": "105",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "a6_visible_RGB",
+      "pixels": "1042",
+      "reference_sum": "32.16992508259136",
+      "candidate_sum": "32.38008688890841",
+      "reference_mae": "0.030873248639722996",
+      "candidate_mae": "0.0310749394327336",
+      "delta_candidate_minus_reference": "0.00020169079301060253",
+      "target": "Original RGB"
+    },
+    {
+      "raw": "113",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "road_target",
+      "pixels": "7070",
+      "reference_sum": "90.34667897626059",
+      "candidate_sum": "66.44521306236857",
+      "reference_mae": "0.012778879628891173",
+      "candidate_mae": "0.009398191380815922",
+      "delta_candidate_minus_reference": "-0.003380688248075251",
+      "target": "Reobserved-road proxy, not deleted-object RGB GT"
+    },
+    {
+      "raw": "113",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "a6_visible_RGB",
+      "pixels": "879",
+      "reference_sum": "26.31405802129302",
+      "candidate_sum": "26.219570877379738",
+      "reference_mae": "0.029936357248342458",
+      "candidate_mae": "0.02982886334172894",
+      "delta_candidate_minus_reference": "-0.00010749390661351707",
+      "target": "Original RGB"
+    },
+    {
+      "raw": "130",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "road_target",
+      "pixels": "3613",
+      "reference_sum": "47.567563472359325",
+      "candidate_sum": "31.101216358685633",
+      "reference_mae": "0.013165669380669617",
+      "candidate_mae": "0.008608141809766297",
+      "delta_candidate_minus_reference": "-0.00455752757090332",
+      "target": "Reobserved-road proxy, not deleted-object RGB GT"
+    },
+    {
+      "raw": "130",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "a6_visible_RGB",
+      "pixels": "455",
+      "reference_sum": "17.942285021417774",
+      "candidate_sum": "17.942579328315333",
+      "reference_mae": "0.039433593453665435",
+      "candidate_mae": "0.03943424028201172",
+      "delta_candidate_minus_reference": "6.468283462873758e-07",
+      "target": "Original RGB"
+    },
+    {
+      "raw": "137",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "road_target",
+      "pixels": "1989",
+      "reference_sum": "42.990354116191156",
+      "candidate_sum": "17.037005346253864",
+      "reference_mae": "0.021614054357059403",
+      "candidate_mae": "0.008565613547638946",
+      "delta_candidate_minus_reference": "-0.013048440809420457",
+      "target": "Reobserved-road proxy, not deleted-object RGB GT"
+    },
+    {
+      "raw": "137",
+      "state": "delete",
+      "split": "HELD9",
+      "region": "a6_visible_RGB",
+      "pixels": "384",
+      "reference_sum": "21.64266664441675",
+      "candidate_sum": "21.7536812069593",
+      "reference_mae": "0.05636111105316862",
+      "candidate_mae": "0.05665021147645651",
+      "delta_candidate_minus_reference": "0.0002891004232878913",
+      "target": "Original RGB"
+    }
+  ],
+  "frames": {
+    "105": {
+      "note": "检查删车后的道路接管与车尾衔接。",
+      "default_roi": "tail",
+      "rois": {
+        "tail": {
+          "label": "车尾与接管区域",
+          "xyxy": [
+            205,
+            178,
+            305,
+            238
+          ]
+        },
+        "road": {
+          "label": "道路衔接",
+          "xyxy": [
+            190,
+            215,
+            330,
+            285
+          ]
+        },
+        "a5": {
+          "label": "左侧车辆（a5 排查）",
+          "xyxy": [
+            0,
+            160,
+            175,
+            320
+          ]
+        }
+      }
+    },
+    "113": {
+      "note": "原框内偏蓝明显减轻；同时检查补全边界与车尾。",
+      "default_roi": "blue",
+      "rois": {
+        "blue": {
+          "label": "用户原框：白线旁偏蓝",
+          "xyxy": [
+            276,
+            175,
+            309,
+            220
+          ]
+        },
+        "tail": {
+          "label": "车尾与接管区域",
+          "xyxy": [
+            202,
+            185,
+            300,
+            242
+          ]
+        },
+        "a5": {
+          "label": "左侧车辆（a5 排查）",
+          "xyxy": [
+            0,
+            160,
+            175,
+            320
+          ]
+        }
+      }
+    },
+    "130": {
+      "note": "回退：车尾银灰亮片增显；净亮化主要来自新静态层，环境×T仍有车形结构。",
+      "default_roi": "tail",
+      "rois": {
+        "tail": {
+          "label": "车尾银灰亮残影",
+          "xyxy": [
+            202,
+            192,
+            298,
+            244
+          ]
+        },
+        "road": {
+          "label": "道路衔接",
+          "xyxy": [
+            190,
+            215,
+            330,
+            285
+          ]
+        },
+        "a5": {
+          "label": "左侧车辆（a5 排查）",
+          "xyxy": [
+            0,
+            160,
+            175,
+            320
+          ]
+        }
+      }
+    },
+    "137": {
+      "note": "回退：银灰亮片增显；该块不在道路接管范围，具体训练成因仍未隔离。",
+      "default_roi": "tail",
+      "rois": {
+        "tail": {
+          "label": "车尾银灰亮残影",
+          "xyxy": [
+            202,
+            192,
+            298,
+            244
+          ]
+        },
+        "blue": {
+          "label": "右侧原蓝斑区域",
+          "xyxy": [
+            276,
+            175,
+            309,
+            220
+          ]
+        },
+        "band": {
+          "label": "原横条区域",
+          "xyxy": [
+            210,
+            213,
+            290,
+            233
+          ]
+        },
+        "a5": {
+          "label": "左侧车辆（a5 排查）",
+          "xyxy": [
+            0,
+            160,
+            175,
+            320
+          ]
+        }
+      }
+    }
+  },
+  "silver315": {
+    "pixels": 315,
+    "mask_definition": "Candidate meanRGB - current reference meanRGB >.08 within x210:290,y213:233; all pixels included",
+    "component_premultiplied_RGB": {
+      "M2_a6": {
+        "reference_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "candidate_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "delta_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "delta_mean_brightness": 0.0,
+        "reference_alphaT_mean": 0.0,
+        "candidate_alphaT_mean": 0.0
+      },
+      "a37": {
+        "reference_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "candidate_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "delta_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "delta_mean_brightness": 0.0,
+        "reference_alphaT_mean": 0.0,
+        "candidate_alphaT_mean": 0.0
+      },
+      "road": {
+        "reference_mean_RGB": [
+          0.00015541375614702702,
+          0.00016601364209597547,
+          0.00018294521880942206
+        ],
+        "candidate_mean_RGB": [
+          0.00017418090461028947,
+          0.00018801533114460727,
+          0.00021141804902563018
+        ],
+        "delta_mean_RGB": [
+          1.8767148463262454e-05,
+          2.20016890486318e-05,
+          2.8472830216208126e-05
+        ],
+        "delta_mean_brightness": 2.308055590936746e-05,
+        "reference_alphaT_mean": 0.0004749252357416683,
+        "candidate_alphaT_mean": 0.0005394034102440827
+      },
+      "native_static": {
+        "reference_mean_RGB": [
+          0.05227243157162789,
+          0.04153397859680274,
+          0.05480461548126879
+        ],
+        "candidate_mean_RGB": [
+          0.34561881990659804,
+          0.37472889092233447,
+          0.42156110983046274
+        ],
+        "delta_mean_RGB": [
+          0.2933463883349702,
+          0.3331949123255317,
+          0.36675649434919394
+        ],
+        "delta_mean_brightness": 0.3310992650032319,
+        "reference_alphaT_mean": 0.17772686753481154,
+        "candidate_alphaT_mean": 0.8289681642774551
+      },
+      "environment": {
+        "reference_mean_RGB": [
+          0.41089910335010954,
+          0.41089910335010954,
+          0.41089910335010954
+        ],
+        "candidate_mean_RGB": [
+          0.2102737903831497,
+          0.2191817766144162,
+          0.22469432614152393
+        ],
+        "delta_mean_RGB": [
+          -0.20062531296695985,
+          -0.19171732673569333,
+          -0.1862047772085856
+        ],
+        "delta_mean_brightness": -0.19284913897041292
+      }
+    },
+    "output_delta_mean_RGB": [
+      0.09273984384915185,
+      0.14149958425097997,
+      0.1805801901552413
+    ],
+    "confirmed_source": "The NET brightness increase over these315 pixels is dominated by the composited native-static RGB term (after each run own road gate); M2/a37 are zero, road is negligible and mean environment contribution decreases. This is not an exclusive attribution of the car-shaped spatial texture.",
+    "unresolved": "The car-shaped structure has not been separated into intrinsic EnvLight texture versus spatial transmittance T; exact static row/lineage IDs and the separate effects of training RGB source, topology, opacity and gates are also not isolated. No claim is made that background-domain RGB will solve it.",
+    "spatial_structure_observation": "The saved candidate environment*T layer visibly retains a car-shaped structure, while the static layer provides a brighter gray base. A negative mean environment delta does not rule out its contribution to the visible ghost shape.",
+    "validation": {
+      "reference": {
+        "marker_max": 0.0,
+        "reconstruction_max": 4.172325134277344e-07,
+        "M2_unchanged": true,
+        "models_unchanged": true
+      },
+      "candidate": {
+        "marker_max": 0.0,
+        "reconstruction_max": 7.748603820800781e-07,
+        "M2_unchanged": true,
+        "models_unchanged": true
+      }
+    }
+  },
+  "closeout": {
+    "status": "ARCHIVED_NOT_ADOPTED",
+    "native_updates": 10000,
+    "road_updates": 1000,
+    "task_total_updates": 26609,
+    "formal_linear_solves": 54,
+    "preflight_linear_solves": 54,
+    "original_M2_retained": true,
+    "human_verdict": null,
+    "next_RCR_training_controller": false,
+    "automatic_shutdown_executed": false,
+    "prepared_not_executed": "backgroundJoint1: CPU-only gradient-domain check, no GPU run",
+    "pending_followup": "Left-side vehicle damage / a5 identity tracing is a separate follow-up; only labeled frames confirm a5 identity, not raw113/130/137 left vehicles."
+  },
+  "holdout_scope": "HELD9 only withholds road-RGB calibration targets; native/road-gate stages used the same49-frame clip. This is internal diagnostic evaluation, not unseen-native generalization.",
+  "actor_identity_scope": "a5 身份仅在有原始标签的帧确认；raw105 actor_labels1为10773像素。raw113/130/137的左侧车辆不视作a5。"
+}

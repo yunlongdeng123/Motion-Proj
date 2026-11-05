@@ -1,0 +1,1199 @@
+[
+  {
+    "name": "control_2k",
+    "first_actual_append": {
+      "event": 44,
+      "kind": "actual_append",
+      "lineage": 64990,
+      "time_shift": null,
+      "camera": "0008098",
+      "camera_timestamp": -0.29999999999999993,
+      "raw": 98,
+      "iteration": 1500,
+      "operation": "ordinary_clone",
+      "family_before": {
+        "count": 1,
+        "rows": [
+          63720
+        ]
+      },
+      "parent_rows": [
+        63720
+      ],
+      "child_rows": [
+        605602
+      ],
+      "family_after": {
+        "count": 2,
+        "rows": [
+          63720,
+          605602
+        ]
+      }
+    },
+    "first_clone_gate": {
+      "event": 43,
+      "kind": "ordinary_clone_before",
+      "lineage": 64990,
+      "time_shift": null,
+      "camera": "0008098",
+      "camera_timestamp": -0.29999999999999993,
+      "raw": 98,
+      "iteration": 1500,
+      "family": {
+        "count": 1,
+        "rows": [
+          63720
+        ]
+      },
+      "gates": {
+        "rows": [
+          {
+            "row": 63720,
+            "normalized_gxy": 0.0001776985009200871,
+            "normalized_signed_gt": -1.3409955101906235e-07,
+            "denom_before_cycle": 100.0,
+            "accumulator_before_cycle": {
+              "row": 63720,
+              "denom": 100.0,
+              "gxy_accum": 0.01776985079050064,
+              "signed_gt_accum": -1.3409954590315465e-05,
+              "normalized_gxy": 0.0001776985009200871,
+              "normalized_signed_gt": -1.3409955101906235e-07,
+              "max_radius_before_reset": 4.0
+            },
+            "gradient_padded_after_clone": false,
+            "scale": [
+              0.003597858129069209,
+              0.0011513029458001256,
+              0.011482947506010532
+            ],
+            "sigma_t": 2.129490613937378,
+            "scale_factor": 4.689656734466553,
+            "scale_threshold": 0.2437431514263153,
+            "spatial_selected": true,
+            "temporal_selected": false,
+            "predicted_selected": true
+          }
+        ],
+        "grad_threshold": 0.00017,
+        "grad_t_threshold": 0.002,
+        "scene_extent": 5.197462421288497,
+        "percent_dense": 0.01,
+        "temporal_enabled": true,
+        "temporal_comparison": "abs(norm signed_gt)",
+        "no_time_split": true,
+        "joint_sample": null,
+        "requested_N": null,
+        "effective_N": 1
+      }
+    },
+    "final_cycle": {
+      "event": 101,
+      "kind": "ordinary_cycle_after",
+      "lineage": 64990,
+      "time_shift": -0.017989759106965885,
+      "camera": "0008124",
+      "camera_timestamp": 0.22000000000000008,
+      "raw": 124,
+      "iteration": 2000,
+      "family": {
+        "count": 9,
+        "rows": [
+          63380,
+          601879,
+          608207,
+          614780,
+          621608,
+          625694,
+          628604,
+          636085,
+          639741
+        ]
+      }
+    },
+    "windows": [
+      {
+        "event": 2,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008107",
+        "camera_timestamp": -0.11999999999999994,
+        "raw": 107,
+        "iteration": 1100,
+        "family": {
+          "count": 1,
+          "rows": [
+            64227
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 64227,
+            "denom": 100.0,
+            "gxy_accum": 0.005986653733998537,
+            "signed_gt_accum": -2.9141845061531058e-06,
+            "normalized_gxy": 5.986653559375554e-05,
+            "normalized_signed_gt": -2.914184449309687e-08,
+            "max_radius_before_reset": 3.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "control",
+          "rows": [
+            64227
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.00027807653532363474,
+                3.1695395591668785e-05
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.00028201343957334757,
+                3.5554949135985225e-05
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00028201343957334757,
+                3.5554949135985225e-05
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.00027807653532363474,
+                3.1695395591668785e-05
+              ]
+            ],
+            "g_applied": [
+              [
+                0.00027807653532363474,
+                3.1695395591668785e-05
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 42,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008098",
+        "camera_timestamp": -0.29999999999999993,
+        "raw": 98,
+        "iteration": 1500,
+        "family": {
+          "count": 1,
+          "rows": [
+            63720
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63720,
+            "denom": 100.0,
+            "gxy_accum": 0.01776985079050064,
+            "signed_gt_accum": -1.3409954590315465e-05,
+            "normalized_gxy": 0.0001776985009200871,
+            "normalized_signed_gt": -1.3409955101906235e-07,
+            "max_radius_before_reset": 4.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "control",
+          "rows": [
+            63720
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.00022454714053310454,
+                -0.00014761467173229903
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.00022008299129083753,
+                -0.00014385416579898447
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00022008299129083753,
+                -0.00014385416579898447
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.00022454714053310454,
+                -0.00014761467173229903
+              ]
+            ],
+            "g_applied": [
+              [
+                0.00022454714053310454,
+                -0.00014761467173229903
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 62,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": 0.028984012133510328,
+        "camera": "0008124",
+        "camera_timestamp": 0.22000000000000008,
+        "raw": 124,
+        "iteration": 1700,
+        "family": {
+          "count": 3,
+          "rows": [
+            63569,
+            603736,
+            610173
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63569,
+            "denom": 100.0,
+            "gxy_accum": 0.018173309043049812,
+            "signed_gt_accum": 4.211148279864574e-06,
+            "normalized_gxy": 0.00018173309217672795,
+            "normalized_signed_gt": 4.211148407762266e-08,
+            "max_radius_before_reset": 5.0
+          },
+          {
+            "row": 603736,
+            "denom": 100.0,
+            "gxy_accum": 0.015538697130978107,
+            "signed_gt_accum": -6.784091965528205e-06,
+            "normalized_gxy": 0.0001553869660710916,
+            "normalized_signed_gt": -6.78409222132359e-08,
+            "max_radius_before_reset": 5.0
+          },
+          {
+            "row": 610173,
+            "denom": 100.0,
+            "gxy_accum": 0.013492459431290627,
+            "signed_gt_accum": -1.3918447621108498e-06,
+            "normalized_gxy": 0.00013492460129782557,
+            "normalized_signed_gt": -1.3918447727689909e-08,
+            "max_radius_before_reset": 4.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "control",
+          "rows": [
+            63569,
+            603736,
+            610173
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.0002512075880076736,
+                -4.7269699280150235e-05
+              ],
+              [
+                1.3709739505429752e-05,
+                0.00010177106014452875
+              ],
+              [
+                0.0002640114107634872,
+                -0.00013559797662310302
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.0002454439818393439,
+                -4.703734157374129e-05
+              ],
+              [
+                1.056413930200506e-05,
+                0.0001000567281153053
+              ],
+              [
+                0.0002631921670399606,
+                -0.00013830975512973964
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.0002454439818393439,
+                -4.703734157374129e-05
+              ],
+              [
+                1.056413930200506e-05,
+                0.0001000567281153053
+              ],
+              [
+                0.0002631921670399606,
+                -0.00013830975512973964
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.0002512075880076736,
+                -4.7269699280150235e-05
+              ],
+              [
+                1.3709739505429752e-05,
+                0.00010177106014452875
+              ],
+              [
+                0.0002640114107634872,
+                -0.00013559797662310302
+              ]
+            ],
+            "g_applied": [
+              [
+                0.0002512075880076736,
+                -4.7269699280150235e-05
+              ],
+              [
+                1.3709739505429752e-05,
+                0.00010177106014452875
+              ],
+              [
+                0.0002640114107634872,
+                -0.00013559797662310302
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "returned": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 2000,
+      "updates": 1000,
+      "source_iteration": 1000,
+      "growth_rgb_mode": "control",
+      "extra_updates_requested": 1000,
+      "native_eval_at_end": false,
+      "seconds": 172.9391489457339,
+      "quality_accepted": false,
+      "human_verdict": null
+    },
+    "gradient_neutrality": {
+      "status": "PASS_EXACT_OPTIMIZER_GRADIENT_NEUTRALITY",
+      "iteration": 1001,
+      "growth_rgb_mode": "control",
+      "optimizer_parameter_slots": 19,
+      "optimizer_slots_with_gradient": 19,
+      "retained_slots_verified": 4,
+      "optimizer_gradient_max_abs_difference": 0.0,
+      "optimizer_gradient_slot_identity_unchanged": true,
+      "aux_added_to_main_loss": false
+    }
+  },
+  {
+    "name": "joint_2k",
+    "first_actual_append": {
+      "event": 44,
+      "kind": "actual_append",
+      "lineage": 64990,
+      "time_shift": null,
+      "camera": "0008098",
+      "camera_timestamp": -0.29999999999999993,
+      "raw": 98,
+      "iteration": 1500,
+      "operation": "ordinary_clone",
+      "family_before": {
+        "count": 1,
+        "rows": [
+          63789
+        ]
+      },
+      "parent_rows": [
+        63789
+      ],
+      "child_rows": [
+        605513
+      ],
+      "family_after": {
+        "count": 2,
+        "rows": [
+          63789,
+          605513
+        ]
+      }
+    },
+    "first_clone_gate": {
+      "event": 43,
+      "kind": "ordinary_clone_before",
+      "lineage": 64990,
+      "time_shift": null,
+      "camera": "0008098",
+      "camera_timestamp": -0.29999999999999993,
+      "raw": 98,
+      "iteration": 1500,
+      "family": {
+        "count": 1,
+        "rows": [
+          63789
+        ]
+      },
+      "gates": {
+        "rows": [
+          {
+            "row": 63789,
+            "normalized_gxy": 0.0002005460555665195,
+            "normalized_signed_gt": -1.038154451293849e-07,
+            "denom_before_cycle": 100.0,
+            "accumulator_before_cycle": {
+              "row": 63789,
+              "denom": 100.0,
+              "gxy_accum": 0.02005460485816002,
+              "signed_gt_accum": -1.0381544598203618e-05,
+              "normalized_gxy": 0.0002005460555665195,
+              "normalized_signed_gt": -1.038154451293849e-07,
+              "max_radius_before_reset": 4.0
+            },
+            "gradient_padded_after_clone": false,
+            "scale": [
+              0.0031193234026432037,
+              0.00185593927744776,
+              0.012356067076325417
+            ],
+            "sigma_t": 2.1350064277648926,
+            "scale_factor": 4.6895551681518555,
+            "scale_threshold": 0.2437378615140915,
+            "spatial_selected": true,
+            "temporal_selected": false,
+            "predicted_selected": true
+          }
+        ],
+        "grad_threshold": 0.00017,
+        "grad_t_threshold": 0.002,
+        "scene_extent": 5.197462421288497,
+        "percent_dense": 0.01,
+        "temporal_enabled": true,
+        "temporal_comparison": "abs(norm signed_gt)",
+        "no_time_split": true,
+        "joint_sample": null,
+        "requested_N": null,
+        "effective_N": 1
+      }
+    },
+    "final_cycle": {
+      "event": 101,
+      "kind": "ordinary_cycle_after",
+      "lineage": 64990,
+      "time_shift": -0.017989759106965885,
+      "camera": "0008124",
+      "camera_timestamp": 0.22000000000000008,
+      "raw": 124,
+      "iteration": 2000,
+      "family": {
+        "count": 9,
+        "rows": [
+          63487,
+          602252,
+          608103,
+          614351,
+          618529,
+          619287,
+          620829,
+          627544,
+          634800
+        ]
+      }
+    },
+    "windows": [
+      {
+        "event": 2,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008107",
+        "camera_timestamp": -0.11999999999999994,
+        "raw": 107,
+        "iteration": 1100,
+        "family": {
+          "count": 1,
+          "rows": [
+            64227
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 64227,
+            "denom": 100.0,
+            "gxy_accum": 0.0060037304647266865,
+            "signed_gt_accum": -3.289894038971397e-06,
+            "normalized_gxy": 6.0037305956939235e-05,
+            "normalized_signed_gt": -3.2898938684411405e-08,
+            "max_radius_before_reset": 3.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "joint",
+          "rows": [
+            64227
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.0002796825719997287,
+                3.21921324939467e-05
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.0002834063197951764,
+                3.603426011977717e-05
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00028340629069134593,
+                3.603426011977717e-05
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.0002796825428958982,
+                3.21921324939467e-05
+              ]
+            ],
+            "g_applied": [
+              [
+                0.0002796825428958982,
+                3.21921324939467e-05
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 42,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008098",
+        "camera_timestamp": -0.29999999999999993,
+        "raw": 98,
+        "iteration": 1500,
+        "family": {
+          "count": 1,
+          "rows": [
+            63789
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63789,
+            "denom": 100.0,
+            "gxy_accum": 0.02005460485816002,
+            "signed_gt_accum": -1.0381544598203618e-05,
+            "normalized_gxy": 0.0002005460555665195,
+            "normalized_signed_gt": -1.038154451293849e-07,
+            "max_radius_before_reset": 4.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "joint",
+          "rows": [
+            63789
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.00013087454135529697,
+                -0.00022241234546527267
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.00012561357289087027,
+                -0.00021781385294161737
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00012561357289087027,
+                -0.00021781385294161737
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.00013087454135529697,
+                -0.00022241234546527267
+              ]
+            ],
+            "g_applied": [
+              [
+                0.00013087454135529697,
+                -0.00022241234546527267
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 62,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": 0.028984012133510328,
+        "camera": "0008124",
+        "camera_timestamp": 0.22000000000000008,
+        "raw": 124,
+        "iteration": 1700,
+        "family": {
+          "count": 3,
+          "rows": [
+            63670,
+            603997,
+            609924
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63670,
+            "denom": 100.0,
+            "gxy_accum": 0.01973237469792366,
+            "signed_gt_accum": -5.4180081860977225e-06,
+            "normalized_gxy": 0.00019732375221792608,
+            "normalized_signed_gt": -5.4180080866217395e-08,
+            "max_radius_before_reset": 6.0
+          },
+          {
+            "row": 603997,
+            "denom": 100.0,
+            "gxy_accum": 0.01711927354335785,
+            "signed_gt_accum": -9.793282515602186e-06,
+            "normalized_gxy": 0.00017119273252319545,
+            "normalized_signed_gt": -9.793282629289024e-08,
+            "max_radius_before_reset": 4.0
+          },
+          {
+            "row": 609924,
+            "denom": 100.0,
+            "gxy_accum": 0.01718541793525219,
+            "signed_gt_accum": -3.3679091302474262e-06,
+            "normalized_gxy": 0.00017185417527798563,
+            "normalized_signed_gt": -3.3679089739280244e-08,
+            "max_radius_before_reset": 5.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "joint",
+          "rows": [
+            63670,
+            603997,
+            609924
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.0001535089686512947,
+                5.512626739800908e-05
+              ],
+              [
+                0.0002980118151754141,
+                -8.614701800979674e-05
+              ],
+              [
+                0.00012038355635013431,
+                -1.6270816558972e-05
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.00015741829702164978,
+                5.348410195438191e-05
+              ],
+              [
+                0.0002988435735460371,
+                -8.976459503173828e-05
+              ],
+              [
+                0.00011493059719214216,
+                -1.6440710169263184e-05
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00015741829702164978,
+                5.348410195438191e-05
+              ],
+              [
+                0.0002988435735460371,
+                -8.976459503173828e-05
+              ],
+              [
+                0.00011493059719214216,
+                -1.6440710169263184e-05
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.0001535089686512947,
+                5.512626739800908e-05
+              ],
+              [
+                0.0002980118151754141,
+                -8.614701800979674e-05
+              ],
+              [
+                0.00012038355635013431,
+                -1.6270816558972e-05
+              ]
+            ],
+            "g_applied": [
+              [
+                0.0001535089686512947,
+                5.512626739800908e-05
+              ],
+              [
+                0.0002980118151754141,
+                -8.614701800979674e-05
+              ],
+              [
+                0.00012038355635013431,
+                -1.6270816558972e-05
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "returned": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 2000,
+      "updates": 1000,
+      "source_iteration": 1000,
+      "growth_rgb_mode": "joint",
+      "extra_updates_requested": 1000,
+      "native_eval_at_end": false,
+      "seconds": 177.81997918337584,
+      "quality_accepted": false,
+      "human_verdict": null
+    },
+    "gradient_neutrality": {
+      "status": "PASS_EXACT_OPTIMIZER_GRADIENT_NEUTRALITY",
+      "iteration": 1001,
+      "growth_rgb_mode": "joint",
+      "optimizer_parameter_slots": 19,
+      "optimizer_slots_with_gradient": 19,
+      "retained_slots_verified": 4,
+      "optimizer_gradient_max_abs_difference": 0.0,
+      "optimizer_gradient_slot_identity_unchanged": true,
+      "aux_added_to_main_loss": false
+    }
+  },
+  {
+    "name": "half_rgb_2k",
+    "first_actual_append": {
+      "event": 64,
+      "kind": "actual_append",
+      "lineage": 64990,
+      "time_shift": 0.028984012133510328,
+      "camera": "0008124",
+      "camera_timestamp": 0.22000000000000008,
+      "raw": 124,
+      "iteration": 1700,
+      "operation": "ordinary_clone",
+      "family_before": {
+        "count": 1,
+        "rows": [
+          63617
+        ]
+      },
+      "parent_rows": [
+        63617
+      ],
+      "child_rows": [
+        596670
+      ],
+      "family_after": {
+        "count": 2,
+        "rows": [
+          63617,
+          596670
+        ]
+      }
+    },
+    "first_clone_gate": {
+      "event": 63,
+      "kind": "ordinary_clone_before",
+      "lineage": 64990,
+      "time_shift": 0.028984012133510328,
+      "camera": "0008124",
+      "camera_timestamp": 0.22000000000000008,
+      "raw": 124,
+      "iteration": 1700,
+      "family": {
+        "count": 1,
+        "rows": [
+          63617
+        ]
+      },
+      "gates": {
+        "rows": [
+          {
+            "row": 63617,
+            "normalized_gxy": 0.00019495694141369313,
+            "normalized_signed_gt": 4.923051744043505e-09,
+            "denom_before_cycle": 100.0,
+            "accumulator_before_cycle": {
+              "row": 63617,
+              "denom": 100.0,
+              "gxy_accum": 0.01949569396674633,
+              "signed_gt_accum": 4.923051619698526e-07,
+              "normalized_gxy": 0.00019495694141369313,
+              "normalized_signed_gt": 4.923051744043505e-09,
+              "max_radius_before_reset": 6.0
+            },
+            "gradient_padded_after_clone": false,
+            "scale": [
+              0.003152770223096013,
+              0.007795021869242191,
+              0.026750260964035988
+            ],
+            "sigma_t": 2.2722697257995605,
+            "scale_factor": 4.6887593269348145,
+            "scale_threshold": 0.24369651079177856,
+            "spatial_selected": true,
+            "temporal_selected": false,
+            "predicted_selected": true
+          }
+        ],
+        "grad_threshold": 0.00017,
+        "grad_t_threshold": 0.002,
+        "scene_extent": 5.197462421288497,
+        "percent_dense": 0.01,
+        "temporal_enabled": true,
+        "temporal_comparison": "abs(norm signed_gt)",
+        "no_time_split": true,
+        "joint_sample": null,
+        "requested_N": null,
+        "effective_N": 1
+      }
+    },
+    "final_cycle": {
+      "event": 101,
+      "kind": "ordinary_cycle_after",
+      "lineage": 64990,
+      "time_shift": -0.017989759106965885,
+      "camera": "0008124",
+      "camera_timestamp": 0.22000000000000008,
+      "raw": 124,
+      "iteration": 2000,
+      "family": {
+        "count": 5,
+        "rows": [
+          63435,
+          594733,
+          597046,
+          599405,
+          602052
+        ]
+      }
+    },
+    "windows": [
+      {
+        "event": 2,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008107",
+        "camera_timestamp": -0.11999999999999994,
+        "raw": 107,
+        "iteration": 1100,
+        "family": {
+          "count": 1,
+          "rows": [
+            64227
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 64227,
+            "denom": 100.0,
+            "gxy_accum": 0.0029862686060369015,
+            "signed_gt_accum": -3.0549463190254755e-06,
+            "normalized_gxy": 2.9862685551051982e-05,
+            "normalized_signed_gt": -3.0549461627060737e-08,
+            "max_radius_before_reset": 3.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "half_rgb",
+          "rows": [
+            64227
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.00027433212380856276,
+                3.0535633413819596e-05
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.00027815578505396843,
+                3.440878208493814e-05
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.00027815578505396843,
+                3.440878208493814e-05
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.00013525423128157854,
+                1.3331242371350527e-05
+              ]
+            ],
+            "g_applied": [
+              [
+                0.00013525423128157854,
+                1.3331242371350527e-05
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 42,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": null,
+        "camera": "0008098",
+        "camera_timestamp": -0.29999999999999993,
+        "raw": 98,
+        "iteration": 1500,
+        "family": {
+          "count": 1,
+          "rows": [
+            63760
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63760,
+            "denom": 100.0,
+            "gxy_accum": 0.013023095205426216,
+            "signed_gt_accum": -1.2385662557790056e-05,
+            "normalized_gxy": 0.000130230953800492,
+            "normalized_signed_gt": -1.2385662273572962e-07,
+            "max_radius_before_reset": 4.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "half_rgb",
+          "rows": [
+            63760
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                -6.695961928926408e-05,
+                -0.000282235472695902
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                -6.669526919722557e-05,
+                -0.0002781630610115826
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                -6.670570292044431e-05,
+                -0.0002781608491204679
+              ]
+            ],
+            "g_mixed": [
+              [
+                -3.36119846906513e-05,
+                -0.00014315394219011068
+              ]
+            ],
+            "g_applied": [
+              [
+                -3.36119846906513e-05,
+                -0.00014315394219011068
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "event": 62,
+        "kind": "ordinary_cycle_before",
+        "lineage": 64990,
+        "time_shift": 0.028984012133510328,
+        "camera": "0008124",
+        "camera_timestamp": 0.22000000000000008,
+        "raw": 124,
+        "iteration": 1700,
+        "family": {
+          "count": 1,
+          "rows": [
+            63617
+          ]
+        },
+        "statistics_before_reset": [
+          {
+            "row": 63617,
+            "denom": 100.0,
+            "gxy_accum": 0.01949569396674633,
+            "signed_gt_accum": 4.923051619698526e-07,
+            "normalized_gxy": 0.00019495694141369313,
+            "normalized_signed_gt": 4.923051744043505e-09,
+            "max_radius_before_reset": 6.0
+          }
+        ],
+        "config": {
+          "max_grad": 0.00017,
+          "min_opacity": 0.005,
+          "extent": 5.197462421288497,
+          "max_screen_size": null,
+          "max_grad_t": 0.002,
+          "prune_only": false
+        },
+        "rgb_vectors": {
+          "mode": "half_rgb",
+          "rows": [
+            63617
+          ],
+          "vectors": {
+            "g_total": [
+              [
+                0.0008153093513101339,
+                0.00016490751295350492
+              ]
+            ],
+            "g_static_RGB": [
+              [
+                0.0007975772023200989,
+                0.0001601238764123991
+              ]
+            ],
+            "g_joint_RGB": [
+              [
+                0.0007975772023200989,
+                0.00016012386186048388
+              ]
+            ],
+            "g_mixed": [
+              [
+                0.0004165207501500845,
+                8.484557474730536e-05
+              ]
+            ],
+            "g_applied": [
+              [
+                0.0004165207501500845,
+                8.484557474730536e-05
+              ]
+            ]
+          }
+        }
+      }
+    ],
+    "returned": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 2000,
+      "updates": 1000,
+      "source_iteration": 1000,
+      "growth_rgb_mode": "half_rgb",
+      "extra_updates_requested": 1000,
+      "native_eval_at_end": false,
+      "seconds": 177.35325844585896,
+      "quality_accepted": false,
+      "human_verdict": null
+    },
+    "gradient_neutrality": {
+      "status": "PASS_EXACT_OPTIMIZER_GRADIENT_NEUTRALITY",
+      "iteration": 1001,
+      "growth_rgb_mode": "half_rgb",
+      "optimizer_parameter_slots": 19,
+      "optimizer_slots_with_gradient": 19,
+      "retained_slots_verified": 4,
+      "optimizer_gradient_max_abs_difference": 0.0,
+      "optimizer_gradient_slot_identity_unchanged": true,
+      "aux_added_to_main_loss": false
+    }
+  }
+]

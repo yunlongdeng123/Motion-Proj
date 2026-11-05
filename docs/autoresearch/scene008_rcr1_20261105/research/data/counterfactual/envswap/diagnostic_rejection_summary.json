@@ -1,0 +1,109 @@
+{
+  "status": "PASS_DIAGNOSTIC_REJECTED_AS_REPAIR",
+  "training_updates": 0,
+  "quality_accepted": false,
+  "fixed_before_swap_residual8": {
+    "current_env": {
+      "blue_error_sum": 0.6825385540723801,
+      "absolute_blue_error_sum": 0.6825385540723801,
+      "positive_blue_gt_05_pixels": 8,
+      "max_positive_blue_error": 0.2318207025527954
+    },
+    "old_clean_env": {
+      "blue_error_sum": -0.16354216635227203,
+      "absolute_blue_error_sum": 0.2618361562490463,
+      "positive_blue_gt_05_pixels": 0,
+      "max_positive_blue_error": 0.020584702491760254
+    }
+  },
+  "regression_ROIs": [
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "environment_band",
+      "state": "current_env",
+      "metrics": {
+        "pixels": 66,
+        "RGB_MAE": 0.062314413487911224,
+        "signed_blue_error": -0.0033074170351028442,
+        "absolute_blue_error": 0.036061808466911316,
+        "max_positive_blue_error": 0.2318207025527954,
+        "positive_blue_gt_05_pixels": 8
+      }
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "environment_band",
+      "state": "old_clean_env",
+      "metrics": {
+        "pixels": 66,
+        "RGB_MAE": 0.14046689867973328,
+        "signed_blue_error": -0.002291354350745678,
+        "absolute_blue_error": 0.02327180653810501,
+        "max_positive_blue_error": 0.06641721725463867,
+        "positive_blue_gt_05_pixels": 4
+      }
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "right_patch",
+      "state": "current_env",
+      "metrics": {
+        "pixels": 1329,
+        "RGB_MAE": 0.02003936842083931,
+        "signed_blue_error": -0.007567199878394604,
+        "absolute_blue_error": 0.013927485793828964,
+        "max_positive_blue_error": 0.06669016182422638,
+        "positive_blue_gt_05_pixels": 4
+      }
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "right_patch",
+      "state": "old_clean_env",
+      "metrics": {
+        "pixels": 1329,
+        "RGB_MAE": 0.2780725061893463,
+        "signed_blue_error": -0.019427170976996422,
+        "absolute_blue_error": 0.055013950914144516,
+        "max_positive_blue_error": 0.20688822865486145,
+        "positive_blue_gt_05_pixels": 197
+      }
+    },
+    {
+      "raw": 113,
+      "edit": "delete",
+      "region": "user_box",
+      "state": "current_env",
+      "metrics": {
+        "pixels": 799,
+        "RGB_MAE": 0.013063284568488598,
+        "signed_blue_error": -0.011530025862157345,
+        "absolute_blue_error": 0.01467674970626831,
+        "max_positive_blue_error": 0.02379709482192993,
+        "positive_blue_gt_05_pixels": 0
+      }
+    },
+    {
+      "raw": 113,
+      "edit": "delete",
+      "region": "user_box",
+      "state": "old_clean_env",
+      "metrics": {
+        "pixels": 799,
+        "RGB_MAE": 0.33922895789146423,
+        "signed_blue_error": -0.019980505108833313,
+        "absolute_blue_error": 0.06111155450344086,
+        "max_positive_blue_error": 0.19124555587768555,
+        "positive_blue_gt_05_pixels": 143
+      }
+    }
+  ],
+  "exact_premult_alpha_depth_four_component_maxabs": 0,
+  "delta_minus_T_deltaenv_maxabs": 4.76837158203125e-07,
+  "interpretation": "Current environment emission dominates the fixed8 under current coverage; swapping old environment is rejected because the same full algorithm has severe surrounding regressions and new blue pixels.",
+  "limitation": "Not a proof that environment parameter learning alone explains low coverage; no new method adopted."
+}

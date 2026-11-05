@@ -1,0 +1,26 @@
+{
+  "schema": "scene008.one_joint_global_RGB_term.v1",
+  "native_arm": "native_ownership",
+  "loss_probe_mode": "global",
+  "global_RGB_coefficient": 1,
+  "initialization": "same seed and original dual transfer; formal starts at zero",
+  "source_iteration": 1000,
+  "stop_iteration": 2000,
+  "additional_updates": 1000,
+  "unchanged": [
+    "static RGB weight2 and mask",
+    "all other objective terms",
+    "ordinary static XY gradient source",
+    "static temporal gradient source",
+    "SGCM",
+    "thresholds",
+    "initialization",
+    "camera/time-shift sampler",
+    "resolved cfg"
+  ],
+  "growth_aux_present": false,
+  "native_readout": "original readout_native defaults",
+  "early_quality_gate": "reported externally; no inherited unrelated 1K acceptance abort in this diagnostic",
+  "interpretation": "tests initial color learning, not the whole former loss or growth source",
+  "deliberate_new_global_path": "joint static/dynamic SH and geometry; original named-term routing checks remain unchanged"
+}

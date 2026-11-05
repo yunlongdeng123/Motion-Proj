@@ -1,0 +1,400 @@
+{
+  "status": "PASS_CPU_SOURCE_AUDIT",
+  "scope": "Original ownership native10K + M2 complete_a6 + road1K opacity gates + fine road colors",
+  "actions": {
+    "training_updates": 0,
+    "cuda_runtime_imports": 0,
+    "gpu_jobs_started": 0,
+    "remote_writes": 0,
+    "source_modifications": 0
+  },
+  "conclusions_zh": [
+    "原native10K文件在加载前已含家族64990的64颗蓝色SH；推理不是这些native SH参数变蓝的起点。",
+    "native SH唯一相关赋值是restore从checkpoint载入。当前静态准备、删车、M2、road gate、fine和拼接均不写回native SH。",
+    "删车/M2会改变动态前景及深度合成，road gate会改变临时opacity，fine会改变独立道路RGB；这些操作可显露、抑制或改变预存蓝色的像素贡献。",
+    "为编辑改造的ownership训练阶段漏joint global RGB与推理删车/补全是两个环节。补global单项实验支持监督缺项影响颜色学习，不能据此把旧版不clone的唯一原因写成已证。"
+  ],
+  "active_dependency_warning": "Use editor_common_active.py and owner5_* snapshots. editor_common.py / gaussian_model.py / gaussian_renderer.py / hybrid_sgcm_helpers.py are earlier v41/old snapshots kept for provenance, NOT the active Native import chain.",
+  "original_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/chkpnt10000.pth",
+  "complete_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/complete_a6.npz",
+  "cpu_checkpoint_evidence": {
+    "status": "PASS_CPU_PRE_INFERENCE_PARAMETER_READ",
+    "device": "cpu",
+    "checkpoint_step": 10000,
+    "lineage": 64990,
+    "family_count": 64,
+    "family_rows": [
+      62760,
+      594860,
+      600811,
+      606986,
+      613453,
+      620114,
+      624914,
+      627019,
+      630616,
+      634482,
+      637730,
+      638162,
+      647798,
+      649261,
+      657472,
+      665365,
+      673659,
+      679810,
+      681986,
+      688185,
+      688871,
+      690457,
+      695301,
+      741822,
+      823745,
+      829257,
+      832252,
+      834419,
+      837658,
+      840060,
+      845523,
+      856806,
+      862625,
+      878392,
+      979848,
+      1021551,
+      1024065,
+      1027127,
+      1027343,
+      1031556,
+      1057367,
+      1058728,
+      1061275,
+      1061733,
+      1062940,
+      1064213,
+      1064218,
+      1064219,
+      1064224,
+      1064470,
+      1064475,
+      1064476,
+      1064481,
+      1064726,
+      1064731,
+      1064736,
+      1071208,
+      1071231,
+      1071250,
+      1071516,
+      1071517,
+      1071783,
+      1071784,
+      1072050
+    ],
+    "family_DC_RGB_min": [
+      -0.004235208034515381,
+      -0.004235208034515381,
+      0.10113781690597534
+    ],
+    "family_DC_RGB_max": [
+      -0.004235208034515381,
+      -0.004235208034515381,
+      1.0665873289108276
+    ],
+    "family_higher_SH_absmax_rgb": [
+      0.0,
+      0.0,
+      0.1301773190498352
+    ],
+    "point1071516_is_in_family": true,
+    "point1071516_DC_RGB": [
+      -0.004235208034515381,
+      -0.004235208034515381,
+      1.0104553699493408
+    ],
+    "family_rows_selected_by_road_opacity_gate": 7,
+    "family_gate_min": 0.9848774671554565,
+    "family_gate_max": 0.9997739195823669,
+    "point1071516_gate": 0.999724805355072,
+    "repair_state_keys": [
+      "gate_raw",
+      "ids",
+      "road.active",
+      "road.dc",
+      "road.initial_dc",
+      "road.opacity",
+      "road.rotation",
+      "road.scaling",
+      "road.xyz"
+    ],
+    "native_SH_keys_in_repair_state": false,
+    "note": "Only checkpoint parameters and saved gate state read. No Runtime/CUDA import or render; runtime post-composition value equality belongs to root GPU counterfactual."
+  },
+  "ownership_training_term_keys": [
+    "static_rgb",
+    "rgb_a6",
+    "rgb_a37",
+    "coverage",
+    "ownership",
+    "static_prefix",
+    "depth_background",
+    "depth_actor",
+    "depth_joint",
+    "sky",
+    "duration",
+    "velocity",
+    "smooth_depth",
+    "smooth_velocity",
+    "background_entropy"
+  ],
+  "direct_assignment_scan": [
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "method": "Runtime._static",
+      "first_line": 194,
+      "last_line": 200,
+      "direct_native_attribute_assignments": []
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "method": "Runtime._road",
+      "first_line": 202,
+      "last_line": 210,
+      "direct_native_attribute_assignments": []
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "method": "Runtime.scene",
+      "first_line": 212,
+      "last_line": 245,
+      "direct_native_attribute_assignments": []
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "method": "Runtime.render_rows",
+      "first_line": 247,
+      "last_line": 261,
+      "direct_native_attribute_assignments": []
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/native_binding.py",
+      "method": "Native.actor_kwargs",
+      "first_line": 32,
+      "last_line": 37,
+      "direct_native_attribute_assignments": []
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/native_binding.py",
+      "method": "Native.render",
+      "first_line": 39,
+      "last_line": 67,
+      "direct_native_attribute_assignments": []
+    }
+  ],
+  "evidence": [
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/editor_common.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\editor_common_active.py",
+      "first_line": 14,
+      "last_line": 24,
+      "statement": "Active native model and prepare_rasterization are owner5 engine; only road helper is loaded from v41 by file.",
+      "source": "ENGINE=C.parent/'r15_baseline_owner5_20261018/training_source/scene0008_089_137'\nsys.path.insert(0,str(ENGINE))\nfrom omegaconf import OmegaConf\nfrom scene import GaussianModel,Dynamic_GaussianModel,EnvLight\nfrom scene.cameras import Camera\nfrom importlib.util import spec_from_file_location, module_from_spec\n_spec=spec_from_file_location('existing_road_raster',C/'engine/utils/v4_road_render.py')\n_helper=module_from_spec(_spec)\n_spec.loader.exec_module(_helper)\nrender_road,road_kwargs,merge_rows,raster=(_helper.render_road,_helper.road_kwargs,_helper.merge_rows,_helper.raster)\nfrom gaussian_renderer import prepare_rasterization"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/native_binding.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\native_binding.py",
+      "first_line": 11,
+      "last_line": 30,
+      "statement": "The parent is original ownership native10K; persistent dynamic actor IDs define keep_a6.",
+      "source": "PARENT = ROOT.parent / 'scene008_native_ownership_20261105'\nOLD_NATIVE = ROOT.parent / 'scene008_a37_only_B10k_20261103_r1'\nOLD_ROAD = ROOT.parent / 'scene008_a37_only_B10k_road_20261103_r3'\nOBS = ROOT.parent / 'scene008_instances_20261105_r1/observations/frames'\nREF = ROOT.parent / 'scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz'\nsys.path.insert(0, str(PARENT / 'source'))\nfrom dual_actor_runtime import install_identity_serialization, actor_ids\n\ninstall_identity_serialization()\ncommon.B = PARENT / 'run_r3/formal'\n\n\nclass Native(common.Native):\n    def __init__(self):\n        super().__init__()\n        self.owners = actor_ids(self.dynamic)\n        if set(self.owners.unique().tolist()) != {6, 37}:\n            raise ValueError('Expected both persistent actor identities')\n        self.rows = {str(i): int((self.owners == i).sum()) for i in (6, 37)}\n        self.keep_a6 = self.owners == 6"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/editor_common.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\editor_common_active.py",
+      "first_line": 43,
+      "last_line": 59,
+      "statement": "Checkpoint tensors load directly, restore(training_args=None), optimizer absent and gradients disabled. There is no inference learning.",
+      "source": "class Native:\n    def __init__(self):\n        torch.set_num_threads(1);self.config=read(B/'effective_config.json');self.args=OmegaConf.create(self.config)\n        self.files=[B/f'{p}10000.pth' for p in ['chkpnt','dynamic_chkpnt','env_light_chkpnt','training_state']]\n        self.before={str(p):(p.stat().st_size,p.stat().st_mtime_ns) for p in self.files}\n        self.static=GaussianModel(self.args);self.dynamic=Dynamic_GaussianModel(self.args);self.env=EnvLight(resolution=self.args.env_map_res).cuda()\n        for p,model in zip(self.files,[self.static,self.dynamic,self.env]):\n            payload,step=torch.load(str(p),map_location='cpu',weights_only=False,mmap=True);assert step==10000;payload=list(payload)\n            if 'env_light' in p.name:payload[0]=torch.nn.Parameter(payload[0].detach().cuda(),requires_grad=False)\n            else:\n                for i in range(1,11):payload[i]=payload[i].detach().cuda()\n                model.time_duration=tuple(self.config['time_duration'])\n            model.restore(tuple(payload),training_args=None)\n            assert getattr(model,'optimizer',None) is None\n            for v in vars(model).values():\n                if torch.is_tensor(v):v.requires_grad_(False)\n            del payload;gc.collect()"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\owner5_gaussian_model.py",
+      "first_line": 110,
+      "last_line": 137,
+      "statement": "restore assigns native DC/rest exactly from saved payload; training setup and Adam loading are skipped when training_args is None.",
+      "source": "    def restore(self, model_args, training_args=None):\n        (self.active_sh_degree,\n         self._xyz,\n         self._features_dc,\n         self._features_rest,\n         self._scaling,\n         self._rotation,\n         self._opacity,\n         self._t,\n         self._scaling_t,\n         self._velocity,\n         self.max_radii2D,\n         xyz_gradient_accum,\n         t_gradient_accum,\n         denom,\n         opt_dict,\n         self.spatial_lr_scale,\n         self.T,\n         self.velocity_decay,\n         ) = model_args\n        opt_dict = restore_sgcm_optimizer(self, opt_dict)\n        self.setup_functions()\n        if training_args is not None:\n            self.training_setup(training_args)\n            self.xyz_gradient_accum = xyz_gradient_accum\n            self.t_gradient_accum = t_gradient_accum\n            self.denom = denom\n            self.optimizer.load_state_dict(opt_dict)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/hybrid_sgcm_helpers.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\owner5_hybrid_sgcm_helpers.py",
+      "first_line": 136,
+      "last_line": 155,
+      "statement": "The restore helper only reconstructs lineage/clone-block metadata, not appearance.",
+      "source": "def restore_sgcm_optimizer(model, state):\n    \"\"\"先还原行 metadata，再将纯 Adam state 交给 load_state_dict。\"\"\"\n    import torch\n    state = dict(state)\n    payload = state.pop(LINEAGE_KEY, None)\n    model._sgcm_lineage_ids = None\n    model._sgcm_clone_blocked = None\n    if payload is not None:\n        if (not isinstance(payload, dict)\n                or set(payload) != {\"schema_version\", \"lineage_ids\", \"clone_blocked\"}\n                or type(payload[\"schema_version\"]) is not int or payload[\"schema_version\"] != 1\n                or not isinstance(payload[\"lineage_ids\"], torch.Tensor)\n                or not isinstance(payload[\"clone_blocked\"], torch.Tensor)\n                or payload[\"lineage_ids\"].dtype != torch.int64\n                or payload[\"clone_blocked\"].dtype != torch.bool):\n            raise ValueError(\"Invalid SGCM checkpoint lineage payload\")\n        model._sgcm_lineage_ids = payload[\"lineage_ids\"].to(model.get_xyz.device).clone()\n        model._sgcm_clone_blocked = payload[\"clone_blocked\"].to(model.get_xyz.device).clone()\n        validate_lineage(model)\n    return state"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/source/dual_actor_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\dual_actor_runtime.py",
+      "first_line": 21,
+      "last_line": 34,
+      "statement": "Identity serialization aliases dynamic capture/restore to the base schema and maps saved lineage to actor IDs; it does not recolor static rows.",
+      "source": "def install_identity_serialization():\n    from scene.gaussian_model import GaussianModel, Dynamic_GaussianModel\n    # Identical 18-field schema; base implementation adds/restores existing\n    # sgcm_lineage_v1 metadata before loading plain Adam. No dynamic SGCM enabled.\n    Dynamic_GaussianModel.capture = GaussianModel.capture\n    Dynamic_GaussianModel.restore = GaussianModel.restore\n\ndef actor_ids(dynamic):\n    ids = getattr(dynamic, '_sgcm_lineage_ids', None)\n    if ids is None or ids.shape != (len(dynamic.get_xyz),):\n        raise RuntimeError('Dynamic checkpoint lacks persistent per-source ownership')\n    if bool(((ids < 0) | (ids >= STATIC_INITIAL_ROWS + A37_INITIAL_ROWS)).any()):\n        raise RuntimeError('Unknown dynamic source ID')\n    return torch.where(ids < STATIC_INITIAL_ROWS, 6, 37)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\owner5_gaussian_model.py",
+      "first_line": 169,
+      "last_line": 172,
+      "statement": "Reading get_features packs DC/rest into a new concatenated tensor.",
+      "source": "    def get_features(self):\n        features_dc = self._features_dc\n        features_rest = self._features_rest\n        return torch.cat((features_dc, features_rest), dim=1)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\owner5_gaussian_renderer.py",
+      "first_line": 335,
+      "last_line": 410,
+      "statement": "Active default static preparation reads SH or evaluates derived RGB, applies the native time envelope/prefilter, and returns raster kwargs without writing model SH.",
+      "source": "    else:\n        means3D = pc.get_xyz\n        opacity = pc.get_opacity\n        scales = None\n        rotations = None\n        cov3D_precomp = None\n        time_shift = None\n        if time_shift is not None:\n            means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)\n            means3D = means3D + pc.get_inst_velocity * time_shift\n            marginal_t = pc.get_marginal_t(viewpoint_camera.timestamp - time_shift)\n        else:\n            means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp)\n            marginal_t = pc.get_marginal_t(viewpoint_camera.timestamp)\n        opacity = opacity * marginal_t\n\n        if pipe.compute_cov3D_python:\n            cov3D_precomp = pc.get_covariance(scaling_modifier)\n        else:\n            scales = pc.get_scaling\n            rotations = pc.get_rotation\n\n            # mask3d = (pc.get_scaling_t[:, 0] < 0.2) | (marginal_t[:, 0] < 0.05)\n        # If precomputed colors are provided, use them. Otherwise, if it is desired to precompute colors\n        # from SHs in Python, do it. If not, then SH -> RGB conversion will be done by rasterizer.\n        shs = None\n        colors_precomp = None\n\n        if override_color is None:\n            if pipe.convert_SHs_python:\n                shs_view = pc.get_features.transpose(1, 2).view(-1, 3, pc.get_max_sh_channels)\n                dir_pp = (means3D.detach() - viewpoint_camera.camera_center.repeat(pc.get_features.shape[0],\n                                                                                   1)).detach()\n                dir_pp_normalized = dir_pp / dir_pp.norm(dim=1, keepdim=True)\n                sh2rgb = eval_sh(pc.active_sh_degree, shs_view, dir_pp_normalized)\n                colors_precomp = torch.clamp_min(sh2rgb + 0.5, 0.0)\n            else:\n                shs = pc.get_features\n        else:\n            colors_precomp = override_color\n\n        feature_list = other\n\n        if len(feature_list) > 0:\n            features = torch.cat(feature_list, dim=1)\n            S_other = features.shape[1]\n        else:\n            features = torch.zeros_like(means3D[:, :0])\n            S_other = 0\n\n        # Prefilter\n        if mask is None:\n            mask = marginal_t[:, 0] > 0.05\n        else:\n            mask = mask & (marginal_t[:, 0] > 0.05)\n        masked_means3D = means3D[mask]\n        # sh_objs = sh_objs[mask]\n        masked_xyz_homo = torch.cat([masked_means3D, torch.ones_like(masked_means3D[:, :1])], dim=1)\n        masked_depth = (masked_xyz_homo @ viewpoint_camera.world_view_transform[:, 2:3])\n        depth_alpha = torch.zeros(means3D.shape[0], 2, dtype=torch.float32, device=means3D.device)\n        depth_alpha[mask] = torch.cat([\n            masked_depth,\n            torch.ones_like(masked_depth)\n        ], dim=1)\n        features = torch.cat([features, depth_alpha], dim=1)\n        mask3d = (pc.get_scaling_t[:, 0] < 0.2) | (marginal_t[:, 0] < 0.05)\n        mask3d = ~mask3d\n        return {\"means3D\": means3D,\n                \"shs\": shs,\n                \"colors_precomp\": colors_precomp,\n                \"features\": features,\n                \"opacities\": opacity,\n                \"scales\": scales,\n                \"rotations\": rotations,\n                \"cov3D_precomp\": cov3D_precomp,\n                \"mask\": mask}"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 80,
+      "last_line": 97,
+      "statement": "Road checkpoint restores into independent Repair, and native/repair/env are frozen before rendering.",
+      "source": "    def __init__(self, fine_road=True):\n        import json\n        self.exp = Experiment()\n        self.n = self.exp.n\n        self.pipe = self.n.args\n        self.scale = float(self.exp.meta['meter_to_model'])\n        self.road_checkpoint = ROAD / 'formal/checkpoint001000.pt'\n        checkpoint = torch.load(self.road_checkpoint, map_location='cpu', weights_only=False)\n        if checkpoint['step'] != 1000 or checkpoint['parent_identity'] != self.n.before:\n            raise ValueError('Road1K checkpoint/native10K identity mismatch')\n        self.exp.repair.load_state_dict(checkpoint['repair'], strict=True)\n        self.exp.repair.requires_grad_(False)\n        self.n.env.requires_grad_(False)\n        self._versions = self._tensor_versions()\n        self.parent_identity = dict(self.n.before)\n        self.repair_state_sha256 = self.repair_hash()\n        self._data = {}\n        self.road_colors = self.exp.repair.road.colors().detach().clone()"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 103,
+      "last_line": 120,
+      "statement": "Fine residual is evaluated only on independent road xyz, then changes only self.road_colors (99x3 world field).",
+      "source": "        if fine_road:\n            path = FINE / 'coefficients.npz'\n            with np.load(path, allow_pickle=False) as saved:\n                baseline = saved['colour_baseline'].copy()\n                coefficients = saved['world'].copy()\n            current = self.road_colors.cpu().numpy()\n            if not np.array_equal(baseline, current) or coefficients.shape != (99, 3):\n                raise ValueError('Fine-road coefficients do not bind to the loaded road colors')\n            knots = json.loads((FINE / 'design.json').read_text())['knots']\n            matrix = np.asarray(self.exp.meta['world_to_model']) @ np.asarray(self.exp.meta['coordinate_anchor'])\n            inverse = np.linalg.inv(matrix)\n            xyz = self.exp.repair.road.xyz.detach().cpu().numpy()\n            local = xyz @ inverse[:3, :3].T + inverse[:3, 3]\n            np.testing.assert_allclose(local[:, :2].min(0), knots['low_m'], atol=1e-6, rtol=0)\n            np.testing.assert_allclose(local[:, :2].max(0), knots['high_m'], atol=1e-6, rtol=0)\n            basis = self.road_colors.new_tensor(world_basis(local[:, :2], knots))\n            assert torch.allclose(basis.sum(1), torch.ones_like(basis[:, 0]), atol=2e-6, rtol=0)\n            self.road_colors = (self.road_colors + basis @ basis.new_tensor(coefficients)).clamp(0, 1)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 128,
+      "last_line": 146,
+      "statement": "Runtime tracks IDs and tensor versions of static/dynamic, repair and env and checks them before building scene inputs.",
+      "source": "    def _tensor_versions(self):\n        versions = {}\n        for name, model in (('static', self.n.static), ('dynamic', self.n.dynamic)):\n            for key, value in vars(model).items():\n                if torch.is_tensor(value):\n                    versions[(name, key)] = (id(value), value._version)\n        for key, value in self.exp.repair.state_dict(keep_vars=True).items():\n            versions[('repair', key)] = (id(value), value._version)\n        for key, value in self.n.env.named_parameters():\n            versions[('environment_parameter', key)] = (id(value), value._version)\n        for key, value in self.n.env.named_buffers():\n            versions[('environment_buffer', key)] = (id(value), value._version)\n        return versions\n\n    def assert_unchanged(self):\n        assert self.n.unchanged(), 'Native checkpoint files changed'\n        assert self.n.before == self.parent_identity, 'Native baseline identity changed'\n        assert self._tensor_versions() == self._versions, 'Frozen native/road tensors changed'\n        assert (id(self.road_colors), self.road_colors._version) == self._road_color_version"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 169,
+      "last_line": 190,
+      "statement": "Each raw uses its original camera and timestamp, checks them against observations, and reads the frozen environment.",
+      "source": "    def raw(self, raw):\n        if raw not in RAW_IDS:\n            raise KeyError(raw)\n        if raw not in self._data:\n            with np.load(OBS / f'{raw:03d}.npz', allow_pickle=False) as saved:\n                original = {key: saved[key].copy() for key in saved.files}\n            camera = self.exp.camera(raw)\n            assert abs(float(original['model_time'])-camera.timestamp) < 1e-6\n            np.testing.assert_allclose(original['model_to_camera'].T,\n                                       camera.world_view_transform.cpu().numpy(), atol=1e-6, rtol=0)\n            device = self.n.bg.device\n            data = {key: torch.as_tensor(value, device=device) for key, value in original.items()\n                    if value.dtype.kind in 'biuf'}\n            data['rgb'] = data['rgb'].float().permute(2, 0, 1).contiguous()\n            if float(data['rgb'].max()) > 1:\n                data['rgb'] = data['rgb']/255.\n            data.update(raw=raw, cam=camera, pose=data['model_from_local'][0].float(), obs=original,\n                        a6_visible=data['visible'][0], a37_visible=data['visible'][1],\n                        a6_depth_valid=data['depth_valid'][0], depth=data['depth_m'][0])\n            with torch.no_grad():\n                directions = camera.get_world_directions(False).permute(1, 2, 0)\n                data['env'] = self.n.env(directions).permute(2, 0, 1).detach()"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 194,
+      "last_line": 200,
+      "statement": "Road gate changes only temporary raster opacities using index_copy; native opacity and native DC/rest are not assigned.",
+      "source": "    def _static(self, camera):\n        rows = prepare_rasterization(camera, self.n.static, self.pipe)\n        rows['means2D'] = torch.zeros_like(rows['means3D'])\n        ids = self.exp.repair.ids\n        rows['opacities'] = rows['opacities'].index_copy(\n            0, ids, rows['opacities'][ids]*self.exp.repair.gate_raw.sigmoid()[:, None])\n        return tagged(rows, 'legacy_static')"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 202,
+      "last_line": 210,
+      "statement": "The apparent SH write is only to newly created separate ROAD rows, cloned before setting road DC; it is not native static SH.",
+      "source": "    def _road(self, camera, channels, precomputed):\n        rows = road_kwargs(camera, self.exp.repair.road, self.pipe, channels,\n                           precomputed_color=precomputed)\n        if precomputed:\n            rows['colors_precomp'] = self.road_colors\n        else:\n            rows['shs'] = rows['shs'].clone()\n            rows['shs'][:, 0] = (self.road_colors-.5)/DC\n        return tagged(rows, 'road')"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 35,
+      "last_line": 50,
+      "statement": "Row selection makes a raster dictionary; group tagging replaces only auxiliary features.",
+      "source": "def select_rows(rows, keep):\n    return {key: None if value is None else value[keep].contiguous()\n            for key, value in rows.items()}\n\n\ndef tagged(rows, group=None, owners=None):\n    \"\"\"24-feature ABI: depth, one, four group flags, then eighteen zeros.\"\"\"\n    source = rows['features']\n    feature = source.new_zeros((len(source), 24))\n    feature[:, :2] = source[:, :2]\n    if owners is not None:\n        feature[owners, 2] = 1\n        feature[~owners, 3] = 1\n    elif group is not None:\n        feature[:, 2 + GROUPS.index(group)] = 1\n    return dict(rows, features=feature)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 212,
+      "last_line": 245,
+      "statement": "Static rows are the unchanged prefix. Baseline delete masks dynamic a37. M2 physically excludes all native dynamic a6 rows, adds every M2 asset row; delete then physically excludes a37. Separate road rows are appended.",
+      "source": "    def scene(self, raw, asset=None, delete=False, baseline=False):\n        self.assert_unchanged()\n        data = self.raw(raw)\n        static = self._static(data['cam'])\n        dynamic = self.n.actor_kwargs(data['cam'], delete_a37=False)\n        channels = static['shs'].shape[1] if static['shs'] is not None else 1\n        precomputed = static['colors_precomp'] is not None\n        if baseline:\n            # Preserve original packed row order and the parent's deletion mask.\n            dynamic = dict(dynamic, mask=dynamic['mask'] & (self.n.keep_a6 if delete else True))\n            rows = merge_rows(static, tagged(dynamic, owners=self.n.keep_a6))\n            asset_rows, native_a6 = None, int(self.n.keep_a6.sum())\n            a37_rows = int((~self.n.keep_a6).sum())\n        else:\n            if asset is None:\n                raise ValueError('A complete asset is required for replacement scenes')\n            # Physical row selection removes ALL native-a6 primitives before raster input.\n            a37 = select_rows(dynamic, ~self.n.keep_a6)\n            if delete:\n                a37 = select_rows(a37, torch.zeros_like(a37['mask']))\n            asset_rows = asset.rows(data['pose'], data['cam'], self.pipe, channels,\n                                    precomputed=precomputed)\n            if len(asset_rows['means3D']) != len(asset.xyz) or len(asset.xyz)==0:\n                raise ValueError('Replacement must use every row of one complete asset')\n            rows = merge_rows(merge_rows(static, tagged(asset_rows, 'asset')), tagged(a37, 'a37'))\n            native_a6, a37_rows = 0, len(a37['mask'])\n        rows = merge_rows(rows, self._road(data['cam'], channels, precomputed))\n        assert bool((rows['features'][:, 6:] == 0).all()), 'Unexpected old clip metadata'\n        meta = dict(raw=raw, delete_a37=bool(delete), native_baseline=bool(baseline),\n                    native_a6_rows_input=native_a6, native_a37_packed_rows=a37_rows,\n                    asset_rows=0 if asset_rows is None else len(asset_rows['means3D']),\n                    groups=GROUPS, same_material_both_states=True)\n        return dict(rows=rows, cam=data['cam'], env=data['env'], bg=self.n.bg,\n                    sameasset=None if baseline else asset, meta=meta)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\sh_asset.py",
+      "first_line": 109,
+      "last_line": 171,
+      "statement": "M2 NPZ is a separate SHAsset: geometry copies NPZ arrays; coefficients are a new own buffer before copying saved asset coefficients. No native tensor alias is introduced.",
+      "source": "    def __init__(self, arrays, metadata=None):\n        super().__init__()\n        for names, dtype in ((FLOAT_FIELDS, torch.float32), (BOOL_FIELDS, torch.bool), (INT_FIELDS, torch.int64)):\n            for key in names:\n                self.register_buffer(key, torch.as_tensor(np.array(arrays[key], copy=True), dtype=dtype))\n        count = len(self.xyz)\n        if count <= 0 or self.xyz.shape != (count, 3) or self.normal.shape != (count, 3) or self.box.shape != (3,):\n            raise ValueError('Invalid frozen asset geometry shapes')\n        if not bool((self.box > 0).all()):\n            raise ValueError('Frozen asset box dimensions must be positive')\n        for key in GEOMETRY_FIELDS:\n            value = getattr(self, key)\n            if not bool(torch.isfinite(value).all()):\n                raise ValueError('Nonfinite geometry: '+key)\n            if key not in ('xyz', 'normal', 'box') and value.shape != (count,):\n                raise ValueError('Wrong row count: '+key)\n        if not bool((self.sigma > 0).all() and (self.thickness > 0).all() and\n                    ((self.opacity > 0) & (self.opacity < 1)).all()):\n            raise ValueError('Invalid frozen scale/opacity')\n        if not torch.allclose(self.normal.norm(dim=1), torch.ones(count), atol=2e-6, rtol=0):\n            raise ValueError('Frozen normals must be unit length')\n        self.geometry_hash = hash_geometry(self._geometry_arrays())\n        expected = str(np.asarray(arrays.get('geometry_hash', self.geometry_hash)).item())\n        if expected != self.geometry_hash:\n            raise ValueError('Frozen geometry hash mismatch')\n        reserved = set(GEOMETRY_FIELDS) | {'rgb', 'colour_inferred', 'geometry_hash', 'metadata_json',\n                                         'canonical_sh', 'coefficients', 'sh', 'sh_degree', 'provenance_hash'}\n        self._extra_names, self._extra_arrays = [], {}\n        for key, value in arrays.items():\n            if key in reserved:\n                continue\n            value = np.array(value, copy=True)\n            if value.dtype.kind in 'biuf' and not hasattr(self, key):\n                self.register_buffer(key, torch.as_tensor(value))\n                self._extra_names.append(key)\n            else:\n                value.setflags(write=False)\n                self._extra_arrays[key] = value\n        self.provenance_hash = self._provenance_hash()\n        if 'provenance_hash' in arrays and str(arrays['provenance_hash']) != self.provenance_hash:\n            raise ValueError('Extra source/child provenance hash mismatch')\n        self.metadata = deepcopy(metadata or {})\n        initial = np.zeros((count, 16, 3), np.float32)\n        rgb = np.asarray(arrays.get('rgb', np.full((count, 3), .5)), np.float32)\n        if rgb.shape != (count, 3):\n            raise ValueError('RGB seed must match geometry row count')\n        initial[:, 0] = (rgb-.5)/C0\n        supplied = arrays.get('canonical_sh', arrays.get('coefficients', arrays.get('sh', initial)))\n        self.register_buffer('coefficients', torch.zeros((count, 16, 3), dtype=torch.float32))\n        self.register_buffer('colour_inferred', torch.as_tensor(\n            np.array(arrays.get('colour_inferred', np.ones(count, bool)), copy=True), dtype=torch.bool))\n        if self.colour_inferred.shape != (count,):\n            raise ValueError('Wrong inferred-color row count')\n        self.set_coefficients(supplied)\n        self._rotation_cache = {}\n        self.last_diagnostics = None\n\n    @classmethod\n    def from_geometry(cls, path):\n        with np.load(path, allow_pickle=False) as bank:\n            arrays = {key: bank[key] for key in bank.files}\n        metadata = json.loads(str(np.asarray(arrays.get('metadata_json', '{}')).item()))\n        return cls(arrays, metadata)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\sh_asset.py",
+      "first_line": 198,
+      "last_line": 208,
+      "statement": "set_coefficients writes only the independent asset coefficients, not Native.static SH.",
+      "source": "    @torch.no_grad()\n    def set_coefficients(self, values, colour_inferred=None):\n        value = torch.as_tensor(values, dtype=self.coefficients.dtype, device=self.coefficients.device)\n        if value.shape != self.coefficients.shape or not bool(torch.isfinite(value).all()):\n            raise ValueError('Expected finite canonical SH coefficients [N,16,3]')\n        self.coefficients.copy_(value)  # Deliberately no range constraint/projection.\n        if colour_inferred is not None:\n            flag = torch.as_tensor(colour_inferred, dtype=torch.bool, device=self.colour_inferred.device)\n            if flag.shape != self.colour_inferred.shape:\n                raise ValueError('Wrong inferred-color row count')\n            self.colour_inferred.copy_(flag)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\sh_asset.py",
+      "first_line": 221,
+      "last_line": 271,
+      "statement": "Asset pose/SH rotation and shader clamp produce only asset raster rows; one copy of every complete M2 row is appended to native static.",
+      "source": "    def world_coefficients(self, matrix):\n        rotation = pose_rotation(matrix)\n        key = rotation.tobytes()\n        if key not in self._rotation_cache:\n            self._rotation_cache[key] = sh_rotation_matrix(rotation)\n        transform = self.coefficients.new_tensor(self._rotation_cache[key])\n        return torch.einsum('ij,njc->nic', transform, self.coefficients)\n\n    def unclamped_colors(self, matrix, camera):\n        return torch.einsum('ni,nic->nc', basis3(self.local_directions(matrix, camera)), self.coefficients)+.5\n\n    def output_diagnostics(self, matrix, camera):\n        value = self.unclamped_colors(matrix, camera).detach()\n        return dict(rows=len(value), unclamped_min=float(value.min()), unclamped_max=float(value.max()),\n                    negative_channels=int((value < 0).sum()), above_one_channels=int((value > 1).sum()),\n                    rows_below_zero=int((value < 0).any(1).sum()), rows_above_one=int((value > 1).any(1).sum()),\n                    lower_shader_clamp=0., upper_shader_clamp=None, coefficient_projection=False)\n\n    def rows(self, matrix, camera, pipe, channels, precomputed=False):\n        pose = torch.as_tensor(matrix, dtype=self.xyz.dtype, device=self.xyz.device)\n        if pose.shape != (4, 4):\n            raise ValueError('Expected a 4x4 actor pose')\n        rotation = pose_rotation(pose)\n        scale = pose[:3, :3].norm(dim=0).mean()\n        means = self.xyz@pose[:3, :3].T+pose[:3, 3]\n        normal = torch.nn.functional.normalize(self.normal@pose[:3, :3].T, dim=1)\n        q = torch.stack((1+normal[:, 2], -normal[:, 1], normal[:, 0], torch.zeros_like(self.sigma)), 1)\n        q = torch.where((q.norm(dim=1) < 1e-5)[:, None], q.new_tensor([0., 1., 0., 0.]), q)\n        q = torch.nn.functional.normalize(q, dim=1)\n        scales = torch.stack((self.sigma, self.sigma, self.thickness), 1)*scale\n        covariance = None\n        if pipe.compute_cov3D_python:\n            tangent, thin = scales[:, 0].square(), scales[:, 2].square()\n            full = tangent[:, None, None]*torch.eye(3, dtype=means.dtype, device=means.device)\n            full = full+(thin-tangent)[:, None, None]*normal[:, :, None]*normal[:, None, :]\n            covariance = full[:, [0, 0, 0, 1, 1, 2], [0, 1, 2, 1, 2, 2]].contiguous()\n        view = torch.as_tensor(camera.world_view_transform, dtype=means.dtype, device=means.device)\n        depth = means@view[:3, 2:3]+view[3, 2]\n        shs, colors = None, None\n        if precomputed:\n            colors = self.unclamped_colors(pose, camera).clamp_min(0)\n        else:\n            if int(channels) < 16:\n                raise ValueError('SH3 native path needs at least16 SH channels; use precomputed=True for fewer')\n            coefficients = self.world_coefficients(rotation)\n            shs = torch.cat((coefficients, coefficients.new_zeros((len(self.xyz), int(channels)-16, 3))), 1)\n        self.last_diagnostics = self.output_diagnostics(pose, camera)\n        return dict(means3D=means, means2D=torch.zeros_like(means), shs=shs, colors_precomp=colors,\n                    features=torch.cat((depth, torch.ones_like(depth)), 1), opacities=self.opacity[:, None],\n                    scales=scales if covariance is None else None, rotations=q if covariance is None else None,\n                    cov3D_precomp=covariance, mask=torch.ones(len(self.xyz), dtype=torch.bool, device=means.device))"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/road_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\road_runtime.py",
+      "first_line": 29,
+      "last_line": 46,
+      "statement": "StableRoad owns separate geometry, DC clone and opacity; these are not members of Native.static.",
+      "source": "class StableRoad(torch.nn.Module):\n    def __init__(self,reference,meta):\n        super().__init__(); self.meta=meta\n        ids=np.flatnonzero(reference['active']);self.ids=ids\n        tensor=lambda a:torch.as_tensor(a,dtype=torch.float32,device='cuda')\n        self.register_buffer('xyz',tensor(reference['model_xyz'][ids]))\n        self.register_buffer('scaling',tensor(reference['gaussian_sigma_m'][ids]*meta['meter_to_model']))\n        normal=reference['normal_world'][ids]@np.asarray(meta['world_to_model'])[:3,:3].T/meta['meter_to_model']\n        normal/=np.linalg.norm(normal,axis=1)[:,None]\n        q=np.c_[1+normal[:,2],-normal[:,1],normal[:,0],np.zeros(len(normal))]\n        q/=np.linalg.norm(q,axis=1)[:,None]\n        self.register_buffer('rotation',tensor(q))\n        self.register_buffer('active',torch.ones(len(ids),dtype=torch.bool,device='cuda'))\n        self.register_buffer('initial_dc',tensor((reference['reference_srgb'][ids]-.5)/.28209479177387814)[:,None])\n        self.dc=torch.nn.Parameter(self.initial_dc.clone())\n        self.opacity=torch.nn.Parameter(torch.full((len(ids),1),4.6,device='cuda'))\n    def colors(self):return .5+.28209479177387814*self.dc[:,0]\n    def output_mask(self):return self.active"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/repair37.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\repair37.py",
+      "first_line": 18,
+      "last_line": 34,
+      "statement": "Loaded Repair contains separate road, native-row index buffer and gate_raw only; direct rendering delegates without updating native models.",
+      "source": "class Repair(torch.nn.Module):\n    def __init__(self,ref,meta):\n        super().__init__();self.road=StableRoad(ref,meta)\n        with torch.no_grad():self.road.opacity.copy_(torch.logit(torch.as_tensor(ref['road_opacity'][self.road.ids,None],device='cuda').clamp(.00001,.99999)))\n        self.road.requires_grad_(False)\n        self.register_buffer('ids',torch.as_tensor(np.load(RUN/'inputs/contributors.npz')['ids'],device='cuda',dtype=torch.long))\n        self.gate_raw=torch.nn.Parameter(torch.full((len(self.ids),),2.,device='cuda'))\nr4.Repair=Repair\n\nclass Experiment(r4.Experiment):\n    def __init__(self):super().__init__();self.settings=json.loads((RUN/'settings.json').read_text())\n    def render(self,raw,enabled=True,camera=None,keep=False):\n        c=camera or self.camera(raw)\n        if not enabled:\n            return self.n.render(c,dynamic=keep)\n        return self.n.render(c,road=self.repair.road,ids=self.repair.ids,\n                             gates=self.repair.gate_raw.sigmoid(),dynamic=keep)"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\v4_road_render.py",
+      "first_line": 18,
+      "last_line": 51,
+      "statement": "Road SH is built from separate road.dc; merging concatenates new tensors and preserves the native prefix values.",
+      "source": "def road_kwargs(camera, road, pipe, sh_channels=1, precomputed_color=False, for_training=False):\n    xyz = road.xyz\n    homogeneous = torch.cat((xyz, torch.ones_like(xyz[:, :1])), 1)\n    depth = homogeneous @ camera.world_view_transform[:, 2:3]\n    covariance = None\n    if pipe.compute_cov3D_python:\n        from utils.general_utils import build_scaling_rotation, strip_symmetric\n        matrix = build_scaling_rotation(road.scaling, road.rotation)\n        covariance = strip_symmetric(matrix @ matrix.transpose(1, 2))\n    shs = None\n    if not precomputed_color:\n        rest = road.dc.new_zeros((len(xyz), sh_channels-1, 3))\n        shs = torch.cat((road.dc, rest), 1)\n    return dict(means3D=xyz, means2D=torch.zeros_like(xyz), shs=shs,\n        colors_precomp=road.colors() if precomputed_color else None,\n        features=torch.cat((depth, torch.ones_like(depth)), 1),\n        opacities=road.opacity.sigmoid(), scales=None if covariance is not None else road.scaling,\n        rotations=None if covariance is not None else road.rotation, cov3D_precomp=covariance,\n        mask=road.active if for_training else road.output_mask())\n\n\ndef merge_rows(left, right):\n    result = {}\n    if set(left) != set(right):\n        raise ValueError('光栅字段不匹配')\n    for name in left:\n        a, b = left[name], right[name]\n        if a is None and b is None:\n            result[name] = None\n        elif a is None or b is None:\n            raise ValueError('光栅表示不一致：'+name)\n        else:\n            result[name] = torch.cat((a, b), 0).contiguous()\n    return result"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\scene_runtime.py",
+      "first_line": 247,
+      "last_line": 264,
+      "statement": "A single depth-sorted raster combines all groups. Edit/asset/road changes can alter occlusion, alpha*T and env weighting without changing native SH.",
+      "source": "    def render_rows(self, raw, scene):\n        data = self.raw(raw)\n        if 'rows' in scene:\n            rows, background, environment = scene['rows'], scene['bg'], scene['env']\n        else:\n            rows, background, environment = scene, self.n.bg, data['env']\n        out = raster(data['cam'], self.pipe, self.n.static.active_sh_degree, rows, background)\n        out['rgb_premultiplied'] = out['rgb']\n        if environment is not None:\n            out['rgb'] = out['rgb']+(1-out['alpha'])*environment\n        out['component_alpha_T'] = out['extra'][:4]\n        assert float((out['component_alpha_T'].sum(0)-out['alpha'][0]).detach().abs().max()) < 2e-5\n        if 'meta' in scene:\n            out['meta'] = scene['meta']\n        return out\n\n    def render_scene(self, raw, asset=None, delete=False, baseline=False):\n        return self.render_rows(raw, self.scene(raw, asset, delete=delete, baseline=baseline))"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/source/integrate_native.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\integrate_native_training.py",
+      "first_line": 26,
+      "last_line": 38,
+      "statement": "The old hybrid loss was replaced during native OWNERSHIP TRAINING by Ownership.terms; this happened before the native10K checkpoint was produced, not during edit inference.",
+      "source": "    start = source.index('            from utils.hybrid30k_losses import compose_hybrid_loss')\n    stop = source.index('        else:\\n', source.index('            dynamic_alpha = dynamic_alpha * dynamic_mask', start))\n    replace(source[start:stop], \"\"\"            from utils.hybrid30k_runtime import record_step\n            terms = _ownership.terms(render_pkg, evidence, gt_image, viewpoint_cam.pts_depth,\n                                     sky_mask, dynamic_mask, args, iteration)\n            if iteration in (1, 1000):\n                _ownership.audit_gradients(terms, gaussians, dynamic_gaussians, render_pkg,\n                                           args, iteration)\n            loss = sum(terms.values())\n            log_dict.update({name: value.item() for name, value in terms.items()})\n            log_dict['loss_instance_total'] = loss.item()\n            record_step(args, iteration, viewpoint_cam, time_shift, gaussians, dynamic_gaussians, log_dict)\n\"\"\")"
+    },
+    {
+      "file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/source/native_ownership.py",
+      "local_snapshot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\10k-rgb-v1-v41-b-case\\work\\native_lineage_counterfactual\\code_audit\\source_snapshots\\native_ownership_training.py",
+      "first_line": 215,
+      "last_line": 231,
+      "statement": "The original ownership training objective includes 2x isolated background static RGB and opacity sky loss, but has no joint global_rgb term (nor the old sky RGB term).",
+      "source": "        return {\n            'static_rgb': (1 + args.hybrid_lambda_static_rgb) * static_rgb,\n            'rgb_a6': args.hybrid_lambda_dynamic_rgb * actor_rgb[0],\n            'rgb_a37': args.hybrid_lambda_dynamic_rgb * actor_rgb[1],\n            'coverage': args.hybrid_lambda_dynamic_opacity * coverage,\n            'ownership': ownership,\n            'static_prefix': .5 * prefix,\n            'depth_background': args.paper_lambda_depth * lidar_decay_factor(iteration, args.lidar_decay) * bg_depth,\n            'depth_actor': .10 * actor_depth,\n            'depth_joint': .10 * joint_depth,\n            'sky': args.paper_lambda_sky * sky_loss(static_alpha, background & sky_mask),\n            'duration': args.lambda_t_reg * static_duration_loss(guarded(feature[:1], background), args.hybrid_time_reg_eps),\n            'velocity': args.lambda_v_reg * static_velocity_loss(guarded(feature[1:], background)),\n            'smooth_depth': args.lambda_inv_depth * smooth_depth,\n            'smooth_velocity': args.lambda_v_smooth * smooth_velocity,\n            'background_entropy': args.lambda_opacity_entropy * combined_opacity_entropy(guarded(static_alpha, background)),\n        }"
+    }
+  ],
+  "limits_zh": [
+    "此文件是CPU参数读取与源码审计，没有运行Runtime或光栅器；组合后逐值一致和像素归因需独立GPU反事实。",
+    "tensor version/文件身份检查是Runtime已有保护，不单独等价于逐值数值验收。",
+    "不声称所有框内颜色只由该族解释，也不把native/无road诊断当最终M2/road质量验收。",
+    "没有新增训练方法，没有预填10K/正式road结果，没有更改remote、Git或训练source。"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "scope": "Completed receipt-backed training updates; old historical native/asset training excluded",
+  "completed_updates_total": 26609,
+  "breakdown": [
+    {
+      "category": "前期颜色后拟合尝试（失败分支，含smoke/恢复）",
+      "updates": 12532
+    },
+    {
+      "category": "增长来源control/joint与half反事实（3×1000）",
+      "updates": 3000
+    },
+    {
+      "category": "RCR-1 full-joint native0→10K",
+      "updates": 10000
+    },
+    {
+      "category": "native预检/完整恢复（3+2+2+2）",
+      "updates": 9
+    },
+    {
+      "category": "global4K parent道路工程预检",
+      "updates": 34
+    },
+    {
+      "category": "global10K parent新road正式",
+      "updates": 1000
+    },
+    {
+      "category": "global10K parent新road预检/恢复",
+      "updates": 34
+    }
+  ],
+  "prior_stage_cutoff_total": 24573,
+  "added_native10k_updates": 1000,
+  "added_native10002_restore_updates": 2,
+  "added_newroad_formal_and_preflight_updates": 1034,
+  "formal_calibration_robust_linear_solves": 54,
+  "formal_calibration_gradient_updates": 0,
+  "engineering_preflight4k_robust_linear_solves": 54,
+  "known_new_finalizer_formal_plus_preflight_linear_solves": 108,
+  "render_evaluation_attribution_extra_SGD_updates": 0,
+  "render_evaluation_cost_note": "Zero SGD updates does not mean zero GPU time; reference/final renders, ROI exports, env swap and layer attribution consumed GPU rendering.",
+  "preflight4k_calibration_note": "The4K engineering preflight separately ran36+18=54 solves,0SGD. Formal54 plus this preflight54 gives108 known new-finalizer solves, excluding older historical calibration.",
+  "unexecuted_backgroundJoint1_updates": 0,
+  "automatic_next_queue": false,
+  "source_receipts": "final/receipts.json",
+  "disposition": "Research archive; candidate not adopted; original M2 retained"
+}

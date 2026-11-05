@@ -1,0 +1,863 @@
+{
+  "files_sha256": {
+    "metrics.json": "da8a821230954ef828e46b4d2eff268ab5209a211faa872eef2528b5ad2a6796",
+    "manifest.json": "89be126ac8ff49a8e8d8a355bf4c674cdcd62d6443281e6b04e54dea4ec8671c"
+  },
+  "manifest_checks": {
+    "status": "PASS_READ_ONLY_COUNTERFACTUAL",
+    "M2_all_27_tensors_bitwise_unchanged_CPU": true,
+    "native_and_road_and_fine_modelunchanged": true,
+    "original_family_all_parameters_exactly_unchanged_CPU": true,
+    "model_Parameter_or_Runtime_version_bindings_changed": false,
+    "family_count": 64,
+    "training_updates": 0
+  },
+  "marker_checks_count": 12,
+  "marker_max": 0.0,
+  "clean_SH_checks": [
+    {
+      "raw": 113,
+      "edit": "keep",
+      "normal_minus_cleanSH_minus_familyRGB_maxabs": 1.0663643479347229e-07,
+      "alpha_depth_group_family_alphaT_exactly_equal": true
+    },
+    {
+      "raw": 113,
+      "edit": "delete",
+      "normal_minus_cleanSH_minus_familyRGB_maxabs": 1.0663643479347229e-07,
+      "alpha_depth_group_family_alphaT_exactly_equal": true
+    },
+    {
+      "raw": 137,
+      "edit": "keep",
+      "normal_minus_cleanSH_minus_familyRGB_maxabs": 1.1920928955078125e-07,
+      "alpha_depth_group_family_alphaT_exactly_equal": true
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "normal_minus_cleanSH_minus_familyRGB_maxabs": 1.1920928955078125e-07,
+      "alpha_depth_group_family_alphaT_exactly_equal": true
+    }
+  ],
+  "ROIs": [
+    {
+      "raw": 113,
+      "edit": "keep",
+      "region": "white_line",
+      "xyxy": [
+        287,
+        182,
+        299,
+        215
+      ],
+      "common_observed_background_pixels": 253,
+      "total_box_pixels": 396,
+      "target_RGB_mean": [
+        0.386650413274765,
+        0.4134816825389862,
+        0.4569556713104248
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.5329587459564209,
+            0.5799866914749146,
+            0.6390977501869202
+          ],
+          "RGB_MAE": 0.16622574627399445,
+          "signed_blue_error": 0.02573525719344616,
+          "absolute_blue_error": 0.025832772254943848,
+          "max_positive_blue_error": 0.0573364794254303,
+          "positive_blue_gt_05_pixels": 2,
+          "family_alphaT_mean": 0.0027145801577717066,
+          "family_alphaT_max_all_box": 0.02020546980202198,
+          "family_B_contribution_mean": 0.0034431752283126116,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.003443174995481968
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 0.6876821517944336
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.5341514348983765,
+            0.5812669992446899,
+            0.6370670795440674
+          ],
+          "RGB_MAE": 0.1662447601556778,
+          "signed_blue_error": 0.022468416020274162,
+          "absolute_blue_error": 0.022796520963311195,
+          "max_positive_blue_error": 0.047524482011795044,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.012840032577514648,
+          "RGB_change_vs_normal_mean_common": [
+            0.0011928171152248979,
+            0.001280133263207972,
+            0.002030364004895091
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.5329587459564209,
+            0.5799866914749146,
+            0.6356545090675354
+          ],
+          "RGB_MAE": 0.16532844305038452,
+          "signed_blue_error": 0.022292081266641617,
+          "absolute_blue_error": 0.022662192583084106,
+          "max_positive_blue_error": 0.047524482011795044,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0027145801577717066,
+          "family_alphaT_max_all_box": 0.02020546980202198,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.02583378553390503,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.00344317639246583
+          ],
+          "whole_box_family_alphaT_sum": 0.6876821517944336
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 7.35744833946228e-08
+    },
+    {
+      "raw": 113,
+      "edit": "keep",
+      "region": "user_box",
+      "xyxy": [
+        276,
+        175,
+        309,
+        220
+      ],
+      "common_observed_background_pixels": 802,
+      "total_box_pixels": 1485,
+      "target_RGB_mean": [
+        0.3442694842815399,
+        0.3689732849597931,
+        0.4085330367088318
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.4681906998157501,
+            0.5062483549118042,
+            0.5611302256584167
+          ],
+          "RGB_MAE": 0.141974076628685,
+          "signed_blue_error": 0.021998360753059387,
+          "absolute_blue_error": 0.02354336343705654,
+          "max_positive_blue_error": 0.06779757142066956,
+          "positive_blue_gt_05_pixels": 43,
+          "family_alphaT_mean": 0.007336725480854511,
+          "family_alphaT_max_all_box": 0.04780110716819763,
+          "family_B_contribution_mean": 0.008697502315044403,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.008697509765625
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 6.7440185546875
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.47082480788230896,
+            0.5091033577919006,
+            0.5550481677055359
+          ],
+          "RGB_MAE": 0.14194029569625854,
+          "signed_blue_error": 0.013171943835914135,
+          "absolute_blue_error": 0.021747063845396042,
+          "max_positive_blue_error": 0.05636937916278839,
+          "positive_blue_gt_05_pixels": 4,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.03316429257392883,
+          "RGB_change_vs_normal_mean_common": [
+            0.002633925760164857,
+            0.002855011960491538,
+            0.0060819415375590324
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.4681906998157501,
+            0.5062483549118042,
+            0.5524325966835022
+          ],
+          "RGB_MAE": 0.14047913253307343,
+          "signed_blue_error": 0.013300856575369835,
+          "absolute_blue_error": 0.02166903391480446,
+          "max_positive_blue_error": 0.05669596791267395,
+          "positive_blue_gt_05_pixels": 4,
+          "family_alphaT_mean": 0.007336725480854511,
+          "family_alphaT_max_all_box": 0.04780110716819763,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.06111633777618408,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.008697509765625
+          ],
+          "whole_box_family_alphaT_sum": 6.7440185546875
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 7.671769708395004e-08
+    },
+    {
+      "raw": 113,
+      "edit": "delete",
+      "region": "white_line",
+      "xyxy": [
+        287,
+        182,
+        299,
+        215
+      ],
+      "common_observed_background_pixels": 253,
+      "total_box_pixels": 396,
+      "target_RGB_mean": [
+        0.386650413274765,
+        0.4134816825389862,
+        0.4569556713104248
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.34807515144348145,
+            0.3713591396808624,
+            0.5355824828147888
+          ],
+          "RGB_MAE": 0.05407314747571945,
+          "signed_blue_error": 0.11897547543048859,
+          "absolute_blue_error": 0.11904780566692352,
+          "max_positive_blue_error": 0.22075147926807404,
+          "positive_blue_gt_05_pixels": 224,
+          "family_alphaT_mean": 0.10115443915128708,
+          "family_alphaT_max_all_box": 0.174347385764122,
+          "family_B_contribution_mean": 0.12877319753170013,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.12877319753170013
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 27.219703674316406
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.3933310806751251,
+            0.4197036623954773,
+            0.46020764112472534
+          ],
+          "RGB_MAE": 0.010330386459827423,
+          "signed_blue_error": -0.0031994807068258524,
+          "absolute_blue_error": 0.007071870844811201,
+          "max_positive_blue_error": 0.018441811203956604,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.14652866125106812,
+          "RGB_change_vs_normal_mean_common": [
+            0.045255884528160095,
+            0.04834434762597084,
+            0.07537486404180527
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.34807515144348145,
+            0.3713591396808624,
+            0.4068091809749603
+          ],
+          "RGB_MAE": 0.044908516108989716,
+          "signed_blue_error": -0.009797726757824421,
+          "absolute_blue_error": 0.01038871519267559,
+          "max_positive_blue_error": 0.008991271257400513,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.10115443915128708,
+          "family_alphaT_max_all_box": 0.174347385764122,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.22291257977485657,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.12877319753170013
+          ],
+          "whole_box_family_alphaT_sum": 27.219703674316406
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 2.9802322387695312e-08
+    },
+    {
+      "raw": 113,
+      "edit": "delete",
+      "region": "user_box",
+      "xyxy": [
+        276,
+        175,
+        309,
+        220
+      ],
+      "common_observed_background_pixels": 799,
+      "total_box_pixels": 1485,
+      "target_RGB_mean": [
+        0.3441387414932251,
+        0.36882486939430237,
+        0.408357709646225
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.3213130533695221,
+            0.3442644476890564,
+            0.46312111616134644
+          ],
+          "RGB_MAE": 0.040992770344018936,
+          "signed_blue_error": 0.07845574617385864,
+          "absolute_blue_error": 0.08462493121623993,
+          "max_positive_blue_error": 0.22075147926807404,
+          "positive_blue_gt_05_pixels": 462,
+          "family_alphaT_mean": 0.07409548759460449,
+          "family_alphaT_max_all_box": 0.174347385764122,
+          "family_B_contribution_mean": 0.09318114817142487,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.09318114817142487
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 62.960121154785156
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.3520956337451935,
+            0.3771854341030121,
+            0.40498724579811096
+          ],
+          "RGB_MAE": 0.013063284568488598,
+          "signed_blue_error": -0.011530025862157345,
+          "absolute_blue_error": 0.01467674970626831,
+          "max_positive_blue_error": 0.02379709482192993,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.14652866125106812,
+          "RGB_change_vs_normal_mean_common": [
+            0.030782675370573997,
+            0.03292100876569748,
+            0.058133967220783234
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.3213130533695221,
+            0.3442644476890564,
+            0.3699398636817932
+          ],
+          "RGB_MAE": 0.03555852919816971,
+          "signed_blue_error": -0.014725398272275925,
+          "absolute_blue_error": 0.016258427873253822,
+          "max_positive_blue_error": 0.019278421998023987,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.07409548759460449,
+          "family_alphaT_max_all_box": 0.174347385764122,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.22291257977485657,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.09318114817142487
+          ],
+          "whole_box_family_alphaT_sum": 62.960121154785156
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 4.470348358154297e-08
+    },
+    {
+      "raw": 137,
+      "edit": "keep",
+      "region": "right_patch",
+      "xyxy": [
+        276,
+        175,
+        309,
+        220
+      ],
+      "common_observed_background_pixels": 1329,
+      "total_box_pixels": 1485,
+      "target_RGB_mean": [
+        0.3337269723415375,
+        0.35603731870651245,
+        0.39459195733070374
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.30163413286209106,
+            0.32099607586860657,
+            0.37761980295181274
+          ],
+          "RGB_MAE": 0.07921622693538666,
+          "signed_blue_error": 0.016593823209404945,
+          "absolute_blue_error": 0.03389925882220268,
+          "max_positive_blue_error": 0.21963882446289062,
+          "positive_blue_gt_05_pixels": 232,
+          "family_alphaT_mean": 0.021463438868522644,
+          "family_alphaT_max_all_box": 0.16994357109069824,
+          "family_B_contribution_mean": 0.02671978808939457,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.02671978808939457
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 28.52490997314453
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.31028875708580017,
+            0.33013972640037537,
+            0.3600153923034668
+          ],
+          "RGB_MAE": 0.07215673476457596,
+          "signed_blue_error": -0.009909597225487232,
+          "absolute_blue_error": 0.014193154871463776,
+          "max_positive_blue_error": 0.05330106243491173,
+          "positive_blue_gt_05_pixels": 2,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.14435210824012756,
+          "RGB_change_vs_normal_mean_common": [
+            0.008654499426484108,
+            0.009143742732703686,
+            0.017604315653443336
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.30163413286209106,
+            0.32099607586860657,
+            0.35089996457099915
+          ],
+          "RGB_MAE": 0.07622415572404861,
+          "signed_blue_error": -0.010125965811312199,
+          "absolute_blue_error": 0.014306679368019104,
+          "max_positive_blue_error": 0.0545845665037632,
+          "positive_blue_gt_05_pixels": 2,
+          "family_alphaT_mean": 0.021463438868522644,
+          "family_alphaT_max_all_box": 0.16994357109069824,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.21743714809417725,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.02671978436410427
+          ],
+          "whole_box_family_alphaT_sum": 28.52490997314453
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 5.960464477539063e-08
+    },
+    {
+      "raw": 137,
+      "edit": "keep",
+      "region": "environment_band",
+      "xyxy": [
+        210,
+        213,
+        290,
+        233
+      ],
+      "common_observed_background_pixels": 66,
+      "total_box_pixels": 1600,
+      "target_RGB_mean": [
+        0.34541016817092896,
+        0.37317293882369995,
+        0.4143938422203064
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.26160168647766113,
+            0.2394423931837082,
+            0.2732660174369812
+          ],
+          "RGB_MAE": 0.11955554783344269,
+          "signed_blue_error": -0.03235847130417824,
+          "absolute_blue_error": 0.0327555350959301,
+          "max_positive_blue_error": 0.0053792595863342285,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.26160168647766113,
+            0.2394423931837082,
+            0.2732660174369812
+          ],
+          "RGB_MAE": 0.11955554783344269,
+          "signed_blue_error": -0.03235847130417824,
+          "absolute_blue_error": 0.0327555350959301,
+          "max_positive_blue_error": 0.0053792595863342285,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.26160168647766113,
+            0.2394423931837082,
+            0.2732660174369812
+          ],
+          "RGB_MAE": 0.11955554783344269,
+          "signed_blue_error": -0.03235847130417824,
+          "absolute_blue_error": 0.0327555350959301,
+          "max_positive_blue_error": 0.0053792595863342285,
+          "positive_blue_gt_05_pixels": 0,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 0.0
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "right_patch",
+      "xyxy": [
+        276,
+        175,
+        309,
+        220
+      ],
+      "common_observed_background_pixels": 1329,
+      "total_box_pixels": 1485,
+      "target_RGB_mean": [
+        0.3337269723415375,
+        0.35603731870651245,
+        0.39459195733070374
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.32112839818000793,
+            0.34351131319999695,
+            0.4502868950366974
+          ],
+          "RGB_MAE": 0.04189389944076538,
+          "signed_blue_error": 0.0682566687464714,
+          "absolute_blue_error": 0.07409018278121948,
+          "max_positive_blue_error": 0.23438747227191925,
+          "positive_blue_gt_05_pixels": 664,
+          "family_alphaT_mean": 0.062318623065948486,
+          "family_alphaT_max_all_box": 0.17912854254245758,
+          "family_B_contribution_mean": 0.07832365483045578,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.07832364737987518
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 90.96084594726562
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.34718814492225647,
+            0.37128397822380066,
+            0.4013797640800476
+          ],
+          "RGB_MAE": 0.02003936842083931,
+          "signed_blue_error": -0.007567199878394604,
+          "absolute_blue_error": 0.013927485793828964,
+          "max_positive_blue_error": 0.06669016182422638,
+          "positive_blue_gt_05_pixels": 4,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.1547199785709381,
+          "RGB_change_vs_normal_mean_common": [
+            0.02605997957289219,
+            0.02777288481593132,
+            0.04890746250748634
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.32112839818000793,
+            0.34351131319999695,
+            0.3719637095928192
+          ],
+          "RGB_MAE": 0.03540444001555443,
+          "signed_blue_error": -0.010066986083984375,
+          "absolute_blue_error": 0.015064695850014687,
+          "max_positive_blue_error": 0.06096890568733215,
+          "positive_blue_gt_05_pixels": 4,
+          "family_alphaT_mean": 0.062318623065948486,
+          "family_alphaT_max_all_box": 0.17912854254245758,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.2291889786720276,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.07832363247871399
+          ],
+          "whole_box_family_alphaT_sum": 90.96084594726562
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 5.960464477539063e-08
+    },
+    {
+      "raw": 137,
+      "edit": "delete",
+      "region": "environment_band",
+      "xyxy": [
+        210,
+        213,
+        290,
+        233
+      ],
+      "common_observed_background_pixels": 66,
+      "total_box_pixels": 1600,
+      "target_RGB_mean": [
+        0.34541016817092896,
+        0.37317293882369995,
+        0.4143938422203064
+      ],
+      "states": {
+        "normal": {
+          "RGB_mean": [
+            0.3959639370441437,
+            0.4128096103668213,
+            0.4575880765914917
+          ],
+          "RGB_MAE": 0.06217551976442337,
+          "signed_blue_error": -0.0019011144759133458,
+          "absolute_blue_error": 0.03572836145758629,
+          "max_positive_blue_error": 0.2318207025527954,
+          "positive_blue_gt_05_pixels": 8,
+          "family_alphaT_mean": 0.0011475952342152596,
+          "family_alphaT_max_all_box": 0.07242853939533234,
+          "family_B_contribution_mean": 0.0014683098997920752,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0014683097833767533
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "whole_box_family_alphaT_sum": 20.0408878326416
+        },
+        "hide_family": {
+          "RGB_mean": [
+            0.3964621424674988,
+            0.41332247853279114,
+            0.456687331199646
+          ],
+          "RGB_MAE": 0.062314413487911224,
+          "signed_blue_error": -0.0033074170351028442,
+          "absolute_blue_error": 0.036061808466911316,
+          "max_positive_blue_error": 0.2318207025527954,
+          "positive_blue_gt_05_pixels": 8,
+          "family_alphaT_mean": 0.0,
+          "family_alphaT_max_all_box": 0.0,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.0564555823802948,
+          "RGB_change_vs_normal_mean_common": [
+            0.0004982162499800324,
+            0.0005128763150423765,
+            0.0009007566841319203
+          ],
+          "whole_box_family_alphaT_sum": 0.0
+        },
+        "clean_SH": {
+          "RGB_mean": [
+            0.3959639370441437,
+            0.4128096103668213,
+            0.4561197757720947
+          ],
+          "RGB_MAE": 0.06210063025355339,
+          "signed_blue_error": -0.003369423560798168,
+          "absolute_blue_error": 0.03604405000805855,
+          "max_positive_blue_error": 0.2318207025527954,
+          "positive_blue_gt_05_pixels": 8,
+          "family_alphaT_mean": 0.0011475952342152596,
+          "family_alphaT_max_all_box": 0.07242853939533234,
+          "family_B_contribution_mean": 0.0,
+          "family_RGB_contribution_mean": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "RGB_change_vs_normal_max_all_box": 0.09266987442970276,
+          "RGB_change_vs_normal_mean_common": [
+            0.0,
+            0.0,
+            0.0014683094341307878
+          ],
+          "whole_box_family_alphaT_sum": 20.0408878326416
+        }
+      },
+      "normal_minus_cleanSH_minus_family_RGB_maxabs_all_box": 4.470348358154297e-08
+    }
+  ],
+  "remote_metrics_and_manifest_SHA256_verified": true,
+  "raw113_white_family_alphaT_delete_over_keep": 37.26338264931577
+}

@@ -1,0 +1,227 @@
+{
+  "status": "PASS_READ_ONLY_CPU_HALF_RGB",
+  "models": [
+    {
+      "arm": "control",
+      "step": 2000,
+      "count": 9,
+      "active_sh_degree": 1,
+      "DC_RGB": [
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.4404798150062561
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.4920286238193512
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.6054677367210388
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.5019214749336243
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.46974027156829834
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.4977295398712158
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.44404834508895874
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.4404798150062561
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.4920286238193512
+        ]
+      ],
+      "DC_RGB_min": [
+        -0.004235208034515381,
+        -0.004235208034515381,
+        0.4404798150062561
+      ],
+      "DC_RGB_max": [
+        -0.004235208034515381,
+        -0.004235208034515381,
+        0.6054677367210388
+      ],
+      "higher_SH_absmax_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "device": "cpu"
+    },
+    {
+      "arm": "half_rgb",
+      "step": 2000,
+      "count": 5,
+      "active_sh_degree": 1,
+      "DC_RGB": [
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.30831480026245117
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.3444308042526245
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.1753496527671814
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.2735907733440399
+        ],
+        [
+          -0.004235208034515381,
+          -0.004235208034515381,
+          0.30831480026245117
+        ]
+      ],
+      "DC_RGB_min": [
+        -0.004235208034515381,
+        -0.004235208034515381,
+        0.1753496527671814
+      ],
+      "DC_RGB_max": [
+        -0.004235208034515381,
+        -0.004235208034515381,
+        0.3444308042526245
+      ],
+      "higher_SH_absmax_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "device": "cpu"
+    }
+  ],
+  "first_actual_append": {
+    "event": 64,
+    "kind": "actual_append",
+    "lineage": 64990,
+    "time_shift": 0.028984012133510328,
+    "camera": "0008124",
+    "camera_timestamp": 0.22000000000000008,
+    "raw": 124,
+    "iteration": 1700,
+    "operation": "ordinary_clone",
+    "family_before": {
+      "count": 1,
+      "rows": [
+        63617
+      ]
+    },
+    "parent_rows": [
+      63617
+    ],
+    "child_rows": [
+      596670
+    ],
+    "family_after": {
+      "count": 2,
+      "rows": [
+        63617,
+        596670
+      ]
+    }
+  },
+  "first_clone_gate": {
+    "event": 63,
+    "kind": "ordinary_clone_before",
+    "lineage": 64990,
+    "time_shift": 0.028984012133510328,
+    "camera": "0008124",
+    "camera_timestamp": 0.22000000000000008,
+    "raw": 124,
+    "iteration": 1700,
+    "family": {
+      "count": 1,
+      "rows": [
+        63617
+      ]
+    },
+    "gates": {
+      "rows": [
+        {
+          "row": 63617,
+          "normalized_gxy": 0.00019495694141369313,
+          "normalized_signed_gt": 4.923051744043505e-09,
+          "denom_before_cycle": 100.0,
+          "accumulator_before_cycle": {
+            "row": 63617,
+            "denom": 100.0,
+            "gxy_accum": 0.01949569396674633,
+            "signed_gt_accum": 4.923051619698526e-07,
+            "normalized_gxy": 0.00019495694141369313,
+            "normalized_signed_gt": 4.923051744043505e-09,
+            "max_radius_before_reset": 6.0
+          },
+          "gradient_padded_after_clone": false,
+          "scale": [
+            0.003152770223096013,
+            0.007795021869242191,
+            0.026750260964035988
+          ],
+          "sigma_t": 2.2722697257995605,
+          "scale_factor": 4.6887593269348145,
+          "scale_threshold": 0.24369651079177856,
+          "spatial_selected": true,
+          "temporal_selected": false,
+          "predicted_selected": true
+        }
+      ],
+      "grad_threshold": 0.00017,
+      "grad_t_threshold": 0.002,
+      "scene_extent": 5.197462421288497,
+      "percent_dense": 0.01,
+      "temporal_enabled": true,
+      "temporal_comparison": "abs(norm signed_gt)",
+      "no_time_split": true,
+      "joint_sample": null,
+      "requested_N": null,
+      "effective_N": 1
+    }
+  },
+  "config_differences": {
+    "model_path": {
+      "control": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_growth_probe_20261105_r1/control_2k",
+      "half_rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_growth_half_rgb_20261105_r1/half_rgb_2k"
+    }
+  },
+  "sampling_time_shift_LR_1000_steps_exact": true,
+  "main_loss_contains_global_rgb": false,
+  "main_loss_keysets_equal": true,
+  "source_equal": {
+    "executed_native_ownership.py": true,
+    "executed_integrate_native.py": true,
+    "executed_dual_actor_runtime.py": true,
+    "executed_readout_native.py": true,
+    "executed_training_function.py": true
+  },
+  "cuda_visible_devices": ""
+}

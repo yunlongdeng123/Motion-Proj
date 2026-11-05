@@ -1,0 +1,139 @@
+{
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_static_origin_diag_20261104_r1/formal_baseline_r1",
+  "is_historical_formal_original": false,
+  "npz_keys": [
+    "all_children_counts",
+    "all_children_ids",
+    "all_parents_counts",
+    "all_parents_ids",
+    "all_removed_counts",
+    "all_removed_ids",
+    "split_both_parents_counts",
+    "split_both_parents_ids",
+    "split_neither_parents_counts",
+    "split_neither_parents_ids",
+    "split_spatial_only_parents_counts",
+    "split_spatial_only_parents_ids",
+    "split_spatial_parents_counts",
+    "split_spatial_parents_ids",
+    "split_temporal_only_parents_counts",
+    "split_temporal_only_parents_ids",
+    "split_temporal_parents_counts",
+    "split_temporal_parents_ids"
+  ],
+  "per_point_gxy_gt_denom_saved": false,
+  "windows": [
+    {
+      "step": 1300,
+      "operation": "ordinary_clone",
+      "kind": "append",
+      "file": "event_000073.npz",
+      "family64990_counts": {
+        "all_children": 0,
+        "all_parents": 0
+      },
+      "split_trigger": null
+    },
+    {
+      "step": 1300,
+      "operation": "ordinary_split",
+      "kind": "append",
+      "file": "event_000074.npz",
+      "family64990_counts": {
+        "all_children": 0,
+        "all_parents": 0,
+        "split_spatial_parents": 0,
+        "split_temporal_parents": 0,
+        "split_both_parents": 0,
+        "split_spatial_only_parents": 0,
+        "split_temporal_only_parents": 0,
+        "split_neither_parents": 0
+      },
+      "split_trigger": {
+        "available": true,
+        "counts_are": "final selected parent rows; spatial and temporal overlap in both",
+        "grad_threshold": 0.00017,
+        "no_extra_random_draws": true,
+        "spatial_rule": "padded_grad>=grad_threshold AND max(parent_scale)>percent_dense*scene_extent*scale_factor",
+        "temporal_mask_present": true,
+        "time_center_sampling": "ordinary split always draws samples_t and sets new_t; no_time_split only restores sigma_t"
+      }
+    },
+    {
+      "step": 1300,
+      "operation": "ordinary_split_parent_remove",
+      "kind": "prune",
+      "file": "event_000075.npz",
+      "family64990_counts": {
+        "all_removed": 0
+      },
+      "split_trigger": null
+    },
+    {
+      "step": 1300,
+      "operation": "ordinary_prune",
+      "kind": "prune",
+      "file": "event_000076.npz",
+      "family64990_counts": {
+        "all_removed": 0
+      },
+      "split_trigger": null
+    },
+    {
+      "step": 1500,
+      "operation": "ordinary_clone",
+      "kind": "append",
+      "file": "event_000093.npz",
+      "family64990_counts": {
+        "all_children": 0,
+        "all_parents": 0
+      },
+      "split_trigger": null
+    },
+    {
+      "step": 1500,
+      "operation": "ordinary_split",
+      "kind": "append",
+      "file": "event_000094.npz",
+      "family64990_counts": {
+        "all_children": 0,
+        "all_parents": 0,
+        "split_spatial_parents": 0,
+        "split_temporal_parents": 0,
+        "split_both_parents": 0,
+        "split_spatial_only_parents": 0,
+        "split_temporal_only_parents": 0,
+        "split_neither_parents": 0
+      },
+      "split_trigger": {
+        "available": true,
+        "counts_are": "final selected parent rows; spatial and temporal overlap in both",
+        "grad_threshold": 0.00017,
+        "no_extra_random_draws": true,
+        "spatial_rule": "padded_grad>=grad_threshold AND max(parent_scale)>percent_dense*scene_extent*scale_factor",
+        "temporal_mask_present": true,
+        "time_center_sampling": "ordinary split always draws samples_t and sets new_t; no_time_split only restores sigma_t"
+      }
+    },
+    {
+      "step": 1500,
+      "operation": "ordinary_split_parent_remove",
+      "kind": "prune",
+      "file": "event_000095.npz",
+      "family64990_counts": {
+        "all_removed": 0
+      },
+      "split_trigger": null
+    },
+    {
+      "step": 1500,
+      "operation": "ordinary_prune",
+      "kind": "prune",
+      "file": "event_000096.npz",
+      "family64990_counts": {
+        "all_removed": 0
+      },
+      "split_trigger": null
+    }
+  ]
+}

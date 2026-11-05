@@ -1,0 +1,322 @@
+{
+  "opacity_reset_interval": 3000,
+  "densify_until_iter": 15000,
+  "policy": "densification_only",
+  "reset_nodes": [
+    3000,
+    6000,
+    9000
+  ],
+  "source_engine": "r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+  "source_lines": {
+    "static_densification_call": [
+      579,
+      581
+    ],
+    "reset_opacity": [
+      781,
+      783
+    ],
+    "paper_evaluation_after_update": [
+      704,
+      720
+    ]
+  },
+  "readouts": [
+    {
+      "name": "global_3k",
+      "iteration": 3000,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_3k/probe_03000/summary.json",
+      "original_frames": [
+        105,
+        113,
+        130
+      ],
+      "common_frames": [
+        105,
+        113,
+        130
+      ],
+      "metrics": {
+        "full_keep_rgb": {
+          "count": 460800,
+          "sum": 62178.07893251335,
+          "mean": 0.13493506712785017
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "sum": 6175.979462300733,
+          "mean": 0.09587648196567208
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "sum": 56550.89697404936,
+          "mean": 0.14674213488657664
+        }
+      },
+      "original_pooled": {
+        "a6_iso_rgb": {
+          "count": 2376,
+          "mean": 0.06400770090029634
+        },
+        "a37_iso_rgb": {
+          "count": 32546,
+          "mean": 0.049087657258284685
+        },
+        "a6_delete_rgb": {
+          "count": 2376,
+          "mean": 0.06400877432011833
+        },
+        "a6_keep_rgb": {
+          "count": 2376,
+          "mean": 0.0648066352408724
+        },
+        "a37_keep_rgb": {
+          "count": 32546,
+          "mean": 0.04912334342155516
+        },
+        "a6_delete_w": {
+          "count": 2376,
+          "mean": 0.9998304988649558
+        },
+        "a6_wrong_w37": {
+          "count": 2376,
+          "mean": 0.030335673318802683
+        },
+        "a37_wrong_w6": {
+          "count": 32546,
+          "mean": 0.0001077658821048395
+        },
+        "strict_a37_w": {
+          "count": 867,
+          "mean": 0.9987351519701253
+        },
+        "a6_depth_m": {
+          "count": 569,
+          "mean": 0.9893335600519432
+        },
+        "a6_static_front": {
+          "count": 1964,
+          "mean": 0.0
+        },
+        "a6_reveal_static_front": {
+          "count": 415,
+          "mean": 0.0002888327621551881
+        },
+        "a6_reveal_w": {
+          "count": 415,
+          "mean": 0.9850900555949613
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "mean": 0.09587648196567208
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "mean": 0.14674213488657664
+        },
+        "full_keep_rgb": {
+          "count": 460800,
+          "mean": 0.13493506712785017
+        }
+      }
+    },
+    {
+      "name": "global_6k",
+      "iteration": 6000,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_6k/probe_06000/summary.json",
+      "original_frames": [
+        105,
+        113,
+        130
+      ],
+      "common_frames": [
+        105,
+        113,
+        130
+      ],
+      "metrics": {
+        "full_keep_rgb": {
+          "count": 460800,
+          "sum": 68083.87581918719,
+          "mean": 0.1477514666215
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "sum": 6125.12426584441,
+          "mean": 0.09508700114636752
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "sum": 64091.44511704285,
+          "mean": 0.16630886489309882
+        }
+      },
+      "original_pooled": {
+        "a6_iso_rgb": {
+          "count": 2376,
+          "mean": 0.028360826572146964
+        },
+        "a37_iso_rgb": {
+          "count": 32546,
+          "mean": 0.02586435550194424
+        },
+        "a6_delete_rgb": {
+          "count": 2376,
+          "mean": 0.028352255474650402
+        },
+        "a6_keep_rgb": {
+          "count": 2376,
+          "mean": 0.029432267436406086
+        },
+        "a37_keep_rgb": {
+          "count": 32546,
+          "mean": 0.02584766948770452
+        },
+        "a6_delete_w": {
+          "count": 2376,
+          "mean": 0.9998793545044231
+        },
+        "a6_wrong_w37": {
+          "count": 2376,
+          "mean": 0.007953995513817553
+        },
+        "a37_wrong_w6": {
+          "count": 32546,
+          "mean": 7.063270518400102e-05
+        },
+        "strict_a37_w": {
+          "count": 867,
+          "mean": 0.9992279375300688
+        },
+        "a6_depth_m": {
+          "count": 569,
+          "mean": 0.5369863107879048
+        },
+        "a6_static_front": {
+          "count": 1964,
+          "mean": 0.0
+        },
+        "a6_reveal_static_front": {
+          "count": 415,
+          "mean": 7.210524685411568e-05
+        },
+        "a6_reveal_w": {
+          "count": 415,
+          "mean": 0.9943286337766303
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "mean": 0.09508700114636752
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "mean": 0.16630886489309882
+        },
+        "full_keep_rgb": {
+          "count": 460800,
+          "mean": 0.1477514666215
+        }
+      }
+    },
+    {
+      "name": "global_9k",
+      "iteration": 9000,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_9k/probe_09000/summary.json",
+      "original_frames": [
+        105,
+        113,
+        130
+      ],
+      "common_frames": [
+        105,
+        113,
+        130
+      ],
+      "metrics": {
+        "full_keep_rgb": {
+          "count": 460800,
+          "sum": 72281.5479822885,
+          "mean": 0.15686099822545246
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "sum": 6225.582940452659,
+          "mean": 0.09664653099311754
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "sum": 68423.22824273063,
+          "mean": 0.17754927199081064
+        }
+      },
+      "original_pooled": {
+        "a6_iso_rgb": {
+          "count": 2376,
+          "mean": 0.016545222592888938
+        },
+        "a37_iso_rgb": {
+          "count": 32546,
+          "mean": 0.014776418356596132
+        },
+        "a6_delete_rgb": {
+          "count": 2376,
+          "mean": 0.016537972835214184
+        },
+        "a6_keep_rgb": {
+          "count": 2376,
+          "mean": 0.016512926535026104
+        },
+        "a37_keep_rgb": {
+          "count": 32546,
+          "mean": 0.014773243371710643
+        },
+        "a6_delete_w": {
+          "count": 2376,
+          "mean": 0.999882830488762
+        },
+        "a6_wrong_w37": {
+          "count": 2376,
+          "mean": 0.0005513166440203974
+        },
+        "a37_wrong_w6": {
+          "count": 32546,
+          "mean": 2.81823229173106e-05
+        },
+        "strict_a37_w": {
+          "count": 867,
+          "mean": 0.9996516162136434
+        },
+        "a6_depth_m": {
+          "count": 569,
+          "mean": 0.31215001493430516
+        },
+        "a6_static_front": {
+          "count": 1964,
+          "mean": 0.0
+        },
+        "a6_reveal_static_front": {
+          "count": 415,
+          "mean": 0.0
+        },
+        "a6_reveal_w": {
+          "count": 415,
+          "mean": 0.9952897261424237
+        },
+        "road_keep_rgb": {
+          "count": 64416,
+          "mean": 0.09664653099311754
+        },
+        "protected_keep_rgb": {
+          "count": 385376,
+          "mean": 0.17754927199081064
+        },
+        "full_keep_rgb": {
+          "count": 460800,
+          "mean": 0.15686099822545246
+        }
+      }
+    }
+  ],
+  "scope": "Native-only reset-boundary observations, not stable final M2/road quality; this report does not smooth or discard them."
+}

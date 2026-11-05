@@ -1,0 +1,488 @@
+{
+  "raw": 137,
+  "edit": "delete",
+  "state": "hide_family",
+  "region": "environment_band",
+  "xyxy": [
+    210,
+    213,
+    290,
+    233
+  ],
+  "mask": "Exact previous three-state common observed background: original actors excluded; M2 alphaT<=.01 at normal/hide64/cleanSH",
+  "source": "Existing float ROI only; no GPU, model, source or image modification",
+  "definitions": {
+    "blue": "B - (R+G)/2",
+    "T": "1-alpha",
+    "E": "Stored environment_RGB_contribution = T * environment_RGB",
+    "G": "RGB - E",
+    "environment_excess": "blue(E) - T*blue(target)",
+    "Gaussian_excess": "blue(G) - alpha*blue(target)",
+    "identity": "environment_excess + Gaussian_excess = blue(RGB-target)",
+    "caution": "This is an additive algebraic decomposition against the same observed target, not proof the old-clean environment will improve the whole image."
+  },
+  "summary": {
+    "observed_background_common_mask_pixels": 66,
+    "residual_pixels": 8,
+    "total_blue_error_sum": 0.6825385540723801,
+    "environment_excess_sum": 0.8329721764197742,
+    "Gaussian_excess_sum": -0.15043362234739416,
+    "environment_dominates_signed_error_pixels": 8,
+    "environment_excess_more_than_half_total_pixels": 8,
+    "negative_Gaussian_excess_pixels": 4,
+    "max_abs_decomposition_residual": 0.0,
+    "max_abs_component_alphaT_sum_minus_alpha": 4.563480615615845e-08,
+    "environment_excess_sum_over_total": 1.2204031134209619,
+    "environment_positive_excess_sum": 0.8329721764197742,
+    "Gaussian_positive_excess_sum": 0.03813742345854848,
+    "environment_share_of_positive_excess_sum": 0.9562197185476138,
+    "M2_and_a37_alphaT_all_zero": true,
+    "road_alphaT_zero_pixels": 7,
+    "high_transmittance_over_098_pixels": 4
+  },
+  "pixels": [
+    {
+      "x": 211,
+      "y": 213,
+      "RGB": [
+        0.33484241366386414,
+        0.3760034143924713,
+        0.46315163373947144
+      ],
+      "target_RGB": [
+        0.3764705955982208,
+        0.3901960849761963,
+        0.42941176891326904
+      ],
+      "alpha": 0.6579656004905701,
+      "transmittance": 0.34203439950942993,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.6579656004905701
+      },
+      "component_alphaT_sum": 0.6579656004905701,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.08241317421197891,
+        0.13509143888950348,
+        0.27319037914276123
+      ],
+      "inferred_environment_RGB": [
+        0.24094995804568706,
+        0.39496448042437027,
+        0.7987219400580476
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.2524292394518852,
+        0.24091197550296783,
+        0.1899612545967102
+      ],
+      "target_blue": 0.046078428626060486,
+      "output_blue": 0.10772871971130371,
+      "environment_blue_contribution": 0.16443807259202003,
+      "Gaussian_blue_contribution": -0.056709352880716324,
+      "environment_excess": 0.1486776649265673,
+      "Gaussian_excess": -0.08702737384132408,
+      "total_blue_error": 0.061650291085243225,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 2.411629569128753,
+      "environment_positive_excess_share": 1.0,
+      "environment_B_channel_excess": 0.12631678262022916,
+      "Gaussian_B_channel_excess": -0.09257691779402677,
+      "total_B_channel_error": 0.03373986482620239
+    },
+    {
+      "x": 286,
+      "y": 213,
+      "RGB": [
+        0.26892852783203125,
+        0.31531333923339844,
+        0.41196209192276
+      ],
+      "target_RGB": [
+        0.3490196168422699,
+        0.3803921639919281,
+        0.42352941632270813
+      ],
+      "alpha": 0.1569342464208603,
+      "transmittance": 0.8430657535791397,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.1569342464208603
+      },
+      "component_alphaT_sum": 0.1569342464208603,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.009004105813801289,
+      "environment_RGB_contribution": [
+        0.26892852783203125,
+        0.31531333923339844,
+        0.41196209192276
+      ],
+      "inferred_environment_RGB": [
+        0.3189887938044284,
+        0.37400800340278506,
+        0.48864764127094695
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.11984115839004517,
+      "environment_blue_contribution": 0.11984115839004517,
+      "Gaussian_blue_contribution": 0.0,
+      "environment_excess": 0.07024905819425076,
+      "Gaussian_excess": -0.009231425709814722,
+      "total_blue_error": 0.061017632484436035,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 1.1512911159273413,
+      "environment_positive_excess_share": 1.0,
+      "environment_B_channel_excess": 0.054898945387722886,
+      "Gaussian_B_channel_excess": -0.066466269787671,
+      "total_B_channel_error": -0.01156732439994812
+    },
+    {
+      "x": 210,
+      "y": 214,
+      "RGB": [
+        0.35975614190101624,
+        0.3974439799785614,
+        0.48554524779319763
+      ],
+      "target_RGB": [
+        0.4058823585510254,
+        0.4205882251262665,
+        0.4578431248664856
+      ],
+      "alpha": 0.6508374810218811,
+      "transmittance": 0.3491625189781189,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.6508374810218811
+      },
+      "component_alphaT_sum": 0.6508374810218811,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.09890186786651611,
+        0.14813727140426636,
+        0.2912037670612335
+      ],
+      "inferred_environment_RGB": [
+        0.2832545376175214,
+        0.4242645282712883,
+        0.8340063759234206
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.2608542740345001,
+        0.24930670857429504,
+        0.1943414807319641
+      ],
+      "target_blue": 0.04460783302783966,
+      "output_blue": 0.10694518685340881,
+      "environment_blue_contribution": 0.16768419742584229,
+      "Gaussian_blue_contribution": -0.06073901057243347,
+      "environment_excess": 0.15210881407968646,
+      "Gaussian_excess": -0.08977146025411731,
+      "total_blue_error": 0.06233735382556915,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 2.440090968656026,
+      "environment_positive_excess_share": 1.0,
+      "environment_B_channel_excess": 0.13134210828603798,
+      "Gaussian_B_channel_excess": -0.10363998535932595,
+      "total_B_channel_error": 0.027702122926712036
+    },
+    {
+      "x": 288,
+      "y": 223,
+      "RGB": [
+        0.4388018548488617,
+        0.42340847849845886,
+        0.5425131320953369
+      ],
+      "target_RGB": [
+        0.3499999940395355,
+        0.3813725411891937,
+        0.42450979351997375
+      ],
+      "alpha": 0.01746135763823986,
+      "transmittance": 0.9825386423617601,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.01746135763823986
+      },
+      "component_alphaT_sum": 0.01746135763823986,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.4388018548488617,
+        0.42340847849845886,
+        0.5338776707649231
+      ],
+      "inferred_environment_RGB": [
+        0.44660009889697505,
+        0.4309331564616106,
+        0.5433655713342977
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.0,
+        0.0,
+        0.008635461330413818
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.11140796542167664,
+      "environment_blue_contribution": 0.10277250409126282,
+      "Gaussian_blue_contribution": 0.008635461330413818,
+      "environment_excess": 0.044976116809033795,
+      "Gaussian_excess": 0.00760832270703371,
+      "total_blue_error": 0.052584439516067505,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 0.8553122791256729,
+      "environment_positive_excess_share": 0.8553122791256729,
+      "environment_B_channel_excess": 0.11678039457053696,
+      "Gaussian_B_channel_excess": 0.0012229440048261986,
+      "total_B_channel_error": 0.11800333857536316
+    },
+    {
+      "x": 288,
+      "y": 224,
+      "RGB": [
+        0.43171998858451843,
+        0.44434431195259094,
+        0.5613619685173035
+      ],
+      "target_RGB": [
+        0.3392156958580017,
+        0.3705882430076599,
+        0.41372549533843994
+      ],
+      "alpha": 0.010475346818566322,
+      "transmittance": 0.9895246531814337,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.010475346818566322
+      },
+      "component_alphaT_sum": 0.010475346818566322,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.43171998858451843,
+        0.44434431195259094,
+        0.5517091155052185
+      ],
+      "inferred_environment_RGB": [
+        0.4362902805872394,
+        0.4490482480895991,
+        0.5575496413671062
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.0,
+        0.0,
+        0.009652853012084961
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.12332981824874878,
+      "environment_blue_contribution": 0.11367696523666382,
+      "Gaussian_blue_contribution": 0.009652853012084961,
+      "environment_excess": 0.055469636166006864,
+      "Gaussian_excess": 0.009036656177132785,
+      "total_blue_error": 0.06450629234313965,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 0.859910469988532,
+      "environment_positive_excess_share": 0.859910469988532,
+      "environment_B_channel_excess": 0.14231753821813187,
+      "Gaussian_B_channel_excess": 0.005318934960731658,
+      "total_B_channel_error": 0.14763647317886353
+    },
+    {
+      "x": 288,
+      "y": 226,
+      "RGB": [
+        0.5133057832717896,
+        0.5227394104003906,
+        0.8086668252944946
+      ],
+      "target_RGB": [
+        0.3235294222831726,
+        0.3549019694328308,
+        0.39803922176361084
+      ],
+      "alpha": 0.012753824703395367,
+      "transmittance": 0.9872461752966046,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.012753824703395367
+      },
+      "component_alphaT_sum": 0.012753824703395367,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.5133057832717896,
+        0.5227394104003906,
+        0.7969143986701965
+      ],
+      "inferred_environment_RGB": [
+        0.5199369682212989,
+        0.5294924644740616,
+        0.8072094059323901
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.0,
+        0.0,
+        0.011752426624298096
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.29064422845840454,
+      "environment_blue_contribution": 0.27889180183410645,
+      "Gaussian_blue_contribution": 0.011752426624298096,
+      "environment_excess": 0.2208185008663331,
+      "Gaussian_excess": 0.01100220168646232,
+      "total_blue_error": 0.2318207025527954,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 0.9525400382049284,
+      "environment_positive_excess_share": 0.9525400382049284,
+      "environment_B_channel_excess": 0.4039516993660347,
+      "Gaussian_B_channel_excess": 0.006675904164849089,
+      "total_B_channel_error": 0.4106276035308838
+    },
+    {
+      "x": 289,
+      "y": 226,
+      "RGB": [
+        0.36594441533088684,
+        0.3888045847415924,
+        0.5060831904411316
+      ],
+      "target_RGB": [
+        0.33137255907058716,
+        0.3588235378265381,
+        0.40392157435417175
+      ],
+      "alpha": 0.016492564231157303,
+      "transmittance": 0.9835074357688427,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.0,
+        "native_static": 0.016492564231157303
+      },
+      "component_alphaT_sum": 0.016492564231157303,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.36594441533088684,
+        0.3888045847415924,
+        0.4946227967739105
+      ],
+      "inferred_environment_RGB": [
+        0.3720809848730987,
+        0.3953244994407694,
+        0.5029171908469063
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.0,
+        0.0,
+        0.01146039366722107
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.12870869040489197,
+      "environment_blue_contribution": 0.1172482967376709,
+      "Gaussian_blue_contribution": 0.01146039366722107,
+      "environment_excess": 0.05939492161136317,
+      "Gaussian_excess": 0.010490242887919665,
+      "total_blue_error": 0.06988516449928284,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 0.8498931359311988,
+      "environment_positive_excess_share": 0.8498931359311988,
+      "environment_B_channel_excess": 0.09736292492912513,
+      "Gaussian_B_channel_excess": 0.004798691157834711,
+      "total_B_channel_error": 0.10216161608695984
+    },
+    {
+      "x": 288,
+      "y": 227,
+      "RGB": [
+        0.37932366132736206,
+        0.39901915192604065,
+        0.5267316102981567
+      ],
+      "target_RGB": [
+        0.3392156958580017,
+        0.3705882430076599,
+        0.41372549533843994
+      ],
+      "alpha": 0.6357640027999878,
+      "transmittance": 0.3642359972000122,
+      "component_alphaT": {
+        "M2_a6": 0.0,
+        "native_a37": 0.0,
+        "road": 0.6270971298217773,
+        "native_static": 0.008666827343404293
+      },
+      "component_alphaT_sum": 0.6357639571651816,
+      "family_alphaT_hidden": 0.0,
+      "family_alphaT_normal": 0.0,
+      "environment_RGB_contribution": [
+        0.1817856878042221,
+        0.18143008649349213,
+        0.2843109965324402
+      ],
+      "inferred_environment_RGB": [
+        0.49908764977009806,
+        0.49811135606639056,
+        0.7805680896946521
+      ],
+      "all_Gaussian_RGB_contribution": [
+        0.19753797352313995,
+        0.21758906543254852,
+        0.24242061376571655
+      ],
+      "target_blue": 0.05882352590560913,
+      "output_blue": 0.13756020367145538,
+      "environment_blue_contribution": 0.10270310938358307,
+      "Gaussian_blue_contribution": 0.034857094287872314,
+      "environment_excess": 0.08127746376653278,
+      "Gaussian_excess": -0.0025407860006865235,
+      "total_blue_error": 0.07873667776584625,
+      "decomposition_residual": 0.0,
+      "environment_excess_over_total": 1.03226940827047,
+      "environment_positive_excess_share": 1.0,
+      "environment_B_channel_excess": 0.1336172781707745,
+      "Gaussian_B_channel_excess": -0.020611163211057715,
+      "total_B_channel_error": 0.1130061149597168
+    }
+  ],
+  "training_updates": 0,
+  "GPU_run_performed": false,
+  "source_files_changed": false,
+  "inference": {
+    "environment_current_composite_excess_is_dominant": true,
+    "evidence": "All8 residual pixels have environment excess > Gaussian excess and >=84.99% of net blue error. Environment accounts for95.62% of summed positive excess; Gaussian negative excess partly cancels it.",
+    "limitation": "High transmittance is part of the current renderer state (4/8 T>.98). This identifies the emitted source term; it does not prove that the environment parameter training alone is the root cause, or rule out insufficient Gaussian coverage. No geometry research or changes are proposed."
+  },
+  "recommended_next_counterfactual": {
+    "worth_testing": true,
+    "training_updates": 0,
+    "implementation_prepared": false,
+    "GPU_run_performed": false,
+    "variable": "Only current EnvLight radiance -> old clean native10K EnvLight sampled on the exact same current raw camera rays",
+    "fixed": "Same current native static/dynamic SH/geometry/opacity/time, complete fixed M2, current road/gate/fine; same keep/delete and same raw camera",
+    "minimal_pair": "For the8 residuals, compare current-env vs oldclean-env while keeping the hide64 kwargs mask identical in both arms; retain M2/road/fine fully enabled. If also checking normal, compare it as a separate fixed-family-state pair.",
+    "outputs_to_check": "Same8 pixel decomposition and same66 observed-background common-mask pixels; same full narrow crop to expose regressions; alpha/depth/component alphaT must be exactly identical after env-only swap.",
+    "decision_boundary": "Improvement would support current environment radiance as a removable contribution in this fixed scene; it would not itself approve oldcleanEnv globally or constitute a physical background repair."
+  }
+}

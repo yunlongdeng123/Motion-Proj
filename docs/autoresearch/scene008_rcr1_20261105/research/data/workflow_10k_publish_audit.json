@@ -1,0 +1,97 @@
+{
+  "status": "PASS_CPU_NATIVE_10K_PUBLICATION_WORKFLOW",
+  "cases": [
+    {
+      "case": "node9000",
+      "passed": true,
+      "sequence": [
+        "components_saved",
+        "original_eval",
+        "family_rgb",
+        "snapshot",
+        "readout",
+        "lineage_healthy"
+      ],
+      "caught": "Done"
+    },
+    {
+      "case": "node10000",
+      "passed": true,
+      "sequence": [
+        "components_saved",
+        "original_eval",
+        "family_rgb",
+        "readout",
+        "complete_eval_returned",
+        "capture_continuation",
+        "publish_begin",
+        "publish_end",
+        "lineage_healthy"
+      ],
+      "caught": "Done"
+    },
+    {
+      "case": "publish_failure",
+      "passed": true,
+      "sequence": [
+        "components_saved",
+        "original_eval",
+        "family_rgb",
+        "readout",
+        "complete_eval_returned",
+        "capture_continuation",
+        "publish_begin"
+      ],
+      "caught": "RuntimeError"
+    },
+    {
+      "case": "native10k_nonterminal",
+      "passed": true,
+      "sequence": [
+        "components_saved",
+        "original_eval",
+        "family_rgb",
+        "readout",
+        "complete_eval_returned",
+        "capture_continuation",
+        "publish_begin",
+        "publish_end",
+        "native_loop_continues"
+      ],
+      "caught": null
+    },
+    {
+      "case": "signal10k",
+      "passed": true,
+      "sequence": [
+        "components_saved",
+        "original_eval",
+        "family_rgb",
+        "readout",
+        "complete_eval_returned",
+        "capture_continuation",
+        "publish_begin",
+        "publish_end",
+        "lineage_healthy"
+      ],
+      "caught": "Done"
+    }
+  ],
+  "unchanged_existing_helpers": [
+    "protected_savetxt",
+    "rng",
+    "same_rng",
+    "restore_rng",
+    "scene_hook",
+    "refine",
+    "record",
+    "adam",
+    "restore",
+    "snapshot",
+    "family_rgb"
+  ],
+  "cfg_assignments_unchanged": true,
+  "native_engine_eval_capture_publish_order_verified": true,
+  "no_loss_or_optimizer_or_training_update_code_changed": true,
+  "GPU_used": false
+}

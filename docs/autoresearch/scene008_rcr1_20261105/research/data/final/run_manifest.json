@@ -1,0 +1,256 @@
+{
+  "code": "RCR-1",
+  "english": "RGB Constraint Restoration",
+  "chinese": "RGB约束恢复",
+  "status": "FINAL_RESEARCH_ARCHIVE_NOT_ADOPTED",
+  "generated_at_utc": "2026-11-05T14:19:22.006825+00:00",
+  "reported_visual_disposition": "去蓝成立，但raw130/137新增银灰亮片，未达当前floor，研究候选不采用；保留当前M2",
+  "native_method": "Only restore1x full-image joint global RGB; original static2/other terms/growth/SGCM/sampling/LR unchanged",
+  "candidate": {
+    "native": "scene008_blue_global_rgb_probe_20261105_r1/global_10k",
+    "native_iteration": 10000,
+    "road": "scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt",
+    "road_formal_updates": 1000,
+    "calibration": "scene008_blue_global_M2_final_20261105_r1/coarse6x5 -> fine11x9",
+    "complete_M2": "scene008_a6_asset_controls_20261105/m2/complete_a6.npz",
+    "M2_all27_tensors_unchanged": true,
+    "render": "scene008_blue_global_M2_final_20261105_r1/render",
+    "keep_frames": 49,
+    "delete_raws": [
+      105,
+      113,
+      130,
+      137
+    ]
+  },
+  "reference": "scene008_blue_current_M2_reference_20261105_r1",
+  "split_roles": {
+    "HELD9": [
+      89,
+      95,
+      101,
+      105,
+      113,
+      121,
+      125,
+      130,
+      137
+    ],
+    "BUILD40": [
+      90,
+      91,
+      92,
+      93,
+      94,
+      96,
+      97,
+      98,
+      99,
+      100,
+      102,
+      103,
+      104,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "scope": "All are inside the same49-frame training clip. Native training and road gate stages have already used this clip; HELD9 was not isolated from those stages.",
+    "held_only_from": "6x5/11x9 road RGB calibration targets",
+    "independent_native_generalization_test": false
+  },
+  "native10k_lineage": {
+    "lineage": 64990,
+    "descendants": 7,
+    "shader_RGB": "black",
+    "higher_SH": "zero",
+    "evidence": "../../../source_archive/evidence/native10k_family.json",
+    "DC_RGB_min": [
+      -0.004235208034515381,
+      -0.004235208034515381,
+      -0.004386425018310547
+    ],
+    "DC_RGB_max": [
+      -0.004235208034515381,
+      -0.004235208034515381,
+      -0.004386425018310547
+    ],
+    "higher_SH_absmax_rgb": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "engineering": {
+    "native10k_complete_publish": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 10000,
+      "updates": 1000,
+      "source_iteration": 9000,
+      "loss_probe_mode": "global",
+      "stop_resume": true,
+      "stop_formal": false,
+      "completed_via": "native_publish_checkpoint_event",
+      "full_training_state": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/training_state10000.pth",
+      "seconds": 442.96386522985995,
+      "quality_accepted": false,
+      "human_verdict": null
+    },
+    "actual_restore10002": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 10002,
+      "updates": 2,
+      "source_iteration": 10000,
+      "loss_probe_mode": "global",
+      "seconds": 32.5373405162245,
+      "quality_accepted": false,
+      "human_verdict": null
+    },
+    "restore_audit": {
+      "status": "PASS_EXACT_FULL_RESTORE",
+      "differences": []
+    },
+    "road_replay": {
+      "status": "PASS_COMPLETE_ENGINEERING_REPLAY",
+      "phase": "formal",
+      "native_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k",
+      "native_iteration": 10000,
+      "formal_updates": 1000,
+      "smoke_updates": 32,
+      "restore_updates": 2,
+      "total_updates": 1034,
+      "wall_seconds": 236.80110764876008,
+      "completed": [
+        "capture_parent",
+        "prepare_inputs",
+        "selection",
+        "smoke",
+        "restore_a",
+        "restore_b",
+        "formal",
+        "evaluation"
+      ],
+      "parent_unchanged": true,
+      "original_source_and_inputs_unchanged": true,
+      "old_static_gate_loaded": false,
+      "old_fine_road_coefficients_loaded": false,
+      "quality_accepted": false,
+      "human_verdict": null,
+      "shutdown": false
+    },
+    "finalizer_status": "PASS_ENGINEERING_ONLY"
+  },
+  "metrics_source": "comparison.json",
+  "silver_source": "rcr1_silver315_contributions.json",
+  "budget": {
+    "scope": "Completed receipt-backed training updates; old historical native/asset training excluded",
+    "completed_updates_total": 26609,
+    "breakdown": [
+      {
+        "category": "前期颜色后拟合尝试（失败分支，含smoke/恢复）",
+        "updates": 12532
+      },
+      {
+        "category": "增长来源control/joint与half反事实（3×1000）",
+        "updates": 3000
+      },
+      {
+        "category": "RCR-1 full-joint native0→10K",
+        "updates": 10000
+      },
+      {
+        "category": "native预检/完整恢复（3+2+2+2）",
+        "updates": 9
+      },
+      {
+        "category": "global4K parent道路工程预检",
+        "updates": 34
+      },
+      {
+        "category": "global10K parent新road正式",
+        "updates": 1000
+      },
+      {
+        "category": "global10K parent新road预检/恢复",
+        "updates": 34
+      }
+    ],
+    "prior_stage_cutoff_total": 24573,
+    "added_native10k_updates": 1000,
+    "added_native10002_restore_updates": 2,
+    "added_newroad_formal_and_preflight_updates": 1034,
+    "formal_calibration_robust_linear_solves": 54,
+    "formal_calibration_gradient_updates": 0,
+    "engineering_preflight4k_robust_linear_solves": 54,
+    "known_new_finalizer_formal_plus_preflight_linear_solves": 108,
+    "render_evaluation_attribution_extra_SGD_updates": 0,
+    "render_evaluation_cost_note": "Zero SGD updates does not mean zero GPU time; reference/final renders, ROI exports, env swap and layer attribution consumed GPU rendering.",
+    "preflight4k_calibration_note": "The4K engineering preflight separately ran36+18=54 solves,0SGD. Formal54 plus this preflight54 gives108 known new-finalizer solves, excluding older historical calibration.",
+    "unexecuted_backgroundJoint1_updates": 0,
+    "automatic_next_queue": false,
+    "source_receipts": "receipts.json",
+    "disposition": "Research archive; candidate not adopted; original M2 retained"
+  },
+  "unadopted": [
+    "hide64",
+    "cleanSH",
+    "oldEnv swap",
+    "half_rgb growth",
+    "full RCR-1 candidate"
+  ],
+  "backgroundJoint1": {
+    "status": "CPU_PREPARED_ONLY_NOT_UPLOADED_NOT_GPU_NOT_VALIDATED",
+    "source": "work/native_jointbg_probe",
+    "training_updates": 0,
+    "automatic_next_queue": false
+  },
+  "unresolved": [
+    "Exact static Gaussian rows/lineages causing silver residual",
+    "Separate shares of EnvLight texture and transmittance pattern in the car-shaped structure",
+    "Unique training cause and old1-versus-new7 densification mechanism"
+  ],
+  "closeout": {
+    "no_new_GPU_work": true,
+    "no_automatic_experiment": true,
+    "shutdown_performed": false,
+    "user_interactive_page_edited_by_this_subtask": true,
+    "publication_scope": "Authorized documentation/source archival and current-branch Git publication; no GPU, no a5 diagnosis and no shutdown. Git verification receipt is delivered separately in the interactive report evidence directory.",
+    "interactive_edits": "Added archive navigation and clarified left-car/a5 label identity; original comparison interaction and render assets retained."
+  },
+  "failure_ledger_refs": [
+    "V82-F13"
+  ],
+  "failure_ledger_delta": "V82-F13",
+  "actual_source_archive": {
+    "index": "../../../source_archive/index.html",
+    "package": "../../../source_archive/actual_sources.tar.gz",
+    "manifest": "../../../source_archive/actual_sources/source_manifest.json",
+    "files_including_manifest": 599,
+    "full_model_backup": false
+  }
+}

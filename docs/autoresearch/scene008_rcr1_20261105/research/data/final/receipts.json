@@ -1,0 +1,384 @@
+{
+  "native_10k_returned": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/returned.json",
+    "value": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 10000,
+      "updates": 1000,
+      "source_iteration": 9000,
+      "loss_probe_mode": "global",
+      "stop_resume": true,
+      "stop_formal": false,
+      "completed_via": "native_publish_checkpoint_event",
+      "full_training_state": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/training_state10000.pth",
+      "seconds": 442.96386522985995,
+      "quality_accepted": false,
+      "human_verdict": null
+    }
+  },
+  "native_10k_restore": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/restore_audit.json",
+    "value": {
+      "status": "PASS_EXACT_FULL_RESTORE",
+      "differences": []
+    }
+  },
+  "native_10002_returned": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_restore_10002/returned.json",
+    "value": {
+      "status": "PASS_COMPLETE_BOUNDARY",
+      "mode": "resume",
+      "iteration": 10002,
+      "updates": 2,
+      "source_iteration": 10000,
+      "loss_probe_mode": "global",
+      "seconds": 32.5373405162245,
+      "quality_accepted": false,
+      "human_verdict": null
+    }
+  },
+  "native_10002_restore": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_restore_10002/restore_audit.json",
+    "value": {
+      "status": "PASS_EXACT_FULL_RESTORE",
+      "differences": []
+    }
+  },
+  "road_replay": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_receipt.json",
+    "value": {
+      "status": "PASS_COMPLETE_ENGINEERING_REPLAY",
+      "phase": "formal",
+      "native_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k",
+      "native_iteration": 10000,
+      "formal_updates": 1000,
+      "smoke_updates": 32,
+      "restore_updates": 2,
+      "total_updates": 1034,
+      "wall_seconds": 236.80110764876008,
+      "completed": [
+        "capture_parent",
+        "prepare_inputs",
+        "selection",
+        "smoke",
+        "restore_a",
+        "restore_b",
+        "formal",
+        "evaluation"
+      ],
+      "parent_unchanged": true,
+      "original_source_and_inputs_unchanged": true,
+      "old_static_gate_loaded": false,
+      "old_fine_road_coefficients_loaded": false,
+      "quality_accepted": false,
+      "human_verdict": null,
+      "shutdown": false
+    }
+  },
+  "road_formal": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/receipt.json",
+    "value": {
+      "step": 1000,
+      "updates": 1000,
+      "seconds": 50.67401909828186,
+      "parent_unchanged": true,
+      "quality_accepted": false,
+      "human_verdict": null
+    }
+  },
+  "road_smoke": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/smoke_summary.json",
+    "value": {
+      "status": "PASS_ORIGINAL_ROAD_PREFLIGHT",
+      "smoke_updates": 32,
+      "restore_updates": 2,
+      "exact_full_model_Adam_sampler_RNG_restore": true,
+      "repeated_next_step_PNG_exact": {
+        "101": true,
+        "105": true,
+        "113": true
+      },
+      "native_parent_frozen": true,
+      "formal_starts_fresh": true
+    }
+  },
+  "coarse_calibration": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5/calibration_receipt.json",
+    "value": {
+      "status": "PASS_CALIBRATION_ENGINEERING",
+      "preflight_only": false,
+      "design_files": 80,
+      "exact_geometry_alpha_depth_parity": [
+        {
+          "raw": 105,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 105,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 113,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 113,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 137,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 137,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        }
+      ],
+      "coefficient_round_trip_exact": true,
+      "coefficients_sha256": "dd6ce0be79c52bf6d7fb453fd9ec8faf63bea461543ae6c03fc053d9a9f37ef9",
+      "M2_all_27_tensors_bitwise_unchanged_CPU": true,
+      "native_and_road_unchanged": true,
+      "calibration_parameters": 90,
+      "gradient_training_updates": 0,
+      "robust_linear_solves": 36,
+      "quality_accepted": false
+    }
+  },
+  "fine_calibration": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/calibration_receipt.json",
+    "value": {
+      "status": "PASS_CALIBRATION_ENGINEERING",
+      "preflight_only": false,
+      "design_files": 80,
+      "exact_geometry_alpha_depth_parity": [
+        {
+          "raw": 105,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 105,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 113,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 113,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 137,
+          "delete": false,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        },
+        {
+          "raw": 137,
+          "delete": true,
+          "maxabs": {
+            "alpha": 0.0,
+            "depth_sum": 0.0,
+            "extra": 0.0
+          }
+        }
+      ],
+      "coefficient_round_trip_exact": true,
+      "coefficients_sha256": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3",
+      "M2_all_27_tensors_bitwise_unchanged_CPU": true,
+      "native_and_road_unchanged": true,
+      "calibration_parameters": 297,
+      "gradient_training_updates": 0,
+      "robust_linear_solves": 18,
+      "quality_accepted": false
+    }
+  },
+  "native_10k_files": [
+    {
+      "name": "executed_train_dual.py",
+      "bytes": 14754
+    },
+    {
+      "name": "executed_train_loss_probe.py",
+      "bytes": 19308
+    },
+    {
+      "name": "executed_global_rgb_probe.py",
+      "bytes": 818
+    },
+    {
+      "name": "executed_lineage_probe.py",
+      "bytes": 20388
+    },
+    {
+      "name": "executed_diag_hooks.py",
+      "bytes": 14575
+    },
+    {
+      "name": "executed_dual_actor_runtime.py",
+      "bytes": 6613
+    },
+    {
+      "name": "executed_native_ownership.py",
+      "bytes": 15159
+    },
+    {
+      "name": "executed_integrate_native.py",
+      "bytes": 3819
+    },
+    {
+      "name": "executed_readout_native.py",
+      "bytes": 4956
+    },
+    {
+      "name": "executed_early_accept.py",
+      "bytes": 1602
+    },
+    {
+      "name": "effective_config.json",
+      "bytes": 8941
+    },
+    {
+      "name": "diagnostic_contract.json",
+      "bytes": 570
+    },
+    {
+      "name": "loss_probe_contract.json",
+      "bytes": 1015
+    },
+    {
+      "name": "executed_training_function.py",
+      "bytes": 27167
+    },
+    {
+      "name": "lineage_64990_ordinary_events.jsonl",
+      "bytes": 181112
+    },
+    {
+      "name": "events.out.tfevents.1793884266.autodl-container-396445a2a1-1984c713.107014.0",
+      "bytes": 1276069
+    },
+    {
+      "name": "loader_transform_matrix.txt",
+      "bytes": 264
+    },
+    {
+      "name": "input.ply",
+      "bytes": 18600254
+    },
+    {
+      "name": "cameras.json",
+      "bytes": 22152
+    },
+    {
+      "name": "actual_scene_binding.json",
+      "bytes": 2278
+    },
+    {
+      "name": "initial_parameter_transfer.json",
+      "bytes": 4103
+    },
+    {
+      "name": "initialization.json",
+      "bytes": 392
+    },
+    {
+      "name": "restore_audit.json",
+      "bytes": 63
+    },
+    {
+      "name": "paired_steps.jsonl",
+      "bytes": 1209854
+    },
+    {
+      "name": "family_RGB_every100.jsonl",
+      "bytes": 9421
+    },
+    {
+      "name": "family_RGB_latest.json",
+      "bytes": 1263
+    },
+    {
+      "name": "runtime.jsonl",
+      "bytes": 10828
+    },
+    {
+      "name": "progress.json",
+      "bytes": 1227
+    },
+    {
+      "name": "chkpnt10000.pth",
+      "bytes": 826934296
+    },
+    {
+      "name": "dynamic_chkpnt10000.pth",
+      "bytes": 839984408
+    },
+    {
+      "name": "env_light_chkpnt10000.pth",
+      "bytes": 226494608
+    },
+    {
+      "name": "training_state10000.pth",
+      "bytes": 44824
+    },
+    {
+      "name": "returned.json",
+      "bytes": 501
+    }
+  ]
+}
