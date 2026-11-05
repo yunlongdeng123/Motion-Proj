@@ -13,8 +13,11 @@ are initial data URIs; there is no JavaScript or external resource dependency.
 import argparse,base64,hashlib,html,io,json,mimetypes,re,shutil,sys
 from datetime import datetime,timezone
 from html.parser import HTMLParser
+from urllib.parse import urlsplit,unquote
 from pathlib import Path
 from PIL import Image,ImageDraw,ImageFont
+from frame_compare import load_validate as load_frame_compare, publish as publish_frame_compare
+from frame_compare import scientific_baseline, inject_preserving_baseline, BEGIN as FC_BEGIN, END as FC_END
 
 WORKSPACE=Path(__file__).resolve().parents[3]
 MAX_HTML_BYTES=8*1024*1024
@@ -199,7 +202,12 @@ def link_previous_delivery(out):
         if updated.count('id="current-a6-diagnosis-link"')!=1 or 'href="../diagnosis/index.html"' not in updated:
             raise ValueError(f'Previous report navigation missing or duplicated: {p}')
         if updated!=text:p.write_bytes(updated.encode('utf-8'))
-        changes.append(dict(path=str(p),before_sha256=before,after_sha256=sha(p),only_banner_insertion_or_update=True))
+        backup=WORKSPACE/'work/a6_artifact_diagnosis/report/prior_delivery_headers'/name
+        actual=p.read_bytes()
+        assert re.sub(rb'<aside id="current-a6-diagnosis-link".*?</aside>',b'',actual,count=1,flags=re.S)==backup.read_bytes()
+        assert (p.parent/'../diagnosis/index.html').resolve().is_file()
+        changes.append(dict(path=str(p),before_sha256=sha(backup),after_sha256=sha(p),only_banner_insertion_or_update=True,
+            banner_count=1,diagnosis_href_in_banner_count=1,diagnosis_target_exists=True,strip_banner_byte_exact_to_original_backup=True))
     return changes
 
 
@@ -339,6 +347,10 @@ def evaluation_roles(pub):
 
 
 def build(args):
+    art=args.artifacts.resolve();out=args.out.resolve()
+    frame_manifest=args.frame_manifest or art/'frame_compare/native49_v1/manifest.json'
+    frame_inputs=load_frame_compare(frame_manifest)
+    baseline=scientific_baseline(out,art/'report/pre_slider_170c.html')
     pub=Publisher(args.artifacts.resolve(),args.out.resolve())
     hero=before_after(pub)
     findings=pub.load('vehicle/findings.json','车体来源归因')
@@ -489,13 +501,17 @@ def build(args):
     assert pub.uri_bytes<=MAX_IMAGE_URI_BYTES
     lead='<p class="lead">先看同分辨率街景。已查清2D→3D转换损失，并接入候选前景matte、连续表面与固定频率采样；黑环和保险杠粗波纹减轻。LOD更平滑，细线也略软。研究候选仍有覆盖代价、大深度位移及局部成像变化，未满足全面采用标准；背景暗团本轮只归因、未修补。</p>'+hero+'<p class="notice"><strong>当前研究候选：</strong>C2+matte canonical资产，另含LOD视口研究对照。area是有透明度损失的诊断分支，未自动采用。新增表面由raw106参考UV构建，49同轨迹视角不证明封闭360°车辆或隐藏形状真值；保留2,778条PVD祖先行也不等于整车已验证。</p>'
     page=re.sub(r'<p class="lead">.*?</p>',lambda m:lead,page,count=1,flags=re.S)
+    frame_module,frame_receipt=publish_frame_compare(frame_inputs,pub.out,Path(__file__).with_name('frame_compare_controller.js'))
+    page=inject_preserving_baseline(page,frame_module,baseline)
     blob=page.encode('utf-8');assert len(blob)<=MAX_HTML_BYTES,(len(blob),pub.uri_bytes)
     (pub.out/'index.html').write_bytes(blob)
     (pub.out/'architecture.svg').write_text(architecture(),encoding='utf-8')
     pub.copy(Path(__file__),'code')
-    receipt=dict(status='READY_STATIC_SELF_CONTAINED_DIAGNOSIS',created_UTC=datetime.now(timezone.utc).isoformat(),
+    receipt=dict(status='READY_OFFLINE_REPORT_WITH_LOCAL_FRAME_DATASET',created_UTC=datetime.now(timezone.utc).isoformat(),
         artifacts=str(pub.art),output=str(pub.out),HTML_bytes=len(blob),embedded_image_URI_bytes=pub.uri_bytes,
-        embedded_images=len(pub.images),JavaScript_required=False,external_images=0,
+        embedded_images=len(pub.images),JavaScript_required=dict(slider_interaction=True,initial_frame=False,static_fallback=False,scientific_report=False),external_images=0,
+        delivery_dependencies='Original21 scientific images embedded; frame PNGs require the adjacent frames directory. Keep it when moving this report.',
+        frame_compare=frame_receipt,scientific_baseline_SHA256='170ccef3351164a1ce8660a07d2f906f8e522fd406c9b0956de4b1eae56a0191',
         final_hook=final,evaluation_roles=roles,latest_conditional_geometry=str(gp) if gp else None,
         teacher_sha256=teacher_sha,evidence=pub.evidence,images=pub.images,
         PVD_neural_weight_updates=0,pretrained_neural_weight_updates=0,
@@ -511,19 +527,38 @@ def build(args):
 
 def verify(out):
     class Parse(HTMLParser):
-        def __init__(self):super().__init__();self.sources=[];self.local=[];self.scripts=0;self.hidden=0
+        def __init__(self):
+            super().__init__();self.sources=[];self.local=[];self.scripts=[];self.hidden=[];self.sections=[];self.frame_sources=[]
         def handle_starttag(self,t,a):
-            if t=='script':self.scripts+=1
+            attrs=dict(a)
+            if t=='section':self.sections.append(attrs.get('id'))
+            in_frames='frame-compare' in self.sections
+            if t=='script':self.scripts.append(dict(id=attrs.get('id'),src=attrs.get('src'),in_frames=in_frames))
             for k,v in a:
-                if k=='hidden':self.hidden+=1
-                if k in ('href','src') and v and not(v.startswith('data:') or '://' in v or v.startswith('#')):self.local.append(v)
-                if t=='img' and k=='src':self.sources.append(v)
+                if k=='hidden':self.hidden.append(dict(id=attrs.get('id'),in_frames=in_frames))
+                if k in ('href','src') and v and not(v.startswith('data:') or '://' in v or v.startswith('#')):
+                    self.local.append(unquote(urlsplit(v).path))
+                if t=='img' and k=='src':
+                    if in_frames:self.frame_sources.append(v)
+                    else:self.sources.append(v)
+        def handle_endtag(self,t):
+            if t=='section' and self.sections:self.sections.pop()
     p=out/'index.html';h=Parse();content=p.read_text(encoding='utf-8');h.feed(content)
     for x in h.sources:
         assert x.startswith('data:image/')
         im=Image.open(io.BytesIO(base64.b64decode(x.split(',',1)[1])));im.verify()
     assert all((out/x).is_file() for x in h.local)
-    assert not h.scripts and not h.hidden and '未取回' not in content
+    assert {x['id'] for x in h.scripts}=={'fc-data','fc-controller'} and len(h.scripts)==2
+    assert all(x['in_frames'] and x['src'] is None for x in h.scripts)
+    assert all(x['in_frames'] and x['id']=='fc-overlay' for x in h.hidden) and len(h.hidden)==1
+    assert '未取回' not in content
+    fc=read(out/'frame_compare_manifest.json');initial=fc['frames']['113']
+    expected_initial=[initial['reference']['path'] if c['id']=='reference' else initial['delete'][c['id']]['path'] for c in fc['columns']]
+    assert h.frame_sources==expected_initial
+    assert all(x.startswith('frames/') and not x.startswith(('data:','http:','https:')) for x in h.frame_sources)
+    stripped=re.sub(re.escape(FC_BEGIN)+r'.*?'+re.escape(FC_END),'',content,count=1,flags=re.S).encode('utf-8')
+    assert hashlib.sha256(stripped).hexdigest()=='170ccef3351164a1ce8660a07d2f906f8e522fd406c9b0956de4b1eae56a0191'
+    assert len(h.sources)==21
     receipt=read(out/'publication_receipt.json');final=receipt['final_hook']
     binding_checks=[]
     for b in final.get('figure_bindings',[]):
@@ -536,9 +571,11 @@ def verify(out):
         binding_checks.append(dict(raw=b['raw'],source=str(source),sha256=b['sha256'],caption=b['caption'],panel_columns=b['panel_columns']))
     if final.get('section_emitted'):
         assert [(x['raw'],Path(x['source']).name) for x in binding_checks]==[(raw,name) for raw in FINAL_RAW_IDS for name in FINAL_FIGURE_NAMES]
-    return dict(status='PASS_ALL_IMAGES_STATIC_DATA_URI_AND_LINKS_EXIST',HTML_sha256=sha(p),
+    return dict(status='PASS_STATIC_SCIENCE_PLUS_SCOPED_LOCAL_FRAME_UI',HTML_sha256=sha(p),
         image_data_URIs=len(h.sources),decoded_image_QA=True,local_links=len(h.local),
         local_link_QA=True,scripts=h.scripts,hidden_elements=h.hidden,HTML_bytes=p.stat().st_size,
+        frame_initial_relative_sources=h.frame_sources,frame_initial_raw=113,frame_initial_state='delete',
+        frame_manifest_complete=True,scientific_baseline_byte_exact_after_section_strip=True,
         explicit_final_figure_bindings=binding_checks,figure_binding_QA=True)
 
 if __name__=='__main__':
@@ -546,4 +583,5 @@ if __name__=='__main__':
     ap.add_argument('--artifacts',type=Path,default=WORKSPACE/'work/a6_artifact_diagnosis')
     ap.add_argument('--out',type=Path,default=WORKSPACE/'outputs/scene008_vehicle_appearance/diagnosis')
     ap.add_argument('--final-manifest',type=Path)
+    ap.add_argument('--frame-manifest',type=Path)
     build(ap.parse_args())

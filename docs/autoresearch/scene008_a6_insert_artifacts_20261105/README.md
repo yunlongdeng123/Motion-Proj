@@ -51,6 +51,6 @@ SurfaceLOD 使用同一已冻结连续 surface S 与正式 canonical RGBA纹理 
 
 LOD相对旧native的keep RGB变化：a37为0/536128像素>.02；road为16/1075281；outside为6580/6312448，最大.723011。相对新native分别0、17、1890，outside最大.377866。这是改善候选的内部证据，不能声称其他成像逐字不变，也没有取消2.7m几何尾部的后续质量门槛。[LOD49完整汇总](delivery/data/scale/surface_lod_v1/evaluation49/summary.json)与[覆盖率原始读出](delivery/data/scale/surface_lod_v1/coverage49/summary.json)保留同分母细节；若静态报告复制布局不同，可按publication_manifest定位。
 
-本轮只对raw105/106/113/130保存完整RGB PNG及crop replay，其余45帧保留真实指标，没有完整49帧RGB视频，未额外重放生成视频。含raw113下方旧暗斑的同一宽crop用于before/after，不能用只裁车的画面声称黑斑已消除。
+原科学评测阶段只对raw105/106/113/130保存完整RGB；本次[49帧展示补齐](frame_compare/README.md)用270次实际原生forward补齐其它45raw，严格复用24张原PNG，得到294方法图和49真实参考。主报告新增离散帧/状态/公共crop切换及无需JavaScript的49×2静态fallback，未使用插值。原21科学图与94指标正文逐字保留。最终整页全49浏览器动态未验证；静态QA和此前四项同controller组件Chrome预检分别归档。含raw113下方旧暗斑的全景仍保留，不能用只裁车的画面声称黑斑已消除。
 
 源执行目录：`/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105`；GPU Python=`/root/autodl-tmp/envs/drivingeditor/bin/python`。源码副本在`source/`，保留原固定路径合同，运行仍依赖既有 frozen controls Runtime 与原 observations，不是独立scene离线包。大CSR矩阵、checkpoint和全float重放保留在run及本地原始取回包，未加入本紧凑Git材料。failure_ledger_refs=[]，failure_ledger_delta=none；human_verdict=null。

@@ -2,7 +2,7 @@
 
 ## Scene008 a6 插入成像诊断与连续表面（2026-11-05）
 
-- `scene008_a6_insert_artifacts_20261105`：[实际颜色载体、C2 深度与前景 RGBA、viewport 和固定域评价](autoresearch/scene008_a6_insert_artifacts_20261105/README.md)。配置、资源、完整结果与输入角色见报告；failure_ledger_delta=none。
+- `scene008_a6_insert_artifacts_20261105`：[实际颜色载体、C2 深度与前景 RGBA、viewport 和固定域评价](autoresearch/scene008_a6_insert_artifacts_20261105/README.md)。配置、资源、完整结果与输入角色见报告；failure_ledger_delta=none。 · [49帧拖动与静态双状态图集](autoresearch/scene008_a6_insert_artifacts_20261105/frame_compare/README.md)
 
 ## Scene008 启发式接管验证（2026-11-05）
 

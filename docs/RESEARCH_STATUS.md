@@ -8,6 +8,8 @@
 
 同一连续 surface / 固定 texture 的 SurfaceLOD 已完成固定49帧和必要的覆盖率读出；RGB与深度对照改善，同时保留少量低alpha及大幅深度前移的限制。报告、可重放入口与取回验收已完成，结果保留为研究候选，无后续训练控制器，没有启动 PVD 后训练或自由参数搜索。HELD9 未进入本次颜色目标，但此前已用于表示诊断与内部开发，不是独立未触碰泛化集。
 
+展示部分已补齐49帧原生双状态PNG、可拖动对照和无JavaScript静态fallback；本次仅补图与展示，不改变科学结论。
+
 执行边界：subagent 仅 gpt-6.1-sol/max；本会话明确保持 AutoDL 开机，不自动关机。failure_ledger_refs=[]，failure_ledger_delta=none；人工画质 verdict 未代填。
 
 RCR-1支线当前由用户采用：2026-11-05明确选择RCR-1 delete用于异常蓝色RGB修复（scope=abnormal_blue_RGB_fix）；固定完整M2资产不变，原管线仅作reference。raw130/137亮片继续开放，完整画质无回退未作新结论，没有自动后续GPU队列。HELD9只对道路RGB校准target留出，不是独立native泛化验证。见[当前交互报告](autoresearch/scene008_rcr1_20261105/index.html)及[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)。本支线failure_ledger_refs=[V82-F13]为历史评审，本次failure_ledger_delta=none；车辆外观主线安排不变。

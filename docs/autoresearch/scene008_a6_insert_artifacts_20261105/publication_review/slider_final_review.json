@@ -1,0 +1,94 @@
+{
+  "status": "PASS_STATIC_AND_EXISTING_COMPONENT_EVIDENCE",
+  "must_fix": [],
+  "created_UTC": "2026-11-05T17:55:27.745782+00:00",
+  "scope": {
+    "read_only": true,
+    "new_GPU_calls": 0,
+    "post_policy_browser_actions": 0,
+    "publisher_or_asset_edits": false,
+    "own_headless_sessions_closed": true
+  },
+  "snapshots": {
+    "final_HTML_sha256": "1af45d7b9a0abf0583ae094cbdf6fa274b10b3e06d1b10293e38542672fe4033",
+    "source_manifest_sha256": "efbcf40049521eecb947e3e9a2282b83796ccf36433dc328e2724a2e0c90c9dd",
+    "controller_sha256": "4c9c9dbb59234573bc013f66eef84bd5c648372ebbbf526791c452f07f08dd82",
+    "component_HTML_sha256": "45e40c637f7ddce89f936c3a6544a0ec261ef5a50040e1eb571c51c95c8ba531"
+  },
+  "static": {
+    "status": "PASS_SLIDER_STATIC_INPUTS",
+    "HTML_sha256": "1af45d7b9a0abf0583ae094cbdf6fa274b10b3e06d1b10293e38542672fe4033",
+    "read_only": true,
+    "new_GPU_calls": 0,
+    "external_network_calls": 0,
+    "must_fix": [],
+    "raw_domain": [
+      89,
+      137
+    ],
+    "frames": 49,
+    "render_PNGs": 294,
+    "reference_PNGs": 49,
+    "all343_SHA_decode_480x320": true,
+    "metadata_raw_state_method_renderer_asset_checked": true,
+    "per_raw_shared_crop_checked": true,
+    "exact_prior_PNG_reuses_checked": 24,
+    "unchanged_science": {
+      "original_170c_byte_exact_after_module_strip": true,
+      "original_static_scientific_images": 21,
+      "original_metric_rows": 94
+    },
+    "static_fallback": {
+      "script_count": 0,
+      "image_occurrences": 392,
+      "all343_unique_paths_covered": true
+    },
+    "local_link_occurrences": 83,
+    "publication_ledger_files": 445,
+    "source_manifest_sha256": "efbcf40049521eecb947e3e9a2282b83796ccf36433dc328e2724a2e0c90c9dd"
+  },
+  "controller_code_review": {
+    "all_group_members_preloaded_and_decoded_before_commit": true,
+    "sequence_guard_before_and_inside_animation_frame": true,
+    "single_turn_group_replacement": true,
+    "failed_group_does_not_commit_displayed_target": true,
+    "already_failed_initial_images_read_synchronously": true,
+    "initial_failure_wins_over_ready": true,
+    "no_manifest_fetch_or_external_runtime_dependencies": true,
+    "common_crop_from_displayed_frame": true,
+    "range_and_state_handlers_same_atomic_request": true,
+    "prev_next_and_raw_jump_bindings": true
+  },
+  "node_syntax_check": "PASS: node --check (no browser launch)",
+  "existing_dynamic_component_evidence": {
+    "status": "PASS_COMPONENT_PREVIEW",
+    "finished_UTC": "2026-11-05T17:51:54.303113+00:00",
+    "finished_Singapore": "2026-11-06 01:51:54 +08:00",
+    "same_controller_as_final_byte_exact": true,
+    "normal_file_security": true,
+    "external_HTTP_requests": [],
+    "runtime_exceptions": [],
+    "tests": [
+      "Missing105 leaves complete113 group labelled113 with explicit visible error",
+      "113 keep recovery clears error and applies one crop to all columns",
+      "Superseded failed request does not overwrite latest successful113 group",
+      "JavaScript disabled: initial113 image group still decodes at480x320"
+    ],
+    "receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_artifact_diagnosis\\review\\slider_component_browser_review.json"
+  },
+  "validation_limits": {
+    "final_main_report_browser_run": false,
+    "full49_keep_delete_runtime_switches_tested": false,
+    "actual_range_drag_prev_next_130_UI_tested": false,
+    "already_failed_initial_image_runtime_tested": false,
+    "already_failed_initial_image_source_guard_reviewed": true,
+    "reason": "Root reported CUA file:// URL-policy rejection and explicit prohibition on raw CDP, alternate browser surfaces or a local HTTP bridge. No browser interaction was performed after that notification. Prior component tests remain historical evidence, not a full final-main runtime test."
+  },
+  "PASS_items": [
+    "All343 files match SHA and decode as lossless480x320 PNG;49frames×3methods×2states and49 truthful references are complete.",
+    "Per-raw camera/branch metadata and observation-based common crop are consistent;24 reused native PNG bytes exactly match earlier results.",
+    "Removing only the marked new module recovers frozen170c report bytes: original21 scientific figures and94 metric rows unchanged.",
+    "Static no-JS49×2 fallback contains all343 unique image paths; all main local links and445 publication ledger entries match.",
+    "Prior component Chrome tests covered missing-one-file atomic failure,113keep/crop recovery, superseded-request race, and no-JS initial113. Final controller source is byte-identical."
+  ]
+}
