@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 道路颜色校正（2026-11-05）
+
+- [共享世界坐标颜色场与 49 帧双状态复核](autoresearch/scene008_ray_road_quality_20261105/README.md)。
+
 ## Scene008 a6 车体半空间裁剪（2026-11-05）
 
 - [scene008_a6_ray_switch_20261105](autoresearch/scene008_a6_ray_switch_20261105/README.md)。隔离 CUDA 前向、同位替换、49 帧黑底及街景。
