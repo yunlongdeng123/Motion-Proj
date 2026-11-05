@@ -1,0 +1,6115 @@
+{
+  "status": "PASS_ENGINEERING",
+  "native_10k_files_sha256_verified": true,
+  "formal": {
+    "step": 1000,
+    "updates": 1000,
+    "seconds": 46.722065687179565,
+    "parent_unchanged": true,
+    "quality_accepted": false,
+    "human_verdict": null
+  },
+  "smoke": {
+    "real_GPU_steps": 32,
+    "restore_updates": 2,
+    "full_state_restored": true,
+    "repeated_next_step_PNG_exact": {
+      "101": true,
+      "105": true,
+      "113": true
+    },
+    "formal_from_scratch": true,
+    "expected_formal_minutes_under10": true
+  },
+  "parent_binding": {
+    "frames": 49,
+    "max_native_rgb_difference": 0.0,
+    "actor_rows": {
+      "6": 100358,
+      "37": 937415
+    },
+    "parent": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/chkpnt10000.pth": [
+        850149464,
+        1793845554989709460
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/dynamic_chkpnt10000.pth": [
+        822966680,
+        1793845557250917532
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/env_light_chkpnt10000.pth": [
+        226494608,
+        1793845558531572807
+      ],
+      "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal/training_state10000.pth": [
+        44312,
+        1793845673909006282
+      ]
+    },
+    "temporal_envelopes_preserved": true
+  },
+  "selection": {
+    "candidate_rows": 171366,
+    "static_rows": 1072051,
+    "protected_dominant_rows": 2457,
+    "fit_pixel_counts": [
+      22903,
+      22903,
+      22891,
+      22917,
+      22926,
+      22926,
+      22939,
+      22996,
+      23036,
+      23108,
+      23167,
+      23218,
+      23237,
+      23311,
+      23241,
+      23143,
+      23083,
+      22964,
+      22916,
+      22986,
+      22969,
+      22938,
+      23036,
+      23025,
+      22754,
+      22857,
+      22953,
+      22964,
+      22991,
+      23131,
+      23146,
+      23152,
+      23244,
+      23267,
+      23161,
+      23162,
+      23101,
+      22993,
+      22852,
+      22553,
+      22237,
+      21940,
+      20945,
+      20119,
+      19126,
+      18053,
+      17014,
+      16034,
+      15043
+    ],
+    "policy": "all49 exact joint-delete alpha*T fit/vehicle-paint scores retaining a6; freeze rows whose protected score>20x fit score; not semantic ownership GT",
+    "parent_unchanged": true,
+    "updates": 0
+  },
+  "road_inputs": {
+    "target": 37,
+    "parent": "native ownership dual-actor 10K",
+    "source_frames": 199,
+    "source_role": "BUILD, not independent clean-road GT",
+    "coarse_domain_cells": 10724,
+    "coarse_envelope_cells": 8868,
+    "mandatory_cells": 4143,
+    "fine_cells": 141888,
+    "active_real_reference_cells": 137171,
+    "inferred_cells": 4717,
+    "unknown_fine_cells": 0,
+    "no_new_colour_interpolation": false,
+    "inferred_policy": "up to0.6m, eight measured-asphalt neighbours IDW; separate labels/confidence; excluded from real-reference metrics",
+    "geometry": "2cm tangent-plane subcells; unknown parents use nearest measured plane within0.6m; not new LiDAR measurements",
+    "calibration": "world-stable anisotropic clean-neighbour native-minus-real RGB offset; recomputed on B10k; capped per channel",
+    "settings": {
+      "target_alias": 37,
+      "detail_cell_m": 0.02,
+      "normal_sigma_m": 0.003,
+      "coverage": {
+        "longitudinal_outer_m": 0.7,
+        "lateral_outer_m": 0.45,
+        "core_fraction": 0.4
+      },
+      "adaptive_rgb": {
+        "enabled": true,
+        "sigma_longitudinal_m": 0.8,
+        "sigma_lateral_m": 0.4,
+        "max_linear_delta": 0.025,
+        "strength": 1.0
+      },
+      "source_policy": "at least3 geometrically eligible real199 colour samples; best projected-resolution source inside upper radiance cluster; no new colour interpolation",
+      "formal_steps": 1000,
+      "learning_rate": 0.06,
+      "gate_init": 2.0,
+      "inference": {
+        "max_neighbour_distance_m": 0.6,
+        "loss_confidence": 0.25,
+        "material": "asphalt_only; world marking cells excluded; explicit inferred samples"
+      },
+      "loss_weights": {
+        "road": 1.0,
+        "native": 2.0,
+        "yellow": 4.0,
+        "other_vehicle": 3.0,
+        "left_road": 2.0,
+        "keep_native_gate_prior": 0.0005
+      }
+    },
+    "seconds": 44.22475075721741,
+    "updates": 0
+  },
+  "pooled": {
+    "road_reobserved_after_delete": {
+      "parent": {
+        "count": 287368,
+        "mean": 0.2024853293780452
+      },
+      "new": {
+        "count": 287368,
+        "mean": 0.02206707720117913
+      },
+      "old_r3": {
+        "count": 287368,
+        "mean": 0.013798650052596634
+      }
+    },
+    "a6_visible_rgb": {
+      "parent": {
+        "count": 39308,
+        "mean": 0.018695739263098272
+      },
+      "new": {
+        "count": 39308,
+        "mean": 0.018695722635822566
+      },
+      "old_r3": {
+        "count": 39308,
+        "mean": 0.029618528988760218
+      }
+    },
+    "road_visible_rgb": {
+      "parent": {
+        "count": 1075281,
+        "mean": 0.027228112867631136
+      },
+      "new": {
+        "count": 1075281,
+        "mean": 0.03275709836299472
+      }
+    },
+    "a6_noedit_rgb": {
+      "parent": {
+        "count": 39308,
+        "mean": 0.018812697355740683
+      },
+      "new": {
+        "count": 39308,
+        "mean": 0.018812597590552337
+      }
+    },
+    "a37_noedit_rgb": {
+      "parent": {
+        "count": 536128,
+        "mean": 0.014543776002264912
+      },
+      "new": {
+        "count": 536128,
+        "mean": 0.014740130689233926
+      }
+    },
+    "protect_noedit_rgb": {
+      "parent": {
+        "count": 6312448,
+        "mean": 0.022598796077830417
+      },
+      "new": {
+        "count": 6312448,
+        "mean": 0.023087128203882628
+      }
+    },
+    "full_noedit_rgb": {
+      "parent": {
+        "count": 7526400,
+        "mean": 0.024378106305195078
+      },
+      "new": {
+        "count": 7526400,
+        "mean": 0.0255344051964807
+      }
+    },
+    "a6_measured_depth": {
+      "parent": {
+        "count": 8930,
+        "mean": 0.2686167973286628
+      },
+      "new": {
+        "count": 8930,
+        "mean": 0.26861671178631924
+      }
+    },
+    "a6_visible_w": {
+      "parent": {
+        "count": 39308,
+        "mean": 0.999990944412556
+      },
+      "new": {
+        "count": 39308,
+        "mean": 0.9999925344196792
+      }
+    },
+    "a6_reprojected_w": {
+      "parent": {
+        "count": 12210,
+        "mean": 0.9989380582642301
+      },
+      "new": {
+        "count": 12210,
+        "mean": 0.999275016316032
+      }
+    },
+    "a37_kept_w": {
+      "new": {
+        "count": 536128,
+        "mean": 0.9993360996872482
+      }
+    }
+  },
+  "rows": [
+    {
+      "raw": 89,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6178,
+            "sum": 1401.7805155732203
+          },
+          "new": {
+            "count": 6178,
+            "sum": 181.94688425427012
+          },
+          "old_r3": {
+            "count": 6178,
+            "sum": 77.78023008345917
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 996,
+            "sum": 19.516337439534254
+          },
+          "new": {
+            "count": 996,
+            "sum": 19.518951818463393
+          },
+          "old_r3": {
+            "count": 996,
+            "sum": 27.709150197333656
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21545,
+            "sum": 611.5306288457068
+          },
+          "new": {
+            "count": 21545,
+            "sum": 699.0325849793444
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 996,
+            "sum": 19.686272070161067
+          },
+          "new": {
+            "count": 996,
+            "sum": 19.688886449090205
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14257,
+            "sum": 157.87680312423618
+          },
+          "new": {
+            "count": 14257,
+            "sum": 157.87680312423618
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128393,
+            "sum": 3294.4503674881416
+          },
+          "new": {
+            "count": 128393,
+            "sum": 3358.992847355723
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3950.6421585855715
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4061.5571851057175
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 184,
+            "sum": 20.554502487182617
+          },
+          "new": {
+            "count": 184,
+            "sum": 20.555070877075195
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 996,
+            "sum": 995.9814453125
+          },
+          "new": {
+            "count": 996,
+            "sum": 995.9921875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 823,
+            "sum": 822.845703125
+          },
+          "new": {
+            "count": 823,
+            "sum": 822.97265625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14257,
+            "sum": 14256.921875
+          }
+        }
+      }
+    },
+    {
+      "raw": 90,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6177,
+            "sum": 1431.036668759305
+          },
+          "new": {
+            "count": 6177,
+            "sum": 186.5550745165674
+          },
+          "old_r3": {
+            "count": 6177,
+            "sum": 77.32940955911181
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1004,
+            "sum": 17.839867362286896
+          },
+          "new": {
+            "count": 1004,
+            "sum": 17.839867362286896
+          },
+          "old_r3": {
+            "count": 1004,
+            "sum": 36.70327068929328
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21434,
+            "sum": 609.6682131609996
+          },
+          "new": {
+            "count": 21434,
+            "sum": 698.0067711471347
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1004,
+            "sum": 18.15097853448242
+          },
+          "new": {
+            "count": 1004,
+            "sum": 18.15097853448242
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14404,
+            "sum": 156.9405257094768
+          },
+          "new": {
+            "count": 14404,
+            "sum": 156.9405257094768
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128404,
+            "sum": 3251.8611510701594
+          },
+          "new": {
+            "count": 128404,
+            "sum": 3316.010166570137
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3894.9689521628316
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4006.7421490581473
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 195,
+            "sum": 23.545915603637695
+          },
+          "new": {
+            "count": 195,
+            "sum": 23.545917510986328
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1004,
+            "sum": 1003.9814453125
+          },
+          "new": {
+            "count": 1004,
+            "sum": 1003.986328125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 812,
+            "sum": 811.849609375
+          },
+          "new": {
+            "count": 812,
+            "sum": 811.93798828125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14404,
+            "sum": 14403.8984375
+          }
+        }
+      }
+    },
+    {
+      "raw": 91,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6194,
+            "sum": 1439.9175068991026
+          },
+          "new": {
+            "count": 6194,
+            "sum": 183.59913221170427
+          },
+          "old_r3": {
+            "count": 6194,
+            "sum": 76.71572185875266
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1006,
+            "sum": 15.945750729209976
+          },
+          "new": {
+            "count": 1006,
+            "sum": 15.947057918674545
+          },
+          "old_r3": {
+            "count": 1006,
+            "sum": 36.004576666193316
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21322,
+            "sum": 596.6747495055897
+          },
+          "new": {
+            "count": 21322,
+            "sum": 684.3231114707887
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1006,
+            "sum": 16.301959879492642
+          },
+          "new": {
+            "count": 1006,
+            "sum": 16.30326706895721
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14411,
+            "sum": 148.52353198087076
+          },
+          "new": {
+            "count": 14411,
+            "sum": 148.52353198087076
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128423,
+            "sum": 3211.9118027677177
+          },
+          "new": {
+            "count": 128423,
+            "sum": 3276.1170274289325
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3841.104242555244
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3951.5885502095625
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 198,
+            "sum": 29.705278396606445
+          },
+          "new": {
+            "count": 198,
+            "sum": 29.705278396606445
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1006,
+            "sum": 1005.986328125
+          },
+          "new": {
+            "count": 1006,
+            "sum": 1005.98828125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 811,
+            "sum": 810.9052734375
+          },
+          "new": {
+            "count": 811,
+            "sum": 810.95849609375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14411,
+            "sum": 14410.8681640625
+          }
+        }
+      }
+    },
+    {
+      "raw": 92,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6202,
+            "sum": 1432.28586511116
+          },
+          "new": {
+            "count": 6202,
+            "sum": 171.49617349727487
+          },
+          "old_r3": {
+            "count": 6202,
+            "sum": 74.73096165394236
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1004,
+            "sum": 14.05915067292517
+          },
+          "new": {
+            "count": 1004,
+            "sum": 14.05915067292517
+          },
+          "old_r3": {
+            "count": 1004,
+            "sum": 29.35065483825747
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21192,
+            "sum": 594.7139641231624
+          },
+          "new": {
+            "count": 21192,
+            "sum": 684.6950045705307
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1004,
+            "sum": 14.321242200036068
+          },
+          "new": {
+            "count": 1004,
+            "sum": 14.322549389500637
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14413,
+            "sum": 130.6205876400054
+          },
+          "new": {
+            "count": 14413,
+            "sum": 130.6205876400054
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128397,
+            "sum": 3204.3121240663168
+          },
+          "new": {
+            "count": 128397,
+            "sum": 3268.9879362567153
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3811.5343013003003
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3924.836908729165
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 191,
+            "sum": 26.22330951690674
+          },
+          "new": {
+            "count": 191,
+            "sum": 26.22330951690674
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1004,
+            "sum": 1003.9921875
+          },
+          "new": {
+            "count": 1004,
+            "sum": 1003.9931640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 794,
+            "sum": 793.861328125
+          },
+          "new": {
+            "count": 794,
+            "sum": 793.919921875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14413,
+            "sum": 14412.87939453125
+          }
+        }
+      }
+    },
+    {
+      "raw": 93,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6326,
+            "sum": 1430.5122867021128
+          },
+          "new": {
+            "count": 6326,
+            "sum": 159.43386588347494
+          },
+          "old_r3": {
+            "count": 6326,
+            "sum": 76.49962915015931
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1008,
+            "sum": 15.489870030840393
+          },
+          "new": {
+            "count": 1008,
+            "sum": 15.489870030840393
+          },
+          "old_r3": {
+            "count": 1008,
+            "sum": 23.620587556040846
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21247,
+            "sum": 617.5995827196166
+          },
+          "new": {
+            "count": 21247,
+            "sum": 708.2250679326244
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1008,
+            "sum": 15.723203388683032
+          },
+          "new": {
+            "count": 1008,
+            "sum": 15.723203388683032
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14437,
+            "sum": 119.58201593125705
+          },
+          "new": {
+            "count": 14437,
+            "sum": 119.58201593125705
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128377,
+            "sum": 3197.6676723842684
+          },
+          "new": {
+            "count": 128377,
+            "sum": 3262.9094975730695
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3796.7284022578096
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3910.981336442608
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 200,
+            "sum": 28.902810096740723
+          },
+          "new": {
+            "count": 200,
+            "sum": 28.902810096740723
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1008,
+            "sum": 1007.99560546875
+          },
+          "new": {
+            "count": 1008,
+            "sum": 1007.99560546875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 769,
+            "sum": 768.8017578125
+          },
+          "new": {
+            "count": 769,
+            "sum": 768.91357421875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14437,
+            "sum": 14436.87353515625
+          }
+        }
+      }
+    },
+    {
+      "raw": 94,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6446,
+            "sum": 1424.4529589983285
+          },
+          "new": {
+            "count": 6446,
+            "sum": 152.89512392632605
+          },
+          "old_r3": {
+            "count": 6446,
+            "sum": 78.79265058363671
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1016,
+            "sum": 15.648366287176032
+          },
+          "new": {
+            "count": 1016,
+            "sum": 15.648366287176032
+          },
+          "old_r3": {
+            "count": 1016,
+            "sum": 26.942484850878827
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21188,
+            "sum": 627.750234849198
+          },
+          "new": {
+            "count": 21188,
+            "sum": 718.5600351224421
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1016,
+            "sum": 15.906536257301923
+          },
+          "new": {
+            "count": 1016,
+            "sum": 15.906536257301923
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14434,
+            "sum": 119.16761722214869
+          },
+          "new": {
+            "count": 14434,
+            "sum": 119.16761722214869
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128382,
+            "sum": 3219.3016566731967
+          },
+          "new": {
+            "count": 128382,
+            "sum": 3285.01472501675
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3820.4921051111596
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3936.152230806416
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 209,
+            "sum": 26.47034740447998
+          },
+          "new": {
+            "count": 209,
+            "sum": 26.47034740447998
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1016,
+            "sum": 1015.99609375
+          },
+          "new": {
+            "count": 1016,
+            "sum": 1015.99609375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 753,
+            "sum": 752.63671875
+          },
+          "new": {
+            "count": 753,
+            "sum": 752.86328125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14434,
+            "sum": 14433.89306640625
+          }
+        }
+      }
+    },
+    {
+      "raw": 95,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6466,
+            "sum": 1433.3727464311523
+          },
+          "new": {
+            "count": 6466,
+            "sum": 159.87865569183487
+          },
+          "old_r3": {
+            "count": 6466,
+            "sum": 77.803155923335
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1038,
+            "sum": 19.97777418361511
+          },
+          "new": {
+            "count": 1038,
+            "sum": 19.97646699415054
+          },
+          "old_r3": {
+            "count": 1038,
+            "sum": 27.368627920397557
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 20959,
+            "sum": 633.8453272562765
+          },
+          "new": {
+            "count": 20959,
+            "sum": 719.6361731695943
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1038,
+            "sum": 20.08496372681111
+          },
+          "new": {
+            "count": 1038,
+            "sum": 20.083656537346542
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14424,
+            "sum": 143.4806611983222
+          },
+          "new": {
+            "count": 14424,
+            "sum": 143.4806611983222
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128334,
+            "sum": 3286.343469154206
+          },
+          "new": {
+            "count": 128334,
+            "sum": 3349.45196234007
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3929.477347834356
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4041.6577349104628
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 225,
+            "sum": 24.434054374694824
+          },
+          "new": {
+            "count": 225,
+            "sum": 24.434054374694824
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1038,
+            "sum": 1037.99560546875
+          },
+          "new": {
+            "count": 1038,
+            "sum": 1037.9990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 680,
+            "sum": 679.52734375
+          },
+          "new": {
+            "count": 680,
+            "sum": 679.89453125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14424,
+            "sum": 14423.9111328125
+          }
+        }
+      }
+    },
+    {
+      "raw": 96,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6581,
+            "sum": 1449.0896041358938
+          },
+          "new": {
+            "count": 6581,
+            "sum": 177.46591857013118
+          },
+          "old_r3": {
+            "count": 6581,
+            "sum": 77.98524636733055
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1025,
+            "sum": 19.03692809457425
+          },
+          "new": {
+            "count": 1025,
+            "sum": 19.036274509620853
+          },
+          "old_r3": {
+            "count": 1025,
+            "sum": 24.161766828387044
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 20796,
+            "sum": 586.5483673927665
+          },
+          "new": {
+            "count": 20796,
+            "sum": 652.1673057071457
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1025,
+            "sum": 19.225816978956573
+          },
+          "new": {
+            "count": 1025,
+            "sum": 19.221895410795696
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14419,
+            "sum": 117.56179166748188
+          },
+          "new": {
+            "count": 14419,
+            "sum": 117.56179166748188
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128301,
+            "sum": 2627.9246217564796
+          },
+          "new": {
+            "count": 128301,
+            "sum": 2676.408924510237
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3200.8145164138405
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3294.5314898204524
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 209,
+            "sum": 35.56626892089844
+          },
+          "new": {
+            "count": 209,
+            "sum": 35.56626892089844
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1025,
+            "sum": 1024.98388671875
+          },
+          "new": {
+            "count": 1025,
+            "sum": 1024.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 643,
+            "sum": 642.37255859375
+          },
+          "new": {
+            "count": 643,
+            "sum": 642.923828125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14419,
+            "sum": 14418.94091796875
+          }
+        }
+      }
+    },
+    {
+      "raw": 97,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6601,
+            "sum": 1466.3525437254575
+          },
+          "new": {
+            "count": 6601,
+            "sum": 189.4147445843846
+          },
+          "old_r3": {
+            "count": 6601,
+            "sum": 78.55436687423207
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1024,
+            "sum": 22.700978252949426
+          },
+          "new": {
+            "count": 1024,
+            "sum": 22.698363874020288
+          },
+          "old_r3": {
+            "count": 1024,
+            "sum": 26.462417593342252
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 20618,
+            "sum": 591.5182956319477
+          },
+          "new": {
+            "count": 20618,
+            "sum": 651.3058639039809
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1024,
+            "sum": 22.845422704151133
+          },
+          "new": {
+            "count": 1024,
+            "sum": 22.84150113389478
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14424,
+            "sum": 120.260783330712
+          },
+          "new": {
+            "count": 14424,
+            "sum": 120.260783330712
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128239,
+            "sum": 2637.6098973129992
+          },
+          "new": {
+            "count": 128239,
+            "sum": 2683.451718973636
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3216.8631596659543
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3313.593208784878
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 217,
+            "sum": 31.898452758789062
+          },
+          "new": {
+            "count": 217,
+            "sum": 31.897117614746094
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1024,
+            "sum": 1023.97412109375
+          },
+          "new": {
+            "count": 1024,
+            "sum": 1023.9990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 618,
+            "sum": 617.41748046875
+          },
+          "new": {
+            "count": 618,
+            "sum": 617.9755859375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14424,
+            "sum": 14423.9384765625
+          }
+        }
+      }
+    },
+    {
+      "raw": 98,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6768,
+            "sum": 1495.1767724303645
+          },
+          "new": {
+            "count": 6768,
+            "sum": 201.8874045653647
+          },
+          "old_r3": {
+            "count": 6768,
+            "sum": 83.38919276463275
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1024,
+            "sum": 22.044442704762332
+          },
+          "new": {
+            "count": 1024,
+            "sum": 22.044442704762332
+          },
+          "old_r3": {
+            "count": 1024,
+            "sum": 28.10392125719227
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 20416,
+            "sum": 585.4646996440133
+          },
+          "new": {
+            "count": 20416,
+            "sum": 642.5052101174952
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1024,
+            "sum": 22.352285911445506
+          },
+          "new": {
+            "count": 1024,
+            "sum": 22.352285911445506
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14428,
+            "sum": 129.94738085975405
+          },
+          "new": {
+            "count": 14428,
+            "sum": 129.94738085975405
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128189,
+            "sum": 2708.995178407844
+          },
+          "new": {
+            "count": 128189,
+            "sum": 2757.1167393779906
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3296.222946443333
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3402.0203167848813
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 218,
+            "sum": 45.70471477508545
+          },
+          "new": {
+            "count": 218,
+            "sum": 45.70471477508545
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1024,
+            "sum": 1023.998046875
+          },
+          "new": {
+            "count": 1024,
+            "sum": 1023.998046875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 563,
+            "sum": 562.3427734375
+          },
+          "new": {
+            "count": 563,
+            "sum": 562.94140625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14428,
+            "sum": 14427.95068359375
+          }
+        }
+      }
+    },
+    {
+      "raw": 99,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6764,
+            "sum": 1529.6638454542845
+          },
+          "new": {
+            "count": 6764,
+            "sum": 212.71535194049648
+          },
+          "old_r3": {
+            "count": 6764,
+            "sum": 84.37439615464245
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1020,
+            "sum": 26.735293264966458
+          },
+          "new": {
+            "count": 1020,
+            "sum": 26.735293264966458
+          },
+          "old_r3": {
+            "count": 1020,
+            "sum": 36.26797507610172
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 19858,
+            "sum": 556.3444452228723
+          },
+          "new": {
+            "count": 19858,
+            "sum": 618.3058713655919
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1020,
+            "sum": 27.066012232215144
+          },
+          "new": {
+            "count": 1020,
+            "sum": 27.066012232215144
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14424,
+            "sum": 142.72418505843962
+          },
+          "new": {
+            "count": 14424,
+            "sum": 142.72418505843962
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128136,
+            "sum": 2739.8220005379117
+          },
+          "new": {
+            "count": 128136,
+            "sum": 2792.9442169273098
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3342.3282092405425
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3456.489633170626
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 223,
+            "sum": 43.81356239318848
+          },
+          "new": {
+            "count": 223,
+            "sum": 43.81356239318848
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1020,
+            "sum": 1019.9990234375
+          },
+          "new": {
+            "count": 1020,
+            "sum": 1019.9990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 534,
+            "sum": 533.515625
+          },
+          "new": {
+            "count": 534,
+            "sum": 533.9296875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14424,
+            "sum": 14423.96337890625
+          }
+        }
+      }
+    },
+    {
+      "raw": 100,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6906,
+            "sum": 1547.112222880416
+          },
+          "new": {
+            "count": 6906,
+            "sum": 219.90942824914237
+          },
+          "old_r3": {
+            "count": 6906,
+            "sum": 86.12428139528492
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1031,
+            "sum": 20.15555422977195
+          },
+          "new": {
+            "count": 1031,
+            "sum": 20.15555422977195
+          },
+          "old_r3": {
+            "count": 1031,
+            "sum": 33.45751885464415
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 19619,
+            "sum": 562.918628549116
+          },
+          "new": {
+            "count": 19619,
+            "sum": 617.6813620234025
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1031,
+            "sum": 20.293462775909575
+          },
+          "new": {
+            "count": 1031,
+            "sum": 20.293462775909575
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14418,
+            "sum": 145.21372776123462
+          },
+          "new": {
+            "count": 14418,
+            "sum": 145.21372776123462
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128087,
+            "sum": 2836.834740980499
+          },
+          "new": {
+            "count": 128087,
+            "sum": 2891.7000964904437
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3438.5360466818092
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3564.6674072488095
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 236,
+            "sum": 54.046244621276855
+          },
+          "new": {
+            "count": 236,
+            "sum": 54.046244621276855
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1031,
+            "sum": 1031.0
+          },
+          "new": {
+            "count": 1031,
+            "sum": 1031.0
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 476,
+            "sum": 475.70068359375
+          },
+          "new": {
+            "count": 476,
+            "sum": 475.935546875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14418,
+            "sum": 14417.9375
+          }
+        }
+      }
+    },
+    {
+      "raw": 101,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6899,
+            "sum": 1551.981943642255
+          },
+          "new": {
+            "count": 6899,
+            "sum": 214.07584796518495
+          },
+          "old_r3": {
+            "count": 6899,
+            "sum": 85.71208145764831
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1018,
+            "sum": 27.950651013990864
+          },
+          "new": {
+            "count": 1018,
+            "sum": 27.950651013990864
+          },
+          "old_r3": {
+            "count": 1018,
+            "sum": 33.110131373628974
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 19200,
+            "sum": 537.8366045881994
+          },
+          "new": {
+            "count": 19200,
+            "sum": 602.1006481892546
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1018,
+            "sum": 27.99182750773616
+          },
+          "new": {
+            "count": 1018,
+            "sum": 27.99182750773616
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14270,
+            "sum": 140.14542559508118
+          },
+          "new": {
+            "count": 14270,
+            "sum": 140.14542559508118
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128058,
+            "sum": 2931.435723580915
+          },
+          "new": {
+            "count": 128058,
+            "sum": 2998.7729752533487
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3533.927548078471
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3670.5759051300993
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 230,
+            "sum": 59.91849422454834
+          },
+          "new": {
+            "count": 230,
+            "sum": 59.91849422454834
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1018,
+            "sum": 1017.99951171875
+          },
+          "new": {
+            "count": 1018,
+            "sum": 1017.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 453,
+            "sum": 452.74951171875
+          },
+          "new": {
+            "count": 453,
+            "sum": 452.91015625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14270,
+            "sum": 14269.96630859375
+          }
+        }
+      }
+    },
+    {
+      "raw": 102,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7087,
+            "sum": 1547.6592248521629
+          },
+          "new": {
+            "count": 7087,
+            "sum": 193.16310115056694
+          },
+          "old_r3": {
+            "count": 7087,
+            "sum": 86.35788208847225
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1030,
+            "sum": 21.473853727831738
+          },
+          "new": {
+            "count": 1030,
+            "sum": 21.473853727831738
+          },
+          "old_r3": {
+            "count": 1030,
+            "sum": 28.932025098009035
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 19265,
+            "sum": 555.5215795988333
+          },
+          "new": {
+            "count": 19265,
+            "sum": 620.5111116411863
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1030,
+            "sum": 21.52940932524507
+          },
+          "new": {
+            "count": 1030,
+            "sum": 21.52940932524507
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14385,
+            "sum": 139.04215783753898
+          },
+          "new": {
+            "count": 14385,
+            "sum": 139.04215783753898
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127991,
+            "sum": 2994.8079594663286
+          },
+          "new": {
+            "count": 127991,
+            "sum": 3064.1791964293516
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3579.4066498333123
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3736.277227879793
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 236,
+            "sum": 73.5699872970581
+          },
+          "new": {
+            "count": 236,
+            "sum": 73.5699872970581
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1030,
+            "sum": 1029.99951171875
+          },
+          "new": {
+            "count": 1030,
+            "sum": 1029.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 396,
+            "sum": 395.783203125
+          },
+          "new": {
+            "count": 396,
+            "sum": 395.8798828125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14385,
+            "sum": 14384.93701171875
+          }
+        }
+      }
+    },
+    {
+      "raw": 103,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7207,
+            "sum": 1537.2113582891761
+          },
+          "new": {
+            "count": 7207,
+            "sum": 167.8456000112419
+          },
+          "old_r3": {
+            "count": 7207,
+            "sum": 87.65762004235876
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1028,
+            "sum": 25.828429871588014
+          },
+          "new": {
+            "count": 1028,
+            "sum": 25.828429871588014
+          },
+          "old_r3": {
+            "count": 1028,
+            "sum": 29.09967336547561
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 18974,
+            "sum": 531.1372642455099
+          },
+          "new": {
+            "count": 18974,
+            "sum": 613.4045754979888
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1028,
+            "sum": 25.859802452498116
+          },
+          "new": {
+            "count": 1028,
+            "sum": 25.859802452498116
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14369,
+            "sum": 148.1120917185326
+          },
+          "new": {
+            "count": 14369,
+            "sum": 148.1120917185326
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128056,
+            "sum": 3103.312849224487
+          },
+          "new": {
+            "count": 128056,
+            "sum": 3182.1742825274996
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3688.019382684841
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3862.0736222410924
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 224,
+            "sum": 80.45661354064941
+          },
+          "new": {
+            "count": 224,
+            "sum": 80.45661354064941
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1028,
+            "sum": 1027.9990234375
+          },
+          "new": {
+            "count": 1028,
+            "sum": 1027.9990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 354,
+            "sum": 353.759765625
+          },
+          "new": {
+            "count": 354,
+            "sum": 353.84326171875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14369,
+            "sum": 14368.88134765625
+          }
+        }
+      }
+    },
+    {
+      "raw": 104,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7260,
+            "sum": 1531.5118647794006
+          },
+          "new": {
+            "count": 7260,
+            "sum": 158.98821850547392
+          },
+          "old_r3": {
+            "count": 7260,
+            "sum": 89.85901759620174
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1048,
+            "sum": 18.99378911149688
+          },
+          "new": {
+            "count": 1048,
+            "sum": 18.99378911149688
+          },
+          "old_r3": {
+            "count": 1048,
+            "sum": 28.363727479358204
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 18264,
+            "sum": 527.8065539602248
+          },
+          "new": {
+            "count": 18264,
+            "sum": 632.1176579915627
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1048,
+            "sum": 19.033658406347968
+          },
+          "new": {
+            "count": 1048,
+            "sum": 19.033658406347968
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14355,
+            "sum": 152.31796796785784
+          },
+          "new": {
+            "count": 14355,
+            "sum": 152.3192751573224
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128133,
+            "sum": 3139.356323784188
+          },
+          "new": {
+            "count": 128133,
+            "sum": 3225.7432474663074
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3710.7710229523364
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3907.7148077098536
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 235,
+            "sum": 75.18631649017334
+          },
+          "new": {
+            "count": 235,
+            "sum": 75.18631649017334
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1048,
+            "sum": 1048.0
+          },
+          "new": {
+            "count": 1048,
+            "sum": 1048.0
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 303,
+            "sum": 302.73876953125
+          },
+          "new": {
+            "count": 303,
+            "sum": 302.84521484375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14355,
+            "sum": 14354.908203125
+          }
+        }
+      }
+    },
+    {
+      "raw": 105,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7284,
+            "sum": 1529.8150181587553
+          },
+          "new": {
+            "count": 7284,
+            "sum": 169.31932445338316
+          },
+          "old_r3": {
+            "count": 7284,
+            "sum": 89.86504493703251
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1042,
+            "sum": 21.77385604311712
+          },
+          "new": {
+            "count": 1042,
+            "sum": 21.77385604311712
+          },
+          "old_r3": {
+            "count": 1042,
+            "sum": 31.377126001752913
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 17483,
+            "sum": 502.039887839288
+          },
+          "new": {
+            "count": 17483,
+            "sum": 621.8261588172172
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1042,
+            "sum": 21.779738425044343
+          },
+          "new": {
+            "count": 1042,
+            "sum": 21.779738425044343
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14296,
+            "sum": 175.1316945811559
+          },
+          "new": {
+            "count": 14296,
+            "sum": 175.12842660749448
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128195,
+            "sum": 3198.3442274392874
+          },
+          "new": {
+            "count": 128195,
+            "sum": 3293.0331119632174
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3780.5252679334953
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4009.8710176643217
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 228,
+            "sum": 75.37572193145752
+          },
+          "new": {
+            "count": 228,
+            "sum": 75.37572193145752
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1042,
+            "sum": 1041.99951171875
+          },
+          "new": {
+            "count": 1042,
+            "sum": 1041.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 264,
+            "sum": 263.728515625
+          },
+          "new": {
+            "count": 264,
+            "sum": 263.85498046875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14296,
+            "sum": 14295.83251953125
+          }
+        }
+      }
+    },
+    {
+      "raw": 106,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7299,
+            "sum": 1530.7725824447116
+          },
+          "new": {
+            "count": 7299,
+            "sum": 177.5363588714972
+          },
+          "old_r3": {
+            "count": 7299,
+            "sum": 90.86064369000087
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1042,
+            "sum": 17.26830016938038
+          },
+          "new": {
+            "count": 1042,
+            "sum": 17.26830016938038
+          },
+          "old_r3": {
+            "count": 1042,
+            "sum": 31.50163523957599
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 16952,
+            "sum": 488.9369517948071
+          },
+          "new": {
+            "count": 16952,
+            "sum": 631.9657082612684
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1042,
+            "sum": 17.274182591587305
+          },
+          "new": {
+            "count": 1042,
+            "sum": 17.274182591587305
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14255,
+            "sum": 184.5493435061362
+          },
+          "new": {
+            "count": 14255,
+            "sum": 184.55587945345906
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128323,
+            "sum": 3218.94193811022
+          },
+          "new": {
+            "count": 128323,
+            "sum": 3331.566770893085
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3783.044222709752
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4057.4102370465407
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 255,
+            "sum": 88.27942943572998
+          },
+          "new": {
+            "count": 255,
+            "sum": 88.2794303894043
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1042,
+            "sum": 1041.99951171875
+          },
+          "new": {
+            "count": 1042,
+            "sum": 1041.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 220,
+            "sum": 219.728515625
+          },
+          "new": {
+            "count": 220,
+            "sum": 219.8486328125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14255,
+            "sum": 14254.72119140625
+          }
+        }
+      }
+    },
+    {
+      "raw": 107,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7331,
+            "sum": 1535.3218684233143
+          },
+          "new": {
+            "count": 7331,
+            "sum": 173.0751562502992
+          },
+          "old_r3": {
+            "count": 7331,
+            "sum": 91.32466286761337
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1050,
+            "sum": 15.952941748546436
+          },
+          "new": {
+            "count": 1050,
+            "sum": 15.952941748546436
+          },
+          "old_r3": {
+            "count": 1050,
+            "sum": 32.18431309767766
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 16681,
+            "sum": 485.61702014517505
+          },
+          "new": {
+            "count": 16681,
+            "sum": 615.6372781391256
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1050,
+            "sum": 15.945752306724899
+          },
+          "new": {
+            "count": 1050,
+            "sum": 15.945752306724899
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14156,
+            "sum": 186.87549665838014
+          },
+          "new": {
+            "count": 14156,
+            "sum": 186.8898757387651
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128339,
+            "sum": 3090.0429350358027
+          },
+          "new": {
+            "count": 128339,
+            "sum": 3200.214826467127
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3647.851768978784
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3892.8308530985087
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 254,
+            "sum": 83.74676513671875
+          },
+          "new": {
+            "count": 254,
+            "sum": 83.74676513671875
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1050,
+            "sum": 1049.99755859375
+          },
+          "new": {
+            "count": 1050,
+            "sum": 1049.99755859375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 167,
+            "sum": 166.82080078125
+          },
+          "new": {
+            "count": 167,
+            "sum": 166.8515625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14156,
+            "sum": 14155.42236328125
+          }
+        }
+      }
+    },
+    {
+      "raw": 108,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7166,
+            "sum": 1533.7960234683705
+          },
+          "new": {
+            "count": 7166,
+            "sum": 163.38167165542836
+          },
+          "old_r3": {
+            "count": 7166,
+            "sum": 91.78852915191965
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1016,
+            "sum": 15.579084323369898
+          },
+          "new": {
+            "count": 1016,
+            "sum": 15.579084323369898
+          },
+          "old_r3": {
+            "count": 1016,
+            "sum": 28.22483473212924
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 17245,
+            "sum": 480.33564857192687
+          },
+          "new": {
+            "count": 17245,
+            "sum": 623.7657108427957
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1016,
+            "sum": 15.576469981810078
+          },
+          "new": {
+            "count": 1016,
+            "sum": 15.576469981810078
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14103,
+            "sum": 195.02713285552454
+          },
+          "new": {
+            "count": 14103,
+            "sum": 194.933668796235
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128255,
+            "sum": 2901.561896425381
+          },
+          "new": {
+            "count": 128255,
+            "sum": 2993.66712053417
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3476.1586427121074
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3686.763868482347
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 198,
+            "sum": 72.77277565002441
+          },
+          "new": {
+            "count": 198,
+            "sum": 72.77277565002441
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1016,
+            "sum": 1015.998046875
+          },
+          "new": {
+            "count": 1016,
+            "sum": 1015.998046875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 137,
+            "sum": 136.7919921875
+          },
+          "new": {
+            "count": 137,
+            "sum": 136.7919921875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14103,
+            "sum": 14102.19287109375
+          }
+        }
+      }
+    },
+    {
+      "raw": 109,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7167,
+            "sum": 1542.822578901716
+          },
+          "new": {
+            "count": 7167,
+            "sum": 158.7859275264782
+          },
+          "old_r3": {
+            "count": 7167,
+            "sum": 90.86902755571646
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 1006,
+            "sum": 16.964704506041016
+          },
+          "new": {
+            "count": 1006,
+            "sum": 16.964704506041016
+          },
+          "old_r3": {
+            "count": 1006,
+            "sum": 35.28888767003082
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 17974,
+            "sum": 518.3947989113512
+          },
+          "new": {
+            "count": 17974,
+            "sum": 630.6124404449947
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 1006,
+            "sum": 16.945096684910823
+          },
+          "new": {
+            "count": 1006,
+            "sum": 16.945096684910823
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 14030,
+            "sum": 227.19706086546648
+          },
+          "new": {
+            "count": 14030,
+            "sum": 227.17810661066324
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128258,
+            "sum": 2729.840658507106
+          },
+          "new": {
+            "count": 128258,
+            "sum": 2817.863530300936
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3350.5102768981887
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3526.326611091121
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 205,
+            "sum": 81.73091888427734
+          },
+          "new": {
+            "count": 205,
+            "sum": 81.73091888427734
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 1006,
+            "sum": 1005.99609375
+          },
+          "new": {
+            "count": 1006,
+            "sum": 1005.99609375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 123,
+            "sum": 122.72119140625
+          },
+          "new": {
+            "count": 123,
+            "sum": 122.72119140625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 14030,
+            "sum": 14029.1123046875
+          }
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7415,
+            "sum": 1550.0225154773216
+          },
+          "new": {
+            "count": 7415,
+            "sum": 155.0537395394058
+          },
+          "old_r3": {
+            "count": 7415,
+            "sum": 94.84949656826211
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 988,
+            "sum": 14.651307343039662
+          },
+          "new": {
+            "count": 988,
+            "sum": 14.651307343039662
+          },
+          "old_r3": {
+            "count": 988,
+            "sum": 30.48398506687954
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 18800,
+            "sum": 580.2634271105053
+          },
+          "new": {
+            "count": 18800,
+            "sum": 656.3490385863115
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 988,
+            "sum": 14.695098256925121
+          },
+          "new": {
+            "count": 988,
+            "sum": 14.695098256925121
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 13883,
+            "sum": 221.13627467743936
+          },
+          "new": {
+            "count": 13883,
+            "sum": 221.07745114641148
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128284,
+            "sum": 2655.948514442978
+          },
+          "new": {
+            "count": 128284,
+            "sum": 2735.7138689832354
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3292.08970523678
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3414.0269490775536
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 207,
+            "sum": 74.435715675354
+          },
+          "new": {
+            "count": 207,
+            "sum": 74.43571758270264
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 988,
+            "sum": 987.99462890625
+          },
+          "new": {
+            "count": 988,
+            "sum": 987.99462890625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 105,
+            "sum": 104.7216796875
+          },
+          "new": {
+            "count": 105,
+            "sum": 104.7216796875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 13883,
+            "sum": 13881.970703125
+          }
+        }
+      }
+    },
+    {
+      "raw": 111,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7239,
+            "sum": 1534.911951300106
+          },
+          "new": {
+            "count": 7239,
+            "sum": 140.52138338328223
+          },
+          "old_r3": {
+            "count": 7239,
+            "sum": 94.92604157280584
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 978,
+            "sum": 12.807189739891328
+          },
+          "new": {
+            "count": 978,
+            "sum": 12.807189739891328
+          },
+          "old_r3": {
+            "count": 978,
+            "sum": 30.829409946571104
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 20065,
+            "sum": 574.8447984557424
+          },
+          "new": {
+            "count": 20065,
+            "sum": 648.9611250589078
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 978,
+            "sum": 12.841176725109108
+          },
+          "new": {
+            "count": 978,
+            "sum": 12.841176725109108
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 13632,
+            "sum": 179.88692896653083
+          },
+          "new": {
+            "count": 13632,
+            "sum": 179.93594858053257
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128181,
+            "sum": 2634.0733388767985
+          },
+          "new": {
+            "count": 128181,
+            "sum": 2688.700129387027
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3272.8328365386405
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3363.37530413855
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 212,
+            "sum": 56.01199817657471
+          },
+          "new": {
+            "count": 212,
+            "sum": 56.01199817657471
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 978,
+            "sum": 977.9931640625
+          },
+          "new": {
+            "count": 978,
+            "sum": 977.9931640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 72,
+            "sum": 71.76416015625
+          },
+          "new": {
+            "count": 72,
+            "sum": 71.76416015625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 13632,
+            "sum": 13630.67578125
+          }
+        }
+      }
+    },
+    {
+      "raw": 112,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7131,
+            "sum": 1510.8465499453014
+          },
+          "new": {
+            "count": 7131,
+            "sum": 123.96527284492913
+          },
+          "old_r3": {
+            "count": 7131,
+            "sum": 91.6430654249707
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 952,
+            "sum": 13.89182998338947
+          },
+          "new": {
+            "count": 952,
+            "sum": 13.89182998338947
+          },
+          "old_r3": {
+            "count": 952,
+            "sum": 30.391827806597576
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 21499,
+            "sum": 581.1062367592822
+          },
+          "new": {
+            "count": 21499,
+            "sum": 664.6905357977375
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 952,
+            "sum": 13.969607885752339
+          },
+          "new": {
+            "count": 952,
+            "sum": 13.969607885752339
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 13243,
+            "sum": 201.49444348167162
+          },
+          "new": {
+            "count": 13243,
+            "sum": 202.15392062417232
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128203,
+            "sum": 2562.6926165464974
+          },
+          "new": {
+            "count": 128203,
+            "sum": 2623.5671174296585
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3279.3664936388086
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3381.986736264458
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 224,
+            "sum": 59.46244812011719
+          },
+          "new": {
+            "count": 224,
+            "sum": 59.46244812011719
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 952,
+            "sum": 951.99609375
+          },
+          "new": {
+            "count": 952,
+            "sum": 951.99609375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 68,
+            "sum": 67.71337890625
+          },
+          "new": {
+            "count": 68,
+            "sum": 67.71337890625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 13243,
+            "sum": 13239.29052734375
+          }
+        }
+      }
+    },
+    {
+      "raw": 113,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7070,
+            "sum": 1481.334972052864
+          },
+          "new": {
+            "count": 7070,
+            "sum": 111.29552415506623
+          },
+          "old_r3": {
+            "count": 7070,
+            "sum": 91.43274941574782
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 879,
+            "sum": 14.722223022254184
+          },
+          "new": {
+            "count": 879,
+            "sum": 14.722223022254184
+          },
+          "old_r3": {
+            "count": 879,
+            "sum": 27.484965870389715
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22083,
+            "sum": 578.9235521493829
+          },
+          "new": {
+            "count": 22083,
+            "sum": 660.0888989644591
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 879,
+            "sum": 14.770589033840224
+          },
+          "new": {
+            "count": 879,
+            "sum": 14.770589033840224
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 12430,
+            "sum": 209.87875812521088
+          },
+          "new": {
+            "count": 12430,
+            "sum": 212.4094771647069
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128429,
+            "sum": 2804.7651531246665
+          },
+          "new": {
+            "count": 128429,
+            "sum": 2865.303053838783
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3593.3795557493286
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3694.5128731056757
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 226,
+            "sum": 58.29931926727295
+          },
+          "new": {
+            "count": 226,
+            "sum": 58.29931926727295
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 879,
+            "sum": 878.9931640625
+          },
+          "new": {
+            "count": 879,
+            "sum": 878.9931640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 81,
+            "sum": 80.7783203125
+          },
+          "new": {
+            "count": 81,
+            "sum": 80.7783203125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 12430,
+            "sum": 12420.4638671875
+          }
+        }
+      }
+    },
+    {
+      "raw": 114,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7243,
+            "sum": 1469.8234387216216
+          },
+          "new": {
+            "count": 7243,
+            "sum": 108.53170239871542
+          },
+          "old_r3": {
+            "count": 7243,
+            "sum": 94.73659747748752
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 897,
+            "sum": 17.246078999713063
+          },
+          "new": {
+            "count": 897,
+            "sum": 17.246078999713063
+          },
+          "old_r3": {
+            "count": 897,
+            "sum": 26.116012759390287
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22337,
+            "sum": 584.091848879325
+          },
+          "new": {
+            "count": 22337,
+            "sum": 662.2297456847155
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 897,
+            "sum": 17.287255520001054
+          },
+          "new": {
+            "count": 897,
+            "sum": 17.287255520001054
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 12258,
+            "sum": 212.12940916023217
+          },
+          "new": {
+            "count": 12258,
+            "sum": 214.96274263667874
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128328,
+            "sum": 2734.41841913847
+          },
+          "new": {
+            "count": 128328,
+            "sum": 2793.837366591586
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3648.5043901600293
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3747.975616947515
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 225,
+            "sum": 52.31137943267822
+          },
+          "new": {
+            "count": 225,
+            "sum": 52.31137943267822
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 897,
+            "sum": 896.99365234375
+          },
+          "new": {
+            "count": 897,
+            "sum": 896.99365234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 44,
+            "sum": 43.673828125
+          },
+          "new": {
+            "count": 44,
+            "sum": 43.673828125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 12258,
+            "sum": 12248.23095703125
+          }
+        }
+      }
+    },
+    {
+      "raw": 115,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7176,
+            "sum": 1453.9623721740209
+          },
+          "new": {
+            "count": 7176,
+            "sum": 106.1034776551387
+          },
+          "old_r3": {
+            "count": 7176,
+            "sum": 92.75279453667463
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 855,
+            "sum": 14.078104034007993
+          },
+          "new": {
+            "count": 855,
+            "sum": 14.078104034007993
+          },
+          "old_r3": {
+            "count": 855,
+            "sum": 22.45653668884188
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22466,
+            "sum": 565.2049168246449
+          },
+          "new": {
+            "count": 22466,
+            "sum": 652.1859503336018
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 855,
+            "sum": 14.096404757641722
+          },
+          "new": {
+            "count": 855,
+            "sum": 14.096404757641722
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 11803,
+            "sum": 186.43856796371983
+          },
+          "new": {
+            "count": 11803,
+            "sum": 186.65490782790584
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128254,
+            "sum": 2551.1409506658674
+          },
+          "new": {
+            "count": 128254,
+            "sum": 2615.8272190226126
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3585.669743951119
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3693.772342527518
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 182,
+            "sum": 41.654815673828125
+          },
+          "new": {
+            "count": 182,
+            "sum": 41.65481376647949
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 855,
+            "sum": 854.9931640625
+          },
+          "new": {
+            "count": 855,
+            "sum": 854.9931640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 38,
+            "sum": 37.8427734375
+          },
+          "new": {
+            "count": 38,
+            "sum": 37.8427734375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 11803,
+            "sum": 11801.4189453125
+          }
+        }
+      }
+    },
+    {
+      "raw": 116,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7404,
+            "sum": 1440.5274784278008
+          },
+          "new": {
+            "count": 7404,
+            "sum": 109.55239104028442
+          },
+          "old_r3": {
+            "count": 7404,
+            "sum": 96.46647310782282
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 831,
+            "sum": 14.416992077080067
+          },
+          "new": {
+            "count": 831,
+            "sum": 14.416992077080067
+          },
+          "old_r3": {
+            "count": 831,
+            "sum": 24.061437433818355
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22744,
+            "sum": 587.3879159947683
+          },
+          "new": {
+            "count": 22744,
+            "sum": 675.8493433155236
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 831,
+            "sum": 14.345096722536255
+          },
+          "new": {
+            "count": 831,
+            "sum": 14.345096722536255
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 11253,
+            "sum": 190.25785399685265
+          },
+          "new": {
+            "count": 11253,
+            "sum": 192.17615472027683
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128194,
+            "sum": 2624.918396549532
+          },
+          "new": {
+            "count": 128194,
+            "sum": 2687.1236202360014
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3815.6377181917487
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3924.5912993344828
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 182,
+            "sum": 45.41818618774414
+          },
+          "new": {
+            "count": 182,
+            "sum": 45.41818618774414
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 831,
+            "sum": 830.9892578125
+          },
+          "new": {
+            "count": 831,
+            "sum": 830.9892578125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 44,
+            "sum": 43.75634765625
+          },
+          "new": {
+            "count": 44,
+            "sum": 43.75634765625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 11253,
+            "sum": 11246.6103515625
+          }
+        }
+      }
+    },
+    {
+      "raw": 117,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 7124,
+            "sum": 1425.177013731125
+          },
+          "new": {
+            "count": 7124,
+            "sum": 108.82955036887142
+          },
+          "old_r3": {
+            "count": 7124,
+            "sum": 95.44425270293141
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 803,
+            "sum": 10.109477856371086
+          },
+          "new": {
+            "count": 803,
+            "sum": 10.109477856371086
+          },
+          "old_r3": {
+            "count": 803,
+            "sum": 21.912744712783024
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22651,
+            "sum": 556.2709184662672
+          },
+          "new": {
+            "count": 22651,
+            "sum": 653.3303853989346
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 803,
+            "sum": 10.100327609747183
+          },
+          "new": {
+            "count": 803,
+            "sum": 10.100327609747183
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 10791,
+            "sum": 145.76307458558585
+          },
+          "new": {
+            "count": 10791,
+            "sum": 150.88791129912715
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128175,
+            "sum": 2586.1572765524616
+          },
+          "new": {
+            "count": 128175,
+            "sum": 2651.9572722970624
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3867.8622149737785
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3991.1556667288532
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 193,
+            "sum": 34.51290702819824
+          },
+          "new": {
+            "count": 193,
+            "sum": 34.51290702819824
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 803,
+            "sum": 802.98876953125
+          },
+          "new": {
+            "count": 803,
+            "sum": 802.98876953125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 36,
+            "sum": 35.638671875
+          },
+          "new": {
+            "count": 36,
+            "sum": 35.638671875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 10791,
+            "sum": 10774.27734375
+          }
+        }
+      }
+    },
+    {
+      "raw": 118,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6970,
+            "sum": 1383.5238687696692
+          },
+          "new": {
+            "count": 6970,
+            "sum": 108.71196422656067
+          },
+          "old_r3": {
+            "count": 6970,
+            "sum": 103.61013021296822
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 768,
+            "sum": 13.073529590910766
+          },
+          "new": {
+            "count": 768,
+            "sum": 13.073529590910766
+          },
+          "old_r3": {
+            "count": 768,
+            "sum": 21.6460779607296
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22801,
+            "sum": 569.1480359063717
+          },
+          "new": {
+            "count": 22801,
+            "sum": 667.6146956073062
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 768,
+            "sum": 13.04934666416375
+          },
+          "new": {
+            "count": 768,
+            "sum": 13.04934666416375
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 10257,
+            "sum": 184.61863431613892
+          },
+          "new": {
+            "count": 10257,
+            "sum": 191.4774580131052
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128034,
+            "sum": 2726.0369997386006
+          },
+          "new": {
+            "count": 128034,
+            "sum": 2791.0271919464867
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4164.780178473913
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4294.128534738789
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 191,
+            "sum": 36.21241569519043
+          },
+          "new": {
+            "count": 191,
+            "sum": 36.21241569519043
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 768,
+            "sum": 767.9912109375
+          },
+          "new": {
+            "count": 768,
+            "sum": 767.9912109375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 35,
+            "sum": 34.85546875
+          },
+          "new": {
+            "count": 35,
+            "sum": 34.85546875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 10257,
+            "sum": 10235.358154296875
+          }
+        }
+      }
+    },
+    {
+      "raw": 119,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6753,
+            "sum": 1331.2434191772481
+          },
+          "new": {
+            "count": 6753,
+            "sum": 104.2912621081341
+          },
+          "old_r3": {
+            "count": 6753,
+            "sum": 98.89695193539956
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 743,
+            "sum": 13.1499988262658
+          },
+          "new": {
+            "count": 743,
+            "sum": 13.1499988262658
+          },
+          "old_r3": {
+            "count": 743,
+            "sum": 20.704901955090463
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22821,
+            "sum": 557.9104508717719
+          },
+          "new": {
+            "count": 22821,
+            "sum": 657.0280924022663
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 743,
+            "sum": 13.116011973528657
+          },
+          "new": {
+            "count": 743,
+            "sum": 13.116011973528657
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 9775,
+            "sum": 223.97255465446506
+          },
+          "new": {
+            "count": 9775,
+            "sum": 229.1215744469082
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128034,
+            "sum": 2826.380150077457
+          },
+          "new": {
+            "count": 128034,
+            "sum": 2894.1461594412103
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4386.977901445905
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4524.955671917356
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 193,
+            "sum": 32.24023628234863
+          },
+          "new": {
+            "count": 193,
+            "sum": 32.24023628234863
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 743,
+            "sum": 742.99365234375
+          },
+          "new": {
+            "count": 743,
+            "sum": 742.99365234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 44,
+            "sum": 43.82373046875
+          },
+          "new": {
+            "count": 44,
+            "sum": 43.82373046875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 9775,
+            "sum": 9758.910400390625
+          }
+        }
+      }
+    },
+    {
+      "raw": 120,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6483,
+            "sum": 1280.6776815302437
+          },
+          "new": {
+            "count": 6483,
+            "sum": 98.01328329947137
+          },
+          "old_r3": {
+            "count": 6483,
+            "sum": 92.40053095828625
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 704,
+            "sum": 10.878758591599762
+          },
+          "new": {
+            "count": 704,
+            "sum": 10.878758591599762
+          },
+          "old_r3": {
+            "count": 704,
+            "sum": 19.819283084652852
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 22772,
+            "sum": 553.6777682314569
+          },
+          "new": {
+            "count": 22772,
+            "sum": 656.3738425658958
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 704,
+            "sum": 10.96045806154143
+          },
+          "new": {
+            "count": 704,
+            "sum": 10.96045806154143
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 9295,
+            "sum": 177.26111668365775
+          },
+          "new": {
+            "count": 9295,
+            "sum": 179.54477690003114
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128063,
+            "sum": 2670.7680626371293
+          },
+          "new": {
+            "count": 128063,
+            "sum": 2739.1229623132094
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4252.920715262648
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4391.081495855615
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 193,
+            "sum": 26.853092193603516
+          },
+          "new": {
+            "count": 193,
+            "sum": 26.853092193603516
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 704,
+            "sum": 703.986328125
+          },
+          "new": {
+            "count": 704,
+            "sum": 703.986328125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 34,
+            "sum": 33.78955078125
+          },
+          "new": {
+            "count": 34,
+            "sum": 33.78955078125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 9295,
+            "sum": 9287.56103515625
+          }
+        }
+      }
+    },
+    {
+      "raw": 121,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6519,
+            "sum": 1222.501847020816
+          },
+          "new": {
+            "count": 6519,
+            "sum": 101.36999303432822
+          },
+          "old_r3": {
+            "count": 6519,
+            "sum": 94.17913936194964
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 679,
+            "sum": 9.337255237041973
+          },
+          "new": {
+            "count": 679,
+            "sum": 9.337255237041973
+          },
+          "old_r3": {
+            "count": 679,
+            "sum": 17.938564843614586
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 23228,
+            "sum": 581.0607744728622
+          },
+          "new": {
+            "count": 23228,
+            "sum": 688.3208996194589
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 679,
+            "sum": 9.481046134023927
+          },
+          "new": {
+            "count": 679,
+            "sum": 9.481046134023927
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 8843,
+            "sum": 166.05131261528004
+          },
+          "new": {
+            "count": 8843,
+            "sum": 167.46111655340064
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127894,
+            "sum": 2648.695176050125
+          },
+          "new": {
+            "count": 127894,
+            "sum": 2717.6696832640446
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4242.3354064961895
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4399.973310843721
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 173,
+            "sum": 18.172555923461914
+          },
+          "new": {
+            "count": 173,
+            "sum": 18.172555923461914
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 679,
+            "sum": 678.990234375
+          },
+          "new": {
+            "count": 679,
+            "sum": 678.990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 36,
+            "sum": 35.865234375
+          },
+          "new": {
+            "count": 36,
+            "sum": 35.865234375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 8843,
+            "sum": 8838.28662109375
+          }
+        }
+      }
+    },
+    {
+      "raw": 122,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 6014,
+            "sum": 1122.0389312888728
+          },
+          "new": {
+            "count": 6014,
+            "sum": 92.2316088143125
+          },
+          "old_r3": {
+            "count": 6014,
+            "sum": 84.23415948296315
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 617,
+            "sum": 10.189542616601102
+          },
+          "new": {
+            "count": 617,
+            "sum": 10.189542616601102
+          },
+          "old_r3": {
+            "count": 617,
+            "sum": 17.81634225754533
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 23322,
+            "sum": 595.0931309839652
+          },
+          "new": {
+            "count": 23322,
+            "sum": 717.8826683428488
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 617,
+            "sum": 10.414379226625897
+          },
+          "new": {
+            "count": 617,
+            "sum": 10.414379226625897
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 8405,
+            "sum": 179.1317096944549
+          },
+          "new": {
+            "count": 8405,
+            "sum": 179.3624286435661
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127903,
+            "sum": 2780.771322622313
+          },
+          "new": {
+            "count": 127903,
+            "sum": 2853.0974627952965
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4347.2775654316065
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4538.8684129353205
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 150,
+            "sum": 11.70566177368164
+          },
+          "new": {
+            "count": 150,
+            "sum": 11.705659866333008
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 617,
+            "sum": 616.9814453125
+          },
+          "new": {
+            "count": 617,
+            "sum": 616.9814453125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 53,
+            "sum": 52.83544921875
+          },
+          "new": {
+            "count": 53,
+            "sum": 52.83544921875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 8405,
+            "sum": 8404.06787109375
+          }
+        }
+      }
+    },
+    {
+      "raw": 123,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 5519,
+            "sum": 1000.8399495820049
+          },
+          "new": {
+            "count": 5519,
+            "sum": 87.83533134376921
+          },
+          "old_r3": {
+            "count": 5519,
+            "sum": 79.97495913977036
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 604,
+            "sum": 10.966993407113478
+          },
+          "new": {
+            "count": 604,
+            "sum": 10.966993407113478
+          },
+          "old_r3": {
+            "count": 604,
+            "sum": 17.25196314661298
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 23472,
+            "sum": 629.5597971477546
+          },
+          "new": {
+            "count": 23472,
+            "sum": 753.9937762771151
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 604,
+            "sum": 11.12124181049876
+          },
+          "new": {
+            "count": 604,
+            "sum": 11.12124181049876
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 7960,
+            "sum": 177.2699397066899
+          },
+          "new": {
+            "count": 7960,
+            "sum": 177.29150833401945
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127953,
+            "sum": 2814.273289198929
+          },
+          "new": {
+            "count": 127953,
+            "sum": 2887.7223047064035
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4307.417756193114
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4548.767425398779
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 152,
+            "sum": 13.610954284667969
+          },
+          "new": {
+            "count": 152,
+            "sum": 13.610954284667969
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 604,
+            "sum": 603.9814453125
+          },
+          "new": {
+            "count": 604,
+            "sum": 603.9814453125
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 45,
+            "sum": 44.75
+          },
+          "new": {
+            "count": 45,
+            "sum": 44.75
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 7960,
+            "sum": 7959.64697265625
+          }
+        }
+      }
+    },
+    {
+      "raw": 124,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 5434,
+            "sum": 949.5282017829595
+          },
+          "new": {
+            "count": 5434,
+            "sum": 85.42754925716144
+          },
+          "old_r3": {
+            "count": 5434,
+            "sum": 78.45820633828407
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 603,
+            "sum": 10.860130086366553
+          },
+          "new": {
+            "count": 603,
+            "sum": 10.860130086366553
+          },
+          "old_r3": {
+            "count": 603,
+            "sum": 17.259479504544288
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 23871,
+            "sum": 732.3454170827463
+          },
+          "new": {
+            "count": 23871,
+            "sum": 856.2898568394885
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 603,
+            "sum": 11.111764193570707
+          },
+          "new": {
+            "count": 603,
+            "sum": 11.111764193570707
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 7621,
+            "sum": 165.09347105611232
+          },
+          "new": {
+            "count": 7621,
+            "sum": 165.2758240076073
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127912,
+            "sum": 2857.2533379220695
+          },
+          "new": {
+            "count": 127912,
+            "sum": 2928.42784491356
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4198.205646512768
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4487.47296505142
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 156,
+            "sum": 16.11151123046875
+          },
+          "new": {
+            "count": 156,
+            "sum": 16.11151123046875
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 603,
+            "sum": 602.98681640625
+          },
+          "new": {
+            "count": 603,
+            "sum": 602.98681640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 36,
+            "sum": 35.74169921875
+          },
+          "new": {
+            "count": 36,
+            "sum": 35.74169921875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 7621,
+            "sum": 7620.3193359375
+          }
+        }
+      }
+    },
+    {
+      "raw": 125,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 4167,
+            "sum": 678.8216447038576
+          },
+          "new": {
+            "count": 4167,
+            "sum": 75.1202316689596
+          },
+          "old_r3": {
+            "count": 4167,
+            "sum": 63.559815623942995
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 518,
+            "sum": 9.67777612421196
+          },
+          "new": {
+            "count": 518,
+            "sum": 9.67777612421196
+          },
+          "old_r3": {
+            "count": 518,
+            "sum": 15.27124392753467
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 23370,
+            "sum": 693.92547423832
+          },
+          "new": {
+            "count": 23370,
+            "sum": 824.5516156348749
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 518,
+            "sum": 9.696730382158421
+          },
+          "new": {
+            "count": 518,
+            "sum": 9.696730382158421
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 6977,
+            "sum": 145.33104699288378
+          },
+          "new": {
+            "count": 6977,
+            "sum": 145.3480404666334
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128002,
+            "sum": 2888.1987351395364
+          },
+          "new": {
+            "count": 128002,
+            "sum": 2959.834026167955
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4065.5167201618024
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4372.576195745496
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 144,
+            "sum": 16.512569427490234
+          },
+          "new": {
+            "count": 144,
+            "sum": 16.512569427490234
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 518,
+            "sum": 517.99560546875
+          },
+          "new": {
+            "count": 518,
+            "sum": 517.99560546875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 91,
+            "sum": 90.5009765625
+          },
+          "new": {
+            "count": 91,
+            "sum": 90.5009765625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 6977,
+            "sum": 6976.83154296875
+          }
+        }
+      }
+    },
+    {
+      "raw": 126,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 4811,
+            "sum": 810.1066513739061
+          },
+          "new": {
+            "count": 4811,
+            "sum": 82.94556180253858
+          },
+          "old_r3": {
+            "count": 4811,
+            "sum": 71.70813910185825
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 545,
+            "sum": 11.064705011900514
+          },
+          "new": {
+            "count": 545,
+            "sum": 11.064705011900514
+          },
+          "old_r3": {
+            "count": 545,
+            "sum": 17.710459349909797
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24271,
+            "sum": 796.9679523954401
+          },
+          "new": {
+            "count": 24271,
+            "sum": 956.3189336229698
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 545,
+            "sum": 11.372548245359212
+          },
+          "new": {
+            "count": 545,
+            "sum": 11.372548245359212
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 6932,
+            "sum": 171.54477461861097
+          },
+          "new": {
+            "count": 6932,
+            "sum": 171.55065697073587
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 127947,
+            "sum": 2914.12846061695
+          },
+          "new": {
+            "count": 127947,
+            "sum": 2982.1951248178375
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3988.6670270719333
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4316.838930557977
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 142,
+            "sum": 15.598255157470703
+          },
+          "new": {
+            "count": 142,
+            "sum": 15.598255157470703
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 545,
+            "sum": 544.994140625
+          },
+          "new": {
+            "count": 545,
+            "sum": 544.994140625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 42,
+            "sum": 41.6689453125
+          },
+          "new": {
+            "count": 42,
+            "sum": 41.6689453125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 6932,
+            "sum": 6931.77783203125
+          }
+        }
+      }
+    },
+    {
+      "raw": 127,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 4480,
+            "sum": 746.2173461003695
+          },
+          "new": {
+            "count": 4480,
+            "sum": 76.19943613468786
+          },
+          "old_r3": {
+            "count": 4480,
+            "sum": 68.1505676350207
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 533,
+            "sum": 12.806860605953261
+          },
+          "new": {
+            "count": 533,
+            "sum": 12.806860605953261
+          },
+          "old_r3": {
+            "count": 533,
+            "sum": 15.024511030758731
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24398,
+            "sum": 746.9166425368749
+          },
+          "new": {
+            "count": 24398,
+            "sum": 953.1192583717348
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 533,
+            "sum": 13.337579647544771
+          },
+          "new": {
+            "count": 533,
+            "sum": 13.337579647544771
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 6626,
+            "sum": 150.5964102143189
+          },
+          "new": {
+            "count": 6626,
+            "sum": 150.61405727325473
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128013,
+            "sum": 2871.617015762895
+          },
+          "new": {
+            "count": 128013,
+            "sum": 2936.696753037075
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3839.8183203684457
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4174.345125413383
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 119,
+            "sum": 13.657659530639648
+          },
+          "new": {
+            "count": 119,
+            "sum": 13.657659530639648
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 533,
+            "sum": 532.99755859375
+          },
+          "new": {
+            "count": 533,
+            "sum": 532.99755859375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 47,
+            "sum": 46.4833984375
+          },
+          "new": {
+            "count": 47,
+            "sum": 46.4833984375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 6626,
+            "sum": 6625.74609375
+          }
+        }
+      }
+    },
+    {
+      "raw": 128,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 4176,
+            "sum": 680.5114358649589
+          },
+          "new": {
+            "count": 4176,
+            "sum": 76.56746309662412
+          },
+          "old_r3": {
+            "count": 4176,
+            "sum": 77.75519726390485
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 506,
+            "sum": 10.441175318788737
+          },
+          "new": {
+            "count": 506,
+            "sum": 10.441175318788737
+          },
+          "old_r3": {
+            "count": 506,
+            "sum": 15.460132622509263
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24563,
+            "sum": 701.8316685220925
+          },
+          "new": {
+            "count": 24563,
+            "sum": 937.5414804618631
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 506,
+            "sum": 10.313070971868001
+          },
+          "new": {
+            "count": 506,
+            "sum": 10.313070971868001
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 6299,
+            "sum": 123.33987706259359
+          },
+          "new": {
+            "count": 6299,
+            "sum": 123.46209929778706
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128216,
+            "sum": 2815.588909973565
+          },
+          "new": {
+            "count": 128216,
+            "sum": 2881.5392355349322
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3672.0849848891958
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3980.8111412585713
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 118,
+            "sum": 15.251810073852539
+          },
+          "new": {
+            "count": 118,
+            "sum": 15.251810073852539
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 506,
+            "sum": 505.9921875
+          },
+          "new": {
+            "count": 506,
+            "sum": 505.9921875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 62,
+            "sum": 61.6328125
+          },
+          "new": {
+            "count": 62,
+            "sum": 61.6328125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 6299,
+            "sum": 6297.69873046875
+          }
+        }
+      }
+    },
+    {
+      "raw": 129,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 3904,
+            "sum": 627.1994199735345
+          },
+          "new": {
+            "count": 3904,
+            "sum": 73.82540418532153
+          },
+          "old_r3": {
+            "count": 3904,
+            "sum": 73.40092608059058
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 487,
+            "sum": 11.703920422005467
+          },
+          "new": {
+            "count": 487,
+            "sum": 11.703920422005467
+          },
+          "old_r3": {
+            "count": 487,
+            "sum": 15.539871641201898
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24534,
+            "sum": 659.3310094684712
+          },
+          "new": {
+            "count": 24534,
+            "sum": 906.6904977535596
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 487,
+            "sum": 11.866665664943866
+          },
+          "new": {
+            "count": 487,
+            "sum": 11.866665664943866
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 6065,
+            "sum": 130.93007157125976
+          },
+          "new": {
+            "count": 6065,
+            "sum": 140.7869346808875
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128463,
+            "sum": 2828.811793428147
+          },
+          "new": {
+            "count": 128463,
+            "sum": 2889.656238426105
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3629.401004411193
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3928.6082044734503
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 123,
+            "sum": 20.536319732666016
+          },
+          "new": {
+            "count": 123,
+            "sum": 20.536319732666016
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 487,
+            "sum": 486.99365234375
+          },
+          "new": {
+            "count": 487,
+            "sum": 486.99365234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 56,
+            "sum": 55.85693359375
+          },
+          "new": {
+            "count": 56,
+            "sum": 55.85693359375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 6065,
+            "sum": 6034.42724609375
+          }
+        }
+      }
+    },
+    {
+      "raw": 130,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 3613,
+            "sum": 568.158362707647
+          },
+          "new": {
+            "count": 3613,
+            "sum": 72.28254485450452
+          },
+          "old_r3": {
+            "count": 3613,
+            "sum": 67.87767604738474
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 455,
+            "sum": 11.61927931662649
+          },
+          "new": {
+            "count": 455,
+            "sum": 11.61927931662649
+          },
+          "old_r3": {
+            "count": 455,
+            "sum": 14.433008340070955
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24850,
+            "sum": 615.6097673988261
+          },
+          "new": {
+            "count": 24850,
+            "sum": 866.725473439612
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 455,
+            "sum": 11.493789162253961
+          },
+          "new": {
+            "count": 455,
+            "sum": 11.493789162253961
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 5820,
+            "sum": 138.5496748693986
+          },
+          "new": {
+            "count": 5820,
+            "sum": 158.2000024089357
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 128752,
+            "sum": 2856.381062673463
+          },
+          "new": {
+            "count": 128752,
+            "sum": 2917.4666851239745
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3615.0866046924784
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3908.858521498798
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 115,
+            "sum": 21.329917907714844
+          },
+          "new": {
+            "count": 115,
+            "sum": 21.329917907714844
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 455,
+            "sum": 454.99755859375
+          },
+          "new": {
+            "count": 455,
+            "sum": 454.99755859375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 70,
+            "sum": 69.8466796875
+          },
+          "new": {
+            "count": 70,
+            "sum": 69.8466796875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 5820,
+            "sum": 5760.265625
+          }
+        }
+      }
+    },
+    {
+      "raw": 131,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 3348,
+            "sum": 512.0158843802055
+          },
+          "new": {
+            "count": 3348,
+            "sum": 68.08776239931467
+          },
+          "old_r3": {
+            "count": 3348,
+            "sum": 63.03311259759357
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 451,
+            "sum": 10.052285462850705
+          },
+          "new": {
+            "count": 451,
+            "sum": 10.052285462850705
+          },
+          "old_r3": {
+            "count": 451,
+            "sum": 13.201962635153905
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24756,
+            "sum": 585.6022542167048
+          },
+          "new": {
+            "count": 24756,
+            "sum": 855.7643688647076
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 451,
+            "sum": 9.959475044859573
+          },
+          "new": {
+            "count": 451,
+            "sum": 9.959475044859573
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 5584,
+            "sum": 126.92973875778262
+          },
+          "new": {
+            "count": 5584,
+            "sum": 145.3297394538531
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 129742,
+            "sum": 2878.528450408863
+          },
+          "new": {
+            "count": 129742,
+            "sum": 2933.3356425164675
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3573.0950975654996
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3882.397737287538
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 107,
+            "sum": 12.373414993286133
+          },
+          "new": {
+            "count": 107,
+            "sum": 12.373414993286133
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 451,
+            "sum": 450.99951171875
+          },
+          "new": {
+            "count": 451,
+            "sum": 450.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 60,
+            "sum": 59.853515625
+          },
+          "new": {
+            "count": 60,
+            "sum": 59.853515625
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 5584,
+            "sum": 5527.4580078125
+          }
+        }
+      }
+    },
+    {
+      "raw": 132,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 3095,
+            "sum": 463.1111481084954
+          },
+          "new": {
+            "count": 3095,
+            "sum": 67.64759370405227
+          },
+          "old_r3": {
+            "count": 3095,
+            "sum": 59.960874806623906
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 438,
+            "sum": 11.291828562971205
+          },
+          "new": {
+            "count": 438,
+            "sum": 11.291828562971205
+          },
+          "old_r3": {
+            "count": 438,
+            "sum": 13.550655330880545
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24661,
+            "sum": 560.2123855365498
+          },
+          "new": {
+            "count": 24661,
+            "sum": 855.3274499670661
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 438,
+            "sum": 11.248037792975083
+          },
+          "new": {
+            "count": 438,
+            "sum": 11.248037792975083
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 5361,
+            "sum": 149.62745323841227
+          },
+          "new": {
+            "count": 5361,
+            "sum": 161.08300927566597
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 130561,
+            "sum": 2983.7209450832743
+          },
+          "new": {
+            "count": 130561,
+            "sum": 3024.4653959839197
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3675.0768072485225
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3985.4637718212325
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 107,
+            "sum": 17.744861602783203
+          },
+          "new": {
+            "count": 107,
+            "sum": 17.744861602783203
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 438,
+            "sum": 437.99853515625
+          },
+          "new": {
+            "count": 438,
+            "sum": 437.99853515625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 56,
+            "sum": 55.8701171875
+          },
+          "new": {
+            "count": 56,
+            "sum": 55.8701171875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 5361,
+            "sum": 5323.73388671875
+          }
+        }
+      }
+    },
+    {
+      "raw": 133,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 2863,
+            "sum": 414.8019249467179
+          },
+          "new": {
+            "count": 2863,
+            "sum": 67.44583957566647
+          },
+          "old_r3": {
+            "count": 2863,
+            "sum": 61.32269516767701
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 425,
+            "sum": 10.876796385040507
+          },
+          "new": {
+            "count": 425,
+            "sum": 10.876796385040507
+          },
+          "old_r3": {
+            "count": 425,
+            "sum": 14.392485114745796
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 24831,
+            "sum": 579.6212145276368
+          },
+          "new": {
+            "count": 24831,
+            "sum": 845.2205950929783
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 425,
+            "sum": 10.786600510356948
+          },
+          "new": {
+            "count": 425,
+            "sum": 10.786600510356948
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 5173,
+            "sum": 150.0555571835721
+          },
+          "new": {
+            "count": 5173,
+            "sum": 155.11372731870506
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 131588,
+            "sum": 2996.6268235224707
+          },
+          "new": {
+            "count": 131588,
+            "sum": 3024.393501397659
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3696.1405325194064
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3971.068676690309
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 105,
+            "sum": 36.65714073181152
+          },
+          "new": {
+            "count": 105,
+            "sum": 36.65714073181152
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 425,
+            "sum": 425.0
+          },
+          "new": {
+            "count": 425,
+            "sum": 425.0
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 68,
+            "sum": 67.81982421875
+          },
+          "new": {
+            "count": 68,
+            "sum": 67.81982421875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 5173,
+            "sum": 5152.333984375
+          }
+        }
+      }
+    },
+    {
+      "raw": 134,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 2624,
+            "sum": 356.97973558097146
+          },
+          "new": {
+            "count": 2624,
+            "sum": 67.09068141283933
+          },
+          "old_r3": {
+            "count": 2624,
+            "sum": 62.4740530095587
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 405,
+            "sum": 9.048691710573621
+          },
+          "new": {
+            "count": 405,
+            "sum": 9.048691710573621
+          },
+          "old_r3": {
+            "count": 405,
+            "sum": 12.395099775400013
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 25068,
+            "sum": 597.4257865936961
+          },
+          "new": {
+            "count": 25068,
+            "sum": 839.6951027021278
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 405,
+            "sum": 9.14999908755999
+          },
+          "new": {
+            "count": 405,
+            "sum": 9.14999908755999
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 4939,
+            "sum": 126.01666600478347
+          },
+          "new": {
+            "count": 4939,
+            "sum": 128.7663393028779
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 132630,
+            "sum": 3011.212110787921
+          },
+          "new": {
+            "count": 132630,
+            "sum": 3046.6977460997005
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3686.949674322648
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3964.8582110109564
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 118,
+            "sum": 80.5870132446289
+          },
+          "new": {
+            "count": 118,
+            "sum": 80.5870132446289
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 405,
+            "sum": 404.99951171875
+          },
+          "new": {
+            "count": 405,
+            "sum": 404.99951171875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 61,
+            "sum": 60.8046875
+          },
+          "new": {
+            "count": 61,
+            "sum": 60.8046875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 4939,
+            "sum": 4925.40283203125
+          }
+        }
+      }
+    },
+    {
+      "raw": 135,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 2382,
+            "sum": 320.80294930562377
+          },
+          "new": {
+            "count": 2382,
+            "sum": 65.37516628397861
+          },
+          "old_r3": {
+            "count": 2382,
+            "sum": 55.07451334307552
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 397,
+            "sum": 7.0385620361194015
+          },
+          "new": {
+            "count": 397,
+            "sum": 7.0385620361194015
+          },
+          "old_r3": {
+            "count": 397,
+            "sum": 11.233988559339195
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 26370,
+            "sum": 607.2470258234534
+          },
+          "new": {
+            "count": 26370,
+            "sum": 817.259477906744
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 397,
+            "sum": 6.9581700949929655
+          },
+          "new": {
+            "count": 397,
+            "sum": 6.9581700949929655
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 4755,
+            "sum": 114.39575663825963
+          },
+          "new": {
+            "count": 4755,
+            "sum": 118.20490711473394
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 133639,
+            "sum": 3024.955909052049
+          },
+          "new": {
+            "count": 133639,
+            "sum": 3058.3938322752947
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3667.443804882234
+          },
+          "new": {
+            "count": 153600,
+            "sum": 3910.066065588966
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 111,
+            "sum": 123.61577987670898
+          },
+          "new": {
+            "count": 111,
+            "sum": 123.61577987670898
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 397,
+            "sum": 396.99560546875
+          },
+          "new": {
+            "count": 397,
+            "sum": 396.99560546875
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 55,
+            "sum": 54.8662109375
+          },
+          "new": {
+            "count": 55,
+            "sum": 54.8662109375
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 4755,
+            "sum": 4741.5791015625
+          }
+        }
+      }
+    },
+    {
+      "raw": 136,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 2113,
+            "sum": 274.3327050926164
+          },
+          "new": {
+            "count": 2113,
+            "sum": 66.0033460331033
+          },
+          "old_r3": {
+            "count": 2113,
+            "sum": 51.202385734330164
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 387,
+            "sum": 9.162418894818984
+          },
+          "new": {
+            "count": 387,
+            "sum": 9.162418894818984
+          },
+          "old_r3": {
+            "count": 387,
+            "sum": 11.685949159320444
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 27397,
+            "sum": 701.8891796584358
+          },
+          "new": {
+            "count": 27397,
+            "sum": 798.226468524721
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 387,
+            "sum": 9.261765403673053
+          },
+          "new": {
+            "count": 387,
+            "sum": 9.261765403673053
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 4587,
+            "sum": 134.78268482146086
+          },
+          "new": {
+            "count": 4587,
+            "sum": 138.64216205925914
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 134422,
+            "sum": 3208.6565466819156
+          },
+          "new": {
+            "count": 134422,
+            "sum": 3216.4029693974007
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 3915.253921740077
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4036.7382741907786
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 98,
+            "sum": 159.5488739013672
+          },
+          "new": {
+            "count": 98,
+            "sum": 159.54887580871582
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 387,
+            "sum": 386.9990234375
+          },
+          "new": {
+            "count": 387,
+            "sum": 386.9990234375
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 42,
+            "sum": 41.88330078125
+          },
+          "new": {
+            "count": 42,
+            "sum": 41.88330078125
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 4587,
+            "sum": 4575.0283203125
+          }
+        }
+      }
+    },
+    {
+      "raw": 137,
+      "metrics": {
+        "road_reobserved_after_delete": {
+          "parent": {
+            "count": 1989,
+            "sum": 256.13873352855444
+          },
+          "new": {
+            "count": 1989,
+            "sum": 67.67781224689679
+          },
+          "old_r3": {
+            "count": 1989,
+            "sum": 51.391211911221035
+          }
+        },
+        "a6_visible_rgb": {
+          "parent": {
+            "count": 384,
+            "sum": 8.792483922385145
+          },
+          "new": {
+            "count": 384,
+            "sum": 8.792483922385145
+          },
+          "old_r3": {
+            "count": 384,
+            "sum": 13.936930579598993
+          }
+        },
+        "road_visible_rgb": {
+          "parent": {
+            "count": 29048,
+            "sum": 802.1996356093441
+          },
+          "new": {
+            "count": 29048,
+            "sum": 809.0702563863306
+          }
+        },
+        "a6_noedit_rgb": {
+          "parent": {
+            "count": 384,
+            "sum": 8.791176733851898
+          },
+          "new": {
+            "count": 384,
+            "sum": 8.791176733851898
+          }
+        },
+        "a37_noedit_rgb": {
+          "parent": {
+            "count": 4449,
+            "sum": 134.54379581529065
+          },
+          "new": {
+            "count": 4449,
+            "sum": 135.4973906367959
+          }
+        },
+        "protect_noedit_rgb": {
+          "parent": {
+            "count": 135362,
+            "sum": 3372.3261424600496
+          },
+          "new": {
+            "count": 135362,
+            "sum": 3365.65492774194
+          }
+        },
+        "full_noedit_rgb": {
+          "parent": {
+            "count": 153600,
+            "sum": 4109.659796256368
+          },
+          "new": {
+            "count": 153600,
+            "sum": 4138.209508973872
+          }
+        },
+        "a6_measured_depth": {
+          "parent": {
+            "count": 94,
+            "sum": 206.41870307922363
+          },
+          "new": {
+            "count": 94,
+            "sum": 206.41870307922363
+          }
+        },
+        "a6_visible_w": {
+          "parent": {
+            "count": 384,
+            "sum": 383.95556640625
+          },
+          "new": {
+            "count": 384,
+            "sum": 383.95556640625
+          }
+        },
+        "a6_reprojected_w": {
+          "parent": {
+            "count": 36,
+            "sum": 35.796875
+          },
+          "new": {
+            "count": 36,
+            "sum": 35.796875
+          }
+        },
+        "a37_kept_w": {
+          "new": {
+            "count": 4449,
+            "sum": 4444.74169921875
+          }
+        }
+      }
+    }
+  ],
+  "reference": "Same-scene re-observations; sRGB metrics decoded identically for all compared PNGs; depth and contribution from native raster",
+  "quality_accepted": false,
+  "human_verdict": null
+}

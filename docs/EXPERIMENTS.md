@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 原生 10K + 道路恢复 1K（2026-11-05）
+
+- `scene008_native_road1k_20261105_r1`。[R3 接线与 49 帧固定域对照](autoresearch/scene008_native_road1k_20261105_r1/README.md)。
+
 ## Scene008 原生 10K 实例监督（2026-11-05）
 
 - `scene008_native_ownership_20261105 / run_r3`。[原生训练、早期验收和 49 帧同域对照](autoresearch/scene008_native_ownership_20261105/README.md)。
