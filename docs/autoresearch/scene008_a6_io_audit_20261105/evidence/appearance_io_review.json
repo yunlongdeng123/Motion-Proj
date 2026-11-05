@@ -1,0 +1,430 @@
+{
+  "status": "APPEARANCE_IO_AUDIT_COMPLETE",
+  "mode": "CPU read-only; no existing source edits, no optimizer execution or GPU rendering.",
+  "conclusion": "The broad lower-body flat colour comes from zero or extremely weak BUILD colour support and a single global RGB-median fallback. The inspected I/O chain is consistent. Literal saturated white points are a separate small fitted subset.",
+  "unknown_colour": {
+    "global_BUILD_median_RGB": [
+      0.3392156958580017,
+      0.4156862795352936,
+      0.4892156720161438
+    ],
+    "RGB_times255": [
+      86.50000244379044,
+      106.00000128149986,
+      124.74999636411667
+    ],
+    "zero_columns": 10557,
+    "all_zero_column_final_RGB_equals_prior_exactly": true,
+    "explanation": "For an A-column equal tozero, the data term has no dependence on that row RGB. Positive ridge and initialization at c0 give the exact optimum RGB=c0. More colour steps or primitive subdivision cannot add observations to that column."
+  },
+  "lower_regions": [
+    {
+      "region": "all",
+      "rows": 18432,
+      "zero_design_columns": 10557,
+      "zero_design_fraction": 0.57275390625,
+      "inferred": 16342,
+      "inferred_fraction": 0.8866102430555556,
+      "prior_is_global_median": 14466,
+      "final_unchanged_from_prior": 10612,
+      "final_mean_rgb": [
+        0.3596432753402041,
+        0.4306201365883074,
+        0.5029238450871263
+      ],
+      "data_diagonal_to_ridge_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.008627550493177295,
+        290.5816384688435,
+        28887.761464477513
+      ]
+    },
+    {
+      "region": "canonical_z_below_zero",
+      "rows": 11246,
+      "zero_design_columns": 9586,
+      "zero_design_fraction": 0.8523919615863418,
+      "inferred": 11204,
+      "inferred_fraction": 0.9962653387871243,
+      "prior_is_global_median": 10885,
+      "final_unchanged_from_prior": 9623,
+      "final_mean_rgb": [
+        0.3371594790173832,
+        0.4114101967199108,
+        0.48414764575436303
+      ],
+      "data_diagonal_to_ridge_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.006801957886045036,
+        424.78108164049047
+      ]
+    },
+    {
+      "region": "canonical_z_below_lowest_measured",
+      "rows": 8779,
+      "zero_design_columns": 8442,
+      "zero_design_fraction": 0.9616129399703839,
+      "inferred": 8776,
+      "inferred_fraction": 0.9996582754300034,
+      "prior_is_global_median": 8741,
+      "final_unchanged_from_prior": 8464,
+      "final_mean_rgb": [
+        0.3384396866895789,
+        0.41457450412606744,
+        0.4877631239493733
+      ],
+      "data_diagonal_to_ridge_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        98.8969900825833
+      ]
+    },
+    {
+      "region": "canonical_z_below_minus025",
+      "rows": 7868,
+      "zero_design_columns": 7763,
+      "zero_design_fraction": 0.9866548042704626,
+      "inferred": 7868,
+      "inferred_fraction": 1.0,
+      "prior_is_global_median": 7860,
+      "final_unchanged_from_prior": 7775,
+      "final_mean_rgb": [
+        0.3390786987826433,
+        0.41543678848814347,
+        0.4888509121123582
+      ],
+      "data_diagonal_to_ridge_quantiles": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        5.758231319885578
+      ]
+    },
+    {
+      "region": "lower_with_design_data",
+      "rows": 1660,
+      "zero_design_columns": 0,
+      "zero_design_fraction": 0.0,
+      "inferred": 1618,
+      "inferred_fraction": 0.9746987951807229,
+      "prior_is_global_median": 1299,
+      "final_unchanged_from_prior": 37,
+      "final_mean_rgb": [
+        0.32528544610523313,
+        0.38671710643782675,
+        0.4548813206065132
+      ],
+      "data_diagonal_to_ridge_quantiles": [
+        1.5596004475177043e-10,
+        2.810404604631899e-09,
+        1.6410994574108771e-06,
+        0.0004108685378570303,
+        0.03516254576209526,
+        4.360993931601423,
+        424.78108164049047
+      ]
+    }
+  ],
+  "rendered_flat_colour_checks": {
+    "tolerance_per_channel": 0.003,
+    "normalization": "Saved solo RGB divided by saved alpha; include only alpha>.5; saved images are float16.",
+    "rows": [
+      {
+        "raw": 105,
+        "alpha_over_half_pixels": 2923,
+        "prior_color_match_pixels": 1298,
+        "prior_match_on_real_a6_visible": 0,
+        "prior_match_off_real_a6_visible": 1298,
+        "prior_match_strict_a37_occluded": 199,
+        "prior_match_possible_occluded": 1191,
+        "prior_match_fraction_of_solid_asset": 0.444064317482039
+      },
+      {
+        "raw": 113,
+        "alpha_over_half_pixels": 2287,
+        "prior_color_match_pixels": 1026,
+        "prior_match_on_real_a6_visible": 1,
+        "prior_match_off_real_a6_visible": 1025,
+        "prior_match_strict_a37_occluded": 157,
+        "prior_match_possible_occluded": 901,
+        "prior_match_fraction_of_solid_asset": 0.4486226497595103
+      },
+      {
+        "raw": 130,
+        "alpha_over_half_pixels": 1265,
+        "prior_color_match_pixels": 567,
+        "prior_match_on_real_a6_visible": 0,
+        "prior_match_off_real_a6_visible": 567,
+        "prior_match_strict_a37_occluded": 133,
+        "prior_match_possible_occluded": 511,
+        "prior_match_fraction_of_solid_asset": 0.4482213438735178
+      }
+    ],
+    "total_matching_pixels": 2889,
+    "matching_pixels_in_original_a6_visible_core": 1,
+    "limitation": "Colour matching is an image diagnostic, not a unique primitive-contribution decomposition. Off-visible pixels include actual occlusion, unknown surfaces and mask boundaries."
+  },
+  "literal_white_points": {
+    "canonical_z_below_zero_white_rows": 9,
+    "RGB": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "inferred": 8,
+    "no_data": 0,
+    "median_raw_alpha_T_mass": 0.2900133158195908,
+    "meaning": "These9 rows moved from coloured c0 to the bounded optimum. They have nonzero but mostly weak fit support; their row RGB is not a per-point measured colour label. They do not explain the broad constant fallback patch."
+  },
+  "checks": {
+    "units": {
+      "status": "PASS",
+      "target_range": [
+        0.06960784643888474,
+        1.0
+      ],
+      "all27429_BUILD_targets_match_original_raw_RGB_exactly": true,
+      "initial_halfgray_is_replaced_by_c0": true
+    },
+    "RGB_B_G_R": {
+      "status": "PASS",
+      "raw_JPEG_vs_prepared_PNG_uint8_maxabs": [
+        0,
+        0,
+        0
+      ],
+      "raw_JPEG_vs_RGB_observation_bank_maxabs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "checked_raw": [
+        105,
+        113,
+        130
+      ],
+      "all_BUILD_target_vs_bank_maxabs": 0.0,
+      "wrong_channel_swap_MAE": 0.09062687451606177
+    },
+    "premultiplied_alpha": {
+      "status": "PASS",
+      "matrix_row_sum_range": [
+        0.9999992560631372,
+        1.0000007064972836
+      ],
+      "evidence": "A=W/alpha fits straight raw RGB; native reference divided by alpha once. Saved actual render/alpha agrees with CPU A@RGB to float16 rounding.",
+      "pilots": [
+        {
+          "raw": 90,
+          "fit_pixels": 853,
+          "target_vs_raw_maxabs": 0.0,
+          "saved_float16_render_unpremultiplied_vs_design_MAE": 0.00010417969879075275,
+          "saved_float16_render_unpremultiplied_vs_design_maxabs": 0.00043169091218520084
+        },
+        {
+          "raw": 106,
+          "fit_pixels": 909,
+          "target_vs_raw_maxabs": 0.0,
+          "saved_float16_render_unpremultiplied_vs_design_MAE": 9.191760948761159e-05,
+          "saved_float16_render_unpremultiplied_vs_design_maxabs": 0.0004044255415853737
+        },
+        {
+          "raw": 136,
+          "fit_pixels": 308,
+          "target_vs_raw_maxabs": 0.0,
+          "saved_float16_render_unpremultiplied_vs_design_MAE": 8.569776005231295e-05,
+          "saved_float16_render_unpremultiplied_vs_design_maxabs": 0.00034865503280845367
+        }
+      ]
+    },
+    "SH_direction": {
+      "status": "PASS",
+      "higher_SH_nonzero": 0,
+      "DC_decode_vs_saved_RGB_maxabs": 0.0,
+      "interpretation": "M2 has SH0 content in an SH3 storage container; view direction cannot change a zero higher-order term."
+    },
+    "coordinate_time": {
+      "status": "PASS_SOURCE_AND_SAVED_RENDER_CHECK",
+      "camera": {
+        "max_model_to_camera_error": 0.0,
+        "all_BUILD_model_times_match": true
+      },
+      "evidence": "All40 saved camera transforms match native camera records exactly and model_times match. Original full PVD construction checks conditioning actor-native metres. Saved render/design parity also exercises geometry/camera bindings.",
+      "limit": "No new physical calibration was inferred or fitted."
+    },
+    "optimization": {
+      "status": "CONVERGED_TO_SAVED_OBJECTIVE",
+      "fit_MAE": 0.034387017252945476,
+      "data_objective": 0.009339317351866218,
+      "ridge_objective": 6.940001738656138e-05,
+      "total": 0.00940871736925278,
+      "projected_KKT_update_maxabs": 9.932203739460022e-07
+    }
+  },
+  "source_evidence": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/source/object_observations.py",
+      "lines": [
+        179,
+        180,
+        188,
+        189,
+        201,
+        203,
+        212,
+        214
+      ],
+      "meaning": "PIL RGB, divide255, camera resize, reviewed visibility, LiDAR sample valid and raw RGB sampling."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py",
+      "lines": [
+        120,
+        146,
+        147,
+        159,
+        238,
+        244,
+        249,
+        259,
+        260,
+        262
+      ],
+      "meaning": "Validated actor-native metres and conditioning correspondences. Initial geometry RGB=.5. Pose/scale and DC RGB mapping."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/fit_asset.py",
+      "lines": [
+        43,
+        47,
+        48,
+        49,
+        52,
+        53,
+        65,
+        66,
+        67,
+        83,
+        84,
+        87,
+        93
+      ],
+      "meaning": "Original raw visible-mask design, unpremultiplication, reliable native prior and global raw median fallback, bounded ridge."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/fit_geometry_arm.py",
+      "lines": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        45,
+        46,
+        47,
+        55,
+        56,
+        57,
+        58,
+        82,
+        85,
+        86,
+        88,
+        94,
+        95
+      ],
+      "meaning": "BUILD40 only, exact original target, normalized alpha*T rows, reliable native-conditioned c0; unknown fallback; FISTA starts at c0 and exports SH0 DC."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/linear_weights.py",
+      "lines": [
+        50,
+        67,
+        71,
+        72,
+        73,
+        74,
+        76,
+        79,
+        80,
+        83,
+        84,
+        85,
+        87
+      ],
+      "meaning": "Replay alpha*T weights and native raster alpha/RGB parity checks, all original mask pixels retained."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/scene_runtime.py",
+      "lines": [
+        176,
+        177,
+        178,
+        182,
+        184,
+        185,
+        266,
+        277,
+        278,
+        279
+      ],
+      "meaning": "Bound camera/time/pose; HWC RGB to CHW; same actor-local matrix; native color reference unpremultiplied exactly once."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+      "lines": [
+        153,
+        155,
+        211,
+        215,
+        221,
+        229,
+        230,
+        242,
+        243,
+        245,
+        247,
+        259,
+        265,
+        266
+      ],
+      "meaning": "Native DC .28209479 and .5 convention, canonical-to-world SH rotation, geometry uniform-scale transform; actual M2 higher SH coefficients allzero."
+    }
+  ],
+  "hashes": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/inputs.npz": "6178c071b0dcb844751f511a6a27919ab30e5e402f61f1af560d6e383c4f477f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/design.npz": "dfadff9f147d1dc644dc23302afea61377e2f025d1a30bee49fce8c3d50331c8",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/m2/complete_a6.npz": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/fit_geometry_arm.py": "477e749b8095ce90e4ffc9cbd329a9d86887c5e102927065dde7bfabf8de3347"
+  },
+  "minimal_next_control": {
+    "name": "BUILD-supported appearance extension on unchanged asset",
+    "change": "Replace the one global-median c0 fallback on strictly zero/weak support rows with a confidence-weighted colour extension over the fixed surface graph from reliable BUILD colour anchors. Keep geometry, N, normal, scale, opacity, known-row material, camera, masks and renderer fixed.",
+    "interpretation": "This is an explicitly inferred appearance prior, not recovered hidden RGB. Keep inferred flags and compare the same fixed visible/HELD and preservation masks.",
+    "IO_action": "The audit found no channel, scaling, alpha or pose correction to apply.",
+    "measurement_path": "True hidden-colour accuracy requires additional verified views of the same surface. Existing visibility gates should remain when collecting such evidence.",
+    "unsupported_action": "Fitting currently a37-occluded pixels to their raw image RGB would transfer the foreground actor colours to a6."
+  },
+  "limitations": [
+    "Canonical-z region cuts are transparent diagnostic geometry cuts, not semantic bumper/wheel labels.",
+    "The global fallback is blue-grey in normalized RGB, although perceived as grey/white in the rendered object.",
+    "Most nonzero lower design columns are still weak: the saved inferred flag is true for1618 of1660. No per-point true colour error is claimed from weighted image observations.",
+    "Native/PVD geometry already uses same-scene context, including old HELD conditioning. This is an I/O diagnosis rather than independent appearance generalization.",
+    "A constant SH0 prior can remain visibly featureless under this correct I/O path. This does not identify model-family capacity as the cause of zero observations."
+  ],
+  "architecture_mermaid": "flowchart LR\n A[Raw FRONT JPEG RGB] --> B[Reviewed BUILD visibility]\n B --> C[Fixed asset alpha*T design W]\n C --> D[Normalize A=W/alpha]\n B --> E[Reliable colour anchors and global median c0]\n D --> F[Bounded SH0 colour fit]\n E --> F\n F --> G[Single unchanged geometry asset]\n E --> H[Zero-support rows retain c0]\n H --> G"
+}

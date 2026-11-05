@@ -1,0 +1,52 @@
+{
+  "status": "GATE_FIX_CONFIRMED_LIMITED_PRECISION_ONLY",
+  "review_scope": "Closeout of gate status, source/contract hash binding, and mean error reporting only. Read-only CPU review; no GPU sampling.",
+  "historical_review": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\root_probe_review.json",
+    "sha256": "d6a25401843e6b11f2e57948e5089f281c435fa221134edf1fa7aede97100ac5",
+    "preserved": true
+  },
+  "gate_status": {
+    "boundary_checks": {
+      "3599.0": "PASS_LIMITED_PRECISION_DIAGNOSTIC",
+      "3600.0": "REQUIRES_REAL_10MIN_SMOKE",
+      "4000.0": "REQUIRES_REAL_10MIN_SMOKE"
+    },
+    "decision_before_receipt": true,
+    "run_rejects_required_long_smoke": true,
+    "run_requires_projected_four_arm_seconds_below3600": true,
+    "open_findings": []
+  },
+  "source_binding": {
+    "current_local_and_remote_sha256": "7b31f519daca9d81f9a90de9834bbaa26647b5574a3a64689953920043960a36",
+    "formally_executed_preserved_sha256": "687f7892a3259e26a42a0f26b734e34022ada164bbadce70e4dbacf9fda07bfb",
+    "contract_sha256": "f5276156be9a652eb368b89ad5381db892c43ba42b5368c926217fc22ae94b09",
+    "new_smoke_source_and_contract_match": true,
+    "code_diff": "Mean-error reporting and smoke/run status/hash/time checks only. Formal sampling loop unchanged.",
+    "formal_rerun": false,
+    "formal_sampling_steps": 4000,
+    "post_fix_additional_smoke_steps": 40
+  },
+  "mean_and_precision": {
+    "receipt_status": "PASS_LIMITED_PRECISION_DIAGNOSTIC",
+    "next_step_bitwise_equal": false,
+    "next_step_maxabs_normalized": 3.1948089599609375e-05,
+    "threshold_normalized": 0.0001,
+    "eight_repeat_meanabs": [
+      0.0,
+      1.6486435470142169e-06,
+      1.6351250451407395e-06,
+      1.5850306075056626e-06,
+      1.5850306075056626e-06,
+      1.7094440257399886e-06,
+      1.5850306075056626e-06,
+      1.6351250451407395e-06
+    ],
+    "mean_definition": "Absolute coordinate mean over the full2048-point tensor, including exact fixed conditioning points.",
+    "precision_conclusion": "Limited-precision diagnostic gate passes. Bitwise sampling remains unestablished. The extra40-step smoke does not replace or rerun the completed4000-step formal experiment."
+  },
+  "saved_receipts": {
+    "before_gate_fix": "b246f3cee467b94218f8ca8c4fab1fd4059a37abf5640cdd2a7fe44af2fb5477",
+    "after_gate_fix": "959855981761d95bc274af5299e6a4e821957ab558a5b44c1292b64ecb09b9b2"
+  }
+}

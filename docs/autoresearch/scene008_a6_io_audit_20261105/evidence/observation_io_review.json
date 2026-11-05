@@ -1,0 +1,519 @@
+{
+  "schema": "a6_observation_io_review_v1",
+  "status": "READ_ONLY_CPU_REVIEW_COMPLETE",
+  "scope": {
+    "created_date": "2026-11-05",
+    "target_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+    "native_raw_window": [
+      89,
+      137
+    ],
+    "all_raw_window": [
+      0,
+      198
+    ],
+    "GPU_used": false,
+    "training_updates": 0,
+    "remote_files_modified": false,
+    "AutoDL_left_running": true,
+    "local_output_only": "work/a6_io_audit/observation_io_review.json",
+    "limits": "只读代码/已有数据统计；原始TFRecord重解码仅raw0、106、198三帧。没有外150帧身份审核、纹理转移或额外训练。"
+  },
+  "conclusion_zh": [
+    "现有外49观测没有可直接复用的已审a6 RGB/body mask。023–071里a6确为instance7且49帧mask_known全False；该窗98份已审body mask属于另外两辆车。077–125只有未审DEVA实例与3辆非a6车的提案。",
+    "全199帧有54715条原始a6 OBB关联LiDAR行；外150帧新增39694条，其中33562条通过已有FRONT实际全云深度测试。但这不是a6身份/颜色确证。",
+    "外150帧保留的445条sparse RGB hint全部在canonical z=.576857至.719606m，来自35帧、256个5cm格；相对49帧reviewed颜色格新增105格仍全部是顶部，不能用来解释或填亮底部。",
+    "全部199帧测点最低z=-.21044834m，低于该处至原始车盒底-.72m的约.50955m带仍无关联LiDAR点。新增150帧只把原49测点最低值降低约1.05cm，未提供下方大带的直接3D颜色支持。",
+    "FRONT全199相机均在车后近同一方位（178.140°至179.584°），不能将199帧等同于全向表面观测。",
+    "未找到足以解释下部大缺失的轴、尺度或Brown畸变错误。粗OBB可能遮挡否决确实过保守，但解除否决只得到候选，不能自动升级为真值。",
+    "原始RGB存在于TFRecord JPEG中，full199银行将未过geometry_visible或reviewed的行RGB置零。零是未知占位，不是黑色实测；重新审关联必须重读原图，不能仅修改valid旗标复用这些零值。",
+    "本审计不能断言所有原始密集图像都没有底部颜色。对缺少LiDAR或已审a6身份的像素，其同一3D表面关联仍未知；现有证据不支持从上部颜色传播来冒充底部观测。"
+  ],
+  "architecture_components": {
+    "diagram": "原始TFRecord(RGB+5LiDAR×2return+标定/时态) → 同帧车体局部坐标/原图回投 → [已审身份+测量可见 | 未审几何候选 | 未知] → 按高度/方位/独立帧数汇总 → 单一资产观测合同；未知RGB保持unknown",
+    "note": "PVD提案与native渲染只作reference，不进入实测真值分支。"
+  },
+  "source_paths": {
+    "raw_tfrecord": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+    "raw_sha256_from_existing_verified_receipt": "48352c4b9822ad7734570ed75ca325f413b522104d68f5bf94faf20221c02ded",
+    "raw_hash_note": "本次未重算整份939MB TFRecord SHA；使用既有CPU验收收据并对3个随机访问record重新验证CRC32C。",
+    "full199": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_full199_observations.npz",
+    "full199_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_full199_receipt.json",
+    "minimal_geometry": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz",
+    "original_actor": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_a6.npz",
+    "native49_views": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_views/{089..137}.npz",
+    "current_bank": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/a6.npz",
+    "current_bank_source": "work/scene008_instances/object_observations.py",
+    "full199_builder": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prepare_a6_observations.py",
+    "decoder": "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/waymo_numpy_cpu.py",
+    "original_extractor": "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/extract_remote_actor_points.py"
+  },
+  "definitions": {
+    "canonical": "每条真实点按自身raw帧标注a6盒位姿从世界转回对象局部米制；x forward/length，y left/width，z up/height。盒长宽高[4.334041700358732,2.077536811865701,1.4400000000000546]m。",
+    "associated_point": "原始5LiDAR×2return正range且非NLZ点，经TOP像素级ego运动补偿后落入当帧a6 OBB。OBB关联不是逐点语义真值，仍可能含路面/他车。",
+    "reviewed_positive": "full199.rgb_valid_reviewed_native49：真实FRONT全云zbuffer通过，且落入已审a6身份silhouette（erode1、排除a37 dilate1）；仅raw89..137。",
+    "sparse_hint": "full199.rgb_valid_sparse_geometric_hint：实际全云深度测试+官方FRONT投影盒+未穿其他OBB+lower guard；外49没有已审身份，始终candidate。",
+    "depth_visible": "既有receipt统计：原始1920×1280 Brown投影，5传感器2return最近深度min9×9，tolerance .20m；只说明测点的深度测试通过，不证明图像像素属于a6。",
+    "box_possible": "other_box_ray_occluded/a37_ray_occluded是粗盒相交可能性，不是实表面遮挡真值。",
+    "voxel": "floor(canonical_xyz/.05)同一5cm固定网格；格新颖性不等于独立表面或颜色真值。",
+    "unknown_rgb": "零占位+valid=False；不得当作黑色观测，不得随valid解除而直接投入拟合。",
+    "height_bins": "固定canonical-z诊断分箱，非语义车身部件标签。",
+    "BUILD_and_HELD": "当前材料拟合仍只用原49中的40 BUILD；9 HELD=(89,95,101,105,113,121,125,130,137)。本次统计审查可读全199，不把全199的reviewed/geometry自动变为BUILD外观训练数据。"
+  },
+  "full199_counts": {
+    "all199": {
+      "frames": 199,
+      "associated_rows": 54715,
+      "depth_visible_rows": 45948,
+      "sparse_hint_rows": 903,
+      "reviewed_rows": 9705,
+      "box_possible_rows": 53802,
+      "voxels5cm": 5976,
+      "z_minmax_m": [
+        -0.21044833958148956,
+        0.7198296785354614
+      ]
+    },
+    "native49": {
+      "frames": 49,
+      "associated_rows": 15021,
+      "depth_visible_rows": 12386,
+      "sparse_hint_rows": 458,
+      "reviewed_rows": 9705,
+      "box_possible_rows": 14559,
+      "voxels5cm": 4424,
+      "z_minmax_m": [
+        -0.19996720552444458,
+        0.7198296785354614
+      ]
+    },
+    "outside150": {
+      "frames": 150,
+      "associated_rows": 39694,
+      "depth_visible_rows": 33562,
+      "sparse_hint_rows": 445,
+      "reviewed_rows": 0,
+      "box_possible_rows": 39243,
+      "voxels5cm": 4385,
+      "z_minmax_m": [
+        -0.21044833958148956,
+        0.7196058034896851
+      ]
+    },
+    "reviewed_rows_also_box_possible": 9558,
+    "reviewed_rows_also_box_possible_fraction": 0.9848531684698609,
+    "interpretation": "粗盒否决会覆盖9558/9705个已审深度可见正例。此证据支持将OBB相交单列候选标志，不支持把外49所有depth-pass点升级为a6颜色真值。"
+  },
+  "height_and_novelty": {
+    "edges_m": [
+      -0.72,
+      -0.210449,
+      0,
+      0.24,
+      0.48,
+      0.72
+    ],
+    "all199_rows": [
+      0,
+      2843,
+      15039,
+      22072,
+      14761
+    ],
+    "native49_rows": [
+      0,
+      1647,
+      4666,
+      5253,
+      3455
+    ],
+    "outside150_rows": [
+      0,
+      1196,
+      10373,
+      16819,
+      11306
+    ],
+    "reviewed49_rows": [
+      0,
+      84,
+      2719,
+      4624,
+      2278
+    ],
+    "outside150_sparse_hint_rows": [
+      0,
+      0,
+      0,
+      0,
+      445
+    ],
+    "outside150_sparse_hint_frames": 35,
+    "outside150_sparse_hint_voxels5cm": 256,
+    "outside150_sparse_hint_z_minmax_m": [
+      0.576856791973114,
+      0.7196058034896851
+    ],
+    "outside150_new_geometry_voxels_relative_native49": 1552,
+    "new_geometry_voxel_member_z_minmax_m": [
+      -0.21044833958148956,
+      0.7186355590820312
+    ],
+    "outside150_new_hint_voxels_relative_reviewed49": 105,
+    "new_hint_voxel_member_z_minmax_m": [
+      0.576856791973114,
+      0.7196058034896851
+    ],
+    "lower_band_without_any_associated_points_m": [
+      -0.72,
+      -0.21044833958148956
+    ],
+    "new_geometry_lower_extension_m": 0.010481134057044983,
+    "note": "新格统计对同一voxel_id做集合差；一格内有多帧或多return不能据此称不同物理面。"
+  },
+  "existing_mask_windows": [
+    {
+      "window": [
+        23,
+        71
+      ],
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_023_071",
+      "a6_instance_index": 7,
+      "a6_track": "7MxwK9zTRZ9g5lc_ZC0z6A",
+      "a6_frame_valid": 49,
+      "a6_real_lidar_points": 17643,
+      "a6_mask_known": 0,
+      "actual_reviewed_mask_pairs": 98,
+      "reviewed_tracks": [
+        {
+          "id": "NoQttdyd4C16Y_zkGhiFKg",
+          "description": "blue_GMC_pickup",
+          "frames": 49
+        },
+        {
+          "id": "fXVhuN-RuJDvZwnkQ-0YSQ",
+          "description": "gray_Jeep_SUV",
+          "frames": 49
+        }
+      ],
+      "body_masks_source": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1/dynamic_actor_assets/{actor_0,actor_1}/body_masks",
+      "mask_status": "real_reviewed_partial_mapping；零类别在不完整映射下为unknown，不能解释为已知背景。",
+      "new_reviewed_a6_frames_outside_native49": 0
+    },
+    {
+      "window": [
+        77,
+        125
+      ],
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_077_125",
+      "a6_track_present_in_anchor_inventory": true,
+      "a6_anchor_inventory_index": 4,
+      "a6_projected_track_observed_count": 49,
+      "generic_DEVA_frames": 49,
+      "candidate_mask_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_077_125/mask/mask_0/Annotations/{0008077..0008125}.png",
+      "proposal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/mask_proposals/scene0008_077_125/selection.proposal.json",
+      "proposal_status": "needs_visual_review",
+      "proposal_tracks": [
+        "3S_GJHyCGGK4ypFPVKOOqA",
+        "mSiVqee7l7dfkt8HQhXZZw",
+        "Umybpe6eOenVBgQ_zgdVtw"
+      ],
+      "proposal_reviewed_pairs": 0,
+      "proposal_contains_a6": false,
+      "new_raw_frames_outside_native49": 12,
+      "new_candidate_frames_raw_range": [
+        77,
+        88
+      ],
+      "new_reviewed_a6_frames_outside_native49": 0,
+      "note": "全图DEVA候选可供后续身份核查，不是a6现成mask；禁止把track inventory index4或proposal actor编号直接当a6语义。"
+    },
+    {
+      "window": [
+        89,
+        137
+      ],
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137",
+      "selection_status": "assembled_from_previously_reviewed_identity_masks",
+      "a6_actor_index": 3,
+      "a6_track": "7MxwK9zTRZ9g5lc_ZC0z6A",
+      "a6_body_masks": 49,
+      "dense_review_label": 4,
+      "a37_actor_index": 4,
+      "a37_dense_review_label": 5,
+      "body_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/dynamic_actor_assets/actor_3/body_masks/{0008089..0008137}.png",
+      "dense_source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023_dense_r7/frames/{0008089..0008137}.npz",
+      "exact_body_mask_vs_dense_label_check": "native49 builder断言resize NEAREST(body_mask)==actor_labels==4",
+      "new_reviewed_a6_frames_outside_native49": 0
+    }
+  ],
+  "coordinate_and_projection_checks": {
+    "saved_canonical_to_world_max_abs_m": 1.2011878425255418e-7,
+    "Brown_reprojection_vs_saved_uv_max_abs_original_px": 0.000061030115830362774,
+    "camera_depth_vs_saved_max_abs_m": 0.0000019055987650062889,
+    "original_extract_vs_full199_redecode_max_abs_m_from_receipt": 2.9802322387695312e-8,
+    "Brown_minus_pinhole_target_shift_480px_quantiles_min_median_p95_max_all": [
+      0.0004840554219927895,
+      0.010344054377885109,
+      0.02534649264478643,
+      0.034845330132486765
+    ],
+    "Brown_minus_pinhole_target_shift_480px_quantiles_reviewed49": [
+      0.0012252341563674662,
+      0.008302724240328756,
+      0.017538906461020878,
+      0.0248789378589145
+    ],
+    "raw_timestamp_delta_us_minmax": [
+      99946,
+      100061
+    ],
+    "raw_RGB_domain": "原始FRONT JPEG1920×1280，Waymo camera x-forward/y-left/z-up，Brown9，camera_from_world=inverse(image.pose@camera.extrinsic)。",
+    "native_domain": "480×320、K=P0/4、KITTI camera z-forward，native project=KX/z-.5、ray=(pixel+.5-c)/f。RGB是原图cv2线性resize，mask是NEAREST。",
+    "lookup_domain_note": "full199 reviewed查mask用floor(raw_Brown_uv/4)；native点取样用floor(native_uv+.5)。必须保留这些半像素约定，不能把raw坐标、native坐标和mask索引直接混用。",
+    "time_and_units_trap": "023–071与077–125各自49帧都把model_time重置为[-.48,.48]，且旧prepared可能world_scale=.1。跨窗口必须按raw_track_id+raw_frame+物理timestamp在米制world/canonical重建，不能直接拼旧normalized pose或同名model_time。",
+    "residual_limits": "Brown9和provided image pose不是逐行rolling-shutter/object-motion校正；不能将本次数值一致性称真实表面几何已验证。"
+  },
+  "FRONT_view_coverage": {
+    "all199": {
+      "azimuth_deg_minmax": [
+        178.1400733528216,
+        179.58404559131307
+      ],
+      "elevation_deg_minmax": [
+        2.1524286089237106,
+        4.990828311760203
+      ],
+      "canonical_camera_origin_min_m": [
+        -34.33810258636907,
+        0.18320501053324345,
+        1.187408874509312
+      ],
+      "canonical_camera_origin_max_m": [
+        -14.700902849375625,
+        0.7054214269499597,
+        1.5869361516228087
+      ]
+    },
+    "native49": {
+      "azimuth_deg_minmax": [
+        178.15302399956366,
+        179.49150824597587
+      ],
+      "elevation_deg_minmax": [
+        2.862658737678418,
+        4.947905029542206
+      ]
+    },
+    "outside150": {
+      "azimuth_deg_minmax": [
+        178.1400733528216,
+        179.58404559131307
+      ],
+      "elevation_deg_minmax": [
+        2.1524286089237106,
+        4.990828311760203
+      ]
+    },
+    "definition": "相机原点经inverse(world_from_canonical)转到当帧车体米制；azimuth=atan2(y,x)，elevation=atan2(z,norm(xy))。",
+    "interpretation": "更多距离与时间，不等于360°绕车视角。"
+  },
+  "raw_small_probe": {
+    "frames": [
+      {
+        "raw": 0,
+        "record_crc32c": "PASS",
+        "all_cloud_rows": 180373,
+        "OBB_rows_before_RGB_or_lower_guard": 374,
+        "z_minmax_m": [
+          0.08266580277029334,
+          0.6947873848015433
+        ],
+        "source_row_set_exact_match": true,
+        "TOP_return1": 333,
+        "TOP_return2": 41,
+        "other4sensors_associated": 0,
+        "FRONT_in_frustum": 374,
+        "other4cameras_in_frustum": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "raw": 106,
+        "record_crc32c": "PASS",
+        "all_cloud_rows": 184359,
+        "OBB_rows_before_RGB_or_lower_guard": 383,
+        "z_minmax_m": [
+          -0.1244696573071451,
+          0.7198296590991049
+        ],
+        "source_row_set_exact_match": true,
+        "TOP_return1": 353,
+        "TOP_return2": 30,
+        "other4sensors_associated": 0,
+        "FRONT_in_frustum": 383,
+        "other4cameras_in_frustum": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "raw": 198,
+        "record_crc32c": "PASS",
+        "all_cloud_rows": 187495,
+        "OBB_rows_before_RGB_or_lower_guard": 133,
+        "z_minmax_m": [
+          -0.022391555724084355,
+          0.7118003388071656
+        ],
+        "source_row_set_exact_match": true,
+        "TOP_return1": 113,
+        "TOP_return2": 20,
+        "other4sensors_associated": 0,
+        "FRONT_in_frustum": 133,
+        "other4cameras_in_frustum": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "cameras_tested": [
+      "FRONT",
+      "FRONT_LEFT",
+      "FRONT_RIGHT",
+      "SIDE_LEFT",
+      "SIDE_RIGHT"
+    ],
+    "camera_order_for_other4": [
+      "FRONT_LEFT",
+      "FRONT_RIGHT",
+      "SIDE_LEFT",
+      "SIDE_RIGHT"
+    ],
+    "official_projected_a6_track": "三帧均仅FRONT有该track的projected_lidar_label；其他四相机均无。",
+    "source_row_order": "原actor源行按空间顺序重排；本次与完整未施加lower/RGB过滤的OBB选择比较的是sorted source_cloud_row集合，三帧完全相同。",
+    "raw198_image_pose_vs_frame_pose_max_abs_entry_for_other4": [
+      0.0678925810570945,
+      0.0678575206129608,
+      0.1359056933051761,
+      0.2035869353403541
+    ],
+    "time_limit": "多相机image.pose与frame.pose不应互换；raw198侧相机已见约.20m平移量级差异。未推断其余196帧的多相机可见性。",
+    "raw_source_size_and_mtime_unchanged": true,
+    "Torch_imported": false,
+    "TensorFlow_imported": false,
+    "inference_limit": "三帧支持没有被RGB/lower guard漏掉额外下方关联点；不是全199×5相机完整覆盖审核，也不能排除无LiDAR的真实车体像素。"
+  },
+  "concrete_IO_risks": [
+    {
+      "finding": "未采纳候选RGB被写成零",
+      "evidence": "prepare_a6_observations.py:360 rgb[index]=where((geometry_visible|reviewed)[:,None],color,0)",
+      "required_action": "重审时从原始JPEG重取raw RGB并另存采样值与valid/unknown原因，绝不把占位零作黑真色。",
+      "status": "VERIFIED"
+    },
+    {
+      "finding": "OBB相交否决过保守",
+      "evidence": "9558个reviewed深度可见正例同时被标box_possible；外49没有相同reviewed覆盖路径。",
+      "required_action": "保留OBB possible flag单列；独立身份审核+实际深度证据才可提升颜色等级。",
+      "status": "VERIFIED_LIMIT_NOT_AUTOMATIC_NEW_TRUTH"
+    },
+    {
+      "finding": "旧窗口身份/时间/单位不能按actor索引或model_time拼接",
+      "evidence": "a6在023–071是instance7，在089–137是actor3；077–125提案中没有a6。",
+      "required_action": "唯一连接键用raw track ID、raw_frame、camera、source_cloud_row及物理timestamp；统一米制canonical。",
+      "status": "VERIFIED"
+    },
+    {
+      "finding": "缺少真实下部颜色与掩码关联的证据",
+      "evidence": "外150的445条hint全在顶部；当前full199最低关联点-.21044834m。",
+      "required_action": "下部保持未知/推断；后续只按同一全车规则收集，不从上部乱传播或把PVD投影作监督。",
+      "status": "VERIFIED_FOR_EXISTING_SPARSE_BANK"
+    }
+  ],
+  "minimal_next_CPU_audit_contract": {
+    "goal": "先验证输入输出与可用信息，不改模型、不寻新纹理方案。对所有方位采用同一规则，允许结论为NO_NEW_CONFIRMED_LOWER_SUPPORT。",
+    "inventory": "用raw_frame×camera枚举可用原始JPEG/标定/image.pose/时间戳/已审track mask；无已审mask明确candidate，不因bbox或zbuffer通过升级。",
+    "reconstruction": "每真实LiDAR点保留(raw,camera,laser,return,rangeimage pixel/source_cloud_row)源映射；按raw时态车盒得到canonical实测点，以该camera自己的image.pose+Brown标定回投原图。先原分辨率，不静默混用pinhole/resize约定。",
+    "visibility": "分别记录正深度/图内、实际全云zbuffer、其他物体真实测点在前、OBB可能相交、身份mask已审/候选/未知；证据互不替代。",
+    "promotion": "只有已审a6身份且通过原冻结实测深度可见规则的样本可叫confirmed RGB。bbox-only、无深度的提案回投、解除OBB否决、跨帧颜色一致仅为candidate；若无新增已审a6 mask，confirmed新增数必须为0。",
+    "unknown": "重读RGB后保存raw_sample_rgb与候选原因；不覆盖缺值成黑色，不将候选并入当前BUILD设计矩阵；不以PVD或native中心/渲染残影制造测量。",
+    "fixed_outputs": "按固定canonical 5cm格、高度分箱和相机方位列confirmed/candidate/unknown、独立raw帧数、相对49的新增格；下方z<-.21044834m单列。报告新增是否只在上部，不把总像素数当底部支持。",
+    "acceptance": [
+      "track映射与raw时间/米制坐标明确，不能仅依据旧actor编号或model_time相等。",
+      "重投影复核与原图/原掩码索引使用同一像素域，并保留当前native49回归对照。",
+      "未知零RGB不得进入任何有效样本；原始JPEG采样值与valid原因独立保存。",
+      "对没有已审a6身份的外49样本，标candidate并列出需验证的身份/可见性，不宣称新真值。",
+      "新增下部confirmed格=0时明确报告0，禁止用上部新格数替代；不据此单独证明所有密集图像中绝无底部信息。",
+      "只作CPU输入审核；当前9 HELD外观锁定、PVD/native reference角色与既有几何来源限制保持可追溯。"
+    ]
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_geometry_minimal.npz": {
+      "sha256": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+      "bytes": 3458047
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/actor_a6.npz": {
+      "sha256": "4e4aed90a1416f262bb494d353815824d934c82f061f557edb77e2cf661da31f",
+      "bytes": 854400
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_full199_observations.npz": {
+      "sha256": "4b91afca11abc5013365d8fc9763a2da63d65aac996307ad8c947562e59e8ea7",
+      "bytes": 3641298
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_full199_receipt.json": {
+      "sha256": "1a743fe6d0fa127a77621cd6e0a06afe9ca7f3995a155b6dd3f86dd93bdc3297",
+      "bytes": 130019
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prepare_a6_observations.py": {
+      "sha256": "0c5cf92000c6a2d6262500636518adb1571658bdf2e858ac74db212b8b344037",
+      "bytes": 31965
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_023_071/trajectories.json": {
+      "sha256": "1e338606070a3439cb377186aaa9ee79e01167b04058703e3cd25304c804387b",
+      "bytes": 4351122
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/instance_editor_20261013/prepared/scene0008_023_071/preparation_report.json": {
+      "sha256": "1792d5146a7a45b9c457c77e89000edafa0d111987ebbf0e128c5b6f791f5fef",
+      "bytes": 26766
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1/dynamic_multi_actor_preparation.json": {
+      "sha256": "6e6769222df18a70c3dfec74ba7b46b9fb4b8a2c0e099c18bddcccb00b02ee66",
+      "bytes": 52099
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/mask_proposals/scene0008_077_125/selection.proposal.json": {
+      "sha256": "9aa5547e5c3ab91e908a89899d138abb0e4105196aa97e203b85a0dac2bea2c7",
+      "bytes": 294209
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_077_125/anchor_actor_candidates.json": {
+      "sha256": "d83bf154d8606d1bf733af31292acd061252417c95f52761d550deaedef346d3",
+      "bytes": 11166
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_077_125/mask/mask_0/inference_manifest.json": {
+      "sha256": "4c4866f3067e5e351a9601dc3c51046ea37ed1c0792a420c50f4876de17fe22b",
+      "bytes": 1532
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/reviewed_selections/scene0008_089_137.json": {
+      "sha256": "78ba091ba7c184fab43b037d1098fd48f1f4f1429aa823b76665535c799a4e04",
+      "bytes": 21473
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json": {
+      "sha256": "972359eed42633476813ba35c0945cab15ebac51b4d8cbd402e6d1dbafeb8f9b",
+      "bytes": 118023
+    },
+    "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/waymo_numpy_cpu.py": {
+      "sha256": "f584f24ef31c4f32928e861528e4aa95a8cabb04f236627d7a3d8b9b7f1b3382",
+      "bytes": 9374
+    },
+    "/root/autodl-tmp/codex_tmp/v43_actor_diagnostics_20261101/extract_remote_actor_points.py": {
+      "sha256": "6e4bd5e287afeecb3887c6596a5301027ca737751d40ddcaa044909229c7f56c",
+      "bytes": 6032
+    }
+  }
+}

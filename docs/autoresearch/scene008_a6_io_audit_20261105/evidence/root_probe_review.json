@@ -1,0 +1,182 @@
+{
+  "status": "READ_ONLY_REVIEW_COMPLETE_LIMITED_PRECISION_PROTOCOL_CONDITIONS",
+  "source_hashes": {
+    "audit_current.py": "bcc6b194936213afce073ced22247ce82c113fc827d381456a7b6c14880e3a51",
+    "probe_geometry_input.py": "687f7892a3259e26a42a0f26b734e34022ada164bbadce70e4dbacf9fda07bfb",
+    "audit/current_audit.json": "8170f0479c90eeed0c3d530de302cfaa9e9c0ec7c4c832094bbec52fdf5bd38e"
+  },
+  "scope": "Source review, saved49-frame diagnostic review, and independent CPU-only input/affine checks. Reviewer did not run GPU inference or edit root sources.",
+  "audit_current": {
+    "status": "LOGIC_AND_SAVED_RESULT_CHECKS_PASS",
+    "frames": 49,
+    "raw_ids_exact": true,
+    "points": 18432,
+    "fit_pixels": 27429,
+    "zero_points": 10557,
+    "weak_points": 5785,
+    "supported_points": 2090,
+    "vertical_bin_point_sum": 18432,
+    "vertical_bin_zero_sum": 10557,
+    "group_conservation_maxabs": 6.556510925292969e-07,
+    "immutable_flags": {
+      "native_road_environment": true,
+      "original_asset_bytes": true
+    },
+    "validation": [
+      "The first3 categories partition every primitive. Fourth below-minimum category intentionally overlaps and is excluded from partition conservation.",
+      "Magenta changes only a temporary rendering colors_precomp clone. The original asset and its saved coefficients remain unchanged.",
+      "A@RGB equality proves the exact null-space effect on the27429 BUILD appearance-fit rows. It does not assert unchanged HELD images or every pixel in the larger visible mask.",
+      "Reported fractions use sums of alpha*T divided by summed alpha on each fixed image domain. They are contribution-weighted fractions within a frame."
+    ],
+    "contribution_fractions": {
+      "all_asset_pixels": {
+        "frame_macro_mean": 0.4797862865486924,
+        "frame_min": 0.4655248820781708,
+        "frame_max": 0.497841477394104,
+        "summed_mask_pixel_count": 117016
+      },
+      "confirmed_visible": {
+        "frame_macro_mean": 0.00044802140302858696,
+        "frame_min": 2.4489558200002648e-05,
+        "frame_max": 0.002515348605811596,
+        "summed_mask_pixel_count": 39308
+      },
+      "outside_reviewed_visible": {
+        "frame_macro_mean": 0.7496847972577932,
+        "frame_min": 0.6263675689697266,
+        "frame_max": 0.8198177814483643,
+        "summed_mask_pixel_count": 77719
+      }
+    },
+    "statistical_limits": [
+      "The macro means above give each camera equal weight. Pixel counts cannot reconstruct an exact pooled alpha-weighted fraction unless each frame alpha denominator is saved.",
+      "Points below the minimum of sparse real199 measurements are extrapolation diagnostics. The minimum is not a true underside boundary or a certificate of empty space."
+    ]
+  },
+  "CPU_probe_input_checks": {
+    "gpu_initialized": false,
+    "original_initial": {
+      "next_t": 999,
+      "shape": [
+        1,
+        3,
+        2048
+      ],
+      "dtype": "float32",
+      "saved_partial_equals_R0_exact": true,
+      "saved_fixed_partial_equals_R0_exact": true,
+      "sha256": "114b99aac5213166374cdc92e10646bfad54bfa9577997d226fd022bf491c53f",
+      "CPU_RNG_shape": [
+        5056
+      ],
+      "CUDA_RNG_shape": [
+        16
+      ]
+    },
+    "RY": {
+      "proper_native_yaw_matrix": [
+        [
+          -1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "composition": "S @ M including translation",
+      "original_det": 0.6484160988503263,
+      "yaw_det": 0.6484160988503263,
+      "roundtrip_maxabs_m": 9.723275429251999e-08
+    },
+    "RV": {
+      "raw": 106,
+      "eligible_original_valid": 255,
+      "selected": 200,
+      "unique_observation_indices": 200,
+      "unique_cloud_rows": 200,
+      "all_BUILD": true,
+      "all_original_visible_and_depth_valid": true,
+      "measured_depth_reprojection_maxabs_m": 9.591441916256827e-07,
+      "projected_nearest_forward_max_m": 9.184882863166877e-07,
+      "limit": "The frame/sample depth consistency is same-source validation, not independent precision ground truth."
+    }
+  },
+  "probe_v3": {
+    "status": "SOURCE_PROTOCOL_REASONABLE_FOR_LIMITED_PRECISION_DIAGNOSTICS",
+    "checked": [
+      "R0 andR0_repeat use identical conditioning, original generated initial noise, and restored CPU/CUDA RNG after model construction.",
+      "Each arm uses1000 frozen DDPM steps with no clipping/optimizer/post-training change. Conditioning is checked unchanged.",
+      "RY applies proper yaw to the entire affine M. It is neither a single-axis reflection nor a translation-preserving partial matrix edit.",
+      "RV deterministic BUILD-frame selection and fixed200 without replacement match the stated input.",
+      "The latest run saves100-step native-coordinate snapshots, compares R0_repeat trajectories, paired generated-row shifts and symmetric generated-set distances.",
+      "Summary does not certify exact replay or adopt an asset."
+    ],
+    "exact_failure": "The parent reported the v2 exact next-step smoke failed and formal sampling was withheld. This review does not reclassify that failure as an affine/input-coordinate error.",
+    "backend_evidence": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/modules/functional/src/voxelization/vox.cu",
+      "line": 68,
+      "operation": "floating-point atomicAdd into voxel feature accumulation",
+      "meaning": "Source-supported possible backend non-bitwise numerical variation. Not a proof that this one kernel is the exclusive cause."
+    },
+    "precision_gate": {
+      "repetitions": 8,
+      "description": "One next-step at t967 repeated from the same saved state after32 warm steps.",
+      "maxabs_normalized_limit": 0.0001,
+      "meaning": "Preregistered engineering tolerance. It does not establish metre-level shape accuracy or1000-step stability."
+    },
+    "conclusion_limits": [
+      "Use the final full R0_repeat drift, rather than the one-step smoke alone, to contextualize RY/RV differences.",
+      "Two same-input full samples provide an observed numerical-drift reference, not a statistical bound or a hypothesis test.",
+      "Separate R0-versus-historical-output drift from current R0_repeat-versus-R0 drift; the historical comparison can include environment/software changes.",
+      "Paired diffusion row indices are seed slots, not identified physical surface correspondences. Symmetric point-set distances are needed alongside row shifts.",
+      "If RY/RV differences are comparable with repeat drift, report unresolved sensitivity.",
+      "RV changes view, time, purity and spatial distribution together; no isolated denoising claim.",
+      "Sparse partial distance and observed minimum height cannot select the true front convention or establish hidden geometry/RGB accuracy."
+    ]
+  },
+  "findings": [
+    {
+      "priority": 2,
+      "file": "probe_geometry_input.py",
+      "line": 120,
+      "title": "Avoid a success receipt before the long-run gate",
+      "issue": "smoke writes PASS_LIMITED_PRECISION_DIAGNOSTIC, then raises if projected four-arm duration exceeds1hour. run checks only the receipt status, so the saved success receipt can bypass the required longer smoke on a subsequent invocation.",
+      "recommendation": "Compute the long-run decision before success receipt publication. Persist a non-success state when the10-minute smoke is required. Bind accepted smoke to the current contract/model/code hashes.",
+      "current_effect": "Conditional enforcement gap; actual projected duration was not supplied to this reviewer."
+    },
+    {
+      "priority": 3,
+      "file": "probe_geometry_input.py",
+      "line": 113,
+      "title": "Record the proposed mean next-step error",
+      "issue": "The parent proposed maxerror/meanerror reporting. Current smoke stores only max error for each of8 repeated next-step outputs.",
+      "recommendation": "Add per-repeat mean absolute error and optionally native-coordinate error while the outputs are already present; retain all exact-failure logs."
+    },
+    {
+      "priority": 3,
+      "file": "audit_current.py",
+      "line": 96,
+      "title": "Retain alpha denominators for pooled statistics",
+      "issue": "Per-frame contribution fractions are valid but current JSON does not retain their alpha sums.",
+      "recommendation": "Keep current framewise or explicitly named macro statistics. Save alpha sums/group sums when an exact pooled all49 statistic is wanted."
+    }
+  ],
+  "deferred": "No new appearance prior, texture fitting, kernel replacement or model/geometry correction is proposed as part of this I/O attribution probe."
+}

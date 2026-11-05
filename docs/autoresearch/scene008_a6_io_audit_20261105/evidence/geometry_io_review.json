@@ -1,0 +1,609 @@
+{
+  "status": "READ_ONLY_CPU_INDEPENDENT_IO_REVIEW_COMPLETE",
+  "summary_zh": [
+    "未发现确定的坐标、单位、重复归一化或输出丢点接线错误；这不证明形状先验适合当前输入。",
+    "PVD仅生成XYZ，无RGB/图像条件；灰白材质是下游初始化与不可观测颜色的结果，不能称为PVD生成了灰白纹理。",
+    "原200点横跨123帧，仅7点位于车体中心以下；936/2048输出点低于全部199帧实测最低高度，属于无实测支持的形状先验。",
+    "仍需区分未知front符号、199帧多视点LiDAR与官方单视点合成深度分布、全框各向异性适配、以及Gaussian化造成的成像变化。"
+  ],
+  "scope": {
+    "local_outputs_only": true,
+    "remote_reads_only": true,
+    "GPU_inference_runs": 0,
+    "training_steps": 0,
+    "remote_writes": false,
+    "shutdown_requested_or_performed": false,
+    "note": "Root coordinates any subsequent diagnostic inference; this review launches none."
+  },
+  "architecture": {
+    "file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\geometry_io_architecture.mmd",
+    "components": [
+      "199-frame LiDAR / seed0 200 XYZ",
+      "Whole-box affine + car global normalization",
+      "Frozen PVD / 200 fixed +1848 generated XYZ",
+      "Inverse affine / PCA Gaussianization",
+      "BUILD colour fit / unseen columns retain prior",
+      "Native compositor / complete-car image"
+    ]
+  },
+  "source_chain": {
+    "original_observations": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_prior_inputs.npz",
+    "input_rows_total": 54715,
+    "input_geometry_equals_minimal": true,
+    "whole_box_lwh_m": [
+      4.33404016494751,
+      2.0775399208068848,
+      1.440000057220459
+    ],
+    "canonical_axes": [
+      "x_forward_length",
+      "y_left_width",
+      "z_up_height"
+    ],
+    "all_measurement_bounds_m": [
+      [
+        -2.1659679412841797,
+        -1.0363516807556152,
+        -0.21044833958148956
+      ],
+      [
+        2.0848424434661865,
+        1.0377053022384644,
+        0.7198296785354614
+      ]
+    ],
+    "all_measurement_z_quantiles_m": [
+      -0.21044833958148956,
+      -0.11873644888401032,
+      -0.004423149861395359,
+      0.21198609471321106,
+      0.3180196285247803,
+      0.5269474685192108,
+      0.6500981569290161,
+      0.688025563955307,
+      0.6966353595256806,
+      0.7198296785354614
+    ],
+    "declared_source_frame_count": 199,
+    "original_200_distinct_frames": 123,
+    "original_200_raw_range": [
+      0,
+      197
+    ],
+    "original_200_BUILD_count": 45,
+    "original_200_HELD_count": 14,
+    "original_200_outside_native49_count": 141,
+    "input200_native_bounds_m": [
+      [
+        -2.1131668090820312,
+        -0.985198974609375,
+        -0.1425415724515915
+      ],
+      [
+        1.7584329843521118,
+        0.9345643520355225,
+        0.7156797647476196
+      ]
+    ],
+    "input200_z_quantiles_m": [
+      -0.1425415724515915,
+      -0.055767498724162576,
+      0.02752908393740654,
+      0.23616819828748703,
+      0.32900090515613556,
+      0.5725735872983932,
+      0.6493771255016327,
+      0.6891581118106842,
+      0.696826639175415,
+      0.7156797647476196
+    ],
+    "input200_below_native_center": 7,
+    "input200_below_all_measurement_zmin": 0,
+    "minimal_geometry_rgb_valid_count": 0,
+    "minimal_geometry_rgb_valid_semantics": "Stripped geometry artifact contains all-false placeholders; not the later reviewed observation-bank flags.",
+    "supplied_confidence_unique": [
+      1.0
+    ],
+    "confidence_used_by_PVD": false,
+    "RGBA_image_used_by_PVD": false,
+    "comments": "Generic prior contract advertises a sparse RGBA hint, but propose_pvd.py reads only XYZ and size; every confidence is one.",
+    "evidence": [
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/propose_pvd.py",
+        "line": 48,
+        "contains": "raw=np.asarray(data['observed_points_actor_native_m']"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/propose_pvd.py",
+        "line": 52,
+        "contains": "indices=rng.choice(len(raw),200,replace=False)"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prepare_a6_observations.py",
+        "line": 215,
+        "contains": "visible_points_confidence=np.ones"
+      }
+    ]
+  },
+  "coordinate_checks": {
+    "normalization": {
+      "schema_version": "c2.pvd_fixed_fullbox_training_stats_transform.v1",
+      "whole_box_lwh_m": [
+        4.33404016494751,
+        2.0775399208068848,
+        1.440000057220459
+      ],
+      "partial_bounds_scaled": false,
+      "partial_bounds_centered": false,
+      "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+      "training_stats_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/pointflow_car_train_stats.json",
+      "training_stats_sha256": "057799ed11945648d788f6f733bd9cc0bfbc487aeabfd24818ed1927ea960c6c",
+      "training_shapes": 2458,
+      "training_npy_crc_verified": 2458,
+      "source_split": "train",
+      "training_mean_xyz": [
+        0.0013179273810237646,
+        0.007349051535129547,
+        0.023509424179792404
+      ],
+      "training_scalar_std": 0.16349221765995026,
+      "training_mean_full_bbox_span_xyz": [
+        0.3736966279626311,
+        0.2702367117519428,
+        0.8653240163921946
+      ],
+      "training_mean_full_bbox_center_xyz": [
+        0.0015711266132031072,
+        0.02641026573529883,
+        0.013171462331391928
+      ],
+      "native_axis": "x length/forward, y width/left, z height/up",
+      "pvd_axis": "X width/right, Y height/up, Z length/back",
+      "front_sign_assumption": "Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used",
+      "training_reference_axis_image": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/reference_training_car_axes.png",
+      "native_to_training_raw_rotation": [
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "model_formula": "q_train=C_bbox+diag(span_train/[W,H,L]) @ R @ native_m; normalized=(q_train-training_mean)/training_scalar_std",
+      "inverse_formula": "native_m=R.T @ diag([W,H,L]/span_train) @ (std*normalized+training_mean-C_bbox)",
+      "pvd_to_actor_native_4x4": [
+        [
+          0.0,
+          0.0,
+          -0.8188630207547728,
+          -0.051778456423143396
+        ],
+        [
+          -0.9089233980558168,
+          0.0,
+          0.0,
+          0.001407643188107219
+        ],
+        [
+          0.0,
+          0.8711947435237231,
+          0.0,
+          -0.10157076498225952
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "actor_native_to_pvd_4x4": [
+        [
+          0.0,
+          -1.100202725707134,
+          0.0,
+          0.0015486928723786421
+        ],
+        [
+          0.0,
+          0.0,
+          1.1478489825998008,
+          0.11658789924677007
+        ],
+        [
+          -1.221205469845576,
+          0.0,
+          0.0,
+          -0.06323213420410352
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "application_adaptation": "Known target fullbox maps to mean complete TRAIN box; official class mean/std then applied. This is not an exact ShapeNet benchmark scene and no partial estimated dimensions or centering are used.",
+      "seed": 0,
+      "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+      "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+      "normalization_sha256": "988d6aa8beca7c097a4b4d78b1b1706ed85537e46fa54caa2062a46cbb6ba8ce",
+      "partial_count": 200,
+      "new_noise_points": 1848,
+      "total_points": 2048,
+      "ddpm_steps": 1000,
+      "input_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/inputs/a6_prior_contract.json",
+      "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights/car_completion_3199.pth"
+    },
+    "rotation_determinant": 1.0,
+    "rotation_orthogonality_max_error": 0.0,
+    "forward_inverse_max_error": 1.1102230246251565e-16,
+    "formula_vs_saved_forward_max_error": 1.3877787807814457e-17,
+    "seed0_row_selection_exact": true,
+    "input200_native_source_rows_exact": true,
+    "fixed200_normalized_output_bit_exact": true,
+    "inverse_output2048_FP32_bit_exact": true,
+    "input200_native_max_error_m": 1.1920928955078125e-07,
+    "publication_existing_arrays_unchanged": true,
+    "publication_alias_exact": true,
+    "canonical_world_max_error_m": 0.0,
+    "world_model_max_error": 0.0,
+    "all199_pose_composition_max_error": 0.0,
+    "meter_to_model_axis_scales": [
+      0.10000000000000095,
+      0.1,
+      0.09999999999999909
+    ],
+    "input200_normalized_bounds": [
+      [
+        -1.0266615152359009,
+        -0.047028299421072006,
+        -2.2106401920318604
+      ],
+      [
+        1.0854673385620117,
+        0.9380801916122437,
+        2.517378807067871
+      ]
+    ],
+    "partial_bbox_centering_or_scaling_used": false,
+    "normalized_not_unit_cube": "The official scalar-global-std normalization legitimately yields |coordinates|>1; a unit-cube expectation would be incorrect.",
+    "float64_stats_instead_of_official_style_FP32_max_native_change_m": 4.215262355966587e-05,
+    "verdict": "Mechanical affine/row/units wiring passes. Front semantic sign and suitability of whole-box-to-mean-box adaptation are not certified by invertibility."
+  },
+  "checkpoint_and_training": {
+    "checkpoint_filename": "car_completion_3199.pth",
+    "fresh_remote_checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+    "cpu_checkpoint_read": {
+      "keys": [
+        "epoch",
+        "model_state",
+        "optimizer_state"
+      ],
+      "epoch": 3199,
+      "state_keys": 296,
+      "classifier": {
+        "model.module.classifier.0.layers.0.weight": [
+          128,
+          64,
+          1
+        ],
+        "model.module.classifier.0.layers.0.bias": [
+          128
+        ],
+        "model.module.classifier.0.layers.1.weight": [
+          128
+        ],
+        "model.module.classifier.0.layers.1.bias": [
+          128
+        ],
+        "model.module.classifier.2.weight": [
+          3,
+          128,
+          1
+        ],
+        "model.module.classifier.2.bias": [
+          3
+        ]
+      },
+      "embedded_stats": [],
+      "cuda_initialized": false
+    },
+    "official_checkpoint_receipt": {
+      "pid": 33267,
+      "started_epoch": 1793693390.40647,
+      "official_repo": "https://github.com/alexzhou907/PVD",
+      "drive_id": "18WhIKXWPFjg0RisewiEZjL-JXfQvirJN",
+      "file": "car_completion_3199.pth",
+      "expected_bytes": 331963658,
+      "download_url": "https://drive.usercontent.google.com/download?id=18WhIKXWPFjg0RisewiEZjL-JXfQvirJN&export=download&confirm=t",
+      "source": "Official README -> Drive PVD/ckpt/completion",
+      "args": [
+        "aria2c",
+        "--continue=true",
+        "--auto-file-renaming=false",
+        "--file-allocation=none",
+        "--max-connection-per-server=16",
+        "--split=16",
+        "--min-split-size=1M",
+        "--summary-interval=10",
+        "--auto-save-interval=10",
+        "--all-proxy=http://127.0.0.1:45957",
+        "--retry-wait=5",
+        "--max-tries=10",
+        "--connect-timeout=10",
+        "--timeout=30",
+        "--dir=/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/weights",
+        "--out=car_completion_3199.pth",
+        "https://drive.usercontent.google.com/download?id=18WhIKXWPFjg0RisewiEZjL-JXfQvirJN&export=download&confirm=t"
+      ]
+    },
+    "category": "car / ShapeNet synset02958343, based on official download provenance; no category label embedded in checkpoint",
+    "nc3_semantics": "Three XYZ/epsilon output channels; not RGB and not three object categories",
+    "extracted_official_core_AST_equal": {
+      "GaussianDiffusion": true,
+      "Model": true,
+      "PVCNN2": true,
+      "discretized_gaussian_log_likelihood": true,
+      "get_betas": true,
+      "normal_kl": true
+    },
+    "training_complete_source": "PointFlow ShapeNetCore.v2.PC15k, 2458 car/train files, each15000 XYZ; previously2458 CRC verified",
+    "training_condition_source": "GenRe single-view depth, cached600 points/view, first200 selected; random one of20 views used per training batch",
+    "official_normalizer_code_contract": "train_completion.get_dataset first computes mean/std from all PointFlow car/train shapes, then explicitly passes those statistics to GenRe loader, which may filter missing/failed views. It does not recompute filtered-subset statistics.",
+    "actual_checkpoint_training_stats_embedded": false,
+    "actual_author_GenRe_training_membership_and_count_verified": false,
+    "GenRe_filtered_subset_descriptive_stats_computed": false,
+    "stats_uncertainty": "The actual checkpoint training run and exact filtered GenRe membership are not recovered. All2458 statistics could differ from descriptive statistics of the retained subset, but such a difference is NOT by itself a mismatch to the inspected official normalizer code. No evidence establishes a normalization bug.",
+    "original_environment_from_receipt": {
+      "schema_version": "c2.frozen_pvd_car_completion.v1",
+      "model": "PVD car_completion_3199",
+      "checkpoint_sha256": "567ec9e6f0c3b453e128d916363bb8f1ddf6a432eef13d10035ee006d732dc1a",
+      "source_commit": "9747265a5f141e5546fd4f862bfa66aa59f1bd33",
+      "seed": 0,
+      "diffusion_steps_this_run": 1000,
+      "official_total_diffusion_steps": 1000,
+      "total_points": 2048,
+      "fixed_original_points": 200,
+      "new_diffused_points": 1848,
+      "training_steps": 0,
+      "trainable_prior_parameters": 0,
+      "partial_coordinate_max_error_m": 9.720820770553473e-08,
+      "all_points_finite": true,
+      "native_bounds_m": [
+        [
+          -2.113166870762787,
+          -1.037633748124835,
+          -0.8318876494345664
+        ],
+        [
+          2.4101841757548614,
+          1.0484799847302766,
+          0.7156797669540541
+        ]
+      ],
+      "inside_whole_box_fraction": 0.95361328125,
+      "generated_inside_whole_box_fraction": 0.9485930735930735,
+      "observed_to_complete_approx_m": {
+        "mean": 0.06570924608786079,
+        "p50": 0.057312433361987644,
+        "p90": 0.11671383778177288
+      },
+      "total_wall_seconds": 26.583829060196877,
+      "sampling_wall_seconds": 25.545124273747206,
+      "peak_allocated_gib": 0.2606196403503418,
+      "peak_reserved_gib": 0.3046875,
+      "torch": "2.2.2+cu118",
+      "cuda": "11.8",
+      "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+      "normalization_source": "fixed_annotated_whole_box_and_official_PointFlow_car_train_global_statistics",
+      "input_sha256": "7fe81eceb526a23fadea4ab8782d67874c1b8421e5c67cd95dceaa3a49c5e637",
+      "worker_sha256": "bdf5dc1faeeb2b37181b33b4c80eb3bf80f3ddec944dc2fec5d52cd6a047e7cf",
+      "resumed_from": null,
+      "quality_status": "Actual frozen partial-to-complete proposal; downstream legal-box/observed constraints and RGB fit still required"
+    },
+    "evidence": [
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/train_completion.py",
+        "line": 481,
+        "contains": "def get_dataset("
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/datasets/shapenet_data_sv.py",
+        "line": 102,
+        "contains": "if len(cams_pths) < 20:"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/datasets/shapenet_data_sv.py",
+        "line": 217,
+        "contains": "data = data[np.random.choice(data.shape[0], 600, replace=False)]"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/train_completion.py",
+        "line": 620,
+        "contains": "randind = np.random.choice(20)"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd/vendor/datasets/shapenet_data_pc.py",
+        "line": 17,
+        "contains": "'02954340': 'cap', '02958343': 'car'"
+      }
+    ]
+  },
+  "geometry_and_gaussianization": {
+    "PVD_total_points": 2048,
+    "PVD_fixed_points": 200,
+    "PVD_generated_points": 1848,
+    "PVD_output_has_rgb": false,
+    "PVD_output_has_normals": false,
+    "PVD_output_has_opacity": false,
+    "output_native_bounds_m": [
+      [
+        -2.1131668090820312,
+        -1.0376337766647339,
+        -0.8318876624107361
+      ],
+      [
+        2.410184144973755,
+        1.0484800338745117,
+        0.7156797647476196
+      ]
+    ],
+    "output_below_all199_measured_zmin": 936,
+    "below_min_all_generated": true,
+    "raw_measurement_lowest_z_m": -0.21044833958148956,
+    "output_lowest_z_m": -0.8318876624107361,
+    "output_out_of_annotated_box_count": 95,
+    "generated_to_real_nn_distance_m_quantiles": [
+      0.0012674343578113801,
+      0.006466824227330914,
+      0.015173507465303264,
+      0.10286229762544363,
+      0.3461386718906013,
+      0.6445423697389695,
+      0.820709011111381,
+      0.8955796264983741,
+      1.0843717038956555,
+      1.2671811461903335
+    ],
+    "real_to_complete_nn_distance_m_quantiles": [
+      0.0,
+      0.0040912918250043525,
+      0.015360051485439749,
+      0.03719374002230054,
+      0.057312421112855366,
+      0.0803368784641389,
+      0.11671384097767434,
+      0.14846151245204509,
+      0.2322275681621514,
+      0.39828305090579375
+    ],
+    "distance_caveat": "Generated-to-observed distance is an evidence-distance diagnostic, not unobserved-surface error.",
+    "complete2048_policy": "Current full_pvd keeps every raw point, including conditioning/out-of-box/invalid normals, with no axis conversion after actor_native_m decoding.",
+    "initial_rgb": [
+      0.5,
+      0.5,
+      0.5
+    ],
+    "initial_peak_opacity": 0.995,
+    "fixed_normal_thickness_m": 0.003,
+    "normal_invalid": 12,
+    "normal_valid": 2036,
+    "normal_policy": "PCA16 inside min(.25,max(4*median nearest3 spacing,.03)); smallest eigenvector; outward sign n dot point >=0; invalid flags retained without replacement",
+    "sigma_policy": "min(.60*median nearest3 spacing,.060,.45*normal_radius) metres",
+    "interpretation": "PCA normals, finite splat footprints, opaque peaks and thickness are downstream rendering conventions. They can fill gaps and change silhouette/depth/occlusion; they are not direct PVD predictions.",
+    "legacy_surface_rows": 7503,
+    "legacy_prior_rows": 1527,
+    "legacy_full_copy_exact": true,
+    "legacy_warning": "The7503-row observed+filtered-prior surface and later1477-row residual layer are different assets; neither is the complete2048 PVD output.",
+    "evidence": [
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py",
+        "line": 125,
+        "contains": "arrays = dict(xyz=points.astype(np.float32)"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py",
+        "line": 159,
+        "contains": "arrays.update(rgb=np.full((2048, 3), .5"
+      },
+      {
+        "remote_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py",
+        "line": 123,
+        "contains": "if not np.array_equal(patch['original_index'], np.arange(2048))"
+      }
+    ]
+  },
+  "current_M2_appearance_identifiability": {
+    "points": 18432,
+    "design_shape": [
+      27429,
+      18432
+    ],
+    "design_nnz": 1725503,
+    "zero_columns": 10557,
+    "zero_column_fraction": 0.57275390625,
+    "zero_column_final_rgb_unique": [
+      [
+        0.3392156958580017,
+        0.4156862795352936,
+        0.4892156720161438
+      ]
+    ],
+    "points_below_all199_measured_zmin": 8407,
+    "zero_columns_below_that_height": 8178,
+    "low_unseen_fraction": 0.9727607945759487,
+    "zero_columns_changed_to_magenta_all27429_BUILD_predictions_bit_exact": true,
+    "meaning": "A null column has no contribution to any fixed BUILD target pixel. Its colour is unidentifiable under this objective and remains the fixed prior; more steps cannot infer its true material.",
+    "distinction": "No target contribution can mean hidden, off-target, culled, thresholded or occluded. A zero column alone does not prove every such point is physically unobserved."
+  },
+  "remaining_adapter_questions": [
+    {
+      "issue": "Front/back semantic convention",
+      "fact": "Native +X maps to PVD -Z, based on first fixed official car/train reference side view; author explicit front-sign documentation not established; no target complete geometry or sign sweep used",
+      "status": "Unresolved semantic assumption; not a demonstrated coordinate bug; do not adopt a sign based on target visual preference."
+    },
+    {
+      "issue": "Whole-box anisotropic application adapter",
+      "fact": "Target [W,H,L] mapped to mean complete training bbox span, plus mean bbox-center and scalar normalization.",
+      "native_metres_per_normalized_axis_singular_values": [
+        0.9089233980558168,
+        0.8711947435237231,
+        0.8188630207547727
+      ],
+      "status": "Documented adaptation, not an exact benchmark convention or a learned per-target shape correspondence."
+    },
+    {
+      "issue": "Conditioning distribution",
+      "fact": "Original200 sampled from123 frames / fused multi-LiDAR OBB returns, versus clean synthetic single-view depth200; confidence all1 and ignored.",
+      "status": "Noise, rigid-box pose errors, viewpoint mixture, density bias and category-instance mismatch remain plausible; their causal contributions are unmeasured."
+    },
+    {
+      "issue": "Unobserved lower shape and colour",
+      "fact": "Only7 original conditioning points have z<0;936 completion points lie below every measured return.",
+      "status": "Unobserved support and material cannot be validated by the same sparse partial evidence."
+    },
+    {
+      "issue": "Gaussian representation",
+      "fact": "Point-only PVD lacks normals, opacity, texture or surface connectivity; downstream PCA/footprints are additional assumptions.",
+      "status": "Point-cloud plausibility does not imply correct window/wheel geometry or render fidelity."
+    }
+  ],
+  "prespecified_short_inference_controls": {
+    "execution_owner": "Root; review only, no run launched here",
+    "training": false,
+    "colour_fit": false,
+    "automatic_adoption": false,
+    "shared": "Same official checkpointSHA,200 conditioning+1848 generated points,seed0,1000 linear beta steps .0001..02,eps,fixedsmall,clip_denoised=False,eval mode; original fullbox and train stats frozen",
+    "R0": "Original exact200 + original adapter; prefer saved initial1848 noise and matching saved RNG; compare RAW point arrays, fixed rows, normalized arrays and fileSHA separately. Publication NPZ adds an alias.",
+    "Ryaw": "Same original200 only change a proper yaw180 convention. H_training=diag(-1,1,-1); S_native=diag(-1,-1,1); inverse-normalized-to-native T_yaw=S_native4@T including translation; forward=inv(T_yaw). Check det+1, Y-up and fixed-point inverse error before inference. No visual-result front truth.",
+    "Rvisible": "Among BUILD frames with >=200 reviewed+depth-consistent samples select greatest count, tie smallest raw; current bank predicts raw106=255. Freeze200 unique cloud-row sample indices with rng0. Original adapter; no duplicate padding. This jointly changes purity, viewpoint and temporal support, so it cannot isolate denoising.",
+    "exact_replay_caveat": "Different GPU, CUDA, Torch, extension build, nondeterministic scatter/reductions can prevent bit equality. Record runtime/source hashes and initial noise/RNG; do not alter method to make only final pictures match.",
+    "preregistration": "Persist selected source rows, complete matrices+inverses, checkpoint/source/data hashes, initial noise/RNG policy and all evaluation denominators before any model result.",
+    "evaluation": "Report all arms as diagnostics. Fixed-source200 reconstruction and clean known-data tests are wiring checks; observed NN/projection checks use the same fixed observed denominator. Exclude conditioning rows from any claimed withheld-point metric. Unknown lower surfaces have no GT; no shape/colour claim from lower completeness or chosen sign.",
+    "falsification": "R0 disagreement isolates reproduction/runtime uncertainty before blaming adaptation. Ryaw differences only show orientation sensitivity. Rvisible differences show source-adapter sensitivity, not proof that one input is true or that unseen geometry is correct.",
+    "optional_known_reference": "A frozen official car reference with deterministic200 and known unconditioned complete points can test clean-data model/normalization/inverse behavior. Full-surface random200 is not the official single-view regime; a training reference tests deployment, not generalization. It bypasses the real-scene box adapter, which still needs its independent affine checks."
+  },
+  "external_primary_sources": [
+    {
+      "title": "Official PVD repository at frozen commit",
+      "url": "https://raw.githubusercontent.com/alexzhou907/PVD/9747265a5f141e5546fd4f862bfa66aa59f1bd33/README.md",
+      "supports": "Shape completion uses GenRe renders; shape point data and official pretrained-model link."
+    },
+    {
+      "title": "PVD paper",
+      "url": "https://arxiv.org/abs/2104.03670",
+      "supports": "Point-cloud shape generation and multimodal completion, including single-view depth scans; no colour synthesis claim."
+    }
+  ],
+  "evidence_manifest": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\download_manifest.json"
+}
