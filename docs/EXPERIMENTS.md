@@ -315,3 +315,5 @@
 
 
 2026-11-05，Scene008完整单一资产完成材质/统一采样/实测法向校正三组49帧对照。M1受限SH3小幅增益，M2全车细采样RGB .04951→.03812、深度 .32646→.27498m；M3仅234中心支持，深度微改善但RGB略差。路面接缝已在1K道路插入中存在，全图冷色主要继承原图/native。AutoDL保持开机。[报告、资产与复核](autoresearch/scene008_a6_asset_controls_20261105/README.md)。
+
+- `scene008_local_blue_road_seam_20261105_r1`：[局部偏蓝和道路颜色边界的49帧冻结诊断](autoresearch/scene008_local_colour_diag_20261105/index.html)；三帧删车与覆盖权重参考替换补充来源归因，训练更新0，修复收益未验证；failure_ledger_delta=none。

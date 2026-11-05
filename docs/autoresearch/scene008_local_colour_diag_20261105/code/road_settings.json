@@ -1,0 +1,13 @@
+{
+  "target_alias": 37,
+  "detail_cell_m": 0.02,
+  "normal_sigma_m": 0.003,
+  "coverage": {"longitudinal_outer_m": 0.70, "lateral_outer_m": 0.45, "core_fraction": 0.40},
+  "adaptive_rgb": {"enabled": true, "sigma_longitudinal_m": 0.80, "sigma_lateral_m": 0.40, "max_linear_delta": 0.025, "strength": 1.0},
+  "source_policy": "at least3 geometrically eligible real199 colour samples; best projected-resolution source inside upper radiance cluster; no new colour interpolation",
+  "formal_steps": 1000,
+  "learning_rate": 0.06,
+  "gate_init": 2.0,
+  "inference": {"max_neighbour_distance_m": 0.60, "loss_confidence": 0.25, "material": "asphalt_only; world marking cells excluded; explicit inferred samples"},
+  "loss_weights": {"road": 1.0, "native": 2.0, "yellow": 4.0, "other_vehicle": 3.0, "left_road": 2.0, "keep_native_gate_prior": 0.0005}
+}
