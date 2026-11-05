@@ -190,6 +190,11 @@ def main():
     def link(path,text):
         return f'<a href="{url(path)}" download>{esc(text)}</a>' if path and path.is_file() else '<span class="muted">待取回</span>'
 
+    evaluation_roles_path=find('reviews/evaluation_roles.json')
+    evaluation_roles=load(evaluation_roles_path) if evaluation_roles_path else {}
+    role_notice_text=(evaluation_roles or {}).get('report_notice_zh','HELD9仅表示未参与颜色拟合；已用于表示缺陷分析，属于内部开发诊断留出，不构成独立最终确认集或泛化证据。所有数值仅作内部同场景对照。')
+    role_notice='<div class="notice"><strong>评价角色说明：</strong>'+esc(role_notice_text)+' '+link(evaluation_roles_path,'评价角色历史JSON')+'</div>'
+
     projective_receipts=[(p,load(p)) for p in projective_files if p.name=='receipt.json']
     projective_rows=''.join(f'<tr><td>{esc(p.relative_to(dest))}</td><td>{esc((j or {}).get("status","未标记"))}</td><td>{link(p,"receipt")}</td></tr>'
                             for p,j in projective_receipts)
@@ -236,7 +241,7 @@ def main():
     research_asset=find('output_adapter/projective_surface/formal_observed/formal/complete_a6.npz')
     asset_download=('<p><a style="display:inline-block;padding:11px 18px;background:#176b65;color:white;border-radius:9px;font-weight:700" href="'+url(research_asset)+'" download>下载当前研究资产(.npz)</a> <span class="caption">单参考view持久a6-local资产 · 研究候选</span></p>') if research_asset else ''
 
-    evidence_rows=''.join(f'<li>{link(p,p.relative_to(dest).as_posix())}</li>' for p in sorted(files) if p.suffix=='.json' and (p.parent.name=='evidence' or p.name in ('receipt.json','prepare_receipt.json','summary.json','metrics49.json','held_hr.json','lidar49.json','hosted_generation.json','projective_preservation.json')))
+    evidence_rows=''.join(f'<li>{link(p,p.relative_to(dest).as_posix())}</li>' for p in sorted(files) if p.suffix=='.json' and (p.parent.name=='evidence' or p.name in ('receipt.json','prepare_receipt.json','summary.json','metrics49.json','held_hr.json','lidar49.json','hosted_generation.json','projective_preservation.json','evaluation_roles.json')))
     code_rows=''.join(f'<li>{link(p,p.relative_to(dest).as_posix())}</li>' for p in sorted(files) if p.suffix=='.py' and ('code' in p.relative_to(dest).parts or 'source' in p.relative_to(dest).parts))
     manifest=load(dest/'evidence/sd_batch_manifest.json') or {}
     prompts=list(dict.fromkeys(j['prompt'] for j in manifest.get('jobs',[]) if 'prompt' in j))
@@ -271,6 +276,10 @@ chooser.addEventListener('change',update);slider.addEventListener('input',update
     template=template.replace(old_lead,'完整a6资产已呈现牌照槽、保险杠与轮胎等车体细节。本页比较二维外观候选如何进入实际3D资产，并在同相机、多帧与街景中检查最终效果。PVD与预训练模型权重保持冻结。')
     final_assessment='<div class="notice warn"><strong>当前结果仍未达到用户参考图的全写实程度。</strong> PVD先验深度带来的表面弯曲、边缘破损仍然可见，多视图泛化也未获证明。可见区域RGB的小幅改善不能解释为隐藏表面更准确。下一阶段优先在真实观测约束下拟合表面几何并检查多视图一致性，暂不进行PVD后训练。</div>'
     template=template.replace('</p><div class="tags">','</p>'+final_assessment+'<div class="tags">',1)
+    template=template.replace('<div class="tags">',role_notice+'<div class="tags">',1)
+    template=template.replace('BUILD选择 · HELD验收','BUILD颜色拟合 · HELD9内部诊断')
+    template=template.replace('分割标签用于验收展示，不用于重新挑选候选。','分割仅标记颜色拟合角色；HELD9已参与表示诊断，不能作独立最终确认。')
+    template=template.replace('这里的HELD仍继承同场景几何上下文，不代表独立几何泛化。','HELD9未参与颜色拟合，但已参与表示缺陷分析，是内部开发诊断留出，不是独立最终确认集或泛化证据。')
     template=template.replace('<nav>',asset_download+'<nav>',1)
     fixed_labels='<div class="column-labels"><span>Observed</span><span>M2</span><span>HR observed</span><span>Thin + strong</span><span>Sphere + strong</span></div>'
     template=template.replace(fixed_labels,f'<div id="columnLabels" class="column-labels" style="--column-count:{len(columns)}">{{{{COLUMNS}}}}</div>')
@@ -303,7 +312,7 @@ chooser.addEventListener('change',update);slider.addEventListener('input',update
         'CONDITIONING':figure(conditioning,'BUILD106 · 真实可见上半部','灰色区域为未知placeholder；黑底为对象外，未作为生成目标。'),
         'SELECTED':figure(selected,'冻结SD候选 · prompt2_seed3','仅凭BUILD形状可用性选择；候选外像素精确恢复。'),
         'STRONG':figure(strong,'Strong v2 · 2D材质proposal','Hosted生成；颜色与隐藏细节均为推断。'),
-        'BOARD':figure(board,'SD固定8候选','两条prompt × 四个seed；未据HELD改选。','wide'),
+        'BOARD':figure(board,'SD固定8候选','两条prompt × 四个seed；候选按BUILD冻结，HELD9作为内部开发诊断留出。','wide'),
         'KERNEL_PREVIEW':figure(kernel_preview,'同色材质的核输出诊断 · raw106','此图是拟合前厚度变换对照，不代表自动采用Sphere。','wide') if kernel_preview else '',
         'KERNELROWS':''.join(kernelrows) or empty(5),
         'KERNEL_LINKS':' '.join([link(held_path,'HR固定域JSON'),link(lidar_path,'LiDAR固定域JSON')]),
@@ -315,6 +324,8 @@ chooser.addEventListener('change',update);slider.addEventListener('input',update
         'ACTIVEGALLERY':json.dumps(active_gallery),'GALLERYOPTIONS':gallery_options,
     }
     for key,value in values.items():template=template.replace('{{'+key+'}}',value)
+    template=template.replace('9 HELD HR','内部HELD9 HR')
+    template=template.replace('同一9 HELD原始HR固定可见域','同一内部HELD9原始HR固定可见域')
     if '{{' in template:raise RuntimeError('Unresolved report template marker')
     (dest/'index.html').write_text(template,encoding='utf-8')
     with zipfile.ZipFile(dest/'evidence_and_code.zip','w',zipfile.ZIP_DEFLATED) as z:
@@ -331,6 +342,8 @@ chooser.addEventListener('change',update);slider.addEventListener('input',update
              'preservation_baseline':'sphere_strong_v2' if preservation else None,
              'preservation_JSON':url(preservation_path),
              'research_asset_download':url(research_asset),
+             'evaluation_roles_JSON':url(evaluation_roles_path),
+             'HELD9_role':'internal development diagnostic holdout; no independent final confirmation/generalization claim',
              'active_gallery':active_gallery,
              'independent_galleries':{k:{'columns':v['columns'],'complete_pairs':v['complete'],'receipt':v['receipt']} for k,v in gallery_sets.items()},
              'missing_gallery_raws':[int(k) for k,v in gallery.items() if not(v['objects'] and v['street'])],

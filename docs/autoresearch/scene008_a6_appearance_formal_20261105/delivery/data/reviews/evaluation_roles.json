@@ -1,0 +1,54 @@
+{
+  "schema": "a6.appearance.evaluation_roles.v1",
+  "recorded_date": "2026-11-05",
+  "status": "HELD9_RECLASSIFIED_AS_INTERNAL_DEVELOPMENT_DIAGNOSTIC_HOLDOUT",
+  "policy_basis": "Repository auto-research rule 25, as identified in the parent repository review: evaluation images used to diagnose or develop representations cannot also serve as an independent final confirmation set.",
+  "original_split_labels_preserved": true,
+  "HELD9_raw_ids": [89, 95, 101, 105, 113, 121, 125, 130, 137],
+  "BUILD_role": "The other 40 frames in raw089..137 supply the declared per-asset real-RGB colour-fit domain.",
+  "HELD9_current_role": {
+    "not_used_for_colour_fitting": true,
+    "not_used_for_generated_candidate_prompt_or_seed_selection": true,
+    "used_for_representation_defect_analysis": true,
+    "documented_diagnostic_example_raw_ids": [113],
+    "diagnostic_topics": [
+      "Thin-kernel holes and broken output coverage",
+      "Sphere-kernel output representation",
+      "View-conditioned surface representation and its defects"
+    ],
+    "role": "Internal development diagnostic holdout",
+    "independent_final_confirmation_set": false,
+    "strictly_untouched_test_set": false,
+    "independent_generalization_evidence": false,
+    "metric_interpretation": "All existing values remain unchanged and are reported only as internal same-scene development comparisons. Exclusion from colour fitting alone does not establish an independent final test."
+  },
+  "role_history": [
+    {
+      "order": 1,
+      "role": "Colour-fit holdout",
+      "description": "The historical HELD label marked frames excluded from per-asset real-RGB colour fitting. The split label alone did not establish independent final confirmation."
+    },
+    {
+      "order": 2,
+      "role": "Development diagnostic use",
+      "description": "raw113 and other held-view displays were inspected to diagnose thin-kernel holes and sphere/surface representation defects during this development round."
+    },
+    {
+      "order": 3,
+      "role": "Explicit reporting correction",
+      "description": "The report now identifies HELD9 as an internal development diagnostic holdout and withdraws any implication that it is an independent final confirmation or generalization set."
+    }
+  ],
+  "independent_final_confirmation": {
+    "performed_in_this_round": false,
+    "conclusion": "No independent final confirmation or generalization claim follows from the current HELD9 comparisons."
+  },
+  "preserved_artifacts": {
+    "original_receipts_edited": false,
+    "assets_changed": false,
+    "metrics_or_denominators_changed": false,
+    "historical_HELD_split_names_in_raw_receipts_changed": false,
+    "reason": "Keep the execution record and role history auditable; correct the interpretation through this separate record and report wording."
+  },
+  "report_notice_zh": "HELD9仅表示未参与颜色拟合；raw113等已用于薄片孔洞、球核及表面表示缺陷分析，属于内部开发诊断留出，不构成独立最终确认集或泛化证据。指标保留原值，仅作内部同场景对照。"
+}
