@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 a6 保留侧高斯重表达（2026-11-05）
+
+- [scene008_a6_truncated_support_20261105](autoresearch/scene008_a6_truncated_support_20261105/README.md)。单高斯与三片配对、逐帧保护及街景复核。
+
 ## Scene008 a6 剩余遮挡复查（2026-11-05）
 
 - [scene008_a6_residual_replay_20261105](autoresearch/scene008_a6_residual_replay_20261105/README.md)。零训练共享退役、双重保护与 49 帧街景复核。
