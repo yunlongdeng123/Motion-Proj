@@ -1,0 +1,148 @@
+{
+  "status": "DIAGNOSIS_COMPLETE_FUTURE_EXPERIMENT_PLAN_NOT_RUN",
+  "date": "2026-11-05",
+  "scope": "Road-prior branch first; current M2 vehicle asset frozen; no road repair, prior training or shutdown in this assessment",
+  "frozen_vehicle": {
+    "run": "scene008_a6_asset_controls_20261105/m2",
+    "file": "complete_a6.npz",
+    "sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+    "policy": "Hash and trajectory fixed during road comparisons; visible RGB/depth/contribution still checked because fixed parameters do not imply fixed composited appearance",
+    "preferred_future_IO_wrapper": "scene008_a6_io_audit_20261105/contract_asset/m2_with_io_contract.npz",
+    "IO_wrapper_sha256": "b7a45af5e1f9882009f69bb2627359593c213a8f82b5b803432f935d78592b46",
+    "numeric_equivalence_verified": true,
+    "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+    "canonical_SH_sha256": "db6263d9d3c05d820990b3d518829e3a9adc7938bd6c9bf4b9aa3355e160e12c"
+  },
+  "diagnosis": {
+    "reported_user_570_roi": "Coordinates unavailable; not reproduced as exact570",
+    "independent_fixed_roi": [
+      230,
+      204,
+      270,
+      222
+    ],
+    "pixel_count": 720,
+    "raw137_road_solo_alpha": 0,
+    "raw137_road_joint_alpha_T": 0,
+    "raw137_static_mean": 0.15058641424402594,
+    "raw137_environment_mean": 0.8493889597555001,
+    "cause": "Finite constructed road world-domain/envelope excludes footprint; not old-layer occlusion or runtime active masking",
+    "existing_road_local_x_m": [
+      8.17,
+      19.75
+    ],
+    "query_local_x_m": [
+      21.2364,
+      28.2701
+    ],
+    "known_geometry_queries": 295,
+    "queries_with_later_FRONT_RGB_witness": 294,
+    "queries_with_stable_colour_proxy": 286,
+    "witness_frames": [
+      154,
+      175
+    ],
+    "unresolved_geometry_pixels": 425,
+    "limits": "Source-valid RGB and stable upper cluster are evidence/proxies, not independent clean albedo ground truth; unknown geometry or absent qualified source does not establish never visible"
+  },
+  "evidence_states": [
+    "Actual road geometry and RGB observed: recover measurements",
+    "Actual road geometry only: preserve geometry, infer missing material separately",
+    "Candidate surface with partial RGB/uncertain height: retain uncertainty and seek more views",
+    "All declared camera opportunities actually blocked at candidate height interval: prior-only within declared inputs",
+    "Out of view, invalid calibration or missing source: unknown, not observed-empty and not proven always-occluded"
+  ],
+  "representation": {
+    "geometry": "One persistent world-coordinate local2.5D road surface h(u), thin mesh/surfel, observed LiDAR anchors; first scope excludes stacked bridge/underpass topology",
+    "material": "Road base colour/texture plus lane/marking structure in the same world/material coordinates; exposure and shadow uncertainty reported separately",
+    "MOG2_mapping": "c=[c_h,c_m]=mu(q)+U(q)z; visible and hidden share the same structural modes. q comes only from legal context; fit scene z with actual measurements. No independent hidden free residual",
+    "prior_role": "Frozen pretrained model proposes candidates; real road observations constrain local3D fitting; predictions retain provenance and uncertainty",
+    "IO_contract": "Separate geometry and material outputs: image inpainting emits RGB, not road height; meshgrid reconstruction is not itself a pretrained hidden-road generator. Record each model's real input/output, units, missing channels and downstream Gaussianization separately, as learned from the vehicle PVD I/O audit",
+    "rendering": "First use current single joint Gaussian raster with bounded thin support and independent analytic surface reference. Full opaque first-hit MOG2 renderer remains a separate implementation claim",
+    "legacy_takeover": "Register conflicting/duplicated old road primitives; persistent coefficients across time,camera,edit; re-express mixed protected surfaces before retirement",
+    "environment": "Background remains frozen; verified road rays must hit road opacity/surface rather than receive sky-direction background; disabling environment alone is not road reconstruction"
+  },
+  "phases": [
+    {
+      "id": "R0_observed_coverage",
+      "goal": "Repair actual observation-supported coverage before claiming a generative prior gain",
+      "steps": [
+        "Register all49 required world road footprints independent of edit state, beginning with raw137 fixedROI and its geometry-unknown remainder",
+        "Recover true sources raw154–175; validate geometry, masks, colour clusters and shadow/exposure consistency",
+        "Use indexed original metadata to inventory all199 times x all available cameras; current cache is FRONT-only, four raw-record samples confirm five cameras, not an exhaustive camera audit",
+        "Reconstruct one enlarged local road surface from measured support; seek better raw geometry for425 unresolved pixels rather than extrapolating their evidence labels",
+        "Add valid surface coverage first; then evaluate persistent old-road takeover and continuity separately"
+      ],
+      "controls": [
+        "Current frozen M2 scene",
+        "Same scene plus measurement-only road extension",
+        "Same extension plus persistent legacy takeover"
+      ],
+      "acceptance": [
+        "Isolated road covers independently verified road rays; proposed alpha>=.98 and environment residual<=.02 on unoccluded verified targets, thresholds frozen before execution",
+        "Measured height/depth and known-road RGB do not worsen beyond declared tolerance; averages and tails both reported",
+        "M2/trajectories/a37 parameter hashes unchanged; known a6/a37 RGB/depth/contribution protected; no road gain offsets a foreground failure",
+        "Road asset/coefficients identical in keep and delete; deletion changes only object existence and computed occlusion"
+      ],
+      "claim": "Observed recovery and coverage engineering, not learned-road-prior success"
+    },
+    {
+      "id": "R1_blinded_world_patch",
+      "goal": "Evaluate completion against withheld known road before applying it to truly hidden regions",
+      "selection": "Pre-register physically separated patches across asphalt,markings and slope/curvature where actual reference exists; start0.5/1/2m sizes, reserve separate world patches for method selection and final evaluation",
+      "contracts": [
+        "Appearance-blind: remove targetRGB/markings from all sources, allow measured geometry; tests material completion only",
+        "Geometry-and-appearance-blind: remove targetRGB,LiDAR/depth,derived geometry and cached information; tests joint road completion"
+      ],
+      "leakage": "Remove patch+guard from ALL relevant199 frames and declared cameras before encoding/fusion. Invalidate same-source old checkpoints,environment,roadmaps,SH/atlas,features and colour caches. Existing full-scene M2/native may not condition the strict road benchmark. Fit a separate blinded road asset from legal context; retain M2 only for later integration",
+      "guard": "World patch halo covers sensor uncertainty,interpolation footprint and renderer effective support; all near-overlapping patches share a split",
+      "ground_truth": "Sealed road height/RGB/marking references used only at final evaluation; no best-of-K selection on hidden truth",
+      "claim": "Same-scene controlled conditional completion; separate unseen roads/scenes required for generalization",
+      "geometry_blind_mask": "Remove a context-height-interval world prism and guard, not a precise GT-height projection whose mask could encode hidden slope. Target marking/type annotations stay evaluation-only."
+    },
+    {
+      "id": "R2_structured_and_learned_prior",
+      "goal": "Measure what prior structure adds beyond observation fusion and interpolation",
+      "minimal_controls": [
+        "Measured fusion plus local plane/robust height and boundary colour baseline",
+        "Same surface with spline/RBF geometry and marking continuity/material continuation",
+        "Conditional shared mu(q)+U(q)z fitted only to legal observed context",
+        "Same physical asset with frozen pretrained image/video candidate teacher, only if earlier controls establish measurable benefit"
+      ],
+      "ablations": [
+        "Shared visible-hidden modes versus independent hidden coefficients",
+        "Conditional mean only versus fitted shared latent",
+        "Same prior on direct grid versus Gaussian parameterization"
+      ],
+      "candidate_policy": "Fixed seed count/budget; select using visible-context fit and 3D/marking consistency, never hidden GT. Project/fuse into the one world road asset and freeze for replay",
+      "metrics": [
+        "World heightMAE/normal/slope",
+        "Marking centerline,width and connectivity",
+        "RGB/colour seam under declared exposure/shadow evaluation",
+        "Coverage and environment residual",
+        "Multi-view/temporal reprojected consistency",
+        "Known-road/vehicle preservation and tail pixels"
+      ],
+      "compute": "Current GPU32760MiB. Published80GB configurations are not proof of minimum need; first validate frozen inference/adapter smoke, do not replace the entire scene training stack. Any future~hour-or-longer experiment needs~10min real smoke covering save/eval/full restore/next-stage before formal budget"
+    },
+    {
+      "id": "R3_persistent_scene_integration",
+      "goal": "One road state and one vehicle asset compose correctly across cameras,time,keep/delete",
+      "checks": [
+        "Extend beyond the current road envelope with source provenance and inferred flags",
+        "Retire redundant old support only after valid road/protected surfaces take over",
+        "Keep the grey moving car-body extension; do not treat it as road",
+        "Audit a37 joint contribution on truly vehicle-free road; fix object-support leakage at its source rather than let road learn car colour",
+        "Run raw105/113/130/137 and all49 paired states, then available other-camera checks; inspect whole view and enlarged road/body boundaries"
+      ],
+      "claims_not_allowed": [
+        "All199 never visible from FRONT-only cache",
+        "Plausible hidden road equals recovered truth",
+        "Alpha increase alone proves geometry",
+        "Current Gaussian blending implements full MOG2 opaque first-hit"
+      ]
+    }
+  ],
+  "next_action": "R0 measurement-only road coverage restoration and creation of R1 blinded benchmark; no broad prior training or threshold search before those are verified",
+  "autodl": "KEEP_ON"
+}

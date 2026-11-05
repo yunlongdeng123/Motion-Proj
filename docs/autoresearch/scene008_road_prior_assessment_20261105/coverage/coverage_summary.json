@@ -1,0 +1,679 @@
+{
+  "scope": "Read-only road coverage diagnosis; complete M2 a6 and every other model fixed; no training or repair.",
+  "user_570_roi_status": "Exact coordinates/mask not supplied and no matching stored ROI identified in scoped searches; independent720px ROI is explicitly separate.",
+  "decisive_raw137": {
+    "independent_roi_xyxy": [
+      230,
+      204,
+      270,
+      222
+    ],
+    "count": 720,
+    "interval_contract": "half-open pixels: x in [230,270), y in [204,222); car box bottom half-open y=202",
+    "isolated_road_alpha": 0,
+    "joint_road_alpha_T": 0,
+    "static_mean": 0.15058641424402594,
+    "environment_mean": 0.8493889597555001,
+    "explanation": "The current road geometry rows do not reach this footprint. All141888 rows are active; no road splat radius overlaps the ROI. Isolated alpha already zero, so old-static occlusion is not the cause here.",
+    "current_candidate_local_x_bounds_m": [
+      8.17,
+      19.75
+    ],
+    "underlying_295_geometric_ray_x_bounds_m": [
+      21.236419872,
+      28.270129443
+    ],
+    "projected_footprint": {
+      "individual_road_splat_AABB_overlap_count": 0,
+      "road_splats_whose_AABB_overlap_ROI_x": 22588,
+      "minimum_projected_AABB_y_for_those_rows": 223.74583435058594,
+      "all_road_rows": 141888,
+      "active_rows": 141888,
+      "positive_camera_depth_rows": 141888,
+      "nonzero_raster_radius_rows": 118890,
+      "culling_interpretation": "Some road rows are culled outside image, but the independent ROI lies inside camera and no existing road row footprint overlaps it. Missing finite world coverage is the cause here, not a per-view semantic mask or old-layer occlusion."
+    }
+  },
+  "source_policy": {
+    "runtime_road_mask": "StableRoad.active is all true and road_kwargs has no per-frame semantic/image domain mask",
+    "candidate_construction": "prepare_road37 forms finite world candidates from predecessor a37 domain, support and weighted mandatory envelope before fine subdivision; current fine candidates all active",
+    "geometry_caveat": "425/720 fixed-ROI rays have no predecessor coarse unit_id. This is missing cached surface support, not proof that real road geometry is absent.",
+    "prior_caveat": "No claim these road points were never visible in all cameras or all199 frames; source audit is a separate branch."
+  },
+  "all49": {
+    "frames": 49,
+    "geometric_band_total": 57560,
+    "gap_total": 8439,
+    "per_frame_gap_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      12,
+      29,
+      41,
+      37,
+      37,
+      37,
+      37,
+      39,
+      50,
+      49,
+      50,
+      50,
+      49,
+      44,
+      36,
+      69,
+      129,
+      187,
+      230,
+      240,
+      294,
+      348,
+      398,
+      412,
+      460,
+      513,
+      521,
+      586,
+      624,
+      669,
+      705,
+      737,
+      720
+    ],
+    "thresholds": "asset alpha*T<.01, road alpha*T<.01, environment>.5; cached float16 replay",
+    "definitions": "Under-tail band comes from a6 box geometry independently of renderer alpha; box-unknown pixels are accounted separately."
+  },
+  "selected": [
+    {
+      "raw": 105,
+      "under_tail": {
+        "count": 1360,
+        "road_solo": {
+          "n": 1360,
+          "mean": 0.9607947037870284,
+          "min": 0.0,
+          "max": 0.9998999834060669
+        },
+        "road_joint": {
+          "n": 1360,
+          "mean": 0.960442225496723,
+          "min": 0.0,
+          "max": 0.9998999834060669
+        },
+        "asset": {
+          "n": 1360,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "a37": {
+          "n": 1360,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 1360,
+          "mean": 0.0026981252181020837,
+          "min": 0.0,
+          "max": 0.06883765012025833
+        },
+        "environment": {
+          "n": 1360,
+          "mean": 0.0368596489815151,
+          "min": 0.00010001659393310547,
+          "max": 0.9412415027618408
+        },
+        "solo_zero_count": 10,
+        "solo_low_count": 12,
+        "joint_attenuated_count": 0
+      },
+      "fixed_roi": {
+        "count": 720,
+        "road_solo": {
+          "n": 720,
+          "mean": 0.3595162419809235,
+          "min": 0.0,
+          "max": 0.9998999834060669
+        },
+        "road_joint": {
+          "n": 720,
+          "mean": 0.04642477340538878,
+          "min": 0.0,
+          "max": 0.9998900890350342
+        },
+        "asset": {
+          "n": 720,
+          "mean": 0.9515263808037465,
+          "min": 0.0,
+          "max": 0.9998999834060669
+        },
+        "a37": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 720,
+          "mean": 0.0008661096831308631,
+          "min": 0.0,
+          "max": 0.012513890862464905
+        },
+        "environment": {
+          "n": 720,
+          "mean": 0.0011827358769045935,
+          "min": 9.989738464355469e-05,
+          "max": 0.0755852460861206
+        },
+        "solo_zero_count": 440,
+        "solo_low_count": 440,
+        "joint_attenuated_count": 210
+      },
+      "candidate": {
+        "count": 1360,
+        "geometric_surface_rays": 1360,
+        "coarse_active": 1360,
+        "coarse_a37_domain": 1360,
+        "coarse_envelope_weight_gt005": 1286,
+        "coarse_marking_excluded": 0,
+        "fine_candidate": 1286,
+        "fine_active": 1286,
+        "fine_inactive": 0,
+        "fine_absent": 74,
+        "nearest_active_xy_m": {
+          "n": 1360,
+          "mean": 0.012578673815333709,
+          "min": 0.0003881222039478796,
+          "max": 0.24342131211555867
+        },
+        "local_min_m": [
+          13.22930457438676,
+          -1.4806786923987878,
+          0.04613484350644059
+        ],
+        "local_max_m": [
+          16.298570681789514,
+          0.43129299713449276,
+          0.09092803637811331
+        ]
+      }
+    },
+    {
+      "raw": 113,
+      "under_tail": {
+        "count": 1160,
+        "road_solo": {
+          "n": 1160,
+          "mean": 0.897353608084136,
+          "min": 0.0,
+          "max": 0.9999001026153564
+        },
+        "road_joint": {
+          "n": 1160,
+          "mean": 0.8968812214403317,
+          "min": 0.0,
+          "max": 0.9999001026153564
+        },
+        "asset": {
+          "n": 1160,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "a37": {
+          "n": 1160,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 1160,
+          "mean": 0.00704501388408344,
+          "min": 0.0,
+          "max": 0.07415720075368881
+        },
+        "environment": {
+          "n": 1160,
+          "mean": 0.09607376481952339,
+          "min": 9.989738464355469e-05,
+          "max": 0.9523283839225769
+        },
+        "solo_zero_count": 37,
+        "solo_low_count": 50,
+        "joint_attenuated_count": 0
+      },
+      "fixed_roi": {
+        "count": 720,
+        "road_solo": {
+          "n": 720,
+          "mean": 0.3347366018000887,
+          "min": 0.0,
+          "max": 0.999899685382843
+        },
+        "road_joint": {
+          "n": 720,
+          "mean": 0.3249056623921433,
+          "min": 0.0,
+          "max": 0.999899685382843
+        },
+        "asset": {
+          "n": 720,
+          "mean": 0.5965498404317461,
+          "min": 0.0,
+          "max": 0.9999001026153564
+        },
+        "a37": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 720,
+          "mean": 0.011670163661214398,
+          "min": 0.0,
+          "max": 0.1329728215932846
+        },
+        "environment": {
+          "n": 720,
+          "mean": 0.06687433413333363,
+          "min": 9.989738464355469e-05,
+          "max": 0.8939025402069092
+        },
+        "solo_zero_count": 456,
+        "solo_low_count": 457,
+        "joint_attenuated_count": 7
+      },
+      "candidate": {
+        "count": 1160,
+        "geometric_surface_rays": 1160,
+        "coarse_active": 1160,
+        "coarse_a37_domain": 1160,
+        "coarse_envelope_weight_gt005": 1002,
+        "coarse_marking_excluded": 0,
+        "fine_candidate": 1002,
+        "fine_active": 1002,
+        "fine_inactive": 0,
+        "fine_absent": 158,
+        "nearest_active_xy_m": {
+          "n": 1160,
+          "mean": 0.021934496488001106,
+          "min": 0.0002717692559381342,
+          "max": 0.2979020433057109
+        },
+        "local_min_m": [
+          14.363703412550652,
+          -1.4800005723340888,
+          0.0634315498824014
+        ],
+        "local_max_m": [
+          18.220099285060357,
+          0.3605917099386261,
+          0.10057306247397158
+        ]
+      }
+    },
+    {
+      "raw": 130,
+      "under_tail": {
+        "count": 820,
+        "road_solo": {
+          "n": 820,
+          "mean": 0.34861042054892494,
+          "min": 0.0,
+          "max": 0.9999001026153564
+        },
+        "road_joint": {
+          "n": 820,
+          "mean": 0.34823316758294115,
+          "min": 0.0,
+          "max": 0.9999001026153564
+        },
+        "asset": {
+          "n": 820,
+          "mean": 0.00029400127553721756,
+          "min": 0.0,
+          "max": 0.12318863719701767
+        },
+        "a37": {
+          "n": 820,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 820,
+          "mean": 0.08606267377066526,
+          "min": 0.0,
+          "max": 0.21114782989025116
+        },
+        "environment": {
+          "n": 820,
+          "mean": 0.5654101586923367,
+          "min": 9.989738464355469e-05,
+          "max": 0.9701082110404968
+        },
+        "solo_zero_count": 515,
+        "solo_low_count": 516,
+        "joint_attenuated_count": 0
+      },
+      "fixed_roi": {
+        "count": 720,
+        "road_solo": {
+          "n": 720,
+          "mean": 0.05668207151013323,
+          "min": 0.0,
+          "max": 0.9998990297317505
+        },
+        "road_joint": {
+          "n": 720,
+          "mean": 0.0565386835188191,
+          "min": 0.0,
+          "max": 0.9998990297317505
+        },
+        "asset": {
+          "n": 720,
+          "mean": 0.06173940751598113,
+          "min": 0.0,
+          "max": 0.9998987317085266
+        },
+        "a37": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 720,
+          "mean": 0.13170029443755943,
+          "min": 0.0,
+          "max": 0.24801306426525116
+        },
+        "environment": {
+          "n": 720,
+          "mean": 0.7500216149621539,
+          "min": 0.00010097026824951172,
+          "max": 0.949576735496521
+        },
+        "solo_zero_count": 658,
+        "solo_low_count": 659,
+        "joint_attenuated_count": 0
+      },
+      "candidate": {
+        "count": 820,
+        "geometric_surface_rays": 541,
+        "coarse_active": 236,
+        "coarse_a37_domain": 236,
+        "coarse_envelope_weight_gt005": 236,
+        "coarse_marking_excluded": 0,
+        "fine_candidate": 236,
+        "fine_active": 236,
+        "fine_inactive": 0,
+        "fine_absent": 305,
+        "nearest_active_xy_m": {
+          "n": 541,
+          "mean": 1.0772985586020807,
+          "min": 0.00125926254048568,
+          "max": 5.0703185420401615
+        },
+        "local_min_m": [
+          18.38288506810664,
+          -1.2448417127548639,
+          0.08673972917670003
+        ],
+        "local_max_m": [
+          24.820317903170785,
+          0.20113808927541224,
+          0.1636272870783455
+        ]
+      }
+    },
+    {
+      "raw": 137,
+      "under_tail": {
+        "count": 720,
+        "road_solo": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "road_joint": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "asset": {
+          "n": 720,
+          "mean": 2.4626167335857947e-05,
+          "min": 0.0,
+          "max": 0.009765899740159512
+        },
+        "a37": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 720,
+          "mean": 0.15144639059176876,
+          "min": 0.05158255621790886,
+          "max": 0.22264550626277924
+        },
+        "environment": {
+          "n": 720,
+          "mean": 0.8485289831128385,
+          "min": 0.7773544788360596,
+          "max": 0.9484174251556396
+        },
+        "solo_zero_count": 720,
+        "solo_low_count": 720,
+        "joint_attenuated_count": 0
+      },
+      "fixed_roi": {
+        "count": 720,
+        "road_solo": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "road_joint": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "asset": {
+          "n": 720,
+          "mean": 2.4626167335857947e-05,
+          "min": 0.0,
+          "max": 0.009765899740159512
+        },
+        "a37": {
+          "n": 720,
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "static": {
+          "n": 720,
+          "mean": 0.15058641424402594,
+          "min": 0.03094266727566719,
+          "max": 0.22264550626277924
+        },
+        "environment": {
+          "n": 720,
+          "mean": 0.8493889597555001,
+          "min": 0.7773544788360596,
+          "max": 0.9690573215484619
+        },
+        "solo_zero_count": 720,
+        "solo_low_count": 720,
+        "joint_attenuated_count": 0
+      },
+      "candidate": {
+        "count": 720,
+        "geometric_surface_rays": 331,
+        "coarse_active": 0,
+        "coarse_a37_domain": 0,
+        "coarse_envelope_weight_gt005": 0,
+        "coarse_marking_excluded": 0,
+        "fine_candidate": 0,
+        "fine_active": 0,
+        "fine_inactive": 0,
+        "fine_absent": 331,
+        "nearest_active_xy_m": {
+          "n": 331,
+          "mean": 4.135695624929153,
+          "min": 0.8515193113296096,
+          "max": 8.520129473745326
+        },
+        "local_min_m": [
+          20.601517413732026,
+          -0.5549026012926713,
+          0.10207301473035102
+        ],
+        "local_max_m": [
+          28.27012944267465,
+          0.18910175861243889,
+          0.18027900309914302
+        ]
+      }
+    }
+  ],
+  "validation": {
+    "updates": 0,
+    "fresh_calls": 8,
+    "model_and_source_unchanged": true,
+    "max_saved_float16_replay_difference": 0.000244140625,
+    "seconds": 6.0660459995269775,
+    "peak_cuda_memory_bytes": 2191724032
+  },
+  "independent_observation_branch": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_prior_assessment_20261105/observations/patch137_observation_ledger.json",
+    "source_sha256": "21ecf628770ac6c1e38be31e32fd067263e14daec0c7733d98ade28c9f858044",
+    "groups": {
+      "fixed_roi": {
+        "pixel_denominator": 720,
+        "inherited_geometry_valid": 295,
+        "inherited_geometry_unknown": 425,
+        "query_points_with_actual_pool_support": 295,
+        "query_points_height_consistent": 295,
+        "points_with_geometric_RGB_witness": 294,
+        "points_with_ge3_geometric_RGB_witnesses": 286,
+        "points_with_no_qualified_FRONT_RGB_witness": 1,
+        "qualified_point_frame_records": 2595,
+        "witness_frames": [
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175
+        ],
+        "all199_FRONT_out_of_fov_points": 0,
+        "all_in_fov_FRONT_opportunities_evidence_blocked_points": 0,
+        "points_with_unresolved_FRONT_opportunity": 253,
+        "local_bounds_m": [
+          [
+            21.236419677734375,
+            -0.5549026131629944,
+            0.10584498941898346
+          ],
+          [
+            28.270130157470703,
+            0.18910175561904907,
+            0.18027900159358978
+          ]
+        ]
+      },
+      "under_tail_band": {
+        "pixel_denominator": 720,
+        "inherited_geometry_valid": 331,
+        "inherited_geometry_unknown": 389,
+        "query_points_with_actual_pool_support": 331,
+        "query_points_height_consistent": 331,
+        "points_with_geometric_RGB_witness": 330,
+        "points_with_ge3_geometric_RGB_witnesses": 322,
+        "points_with_no_qualified_FRONT_RGB_witness": 1,
+        "qualified_point_frame_records": 2947,
+        "witness_frames": [
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172,
+          173,
+          174,
+          175
+        ],
+        "all199_FRONT_out_of_fov_points": 0,
+        "all_in_fov_FRONT_opportunities_evidence_blocked_points": 0,
+        "points_with_unresolved_FRONT_opportunity": 282,
+        "local_bounds_m": [
+          [
+            20.601516723632812,
+            -0.5549026131629944,
+            0.10207301378250122
+          ],
+          [
+            28.270130157470703,
+            0.18910175561904907,
+            0.18027900159358978
+          ]
+        ]
+      }
+    },
+    "interpretation": "Most geometry-mapped ROI points have qualified FRONT RGB witnesses from later frames. Recover real evidence/expand world domain before treating this patch as prior-only. Remaining no-uid pixels stay unknown; real clean photometric truth is not asserted."
+  }
+}

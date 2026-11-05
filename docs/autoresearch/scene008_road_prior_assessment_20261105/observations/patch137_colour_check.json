@@ -1,0 +1,58 @@
+{
+  "schema": "SMALL_PATCH_RGB_PROXY_CHECK_V1",
+  "CPU_only": true,
+  "source_camera": "FRONT",
+  "source_frames_decoded": [
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175
+  ],
+  "cached_PNGs_decoded": 23,
+  "raw_records_decoded": 0,
+  "reference_rule": "Existing shadow199 rule, fixed before this check: q75 upper linear-luma cluster[-.025,+.06]; max-channel RGB agreement<.035; >=3 agreeing views; each linear channel >0.012 and <0.88. Span>=6 also reported separately.",
+  "groups": {
+    "fixed_roi": {
+      "query_points": 295,
+      "geometrically_witnessed": 294,
+      "stable_upper_cluster_ge3": 286,
+      "stable_upper_cluster_ge3_and_span6": 274,
+      "qualified_but_insufficient_or_unstable": 8,
+      "qualified_source_records": 2595,
+      "agreeing_source_records": 2488
+    },
+    "under_tail_band": {
+      "query_points": 331,
+      "geometrically_witnessed": 330,
+      "stable_upper_cluster_ge3": 322,
+      "stable_upper_cluster_ge3_and_span6": 310,
+      "qualified_but_insufficient_or_unstable": 8,
+      "qualified_source_records": 2947,
+      "agreeing_source_records": 2812
+    }
+  },
+  "source_budget": "Same real199 FRONT cache, no external/generative pseudo-labels.",
+  "caution": "Stable high-radiance clustering is a clean-road proxy. It does not certify true unshadowed albedo or independent clean GT. Query heights are inherited measured-support interpolation.",
+  "optimizer_updates": 0,
+  "original_assets_modified": false,
+  "GPU_used": false
+}

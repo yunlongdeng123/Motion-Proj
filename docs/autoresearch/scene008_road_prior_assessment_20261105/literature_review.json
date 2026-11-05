@@ -1,0 +1,623 @@
+{
+  "artifact_type": "source_verified_method_assessment",
+  "checked_date": "2026-11-05",
+  "scope": {
+    "scene": "Scene008/a6 road-prior assessment after completed M2 asset",
+    "restrictions": [
+      "read-only research",
+      "no training",
+      "no model edits",
+      "no shutdown"
+    ],
+    "verification_level": "Official papers/projects, current repository trees/READMEs/license files and weight catalogs inspected. No installation, weight download or execution; our-stack runtime unverified.",
+    "source_receipt": "work/road_prior_assessment/literature_source_checks.json",
+    "local_inputs": [
+      "C:/Users/dengyunlong/Downloads/MOG2_Method_Probes_CN.md",
+      "C:/Users/dengyunlong/Downloads/V43_METHOD_PROPOSAL_R4.md"
+    ]
+  },
+  "findings": [
+    "先按全部199真实观测恢复世界路面coverage，只有全部合法输入无直接证据的子域才是prior-only。当前road alpha=0不能证明道路从未被看见。",
+    "raw137约570px、static约15%/env约85%为父任务提供的摘要，本审查未重算或核对分母；贡献权重不能自动当面积/真实语义比例。",
+    "R4冻结表示内的keep/rebind/defer不能创造缺失道路；MOG2的道路surface恢复、局部替换、首交遮挡是新的表示能力问题。",
+    "StreetUnveiler是最直接persistent3D补全基线，但其alpha启发式不是传感器可观测性证明，反时间策略仅适用于前向相机的原构造。",
+    "严格世界patch holdout检验可预测恢复；真实never-observed道路只能检验可行性、约束和一致性，不能宣称隐藏纹理truth recovery。"
+  ],
+  "selected_works": [
+    {
+      "id": "rogs",
+      "title": "RoGs: Large Scale Road Surface Reconstruction with Meshgrid Gaussian",
+      "venue": "arXiv preprint 2024",
+      "venue_status": "Author README/arXiv verified; no top-conference venue verified, do not call CVPR/ECCV/ICRA.",
+      "external_component": "规则meshgrid薄surfels道路，pose初始化高度/朝向，RGB/语义及可选LiDAR高度监督。",
+      "borrow_ours": "借世界道路结构、pose/LiDAR初始化和几何/纹理不同分辨率，构建局部道路强基线。",
+      "test_ours": [
+        "相同199合法观测比较平面、低阶/RBF高度场、直接网格与meshgrid道路",
+        "独立留出高度/法向、标线位置、图像误差和道路射线coverage"
+      ],
+      "not_solved": [
+        "不是学习生成隐藏道路",
+        "未观察材质无truth保证",
+        "仍alpha合成，无MOG2 opaque-first-hit和旧层替换保证"
+      ],
+      "integration_risk": [
+        "官方仅KITTI/nuScenes adapter，Waymo需接线",
+        "PyTorch1.13.1/CUDA11.7/PyTorch3D、自定义rasterizer需独立环境",
+        "nearest-pose初始化不等于真实路面测量"
+      ],
+      "release": {
+        "repo": "https://github.com/fzhiheng/RoGS",
+        "code_status": "Public nonplaceholder train/road model source verified; not executed.",
+        "file_count": 27,
+        "tree_sha": "0f816c66d06a7680d1b16eb52e9a9f764bc6920c",
+        "weights": "Per-scene optimization; no reusable pretrained road prior advertised in inspected README.",
+        "license": "Top-level Apache-2.0; dependencies separately tracked."
+      },
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2405.14342",
+          "role": "primary paper",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/fzhiheng/RoGS/main/README.md",
+          "role": "author code and venue",
+          "status": "HTTP200 read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/fzhiheng/RoGS/blob/main/LICENSE",
+          "role": "license",
+          "status": "repository API metadata/file verified",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "2dgs",
+      "title": "2D Gaussian Splatting for Geometrically Accurate Radiance Fields",
+      "venue": "SIGGRAPH 2024 Conference Papers",
+      "venue_status": "Official project verified, DOI 10.1145/3641519.3657428.",
+      "external_component": "定向2D盘、透视正确ray-splat相交、深度畸变和法向一致性正则、网格提取。",
+      "borrow_ours": "作为自由3DGS与显式道路网格之间的表面化基线，分离参数化和先验收益。",
+      "test_ours": [
+        "同观测/容量/预算比较2DGS道路和直接网格",
+        "核对高度/法向、coverage、薄面缝隙、alpha透射",
+        "测试与M2/其他对象的深度遮挡和共同世界点一致性"
+      ],
+      "not_solved": [
+        "不是道路生成先验",
+        "无未观测纹理或归属自动恢复",
+        "ray-splat相交仍可alpha混色，不等于opaque renderer"
+      ],
+      "integration_risk": [
+        "CUDA surfel rasterizer",
+        "道路掠射、meshing/TSDF分辨率和几何缝隙",
+        "更密网格/更多训练须成本匹配"
+      ],
+      "release": {
+        "repo": "https://github.com/hbb1/2d-gaussian-splatting",
+        "code_status": "Train/render/mesh interfaces and source tree verified; not executed.",
+        "file_count": 56,
+        "tree_sha": "f3e3b9fa67bbd1c75e05167ff37391d8dab2a678",
+        "weights": "Per-scene fitting; no learned global road prior needed.",
+        "license": "Gaussian-Splatting research/evaluation non-commercial license, not MIT/Apache."
+      },
+      "sources": [
+        {
+          "url": "https://surfsplatting.github.io/",
+          "role": "official project, venue and method",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/hbb1/2d-gaussian-splatting",
+          "role": "official code",
+          "status": "read and API tree verified",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/hbb1/2d-gaussian-splatting/main/LICENSE.md",
+          "role": "license",
+          "status": "HTTP200 read",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "streetunveiler",
+      "title": "3D StreetUnveiler with Semantic-aware 2DGS - a simple baseline",
+      "venue": "ICLR 2025",
+      "venue_status": "Official ICLR proceedings and project verified.",
+      "external_component": "semantic 2DGS删除目标，以alpha定位补全域，反时间引用图补全作伪标签，再局部优化持久2DGS。",
+      "borrow_ours": "单次生成、统一3D再优化、最小补全域；先把真实显露融合进世界patch，仅对不足域做生成。",
+      "test_ours": [
+        "同信息比较平面融合、纯2D补全与固化3D",
+        "固化后留出相机/跳帧/逆序/重复编辑",
+        "alpha启发式与raw199证据账本分开比较",
+        "前向与侧后相机分表"
+      ],
+      "not_solved": [
+        "伪标签不是真值",
+        "附录F说明原time-reversal仅forward-facing，侧后相机一致性不自然保证",
+        "hard semantic/alpha受旧表示污染",
+        "没有反射率分解或真实标线保证"
+      ],
+      "author_cost_only": {
+        "hardware": "single A40, peak16GB; Waymo484x320",
+        "waymo_198frames_mean_seconds": {
+          "reconstruction": 10016,
+          "inpainting": 1035,
+          "reoptimization": 524
+        },
+        "note": "Paper-reported setup, not our runtime/VRAM guarantee."
+      },
+      "integration_risk": [
+        "CUDA12.1/PyTorch2.5.1和多扩展、ZITS++/LeftRefill",
+        "keyframe选择需预登记",
+        "原empty-street全删流程不能重写现成M2或其他合法对象"
+      ],
+      "release": {
+        "repo": "https://github.com/DavidXu-JJ/StreetUnveiler",
+        "code_status": "Reconstruction/unveil/reoptimization and Waymo adapter source verified; not executed.",
+        "file_count": 65,
+        "tree_sha": "0eec6c02f9c0e1b279b308d98a460f6cb8693e24",
+        "weights": "Author HF backup API HTTP200/gated=false lists expected ZITS++ and LeftRefill files; not downloaded/executed.",
+        "weight_url": "https://huggingface.co/jingwei-xu-00/pretrained_backup_for_streetunveiler",
+        "license": "Main MIT; 2DGS/rasterizer and pretrained model terms remain separate."
+      },
+      "sources": [
+        {
+          "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/1fc6c343d8dbb4c369ab6e04225f5a65-Paper-Conference.pdf",
+          "role": "official proceedings",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://arxiv.org/html/2405.18416",
+          "role": "method and appendices B5/F",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://streetunveiler.github.io/",
+          "role": "official project",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/DavidXu-JJ/StreetUnveiler",
+          "role": "official code",
+          "status": "README/API tree verified",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/DavidXu-JJ/StreetUnveiler/main/LICENSE",
+          "role": "license",
+          "status": "HTTP200 read",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "streetcrafter",
+      "title": "StreetCrafter: Street View Synthesis with Controllable Video Diffusion Models",
+      "venue": "CVPR 2025",
+      "venue_status": "Official CVF proceedings/project verified.",
+      "external_component": "标定彩色LiDAR渲染作为像素相机条件，生成新轨迹视图，再蒸馏到动态3DGS。",
+      "borrow_ours": "仅借道路patch的pose/几何条件和伪视图蒸馏路径，M2先冻结，生成固化到一个世界道路状态。",
+      "test_ours": [
+        "无生成/单图生成/pose-conditioned伪视图同观测对比",
+        "真实留出图像/深度/标线几何",
+        "固化前后跨相机一致性及全部生成/蒸馏成本"
+      ],
+      "not_solved": [
+        "生成新视图不等于隐藏原路面真值",
+        "原蒸馏联合优化前景、背景、sky和tracklets，不自动保持M2",
+        "不保证局部旧层替换或opaque visibility"
+      ],
+      "author_cost_only": {
+        "official_tested_hardware": "one A100/A80080GB",
+        "note": "Our-stack cost/fit unverified."
+      },
+      "integration_risk": [
+        "Vista视频模型和自定义3DGS依赖重",
+        "sky/background接口需审计",
+        "仅在轻量基线不足时考虑teacher"
+      ],
+      "release": {
+        "repo": "https://github.com/zju3dv/street_crafter",
+        "code_status": "Diffusion inference and 3D distillation source/interfaces verified; not executed.",
+        "file_count": 155,
+        "tree_sha": "9937775ba12f069d363c61ad00ff977900660f9c",
+        "weights": "Official Drive links/filenames present; browser shows sign-in. Binary access/integrity and execution unverified.",
+        "weight_urls": [
+          "https://drive.google.com/file/d/1Qtdkm0wvIUSMWQMVldd-d16rHZsNFFt1/view",
+          "https://drive.google.com/file/d/1GUZw4s2-B9KmUWYNduHa-ur5kVciOyTI/view"
+        ],
+        "license": "Current2026 PRL v1.0. Academic/educational/personal research exempt from registration; defined organizational Project Use requires registration. Upstream terms separate."
+      },
+      "sources": [
+        {
+          "url": "https://openaccess.thecvf.com/content/CVPR2025/papers/Yan_StreetCrafter_Street_View_Synthesis_with_Controllable_Video_Diffusion_Models_CVPR_2025_paper.pdf",
+          "role": "official proceedings",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://arxiv.org/html/2412.13188",
+          "role": "paper and distillation",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://zju3dv.github.io/street_crafter/",
+          "role": "official project",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/zju3dv/street_crafter",
+          "role": "code and weights links",
+          "status": "README/API tree verified",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/zju3dv/street_crafter/main/LICENSE",
+          "role": "current license",
+          "status": "HTTP200 read",
+          "date": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "id": "infinicube",
+      "title": "InfiniCube: Unbounded and Controllable Dynamic 3D Driving Scene Generation with World-Guided Video Models",
+      "venue": "ICCV 2025",
+      "venue_status": "Official CVF proceedings/project verified.",
+      "external_component": "HD-map/road-surface条件生成voxel world，用语义和世界坐标buffer引导视频，再生成可控动态3DGS。",
+      "borrow_ours": "借road-edge/road-line/road-surface分离条件及世界坐标buffer；局部测量/未知mask编码是我方迁移设计。",
+      "test_ours": [
+        "RGB上下文/增加geometry buffer/增加marking buffer同信息消融",
+        "固定世界状态和seed，评留出视角、标线位置/连通/虚线相位",
+        "没有合法HD map时明确替代来源，禁止测试truth入条件"
+      ],
+      "not_solved": [
+        "生成新世界不是忠实恢复同一实录世界",
+        "不提供隐藏路面真实反射率/纹理",
+        "与M2冻结及局部替换接口不同"
+      ],
+      "author_cost_only": {
+        "paper_A100_gpu_days": {
+          "voxel_stage": 48,
+          "video_stage": 192,
+          "scene_stage_reported": 32
+        },
+        "current_code": "Wan2.1 14B; README reports about20min/93frames480p on oneA100 excluding weight loading.",
+        "version_note": "Paper SVD-XT vs current Wan2.1 implementation must be distinguished."
+      },
+      "integration_risk": [
+        "fVDB/三阶段checkpoint/视频模型环境重",
+        "README称1.3B条件跟随不稳定",
+        "当前应借结构条件，不先全栈换成无界场景生成"
+      ],
+      "release": {
+        "repo": "https://github.com/nv-tlabs/InfiniCube",
+        "code_status": "Public train/inference tree and author weight catalog verified; not executed.",
+        "file_count": 157,
+        "tree_sha": "6acb18c8be09d1d5a74e1cf7ceb5158dd79f92c4",
+        "weights": "HF API HTTP200/gated=false, voxel VAE/diffusion, GSM and Wan buffer weights listed; not downloaded/executed.",
+        "weight_url": "https://huggingface.co/yifanlu/InfiniCube-checkpoints",
+        "license": "Source Apache-2.0; weights Waymo non-commercial-use terms; third-party models separate."
+      },
+      "sources": [
+        {
+          "url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Lu_InfiniCube_Unbounded_and_Controllable_Dynamic_3D_Driving_Scene_Generation_with_ICCV_2025_paper.pdf",
+          "role": "official proceedings",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://arxiv.org/html/2412.03934",
+          "role": "road condition and paper cost",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://research.nvidia.com/labs/toronto-ai/infinicube/",
+          "role": "official project",
+          "status": "read",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/nv-tlabs/InfiniCube",
+          "role": "current release vs paper",
+          "status": "README/API tree verified",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://huggingface.co/yifanlu/InfiniCube-checkpoints",
+          "role": "weights and terms",
+          "status": "card/API catalog verified",
+          "date": "2026-11-05"
+        },
+        {
+          "url": "https://github.com/nv-tlabs/InfiniCube/blob/main/LICENSE",
+          "role": "source/weight terms",
+          "status": "raw HTTP200 read",
+          "date": "2026-11-05"
+        }
+      ]
+    }
+  ],
+  "local_method_boundary": {
+    "R4": {
+      "core": "固定G和H0，仅keep/rebind/defer；评价共享决策差距和能力残余。",
+      "cannot_claim": "创造缺失道路/车头、任意颜色/几何修复、完整反事实truth。",
+      "source": "V43_METHOD_PROPOSAL_R4.md sections1-4/8/13"
+    },
+    "MOG2": {
+      "proposed_changes": [
+        "独立车辆和世界道路surface/material",
+        "可见/隐藏域共享系数",
+        "合法测量拟合",
+        "旧局部混合表示替换",
+        "opaque首交与保留对象遮挡"
+      ],
+      "theory": "固定q和A/U/B，ker(AU)包含于ker(BU)才是该条件模型内目标可辨识性；报告eta_B、有效奇异值、||BU(AU)†||、先验偏差和正则偏差。",
+      "boundaries": [
+        "用户草案方法/条件理论，未实现不当成成果",
+        "只叠道路而保留旧自由成像层不构成MOG2",
+        "隐藏域自由残差会重新引入未约束模式",
+        "直接网格+相同先验是必须的对照",
+        "阴影/光照/掠射/遮挡切换另列"
+      ],
+      "source": "MOG2_Method_Probes_CN.md sections3.3-3.6/4.6-4.9/4.12"
+    }
+  },
+  "observability_audit": {
+    "status": "proposal_not_executed",
+    "separate_axes": [
+      "raw RGB/LiDAR支持",
+      "road representation coverage",
+      "final composition/occlusion supplier"
+    ],
+    "classes": [
+      {
+        "id": "rgb_geometry_observed",
+        "definition": "真实道路RGB经pose/depth/occlusion核验，且多视角或LiDAR几何支持。",
+        "route": "先测量恢复，不计prior-only。"
+      },
+      {
+        "id": "rgb_geometry_weak",
+        "definition": "有直接RGB但几何对应、曝光或掠射不可靠。",
+        "route": "保留不确定度。"
+      },
+      {
+        "id": "geometry_only",
+        "definition": "LiDAR/几何支持，但无可靠直接材质。",
+        "route": "几何测量与外观先验分轨。"
+      },
+      {
+        "id": "all_legal_views_occluded",
+        "definition": "全部199及合法相机内有效投影始终被核验前景遮挡，无直接几何/材质。",
+        "route": "条件生成假设，不能证明原隐藏truth。"
+      },
+      {
+        "id": "outside_or_unverified",
+        "definition": "视锥外、定位失败、缺帧/相机或对应未核验。",
+        "route": "unknown/unsupported，不等同遮挡。"
+      }
+    ],
+    "fields": [
+      "world_patch_id",
+      "fixed_polygon_and_halo",
+      "source_frame_camera_ids",
+      "source_role",
+      "RGB_valid_area",
+      "LiDAR_hits",
+      "distinct_baselines_incidence",
+      "occlusion_evidence",
+      "exposure_shadow",
+      "geometry_uncertainty",
+      "model_coverage",
+      "final_first_hit_supplier"
+    ]
+  },
+  "masked_world_patch_holdout": {
+    "status": "proposal_not_executed",
+    "unit": "世界patch B及预登记halo，全部视图共用。",
+    "remove_from_all_inputs": [
+      "全部199×实际合法相机的B/halo投影RGB和跨相机证据",
+      "B/halo的LiDAR、SfM、深度、对应、目标语义/标线、预计算BEV和embeddings",
+      "native/init/roadfusion/coarse-colour、旧render、prior条件和cache中的目标信息",
+      "已见B训练的旧checkpoint/atlas不能作为隐藏目标初始化或encoder输入；显示层mask不清除记忆",
+      "宽Gaussian/核/卷积支撑跨边界的残留需halo和来源追踪"
+    ],
+    "partition": [
+      "物理路段/场景祖先train/dev/test分离，近邻crop和halo不得跨split。",
+      "材质、标线、资产、遮挡/轨迹祖先按泛化主张隔离。",
+      "q/初始化/mu/U/阈值只用合法输入和dev；完整目标仅sealed scorer可读。",
+      "world polygon/mask属于允许任务定义时明确登记，不暗含测试高度/纹理。",
+      "同源显露参考既恢复又评分只能叫fit；独立留出视角/时刻/传感器。",
+      "masked-visible-patch和真实never-observed分表。"
+    ],
+    "negative_leak_tests": [
+      "源文件/hash清单，scorer读权限隔离。",
+      "替换sealed target纹理后，部署输入/q/输出/选择均应不变。",
+      "确认mask在全图encoder前执行，邻近crop不含target。",
+      "展示所有相机B/halo覆盖及残留目标计数。",
+      "连续帧不作独立样本，报告patch/scene数和困难标线/失败分母。"
+    ],
+    "existing_colorfine_holdout_warning": {
+      "source": "Peer raw-source audit communicated by /root/road_observations; not independently re-run here.",
+      "view_ids": [
+        89,
+        95,
+        101,
+        105,
+        113,
+        121,
+        125,
+        130,
+        137
+      ],
+      "limitation": "仅约束新增校色fit；fine anchor继承已校色coarse，road ref/geometry使用all199，nativeB同源。不得当道路never-observed外推证据。depth-only单独track。"
+    }
+  },
+  "next_steps_proposal_only": [
+    {
+      "phase": "A0",
+      "task": "冻结当前M2/原checkpoint，真实199观测世界patch账本，核对570px射线与贡献分母。",
+      "gate": "每类有证据，未核实即unknown。"
+    },
+    {
+      "phase": "A1",
+      "task": "同输入平面/低阶RBF/直接高度网格+多视角纹理融合；几何平滑与标线高频分开。",
+      "gate": "独立留出几何/图像增益；简单融合足够则不扩复杂prior。"
+    },
+    {
+      "phase": "A2",
+      "task": "诊断棋盘道路材质，检查覆盖/深度首交/保留对象遮挡/旧宽核；替换域覆盖编辑扫掠空间。",
+      "gate": "已命中opaque road子射线对可见背景E的响应近零，none和非目标不恶化；不是生成质量成绩。"
+    },
+    {
+      "phase": "A3",
+      "task": "严格worldpatch holdout，先解析模式，再条件均值/低秩模式；源数据/缓存/旧表示一起剔除。",
+      "gate": "优于平面/插值/仅均值；高度/法向/标线/材质分项。"
+    },
+    {
+      "phase": "A4",
+      "task": "必要时接StreetUnveiler persistent3D基线，后选StreetCrafter teacher，只借InfiniCube结构buffer。",
+      "gate": "同信息/外部预训练成本账本，固化一次世界道路状态，多编辑不重新采样。"
+    }
+  ],
+  "new_design_not_external_claim": {
+    "geometry": "h(u)=低阶面+受限多尺度RBF，可靠LiDAR和可见道路锚定。",
+    "marking": "独立标线曲线/宽度/虚线相位和高频材质；合法邻域约束，族外分叉/修补保留未知。",
+    "material": "世界atlas或低秩/RBF系数，与曝光/照明分开；烘焙阴影不称真实反射率。",
+    "coupling": "c=mu(q)+U(q)z，测量拟合z，编辑前冻结；无隐藏自由残差。",
+    "attribution": "该组合及M2/局部替换接口是我方待验证设计，论文只提供组件启发/基线。"
+  },
+  "latest_2026_check": {
+    "title": "RoGS: Adaptive Meshgrid Gaussian for Large-Scale Road Surface Mapping",
+    "arxiv": "https://arxiv.org/abs/2607.15048",
+    "paper": "https://arxiv.org/html/2607.15048",
+    "date": "2026-11-05",
+    "status": "Primary arXiv v2(2026-08-19) read. No proceedings venue on metadata. Paper points to fzhiheng/RoGS with future-release wording; current repo pushed2024-11-22 and README still cites2024 method. Adaptive/trajectory-consistency additions not verified released.",
+    "decision": "Do not replace the verified2024 baseline or label2026 method top-conference/open-source-complete. Road-adaptive density and multi-pose robust initialization are optional ideas; not hidden-road completion."
+  },
+  "current_scene_update": {
+    "source": "Root communicated after own read-only measurements,2026-11-05; code/evidence path maintained by root.",
+    "finding": "raw137 world-domain truncation confirmed by root.",
+    "implication": "Coverage/domain restoration is an engineering gate before learned priors; do not count the fix as never-observed completion."
+  },
+  "masked_holdout_baselines": {
+    "shared_contract": [
+      "固定B+halo、输入199×available cameras的合法剩余数据、scene祖先split、评价域与同一surface/visibility/replacement后端。",
+      "除单独visibility消融外，所有prior基线共享最终首交后端；额外training scene、weights、伪视图、训练/采样预算逐项记账。",
+      "所有世界道路只恢复一次，固定q/c后跑none/delete/shift/rotate和留出相机；不按相机/操作重新生成。"
+    ],
+    "baselines": [
+      {
+        "id": "B0_system_reference",
+        "definition": "保留现有M2/native道路的系统参照，domain缺口和coverage明确标注。",
+        "role": "系统参照，不能与新增道路方法称纯prior单因素。"
+      },
+      {
+        "id": "B1_plane_fusion",
+        "definition": "合法LiDAR/道路支持拟合局部平面；可见RGB曝光校正后投到世界atlas；B内只用边界插值。",
+        "role": "最简可落地强基线。"
+      },
+      {
+        "id": "B2_loworder_RBF",
+        "definition": "低阶+受限RBF高度，材料用相同world atlas和预登记插值；无学习生成器。",
+        "role": "测试道路曲率/连续性本身足够与否。"
+      },
+      {
+        "id": "B3_independent_hidden_negative",
+        "definition": "相同系数容量但隐藏区独立，无目标监督；多初始化检验同样visible fit能否产生不同Bc。",
+        "role": "展示未约束模式，不能用hidden GT拟合。"
+      },
+      {
+        "id": "B4_mean_only",
+        "definition": "同训练数据的mu(q)，无inner measurement fit；先解析/简单条件均值，再考虑学习网络。",
+        "role": "隔离数据集均值/条件预测的作用。"
+      },
+      {
+        "id": "B5_shared_latent",
+        "definition": "c=mu(q)+U(q)z，使用合法y/A拟合z；低秩模式同时支撑可见与隐藏域。",
+        "role": "MOG2§3.3主假设；同容量比较B2/B4。"
+      },
+      {
+        "id": "B5m_direct_mesh_same_prior",
+        "definition": "同模板网格、mu/U、测量和监督，仅几何基元从Gaussian deformation换成直接顶点。",
+        "role": "隔离共享prior和Gaussian参数化贡献。"
+      },
+      {
+        "id": "B6_optional_persistent_inpaint",
+        "definition": "StreetUnveiler局部补全+重优化3D，与仅2D补全分表；必要时pose-conditioned teacher。",
+        "role": "外部系统对照，不与不含外部预训练的方法伪称同监督。"
+      }
+    ],
+    "hypotheses": [
+      {
+        "id": "Hcoverage",
+        "claim": "真实可见域扩展后，B1即可恢复较多道路命中/降低env贡献。",
+        "falsifier": "几何覆盖恢复后仍无道路首交，说明供给或合成接口未闭合。"
+      },
+      {
+        "id": "Hcoupling",
+        "claim": "B5在独立maskedpatch优于B2和B4，且measurement fit优于mean-only。",
+        "falsifier": "只改善visible fit、或隐藏族外误差更大、或与简单插值等效；不扩复杂网络。"
+      },
+      {
+        "id": "Hidentifiability",
+        "claim": "coupled U降低改变BU而不改变AU的模式，且稳定性指标能解释成功/失败。",
+        "falsifier": "存在v满足AUv≈0但BUv明显变化；隐藏独立残差恢复该漏洞。"
+      },
+      {
+        "id": "Hpersistence",
+        "claim": "同一3D道路在独立视角、重复编辑和逆序查询保持同一世界材料/几何。",
+        "falsifier": "2D感知改善但标线重投影漂移、不同操作重采样或背景状态变化。"
+      },
+      {
+        "id": "Hvisibility",
+        "claim": "正确道路+局部替换后，命中road子射线不依赖可见背景E且仍正确被M2/保留对象遮挡。",
+        "falsifier": "旧层仍遮道路、错误首交、E有限差分非零或none/非目标破坏。"
+      }
+    ],
+    "metrics": [
+      "独立patch高度MAE/RMSE/法向/coverage",
+      "标线位置/延续/虚线相位",
+      "可核对RGB误差及感知指标分列",
+      "visible-fit与hidden-test分列",
+      "road first-hit/env/legacy-supplier比例及有效分母",
+      "none与保留域损伤",
+      "共同世界点重投影及重复操作一致性",
+      "训练/采样/固化成本"
+    ]
+  },
+  "shared_latent_mapping": {
+    "document": "MOG2_Method_Probes_CN.md §3.3/3.4/3.5",
+    "q": "由合法可见世界道路patch、LiDAR/位姿、标线端点/邻域与观测mask构成；部署前固定。",
+    "c": "拼接道路高度和世界材质系数，固定通道单位归一化。",
+    "mu_U": "条件均值和模式；早期可用人工低阶坡度/曲率/标线延续模式，学习版必须在独立道路训练。模式同时影响可见与隐藏，不给隐藏区单独free residual。",
+    "z": "只用合法y和A拟合；先稳定LS/ridge，记录lambda/偏差/有效秩，不直接套完整非线性保证。",
+    "A": "RGB/LiDAR合法测量与固定对应/曝光/几何条件；被车遮挡像素不是道路材质测量。",
+    "B": "预登记需要显露的世界域高度/材质/法向读取，和holdout评分域一致；不根据输出或sealedGT选容易域。",
+    "audit": "M=AU,N=BU，检查ker(M)⊆ker(N)及近似eta_B，||N M†||衡量噪声放大；零空间成立仍需实测族外偏差delta。",
+    "external_mapping": "RoGS/2DGS用于surface baseline；StreetUnveiler/StreetCrafter仅提供pseudo-observations/teacher启发，不能当y真值；InfiniCube结构buffer启发q，均未提出这里的mu/U/z目标可恢复合同。",
+    "persistent_output": "一次恢复并保存h/m或c及q/mu/U/z；M2编辑仅变对象pose/existence，重算first-hit；无每视角独立补图。",
+    "scientific_boundary": "代数可辨识性有赖固定A/U/B及生成族准确性；不能由样图自然推出真实隐藏道路正确。"
+  },
+  "stop_conditions": [
+    "road正确但env/旧层仍成像：先修接口，不以更大生成器掩盖。",
+    "raw199已有证据：修coverage，不计prior-only。",
+    "同监督直接网格/简单融合等效：收缩复杂模块主张。",
+    "感知更自然但holdout标线/高度更差：不接受truth recovery。",
+    "无独立真实参考：只报告可核对几何、系统视觉和3D一致性。",
+    "未来获准的约一小时以上实验须真实约10分钟smoke覆盖保存/评价/完整恢复/下一阶段入口，额外开销单列；本次未启动实验。"
+  ]
+}

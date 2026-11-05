@@ -28,3 +28,6 @@
 
 
 2026-11-05，Scene008车辆先验输入输出审计：PVD只输出XYZ，M2的10557/18432点无RGB损失支持，低于全199帧实测最低高度的8178/8407点保持全局蓝灰回退色；原图、单位、坐标、颜色解码链未发现确定bug。完成4x1000步冻结几何输入敏感性及同输入复现对照；PVCNN数值非逐位确定，结果不采用。资产新增显式外观来源合同，三帧黑底/街景渲染不变。暂不训练、不启动道路分支、AutoDL保持开机。[报告与证据](autoresearch/scene008_a6_io_audit_20261105/README.md)。
+
+
+2026-11-05，Scene008道路先验前置诊断与计划完成：raw137独立720px道路alpha0，主要因旧road envelope不到目标world范围；295可信query中294在raw154–175有真实FRONT见证，优先实测恢复。当前199仅FRONT，未证明全相机nevervisible。M2冻结，未修路/训练，AutoDL开机。[报告与下一阶段合同](autoresearch/scene008_road_prior_assessment_20261105/README.md)。

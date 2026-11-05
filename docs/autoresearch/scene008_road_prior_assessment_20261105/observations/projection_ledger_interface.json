@@ -1,0 +1,47 @@
+{
+  "schema": "ROAD_SUPPORT_LEDGER_INTERFACE_DESIGN_V1",
+  "status": "DESIGN_ONLY",
+  "indexed_original_records": {
+    "raw_TFRecord": "/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/training/segment-10094743350625019937_3420_000_3440_000_with_camera_labels.tfrecord",
+    "offset_ledger": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/extraction.json",
+    "interface": "frames[raw].record.header_offset and payload_length permit direct seek to only selected records; check TFRecord CRC before parsing. JPEG and LiDAR range images need not be decoded to inventory image availability, camera calibration, pose or compressed sensor presence.",
+    "parser": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/waymo_numpy_cpu.py:protobuf",
+    "current_sample_inventory": "observation_audit.json:original_sensor_inventory samples raw0/102/137/198 only"
+  },
+  "cached_FRONT_records": {
+    "path_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/{raw:03d}.npz",
+    "fields": {
+      "K": "3x3 intrinsics of cached FRONT 480x320 image",
+      "w2l": "Despite its short name, maps anchor-local metres to FRONT camera coordinates",
+      "cloud": "Nearest real LiDAR return per FRONT pixel after FOV projection; not a dense depth map",
+      "ground": "Ground flag for each cached cloud return",
+      "ground_local": "All measured ground points for the frame before FRONT visibility thinning",
+      "guard": "Conservative union of FRONT annotation rectangles dilated 2px and original selected masks where present",
+      "box_center/box_half/box_axes": "All valid annotated 3D boxes in anchor-local coordinates"
+    },
+    "geometry_pool": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/full199_ground_pool.npz",
+    "pixel_projection": "camera_xyz = local_xyz @ w2l[:3,:3].T + w2l[:3,3]; uv = (camera_xyz @ K.T)[:2]/z - 0.5",
+    "pose_chain": "local anchor metres -> coordinate_anchor -> world metres -> frame vehicle inverse pose -> inverse camera extrinsic -> camera axes. The existing calibration_text helper supplies the pinhole/extrinsic part for P0..P4.",
+    "caution": "Do not use native model-unit xyz directly with these metre-valued matrices. meter_to_model=0.1; current road xyz are model units while coverage local_xyz are anchor metres."
+  },
+  "surround_camera_followup": {
+    "first_step": "For patches with no FRONT witness, project the finite height-uncertain world patch through all supplied native camera calibrations and poses using indexed protobuf metadata, before decoding candidate camera images.",
+    "decode_policy": "Decode only the candidate camera/frame JPEGs likely to see the patch, then run measured support, occlusion and RGB quality checks. Preserve an unsearched flag until every required input is accounted for.",
+    "native_dimensions_sampled": "Cameras1/2/3 are 1920x1280; cameras4/5 are 1920x886 in all four inventory samples. A forced 480x320 side-camera image would require a different y scaling; use true dimensions and explicitly scaled intrinsics.",
+    "calibration_caution": "The current pinhole helper uses the first four of nine intrinsic parameters. A rigorous visibility-boundary claim must also cover the remaining distortion parameters and relevant camera pose/timing/rolling-shutter effects."
+  },
+  "per_world_query_view_record": {
+    "ids": ["patch_id", "query_id", "scene_id", "raw", "camera_enum", "source_image_hash"],
+    "geometry": ["local_xyz_or_height_interval", "normal", "actual_return_support_count", "support_radius_m", "height_residual_m", "geometry_origin"],
+    "projection": ["native_uv", "camera_depth_m", "finite_patch_frustum_state", "projection_uncertainty_px", "image_available", "calibration_valid"],
+    "occlusion": ["annotated_box_blocked", "nearest_return_distance_px", "nearest_return_depth_m", "nearest_return_ground", "positive_front_surface", "triangle_supported", "triangle_vertices", "triangle_depth_residual_m", "triangle_normal_cosine", "guarded_2d"],
+    "RGB": ["sample_sRGB", "sharpness", "source_quality_gate", "upper_cluster_member", "RGB_agreement", "photometric_confidence"],
+    "decision": ["accepted_RGB_witness", "evidence_state", "rejection_reason_bits", "unresolved_visibility", "audited_input_scope"]
+  },
+  "implemented_small_patch_ledger": {
+    "script": "patch_observation_ledger.py",
+    "outputs": ["patch137_observation_ledger.npz", "patch137_observation_ledger.json", "patch137_colour_check.npz", "patch137_colour_check.json"],
+    "scope": "331 supported query points from independently fixed raw137 audit regions across 199 cached FRONT frames. Full height-uncertainty or surround-camera search is not implemented by this diagnostic.",
+    "result": "330 of331 queries already have actual FRONT RGB witnesses. One has no accepted witness and remains unknown, not never-visible."
+  }
+}

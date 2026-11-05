@@ -1,0 +1,129 @@
+{
+  "schema": "ROAD_WORLD_PATCH_MASKED_HOLDOUT_DESIGN_V1",
+  "status": "DESIGN_ONLY_NOT_EXECUTED",
+  "authorization_scope": "CPU evidence audit and experiment design only; no training, GPU work, base asset modification or shutdown performed.",
+  "fixed_assets": {
+    "a6": "Accepted M2 asset remains frozen. Record its content hashes before any future benchmark.",
+    "persistent_road": "A single world-space surface/material/marking asset with the same parameters in keep and delete modes.",
+    "photometric_parent_warning": "Existing native B, environment, road initialization and coarse/fine calibration used same-scene RGB. Their target information is not removed merely by holding out camera views or suppressing output rows."
+  },
+  "data_scope": {
+    "time": {"raw_start": 0, "raw_end": 198, "frame_count": 199},
+    "current_audited_RGB_pipeline": "199 FRONT images only",
+    "supplied_sensor_evidence": "Indexed protobuf samples raw0/102/137/198 contain all five camera images/calibrations and all five LiDAR sensors with two compressed returns. This four-record audit is not an all199 sensor-completeness audit.",
+    "required_all_input_ledger": "Enumerate every available (raw,camera) before a full all-supplied-RGB claim. Missing image, invalid calibration, unknown height, sparse depth and untested camera remain explicit unknown states.",
+    "LiDAR_scope": "Original reader combines five LiDAR sensors x two returns with TOP motion compensation and NLZ filtering. FRONT cache retains only nearest FRONT-FOV cloud returns plus a separately stored ground pool; that cache is not a full surround occlusion map."
+  },
+  "evidence_states": [
+    {
+      "id": "rgb_observed_supported_stable",
+      "definition": "Same world patch has a camera projection with measured geometric support, no positive foreground conflict, sufficient image quality, and >=3 mutually agreeing real RGB observations under a fixed rule.",
+      "allowed_action": "Use real observations, repair rejected eligibility or representation/visibility integration first.",
+      "caveat": "Radiance consistency is a clean-reference proxy, not independently measured unshadowed albedo."
+    },
+    {
+      "id": "rgb_observed_supported_weak",
+      "definition": "At least one verified real RGB observation exists, but count, span, sharpness or color consistency fails the stable-reference threshold.",
+      "allowed_action": "Retain source identity and confidence; seek other frames/cameras or robust fitting. Never relabel as never-visible."
+    },
+    {
+      "id": "depth_only_measured",
+      "definition": "Actual sensor ground/road returns support surface position or normal, but no verified usable RGB sample exists in the audited input scope.",
+      "allowed_action": "Use geometry as a declared depth-only constraint; appearance remains unknown."
+    },
+    {
+      "id": "geometry_candidate_occluded",
+      "definition": "A plausible world road surface projects inside an audited camera, with positive front-surface or conservative box-blocking evidence. RGB is occluded in that view.",
+      "allowed_action": "Search every other input view; prior is eligible only after the scope-level search, not from a single view's occlusion.",
+      "caveat": "An annotated box provides approximate occlusion evidence; it does not prove an exact dense physical silhouette."
+    },
+    {
+      "id": "out_of_fov_in_audited_scope",
+      "definition": "A sufficiently certain world surface is behind or unambiguously outside every tested camera frustum.",
+      "allowed_action": "Report not imaged by the audited scope. Do not generalize from FRONT199 to all supplied cameras."
+    },
+    {
+      "id": "visibility_unknown",
+      "definition": "No accepted sample and no complete positive occlusion/out-of-FOV accounting; includes conservative 2D guard rejection, sparse depth, quality gates, untested cameras and missing records.",
+      "allowed_action": "Collect or compute missing evidence. Any prior output is an uncertain hypothesis rather than proof of never-visible necessity."
+    },
+    {
+      "id": "surface_location_unknown",
+      "definition": "Road height, normal or ray/surface intersection lacks adequate measured support or has incompatible geometry.",
+      "allowed_action": "Do not assign a precise world patch or make a visibility claim. Propagate a height interval or obtain geometry."
+    }
+  ],
+  "never_visible_claim_contract": {
+    "unit": "Fixed world patch on a road surface with a documented geometry uncertainty interval, not an image-space hole.",
+    "required": [
+      "Freeze world patch, spatial guard, input scene, time indices, complete camera roster and calibrated pixel convention.",
+      "Check projection of the full finite patch and its height uncertainty in every available input camera/time, including lens distortion and relevant pose/timing uncertainty.",
+      "For in-frustum opportunities require positive foreground occlusion evidence or an explicit lack of sufficient confidence. Sparse absence of LiDAR is not occlusion proof.",
+      "Record separate per-view flags: frustum state, image availability, geometry confidence, annotation-box blocker, measured front surface, guard, image quality and RGB acceptance/reject cause.",
+      "Only state no usable RGB observed under the audited scope when no verified RGB witness exists. A stronger never-visible statement is conditional on complete frustum/occlusion accounting with no unresolved views.",
+      "Report all-out-of-FOV, all-occluded and unresolved cases separately. Missing sample count alone is never sufficient."
+    ],
+    "current_conclusion": "No existing source_valid array supplies enough negative evidence to certify all199x5-camera never-visible road patches."
+  },
+  "masked_holdout": {
+    "purpose": "A controlled missing-road benchmark with sealed real RGB ground truth; this is distinct from naturally unknown road completion.",
+    "patch_definition": "Choose nonoverlapping finite world-surface patches using geometry/visibility and predeclared material strata (plain asphalt, solid paint, dashed paint, seam/edge or curvature where present). Freeze IDs, metric bounds and seed before evaluating any completion.",
+    "guard": "Dilate each patch in world space for geometric/calibration uncertainty, interpolation and filtering footprints, and finite Gaussian support. Predeclare the guard. Mask before every feature encoder; a small guard does not remove information already embedded by a global encoder.",
+    "input_blinding": [
+      "For every available input camera/time, remove RGB rays that can intersect target+guard over its allowed height interval, before any resizing, sharpening, photometric statistics, feature extraction or model inference.",
+      "Keep original RGB target pixels in a separate read-only evaluation store unavailable to fitting, candidate generation, validation or model selection. Never black-fill and then label that black region as negative road evidence.",
+      "Rebuild all same-scene appearance initialization, source RGB tensors, upper-cluster references, fused road colors, texture atlases, SH features, native/environment appearance, global/coarse/fine calibration fields and scene-conditioned prior features from the blinded inputs.",
+      "For existing learned scene models either refit the necessary appearance state from blinded inputs or exclude that model from the strict no-target-information track. Masking its final output is insufficient.",
+      "Invalidate caches by a content hash covering original scene identity, world patch, guard, camera masks and blinding stage. Taint every downstream artifact that depends on an unblinded target.",
+      "Mask or remove Gaussian/surfel contributions whose finite footprint crosses target+guard even when their centers lie outside it. Recompute interpolation and neighboring calibration without target colors.",
+      "Prior prompts, reference images, retrieval examples, embeddings, point colors and preview thumbnails must come from blinded inputs. Candidate selection may use visible context and predefined constraints, never target GT.",
+      "Any generic pretrained weights are frozen and provenance-recorded. Same-scene finetuning or memorized target conditioning must be declared; suspected training-set overlap cannot be silently treated as clean external knowledge."
+    ],
+    "geometry_tracks": {
+      "appearance_blind_depth_known": "Permit real geometry-only LiDAR support inside target, identical in every arm; remove all target RGB from every source and derivative. This tests missing appearance with measured geometry.",
+      "geometry_and_appearance_blind": "Additionally withhold target+guard ground returns, geometry supervision and geometry initialization, then reconstruct from surrounding support or prior. Do not compare it directly to the depth-known track without labeling the difference.",
+      "mask_generation_note": "If evaluation-only geometry is used to define exact masks, isolate that geometry from fitting except in the explicitly depth-known track."
+    },
+    "split": "World patches are the statistical split unit. Hold out complete patches across all views; reserve separate validation patches for settings. View holdout alone leaves the same target visible in other images and is not sufficient.",
+    "candidate_selection": "Use a fixed prior-candidate budget and seed, with scoring only on allowed surrounding RGB, geometry, material and marking continuity. Seal test GT until final evaluation.",
+    "arms": [
+      "Real-observation recovery oracle with full source access: upper bound, outside the blinded comparison.",
+      "Blinded real context only: geometry-aware interpolation/material fit, no pretrained completion.",
+      "Pretrained candidates only projected to the shared world surface, no real-context fit.",
+      "Pretrained candidates followed by the same allowed real-context fit and persistent shared-world optimization."
+    ],
+    "controls": "Identical patch manifests, geometry track, cameras, allowed RGB budget, optimization budget and rendering pipeline across comparable arms. Audit overhead, smoke and engineering replay are itemized separately."
+  },
+  "proposed_representation": {
+    "surface": "A local 2.5D road height field or mesh anchored to actual LiDAR, with measured support and uncertainty; no unconstrained flat plane in unsupported regions.",
+    "appearance": "World-shared asphalt material/texture plus marking curves or a semantic marking layer on the same surface. Tie visible and completed segments through continuity and material constraints.",
+    "prior": "Generate multiple context-conditioned material/marking candidates, project them into the world surface, reject geometric/marking discontinuities, then fit against allowed real observations outside blinded or naturally unknown regions.",
+    "observation_priority": "When an actual patch is observed in any supplied input, use those real observations. Completion priors address the verified absent-RGB or explicitly blinded portion only.",
+    "persistent_rendering": "Register the fitted road once with provenance and confidence. Render it in the ordinary depth/opacity ordering in both keep and delete; no edit-time hallucination or screen-space patch substitution.",
+    "frozen_actor": "No a6 M2 weight, geometry, opacity, ownership or row identity changes. Above-road foreground and retained vehicles remain in the depth ordering."
+  },
+  "evaluation": {
+    "valid_reference": "Score only sealed real RGB pixels with measured geometric visibility and documented photometric qualification. Unknown hidden centers have no invented pixel GT.",
+    "denominators": "Report total patch area/cells, geometric support, RGB-witnessed area, scored pixels and pixel-frames, visible source frames/cameras, target/guard excluded counts and unresolved area. Provide per-patch macro and pixel-weighted aggregates.",
+    "appearance": "Linear-RGB MAE and sRGB PSNR; SSIM only on valid supported windows. Report asphalt and marking strata separately, including marking location, width and endpoint continuity where GT supports them.",
+    "geometry": "Measured depth/normal errors in the declared geometry track; height uncertainty and geometry failure counts remain separate from appearance scores.",
+    "multi_view": "Fixed world-patch reprojection consistency and temporal stability in all specified views, with image-angle/depth bins.",
+    "integration": "Actual joint road alpha*T, standalone alpha, environment/static/road contribution accounting, residual foreground occlusion, seam damage, and protected-region changes in both keep/delete. High standalone alpha cannot substitute for joint contribution.",
+    "asset_consistency": "Hash and exact-compare frozen a6 M2/base parents and persistent road state between keep/delete; render with the current timestamp rather than a global timestamp override.",
+    "acceptance": "Preregister thresholds against a baseline and validation patches before opening sealed test GT. No quality-accepted claim is made by this design file."
+  },
+  "existing_holdout_audit": {
+    "fine_calibration_source": "scene008_ray_road_colour_fine_20261105/source/refine_colour.py",
+    "coarse_source": "scene008_ray_road_colour_20261105/source/calibrate.py",
+    "heldout_raw": [89,95,101,105,113,121,125,130,137],
+    "what_is_held_out": "These nine views are skipped only when caching the added calibration residual fit.",
+    "remaining_target_paths": "Road RGB/geometry were built from all199; same-scene native parents remain; fine coefficients are initialized/regularized around the accepted coarse field. Coarse/fine fields are not rebuilt under world-patch blinding.",
+    "valid_claim": "A diagnostic of an additional calibration fit at withheld camera views.",
+    "invalid_claim": "Strict extrapolation into road appearance absent from all input RGB or independent clean-road test GT."
+  },
+  "future_execution_gate": {
+    "current_run": "No future benchmark training authorized or started by this audit.",
+    "before_long_run": "For any >=about1h approved experiment, run about10min smoke in the real environment including forward/backward, finite loss, memory, loading, checkpoint save, evaluation, full optimizer/RNG/sampler restore and entry to the next stage. CPU tests do not replace this smoke.",
+    "budget": "Keep the agreed scientific method, samples, learning rate and formal step budget unchanged; separately account for smoke and engineering replays."
+  }
+}
