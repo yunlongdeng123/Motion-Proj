@@ -1,0 +1,218 @@
+{
+  "schema": "a6_appearance_input_QA_v2",
+  "status": "PASS",
+  "scope_zh": "只读CPU复核原包与V2的160个case-frame文件，以及4份独立case归档。它们对应同40个FRONT相机/时间帧，不能称160个独立视角。本次没有模型训练、GPU渲染、原始多相机重解码或远端写入。",
+  "checked": {
+    "original_case_frame_packages": 160,
+    "V2_case_frame_packages": 160,
+    "distinct_FRONT_raw_views": 40,
+    "cases": [
+      "full",
+      "left",
+      "right",
+      "top"
+    ],
+    "standalone_archives": 4,
+    "files_per_archive": 82
+  },
+  "architecture_components": {
+    "diagram": "原始BUILD RGB + 已审a6可见mask + case行资格 → 保留known像素/其余unknown → floatRGB NPZ + RGBA预览\n固定完整PVD/M2几何 → camera/尺度/crop + prior alpha/expected-Z（非GT）\n本case40帧 + 公共geometry + 本case合同 → 单独tar；不含其他case/full sibling",
+    "reference_boundary": "拟合后的M2 RGB/SH、HELD RGB、被本case剔除的RGB不进入本case输入。"
+  },
+  "known_pixels": {
+    "full": 27429,
+    "left": 18710,
+    "right": 17885,
+    "top": 16822
+  },
+  "findings_zh": [
+    "四种case的known计数精确等于full27429、left18710、right17885、top16822；每种case仅包含BUILD40，无HELD RGB。",
+    "所有known float32 sRGB逐值等于当前真实观测银行的同源RGB，最大差0；所有known位置位于已审a6可见域，落到a37已审域的计数0。",
+    "NPZ的RGB_known_mask与source_pixel_ids和case保留行完全一致。left/right/top保留行对各自hidden几何列的系数严格为0，没有仅凭bbox或其他弱可见性认可新RGB。",
+    "所有unknown位置的RGB均为占位0，RGBA alpha=0且透明位置RGB也为0；未藏masked RGB。占位0没有黑色/背景监督含义，消费者必须使用显式known/unknown mask。",
+    "geometry_only.npz只有9个冻结几何/来源字段，与geometry_dense逐值相同，包含18432个固定几何点；没有RGB、SH、拟合材质或隐藏颜色。",
+    "原builder对sealed_targets只请求raw、pixels、BUILD三个元数据字段，不请求target RGB；本QA也没有解压sealed target RGB。",
+    "V2的160份文件保留每个原字段的dtype、shape和逐字节数组内容；RGB/mask的汇总SHA与原包一致，几何文件字节SHA也保持不变。",
+    "原包数值相机矩阵正确，但缺少显式尺度/裁剪相机接口。V2已为全部160份补齐meter_to_model、camera_from_local_m、camera_K_crop、full_image_hw及RGB_unknown_mask并通过数值复核。",
+    "4个tar各自严格只有本case40NPZ、40PNG、geometry_only.npz和case_contract.json，共82个普通文件，无链接、其他case/full sibling、HELD或材质文件；每个成员字节均与已审V2目录一致。"
+  ],
+  "RGB_checks": {
+    "authoritative": "NPZ known_RGB_srgb，float32 sRGB；仅RGB_known_mask=True的值具有观测资格。",
+    "known_source_max_abs_error": 0,
+    "known_pixels_outside_reviewed_a6": 0,
+    "known_pixels_on_reviewed_a37": 0,
+    "unknown_nonzero_RGB_values": 0,
+    "RGBA_preview_unknown_nonzero_RGB_values": 0,
+    "RGBA_preview_matches_uint8_round_RGB_times255_and_mask_alpha": true,
+    "RGB_range_checked": [
+      0,
+      1
+    ],
+    "hidden_geometry_training_columns_exact_zero_for_cases": [
+      "left",
+      "right",
+      "top"
+    ],
+    "no_HELD_RGB_exported": true,
+    "no_masked_RGB_exported": true,
+    "no_fitted_M2_material_exported": true,
+    "sealed_target_RGB_decompressed": false,
+    "source_observed_depth_valid_pixel_counts": {
+      "full": 6492,
+      "left": 4363,
+      "right": 4102,
+      "top": 4492
+    },
+    "depth_valid_note": "这些计数只反映同源obs.depth_valid；RGB known不意味着每像素均有LiDAR深度。输入prior_expected_depth_m始终不是该观测深度。"
+  },
+  "geometry_and_depth": {
+    "geometry_points": 18432,
+    "geometry_export_fields": [
+      "box",
+      "normal",
+      "normal_valid",
+      "opacity",
+      "sampling_child_index",
+      "sampling_parent_index",
+      "sigma",
+      "thickness",
+      "xyz"
+    ],
+    "geometry_bytes_sha256": "ff6b8360eae741b0bbd2e82ca37f943cec4c88dd98a582133b8b9e36a8631e9c",
+    "source_seed_RGB_uniform_half": true,
+    "prior_alpha_and_depth_identical_across_cases_for_each_raw": true,
+    "finite_alpha_depth_checked": true,
+    "prior_expected_depth_m_range_where_alpha_gt001": [
+      12.772480010986328,
+      29.57216453552246
+    ],
+    "expected_depth_definition": "原builder固定几何孤立渲染的depth_sum/alpha/meter_to_model；是alpha加权的提案camera-z参考，不是实测深度、不可称sensor GT或不透明首交真值。",
+    "unknown_depth_note": "alpha极低/为0处的depth占位值没有free-space或真值意义；应同时读取prior_alpha。",
+    "context_limit": "固定PVD几何已有同场景/历史HELD条件点上下文；无HELD RGB导出不等价于独立几何泛化。"
+  },
+  "camera_and_units": {
+    "full_image_hw": [
+      320,
+      480
+    ],
+    "source_meter_to_model": 0.09999999999999999,
+    "stored_pose_linear_scale_range": [
+      0.09999999403953552,
+      0.10000000149011612
+    ],
+    "model_matrix_scope": "model_from_local把对象局部米制坐标插入native model单位；model_to_camera仍在该model尺度中。直接物理回投应使用camera_from_local_m。",
+    "camera_from_local_m_formula": "C=model_to_camera @ model_from_local；C[:3,:] /= meter_to_model，齐次最后一行不除。",
+    "K_full": "camera_K保持FULL480x320坐标。",
+    "K_crop": "camera_K_crop=K_full，且cx-=crop_x0、cy-=crop_y0；crop_xyxy是[x0,y0,x1,y1)，RGB数组shape=(y1-y0,x1-x0,3)。",
+    "native_pixel_convention": "projection=K*cameraXYZ/z - .5；crop像素坐标等于full投影减[x0,y0]。对应ray使用pixel+.5。",
+    "explicit_unit_files": 160,
+    "source_K_max_abs_px": 0,
+    "source_model_pose_max_abs": 1.160244664788479e-7,
+    "physical_camera_transform_max_abs_m": 0.0000013898774824383509,
+    "crop_K_max_abs_px": 0,
+    "crop_projection_max_abs_px": 5.684341886080802e-14,
+    "explicit_scale_max_abs_difference": 2.623359002251746e-9,
+    "numerical_result": "上述差异在保存的float32姿态舍入量级内；没有发现10倍单位或crop主点错误。"
+  },
+  "V2_regression": {
+    "all_original_array_field_sets_bitwise_preserved": 160,
+    "original_RGB_mask_SHA256": "1803aefc0ae6108ac040d72e85b8001ac6309ef445fe68b26a625be6c6cbfd74",
+    "V2_RGB_mask_SHA256": "1803aefc0ae6108ac040d72e85b8001ac6309ef445fe68b26a625be6c6cbfd74",
+    "RGB_and_mask_digest_equal": true,
+    "original_geometry_bytes_unchanged": true,
+    "added_fields": [
+      "meter_to_model",
+      "camera_from_local_m",
+      "camera_K_crop",
+      "full_image_hw",
+      "RGB_unknown_mask"
+    ]
+  },
+  "packages": {
+    "full": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_full.tar.gz",
+      "files": 82,
+      "npz_views": 40,
+      "PNG_previews": 40,
+      "sha256": "660f0b8e551c6c3906d642558d68d1cecd38aa03150d8b87e7dd0619119a2668",
+      "bytes": 1233491,
+      "member_manifest_sha256": "b529e7d9061b58ea8c35a44b1c8c47c123bfad8a7684e8502e0d69c22867c6bf",
+      "no_other_case_or_HELD_or_fitted_material": true
+    },
+    "left": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_left.tar.gz",
+      "files": 82,
+      "npz_views": 40,
+      "PNG_previews": 40,
+      "sha256": "2c712027b7d863464ab8577a338e2c00dc17b207fff5f46d645471ea3495c108",
+      "bytes": 1138528,
+      "member_manifest_sha256": "3419fb8106d283396e65c12a44968239e41981baa8363b15b9af0578975d1a38",
+      "no_other_case_or_HELD_or_fitted_material": true
+    },
+    "right": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_right.tar.gz",
+      "files": 82,
+      "npz_views": 40,
+      "PNG_previews": 40,
+      "sha256": "97a8f0602fb802d75d23f544361b4a42bee272ac4b7b07ef1f7c47a7ca3f39ba",
+      "bytes": 1139683,
+      "member_manifest_sha256": "a8835e54edc6236f00d4bfc3b9d79fa233f33814798b2758a90897796c17667f",
+      "no_other_case_or_HELD_or_fitted_material": true
+    },
+    "top": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_top.tar.gz",
+      "files": 82,
+      "npz_views": 40,
+      "PNG_previews": 40,
+      "sha256": "34ec352def28cb2dde2cb40a70729ab1b4363d04e723595c4bc4174bbbbc8c02",
+      "bytes": 1124414,
+      "member_manifest_sha256": "9de5261d6beb65cd17dc6c7bd4d8151adb81c88abd7ed0637b258c720c017f06",
+      "no_other_case_or_HELD_or_fitted_material": true
+    }
+  },
+  "isolation_scope": "发布和模型适配应逐次只接收选定case的独立tar。包含full/left/right/top sibling的内部组装目录不是单个pseudo case的输入边界；独立tar已消除此混读入口。",
+  "builder_review": {
+    "sealed_bank_fields_read": [
+      "BUILD",
+      "pixels",
+      "raw"
+    ],
+    "original_builder_source_sha256": "c75a5eb98d0936506264f87ab9f9015ad5192442e3d2c123c2984ef5ded23a8d",
+    "geometry_allowlist_verified": true,
+    "source_RGB_is_runtime_original_observation_not_rendered_material": true
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/full/case_contract.json": "4f609631b7417207eb791744e6610f3e30a63d1140eee24ea31ca940c5a09ad3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/left/case_contract.json": "fd59dd80f82a124ec1d0e19d488408f06d66ff756262c84cd3fe672dd84364b0",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/right/case_contract.json": "7b5178f59a316b5000e1ca1cbba447cf23093a38c74eef115eaf43c938f9345f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/top/case_contract.json": "e70c692b97911ef7e9ca4d4bc25ffdaaae0deb2d3bb21a82d7d1fd6ee7af5d48",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/cases/left/split.npz": "ae24c4ca55a8401a1e5a9bffc8a0e274f8d38d9cc51c9022b428f62ba9dde1c4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/cases/right/split.npz": "be850335f03e5776fcd4461495db486c7ff7c0380aa6f145bdfcfa5aefd19be2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/cases/top/split.npz": "29bef9da585aa2263e944309574e3d8d4986939793015ea67666d49056410e50",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/geometry_only.npz": "ff6b8360eae741b0bbd2e82ca37f943cec4c88dd98a582133b8b9e36a8631e9c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_full.tar.gz": "660f0b8e551c6c3906d642558d68d1cecd38aa03150d8b87e7dd0619119a2668",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_left.tar.gz": "2c712027b7d863464ab8577a338e2c00dc17b207fff5f46d645471ea3495c108",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_right.tar.gz": "97a8f0602fb802d75d23f544361b4a42bee272ac4b7b07ef1f7c47a7ca3f39ba",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_packages/appearance_inputs_top.tar.gz": "34ec352def28cb2dde2cb40a70729ab1b4363d04e723595c4bc4174bbbbc8c02",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/appearance_inputs_v2/contract.json": "e8d7ce3e42ad2c833a0e72f3e7a3c10d74d7b1c0951fccc784c2669105833d98",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/geometry_dense.npz": "1dc8abfba320f888f3224bc097fb09ed11c09751530ae00f45c2efe07bcc41e3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/source/build_appearance_inputs.py": "c75a5eb98d0936506264f87ab9f9015ad5192442e3d2c123c2984ef5ded23a8d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/data/sealed_targets.npz": "947f3645ed0899133429f1a522525b5a873a7b10c53bb0298dc14d0b0f04dc15",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/data/all_design.npz": "470ca0ba132dc49de3951c9c1e2921089f2e593fd5976bdb4cc419baaf25fadc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/receipt.json": "7afdf75bbbd6f36fc3237b9f8a2fb5e3b11c745fec016d81ac120d7475c4a6c1"
+  },
+  "failures": [],
+  "limits_zh": [
+    "这是输入接口QA通过，未证明任何补全模型或颜色恢复方法有效；不改变已完成评价和不采用结果。",
+    "RGBA仅是8位预览，不能替代authoritative float RGB与显式unknown mask。",
+    "case拆分为同场景材料伪遮挡控制，不是独立新车/新视角泛化实验。"
+  ],
+  "execution": {
+    "CPU_only": true,
+    "GPU_used": false,
+    "Torch_imported": false,
+    "TensorFlow_imported": false,
+    "remote_files_written": false,
+    "AutoDL_left_running": true
+  }
+}

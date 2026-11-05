@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "geometry": "Frozen complete M2 centers/normals; no material inputs",
+  "holdout": "Train drops ANY stored nonzero A[:,H] contribution (epsilon0); eval hidden row mass fraction>=.9; other removed rows are mixed-boundary diagnostics",
+  "prior": "Only remaining training target RGB channelwise median; no original prior, native reference or full-fit M2 material in pseudo cases",
+  "shared_fit": "One common2000-step bounded SH0 fit per pseudo case, outside this module; all methods freeze every nonzero TRAIN column",
+  "unknown": "Strict zero columns of Atrain, not a colour-confidence label or physical visibility truth",
+  "graph": "Geometry-only mutual8NN; h=median six nearest other center distances; distance<=2min(h); dot(normals)>=cos30; edge tangent to both normals within30deg; same-side plane-offset product<=(.1min(h))^2",
+  "weights": "exp(-distance^2/(2h_i h_j))*dot(normal_i,normal_j)^2; positive symmetric; no RGB-dependent edges or weights",
+  "median": "Unknown retains freshly rebuilt global training median",
+  "nearest": "Unknown copies geodesically nearest known anchor on this same graph",
+  "graph_extension": "Dirichlet harmonic extension; no screening colour parameter, learned weights or texture synthesis",
+  "disconnected": "Unknown components with no known anchor retain median and are marked unreachable",
+  "provenance": "unknown flags survive extension; propagated colours are a heuristic, never texture truth",
+  "full_data_scope": "Existing full-fit M2 may be a baseline only in the separate real all49 experiment, extending its original zero columns. It must never supply pseudo-case training anchors or c0.",
+  "limits": [
+    "Geometry-only adjacency does not certify topology, especially at separations below local sampling spacing.",
+    "SH0 fitted values of nonzero columns are regularized inverse estimates, not per-point measured truth.",
+    "Harmonic/nearest propagation cannot recover an unseen isolated colour patch; failure on such a patch is expected.",
+    "Empty target-dominant eval regions are uninformative cases, not passing cases."
+  ],
+  "GPU_used": false,
+  "parameter_search": false
+}

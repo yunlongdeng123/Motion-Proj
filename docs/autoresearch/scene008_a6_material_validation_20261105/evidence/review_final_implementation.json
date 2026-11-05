@@ -1,0 +1,121 @@
+{
+  "status": "FINAL_IMPLEMENTATION_REVIEW_NO_BLOCKING_LOGIC_ERROR_FOUND",
+  "review_mode": "Read-only CPU, source and preregistered contract only. No pseudo/real quality summary, scores, fitted-colour visualization or validation winner was inspected. Output material reads were restricted to equality/invariance checks.",
+  "source_sha256": {
+    "surface_material.py": "1be56bb8d86df852c12349b1b4d577ce49e76dae0428e3df404afeeb597465cb",
+    "extend_real.py": "cffc606c49ade96414bad1d59ef6cf1a17dd3c4b18891614b42954f4191f5477",
+    "evaluate_material.py": "bd2a3e7f276fe056c7f5e4b0ea1ee1641333f36350d01b5a1e40698368ba90bb",
+    "fit_material.py": "9f5f86871b13813db9cb01f939f6a95470f1e61410fa944c16939a32968d0761",
+    "collect_design.py": "d2b93c219bcb1b83bf0a811643e85c6a3e2d1b9b8b3f10083b4bb546d925b5f1"
+  },
+  "source_binding": "All five local hashes matched their executed remote source files. Fit/module hashes matched evaluation_contract.json.",
+  "contract": {
+    "sha256": "ab9a3de96b2d03a7072118359651d815d33415e4f4d38761205e3ce2e17b8f51",
+    "case_contract_sha256": "b612c95f0a30e191a8cb28204b58990035fef938a6684abac82d28010e10dc2e",
+    "timing_wording": "Numerical gates were frozen after engineering-only32-step smoke and before formal2000-step fits or pseudo RGB quality inspection. This is not a before-any-fit claim.",
+    "registration_UTC": "2026-11-05T09:58:51.470680+00:00",
+    "observed_file_times_local_plus0800": {
+      "evaluation_contract": "2026-11-05 17:58:51.468868756",
+      "first_saved_formal1000_checkpoint": "2026-11-05 17:58:57.242782200"
+    },
+    "timing_evidence_scope": "Recorded checkpoint chronology is consistent with the parent-reported before-formal launch order. The reviewer did not independently instrument the first optimizer call.",
+    "cases_informativeness": "Contract records all left/right/top cases informative using geometry-only counts. No quality score was consumed for this review."
+  },
+  "parent_graph": {
+    "source_lines": {
+      "parent_selection_and_geometry_identity": [
+        286,
+        304
+      ],
+      "star_endpoint_tests": [
+        305,
+        324
+      ],
+      "mapped_actual_edges": [
+        325,
+        329
+      ]
+    },
+    "design": "Coarse adjacency is evaluated on existing central child0 vertices. Other children receive geometry-checked star edges to their own central vertex. There are no virtual spatial nodes, coarse colour averages or new Gaussian rows.",
+    "independent_actual_endpoint_checks": {
+      "vertices": 18432,
+      "undirected_edges": 17909,
+      "components": 1088,
+      "all_endpoints_existing_fine_rows": true,
+      "invalid_normal_edge_count": 0,
+      "normal_barrier_failures": 0,
+      "distance_barrier_failures": 0,
+      "tangent_barrier_failures_with_declared_roundoff": 0,
+      "sheet_barrier_failures": 0,
+      "positive_weights": true,
+      "symmetric_weights": true
+    },
+    "scale_boundary": "Parent-local spacing changes physical adjacency and sheet-gap scale. The source explicitly discloses this discretization/adjacency assumption; this is not proof of true topology or a neural training gain."
+  },
+  "real_material_export": {
+    "source_lines": [
+      18,
+      19,
+      26,
+      27,
+      28,
+      29,
+      38,
+      39,
+      40,
+      41,
+      42
+    ],
+    "original_wrapper_vs_M2_all_canonical_SH_equal": true,
+    "verified_methods": [
+      "median",
+      "child_nearest",
+      "child_graph",
+      "parent_nearest",
+      "parent_graph"
+    ],
+    "all_methods": {
+      "nonzero_original_canonical_SH_bitwise_equal": true,
+      "decoded_known_RGB_bitwise_equal": true,
+      "original_BUILD_A_times_decoded_RGB_exact": true,
+      "original_inferred_flags_preserved": true
+    },
+    "source_logic": "Current coefficients start from the original full coefficient table. Only propagated unknown-row DC is replaced. Every higher coefficient and every nonzero-row coefficient is preserved; final exported/reloaded equality and operator invariance are checked.",
+    "truth_limit": "Extended original zero-column colours remain inferred. The real full-data branch is separate from pseudo-case training."
+  },
+  "train_and_evaluation_alignment": {
+    "all49_normalized_operator_rows": 33331,
+    "BUILD_rows": 27429,
+    "HELD_rows": 5902,
+    "normalization_row_sum_range": [
+      0.9999992560631372,
+      1.000000753563011
+    ],
+    "zero_operator_rows": 0,
+    "left_right_top_independent_checks": {
+      "global_BUILD_row_mask_matches_saved_case_mask": true,
+      "A_all_selected_rows_equal_saved_Atrain_exactly": true,
+      "hidden_training_nnz": 0,
+      "zero_column_flags_match_exactly": true,
+      "HELD_training_rows": 0
+    },
+    "pseudo_metric": "A@decoded_RGB is compared to original RGB on fixed geometry-derived H>=0.9 rows. Mixed rows are separate. The same rows and denominator are used for every method, including unreachable nodes.",
+    "macro": "HELD/BUILD macro averages give each of the three cases equal weight.",
+    "real_metric": "Real evaluation uses metrics.evaluate_frame/evaluate_pair on original full fixed visible/reviewed/depth masks for all49 frames. It compares the same-frame real M2 median asset with every extension in both keep/delete states.",
+    "frozen_geometry_checks": "The real evaluator asserts bitwise equal alpha, depth_sum and all component alpha*T for isolated, keep and delete renders. These assertions are stronger than the frozen5e-6 tolerance.",
+    "domain_wording": "Pseudo all_observed is the33331-row eroded fit-core, not the39308-pixel original full a6 core. The separate real render evaluation covers the original full core. Label both domains explicitly.",
+    "premultiplication_wording": "Pseudo operator RGB is conditional/normalized. Real black-background isolated RGB is premultiplied and joint scene RGB includes normal compositing. These are separate metrics and should not be numerically conflated."
+  },
+  "logical_assessment": {
+    "blocking_findings": [],
+    "leakage": "No masked-colour/native-prediction prior path was found in the inspected prepare/fit/extension interfaces. Masked columns and HELD training exclusion also passed independent operator checks.",
+    "quality_status": "Quality remains unassessed by this reviewer. COMPLETE_SEALED_MATERIAL_EVALUATION and PASS_FROZEN_GEOMETRY_SCENE_EVALUATION are completion/geometry labels, not automatic passes of the numerical material/preservation gates.",
+    "downstream_gate_requirement": "Final acceptance must apply the already frozen evaluation_contract thresholds without reselecting masks, graph rules, seeds or a different per-region winner after inspecting scores."
+  },
+  "review_boundaries": [
+    "Parent geometry barriers are heuristics on sampled PVD geometry and estimated normals.",
+    "Training-support colours are regularized inverse estimates, not semantic per-point albedo truth.",
+    "Original unknown surfaces have no true hidden RGB target. Same-scene pseudo-occlusion performance cannot certify their true texture.",
+    "This review ran no GPU jobs and did not change any original source or prior review artifact."
+  ]
+}

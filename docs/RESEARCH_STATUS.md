@@ -31,3 +31,6 @@
 
 
 2026-11-05，Scene008道路先验前置诊断与计划完成：raw137独立720px道路alpha0，主要因旧road envelope不到目标world范围；295可信query中294在raw154–175有真实FRONT见证，优先实测恢复。当前199仅FRONT，未证明全相机nevervisible。M2冻结，未修路/训练，AutoDL开机。[报告与下一阶段合同](autoresearch/scene008_road_prior_assessment_20261105/README.md)。
+
+
+2026-11-05，Scene008车辆外观严格伪遮挡完成：3case/5规则，HELD宏RGB误差默认色.17327、细图调和.17429、父面调和.17919，四候选未过质量门，不采用；49帧保护门均通过、alpha/depth/groups逐位不变。原200点均实测来源、199跨帧自洽，无大规模他车实体重叠证据。交付4个隔离的显式mask/米制camera外观模型输入包，PVD未训练，M2保留，AutoDL开机。[报告与重放](autoresearch/scene008_a6_material_validation_20261105/README.md)。

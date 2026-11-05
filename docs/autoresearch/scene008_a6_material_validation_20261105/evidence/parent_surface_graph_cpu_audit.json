@@ -1,0 +1,138 @@
+{
+  "status": "PASS_CPU_GEOMETRY_ONLY",
+  "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+  "child_graph": {
+    "rows": 18432,
+    "undirected_edges": 30146,
+    "connected_components": 1659,
+    "isolated_vertices": 413,
+    "invalid_normal_vertices": 108,
+    "spacing_m_quantiles": [
+      0.008047277594998483,
+      0.02425706432769805,
+      0.046551425808180925,
+      0.07039390234748956,
+      0.0912302582410171
+    ],
+    "rejected_edge_tests_overlapping": {
+      "candidate_mutual_edges": 57210,
+      "distance": 2,
+      "normal": 9867,
+      "tangent": 16358,
+      "same_side_sheet": 22113
+    },
+    "geometry_only": true,
+    "colour_dependent_edges": false,
+    "parameters": {
+      "spacing_k": 6,
+      "mutual_neighbors": 8,
+      "distance_spacing": 2.0,
+      "normal_cosine": 0.8660254037844387,
+      "tangency_fraction": 0.5,
+      "same_side_spacing_tolerance": 0.1
+    }
+  },
+  "parent_graph": {
+    "topology": "parent_local_graph_lifted_with_central_child_stars",
+    "rows": 18432,
+    "parents": 2048,
+    "children_per_parent": 9,
+    "parent_key": "sampling_parent_index",
+    "child_key": "sampling_child_index",
+    "parent_graph": {
+      "rows": 2048,
+      "undirected_edges": 1621,
+      "connected_components": 992,
+      "isolated_vertices": 763,
+      "invalid_normal_vertices": 12,
+      "spacing_m_quantiles": [
+        0.038291172843630414,
+        0.07127695777284405,
+        0.12020324799971349,
+        0.2051767950341608,
+        0.37591941304487275
+      ],
+      "rejected_edge_tests_overlapping": {
+        "candidate_mutual_edges": 6501,
+        "distance": 129,
+        "normal": 2615,
+        "tangent": 2449,
+        "same_side_sheet": 3425
+      },
+      "geometry_only": true,
+      "colour_dependent_edges": false,
+      "parameters": {
+        "spacing_k": 6,
+        "mutual_neighbors": 8,
+        "distance_spacing": 2.0,
+        "normal_cosine": 0.8660254037844387,
+        "tangency_fraction": 0.5,
+        "same_side_spacing_tolerance": 0.1
+      }
+    },
+    "parent_undirected_edges": 1621,
+    "star_edges": 16288,
+    "noncentral_star_rejected": 96,
+    "undirected_edges": 17909,
+    "connected_components": 1088,
+    "isolated_vertices": 108,
+    "invalid_normal_vertices": 108,
+    "max_child_parent_plane_roundoff_m": 1.1745681970098953e-07,
+    "parent_spacing_m_quantiles": [
+      0.038291172843630414,
+      0.07127695777284405,
+      0.12020324799971349,
+      0.2051767950341608,
+      0.37591941304487275
+    ],
+    "geometry_only": true,
+    "colours_read": false,
+    "original_child_graph_unchanged": true,
+    "vertices_and_geometry_unchanged": true,
+    "limits": "Ancestry links are a registered discretization rule. Parent adjacency still relies on sampled geometry/estimated normals, not surface or semantic truth; coarser spacing can admit thinner parallel gaps than the child graph."
+  },
+  "full_BUILD_zero_columns": 10557,
+  "full_child_reachable": 1662,
+  "full_parent_reachable": 3321,
+  "cases": {
+    "left": {
+      "unknown": 12945,
+      "child_reachable": 1404,
+      "parent_reachable": 3627,
+      "train_rows": 18710,
+      "eval_rows": 6279
+    },
+    "right": {
+      "unknown": 13564,
+      "child_reachable": 1499,
+      "parent_reachable": 3745,
+      "train_rows": 17885,
+      "eval_rows": 6095
+    },
+    "top": {
+      "unknown": 12388,
+      "child_reachable": 2133,
+      "parent_reachable": 4648,
+      "train_rows": 16822,
+      "eval_rows": 5197
+    }
+  },
+  "thin_sheet_toy": {
+    "parents": 98,
+    "children": 882,
+    "sheet_gap_m": 0.04,
+    "parent_spacing_m": 0.1,
+    "child_components": 98,
+    "lifted_components": 2,
+    "cross_sheet_edges": 0
+  },
+  "vertices_and_geometry_arrays_unchanged": true,
+  "source_child_function_unchanged": true,
+  "graph_symmetric": true,
+  "edge_lengths_are_actual_geometry": true,
+  "RGB_values_read": false,
+  "material_fit_or_extension_run": false,
+  "GPU_used": false,
+  "remote_writes": false,
+  "interpretation": "Coarse ancestry connectivity control, not topology truth. Same normal/tangency/sheet tests retain the toy barrier; coarse spacing permits smaller relative-resolution ambiguities."
+}

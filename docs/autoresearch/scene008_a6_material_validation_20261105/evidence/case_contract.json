@@ -1,0 +1,39 @@
+{
+  "status": "PRE_REGISTERED_BEFORE_MATERIAL_FIT",
+  "geometry_sha256": "1dc8abfba320f888f3224bc097fb09ed11c09751530ae00f45c2efe07bcc41e3",
+  "original_design_sha256": "dfadff9f147d1dc644dc23302afea61377e2f025d1a30bee49fce8c3d50331c8",
+  "raw_target_source_sha256": "6178c071b0dcb844751f511a6a27919ab30e5e402f61f1af560d6e383c4f477f",
+  "planes": {
+    "left_y_ge": 0.3491668105125427,
+    "right_y_le": -0.33743923902511597,
+    "top_z_ge": 0.47147852182388306
+  },
+  "plane_rule": "Tail25% of BUILD projected column mass on canonical y+,y-,z+; geometry and alpha*T only, no RGB values.",
+  "training": "Discard EVERY BUILD row with any nonzero coefficient in the spatial hidden set; no tolerance exemption.",
+  "evaluation": "Original observed rows with >=.9 normalized contribution from hidden set; mixed boundary rows reported separately.",
+  "prior": "Per-case median of retained raw training target rows only. Never read fitted M2 colours, original prior, or native predicted colours.",
+  "common_fit": "Exactly2000 fullbatch projected FISTA SH0 RGB steps, lambda .001, RGB[0,1]; identical known fit shared by3 extension arms.",
+  "methods": [
+    "median",
+    "child_nearest",
+    "child_graph",
+    "parent_nearest",
+    "parent_graph"
+  ],
+  "updates": "Only mathematically zero columns of retained A; every nonzero column is frozen.",
+  "hypothesis": "Geometry-only colour continuation may improve smooth missing appearance, but cannot guarantee hidden semantic texture.",
+  "adoption_gate": "All3 spatial cases and temporal HELD evaluated; same fixed rule; known RGB preservation and full49 scene checks. Failure reported without parameter sweep.",
+  "scope": "Same-scene material-only pseudo-occlusion. Geometry and PVD source are frozen and already use same-scene context.",
+  "formal_colour_steps": 6000,
+  "neural_model_training_steps": 0,
+  "topology_control": {
+    "registration": "Added before any pseudo RGB fit or outcome",
+    "motivation": "Geometry-only child8NN graph has1659 components; subdivision ancestry may retain mother-surface adjacency.",
+    "child": "Original geometry-only mutual8NN graph unchanged",
+    "parent": "Same graph formula on2048 exact source mothers; lift to existing child0 centres and verified within-mother tangent star edges",
+    "seed_colours": "Identical nonzero TRAIN fine-point values; no parent RGB averaging or refitting",
+    "physical_scale": "Spacing, edge radius and plane tolerance evaluated on each discretization; not identical metre thresholds or a topology guarantee",
+    "forbidden": "No extra primitives, no geometry/opacity change, no colour-dependent graph, no case-specific best-method switching",
+    "formal_colour_steps_unchanged": 6000
+  }
+}

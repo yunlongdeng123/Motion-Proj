@@ -1,0 +1,77 @@
+{
+  "status": "FROZEN_BEFORE_FORMAL_FIT_AND_QUALITY_EVALUATION",
+  "timing": "Numerical gates registered after engineering-only32step smoke, before formal2000step fits or inspecting pseudo RGB comparison scores. Not claimed before every smoke update.",
+  "registration_UTC": "2026-11-05T09:58:51.470680+00:00",
+  "case_contract_sha256": "b612c95f0a30e191a8cb28204b58990035fef938a6684abac82d28010e10dc2e",
+  "smoke_receipt_sha256": "b384d4fa071af18747ea88fdf79f85707ac4206d4ee80e25b0948d6c1d9a79a5",
+  "fit_source_sha256": "9f5f86871b13813db9cb01f939f6a95470f1e61410fa944c16939a32968d0761",
+  "module_sha256": "1be56bb8d86df852c12349b1b4d577ce49e76dae0428e3df404afeeb597465cb",
+  "methods": [
+    "median",
+    "child_nearest",
+    "child_graph",
+    "parent_nearest",
+    "parent_graph"
+  ],
+  "cases": [
+    {
+      "case": "left",
+      "sufficient": {
+        "retained_train_pixels": true,
+        "retained_BUILD_frames": true,
+        "BUILD_test_pixels": true,
+        "HELD_test_pixels": true,
+        "HELD_frames_20pixels": true
+      },
+      "status": "INFORMATIVE",
+      "train_pixels": 18710,
+      "BUILD_test_pixels": 6279,
+      "HELD_test_pixels": 1341
+    },
+    {
+      "case": "right",
+      "sufficient": {
+        "retained_train_pixels": true,
+        "retained_BUILD_frames": true,
+        "BUILD_test_pixels": true,
+        "HELD_test_pixels": true,
+        "HELD_frames_20pixels": true
+      },
+      "status": "INFORMATIVE",
+      "train_pixels": 17885,
+      "BUILD_test_pixels": 6095,
+      "HELD_test_pixels": 1281
+    },
+    {
+      "case": "top",
+      "sufficient": {
+        "retained_train_pixels": true,
+        "retained_BUILD_frames": true,
+        "BUILD_test_pixels": true,
+        "HELD_test_pixels": true,
+        "HELD_frames_20pixels": true
+      },
+      "status": "INFORMATIVE",
+      "train_pixels": 16822,
+      "BUILD_test_pixels": 5197,
+      "HELD_test_pixels": 1175
+    }
+  ],
+  "gates": {
+    "absolute_HELD_macro_improvement_min": 0.003,
+    "relative_HELD_macro_improvement_min": 0.1,
+    "maximum_case_worsening": 0.003,
+    "case_improvements_at_least": 2,
+    "case_improvement_min": 0.003,
+    "HELD_mixed_macro_worsening_max": 0.003,
+    "specific_graph_claim_macro_improvement_min": 0.002,
+    "real_pooled_and_each_frame_RGB_MAE_increase_max": 0.003,
+    "real_mean_RGB_parent_change_max": 0.003,
+    "alpha_depth_group_tolerance": 5e-06,
+    "retained_BUILD_operator_prediction_must_be_exact": true
+  },
+  "source": "Independent pre-outcome evaluation_review.json; engineering thresholds, not universal perceptual criteria.",
+  "no_case_specific_winner": true,
+  "unreachable_test_pixels_stay_in_denominator": true,
+  "scene_adoption_requires_quality_and_preservation": true
+}

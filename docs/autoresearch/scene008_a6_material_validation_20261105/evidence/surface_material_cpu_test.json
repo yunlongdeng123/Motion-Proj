@@ -1,0 +1,107 @@
+{
+  "status": "PASS_CPU",
+  "graph_sheet_barrier": true,
+  "disconnected_unknown_remains_median": true,
+  "tiny_hidden_contribution_drops_entire_row": true,
+  "row_masks_are_boolean": true,
+  "held_RGB_perturbation_does_not_change_prior": true,
+  "nonzero_columns_and_training_predictions_exact": {
+    "median": {
+      "nonzero_columns_frozen": true,
+      "train_prediction_bit_exact": true,
+      "rows": 2,
+      "columns": 9,
+      "unknown_columns": 7
+    },
+    "nearest": {
+      "nonzero_columns_frozen": true,
+      "train_prediction_bit_exact": true,
+      "rows": 2,
+      "columns": 9,
+      "unknown_columns": 7
+    },
+    "graph": {
+      "nonzero_columns_frozen": true,
+      "train_prediction_bit_exact": true,
+      "rows": 2,
+      "columns": 9,
+      "unknown_columns": 7
+    }
+  },
+  "unknown_input_colour_not_consumed": true,
+  "isolated_unseen_patch_not_identifiable": true,
+  "methods": {
+    "median": {
+      "method": "median",
+      "known_frozen": 7,
+      "unknown": 91,
+      "propagated": 0,
+      "unreachable": 49,
+      "retained_global_median": 91,
+      "harmonic_residual_maxabs": null,
+      "geometry_hash": "5a9c8ec0acd21446830b01507bfa7466eabd413733a906e161817344ce061506",
+      "unknown_labels_preserved": true,
+      "texture_truth_generated": false,
+      "unknown_colour_inputs_consumed": false
+    },
+    "nearest": {
+      "method": "nearest",
+      "known_frozen": 7,
+      "unknown": 91,
+      "propagated": 42,
+      "unreachable": 49,
+      "retained_global_median": 49,
+      "harmonic_residual_maxabs": null,
+      "geometry_hash": "5a9c8ec0acd21446830b01507bfa7466eabd413733a906e161817344ce061506",
+      "unknown_labels_preserved": true,
+      "texture_truth_generated": false,
+      "unknown_colour_inputs_consumed": false
+    },
+    "graph": {
+      "method": "graph",
+      "known_frozen": 7,
+      "unknown": 91,
+      "propagated": 42,
+      "unreachable": 49,
+      "retained_global_median": 49,
+      "harmonic_residual_maxabs": 4.996003610813204e-16,
+      "geometry_hash": "5a9c8ec0acd21446830b01507bfa7466eabd413733a906e161817344ce061506",
+      "unknown_labels_preserved": true,
+      "texture_truth_generated": false,
+      "unknown_colour_inputs_consumed": false
+    }
+  },
+  "synthetic_graph": {
+    "rows": 98,
+    "undirected_edges": 168,
+    "connected_components": 2,
+    "isolated_vertices": 0,
+    "invalid_normal_vertices": 0,
+    "spacing_m_quantiles": [
+      0.09999999999999998,
+      0.09999999999999998,
+      0.10000000000000002,
+      0.10385164807134509,
+      0.10385164807134513
+    ],
+    "rejected_edge_tests_overlapping": {
+      "candidate_mutual_edges": 345,
+      "distance": 0,
+      "normal": 0,
+      "tangent": 49,
+      "same_side_sheet": 177
+    },
+    "geometry_only": true,
+    "colour_dependent_edges": false,
+    "parameters": {
+      "spacing_k": 6,
+      "mutual_neighbors": 8,
+      "distance_spacing": 2.0,
+      "normal_cosine": 0.8660254037844387,
+      "tangency_fraction": 0.5,
+      "same_side_spacing_tolerance": 0.1
+    }
+  },
+  "GPU_used": false,
+  "remote_writes": false
+}

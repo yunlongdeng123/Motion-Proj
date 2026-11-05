@@ -1,0 +1,655 @@
+{
+  "status": "PASS_COLOUR_FIT_AND_EXTENSION",
+  "formal_colour_steps": 6000,
+  "neural_model_training_steps": 0,
+  "cases": [
+    {
+      "case": "left",
+      "steps": 2000,
+      "objective_initial": 0.07043426055334663,
+      "objective_final": 0.008790388857009354,
+      "seconds": 3.3371059894561768,
+      "train_RGB_MAE": 0.031862915597050324,
+      "projected_update_maxabs": 1.1175870895385742e-06,
+      "methods": [
+        {
+          "method": "median",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/left/extensions/median_asset.npz",
+            "file_sha256": "9f6bd87d2a08f461ac194be7df851aa6fda9c90a517cbdecbfb3e157d82cf961",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 0,
+          "unreachable": 11541,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "extension_audit": {
+            "method": "median",
+            "known_frozen": 5487,
+            "unknown": 12945,
+            "propagated": 0,
+            "unreachable": 11541,
+            "retained_global_median": 12945,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/left/extensions/child_nearest_asset.npz",
+            "file_sha256": "58f200eb3c802063b1c34b2a17b5281f87e32e7a41a196130e14597cc720ebe9",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 1404,
+          "unreachable": 11541,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 5487,
+            "unknown": 12945,
+            "propagated": 1404,
+            "unreachable": 11541,
+            "retained_global_median": 11541,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/left/extensions/child_graph_asset.npz",
+            "file_sha256": "44b02f116f183c0d854a237737e8758b30fec103e8f312140773f85a6f8c9458",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 1404,
+          "unreachable": 11541,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 5487,
+            "unknown": 12945,
+            "propagated": 1404,
+            "unreachable": 11541,
+            "retained_global_median": 11541,
+            "harmonic_residual_maxabs": 5.551115123125783e-16,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/left/extensions/parent_nearest_asset.npz",
+            "file_sha256": "bad7f01b99646539611b9f44183eba1d122db151548afc355d2590188d88a85b",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 3627,
+          "unreachable": 9318,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 5487,
+            "unknown": 12945,
+            "propagated": 3627,
+            "unreachable": 9318,
+            "retained_global_median": 9318,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/left/extensions/parent_graph_asset.npz",
+            "file_sha256": "927fef8bf5b373f01ed5488d058d8fcf8edb05701d46ed5d5c6ed65dfa784895",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 3627,
+          "unreachable": 9318,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 18710,
+            "columns": 18432,
+            "unknown_columns": 12945
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 5487,
+            "unknown": 12945,
+            "propagated": 3627,
+            "unreachable": 9318,
+            "retained_global_median": 9318,
+            "harmonic_residual_maxabs": 1.5543122344752192e-15,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "right",
+      "steps": 2000,
+      "objective_initial": 0.11075076364766231,
+      "objective_final": 0.008399926341534065,
+      "seconds": 2.8421313762664795,
+      "train_RGB_MAE": 0.03281493950699418,
+      "projected_update_maxabs": 1.6242265701293945e-06,
+      "methods": [
+        {
+          "method": "median",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/right/extensions/median_asset.npz",
+            "file_sha256": "6c08ebc0c71041d3f265e941e3e4a9f5aa35ccabfa1fc1164f050f4f09e49e1e",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 0,
+          "unreachable": 12065,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "extension_audit": {
+            "method": "median",
+            "known_frozen": 4868,
+            "unknown": 13564,
+            "propagated": 0,
+            "unreachable": 12065,
+            "retained_global_median": 13564,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/right/extensions/child_nearest_asset.npz",
+            "file_sha256": "0667f88cf669c156eae3299ae247d32e54e75b206edee9c92b5657d0bb59b2a6",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 1499,
+          "unreachable": 12065,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 4868,
+            "unknown": 13564,
+            "propagated": 1499,
+            "unreachable": 12065,
+            "retained_global_median": 12065,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/right/extensions/child_graph_asset.npz",
+            "file_sha256": "2b1041f977267242cb330701378eeb0b79d559bd3e99340be76719d10e6ff34e",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 1499,
+          "unreachable": 12065,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 4868,
+            "unknown": 13564,
+            "propagated": 1499,
+            "unreachable": 12065,
+            "retained_global_median": 12065,
+            "harmonic_residual_maxabs": 9.43689570931383e-16,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/right/extensions/parent_nearest_asset.npz",
+            "file_sha256": "77ad25c372d2a1f6cdfea96471d76c8c2a4c1275096cd3fccb3858e7bc2b2860",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 3745,
+          "unreachable": 9819,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 4868,
+            "unknown": 13564,
+            "propagated": 3745,
+            "unreachable": 9819,
+            "retained_global_median": 9819,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/right/extensions/parent_graph_asset.npz",
+            "file_sha256": "676f027cf5d5694f23e7f1d6b392d4789fdbe039de0040f4540f6e2654e96b72",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 3745,
+          "unreachable": 9819,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 17885,
+            "columns": 18432,
+            "unknown_columns": 13564
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 4868,
+            "unknown": 13564,
+            "propagated": 3745,
+            "unreachable": 9819,
+            "retained_global_median": 9819,
+            "harmonic_residual_maxabs": 2.7200464103316335e-15,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "top",
+      "steps": 2000,
+      "objective_initial": 0.1437989996174283,
+      "objective_final": 0.010229216172156814,
+      "seconds": 1.9481356143951416,
+      "train_RGB_MAE": 0.036778136485320884,
+      "projected_update_maxabs": 1.4603137969970703e-06,
+      "methods": [
+        {
+          "method": "median",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/top/extensions/median_asset.npz",
+            "file_sha256": "37a90a81854d92b3c335abc3290190de3b981955d8b6e26b5019b22621fbf238",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 0,
+          "unreachable": 10255,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "extension_audit": {
+            "method": "median",
+            "known_frozen": 6044,
+            "unknown": 12388,
+            "propagated": 0,
+            "unreachable": 10255,
+            "retained_global_median": 12388,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/top/extensions/child_nearest_asset.npz",
+            "file_sha256": "8becdf57eeb23568ba32f972288002cf73a48b6ca5379b25b274d7f7002d7a77",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 2133,
+          "unreachable": 10255,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 6044,
+            "unknown": 12388,
+            "propagated": 2133,
+            "unreachable": 10255,
+            "retained_global_median": 10255,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "child_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/top/extensions/child_graph_asset.npz",
+            "file_sha256": "598a1732e4534d912c6d651c2ec776c322b7ed1a5161f11a3a009a11f8ce84ad",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 2133,
+          "unreachable": 10255,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 6044,
+            "unknown": 12388,
+            "propagated": 2133,
+            "unreachable": 10255,
+            "retained_global_median": 10255,
+            "harmonic_residual_maxabs": 6.661338147750939e-16,
+            "geometry_hash": "022d77eb034dbe201e8919da30d0fd9b0123ac96c60a4b96029fdd7e7f60351e",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_nearest",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/top/extensions/parent_nearest_asset.npz",
+            "file_sha256": "fb6fc7472994fd26c90b061e60c3a5e4e7d14c593e457458ae94a93b15873490",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 4648,
+          "unreachable": 7740,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "extension_audit": {
+            "method": "nearest",
+            "known_frozen": 6044,
+            "unknown": 12388,
+            "propagated": 4648,
+            "unreachable": 7740,
+            "retained_global_median": 7740,
+            "harmonic_residual_maxabs": null,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        },
+        {
+          "method": "parent_graph",
+          "export": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_material_validation_20261105/formal/top/extensions/parent_graph_asset.npz",
+            "file_sha256": "4d96a1f80110198b360340911ac3d8e29ea2a463edbd8bb8c570c34cb6d77c85",
+            "geometry_hash": "7716494c39a2674d57be9284395df76aafdab4aec7941beb7265fec1faf1e912",
+            "provenance_hash": "2f73582c376c48257dcf8de181a09401254f89f07b6e277e42d1954a4ae89317",
+            "rows": 18432,
+            "sh_degree": 3
+          },
+          "propagated": 4648,
+          "unreachable": 7740,
+          "nonzero_columns_RGB_bitwise_unchanged": true,
+          "train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "export_reload_train_invariance": {
+            "nonzero_columns_frozen": true,
+            "train_prediction_bit_exact": true,
+            "rows": 16822,
+            "columns": 18432,
+            "unknown_columns": 12388
+          },
+          "extension_audit": {
+            "method": "graph",
+            "known_frozen": 6044,
+            "unknown": 12388,
+            "propagated": 4648,
+            "unreachable": 7740,
+            "retained_global_median": 7740,
+            "harmonic_residual_maxabs": 1.887379141862766e-15,
+            "geometry_hash": "ce09c4aecf3594422fae1815564fe905e11e4b78b2d1c4947b1bfd4c1e5a1136",
+            "unknown_labels_preserved": true,
+            "texture_truth_generated": false,
+            "unknown_colour_inputs_consumed": false
+          }
+        }
+      ]
+    }
+  ]
+}

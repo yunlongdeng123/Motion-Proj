@@ -1,0 +1,156 @@
+{
+  "status": "PRE_FIT_LEAKAGE_FAIRNESS_AND_EVALUATION_REVIEW",
+  "scope": "Read-only CPU source/design review. No pseudo-mask fit result or GPU evaluation was used to choose this review. Parent-lift design is reviewed; final implementation still needs verification.",
+  "source_sha256": {
+    "prepare_cases.py": "8f94d2ad81dcb801dedf746c61c4781d230c56d82bbf013b3539f6a54677a36d",
+    "fit_material.py": "9f5f86871b13813db9cb01f939f6a95470f1e61410fa944c16939a32968d0761",
+    "collect_design.py": "d2b93c219bcb1b83bf0a811643e85c6a3e2d1b9b8b3f10083b4bb546d925b5f1",
+    "surface_material.py": "1be56bb8d86df852c12349b1b4d577ce49e76dae0428e3df404afeeb597465cb"
+  },
+  "fixed_contract": {
+    "geometry": "One complete18432-row M2 asset. Freeze centers, normals, sigma, thickness, opacity, pose, row order and renderer.",
+    "primary_cases": [
+      "left",
+      "right",
+      "top"
+    ],
+    "optional_centre": "Declare before inspecting RGB outcomes. It is secondary unless included in the primary list before fitting.",
+    "H": "Use only BUILD normalized operator column mass and object y+/y-/z+ weighted quartiles. State that this is normalized A mass, not raw alpha*T mass.",
+    "training": "Drop EVERY BUILD row with any structural nonzero in A[:,H]. Eliminate explicit stored zeros. No epsilon exception.",
+    "test": "Fixed original observed RGB rows with hidden contribution fraction>=0.9. Report other removed mixed rows separately.",
+    "fit": "One fresh2000-step SH0 common fit per case,6000 total. Rebuild median/c0 only from retained raw BUILD target.",
+    "editable": "Only exact zero columns of Atrain can change. Every nonzero-column colour remains frozen.",
+    "real_full_branch": "Separate branch may retain original full M2 supervised material and extend its10557 zero columns. It never provides pseudo-case answers, seeds or priors."
+  },
+  "leakage_gates": [
+    {
+      "id": "L1",
+      "requirement": "All training target rows are BUILD40 raw-frame/pixel pairs. HELD9 contributes no RGB target, median, initialization, anchor or parameter selection.",
+      "check": "Persist row IDs and canonical content hashes."
+    },
+    {
+      "id": "L2",
+      "requirement": "Atrain[:,H].nnz==0 across all BUILD frames; unknown[H].all() is true.",
+      "check": "Use exact CSR structural nonzeros after eliminate_zeros. Persist H and row-mask hashes."
+    },
+    {
+      "id": "L3",
+      "requirement": "Forbidden RGB has no effect on training or completion.",
+      "check": "Poison all removed BUILD RGB and all HELD RGB. Row IDs, retained targets, median/c0, common-fit input/output and completion RGB content hashes must stay identical. Only evaluation scores may change. Hash canonical arrays, not ZIP timestamps."
+    },
+    {
+      "id": "L4",
+      "requirement": "Artificial cases do not use old fitted M2 RGB, original prior, old colour flags or native predicted RGB as answers or seeds.",
+      "check": "Explicit field allowlist. Uniform0.5 geometry seeds are overwritten by fresh c0. Isolate the full-data branch loader."
+    },
+    {
+      "id": "L5",
+      "requirement": "Extension receives only common_fit RGB at nonzero TRAIN columns and the fresh train median.",
+      "check": "Keep known_rgb[~unknown] input API. Unknown colours are absent from the extension interface. Rebuild all source support metadata after row removal."
+    },
+    {
+      "id": "L6",
+      "requirement": "All methods share one common fit, one anchor set and the same allowed zero-column update domain.",
+      "check": "Byte-equal nonzero-column colours, identical common-fit hash. Count H, extra-zero outside H, natural-zero and graph-unreachable nodes separately."
+    },
+    {
+      "id": "L7",
+      "requirement": "Graph/H/solver rules are frozen before fitting or reading validation RGB outcomes.",
+      "check": "Version contract with all five arms, graph parameters/hashes and fixed gates. No RGB-dependent adjacency or per-case best method."
+    },
+    {
+      "id": "L8",
+      "requirement": "Export/reload preserves invariance.",
+      "check": "Check Atrain@decoded_RGB after reload. Real full-data export preserves original canonical SH coefficients on nonzero columns bytewise and updates unknown DC only."
+    },
+    {
+      "id": "L9",
+      "requirement": "One shared material table per method for all49 frames and both edits.",
+      "check": "No frame/edit-specific colours, no native-a6 renderer rows, identical full geometry and row order."
+    }
+  ],
+  "fairness": {
+    "verdict": "The strict mask/common-fit design is fair. Parent-lift arms are fair when registered before RGB outcomes and kept as separate discretization/adjacency controls.",
+    "arms": [
+      "median",
+      "child_geodesic_nearest",
+      "child_harmonic",
+      "parent_lift_geodesic_nearest",
+      "parent_lift_harmonic"
+    ],
+    "NN_label": "Current nearest is geodesic-nearest on the same graph, not Euclidean nearest. Compare estimator rules on that graph.",
+    "parent_conditions": [
+      "Retain original child graph and both child arms; freeze all five arms before fitting.",
+      "Lift geometry edges to the same18432 fine vertices and use the same fine-row known colours as Dirichlet anchors.",
+      "Extra coarse colour averaging or refitting is an additional aggregation factor, so it cannot be called a pure adjacency control.",
+      "Check barriers at actual lifted endpoints. Parent-local h changes physical radii/tolerances even when formulas match; disclose the effective scale.",
+      "Every arm uses identical H>=0.9 test rows. Unreachable regions stay median and remain in the denominator."
+    ],
+    "connectivity_context": "Parent reports1659 child components and1662 reachable original-zero columns before any pseudo-mask RGB fit. A disclosed geometry-only addition does not use validation RGB labels.",
+    "weak_anchors": "Any nonzero TRAIN column may still be a weak regularized colour estimate. It is not a per-point measured colour label. Keep the declared seed rule fixed after results."
+  },
+  "metrics": {
+    "primary": "RGB MAE on fixed H>=0.9 original observed rows, using normalized A@RGB versus original RGB[0,1]. One fixed denominator per RGB pixel.",
+    "partitions": [
+      "BUILD spatial-withheld",
+      "HELD temporal+spatial-withheld",
+      "mixed removed rows with0<fraction<0.9",
+      "retained rows with fraction0"
+    ],
+    "record": [
+      "Count/sum/mean per frame/case/method/split and paired differences against median.",
+      "Case-equal macro primary score. Within-case pooled pixel MAE, frame scores and worst-frame errors.",
+      "H/extra-zero/natural-zero/reachable/unreachable counts and target contribution fractions.",
+      "Mixed/boundary RGB error. Optional image-gradient error only on adjacent pairs inside the fixed test region.",
+      "All49 original full visible/reviewed a6 masks and fixed measured-depth denominators.",
+      "Factual keep-state a37/road/protected regions and strict reobserved-road delete references."
+    ],
+    "units": "Keep normalized A colour metrics separate from premultiplied black-background render errors. Test masks are geometry-only and method-independent.",
+    "limits": "Nearby frames/pixels are correlated. No pixel-iid significance claim. Original unknown lower surfaces have no hidden RGB truth."
+  },
+  "proposed_fixed_gates": {
+    "status": "Engineering thresholds proposed before pseudo-mask RGB outcomes. Copy them into the versioned contract before fitting. These are not calibrated perceptual limits or sample-size power claims.",
+    "G0_integrity": {
+      "pass_rule": "All leakage gates pass. Geometry/provenance arrays bytewise frozen. Finite RGB[0,1], higher SH exactlyzero, one full asset in both edit states.",
+      "failure": "Invalid implementation until repaired/replayed with prior artifacts preserved."
+    },
+    "G1_informativeness": {
+      "retained_train_pixels_min": 1000,
+      "retained_BUILD_frames_min": 10,
+      "BUILD_spatial_test_pixels_min": 200,
+      "HELD_test_pixels_min": 100,
+      "HELD_frames_with_at_least20_test_pixels_min": 3,
+      "action": "Check with geometry/masks only. An insufficient case is inconclusive, never a pass. Report it without silent H/threshold retuning or omission."
+    },
+    "G2_material_validation": {
+      "primary": "Case-equal HELD H>=0.9 MAE improves over fresh median by >=0.003 absolute AND >=10% relative.",
+      "case_guard": "No mandatory case worsens by >0.003. At least ceil(2*K/3) of K mandatory cases improve by >=0.003.",
+      "mixed_guard": "Case-equal HELD mixed-region MAE increase<=0.003.",
+      "claim": "Supports withheld-colour continuation on this object/regions. It does not establish unseen semantic texture or true underbody colour."
+    },
+    "G3_graph_specific_claim": {
+      "pass_rule": "For harmonic-vs-geodesic-nearest or parent-vs-child advantage, paired case-equal HELD MAE improves by >=0.002 and no mandatory case worsens by >0.003.",
+      "selection": "Choose one global rule across regions and the real full-data case. Report all five arms. No regionwise validation-label winner assembly."
+    },
+    "G4_frozen_render": {
+      "alpha_depth_and_group_maxabs_tolerance": 5e-06,
+      "group_sum_alpha_conservation_tolerance": 2e-05,
+      "deleted_a37_alphaT_maxabs": 5e-06,
+      "rule": "Any material-dependent geometry/alpha/depth/ownership change is an implementation failure."
+    },
+    "G5_real_full_scene": {
+      "BUILD_fit": "A_BUILD@decoded_RGB exactly unchanged on all original27429 fit rows after reload.",
+      "a6_core": "Pooled and each-frame original fixed a6-visible-core RGB MAE increase<=0.003 and mean RGB parent change<=0.003 versus original M2.",
+      "preservation": "Pooled and each-frame mean RGB parent change<=0.003 on factual keep a37, original measured road and protected regions. Reference MAE increase<=0.003 where factual/reobserved RGB exists.",
+      "tails": "Report p95/max/above0.02 counts and worst frames even when mean guards pass.",
+      "delete": "Deleted-a37 pixels cannot use same-frame factual raw RGB as counterfactual truth. Newly revealed a6 material remains inferred.",
+      "acceptance": "Engineering/preservation pass completes a valid comparison. Material quality needs G2; unknown-surface truth remains unavailable."
+    }
+  },
+  "implementation_notes": {
+    "examined": "Base3-arm prepare/common-fit/child-extension code. Core row removal, fresh median, known-only API and common-fit sharing are correct.",
+    "parent_updates": "Parent will load target only from old inputs and preserve original frozen-row DC during real export. Final parent-lift implementation is not certified by this design review.",
+    "poison_current": "Existing prepare checks poisoned removed RGB leaves retained targets and median unchanged. Extend checks through common-fit/extension and HELD poisoning."
+  },
+  "architecture_mermaid": "flowchart LR\n G[Fixed M2 geometry and A] --> H[Geometry-only spatial H]\n H --> D[Drop all H-contributing BUILD rows]\n R[Retained raw BUILD RGB] --> F[Fresh c0 and one common fit]\n D --> F\n F --> Z[Freeze nonzero TRAIN columns]\n Z --> M[Median]\n Z --> N[Geodesic nearest]\n Z --> P[Harmonic extension]\n M --> E[Same sealed H and HELD RGB evaluation]\n N --> E\n P --> E\n E --> S[49-frame keep/delete preservation]"
+}

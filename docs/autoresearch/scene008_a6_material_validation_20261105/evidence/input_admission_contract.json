@@ -1,0 +1,221 @@
+{
+  "schema": "a6_input_admission_contract_v1",
+  "status": "FROZEN_CPU_CANDIDATE_RULES_NO_NEW_PVD",
+  "scope_zh": "本合同只约定原始真实点的追溯、几何候选准入与颜色证据等级；已生成的原2048 PVD和原200保持不变。本次不重新运行PVD、不选新200、不训练、不改渲染或远端。",
+  "target": {
+    "scene_context": "10094743350625019937_3420_000_3440_000",
+    "raw_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+    "coordinates": "object local x-forward/length, y-left/width, z-up/height; metres",
+    "source_uid": "(raw_frame << 32) + source_cloud_row；仅在本scene+track内唯一，必须同时保留scene/track与source bank SHA。"
+  },
+  "architecture_components": {
+    "diagram": "原始LiDAR/标注/时态 → 精确源行与米制局部坐标 → 他物实体盒重叠检查 → 独立raw帧局部几何自洽 → geometry candidate\n原始RGB + 已审a6身份mask + 实测深度可见 + BUILD → appearance candidate\n两类证据及unknown原因 → 一份候选账本；PVD/native渲染只作reference",
+    "notes": [
+      "射线穿粗盒与点落在他车盒是不同检查。",
+      "几何候选与颜色资格分别存旗标；未确定点semantic_class=-1。"
+    ]
+  },
+  "source_admission": {
+    "provenance_required": [
+      "来自真实5LiDAR×2return正range、非NLZ源行；TOP使用已有像素级ego运动补偿。",
+      "保留raw_frame、source_cloud_row、canonical_xyz、原始时间戳、a6标注位姿、source bank SHA；不接受native Gaussian中心、渲染残影回投或PVD生成点伪作实测。",
+      "按(raw,cloud_row)与现有真实观测银行精确连接；坐标误差≤.0005m。原PVD往返误差另行记录，不把它当传感器误差估计。"
+    ],
+    "association": "源点须位于本帧a6标注OBB；该条件只是关联前提，不是逐点语义真值。",
+    "other_actor_volume_guard": "逐点转换到同帧所有其他有效标注OBB；落入其他OBB加3cm边界者拒绝本轮几何准入。点不在他物盒中仍不能证明RGB未遮挡。",
+    "visibility_separate": "a37/其他OBB射线相交仅保留possible-occlusion；不能用盒未遮挡或full-cloud zbuffer通过单独认可RGB。",
+    "no_region_exceptions": "同一全车规则；无上下部、前后、遮挡方位或图像质量特调。候选池重建未新增高度裁剪；既有银行的bottom10cm guard没有排除本份54715条源行。"
+  },
+  "independent_temporal_support": {
+    "metric_radius_m": 0.05,
+    "minimum_distinct_admitted_raw_frames": 3,
+    "minimum_other_raw_frames": 2,
+    "minimum_physical_time_span_s": 0.5,
+    "implementation": "在米制canonical坐标中对真实点查半径5cm邻域；同一raw的多个sensor/return/源行只算一帧。span用最大减最小原始timestamp，不用重置后的旧窗口model_time。",
+    "source_and_support_raw_ids": "0..198排除旧9HELD帧；共190帧。",
+    "legacy_HELD": [
+      89,
+      95,
+      101,
+      105,
+      113,
+      121,
+      125,
+      130,
+      137
+    ],
+    "no_HELD_selection_dependency": "候选代表从190帧原始sample重建，不直接复用曾由全199/HELD参与代表选择的旧4667 anchors。",
+    "parameter_basis": "5cm沿用既有真实观测空间离散尺度；至少3帧（含至少2个他帧）避免同次采样/双return被当重复验证；.5s排除只有相邻一两帧的支持。它们是预固定工程准入条件，不是传感器置信区间；本次没有阈值扫描。",
+    "report_only": [
+      "跨raw<89、BUILD40、raw>137三个时期的支持分别计数，不强制每点三个时期均出现。",
+      "支持首末时刻的a6位移仅作静止期混淆诊断，不事后加门槛筛点。",
+      "邻域支持只证明对象对齐后的局部重复性；不能排除所有静态/共运动混淆。"
+    ],
+    "independence_limit": "这里的非HELD准入仅隔离条件点来源、支持点和候选代表选择的直接HELD依赖；不宣称历史原生场景/标定上下文或原PVD已成为独立HELD泛化。"
+  },
+  "deterministic_pool": {
+    "input": "current_a6_observations.sample_*中190个非HELD真实原始帧；没有PVD/native拟合参数。",
+    "grid_m": 0.05,
+    "representative": "floor(xyz/.05)每格计算真实点均值，仅用来找距离均值最近的一条实际源行；保留该条原始实测xyz。距离相同按source_uid升序。无坐标投影或均值点冒充测量，无RGB/画质优先级。",
+    "count_before_admission": 5816,
+    "admitted_geometry_candidates": 5399,
+    "unaccepted_representatives": 417,
+    "artifact": "geometry_candidate_pool.npz",
+    "selection_field": "geometry_admission_eligible",
+    "unresolved_semantics": "所有行semantic_class=-1，包括通过准入的5399行；不是逐点语义真值。reject行保留reason bits以便复核。",
+    "no_new_sampling": "本合同没有从5399行抽取新的200，也没有决定新PVD采样器、步数或模型。"
+  },
+  "RGB_admission": {
+    "source_rule": "只有本源帧sample_rgb_valid=True（当前已审a6身份silhouette与实际全云深度可见均通过）的真实RGB可称source-reviewed；外49无已审身份者保持未知。",
+    "BUILD_raw_ids": [
+      90,
+      91,
+      92,
+      93,
+      94,
+      96,
+      97,
+      98,
+      99,
+      100,
+      102,
+      103,
+      104,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "appearance_BUILD_eligible": "geometry_admission_eligible & source_rgb_valid & source_raw_frame∈BUILD40",
+    "unknown_encoding": "NPZ.source_rgb_srgb对source_rgb_valid=False存NaN；必须同时读valid。不能把原full199/当前银行的未知占位0当黑真色。",
+    "no_transfer": "没有从邻域/上部/全局中位数转移颜色；跨帧几何支持不等于该点具有多帧实测RGB。",
+    "no_unreviewed_promotion": "bbox、盒否决解除、颜色一致性或仅zbuffer通过不升级颜色资格；新增身份/深度审核要另有明确来源记录。",
+    "original_PVD_role": "原PVD代码实际读取点云几何，未使用这些200点的RGB作扩散条件；RGB资格不足不能直接称几何输入污染。",
+    "bank_version_note": "原200当前银行已审RGB44，C2历史银行46；共同44。当前资格只用固定hash的current bank，不取历史旗标并集；两版像素域/可见规则差异不等于点云伪造。"
+  },
+  "original200_facts": {
+    "source": "seed0对54715条真实OBB关联源行无放回抽200，完整复现；与当前sample的200个源UID与xyz全匹配。",
+    "source_mapping_max_abs_m": 0,
+    "PVD_roundtrip_max_abs_m": 1.1920928955078125e-7,
+    "unique_source_frames": 123,
+    "other_actor_point_volume_overlap_pad03": 0,
+    "distinct_source_UIDs": 200,
+    "distinct5mm_grid_cells": 200,
+    "distinct5cm_grid_cells": 192,
+    "pairs_within5mm": 1,
+    "geometry_consistent_under_this_rule": 199,
+    "failed_temporal_point": "input171，raw109/cloud76611：只有1个半径5cm支持raw帧；自身RGB已审。此点不满足本合同的跨帧几何条件，不能据此断言错误点或错误RGB。",
+    "legacy_HELD_source_points": 14,
+    "future_clean_geometry_admission": 185,
+    "source_reviewed_RGB": 44,
+    "source_reviewed_RGB_BUILD": 33,
+    "geometry_admitted_source_RGB_BUILD": 32,
+    "source_z_range_m": [
+      -0.1425415724515915,
+      0.7156797647476196
+    ],
+    "full199_lowest_measured_z_m": -0.21044833958148956,
+    "interpretation": "没有大量伪原生中心/他车实体盒重叠污染原200的证据；主要已证实限制是部分表面观测、原始return密度/时间相关性与14个旧HELD几何源点。通过几何候选规则也不代表PVD生成完整表面正确。"
+  },
+  "normalization_and_frame": {
+    "rule": "保留原固定全车盒+官方car TRAIN mean/std的坐标合同；禁止对每份partial bounds再中心化/缩放。",
+    "transform_verification": "原200逆变换与原始实测源行最大误差1.19e-7m，说明当前固定变换往返与源映射一致。",
+    "limits": "原native+X→PVD-Z的前后符号基于已有参考车轴假设，作者明确front-sign文档未建立；本审核不证明ShapeNet语义轴或跨域先验形状正确，不更改该假设。",
+    "cross_window_join": "旧023–071/077–125/089–137窗口model_time均各自重置，不能按同值time拼接；按raw/timestamp/track在米制canonical处理。"
+  },
+  "artifact_schema": {
+    "shared": [
+      "xyz_local_m",
+      "voxel_key",
+      "source_uid",
+      "source_raw_frame",
+      "source_cloud_row",
+      "source_current_sample_index",
+      "source_original_observation_index",
+      "source_current_fused_anchor",
+      "source_rgb_srgb",
+      "source_rgb_valid",
+      "source_HELD",
+      "geometry_consistent",
+      "geometry_admission_eligible",
+      "appearance_BUILD_eligible",
+      "geometry_rejection_bits",
+      "semantic_class",
+      "support_raw_frame_mask",
+      "support_frame_count",
+      "support_other_frame_count",
+      "support_time_span_s",
+      "support_actor_endpoint_translation_m"
+    ],
+    "diagnostics": "input200_eligibility.npz有原200按原序逐点资格；geometry_candidate_pool.npz有5816个真实代表及5399个通过旗标。支持mask为N×199，旧HELD列必须全False。",
+    "reasons": {
+      "1": "source coordinate mapping mismatch",
+      "2": "outside own annotated OBB",
+      "4": "inside other annotated OBB plus3cm",
+      "8": "fewer than3 distinct admitted raw frames",
+      "16": "fewer than2 other admitted raw frames",
+      "32": "support span below0.5s",
+      "64": "legacy HELD source; future clean conditioning excluded"
+    },
+    "source_metadata": "两份NPZ记录scene_context、target_track_id、source_bank_sha256、坐标、固定门槛和190个支持raw IDs。"
+  },
+  "executable_acceptance": [
+    "复现seed0原200、别名indices与fixed_partial一致；每行能精确连接当前sample源UID，误差≤.0005m。",
+    "199个原始record CRC32C通过；逐点他物体积检查明确区分ray-OBB可能遮挡，本次+3cm重叠数=0。",
+    "candidate pool源raw与support mask均不含旧9HELD；代表是输入样本中的真实点，未投影、未造均值点。",
+    "geometry_admission_eligible严格等价reason_bits==0；支持≥3raw、至少2其他raw、span≥.5s，条件对全车一致。",
+    "所有semantic_class==-1；source_rgb_valid=False时RGB全NaN；appearance_BUILD_eligible不得含未审/HELD RGB。",
+    "记录源SHA、资格数量、每行拒绝原因与下方缺失带；不把源点数/候选数当成新完整表面或新颜色覆盖。",
+    "不运行PVD/GPU、不修改原模型和远端；不以本次准入结果替代后续新实验合同或直接训练。"
+  ],
+  "artifacts": {
+    "input200_eligibility.npz": {
+      "bytes": 21528,
+      "sha256": "c432e822831290853b10d3e9b534e9d138404424dac2bdd168e8efe89a988dab"
+    },
+    "geometry_candidate_pool.npz": {
+      "bytes": 320400,
+      "sha256": "57255d369f5d0c1973349f7597bf51416b4d1974f4ed54ac80c2434f4dc54e90"
+    }
+  },
+  "source_SHA256": {
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\source_evidence\\scene008_a37_C2_20261103_r1\\inputs\\a6_geometry_minimal.npz": "c112b730ce327084766978aa6aa764b1654c32fe5d2bcb5676c396ee763bc8b2",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_material_validation\\inputs\\current_a6_observations.npz": "ab2a88253cde28856c5618fc1444cbdbcd9bbd1dbf1ee589ad4deb40b183dd0e",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_material_validation\\inputs\\c2_full199_observations.npz": "4b91afca11abc5013365d8fc9763a2da63d65aac996307ad8c947562e59e8ea7",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_material_validation\\inputs\\raw_other_box_flags.npz": "f4269fd5cfbc9ced378146ab28b2d1d321f8157c06048a38091aa9817baa1946",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\source_evidence\\scene008_a37_C2_20261103_r1\\source\\prior\\proposals\\pvd_seed000\\candidate_points_actor_native.npz": "1d1b7e20ca389c184f54094674d40d1aa842e61da708b34f8b1ff2911d731562",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\source_evidence\\scene008_a37_C2_20261103_r1\\source\\prior\\proposals\\pvd_seed000\\fixed_partial_input.npz": "90dd3b52c90e242281dfbff57b4efdb087017719b60f96bc1e7c692c07f6f14f",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_io_audit\\source_evidence\\scene008_a37_C2_20261103_r1\\inputs\\a6_prior_inputs.npz": "7d0217f569d97372d288a474262fda6c9ef6e76741ba5a006e3ae2d0f64342ee",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_material_validation\\inputs\\raw_annotations_check.json": "f4ddd7c3f5b8370eb71e18f44a67aa33f4e78eab59a1f61eeee4fec62932cbd0",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_material_validation\\audit_input200_cpu.py": "844332a4db95e4edc0c7027dc44b654d9387f77b33c613594d41a75daa4f1c59"
+  },
+  "execution": {
+    "GPU_used": false,
+    "training_updates": 0,
+    "remote_mutations": false,
+    "AutoDL_left_running": true
+  }
+}
