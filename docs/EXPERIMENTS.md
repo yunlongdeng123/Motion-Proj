@@ -309,3 +309,6 @@
 2026-11-05，Scene008完成近/同/远物理法向支撑9个对照，0个通过全部方法验收；324个保存指标重放及81条实际选择状态重载。物理支撑位置与原生中心排序深度需区分。AutoDL保持开机。[实验与代码](autoresearch/scene008_a6_layered_handoff_20261105/README.md)。
 
 2026-11-05，Scene008完整下部C/CM资格与剂量匹配五臂验证未采用；mode增量很小，raw97略超累计outside预算。预检显示corridor仅覆盖7.97%原生前方责任；1502个双侧观测候选覆盖40.26%，转向完整重表达无退役控制。[实验/预检/下一步合同](autoresearch/scene008_a6_depth_consistency_20261105/README.md)。
+
+
+2026-11-05，Scene008旧裁剪分支收尾，转向单一完整a6资产。完整2048 PVD固定几何＋BUILD可见RGB拟合，原生a6退出成像，49帧保存重载和统一遮挡验证通过；画质未验收，native/new黑底RGB .01873/.04951，空间与SH容量差异待独立拆分。AutoDL保持开机。[报告、完整资产与下一合同](autoresearch/scene008_a6_complete_asset_20261105/README.md)。

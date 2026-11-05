@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "status": "READ_ONLY_SAVED_DATA_CPU_AUDIT",
+  "snapshot_utc": "2026-11-05T07:31:24.049633+00:00",
+  "run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105",
+  "geometry_hash": "3dd5bd7f382fd604b6c77c40de2f7bcebe58aa5495edff349226cbcb33e6d1e7",
+  "sources": {
+    "geometry": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/geometry.npz",
+      "sha256": "3236d00e4c91e04973ec791fe98fc75ed51c1e53e8021d53ca5172fb60fe8a0b"
+    },
+    "observations": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/a6.npz",
+      "sha256": "ab2a88253cde28856c5618fc1444cbdbcd9bbd1dbf1ee589ad4deb40b183dd0e"
+    },
+    "design": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/appearance_design.npz",
+      "sha256": "c9dd6886b854770b04cc1e71b07dfd932219ff01ec705b6efb7355d57a9da0a2"
+    },
+    "appearance_inputs": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/appearance_inputs.npz",
+      "sha256": "77b40296e47dfc592cbc5a5339d997507ac5919b7e7a7b4611f63f9804e65843"
+    },
+    "fitted_asset": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/complete_a6_fitted.npz",
+      "sha256": "3ec5560316a61c3c7434e0801f0ecacf4c4a46b35d5068802a053c6d4f545503"
+    },
+    "fit_receipt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/fit_receipt.json",
+      "sha256": "1174bed10d3026237263318c7538408e68f51616d12744769c2a1f2bbbceaecc"
+    },
+    "collection": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/appearance/collection.json",
+      "sha256": "48bf347ed2ec058c55cc1042bf58745b028bdd15383a84cf8ae99c9e7d679042"
+    }
+  },
+  "selection": {
+    "BUILD": [
+      90,
+      91,
+      92,
+      93,
+      94,
+      96,
+      97,
+      98,
+      99,
+      100,
+      102,
+      103,
+      104,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "HELD": [
+      89,
+      95,
+      101,
+      105,
+      113,
+      121,
+      125,
+      130,
+      137
+    ],
+    "sample_rule": "sample_rgb_valid AND sample_raw_frame in BUILD; no HELD sample RGB used in these statistics",
+    "point_array": "sample_xyz_local_m",
+    "colour_array": "sample_rgb",
+    "independent_frame_array": "sample_raw_frame",
+    "PVD_point_rule": "all2048 xyz, no generated/out-of-box/normal-valid filtering",
+    "new_experiment_or_render": false
+  },
+  "definitions": {
+    "sample_to_PVD_distance": "Euclidean nearest stored PVD center for each retained RGB-valid measured sample; point-to-point, not surface distance",
+    "PVD_to_sample_distance": "Euclidean nearest retained BUILD RGB-valid measured sample for every PVD point",
+    "two_frame_6cm_support": "At least2 distinct BUILD raw-frame IDs among valid-colour measured samples within inclusive Euclidean radius0.06m of each PVD point; diagnostic only, not fitting eligibility",
+    "quantile_order": [
+      0,
+      0.5,
+      0.9,
+      0.95,
+      1
+    ],
+    "nonzero_design_column": "sum of squared entries in saved normalized alphaT design A >0",
+    "inferred_flag": "saved colour_inferred = (views<2) OR (mass<1); views counts BUILD frames with full alphaT column mass>=.05",
+    "native_prior_supported": "prior_mass>=.05; this is total reliable-native alphaT, not a two-frame criterion",
+    "colour_at_bound": "RGB component <=1e-5 or >=1-1e-5; diagnostic only",
+    "mean_fit_alpha": "sum(saved unnormalized alphaT column mass)/number of fitting pixels"
+  },
+  "measured_support": {
+    "samples": 7311,
+    "distinct_frames": 40,
+    "actual_frames": [
+      90,
+      91,
+      92,
+      93,
+      94,
+      96,
+      97,
+      98,
+      99,
+      100,
+      102,
+      103,
+      104,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      122,
+      123,
+      124,
+      126,
+      127,
+      128,
+      129,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136
+    ],
+    "sample_RGB_median": [
+      0.35686275362968445,
+      0.4225490093231201,
+      0.5029411911964417
+    ],
+    "sample_to_PVD_point_quantiles_m": [
+      0.0,
+      0.057622834669723566,
+      0.09738104369735341,
+      0.11906881185469073,
+      0.39828305090579375
+    ],
+    "PVD_to_BUILD_RGB_point_quantiles_m": [
+      0.0,
+      0.4562132284040988,
+      0.9090754180882986,
+      1.0041913473992672,
+      1.2962618175392455
+    ],
+    "PVD_points_with_2_BUILD_RGB_frames_within_6cm": 325
+  },
+  "fixed_geometry": {
+    "rows": 2048,
+    "normal_invalid": 12,
+    "out_of_box": 95,
+    "sigma_at_6cm_cap": 857,
+    "sigma_quantile_0_50_90_100_m": [
+      0.011161998845636845,
+      0.05510154739022255,
+      0.05999999865889549,
+      0.05999999865889549
+    ],
+    "conditioning_points": 200,
+    "generated_points": 1848,
+    "previous_HELD_conditioning_points": 14
+  },
+  "appearance_design": {
+    "shape": [
+      27429,
+      2048
+    ],
+    "nnz": 709763,
+    "nonzero_columns": 1099,
+    "zero_columns": 949,
+    "nonzero_column_norm_quantile_0_10_50_90_100": [
+      9.045886812820547e-07,
+      0.0009116420207392271,
+      0.2237116981207024,
+      4.516357863242767,
+      16.643846323370177
+    ],
+    "observed_flag_points": 646,
+    "inferred_flag_points": 1402,
+    "inferred_nonzero_columns": 453,
+    "native_prior_supported": 885,
+    "native_prior_supported_with_lt2_fit_mass_frames": 186,
+    "colour_bound_entries": 653,
+    "colour_entries": 6144,
+    "mean_absolute_colour_update": 0.08543729782104492,
+    "observed_mean_absolute_colour_update": 0.19671593606472015,
+    "inferred_mean_absolute_colour_update": 0.03416341170668602,
+    "global_unknown_RGB": [
+      0.3392156958580017,
+      0.4156862795352936,
+      0.4892156720161438
+    ],
+    "mean_isolated_alpha_on_fit_pixels": 0.9838896839184849
+  },
+  "frozen_fit_contract": {
+    "lambda": 0.001,
+    "fit_alpha_min": 0.2,
+    "visible_erosion_px": 1,
+    "native_prior_alpha_min": 0.9,
+    "native_prior_raw_RGB_L1_mean_max": 0.05,
+    "colour_bounds": [
+      0,
+      1
+    ],
+    "geometry_updates": 0,
+    "no_additional_parameter_search": true,
+    "collection_totals": {
+      "visible": 32299,
+      "interior": 27429,
+      "fit": 27429,
+      "omitted_low_alpha": 0,
+      "reliable_native": 25762
+    },
+    "build_normalized_RGB_MAE_prior": 0.06017592179890496,
+    "build_normalized_RGB_MAE_fitted": 0.04387844698299314
+  },
+  "interpretation_limits": [
+    "All eroded BUILD fitting pixels passed alpha>=.2; lack of interior projected coverage is not established as the main error source.",
+    "A nonzero column is not proof of independent material identifiability; zero columns are not proof of absent geometry.",
+    "325 local two-frame 3D supports and646 fitting observed flags have different definitions and must not be interchanged.",
+    "Nearest point distances reflect both sampling and geometric mismatch, not ground-truth point-to-surface error.",
+    "Colour bounds, ridge effects, and design column norms are mechanism clues, not causal proof that geometry alone caused detail loss.",
+    "Native SH appearance capacity may exceed the replacement SH0 capacity; the current RGB gap is not uniquely attributable to PVD geometry.",
+    "The fixed completion has14 conditioning points from previous HELD frames and the native prior has previous full-scene training context; this is repeated mechanism evaluation, not independent generalization.",
+    "No geometry, model, coefficient, renderer, mask or threshold was changed by this audit."
+  ]
+}

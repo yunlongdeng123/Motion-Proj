@@ -19,3 +19,6 @@
 全量同位替换有 5 帧非目标保护失败。现有空射线证据与受保护的非目标像素无交集，中央混合支撑仍需确认。整体道路和可见车身质量基本持平。AutoDL 保持开机。
 
 [上一轮保留侧高斯重表达](autoresearch/scene008_a6_truncated_support_20261105/README.md)。
+
+
+2026-11-05，Scene008旧裁剪分支收尾，转向单一完整a6资产。完整2048 PVD固定几何＋BUILD可见RGB拟合，原生a6退出成像，49帧保存重载和统一遮挡验证通过；画质未验收，native/new黑底RGB .01873/.04951，空间与SH容量差异待独立拆分。AutoDL保持开机。[报告、完整资产与下一合同](autoresearch/scene008_a6_complete_asset_20261105/README.md)。

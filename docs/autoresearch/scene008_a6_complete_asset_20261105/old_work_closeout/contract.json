@@ -1,0 +1,31 @@
+{
+  "status":"FROZEN_BEFORE_REAL_BASIS_RENDER",
+  "scene":"Scene008",
+  "source":"scene008_a6_depth_consistency_20261105/preflight_ledger.npz",
+  "parent":"scene008_a6_depth_order_20261105/delivery/support_accepted.npz",
+  "candidate_scope":"All 1502 preflight eligible UID planes; process all their current masked-on positive-opacity native primitives including original, inherited moment children, and exact-clip appended branches",
+  "coordinates":"Shared car-reference plane from BUILD measured/proposal responsibilities; children deterministically derive from parent at actual native time, no new free temporal parameters",
+  "moment_source":"Whiten each prepared native splat Gaussian with its original rotation/scales. For inherited clips, intersect the old camera plane (transformed to model coordinates) with the shared new plane. Use same covariance for probabilities and determinant factors.",
+  "clip_limit":"Legacy clip-conditioning precision uses a variance floor; record its covariance/mean discrepancy from the unregularized splat. Do not reuse stale clip precision on new child geometry.",
+  "children":"Two conditional moment-matched ordinary Gaussian children for resolved nonzero sides; source primitive mask exits. All new children clear old clip metadata and update center depth. Source SH/material is inherited without fitting.",
+  "degenerate_policy":"Exact-empty or numerically tiny sides preserve the original full parent primitive and metadata as an unsplit protected component. These components do not participate in S/U; report their counts and contribution coverage. Numerical moment errors also preserve original primitives but block stage2 eligibility.",
+  "initialization":{
+    "m":"unconditional child probability Z_j * sqrt(det(original covariance)/det(child covariance))",
+    "opacity":"a_child = 1 - (1 - a_parent)^m; a_parent=1 uses the limiting value1 for m>0; zero probability has no child",
+    "meaning":"A fixed bounded optical-volume proxy initialization; not a proof of native projected alpha, alpha*T, RGB or depth conservation",
+    "diagnostics":"Record linear-volume a_parent*m values above1 without clipping them into a candidate; record optical saturation and entry into native 0.99 cap. Infinite source optical depth has no finite conservation claim.",
+    "selection":"Only this initialization is the R candidate; no image-dependent initialization choice, threshold or strength sweep"
+  },
+  "arms":["P: parent", "R: full resolved children, no retirement", "S conditional on R pass: retire replace-side resolved children50%", "U conditional on R pass: retire both resolved children at BUILD target-alphaT dose matched to S"],
+  "R_gate":["all inherited full49 black/keep/delete protection and road/seam pooled guards", "fixed measured-a6 parent depth mean absolute change<=0.005m per frame/state", "protected per-pixel RGB change<=0.05", "known/outside parent alpha mean absolute change<=0.01", "target PVD alphaT absolute change divided by fixed isolated target alpha<=0.01 per frame/state", "no numerical moment errors, nonzero resolved-child target dose"],
+  "stage2":"Only run if the complete R gate passes. Use BUILD R-native joint alphaT of resolved keep/replace tags to compute one fixed global matched coefficient. Same R geometry/SH/opacity in S and U; no refitting.",
+  "failed_R":"Save and reload parent/zero-operation. Stop moment-only pipeline without running S/U; bounded local response fitting is a separate future experiment.",
+  "domain":"Fixed431 lower PVD and26229 target rays; no hidden RGB supervision or geometry accuracy inference from visible contribution",
+  "build":"40 original frames excluding repeated internal HELD",
+  "held":[89,95,101,105,113,121,125,130,137],
+  "scope":"Repeated same-scene mechanism probes; not untouched test data, independent generalization, a rigid immutable object asset or an opaque first-hit renderer",
+  "smoke":["real parent-row identity parity all states", "moment probability/mean/second reconstruction", "all copied PVD/static/a37 rows preserved", "saved basis-frame reload/render equality", "finite native output and unchanged source-model checks", "evaluation and next-stage entry state saved"],
+  "training_updates":0,
+  "autodl":"keep on",
+  "subagents":"gpt-6.1-sol / max only"
+}

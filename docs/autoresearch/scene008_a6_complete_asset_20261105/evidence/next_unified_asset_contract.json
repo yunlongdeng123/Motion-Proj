@@ -1,0 +1,50 @@
+{
+  "status": "DESIGN_ONLY_NOT_RUN",
+  "direction": "Measurements and prior jointly recover ONE complete a6 surface asset",
+  "closed_direction": "No further native-a6 clipping, lower-body gates, or reveal-rate parameter search",
+  "current_control": "Original full2048 PVD fixed centres, tangent support, opacity; shared bounded SH0 colours from BUILD visible a6",
+  "current_conclusion": "One complete asset can replace the native-a6 object branch consistently; current SH0/2048 control does not preserve observed appearance or depth well enough",
+  "causal_limit": "Native has100358 primitives and active SH3 versus2048 SH0; RGB gap cannot isolate geometry, discretization, alignment or view-dependent material capacity",
+  "persistent_invariants": [
+    "One canonical surface/material representation; native a6 is a reference and has zero renderer input rows",
+    "Fixed object trajectory; same asset and frozen scene in a37-present and delete states",
+    "All scene components enter one depth sort and alpha composition",
+    "Observed positive, occluded unknown, and measured-empty evidence remain distinct",
+    "RGB updates use only this object's confirmed-visible measurements; no a37/road colour transfer",
+    "Rules depend on sampling, reliable observations and surface distance; no lower/left/right/top split",
+    "Measurement anchors and generated prior provenance remain distinguishable in the one final asset",
+    "Full49 fixed RGB/depth/silhouette/preservation denominators; no new-model alpha selection in evaluation"
+  ],
+  "controls_in_order": [
+    {
+      "arm": "M1_material_capacity",
+      "frozen": ["same full2048 centres", "same normals", "same sigma/thickness/opacity", "trajectory", "background"],
+      "change": "Explicit view-dependent material basis (up to SH3) with BUILD-only fit and strong shared RGB/DC prior",
+      "purpose": "Separate material capacity from fixed-geometry effects; verify shader output constraints and held appearance error",
+      "no_claim": "Better training RGB alone does not prove geometry or unknown texture correct"
+    },
+    {
+      "arm": "M2_surface_discretization",
+      "frozen": ["underlying full PVD proposal surface", "trajectory", "background", "M1 material order"],
+      "change": "Resample one reconstructed proposal surface more densely, with spacing set from camera pixel footprint and local curvature; all regions use the same rule",
+      "purpose": "Determine whether observed detail is limited by coarse splat support; compare coverage/depth changes rather than labeling resampling geometry-free",
+      "no_claim": "Resampling can alter rasterized support and needs a separate ablation; it must not be mixed into the geometry-correction result"
+    },
+    {
+      "arm": "M3_measured_surface_correction",
+      "frozen": ["M2 sampling rule", "M1 material order", "trajectory", "background"],
+      "change": "Fit one object-local surface jointly to reliable measured LiDAR anchors, observed contours and weak PVD shape constraints; allow bounded displacement along/near the proposal surface",
+      "native_reference": "Use native geometry/material only where it agrees with actual visible RGB and real depth; native Gaussian centres alone are not measurements",
+      "unknown": "Occluded regions retain a weak smooth PVD constraint, not a zero-opacity target; unknown colour remains low capacity and marked inferred",
+      "purpose": "Test measured preservation and complete-surface consistency in one asset without concurrent native and generated bodies"
+    }
+  ],
+  "stage_acceptance": {
+    "object_first": "Black-background full asset must retain observed rear-window/taillight detail, measured depth and complete reviewed silhouette; inspect105,113,130 then all49",
+    "scene_second": "Frozen street a37 must occlude the same asset; deleting onlya37 reveals it; separately report a37/road/outside RGB tails",
+    "unknown": "Continuity, temporal stability and ordering only where independent hidden truth is absent; no hidden accuracy claim",
+    "external_legacy": "Remaining static representation is frozen diagnostic context, not declared repaired by removing the native-a6 object branch"
+  },
+  "long_run_execution": "If estimated wall time reaches about1hour, complete about10min real-GPU smoke including save/evaluate/full restore/next entry before formal run; keep original budget separate",
+  "autodl": "KEEP_ON; no shutdown authorized in this task"
+}
