@@ -303,3 +303,5 @@
 - WS-V43-CASE15-ISOLATION-20261101-R1：[15例机制隔离、CPU证据与剩余待办](autoresearch/v43_ownership_20261028/case15_isolation_20261101/index.html)；735源case-frame、588完整G case-frame、复用24原生浮点记录、147候选mask；新增训练/GPU查询0。输入与资源见同目录run_contract.json，正式资格仍unknown。
 
 - `scene008_a37_C2_20261103_r1` — [冻结PVD补全＋局部优化1k，未超过身份10k＋道路1k基线](autoresearch/scene008_a37_C2_20261103/result_report.html)：a6可见域误差与完整重建均未过门槛，完整状态/49帧/成像阻挡诊断保留。
+
+2026-11-05，Scene008完成三组实测表面薄壳/贡献登记成对接管。两套规则均未通过，216分支重放及独立审计通过；全部登记行mixed且法线范围近2–3m，下一步先区分深度层。保留父资产，AutoDL开机。[实验与代码](autoresearch/scene008_a6_coupled_handoff_20261105/README.md)。

@@ -1,0 +1,432 @@
+{
+  "status": "EXECUTION_PASS",
+  "rank": 0,
+  "choices": {
+    "0.5": {
+      "gamma": [
+        0.017951034982929274,
+        0.05293616442931183,
+        0.07541201709713256,
+        0.014321828569100654,
+        0.010551376747489688,
+        0.00677311369328709,
+        0.09767006799656423
+      ],
+      "status": "BUILD_REJECT",
+      "rgb_depth_failures": [
+        "coverage"
+      ],
+      "coverage_error": 0.01577105749442745,
+      "build_group_pixels": 141,
+      "metrics": {
+        "rgb": {
+          "count": 141,
+          "mean": 0.01918002000038928
+        },
+        "depth": {
+          "count": 141,
+          "mean": 0.08233977378682887
+        },
+        "coverage_error": {
+          "count": 141,
+          "mean": 0.01577105749442745
+        },
+        "old_new_coverage": {
+          "count": 141,
+          "mean": 0.038942567383378604
+        },
+        "total_alpha": {
+          "count": 141,
+          "mean": 0.9998890732197051
+        },
+        "known_rgb": {
+          "count": 32299,
+          "mean": 0.01837133224376535
+        },
+        "known_change": {
+          "count": 32299,
+          "mean": 7.884355157430339e-05
+        },
+        "outside_change": {
+          "count": 102179,
+          "mean": 3.718233170531601e-05
+        }
+      },
+      "retirement_metrics": {
+        "rgb": {
+          "count": 141,
+          "mean": 0.019345828227976217
+        },
+        "depth": {
+          "count": 141,
+          "mean": 0.08682793421102754
+        },
+        "coverage_error": {
+          "count": 141,
+          "mean": 0.021398155601718503
+        },
+        "old_new_coverage": {
+          "count": 141,
+          "mean": 0.020701786179260842
+        },
+        "total_alpha": {
+          "count": 141,
+          "mean": 0.999888281027476
+        },
+        "known_rgb": {
+          "count": 32299,
+          "mean": 0.01837885109399203
+        },
+        "known_change": {
+          "count": 32299,
+          "mean": 8.392030077352299e-05
+        },
+        "outside_change": {
+          "count": 102179,
+          "mean": 3.9736855717565844e-05
+        }
+      },
+      "exact_build_loss": 110.67952767641755,
+      "selected_origin": "iteration_2"
+    }
+  },
+  "build": [
+    90,
+    91,
+    92,
+    93,
+    94,
+    96,
+    97,
+    98,
+    99,
+    100,
+    102,
+    103,
+    104,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    122,
+    123,
+    124,
+    126,
+    127,
+    128,
+    129,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136
+  ],
+  "held": [
+    89,
+    95,
+    101,
+    105,
+    113,
+    121,
+    125,
+    130,
+    137
+  ],
+  "selection_used_heldout": false,
+  "method": "Deterministic bounded joint Gauss-Newton opacity heuristic",
+  "registered": {
+    "retirement": 0.5,
+    "gamma_cap": 0.35,
+    "max_iterations": 2,
+    "finite_difference": 0.01,
+    "interior_difference": "central",
+    "boundary_difference": "one-sided",
+    "exact_line_search": [
+      1.0,
+      0.5,
+      0.25
+    ],
+    "term_scales": {
+      "coverage": 0.01,
+      "rgb": 0.003,
+      "depth": 0.03,
+      "known_outside_group_change": 0.003,
+      "legacy_outside_change": 0.005
+    },
+    "count_normalization": "global BUILD sqrt scalar count per term",
+    "ridge": 0.02,
+    "ridge_definition": "0.02 * sum(gamma**2)",
+    "masks": "group_mask; observed pixels outside group_mask; fixed legacy outside mask",
+    "no_other_retirement_levels_run": true
+  },
+  "term_scalar_counts": {
+    "coverage": 141,
+    "rgb": 423,
+    "depth": 141,
+    "known_outside_group_change": 96474,
+    "legacy_outside_change": 306537
+  },
+  "root_fit_sha256": "49eaf8c13cbc7eb3248125608db479bb95d9072b9e3fb59161073ff591c04c08",
+  "ledger_sha256": "091c665e1d5b050f90f87435124546c4b283c42692efb3263229612c5e7d0ef7",
+  "proxy_parameters": 7,
+  "initialization": {
+    "root_scalar": 0.05029296875,
+    "clipped_vector": [
+      0.05029296875,
+      0.05029296875,
+      0.05029296875,
+      0.05029296875,
+      0.05029296875,
+      0.05029296875,
+      0.05029296875
+    ],
+    "loss": 111.79465118594096,
+    "zero_loss": 117.40627106918414,
+    "zero_term_losses": {
+      "coverage": 9.186543208121451,
+      "rgb": 71.51370109401138,
+      "depth": 36.64269504791704,
+      "known_outside_group_change": 0.0526779026769967,
+      "legacy_outside_change": 0.010653816457297804,
+      "ridge": 0.0
+    }
+  },
+  "final_term_losses": {
+    "coverage": 5.468118997564452,
+    "rgb": 69.56899210350421,
+    "depth": 35.58970153834578,
+    "known_outside_group_change": 0.04365589249201755,
+    "legacy_outside_change": 0.008684880249871728,
+    "ridge": 0.000374264261209791
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "gamma_before": [
+        0.05029296875,
+        0.05029296875,
+        0.05029296875,
+        0.05029296875,
+        0.05029296875,
+        0.05029296875,
+        0.05029296875
+      ],
+      "loss_before": 111.79465118594096,
+      "finite_difference_schemes": [
+        "central",
+        "central",
+        "central",
+        "central",
+        "central",
+        "central",
+        "central"
+      ],
+      "solver": {
+        "success": true,
+        "status": 1,
+        "message": "The first-order optimality measure is less than `tol`.",
+        "cost": 55.34591035903811,
+        "optimality": 1.0598562943822662e-14,
+        "iterations": 2
+      },
+      "trials": [
+        {
+          "strength": 1.0,
+          "gamma": [
+            0.02437851981520497,
+            0.043478562248897096,
+            0.07121737982014133,
+            0.019952969316154087,
+            0.0,
+            0.014722031749817142,
+            0.11058618781335369
+          ],
+          "loss": 110.68040975201127,
+          "term_losses": {
+            "coverage": 5.544181052153537,
+            "rgb": 69.53447416872982,
+            "depth": 35.54871685709015,
+            "known_outside_group_change": 0.043880657179355576,
+            "legacy_outside_change": 0.008749001319822786,
+            "ridge": 0.0004080155386104436
+          }
+        },
+        {
+          "strength": 0.5,
+          "gamma": [
+            0.03733574428260249,
+            0.04688576549944855,
+            0.060755174285070664,
+            0.035122969033077045,
+            0.025146484375,
+            0.032507500249908575,
+            0.08043957828167685
+          ],
+          "loss": 110.98330818623423,
+          "term_losses": {
+            "coverage": 5.736561785754631,
+            "rgb": 69.75666169133632,
+            "depth": 35.43595306702494,
+            "known_outside_group_change": 0.04497306342509923,
+            "legacy_outside_change": 0.008825045573895005,
+            "ridge": 0.00033353311933533817
+          }
+        },
+        {
+          "strength": 0.25,
+          "gamma": [
+            0.043814356516301244,
+            0.048589367124724274,
+            0.055524071517535335,
+            0.04270796889153852,
+            0.0377197265625,
+            0.04140023449995429,
+            0.06536627351583842
+          ],
+          "loss": 111.34196020634602,
+          "term_losses": {
+            "coverage": 5.996532815739416,
+            "rgb": 69.90086318144608,
+            "depth": 35.3890976802986,
+            "known_outside_group_change": 0.046155920634878084,
+            "legacy_outside_change": 0.008978667737849945,
+            "ridge": 0.00033194048922384315
+          }
+        }
+      ],
+      "step": [
+        -0.02591444893479503,
+        -0.006814406501102904,
+        0.02092441107014133,
+        -0.030339999433845913,
+        -0.05029296875,
+        -0.03557093700018286,
+        0.060293219063353685
+      ],
+      "accepted": true,
+      "selected_strength": 1.0,
+      "loss_after": 110.68040975201127
+    },
+    {
+      "iteration": 2,
+      "gamma_before": [
+        0.02437851981520497,
+        0.043478562248897096,
+        0.07121737982014133,
+        0.019952969316154087,
+        0.0,
+        0.014722031749817142,
+        0.11058618781335369
+      ],
+      "loss_before": 110.68040975201127,
+      "finite_difference_schemes": [
+        "central",
+        "central",
+        "central",
+        "central",
+        "forward",
+        "central",
+        "central"
+      ],
+      "solver": {
+        "success": true,
+        "status": 3,
+        "message": "The unconstrained solution is optimal.",
+        "cost": 55.31746488014317,
+        "optimality": 1.5619667018129668e-14,
+        "iterations": 0
+      },
+      "trials": [
+        {
+          "strength": 1.0,
+          "gamma": [
+            0.017951034982929274,
+            0.05293616442931183,
+            0.07541201709713256,
+            0.014321828569100654,
+            0.010551376747489688,
+            0.00677311369328709,
+            0.09767006799656423
+          ],
+          "loss": 110.67952767641755,
+          "term_losses": {
+            "coverage": 5.468118997564452,
+            "rgb": 69.56899210350421,
+            "depth": 35.58970153834578,
+            "known_outside_group_change": 0.04365589249201755,
+            "legacy_outside_change": 0.008684880249871728,
+            "ridge": 0.000374264261209791
+          }
+        },
+        {
+          "strength": 0.5,
+          "gamma": [
+            0.021164777399067122,
+            0.04820736333910446,
+            0.07331469845863695,
+            0.01713739894262737,
+            0.005275688373744844,
+            0.010747572721552117,
+            0.10412812790495896
+          ],
+          "loss": 110.69588124610996,
+          "term_losses": {
+            "coverage": 5.50441819765586,
+            "rgb": 69.5668241933251,
+            "depth": 35.5718583191221,
+            "known_outside_group_change": 0.0436873981950808,
+            "legacy_outside_change": 0.008704604944599126,
+            "ridge": 0.0003885328672654707
+          }
+        },
+        {
+          "strength": 0.25,
+          "gamma": [
+            0.02277164860713605,
+            0.045842962794000776,
+            0.07226603913938913,
+            0.01854518412939073,
+            0.002637844186872422,
+            0.01273480223568463,
+            0.10735715785915632
+          ],
+          "loss": 110.68114325713442,
+          "term_losses": {
+            "coverage": 5.49764138613351,
+            "rgb": 69.5820714721532,
+            "depth": 35.548568710530226,
+            "known_outside_group_change": 0.04374352745085297,
+            "legacy_outside_change": 0.008720538421880038,
+            "ridge": 0.00039762244477679545
+          }
+        }
+      ],
+      "step": [
+        -0.006427484832275696,
+        0.00945760218041473,
+        0.004194637276991235,
+        -0.005631140747053432,
+        0.010551376747489688,
+        -0.007948918056530052,
+        -0.012916119816789463
+      ],
+      "accepted": true,
+      "selected_strength": 1.0,
+      "loss_after": 110.67952767641755
+    }
+  ],
+  "training_updates": 0,
+  "learned_policy": false,
+  "geometry_and_groups_modified": false
+}

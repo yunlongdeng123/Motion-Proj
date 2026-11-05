@@ -1,0 +1,119 @@
+{
+  "status": "FROZEN_BEFORE_JOINT_HELD_EVALUATION",
+  "scene": "Scene008",
+  "objective": "measured surface handoff with coupled old and new contribution",
+  "parent": "scene008_a6_depth_order_20261105/delivery",
+  "split": {
+    "build": "40 native49 frames outside held",
+    "held": [
+      89,
+      95,
+      101,
+      105,
+      113,
+      121,
+      125,
+      130,
+      137
+    ],
+    "limits": "Parent, PVD and inherited domains contain full-scene context; split validates the new groups/fitting only."
+  },
+  "groups": {
+    "normal_angle_degrees": 20,
+    "neighbor_distance_m": 0.08,
+    "min_component_anchors": 8,
+    "min_actual_RGB_source_frames": 2,
+    "max_plane_q95_residual_m": 0.06,
+    "rear_normal_abs_x_min": 0.65,
+    "tangent_voxel_m": 0.08,
+    "max_tangent_sigma_m": 0.035,
+    "choice": "every qualified group in deterministic geometry ranking; none selected by rendering metrics"
+  },
+  "retirement": {
+    "type": "ray-integrated conditional native mass inside a fixed group-oriented box",
+    "levels": [
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "primary": 0.5,
+    "old_surface_semantics": "support attribution near observed group; no semantic Gaussian identity truth"
+  },
+  "arms": [
+    "parent",
+    "same retirement only",
+    "new observed proxies only",
+    "same retirement plus proxies"
+  ],
+  "methods": [
+    {
+      "id": "grid",
+      "scope": "shared scalar per group",
+      "selection": "BUILD minimum absolute old-plus-new group alpha*T error",
+      "gamma": [
+        0,
+        0.1,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        1
+      ]
+    },
+    {
+      "id": "root",
+      "scope": "shared scalar per group",
+      "selection": "BUILD pooled signed old-plus-new alpha*T budget",
+      "steps": 10,
+      "bracket": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "joint",
+      "scope": "vector over the 7/5/5 proxy rows, same fixed retirement",
+      "selection": "joint bounded deterministic fitting on actual BUILD compositing",
+      "cap": 0.35,
+      "finite_difference": 0.01,
+      "iterations": 2,
+      "line_search": [
+        1,
+        0.5,
+        0.25
+      ],
+      "ridge": 0.02,
+      "residual_units": {
+        "group_coverage": 0.01,
+        "group_RGB": 0.003,
+        "group_depth_m": 0.03,
+        "known_RGB_change": 0.003,
+        "outside_RGB_change": 0.005
+      }
+    }
+  ],
+  "acceptance": {
+    "build_gate_required": true,
+    "held_group_RGB_and_depth": "both improve compared to same retirement alone",
+    "group_coverage_abs_mean_max": 0.01,
+    "all49_states": [
+      "black",
+      "keep a37",
+      "delete a37"
+    ],
+    "other_surfaces": "previous fixed scene and road/seam guard thresholds",
+    "probe_replay": [
+      105,
+      113,
+      130
+    ],
+    "scope": "each group, then simultaneous groups would require another interaction check"
+  },
+  "renderer": "native center-depth alpha compositing; all rows together; no first opaque surface guarantee",
+  "learning": "heuristic and physical fitting only; no learned policy",
+  "resources": {
+    "autodl": "keep on",
+    "subagents": "sol 6.1 max only"
+  }
+}

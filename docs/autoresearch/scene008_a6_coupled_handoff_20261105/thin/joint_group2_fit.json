@@ -1,0 +1,404 @@
+{
+  "status": "EXECUTION_PASS",
+  "rank": 2,
+  "choices": {
+    "0.5": {
+      "gamma": [
+        0.06977254686706294,
+        0.0004180858427655608,
+        0.0,
+        0.0,
+        0.05473615440322799
+      ],
+      "status": "BUILD_REJECT",
+      "rgb_depth_failures": [
+        "coverage"
+      ],
+      "coverage_error": 0.014076817826263813,
+      "build_group_pixels": 65,
+      "metrics": {
+        "rgb": {
+          "count": 65,
+          "mean": 0.03020791453309357
+        },
+        "depth": {
+          "count": 65,
+          "mean": 0.14709669259878305
+        },
+        "coverage_error": {
+          "count": 65,
+          "mean": 0.014076817826263813
+        },
+        "old_new_coverage": {
+          "count": 65,
+          "mean": 0.027570637807730235
+        },
+        "total_alpha": {
+          "count": 65,
+          "mean": 0.9998924337900602
+        },
+        "known_rgb": {
+          "count": 32299,
+          "mean": 0.018359708099949506
+        },
+        "known_change": {
+          "count": 32299,
+          "mean": 5.845435788304981e-05
+        },
+        "outside_change": {
+          "count": 102179,
+          "mean": 1.9829996755879125e-05
+        }
+      },
+      "retirement_metrics": {
+        "rgb": {
+          "count": 65,
+          "mean": 0.030749180698050903
+        },
+        "depth": {
+          "count": 65,
+          "mean": 0.15497490809513972
+        },
+        "coverage_error": {
+          "count": 65,
+          "mean": 0.012089262253357446
+        },
+        "old_new_coverage": {
+          "count": 65,
+          "mean": 0.010575588535245446
+        },
+        "total_alpha": {
+          "count": 65,
+          "mean": 0.9998919367790222
+        },
+        "known_rgb": {
+          "count": 32299,
+          "mean": 0.01836641588311341
+        },
+        "known_change": {
+          "count": 32299,
+          "mean": 4.90820451166584e-05
+        },
+        "outside_change": {
+          "count": 102179,
+          "mean": 1.65118352294856e-05
+        }
+      },
+      "exact_build_loss": 308.6048502383971,
+      "selected_origin": "iteration_2"
+    }
+  },
+  "build": [
+    90,
+    91,
+    92,
+    93,
+    94,
+    96,
+    97,
+    98,
+    99,
+    100,
+    102,
+    103,
+    104,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    122,
+    123,
+    124,
+    126,
+    127,
+    128,
+    129,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136
+  ],
+  "held": [
+    89,
+    95,
+    101,
+    105,
+    113,
+    121,
+    125,
+    130,
+    137
+  ],
+  "selection_used_heldout": false,
+  "method": "Deterministic bounded joint Gauss-Newton opacity heuristic",
+  "registered": {
+    "retirement": 0.5,
+    "gamma_cap": 0.35,
+    "max_iterations": 2,
+    "finite_difference": 0.01,
+    "interior_difference": "central",
+    "boundary_difference": "one-sided",
+    "exact_line_search": [
+      1.0,
+      0.5,
+      0.25
+    ],
+    "term_scales": {
+      "coverage": 0.01,
+      "rgb": 0.003,
+      "depth": 0.03,
+      "known_outside_group_change": 0.003,
+      "legacy_outside_change": 0.005
+    },
+    "count_normalization": "global BUILD sqrt scalar count per term",
+    "ridge": 0.02,
+    "ridge_definition": "0.02 * sum(gamma**2)",
+    "masks": "group_mask; observed pixels outside group_mask; fixed legacy outside mask",
+    "no_other_retirement_levels_run": true
+  },
+  "term_scalar_counts": {
+    "coverage": 65,
+    "rgb": 195,
+    "depth": 65,
+    "known_outside_group_change": 96702,
+    "legacy_outside_change": 306537
+  },
+  "root_fit_sha256": "57a26def12531b5b2e5c857026141938f533fe0f1b9cac3b072e309f40d80e0d",
+  "ledger_sha256": "750f87ddbf4cd20a229e0738f71d7520f7abcb3c6b60547e4e1609842f6ac28e",
+  "proxy_parameters": 5,
+  "initialization": {
+    "root_scalar": 0.02099609375,
+    "clipped_vector": [
+      0.02099609375,
+      0.02099609375,
+      0.02099609375,
+      0.02099609375,
+      0.02099609375
+    ],
+    "loss": 310.46749332877914,
+    "zero_loss": 314.0647991142419,
+    "zero_term_losses": {
+      "coverage": 3.280028064516895,
+      "rgb": 210.82013570896407,
+      "depth": 99.93267231786581,
+      "known_outside_group_change": 0.02770606547339744,
+      "legacy_outside_change": 0.004256957421808149,
+      "ridge": 0.0
+    }
+  },
+  "final_term_losses": {
+    "coverage": 3.4648885805526652,
+    "rgb": 207.16426122860207,
+    "depth": 97.9430317708267,
+    "known_outside_group_change": 0.028220362318645404,
+    "legacy_outside_change": 0.004291007503337587,
+    "ridge": 0.0001572885938188486
+  },
+  "history": [
+    {
+      "iteration": 1,
+      "gamma_before": [
+        0.02099609375,
+        0.02099609375,
+        0.02099609375,
+        0.02099609375,
+        0.02099609375
+      ],
+      "loss_before": 310.46749332877914,
+      "finite_difference_schemes": [
+        "central",
+        "central",
+        "central",
+        "central",
+        "central"
+      ],
+      "solver": {
+        "success": true,
+        "status": 1,
+        "message": "The first-order optimality measure is less than `tol`.",
+        "cost": 154.3603184578417,
+        "optimality": 2.0059258074023312e-14,
+        "iterations": 3
+      },
+      "trials": [
+        {
+          "strength": 1.0,
+          "gamma": [
+            0.071890663645086,
+            0.0008361716855311216,
+            0.0,
+            0.0,
+            0.051272756358655955
+          ],
+          "loss": 308.6279148216163,
+          "term_losses": {
+            "coverage": 3.451263429065202,
+            "rgb": 207.19755318239146,
+            "depth": 97.94671732808453,
+            "known_outside_group_change": 0.027965018688468738,
+            "legacy_outside_change": 0.004259906141800267,
+            "ridge": 0.0001559572449406534
+          }
+        },
+        {
+          "strength": 0.5,
+          "gamma": [
+            0.046443378697543,
+            0.01091613271776556,
+            0.010498046875,
+            0.010498046875,
+            0.03613442505432798
+          ],
+          "loss": 309.827339712455,
+          "term_losses": {
+            "coverage": 2.4925986715311903,
+            "rgb": 209.31944607207942,
+            "depth": 97.98455876454653,
+            "known_outside_group_change": 0.02657933045255026,
+            "legacy_outside_change": 0.00408082856478425,
+            "ridge": 7.604528057483006e-05
+          }
+        },
+        {
+          "strength": 0.25,
+          "gamma": [
+            0.0337197362237715,
+            0.015956113233882782,
+            0.0157470703125,
+            0.0157470703125,
+            0.02856525940216399
+          ],
+          "loss": 310.2397312153901,
+          "term_losses": {
+            "coverage": 2.1968064328461825,
+            "rgb": 209.98464540758295,
+            "depth": 98.02641267251448,
+            "known_outside_group_change": 0.027642646753001994,
+            "legacy_outside_change": 0.00416998504038976,
+            "ridge": 5.407065304199547e-05
+          }
+        }
+      ],
+      "step": [
+        0.05089456989508601,
+        -0.02015992206446888,
+        -0.02099609375,
+        -0.02099609375,
+        0.03027666260865595
+      ],
+      "accepted": true,
+      "selected_strength": 1.0,
+      "loss_after": 308.6279148216163
+    },
+    {
+      "iteration": 2,
+      "gamma_before": [
+        0.071890663645086,
+        0.0008361716855311216,
+        0.0,
+        0.0,
+        0.051272756358655955
+      ],
+      "loss_before": 308.6279148216163,
+      "finite_difference_schemes": [
+        "central",
+        "forward",
+        "forward",
+        "forward",
+        "central"
+      ],
+      "solver": {
+        "success": true,
+        "status": 1,
+        "message": "The first-order optimality measure is less than `tol`.",
+        "cost": 154.2832493760372,
+        "optimality": 2.2088195058993543e-14,
+        "iterations": 2
+      },
+      "trials": [
+        {
+          "strength": 1.0,
+          "gamma": [
+            0.06765443008903987,
+            0.0,
+            0.0,
+            0.0,
+            0.05819955244780002
+          ],
+          "loss": 308.6062065169392,
+          "term_losses": {
+            "coverage": 3.4968021096473754,
+            "rgb": 207.13305868854803,
+            "depth": 97.94332043105915,
+            "known_outside_group_change": 0.028536389909692997,
+            "legacy_outside_change": 0.004329611578729702,
+            "ridge": 0.00015928619631594017
+          }
+        },
+        {
+          "strength": 0.5,
+          "gamma": [
+            0.06977254686706294,
+            0.0004180858427655608,
+            0.0,
+            0.0,
+            0.05473615440322799
+          ],
+          "loss": 308.6048502383971,
+          "term_losses": {
+            "coverage": 3.4648885805526652,
+            "rgb": 207.16426122860207,
+            "depth": 97.9430317708267,
+            "known_outside_group_change": 0.028220362318645404,
+            "legacy_outside_change": 0.004291007503337587,
+            "ridge": 0.0001572885938188486
+          }
+        },
+        {
+          "strength": 0.25,
+          "gamma": [
+            0.07083160525607447,
+            0.0006271287641483412,
+            0.0,
+            0.0,
+            0.05300445538094197
+          ],
+          "loss": 308.61327202244536,
+          "term_losses": {
+            "coverage": 3.4557897589049644,
+            "rgb": 207.18062596181113,
+            "depth": 97.94438375576695,
+            "known_outside_group_change": 0.028045940006025966,
+            "legacy_outside_change": 0.004270066318727329,
+            "ridge": 0.00015653963767738895
+          }
+        }
+      ],
+      "step": [
+        -0.004236233556046126,
+        -0.0008361716855311216,
+        -0.0,
+        -0.0,
+        0.006926796089144064
+      ],
+      "accepted": true,
+      "selected_strength": 0.5,
+      "loss_after": 308.6048502383971
+    }
+  ],
+  "training_updates": 0,
+  "learned_policy": false,
+  "geometry_and_groups_modified": false
+}
