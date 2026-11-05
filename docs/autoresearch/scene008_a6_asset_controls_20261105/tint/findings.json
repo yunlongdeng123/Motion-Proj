@@ -1,0 +1,174 @@
+{
+  "status": "THREE_FRAME_DIAGNOSTIC_COMPLETE",
+  "conclusions": [
+    "Road boundary discontinuity grows when the frozen road layer is inserted after static suppression. It persists with the saved world color field disabled.",
+    "The saved fine world field slightly decreases boundary RGB jumps and blue index on these controls. Its effect outside road alpha*T<1e-6 is at numerical noise.",
+    "The complete a6 asset changes no measured road boundary jump in these controls. This identifies inherited background composition as the dominant seam source here.",
+    "Same-camera originalRGB already has a positive blue index. Native10K and its learned directional environment carry the broad cool background appearance.",
+    "The environment is a learned direction-dependent RGB background added as(1-alpha)*env. Its large additive blue contribution does not establish a physically excessive illumination or camera white-balance error."
+  ],
+  "keep_frame_numbers": [
+    {
+      "raw": 105,
+      "blue": {
+        "raw": 0.07889934315939474,
+        "native": 0.07845268775232095,
+        "road_off": 0.07857737826798257,
+        "road_fine": 0.078166422572455,
+        "asset_fine": 0.07803692808390528
+      },
+      "boundary_rgb_jump": {
+        "native": 0.011903085745871067,
+        "gated_no_road": 0.011999791488051414,
+        "road_off": 0.01667863316833973,
+        "road_fine": 0.016575036570429802,
+        "asset_fine": 0.016575036570429802
+      },
+      "observed_road_MAE": {
+        "native": 0.028688551988242078,
+        "road_off": 0.03554193491796284,
+        "road_fine": 0.03508475860175416,
+        "asset_fine": 0.03506794282615892
+      },
+      "environment_additive_blue": {
+        "native": 0.060839544341585367,
+        "asset_fine": 0.058579844021236636
+      },
+      "fine_effect_outside_road_maxabs": 2.9802322387695312e-08
+    },
+    {
+      "raw": 113,
+      "blue": {
+        "raw": 0.07560727094032928,
+        "native": 0.08026040867375438,
+        "road_off": 0.08043173922672395,
+        "road_fine": 0.08002737923560138,
+        "asset_fine": 0.07993888387904917
+      },
+      "boundary_rgb_jump": {
+        "native": 0.014299838803708553,
+        "gated_no_road": 0.013901735655963421,
+        "road_off": 0.01725558564066887,
+        "road_fine": 0.01670875772833824,
+        "asset_fine": 0.01670875772833824
+      },
+      "observed_road_MAE": {
+        "native": 0.02618295870223465,
+        "road_off": 0.02986179935626979,
+        "road_fine": 0.028524620984390164,
+        "asset_fine": 0.02852466093944865
+      },
+      "environment_additive_blue": {
+        "native": 0.06252889916507999,
+        "asset_fine": 0.059686566900028847
+      },
+      "fine_effect_outside_road_maxabs": 7.450580596923828e-09
+    },
+    {
+      "raw": 130,
+      "blue": {
+        "raw": 0.07800609459553698,
+        "native": 0.08114634588197077,
+        "road_off": 0.08183648305386365,
+        "road_fine": 0.081489286331395,
+        "asset_fine": 0.0814060527863118
+      },
+      "boundary_rgb_jump": {
+        "native": 0.019696267321705818,
+        "gated_no_road": 0.019383685663342476,
+        "road_off": 0.024651354178786278,
+        "road_fine": 0.024274015799164772,
+        "asset_fine": 0.024274015799164772
+      },
+      "observed_road_MAE": {
+        "native": 0.024752847895970646,
+        "road_off": 0.0348475564447607,
+        "road_fine": 0.03423484066742367,
+        "asset_fine": 0.03423484066742367
+      },
+      "environment_additive_blue": {
+        "native": 0.06746411921905014,
+        "asset_fine": 0.060902551339437304
+      },
+      "fine_effect_outside_road_maxabs": 1.4901161193847656e-08
+    }
+  ],
+  "source_evidence": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/scene_runtime.py",
+      "lines": [
+        53,
+        59,
+        103,
+        120,
+        194,
+        198,
+        202,
+        209,
+        253,
+        256
+      ],
+      "supports": "Bilinear continuous11x9 world field changes roadRGB only; learned static gates, joint road rendering, additive environment."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/source/native_binding.py",
+      "lines": [
+        39,
+        44,
+        45,
+        47,
+        57,
+        59,
+        64,
+        65,
+        66
+      ],
+      "supports": "Native render interface; road gate and insertion; original environment composite."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_ray_road_colour_20261105/source/calibrate.py",
+      "lines": [
+        27,
+        89,
+        93,
+        99,
+        100,
+        104,
+        225,
+        235,
+        237,
+        260,
+        269
+      ],
+      "supports": "Local RGB bound. Keep raw roadRGB with shadows excluded; delete reobserved roadRGB. Fixed alpha/depth/order. Bilinear world field."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_ray_road_colour_fine_20261105/source/refine_colour.py",
+      "lines": [
+        14,
+        46,
+        47,
+        58,
+        61
+      ],
+      "supports": "11x9 fine field anchored to accepted6x5 coarse calibration with regularization."
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/evaluate.py",
+      "lines": [
+        13,
+        17,
+        63,
+        64
+      ],
+      "supports": "Image export only clips and rounds RGB. It applies no scene-wide color operation."
+    }
+  ],
+  "limits": [
+    "Only raw105113130 were rendered. A full-clip color claim would require more views.",
+    "Full-image blue means include sky. The measurements establish relative changes between matched controls.",
+    "Deleted object pixels lack factual same-camera counterfactualRGB.",
+    "Environment contribution is renderer additive attribution. White balance, tone mapping and acquisition color calibration remain unverified.",
+    "Visual and boundary controls identify the road/static/environment compositing mismatch. They do not uniquely identify whether its earliest cause was road reference texture, local shadow treatment, gate selection, or native directional background fitting."
+  ]
+}

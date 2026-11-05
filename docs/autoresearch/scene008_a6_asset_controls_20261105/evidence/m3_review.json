@@ -1,0 +1,73 @@
+{
+  "status": "CORE_CONSTRAINTS_PASS_LATEST_SOURCE_PROVENANCE_FIX_VERIFIED",
+  "review_scope": "Read-only source and existing CPU artifacts; no fitting or GPU execution by reviewer.",
+  "reviewed_source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\a6_asset_controls\\measured_correction.py",
+  "reviewed_source_sha256": "181e673af08f488f60abb3e6a69879cd13fd37c081d14daf530213363c6e4ada",
+  "checks": {
+    "rows_before": 18432,
+    "rows_after": 18432,
+    "eligible": 234,
+    "unknown_exactly_unchanged": true,
+    "original_noncenter_fields_changed": [],
+    "max_abs_normal_displacement_m": 0.055362607520014366,
+    "max_tangent_roundoff_m": 6.407425252831757e-08,
+    "max_tapered_bound_roundoff_m": 3.382947529745328e-08,
+    "anchor_reference_rows": 13629,
+    "distinct_source_rows": 1765,
+    "held_intersection": [],
+    "all_original_rgb_valid": true
+  },
+  "findings": [
+    {
+      "priority": 3,
+      "title": "Bind the BUILD frame bank contents",
+      "file": "measured_correction.py",
+      "line": 355,
+      "evidence": "frames_source currently records a path. Geometric trust selection also consumes K, poses, visible/depth_valid/depth_m/scene_depth_m from that bank.",
+      "recommendation": "Embed the packed BUILD frame-bank SHA, or exact40 original frame SHA values, alongside source hashes. This can be provenance metadata without changing the fixed numerical contract."
+    }
+  ],
+  "interpretation": {
+    "training_residual": "source_self_consistency_abs_depth and solver loss reuse the LiDAR points that define correction. They establish provenance/fit, not independent geometry accuracy.",
+    "required_outcome": "Judge M3 versus M2 with existing evaluate_control.py full fixed visible and measured-depth masks, separately BUILD and HELD. The renderer expected-depth readout differs from a training plane residual.",
+    "held_depth": "HELD9 excludes incremental normal-correction observations, but M2/native/PVD conditioning and shared pose/calibration already use same-scene context. It is an internal incremental-control test.",
+    "crossfit_limit": "Crossfit folds are distinct BUILD frames; inlier/frame preselection uses the full local BUILD set. Their residuals are consistency diagnostics, not an independent test.",
+    "appearance": "fit_geometry_arm.py reuses exact saved M2 c0 and inferred flags for M3, starts both from c0, and asserts identical27429 BUILD target RGB pixels. Both have2000 SH0 steps.",
+    "unknown": "Unknown centers retain delta0. Normal/scale/thickness/opacity and original RGB seeds are exactly preserved in the inspected geometry artifacts."
+  },
+  "resolved_in_latest_source": [
+    {
+      "title": "Current geometry/provenance metadata hashes",
+      "lines": [
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        333
+      ],
+      "resolution": "Current hashes are computed before metadata serialization and overwrite inherited M2 metadata hashes."
+    },
+    {
+      "title": "Standalone input and builder provenance",
+      "lines": [
+        353,
+        354,
+        355,
+        356,
+        357,
+        364
+      ],
+      "resolution": "Input, observations, contract and builder SHA are passed into correct_geometry and embedded before export. Builder errata clarifies projected-nearest depth semantics without altering the preregistered numeric method."
+    }
+  ],
+  "examined_artifact_limitation": "The inspected local _cpu_measured_geometry.npz predates the metadata-only source fix. Its corrected centers and invariants pass; its embedded metadata must be regenerated with the current builder before delivery.",
+  "evaluation_denominators": {
+    "all49_measured_depth_points": 8930,
+    "BUILD_depth_points": 7311,
+    "HELD_depth_points": 1619
+  }
+}
