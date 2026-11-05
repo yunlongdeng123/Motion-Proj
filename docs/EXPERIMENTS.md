@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 原生 10K 实例监督（2026-11-05）
+
+- `scene008_native_ownership_20261105 / run_r3`。[原生训练、早期验收和 49 帧同域对照](autoresearch/scene008_native_ownership_20261105/README.md)。
+
 ## Scene008 双实例恢复与局部替换（2026-11-05）
 
 - `scene008_instances_20261105_r1`。[实验合同、组件图和 CPU 回执](autoresearch/scene008_instances_20261105/README.md)。
