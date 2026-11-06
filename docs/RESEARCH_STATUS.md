@@ -1,16 +1,14 @@
 # 当前研究状态
 
-更新：2026-11-06。
+更新：2026-11-07（Asia/Singapore）。
 
-当前主线为 Scene008 a6 的实际几何与外观恢复。PVD、预训练模型及背景参数冻结，原 M2 与旧 projective 资产保留，研究候选没有自动采用。
+Scene008 当前车体阶段保留 C2 连续表面、固定 RGBA 与同一 S/F SurfaceLOD；PVD 与预训练权重不更新。已有49帧双状态和拖动报告保留，几何前移、少量低alpha及内部开发域边界仍以原报告为准，不扩为360度或隐藏真值准确性结论。
 
-本轮已完成删 a37 后黑斑的实际颜色载体与几何位置诊断、观测锚定的 C2 连续深度后验、固定前景 matte RGBA 组合，以及相同 BUILD40 像素域的颜色拟合和固定49帧检查。新 chart 几何确实改变；原生480的 RGB 退化、HR/深度改善与外域局部变化须分别解释，不能把工程 PASS 当画质通过。详细证据见[本轮报告](autoresearch/scene008_a6_insert_artifacts_20261105/README.md)。
+当前工作为 v44：把 RCR-1 已保存的 RGB×1 原生10K及其 freshroad1K/gates 接入当前冻结车体。独立代码和实际远端CPU输入检查已完成（552项）；原11×9世界色场仅为来自旧M2联合场景的冻结迁移，未重标定。新组合未运行GPU、未得到画质verdict；当前CUDA不可用，下一步带GPU后先raw105/113/130/137成对pilot，通过工程检查再完整49帧。详见[v44接线与异常评估](autoresearch/scene008_v44_rgb_asset_20261107/index.html)。
 
-同一连续 surface / 固定 texture 的 SurfaceLOD 已完成固定49帧和必要的覆盖率读出；RGB与深度对照改善，同时保留少量低alpha及大幅深度前移的限制。报告、可重放入口与取回验收已完成，结果保留为研究候选，无后续训练控制器，没有启动 PVD 后训练或自由参数搜索。HELD9 未进入本次颜色目标，但此前已用于表示诊断与内部开发，不是独立未触碰泛化集。
+银亮片与暗斑分别保留诊断：历史亮片净增亮由static主导、环境×T仍有车形，不能称为PVD车体产生或去蓝已修复。v44将输出同排序四组RGB/alpha贡献；新组合来源待实际渲染核对。无新native/road/asset训练，无待启动控制器。
 
-展示部分已补齐49帧原生双状态PNG、可拖动对照和无JavaScript静态fallback；本次仅补图与展示，不改变科学结论。
-
-执行边界：subagent 仅 gpt-6.1-sol/max；本会话明确保持 AutoDL 开机，不自动关机。failure_ledger_refs=[]，failure_ledger_delta=none；人工画质 verdict 未代填。
+执行边界：subagent仅gpt-6.1-sol/max；本会话保持AutoDL开机，不自动关机。failure_ledger_refs=[]，本次failure_ledger_delta=none；人工画质verdict未代填。
 
 RCR-1支线当前由用户采用：2026-11-05明确选择RCR-1 delete用于异常蓝色RGB修复（scope=abnormal_blue_RGB_fix）；固定完整M2资产不变，原管线仅作reference。raw130/137亮片继续开放，完整画质无回退未作新结论，没有自动后续GPU队列。HELD9只对道路RGB校准target留出，不是独立native泛化验证。见[当前交互报告](autoresearch/scene008_rcr1_20261105/index.html)及[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)。本支线failure_ledger_refs=[V82-F13]为历史评审，本次failure_ledger_delta=none；车辆外观主线安排不变。
 

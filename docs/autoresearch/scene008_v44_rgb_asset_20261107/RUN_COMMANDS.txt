@@ -1,0 +1,7 @@
+# 手动在带GPU环境执行；无自动排队、不开关实例。旧模型/结果保留。
+cd /root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1
+/root/autodl-tmp/envs/drivingeditor/bin/python contract/v44_contract.py contract/input_contract.json --receipt contract/cpu_preflight_recheck.json
+# GPU恢复后：
+/root/autodl-tmp/envs/drivingeditor/bin/python source/evaluate_v44.py --contract contract/input_contract.json --mode pilot --output results/pilot_r1
+# 人工/工程复核pilot结果后再执行，不是自动已排队：
+/root/autodl-tmp/envs/drivingeditor/bin/python source/evaluate_v44.py --contract contract/input_contract.json --mode full49 --output results/full49_r1

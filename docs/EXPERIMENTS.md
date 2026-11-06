@@ -337,3 +337,5 @@
 - `RCR-1 / scene008_rcr1_20261105`：[当前delete交互报告](autoresearch/scene008_rcr1_20261105/index.html)、[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)、[机制与原始账本](autoresearch/scene008_rcr1_20261105/research/index.html)、[源码归档](autoresearch/scene008_rcr1_20261105/source_archive/index.html)；用户采用异常蓝色RGB修复，亮片保留开放，完整画质无回退未作新结论；a5更早代码提交独立待查。HELD9仅道路RGB校准target留出。failure_ledger_refs=[V82-F13]（历史），本次failure_ledger_delta=none。
 
 - `a5 followup / scene008_rcr1_20261105`：[实际报告直接复核](autoresearch/scene008_rcr1_20261105/followup_a5/index.html#report-crosscheck)、[原生六阶段对照](autoresearch/scene008_rcr1_20261105/followup_a5/index.html)；旧Full5选择性删除a6/a37仍保留a5，新报告Native10K已缺、M0/M2非起点；3fefd98仅首次归档配方，不是唯一因果提交。本次追加0GPU/0SGD、未修复，不新增失败卡；failure_ledger_delta=none。
+
+- `v44 / scene008_v44_rgb_asset_20261107_r1`：[当前冻结车体与RCR-1去蓝背景接线、异常评估及CPU预检](autoresearch/scene008_v44_rgb_asset_20261107/index.html)；552项实际CPU检查通过，GPU pilot/full49未运行；固定色场迁移非新校准，银亮片未修复，failure_ledger_delta=none。

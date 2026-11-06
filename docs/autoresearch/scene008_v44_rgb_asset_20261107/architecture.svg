@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 295" role="img" aria-label="v44组件与数据流">
+    <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8Z" fill="#64748b"/></marker></defs>
+    <style>text{font:17px system-ui,'Microsoft YaHei',sans-serif;fill:#203245}rect{fill:#eff5f8;stroke:#b9cbd8;rx:8}path.link{stroke:#64748b;fill:none;stroke-width:2;marker-end:url(#a)}</style>
+    <rect x="12" y="15" width="244" height="70"/><text x="31" y="43">原始 RGB／LiDAR／轨迹</text><text x="31" y="68">同一组相机与原始观测</text>
+    <rect x="310" y="15" width="305" height="70"/><text x="328" y="43">RCR-1 原生 10K（已保存）</text><text x="328" y="68">联合 RGB ×1 ＋实例约束</text>
+    <rect x="310" y="114" width="305" height="70"/><text x="328" y="143">匹配的道路 1K／静态 gates</text><text x="328" y="168">固定 11×9 色场迁移</text>
+    <rect x="12" y="215" width="603" height="65"/><text x="32" y="243">当前完整 a6：C2 表面 ＋固定 RGBA ＋ SurfaceLOD</text><text x="32" y="266">PVD 与资产参数冻结；原生 a6 退出成像</text>
+    <rect x="690" y="100" width="365" height="95"/><text x="711" y="129">v44：所有层统一深度排序</text><text x="711" y="155">保留 a37 ／只删除 a37</text><text x="711" y="179">输出 RGB、深度、分组 RGB×T</text>
+    <path class="link" d="M256 50 H310"/><path class="link" d="M462 85 V114"/><path class="link" d="M615 149 H690"/><path class="link" d="M615 248 H650 V178 H690"/>
+    </svg>
