@@ -1,0 +1,121 @@
+{
+  "schema": "R0_STRIP_CELL_MATERIAL_FULL_LIFECYCLE_LEDGER_V1",
+  "eligibility": {
+    "forwards": 80,
+    "renderer_backwards": 80,
+    "seconds": 12.301092386245728,
+    "optimizer_steps": 0
+  },
+  "smoke": {
+    "paired_steps": 32,
+    "forwards": 78,
+    "renderer_backwards": 64,
+    "regularizer_backwards": 32,
+    "seconds": 12.447641849517822
+  },
+  "restored_disposable": {
+    "paired_steps": 2,
+    "forwards": 4,
+    "renderer_backwards": 4,
+    "regularizer_backwards": 2,
+    "seconds": 0.9403321743011475,
+    "all_checkpoint_restore_checks_exact": true
+  },
+  "formal": {
+    "fresh_init": true,
+    "paired_steps": 1000,
+    "forwards": 2000,
+    "renderer_backwards": 2000,
+    "regularizer_backwards": 1000,
+    "seconds": 279.1498260498047,
+    "lr": 0.01
+  },
+  "total_forwards": 2162,
+  "total_native_renderer_backwards": 2148,
+  "total_optimizer_steps": {
+    "smoke": 32,
+    "disposable": 2,
+    "formal": 1000
+  },
+  "eligible_cells": 2171,
+  "trainable_material_scalars": 6513,
+  "zero_columns_frozen": 12490,
+  "strip_outside_frozen_source_rows": 4563,
+  "initial_forward_colour_maxabs_difference": 0.0,
+  "final_source_delta_maxabs": 0.14366695284843445,
+  "original_native_C2_road_gate_env_camera_trajectory_updates": 0,
+  "new_geometry_sigma_opacity_updates": 0,
+  "peak_allocated_bytes": 2182075392,
+  "peak_reserved_bytes": 3888119808,
+  "first32_smoke_vs_fresh_formal_record_maxabs": {
+    "data_MSE": 0.0,
+    "anchor": 9.094947017729282e-13,
+    "texture": 1.4210854715202004e-14,
+    "gradient_norm": 1.1368683772161603e-13
+  },
+  "next2_restore_vs_fresh_formal_record_maxabs": {
+    "data_MSE": 0.0,
+    "anchor": 0.0,
+    "texture": 2.842170943040401e-14,
+    "gradient_norm": 0.0
+  },
+  "replay_comparison_note": "Actual recorded loss/regularizer/gradient numbers, no tolerance widening. Full delta/Adam/RNG/sampler restore separately checked bitwise.",
+  "checkpoints": {
+    "smoke": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/material_cellfit_strip_v1/smoke/checkpoint000032.pt",
+      "sha256": "97641c6ec6706bb05a8a23e2a0c969b4014a2532a42f56065aa1757482331ae4",
+      "step": 32,
+      "Adam_steps": [
+        32.0
+      ],
+      "component_bit_hash": {
+        "delta": "54fd98e46ede2378d4d8b6c3f260b3b2ec2dcdf8a7f482c3cacf4d8c38c76405",
+        "optimizer": "161856a3338729c7925431607810fe44d83c5bd5c3b2e9f183a549ebceae8268",
+        "rng": "0ccbae9824512c5fffa767d450d654d68c8549b02e64bd81ea95ac20dcf30649",
+        "sampler": "67e57e5f5ffe3994b5b2e97dd6a375bae15fc083e3861c210021558160499f8f"
+      },
+      "next_two_frames": [
+        126,
+        93
+      ]
+    },
+    "restore": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/material_cellfit_strip_v1/restore/checkpoint000034.pt",
+      "sha256": "c35dafa55887eeec5e7bee3b93f5a0ae5a2c856443c055ab31f87a5620250ec3",
+      "step": 34,
+      "Adam_steps": [
+        34.0
+      ],
+      "component_bit_hash": {
+        "delta": "7a080e2bb68d1bedf7a521e097246dfaed44f029525939a64e0e0a93cdf21d75",
+        "optimizer": "bbdb5a71cefcd534d062430b3919153b052a19ef796a760901f8b8fc93fb035d",
+        "rng": "0ccbae9824512c5fffa767d450d654d68c8549b02e64bd81ea95ac20dcf30649",
+        "sampler": "c782d3fd83c4258e466e8adeb5e7425f2d8050abed00be77c844dae67ae06680"
+      },
+      "next_two_frames": [
+        112,
+        110
+      ]
+    },
+    "formal": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/material_cellfit_strip_v1/formal/checkpoint001000.pt",
+      "sha256": "2f07f446427e8d03bc9a9fdbfb275aa07bf406c5acd558685cad019d1282ba87",
+      "step": 1000,
+      "Adam_steps": [
+        1000.0
+      ],
+      "component_bit_hash": {
+        "delta": "a7231f59d3164bf0122e107ef10a02c72550e6466701a67ea7d9db27d5fb6027",
+        "optimizer": "35373a6666642a7757ddd288115278ba22f9266725f9dd4facb767d2686aee12",
+        "rng": "0ccbae9824512c5fffa767d450d654d68c8549b02e64bd81ea95ac20dcf30649",
+        "sampler": "ad856b034192ee1e5cc85fd30f301c9f6c7943c27d77a8a551110bd826749bff"
+      },
+      "next_two_frames": [
+        102,
+        107
+      ]
+    }
+  },
+  "wide_cellfit_gpu_steps": 0,
+  "shutdown_performed": false
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "R0_FULLFRAME_GROUND_POOL_RAY_SUPPORT_V1",
+  "raw": 137,
+  "CPU_only": true,
+  "RGB_images_opened": 0,
+  "rule": "Entire480x320: anchor ground-plane start,8 measured-pool IDW updates; >=3of8 actual deduplicated returns within0.8m, final height residual<0.03m; t(0.1,120), initial x[0.5,90],y+-8. No old-grid containment required.",
+  "groups": {
+    "fixed_roi": {
+      "pixels": 720,
+      "old_geometry_valid": 295,
+      "old_geometry_unknown": 425,
+      "new_pooled_geometry_valid": 719,
+      "old_unknown_now_pool_supported": 425,
+      "old_unknown_still_geometry_unknown": 0,
+      "new_geometry_in_expanded_candidate": 296,
+      "new_geometry_in_active_candidate": 283,
+      "old_unknown_in_expanded_candidate": 2,
+      "old_unknown_in_active_candidate": 2,
+      "old_unknown_with_any_cell_rgb_witness": 2,
+      "old_unknown_with_ge3_cell_clean_witness": 2,
+      "local_bounds_supported": [
+        [
+          21.199481038512126,
+          -1.6764435697847488,
+          0.1058102590848704
+        ],
+        [
+          28.216392920090406,
+          0.1877080328940285,
+          0.18230734241841873
+        ]
+      ],
+      "old_unknown_supported_bounds": [
+        [
+          21.288463451595007,
+          -1.6764435697847488,
+          0.1058102590848704
+        ],
+        [
+          28.216392920090406,
+          -0.47763325045777616,
+          0.18052812331099588
+        ]
+      ]
+    },
+    "under_tail_band": {
+      "pixels": 720,
+      "old_geometry_valid": 331,
+      "old_geometry_unknown": 389,
+      "new_pooled_geometry_valid": 719,
+      "old_unknown_now_pool_supported": 389,
+      "old_unknown_still_geometry_unknown": 0,
+      "new_geometry_in_expanded_candidate": 332,
+      "new_geometry_in_active_candidate": 317,
+      "old_unknown_in_expanded_candidate": 2,
+      "old_unknown_in_active_candidate": 2,
+      "old_unknown_with_any_cell_rgb_witness": 2,
+      "old_unknown_with_ge3_cell_clean_witness": 2,
+      "local_bounds_supported": [
+        [
+          20.608005740106456,
+          -1.4850491191212085,
+          0.10287108468252582
+        ],
+        [
+          28.216392920090406,
+          0.1877080328940285,
+          0.18230734241841873
+        ]
+      ],
+      "old_unknown_supported_bounds": [
+        [
+          20.72651032335499,
+          -1.4850491191212085,
+          0.10287108468252582
+        ],
+        [
+          28.216392920090406,
+          -0.47763325045777616,
+          0.18052812331099588
+        ]
+      ]
+    },
+    "full_image": {
+      "pixels": 153600,
+      "old_geometry_valid": 45473,
+      "old_geometry_unknown": 108127,
+      "new_pooled_geometry_valid": 56938,
+      "old_unknown_now_pool_supported": 13544,
+      "old_unknown_still_geometry_unknown": 94583,
+      "new_geometry_in_expanded_candidate": 43178,
+      "new_geometry_in_active_candidate": 38622,
+      "old_unknown_in_expanded_candidate": 50,
+      "old_unknown_in_active_candidate": 46,
+      "old_unknown_with_any_cell_rgb_witness": 49,
+      "old_unknown_with_ge3_cell_clean_witness": 46,
+      "local_bounds_supported": [
+        [
+          10.407774441934901,
+          -8.02950489759716,
+          -0.2444361301225202
+        ],
+        [
+          87.86383893689718,
+          8.524019583169878,
+          0.5008130323986095
+        ]
+      ],
+      "old_unknown_supported_bounds": [
+        [
+          12.232053234714762,
+          -8.02950489759716,
+          -0.2444361301225202
+        ],
+        [
+          87.86383893689718,
+          8.524019583169878,
+          0.5008130323986095
+        ]
+      ]
+    }
+  },
+  "geometry_origin": "Measured-support interpolated ray/surface intersection, not dense LiDAR.",
+  "limits": [
+    "Old unknown becoming pool-supported is geometry evidence only; cell RGB witness does not prove exact ray-point RGB.",
+    "Sparse failures remain geometry unknown; no never-visible conclusion.",
+    "Only the fixed full-image geometry rule determined support; ROI is reporting only."
+  ],
+  "seconds": 1.5628318786621094
+}

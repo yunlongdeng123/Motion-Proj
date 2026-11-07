@@ -1,0 +1,1455 @@
+[
+  {
+    "run": "pilot_v1",
+    "frames": 4,
+    "candidate": "extension",
+    "delete_observed_road_RGB_delta": 0.005982053137303812,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 4.6061840794996145e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 1.4205756921487067e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.006583946064408919,
+        "pass_gate": false,
+        "failed_raws": [
+          137
+        ]
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.005130558878600783,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.002628395322437159,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0020265856881648107,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 4.611378347933737e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.007550686864874173,
+        "pass_gate": false,
+        "failed_raws": [
+          105,
+          113,
+          137
+        ]
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.005982053137303812,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.00271325429443248,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0022624263295911856,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "R0入口 / 原候选域",
+    "note": "4帧入口；后续发现候选域与halo不完整，保留原现场。"
+  },
+  {
+    "run": "pilot_v2",
+    "frames": 4,
+    "candidate": "extension",
+    "delete_observed_road_RGB_delta": 0.005982053137303812,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 9.521814798328643e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 1.4205756921487067e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.006583946064408919,
+        "pass_gate": false,
+        "failed_raws": [
+          137
+        ]
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.005130558878600783,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0028672249436267026,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.002176739335907691,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 9.528096600376623e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.007550686864874173,
+        "pass_gate": false,
+        "failed_raws": [
+          105,
+          113,
+          137
+        ]
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.005982053137303812,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0030397910469096047,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.002577688419123359,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "V2完整矩形 / 入口",
+    "note": "补齐几何候选及halo；不能用入口成功代替49帧保护验收。"
+  },
+  {
+    "run": "full49_v2",
+    "frames": 49,
+    "candidate": "extension",
+    "delete_observed_road_RGB_delta": 0.004936858802773416,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00018470093929200126,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632096290588417,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 1.9170254763473116e-07,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.006583946064408919,
+        "pass_gate": false,
+        "failed_raws": [
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137
+        ]
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0037350087533430734,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0028672249436267026,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0017421376568757582,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00018595560958067914,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632134437560997,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.008261839731279877,
+        "pass_gate": false,
+        "failed_raws": [
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137
+        ]
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.004936858802773416,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0030397910469096047,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.002258666190560494,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "V2完整矩形 / 原材质",
+    "note": "恢复大缺口，但补面也在非road区域接管，保护失败；未采用。"
+  },
+  {
+    "run": "pilot_clip49",
+    "frames": 4,
+    "candidate": "extension",
+    "delete_observed_road_RGB_delta": 0.00599916167181129,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 9.521814798328643e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 1.4205756921487067e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.006613901964119047,
+        "pass_gate": false,
+        "failed_raws": [
+          137
+        ]
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.005154803401050092,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.002865753353405564,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0021833384303367107,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 9.528096600376623e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.007568809501670416,
+        "pass_gate": false,
+        "failed_raws": [
+          105,
+          113,
+          137
+        ]
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.00599916167181129,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.003038257991772021,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "extension",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.002578090845023445,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "材质clip控制 / 入口",
+    "note": "单列失败或中间控制，不覆盖原材质结果。"
+  },
+  {
+    "run": "pilot_worldfield_r2",
+    "frames": 4,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0030283652357799493,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 8.765896563302233e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.003484708169092847,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0026291201141172733,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0019106226595191206,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0013375666935897985,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 8.771876445229365e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0038430272836339867,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0030283652357799493,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0020159190519786555,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.001592140556241111,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "低cap世界色场 / 入口",
+    "note": "11×9世界色场的独立入口，后续全49仍需检查。"
+  },
+  {
+    "run": "full49_worldfield",
+    "frames": 49,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0025629176975374493,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00015287477297187824,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632096290588417,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 4.3904211450424e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.003484708169092847,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0019453309824110573,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0019106226595191206,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0011185774074687679,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00015338666269108792,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632134437560997,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.004275174205340768,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0025629176975374493,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.002048625941555169,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0014607597190320794,
+        "pass_gate": false,
+        "failed_raws": []
+      }
+    ],
+    "title": "低cap世界色场 / 全49",
+    "note": "calibrated仍有4个预注册可见保护门失败；未采用。"
+  },
+  {
+    "run": "pilot_corridor",
+    "frames": 4,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0012992468572323272,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 8.765896563302233e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0013135976471256097,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0009202859765390578,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.00048097697215839647,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.00029357862578631433,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 8.771876445229365e-05,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.0,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0019180603987621891,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0012992468572323272,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0005706207094246206,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0005188727639818119,
+        "pass_gate": true,
+        "failed_raws": []
+      }
+    ],
+    "title": "固定world strip / 入口",
+    "note": "按原road y-world包络固定active，不使用逐帧图像ROI。"
+  },
+  {
+    "run": "full49_corridor",
+    "frames": 49,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0012655199430184234,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00015287477297187824,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632096290588417,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 4.3904211450424e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0013893622652448381,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0006859490097916969,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0004963130005501658,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0002143329029048787,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00015338666269108792,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632134437560997,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0019906585568065863,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0012655199430184234,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0006417255451025353,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0005094549933997335,
+        "pass_gate": true,
+        "failed_raws": []
+      }
+    ],
+    "title": "固定world strip / 全49",
+    "note": "active仅10098/14661；保护域回到门内，delete原观测road仍+0.0012655，高于原+0.001门；未采用。"
+  },
+  {
+    "run": "full49_corridor_matched",
+    "frames": 49,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0012693464675794137,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.0001743498425408746,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632096290588417,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 6.826737838569463e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0013715737552846413,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0006461315759687426,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0005177730011845932,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.00021283518395660665,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00017529069777488804,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632134437560997,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.002024147501022845,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0012693464675794137,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0006907864969999677,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0005408440800175468,
+        "pass_gate": true,
+        "failed_raws": []
+      }
+    ],
+    "title": "matched strip重拟合 / 全49",
+    "note": "同scope材质重拟合；delete原观测road约+0.0012693，13门仅12通过；未采用。"
+  },
+  {
+    "run": "full49_corridor_cellfit",
+    "frames": 49,
+    "candidate": "calibrated",
+    "delete_observed_road_RGB_delta": 0.0010437881930815025,
+    "gates": [
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.0001743498425408746,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632096290588417,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "a37_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 6.824798168963975e-08,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0010796126329209628,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0004885022925116729,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.00045780671258435074,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "keep",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0001847177690821114,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.001,
+        "observed": 0.00017529069777488804,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "a6_depth_m",
+        "kind": "max_frame_regression",
+        "threshold": 0.01,
+        "observed": 0.004632134437560997,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0016721487621441586,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "observed_road_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0010437881930815025,
+        "pass_gate": false,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "max_frame_regression",
+        "threshold": 0.005,
+        "observed": 0.0006640537183982102,
+        "pass_gate": true,
+        "failed_raws": []
+      },
+      {
+        "state": "delete",
+        "candidate": "calibrated",
+        "metric": "protected_RGB",
+        "kind": "pooled_regression",
+        "threshold": 0.001,
+        "observed": 0.0004995879359385412,
+        "pass_gate": true,
+        "failed_raws": []
+      }
+    ],
+    "title": "newroad-only高cap cellfit / 全49",
+    "note": "新增材质容量控制。只按实际收据与完整PNG读结果，不预写成功；可见门与未知下体兼容性分开。"
+  }
+]

@@ -1,0 +1,127 @@
+{
+  "schema": "scene008.R0_R1.CPU_preparation_receipt.v1",
+  "status": "PASS_FRONT199_CPU_PREPARATION_PHYSICAL_STRICTNESS_NOT_CERTIFIED",
+  "root_R0_frozen_contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/contract.json",
+    "sha256": "e9f0b47b983270d8954c71330e2bab8824d6e6f91d72fb45e9aaa76ec2fe6464",
+    "original_modified": false
+  },
+  "current_vehicle": {
+    "C2_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+    "old_M2_is_current": false
+  },
+  "authoritative_R1_generation": "FRONT_geometry_v2",
+  "initial_draft_disqualified": "../public used old source_valid with whole-image sharpness; preserved, never estimator input",
+  "patches": 6,
+  "validation_patches": 3,
+  "sealed_test_patches": 3,
+  "world_sizes_m": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "guard_m": 0.75,
+  "selection_reads_target_RGB": false,
+  "selection_reads_old_source_valid": false,
+  "selection_reads_fit_errors": false,
+  "selection_receipt_sha256": "ea09b66ed1ac32be9750d8152c14c17db5f30312d962987b822ed2a4d4b88c07",
+  "actual_RGB_scope": {
+    "frames": 199,
+    "cameras": [
+      "FRONT"
+    ],
+    "other_four_cameras_audited": false
+  },
+  "raw_LiDAR_rebuilt": {
+    "sensors": 5,
+    "returns_per_sensor": 2,
+    "before_fusion": true,
+    "original_returns": 36028042,
+    "geometry_RGB_blind_removed_points": 397111
+  },
+  "masking": {
+    "native_masked_pixel_frames": 203203793,
+    "prepared_invalid_pixel_frames": 12728690,
+    "target_colour_intervention_exact_all199": true,
+    "full_prism_filter_passed": true,
+    "max_constant_velocity_motion_bound_m": 0.26812594198262224
+  },
+  "decoder_parity": {
+    "matrices": 11,
+    "full_raw137_XYZ_bitwise_equal": true,
+    "dependency": {
+      "path": "/root/autodl-tmp/fast_range_matrix.py",
+      "sha256": "6d07d45ed9304ca134ebe0e52f3aca0382193cd115e0cafcacf64df9db1455b1"
+    }
+  },
+  "checks": {
+    "full_source_validation": 3879,
+    "all_passed": true,
+    "isolated_export_byte_parity": true,
+    "isolated_track_inventory": [
+      {
+        "track": "appearance_blind",
+        "input_manifest_sha256": "47306b1b2e5842f750f84be70afaa77d9e5e212a55ceafb56bbd9c82f9b45178",
+        "files": {
+          "rgb": 398,
+          "geometry": 199,
+          "camera": 199
+        }
+      },
+      {
+        "track": "geometry_RGB_blind",
+        "input_manifest_sha256": "bc7e0d2b3b5de639aaab115a11f5717da22696235d9cc26fce1b69c44acec2a8",
+        "files": {
+          "rgb": 398,
+          "geometry": 199,
+          "camera": 199
+        }
+      }
+    ]
+  },
+  "fixed_R0_protection": {
+    "domain_manifest_sha256": "4f3afaf3ba282fc1942e7b4420d94e7ed447accf4b4575ed57e403584546329a",
+    "totals": {
+      "a6_visible": 39308,
+      "a37_visible_keep": 536128,
+      "a6_measured_depth": 8930,
+      "road_keep_original": 1075281,
+      "road_delete_proxy": 287368,
+      "protected_original": 6312448,
+      "a37_measured_depth_keep": 91066,
+      "raw137_fixed720_ROI": 720
+    },
+    "prediction_conditioned": false
+  },
+  "sealed_evaluation": {
+    "patch_manifest_sha256": "74dae6d491b4dd9249833cf427b1cbc83c58b9296da721430599fc5d29628339",
+    "store_outside_estimator_inputs": true,
+    "references_prepared_not_scored": true,
+    "target_grid_cells": 1647,
+    "stable_radiance_proxy_cells": 1374,
+    "independent_marking_GT": false,
+    "independent_hidden_albedo_or_normal_GT": false
+  },
+  "seconds": {
+    "geometry_only_selection": 7.110976219177246,
+    "slow_three_raw_smoke_extra": 36.12610340118408,
+    "fast_decoder_parity_extra": 13.373717784881592,
+    "formal_front199_source_preparation": 119.43104720115662
+  },
+  "completion_methods_run": 0,
+  "training_updates": 0,
+  "GPU_used": false,
+  "power_operations": 0,
+  "source_TFRecord_or_old_experiments_modified": false,
+  "R0_road_candidate_adopted_by_this_subtask": false,
+  "external_estimator_process_isolation_audited": false,
+  "physical_all_sensor_strict_blinding_certified": false,
+  "limitations": [
+    "FRONT-only RGB; no all-five-camera search or never-visible claim.",
+    "Rolling-shutter/pose interval assumes bounded constant velocity; physical timing/calibration envelope is not independently certified.",
+    "Only one isolated track may be mounted; old scene, other track, sealed GT and integration_domains must remain inaccessible to an estimator.",
+    "Directory/hash checks are not OS-level process isolation.",
+    "Reference colors are qualified actual radiance proxies, and sparse measured heights/slope are not dense hidden geometry or unshadowed albedo GT.",
+    "No marking GT, completion result, independent scene test, model post-training or quality-accepted result is established."
+  ]
+}

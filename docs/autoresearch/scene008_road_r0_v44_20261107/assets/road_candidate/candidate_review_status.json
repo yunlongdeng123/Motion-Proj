@@ -1,0 +1,20 @@
+{
+  "status": "RESEARCH_CANDIDATE_NOT_ADOPTED",
+  "passed_frozen_gates": 12,
+  "total_frozen_gates": 13,
+  "remaining_failure": {
+    "metric": "delete observed-road pooled RGB MAE",
+    "before": 0.021273425,
+    "after": 0.022317213,
+    "delta": 0.001043788,
+    "allowed_delta": 0.001
+  },
+  "physical_limits": [
+    "Some inferred vehicle surfaces lie below measured road.",
+    "Some near-ground Gaussian centres have footprints across image rays and occlude an inferred vehicle surface that should be in front on that ray.",
+    "Current Gaussian blending is not full MOG first-hit; no claim of true hidden-vehicle preservation."
+  ],
+  "material_budget_unchanged": true,
+  "formal_steps": 1000,
+  "no_extra_fit_to_pass_gate": true
+}

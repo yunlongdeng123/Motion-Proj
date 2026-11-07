@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-label="Road benchmark components and separate sealed evaluation">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#385d73"/></marker></defs>
+<rect width="1180" height="430" fill="#f6f8fb"/>
+<g fill="white" stroke="#8598a5" stroke-width="1.5">
+<rect x="20" y="30" width="215" height="75" rx="9"/><rect x="295" y="30" width="240" height="75" rx="9"/>
+<rect x="20" y="165" width="215" height="90" rx="9"/><rect x="295" y="165" width="240" height="90" rx="9"/>
+<rect x="600" y="120" width="245" height="80" rx="9"/><rect x="600" y="225" width="245" height="80" rx="9"/>
+<rect x="915" y="168" width="240" height="90" rx="9"/><rect x="600" y="340" width="245" height="65" rx="9"/>
+<rect x="20" y="340" width="515" height="65" rx="9"/>
+</g>
+<g font-family="Segoe UI,Arial,sans-serif" font-size="17" text-anchor="middle" fill="#19384b">
+<text x="127" y="61">Geometry-only selection</text><text x="127" y="87">No target RGB / fit error</text>
+<text x="415" y="61">Fixed world patches + guard</text><text x="415" y="87">0.5 / 1 / 2 m, spatial split</text>
+<text x="127" y="193">199 raw FRONT JPEGs</text><text x="127" y="219">Raw 5-LiDAR × 2 returns</text><text x="127" y="244" font-size="14">Other RGB cameras excluded</text>
+<text x="415" y="194">CPU source rebuild</text><text x="415" y="221">Mask prism before resize/fusion</text><text x="415" y="244" font-size="14">XYZ only; no old scene checkpoint</text>
+<text x="723" y="151">Appearance-blind input</text><text x="723" y="178">Masked RGB + measured XYZ</text>
+<text x="723" y="256">Geometry + RGB blind input</text><text x="723" y="283">Masked RGB + filtered XYZ</text>
+<text x="1035" y="199">CPU plane + boundary median</text><text x="1035" y="225">Frozen candidate / settings</text><text x="1035" y="248" font-size="14">One isolated track, one patch process</text>
+<text x="723" y="367">Sealed GT → external evaluation</text><text x="723" y="390" font-size="14">Radiance/height proxies; no marking GT</text>
+<text x="278" y="367">R0: V44 observations → fixed protection domains</text><text x="278" y="391" font-size="14">C2/SF frozen; actor / road / outside metrics; excluded from R1 input</text>
+</g>
+<g fill="none" stroke="#385d73" stroke-width="2" marker-end="url(#arrow)">
+<path d="M235 67H295"/><path d="M415 105V165"/><path d="M235 210H295"/>
+<path d="M535 188L600 160"/><path d="M535 232L600 265"/><path d="M845 160L915 195"/><path d="M845 265L915 230"/>
+<path d="M1035 258V372H845"/>
+</g>
+<path d="M127 255V293H560V372H600" fill="none" stroke="#8a6396" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+</svg>

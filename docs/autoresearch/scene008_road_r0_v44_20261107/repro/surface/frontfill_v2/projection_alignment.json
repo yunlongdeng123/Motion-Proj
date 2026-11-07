@@ -1,0 +1,865 @@
+{
+  "schema": "R0_FRONTFILL_THREE_PROJECTION_CPU_AUDIT_V1",
+  "CPU_only": true,
+  "paths": {
+    "A": "full199 frames/{raw}.npz w2l,K on anchor-local metres",
+    "B": "instances observations model_to_camera,K on model_xyz",
+    "C": "V44 full49 actual_camera_pose.full_projection; homogeneous model_xyz row-vector multiply and native ndc2Pix"
+  },
+  "pixel_convention": "Pinhole uv=K*[x,y,z]/z -0.5; native raster uv=((NDC+1)*[W,H]-1)/2.",
+  "rows": [
+    {
+      "raw": 105,
+      "active_front_points": 14661,
+      "common_front": 14661,
+      "common_inframe": 14661,
+      "same_frame_qualified_points": 193,
+      "source_resolution_wh": [
+        480,
+        320
+      ],
+      "observation_resolution_wh": [
+        480,
+        320
+      ],
+      "raster_resolution_wh": [
+        480,
+        320
+      ],
+      "source_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observation_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "K_maxabs": 0.0,
+      "observation_model_to_camera_vs_saved_worldview_maxabs": 1.8516210897878693e-08,
+      "A_source_vs_B_observation_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -6.023594419110766e-11,
+          -8.974951998949994e-12
+        ],
+        "max_abs_component": 1.3142198440618813e-10,
+        "median_euclidean": 5.942225695491432e-11,
+        "max_euclidean": 1.327504785489497e-10,
+        "p95_euclidean": 9.207725017671268e-11
+      },
+      "A_source_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          4.949474719746292e-07,
+          -2.006809977682831e-06
+        ],
+        "max_abs_component": 3.818881552319908e-06,
+        "median_euclidean": 2.3238988267703054e-06,
+        "max_euclidean": 4.641336185429843e-06,
+        "p95_euclidean": 3.5532300493727324e-06
+      },
+      "B_observation_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          4.950077079188203e-07,
+          -2.0068010027308323e-06
+        ],
+        "max_abs_component": 3.818838720803797e-06,
+        "median_euclidean": 2.3239247984345413e-06,
+        "max_euclidean": 4.6412892489638836e-06,
+        "p95_euclidean": 3.553284726185516e-06
+      },
+      "A_source_vs_B_observation_qualified_px": {
+        "points": 193,
+        "mean_vector": [
+          -5.445143012361604e-11,
+          -1.2050510273004974e-11
+        ],
+        "max_abs_component": 8.608935786469374e-11,
+        "median_euclidean": 5.6180259220557326e-11,
+        "max_euclidean": 8.695650682004666e-11,
+        "p95_euclidean": 7.883270440609799e-11
+      },
+      "A_source_vs_C_native_raster_qualified_px": {
+        "points": 193,
+        "mean_vector": [
+          -1.2681188327771046e-06,
+          -2.2876161336717847e-06
+        ],
+        "max_abs_component": 2.546321411500685e-06,
+        "median_euclidean": 2.6540015209997787e-06,
+        "max_euclidean": 3.013066613952492e-06,
+        "p95_euclidean": 2.9260001883355905e-06
+      },
+      "B_observation_vs_saved_worldview_qualified_px": {
+        "points": 193,
+        "mean_vector": [
+          6.673809850086174e-07,
+          -1.8988732727280555e-06
+        ],
+        "max_abs_component": 2.1028685353030596e-06,
+        "median_euclidean": 2.038154282498654e-06,
+        "max_euclidean": 2.2437502951041256e-06,
+        "p95_euclidean": 2.1891401443353173e-06
+      },
+      "saved_raster_float64_vs_float32_qualified_px": {
+        "points": 193,
+        "mean_vector": [
+          -4.324401273150856e-06,
+          9.803563570062462e-07
+        ],
+        "max_abs_component": 3.030472916520921e-05,
+        "median_euclidean": 1.2326010614864953e-05,
+        "max_euclidean": 3.1403059748096835e-05,
+        "p95_euclidean": 2.2724329425911393e-05
+      },
+      "same_frame_srgb": {
+        "cached_source_vs_sourcePNG_at_A": {
+          "points": 193,
+          "mean_difference_rgb": [
+            1.1376516706807928e-08,
+            9.165912611234522e-09,
+            5.9185923249314535e-09
+          ],
+          "MAE_srgb": 2.4246575432422763e-08,
+          "max_abs_channel": 4.97167251367614e-07,
+          "p95_abs_channel": 6.33969803154333e-08
+        },
+        "sourcePNG_at_A_vs_observation_at_A": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.0003526902243766371,
+            0.000405960304808183,
+            0.00035193631736928055
+          ],
+          "MAE_srgb": 0.001990170842504352,
+          "max_abs_channel": 0.023929580103385528,
+          "p95_abs_channel": 0.005244907861653353
+        },
+        "sourcePNG_at_A_vs_observation_at_B": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.00035269022425873025,
+            0.00040596030468199374,
+            0.0003519363172401953
+          ],
+          "MAE_srgb": 0.00199017084261278,
+          "max_abs_channel": 0.023929580110187865,
+          "p95_abs_channel": 0.005244907864312221
+        },
+        "sourcePNG_at_A_vs_observation_at_C": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.0003526815894012515,
+            0.00040595067121165714,
+            0.00035192708918848075
+          ],
+          "MAE_srgb": 0.0019901811490617154,
+          "max_abs_channel": 0.02392991481426987,
+          "p95_abs_channel": 0.005245331872789589
+        },
+        "reference_vs_sourcePNG_at_A": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.010202542900789488,
+            0.010830156290237657,
+            0.011346084980278398
+          ],
+          "MAE_srgb": 0.011296004279247665,
+          "max_abs_channel": 0.03338674728966062,
+          "p95_abs_channel": 0.01813043908309097
+        },
+        "reference_vs_observation_at_B": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.01055523312504822,
+            0.011236116594919658,
+            0.01169802129751858
+          ],
+          "MAE_srgb": 0.011612383347531402,
+          "max_abs_channel": 0.03326551762150426,
+          "p95_abs_channel": 0.0192144317422415
+        },
+        "reference_vs_observation_at_C": {
+          "points": 193,
+          "mean_difference_rgb": [
+            0.010555224490190739,
+            0.011236106961449317,
+            0.011698012069466872
+          ],
+          "MAE_srgb": 0.011612373385049057,
+          "max_abs_channel": 0.033265139644175545,
+          "p95_abs_channel": 0.01921398311024898
+        }
+      },
+      "whole_image_same_pixel_sourcePNG_observation_srgb_MAE": 0.009512551266735383
+    },
+    {
+      "raw": 113,
+      "active_front_points": 14661,
+      "common_front": 14661,
+      "common_inframe": 14661,
+      "same_frame_qualified_points": 328,
+      "source_resolution_wh": [
+        480,
+        320
+      ],
+      "observation_resolution_wh": [
+        480,
+        320
+      ],
+      "raster_resolution_wh": [
+        480,
+        320
+      ],
+      "source_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observation_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "K_maxabs": 0.0,
+      "observation_model_to_camera_vs_saved_worldview_maxabs": 2.8169131582878038e-08,
+      "A_source_vs_B_observation_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -3.6449146075769885e-11,
+          6.2537841429587006e-12
+        ],
+        "max_abs_component": 1.262634441445698e-10,
+        "median_euclidean": 3.530595264431616e-11,
+        "max_euclidean": 1.271928061305766e-10,
+        "p95_euclidean": 7.011672582808629e-11
+      },
+      "A_source_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          3.7514371757602417e-07,
+          2.7331274117779372e-06
+        ],
+        "max_abs_component": 7.994804740008021e-06,
+        "median_euclidean": 3.3291632595741707e-06,
+        "max_euclidean": 9.210220011873928e-06,
+        "p95_euclidean": 5.385344850772135e-06
+      },
+      "B_observation_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          3.751801667220999e-07,
+          2.7331211579937942e-06
+        ],
+        "max_abs_component": 7.994909402952999e-06,
+        "median_euclidean": 3.329136923264509e-06,
+        "max_euclidean": 9.210306926209703e-06,
+        "p95_euclidean": 5.38530819191119e-06
+      },
+      "A_source_vs_B_observation_qualified_px": {
+        "points": 328,
+        "mean_vector": [
+          -7.026615603730001e-11,
+          1.0349834810324132e-11
+        ],
+        "max_abs_component": 1.262634441445698e-10,
+        "median_euclidean": 7.019769601508414e-11,
+        "max_euclidean": 1.271928061305766e-10,
+        "p95_euclidean": 1.0241707124444117e-10
+      },
+      "A_source_vs_C_native_raster_qualified_px": {
+        "points": 328,
+        "mean_vector": [
+          4.540850249763581e-06,
+          3.7989523684665885e-06
+        ],
+        "max_abs_component": 7.994804740008021e-06,
+        "median_euclidean": 5.651495138147701e-06,
+        "max_euclidean": 9.210220011873928e-06,
+        "p95_euclidean": 8.288506833790927e-06
+      },
+      "B_observation_vs_saved_worldview_qualified_px": {
+        "points": 328,
+        "mean_vector": [
+          4.139476682708775e-06,
+          1.4454153083104246e-07
+        ],
+        "max_abs_component": 7.35026603138067e-06,
+        "median_euclidean": 3.920110172983578e-06,
+        "max_euclidean": 7.351368023794046e-06,
+        "p95_euclidean": 6.5122763302196126e-06
+      },
+      "saved_raster_float64_vs_float32_qualified_px": {
+        "points": 328,
+        "mean_vector": [
+          -1.409824396650857e-06,
+          1.230291068067783e-06
+        ],
+        "max_abs_component": 3.764540338124789e-05,
+        "median_euclidean": 1.1336727131867888e-05,
+        "max_euclidean": 3.772912910185316e-05,
+        "p95_euclidean": 2.340713600927764e-05
+      },
+      "same_frame_srgb": {
+        "cached_source_vs_sourcePNG_at_A": {
+          "points": 328,
+          "mean_difference_rgb": [
+            4.156803805316085e-08,
+            4.1009337171531595e-08,
+            3.707032652017081e-08
+          ],
+          "MAE_srgb": 6.36949405187594e-08,
+          "max_abs_channel": 8.589866249408828e-07,
+          "p95_abs_channel": 3.2599381841191795e-07
+        },
+        "sourcePNG_at_A_vs_observation_at_A": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.0006041603947916991,
+            0.0006227254740727514,
+            0.0006008252389581928
+          ],
+          "MAE_srgb": 0.003973659138151261,
+          "max_abs_channel": 0.04481549967179793,
+          "p95_abs_channel": 0.01569131487642729
+        },
+        "sourcePNG_at_A_vs_observation_at_B": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.0006041603948472935,
+            0.0006227254741140065,
+            0.000600825239007363
+          ],
+          "MAE_srgb": 0.003973659138290141,
+          "max_abs_channel": 0.0448154996752661,
+          "p95_abs_channel": 0.015691314875866787
+        },
+        "sourcePNG_at_A_vs_observation_at_C": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.0006041537716416915,
+            0.0006227196867844114,
+            0.0006008182219019862
+          ],
+          "MAE_srgb": 0.003973646004716235,
+          "max_abs_channel": 0.044815495419241624,
+          "p95_abs_channel": 0.01569216544927362
+        },
+        "reference_vs_sourcePNG_at_A": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.006382037453148536,
+            0.007332301298180463,
+            0.007078045932856839
+          ],
+          "MAE_srgb": 0.010917835973324757,
+          "max_abs_channel": 0.0691954105077014,
+          "p95_abs_channel": 0.031390104885214966
+        },
+        "reference_vs_observation_at_B": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.006986197847995831,
+            0.007955026772294474,
+            0.007678871171864197
+          ],
+          "MAE_srgb": 0.012071880792246999,
+          "max_abs_channel": 0.11283151773612832,
+          "p95_abs_channel": 0.039548036093254704
+        },
+        "reference_vs_observation_at_C": {
+          "points": 328,
+          "mean_difference_rgb": [
+            0.006986191224790229,
+            0.007955020984964884,
+            0.00767886415475881
+          ],
+          "MAE_srgb": 0.012071848477736699,
+          "max_abs_channel": 0.11283148597233333,
+          "p95_abs_channel": 0.039547058213738176
+        }
+      },
+      "whole_image_same_pixel_sourcePNG_observation_srgb_MAE": 0.009504551537097563
+    },
+    {
+      "raw": 130,
+      "active_front_points": 14661,
+      "common_front": 14661,
+      "common_inframe": 14661,
+      "same_frame_qualified_points": 387,
+      "source_resolution_wh": [
+        480,
+        320
+      ],
+      "observation_resolution_wh": [
+        480,
+        320
+      ],
+      "raster_resolution_wh": [
+        480,
+        320
+      ],
+      "source_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observation_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "K_maxabs": 0.0,
+      "observation_model_to_camera_vs_saved_worldview_maxabs": 1.48033063585018e-08,
+      "A_source_vs_B_observation_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -9.701629885129774e-12,
+          -1.8123826791928916e-12
+        ],
+        "max_abs_component": 6.569678134837886e-11,
+        "median_euclidean": 1.1058200132224653e-11,
+        "max_euclidean": 6.570814781929243e-11,
+        "p95_euclidean": 2.9599023743266104e-11
+      },
+      "A_source_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -6.680563530545456e-07,
+          9.700981568315858e-08
+        ],
+        "max_abs_component": 1.5250850680104122e-05,
+        "median_euclidean": 3.5612577936508294e-06,
+        "max_euclidean": 1.5269266764305123e-05,
+        "p95_euclidean": 7.94791477830431e-06
+      },
+      "B_observation_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -6.680466514246605e-07,
+          9.701162806583778e-08
+        ],
+        "max_abs_component": 1.5250825537549417e-05,
+        "median_euclidean": 3.5612554036936626e-06,
+        "max_euclidean": 1.5269241299019163e-05,
+        "p95_euclidean": 7.947924369299222e-06
+      },
+      "A_source_vs_B_observation_qualified_px": {
+        "points": 387,
+        "mean_vector": [
+          -1.0513094844863912e-11,
+          -1.7967367473251526e-12
+        ],
+        "max_abs_component": 4.615685611497611e-11,
+        "median_euclidean": 1.2676496616931024e-11,
+        "max_euclidean": 4.6621454706437784e-11,
+        "p95_euclidean": 3.481245625081051e-11
+      },
+      "A_source_vs_C_native_raster_qualified_px": {
+        "points": 387,
+        "mean_vector": [
+          -3.490778089143267e-07,
+          9.807471392918446e-08
+        ],
+        "max_abs_component": 8.548252310447424e-06,
+        "median_euclidean": 5.595597868686694e-06,
+        "max_euclidean": 8.567770498211362e-06,
+        "p95_euclidean": 7.611704861928314e-06
+      },
+      "B_observation_vs_saved_worldview_qualified_px": {
+        "points": 387,
+        "mean_vector": [
+          -3.388414143927541e-08,
+          -1.4244602511238324e-06
+        ],
+        "max_abs_component": 1.6982319550606917e-06,
+        "median_euclidean": 1.4434788423512543e-06,
+        "max_euclidean": 1.7125754945672105e-06,
+        "p95_euclidean": 1.6612877637650154e-06
+      },
+      "saved_raster_float64_vs_float32_qualified_px": {
+        "points": 387,
+        "mean_vector": [
+          8.650174702742021e-07,
+          -2.6512591253736965e-07
+        ],
+        "max_abs_component": 3.1545040428682114e-05,
+        "median_euclidean": 1.0876447577986247e-05,
+        "max_euclidean": 3.4394793236056575e-05,
+        "p95_euclidean": 2.270008806705074e-05
+      },
+      "same_frame_srgb": {
+        "cached_source_vs_sourcePNG_at_A": {
+          "points": 387,
+          "mean_difference_rgb": [
+            4.100259850424975e-09,
+            1.2440670371563467e-09,
+            -1.6634698717540626e-09
+          ],
+          "MAE_srgb": 2.8277126006072538e-08,
+          "max_abs_channel": 4.6872668224562375e-07,
+          "p95_abs_channel": 1.2463917498095611e-07
+        },
+        "sourcePNG_at_A_vs_observation_at_A": {
+          "points": 387,
+          "mean_difference_rgb": [
+            0.0003559081367390235,
+            0.00035510571537476527,
+            0.00040560994905943583
+          ],
+          "MAE_srgb": 0.0029375555525532984,
+          "max_abs_channel": 0.022253520826910678,
+          "p95_abs_channel": 0.009368548620901362
+        },
+        "sourcePNG_at_A_vs_observation_at_B": {
+          "points": 387,
+          "mean_difference_rgb": [
+            0.00035590813674504703,
+            0.00035510571538908015,
+            0.00040560994907490696
+          ],
+          "MAE_srgb": 0.0029375555525598483,
+          "max_abs_channel": 0.02225352082672849,
+          "p95_abs_channel": 0.009368548620816652
+        },
+        "sourcePNG_at_A_vs_observation_at_C": {
+          "points": 387,
+          "mean_difference_rgb": [
+            0.0003559021023667619,
+            0.00035510141576114234,
+            0.00040560617642517214
+          ],
+          "MAE_srgb": 0.0029375669830746425,
+          "max_abs_channel": 0.022253676225108432,
+          "p95_abs_channel": 0.00936857477295333
+        },
+        "reference_vs_sourcePNG_at_A": {
+          "points": 387,
+          "mean_difference_rgb": [
+            -0.00512524328458282,
+            -0.00529130267889666,
+            -0.005688979074404874
+          ],
+          "MAE_srgb": 0.011220229687528182,
+          "max_abs_channel": 0.07530278287922931,
+          "p95_abs_channel": 0.046032587588647145
+        },
+        "reference_vs_observation_at_B": {
+          "points": 387,
+          "mean_difference_rgb": [
+            -0.004769335147837771,
+            -0.004936196963507577,
+            -0.0052833691253299665
+          ],
+          "MAE_srgb": 0.01172960231957544,
+          "max_abs_channel": 0.08337690297712674,
+          "p95_abs_channel": 0.04397858627929252
+        },
+        "reference_vs_observation_at_C": {
+          "points": 387,
+          "mean_difference_rgb": [
+            -0.004769341182216059,
+            -0.00493620126313552,
+            -0.005283372897979703
+          ],
+          "MAE_srgb": 0.011729594812326376,
+          "max_abs_channel": 0.08337653045260501,
+          "p95_abs_channel": 0.043978601126131556
+        }
+      },
+      "whole_image_same_pixel_sourcePNG_observation_srgb_MAE": 0.009040346056492567
+    },
+    {
+      "raw": 137,
+      "active_front_points": 14661,
+      "common_front": 14661,
+      "common_inframe": 14661,
+      "same_frame_qualified_points": 1231,
+      "source_resolution_wh": [
+        480,
+        320
+      ],
+      "observation_resolution_wh": [
+        480,
+        320
+      ],
+      "raster_resolution_wh": [
+        480,
+        320
+      ],
+      "source_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observation_K": [
+        [
+          515.035648278,
+          0.0,
+          243.8991264286
+        ],
+        [
+          0.0,
+          515.035648278,
+          157.713333711125
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "K_maxabs": 0.0,
+      "observation_model_to_camera_vs_saved_worldview_maxabs": 2.6982051926083273e-08,
+      "A_source_vs_B_observation_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -2.3571086650853054e-11,
+          -4.767947732438096e-12
+        ],
+        "max_abs_component": 8.196820999728516e-11,
+        "median_euclidean": 2.376656583705798e-11,
+        "max_euclidean": 8.376992092207489e-11,
+        "p95_euclidean": 4.7510829885713205e-11
+      },
+      "A_source_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -1.5416180551868476e-06,
+          3.664904250369751e-06
+        ],
+        "max_abs_component": 2.5082378643404013e-05,
+        "median_euclidean": 6.614529480785547e-06,
+        "max_euclidean": 2.5797400824610994e-05,
+        "p95_euclidean": 1.3525006169195153e-05
+      },
+      "B_observation_vs_C_native_raster_common_inframe_px": {
+        "points": 14661,
+        "mean_vector": [
+          -1.5415944841001967e-06,
+          3.6649090183174834e-06
+        ],
+        "max_abs_component": 2.5082361689854338e-05,
+        "median_euclidean": 6.61453707932486e-06,
+        "max_euclidean": 2.5797387716716626e-05,
+        "p95_euclidean": 1.352499444997124e-05
+      },
+      "A_source_vs_B_observation_qualified_px": {
+        "points": 1231,
+        "mean_vector": [
+          -2.6358936335186114e-11,
+          -6.398694192966829e-12
+        ],
+        "max_abs_component": 7.565859050373547e-11,
+        "median_euclidean": 2.685087505073578e-11,
+        "max_euclidean": 7.616660196291766e-11,
+        "p95_euclidean": 5.5228451261230885e-11
+      },
+      "A_source_vs_C_native_raster_qualified_px": {
+        "points": 1231,
+        "mean_vector": [
+          -4.154473766103078e-06,
+          4.510354905614457e-06
+        ],
+        "max_abs_component": 1.9270744303412357e-05,
+        "median_euclidean": 1.0748171010684733e-05,
+        "max_euclidean": 2.0027343406880372e-05,
+        "p95_euclidean": 1.768905672253832e-05
+      },
+      "B_observation_vs_saved_worldview_qualified_px": {
+        "points": 1231,
+        "mean_vector": [
+          -9.163766356187193e-07,
+          1.7894631439001025e-06
+        ],
+        "max_abs_component": 4.2435209337554625e-06,
+        "median_euclidean": 2.756129257402645e-06,
+        "max_euclidean": 4.874360515292283e-06,
+        "p95_euclidean": 4.347846409230116e-06
+      },
+      "saved_raster_float64_vs_float32_qualified_px": {
+        "points": 1231,
+        "mean_vector": [
+          -3.7583036664521433e-06,
+          -4.3421676977007377e-07
+        ],
+        "max_abs_component": 3.9398471585627703e-05,
+        "median_euclidean": 1.2222110650285629e-05,
+        "max_euclidean": 4.7190595916342924e-05,
+        "p95_euclidean": 2.6226719773480705e-05
+      },
+      "same_frame_srgb": {
+        "cached_source_vs_sourcePNG_at_A": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            1.675047864512081e-08,
+            1.3181455548969051e-08,
+            1.0341992766278654e-08
+          ],
+          "MAE_srgb": 3.896034053527905e-08,
+          "max_abs_channel": 7.969131928797779e-07,
+          "p95_abs_channel": 1.676695767782731e-07
+        },
+        "sourcePNG_at_A_vs_observation_at_A": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            0.00021272905695120844,
+            0.0001471325141487201,
+            0.00011217890973297783
+          ],
+          "MAE_srgb": 0.003303898218643911,
+          "max_abs_channel": 0.04632991261271363,
+          "p95_abs_channel": 0.012038544334341187
+        },
+        "sourcePNG_at_A_vs_observation_at_B": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            0.00021272905695481496,
+            0.00014713251415262647,
+            0.00011217890973668936
+          ],
+          "MAE_srgb": 0.0033038982185827014,
+          "max_abs_channel": 0.046329912612554036,
+          "p95_abs_channel": 0.012038544333804206
+        },
+        "sourcePNG_at_A_vs_observation_at_C": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            0.00021272665483133566,
+            0.00014712914687672323,
+            0.00011217224747058528
+          ],
+          "MAE_srgb": 0.003303894625465381,
+          "max_abs_channel": 0.04632994911613009,
+          "p95_abs_channel": 0.012038769641683293
+        },
+        "reference_vs_sourcePNG_at_A": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            -0.0023300480715006157,
+            -0.0018159235698752515,
+            -0.002392070304532972
+          ],
+          "MAE_srgb": 0.014919810877847921,
+          "max_abs_channel": 0.17183873032868063,
+          "p95_abs_channel": 0.04693195814842311
+        },
+        "reference_vs_observation_at_B": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            -0.0021173190145458032,
+            -0.001668791055722626,
+            -0.0022798913947962825
+          ],
+          "MAE_srgb": 0.015835739118850643,
+          "max_abs_channel": 0.16421331258082306,
+          "p95_abs_channel": 0.04767003585360698
+        },
+        "reference_vs_observation_at_C": {
+          "points": 1231,
+          "mean_difference_rgb": [
+            -0.002117321416669282,
+            -0.0016687944229985257,
+            -0.0022798980570623868
+          ],
+          "MAE_srgb": 0.015835725768892944,
+          "max_abs_channel": 0.16421332434356806,
+          "p95_abs_channel": 0.04766997911165076
+        }
+      },
+      "whole_image_same_pixel_sourcePNG_observation_srgb_MAE": 0.008834148819660569
+    }
+  ],
+  "GPU_used": false,
+  "torch_imported": false,
+  "checkpoint_loads": 0,
+  "optimizer_updates": 0,
+  "seconds": 0.9980897903442383
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "scene008.road_world_patch_benchmark.v2",
+  "created_at": "2026-11-07",
+  "status": "CPU_PREPARATION_NOT_COMPLETION_RESULT",
+  "integration_reference": "V44 frozen C2/RGBA/SurfaceLOD; old M2 is provenance only",
+  "strict_benchmark_is_separate_from_R0_V44_scene": true,
+  "input_scope": {
+    "raw_ids": [0, 198],
+    "frame_count": 199,
+    "declared_rgb_cameras": [{"name": "FRONT", "enum": 1}],
+    "other_camera_RGB": "excluded and unaudited, never represented as all-five-camera blinding",
+    "LiDAR": "All five original sensors/two returns; rebuild from raw before point filtering. No old pooled/interpolated geometry is estimator input.",
+    "sensor_model": "Original FRONT Brown-Conrady intrinsics and actual pose. Conservative finite-prism interval projection plus pixel padding; rolling-shutter motion bound is recorded but not an independently validated physical calibration.",
+    "claim_limit": "FRONT-only conditional benchmark under declared sensor bounds, not proof of all-sensor never-visible road. Full physical strictness remains uncertified until timing/distortion and an external input-isolation audit pass."
+  },
+  "tracks": {
+    "appearance_blind": {
+      "RGB": "Mask target+guard in every declared raw JPEG before resize, statistics, feature extraction or candidate generation.",
+      "geometry": "Original XYZ-only LiDAR may remain in target; no intensity, elongation, point RGB, target markings or target-fitted appearance.",
+      "claim": "Appearance completion with measured geometry, not joint completion."
+    },
+    "geometry_RGB_blind": {
+      "RGB": "Same masked RGB and validity as appearance_blind.",
+      "geometry": "Remove every raw return within the context-height-interval target+guard prism before any fusion, nearest-pixel selection, ground labeling, plane fit or encoder.",
+      "claim": "Joint geometry/material completion from legal context; must not load original surface or scene checkpoints."
+    }
+  },
+  "selection": {
+    "unit": "One persistent finite anchor-local XY patch with explicit coordinate_anchor to world metres; all views share its identity.",
+    "sizes_m": [0.5, 1.0, 2.0],
+    "patches_per_size_and_split": 1,
+    "splits": ["validation", "sealed_test"],
+    "seed": "scene008-R1-FRONT-geometry-only-20261107-v1",
+    "candidate_rule": "Regular geometry grid; measured support and >=3 direct real-return FRONT witnesses recomputed from XYZ/cameras/annotation guards without RGB/quality gates; spatial SHA256 ranking. Never load old source_valid (it includes full-image sharpness), source_rgb, color stability, reconstruction loss or completion output for selection.",
+    "overlap_rule": "Target+guard rectangles cannot overlap between any selected patches; near-overlapping alternatives are excluded rather than split across arms.",
+    "material_strata": "Marking/asphalt labels are evaluator-only and currently unannotated. No claim that all marking classes have reference.",
+    "slope_reference": "Measured target heights may support a sealed local slope diagnostic; fitted normals/slopes are reference proxies, not independent ground-truth normals.",
+    "target_GT_not_used_for_settings": true
+  },
+  "masking": {
+    "guard_m": 0.75,
+    "guard_budget": {"geometric_calibration_m": 0.25, "max_estimator_primitive_effective_radius_m": 0.30, "extra_context_margin_m": 0.20},
+    "native_pixel_padding": 16,
+    "height_prism": "Context-only z range outside ALL selected target+guard rectangles, within 8m of each center, expanded by 0.75m. No exact target height or slope enters mask shape.",
+    "missing_pixel_semantics": "Explicit valid=false; neutral fill is not negative evidence, ground truth or a road observation.",
+    "derived_data": "Create from blinded sources only; same patch/guard/source/mask hashes are cache keys. Global encoders operate after masking.",
+    "finite_support": "Any new Gaussian, surfel, interpolation kernel or filter whose effective support crosses target+guard is tainted unless rebuilt from legal context. Bound/radius must be declared."
+  },
+  "forbidden_estimator_dependencies": [
+    "unblinded original images or thumbnails", "old full199 source_rgb/source_valid appearance caches", "full199 initialization or fitted target geometry in geometry_RGB_blind", "native10K checkpoints", "road1K checkpoints", "environment map", "roadmaps or atlases", "global/coarse/fine color fields", "SH tables", "same-scene embeddings/features", "V44 complete scene or old render outputs", "sealed evaluator references or target marking labels"
+  ],
+  "sealed_evaluation": {
+    "store": "evaluator_only/ outside public/inputs/; estimator must be launched with only explicit public inputs mounted or copied to an isolated work directory",
+    "isolation_limit": "Directory separation and allowlist auditing are implemented; this is not an OS-level secrecy guarantee. An estimator run must separately audit its process/filesystem inputs.",
+    "evaluator": "Separate evaluator invocation after candidate/seed/settings/artifact hashes are frozen; sealed-test RGB, height, markings and errors cannot choose candidates, splits or settings.",
+    "references": "Real measured geometry and qualified FRONT radiance witnesses; stable radiance is a proxy, not independently measured unshadowed albedo.",
+    "metrics": ["per-patch macro and pixel-weighted linear-RGB MAE/sRGB PSNR", "measured height/depth MAE and p90/p99/max", "coverage and unresolved area", "world seam and temporal/reprojection consistency", "marking centerline/width/connectivity only when sealed labels exist"],
+    "denominators": ["target area/cells", "measured geometry support", "qualified witness cells", "scored pixels/pixel-frames", "masked pixels per raw/camera", "removed LiDAR counts", "unresolved reference area"],
+    "baseline_arms": ["legal-context plane/interpolation", "legal-context spline/material continuation", "same legal-context shared prior"],
+    "no_best_of_K_on_test_GT": true,
+    "unseen_scene_generalization_claim": false
+  },
+  "R0_protection": {
+    "domain_source": "Original V44 observations, original a6_probe_reference, fixed raw137 ROI; never current or candidate predictions.",
+    "raws": [89, 137],
+    "a6": "Original visible[0] RGB and depth_valid[0] measured depth; component alpha*T and tails, same identity in both states.",
+    "a37": "Original visible[1] RGB and depth_valid[1] where present in keep; deleted contribution exactly zero in delete.",
+    "road_keep": "Original obs.road uses original real RGB.",
+    "road_delete_proxy": "obs.road_edit AND original ground_beneath_a37_proxy depth>0; proxy target is labeled explicitly and never hidden GT.",
+    "protected": "obs.protect minus original a6/a37 visible masks; retain outside/seam tails separately.",
+    "verified_new_road": "Freeze measurement-only geometry and unoccluded verified support before R0 candidate render; do not derive acceptance domain from candidate alpha.",
+    "coverage_gates": {"isolated_road_alpha_min": 0.98, "joint_environment_residual_max": 0.02},
+    "preservation_gates": "Report signed changes, weighted mean and p90/p99/max; no road aggregate offsets foreground regression. Quality acceptance remains separate from engineering pass."
+  },
+  "compute": {"CPU_only_preparation": true, "GPU_used": false, "training_updates": 0, "power_operations": 0, "long_run_smoke_required_if_later_authorized": "For an experiment of about one hour or more, about ten minutes in the real GPU environment with save/eval/full resume/next stage, separately accounted."}
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scene008.road_patch_manifest.v1",
+  "type": "object",
+  "required": ["schema", "selection_seed", "selection_reads_RGB", "coordinate_anchor", "declared_cameras", "raw_ids", "guard_m", "patches"],
+  "properties": {
+    "schema": {"const": "scene008.road_patch_manifest.v1"},
+    "selection_reads_RGB": {"const": false},
+    "declared_cameras": {"const": [1]},
+    "raw_ids": {"type": "array", "minItems": 199, "maxItems": 199, "items": {"type": "integer", "minimum": 0, "maximum": 198}, "uniqueItems": true},
+    "guard_m": {"type": "number", "minimum": 0.75},
+    "patches": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["patch_id", "split", "size_m", "xy_bounds_local_m", "guard_xy_bounds_local_m", "context_z_interval_m", "world_target_corners_m", "mask_height_uses_target_geometry"], "properties": {"split": {"enum": ["validation", "sealed_test"]}, "size_m": {"enum": [0.5, 1.0, 2.0]}, "mask_height_uses_target_geometry": {"const": false}}}}
+  },
+  "additionalProperties": true
+}

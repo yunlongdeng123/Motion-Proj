@@ -1,0 +1,307 @@
+{
+  "status": "RESEARCH_CANDIDATE_NOT_ADOPTED",
+  "asset": "new_road_canonical_candidate.npz",
+  "sha256": "7db38a9ee69823e4a5fd4fbc78d49a5423cad9a146ca952fa51b9a6b9dc387c8",
+  "arrays": {
+    "keys": {
+      "shape": [
+        10098,
+        2
+      ],
+      "dtype": "int64"
+    },
+    "local_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "world_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "model_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "normal_local": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "normal_world": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "gaussian_sigma_m": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "geometry_measured_support": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "actual_return_support_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "support_pool_ids": {
+      "shape": [
+        10098,
+        8
+      ],
+      "dtype": "int32"
+    },
+    "support_distances_m": {
+      "shape": [
+        10098,
+        8
+      ],
+      "dtype": "float32"
+    },
+    "support_height_residual_m": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "geometry_confidence": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "candidate_origin": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "active": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "real_active": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "reference_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "reference_linear": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "rgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "opacity": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "opacity_logit": {
+      "shape": [
+        10098,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "original_source_proxy_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "original_source_proxy_linear": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "source_rgb": {
+      "shape": [
+        199,
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "source_valid": {
+      "shape": [
+        199,
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "source_agree": {
+      "shape": [
+        199,
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "source_raw": {
+      "shape": [
+        199
+      ],
+      "dtype": "int16"
+    },
+    "source_valid_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "agree_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "source_valid_count49": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "source_photometric_confidence": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "original_appearance_provenance": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "appearance_provenance": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "source_parent_cell_ids": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int64"
+    },
+    "material_parent_extension_local_ids": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int64"
+    },
+    "coordinate_anchor": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "world_to_model": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "meter_to_model": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "cell_m": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "strip_lateral_bounds_m": {
+      "shape": [
+        2
+      ],
+      "dtype": "float64"
+    },
+    "source_asset_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "material_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "material_role": {
+      "shape": [],
+      "dtype": "<U49"
+    },
+    "candidate_status": {
+      "shape": [],
+      "dtype": "<U30"
+    },
+    "material_eligible": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "material_observed_mass_by_state": {
+      "shape": [
+        2,
+        10098
+      ],
+      "dtype": "float64"
+    },
+    "material_observed_frame_count_by_state": {
+      "shape": [
+        2,
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "parent_material_metadata_json": {
+      "shape": [],
+      "dtype": "<U501"
+    }
+  },
+  "appearance_2": "fitted real-visible-road material, not independently observed hidden RGB",
+  "source_rgb_role": "unaltered geometrically-qualified original real FRONT observations; invalid samples remain unavailable NaN",
+  "geometry_role": "LiDAR-supported interpolated road surface, not per-cell independent LiDAR measurements"
+}

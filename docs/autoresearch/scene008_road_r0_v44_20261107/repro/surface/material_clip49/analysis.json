@@ -1,0 +1,600 @@
+{
+  "schema": "R0_CURRENT49_REAL_MATERIAL_ANALYSIS_V1",
+  "input_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/frontfill_v2/road_reference_199.npz",
+  "input_sha256": "6112be03108b5a9b1a6deb2f605ef850dcd8ba5018346fa822993177815807a2",
+  "source_raws": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "rule": "Unchanged linear q75 luma cluster[-.025,+.06], channel median, maxRGB agreement<.035, >=3 agreeing raws, span>=6, linear channels(.012,.88)",
+  "RGB_encoding": "source_rgb is encoded sRGB; exactly once sRGB->linear and inverse conversion",
+  "geometry_active_and_original_noncolour_arrays_unchanged": true,
+  "cohorts": {
+    "all_candidates": {
+      "cells": 53082,
+      "qualified_current49_records": 238702,
+      "current49_source_count": {
+        "zero": 40131,
+        "one": 850,
+        "two": 630,
+        "ge3": 11471
+      },
+      "current49_stable_cells": 9457,
+      "old199_minus_current49_observed": {
+        "records": 238702,
+        "signed_mean_RGB": [
+          0.0016005017096176744,
+          0.001606828416697681,
+          0.0010770433582365513
+        ],
+        "absolute_RGB_MAE": 0.013403779827058315,
+        "abs_channel_p95": 0.023228079080581665
+      },
+      "candidate_minus_current49_observed": {
+        "records": 238702,
+        "signed_mean_RGB": [
+          0.0014332110295072198,
+          0.0014295807341113687,
+          0.0008838408975861967
+        ],
+        "absolute_RGB_MAE": 0.013082114048302174,
+        "abs_channel_p95": 0.022585958242416382
+      },
+      "candidate_minus_old199": {
+        "records": 53082,
+        "signed_mean_RGB": [
+          1.3817206308885943e-05,
+          1.205774060508702e-05,
+          1.3484012015396729e-05
+        ],
+        "absolute_RGB_MAE": 0.0002259567700093612,
+        "abs_channel_p95": 0.0
+      }
+    },
+    "all_active": {
+      "cells": 28149,
+      "qualified_current49_records": 235638,
+      "current49_source_count": {
+        "zero": 15935,
+        "one": 738,
+        "two": 546,
+        "ge3": 10930
+      },
+      "current49_stable_cells": 9453,
+      "old199_minus_current49_observed": {
+        "records": 235638,
+        "signed_mean_RGB": [
+          0.005471013952046633,
+          0.005871590226888657,
+          0.005886086728423834
+        ],
+        "absolute_RGB_MAE": 0.00928188394755125,
+        "abs_channel_p95": 0.02040799558162689
+      },
+      "candidate_minus_current49_observed": {
+        "records": 235638,
+        "signed_mean_RGB": [
+          0.00530155748128891,
+          0.005692021455615759,
+          0.005690349265933037
+        ],
+        "absolute_RGB_MAE": 0.008956034667789936,
+        "abs_channel_p95": 0.019918099045753472
+      },
+      "candidate_minus_old199": {
+        "records": 28149,
+        "signed_mean_RGB": [
+          2.6055808120872825e-05,
+          2.273789323226083e-05,
+          2.5427487344131805e-05
+        ],
+        "absolute_RGB_MAE": 0.0004260981222614646,
+        "abs_channel_p95": 0.0
+      }
+    },
+    "active_front": {
+      "cells": 14661,
+      "qualified_current49_records": 16413,
+      "current49_source_count": {
+        "zero": 12666,
+        "one": 298,
+        "two": 215,
+        "ge3": 1482
+      },
+      "current49_stable_cells": 1194,
+      "old199_minus_current49_observed": {
+        "records": 16413,
+        "signed_mean_RGB": [
+          0.0007784828194417059,
+          0.0009509545634500682,
+          0.0009125345968641341
+        ],
+        "absolute_RGB_MAE": 0.011202199384570122,
+        "abs_channel_p95": 0.03432775437831878
+      },
+      "candidate_minus_current49_observed": {
+        "records": 16413,
+        "signed_mean_RGB": [
+          -0.0016544407699257135,
+          -0.0016265445156022906,
+          -0.0018971686949953437
+        ],
+        "absolute_RGB_MAE": 0.0065240091644227505,
+        "abs_channel_p95": 0.026292681694030755
+      },
+      "candidate_minus_old199": {
+        "records": 14661,
+        "signed_mean_RGB": [
+          5.002693796996027e-05,
+          4.3656571506289765e-05,
+          4.8820566007634625e-05
+        ],
+        "absolute_RGB_MAE": 0.0008181050070561469,
+        "abs_channel_p95": 0.005663588643074037
+      }
+    },
+    "front_current49_override": {
+      "cells": 1194,
+      "qualified_current49_records": 14569,
+      "current49_source_count": {
+        "zero": 0,
+        "one": 0,
+        "two": 0,
+        "ge3": 1194
+      },
+      "current49_stable_cells": 1194,
+      "old199_minus_current49_observed": {
+        "records": 14569,
+        "signed_mean_RGB": [
+          0.002742812968790531,
+          0.0029355979058891535,
+          0.003094654530286789
+        ],
+        "absolute_RGB_MAE": 0.009952658787369728,
+        "abs_channel_p95": 0.024795818328857404
+      },
+      "candidate_minus_current49_observed": {
+        "records": 14569,
+        "signed_mean_RGB": [
+          1.9537530988600338e-06,
+          3.187191396136768e-05,
+          -7.067517435643822e-05
+        ],
+        "absolute_RGB_MAE": 0.004682350903749466,
+        "abs_channel_p95": 0.015014499425888055
+      },
+      "candidate_minus_old199": {
+        "records": 1194,
+        "signed_mean_RGB": [
+          0.0006142754573374987,
+          0.0005360544309951365,
+          0.0005994625971652567
+        ],
+        "absolute_RGB_MAE": 0.010045425035059452,
+        "abs_channel_p95": 0.033905792236328114
+      }
+    },
+    "front_full199_fallback": {
+      "cells": 13467,
+      "qualified_current49_records": 1844,
+      "current49_source_count": {
+        "zero": 12666,
+        "one": 298,
+        "two": 215,
+        "ge3": 288
+      },
+      "current49_stable_cells": 0,
+      "old199_minus_current49_observed": {
+        "records": 1844,
+        "signed_mean_RGB": [
+          -0.014741215854883194,
+          -0.014729288406670094,
+          -0.016327854245901108
+        ],
+        "absolute_RGB_MAE": 0.021074514836072922,
+        "abs_channel_p95": 0.053419068455696106
+      },
+      "candidate_minus_current49_observed": {
+        "records": 1844,
+        "signed_mean_RGB": [
+          -0.014741215854883194,
+          -0.014729288406670094,
+          -0.016327854245901108
+        ],
+        "absolute_RGB_MAE": 0.021074514836072922,
+        "abs_channel_p95": 0.053419068455696106
+      },
+      "candidate_minus_old199": {
+        "records": 13467,
+        "signed_mean_RGB": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "absolute_RGB_MAE": 0.0,
+        "abs_channel_p95": 0.0
+      }
+    },
+    "active_front_added_v2": {
+      "cells": 6108,
+      "qualified_current49_records": 3172,
+      "current49_source_count": {
+        "zero": 5602,
+        "one": 76,
+        "two": 59,
+        "ge3": 371
+      },
+      "current49_stable_cells": 265,
+      "old199_minus_current49_observed": {
+        "records": 3172,
+        "signed_mean_RGB": [
+          -0.00624709902331233,
+          -0.00633641192689538,
+          -0.007404121570289135
+        ],
+        "absolute_RGB_MAE": 0.013553468510508537,
+        "abs_channel_p95": 0.04070550203323364
+      },
+      "candidate_minus_current49_observed": {
+        "records": 3172,
+        "signed_mean_RGB": [
+          -0.002736500231549144,
+          -0.0026140979025512934,
+          -0.002946126740425825
+        ],
+        "absolute_RGB_MAE": 0.007229532580822706,
+        "abs_channel_p95": 0.031991444528102875
+      },
+      "candidate_minus_old199": {
+        "records": 6108,
+        "signed_mean_RGB": [
+          0.00018278660718351603,
+          0.0001897333568194881,
+          0.00023975504154805094
+        ],
+        "absolute_RGB_MAE": 0.0005564090679399669,
+        "abs_channel_p95": 0.0
+      }
+    }
+  },
+  "pilot_posthoc_cohorts": [
+    {
+      "raw": 105,
+      "pixels": 236,
+      "domain": "Saved V2 extension alphaT>.9 intersect fixed original observed road; posthoc diagnostic only",
+      "GT_mean": [
+        0.39529305696487427,
+        0.3934199810028076,
+        0.414955198764801
+      ],
+      "V2_render_mean": [
+        0.34000056982040405,
+        0.34575924277305603,
+        0.37195777893066406
+      ],
+      "V44_RGB_MAE": 0.006163334473967552,
+      "V2_RGB_MAE": 0.05427524447441101,
+      "nearest_projected_cell_distance_px": {
+        "count": 236,
+        "mean": 0.42726266927208045,
+        "p50": 0.4162408608025142,
+        "p95": 0.8048204034827413,
+        "maximum": 1.0460896727233135
+      },
+      "nearest_cells_unique": 226,
+      "nearest_cell_current49_stable_pixel_fraction": 0.326271186440678,
+      "nearest_cell_current_raw_qualified_fraction": 0.0211864406779661,
+      "nearest_cell_old_reference_mean": [
+        0.3654754161834717,
+        0.3630097806453705,
+        0.3814663589000702
+      ],
+      "nearest_cell_candidate_mean": [
+        0.3673325181007385,
+        0.36442831158638,
+        0.382987380027771
+      ],
+      "nearest_cell_candidate_delta": {
+        "records": 236,
+        "signed_mean_RGB": [
+          0.0018571207765489817,
+          0.001418544678017497,
+          0.001521076774224639
+        ],
+        "absolute_RGB_MAE": 0.001953731058165431,
+        "abs_channel_p95": 0.00978671610355376
+      },
+      "nearest_cell_current_source_count": {
+        "count": 236,
+        "mean": 4.686440677966102,
+        "p50": 2.0,
+        "p95": 17.0,
+        "maximum": 27.0
+      },
+      "nearest_cell_current_raw_colour_mean": [
+        0.3637697100639343,
+        0.4024348258972168,
+        0.4502171576023102
+      ],
+      "nearest_cell_current_raw_cache_minus_ref": {
+        "records": 5,
+        "signed_mean_RGB": [
+          -0.003258615732192993,
+          0.0025785029865801334,
+          -0.0014098703395575285
+        ],
+        "absolute_RGB_MAE": 0.004453168250620365,
+        "abs_channel_p95": 0.012118029594421384
+      },
+      "nearest_cell_candidate_is_not_rendered_result": true
+    },
+    {
+      "raw": 113,
+      "pixels": 185,
+      "domain": "Saved V2 extension alphaT>.9 intersect fixed original observed road; posthoc diagnostic only",
+      "GT_mean": [
+        0.3938523232936859,
+        0.39356133341789246,
+        0.4163808822631836
+      ],
+      "V2_render_mean": [
+        0.33664578199386597,
+        0.3450582027435303,
+        0.37370678782463074
+      ],
+      "V44_RGB_MAE": 0.0065374840050935745,
+      "V2_RGB_MAE": 0.053149495273828506,
+      "nearest_projected_cell_distance_px": {
+        "count": 185,
+        "mean": 0.4503500190544207,
+        "p50": 0.4695421612552635,
+        "p95": 0.7868824454069705,
+        "maximum": 1.263301368611568
+      },
+      "nearest_cells_unique": 169,
+      "nearest_cell_current49_stable_pixel_fraction": 0.372972972972973,
+      "nearest_cell_current_raw_qualified_fraction": 0.0972972972972973,
+      "nearest_cell_old_reference_mean": [
+        0.3659760355949402,
+        0.36611250042915344,
+        0.38672930002212524
+      ],
+      "nearest_cell_candidate_mean": [
+        0.3671712875366211,
+        0.3668895959854126,
+        0.3878069519996643
+      ],
+      "nearest_cell_candidate_delta": {
+        "records": 185,
+        "signed_mean_RGB": [
+          0.0011950954794883728,
+          0.0007771499804221094,
+          0.001077544642612338
+        ],
+        "absolute_RGB_MAE": 0.0019175406778231263,
+        "abs_channel_p95": 0.01032799184322357
+      },
+      "nearest_cell_current_source_count": {
+        "count": 185,
+        "mean": 5.735135135135135,
+        "p50": 2.0,
+        "p95": 18.799999999999983,
+        "maximum": 33.0
+      },
+      "nearest_cell_current_raw_colour_mean": [
+        0.36757370829582214,
+        0.397182434797287,
+        0.45124879479408264
+      ],
+      "nearest_cell_current_raw_cache_minus_ref": {
+        "records": 18,
+        "signed_mean_RGB": [
+          0.002620380837470293,
+          0.00018969674420077354,
+          0.004096322692930698
+        ],
+        "absolute_RGB_MAE": 0.007416843436658382,
+        "abs_channel_p95": 0.012315323948860169
+      },
+      "nearest_cell_candidate_is_not_rendered_result": true
+    },
+    {
+      "raw": 130,
+      "pixels": 256,
+      "domain": "Saved V2 extension alphaT>.9 intersect fixed original observed road; posthoc diagnostic only",
+      "GT_mean": [
+        0.3946767747402191,
+        0.3903608024120331,
+        0.4087621867656708
+      ],
+      "V2_render_mean": [
+        0.3415055274963379,
+        0.34664255380630493,
+        0.3722560703754425
+      ],
+      "V44_RGB_MAE": 0.007404400501400232,
+      "V2_RGB_MAE": 0.05039920285344124,
+      "nearest_projected_cell_distance_px": {
+        "count": 256,
+        "mean": 0.47980696441525417,
+        "p50": 0.47258887042470177,
+        "p95": 0.8637353113846042,
+        "maximum": 1.2954701882028787
+      },
+      "nearest_cells_unique": 233,
+      "nearest_cell_current49_stable_pixel_fraction": 0.37109375,
+      "nearest_cell_current_raw_qualified_fraction": 0.25390625,
+      "nearest_cell_old_reference_mean": [
+        0.3721919655799866,
+        0.3678641617298126,
+        0.3850551247596741
+      ],
+      "nearest_cell_candidate_mean": [
+        0.3741063177585602,
+        0.3691946268081665,
+        0.3865346610546112
+      ],
+      "nearest_cell_candidate_delta": {
+        "records": 256,
+        "signed_mean_RGB": [
+          0.0019143507815897465,
+          0.0013306286418810487,
+          0.0014794865855947137
+        ],
+        "absolute_RGB_MAE": 0.0020579444244503975,
+        "abs_channel_p95": 0.009787414968013752
+      },
+      "nearest_cell_current_source_count": {
+        "count": 256,
+        "mean": 5.5234375,
+        "p50": 2.0,
+        "p95": 18.0,
+        "maximum": 33.0
+      },
+      "nearest_cell_current_raw_colour_mean": [
+        0.40607553720474243,
+        0.3995921015739441,
+        0.4163479506969452
+      ],
+      "nearest_cell_current_raw_cache_minus_ref": {
+        "records": 65,
+        "signed_mean_RGB": [
+          0.004474977497011423,
+          0.0043738712556660175,
+          0.005133169703185558
+        ],
+        "absolute_RGB_MAE": 0.006564593408256769,
+        "abs_channel_p95": 0.02083065509796141
+      },
+      "nearest_cell_candidate_is_not_rendered_result": true
+    },
+    {
+      "raw": 137,
+      "pixels": 355,
+      "domain": "Saved V2 extension alphaT>.9 intersect fixed original observed road; posthoc diagnostic only",
+      "GT_mean": [
+        0.38506752252578735,
+        0.3852277398109436,
+        0.40958282351493835
+      ],
+      "V2_render_mean": [
+        0.33532029390335083,
+        0.343882292509079,
+        0.3724431097507477
+      ],
+      "V44_RGB_MAE": 0.00801179837435484,
+      "V2_RGB_MAE": 0.04818907007575035,
+      "nearest_projected_cell_distance_px": {
+        "count": 355,
+        "mean": 0.5035292333383673,
+        "p50": 0.487988677050373,
+        "p95": 0.9618817264519027,
+        "maximum": 1.1805065983757344
+      },
+      "nearest_cells_unique": 319,
+      "nearest_cell_current49_stable_pixel_fraction": 0.27887323943661974,
+      "nearest_cell_current_raw_qualified_fraction": 0.4084507042253521,
+      "nearest_cell_old_reference_mean": [
+        0.36031055450439453,
+        0.36123016476631165,
+        0.38277119398117065
+      ],
+      "nearest_cell_candidate_mean": [
+        0.36170852184295654,
+        0.36221957206726074,
+        0.38389089703559875
+      ],
+      "nearest_cell_candidate_delta": {
+        "records": 355,
+        "signed_mean_RGB": [
+          0.0013980253133922815,
+          0.0009895415278151631,
+          0.0011197858257219195
+        ],
+        "absolute_RGB_MAE": 0.0015124406199902296,
+        "abs_channel_p95": 0.008734494447708126
+      },
+      "nearest_cell_current_source_count": {
+        "count": 355,
+        "mean": 4.143661971830986,
+        "p50": 0.0,
+        "p95": 17.0,
+        "maximum": 32.0
+      },
+      "nearest_cell_current_raw_colour_mean": [
+        0.3944111764431,
+        0.38701844215393066,
+        0.4062430262565613
+      ],
+      "nearest_cell_current_raw_cache_minus_ref": {
+        "records": 145,
+        "signed_mean_RGB": [
+          0.006977666635066271,
+          0.004354838747531176,
+          0.005845010746270418
+        ],
+        "absolute_RGB_MAE": 0.008767531253397465,
+        "abs_channel_p95": 0.027711835503578176
+      },
+      "nearest_cell_candidate_is_not_rendered_result": true
+    }
+  ],
+  "limits": [
+    "Current49 are build inputs, not held-out validation.",
+    "Nearest projected cells describe source support, not exact raster weights or a rendered candidate prediction.",
+    "No hidden-road truth, no deleted/rendered/vehicle pixel used as a colour source.",
+    "Full199 fallback stays exact where current49 lacks stable qualified witnesses."
+  ],
+  "CPU_only": true,
+  "GPU_used": false,
+  "torch_imported": false,
+  "colour_residual_fit": false,
+  "created_utc": "2026-11-07T01:39:28.366696+00:00"
+}

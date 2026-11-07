@@ -1,0 +1,20 @@
+{
+  "schema": "R0_V2_DOMAIN_REPAIR_LINEAGE",
+  "recorded_date": "2026-11-07",
+  "timing": "Lineage clarification recorded after v2 pilot and full49; not represented as a new preregistration or unchanged v1 asset hash",
+  "parent_contract_remote": "scene008_road_r0_v44_20261107_r1/contract.json",
+  "parent_contract_sha256": "e9f0b47b983270d8954c71330e2bab8824d6e6f91d72fb45e9aaa76ec2fe6464",
+  "v1_surface_sha256": "1f3fc2f52280d984a27fe7684021f2040205deba8badac878eb614401879a767",
+  "v2_surface_sha256": "6112be03108b5a9b1a6deb2f605ef850dcd8ba5018346fa822993177815807a2",
+  "reason": "Independent pooled-LiDAR ray audit found geometry-supported road queries excluded from irregular old candidate halo; fixed rectangular forward domain extends existing world candidate bounds, not pixel-ROI-driven point selection",
+  "changed": "Add7313 world8cm cells to fill fixed front rectangle;6108 additional active real-source cells",
+  "unchanged": [
+    "First45769 geometry/material/provenance arrays bitwise",
+    "All geometry/colour qualification rules",
+    "Sigma and opacity",
+    "Frozen V44 car/native/road/gates/env/cameras",
+    "Parent preservation thresholds"
+  ],
+  "future_material_stage": "Separate true-observed-road calibration comparison; no hidden GT or new neural prior",
+  "original_v1_contract_not_overwritten": true
+}

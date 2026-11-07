@@ -1,0 +1,61 @@
+{
+  "schema": "R0_SRGB_ENCODING_AND_SOURCE_PROXY_AUDIT_V1",
+  "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/frontfill_v2/road_reference_199.npz",
+  "source_encoding": "PNG integer channels/255 are encoded sRGB, bilinear sampled before fusion.",
+  "fusion": "Exactly one sRGB->linear conversion, fixed q75 clean-radiance cluster; reference_srgb is exactly one inverse conversion.",
+  "rendering": "MeasuredExtension passes reference_srgb directly as colors_precomp; no extra linear transform in road_kwargs.",
+  "accepted_source_srgb_minmax": [
+    0.0707143098115921,
+    0.7102383971214294
+  ],
+  "inverse_encoding_maxabs_linear": 8.940696716308594e-08,
+  "front_active_cells": 14661,
+  "comparisons": [
+    {
+      "raw_range": [
+        0,
+        198
+      ],
+      "accepted_front_point_frame_records": 234144,
+      "ref_minus_observed_mean_srgb": [
+        0.0044198534451425076,
+        0.004663314204663038,
+        0.004742094315588474
+      ],
+      "ref_observed_MAE_srgb": 0.012017316184937954,
+      "abs_channel_difference_p95": 0.043636027723550797
+    },
+    {
+      "raw_range": [
+        89,
+        137
+      ],
+      "accepted_front_point_frame_records": 16413,
+      "ref_minus_observed_mean_srgb": [
+        0.0007784828194417059,
+        0.0009509545634500682,
+        0.0009125345968641341
+      ],
+      "ref_observed_MAE_srgb": 0.011202199384570122,
+      "abs_channel_difference_p95": 0.03432774916291237
+    },
+    {
+      "raw_range": [
+        138,
+        198
+      ],
+      "accepted_front_point_frame_records": 192289,
+      "ref_minus_observed_mean_srgb": [
+        0.005313015077263117,
+        0.005565232131630182,
+        0.005730295088142157
+      ],
+      "ref_observed_MAE_srgb": 0.012828375212848186,
+      "abs_channel_difference_p95": 0.04727625846862793
+    }
+  ],
+  "interpretation": "Differences measure real-view illumination/photometric variation against the clean-view proxy, not hidden clean GT error. Current49 build images are not held-out.",
+  "no_colour_fit": true,
+  "optimizer_updates": 0,
+  "GPU_used": false
+}

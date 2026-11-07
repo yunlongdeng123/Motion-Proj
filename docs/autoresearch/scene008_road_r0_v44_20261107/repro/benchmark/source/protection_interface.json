@@ -1,0 +1,22 @@
+{
+  "schema": "scene008.R0.protection_metric_interface.v1",
+  "purpose": "Freeze R0 measurement extension protection domains before candidate renders; this data is forbidden as strict R1 conditioning.",
+  "domain_builder": "freeze_r0_domains.py --output <benchmark-root>",
+  "domain_files": "integration_domains/{raw:03d}.npz, raw89..137",
+  "denominators_expected": {"a6_visible": 39308, "a6_measured_depth": 8930, "a37_visible_keep": 536128, "road_keep_original": 1075281, "road_delete_proxy": 287368, "protected_original": 6312448, "raw137_fixed720_ROI": 720},
+  "original_held9": [89,95,101,105,113,121,125,130,137],
+  "held9_role": "Internal development diagnostics; do not label independent test.",
+  "render_fields": {"rgb": "float CHW RGB in [0,1]", "alpha": "H,W total alpha", "depth_sum": "premultiplied native camera depth; divide by alpha and meter_to_model=.1 for metres", "component_alpha_T": "4,H,W in frozen group order asset,a37,road,native_static", "component_RGB": "optional actual shared-sort RGB markers; do not invent current group RGB if absent", "environment_T_RGB": "actual environment times residual transmittance, not intrinsic environment texture"},
+  "metrics": {
+    "foreground": "For original a6/a37 domains report RGB MAE, measured camera-depth MAE, alpha*T mean; signed per-frame changes plus pooled means and p90/p99/max tails, counts >.02 and >.05.",
+    "road": "Original known-road RGB; delete proxy RGB separately, measured world height/depth against actual support; standalone road alpha and actual joint road alpha*T; environment residual on independently verified unoccluded road.",
+    "preservation": "Original protected RGB/depth and seam/outside pixel changes; no new candidate-alpha condition may shrink denominator.",
+    "fixed137": "Keep 720-pixel ROI [230,204,270,222] including unsupported remainder; report geometry-known/unknown and actual support separately.",
+    "verified_extension": "Freeze measurement-supported new road points/rays from R0 CPU construction before comparison; source RGB witnesses and unknown areas remain separate."
+  },
+  "engineering_gates": {"a6_asset_all_named_tensors_unchanged": true, "persistent_SF_unchanged": true, "native_a6_input_rows": 0, "keep_delete_changes_only_a37": true, "delete_a37_component_exact_zero": true, "road_state_same_keep_delete": true, "joint_component_alpha_sum_maxabs_tolerance": 0.00002},
+  "road_coverage_gates_from_original_plan": {"standalone_alpha_min": 0.98, "environment_residual_max": 0.02, "scope": "independently verified unoccluded road; no foreground failure may be offset by road gain"},
+  "numerical_preservation_thresholds": {"status": "ROOT_MUST_FREEZE_BEFORE_FORMAL_QUALITY_GATE", "rule": "This interface reports every signed regression and tail. It does not invent new acceptance tolerances or turn engineering success into quality acceptance."},
+  "reference_assets": {"current_C2_SHA256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d", "posterior_SHA256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06", "old_M2_is_current_asset": false},
+  "strict_R1_separation": "Do not mount integration_domains, original observations, full scene checkpoints, V44 renders, or old road assets into a blinded completion process. R0 is observation recovery/integration; R1 is separately conditioned controlled completion."
+}

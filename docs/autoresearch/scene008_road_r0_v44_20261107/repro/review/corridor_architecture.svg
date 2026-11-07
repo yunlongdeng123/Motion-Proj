@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="360" viewBox="0 0 1120 360">
+ <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#304458"/></marker></defs>
+ <rect width="1120" height="360" fill="white"/>
+ <g font-family="Arial,sans-serif" fill="#1e3040" text-anchor="middle">
+  <text x="560" y="32" font-size="21" font-weight="bold">R0 fixed world-strip control</text>
+  <rect x="25" y="83" width="215" height="104" rx="10" fill="#e5eff8" stroke="#739bb7"/>
+  <text x="132" y="113" font-size="16">Frozen V44 + V2 road grid</text><text x="132" y="139" font-size="14">Existing geometry / source RGB</text><text x="132" y="163" font-size="14">No original model changes</text>
+  <rect x="290" y="83" width="235" height="104" rx="10" fill="#e8f3eb" stroke="#759b83"/>
+  <text x="407" y="113" font-size="16">Persistent world active mask</text><text x="407" y="139" font-size="14">x beyond original forward edge</text><text x="407" y="163" font-size="14">y within original road envelope</text>
+  <rect x="575" y="83" width="230" height="104" rx="10" fill="#fff2d9" stroke="#b5a065"/>
+  <text x="690" y="113" font-size="16">Fixed material control</text><text x="690" y="139" font-size="14">Source RGB / same wide field</text><text x="690" y="163" font-size="14">Sigma and opacity unchanged</text>
+  <rect x="855" y="83" width="240" height="104" rx="10" fill="#eeeaf8" stroke="#9489b7"/>
+  <text x="975" y="113" font-size="16">One native shared depth sort</text><text x="975" y="139" font-size="14">Same camera, keep / delete</text><text x="975" y="163" font-size="14">No pixel routing or priority</text>
+  <path d="M240,135 H290 M525,135 H575 M805,135 H855" stroke="#304458" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <rect x="340" y="244" width="440" height="72" rx="10" fill="#eff3f6" stroke="#8398a6"/>
+  <text x="560" y="273" font-size="16">Independent readout and preservation checks</text><text x="560" y="297" font-size="14">13 gates + full-map hashes + unknown-body contribution</text>
+  <path d="M975,187 V220 H560 V244" stroke="#304458" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <text x="560" y="346" font-size="13" fill="#596d7c">A measured ground point is not a road-semantic label. Frozen asset rows do not imply frozen alpha*T contribution.</text>
+ </g>
+</svg>

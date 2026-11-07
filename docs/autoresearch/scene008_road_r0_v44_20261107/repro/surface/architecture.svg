@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="420" viewBox="0 0 1120 420">
+ <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#304458"/></marker></defs>
+ <rect width="1120" height="420" fill="#fff"/>
+ <g font-family="Arial,sans-serif" fill="#192c3c" text-anchor="middle">
+  <text x="560" y="31" font-size="21" font-weight="bold">R0 measured-support road extension</text>
+  <rect x="25" y="91" width="185" height="88" rx="10" fill="#e4eff9" stroke="#6f9cbe"/>
+  <text x="117" y="124" font-size="16">199 real FRONT views</text><text x="117" y="150" font-size="15">LiDAR + poses + boxes</text>
+  <rect x="270" y="73" width="215" height="124" rx="10" fill="#e8f4ed" stroke="#6fa084"/>
+  <text x="377" y="101" font-size="16">Fixed 8 cm world grid</text><text x="377" y="127" font-size="14">Original halo + front rectangle</text><text x="377" y="150" font-size="14">Measured-pool height / normal</text><text x="377" y="174" font-size="14">Keep geometry provenance</text>
+  <rect x="545" y="73" width="240" height="124" rx="10" fill="#fff3db" stroke="#b69a5d"/>
+  <text x="665" y="101" font-size="16">Real-source evidence gates</text><text x="665" y="127" font-size="14">Measured triangle + depth</text><text x="665" y="150" font-size="14">2D guard + 3D box clear</text><text x="665" y="174" font-size="14">Stable RGB: 3 views, span 6</text>
+  <rect x="845" y="73" width="250" height="124" rx="10" fill="#eae9f7" stroke="#9287b7"/>
+  <text x="970" y="101" font-size="16">One persistent road asset</text><text x="970" y="127" font-size="14">xyz + normal + sigma + RGB</text><text x="970" y="150" font-size="14">Confidence + source IDs + grid</text><text x="970" y="174" font-size="14">Active / unknown kept separate</text>
+  <path d="M210,135 H270 M485,135 H545 M785,135 H845" stroke="#304458" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <rect x="720" y="270" width="375" height="90" rx="10" fill="#f0f2f4" stroke="#7c8c99"/>
+  <text x="907" y="299" font-size="16">Frozen V44 + measured front extension</text><text x="907" y="325" font-size="14">One shared native depth sort</text><text x="907" y="347" font-size="14">Paired keep / delete evaluation</text>
+  <path d="M970,197 V270" stroke="#304458" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <text x="290" y="280" font-size="15">local metres → world metres → model units</text>
+  <text x="290" y="308" font-size="14">No colour interpolation; unknown remains unknown</text>
+  <text x="290" y="336" font-size="14">All 199 are build inputs; RGB is a clean-view proxy</text>
+  <text x="560" y="399" font-size="13" fill="#596c7c">V1 preserved. V2 changes candidate-domain completeness only; source, colour and sigma rules stay fixed.</text>
+ </g>
+</svg>

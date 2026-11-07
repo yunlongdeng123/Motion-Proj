@@ -1,0 +1,560 @@
+{
+  "schema": "SCENE008_R0_R1_DELIVERY_FACTS_V1",
+  "date": "2026-11-07",
+  "primary_run": "full49_corridor_cellfit",
+  "primary_variant": "calibrated",
+  "headline": "实测路面已补建；可见保护与推断车体接触分开验收",
+  "decision": "完整49帧的已观测保护门通过 12/13；整体仍为研究候选，未替换原V44正式版本。新增道路始终启用，删除仅移除a37。",
+  "observed_protection": {
+    "passed": 12,
+    "total": 13,
+    "gates": [
+      {
+        "state": "keep",
+        "metric": "a6_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.001,
+        "delta": 0.0001743498425408746,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "a6_depth_m",
+        "kind": "max_frame",
+        "tolerance": 0.01,
+        "delta": 0.004632096290588417,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "observed_road_RGB",
+        "kind": "pooled",
+        "tolerance": 0.001,
+        "delta": 0.0004885022925116729,
+        "before": 0.016457506961928246,
+        "after": 0.01694600925443992,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.005,
+        "delta": 0.0010796126329209628,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "protected_RGB",
+        "kind": "pooled",
+        "tolerance": 0.001,
+        "delta": 0.0001847177690821062,
+        "before": 0.015194446830816642,
+        "after": 0.015379164599898748,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "protected_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.005,
+        "delta": 0.00045780671258435074,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "delete",
+        "metric": "a6_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.001,
+        "delta": 0.00017529069777488804,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "delete",
+        "metric": "a6_depth_m",
+        "kind": "max_frame",
+        "tolerance": 0.01,
+        "delta": 0.004632134437560997,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "delete",
+        "metric": "observed_road_RGB",
+        "kind": "pooled",
+        "tolerance": 0.001,
+        "delta": 0.0010437881930815025,
+        "before": 0.021273425040277842,
+        "after": 0.022317213233359345,
+        "failed_raws": [],
+        "passed": false
+      },
+      {
+        "state": "delete",
+        "metric": "observed_road_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.005,
+        "delta": 0.0016721487621441586,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "delete",
+        "metric": "protected_RGB",
+        "kind": "pooled",
+        "tolerance": 0.001,
+        "delta": 0.0004995879359385429,
+        "before": 0.015359426388757291,
+        "after": 0.015859014324695834,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "delete",
+        "metric": "protected_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.005,
+        "delta": 0.0006640537183982102,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      },
+      {
+        "state": "keep",
+        "metric": "a37_RGB",
+        "kind": "max_frame",
+        "tolerance": 0.001,
+        "delta": 6.824798168963975e-08,
+        "before": null,
+        "after": null,
+        "failed_raws": [],
+        "passed": true
+      }
+    ]
+  },
+  "scene_adopted": false,
+  "human_verdict": null,
+  "unknown_vehicle_ground_compatibility_resolved": false,
+  "fixed720": {
+    "raw": 137,
+    "pixels": 720,
+    "before": {
+      "extension_solo_alpha": {
+        "pixels": 720,
+        "sum": 719.7411768436432,
+        "mean": 0.9996405233939488,
+        "min": 0.9947901368141174,
+        "p95": 0.9998959928750992,
+        "max": 0.9998997449874878
+      },
+      "extension_solo_alpha_below098": 0,
+      "environment_T_above002": 720,
+      "alpha": {
+        "pixels": 720,
+        "sum": 569.0175126791,
+        "mean": 0.7903021009431945,
+        "min": 0.6717286705970764,
+        "p95": 0.9121842592954634,
+        "max": 0.9490498900413513
+      },
+      "road_alphaT": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "static_alphaT": {
+        "pixels": 720,
+        "sum": 568.5716677308083,
+        "mean": 0.7896828718483448,
+        "min": 0.6717286705970764,
+        "p95": 0.9121842592954634,
+        "max": 0.9490498900413513
+      },
+      "asset_alphaT": {
+        "pixels": 720,
+        "sum": 0.4458454321138561,
+        "mean": 0.0006192297668248001,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.11651274561882019
+      },
+      "a37_alphaT": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "environment_T": {
+        "pixels": 720,
+        "sum": 150.98248732089996,
+        "mean": 0.2096978990568055,
+        "min": 0.05095010995864868,
+        "p95": 0.3042705863714218,
+        "max": 0.3282713294029236
+      },
+      "extension_alphaT": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "extension_visibility_ratio": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "road_only_depth_residual_m": {
+        "pixels": 720,
+        "sum": 6349.765451431274,
+        "mean": 8.819118682543436,
+        "min": 4.980342864990234,
+        "p95": 11.693163585662841,
+        "max": 12.575531005859375
+      }
+    },
+    "after": {
+      "extension_solo_alpha": {
+        "pixels": 720,
+        "sum": 719.7411768436432,
+        "mean": 0.9996405233939488,
+        "min": 0.9947901368141174,
+        "p95": 0.9998959928750992,
+        "max": 0.9998997449874878
+      },
+      "extension_solo_alpha_below098": 0,
+      "environment_T_above002": 0,
+      "alpha": {
+        "pixels": 720,
+        "sum": 719.7427142262459,
+        "mean": 0.9996426586475637,
+        "min": 0.9947901368141174,
+        "p95": 0.999896240234375,
+        "max": 0.999899685382843
+      },
+      "road_alphaT": {
+        "pixels": 720,
+        "sum": 701.17802298069,
+        "mean": 0.9738583652509584,
+        "min": 0.8850242495536804,
+        "p95": 0.9998414546251297,
+        "max": 0.9998992085456848
+      },
+      "static_alphaT": {
+        "pixels": 720,
+        "sum": 18.56469082296826,
+        "mean": 0.025784292809678137,
+        "min": 0.0,
+        "p95": 0.08981512449681758,
+        "max": 0.11472256481647491
+      },
+      "asset_alphaT": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "a37_alphaT": {
+        "pixels": 720,
+        "sum": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "p95": 0.0,
+        "max": 0.0
+      },
+      "environment_T": {
+        "pixels": 720,
+        "sum": 0.2572857737541199,
+        "mean": 0.0003573413524362776,
+        "min": 0.00010031461715698242,
+        "p95": 0.0010263979434967038,
+        "max": 0.005209863185882568
+      },
+      "extension_alphaT": {
+        "pixels": 720,
+        "sum": 701.17802298069,
+        "mean": 0.9738583652509584,
+        "min": 0.8850242495536804,
+        "p95": 0.9998414546251297,
+        "max": 0.9998992085456848
+      },
+      "extension_visibility_ratio": {
+        "pixels": 720,
+        "sum": 701.4311274886131,
+        "mean": 0.9742098992897404,
+        "min": 0.8852799534797668,
+        "p95": 1.0,
+        "max": 1.0
+      },
+      "road_only_depth_residual_m": {
+        "pixels": 720,
+        "sum": 21.52935791015625,
+        "mean": 0.029901885986328126,
+        "min": 0.0,
+        "p95": 0.09481906890869138,
+        "max": 0.16039276123046875
+      }
+    }
+  },
+  "details": [
+    "当前车辆C2/SurfaceLOD、轨迹、原生10K、旧道路1K、旧gates和环境冻结；没有把原静态层重新训练成修补器。R0补面使用真实FRONT199观测，不是生成先验实验。",
+    "raw137固定720像素：道路alphaT 0.000000→0.973858；环境透射 0.209698→0.000357。这描述覆盖/读出，不是隐藏真值准确率。",
+    "原425个缺少旧交点的像素，经独立测量池和精确射线核验，423个具有后续FRONT RGB见证；没有把旧缓存缺失直接称为永不显露。其余不确定状态保留。",
+    "全矩形加面会重复接管侧方正常表面。纯因果对照固定颜色/几何/透明度，只把新道路active范围限制到原道路横向包络，保护域明显恢复；边界是同一持久世界状态，不是逐帧抠图，也不冒称道路语义真值。",
+    "低容量场、匹配范围重拟合及更高容量材质对照分别记账。材质拟合只读原始可见道路；从未用a37像素为道路或a6未知车身取色。高容量资格由原生alphaT的非零观测列确定，精确零列保持初始化。",
+    "最终1000步只拟合2171个具有可见成像贡献的材质列（6513标量）；12490个精确零列保持初始化，其中4563个位于条带外。32步真实smoke、完整状态恢复后的2步重放单列，正式1000步没有延长；预训练神经网络、原模型、几何和透明度更新均为0。",
+    "固定参数并不保证最终成像不变。新地面会改变少量被a37遮住、仅由先验推断的a6下部贡献，raw130轮胎下缘最明显；这些像素不属于已观测道路真值，也不是已观测a6轮廓。车地高度/足迹/深度排序需单独核查，不能用已观测保护门掩盖。",
+    "35条模型表面首交探针中，24条C2 chart在实测地面前、11条地面在前；最严重18条贡献损失中两类均存在。该探针是当前开放chart的三角近似，非真实隐藏车身GT、非完整MOG渲染器；支持把几何接触与Gaussian足迹/中心排序分开处理，不能统一归因。",
+    "当前高斯期望深度与真实LiDAR first-return的比较不是MOG-2不透明首交精度；不把alpha升高或环境变小作为几何正确的充分证据。",
+    "R1已从原始源重建两种隔离输入：只遮外观、同时遮几何与外观。最小基线为合法局部平面和边界颜色中位延续。51帧入口与同方法全199控制分开；unsupported颜色保留在覆盖分母，不能只报有预测区域的误差。",
+    "R1原测试已为固定基线开封，全199扩展是同场景开发控制。后续受这些指标影响的新方法需要新未触碰patch进行独立确认；本轮没有训练道路生成模型、没有实现完整MOG-2渲染器或证明跨场景泛化。",
+    "已导出10098行自含持久新道路候选。独立进程在raw105/113/130/137的保留/删除8次重放中，RGB、alpha、期望深度、分组alpha与PNG SHA均精确一致；不声称未保存的group RGB数组也被逐项验证。"
+  ],
+  "scientific_scope": {
+    "R0": "observation-supported road reconstruction",
+    "R1": "FRONT-only blinded-patch preparation and legal baselines",
+    "R2_learned_road_prior": "not implemented or trained",
+    "MOG2_first_hit": "not implemented",
+    "R4_decision_generalization": "not evaluated"
+  },
+  "budget": [
+    {
+      "run": "pilot_v1",
+      "kind": "paired_eval",
+      "native_forwards": 20,
+      "seconds": 13.165242195129395,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "pilot_v2",
+      "kind": "paired_eval",
+      "native_forwards": 20,
+      "seconds": 15.87315034866333,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "full49_v2",
+      "kind": "paired_eval",
+      "native_forwards": 245,
+      "seconds": 57.389917612075806,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "pilot_clip49",
+      "kind": "paired_eval",
+      "native_forwards": 20,
+      "seconds": 14.863896369934082,
+      "optimizer_updates": 0
+    },
+    {
+      "status": "ENGINEERING_EVALUATOR_BRANCH_FAILURE_PRESERVED",
+      "error": "KeyError baseline: a newly inserted material-parity if captured the old baseline else branch",
+      "where": "first raw105 keep baseline metrics; before any calibrated forward or quality score",
+      "completed_frames": 0,
+      "successful_native_forwards_before_failure": 2,
+      "count_basis": "executed source order: extension solo then keep baseline; crash before subsequent variant",
+      "source_snapshot_sha256": {
+        "evaluate_r0.py": "ede4e39255bf206b4d8c4686131c91093070ce0ae884714d53d8f483b2ff300b",
+        "r0_runtime.py": "105764b43880e994127a8d854905d24e2f142867d06477ce92d75ae70cbf656e"
+      },
+      "asset_updates": 0,
+      "field_updates": 0,
+      "optimizer_updates": 0,
+      "recovery": "separate if variant!=baseline guard, unchanged method, rerun in results/pilot_worldfield_r2",
+      "old_scene_preserved": true
+    },
+    {
+      "run": "pilot_worldfield_r2",
+      "kind": "paired_eval",
+      "native_forwards": 28,
+      "seconds": 18.31787896156311,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "full49_worldfield",
+      "kind": "paired_eval",
+      "native_forwards": 343,
+      "seconds": 86.11197328567505,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "pilot_corridor",
+      "kind": "paired_eval",
+      "native_forwards": 28,
+      "seconds": 16.430011510849,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "full49_corridor",
+      "kind": "paired_eval",
+      "native_forwards": 343,
+      "seconds": 66.31176352500916,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "full49_corridor_matched",
+      "kind": "paired_eval",
+      "native_forwards": 343,
+      "seconds": 64.81633138656616,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "full49_corridor_cellfit",
+      "kind": "paired_eval",
+      "native_forwards": 343,
+      "seconds": 64.28316020965576,
+      "optimizer_updates": 0
+    },
+    {
+      "run": "surface/material_worldfield11x9_v1/smoke_process/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 30,
+      "stored_forwards_counter": 30,
+      "stored_counter_semantics": "cumulative field counter",
+      "backwards": null,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 0,
+      "seconds": 9.627349615097046,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_worldfield11x9_v1/resume_process/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 370,
+      "stored_forwards_counter": 400,
+      "stored_counter_semantics": "cumulative field counter",
+      "backwards": null,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 0,
+      "seconds": 31.652000188827515,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_worldfield11x9_strip_v1/smoke_process/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 30,
+      "stored_forwards_counter": 30,
+      "stored_counter_semantics": "cumulative field counter",
+      "backwards": null,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 0,
+      "seconds": 10.004874467849731,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_worldfield11x9_strip_v1/resume_process/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 370,
+      "stored_forwards_counter": 400,
+      "stored_counter_semantics": "cumulative field counter",
+      "backwards": null,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 0,
+      "seconds": 23.56837487220764,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_cellfit_strip_v1/eligibility/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 80,
+      "stored_forwards_counter": 80,
+      "stored_counter_semantics": "phase-only",
+      "backwards": 80,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 0,
+      "seconds": 12.301092386245728,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_cellfit_strip_v1/smoke/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 78,
+      "stored_forwards_counter": 78,
+      "stored_counter_semantics": "phase-only",
+      "backwards": 64,
+      "formal_asset_steps": 0,
+      "disposable_steps": 0,
+      "steps_executed": 32,
+      "seconds": 12.447641849517822,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_cellfit_strip_v1/restore/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 4,
+      "stored_forwards_counter": 4,
+      "stored_counter_semantics": "phase-only",
+      "backwards": 4,
+      "formal_asset_steps": 0,
+      "disposable_steps": 2,
+      "steps_executed": 2,
+      "seconds": 0.9403321743011475,
+      "neural_training_updates": 0
+    },
+    {
+      "run": "surface/material_cellfit_strip_v1/formal/receipt.json",
+      "kind": "material",
+      "forwards_incremental": 2000,
+      "stored_forwards_counter": 2000,
+      "stored_counter_semantics": "phase-only",
+      "backwards": 2000,
+      "formal_asset_steps": 1000,
+      "disposable_steps": 0,
+      "steps_executed": 1000,
+      "seconds": 279.1498260498047,
+      "neural_training_updates": 0
+    }
+  ],
+  "original_model_or_neural_weight_updates": 0,
+  "shutdown_performed": false,
+  "next_steps": [
+    "resolve inferred vehicle/road geometry and effective-support conflict without per-edit holes or foreground priority",
+    "compare structured/learned road priors against full199 legal baselines on a new untouched patch bank",
+    "retain separate geometry, colour, marking, coverage, preservation and uncertainty measures"
+  ],
+  "canonical_candidate": {
+    "file": "candidates/baked_cellfit_strip1000_candidate_v1/new_road_canonical_candidate.npz",
+    "sha256": "7db38a9ee69823e4a5fd4fbc78d49a5423cad9a146ca952fa51b9a6b9dc387c8",
+    "rows": 10098,
+    "status": "RESEARCH_CANDIDATE_NOT_ADOPTED",
+    "independent_baked_parity_forwards": 8
+  }
+}

@@ -1,0 +1,11 @@
+# Research candidate only: original V44 is the accepted fallback.
+# Run on AutoDL with the pinned original dependencies; no service or power actions.
+PY=/root/autodl-tmp/envs/drivingeditor/bin/python
+RUN=/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1
+$PY "$RUN/candidates/baked_cellfit_strip1000_candidate_v1/verify_baked_parity.py" \
+  --manifest "$RUN/candidates/baked_cellfit_strip1000_candidate_v1/scene_manifest.json" \
+  --reference-results "$RUN/results/full49_corridor_cellfit" \
+  --reference-variant calibrated \
+  --output "$RUN/results/baked_replay_new_directory"
+# The output must be a new directory. Eight replay forwards, no optimization.
+# source/cellfit_strip is not a learned prior; formal1000 / smoke32 / restore2 are separate.

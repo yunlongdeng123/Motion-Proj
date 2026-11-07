@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008 V44道路实测覆盖与盲化基线（2026-11-07）
+
+- `scene008_road_r0_v44_20261107_r1`：[49帧双状态、固定域实测道路接入、材质控制及R1严格输入基线](autoresearch/scene008_road_r0_v44_20261107/index.html)。参数、资源、各阶段失败、额外计算与重放见报告；完整49帧12/13，研究候选未采用。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。
+
 ## Scene008 a6 插入成像诊断与连续表面（2026-11-05）
 
 - `scene008_a6_insert_artifacts_20261105`：[实际颜色载体、C2 深度与前景 RGBA、viewport 和固定域评价](autoresearch/scene008_a6_insert_artifacts_20261105/README.md)。配置、资源、完整结果与输入角色见报告；failure_ledger_delta=none。 · [49帧拖动与静态双状态图集](autoresearch/scene008_a6_insert_artifacts_20261105/frame_compare/README.md)
