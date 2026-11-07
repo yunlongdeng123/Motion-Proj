@@ -1,0 +1,5018 @@
+{
+  "schema": "BLUE_FINAL_METRICS_V2",
+  "status": "BLUE_SEAM_UNRESOLVED_RESEARCH_CONTROL",
+  "blue_acceptance": "No seam-resolved/pass claim: fixed near-x residual-jump did not improve with the material control.",
+  "whole_scene_adopted": false,
+  "human_verdict": null,
+  "raw": 128,
+  "bbox": [
+    165,
+    188,
+    208,
+    234
+  ],
+  "bbox_provenance": "Parent supplied approximate bbox from user screenshot; not an exact circle segmentation.",
+  "cards": {
+    "original_road": {
+      "count_pixels": 1385,
+      "n2_abs_RGB_error_sum": 41.93986511230469,
+      "n2_material_abs_RGB_error_sum": 41.49241638183594,
+      "n2_abs_RGB_error_mean": 0.030281489714980125,
+      "n2_material_abs_RGB_error_mean": 0.02995842508971691,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 0.00041077000787481666,
+      "material_vs_n2_image_channel_abs_change_max": 0.0072449445724487305
+    },
+    "clean_original_road": {
+      "count_pixels": 1340,
+      "n2_abs_RGB_error_sum": 40.9764404296875,
+      "n2_material_abs_RGB_error_sum": 40.528892517089844,
+      "n2_abs_RGB_error_mean": 0.03057943470776081,
+      "n2_material_abs_RGB_error_mean": 0.030245443806052208,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 0.0004235988890286535,
+      "material_vs_n2_image_channel_abs_change_max": 0.0072449445724487305
+    },
+    "depth_qualified_clean_original_road": {
+      "count_pixels": 214,
+      "n2_abs_RGB_error_sum": 8.007285118103027,
+      "n2_material_abs_RGB_error_sum": 7.907910346984863,
+      "n2_abs_RGB_error_mean": 0.0374172143638134,
+      "n2_material_abs_RGB_error_mean": 0.036952853202819824,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 0.0005815504118800163,
+      "material_vs_n2_image_channel_abs_change_max": 0.007027089595794678
+    },
+    "guard": {
+      "count_pixels": 266,
+      "n2_abs_RGB_error_sum": 5.651543617248535,
+      "n2_material_abs_RGB_error_sum": 5.651800155639648,
+      "n2_abs_RGB_error_mean": 0.021246403455734253,
+      "n2_material_abs_RGB_error_mean": 0.021247366443276405,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 7.419284429488471e-06,
+      "material_vs_n2_image_channel_abs_change_max": 0.0007382333278656006
+    },
+    "nonroad": {
+      "count_pixels": 593,
+      "n2_abs_RGB_error_sum": 19.7830753326416,
+      "n2_material_abs_RGB_error_sum": 19.696569442749023,
+      "n2_abs_RGB_error_mean": 0.033361006528139114,
+      "n2_material_abs_RGB_error_mean": 0.033215124160051346,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 0.00015183362120296806,
+      "material_vs_n2_image_channel_abs_change_max": 0.007678210735321045
+    },
+    "global_observed_road": {
+      "count_pixels": 24563,
+      "n2_abs_RGB_error_sum": 906.3074951171875,
+      "n2_material_abs_RGB_error_sum": 905.8546752929688,
+      "n2_abs_RGB_error_mean": 0.036897268146276474,
+      "n2_material_abs_RGB_error_mean": 0.036878835409879684,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 2.3510367100243457e-05,
+      "material_vs_n2_image_channel_abs_change_max": 0.0072449445724487305
+    },
+    "global_protected": {
+      "count_pixels": 128216,
+      "n2_abs_RGB_error_sum": 2265.809814453125,
+      "n2_material_abs_RGB_error_sum": 2265.19970703125,
+      "n2_abs_RGB_error_mean": 0.017671817913651466,
+      "n2_material_abs_RGB_error_mean": 0.01766705885529518,
+      "abs_error_sum_definition": "Sum over pixels of mean over 3 absolute RGB channel errors; divide by count_pixels.",
+      "material_vs_n2_image_abs_change_mean": 6.044945621397346e-06,
+      "material_vs_n2_image_channel_abs_change_max": 0.007678210735321045
+    }
+  },
+  "total_R0_to_n2_material_original_road": {
+    "parent": 0.031119463965296745,
+    "candidate": 0.02995842508971691
+  },
+  "primary_material_relative_MAE_improvement": 0.010668716377695064,
+  "fixed_world_band_counts": {
+    "near_x_minus": {
+      "pixels": 42,
+      "scene_depth_qualified_pixels": 7,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "near_x_plus": {
+      "pixels": 34,
+      "scene_depth_qualified_pixels": 2,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    },
+    "far_x_minus": {
+      "pixels": 0,
+      "scene_depth_qualified_pixels": 0,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "far_x_plus": {
+      "pixels": 0,
+      "scene_depth_qualified_pixels": 0,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    },
+    "lateral_y_minus": {
+      "pixels": 146,
+      "scene_depth_qualified_pixels": 44,
+      "tangent_axis": 0,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "lateral_y_plus": {
+      "pixels": 75,
+      "scene_depth_qualified_pixels": 20,
+      "tangent_axis": 0,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    }
+  },
+  "near_x_residual_jump": {
+    "parent": 0.01082245446741581,
+    "candidate": 0.010833921919887265,
+    "raw": 128,
+    "state": "delete",
+    "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+    "boundary": "near_x",
+    "paired_bins": 6,
+    "matched_minus_count": 35,
+    "matched_plus_count": 33,
+    "reference_label": "n2",
+    "candidate_label": "n2 +18coef"
+  },
+  "near_x_paired_tangent_bins": 6,
+  "unsupported": [
+    "far-x has no in-ROI supported pixels",
+    "lateral has146/75 side pixels but no fixed .2m tangent bin with>=3 pixels on both sides; no lateral residual-jump score"
+  ],
+  "fixed_geometry_weight_exact": {
+    "alpha": true,
+    "group_alpha_T": true,
+    "newroad_alpha_T": true,
+    "oldroad_alpha_T": true,
+    "depth_m": true
+  },
+  "parent_mechanism": {
+    "road_newW_gt_half_conditional_pixels": 598,
+    "weights_new_old_static": [
+      0.8156041503,
+      0.0019844559,
+      0.1819950491
+    ],
+    "newroad_mass_normalized_RGB": [
+      0.421117872,
+      0.429338723,
+      0.455679148
+    ],
+    "static_mass_normalized_RGB": [
+      0.061500743,
+      0.12474598,
+      0.212600023
+    ],
+    "solo_alpha_mean": 0.993849218,
+    "joint_over_solo_mean": 0.820806265,
+    "interpretation": "Conditional diagnostic, not primary denominator: solo support is already high while joint static competition remains; screenshot alone does not identify a material problem.",
+    "raw": 128,
+    "state": "delete",
+    "method": "R0",
+    "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX"
+  },
+  "fixed_boundary_group_tables": {
+    "band_near_x_minus": {
+      "pixels": 42,
+      "asset": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "a37": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "oldroad": {
+        "alphaT_mean": 0.3728691339492798,
+        "alphaT_sum": 15.660503387451172,
+        "rgbT_mean": [
+          0.13838021457195282,
+          0.1422136127948761,
+          0.15254370868206024
+        ],
+        "mass_normalized_rgb": [
+          0.37112271785736084,
+          0.38140353560447693,
+          0.40910792350769043
+        ]
+      },
+      "newroad": {
+        "alphaT_mean": 0.5064955949783325,
+        "alphaT_sum": 21.27281379699707,
+        "rgbT_mean": [
+          0.2016752064228058,
+          0.2046080380678177,
+          0.21744753420352936
+        ],
+        "mass_normalized_rgb": [
+          0.3981776535511017,
+          0.40396806597709656,
+          0.42931774258613586
+        ]
+      },
+      "static": {
+        "alphaT_mean": 0.11995579302310944,
+        "alphaT_sum": 5.038143157958984,
+        "rgbT_mean": [
+          0.02831069380044937,
+          0.033495526760816574,
+          0.041567277163267136
+        ],
+        "mass_normalized_rgb": [
+          0.2360093891620636,
+          0.2792322635650635,
+          0.34652164578437805
+        ]
+      },
+      "env_rgbT_mean": [
+        0.0004157613730058074,
+        0.00043847455526702106,
+        0.0004829623212572187
+      ],
+      "render_rgb_mean": [
+        0.3687818944454193,
+        0.38075557351112366,
+        0.4120415151119232
+      ],
+      "observed_rgb_mean": [
+        0.3772642910480499,
+        0.3845471441745758,
+        0.411834716796875
+      ],
+      "r0_rgb_mae": 0.02252892404794693,
+      "v44_rgb_mae": 0.015239743515849113,
+      "solo_alpha_mean": 0.8605393767356873,
+      "joint_over_solo_mean": 0.5765807032585144
+    },
+    "band_near_x_plus": {
+      "pixels": 34,
+      "asset": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "a37": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "oldroad": {
+        "alphaT_mean": 0.0023083090782165527,
+        "alphaT_sum": 0.07848250865936279,
+        "rgbT_mean": [
+          0.000772818922996521,
+          0.0008408181602135301,
+          0.0009140801848843694
+        ],
+        "mass_normalized_rgb": [
+          0.3347987234592438,
+          0.36425718665122986,
+          0.3959955871105194
+        ]
+      },
+      "newroad": {
+        "alphaT_mean": 0.9312231540679932,
+        "alphaT_sum": 31.66158676147461,
+        "rgbT_mean": [
+          0.3638705015182495,
+          0.37498652935028076,
+          0.40385934710502625
+        ],
+        "mass_normalized_rgb": [
+          0.39074471592903137,
+          0.40268170833587646,
+          0.4336869716644287
+        ]
+      },
+      "static": {
+        "alphaT_mean": 0.0660826563835144,
+        "alphaT_sum": 2.2468101978302,
+        "rgbT_mean": [
+          0.00033630713005550206,
+          0.00595712848007679,
+          0.013627355918288231
+        ],
+        "mass_normalized_rgb": [
+          0.005089189391583204,
+          0.09014663100242615,
+          0.20621684193611145
+        ]
+      },
+      "env_rgbT_mean": [
+        0.00024134501290973276,
+        0.00025277913664467633,
+        0.00028293352806940675
+      ],
+      "render_rgb_mean": [
+        0.3652209937572479,
+        0.3820372223854065,
+        0.4186837077140808
+      ],
+      "observed_rgb_mean": [
+        0.3636678457260132,
+        0.38290077447891235,
+        0.419521301984787
+      ],
+      "r0_rgb_mae": 0.012525825761258602,
+      "v44_rgb_mae": 0.004846789874136448,
+      "solo_alpha_mean": 0.9995810389518738,
+      "joint_over_solo_mean": 0.9316152334213257
+    },
+    "band_lateral_y_minus": {
+      "pixels": 146,
+      "asset": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "a37": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "oldroad": {
+        "alphaT_mean": 0.005217749625444412,
+        "alphaT_sum": 0.761791467666626,
+        "rgbT_mean": [
+          0.0018627606332302094,
+          0.0020047775469720364,
+          0.0022326079197227955
+        ],
+        "mass_normalized_rgb": [
+          0.3570046126842499,
+          0.3842226266860962,
+          0.42788711190223694
+        ]
+      },
+      "newroad": {
+        "alphaT_mean": 0.6995006203651428,
+        "alphaT_sum": 102.12709045410156,
+        "rgbT_mean": [
+          0.3051307797431946,
+          0.32185477018356323,
+          0.34909069538116455
+        ],
+        "mass_normalized_rgb": [
+          0.43621233105659485,
+          0.4601207673549652,
+          0.49905699491500854
+        ]
+      },
+      "static": {
+        "alphaT_mean": 0.2947574853897095,
+        "alphaT_sum": 43.03459167480469,
+        "rgbT_mean": [
+          0.021013133227825165,
+          0.041371528059244156,
+          0.06960894167423248
+        ],
+        "mass_normalized_rgb": [
+          0.07128956913948059,
+          0.1403578519821167,
+          0.2361566722393036
+        ]
+      },
+      "env_rgbT_mean": [
+        0.0003531894471962005,
+        0.0003903272736351937,
+        0.0004883852088823915
+      ],
+      "render_rgb_mean": [
+        0.32835978269577026,
+        0.36562126874923706,
+        0.42142051458358765
+      ],
+      "observed_rgb_mean": [
+        0.3728506565093994,
+        0.4048689603805542,
+        0.4588709771633148
+      ],
+      "r0_rgb_mae": 0.04208109527826309,
+      "v44_rgb_mae": 0.012330801226198673,
+      "solo_alpha_mean": 0.9643753170967102,
+      "joint_over_solo_mean": 0.7281090617179871
+    },
+    "band_lateral_y_plus": {
+      "pixels": 75,
+      "asset": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "a37": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "oldroad": {
+        "alphaT_mean": 0.0,
+        "alphaT_sum": 0.0,
+        "rgbT_mean": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mass_normalized_rgb": null
+      },
+      "newroad": {
+        "alphaT_mean": 0.18220315873622894,
+        "alphaT_sum": 13.665237426757812,
+        "rgbT_mean": [
+          0.08424323052167892,
+          0.08846200257539749,
+          0.09452296793460846
+        ],
+        "mass_normalized_rgb": [
+          0.4623587429523468,
+          0.48551297187805176,
+          0.5187778472900391
+        ]
+      },
+      "static": {
+        "alphaT_mean": 0.7312585711479187,
+        "alphaT_sum": 54.844390869140625,
+        "rgbT_mean": [
+          0.15697339177131653,
+          0.18480932712554932,
+          0.23414309322834015
+        ],
+        "mass_normalized_rgb": [
+          0.21466195583343506,
+          0.252727746963501,
+          0.3201919496059418
+        ]
+      },
+      "env_rgbT_mean": [
+        0.07775061577558517,
+        0.08211078494787216,
+        0.10934705287218094
+      ],
+      "render_rgb_mean": [
+        0.31896719336509705,
+        0.35538214445114136,
+        0.4380129873752594
+      ],
+      "observed_rgb_mean": [
+        0.35852307081222534,
+        0.3899998962879181,
+        0.43930694460868835
+      ],
+      "r0_rgb_mae": 0.03495470806956291,
+      "v44_rgb_mae": 0.02085876651108265,
+      "solo_alpha_mean": 0.31173524260520935,
+      "joint_over_solo_mean": 0.3902718722820282
+    }
+  },
+  "cell_provenance": {
+    "caveat": "Centre projection only; Gaussian footprint may contribute beyond centre. source_valid is a source qualification cache, not a dense visibility/absence label.",
+    "counts": {
+      "all_bbox_centres": {
+        "rows": 2163,
+        "material_eligible": 2026,
+        "source_valid_raw128": 139,
+        "source_valid_any49": 493,
+        "source_valid_ge3_49": 370,
+        "eligible_raw128_source_valid": 139,
+        "max_fit_mass": 148.35447599133477
+      },
+      "originalroad_centres": {
+        "rows": 1912,
+        "material_eligible": 1850,
+        "source_valid_raw128": 136,
+        "source_valid_any49": 457,
+        "source_valid_ge3_49": 355,
+        "eligible_raw128_source_valid": 136,
+        "max_fit_mass": 148.35447599133477
+      },
+      "originalroad_unguarded_centres": {
+        "rows": 1788,
+        "material_eligible": 1753,
+        "source_valid_raw128": 136,
+        "source_valid_any49": 439,
+        "source_valid_ge3_49": 355,
+        "eligible_raw128_source_valid": 136,
+        "max_fit_mass": 148.35447599133477
+      },
+      "originalroad_depth_agree_centres": {
+        "rows": 361,
+        "material_eligible": 361,
+        "source_valid_raw128": 50,
+        "source_valid_any49": 99,
+        "source_valid_ge3_49": 69,
+        "eligible_raw128_source_valid": 50,
+        "max_fit_mass": 23.93156103192632
+      },
+      "originalroad_unguarded_depth_agree_centres": {
+        "rows": 351,
+        "material_eligible": 351,
+        "source_valid_raw128": 50,
+        "source_valid_any49": 96,
+        "source_valid_ge3_49": 69,
+        "eligible_raw128_source_valid": 50,
+        "max_fit_mass": 23.93156103192632
+      },
+      "front_depth_conflict_centres": {
+        "rows": 71,
+        "material_eligible": 69,
+        "source_valid_raw128": 0,
+        "source_valid_any49": 4,
+        "source_valid_ge3_49": 2,
+        "eligible_raw128_source_valid": 0,
+        "max_fit_mass": 4.875648343935609
+      },
+      "no_scene_depth_centres": {
+        "rows": 1643,
+        "material_eligible": 1549,
+        "source_valid_raw128": 89,
+        "source_valid_any49": 374,
+        "source_valid_ge3_49": 291,
+        "eligible_raw128_source_valid": 89,
+        "max_fit_mass": 148.35447599133477
+      }
+    }
+  },
+  "method": {
+    "basis_count": 6,
+    "RGB_parameter_count": 18,
+    "active_parent_rows": 1270,
+    "all_parent_rows": 10098,
+    "data_pixels_unique_BUILD40": 714546,
+    "data_pixel_states": 1429092,
+    "full_world_edges": [
+      "x=19.8",
+      "x=31.8",
+      "y=2.71"
+    ],
+    "radius_m": 0.4,
+    "source_proxy_bound": 0.15,
+    "source_proxy_final_maxabs": 0.15000000000000002,
+    "colour_change_maxabs": 0.02287485534107131,
+    "basis_outside_exactly_frozen": true,
+    "geometry_alpha_native_env_camera_updates": 0,
+    "ridge": 0.01,
+    "protect_weight": 1.0,
+    "fit_data": "BUILD40 original true road and frozen vehicle guards; same mask for keep/delete. No hidden/deleted road RGB.",
+    "protection": "All pixels outside each fixed fitting mask preserve same n2 rendered parent RGB.",
+    "fit_control": "One fixed constrained convex LS per channel; no grid, no additional colour steps, no held9 method/lambda/budget selection.",
+    "development_boundary": "Raw128 is BUILD, inherited source proxy used199 views, prior scene/test already opened; same-scene development only."
+  },
+  "lifecycle": {
+    "smoke_measurement_forwards": 4,
+    "smoke_validation_forwards": 4,
+    "formal_measurement_forwards": 80,
+    "formal_validation_forwards": 4,
+    "own_total_forwards": 92,
+    "backwards": 0,
+    "normal_equations_restore": "Raw90 keep/delete saved, new process restored checksum and appended raw91 keep/delete before fit entry.",
+    "formal_measurement_seconds_approx": 18.15,
+    "peak_allocated_bytes": 1714577408,
+    "peak_reserved_bytes": 2657091584,
+    "formal_real_render_linear_validation_maxabs": 3.454007526659808e-07
+  },
+  "predicted_BUILD_per_view_data_MSE": {
+    "before": 0.001002528075569159,
+    "after": 0.0010014486835252434,
+    "outside_parent_preservation_MSE": 8.220017936766179e-09,
+    "not_a_heldout_score": true
+  },
+  "material_sha256": "8bb079a9377845643607885e4bd84f417d5de2363e9d31671599b01b3be03840",
+  "material_remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/boundary_material_v1/formal/material_override.npz",
+  "evidence_files": [
+    "roi_registration.json",
+    "blue_parent_audit.json",
+    "n2_material_vs_n2_fixed_blue_comparison.json",
+    "n2_material_vs_R0_fixed_blue_comparison.json",
+    "contract.json",
+    "fit_receipt.json",
+    "linear_validation.json",
+    "receipt.json",
+    "blue_final_metrics.json",
+    "blue_compute_ledger.json",
+    "fivekey_fixed_world_patch_comparison.json",
+    "retrieval_verification.json"
+  ],
+  "image_files": [
+    "blue_frozen_groups_and_bands.png",
+    "n2_material_vs_n2_fixed_blue_comparison.png",
+    "blue_material_components.png"
+  ],
+  "pending": "No additional fit/GPU. Root completes report/whole-scene checks; blue remains unresolved.",
+  "limits": [
+    "Sparse actual scene depth / interpolated measured ground are not dense hidden-road GT",
+    "centre depth/expected depth is not physical first hit; weights do not prove correct ordering",
+    "No marking/shadow accuracy or learned-road-prior/generalization claim",
+    "Blue and red acceptance remain separate; a small MAE gain is insufficient to declare the seam solved"
+  ],
+  "main_engineering_candidate": "n2 + RelativeMip, frozen parent cellfit1000 material; root-owned, not whole-scene adoption",
+  "material_control_decision": "18coef retained as negative/limited appearance control; excluded from main engineering candidate",
+  "primary_state": "delete",
+  "primary_metric_rows": [
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "R0",
+      "count_pixels": 1385,
+      "abs_RGB_error_sum": 43.10045623779297,
+      "abs_RGB_error_mean": 0.031119463965296745,
+      "near_x_paired_bins": 6,
+      "near_x_band_minus_count": 42,
+      "near_x_band_plus_count": 34,
+      "near_x_matched_minus_count": 35,
+      "near_x_matched_plus_count": 33,
+      "near_x_equal_bin_abs_residual_jump": 0.012529406075676283,
+      "clean_road_count": 1340,
+      "clean_road_MAE": 0.0314454585313797,
+      "direct_depth_clean_road_count": 214,
+      "direct_depth_clean_road_MAE": 0.038474828004837036,
+      "raw128_global_protect_count": 128216,
+      "raw128_global_protect_abs_RGB_error_sum": 2265.568359375,
+      "raw128_global_protect_MAE": 0.017669936642050743,
+      "newroad_alphaT_mean": 0.4107460677623749,
+      "oldroad_alphaT_mean": 0.23269562423229218,
+      "static_alphaT_mean": 0.3364439010620117,
+      "global_clip_scope": "49frame dual-state evaluated by parent",
+      "comparison_source": "AA_vs_R0_fixed_blue_comparison.json"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2",
+      "count_pixels": 1385,
+      "abs_RGB_error_sum": 41.93986511230469,
+      "abs_RGB_error_mean": 0.030281489714980125,
+      "near_x_paired_bins": 6,
+      "near_x_band_minus_count": 42,
+      "near_x_band_plus_count": 34,
+      "near_x_matched_minus_count": 35,
+      "near_x_matched_plus_count": 33,
+      "near_x_equal_bin_abs_residual_jump": 0.01082245446741581,
+      "clean_road_count": 1340,
+      "clean_road_MAE": 0.03057943470776081,
+      "direct_depth_clean_road_count": 214,
+      "direct_depth_clean_road_MAE": 0.0374172143638134,
+      "raw128_global_protect_count": 128216,
+      "raw128_global_protect_abs_RGB_error_sum": 2265.809814453125,
+      "raw128_global_protect_MAE": 0.017671817913651466,
+      "newroad_alphaT_mean": 0.4026018977165222,
+      "oldroad_alphaT_mean": 0.23269562423229218,
+      "static_alphaT_mean": 0.3434213399887085,
+      "global_clip_scope": "49frame dual-state evaluated by parent",
+      "comparison_source": "n2_material_vs_n2_fixed_blue_comparison.json"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA",
+      "count_pixels": 1385,
+      "abs_RGB_error_sum": 40.9932746887207,
+      "abs_RGB_error_mean": 0.02959803119301796,
+      "near_x_paired_bins": 6,
+      "near_x_band_minus_count": 42,
+      "near_x_band_plus_count": 34,
+      "near_x_matched_minus_count": 35,
+      "near_x_matched_plus_count": 33,
+      "near_x_equal_bin_abs_residual_jump": 0.009794056376752755,
+      "clean_road_count": 1340,
+      "clean_road_MAE": 0.029845720157027245,
+      "direct_depth_clean_road_count": 214,
+      "direct_depth_clean_road_MAE": 0.03681971877813339,
+      "raw128_global_protect_count": 128216,
+      "raw128_global_protect_abs_RGB_error_sum": 2262.853271484375,
+      "raw128_global_protect_MAE": 0.017648760229349136,
+      "newroad_alphaT_mean": 0.39441072940826416,
+      "oldroad_alphaT_mean": 0.23269562423229218,
+      "static_alphaT_mean": 0.350960910320282,
+      "global_clip_scope": "49frame dual-state evaluated by parent",
+      "comparison_source": "AA_vs_R0_fixed_blue_comparison.json"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2_material",
+      "count_pixels": 1385,
+      "abs_RGB_error_sum": 41.49241638183594,
+      "abs_RGB_error_mean": 0.02995842508971691,
+      "near_x_paired_bins": 6,
+      "near_x_band_minus_count": 42,
+      "near_x_band_plus_count": 34,
+      "near_x_matched_minus_count": 35,
+      "near_x_matched_plus_count": 33,
+      "near_x_equal_bin_abs_residual_jump": 0.010833921919887265,
+      "clean_road_count": 1340,
+      "clean_road_MAE": 0.030245443806052208,
+      "direct_depth_clean_road_count": 214,
+      "direct_depth_clean_road_MAE": 0.036952853202819824,
+      "raw128_global_protect_count": 128216,
+      "raw128_global_protect_abs_RGB_error_sum": 2265.19970703125,
+      "raw128_global_protect_MAE": 0.01766705885529518,
+      "newroad_alphaT_mean": 0.4026018977165222,
+      "oldroad_alphaT_mean": 0.23269562423229218,
+      "static_alphaT_mean": 0.3434213399887085,
+      "global_clip_scope": "49frame dual-state evaluated by parent",
+      "comparison_source": "n2_material_vs_R0_fixed_blue_comparison.json"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA_frozen_material",
+      "count_pixels": 1385,
+      "abs_RGB_error_sum": 40.55290985107422,
+      "abs_RGB_error_mean": 0.029280081391334534,
+      "near_x_paired_bins": 6,
+      "near_x_band_minus_count": 42,
+      "near_x_band_plus_count": 34,
+      "near_x_matched_minus_count": 35,
+      "near_x_matched_plus_count": 33,
+      "near_x_equal_bin_abs_residual_jump": 0.009792360166708628,
+      "clean_road_count": 1340,
+      "clean_road_MAE": 0.029516927897930145,
+      "direct_depth_clean_road_count": 214,
+      "direct_depth_clean_road_MAE": 0.03633444756269455,
+      "raw128_global_protect_count": 128216,
+      "raw128_global_protect_abs_RGB_error_sum": 2262.271484375,
+      "raw128_global_protect_MAE": 0.01764422282576561,
+      "newroad_alphaT_mean": 0.39441072940826416,
+      "oldroad_alphaT_mean": 0.23269562423229218,
+      "static_alphaT_mean": 0.350960910320282,
+      "global_clip_scope": "5key only",
+      "comparison_source": "AA_frozen_material_vs_R0_fixed_blue_comparison.json"
+    }
+  ],
+  "metric_numerator": "Sum over pixels of mean absolute error over3 RGB channels; denominator1385 original-road pixels. No nonroad/foreground pixels added.",
+  "final_near_x_counts": {
+    "raw": 128,
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+    "minus": 42,
+    "plus": 34,
+    "matched_minus": 35,
+    "matched_plus": 33,
+    "matched_tangent_bins": 6
+  },
+  "near_x_residual_jump_definition": "For each fixed .2m tangent bin with>=3 original-eligible pixels per side, difference of mean(render-originalRGB) across sides; mean absolute RGB channel jump, then equal mean over6 bins. Not raw colour difference or a physical geometry metric.",
+  "unsupported_primary": [
+    "far-x no supported pixels",
+    "lateral146/75 side pixels but no>=3/side matched tangent bin; no primary lateral jump score"
+  ],
+  "fivekey_world_support": {
+    "source": "fivekey_fixed_world_patch_comparison.json",
+    "raws": [
+      105,
+      113,
+      128,
+      130,
+      137
+    ],
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "primary_circle_not_redefined": true,
+    "note": "Same predeclared world patch, full original road+guard+raw-ground mapping. Secondary masks built before loading method arrays; this audit occurred after pilot results were open, not independent confirmation.",
+    "lateral_AA_vs_R0_worsens_in_other_four_DELETE_views": true,
+    "KEEP_can_show_opposite_direction": true
+  },
+  "parent_global_metrics_receipt_excerpts": {
+    "n2_full49": [
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18221.72177712341,
+        "mean": 0.01694600925443992
+      },
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 97080.17682030165,
+        "mean": 0.015379164599898748
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18188.42070600973,
+        "mean": 0.016915039609190274
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 97051.01840031223,
+        "mean": 0.015374545406205678
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23997.27536277987,
+        "mean": 0.022317213233359345
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 100109.20325589756,
+        "mean": 0.015859014324695834
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23949.799912066283,
+        "mean": 0.022273061564434118
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 100124.20565760016,
+        "mean": 0.01586139096236518
+      }
+    ],
+    "n2_mip_full49": [
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18221.72177712341,
+        "mean": 0.01694600925443992
+      },
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 97080.17682030165,
+        "mean": 0.015379164599898748
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18163.211740801013,
+        "mean": 0.016891595537167507
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 96979.07953162154,
+        "mean": 0.015363149055900586
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23997.27536277987,
+        "mean": 0.022317213233359345
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 100109.20325589756,
+        "mean": 0.015859014324695834
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23910.59158280861,
+        "mean": 0.022236598231354047
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 99973.4929431357,
+        "mean": 0.015837515484188654
+      }
+    ],
+    "n2_material_full49": [
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18221.72177712341,
+        "mean": 0.01694600925443992
+      },
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 97080.17682030165,
+        "mean": 0.015379164599898748
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 18176.584229936223,
+        "mean": 0.016904031811160267
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 97037.11517041046,
+        "mean": 0.015372342896196604
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23997.27536277987,
+        "mean": 0.022317213233359345
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 100109.20325589756,
+        "mean": 0.015859014324695834
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 1075281,
+        "sum": 23935.255211815547,
+        "mean": 0.02225953514645525
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 6312448,
+        "sum": 100105.29185755286,
+        "mean": 0.015858394692130986
+      }
+    ],
+    "n2_material_pilot": [
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 2264.5164972622006,
+        "mean": 0.01918642765860524
+      },
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11077.186686986835,
+        "mean": 0.017069294105571172
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 2257.9330720824364,
+        "mean": 0.019130648682779673
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11073.833692849581,
+        "mean": 0.017064127338531822
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 3344.824792688167,
+        "mean": 0.028339488360190183
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11285.093172764526,
+        "mean": 0.01738966578950823
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 3336.78729770278,
+        "mean": 0.028271389577832023
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11283.96419230456,
+        "mean": 0.01738792609692607
+      }
+    ],
+    "n2_mip_material_pilot": [
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 2264.5164972622006,
+        "mean": 0.01918642765860524
+      },
+      {
+        "state": "keep",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11077.186686986835,
+        "mean": 0.017069294105571172
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 2254.148547444289,
+        "mean": 0.019098583776968735
+      },
+      {
+        "state": "keep",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11063.728740779883,
+        "mean": 0.01704855620087076
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 3344.824792688167,
+        "mean": 0.028339488360190183
+      },
+      {
+        "state": "delete",
+        "variant": "parent",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11285.093172764526,
+        "mean": 0.01738966578950823
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "observed_road_RGB",
+        "count": 118027,
+        "sum": 3332.050874623157,
+        "mean": 0.02823125958147845
+      },
+      {
+        "state": "delete",
+        "variant": "candidate",
+        "metric": "protected_RGB",
+        "count": 648954,
+        "sum": 11268.78385034393,
+        "mean": 0.017364534081528014
+      }
+    ]
+  },
+  "source_and_fitstate_retrieval": {
+    "status": "PASS_ARCHIVE_AND_ALL_RETRIEVED_MEMBERS_SHA256",
+    "members": 29,
+    "separately_verified_arrays": 6,
+    "archive_bytes": 19865523,
+    "archive_sha256": "b54c61d2291b22cebe8e5f9e93cb3803a9c4d2ee289335a22d60478ea8cd53f0"
+  },
+  "shadows": "Original raw image supplies visible radiance only; no shadow/material decomposition or hidden road shadow GT. A remaining dark static contribution cannot be certified as either a true shadow or a colour bug from these data.",
+  "compute_ledger": "blue_compute_ledger.json",
+  "components_figure": "blue_material_components.png",
+  "final_figure": "blue_final_comparison.png",
+  "world_figure": "blue_fivekey_world_residual_jump.png",
+  "primary_KEEP_separate_source": "raw128_fixed_roi_both_states.json",
+  "primary_both_states": [
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "R0",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 59.566837310791016,
+          "abs_RGB_error_mean": 0.030114680528640747
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 41.19584655761719,
+          "abs_RGB_error_mean": 0.02974429354071617
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 4.67867374420166,
+          "abs_RGB_error_mean": 0.01758899912238121
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 40.30063247680664,
+          "abs_RGB_error_mean": 0.03007509931921959
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 18.370990753173828,
+          "abs_RGB_error_mean": 0.03097974881529808
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 25.553695678710938,
+          "abs_RGB_error_mean": 0.032264769077301025
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 25.063491821289062,
+          "abs_RGB_error_mean": 0.03289172053337097
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 8.074102401733398,
+          "abs_RGB_error_mean": 0.036534398794174194
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.936466217041016,
+          "abs_RGB_error_mean": 0.03708628937602043
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.6129374504089355,
+          "abs_RGB_error_mean": 0.04714903607964516
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.11430004239082336,
+          "abs_RGB_error_mean": 0.03810001537203789
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 31.472091674804688,
+          "abs_RGB_error_mean": 0.02927636355161667
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9402045011520386,
+          "abs_RGB_error_mean": 0.022385820746421814
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.5108858942985535,
+          "abs_RGB_error_mean": 0.01502605527639389
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 6.143105983734131,
+          "abs_RGB_error_mean": 0.04207606986165047
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.62160325050354,
+          "abs_RGB_error_mean": 0.03495471179485321
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2244.0126953125,
+          "abs_RGB_error_mean": 0.017501814290881157
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.009747075227399668,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.008372355252504349
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.021295301616191864
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.008281282149255276
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.006064971908926964
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.010642257519066334
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0038262829184532166
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/128/r0_keep.npz",
+      "source_sha256": "302e469b6eb4898a0fd7fbcf322f60a86934b11805ffc56eebc5d9ba88f89627"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 58.180145263671875,
+          "abs_RGB_error_mean": 0.029413621872663498
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 40.04154586791992,
+          "abs_RGB_error_mean": 0.028910864144563675
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 4.630725383758545,
+          "abs_RGB_error_mean": 0.017408741638064384
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 39.140533447265625,
+          "abs_RGB_error_mean": 0.029209353029727936
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 18.13860321044922,
+          "abs_RGB_error_mean": 0.03058786317706108
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 24.663036346435547,
+          "abs_RGB_error_mean": 0.031140197068452835
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 24.171062469482422,
+          "abs_RGB_error_mean": 0.03172055259346962
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.848897933959961,
+          "abs_RGB_error_mean": 0.035515375435352325
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.710083961486816,
+          "abs_RGB_error_mean": 0.0360284298658371
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.5334224700927734,
+          "abs_RGB_error_mean": 0.041032496839761734
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.09254433959722519,
+          "abs_RGB_error_mean": 0.03084811381995678
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 30.644268035888672,
+          "abs_RGB_error_mean": 0.028506295755505562
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9186695218086243,
+          "abs_RGB_error_mean": 0.02187308296561241
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.5061705112457275,
+          "abs_RGB_error_mean": 0.014887368306517601
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 6.021721363067627,
+          "abs_RGB_error_mean": 0.041244667023420334
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.1719937324523926,
+          "abs_RGB_error_mean": 0.028959916904568672
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2244.121826171875,
+          "abs_RGB_error_mean": 0.017502665519714355
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.008037736794600884,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.008500649593770504
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.010489112697541714
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.009168012998998165
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004559336695820093
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.01135858055204153
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004150728229433298
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_full49/128/candidate_keep.npz",
+      "source_sha256": "1ffbdf8638ad95dd528e215402d1d7b1e8cd7e05679b08eaf59a09fc9c5bfa2d"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 56.529022216796875,
+          "abs_RGB_error_mean": 0.028578879311680794
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 39.13286590576172,
+          "abs_RGB_error_mean": 0.028254777193069458
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 4.633358001708984,
+          "abs_RGB_error_mean": 0.017418639734387398
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 38.19282531738281,
+          "abs_RGB_error_mean": 0.02850210852921009
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 17.39615821838379,
+          "abs_RGB_error_mean": 0.02933584898710251
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 23.81342887878418,
+          "abs_RGB_error_mean": 0.030067460611462593
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 23.322378158569336,
+          "abs_RGB_error_mean": 0.030606795102357864
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.726498126983643,
+          "abs_RGB_error_mean": 0.034961529076099396
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.593091011047363,
+          "abs_RGB_error_mean": 0.035481732338666916
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.4637061357498169,
+          "abs_RGB_error_mean": 0.03566970303654671
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.07522499561309814,
+          "abs_RGB_error_mean": 0.025074997916817665
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 29.945026397705078,
+          "abs_RGB_error_mean": 0.02785583771765232
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.8536205291748047,
+          "abs_RGB_error_mean": 0.02032429911196232
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.44884467124938965,
+          "abs_RGB_error_mean": 0.013201314024627209
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.975940704345703,
+          "abs_RGB_error_mean": 0.0409311018884182
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 1.9015698432922363,
+          "abs_RGB_error_mean": 0.025354264304041862
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2241.50732421875,
+          "abs_RGB_error_mean": 0.017482275143265724
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.007119644006403784,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007310574408620596
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0066284858621656895
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.010067804716527462
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0090046850964427
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007023594807833433
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0026827191468328238
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_mip_full49/128/candidate_keep.npz",
+      "source_sha256": "a272ffff98af8b078b82499735a565726c572a8ec556e619cb8caf179df17a62"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2_material",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 57.64498519897461,
+          "abs_RGB_error_mean": 0.029143067076802254
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 39.593257904052734,
+          "abs_RGB_error_mean": 0.028587190434336662
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 4.630753040313721,
+          "abs_RGB_error_mean": 0.01740884594619274
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 38.69221115112305,
+          "abs_RGB_error_mean": 0.02887478470802307
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 18.051727294921875,
+          "abs_RGB_error_mean": 0.03044136054813862
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 24.335681915283203,
+          "abs_RGB_error_mean": 0.030726870521903038
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 23.843669891357422,
+          "abs_RGB_error_mean": 0.03129090368747711
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.749326705932617,
+          "abs_RGB_error_mean": 0.035064827650785446
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.610517501831055,
+          "abs_RGB_error_mean": 0.03556316718459129
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.5208634734153748,
+          "abs_RGB_error_mean": 0.040066421031951904
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.08975537866353989,
+          "abs_RGB_error_mean": 0.029918460175395012
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 30.310901641845703,
+          "abs_RGB_error_mean": 0.028196187689900398
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9192624688148499,
+          "abs_RGB_error_mean": 0.021887201815843582
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.5102019906044006,
+          "abs_RGB_error_mean": 0.015005940571427345
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.924682140350342,
+          "abs_RGB_error_mean": 0.04058001562952995
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.119680643081665,
+          "abs_RGB_error_mean": 0.028262408450245857
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2243.53857421875,
+          "abs_RGB_error_mean": 0.017498116940259933
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.00804278370924294,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.008542264811694622
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.010401048697531223
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.00913788191974163
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004358618054538965
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.011545061133801937
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0042718276381492615
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_material_full49/128/candidate_keep.npz",
+      "source_sha256": "4678a1890124112ea1f43cac86cb3646152b03e01b15eded04a42c2e91c73bf4"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA_frozen_material",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 56.011383056640625,
+          "abs_RGB_error_mean": 0.028317181393504143
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 38.6910514831543,
+          "abs_RGB_error_mean": 0.027935776859521866
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 4.633386611938477,
+          "abs_RGB_error_mean": 0.017418745905160904
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 37.7509765625,
+          "abs_RGB_error_mean": 0.028172370046377182
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 17.320331573486328,
+          "abs_RGB_error_mean": 0.029207978397607803
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 23.492084503173828,
+          "abs_RGB_error_mean": 0.029661722481250763
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 23.000999450683594,
+          "abs_RGB_error_mean": 0.030185038223862648
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.6223978996276855,
+          "abs_RGB_error_mean": 0.03449048846960068
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.488994598388672,
+          "abs_RGB_error_mean": 0.03499530255794525
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.45514461398124695,
+          "abs_RGB_error_mean": 0.03501112386584282
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.07508065551519394,
+          "abs_RGB_error_mean": 0.02502688579261303
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 29.616016387939453,
+          "abs_RGB_error_mean": 0.027549782767891884
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.8532246351242065,
+          "abs_RGB_error_mean": 0.02031487226486206
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.4493803083896637,
+          "abs_RGB_error_mean": 0.013217068277299404
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.867884635925293,
+          "abs_RGB_error_mean": 0.04019099101424217
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 1.873929500579834,
+          "abs_RGB_error_mean": 0.024985726922750473
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2240.947021484375,
+          "abs_RGB_error_mean": 0.01747790537774563
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.007112209064265092,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007347607985138893
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0065780519507825375
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.01004914939403534
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.008793722838163376
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007215643767267466
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.002689078450202942
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_mip_material_pilot/128/candidate_keep.npz",
+      "source_sha256": "fdf505063f3c77c2821052b76d68fb77bbeed94141a3b48b60a404c87844e45f"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "R0",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 63.13507843017578,
+          "abs_RGB_error_mean": 0.03191864490509033
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 43.10045623779297,
+          "abs_RGB_error_mean": 0.031119462102651596
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 5.719940185546875,
+          "abs_RGB_error_mean": 0.02150353416800499
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 42.13691329956055,
+          "abs_RGB_error_mean": 0.0314454585313797
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 20.034618377685547,
+          "abs_RGB_error_mean": 0.03378519043326378
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 26.309627532958984,
+          "abs_RGB_error_mean": 0.03321922570466995
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 25.902244567871094,
+          "abs_RGB_error_mean": 0.03399244695901871
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 8.34857177734375,
+          "abs_RGB_error_mean": 0.037776343524456024
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 8.233613014221191,
+          "abs_RGB_error_mean": 0.038474828004837036
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.6199358701705933,
+          "abs_RGB_error_mean": 0.04768737405538559
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.11430004239082336,
+          "abs_RGB_error_mean": 0.03810001537203789
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 32.99369430541992,
+          "abs_RGB_error_mean": 0.030691808089613914
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9462149143218994,
+          "abs_RGB_error_mean": 0.02252892591059208
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.42587804794311523,
+          "abs_RGB_error_mean": 0.012525824829936028
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 6.143839359283447,
+          "abs_RGB_error_mean": 0.042081091552972794
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.62160325050354,
+          "abs_RGB_error_mean": 0.03495471179485321
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2265.568359375,
+          "abs_RGB_error_mean": 0.017669934779405594
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.012529406075676283,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.02506634034216404
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.021295301616191864
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.008281282149255276
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.006064971908926964
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.010642257519066334
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0038262829184532166
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/128/r0_delete.npz",
+      "source_sha256": "c80f1c538ec7b52d92b96524db9c24510fb796487714e6d8cd6e22edecaebd97"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 61.722938537597656,
+          "abs_RGB_error_mean": 0.031204720959067345
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 41.93986511230469,
+          "abs_RGB_error_mean": 0.030281491577625275
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 5.651543617248535,
+          "abs_RGB_error_mean": 0.021246405318379402
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 40.9764404296875,
+          "abs_RGB_error_mean": 0.03057943284511566
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 19.7830753326416,
+          "abs_RGB_error_mean": 0.033361002802848816
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 25.424503326416016,
+          "abs_RGB_error_mean": 0.032101646065711975
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 25.020065307617188,
+          "abs_RGB_error_mean": 0.0328347310423851
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 8.129307746887207,
+          "abs_RGB_error_mean": 0.03678419813513756
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 8.007285118103027,
+          "abs_RGB_error_mean": 0.037417221814394
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.5465760231018066,
+          "abs_RGB_error_mean": 0.04204430803656578
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.09254433959722519,
+          "abs_RGB_error_mean": 0.03084811381995678
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 32.14747619628906,
+          "abs_RGB_error_mean": 0.029904628172516823
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9246671795845032,
+          "abs_RGB_error_mean": 0.022015884518623352
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.4200194478034973,
+          "abs_RGB_error_mean": 0.012353513389825821
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 6.0224432945251465,
+          "abs_RGB_error_mean": 0.04124961048364639
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.1719937324523926,
+          "abs_RGB_error_mean": 0.028959916904568672
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2265.809814453125,
+          "abs_RGB_error_mean": 0.017671817913651466
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.01082245446741581,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.025208955630660057
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.010489112697541714
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.009168012998998165
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004559336695820093
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.01135858055204153
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004150728229433298
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_full49/128/candidate_delete.npz",
+      "source_sha256": "f396d02dd6448f9a11de5d55ed74234a967bc60f1b54e2304578c0fa7ed11166"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 59.972164154052734,
+          "abs_RGB_error_mean": 0.03031959757208824
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 40.9932746887207,
+          "abs_RGB_error_mean": 0.02959803305566311
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 5.618150234222412,
+          "abs_RGB_error_mean": 0.021120864897966385
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 39.993263244628906,
+          "abs_RGB_error_mean": 0.029845718294382095
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 18.978891372680664,
+          "abs_RGB_error_mean": 0.03200487419962883
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 24.528308868408203,
+          "abs_RGB_error_mean": 0.03097008727490902
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 24.134042739868164,
+          "abs_RGB_error_mean": 0.03167197108268738
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.991183280944824,
+          "abs_RGB_error_mean": 0.036159198731184006
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.879420280456543,
+          "abs_RGB_error_mean": 0.03681972250342369
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.47802817821502686,
+          "abs_RGB_error_mean": 0.03677139803767204
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.07522499561309814,
+          "abs_RGB_error_mean": 0.025074997916817665
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 31.424880981445312,
+          "abs_RGB_error_mean": 0.02923244796693325
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.8594937920570374,
+          "abs_RGB_error_mean": 0.020464137196540833
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.3629353642463684,
+          "abs_RGB_error_mean": 0.010674569755792618
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.976654529571533,
+          "abs_RGB_error_mean": 0.04093598946928978
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 1.9015698432922363,
+          "abs_RGB_error_mean": 0.025354264304041862
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2262.853271484375,
+          "abs_RGB_error_mean": 0.017648758366703987
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.009794056376752755,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.023357048630714417
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0066284858621656895
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.010067804716527462
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0090046850964427
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007023594807833433
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0026827191468328238
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_mip_full49/128/candidate_delete.npz",
+      "source_sha256": "cb7c46aa47bf81fcd26d5d791226c909fe7c76afd20d7b0df3aee9aa28145db1"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "n2_material",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 61.188987731933594,
+          "abs_RGB_error_mean": 0.030934777110815048
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 41.49241638183594,
+          "abs_RGB_error_mean": 0.029958423227071762
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 5.651800155639648,
+          "abs_RGB_error_mean": 0.021247368305921555
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 40.528892517089844,
+          "abs_RGB_error_mean": 0.03024544194340706
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 19.696569442749023,
+          "abs_RGB_error_mean": 0.033215124160051346
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 25.097980499267578,
+          "abs_RGB_error_mean": 0.031689368188381195
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 24.69344139099121,
+          "abs_RGB_error_mean": 0.03240609169006348
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 8.029808044433594,
+          "abs_RGB_error_mean": 0.036333974450826645
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.907910346984863,
+          "abs_RGB_error_mean": 0.036952853202819824
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.534017026424408,
+          "abs_RGB_error_mean": 0.04107823222875595
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.08975537866353989,
+          "abs_RGB_error_mean": 0.029918460175395012
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 31.81488037109375,
+          "abs_RGB_error_mean": 0.029595237225294113
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.9252628087997437,
+          "abs_RGB_error_mean": 0.022030066698789597
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.42464160919189453,
+          "abs_RGB_error_mean": 0.012489459477365017
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.925404071807861,
+          "abs_RGB_error_mean": 0.04058495908975601
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 2.119680643081665,
+          "abs_RGB_error_mean": 0.028262408450245857
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2265.19970703125,
+          "abs_RGB_error_mean": 0.01766705885529518
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.010833921919887265,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.02528909407556057
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.010401048697531223
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.00913788191974163
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.004358618054538965
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.011545061133801937
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0042718276381492615
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_material_full49/128/candidate_delete.npz",
+      "source_sha256": "8e7102b55b2c32bc83202f72b8cde6f7ce898cf38e1e0d6083db950e5f25bbc9"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "PRIMARY_FIXED_APPROXIMATE_USER_BBOX",
+      "method": "AA_frozen_material",
+      "regions": {
+        "roi": {
+          "count_pixels": 1978,
+          "abs_RGB_error_sum": 59.456275939941406,
+          "abs_RGB_error_mean": 0.030058784410357475
+        },
+        "original_road": {
+          "count_pixels": 1385,
+          "abs_RGB_error_sum": 40.55290985107422,
+          "abs_RGB_error_mean": 0.029280079528689384
+        },
+        "guard": {
+          "count_pixels": 266,
+          "abs_RGB_error_sum": 5.618490695953369,
+          "abs_RGB_error_mean": 0.021122146397829056
+        },
+        "clean_original_road": {
+          "count_pixels": 1340,
+          "abs_RGB_error_sum": 39.55268859863281,
+          "abs_RGB_error_mean": 0.029516931623220444
+        },
+        "nonroad": {
+          "count_pixels": 593,
+          "abs_RGB_error_sum": 18.903364181518555,
+          "abs_RGB_error_mean": 0.031877510249614716
+        },
+        "mapped_original_road": {
+          "count_pixels": 792,
+          "abs_RGB_error_sum": 24.208412170410156,
+          "abs_RGB_error_mean": 0.030566176399588585
+        },
+        "mapped_clean_original_road": {
+          "count_pixels": 762,
+          "abs_RGB_error_sum": 23.813934326171875,
+          "abs_RGB_error_mean": 0.03125188127160072
+        },
+        "depth_qualified_original_road": {
+          "count_pixels": 221,
+          "abs_RGB_error_sum": 7.887413024902344,
+          "abs_RGB_error_mean": 0.03568965196609497
+        },
+        "depth_qualified_clean_original_road": {
+          "count_pixels": 214,
+          "abs_RGB_error_sum": 7.775571346282959,
+          "abs_RGB_error_mean": 0.03633444383740425
+        },
+        "front_conflict_original_road": {
+          "count_pixels": 13,
+          "abs_RGB_error_sum": 0.4694666564464569,
+          "abs_RGB_error_mean": 0.036112818866968155
+        },
+        "behind_conflict_original_road": {
+          "count_pixels": 3,
+          "abs_RGB_error_sum": 0.07508065551519394,
+          "abs_RGB_error_mean": 0.02502688579261303
+        },
+        "no_scene_return_original_road": {
+          "count_pixels": 1075,
+          "abs_RGB_error_sum": 31.09699249267578,
+          "abs_RGB_error_mean": 0.028927434235811234
+        },
+        "band_near_x_minus": {
+          "count_pixels": 42,
+          "abs_RGB_error_sum": 0.8591001033782959,
+          "abs_RGB_error_mean": 0.020454764366149902
+        },
+        "band_near_x_plus": {
+          "count_pixels": 34,
+          "abs_RGB_error_sum": 0.3644985258579254,
+          "abs_RGB_error_mean": 0.010720544494688511
+        },
+        "band_far_x_minus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_far_x_plus": {
+          "count_pixels": 0,
+          "abs_RGB_error_sum": 0.0,
+          "abs_RGB_error_mean": null
+        },
+        "band_lateral_y_minus": {
+          "count_pixels": 146,
+          "abs_RGB_error_sum": 5.868598937988281,
+          "abs_RGB_error_mean": 0.04019588232040405
+        },
+        "band_lateral_y_plus": {
+          "count_pixels": 75,
+          "abs_RGB_error_sum": 1.873929500579834,
+          "abs_RGB_error_mean": 0.024985726922750473
+        },
+        "global_protected": {
+          "count_pixels": 128216,
+          "abs_RGB_error_sum": 2262.271484375,
+          "abs_RGB_error_mean": 0.01764422096312046
+        }
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 34,
+          "paired_bins": 6,
+          "matched_minus_count": 35,
+          "matched_plus_count": 33,
+          "equal_bin_abs_residual_jump_mean": 0.009792360166708628,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.02342851459980011
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0065780519507825375
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.01004914939403534
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.008793722838163376
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007215643767267466
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.002689078450202942
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 146,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "equal_bin_abs_residual_jump_mean": null,
+          "bins": []
+        }
+      },
+      "source_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/results/n2_mip_material_pilot/128/candidate_delete.npz",
+      "source_sha256": "cf281f487c7557b212c3fe348865a04299c3807a4e4d34103ebffef88b524560"
+    }
+  ],
+  "secondary_world_boundary_rows": [
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.002514420348840455
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.008962359221186489
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.002864341794823607
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.008056248305365443
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0034296484858108065
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.007796615711413324
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0027461921951423087
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.00783813331509009
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0033320764584156373
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.0076324827678035945
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.002725209817678357
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.011333846428897232
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0028937896713614464
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.016457277350127697
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.004227475593021761
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.01993421238148585
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0027720103971660137
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.01658656884683296
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 690,
+      "band_minus_count": 39,
+      "band_plus_count": 40,
+      "paired_bins": 6,
+      "matched_minus_count": 38,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.004130237056718518
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 690,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 690,
+      "band_minus_count": 137,
+      "band_plus_count": 135,
+      "paired_bins": 8,
+      "matched_minus_count": 51,
+      "matched_plus_count": 45,
+      "equal_bin_abs_residual_jump_mean": 0.019598882441641763
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.00724456537448402
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.011535583665439239
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.006461513378391308
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.012737685853304962
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.00512099201192281
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.01529454435997953
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.006393192252809448
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.012164121338476738
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.00505978027026036
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.01458778022788465
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.008697785420476325
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.011436118724911163
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.007958445980745767
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.01244299664782981
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.006464751753290849
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.015002591884694993
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.007884405736279274
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.01181259968628486
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 641,
+      "band_minus_count": 43,
+      "band_plus_count": 42,
+      "paired_bins": 7,
+      "matched_minus_count": 34,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.006398540272909615
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 641,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 641,
+      "band_minus_count": 107,
+      "band_plus_count": 108,
+      "paired_bins": 6,
+      "matched_minus_count": 41,
+      "matched_plus_count": 34,
+      "equal_bin_abs_residual_jump_mean": 0.014277375536039472
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0094672767057394
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.00777159514836967
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.0068472899923411506
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.007784202617282669
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.006846226324948172
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.012249607554016015
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.010556312821184596
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.009521702362690121
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.010575340827926993
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 772,
+      "band_minus_count": 43,
+      "band_plus_count": 35,
+      "paired_bins": 6,
+      "matched_minus_count": 36,
+      "matched_plus_count": 33,
+      "equal_bin_abs_residual_jump_mean": 0.009526377427391708
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 772,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 772,
+      "band_minus_count": 150,
+      "band_plus_count": 75,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.008808334212517366
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009026641595280833
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.007746766175841913
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009598620856801668
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.006321901935734786
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.011908282862148352
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.007755756872938946
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009604203540624844
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.006289371682214551
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.011727487927095758
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.009060469543328509
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009026641595280833
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.007998468150617555
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009598620856801668
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.006635680940235034
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.011908282862148352
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.008007466531125829
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.009604203540624844
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 1002,
+      "band_minus_count": 50,
+      "band_plus_count": 61,
+      "paired_bins": 8,
+      "matched_minus_count": 41,
+      "matched_plus_count": 56,
+      "equal_bin_abs_residual_jump_mean": 0.006603180183446966
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 1002,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 1002,
+      "band_minus_count": 171,
+      "band_plus_count": 140,
+      "paired_bins": 9,
+      "matched_minus_count": 56,
+      "matched_plus_count": 53,
+      "equal_bin_abs_residual_jump_mean": 0.011727487927095758
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008139443748708194
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.010415041955032697
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.00822194458063071
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.01322006901803737
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008141187873358527
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.015788812939232837
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008285476127639413
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.013124139215021084
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008234300767071545
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.015515203886510183
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008367117115994915
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "R0",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.010415041955032697
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008439425708881268
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.01322006901803737
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008378880641733607
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.015788812939232837
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008501489025851091
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "n2_material",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.013124139215021084
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "near_x",
+      "road_count": 1447,
+      "band_minus_count": 92,
+      "band_plus_count": 87,
+      "paired_bins": 12,
+      "matched_minus_count": 90,
+      "matched_plus_count": 76,
+      "equal_bin_abs_residual_jump_mean": 0.008470591817361614
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "far_x",
+      "road_count": 1447,
+      "band_minus_count": 0,
+      "band_plus_count": 0,
+      "paired_bins": 0,
+      "matched_minus_count": 0,
+      "matched_plus_count": 0,
+      "equal_bin_abs_residual_jump_mean": null
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domain": "SECONDARY_PREDECLARED_WORLD_PATCH",
+      "method": "AA_frozen_material",
+      "boundary": "lateral_y",
+      "road_count": 1447,
+      "band_minus_count": 200,
+      "band_plus_count": 200,
+      "paired_bins": 15,
+      "matched_minus_count": 101,
+      "matched_plus_count": 113,
+      "equal_bin_abs_residual_jump_mean": 0.015515203886510183
+    }
+  ],
+  "cards_reference_label": "n2 (fixed geometry, parent material)",
+  "cards_candidate_label": "n2 +18coef material control",
+  "cards_state": "delete",
+  "cards_raw": 128
+}

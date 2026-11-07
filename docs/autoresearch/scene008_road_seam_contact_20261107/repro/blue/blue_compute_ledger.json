@@ -1,0 +1,106 @@
+{
+  "schema": "BLUE_COMPUTE_LEDGER_V1",
+  "own_GPU": {
+    "smoke_basis_measurement": 4,
+    "smoke_material_real_render_validation": 4,
+    "formal_basis_measurement": 80,
+    "formal_material_real_render_validation": 4,
+    "total_forwards": 92,
+    "total_backwards": 0,
+    "GPU_training_steps": 0,
+    "CPU_constrained_QP_channels": 3,
+    "formal_measurement_seconds_approx": 18.15,
+    "peak_allocated_bytes": 1714577408,
+    "peak_reserved_bytes": 2657091584,
+    "formal_linear_prediction_real_render_maxabs": 3.454007526659808e-07
+  },
+  "own_CPU": {
+    "fivekey_world_patch_audit_seconds": 25.03580665588379,
+    "colour_hyperparameter_searches": 0,
+    "note": "Other local audit, plotting, QP, hashing and transfer wall time was not instrumented; not invented."
+  },
+  "external_joint_evaluation_receipts": [
+    {
+      "name": "n2_full49",
+      "forwards": 245,
+      "seconds": 41.26741123199463,
+      "raw_count": 49,
+      "attribution": "Parent joint blue/red/protection evaluation, not additional blue fitting. Do not double-count in root ledger."
+    },
+    {
+      "name": "n2_mip_full49",
+      "forwards": 245,
+      "seconds": 42.07157325744629,
+      "raw_count": 49,
+      "attribution": "Parent joint blue/red/protection evaluation, not additional blue fitting. Do not double-count in root ledger."
+    },
+    {
+      "name": "n2_material_full49",
+      "forwards": 343,
+      "seconds": 62.02035617828369,
+      "raw_count": 49,
+      "attribution": "Parent joint blue/red/protection evaluation, not additional blue fitting. Do not double-count in root ledger."
+    },
+    {
+      "name": "n2_material_pilot",
+      "forwards": 35,
+      "seconds": 16.333231210708618,
+      "raw_count": 5,
+      "attribution": "Parent joint blue/red/protection evaluation, not additional blue fitting. Do not double-count in root ledger."
+    },
+    {
+      "name": "n2_mip_material_pilot",
+      "forwards": 35,
+      "seconds": 16.691879272460938,
+      "raw_count": 5,
+      "attribution": "Parent joint blue/red/protection evaluation, not additional blue fitting. Do not double-count in root ledger."
+    }
+  ],
+  "retrieval_verification": {
+    "status": "PASS_ARCHIVE_AND_ALL_RETRIEVED_MEMBERS_SHA256",
+    "archive_sha256": "b54c61d2291b22cebe8e5f9e93cb3803a9c4d2ee289335a22d60478ea8cd53f0",
+    "archive_bytes": 19865523,
+    "verified_members": [
+      "blue/boundary_material_v1/contract.json",
+      "blue/boundary_material_v1/formal/fit_receipt.json",
+      "blue/boundary_material_v1/formal/linear_validation.json",
+      "blue/boundary_material_v1/formal/material_override.npz",
+      "blue/boundary_material_v1/formal/normal_equations.npz",
+      "blue/boundary_material_v1/formal/probe_090_delete.npz",
+      "blue/boundary_material_v1/formal/probe_090_keep.npz",
+      "blue/boundary_material_v1/formal/probe_091_delete.npz",
+      "blue/boundary_material_v1/formal/probe_091_keep.npz",
+      "blue/boundary_material_v1/formal/receipt.json",
+      "blue/boundary_material_v1/prepared.npz",
+      "blue/boundary_material_v1/smoke/fit_receipt.json",
+      "blue/boundary_material_v1/smoke/linear_validation.json",
+      "blue/boundary_material_v1/smoke/material_override.npz",
+      "blue/boundary_material_v1/smoke/normal_equations.npz",
+      "blue/boundary_material_v1/smoke/probe_090_delete.npz",
+      "blue/boundary_material_v1/smoke/probe_090_keep.npz",
+      "blue/boundary_material_v1/smoke/probe_091_delete.npz",
+      "blue/boundary_material_v1/smoke/probe_091_keep.npz",
+      "blue/boundary_material_v1/smoke/receipt.json",
+      "blue/boundary_material_v1/source_snapshot/boundary_material_control.py",
+      "blue/boundary_material_v1/source_snapshot/refined_road_runtime.py",
+      "blue/boundary_material_v1/source_snapshot/world_surface_sampling.py",
+      "blue/boundary_material_v1/supervision_masks.npz",
+      "results/n2_full49/receipt.json",
+      "results/n2_material_full49/receipt.json",
+      "results/n2_material_pilot/receipt.json",
+      "results/n2_mip_full49/receipt.json",
+      "results/n2_mip_material_pilot/receipt.json"
+    ],
+    "verified_individual_arrays": [
+      "results/n2_full49/128/candidate_delete.npz",
+      "results/n2_mip_full49/128/candidate_delete.npz",
+      "results/n2_material_full49/128/candidate_delete.npz",
+      "results/n2_mip_material_pilot/128/candidate_delete.npz",
+      "diagnostic/layers_v1/128/r0_delete.npz",
+      "diagnostic/layers_v1/128/observations.npz"
+    ],
+    "report_exclusion": "Private fitstate archive contains actual observation probes for replay; public report should link light metadata/plots/code and material, not bundle these probes."
+  },
+  "no_additional_GPU_after_parent_stop": true,
+  "power_operations": 0
+}

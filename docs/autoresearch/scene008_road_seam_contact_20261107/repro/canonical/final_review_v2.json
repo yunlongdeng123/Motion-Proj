@@ -1,0 +1,1137 @@
+{
+  "schema": "CANONICAL_GEOMETRY_SUPPORT_REVIEW_ADDENDUM_V2",
+  "status": "GEOMETRY_SUPPORT_RESEARCH_CANDIDATE",
+  "supersedes_review": "final_review.json v1; retained without changing any canonical source bytes",
+  "adoption_claim": false,
+  "canonical_asset_sha256": "53de3cb31be234865995766eaeb11a5fced59160456bb139b08cdb3eb0031baf",
+  "scene_manifest_sha256": "48ac926aafb1cb07ddd98c4ee6c9ffdc7c4501076a1cdbc7ffb99cc9736e84c7",
+  "replay_receipt_sha256": "1dc8adf93581d7ec8c9a9011f17e64f27bc8fc59c6804ecbfe568aadb644ce21",
+  "canonical_manifest_asset_and_parity_unmodified": true,
+  "blue_crossframe_seam_status": "UNRESOLVED_WITH_CROSSFRAME_BOUNDARY_REGRESSIONS",
+  "user_screenshot_state": "delete",
+  "blue_conclusion": "DELETE: raw128 near-x improves (.0122496076 to .0095217024, 6 bins), but raw105 lateral-y (.0113338464 to .0199342124, 8 bins) and raw137 lateral-y (.0104150420 to .0157888129, 15 bins) regress. No crossframe seam-resolved claim. KEEP is reported separately below.",
+  "blue_primary_source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_fixed_world_patch_comparison.json",
+  "blue_primary_source_sha256": "d0bb8034d0909b11a94a0f1cfc7f8a2c3a9d1d8d1a80ec2ed851be4e7170af91",
+  "blue_raw128_material_control_source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/blue_public_summary.json",
+  "blue_raw128_material_control_source_sha256": "492ab5393d977a113e239bb08d21ff217e8ce4bd0f5f5f8a8f65b1760379ad17",
+  "boundary_evidence": [
+    {
+      "raw": 105,
+      "state": "keep",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 39,
+        "plus": 40
+      },
+      "side_pixel_count_total": 79,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 9,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 16,
+          "minus_count": 8,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.002514420348840455,
+      "AA_residual_jump": 0.0034296484858108065,
+      "change": 0.0009152281369703514,
+      "status": "regression"
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 137,
+        "plus": 135
+      },
+      "side_pixel_count_total": 272,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 95,
+          "minus_count": 9,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 99,
+          "minus_count": 9,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 104,
+          "minus_count": 7,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 106,
+          "minus_count": 4,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 108,
+          "minus_count": 5,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 111,
+          "minus_count": 7,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 122,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 133,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 8,
+      "R0_residual_jump": 0.008962359221186489,
+      "AA_residual_jump": 0.007796615711413324,
+      "change": -0.001165743509773165,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 39,
+        "plus": 40
+      },
+      "side_pixel_count_total": 79,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 9,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 16,
+          "minus_count": 8,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.002725209817678357,
+      "AA_residual_jump": 0.004227475593021761,
+      "change": 0.0015022657753434037,
+      "status": "regression"
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 137,
+        "plus": 135
+      },
+      "side_pixel_count_total": 272,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 95,
+          "minus_count": 9,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 99,
+          "minus_count": 9,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 104,
+          "minus_count": 7,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 106,
+          "minus_count": 4,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 108,
+          "minus_count": 5,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 111,
+          "minus_count": 7,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 122,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 133,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 8,
+      "R0_residual_jump": 0.011333846428897232,
+      "AA_residual_jump": 0.01993421238148585,
+      "change": 0.008600365952588618,
+      "status": "regression"
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 43,
+        "plus": 42
+      },
+      "side_pixel_count_total": 85,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 8,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 4,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 4,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 5,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 7,
+      "R0_residual_jump": 0.00724456537448402,
+      "AA_residual_jump": 0.00512099201192281,
+      "change": -0.0021235733625612095,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 107,
+        "plus": 108
+      },
+      "side_pixel_count_total": 215,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 97,
+          "minus_count": 9,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 8,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 112,
+          "minus_count": 7,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 114,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 118,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 121,
+          "minus_count": 3,
+          "plus_count": 7
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.011535583665439239,
+      "AA_residual_jump": 0.01529454435997953,
+      "change": 0.003758960694540292,
+      "status": "regression"
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 43,
+        "plus": 42
+      },
+      "side_pixel_count_total": 85,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 8,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 4,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 4,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 5,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 7,
+      "R0_residual_jump": 0.008697785420476325,
+      "AA_residual_jump": 0.006464751753290849,
+      "change": -0.002233033667185476,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 107,
+        "plus": 108
+      },
+      "side_pixel_count_total": 215,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 97,
+          "minus_count": 9,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 8,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 112,
+          "minus_count": 7,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 114,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 118,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 121,
+          "minus_count": 3,
+          "plus_count": 7
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.011436118724911163,
+      "AA_residual_jump": 0.015002591884694993,
+      "change": 0.003566473159783831,
+      "status": "regression"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 43,
+        "plus": 35
+      },
+      "side_pixel_count_total": 78,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 6,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 8,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 9,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 5,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.0094672767057394,
+      "AA_residual_jump": 0.0068472899923411506,
+      "change": -0.002619986713398249,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 150,
+        "plus": 75
+      },
+      "side_pixel_count_total": 225,
+      "paired_bin_pixel_counts": [],
+      "paired_tangent_bins": 0,
+      "R0_residual_jump": null,
+      "AA_residual_jump": null,
+      "change": null,
+      "status": "unsupported"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 43,
+        "plus": 35
+      },
+      "side_pixel_count_total": 78,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 6,
+          "minus_count": 5,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 8,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 9,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 5,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 6,
+      "R0_residual_jump": 0.012249607554016015,
+      "AA_residual_jump": 0.009521702362690121,
+      "change": -0.0027279051913258936,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 150,
+        "plus": 75
+      },
+      "side_pixel_count_total": 225,
+      "paired_bin_pixel_counts": [],
+      "paired_tangent_bins": 0,
+      "R0_residual_jump": null,
+      "AA_residual_jump": null,
+      "change": null,
+      "status": "unsupported"
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 50,
+        "plus": 61
+      },
+      "side_pixel_count_total": 111,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 6,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 7,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 8,
+          "minus_count": 6,
+          "plus_count": 11
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 5,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 4,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 3,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 8,
+      "R0_residual_jump": 0.008808334212517366,
+      "AA_residual_jump": 0.006321901935734786,
+      "change": -0.0024864322767825797,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 171,
+        "plus": 140
+      },
+      "side_pixel_count_total": 311,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 96,
+          "minus_count": 9,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 98,
+          "minus_count": 4,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 99,
+          "minus_count": 5,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 102,
+          "minus_count": 3,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 6,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 113,
+          "minus_count": 6,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 115,
+          "minus_count": 8,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 117,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 121,
+          "minus_count": 8,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 9,
+      "R0_residual_jump": 0.009026641595280833,
+      "AA_residual_jump": 0.011908282862148352,
+      "change": 0.0028816412668675184,
+      "status": "regression"
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 50,
+        "plus": 61
+      },
+      "side_pixel_count_total": 111,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 6,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 7,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 8,
+          "minus_count": 6,
+          "plus_count": 11
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 5,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 4,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 3,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 8,
+      "R0_residual_jump": 0.009060469543328509,
+      "AA_residual_jump": 0.006635680940235034,
+      "change": -0.002424788603093475,
+      "status": "improved_or_equal"
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 171,
+        "plus": 140
+      },
+      "side_pixel_count_total": 311,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 96,
+          "minus_count": 9,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 98,
+          "minus_count": 4,
+          "plus_count": 4
+        },
+        {
+          "tangent_bin": 99,
+          "minus_count": 5,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 102,
+          "minus_count": 3,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 6,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 113,
+          "minus_count": 6,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 115,
+          "minus_count": 8,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 117,
+          "minus_count": 7,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 121,
+          "minus_count": 8,
+          "plus_count": 6
+        }
+      ],
+      "paired_tangent_bins": 9,
+      "R0_residual_jump": 0.009026641595280833,
+      "AA_residual_jump": 0.011908282862148352,
+      "change": 0.0028816412668675184,
+      "status": "regression"
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 92,
+        "plus": 87
+      },
+      "side_pixel_count_total": 179,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 5,
+          "minus_count": 7,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 6,
+          "minus_count": 6,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 7,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 7,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 11,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 12,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 13,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 8,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 16,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 17,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 12,
+      "R0_residual_jump": 0.008139443748708194,
+      "AA_residual_jump": 0.008141187873358527,
+      "change": 1.744124650333162e-06,
+      "status": "regression"
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 200,
+        "plus": 200
+      },
+      "side_pixel_count_total": 400,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 95,
+          "minus_count": 9,
+          "plus_count": 11
+        },
+        {
+          "tangent_bin": 96,
+          "minus_count": 10,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 97,
+          "minus_count": 10,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 98,
+          "minus_count": 9,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 100,
+          "minus_count": 6,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 101,
+          "minus_count": 4,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 6,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 104,
+          "minus_count": 9,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 106,
+          "minus_count": 5,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 107,
+          "minus_count": 5,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 110,
+          "minus_count": 7,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 112,
+          "minus_count": 5,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 120,
+          "minus_count": 8,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 129,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 144,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 15,
+      "R0_residual_jump": 0.010415041955032697,
+      "AA_residual_jump": 0.015788812939232837,
+      "change": 0.00537377098420014,
+      "status": "regression"
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "world_boundary": "near_x",
+      "side_pixel_counts": {
+        "minus": 92,
+        "plus": 87
+      },
+      "side_pixel_count_total": 179,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 5,
+          "minus_count": 7,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 6,
+          "minus_count": 6,
+          "plus_count": 7
+        },
+        {
+          "tangent_bin": 7,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 9,
+          "minus_count": 7,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 10,
+          "minus_count": 11,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 11,
+          "minus_count": 12,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 12,
+          "minus_count": 13,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 13,
+          "minus_count": 8,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 14,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 15,
+          "minus_count": 6,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 16,
+          "minus_count": 6,
+          "plus_count": 5
+        },
+        {
+          "tangent_bin": 17,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 12,
+      "R0_residual_jump": 0.008367117115994915,
+      "AA_residual_jump": 0.008378880641733607,
+      "change": 1.1763525738691868e-05,
+      "status": "regression"
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "world_boundary": "lateral_y",
+      "side_pixel_counts": {
+        "minus": 200,
+        "plus": 200
+      },
+      "side_pixel_count_total": 400,
+      "paired_bin_pixel_counts": [
+        {
+          "tangent_bin": 95,
+          "minus_count": 9,
+          "plus_count": 11
+        },
+        {
+          "tangent_bin": 96,
+          "minus_count": 10,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 97,
+          "minus_count": 10,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 98,
+          "minus_count": 9,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 100,
+          "minus_count": 6,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 101,
+          "minus_count": 4,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 103,
+          "minus_count": 6,
+          "plus_count": 10
+        },
+        {
+          "tangent_bin": 104,
+          "minus_count": 9,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 106,
+          "minus_count": 5,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 107,
+          "minus_count": 5,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 110,
+          "minus_count": 7,
+          "plus_count": 8
+        },
+        {
+          "tangent_bin": 112,
+          "minus_count": 5,
+          "plus_count": 9
+        },
+        {
+          "tangent_bin": 120,
+          "minus_count": 8,
+          "plus_count": 3
+        },
+        {
+          "tangent_bin": 129,
+          "minus_count": 5,
+          "plus_count": 6
+        },
+        {
+          "tangent_bin": 144,
+          "minus_count": 3,
+          "plus_count": 3
+        }
+      ],
+      "paired_tangent_bins": 15,
+      "R0_residual_jump": 0.010415041955032697,
+      "AA_residual_jump": 0.015788812939232837,
+      "change": 0.00537377098420014,
+      "status": "regression"
+    }
+  ],
+  "material_selection": "unchanged parent cellfit1000; blue18coef control not included",
+  "review_limits": [
+    "Geometry support only; the whole new-road scene is not adopted.",
+    "Blue seam is not resolved across the fixed five-view world patch; boundary-specific regressions are preserved above.",
+    "Red inferred pointset support/ordering evidence does not establish true hidden-wheel geometry or texture preservation.",
+    "Exact replay proves delivery reproducibility, not scientific quality acceptance."
+  ],
+  "new_GPU_forwards": 0,
+  "new_optimizer_updates": 0,
+  "original_parameter_updates": 0
+}

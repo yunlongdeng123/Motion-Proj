@@ -1,0 +1,138 @@
+{
+  "status": "CPU_ENGINEERING_DRAFT_NO_GPU_NO_TRAINING",
+  "parent_archive_HEAD": "851703e7",
+  "parent_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/candidates/baked_cellfit_strip1000_candidate_v1/scene_manifest.json",
+  "parent_manifest_sha256": "885b506af5df0db74e6ae97f9e52a0c5bfa72a23d9f2e044f428610548548dc9",
+  "parent_canonical_sha256": "7db38a9ee69823e4a5fd4fbc78d49a5423cad9a146ca952fa51b9a6b9dc387c8",
+  "local_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/inputs/scene_manifest.json",
+  "source_hashes": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/source/r0_runtime.py": "105764b43880e994127a8d854905d24e2f142867d06477ce92d75ae70cbf656e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/source/corridor_runtime.py": "28c5d6a28ada61d3cb6d2e4d69b6100e47d5c9e652e7816faf974c9c8e8b2b3c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/source/v44_runtime.py": "245336e5bedeb2e994d690c14df88e53c8c1303242b626b636bc7ad9de718ad9",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/candidates/baked_cellfit_strip1000_candidate_v1/baked_road_runtime.py": "cee6172d09b274c1d57010cd2bfe36ad110c199515b73973573b2397319e6380"
+  },
+  "engineering_source_sha256": {
+    "world_surface_sampling.py": "1aeaf50676882a1ee10a38ebb02cccb7a27cc6232a68fad51b4d335b50bf854b",
+    "refined_road_runtime.py": "000c7a8cc1e5b45446da8be7c6117e5bdbeeb0a57caf180369a230b53ede5c30",
+    "prepare_engineering_base.py": "e0c69041553d278cd25bfe1a01d23788bd06befd9797bafee4c18bbfc091c858"
+  },
+  "checks": {
+    "n1_geometry_material_opacity_arrays_bitwise": true,
+    "parent_arrays_unchanged": true,
+    "existing_ABI_preserved": {
+      "features": 24,
+      "original_groups_alpha": [
+        2,
+        6
+      ],
+      "original_groups_RGB": [
+        6,
+        18
+      ],
+      "newroad_alpha": 18,
+      "newroad_RGB": [
+        19,
+        22
+      ],
+      "newroad_centre_depth_m": 22,
+      "asset_centre_depth_m": 23
+    }
+  },
+  "CPU_geometry_previews": {
+    "1": {
+      "factor": 1,
+      "parent_rows": 10098,
+      "child_rows": 10098,
+      "parent_cell_m": 0.08,
+      "child_grid_step_m": 0.08,
+      "sigma_policy": "all three parent kernel sigmas divided by factor",
+      "nominal_peak_opacity_policy": "copy parent .99; no opacity/n^2 or optical-depth split",
+      "opacity_logit_copy_exact": true,
+      "material_copy_exact": true,
+      "source_identity_copy_exact": true,
+      "tangent_plane_residual_m": 0.0,
+      "intrinsic_plane_kernel_area_ratio": 1.0,
+      "projected_alpha_preservation_claim": false,
+      "warning": "Native cov2D filter floor +0.3I may alter projected alpha/density; no AA compensation implemented",
+      "first_hit_surface_claim": false,
+      "geometry_role": "same parent tangent surface; not extra LiDAR or height fitting",
+      "CPU_geometry_payload_bytes": 1595484,
+      "GPU_execution_count": 0
+    },
+    "2": {
+      "factor": 2,
+      "parent_rows": 10098,
+      "child_rows": 40392,
+      "parent_cell_m": 0.08,
+      "child_grid_step_m": 0.04,
+      "sigma_policy": "all three parent kernel sigmas divided by factor",
+      "nominal_peak_opacity_policy": "copy parent .99; no opacity/n^2 or optical-depth split",
+      "opacity_logit_copy_exact": true,
+      "material_copy_exact": true,
+      "source_identity_copy_exact": true,
+      "tangent_plane_residual_m": 8.673617379884035e-19,
+      "intrinsic_plane_kernel_area_ratio": 1.0,
+      "projected_alpha_preservation_claim": false,
+      "warning": "Native cov2D filter floor +0.3I may alter projected alpha/density; no AA compensation implemented",
+      "first_hit_surface_claim": false,
+      "geometry_role": "same parent tangent surface; not extra LiDAR or height fitting",
+      "CPU_geometry_payload_bytes": 6866640,
+      "GPU_execution_count": 0
+    },
+    "4": {
+      "factor": 4,
+      "parent_rows": 10098,
+      "child_rows": 161568,
+      "parent_cell_m": 0.08,
+      "child_grid_step_m": 0.02,
+      "sigma_policy": "all three parent kernel sigmas divided by factor",
+      "nominal_peak_opacity_policy": "copy parent .99; no opacity/n^2 or optical-depth split",
+      "opacity_logit_copy_exact": true,
+      "material_copy_exact": true,
+      "source_identity_copy_exact": true,
+      "tangent_plane_residual_m": 1.734723475976807e-18,
+      "intrinsic_plane_kernel_area_ratio": 1.0,
+      "projected_alpha_preservation_claim": false,
+      "warning": "Native cov2D filter floor +0.3I may alter projected alpha/density; no AA compensation implemented",
+      "first_hit_surface_claim": false,
+      "geometry_role": "same parent tangent surface; not extra LiDAR or height fitting",
+      "CPU_geometry_payload_bytes": 27466560,
+      "GPU_execution_count": 0
+    }
+  },
+  "interface": {
+    "class_name": "RefinedRoadRuntime",
+    "constructor": "(manifest_path,factor=2,verify_dependencies=False,opacity_fn=None,opacity_policy_id=None)",
+    "properties": [
+      "rt",
+      "parent(BakedRoadRuntime)",
+      "base(parent R0Runtime)"
+    ],
+    "methods": [
+      "scene(raw,delete=False)",
+      "extension_rows(raw,opacity_fn=None)",
+      "render_scene(raw,delete=False)",
+      "receipt()"
+    ]
+  },
+  "evaluation_scopes": {
+    "blue_seam": "separate road appearance/continuity assessment",
+    "red_tire": "separate tire/contact/occlusion assessment"
+  },
+  "opacity": "copy parent nominal .99; intrinsic plane kernel area preserved, not screen alpha",
+  "normal_sigma": "same parent surface; all kernel axes /factor, no centre height bias",
+  "AA": "not implemented; optional functional opacity hook reserved for reviewed formula only",
+  "rollback": "factor1 directly uses original parent scene rows; no cached asset is overwritten",
+  "required_next_checks": [
+    "fresh process, one wrapper per factor",
+    "n1 GPU exact parent parity",
+    "single n2 five-key paired pilot",
+    "original24channel conservation and raw oldroad subtraction residuals",
+    "no automatic n4 escalation"
+  ],
+  "time_cost": "one native shared sort per scene; same24channel ABI. Actual timing required; .3I filter floor prevents an alpha-preservation claim",
+  "old_model_updates": 0,
+  "newroad_training_updates": 0,
+  "GPU_forwards": 0,
+  "shutdown_performed": false
+}

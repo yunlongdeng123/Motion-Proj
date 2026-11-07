@@ -1,0 +1,61 @@
+{
+  "status": "GEOMETRY_SUPPORT_RESEARCH_CANDIDATE",
+  "adoption_claim": false,
+  "asset_sha256": "53de3cb31be234865995766eaeb11a5fced59160456bb139b08cdb3eb0031baf",
+  "scene_manifest_sha256": "48ac926aafb1cb07ddd98c4ee6c9ffdc7c4501076a1cdbc7ffb99cc9736e84c7",
+  "exact_capture": {
+    "receipt": "canonical_capture_r1/render_tuple.receipt.json",
+    "forwards": 0,
+    "gpu_enabled_runtime_window_seconds": 10.332131624221802,
+    "peak_allocated_bytes": 752527872,
+    "peak_reserved_bytes": 775946240,
+    "concurrency": {
+      "gpu_memory_MiB_csv": "0, 32760 MiB, 1 MiB, 32230 MiB",
+      "concurrent_compute_apps_csv": "",
+      "concurrent_commands": "",
+      "inspection_only": true,
+      "other_processes_stopped_or_modified": false
+    }
+  },
+  "independent_replay": {
+    "receipt": "canonical_n2_mip_candidate_v2/parity/receipt.json",
+    "forwards": 10,
+    "gpu_enabled_runtime_window_seconds": 18.980093955993652,
+    "all_float_fields_exact": true,
+    "all_PNG_byte_exact": true,
+    "peak_allocated_bytes": 1682402304,
+    "peak_reserved_bytes": 2646605824,
+    "concurrency": {
+      "gpu_memory_MiB_csv": "0, 32760 MiB, 1 MiB, 32230 MiB",
+      "concurrent_compute_apps_csv": "",
+      "concurrent_commands": "",
+      "inspection_only": true,
+      "other_processes_stopped_or_modified": false
+    },
+    "raws": [
+      105,
+      113,
+      128,
+      130,
+      137
+    ]
+  },
+  "additional_engineering_forwards": 10,
+  "total_additional_gpu_enabled_runtime_window_seconds": 29.312225580215454,
+  "original_model_parameter_updates": 0,
+  "newroad_optimizer_updates": 0,
+  "material": "unchanged parent cellfit1000; blue boundary control not selected",
+  "CPU_formula_checks": {
+    "attempts": 2,
+    "GPU_forwards": 0,
+    "initial_test_error": "float32 identity in a float64 analytic test; fixed dtype without tolerance relaxation"
+  },
+  "budget_scope": "additional canonical export/replay engineering only; root-owned n1/n2/AA pilot/full49 budgets are separate",
+  "numerical_semantics": "bitwise float/PNG comparison; no relaxed equivalent label",
+  "unresolved": [
+    "Blue road seam and red wheel ordering require separate acceptance.",
+    "Inferred hidden vehicle/road geometry conflict is not resolved by material fit or canonical export.",
+    "Fitted road colours are not independently observed hidden-road RGB truth."
+  ],
+  "AutoDL_shutdown": false
+}

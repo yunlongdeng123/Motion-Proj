@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008道路接缝与车轮遮挡分项验证（2026-11-07）
+
+- `scene008_road_seam_contact_20261107_r1`：[同面道路细分、滤波归一化、边界材质强控制与49帧分项验收](autoresearch/scene008_road_seam_contact_20261107/index.html)。红侧支撑有增量，蓝侧跨帧接缝仍开放；18系数颜色对照未选入主资产。资源、正式/短程、失败与精确重放见报告。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。
+
 ## Scene008 V44道路实测覆盖与盲化基线（2026-11-07）
 
 - `scene008_road_r0_v44_20261107_r1`：[49帧双状态、固定域实测道路接入、材质控制及R1严格输入基线](autoresearch/scene008_road_r0_v44_20261107/index.html)。参数、资源、各阶段失败、额外计算与重放见报告；完整49帧12/13，研究候选未采用。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。

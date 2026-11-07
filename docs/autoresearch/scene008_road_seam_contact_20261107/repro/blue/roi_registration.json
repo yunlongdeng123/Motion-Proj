@@ -1,0 +1,152 @@
+{
+  "status": "frozen_before_opening_n2_control",
+  "raw": 128,
+  "blue_circle_provenance": "Parent supplied approximate bbox from user screenshot; not an exact circle segmentation.",
+  "bbox_xyxy_halfopen": [
+    165,
+    188,
+    208,
+    234
+  ],
+  "historical_approx_bbox_xyxy_halfopen": [
+    180,
+    190,
+    204,
+    225
+  ],
+  "primary_denominator": "original observed road inside fixed bbox; conservative cached vehicle guard separately excluded",
+  "world_patch_anchor_local_m": {
+    "x": [
+      19.0,
+      32.6
+    ],
+    "y": [
+      0.5,
+      3.5
+    ]
+  },
+  "world_mapping": "Raw128 measured ground only; iterative ray intersection with IDW nearest8 XY heights; radius .8m, >=3, local |z-median|<=.15m, weighted z spread<=.08m, final position convergence<.02m. Not dense ground truth.",
+  "initial_height_m": 0.0870623029768467,
+  "depth_threshold_m": 0.3,
+  "depth_qualification": "Measured scene return agrees with raw-ground-interpolated camera z within .3m. Front conflict / behind conflict / no-return separate. Conservative eligibility, not physical surface GT.",
+  "bands": {
+    "near_x_minus": {
+      "pixels": 42,
+      "scene_depth_qualified_pixels": 7,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "near_x_plus": {
+      "pixels": 34,
+      "scene_depth_qualified_pixels": 2,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    },
+    "far_x_minus": {
+      "pixels": 0,
+      "scene_depth_qualified_pixels": 0,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "far_x_plus": {
+      "pixels": 0,
+      "scene_depth_qualified_pixels": 0,
+      "tangent_axis": 1,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    },
+    "lateral_y_minus": {
+      "pixels": 146,
+      "scene_depth_qualified_pixels": 44,
+      "tangent_axis": 0,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        -0.4,
+        -0.08
+      ]
+    },
+    "lateral_y_plus": {
+      "pixels": 75,
+      "scene_depth_qualified_pixels": 20,
+      "tangent_axis": 0,
+      "tangent_bin_m": 0.2,
+      "signed_range_m": [
+        0.08,
+        0.4
+      ]
+    }
+  },
+  "edge_centres": {
+    "near_x": {
+      "axis": 0,
+      "anchor_local_m": 19.8,
+      "tangent_axis": 1
+    },
+    "far_x": {
+      "axis": 0,
+      "anchor_local_m": 31.8,
+      "tangent_axis": 1
+    },
+    "lateral_y": {
+      "axis": 1,
+      "anchor_local_m": 2.71,
+      "tangent_axis": 0
+    }
+  },
+  "edge_interpretation": "Frozen newroad centre-domain / strip limits; representation-support boundaries, not asserted physical road discontinuities.",
+  "selection_exclusions": [
+    "No n2 output read",
+    "No RGB value or fitted residual used for mask selection",
+    "No candidate alpha used for primary masks",
+    "No road_edit_rgb/depth used",
+    "No ROI-specific fit freedom"
+  ],
+  "counts": {
+    "roi": 1978,
+    "original_road": 1385,
+    "guard": 266,
+    "clean_original_road": 1340,
+    "nonroad": 593,
+    "mapped_original_road": 792,
+    "mapped_clean_original_road": 762,
+    "depth_qualified_original_road": 221,
+    "depth_qualified_clean_original_road": 214,
+    "front_conflict_original_road": 13,
+    "behind_conflict_original_road": 3,
+    "no_scene_return_original_road": 1075,
+    "band_near_x_minus": 42,
+    "band_near_x_plus": 34,
+    "band_far_x_minus": 0,
+    "band_far_x_plus": 0,
+    "band_lateral_y_minus": 146,
+    "band_lateral_y_plus": 75
+  },
+  "transform_max_abs_error": 0.0,
+  "sources": {
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\road_seam_contact\\blue\\layers_128\\observations.npz": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\work\\road_seam_contact\\blue\\fullclip_frame128.npz": "7ea87969cda637137af6f30ca4bff388600f68b51481089256e765013f41ec25",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_r0_v44\\delivery\\assets\\road_candidate\\new_road_canonical_candidate.npz": "7db38a9ee69823e4a5fd4fbc78d49a5423cad9a146ca952fa51b9a6b9dc387c8"
+  },
+  "limits": [
+    "Raw128 FRONT-only diagnostic",
+    "ROI contains foreground/nonroad; only original road is primary",
+    "Sparse scene depth and interpolated measured support, not hidden-road GT",
+    "Blue and red acceptance remain separate",
+    "No line/paint/shadow GT annotation"
+  ]
+}

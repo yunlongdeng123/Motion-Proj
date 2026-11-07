@@ -1,0 +1,26 @@
+{
+  "registered_after": "n2_pilot/full49; before any relativeMip render",
+  "reason": "native +0.3I screen covariance floor, independent CPU minor-axis median64.5%; chart-front residual wrong occlusion",
+  "geometry": "exact same n2 parent-tangent40392 world children",
+  "colour": "fixed parent cellfit1000 material",
+  "formula": "alpha_child_eff=alpha_parent * f(Sigma_child)/f(Sigma_parent), f(S)=sqrt(det(S)/det(S+.3I))",
+  "intrinsic_alpha": 0.99,
+  "effective_amplitude": "camera-dependent deterministic sampling-filter normalization; not edit/mask/ownership control",
+  "projection": "replicate native Jacobian/view rotation/legacy FoV clamp and scale modifier; no CUDA replacement",
+  "n1": "no compensation and parent exact",
+  "pilot_raws": [
+    105,
+    113,
+    128,
+    130,
+    137
+  ],
+  "full49_trigger": "raw137 fixed720 new-road solo alpha min>=.98 with zero low-alpha pixels; inspect chart-first gain and newly exposed ground-first separately, no headline overall pass",
+  "wheel_evaluation": "fixed red ray sets from opaque canonical chart/independent ground; hidden truth unknown, ray sets not reselected",
+  "ground_first_leak_marker": 0.01,
+  "one_fallback_only": true,
+  "factor4_run": false,
+  "hypothesis_boundary": "filter normalization may not fix centre-depth sorting or geometry intersection; no full Mip/2DGS/MOG claim",
+  "optimizer_updates": 0,
+  "AutoDL": "KEEP_ON"
+}

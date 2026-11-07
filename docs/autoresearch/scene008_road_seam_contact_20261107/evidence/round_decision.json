@@ -1,0 +1,70 @@
+{
+  "task_run": "scene008_road_seam_contact_20261107_r1",
+  "primary_result": "results/n2_mip_full49",
+  "primary_component": "fixed-world n2 road surface resampling + parent-relativeMip amplitude; original cellfit1000 colours",
+  "status": "GEOMETRY_SUPPORT_RESEARCH_CANDIDATE",
+  "separate_outcomes": {
+    "red_contact": "Positive support improvement on fixed chart-first rays, ground-first suppression retained; incomplete",
+    "blue_seam": "Open: mixed new/oldroad and newroad/static interfaces; fixed boundary material control does not improve preselected near-x residual jump"
+  },
+  "blue_material": "Fit once (18RGB constrained QP), not merged into primary; no refit/step/threshold search",
+  "whole_scene_adopted": false,
+  "human_verdict": null,
+  "fixed_red": {
+    "raw128_chart_first_count": 23,
+    "raw128_ground_first_count": 12,
+    "raw128_contact_count": 1,
+    "raw130_chart_first_count": 24,
+    "raw130_ground_first_count": 11,
+    "note": "current canonical chart and same-scene LiDAR-supported ground; not hidden GT"
+  },
+  "root_native_forward_runs": {
+    "layers_v1": 30,
+    "n1_parity": 10,
+    "n2_pilot": 25,
+    "n2_full49": 245,
+    "n2_mip_pilot": 25,
+    "n2_mip_full49": 245,
+    "n2_material_pilot": 35,
+    "n2_material_full49": 343,
+    "n2_mip_material_pilot": 35
+  },
+  "blue_native_forwards": 92,
+  "canonical_replay": {
+    "forwards": 10,
+    "seconds": 18.9801,
+    "raws": [
+      105,
+      113,
+      128,
+      130,
+      137
+    ],
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "all_saved_float_and_PNG_exact": true
+  },
+  "network_weight_updates": 0,
+  "vehicle_parameter_updates": 0,
+  "original_model_parameter_updates": 0,
+  "training_backwards": 0,
+  "learned_road_prior_trained": false,
+  "factor4_executed": false,
+  "MOG_opaque_first_intersection_implemented": false,
+  "R4_policy_generalization_evaluated": false,
+  "original_V44_preserved": true,
+  "AutoDL_power_action": "none; KEEP_ON",
+  "failure_ledger_refs": [
+    "V82-F13"
+  ],
+  "failure_ledger_delta": "update existing card after final audit",
+  "root_native_forward_total": 993,
+  "canonical_candidate": "engineer/canonical_n2_mip_candidate_v2/scene_manifest.json",
+  "canonical_tuple_capture": {
+    "forwards": 0,
+    "seconds": 10.3321
+  },
+  "total_native_forwards": 1095
+}

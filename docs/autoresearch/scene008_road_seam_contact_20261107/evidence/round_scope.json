@@ -1,0 +1,49 @@
+{
+  "task_run": "scene008_road_seam_contact_20261107_r1",
+  "parent": "scene008_road_r0_v44_20261107_r1",
+  "parent_commit": "851703e783d5f10ee8894447b06757c0396562ec",
+  "user_scope": [
+    "road colour/brightness and representation seam",
+    "wheel-ground geometry and Gaussian support/order"
+  ],
+  "separate_acceptance": true,
+  "frozen": [
+    "C2 canonical and SurfaceLOD",
+    "native10K",
+    "old road1K/gates",
+    "environment",
+    "camera/trajectory",
+    "PVD pretrained weights",
+    "parent material for support-only controls"
+  ],
+  "first_diagnostic_raws": [
+    105,
+    113,
+    128,
+    130,
+    137
+  ],
+  "evaluation": "same-scene development; previous49 all inspected, not independent test",
+  "blue_ROI_role": "image-guided diagnostic selection, not hidden truth or per-frame method mask",
+  "red_ROI_role": "diagnostic inferred vehicle/ground conflict, not hidden shape GT",
+  "allowed_minimal_controls": [
+    "fixed-world surface-supported refinement of new road",
+    "persistent road-material/representation seam correction after source attribution"
+  ],
+  "prohibited": [
+    "foreground vehicle priority",
+    "per-frame road holes",
+    "moving/scaling whole vehicle to chase visibility",
+    "changing parent preservation thresholds",
+    "threshold/seed grids"
+  ],
+  "stop_rule": "one physically motivated refinement plus one justified fallback; keep geometry and colour controls separate; save negative results; no repeated scalar retuning to cross gates",
+  "smoke": "Any new hour-scale formal fit must have approx10min real environment smoke including checkpoint/eval/full restore/next stage; short forward-only controls separately accounted",
+  "road_learned_prior_training": false,
+  "AutoDL": "KEEP_ON, no shutdown",
+  "subagents": "gpt-6.1-sol/max only",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F13"
+  ]
+}

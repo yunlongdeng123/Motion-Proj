@@ -1,0 +1,583 @@
+{
+  "arrays": {
+    "local_xyz": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "world_xyz": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "model_xyz": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "normal_local": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "normal_world": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "gaussian_sigma_m": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "reference_srgb": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "opacity": {
+      "shape": [
+        40392
+      ],
+      "dtype": "float32"
+    },
+    "opacity_logit": {
+      "shape": [
+        40392,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "parent_indices": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int64"
+    },
+    "child_indices": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int16"
+    },
+    "source_parent_cell_ids": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int64"
+    },
+    "delta_local_m": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "active": {
+      "shape": [
+        40392
+      ],
+      "dtype": "bool"
+    },
+    "child_to_parent_ids": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int64"
+    },
+    "material_parent_colours_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "original_source_proxy_srgb": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "source_valid_count": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int16"
+    },
+    "source_valid_count49": {
+      "shape": [
+        40392
+      ],
+      "dtype": "int16"
+    },
+    "original_appearance_provenance": {
+      "shape": [
+        40392
+      ],
+      "dtype": "uint8"
+    },
+    "appearance_provenance": {
+      "shape": [
+        40392
+      ],
+      "dtype": "uint8"
+    },
+    "coordinate_anchor": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "world_to_model": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "meter_to_model": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "cell_m": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "parent_cell_m": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "strip_lateral_bounds_m": {
+      "shape": [
+        2
+      ],
+      "dtype": "float64"
+    },
+    "parent_manifest_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "parent_asset_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "tuple_capture_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "material_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "material_role": {
+      "shape": [],
+      "dtype": "<U49"
+    },
+    "candidate_status": {
+      "shape": [],
+      "dtype": "<U35"
+    },
+    "capture_origin": {
+      "shape": [],
+      "dtype": "<U42"
+    },
+    "material_selection": {
+      "shape": [],
+      "dtype": "<U66"
+    },
+    "parent_keys": {
+      "shape": [
+        10098,
+        2
+      ],
+      "dtype": "int64"
+    },
+    "parent_local_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_world_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "parent_model_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float64"
+    },
+    "parent_normal_local": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_normal_world": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_gaussian_sigma_m": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_geometry_measured_support": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_actual_return_support_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "parent_support_pool_ids": {
+      "shape": [
+        10098,
+        8
+      ],
+      "dtype": "int32"
+    },
+    "parent_support_distances_m": {
+      "shape": [
+        10098,
+        8
+      ],
+      "dtype": "float32"
+    },
+    "parent_support_height_residual_m": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "parent_geometry_confidence": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "parent_candidate_origin": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "parent_active": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_real_active": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_reference_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_reference_linear": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_rgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_opacity": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "parent_opacity_logit": {
+      "shape": [
+        10098,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "parent_original_source_proxy_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_original_source_proxy_linear": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_source_rgb": {
+      "shape": [
+        199,
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_source_valid": {
+      "shape": [
+        199,
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_source_agree": {
+      "shape": [
+        199,
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_source_raw": {
+      "shape": [
+        199
+      ],
+      "dtype": "int16"
+    },
+    "parent_source_valid_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "parent_agree_count": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "parent_source_valid_count49": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "parent_source_photometric_confidence": {
+      "shape": [
+        10098
+      ],
+      "dtype": "float32"
+    },
+    "parent_original_appearance_provenance": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "parent_appearance_provenance": {
+      "shape": [
+        10098
+      ],
+      "dtype": "uint8"
+    },
+    "parent_source_parent_cell_ids": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int64"
+    },
+    "parent_material_parent_extension_local_ids": {
+      "shape": [
+        10098
+      ],
+      "dtype": "int64"
+    },
+    "parent_coordinate_anchor": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "parent_world_to_model": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64"
+    },
+    "parent_meter_to_model": {
+      "shape": [],
+      "dtype": "float64"
+    },
+    "parent_strip_lateral_bounds_m": {
+      "shape": [
+        2
+      ],
+      "dtype": "float64"
+    },
+    "parent_source_asset_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "parent_material_sha256": {
+      "shape": [],
+      "dtype": "<U64"
+    },
+    "parent_material_role": {
+      "shape": [],
+      "dtype": "<U49"
+    },
+    "parent_candidate_status": {
+      "shape": [],
+      "dtype": "<U30"
+    },
+    "parent_material_eligible": {
+      "shape": [
+        10098
+      ],
+      "dtype": "bool"
+    },
+    "parent_material_observed_mass_by_state": {
+      "shape": [
+        2,
+        10098
+      ],
+      "dtype": "float64"
+    },
+    "parent_material_observed_frame_count_by_state": {
+      "shape": [
+        2,
+        10098
+      ],
+      "dtype": "int16"
+    },
+    "parent_parent_material_metadata_json": {
+      "shape": [],
+      "dtype": "<U501"
+    },
+    "render_model_xyz": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_render_model_xyz": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "render_scales_model": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_render_scales_model": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "render_rotation_wxyz": {
+      "shape": [
+        40392,
+        4
+      ],
+      "dtype": "float32"
+    },
+    "parent_render_rotation_wxyz": {
+      "shape": [
+        10098,
+        4
+      ],
+      "dtype": "float32"
+    },
+    "render_opacity_logit": {
+      "shape": [
+        40392,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "parent_render_opacity_logit": {
+      "shape": [
+        10098,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "render_colours_srgb": {
+      "shape": [
+        40392,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "parent_render_colours_srgb": {
+      "shape": [
+        10098,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "render_tuple_geometry_authoritative": {
+      "shape": [],
+      "dtype": "bool"
+    }
+  },
+  "authoritative_render_tuple": [
+    "render_model_xyz",
+    "render_scales_model",
+    "render_rotation_wxyz",
+    "render_opacity_logit",
+    "render_colours_srgb"
+  ],
+  "child_to_parent": "child_to_parent_ids into parent_* tables",
+  "source_rgb_role": "parent_source_rgb: unchanged original qualified real FRONT observations; invalid samples remain unavailable NaN",
+  "material_role": "render_colours_srgb: fitted persistent appearance, not independently observed hidden texture",
+  "native_capture_verified": true
+}
