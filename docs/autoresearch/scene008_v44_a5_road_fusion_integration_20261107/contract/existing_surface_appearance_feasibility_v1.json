@@ -1,0 +1,21 @@
+{
+  "schema": "POSTHOC_EXISTING_SURFACE_APPEARANCE_FEASIBILITY_V1",
+  "chronology": "After original C integration failures and D full-support qualification finds only62 safe children. Diagnostic feasibility only, before E qualification; no optimizer authorized by this file",
+  "problem": "Adding a separate road layer changes depth/occlusion. Reuse the source fusion-target-to-3D-material bake algorithm on existing scene support instead",
+  "baseline": "Original latest SemanticActor5V44Integration, without AA/C new geometry or D rows",
+  "calibration_raws": [94, 105, 128, 137],
+  "states": ["keep", "delete"],
+  "branches": ["original native_static", "original oldroad"],
+  "row_identity": "Stable local row index within each original branch, bound to unchanged checkpoint, topology, v44 and semantic sidecar. No current screen-mask row lookup at query",
+  "diagnostic": "Two constant-one auxiliary features on candidate branch rows, native visible contribution inside original road domain and V2 guard;0 colour or Gaussian updates",
+  "guard": "Same V2 original observations plus latest-baseline C2/a5 native alpha>0; KEEP additionally original a37 observations and native alpha>0",
+  "initial_road_domain": "Original obs.road; DELETE may additionally original road_edit intersect frozen ground proxy. Later fit domain, if authorized, must use the original source C legal fit masks, not hidden-road GT",
+  "predicate": "Sum inside>0 and sum guard==0, strict exact zero, no metric/RGB threshold search",
+  "planned_initial_compute": {"native_forwards": 8, "dummy_feature_backwards": 8, "optimizer_steps": 0},
+  "potential_runtime_if_feasible": "Same unchanged geometry/mask/opacity/environment and shared KEEP/DELETE. Apply a persistent row-wise RGB residual to evaluated original SH/fine colours in a temporary packet. No original model tensor mutation",
+  "preservation_reason": "Unlike D row removal, changing only colour leaves visibility/T unchanged; BUILD zero-guard contribution can be reused for those views, subject to native verification",
+  "limits": "Calibration-only until actual additional-view verification. Source algorithm is adapted to existing surfaces, not claimed identical to importing the original40392 asset. New fit needs explicit concrete method contract, not assumed here",
+  "unchanged_evaluation_contract_sha256": "4560bb91f4cc3b27b89693acd0918f939d2ac07e9bcd7cbbc6e0574e885516cc",
+  "human_verdict": null,
+  "GPU_power": "KEEP_ON"
+}

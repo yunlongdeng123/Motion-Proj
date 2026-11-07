@@ -1,0 +1,34 @@
+{
+  "status": "PREPARED_AWAIT_NEW_NATIVE_PILOT_RESULTS",
+  "main_title": "Scene008：保留a5车顶与删车效果的道路融合接入",
+  "baseline": "Latest delivered 49BUILD-fit SemanticActor5V44Integration",
+  "variants": [
+    "baseline",
+    "AA",
+    "C"
+  ],
+  "pilot_raws": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "diagnostic_raws": [
+    130
+  ],
+  "sections": [
+    "Current actual decision with no pending values invented",
+    "Architecture components",
+    "Four-frame native KEEP/DELETE + raw94/105 body + raw128/137 fixed road crops",
+    "Latest-vs-AA and latest-vs-C no-regression table; C-vs-AA material increment separate",
+    "Original128 six-bin and world near/lateral fixed-bin scores; unsupported far",
+    "Raw130 wheel diagnostics separate; original 71 rays preserved",
+    "Full49 only after explicit root numerical+native-image gate",
+    "Frozen masks, thresholds, source/asset/model guards, compute/retrieval and human null"
+  ],
+  "candidate_data_namespace": "evidence/pilot/{baseline,AA,C}/frames/{raw:03d}/{keep,delete}.png and state_float.npz",
+  "source_review": "evidence/source_road_review.json",
+  "frozen_contract": "contract/independent_evaluation_contract_v1.json",
+  "no_old_report_or_central_viewer_modified": true,
+  "no_GPU_experiment_started": true
+}

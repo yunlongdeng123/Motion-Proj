@@ -1,0 +1,10 @@
+{
+  "status": "PRESERVED_FIRST_NO_C_FORWARD_METRIC_UNIT_POSTPROCESS_ASSERTION",
+  "actual_native_joint_calls": 1,
+  "actual_raster_kernel_forwards": 1,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "cause": "CPU NumPy versus CUDA division rounding in derived metres; raw depth_sum and alpha were exact",
+  "correction": "Same baseline NumPy postprocess for exported depth_m; API raw CUDA depth_m retained separately in depth_m_gpu",
+  "API_geometry_or_road_asset_changed": false
+}

@@ -1,0 +1,372 @@
+{
+  "latest_user_goal": "Return to delivered21K component scene; no end-to-end retraining or sole-Full5 substitution. C road material only; root decides added steps based on results. GPU stays on.",
+  "formal_budget": {
+    "base_component_total": 21000,
+    "base_breakdown": {
+      "native_v44": 10000,
+      "road_repair": 1000,
+      "Full5_for_a5": 10000,
+      "semantic_binding_and_integration": 0
+    },
+    "single_continuous_21k_model": false,
+    "new_C_formal_updates_at_last_verified_status": 2000,
+    "new_C_provisional_upper_bound": 10000,
+    "checkpoints_new_C_steps": [
+      500,
+      2000,
+      5000,
+      10000
+    ],
+    "root_may_stop_for_material_plateau_or_geometric_limit": true,
+    "prior_C400_E400_F400_are_separate_candidates": true,
+    "one_KEEP_DELETE_pair_is_one_optimizer_update": true,
+    "smoke_and_replay_separate": true,
+    "new_C_actual_stop": 2000,
+    "unexecuted_remaining_from_provisional_cap": 8000
+  },
+  "background_control": {
+    "method": "Unmodified completeC40392 support, C warm initializer, only parent-shared RGB updated",
+    "train_views": "all49 nowBUILD, including former9HELD; no held-out prediction claim",
+    "qualification": {
+      "native_forwards": 98,
+      "dummy_backwards": 98,
+      "optimizer_updates": 0,
+      "eligible_parents": 2119,
+      "trainable_RGB_scalars": 6357,
+      "frozen_parents": 7979,
+      "new_parents_vs_original_BUILD40": 66,
+      "seconds": 45.2947781085968,
+      "manifest_sha256": "6df77ae629503373f81b4e36ba67e81332792ad66acfa9bb0518806eed9f9515"
+    },
+    "optimizer": "Fresh privateAdam .01/betas .9,.999/eps1e-8, RGBprojected[0,1], paired meanRGBMSE",
+    "smoke": "Real>=600s training plus save/eval/fullparameterAdamRNGsamplerrestore and next2/stage entry; actual costs separately",
+    "known_C4_quality_failures_do_not_veto_authorized_control": true,
+    "automatic_default_adoption": false,
+    "status": "Complete formal2000; no further training waiter. Complete49 control evaluated and all necessary backups verified.",
+    "remote_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1",
+    "smoke_pid": 78254,
+    "smoke_training_core_sha256": "2222d3d4da7ffafe7fa83b5c69ca6b359d046055238373775252ba0f68af3275",
+    "training_contract_sha256": "f56f2cc76eeadf1f7e1d5b4bb606897d4965d87b222941f5de81ae34ae7f3bd0",
+    "formal_pid": 80058,
+    "controller_pid": 78775,
+    "lifecycle": {
+      "smoke_training_seconds": 600.2084789276123,
+      "smoke_training_updates": 1992,
+      "disposable_updates": 2,
+      "smoke_actual_forwards": 4012,
+      "smoke_actual_backwards": 3988,
+      "fresh_restore_actual_forwards": 6,
+      "fresh_restore_actual_backwards": 4,
+      "fresh_restore_updates": 2,
+      "total_engineering_optimizer_updates": 1996,
+      "initial_full_restore_bitexact": true,
+      "fresh_saved_public128KD_RGB_alpha_depthsum_groups_exact": true,
+      "next2_RGB_maxdiff": 0.0,
+      "next2_Adam_maxdiff": 2.84e-14,
+      "sampler_all_RNG_exact": true,
+      "whole_next2_bitexact_claim": false
+    },
+    "formal_fresh_initializer": "SameCwarm+freshprivateAdam0+same49shuffleSeed; does not continue smoke weights",
+    "first_formal_stop": 2000,
+    "actual_C49_stage_totals": {
+      "native_forwards": 8344,
+      "backwards_including_dummy": 8090,
+      "formal_optimizer_updates": 2000,
+      "engineering_optimizer_updates": 1996,
+      "CPU_colour_solve_calls": 0
+    },
+    "final49": {
+      "native_forwards": 196,
+      "actual_model_states": 98,
+      "backwards": 0,
+      "geometry_identity_vs_Cwarm0_exact_execution_assertions": true,
+      "warm49_fullfloat_saved": false,
+      "candidate2K_all49_float_saved": true,
+      "warm_independent_CPU_geometry_recompute": "Four-frame only; all49 asserted in execution"
+    },
+    "complete_backup": {
+      "packages": 13,
+      "verified_bytes": 599316804,
+      "verification": "outputs/scene008_v44_a5_c49_rgb_20261107/evidence/C49_complete_local_backup_verification.json"
+    },
+    "stop_reason": "MSE near plateau, mixed seam directions/lateral worse, C2 visibility unchanged. Parameters still drift; no convergence claim."
+  },
+  "historical_road_branch_through_G": {
+    "native_joint_forwards": 1769,
+    "native_backwards_including_dummy": 1678,
+    "new_material_formal_updates_E400_plus_F400": 800,
+    "new_material_engineering_updates": 16,
+    "original_scene_Gaussian_updates": 0,
+    "status": "Historical controls not adopted; source contracts/results preserved"
+  },
+  "foreground_iteration": {
+    "variant": "H4 conservative model-foreground whole-road-child culling",
+    "contract": "contract/foreground_road_culling_H4_v1.json",
+    "contract_sha256": "01fbd50470830ad654c9494c7d90ec9e05b074f565e9207df02470326f03638c",
+    "status": "H2 complete4rawKD; vehicle protection improved but seam/environment gatesFAIL. Not adopted.",
+    "optimizer_updates": 0,
+    "purpose": "Retain full persistentC road asset while preventing its rendered contribution on nativeC2/a5/retained37 foreground; verify silver/seams, no adoption claim",
+    "H1_actual": {
+      "native_forwards": 54,
+      "dummy_backwards": 47,
+      "public_outputs": 3,
+      "optimizer_updates": 0
+    },
+    "H1_partial128_DELETE": "Large silver patch reduced; originalC2 foreground retained; underwheel thinborder and seam regress remain. Not adopted.",
+    "H2_contract": "contract/foreground_road_culling_H4_v2.json",
+    "H2_contract_sha256": "5621868aaf6479fc385b77d0d74f1d8b140ae77d5f69c3d6154609263dfb4532",
+    "H2_actual": {
+      "native_forwards": 113,
+      "dummy_backwards": 100,
+      "public_outputs": 8,
+      "optimizer_updates": 0,
+      "three_H1_masks_reused_and_new_public_exact": true
+    },
+    "H2_numeric": {
+      "original4560_gates": {
+        "PASS": 46,
+        "FAIL": 40,
+        "unsupported": 8
+      },
+      "raw128_primary_KEEP_relative_delta": 0.0465,
+      "raw128_primary_DELETE_relative_delta": 0.465,
+      "model_C2_alpha_maxdrop": 7.15e-07,
+      "observed_a5_a6_RGB_depth_and_KEEP37_no_regression": true,
+      "not_global_exact": true,
+      "silver128_static_mean_before": 0.37629,
+      "silver128_static_mean_after": 0.06541,
+      "silver137_static_mean_before": 0.8241,
+      "silver137_static_mean_after": 0.04294
+    },
+    "H2_C2000": {
+      "public_forwards": 8,
+      "backwards": 0,
+      "primary_KEEP": 0.004613534469778339,
+      "primary_DELETE": 0.00933907371169577,
+      "KEEP_relative_gain_vs21K": -0.1583,
+      "old94gates": {
+        "PASS": 49,
+        "FAIL": 37,
+        "unsupported": 8
+      },
+      "all_geometry_and_semantic_RGB_vsH2_initial_bitexact": true,
+      "quality_accepted": false
+    }
+  },
+  "I_fixed_world_coverage": {
+    "status": "STOP_THIS_FIXED_CONTROL_NEGATIVE_NO_EXTRA_FRAMES_NO_BAND_GRID",
+    "native_forwards": 4,
+    "backwards": 0,
+    "optimizer_updates": 0,
+    "first_engineering_failure_forwards": 0,
+    "source_crop_planes_from_exact_original_input": true,
+    "band_m": 0.4,
+    "attenuated_children": 6408,
+    "primary128_KEEP": 0.008177357,
+    "primary128_DELETE": 0.0118344051,
+    "raw137_lateral_both_states": 0.0106376268,
+    "newroad_model_foreground_mass": 0,
+    "not_a_denial_of_all_handover_methods": true
+  },
+  "J_restricted_RGB_affine_control": {
+    "status": "Complete oneLP feasible and actual8F; sixpool pass, original94gates55PASS31FAIL8unsupported; not adopted/not49",
+    "newroad_variable_parent_rows": 2119,
+    "frozen_parent_rows": 7979,
+    "signed_rows": 106,
+    "native_affinity_max_abs_error": 1.2129e-07,
+    "neural_training_updates": 0,
+    "actual_CPU_solver_calls_at_snapshot": 1,
+    "operator_contract_sha256": "e2ef3c2656eb3c38fce208d840a28575818092ebb80aebc61d612d6ecf2e3bb5",
+    "LP_contract_sha256": "f1adea94500d1488b3c266ca4c2645596181a08654f6bdb0892df050e8f65a76",
+    "objective": "Minimum originalC49 visible-mass weighted absolute RGB change, observabilityproxy only",
+    "photo_protection_not_part_ofLP": "Actual evaluation complete; original31 failures retained. Photo protection was not LP constrained.",
+    "no_automatic49_or_new_training": true,
+    "human_verdict": null,
+    "actual_native_forwards": 32,
+    "actual_dummy_backwards": 16,
+    "actual_CPU_solver_calls": 1,
+    "actual_Adam_updates": 0,
+    "changed_parent_rows": 18,
+    "RGB_delta_max": 0.48327687,
+    "actual_affinity_error": 5.9131e-08,
+    "all_geometry_vsH2C2K_bitexact": true,
+    "primary_actual": {
+      "keep": 0.00460984319,
+      "delete": 0.0076028791
+    },
+    "near_actual": {
+      "keep": 0.00603666879,
+      "delete": 0.00715017261
+    },
+    "lateral_actual": {
+      "keep": 0.00368457978,
+      "delete": 0.00352410151
+    },
+    "local_bin_vs21K": {
+      "keep": {
+        "improved": 17,
+        "regressed": 19,
+        "equal": 17
+      },
+      "delete": {
+        "improved": 22,
+        "regressed": 22,
+        "equal": 9
+      }
+    },
+    "remaining_failures": {
+      "protected_nonroad_photo": 7,
+      "original_road_photo": 8,
+      "broad_nonroad_geometry_alpha_depth": 16
+    },
+    "root_actual_visual": "Viewed full128/137DELETE plus J_actual4_delete_road_details; large silverpatch reduced but thinbrightedge/blackseams remain. No49 release."
+  },
+  "K_local_bin_control": {
+    "status": "One CPU LP and actual8F complete. All6pool+106local original targetsPASS; original94gates55PASS31FAIL8unsupported. Not adopted/no49.",
+    "same_asJ": "A/c0/mu/eligible2119/box/original6pool targets",
+    "only_new_constraints": "For all106 registeredbins, score<=min(H2C2K_bin,latest21K_bin)+1e-6-1e-7",
+    "zero_A_rows": 26,
+    "important": "Corrected before freeze: no artificial strict improvement on constantbins. Do not use min(current,latest+tol)-reserve forbin gates. Keep originalJ unchanged.",
+    "maximum_new_solver_calls": 1,
+    "actual_solver_calls": 1,
+    "native_candidate8F_only_after_cert": true,
+    "no_auto49": true,
+    "actual_native_forwards": 8,
+    "actual_backwards": 0,
+    "Adam_updates": 0,
+    "original_scene_updates": 0,
+    "changed_parent_rows": 40,
+    "RGB_delta_max": 0.50589,
+    "all_geometry_vs_H2C2K_bitexact": true,
+    "affinity_max_abs_error": 5.1292951219750194e-08,
+    "actual_pools": [
+      {
+        "name": "primary128",
+        "state": "keep",
+        "bins": 6,
+        "actual_original_score": 0.0037760457392626754,
+        "original_target": 0.004613534469778339,
+        "tightened_reserve_target": 0.004613434469778339,
+        "margin_to_original": 0.000837488730515664,
+        "margin_to_tightened": 0.0008373887305156637,
+        "original_pass": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "bins": 24,
+        "actual_original_score": 0.005003136085482159,
+        "original_target": 0.006036768960524972,
+        "tightened_reserve_target": 0.0060366689605249714,
+        "margin_to_original": 0.001033632875042813,
+        "margin_to_tightened": 0.0010335328750428127,
+        "original_pass": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "bins": 23,
+        "actual_original_score": 0.0036889095259222972,
+        "original_target": 0.0038325507547889394,
+        "tightened_reserve_target": 0.0038324507547889395,
+        "margin_to_original": 0.00014364122886664213,
+        "margin_to_tightened": 0.00014354122886664229,
+        "original_pass": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "bins": 6,
+        "actual_original_score": 0.0062979465098275495,
+        "original_target": 0.0076029783590153485,
+        "tightened_reserve_target": 0.007602878359015348,
+        "margin_to_original": 0.001305031849187799,
+        "margin_to_tightened": 0.0013049318491877987,
+        "original_pass": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "bins": 24,
+        "actual_original_score": 0.0056075301132902195,
+        "original_target": 0.007150272171470027,
+        "tightened_reserve_target": 0.007150172171470026,
+        "margin_to_original": 0.001542742058179807,
+        "margin_to_tightened": 0.0015426420581798068,
+        "original_pass": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "bins": 23,
+        "actual_original_score": 0.0034304095265131605,
+        "original_target": 0.00352419822717539,
+        "tightened_reserve_target": 0.0035240982271753903,
+        "margin_to_original": 9.378870066222966e-05,
+        "margin_to_tightened": 9.368870066222982e-05,
+        "original_pass": true
+      }
+    ],
+    "per_bin_original_pass_count": 106,
+    "original_gate_counts": {
+      "PASS": 55,
+      "FAIL": 31,
+      "unsupported": 8
+    },
+    "root_actual_visual": "Viewed full4KEEP and DELETE detail boards. a5 intact; thinblackseam and blue/purple patches remain."
+  },
+  "withdrawn_route": {
+    "single_scene20K_and_pureFull5": "Withdrawn by user. Keep completed native and adapter/C4 diagnostics only. No semantic probe/extra49/fitting launched.",
+    "completed_native_baseline_renderer_calls": 8,
+    "completed_native_baseline_kernel_forwards": 24,
+    "parity_first_failure_kernel_forwards": 1,
+    "parity_retry_kernel_forwards": 8,
+    "C4_kernel_forwards": 8,
+    "Gaussian_updates": 0,
+    "backwards": 0
+  },
+  "gpu_stays_on": true,
+  "automatic_shutdown": false,
+  "human_verdict": null,
+  "schema": "FROZEN21K_ROAD_RESULT_LEDGER_V1",
+  "quality_accepted": false,
+  "limits": "Run results only. Project status/next steps live solely in docs/RESEARCH_STATUS.md. C49 allBUILD is not independent generalization; K only4frames.",
+  "white_point_diagnostic": {
+    "actual_forwards": 2,
+    "dummy_backwards": 2,
+    "optimizer_updates": 0,
+    "finding": "Both white points are >99% eligible2119 visible mass; not frozen-parent lock. Cwarm darker, formal2K brightens. All mass/RGB reconstructions pass.",
+    "root_scope": "Single CPU counterfactual only: allpositive union parentRGB K->Cwarm, no subset/ratio grid, check original6+106 and two point predictedRGB before deciding native8F."
+  },
+  "L_Cwarm12_counterfactual": {
+    "actual_native_forwards": 8,
+    "dummy_backwards": 0,
+    "Adam_updates": 0,
+    "new_CPU_solver_calls": 0,
+    "fixed_parent_ids": [
+      12,
+      13,
+      14,
+      83,
+      84,
+      85,
+      153,
+      154,
+      155,
+      224,
+      225,
+      226
+    ],
+    "actual_changed_parents": 10,
+    "actual_signed106_vsK_byteexact": true,
+    "sixpool_and_106local_original_targets_pass": true,
+    "original94": {
+      "PASS": 55,
+      "FAIL": 31,
+      "unsupported": 8
+    },
+    "all_geometry_identity_vsK_exact": true,
+    "root_visual_review": "Viewed full128/137DELETE and fixed L detail board; brightspots gone, adjacent darkspot and thinseams/colourband remain. No general fix or49 adoption."
+  },
+  "supervision_coverage_evidence": "evidence/review/C49_protected_supervision_coverage_audit_v1.json"
+}

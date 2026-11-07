@@ -1,0 +1,98 @@
+{
+  "status": "PASS_CANONICAL_AA_C_GEOMETRY_OPACITY_EXACT_ONLY_RGB_DIFFERENT",
+  "assets": [
+    {
+      "variant": "AA",
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/canonical_n2_mip_candidate_v2/scene_manifest.json",
+      "manifest_sha256": "48ac926aafb1cb07ddd98c4ee6c9ffdc7c4501076a1cdbc7ffb99cc9736e84c7",
+      "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/canonical_n2_mip_candidate_v2/new_road_canonical_candidate.npz",
+      "asset_sha256": "53de3cb31be234865995766eaeb11a5fced59160456bb139b08cdb3eb0031baf",
+      "rows": 40392,
+      "parent_rows": 10098,
+      "renderer_policy": {
+        "relative_mip": true,
+        "source_file": "relative_mip.py",
+        "legacy_neg_fov": true,
+        "normalize_quaternion": false,
+        "covariance_floor_pixel2": 0.3,
+        "native_CUDA_modified": false,
+        "intrinsic_opacity_nominal": 0.99,
+        "asset_opacity_training_updates": 0,
+        "interpretation": "same-camera deterministic newroad amplitude; not a trained intrinsic asset parameter"
+      },
+      "frozen_v44_binding_sha256": "57e6dd01e9fbec40c1cfe4037c634773b62deea7a9684761a2874e5b6e41ed4b"
+    },
+    {
+      "variant": "C",
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/scene_manifest.json",
+      "manifest_sha256": "1025c7a1ad12d6b6f21a679378005a6689d8e4278d6592f8475431c5e8fd4057",
+      "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/new_road_canonical_candidate.npz",
+      "asset_sha256": "3afc6e25b7b152f851b4eb0de4a73e6d219c9526d75453d99097a31ddd5774c5",
+      "rows": 40392,
+      "parent_rows": 10098,
+      "renderer_policy": {
+        "relative_mip": true,
+        "source_file": "relative_mip.py",
+        "legacy_neg_fov": true,
+        "normalize_quaternion": false,
+        "covariance_floor_pixel2": 0.3,
+        "native_CUDA_modified": false,
+        "intrinsic_opacity_nominal": 0.99,
+        "asset_opacity_training_updates": 0,
+        "interpretation": "same-camera deterministic newroad amplitude; not a trained intrinsic asset parameter"
+      },
+      "frozen_v44_binding_sha256": "57e6dd01e9fbec40c1cfe4037c634773b62deea7a9684761a2874e5b6e41ed4b"
+    }
+  ],
+  "tuple_comparison": {
+    "render_model_xyz": {
+      "array_equal": true,
+      "dtype": "float32",
+      "shape": [
+        40392,
+        3
+      ],
+      "max_abs_difference": 0.0
+    },
+    "render_scales_model": {
+      "array_equal": true,
+      "dtype": "float32",
+      "shape": [
+        40392,
+        3
+      ],
+      "max_abs_difference": 0.0
+    },
+    "render_rotation_wxyz": {
+      "array_equal": true,
+      "dtype": "float32",
+      "shape": [
+        40392,
+        4
+      ],
+      "max_abs_difference": 0.0
+    },
+    "render_opacity_logit": {
+      "array_equal": true,
+      "dtype": "float32",
+      "shape": [
+        40392,
+        1
+      ],
+      "max_abs_difference": 0.0
+    },
+    "render_colours_srgb": {
+      "array_equal": false,
+      "dtype": "float32",
+      "shape": [
+        40392,
+        3
+      ],
+      "max_abs_difference": 0.5763506889343262
+    }
+  },
+  "changed_child_RGB_rows": 8212,
+  "new_training_updates": 0,
+  "C_role": "Read-only baked C material, no refit; query does not read original target RGB or target masks.",
+  "main_baseline": "Latest SemanticActor5V44Integration; AA is only a geometry-support ablation, never the main baseline."
+}

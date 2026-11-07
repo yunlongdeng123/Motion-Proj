@@ -1,0 +1,2574 @@
+{
+  "schema": "K_FINAL_INDEPENDENT_CPU_SUMMARY_V1",
+  "status": "SIX_POOL_AND_106_LOCAL_TARGETS_PASSED_FULL_ORIGINAL_QUALITY_FAILED",
+  "raws": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "cost": {
+    "new_native_forwards": 8,
+    "new_backwards": 0,
+    "new_CPU_LP_calls": 1,
+    "Adam_updates": 0,
+    "Gaussian_SH_updates": 0,
+    "new_operator_forwards": 0,
+    "J_operator_reused": true,
+    "palette_parent_rows_changed": 40,
+    "palette_max_absolute_RGB_change": 0.5058919191360474
+  },
+  "original4560": {
+    "total_gates": 94,
+    "counts": {
+      "passed": 55,
+      "failed": 31,
+      "unsupported": 8
+    },
+    "failed_categories": [
+      {
+        "name": "K:nonroad_guard:alpha_pixel_max_abs",
+        "failed_count": 8,
+        "threshold": 1e-06,
+        "maximum_failed_value": 0.33159130811691284,
+        "worst_raw": 137,
+        "worst_state": "delete"
+      },
+      {
+        "name": "K:nonroad_guard:depth_pixel_max_abs_m",
+        "failed_count": 8,
+        "threshold": 1e-05,
+        "maximum_failed_value": 14.180116653442383,
+        "worst_raw": 137,
+        "worst_state": "delete"
+      },
+      {
+        "name": "K:original_road_RGB",
+        "failed_count": 8,
+        "threshold": 1e-06,
+        "maximum_failed_value": 0.0005945037494385491,
+        "worst_raw": 94,
+        "worst_state": "delete"
+      },
+      {
+        "name": "K:protected_nonroad_RGB",
+        "failed_count": 7,
+        "threshold": 1e-06,
+        "maximum_failed_value": 0.0003938620516973426,
+        "worst_raw": 137,
+        "worst_state": "delete"
+      }
+    ],
+    "all31_failures_retained": true,
+    "gates_not_redefined": true
+  },
+  "six_original_pool_targets": {
+    "pass_count": 6,
+    "records": [
+      {
+        "name": "primary128",
+        "state": "keep",
+        "bins": 6,
+        "actual_original_score": 0.0037760457392626754,
+        "original_target": 0.004613534469778339,
+        "tightened_reserve_target": 0.004613434469778339,
+        "margin_to_original": 0.000837488730515664,
+        "margin_to_tightened": 0.0008373887305156637,
+        "original_pass": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "bins": 24,
+        "actual_original_score": 0.005003136085482159,
+        "original_target": 0.006036768960524972,
+        "tightened_reserve_target": 0.0060366689605249714,
+        "margin_to_original": 0.001033632875042813,
+        "margin_to_tightened": 0.0010335328750428127,
+        "original_pass": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "bins": 23,
+        "actual_original_score": 0.0036889095259222972,
+        "original_target": 0.0038325507547889394,
+        "tightened_reserve_target": 0.0038324507547889395,
+        "margin_to_original": 0.00014364122886664213,
+        "margin_to_tightened": 0.00014354122886664229,
+        "original_pass": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "bins": 6,
+        "actual_original_score": 0.0062979465098275495,
+        "original_target": 0.0076029783590153485,
+        "tightened_reserve_target": 0.007602878359015348,
+        "margin_to_original": 0.001305031849187799,
+        "margin_to_tightened": 0.0013049318491877987,
+        "original_pass": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "bins": 24,
+        "actual_original_score": 0.0056075301132902195,
+        "original_target": 0.007150272171470027,
+        "tightened_reserve_target": 0.007150172171470026,
+        "margin_to_original": 0.001542742058179807,
+        "margin_to_tightened": 0.0015426420581798068,
+        "original_pass": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "bins": 23,
+        "actual_original_score": 0.0034304095265131605,
+        "original_target": 0.00352419822717539,
+        "tightened_reserve_target": 0.0035240982271753903,
+        "margin_to_original": 9.378870066222966e-05,
+        "margin_to_tightened": 9.368870066222982e-05,
+        "original_pass": true
+      }
+    ]
+  },
+  "106_local_no_regression_targets": {
+    "original_pass_count": 106,
+    "failed_count": 0,
+    "formula": "mean(abs(signed_RGB_residual)) <= min(current_H2_C2000_bin_score, latest21K_bin_score)+1e-6",
+    "LP_reserve": 1e-07,
+    "minimum_original_margin": 7.537130638959454e-08,
+    "minimum_original_margin_bin": {
+      "raw": 128,
+      "state": "keep",
+      "kind": "primary128",
+      "edge": "near_x",
+      "tangent_bin": 12,
+      "minus_pixels": 4,
+      "plus_pixels": 6,
+      "latest_score": 0.0021537907887250185,
+      "H2_C2000_score": 0.0008385851979255676,
+      "J_actual_score": 0.0008864526753313839,
+      "K_actual_score": 0.0008395098266191781,
+      "delta_vs_latest": -0.0013142809621058404,
+      "delta_vs_H2_C2000": 9.246286936104298e-07,
+      "delta_vs_J": -4.694284871220589e-05,
+      "original_no_regression_target": 0.0008395851979255677,
+      "tightened_reserve_target": 0.0008394851979255677,
+      "margin_to_original": 7.537130638959454e-08,
+      "margin_to_tightened": -2.4628693610353677e-08,
+      "original_per_bin_pass": true,
+      "tightened_reserve_pass": false,
+      "actual_signed_residual_RGB": [
+        4.7264620661735535e-08,
+        0.0025184699334204197,
+        -1.234002411365509e-08
+      ],
+      "predicted_signed_residual_RGB": [
+        -7.435941229080867e-11,
+        0.002518454172292549,
+        -8.094201532984902e-10
+      ]
+    },
+    "actual_bins_exceeding_extra_reserve": 45,
+    "worst_reserve_margin": -2.4628693610353677e-08,
+    "reserve_is_not_the_original_quality_tolerance": true,
+    "latest21K_strict_sign_and_1e_6_diagnostic_counts": [
+      {
+        "reference": "latest",
+        "state": "keep",
+        "bins": 53,
+        "strict_sign_counts": {
+          "improved": 12,
+          "regressed": 24,
+          "equal": 17
+        },
+        "diagnostic_1e_6_counts": {
+          "improved": 12,
+          "regressed": 0,
+          "within_1e_6": 41
+        },
+        "worst_regression": {
+          "raw": 137,
+          "state": "keep",
+          "kind": "world",
+          "edge": "lateral_y",
+          "tangent_bin": 98,
+          "minus_pixels": 9,
+          "plus_pixels": 8,
+          "latest_score": 0.0010488898260518909,
+          "H2_C2000_score": 0.0035557185765355825,
+          "J_actual_score": 0.003548185108229518,
+          "K_actual_score": 0.001049811253324151,
+          "delta_vs_latest": 9.214272722601891e-07,
+          "delta_vs_H2_C2000": -0.0025059073232114315,
+          "delta_vs_J": -0.002498373854905367,
+          "original_no_regression_target": 0.0010498898260518908,
+          "tightened_reserve_target": 0.0010497898260518907,
+          "margin_to_original": 7.857272773972683e-08,
+          "margin_to_tightened": -2.142727226032981e-08,
+          "original_per_bin_pass": true,
+          "tightened_reserve_pass": false,
+          "actual_signed_residual_RGB": [
+            -0.002148862462490797,
+            -0.0010005596559494734,
+            -1.1641532182693481e-08
+          ],
+          "predicted_signed_residual_RGB": [
+            -0.0021488372042822693,
+            -0.0010005365278845735,
+            4.231190922372036e-09
+          ]
+        }
+      },
+      {
+        "reference": "latest",
+        "state": "delete",
+        "bins": 53,
+        "strict_sign_counts": {
+          "improved": 12,
+          "regressed": 32,
+          "equal": 9
+        },
+        "diagnostic_1e_6_counts": {
+          "improved": 12,
+          "regressed": 0,
+          "within_1e_6": 41
+        },
+        "worst_regression": {
+          "raw": 137,
+          "state": "delete",
+          "kind": "world",
+          "edge": "lateral_y",
+          "tangent_bin": 98,
+          "minus_pixels": 9,
+          "plus_pixels": 8,
+          "latest_score": 0.0010488898260518909,
+          "H2_C2000_score": 0.0035557185765355825,
+          "J_actual_score": 0.003548185108229518,
+          "K_actual_score": 0.001049811253324151,
+          "delta_vs_latest": 9.214272722601891e-07,
+          "delta_vs_H2_C2000": -0.0025059073232114315,
+          "delta_vs_J": -0.002498373854905367,
+          "original_no_regression_target": 0.0010498898260518908,
+          "tightened_reserve_target": 0.0010497898260518907,
+          "margin_to_original": 7.857272773972683e-08,
+          "margin_to_tightened": -2.142727226032981e-08,
+          "original_per_bin_pass": true,
+          "tightened_reserve_pass": false,
+          "actual_signed_residual_RGB": [
+            -0.002148862462490797,
+            -0.0010005596559494734,
+            -1.1641532182693481e-08
+          ],
+          "predicted_signed_residual_RGB": [
+            -0.0021488372042822693,
+            -0.0010005365278845735,
+            4.231190922372036e-09
+          ]
+        }
+      }
+    ]
+  },
+  "same_H2_C2000_geometry_and_identity": {
+    "all_saved_alpha_depth_8groups_semanticRGB_bitwise_equal": true,
+    "fixed_model_foreground_RGB_max_abs_change": 0.0,
+    "fixed_model_foreground_newroad_mass_all_zero": true,
+    "reference_limit": "Relative to H2+C2000 only. H2 road geometry/effective visibility differ from delivered21K."
+  },
+  "protectedNR_bright_artifact_diagnostic": {
+    "conclusion": "NO_REDUCTION_AT_TWO_FIXED_PRIOR_J_MAX_ERROR_COORDINATES",
+    "maximum_coordinates_unchanged_vs_J_and_H2": true,
+    "records": [
+      {
+        "raw": 128,
+        "state": "delete",
+        "fixed_display_crop_xyxy": [
+          277,
+          203,
+          326,
+          240
+        ],
+        "selection_provenance": "Prior J protected_nonroad maximum error-increase point and its original top20 set; not selected from K.",
+        "maximum_J_point": {
+          "rank_in_preexisting_J_audit": 1,
+          "pixel_xy": [
+            301,
+            221
+          ],
+          "source_instance_actor_id": null,
+          "original_roles": {
+            "a5": false,
+            "a6": false,
+            "a37": false,
+            "road": false,
+            "road_edit": false,
+            "protect": true,
+            "protected_nonroad": true,
+            "fixed_nonroad_geometry_guard": true,
+            "full_actor37_label5": false,
+            "any_actor_label": false,
+            "ground_beneath_a37_proxy": false
+          },
+          "observed_RGB": [
+            0.34215685725212097,
+            0.3696078360080719,
+            0.40882351994514465
+          ],
+          "latest21K_RGB": [
+            0.3505079448223114,
+            0.38700759410858154,
+            0.42247986793518066
+          ],
+          "H2_RGB": [
+            0.8297063112258911,
+            0.8474917411804199,
+            0.8601024746894836
+          ],
+          "J_RGB": [
+            0.8297063112258911,
+            0.8474917411804199,
+            0.8601024746894836
+          ],
+          "K_RGB": [
+            0.8297063112258911,
+            0.8474917411804199,
+            0.8601024746894836
+          ],
+          "K_equals_H2_float32": true,
+          "K_equals_J_float32": true,
+          "K_observed_RGB_error": 0.4722374379634857,
+          "J_observed_RGB_error": 0.4722374379634857,
+          "latest21K_observed_RGB_error": 0.013135731220245361
+        },
+        "prior_J_top20_K_equals_J_count": 20,
+        "prior_J_top20_K_equals_H2_count": 20,
+        "fixed_top20_samples": [
+          {
+            "rank_in_preexisting_J_audit": 1,
+            "pixel_xy": [
+              301,
+              221
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.34215685725212097,
+              0.3696078360080719,
+              0.40882351994514465
+            ],
+            "latest21K_RGB": [
+              0.3505079448223114,
+              0.38700759410858154,
+              0.42247986793518066
+            ],
+            "H2_RGB": [
+              0.8297063112258911,
+              0.8474917411804199,
+              0.8601024746894836
+            ],
+            "J_RGB": [
+              0.8297063112258911,
+              0.8474917411804199,
+              0.8601024746894836
+            ],
+            "K_RGB": [
+              0.8297063112258911,
+              0.8474917411804199,
+              0.8601024746894836
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.4722374379634857,
+            "J_observed_RGB_error": 0.4722374379634857,
+            "latest21K_observed_RGB_error": 0.013135731220245361
+          },
+          {
+            "rank_in_preexisting_J_audit": 2,
+            "pixel_xy": [
+              302,
+              221
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3490196168422699,
+              0.3764705955982208,
+              0.4156862795352936
+            ],
+            "latest21K_RGB": [
+              0.3524588942527771,
+              0.3900490999221802,
+              0.42575618624687195
+            ],
+            "H2_RGB": [
+              0.6103208661079407,
+              0.6375831365585327,
+              0.6645368337631226
+            ],
+            "J_RGB": [
+              0.6103208661079407,
+              0.6375831365585327,
+              0.6645368337631226
+            ],
+            "K_RGB": [
+              0.6103208661079407,
+              0.6375831365585327,
+              0.6645368337631226
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2570881148179372,
+            "J_observed_RGB_error": 0.2570881148179372,
+            "latest21K_observed_RGB_error": 0.009029229482014975
+          },
+          {
+            "rank_in_preexisting_J_audit": 3,
+            "pixel_xy": [
+              305,
+              207
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5892156958580017,
+              0.6166666746139526,
+              0.6558823585510254
+            ],
+            "latest21K_RGB": [
+              0.5832363963127136,
+              0.6082170605659485,
+              0.6533757448196411
+            ],
+            "H2_RGB": [
+              0.33928173780441284,
+              0.36718401312828064,
+              0.4043721854686737
+            ],
+            "J_RGB": [
+              0.33928173780441284,
+              0.36718401312828064,
+              0.4043721854686737
+            ],
+            "K_RGB": [
+              0.33928173780441284,
+              0.36718401312828064,
+              0.4043721854686737
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.25030893087387085,
+            "J_observed_RGB_error": 0.25030893087387085,
+            "latest21K_observed_RGB_error": 0.005645175774892171
+          },
+          {
+            "rank_in_preexisting_J_audit": 4,
+            "pixel_xy": [
+              310,
+              222
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.34705883264541626,
+              0.3705882430076599,
+              0.4176470637321472
+            ],
+            "latest21K_RGB": [
+              0.3673872649669647,
+              0.40105485916137695,
+              0.4402180016040802
+            ],
+            "H2_RGB": [
+              0.10611073672771454,
+              0.08839066326618195,
+              0.15762057900428772
+            ],
+            "J_RGB": [
+              0.10611073672771454,
+              0.08839066326618195,
+              0.15762057900428772
+            ],
+            "K_RGB": [
+              0.10611073672771454,
+              0.08839066326618195,
+              0.15762057900428772
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.26105738679567975,
+            "J_observed_RGB_error": 0.26105738679567975,
+            "latest21K_observed_RGB_error": 0.024455328782399494
+          },
+          {
+            "rank_in_preexisting_J_audit": 5,
+            "pixel_xy": [
+              303,
+              206
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5549019575119019,
+              0.5823529362678528,
+              0.6215686202049255
+            ],
+            "latest21K_RGB": [
+              0.546988844871521,
+              0.572592556476593,
+              0.6188081502914429
+            ],
+            "H2_RGB": [
+              0.3130897581577301,
+              0.3407863676548004,
+              0.37600475549697876
+            ],
+            "J_RGB": [
+              0.3130897581577301,
+              0.3407863676548004,
+              0.37600475549697876
+            ],
+            "K_RGB": [
+              0.3130897581577301,
+              0.3407863676548004,
+              0.37600475549697876
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2429808775583903,
+            "J_observed_RGB_error": 0.2429808775583903,
+            "latest21K_observed_RGB_error": 0.006811320781707764
+          },
+          {
+            "rank_in_preexisting_J_audit": 6,
+            "pixel_xy": [
+              310,
+              211
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.570588231086731,
+              0.591176450252533,
+              0.6431372761726379
+            ],
+            "latest21K_RGB": [
+              0.582595944404602,
+              0.6065683364868164,
+              0.6544155478477478
+            ],
+            "H2_RGB": [
+              0.3227565884590149,
+              0.3501158356666565,
+              0.3858586847782135
+            ],
+            "J_RGB": [
+              0.3227565884590149,
+              0.3501158356666565,
+              0.3858586847782135
+            ],
+            "K_RGB": [
+              0.3227565884590149,
+              0.3501158356666565,
+              0.3858586847782135
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.24872361620267233,
+            "J_observed_RGB_error": 0.24872361620267233,
+            "latest21K_observed_RGB_error": 0.012892623742421469
+          },
+          {
+            "rank_in_preexisting_J_audit": 7,
+            "pixel_xy": [
+              307,
+              209
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5607843399047852,
+              0.5843137502670288,
+              0.6313725709915161
+            ],
+            "latest21K_RGB": [
+              0.5564795732498169,
+              0.581655740737915,
+              0.6292960047721863
+            ],
+            "H2_RGB": [
+              0.3272104859352112,
+              0.3545707166194916,
+              0.3897620737552643
+            ],
+            "J_RGB": [
+              0.3272104859352112,
+              0.3545707166194916,
+              0.3897620737552643
+            ],
+            "K_RGB": [
+              0.3272104859352112,
+              0.3545707166194916,
+              0.3897620737552643
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.234975794951121,
+            "J_observed_RGB_error": 0.234975794951121,
+            "latest21K_observed_RGB_error": 0.0030131141344706216
+          },
+          {
+            "rank_in_preexisting_J_audit": 8,
+            "pixel_xy": [
+              302,
+              205
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5745097994804382,
+              0.6019607782363892,
+              0.6411764621734619
+            ],
+            "latest21K_RGB": [
+              0.5690357685089111,
+              0.5945210456848145,
+              0.6394781470298767
+            ],
+            "H2_RGB": [
+              0.3390635848045349,
+              0.3665967583656311,
+              0.4025282859802246
+            ],
+            "J_RGB": [
+              0.3390635848045349,
+              0.3665967583656311,
+              0.4025282859802246
+            ],
+            "K_RGB": [
+              0.3390635848045349,
+              0.3665967583656311,
+              0.4025282859802246
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.23648613691329956,
+            "J_observed_RGB_error": 0.23648613691329956,
+            "latest21K_observed_RGB_error": 0.004870692888895671
+          },
+          {
+            "rank_in_preexisting_J_audit": 9,
+            "pixel_xy": [
+              306,
+              208
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5901960730552673,
+              0.6176470518112183,
+              0.656862735748291
+            ],
+            "latest21K_RGB": [
+              0.5825695395469666,
+              0.6081976294517517,
+              0.6558419466018677
+            ],
+            "H2_RGB": [
+              0.3591417372226715,
+              0.3844664692878723,
+              0.42334187030792236
+            ],
+            "J_RGB": [
+              0.3591417372226715,
+              0.3844664692878723,
+              0.42334187030792236
+            ],
+            "K_RGB": [
+              0.3591417372226715,
+              0.3844664692878723,
+              0.42334187030792236
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2325852612654368,
+            "J_observed_RGB_error": 0.2325852612654368,
+            "latest21K_observed_RGB_error": 0.006032248338063558
+          },
+          {
+            "rank_in_preexisting_J_audit": 10,
+            "pixel_xy": [
+              304,
+              206
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.591176450252533,
+              0.6186274290084839,
+              0.6578431129455566
+            ],
+            "latest21K_RGB": [
+              0.5828553438186646,
+              0.6088243722915649,
+              0.6546927094459534
+            ],
+            "H2_RGB": [
+              0.3590545952320099,
+              0.3866354823112488,
+              0.42402321100234985
+            ],
+            "J_RGB": [
+              0.3590545952320099,
+              0.3866354823112488,
+              0.42402321100234985
+            ],
+            "K_RGB": [
+              0.3590545952320099,
+              0.3866354823112488,
+              0.42402321100234985
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2326445678869883,
+            "J_observed_RGB_error": 0.2326445678869883,
+            "latest21K_observed_RGB_error": 0.007091522216796875
+          },
+          {
+            "rank_in_preexisting_J_audit": 11,
+            "pixel_xy": [
+              208,
+              212
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3333333432674408,
+              0.36666667461395264,
+              0.4058823585510254
+            ],
+            "latest21K_RGB": [
+              0.3332711458206177,
+              0.3618629574775696,
+              0.41000378131866455
+            ],
+            "H2_RGB": [
+              0.6329851150512695,
+              0.5520784258842468,
+              0.5780302882194519
+            ],
+            "J_RGB": [
+              0.6329851150512695,
+              0.5520784258842468,
+              0.5780302882194519
+            ],
+            "K_RGB": [
+              0.6329851150512695,
+              0.5520784258842468,
+              0.5780302882194519
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21907048424084982,
+            "J_observed_RGB_error": 0.21907048424084982,
+            "latest21K_observed_RGB_error": 0.0029957791169484458
+          },
+          {
+            "rank_in_preexisting_J_audit": 12,
+            "pixel_xy": [
+              311,
+              222
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3480392098426819,
+              0.3754901885986328,
+              0.41470587253570557
+            ],
+            "latest21K_RGB": [
+              0.3654080331325531,
+              0.3974355161190033,
+              0.4377749264240265
+            ],
+            "H2_RGB": [
+              0.12925784289836884,
+              0.11925745755434036,
+              0.1866832673549652
+            ],
+            "J_RGB": [
+              0.12925784289836884,
+              0.11925745755434036,
+              0.1866832673549652
+            ],
+            "K_RGB": [
+              0.12925784289836884,
+              0.11925745755434036,
+              0.1866832673549652
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2343455677231153,
+            "J_observed_RGB_error": 0.2343455677231153,
+            "latest21K_observed_RGB_error": 0.020794401566187542
+          },
+          {
+            "rank_in_preexisting_J_audit": 13,
+            "pixel_xy": [
+              310,
+              221
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.34215685725212097,
+              0.3656862676143646,
+              0.41274508833885193
+            ],
+            "latest21K_RGB": [
+              0.3546471893787384,
+              0.38710933923721313,
+              0.42455562949180603
+            ],
+            "H2_RGB": [
+              0.1310819387435913,
+              0.12119685113430023,
+              0.18561716377735138
+            ],
+            "J_RGB": [
+              0.1310819387435913,
+              0.12119685113430023,
+              0.18561716377735138
+            ],
+            "K_RGB": [
+              0.1310819387435913,
+              0.12119685113430023,
+              0.18561716377735138
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2275640865166982,
+            "J_observed_RGB_error": 0.2275640865166982,
+            "latest21K_observed_RGB_error": 0.015241314967473349
+          },
+          {
+            "rank_in_preexisting_J_audit": 14,
+            "pixel_xy": [
+              301,
+              204
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5745097994804382,
+              0.6019607782363892,
+              0.6411764621734619
+            ],
+            "latest21K_RGB": [
+              0.582304060459137,
+              0.6080394387245178,
+              0.6517981290817261
+            ],
+            "H2_RGB": [
+              0.35783758759498596,
+              0.3843851089477539,
+              0.4211363196372986
+            ],
+            "J_RGB": [
+              0.35783758759498596,
+              0.3843851089477539,
+              0.4211363196372986
+            ],
+            "K_RGB": [
+              0.35783758759498596,
+              0.3843851089477539,
+              0.4211363196372986
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21809600790341696,
+            "J_observed_RGB_error": 0.21809600790341696,
+            "latest21K_observed_RGB_error": 0.008164862791697184
+          },
+          {
+            "rank_in_preexisting_J_audit": 15,
+            "pixel_xy": [
+              314,
+              214
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5901960730552673,
+              0.6176470518112183,
+              0.656862735748291
+            ],
+            "latest21K_RGB": [
+              0.5806925296783447,
+              0.6035704016685486,
+              0.6523966193199158
+            ],
+            "H2_RGB": [
+              0.3733350336551666,
+              0.3994304835796356,
+              0.43865424394607544
+            ],
+            "J_RGB": [
+              0.3733350336551666,
+              0.3994304835796356,
+              0.43865424394607544
+            ],
+            "K_RGB": [
+              0.3733350336551666,
+              0.3994304835796356,
+              0.43865424394607544
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21776203314463297,
+            "J_observed_RGB_error": 0.21776203314463297,
+            "latest21K_observed_RGB_error": 0.009348769982655844
+          },
+          {
+            "rank_in_preexisting_J_audit": 16,
+            "pixel_xy": [
+              208,
+              211
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.35098040103912354,
+              0.3843137323856354,
+              0.41862744092941284
+            ],
+            "latest21K_RGB": [
+              0.3409077823162079,
+              0.3704042136669159,
+              0.41895198822021484
+            ],
+            "H2_RGB": [
+              0.6262583136558533,
+              0.5781156420707703,
+              0.5851741433143616
+            ],
+            "J_RGB": [
+              0.6262583136558533,
+              0.5781156420707703,
+              0.5851741433143616
+            ],
+            "K_RGB": [
+              0.6262583136558533,
+              0.5781156420707703,
+              0.5851741433143616
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21187550822893778,
+            "J_observed_RGB_error": 0.21187550822893778,
+            "latest21K_observed_RGB_error": 0.008102228244145712
+          },
+          {
+            "rank_in_preexisting_J_audit": 17,
+            "pixel_xy": [
+              192,
+              197
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.4000000059604645,
+              0.42941176891326904,
+              0.48627451062202454
+            ],
+            "latest21K_RGB": [
+              0.36457228660583496,
+              0.4016173183917999,
+              0.5022068023681641
+            ],
+            "H2_RGB": [
+              0.16667036712169647,
+              0.2070440649986267,
+              0.2665007710456848
+            ],
+            "J_RGB": [
+              0.16667036712169647,
+              0.2070440649986267,
+              0.2665007710456848
+            ],
+            "K_RGB": [
+              0.16667036712169647,
+              0.2070440649986267,
+              0.2665007710456848
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.22515702744325003,
+            "J_observed_RGB_error": 0.22515702744325003,
+            "latest21K_observed_RGB_error": 0.026384820540746052
+          },
+          {
+            "rank_in_preexisting_J_audit": 18,
+            "pixel_xy": [
+              193,
+              197
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.39313724637031555,
+              0.4225490093231201,
+              0.4794117510318756
+            ],
+            "latest21K_RGB": [
+              0.37193459272384644,
+              0.4063473343849182,
+              0.5071332454681396
+            ],
+            "H2_RGB": [
+              0.1668543517589569,
+              0.2071087658405304,
+              0.26889660954475403
+            ],
+            "J_RGB": [
+              0.1668543517589569,
+              0.2071087658405304,
+              0.26889660954475403
+            ],
+            "K_RGB": [
+              0.1668543517589569,
+              0.2071087658405304,
+              0.26889660954475403
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21741275986035666,
+            "J_observed_RGB_error": 0.21741275986035666,
+            "latest21K_observed_RGB_error": 0.02170860767364502
+          },
+          {
+            "rank_in_preexisting_J_audit": 19,
+            "pixel_xy": [
+              311,
+              211
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5813725590705872,
+              0.593137264251709,
+              0.6519607901573181
+            ],
+            "latest21K_RGB": [
+              0.5713632106781006,
+              0.5970876812934875,
+              0.6455374956130981
+            ],
+            "H2_RGB": [
+              0.3802919387817383,
+              0.40709131956100464,
+              0.44449397921562195
+            ],
+            "J_RGB": [
+              0.3802919387817383,
+              0.40709131956100464,
+              0.44449397921562195
+            ],
+            "K_RGB": [
+              0.3802919387817383,
+              0.40709131956100464,
+              0.44449397921562195
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.1981977919737498,
+            "J_observed_RGB_error": 0.1981977919737498,
+            "latest21K_observed_RGB_error": 0.006794353326161702
+          },
+          {
+            "rank_in_preexisting_J_audit": 20,
+            "pixel_xy": [
+              194,
+              197
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3892156779766083,
+              0.4264705777168274,
+              0.4794117510318756
+            ],
+            "latest21K_RGB": [
+              0.3675473928451538,
+              0.40144771337509155,
+              0.5066279768943787
+            ],
+            "H2_RGB": [
+              0.17059388756752014,
+              0.21090878546237946,
+              0.27359339594841003
+            ],
+            "J_RGB": [
+              0.17059388756752014,
+              0.21090878546237946,
+              0.27359339594841003
+            ],
+            "K_RGB": [
+              0.17059388756752014,
+              0.21090878546237946,
+              0.27359339594841003
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.21333397924900055,
+            "J_observed_RGB_error": 0.21333397924900055,
+            "latest21K_observed_RGB_error": 0.024635791778564453
+          }
+        ],
+        "crop_RGB_K_minus_J_max_abs": 0.0,
+        "crop_RGB_K_minus_H2_max_abs": 0.0
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "fixed_display_crop_xyxy": [
+          276,
+          209,
+          325,
+          246
+        ],
+        "selection_provenance": "Prior J protected_nonroad maximum error-increase point and its original top20 set; not selected from K.",
+        "maximum_J_point": {
+          "rank_in_preexisting_J_audit": 1,
+          "pixel_xy": [
+            300,
+            227
+          ],
+          "source_instance_actor_id": null,
+          "original_roles": {
+            "a5": false,
+            "a6": false,
+            "a37": false,
+            "road": false,
+            "road_edit": false,
+            "protect": true,
+            "protected_nonroad": true,
+            "fixed_nonroad_geometry_guard": true,
+            "full_actor37_label5": false,
+            "any_actor_label": false,
+            "ground_beneath_a37_proxy": false
+          },
+          "observed_RGB": [
+            0.3382352888584137,
+            0.36176469922065735,
+            0.40882351994514465
+          ],
+          "latest21K_RGB": [
+            0.35831525921821594,
+            0.393612802028656,
+            0.43165886402130127
+          ],
+          "H2_RGB": [
+            0.7741163372993469,
+            0.7946293950080872,
+            0.8123864531517029
+          ],
+          "J_RGB": [
+            0.7741163372993469,
+            0.7946293950080872,
+            0.8123864531517029
+          ],
+          "K_RGB": [
+            0.7741163372993469,
+            0.7946293950080872,
+            0.8123864531517029
+          ],
+          "K_equals_H2_float32": true,
+          "K_equals_J_float32": true,
+          "K_observed_RGB_error": 0.42410289247830707,
+          "J_observed_RGB_error": 0.42410289247830707,
+          "latest21K_observed_RGB_error": 0.024921139081319172
+        },
+        "prior_J_top20_K_equals_J_count": 20,
+        "prior_J_top20_K_equals_H2_count": 20,
+        "fixed_top20_samples": [
+          {
+            "rank_in_preexisting_J_audit": 1,
+            "pixel_xy": [
+              300,
+              227
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3382352888584137,
+              0.36176469922065735,
+              0.40882351994514465
+            ],
+            "latest21K_RGB": [
+              0.35831525921821594,
+              0.393612802028656,
+              0.43165886402130127
+            ],
+            "H2_RGB": [
+              0.7741163372993469,
+              0.7946293950080872,
+              0.8123864531517029
+            ],
+            "J_RGB": [
+              0.7741163372993469,
+              0.7946293950080872,
+              0.8123864531517029
+            ],
+            "K_RGB": [
+              0.7741163372993469,
+              0.7946293950080872,
+              0.8123864531517029
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.42410289247830707,
+            "J_observed_RGB_error": 0.42410289247830707,
+            "latest21K_observed_RGB_error": 0.024921139081319172
+          },
+          {
+            "rank_in_preexisting_J_audit": 2,
+            "pixel_xy": [
+              301,
+              227
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.33627450466156006,
+              0.3598039150238037,
+              0.406862735748291
+            ],
+            "latest21K_RGB": [
+              0.3528291583061218,
+              0.3877192437648773,
+              0.4269358515739441
+            ],
+            "H2_RGB": [
+              0.7499744296073914,
+              0.773502767086029,
+              0.7944085597991943
+            ],
+            "J_RGB": [
+              0.7499744296073914,
+              0.773502767086029,
+              0.7944085597991943
+            ],
+            "K_RGB": [
+              0.7499744296073914,
+              0.773502767086029,
+              0.7944085597991943
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.40498153368632,
+            "J_observed_RGB_error": 0.40498153368632,
+            "latest21K_observed_RGB_error": 0.021514366070429485
+          },
+          {
+            "rank_in_preexisting_J_audit": 3,
+            "pixel_xy": [
+              301,
+              228
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.34705883264541626,
+              0.3745098114013672,
+              0.41372549533843994
+            ],
+            "latest21K_RGB": [
+              0.35322490334510803,
+              0.3875446319580078,
+              0.42541515827178955
+            ],
+            "H2_RGB": [
+              0.6969427466392517,
+              0.7151522040367126,
+              0.7321242690086365
+            ],
+            "J_RGB": [
+              0.6969427466392517,
+              0.7151522040367126,
+              0.7321242690086365
+            ],
+            "K_RGB": [
+              0.6969427466392517,
+              0.7151522040367126,
+              0.7321242690086365
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.3363083600997925,
+            "J_observed_RGB_error": 0.3363083600997925,
+            "latest21K_observed_RGB_error": 0.010296851396560669
+          },
+          {
+            "rank_in_preexisting_J_audit": 4,
+            "pixel_xy": [
+              309,
+              215
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5696078538894653,
+              0.6009804010391235,
+              0.6441176533699036
+            ],
+            "latest21K_RGB": [
+              0.5739929676055908,
+              0.5986266732215881,
+              0.6462798714637756
+            ],
+            "H2_RGB": [
+              0.3223678767681122,
+              0.35026809573173523,
+              0.3858714997768402
+            ],
+            "J_RGB": [
+              0.3223678767681122,
+              0.35026809573173523,
+              0.3858714997768402
+            ],
+            "K_RGB": [
+              0.3223678767681122,
+              0.35026809573173523,
+              0.3858714997768402
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2520661453406016,
+            "J_observed_RGB_error": 0.2520661453406016,
+            "latest21K_observed_RGB_error": 0.00296701987584432
+          },
+          {
+            "rank_in_preexisting_J_audit": 5,
+            "pixel_xy": [
+              304,
+              211
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5813725590705872,
+              0.6088235378265381,
+              0.6421568393707275
+            ],
+            "latest21K_RGB": [
+              0.5789000988006592,
+              0.6041006445884705,
+              0.6493749022483826
+            ],
+            "H2_RGB": [
+              0.32694047689437866,
+              0.3545713424682617,
+              0.3909628987312317
+            ],
+            "J_RGB": [
+              0.32694047689437866,
+              0.3545713424682617,
+              0.3909628987312317
+            ],
+            "K_RGB": [
+              0.32694047689437866,
+              0.3545713424682617,
+              0.3909628987312317
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2532927393913269,
+            "J_observed_RGB_error": 0.2532927393913269,
+            "latest21K_observed_RGB_error": 0.004804472128550212
+          },
+          {
+            "rank_in_preexisting_J_audit": 6,
+            "pixel_xy": [
+              306,
+              213
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.563725471496582,
+              0.591176450252533,
+              0.6303921341896057
+            ],
+            "latest21K_RGB": [
+              0.5501436591148376,
+              0.5760741233825684,
+              0.6242105960845947
+            ],
+            "H2_RGB": [
+              0.31234484910964966,
+              0.3391691744327545,
+              0.37364354729652405
+            ],
+            "J_RGB": [
+              0.31234484910964966,
+              0.3391691744327545,
+              0.37364354729652405
+            ],
+            "K_RGB": [
+              0.31234484910964966,
+              0.3391691744327545,
+              0.37364354729652405
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2533788283665975,
+            "J_observed_RGB_error": 0.2533788283665975,
+            "latest21K_observed_RGB_error": 0.01162189245223999
+          },
+          {
+            "rank_in_preexisting_J_audit": 7,
+            "pixel_xy": [
+              305,
+              212
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5803921818733215,
+              0.6078431606292725,
+              0.6470588445663452
+            ],
+            "latest21K_RGB": [
+              0.5759627223014832,
+              0.601658821105957,
+              0.6492441296577454
+            ],
+            "H2_RGB": [
+              0.34453821182250977,
+              0.36912277340888977,
+              0.40683409571647644
+            ],
+            "J_RGB": [
+              0.34453821182250977,
+              0.36912277340888977,
+              0.40683409571647644
+            ],
+            "K_RGB": [
+              0.34453821182250977,
+              0.36912277340888977,
+              0.40683409571647644
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2382663687070211,
+            "J_observed_RGB_error": 0.2382663687070211,
+            "latest21K_observed_RGB_error": 0.004266361395517985
+          },
+          {
+            "rank_in_preexisting_J_audit": 8,
+            "pixel_xy": [
+              301,
+              209
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.570588231086731,
+              0.5941176414489746,
+              0.6411764621734619
+            ],
+            "latest21K_RGB": [
+              0.5606206059455872,
+              0.5862888693809509,
+              0.632479727268219
+            ],
+            "H2_RGB": [
+              0.3308912515640259,
+              0.3586304187774658,
+              0.3943285346031189
+            ],
+            "J_RGB": [
+              0.3308912515640259,
+              0.3586304187774658,
+              0.3943285346031189
+            ],
+            "K_RGB": [
+              0.3308912515640259,
+              0.3586304187774658,
+              0.3943285346031189
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.24067737658818564,
+            "J_observed_RGB_error": 0.24067737658818564,
+            "latest21K_observed_RGB_error": 0.0088310440381368
+          },
+          {
+            "rank_in_preexisting_J_audit": 9,
+            "pixel_xy": [
+              311,
+              228
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3333333432674408,
+              0.3607843220233917,
+              0.4000000059604645
+            ],
+            "latest21K_RGB": [
+              0.37095093727111816,
+              0.4065101444721222,
+              0.4476280212402344
+            ],
+            "H2_RGB": [
+              0.0797063559293747,
+              0.05918259546160698,
+              0.13020582497119904
+            ],
+            "J_RGB": [
+              0.0797063559293747,
+              0.05918259546160698,
+              0.13020582497119904
+            ],
+            "K_RGB": [
+              0.0797063559293747,
+              0.05918259546160698,
+              0.13020582497119904
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.27500763162970543,
+            "J_observed_RGB_error": 0.27500763162970543,
+            "latest21K_observed_RGB_error": 0.043657143910725914
+          },
+          {
+            "rank_in_preexisting_J_audit": 10,
+            "pixel_xy": [
+              310,
+              216
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5754901766777039,
+              0.5990195870399475,
+              0.6460784077644348
+            ],
+            "latest21K_RGB": [
+              0.554094672203064,
+              0.5794692039489746,
+              0.6283906102180481
+            ],
+            "H2_RGB": [
+              0.33107224106788635,
+              0.3561573028564453,
+              0.3920096755027771
+            ],
+            "J_RGB": [
+              0.33107224106788635,
+              0.3561573028564453,
+              0.3920096755027771
+            ],
+            "K_RGB": [
+              0.33107224106788635,
+              0.3561573028564453,
+              0.3920096755027771
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.24711631735165915,
+            "J_observed_RGB_error": 0.24711631735165915,
+            "latest21K_observed_RGB_error": 0.019544561703999836
+          },
+          {
+            "rank_in_preexisting_J_audit": 11,
+            "pixel_xy": [
+              317,
+              221
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5745097994804382,
+              0.6019607782363892,
+              0.6411764621734619
+            ],
+            "latest21K_RGB": [
+              0.5618288516998291,
+              0.5845491290092468,
+              0.6335071325302124
+            ],
+            "H2_RGB": [
+              0.3372913599014282,
+              0.3640127182006836,
+              0.39979472756385803
+            ],
+            "J_RGB": [
+              0.3372913599014282,
+              0.3640127182006836,
+              0.39979472756385803
+            ],
+            "K_RGB": [
+              0.3372913599014282,
+              0.3640127182006836,
+              0.39979472756385803
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.23884941140810648,
+            "J_observed_RGB_error": 0.23884941140810648,
+            "latest21K_observed_RGB_error": 0.012587308883666992
+          },
+          {
+            "rank_in_preexisting_J_audit": 12,
+            "pixel_xy": [
+              302,
+              210
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.545098066329956,
+              0.570588231086731,
+              0.613725483417511
+            ],
+            "latest21K_RGB": [
+              0.5238958597183228,
+              0.5498682856559753,
+              0.598463237285614
+            ],
+            "H2_RGB": [
+              0.30961841344833374,
+              0.3363770544528961,
+              0.3710232377052307
+            ],
+            "J_RGB": [
+              0.30961841344833374,
+              0.3363770544528961,
+              0.3710232377052307
+            ],
+            "K_RGB": [
+              0.30961841344833374,
+              0.3363770544528961,
+              0.3710232377052307
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.23746435840924582,
+            "J_observed_RGB_error": 0.23746435840924582,
+            "latest21K_observed_RGB_error": 0.019061466058095295
+          },
+          {
+            "rank_in_preexisting_J_audit": 13,
+            "pixel_xy": [
+              302,
+              228
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.33529412746429443,
+              0.36274510622024536,
+              0.4019607901573181
+            ],
+            "latest21K_RGB": [
+              0.34743383526802063,
+              0.381442666053772,
+              0.4190918207168579
+            ],
+            "H2_RGB": [
+              0.577799379825592,
+              0.599820077419281,
+              0.6232715845108032
+            ],
+            "J_RGB": [
+              0.577799379825592,
+              0.599820077419281,
+              0.6232715845108032
+            ],
+            "K_RGB": [
+              0.577799379825592,
+              0.599820077419281,
+              0.6232715845108032
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2336303393046061,
+            "J_observed_RGB_error": 0.2336303393046061,
+            "latest21K_observed_RGB_error": 0.015989432732264202
+          },
+          {
+            "rank_in_preexisting_J_audit": 14,
+            "pixel_xy": [
+              307,
+              213
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.572549045085907,
+              0.6000000238418579,
+              0.6392157077789307
+            ],
+            "latest21K_RGB": [
+              0.5803731679916382,
+              0.6049705147743225,
+              0.6506448984146118
+            ],
+            "H2_RGB": [
+              0.3532259166240692,
+              0.38099706172943115,
+              0.4169486463069916
+            ],
+            "J_RGB": [
+              0.3532259166240692,
+              0.38099706172943115,
+              0.4169486463069916
+            ],
+            "K_RGB": [
+              0.3532259166240692,
+              0.38099706172943115,
+              0.4169486463069916
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.22019771734873453,
+            "J_observed_RGB_error": 0.22019771734873453,
+            "latest21K_observed_RGB_error": 0.008074601491292318
+          },
+          {
+            "rank_in_preexisting_J_audit": 15,
+            "pixel_xy": [
+              314,
+              219
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5941176414489746,
+              0.6215686202049255,
+              0.6607843041419983
+            ],
+            "latest21K_RGB": [
+              0.564741849899292,
+              0.5905858874320984,
+              0.6419820785522461
+            ],
+            "H2_RGB": [
+              0.3621812164783478,
+              0.38802915811538696,
+              0.4262143671512604
+            ],
+            "J_RGB": [
+              0.3621812164783478,
+              0.38802915811538696,
+              0.4262143671512604
+            ],
+            "K_RGB": [
+              0.3621812164783478,
+              0.38802915811538696,
+              0.4262143671512604
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.23334860801696777,
+            "J_observed_RGB_error": 0.23334860801696777,
+            "latest21K_observed_RGB_error": 0.026386916637420654
+          },
+          {
+            "rank_in_preexisting_J_audit": 16,
+            "pixel_xy": [
+              299,
+              227
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.3490196168422699,
+              0.3705882430076599,
+              0.4117647111415863
+            ],
+            "latest21K_RGB": [
+              0.35479557514190674,
+              0.3950461447238922,
+              0.4305555820465088
+            ],
+            "H2_RGB": [
+              0.5747746229171753,
+              0.5986101031303406,
+              0.626101553440094
+            ],
+            "J_RGB": [
+              0.5747746229171753,
+              0.5986101031303406,
+              0.626101553440094
+            ],
+            "K_RGB": [
+              0.5747746229171753,
+              0.5986101031303406,
+              0.626101553440094
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2227045694986979,
+            "J_observed_RGB_error": 0.2227045694986979,
+            "latest21K_observed_RGB_error": 0.01634157697359721
+          },
+          {
+            "rank_in_preexisting_J_audit": 17,
+            "pixel_xy": [
+              320,
+              223
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5607843399047852,
+              0.5882353186607361,
+              0.6196078658103943
+            ],
+            "latest21K_RGB": [
+              0.579822838306427,
+              0.6019444465637207,
+              0.65227872133255
+            ],
+            "H2_RGB": [
+              0.34036198258399963,
+              0.3648136556148529,
+              0.400218665599823
+            ],
+            "J_RGB": [
+              0.34036198258399963,
+              0.3648136556148529,
+              0.400218665599823
+            ],
+            "K_RGB": [
+              0.34036198258399963,
+              0.3648136556148529,
+              0.400218665599823
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.22107774019241333,
+            "J_observed_RGB_error": 0.22107774019241333,
+            "latest21K_observed_RGB_error": 0.02180616060892741
+          },
+          {
+            "rank_in_preexisting_J_audit": 18,
+            "pixel_xy": [
+              306,
+              212
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5852941274642944,
+              0.6127451062202454,
+              0.6519607901573181
+            ],
+            "latest21K_RGB": [
+              0.5840953588485718,
+              0.609957218170166,
+              0.6561571955680847
+            ],
+            "H2_RGB": [
+              0.38923612236976624,
+              0.413332998752594,
+              0.45147544145584106
+            ],
+            "J_RGB": [
+              0.38923612236976624,
+              0.413332998752594,
+              0.45147544145584106
+            ],
+            "K_RGB": [
+              0.38923612236976624,
+              0.413332998752594,
+              0.45147544145584106
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.19865182042121887,
+            "J_observed_RGB_error": 0.19865182042121887,
+            "latest21K_observed_RGB_error": 0.002727687358856201
+          },
+          {
+            "rank_in_preexisting_J_audit": 19,
+            "pixel_xy": [
+              311,
+              216
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.5960784554481506,
+              0.6196078658103943,
+              0.6666666865348816
+            ],
+            "latest21K_RGB": [
+              0.5903729200363159,
+              0.6136967539787292,
+              0.6611126065254211
+            ],
+            "H2_RGB": [
+              0.39778321981430054,
+              0.42214491963386536,
+              0.4605879485607147
+            ],
+            "J_RGB": [
+              0.39778321981430054,
+              0.42214491963386536,
+              0.4605879485607147
+            ],
+            "K_RGB": [
+              0.39778321981430054,
+              0.42214491963386536,
+              0.4605879485607147
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.20061230659484863,
+            "J_observed_RGB_error": 0.20061230659484863,
+            "latest21K_observed_RGB_error": 0.005723575750986735
+          },
+          {
+            "rank_in_preexisting_J_audit": 20,
+            "pixel_xy": [
+              303,
+              210
+            ],
+            "source_instance_actor_id": null,
+            "original_roles": {
+              "a5": false,
+              "a6": false,
+              "a37": false,
+              "road": false,
+              "road_edit": false,
+              "protect": true,
+              "protected_nonroad": true,
+              "fixed_nonroad_geometry_guard": true,
+              "full_actor37_label5": false,
+              "any_actor_label": false,
+              "ground_beneath_a37_proxy": false
+            },
+            "observed_RGB": [
+              0.572549045085907,
+              0.6000000238418579,
+              0.6392157077789307
+            ],
+            "latest21K_RGB": [
+              0.5842747688293457,
+              0.6093122959136963,
+              0.6541649103164673
+            ],
+            "H2_RGB": [
+              0.36799803376197815,
+              0.39488551020622253,
+              0.4321412444114685
+            ],
+            "J_RGB": [
+              0.36799803376197815,
+              0.39488551020622253,
+              0.4321412444114685
+            ],
+            "K_RGB": [
+              0.36799803376197815,
+              0.39488551020622253,
+              0.4321412444114685
+            ],
+            "K_equals_H2_float32": true,
+            "K_equals_J_float32": true,
+            "K_observed_RGB_error": 0.2055799961090088,
+            "J_observed_RGB_error": 0.2055799961090088,
+            "latest21K_observed_RGB_error": 0.01199573278427124
+          }
+        ],
+        "crop_RGB_K_minus_J_max_abs": 0.0,
+        "crop_RGB_K_minus_H2_max_abs": 0.0
+      }
+    ],
+    "figure": {
+      "path": "figures/K_protected_nonroad_fixed_crops.png",
+      "sha256": "555d00e5ce53765bc133a2422c5760e9cbd23b1ed44e3344d4e244f67bf48535",
+      "size": [
+        1260,
+        650
+      ]
+    }
+  },
+  "source_files": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\review\\K_candidate_fixed4560_cpu.json",
+      "sha256": "ad5b34dc67c01bfd1d0357a70973666dfe8819affb49725e81dd4b7d2a6d052a"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\review\\K_actual_pools_bins_cpu_v1.json",
+      "sha256": "dd8871d2f91e3f49be7c96e507c2b4b8ac8c1edae3a6a392fe9f3b0adb99f79a"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\review\\K_components_vs_H2_C2000_v1.json",
+      "sha256": "5a9d6c35b06dfb5396ec0f4b49adcce1b708068640ece999d5dc9d7752bdf1a8"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\review\\K_components_vs_latest_v1.json",
+      "sha256": "b8c1767ae574c6deff03ee64eb21da22d414687463eddb2ea132c3ae9ecbbaf3"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\review\\J_failure_pixels_v1.json",
+      "sha256": "25353151788185e01c8376f50d9b52979e1574ab54f79c50ab477238c8eba395"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\K_single_v1\\result.json",
+      "sha256": "f22d1c51c961491b4cd7606120d3682cd457490937547a41927ae4dab6a03add"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\receipt.json",
+      "sha256": "e0e4e2d91cc4673f05545d86972dde75a23e8f5c47f05c279295b9ffd037fccd"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\K_execution_ledger_v1.json",
+      "sha256": "91004ead3af49bab0cacac9d23ae8f2d088a01083683b4a7c8079ee47626f9b9"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_c49_rgb_20261107\\evidence\\H2_material2000_retry1\\frames\\128\\delete_float.npz",
+      "sha256": "40849ec4ea455a71c6f90f20bcfb6d58071a638648c33ab9d2d4335577afabae"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\J_LP_candidate\\frames\\128\\delete_float.npz",
+      "sha256": "3171c38765101ea9e8af97368c326d71438a73d13f0429a4890e119692d8d115"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\frames\\128\\delete_float.npz",
+      "sha256": "59fe9bd0ef4797f3bbefdab3bcc01f807111f32f2cdf3c44eaed127b4f677032"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\baseline4\\frames\\128\\delete.png",
+      "sha256": "59b32761a4a900f80071e88a00adf11e77f4ecc00e2a32452da6233cb1921014"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_c49_rgb_20261107\\evidence\\H2_material2000_retry1\\frames\\128\\delete.png",
+      "sha256": "ddb9039be5fc3e468c91783cf57d997461db3aaafeb35449dfb1c570dd2084cb"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\J_LP_candidate\\frames\\128\\delete.png",
+      "sha256": "4441c224f05368ee1018fb9a1cd8371c85127e31d5c389351221ebf400fd8c65"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\frames\\128\\delete.png",
+      "sha256": "7ce6982a99e43c9c3ca5f89863e0358ed7d2cc1bf41fb83abe989e8d6b5ea829"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_c49_rgb_20261107\\evidence\\H2_material2000_retry1\\frames\\137\\delete_float.npz",
+      "sha256": "ce5ada28a08c6dce01ce79b9fb9c276cbc61144f05cfdc88c5477741a07aed4a"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\J_LP_candidate\\frames\\137\\delete_float.npz",
+      "sha256": "d2b6de1236216c46b7819a1450d3917bb0190aaabaa49b9a941cfa4c619f5147"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\frames\\137\\delete_float.npz",
+      "sha256": "fc23e6b595a14f80c89b097ea2b41d87a02cf32f77c867b20867890ce846b613"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\baseline4\\frames\\137\\delete.png",
+      "sha256": "f4e0b0b84da64bf04e6a0a873f2fc38b513ae147d8e617d99d1476f733172294"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_c49_rgb_20261107\\evidence\\H2_material2000_retry1\\frames\\137\\delete.png",
+      "sha256": "49c206edd169f39145d2b21db398fcd32bd3d9ffe38069f087e8dafb02804a2f"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\J_LP_candidate\\frames\\137\\delete.png",
+      "sha256": "4c2f3b02b3f3843fe28eb73e9c0b1465e810a5a76e3216036d2fab1601797fa9"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_a5_road_fusion_integration_20261107\\evidence\\K_LP_candidate\\frames\\137\\delete.png",
+      "sha256": "f6b442503ad948ff95907961f19e12c82aabb7cf8f52585b2ec39cd8b70c98c4"
+    }
+  ],
+  "quality_accepted": false,
+  "agent_visual_verdict": "ROOT_REVIEW_SEPARATE",
+  "human_verdict": null,
+  "automatic49": false,
+  "limits": [
+    "Local tolerance passing permits strict micro-regressions below1e-6; no pixel-exact or all-bin-improved claim.",
+    "Pooled and local seam feasibility do not remove31 original photo/geometry failures.",
+    "ProtectedNR fixed crops are post-result diagnostics of existing failures, not a changed training or scoring domain.",
+    "Source O includes a37 and is not hidden-road DELETE ground truth. Label/source-group roles are recorded without semantic reassignment."
+  ]
+}

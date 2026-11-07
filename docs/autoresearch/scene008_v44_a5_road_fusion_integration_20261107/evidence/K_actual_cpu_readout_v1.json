@@ -1,0 +1,419 @@
+{
+  "status": "FOUR_RAW_SIX_POOLS_AND_106_BINS_PASSED_ORIGINAL_FULL_QUALITY_GATES_FAILED",
+  "scope": {
+    "raws": [
+      94,
+      105,
+      128,
+      137
+    ],
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "K_training_updates": 0,
+    "K_solver_calls": 1,
+    "K_actual_quality_forwards": 8,
+    "K_operator_forwards": 0,
+    "K_dummy_backwards": 0,
+    "K_affinity_forwards": 0,
+    "existing_J_operator_reused": true,
+    "automatic_49_authorized": false
+  },
+  "original4560_gate_counts": {
+    "passed": 55,
+    "failed": 31,
+    "unsupported": 8
+  },
+  "failed_gate_categories": {
+    "K:protected_nonroad_RGB": 7,
+    "K:original_road_RGB": 8,
+    "K:nonroad_guard:alpha_pixel_max_abs": 8,
+    "K:nonroad_guard:depth_pixel_max_abs_m": 8
+  },
+  "original_pool_constraints": [
+    {
+      "name": "primary128",
+      "state": "keep",
+      "bins": 6,
+      "actual_original_score": 0.0037760457392626754,
+      "original_target": 0.004613534469778339,
+      "tightened_reserve_target": 0.004613434469778339,
+      "margin_to_original": 0.000837488730515664,
+      "margin_to_tightened": 0.0008373887305156637,
+      "original_pass": true
+    },
+    {
+      "name": "world_near",
+      "state": "keep",
+      "bins": 24,
+      "actual_original_score": 0.005003136085482159,
+      "original_target": 0.006036768960524972,
+      "tightened_reserve_target": 0.0060366689605249714,
+      "margin_to_original": 0.001033632875042813,
+      "margin_to_tightened": 0.0010335328750428127,
+      "original_pass": true
+    },
+    {
+      "name": "world_lateral",
+      "state": "keep",
+      "bins": 23,
+      "actual_original_score": 0.0036889095259222972,
+      "original_target": 0.0038325507547889394,
+      "tightened_reserve_target": 0.0038324507547889395,
+      "margin_to_original": 0.00014364122886664213,
+      "margin_to_tightened": 0.00014354122886664229,
+      "original_pass": true
+    },
+    {
+      "name": "primary128",
+      "state": "delete",
+      "bins": 6,
+      "actual_original_score": 0.0062979465098275495,
+      "original_target": 0.0076029783590153485,
+      "tightened_reserve_target": 0.007602878359015348,
+      "margin_to_original": 0.001305031849187799,
+      "margin_to_tightened": 0.0013049318491877987,
+      "original_pass": true
+    },
+    {
+      "name": "world_near",
+      "state": "delete",
+      "bins": 24,
+      "actual_original_score": 0.0056075301132902195,
+      "original_target": 0.007150272171470027,
+      "tightened_reserve_target": 0.007150172171470026,
+      "margin_to_original": 0.001542742058179807,
+      "margin_to_tightened": 0.0015426420581798068,
+      "original_pass": true
+    },
+    {
+      "name": "world_lateral",
+      "state": "delete",
+      "bins": 23,
+      "actual_original_score": 0.0034304095265131605,
+      "original_target": 0.00352419822717539,
+      "tightened_reserve_target": 0.0035240982271753903,
+      "margin_to_original": 9.378870066222966e-05,
+      "margin_to_tightened": 9.368870066222982e-05,
+      "original_pass": true
+    }
+  ],
+  "original_local_bin_pass_count": 106,
+  "original_local_bin_failed": [],
+  "per_bin_tail_summary": [
+    {
+      "reference": "latest",
+      "state": "keep",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 12,
+        "regressed": 24,
+        "equal": 17
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 12,
+        "regressed": 0,
+        "within_1e_6": 41
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "keep",
+        "kind": "world",
+        "edge": "lateral_y",
+        "tangent_bin": 98,
+        "minus_pixels": 9,
+        "plus_pixels": 8,
+        "latest_score": 0.0010488898260518909,
+        "H2_C2000_score": 0.0035557185765355825,
+        "J_actual_score": 0.003548185108229518,
+        "K_actual_score": 0.001049811253324151,
+        "delta_vs_latest": 9.214272722601891e-07,
+        "delta_vs_H2_C2000": -0.0025059073232114315,
+        "delta_vs_J": -0.002498373854905367,
+        "original_no_regression_target": 0.0010498898260518908,
+        "tightened_reserve_target": 0.0010497898260518907,
+        "margin_to_original": 7.857272773972683e-08,
+        "margin_to_tightened": -2.142727226032981e-08,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": false,
+        "actual_signed_residual_RGB": [
+          -0.002148862462490797,
+          -0.0010005596559494734,
+          -1.1641532182693481e-08
+        ],
+        "predicted_signed_residual_RGB": [
+          -0.0021488372042822693,
+          -0.0010005365278845735,
+          4.231190922372036e-09
+        ]
+      }
+    },
+    {
+      "reference": "latest",
+      "state": "delete",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 12,
+        "regressed": 32,
+        "equal": 9
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 12,
+        "regressed": 0,
+        "within_1e_6": 41
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "delete",
+        "kind": "world",
+        "edge": "lateral_y",
+        "tangent_bin": 98,
+        "minus_pixels": 9,
+        "plus_pixels": 8,
+        "latest_score": 0.0010488898260518909,
+        "H2_C2000_score": 0.0035557185765355825,
+        "J_actual_score": 0.003548185108229518,
+        "K_actual_score": 0.001049811253324151,
+        "delta_vs_latest": 9.214272722601891e-07,
+        "delta_vs_H2_C2000": -0.0025059073232114315,
+        "delta_vs_J": -0.002498373854905367,
+        "original_no_regression_target": 0.0010498898260518908,
+        "tightened_reserve_target": 0.0010497898260518907,
+        "margin_to_original": 7.857272773972683e-08,
+        "margin_to_tightened": -2.142727226032981e-08,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": false,
+        "actual_signed_residual_RGB": [
+          -0.002148862462490797,
+          -0.0010005596559494734,
+          -1.1641532182693481e-08
+        ],
+        "predicted_signed_residual_RGB": [
+          -0.0021488372042822693,
+          -0.0010005365278845735,
+          4.231190922372036e-09
+        ]
+      }
+    },
+    {
+      "reference": "H2_C2000",
+      "state": "keep",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 29,
+        "regressed": 7,
+        "equal": 17
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 29,
+        "regressed": 0,
+        "within_1e_6": 24
+      },
+      "worst_regression": {
+        "raw": 128,
+        "state": "keep",
+        "kind": "primary128",
+        "edge": "near_x",
+        "tangent_bin": 12,
+        "minus_pixels": 4,
+        "plus_pixels": 6,
+        "latest_score": 0.0021537907887250185,
+        "H2_C2000_score": 0.0008385851979255676,
+        "J_actual_score": 0.0008864526753313839,
+        "K_actual_score": 0.0008395098266191781,
+        "delta_vs_latest": -0.0013142809621058404,
+        "delta_vs_H2_C2000": 9.246286936104298e-07,
+        "delta_vs_J": -4.694284871220589e-05,
+        "original_no_regression_target": 0.0008395851979255677,
+        "tightened_reserve_target": 0.0008394851979255677,
+        "margin_to_original": 7.537130638959454e-08,
+        "margin_to_tightened": -2.4628693610353677e-08,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": false,
+        "actual_signed_residual_RGB": [
+          4.7264620661735535e-08,
+          0.0025184699334204197,
+          -1.234002411365509e-08
+        ],
+        "predicted_signed_residual_RGB": [
+          -7.435941229080867e-11,
+          0.002518454172292549,
+          -8.094201532984902e-10
+        ]
+      }
+    },
+    {
+      "reference": "H2_C2000",
+      "state": "delete",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 38,
+        "regressed": 6,
+        "equal": 9
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 38,
+        "regressed": 0,
+        "within_1e_6": 15
+      },
+      "worst_regression": {
+        "raw": 128,
+        "state": "delete",
+        "kind": "primary128",
+        "edge": "near_x",
+        "tangent_bin": 12,
+        "minus_pixels": 4,
+        "plus_pixels": 6,
+        "latest_score": 0.0021537907887250185,
+        "H2_C2000_score": 0.0008385851979255676,
+        "J_actual_score": 0.0008864526753313839,
+        "K_actual_score": 0.0008395098266191781,
+        "delta_vs_latest": -0.0013142809621058404,
+        "delta_vs_H2_C2000": 9.246286936104298e-07,
+        "delta_vs_J": -4.694284871220589e-05,
+        "original_no_regression_target": 0.0008395851979255677,
+        "tightened_reserve_target": 0.0008394851979255677,
+        "margin_to_original": 7.537130638959454e-08,
+        "margin_to_tightened": -2.4628693610353677e-08,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": false,
+        "actual_signed_residual_RGB": [
+          4.7264620661735535e-08,
+          0.0025184699334204197,
+          -1.234002411365509e-08
+        ],
+        "predicted_signed_residual_RGB": [
+          -3.8808950974730805e-10,
+          0.00251845400796855,
+          -8.094201532984902e-10
+        ]
+      }
+    },
+    {
+      "reference": "J",
+      "state": "keep",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 22,
+        "regressed": 14,
+        "equal": 17
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 22,
+        "regressed": 9,
+        "within_1e_6": 22
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "keep",
+        "kind": "world",
+        "edge": "lateral_y",
+        "tangent_bin": 107,
+        "minus_pixels": 5,
+        "plus_pixels": 8,
+        "latest_score": 0.006189994513988495,
+        "H2_C2000_score": 0.012761890888214111,
+        "J_actual_score": 8.76995454035523e-09,
+        "K_actual_score": 0.006190894171595573,
+        "delta_vs_latest": 8.996576070785522e-07,
+        "delta_vs_H2_C2000": -0.006570996716618538,
+        "delta_vs_J": 0.006190885401641033,
+        "original_no_regression_target": 0.006190994513988495,
+        "tightened_reserve_target": 0.006190894513988495,
+        "margin_to_original": 1.0034239292158048e-07,
+        "margin_to_tightened": 3.4239292130699983e-10,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": true,
+        "actual_signed_residual_RGB": [
+          0.006706099025905132,
+          0.009557799436151981,
+          0.002308784518390894
+        ],
+        "predicted_signed_residual_RGB": [
+          0.0067060989610123745,
+          0.009557795503140287,
+          0.0023087890015021095
+        ]
+      }
+    },
+    {
+      "reference": "J",
+      "state": "delete",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 27,
+        "regressed": 17,
+        "equal": 9
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 27,
+        "regressed": 14,
+        "within_1e_6": 12
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "delete",
+        "kind": "world",
+        "edge": "lateral_y",
+        "tangent_bin": 107,
+        "minus_pixels": 5,
+        "plus_pixels": 8,
+        "latest_score": 0.006189994513988495,
+        "H2_C2000_score": 0.012761890888214111,
+        "J_actual_score": 8.76995454035523e-09,
+        "K_actual_score": 0.006190894171595573,
+        "delta_vs_latest": 8.996576070785522e-07,
+        "delta_vs_H2_C2000": -0.006570996716618538,
+        "delta_vs_J": 0.006190885401641033,
+        "original_no_regression_target": 0.006190994513988495,
+        "tightened_reserve_target": 0.006190894513988495,
+        "margin_to_original": 1.0034239292158048e-07,
+        "margin_to_tightened": 3.4239292130699983e-10,
+        "original_per_bin_pass": true,
+        "tightened_reserve_pass": true,
+        "actual_signed_residual_RGB": [
+          0.006706099025905132,
+          0.009557799436151981,
+          0.002308784518390894
+        ],
+        "predicted_signed_residual_RGB": [
+          0.0067060989610123745,
+          0.009557795503140287,
+          0.0023087890015021095
+        ]
+      }
+    }
+  ],
+  "same_H2_geometry": true,
+  "same_H2_foreground_RGB_pixel_max_abs": 0.0,
+  "H2_foreground_union_newroad_mass_all_zero": true,
+  "photo_table": "evidence/K_actual_photo_two_references.csv",
+  "source_evidence": [
+    {
+      "path": "evidence/review/K_candidate_fixed4560_cpu.json",
+      "sha256": "ad5b34dc67c01bfd1d0357a70973666dfe8819affb49725e81dd4b7d2a6d052a"
+    },
+    {
+      "path": "evidence/review/K_actual_pools_bins_cpu_v1.json",
+      "sha256": "dd8871d2f91e3f49be7c96e507c2b4b8ac8c1edae3a6a392fe9f3b0adb99f79a"
+    },
+    {
+      "path": "evidence/review/K_components_vs_latest_v1.json",
+      "sha256": "b8c1767ae574c6deff03ee64eb21da22d414687463eddb2ea132c3ae9ecbbaf3"
+    },
+    {
+      "path": "evidence/review/K_components_vs_H2_C2000_v1.json",
+      "sha256": "5a9d6c35b06dfb5396ec0f4b49adcce1b708068640ece999d5dc9d7752bdf1a8"
+    }
+  ],
+  "quality_accepted": false,
+  "agent_visual_acceptance": "PARENT_REVIEW_SEPARATE",
+  "human_verdict": null,
+  "limits": [
+    "106 local original1e-6 tolerance constraints pass; strict micro-regressions may remain.53bins/state are overlapping metrics, not independent observations.",
+    "H2 equality refers to the fixed H2+C2000 geometry and foreground domains; geometry differs from delivered21K.",
+    "The original photo/nonroad geometry failures are retained; no 49-frame J claim is made.",
+    "The LP safety reserve is reported separately from the original gates; some actual local bins cross the extra reserve while retaining the original1e-6 tolerance margin."
+  ]
+}

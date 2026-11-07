@@ -1,0 +1,2708 @@
+{
+  "status": "PASS_READONLY_SAVED_GROUP_ATTRIBUTION_NOT_QUALITY_ACCEPTANCE",
+  "script_sha256": "b0e86aaa206bb68ba4a88401b235ec743eaa74b0726f52b28dacdac9749361d5",
+  "actual_gpu_forwards": 0,
+  "actual_backwards": 0,
+  "actual_optimizer_updates": 0,
+  "group_order": [
+    "C2_asset_a6",
+    "native_a37",
+    "oldroad",
+    "native_static",
+    "semantic_a5",
+    "unused_a18",
+    "unused_a26",
+    "newroad"
+  ],
+  "ROI_provenance": {
+    "128": "Root-specified silver ROI; fixed before this audit; not a score domain",
+    "137": "Manual post-result rectangular silver road remnant from actually viewed baseline/C DELETE PNG; not a score domain"
+  },
+  "limits": [
+    "alpha_T is native transmittance-weighted contribution, not per-pixel semantic truth or RGB decomposition.",
+    "Old group-specific RGB was not saved; no per-group colour is fabricated.",
+    "The large128 ROI contains both road/static representations and real C2 contributions, so cannot be retired wholesale.",
+    "Original fixed wheel rays remain a separate test; a road remnant being covered does not prove tires preserved."
+  ],
+  "records": [
+    {
+      "raw": 128,
+      "state": "keep",
+      "ROI_xyxy": [
+        210,
+        202,
+        302,
+        242
+      ],
+      "pixels": 3680,
+      "baseline": {
+        "joint_alpha_mean": 0.999850869178772,
+        "joint_alpha_min": 0.9839949607849121,
+        "group_sum_joint_alpha_max_abs": 8.701463229954243e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9970967714877232,
+          "oldroad": 4.302106040722473e-05,
+          "native_static": 0.0027110410064284853,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9999018311500549,
+          "oldroad": 0.02098165825009346,
+          "native_static": 0.5440791845321655,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 3677,
+          "oldroad": 0,
+          "native_static": 3,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "C": {
+        "joint_alpha_mean": 0.9998958706855774,
+        "joint_alpha_min": 0.999788224697113,
+        "group_sum_joint_alpha_max_abs": 5.662441253662109e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9970967714877232,
+          "oldroad": 4.302106040722473e-05,
+          "native_static": 0.0013263500248139276,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0014296523826763394
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9999018311500549,
+          "oldroad": 0.02098165825009346,
+          "native_static": 0.4090941548347473,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.3717068135738373
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 3680,
+          "oldroad": 0,
+          "native_static": 0,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "oldroad_alpha_T_exact_in_ROI": true,
+      "C2_alpha_T_max_drop": 0.0,
+      "C2_alpha_T_drop_gt1e_6_pixels": 0,
+      "top20_C2_alpha_T_drops": [
+        {
+          "x": 210,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.1787337213754654,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.43991518020629883,
+            0.0,
+            0.5440791845321655,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.43991518020629883,
+            0.0,
+            0.3811938166618347,
+            0.0,
+            0.0,
+            0.0,
+            0.1787337213754654
+          ]
+        },
+        {
+          "x": 211,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.1499568521976471,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.5942802429199219,
+            0.0,
+            0.3923315107822418,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.5942802429199219,
+            0.0,
+            0.2556374967098236,
+            0.0,
+            0.0,
+            0.0,
+            0.1499568521976471
+          ]
+        },
+        {
+          "x": 212,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.08596047759056091,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.7983807921409607,
+            0.0,
+            0.19602681696414948,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.7983807921409607,
+            0.0,
+            0.1155184805393219,
+            0.0,
+            0.0,
+            0.0,
+            0.08596047759056091
+          ]
+        },
+        {
+          "x": 213,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.03266814723610878,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9299535155296326,
+            0.0,
+            0.06808522343635559,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9299535155296326,
+            0.0,
+            0.03726107254624367,
+            0.0,
+            0.0,
+            0.0,
+            0.03266814723610878
+          ]
+        },
+        {
+          "x": 214,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.009481060318648815,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9804096817970276,
+            0.0,
+            0.019051292911171913,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9804096817970276,
+            0.0,
+            0.010007920674979687,
+            0.0,
+            0.0,
+            0.0,
+            0.009481060318648815
+          ]
+        },
+        {
+          "x": 215,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.002517411718145013,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9947866797447205,
+            0.0,
+            0.005079041235148907,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9947866797447205,
+            0.0,
+            0.002588552189990878,
+            0.0,
+            0.0,
+            0.0,
+            0.002517411718145013
+          ]
+        },
+        {
+          "x": 216,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.001060317037627101,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9978559017181396,
+            0.0,
+            0.0020438593346625566,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9978559017181396,
+            0.0,
+            0.0009830815251916647,
+            0.0,
+            0.0,
+            0.0,
+            0.001060317037627101
+          ]
+        },
+        {
+          "x": 217,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0004220862465444952,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9990699291229248,
+            0.0,
+            0.0008287891396321356,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9990699291229248,
+            0.0,
+            0.00040663674008101225,
+            0.0,
+            0.0,
+            0.0,
+            0.0004220862465444952
+          ]
+        },
+        {
+          "x": 218,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0001268199412152171,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9995949864387512,
+            0.0,
+            0.00029842343064956367,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9995949864387512,
+            0.0,
+            0.00017039499653037637,
+            0.0,
+            0.0,
+            0.0,
+            0.0001268199412152171
+          ]
+        },
+        {
+          "x": 219,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998731017112732,
+            0.0,
+            2.5459605240030214e-05,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998731017112732,
+            0.0,
+            2.5459605240030214e-05,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 220,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998466968536377,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998466968536377,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 221,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9999001026153564,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9999001026153564,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 222,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998995065689087,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998995065689087,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 223,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998961687088013,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998961687088013,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 224,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998996257781982,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998996257781982,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 225,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998999834060669,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998999834060669,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 226,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9999000430107117,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9999000430107117,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 227,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998897314071655,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998897314071655,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 228,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998975992202759,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998975992202759,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 229,
+          "y": 202,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998990297317505,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998990297317505,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "ROI_xyxy": [
+        210,
+        202,
+        302,
+        242
+      ],
+      "pixels": 3680,
+      "baseline": {
+        "joint_alpha_mean": 0.95396888256073,
+        "joint_alpha_min": 0.6996564269065857,
+        "group_sum_joint_alpha_max_abs": 6.668269634246826e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.043665798792094195,
+          "native_a37": 0.0,
+          "oldroad": 0.5340133420215748,
+          "native_static": 0.3762897347084772,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.99559086561203,
+          "native_a37": 0.0,
+          "oldroad": 0.9998998641967773,
+          "native_static": 0.9933452010154724,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 174,
+          "native_a37": 0,
+          "oldroad": 1988,
+          "native_static": 1518,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "C": {
+        "joint_alpha_mean": 0.9998533725738525,
+        "joint_alpha_min": 0.9987081289291382,
+        "group_sum_joint_alpha_max_abs": 5.345791578292847e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.025890323861304874,
+          "native_a37": 0.0,
+          "oldroad": 0.5340133420215748,
+          "native_static": 0.03216496882492813,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.4077847855031166
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.9949687123298645,
+          "native_a37": 0.0,
+          "oldroad": 0.9998998641967773,
+          "native_static": 0.8197841048240662,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.9999000430107117
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 94,
+          "native_a37": 0,
+          "oldroad": 1987,
+          "native_static": 31,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 1568
+        }
+      },
+      "oldroad_alpha_T_exact_in_ROI": true,
+      "C2_alpha_T_max_drop": 0.9629351496696472,
+      "C2_alpha_T_drop_gt1e_6_pixels": 237,
+      "top20_C2_alpha_T_drops": [
+        {
+          "x": 273,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.9629351496696472,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9629351496696472,
+          "newroad_alpha_T_C": 0.9998783469200134,
+          "baseline_group_alpha_T": [
+            0.9629351496696472,
+            0.0,
+            0.0,
+            0.03584972023963928,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998783469200134
+          ]
+        },
+        {
+          "x": 272,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.9621785879135132,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9621785879135132,
+          "newroad_alpha_T_C": 0.9998895525932312,
+          "baseline_group_alpha_T": [
+            0.9621785879135132,
+            0.0,
+            0.0,
+            0.03664928674697876,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998895525932312
+          ]
+        },
+        {
+          "x": 271,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.9611192345619202,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9611192345619202,
+          "newroad_alpha_T_C": 0.999891459941864,
+          "baseline_group_alpha_T": [
+            0.9611192345619202,
+            0.0,
+            0.0,
+            0.0375174880027771,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.999891459941864
+          ]
+        },
+        {
+          "x": 270,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.9585024118423462,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9585024118423462,
+          "newroad_alpha_T_C": 0.9998824000358582,
+          "baseline_group_alpha_T": [
+            0.9585024118423462,
+            0.0,
+            0.0,
+            0.03939167782664299,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998824000358582
+          ]
+        },
+        {
+          "x": 273,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.9583690166473389,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9583690166473389,
+          "newroad_alpha_T_C": 0.9998722672462463,
+          "baseline_group_alpha_T": [
+            0.9583690166473389,
+            0.0,
+            0.0,
+            0.0396285280585289,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998722672462463
+          ]
+        },
+        {
+          "x": 273,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.9629338383674622,
+          "C2_alpha_T_C": 0.004848286509513855,
+          "C2_alpha_T_drop": 0.9580855369567871,
+          "newroad_alpha_T_C": 0.9870225191116333,
+          "baseline_group_alpha_T": [
+            0.9629338383674622,
+            0.0,
+            0.0,
+            0.036074262112379074,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.004848286509513855,
+            0.0,
+            0.0,
+            0.007713766302913427,
+            0.0,
+            0.0,
+            0.0,
+            0.9870225191116333
+          ]
+        },
+        {
+          "x": 272,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.9566340446472168,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9566340446472168,
+          "newroad_alpha_T_C": 0.9998952150344849,
+          "baseline_group_alpha_T": [
+            0.9566340446472168,
+            0.0,
+            0.0,
+            0.041219986975193024,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998952150344849
+          ]
+        },
+        {
+          "x": 272,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.9621235132217407,
+          "C2_alpha_T_C": 0.0056882635690271854,
+          "C2_alpha_T_drop": 0.9564352631568909,
+          "newroad_alpha_T_C": 0.9859834313392639,
+          "baseline_group_alpha_T": [
+            0.9621235132217407,
+            0.0,
+            0.0,
+            0.036903414875268936,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0056882635690271854,
+            0.0,
+            0.0,
+            0.007865127176046371,
+            0.0,
+            0.0,
+            0.0,
+            0.9859834313392639
+          ]
+        },
+        {
+          "x": 271,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.9615700244903564,
+          "C2_alpha_T_C": 0.007193286437541246,
+          "C2_alpha_T_drop": 0.954376757144928,
+          "newroad_alpha_T_C": 0.9845417141914368,
+          "baseline_group_alpha_T": [
+            0.9615700244903564,
+            0.0,
+            0.0,
+            0.03743025287985802,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.007193286437541246,
+            0.0,
+            0.0,
+            0.00783237162977457,
+            0.0,
+            0.0,
+            0.0,
+            0.9845417141914368
+          ]
+        },
+        {
+          "x": 270,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.9575095176696777,
+          "C2_alpha_T_C": 0.006473276298493147,
+          "C2_alpha_T_drop": 0.9510362148284912,
+          "newroad_alpha_T_C": 0.985483705997467,
+          "baseline_group_alpha_T": [
+            0.9575095176696777,
+            0.0,
+            0.0,
+            0.04135241359472275,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.006473276298493147,
+            0.0,
+            0.0,
+            0.007725541014224291,
+            0.0,
+            0.0,
+            0.0,
+            0.985483705997467
+          ]
+        },
+        {
+          "x": 274,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.955517590045929,
+          "C2_alpha_T_C": 0.005564800463616848,
+          "C2_alpha_T_drop": 0.9499527812004089,
+          "newroad_alpha_T_C": 0.9862647652626038,
+          "baseline_group_alpha_T": [
+            0.955517590045929,
+            0.0,
+            0.0,
+            0.04213156923651695,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.005564800463616848,
+            0.0,
+            0.0,
+            0.007519140839576721,
+            0.0,
+            0.0,
+            0.0,
+            0.9862647652626038
+          ]
+        },
+        {
+          "x": 274,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.949723482131958,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.949723482131958,
+          "newroad_alpha_T_C": 0.9998375177383423,
+          "baseline_group_alpha_T": [
+            0.949723482131958,
+            0.0,
+            0.0,
+            0.04678640887141228,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998375177383423
+          ]
+        },
+        {
+          "x": 269,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.9523137807846069,
+          "C2_alpha_T_C": 0.004524667281657457,
+          "C2_alpha_T_drop": 0.9477891325950623,
+          "newroad_alpha_T_C": 0.9878901839256287,
+          "baseline_group_alpha_T": [
+            0.9523137807846069,
+            0.0,
+            0.0,
+            0.04576055705547333,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.004524667281657457,
+            0.0,
+            0.0,
+            0.007391386199742556,
+            0.0,
+            0.0,
+            0.0,
+            0.9878901839256287
+          ]
+        },
+        {
+          "x": 271,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.9466730356216431,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9466730356216431,
+          "newroad_alpha_T_C": 0.9999000430107117,
+          "baseline_group_alpha_T": [
+            0.9466730356216431,
+            0.0,
+            0.0,
+            0.04965006932616234,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9999000430107117
+          ]
+        },
+        {
+          "x": 269,
+          "y": 206,
+          "C2_alpha_T_baseline": 0.9346377849578857,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9346377849578857,
+          "newroad_alpha_T_C": 0.9998981356620789,
+          "baseline_group_alpha_T": [
+            0.9346377849578857,
+            0.0,
+            0.0,
+            0.058660220354795456,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998981356620789
+          ]
+        },
+        {
+          "x": 274,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.9243908524513245,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9243908524513245,
+          "newroad_alpha_T_C": 0.9998749494552612,
+          "baseline_group_alpha_T": [
+            0.9243908524513245,
+            0.0,
+            0.0,
+            0.06831606477499008,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998749494552612
+          ]
+        },
+        {
+          "x": 268,
+          "y": 205,
+          "C2_alpha_T_baseline": 0.924565315246582,
+          "C2_alpha_T_C": 0.0027474791277199984,
+          "C2_alpha_T_drop": 0.9218178391456604,
+          "newroad_alpha_T_C": 0.9902802109718323,
+          "baseline_group_alpha_T": [
+            0.924565315246582,
+            0.0,
+            0.0,
+            0.06804332137107849,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0027474791277199984,
+            0.0,
+            0.0,
+            0.006859269458800554,
+            0.0,
+            0.0,
+            0.0,
+            0.9902802109718323
+          ]
+        },
+        {
+          "x": 270,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.9167609810829163,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9167609810829163,
+          "newroad_alpha_T_C": 0.9998681545257568,
+          "baseline_group_alpha_T": [
+            0.9167609810829163,
+            0.0,
+            0.0,
+            0.07437517493963242,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998681545257568
+          ]
+        },
+        {
+          "x": 273,
+          "y": 208,
+          "C2_alpha_T_baseline": 0.9009958505630493,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.9009958505630493,
+          "newroad_alpha_T_C": 0.9998843669891357,
+          "baseline_group_alpha_T": [
+            0.9009958505630493,
+            0.0,
+            0.0,
+            0.08796244859695435,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998843669891357
+          ]
+        },
+        {
+          "x": 272,
+          "y": 208,
+          "C2_alpha_T_baseline": 0.870044469833374,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.870044469833374,
+          "newroad_alpha_T_C": 0.9998953938484192,
+          "baseline_group_alpha_T": [
+            0.870044469833374,
+            0.0,
+            0.0,
+            0.11448986083269119,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9998953938484192
+          ]
+        }
+      ]
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "ROI_xyxy": [
+        207,
+        207,
+        274,
+        227
+      ],
+      "pixels": 1340,
+      "baseline": {
+        "joint_alpha_mean": 0.9998989701271057,
+        "joint_alpha_min": 0.9998461008071899,
+        "group_sum_joint_alpha_max_abs": 3.4226104617118835e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9998915199913195,
+          "oldroad": 0.0,
+          "native_static": 7.457509514436546e-06,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9999014735221863,
+          "oldroad": 0.0,
+          "native_static": 0.0032361201010644436,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 1340,
+          "oldroad": 0,
+          "native_static": 0,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "C": {
+        "joint_alpha_mean": 0.9998989701271057,
+        "joint_alpha_min": 0.9998461008071899,
+        "group_sum_joint_alpha_max_abs": 2.9854709282517433e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9998915199913195,
+          "oldroad": 0.0,
+          "native_static": 4.144872121545252e-06,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 3.3224940966986774e-06
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.9999014735221863,
+          "oldroad": 0.0,
+          "native_static": 0.001742525608278811,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0014912353362888098
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 1340,
+          "oldroad": 0,
+          "native_static": 0,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "oldroad_alpha_T_exact_in_ROI": true,
+      "C2_alpha_T_max_drop": 0.0,
+      "C2_alpha_T_drop_gt1e_6_pixels": 0,
+      "top20_C2_alpha_T_drops": [
+        {
+          "x": 207,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0014912353362888098,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9966639280319214,
+            0.0,
+            0.0032361201010644436,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9966639280319214,
+            0.0,
+            0.001742525608278811,
+            0.0,
+            0.0,
+            0.0,
+            0.0014912353362888098
+          ]
+        },
+        {
+          "x": 208,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0005431104800663888,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9987267255783081,
+            0.0,
+            0.001171948155388236,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9987267255783081,
+            0.0,
+            0.0006288407603278756,
+            0.0,
+            0.0,
+            0.0,
+            0.0005431104800663888
+          ]
+        },
+        {
+          "x": 209,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.00013475731248036027,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9995455145835876,
+            0.0,
+            0.0003539676545187831,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9995455145835876,
+            0.0,
+            0.0002190600789617747,
+            0.0,
+            0.0,
+            0.0,
+            0.00013475731248036027
+          ]
+        },
+        {
+          "x": 210,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998868703842163,
+            0.0,
+            1.023530785460025e-05,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998868703842163,
+            0.0,
+            1.023530785460025e-05,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 211,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9999011158943176,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9999011158943176,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 212,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998983144760132,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998983144760132,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 213,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998980760574341,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998980760574341,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 214,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998997449874878,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998997449874878,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 215,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998992681503296,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998992681503296,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 216,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998998641967773,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998998641967773,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 217,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998983144760132,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998983144760132,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 218,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.999899685382843,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.999899685382843,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 219,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998992085456848,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998992085456848,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 220,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.999900758266449,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.999900758266449,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 221,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9999005198478699,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9999005198478699,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 222,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998998045921326,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998998045921326,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 223,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998989701271057,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998989701271057,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 224,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998977184295654,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998977184295654,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 225,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.999900758266449,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.999900758266449,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "x": 226,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.0,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.9998989105224609,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.9998989105224609,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "ROI_xyxy": [
+        207,
+        207,
+        274,
+        227
+      ],
+      "pixels": 1340,
+      "baseline": {
+        "joint_alpha_mean": 0.8569598197937012,
+        "joint_alpha_min": 0.6918744444847107,
+        "group_sum_joint_alpha_max_abs": 5.997717380523682e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.0,
+          "oldroad": 0.03286454990374119,
+          "native_static": 0.8240951802963808,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.0,
+          "oldroad": 0.9839168190956116,
+          "native_static": 0.9803083539009094,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.0
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 0,
+          "oldroad": 48,
+          "native_static": 1292,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 0
+        }
+      },
+      "C": {
+        "joint_alpha_mean": 0.9998739361763,
+        "joint_alpha_min": 0.9997968673706055,
+        "group_sum_joint_alpha_max_abs": 3.5762786865234375e-07,
+        "alpha_zero_pixels": 0,
+        "group_alpha_T_mean": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.0,
+          "oldroad": 0.03286454990374119,
+          "native_static": 0.04293811580796076,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.9240712140241999
+        },
+        "group_alpha_T_max": {
+          "C2_asset_a6": 0.0,
+          "native_a37": 0.0,
+          "oldroad": 0.9839168190956116,
+          "native_static": 0.522294819355011,
+          "semantic_a5": 0.0,
+          "unused_a18": 0.0,
+          "unused_a26": 0.0,
+          "newroad": 0.9998999834060669
+        },
+        "dominant_group_pixels": {
+          "C2_asset_a6": 0,
+          "native_a37": 0,
+          "oldroad": 47,
+          "native_static": 2,
+          "semantic_a5": 0,
+          "unused_a18": 0,
+          "unused_a26": 0,
+          "newroad": 1291
+        }
+      },
+      "oldroad_alpha_T_exact_in_ROI": true,
+      "C2_alpha_T_max_drop": 0.0,
+      "C2_alpha_T_drop_gt1e_6_pixels": 0,
+      "top20_C2_alpha_T_drops": [
+        {
+          "x": 207,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.4775744080543518,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9784541726112366,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.522294819355011,
+            0.0,
+            0.0,
+            0.0,
+            0.4775744080543518
+          ]
+        },
+        {
+          "x": 208,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.5058497190475464,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9756192564964294,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.4940461814403534,
+            0.0,
+            0.0,
+            0.0,
+            0.5058497190475464
+          ]
+        },
+        {
+          "x": 209,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.5176752209663391,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9746191501617432,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.48219871520996094,
+            0.0,
+            0.0,
+            0.0,
+            0.5176752209663391
+          ]
+        },
+        {
+          "x": 210,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.5281844735145569,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9742438793182373,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.4716793894767761,
+            0.0,
+            0.0,
+            0.0,
+            0.5281844735145569
+          ]
+        },
+        {
+          "x": 211,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.557352602481842,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9720807671546936,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.4425448775291443,
+            0.0,
+            0.0,
+            0.0,
+            0.557352602481842
+          ]
+        },
+        {
+          "x": 212,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.5709439516067505,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9695388674736023,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.42892736196517944,
+            0.0,
+            0.0,
+            0.0,
+            0.5709439516067505
+          ]
+        },
+        {
+          "x": 213,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.5833229422569275,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9685031175613403,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.4165765941143036,
+            0.0,
+            0.0,
+            0.0,
+            0.5833229422569275
+          ]
+        },
+        {
+          "x": 214,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.6021997928619385,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9645518660545349,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.39768707752227783,
+            0.0,
+            0.0,
+            0.0,
+            0.6021997928619385
+          ]
+        },
+        {
+          "x": 215,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.6250265836715698,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.960014820098877,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.374866783618927,
+            0.0,
+            0.0,
+            0.0,
+            0.6250265836715698
+          ]
+        },
+        {
+          "x": 216,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.6432927846908569,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9541192054748535,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.35659897327423096,
+            0.0,
+            0.0,
+            0.0,
+            0.6432927846908569
+          ]
+        },
+        {
+          "x": 217,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.6669433116912842,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9500800967216492,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.3329455852508545,
+            0.0,
+            0.0,
+            0.0,
+            0.6669433116912842
+          ]
+        },
+        {
+          "x": 218,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.6904098987579346,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9476194381713867,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.309477835893631,
+            0.0,
+            0.0,
+            0.0,
+            0.6904098987579346
+          ]
+        },
+        {
+          "x": 219,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.718468189239502,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9412423968315125,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.28143173456192017,
+            0.0,
+            0.0,
+            0.0,
+            0.718468189239502
+          ]
+        },
+        {
+          "x": 220,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.7390952110290527,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.933083713054657,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.26079580187797546,
+            0.0,
+            0.0,
+            0.0,
+            0.7390952110290527
+          ]
+        },
+        {
+          "x": 221,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.7628983855247498,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.9223523139953613,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.23697338998317719,
+            0.0,
+            0.0,
+            0.0,
+            0.7628983855247498
+          ]
+        },
+        {
+          "x": 222,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.7888527512550354,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.905129611492157,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.21104194223880768,
+            0.0,
+            0.0,
+            0.0,
+            0.7888527512550354
+          ]
+        },
+        {
+          "x": 223,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.8030720353126526,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.8862884044647217,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.19679322838783264,
+            0.0,
+            0.0,
+            0.0,
+            0.8030720353126526
+          ]
+        },
+        {
+          "x": 224,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.8148435950279236,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.8674967288970947,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.18504057824611664,
+            0.0,
+            0.0,
+            0.0,
+            0.8148435950279236
+          ]
+        },
+        {
+          "x": 225,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.8224105834960938,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.8473506569862366,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.17744691669940948,
+            0.0,
+            0.0,
+            0.0,
+            0.8224105834960938
+          ]
+        },
+        {
+          "x": 226,
+          "y": 207,
+          "C2_alpha_T_baseline": 0.0,
+          "C2_alpha_T_C": 0.0,
+          "C2_alpha_T_drop": 0.0,
+          "newroad_alpha_T_C": 0.8344663977622986,
+          "baseline_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.8214702606201172,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "C_group_alpha_T": [
+            0.0,
+            0.0,
+            0.0,
+            0.16543221473693848,
+            0.0,
+            0.0,
+            0.0,
+            0.8344663977622986
+          ]
+        }
+      ]
+    }
+  ],
+  "figures": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/silver_support_group_audit_v1/raw128_keep_silver_groups.png",
+      "sha256": "915897838abe7ff949548a487bbc912f9ad902463b64b0947a3eb736c20cf1c2",
+      "size": [
+        1380,
+        555
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/silver_support_group_audit_v1/raw128_delete_silver_groups.png",
+      "sha256": "913040461b082b4f9156979f1f8cfddee2a5134d6dd0dad4b585d7755cc48e93",
+      "size": [
+        1380,
+        555
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/silver_support_group_audit_v1/raw137_keep_silver_groups.png",
+      "sha256": "9bacb0092a427392ddde0d1bf879985402ad4b324594aa4cd6e45ca5339997f6",
+      "size": [
+        1005,
+        355
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/silver_support_group_audit_v1/raw137_delete_silver_groups.png",
+      "sha256": "2acf068cc6125d6d8e8c8d4c433c66357fc9951afe21f425165fe060e6f9648b",
+      "size": [
+        1005,
+        355
+      ]
+    }
+  ],
+  "source_integrity": {
+    "status": "PASS_SIZE_MTIME_SHA_UNCHANGED",
+    "files": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/keep_float.npz",
+        "bytes": 3643198,
+        "mtime_ns": 1794031456344455325,
+        "sha256": "d8865d60daf3bfe3e8bcd2f1087536df92f03d40ae7941d5997b61fc28a832ef"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/delete_float.npz",
+        "bytes": 3604345,
+        "mtime_ns": 1794031456956073312,
+        "sha256": "77fdea82d81481e00784aa1a2c762abc6c46ab20b79efe1b29b4dc13352d75fb"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/C4_retry1/frames/128/keep_float.npz",
+        "bytes": 3678131,
+        "mtime_ns": 1794031912044397207,
+        "sha256": "bdd4783d4ad6b0df1def58e63f8211c37ee8acf37f2fcaf4bc6e8c35b5e1610a"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/C4_retry1/frames/128/delete_float.npz",
+        "bytes": 3662262,
+        "mtime_ns": 1794031912684458209,
+        "sha256": "c502a9a518f125fd603152375e3bc8df85550aeeff1eabd2b6e00b6e16fbdcdf"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/keep_float.npz",
+        "bytes": 3613454,
+        "mtime_ns": 1794031457851515525,
+        "sha256": "088fbefc2fcd9e895d3725158914f4981d2b976a7adab4d70ed04b784fadbfb5"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/delete_float.npz",
+        "bytes": 3603134,
+        "mtime_ns": 1794031458451142840,
+        "sha256": "1944148993b5de2d955c1bff4324b6e8c2c21b6db45aad033ac6ef1e0f7222b5"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/C4_retry1/frames/137/keep_float.npz",
+        "bytes": 3654291,
+        "mtime_ns": 1794031913644549744,
+        "sha256": "238b43ea352f942de94b83b97a6c69f686d777403492cfac2e83c9f8ee410894"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/C4_retry1/frames/137/delete_float.npz",
+        "bytes": 3672466,
+        "mtime_ns": 1794031914296611938,
+        "sha256": "092179ea2d932e0d45af4daec46d12534bfaf972f9b6670aa24900a757b7c02a"
+      }
+    ]
+  }
+}

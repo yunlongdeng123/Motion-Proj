@@ -1,0 +1,29 @@
+{
+  "status": "READONLY_SCOPED_HISTORY_NO_EXECUTED_FIXED_WORLD_PATCH_OPACITY_HANDOVER_FOUND",
+  "searched_scope": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1"
+  ],
+  "finding": "No executed continuous opacity/coverage handover along the fixed new world-road patch boundary was found in these registered source packages. This is a scoped conclusion, not a claim about all research history.",
+  "source_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/contract/round_scope.json": "63bb72f867fe5c046b6d711bb0a621dd8fcb64b1f86a26729ca62eab0bf8f267",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/contract/mip_control_before_execution.json": "94c8dfc7f64d90f31482485246b31d164def4fa217810ad806be483a8098fc2a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/world_surface_sampling.py": "1aeaf50676882a1ee10a38ebb02cccb7a27cc6232a68fad51b4d335b50bf854b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/relative_mip.py": "0725433773269332212bd7abfc1ffa0cc674aa9acde5b45a3e6506b702aabcbe",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/refined_road_runtime.py": "7e8c8939034086724b7a84bcf9e75df636a58cdd092873264835b8dff3ca7ead",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/contract/round_scope.json": "aebecfacddc10f4a3b2e267c3de8f8ae2a283d7b63e97c258618bb6eab0007ac",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/contract/edgeblend_control_v1.json": "7c2dcda0fb265824763d6f808501b73bdf483d15034e89377f9fbecd99060b2a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/fusion_colour_runtime.py": "245dbd28b0cb59f3b96c6e908687afa0f44890e70d2f5af65c83db40d5fdd839"
+  },
+  "executed_methods": {
+    "sampling": "n1/n2/n4 fixed world Gaussian refinement; child intrinsic opacity copied exactly from parent .99",
+    "relativeMip": "Camera covariance area normalization only: alpha_child_eff=alpha_parent*f(child)/f(parent)",
+    "C_material": "Parent RGB-only fit; geometry/opacities/Mip frozen",
+    "C_fallback": "Fixed10px EDT blend of fusion target with observed RGB; colour target, not opacity"
+  },
+  "available_interface": "refined_road_runtime.py:38-74 named opacity_fn hook exists; only relativeMip use found in this scope.",
+  "cancelled_control": "C legacy RGB takeover was CPU-reviewed and unexecuted; not a tested world boundary coverage handover.",
+  "does_not_establish_new_method_success": true,
+  "new_GPU_forwards": 0,
+  "new_model_updates": 0
+}

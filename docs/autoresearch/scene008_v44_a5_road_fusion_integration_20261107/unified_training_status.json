@@ -1,0 +1,30 @@
+{
+  "phase": "FULL5_SINGLE_SCENE_10K_REUSE_STRUCTURAL_PREFLIGHT",
+  "updated_utc": "2026-11-07T07:59:49.480710+00:00",
+  "latest_user_goal": "One scene, formal total<=20K; reuse Full5@10K first, structural four-frame validation, then only C road RGB to20K. Independent delete_actor_ids=[37].",
+  "old_v44_plus_full5_C49_10K": {
+    "started": false,
+    "superseded_by": "Full5-only structural preflight; do not launch old dual-base route"
+  },
+  "current_next": "Reuse existing Full5 10K as sole scene. Verify four raw IDs94,105,128,137 KEEP/DELETE37, identity ownership and depth; compare a6 against prior v44 rather than assume equivalence. Then test complete C road layer. No material long-run before structural gates.",
+  "formal_budget": {
+    "total_upper_bound": 20000,
+    "reused_scene_steps": 10000,
+    "new_road_material_updates_upper_bound": 10000,
+    "paired_KEEP_DELETE_is_one_update": true,
+    "scene_checkpoints": [
+      5000,
+      10000
+    ],
+    "material_checkpoints_global": [
+      12000,
+      15000,
+      20000
+    ],
+    "smoke_and_replay_excluded": true,
+    "render_calls_recorded_separately": true
+  },
+  "gpu_stays_on": true,
+  "automatic_shutdown": false,
+  "human_verdict": null
+}

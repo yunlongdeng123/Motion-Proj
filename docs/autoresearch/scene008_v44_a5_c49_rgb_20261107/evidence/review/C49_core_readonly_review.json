@@ -1,0 +1,27 @@
+{
+  "status": "PASS_READONLY_SOURCE_REVIEW_NO_BLOCKING_DEFECT",
+  "sources": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/C49_material_core.py": "2222d3d4da7ffafe7fa83b5c69ca6b359d046055238373775252ba0f68af3275",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/road_fusion_material_runtime.py": "4d8932b39b8b0fd5034c1147068acf7a6b5474c62e556d2ebc79a04e319f1009",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/C49_restore_next2_gate.py": "797ef211fecb92fcde1efb54a4be894208ecb02f00211f95796b0d48d6d4528d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/C49_lifecycle_then_formal2000.py": "f83f89377c3116a4f015dc07c5ad8013d6277d9ef94611e2647795ef2b273db9"
+  },
+  "checks": {
+    "gradient": "Core71:79 rebuilds parent table per state; runtime detaches original rows/env/bg, only eligible RGB can receive backward",
+    "optimizer": "Core56,80:82 only qualified2119 RGB Adam .01, projected0..1, clears gradients before checkpoint boundary",
+    "training_loss": "Core75:79 native C .5*(KEEP MSE + DELETE MSE), original edgeblend targets and fit masks, all49 BUILD",
+    "sampler": "Core35:41 private seed20261107 shuffle all raw89..137, state order/position/epoch/RNG saved",
+    "save_restore": "Core89:98 RGB + Adam + all RNG + private sampler + history/config exact at restored start",
+    "evaluation": "Core99:118 public same-runtime render, preserves all RNG and frozen geometry/cached semantic contribution",
+    "long_smoke": "Core124:134 sum(training pair wall times)>=600 seconds, early49 and final save/eval/stateexact, disposable2",
+    "next_entry": "restore gate7:33 saved same RGB raw128KD replay exact, then restored next2 tolerance1e-6 RGB/1e-8 Adam with honest bitwise field",
+    "formal_release": "lifecycle19:23 only after smoke + restore gate, fresh formal step0 ->500/2000, no automatic5K/10K"
+  },
+  "limitations": [
+    "Source review is supplementary to actual native smoke, not a substitute.",
+    "Material control retains known original C geometry/foreground and photometric failure modes.",
+    "No Gaussian, opacity, SH, pose, identity or environment training authorized by this core."
+  ],
+  "review_added_native_forwards": 0,
+  "review_added_model_updates": 0
+}

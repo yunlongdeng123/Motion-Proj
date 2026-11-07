@@ -1,0 +1,122 @@
+{
+  "status": "RELEASED_FRESH_ZERO_400_AFTER_REAL_LIFECYCLE",
+  "smoke": {
+    "status": "PASS_SMOKE_SAVE_PUBLIC_EVAL_AND_DISPOSABLE_NEXT2",
+    "smoke_updates": 4,
+    "disposable_updates": 2,
+    "actual_optimizer_updates": 6,
+    "actual_native_forwards": 20,
+    "actual_native_backwards": 12,
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/F_smoke_r1/state4.pth",
+    "disposable_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/F_smoke_r1/disposable_state6.pth",
+    "formal_ETA_seconds_from_actual_smoke": 138.38064670562744,
+    "long_smoke_required": false,
+    "actual_training_smoke_seconds": 1.3838064670562744,
+    "formal_not_started": true,
+    "original_Gaussian_SH_geometry_opacity_identity_updates": 0,
+    "only_new_colour_residual_updates": 6,
+    "parameter_bounds": [
+      -1,
+      1
+    ],
+    "weighted_l1_cost_cpu_float64": 0.9999999141457808,
+    "weighted_l1_budget": 1.0,
+    "delta_max_abs": 0.05894291773438454,
+    "fit_contract_sha256": "37f825b4ba817d3cee18d846e462eb273067f4617006b1b6baf2e337cefae759",
+    "all_original_model_binding_and_files_unchanged": true,
+    "seconds": 26.646990299224854,
+    "max_reserved_cuda_bytes": 4380950528,
+    "all49_auto_release": false,
+    "shutdown": false,
+    "reset_card": false
+  },
+  "gate": {
+    "status": "PASS_FRESH_FULL_RESTORE_NEXT2_AND_TRAIN_PUBLIC_PARITY",
+    "restore_start_bit_exact": true,
+    "native_parity_forwards": 2,
+    "next2_training_forwards": 4,
+    "actual_native_forwards": 6,
+    "actual_native_backwards": 4,
+    "actual_optimizer_updates": 2,
+    "restored_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/F_restore_parity_r1/restored_state6.pth",
+    "control_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/F_smoke_r1/disposable_state6.pth",
+    "next2_delta_max_abs_difference": 3.725290298461914e-09,
+    "next2_Adam_moment_differences": [
+      {
+        "parameter": 0,
+        "field": "step",
+        "max_abs_difference": 0.0
+      },
+      {
+        "parameter": 0,
+        "field": "exp_avg",
+        "max_abs_difference": 5.4569682106375694e-12
+      },
+      {
+        "parameter": 0,
+        "field": "exp_avg_sq",
+        "max_abs_difference": 1.0408340855860843e-17
+      }
+    ],
+    "next2_loss_max_abs_difference": 0.0,
+    "next2_projection_cost_max_abs_difference": 1.0967360353220101e-10,
+    "next2_parameter_tolerance": 1e-06,
+    "next2_Adam_tolerance": 1e-08,
+    "next2_raw_schedule_sampler_RNG_exact": true,
+    "next2_complete_bitwise_equality_claim": false,
+    "all_original_models_and_files_unchanged": true,
+    "formal_not_started_by_this_GPU_worker": true,
+    "fit_contract_sha256": "37f825b4ba817d3cee18d846e462eb273067f4617006b1b6baf2e337cefae759"
+  },
+  "target_manifest_guard": {
+    "status": "PASS_SOURCE_C_MANIFEST_AND_FOUR_ACTUAL_TARGET_FILES_CLOSED",
+    "phase": "before_formal",
+    "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/target_manifest.json",
+    "manifest_sha256": "d7cca4167e2bbb68347f63babae356320a1b0ddd60e580bf746e966f2ac8acbe",
+    "files": [
+      {
+        "raw": 94,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40/raw094.npz",
+        "bytes": 4435024,
+        "mtime_ns": 1794027961087110644,
+        "sha256": "c50dd1b2f1a5588f6a3fa57ed782137e2064d451f564a8cc4840ac1685594969",
+        "manifest_file": "projected_BUILD40/raw094.npz",
+        "original_role": "BUILD_FIT",
+        "current_role": "BUILD"
+      },
+      {
+        "raw": 105,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9/raw105.npz",
+        "bytes": 4510987,
+        "mtime_ns": 1794027969370041708,
+        "sha256": "304d0b9b3feb005cbbb01e5f937501c475fdfb6463292cb9a098f345615e88be",
+        "manifest_file": "projected_HELD9/raw105.npz",
+        "original_role": "HELD_PROJECT_EVAL_ONLY",
+        "current_role": "BUILD"
+      },
+      {
+        "raw": 128,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40/raw128.npz",
+        "bytes": 4423175,
+        "mtime_ns": 1794027984435628998,
+        "sha256": "7d4619f119e7e2718d8fb5613c674dd11a39be444366a5a0a1222424fd7d42ec",
+        "manifest_file": "projected_BUILD40/raw128.npz",
+        "original_role": "BUILD_FIT",
+        "current_role": "BUILD"
+      },
+      {
+        "raw": 137,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9/raw137.npz",
+        "bytes": 4444028,
+        "mtime_ns": 1794027990305871696,
+        "sha256": "d89606750bf2a35e18bb2667cf3f41f0c50d92f919c1a8e1f07265d409cfb5e3",
+        "manifest_file": "projected_HELD9/raw137.npz",
+        "original_role": "HELD_PROJECT_EVAL_ONLY",
+        "current_role": "BUILD"
+      }
+    ],
+    "evidence_note": "Smoke recorded actual4SHA before optimization; this external manifest closure is performed before fresh formal and repeated after formal."
+  },
+  "formal_fresh_zero": true,
+  "all49_auto_release": false
+}

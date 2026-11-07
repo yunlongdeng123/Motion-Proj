@@ -1,0 +1,105 @@
+{
+  "status": "CPU_EXISTING_C_TARGET_INTERFACE_ONLY",
+  "target_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1",
+  "BUILD_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40",
+  "HELD_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9",
+  "file_pattern": "rawNNN.npz",
+  "target_key": "edgeblend_rgb",
+  "target_shape": [
+    320,
+    480,
+    3
+  ],
+  "target_dtype": "float32",
+  "fixed_fit_mask_key": "fit_mask",
+  "protect_mask_key": "protect_mask",
+  "same_target_and_fit_mask_for_keep_delete": true,
+  "rows": [
+    {
+      "raw": 94,
+      "original_role": "BUILD40",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40/raw094.npz",
+      "sha256": "c50dd1b2f1a5588f6a3fa57ed782137e2064d451f564a8cc4840ac1685594969",
+      "fit_mask_pixels": 16233,
+      "fusion_replace_pixels": 18,
+      "edgeblend_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "edgeblend_rgb_dtype": "float32"
+    },
+    {
+      "raw": 105,
+      "original_role": "HELD9",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9/raw105.npz",
+      "sha256": "304d0b9b3feb005cbbb01e5f937501c475fdfb6463292cb9a098f345615e88be",
+      "fit_mask_pixels": 12384,
+      "fusion_replace_pixels": 94,
+      "edgeblend_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "edgeblend_rgb_dtype": "float32"
+    },
+    {
+      "raw": 128,
+      "original_role": "BUILD40",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40/raw128.npz",
+      "sha256": "7d4619f119e7e2718d8fb5613c674dd11a39be444366a5a0a1222424fd7d42ec",
+      "fit_mask_pixels": 20869,
+      "fusion_replace_pixels": 550,
+      "edgeblend_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "edgeblend_rgb_dtype": "float32"
+    },
+    {
+      "raw": 137,
+      "original_role": "HELD9",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9/raw137.npz",
+      "sha256": "d89606750bf2a35e18bb2667cf3f41f0c50d92f919c1a8e1f07265d409cfb5e3",
+      "fit_mask_pixels": 26612,
+      "fusion_replace_pixels": 982,
+      "edgeblend_rgb_shape": [
+        320,
+        480,
+        3
+      ],
+      "edgeblend_rgb_dtype": "float32"
+    }
+  ],
+  "inputs": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/target_manifest.json": {
+      "bytes": 101461,
+      "sha256": "d7cca4167e2bbb68347f63babae356320a1b0ddd60e580bf746e966f2ac8acbe"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/edgeblend_contract.json": {
+      "bytes": 2258,
+      "sha256": "416655ea70b6c6584d9e655a6279e5a42e6724a87efd3336878ad677ddc75212"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/fit_contract.json": {
+      "bytes": 18753,
+      "sha256": "897e57605ddeb3a5f9f8257e91754e28bd0188a4eb218f0e2d3ef60d5ec6f8a2"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/supervision_masks.npz": {
+      "bytes": 101173,
+      "sha256": "8c46130c1aa206c6bffdf3ff37dfffde16853019204297b41530cb8019d13b3f"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/qualified_parents.npz": {
+      "bytes": 133901,
+      "sha256": "69cc06cfcbe930cca9e4f9a7ddcca3beb122b68eb97a54d38db9e90b0371e8db"
+    }
+  },
+  "old_qualified_2053_parents_role": "Only original added-road10098 parents; never transferable to native-static1042776 or oldroad143248.",
+  "legacy_qualification_must_be_new": true,
+  "original_C_target_formula": "O+clip(distance_inside(M)/10,0,1)*(B-O)",
+  "original_fit_BUILD40_only": true,
+  "original_HELD9_query_RGB_target_role": "Construction diagnosis only; not original fitting and not independent prediction. New roles require explicit contract.",
+  "interface_for_future_fixed_geometry_residual": "Use current baseline colors_precomp + constant branch-row delta; geometry/SH/time/opacity/mask and fine preserved.",
+  "new_fit_steps": 0,
+  "new_GPU_forwards": 0
+}

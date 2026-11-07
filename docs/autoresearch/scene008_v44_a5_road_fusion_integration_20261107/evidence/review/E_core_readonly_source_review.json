@@ -1,0 +1,53 @@
+{
+  "status": "REVIEWED_REAL_LIFECYCLE_PASSED_FRESH_FORMAL_RELEASED",
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/E_colour_bake_core.py",
+  "source_sha256": "5b55034b0204942cd7fe3ec503d47e441ba28bd89a5eabf0a0b773fe19abaae2",
+  "public_api_sha256": "415bd33afac61e7d28e6d195051db0e33ab3f793f36d5e31208a2e89f936fa9f",
+  "fit_contract_sha256": "62be3c0ddde3ec5421954a1e3c28d4813c9d713def0221204510d33d4c2ed6f1",
+  "reviewed_line_count": 150,
+  "findings": [
+    {
+      "lines": "66-85",
+      "result": "Differentiable index_copy/clamp_min to private delta; detached geometry and direct native raster; paired half-MSE gradients accumulate before one optimizer update."
+    },
+    {
+      "lines": "85-100",
+      "result": "Only delta Adam; bound projection[-1,1]; complete boundary saves parameter/Adam/sampler/all RNG/history/config; recursive exact start restore."
+    },
+    {
+      "lines": "128-147",
+      "result": "Fresh formal400 paired steps; smoke4 covers all raw IDs; adaptive600s real smoke when estimated>=1h; disposable2 and restored2 are separate engineering updates."
+    },
+    {
+      "lines": "106-124",
+      "result": "Public415 export/evaluation; whole-image alpha/depth/group geometry equality; original model state and files guarded."
+    }
+  ],
+  "followups_can_be_external_without_editing_running_source": true,
+  "not_an_extra_approval_gate": true,
+  "new_GPU_forwards": 0,
+  "fit_steps_executed_by_reviewer": 0,
+  "source_followups_closed_by_actual_receipts": true,
+  "evidence_followups_before_formal_closed": {
+    "target_manifest_and_four_expected_files": "contract/E_target_guard_before_formal.json",
+    "same_delta_train_helper_public415_native_parity": "E_restore_parity_r1/train_helper_public_API_parity.json",
+    "full_restore_next2": "E_restore_parity_r1/returned.json"
+  },
+  "supplemental_source_sha256": {
+    "E_restore_parity_gate.py": "8a412e8702524a4c71903c50e298ecd51912d16a785f8942d6b977940bf5934d",
+    "E_lifecycle_then_formal400.py": "9843cd2b464a804928e7d78b73c0591a841d15944c98405a987736e11f51fe6e"
+  },
+  "actual_lifecycle_findings": {
+    "restore_start_bit_exact": true,
+    "direct128_KD_public415_RGB_alpha_group_parity": "bit-exact",
+    "next2_delta_max_abs_difference": 3.725290298461914e-09,
+    "next2_Adam_exp_avg_max_abs_difference": 5.684341886080802e-14,
+    "next2_Adam_exp_avg_sq_max_abs_difference": 3.3881317890172014e-21,
+    "next2_loss_max_abs_difference": 0.0,
+    "next2_complete_bitwise_equality_claim": false,
+    "fresh_formal_pid": 68404,
+    "fresh_formal_paired_steps": 400,
+    "no_automatic49": true
+  },
+  "reviewed_training_source_or_original_model_modified_by_review": false
+}

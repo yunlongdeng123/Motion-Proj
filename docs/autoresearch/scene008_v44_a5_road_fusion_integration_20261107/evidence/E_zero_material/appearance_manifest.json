@@ -1,0 +1,42 @@
+{
+  "schema": "fixed-baseline-road-appearance-rgb-v1",
+  "material_file": "fixed_rgb_residual.npz",
+  "material_sha256": "14387088e2ed8a945bf1ac6d6b6e048a0203e8e76f8dec3cecc2146762ce3301",
+  "qualification_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/qualification_manifest.json",
+  "qualification_manifest_sha256": "48283b8f375d504553e827bdc3ba2bd846414f6e807c8c0a22520923a7686dae",
+  "qualification_selection_sha256": "5d9521ba58fab9b3fc2c287836f68757875f6508a68ecec954008611ddf4d9d8",
+  "model_binding": {
+    "v44_binding_sha256": "57e6dd01e9fbec40c1cfe4037c634773b62deea7a9684761a2874e5b6e41ed4b",
+    "v44_contract_sha256": "719b0660cbb952e4a8ed4595dc5e56a7f358d1a633c1eb42eaadef186f530a17",
+    "native_static_tensor_sha256": "317e1776e24ebdfa065336e9b74f14a071a254b2ec2398f2302fe6f628de4d1b",
+    "oldroad_repair_state_sha256": "dab42d5e3e618fda82757c833fd53328524a546890a0eb55d31b0f8a32ec6f59",
+    "oldroad_final_colour_sha256": "1e87f7f3f3076986427a330128e2666480c05a5b275fdec7d6fa9761656d2cd6",
+    "semantic_manifest_sha256": "f77f33745925956cc582a0cb2b80f9e1bf2708ed41c7fcddecff8c891a4a937f",
+    "semantic_selection_sha256": "3c3b0818a4794127915d2aed1d5b19da6b51ddbbf58fb35858d801724dbed0ec",
+    "full5_gaussian_files_sha256": {
+      "chkpnt10000.pth": "2e6f79500b29f224db94d22d17c15d8affa671f916ad23e846906456305d8769",
+      "dynamic_chkpnt10000.pth": "af2d18e2551281a8c4cd49349dd6e8dfca4b23ab203d336a94cf1c9916bf7c00"
+    },
+    "branch_rows": {
+      "native_static": 1042776,
+      "oldroad": 143248
+    }
+  },
+  "branch_rows": {
+    "native_static": 1042776,
+    "oldroad": 143248
+  },
+  "apply_rule": "selected colors_precomp = clamp_min(existing colors_precomp + fixed branch-row RGB delta, 0); no upper clamp",
+  "same_delta_for_all_cameras_times_and_keep_delete": true,
+  "geometry_updates": 0,
+  "opacity_updates": 0,
+  "mask_changes": 0,
+  "SH_coefficients_unchanged": true,
+  "existing_SH_direction_dependence_preserved": true,
+  "nonnegative_projection_after_original_SH_and_fine": true,
+  "projection_can_make_view_dependence_nonlinear": true,
+  "old_fine_applied_before_residual": true,
+  "optimizer_steps_executed_by_exporter": 0,
+  "quality_accepted": false,
+  "human_verdict": null
+}

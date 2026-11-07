@@ -1,0 +1,261 @@
+{
+  "schema": "ROAD_FUSION_LATEST_V44_A5_FIXED_EVALUATION_V1",
+  "status": "FROZEN_BEFORE_NEW_CANDIDATE_OUTPUT_REVIEW",
+  "sealed_utc": "2026-11-07T06:03:50.349793+00:00",
+  "new_candidate_arrays_seen_before_sealing": false,
+  "baseline": "Latest delivered SemanticActor5V44Integration 49BUILD-fit sidecar, not old v44 and not AA",
+  "baseline_evidence": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\scene008_v44_full5_integration_20261107",
+  "baseline_full49_summary_sha256": "4402663b9b9f8c94f9b41de202d706921555a19a6a4b4dbac0963e105635aea2",
+  "baseline_adapter_semantic_source_note": "frozen source and sidecar references are in latest summary/input guards; never change query membership",
+  "variants": [
+    "baseline",
+    "AA",
+    "C"
+  ],
+  "comparisons": [
+    "AA-vs-baseline",
+    "C-vs-baseline",
+    "C-vs-AA"
+  ],
+  "pilot_raws": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "diagnostic_only_raws": [
+    130
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "no_automatic_all49": true,
+  "all49_requires_root_actual_pilot_image_review_and_numeric_receipt": true,
+  "no_training_no_colour_refit": true,
+  "GPU_keep_on": true,
+  "human_verdict": null,
+  "metric_units": {
+    "RGB": "encoded RGB channel MAE in [0,1]",
+    "depth_m": "metres",
+    "alpha": "unitless",
+    "seam": "equal matched-bin mean of absolute channel residual jumps"
+  },
+  "fixed_domain_policy": "Original observations/registries only, no outcome/candidate alpha selection, no cropping denominators, no hiding unsupported or bad bins",
+  "a5": {
+    "mask": "original actor_labels==1",
+    "upper": "mask intersect y <= min_y+0.25*(max_y-min_y), no +1",
+    "all49_pixels": 121128,
+    "all49_upper_pixels": 25906,
+    "visible_raws": [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112
+    ],
+    "all49_mask_SHA256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+    "all49_upper_SHA256": "d5c24aeee22bb804311e28f89de6f0652438465263c3e45a2f9d245d6b67379f"
+  },
+  "vehicle_domains": {
+    "a6": "obs.visible[0]",
+    "a6_measured_depth": "obs.depth_valid[0] vs obs.depth_m[0]",
+    "a37_keep": "obs.visible[1]"
+  },
+  "protected_domains": {
+    "legacy_protected_report_only": "obs.protect & ~a6_visible & ~a37_visible; preserve original metric separately",
+    "protected_nonroad_gate": "obs.protect & ~a6_visible & ~a37_visible & ~obs.road & ~obs.road_edit",
+    "fixed_nonroad_geometry_guard": "(~obs.road & ~obs.road_edit) & (obs.protect | a5_mask | a6_visible | a37_visible)",
+    "note": "road_edit is original potential edit-road domain, not rendered road alpha; all masks fixed before results. Guard changes require new protocol, never silently reinterpret."
+  },
+  "road_domains": {
+    "original_road": "obs.road, RGB vs original obs.rgb",
+    "delete_proxy_report_separate": "obs.road_edit & original ground_beneath_a37_proxy, RGB vs obs.road_edit_rgb, not hidden GT",
+    "world_registry_SHA256": "0af33f63171cc34b404e4a0719495a16a49b993c5aaa36d1a442b1695251e7d8",
+    "world_patch_anchor_local_m": {
+      "x": [
+        19,
+        32.6
+      ],
+      "y": [
+        0.5,
+        3.5
+      ]
+    },
+    "edges_anchor_local_m": {
+      "near_x": 19.8,
+      "far_x": 31.8,
+      "lateral_y": 2.71
+    },
+    "symmetric_side_band_m": [
+      0.08,
+      0.4
+    ],
+    "tangent_bin_m": 0.2,
+    "min_pixels_per_side": 3,
+    "all49_expected_support": {
+      "near_x": {
+        "frames": 47,
+        "bins": 248
+      },
+      "lateral_y": {
+        "frames": 40,
+        "bins": 277
+      },
+      "far_x": {
+        "frames": 0,
+        "bins": 0,
+        "score": null
+      }
+    },
+    "primary_raw128": {
+      "bbox_xyxy": [
+        165,
+        188,
+        208,
+        234
+      ],
+      "road_pixels": 1385,
+      "near_paired_bins": 6,
+      "matched_minus_pixels": 35,
+      "matched_plus_pixels": 33,
+      "world_patch_is_separate": true
+    }
+  },
+  "gates": {
+    "for_each_AA_and_C_vs_latest_per_frame_state": {
+      "a5_full_RGB_MAE_delta_max": 1e-06,
+      "a5_upper_RGB_MAE_delta_max": 1e-06,
+      "a6_RGB_MAE_delta_max": 1e-06,
+      "a6_measured_depth_MAE_delta_max_m": 1e-05,
+      "KEEP_a37_RGB_MAE_delta_max": 1e-06,
+      "protected_nonroad_RGB_MAE_delta_max": 1e-06,
+      "original_road_RGB_MAE_delta_max": 1e-06,
+      "fixed_nonroad_alpha_pixel_max_abs_delta": 1e-06,
+      "fixed_nonroad_depth_pixel_max_abs_delta_m": 1e-05
+    },
+    "seams_each_state_vs_latest": {
+      "pilot_and_if_released_all49_near_x_equal_bin_pooled_delta_max": 1e-06,
+      "pilot_and_if_released_all49_lateral_y_equal_bin_pooled_delta_max": 1e-06,
+      "raw128_original_primary_near6_delta_max": 1e-06,
+      "raw128_near_relative_reduction_min": 0.05,
+      "raw128_near_absolute_reduction_min": 0.0001,
+      "all_registered_pairs_must_be_finite_complete": true,
+      "unsupported_is_null_not_zero_or_pass": true
+    },
+    "C_vs_AA_colour_only_engineering": {
+      "serialized_xyz_scale_quaternion_opacity_tuple_exact": true,
+      "alpha_full_image_max_abs_delta": 1e-06,
+      "depth_full_image_max_abs_delta_m": 1e-05,
+      "all_group_alpha_T_max_abs_delta": 1e-06,
+      "group_order_and_cameras_times_exact": true
+    },
+    "metadata": {
+      "original_models_and_assets_unchanged": true,
+      "same_semantic_sidecar_rows_all_variants_states": true,
+      "E_delete37_only": true,
+      "same_newroad_always_on_KEEP_DELETE": true
+    },
+    "threshold_changes_after_outputs_seen": false,
+    "legacy_looser_gates": "historical reference only; cannot substitute no-regression gates"
+  },
+  "reporting": {
+    "RGB_pixel_max_difference": "report diagnostics, do not call whole frame lossless/pixel exact based on MAE",
+    "per_frame_and_per_bin_tails_required": true,
+    "AA_and_C_vs_latest_required": true,
+    "C_vs_AA_is_only_material_increment": true,
+    "raw130_fixed_wheel_rays_separate_not_pilot_pooled": true,
+    "no_new_hole_count_in_original_fixed_a6_domain": true,
+    "root_visual_gate_separate_from_numeric": true,
+    "overall_quality_accepted": false,
+    "human_verdict": null
+  },
+  "known_prior_negative": "C improves lateral/colour vs AA, but original128near and full49near regress. It is a candidate, not a full seam fix. New 40392-row road topology differs from latest v44 old143248-row road, so old C-vs-AA geometry parity does not prove latest integration preservation.",
+  "source_references": [
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\index.html",
+      "relative": "index.html",
+      "bytes": 17992,
+      "sha256": "8f918025bbafa4965a0636b6866b6042e2a8c51229bc071ef1a93c59fea3598e"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\EVALUATION_CONTRACT.md",
+      "relative": "repro/red_review/EVALUATION_CONTRACT.md",
+      "bytes": 6051,
+      "sha256": "ac46f85477fa14f49822598de1c10e928f8da061005503e444c7fa9f3c893624"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\world_masks49_v1\\registry.json",
+      "relative": "repro/red_review/world_masks49_v1/registry.json",
+      "bytes": 156706,
+      "sha256": "0af33f63171cc34b404e4a0719495a16a49b993c5aaa36d1a442b1695251e7d8"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\world_masks49_v1\\primary_raw128\\fixed_masks_raw128.npz",
+      "relative": "repro/red_review/world_masks49_v1/primary_raw128/fixed_masks_raw128.npz",
+      "bytes": 2460782,
+      "sha256": "53c560a34be8709d5b96267068aeabe68e76aa8a915fe2a97e93c67c8f439a06"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\world_masks49_v1\\primary_raw128\\roi_registration.json",
+      "relative": "repro/red_review/world_masks49_v1/primary_raw128/roi_registration.json",
+      "bytes": 4743,
+      "sha256": "47d651121a3ce0b900a7a695ed6ab6b432314f7152cc3db2db027b5262ff516e"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\evaluate_fusion_writeback.py",
+      "relative": "repro/red_review/evaluate_fusion_writeback.py",
+      "bytes": 22736,
+      "sha256": "d110843108373e5fb3d544398a65387e49d9b63f9aa33851529a08125cbafbe9"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\prepare_world_masks49.py",
+      "relative": "repro/red_review/prepare_world_masks49.py",
+      "bytes": 7704,
+      "sha256": "0afd27874856408c800ce3bc8833e2ce938e1702f8c55c253e4dd44023c10fe4"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\red_review\\full49_edgeblend_summary_v1.json",
+      "relative": "repro/red_review/full49_edgeblend_summary_v1.json",
+      "bytes": 67013,
+      "sha256": "e3ccf764b08dee630fb46d7878ab85dd04401143104a832f5122727d640bebbd"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\engineer\\canonical_edgeblend_v1\\scene_manifest.json",
+      "relative": "repro/engineer/canonical_edgeblend_v1/scene_manifest.json",
+      "bytes": 40273,
+      "sha256": "1025c7a1ad12d6b6f21a679378005a6689d8e4278d6592f8475431c5e8fd4057"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\engineer\\canonical_edgeblend_v1\\new_road_canonical_candidate.npz",
+      "relative": "repro/engineer/canonical_edgeblend_v1/new_road_canonical_candidate.npz",
+      "bytes": 7362139,
+      "sha256": "3afc6e25b7b152f851b4eb0de4a73e6d219c9526d75453d99097a31ddd5774c5"
+    },
+    {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-05\\j-ao-j\\outputs\\scene008_road_fusion_bake\\delivery\\repro\\engineer\\canonical_edgeblend_v1\\baseline_scene_manifest.json",
+      "relative": "repro/engineer/canonical_edgeblend_v1/baseline_scene_manifest.json",
+      "bytes": 39244,
+      "sha256": "48ac926aafb1cb07ddd98c4ee6c9ffdc7c4501076a1cdbc7ffb99cc9736e84c7"
+    }
+  ]
+}

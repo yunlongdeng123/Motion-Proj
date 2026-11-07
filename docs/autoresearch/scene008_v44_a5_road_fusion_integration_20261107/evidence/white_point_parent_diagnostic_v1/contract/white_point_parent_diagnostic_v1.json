@@ -1,0 +1,58 @@
+{
+  "schema": "TWO_POINT_FULL_PARENT_VISIBILITY_DIAGNOSTIC_V1",
+  "status": "SEALED_BEFORE_TWO_POINT_GPU",
+  "source_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/probe_white_point_parents.py",
+  "source_sha256": "0198fae7ba7b09a1567be40d97ac3439879ebb87fb9b2c6e72ccd975d98a011b",
+  "frozen_scene": "H2 + original formal2K complete C material; no I, no H3, no new RGB point applied",
+  "material_scene_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/formal_export2000_r1/scene_manifest.json",
+  "material_asset_sha256": "1287d260b80196bf7f3f4555b77f4d4879ba6bc7e56c63dbe6ac098e66a02952",
+  "H2_cached_visibility": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2",
+  "points": [
+    {
+      "raw": 128,
+      "state": "delete",
+      "pixel_xy": [
+        301,
+        221
+      ]
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "pixel_xy": [
+        300,
+        227
+      ]
+    }
+  ],
+  "point_role": "Posthoc diagnosed protected-nonroad photo-error pixels; GT is used only to describe roles/fit/protect coverage, never to form a query guard.",
+  "planned_forwards": 2,
+  "planned_backwards": 2,
+  "probe": "Full10098 parent-only ones leaf in feature16->extra14 indexed to40392children; single-pixel positive loss. All geometry/SH/RGB/env/mask inputs detached.",
+  "checks": [
+    "Actual native RGB, alpha, depth_sum, canonical NumPydepth and8groups exact to cachedH2formal2K",
+    "Probe ones equals all-newroad alphaT within1e-6",
+    "Nonnegative parent mass SUM closes to pixel newroad alphaT abs1e-6 and rel1e-5",
+    "Sum mass*parentRGB reproduces cachedCwarm/H2formal2K/J/K newroad premultipliedRGB within1e-6",
+    "All model parameters/identity/geometry/source remain unchanged"
+  ],
+  "outputs": [
+    "Full10098 weights per point",
+    "Positive contributing parents sortedby native visible mass",
+    "Current2119 vs frozen7979 mass partition",
+    "SourceCwarm/formal2K/J/K colours for every contributor",
+    "ExactC49 fit influence \u03bc and original source RGB coverage/provenance",
+    "Current observed/target fit/protect roles at original coordinates"
+  ],
+  "qualification_manifest_sha256": "6df77ae629503373f81b4e36ba67e81332792ad66acfa9bb0518806eed9f9515",
+  "no_new_QUERY_selection": true,
+  "no_optimizer": true,
+  "no_Gaussian_or_intrinsic_opacity_or_colour_updates": true,
+  "no_new_variant": true,
+  "automatic_fit": false,
+  "automatic49": false,
+  "quality_acceptance_claim": false,
+  "GPU_stays_on": true,
+  "shutdown": false,
+  "root_review": "Exact2point attribution only; no changes to pixel/target roles or material. Original gate failures remain."
+}

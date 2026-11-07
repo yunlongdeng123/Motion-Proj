@@ -1,0 +1,56 @@
+{
+  "schema": "C49_PARENT_SHARED_RGB_BACKGROUND_CONTROL_TRAINING_V1",
+  "status": "SEALED_BEFORE_FIRST_RGB_OPTIMIZER",
+  "source_scene": "Delivered21K component v44+semantic_a5 single assembled runtime",
+  "road_asset_sha256": "3afc6e25b7b152f851b4eb0de4a73e6d219c9526d75453d99097a31ddd5774c5",
+  "initializer": "existing C400 warm material, not zero-trained material",
+  "private_Adam_fresh_at_formal_step0": true,
+  "eligible_parents": 2119,
+  "zero_mass_frozen_parents": 7979,
+  "shared_parent_rows_total": 10098,
+  "full_children_total": 40392,
+  "qualification_manifest_sha256": "6df77ae629503373f81b4e36ba67e81332792ad66acfa9bb0518806eed9f9515",
+  "all49_current_BUILD": true,
+  "sampling": "uniform shuffled49 raw89..137, private Python random seed20261107",
+  "seed": 20261107,
+  "loss": ".5*(KEEP mean squared RGB error + DELETE mean squared RGB error), same original Cedgeblend_rgb and legalfit_mask, no extra weights/crops",
+  "optimizer": {
+    "name": "Adam",
+    "lr": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08
+  },
+  "RGB_bounds": [
+    0,
+    1
+  ],
+  "smoke_training_seconds_min": 600,
+  "smoke_updates": "all actual updates separately recorded, never counted as formal",
+  "lifecycle": "Cwarm0 public4KD exact; real600seconds; early/full saves; publicevaluation; disposable2; fresh exactrestore+next2; same-seed fresh formal from Cwarm0",
+  "formal_initial_stop": 2000,
+  "formal_maximum": 10000,
+  "formal_check_nodes": [
+    500,
+    2000,
+    5000,
+    10000
+  ],
+  "released_initial_formal_nodes": [
+    500,
+    2000
+  ],
+  "freeze": "all original scene/roof/identity/Gaussian/SH and Cgeometry/scales/rotations/opacity/Mip/masks fixed; only eligible shared-parentRGB optimized",
+  "node_geometric_reference": "unmodified Cwarm0, all global alpha/depth_sum/metricdepth/8groups/semanticRGB exact",
+  "known_not_best_control": true,
+  "original_C4_tire_and_integration_failures_remain": true,
+  "automatic_quality_adoption": false,
+  "automatic_H_or_49_release": false,
+  "GPU_power": "KEEP_ON",
+  "shutdown": false,
+  "reset_card": false,
+  "material_runtime_sha256": "4d8932b39b8b0fd5034c1147068acf7a6b5474c62e556d2ebc79a04e319f1009",
+  "executed_core_sha256": "2222d3d4da7ffafe7fa83b5c69ca6b359d046055238373775252ba0f68af3275"
+}

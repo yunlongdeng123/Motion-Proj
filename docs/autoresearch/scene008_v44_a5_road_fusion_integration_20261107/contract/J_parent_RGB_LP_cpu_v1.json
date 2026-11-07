@@ -1,0 +1,153 @@
+{
+  "schema": "J_PARENT_RGB_SINGLE_LP_CPU_PROTOCOL_V1",
+  "status": "SEALED_BEFORE_J_CPU_SOLVE",
+  "scope": "One restricted material-interface feasibility control on the frozen21K scene + formalC2000 material + original fixed H2 visibility. Not I, not G/F old rows, not neural training, not the original C algorithm unchanged.",
+  "views": {
+    "BUILD_raws": [
+      94,
+      105,
+      128,
+      137
+    ],
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "pairs_per_state": {
+      "world_near": 24,
+      "world_lateral": 23,
+      "primary128_near": 6
+    },
+    "total_pairs": 106,
+    "residual_channels": 318,
+    "independent_heldout": false
+  },
+  "frozen_inputs": {
+    "sole_material_baseline_for_delta": "Actual formal2000/H2 parent colours, not Cwarm400 initializer",
+    "existing_scene_geometry_opacity_identity_RGB_and_H2_masks": "Unchanged; only a new candidate eligible parentRGB field may differ",
+    "operator_schema": "J-road-parent-rgb-signed-seam-operator-v1",
+    "A_shape": [
+      106,
+      2119
+    ],
+    "baseline_J_shape": [
+      106,
+      3
+    ],
+    "baseline_J_definition": "Native predicted-minus-observed RGB residual: mean plus minus mean minus, on the exact original registered masks. Fixed background and frozen parents are already included.",
+    "required_parent_fields": [
+      "eligible_parent_ids",
+      "initial_parent_RGB",
+      "full_parent_RGB",
+      "eligible_parent_mass"
+    ],
+    "required_record_fields": [
+      "raw",
+      "state",
+      "kind",
+      "edge",
+      "tangent_bin",
+      "minus_pixels",
+      "plus_pixels",
+      "minus_sha256",
+      "plus_sha256"
+    ],
+    "eligibility": "Original all49 uncullled-C legal-fit visibility qualification;2119 positive-mass eligible parents.7979 other parents are fixed, even if H2 unocclusion exposes them in some views.",
+    "mass_provenance": "Exact original C49 qualification parent_mass, not a new H2/operator mass or RGB-loss gradient",
+    "full_parent_A": "Optional/full closure audit over10098 parents; only2119 eligible columns are variables",
+    "native_linearity_gate": "Before any solve/release: actual eight-forward bounded0.001 perturbation must validate j=j0+A*delta within1e-6, with all source/identity/geometry guards retained."
+  },
+  "LP_variables": {
+    "delta": "6357 free signed variables delta[r,c], candidate RGB=actualC2000 RGB+delta",
+    "absolute_delta": "6357 nonnegative epigraph u[r,c]>=abs(delta[r,c])",
+    "residual_absolute": "318 nonnegative epigraph t[b,c]>=abs(j0[b,c]+sum_r A[b,r]*delta[r,c])",
+    "total_variables": 13032,
+    "box": "-c0[r,c]<=delta[r,c]<=1-c0[r,c], so all final parent colours lie in[0,1]",
+    "fixed_parents": "All7979 noneligible RGB rows copied bitwise from the current full-parent table; no variables, no expansion."
+  },
+  "objective": {
+    "formula": "min sum_r (mu_all49[r]/mean(mu_all49_eligible))*sum_c u[r,c]",
+    "weights": "All2119 masses strictly positive; preserve full float64 values. Mean-one normalization is only common numerical scaling.",
+    "meaning": "Original-C49 visible-mass-weighted minimum material change; a fixed observability proxy.",
+    "not_a_protection_bound": "Unculled-C49 mass is not an upper bound on H2 current/all49 pixel change: removing other road children can expose later parent contributions.",
+    "no_other_terms": "No MSE/TV/L2/seed/grid or extra colour penalties; no F/G L1 budget and no modified objective weights."
+  },
+  "constraints": {
+    "residual_affine": "j(delta)=j0+A*delta; channel-independent A, shared parent RGB triplets",
+    "pool_score": "sum of t over exactly that pool's N bins and3channels divided by3*N; equal-bin mean, not per-pixel weighting",
+    "primary_each_state": "mean absolute residual <= min(currentH2_C2000, latest21K*0.95, latest21K-1e-4)-1e-7",
+    "world_near_and_lateral_each_state": "mean absolute residual <= min(currentH2_C2000, latest21K+1e-6)-1e-7",
+    "number_of_pool_constraints": 6,
+    "membership": "Original53 pairs/state=47 world+6 independent primary. Keep primary35/33 pixels distinct from world12836/33. Do not duplicate primary into a world pool or add per-bin no-regression gates.",
+    "already_good_KEEP": "Target is capped by current H2_C2000, so the solver cannot trade an already-good KEEP primary back toward the weaker latest threshold.",
+    "constant_precision": "Use the already published original4560 current/latest scores, bind their source hashes. Never silently replace predicted-minus-observed residual with raw RGB or alter thresholds."
+  },
+  "published_reference_metrics": {
+    "primary128": {
+      "keep": {
+        "latest": 0.005481387081090361,
+        "current_H2_C2000": 0.004613534469778339
+      },
+      "delete": {
+        "latest": 0.008003135114752999,
+        "current_H2_C2000": 0.00933907371169577
+      }
+    },
+    "world_near": {
+      "keep": {
+        "latest": 0.006035768960524972,
+        "current_H2_C2000": 0.00675247771141585
+      },
+      "delete": {
+        "latest": 0.0071492721714700265,
+        "current_H2_C2000": 0.0081604668860867
+      }
+    },
+    "world_lateral": {
+      "keep": {
+        "latest": 0.0038315507547889392,
+        "current_H2_C2000": 0.007582721404184628
+      },
+      "delete": {
+        "latest": 0.00352319822717539,
+        "current_H2_C2000": 0.009049042120434182
+      }
+    }
+  },
+  "solver": {
+    "library": "scipy.optimize.linprog / SciPy1.13.1 HiGHS",
+    "method": "highs",
+    "primal_feasibility_tolerance": 1e-09,
+    "dual_feasibility_tolerance": 1e-09,
+    "time_limit_seconds": 120,
+    "maximum_calls": 1,
+    "no_grid_no_retry_no_alternate_objective": true,
+    "sparse_constraints": true,
+    "coefficient_policy": "Keep complete original float64 A/j0/mass in compilation, no Python thresholding/rounding. Independently recompute all6 pools with the full undropped matrix after the solver, so an internally tolerated coefficient is never accepted blindly.",
+    "inconclusive_status": "Time/iteration limit or numerical difficulty is not infeasibility and not a scientific negative.",
+    "infeasible_scope": "Only this2119-variable-parent boxRGB field with7979 frozen, measured operator and registered6 budgets. Do not claim all10098 parents/all representations/all methods are impossible."
+  },
+  "export_and_validation": {
+    "float64_certificate": "Independently recompute abs(delta), box and all6 actual abs(j) pools; enforce registered tightened targets within1e-9 numerical audit tolerance, not just solver epigraph values.",
+    "production_RGB": "Export one float32 absolute parentRGB table in original10098-row order; eligible changes only, frozen7979 bitwise unchanged. Standard box/f32 conversion is recorded, not a line search or another solve.",
+    "quantized_certificate": "Recompute j0+A*(exported_float32_RGB-c0) with full float64 A and report both tightened-target margin and original-target margin. If original registered targets fail, stop without shrink/sweep/re-solve.",
+    "GPU_release_after_feasible_certified_solve": "One new material8-forward four-frame validation only, no new calibration/backward/Adam. Actual original4560 values plus image review decide quality; no automatic49/default adoption.",
+    "photo_not_constrained_by_LP": "All non-seam photo domains remain pending until actual8F original4560 evaluation. H2 model-car guard0 supports some regions, not every nonroad pixel.",
+    "residual_rounding_limit": "The1e-7 reserve and CPU affine checks do not replace actual float renderer validation.",
+    "quality_accepted": false,
+    "human_verdict": null
+  },
+  "accounting": {
+    "planned_CPU_solver_calls": 1,
+    "actual_CPU_solver_calls_at_draft": 0,
+    "Adam_updates": 0,
+    "neural_training_updates": 0,
+    "new_material_values_may_change": true,
+    "GPU_operator_and_perturb_and_candidate_forwards": "Separate actual receipts, not inferred from solver variables",
+    "no_new_H49_or_training_authorized_by_this_draft": true
+  },
+  "history": "C2K control/49 failures, H2 material controls and I partial negative remain immutable. I early94/105/all49 are not released; no band scan.",
+  "GPU_power": "KEEP_ON",
+  "operator_protocol_sha256": "e2ef3c2656eb3c38fce208d840a28575818092ebb80aebc61d612d6ecf2e3bb5",
+  "root_protocol_review": "One HiGHS call only after actual native operator linearity PASS; feasible candidate must be CPU-certified and rerendered8F with original full evaluation; no neural training or quality acceptance"
+}

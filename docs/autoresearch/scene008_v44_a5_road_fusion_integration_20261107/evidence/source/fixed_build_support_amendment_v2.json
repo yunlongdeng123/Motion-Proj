@@ -1,0 +1,20 @@
+{
+  "schema": "POSTHOC_FIXED_BUILD_ROAD_SUPPORT_ENGINEERING_V2",
+  "supersedes_method_guard_only": "fixed_build_support_amendment_v1.json; retain V1 bytes and any actual execution separately",
+  "chronology": "After original four-view AA/C results and independent130 wheel diagnosis; registered before the V2 support qualification",
+  "trigger": "Fixed model wheel rays lose up to0.962935/0.943457 native C2 alpha contribution against latest at128/130; original GT visible masks may omit these existing model pixels",
+  "unchanged_evaluation_contract_sha256": "4560bb91f4cc3b27b89693acd0918f939d2ac07e9bcd7cbbc6e0574e885516cc",
+  "calibration_raws": [94, 105, 128, 137],
+  "states": ["keep", "delete"],
+  "original_method": "All V1 fixed-row/inside>0/outside==0, frozen physical fields,0optimizer and post-filter re-render requirements remain",
+  "additional_BUILD_guard": "Union the already frozen latest-baseline native group_alpha_T[0]>0 (C2 asset), group_alpha_T[4]>0 (semantic a5), and in KEEP only group_alpha_T[1]>0 (a37) with the V1 observed guard",
+  "reason": "Protect existing model contributions including wheels and Gaussian tails that need not coincide with observed actor segmentation",
+  "information_role": "Latest-baseline alpha is a BUILD-side calibration input, SHA-bound in sidecar. Neither candidate alpha nor query GT/masks select runtime rows. The four views are development calibration, not HELD",
+  "no_static_union": "Do not include all native-static support; that would forbid legitimate road replacement everywhere",
+  "runtime": "Immutable source-C-asset/row-order/model-bound child row mask shared by every query and edit state; no dynamic mask or pixel compositing",
+  "quality_gate_change": "None of4560 gates relaxed or denominators changed. Existing fixed71 wheel rays remain a separate mandatory root review, not an average with road gains",
+  "additional_release_rule": "Do not release49 if D newly reduces existing model contribution on the fixed71 wheel rays by more than1e-6; this stricter rule does not replace the original gates",
+  "compute": "V1 not assumed executed. Record actual qualification rounds and any D or130 replay precisely; no unrecorded backward or update",
+  "human_verdict": null,
+  "GPU_power": "KEEP_ON"
+}

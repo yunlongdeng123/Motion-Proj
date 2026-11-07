@@ -1,0 +1,871 @@
+{
+  "schema": "C49_PROTECTED_SUPERVISION_COVERAGE_AUDIT_V1",
+  "status": "PASS_READ_ONLY_SOURCE_AND_INPUT_PATH_AUDIT_COVERAGE_GAP_IDENTIFIED",
+  "architecture_reference": "../../architecture_frozen21k_parallel.svg",
+  "qualification_source": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/qualify_C49_parent_visibility.py",
+      "sha256": "5bf4ec74943624a1b63b4cceb52958cc1eb497ac2762d8e682657431b24333e0",
+      "first_line": 26,
+      "last_line": 34,
+      "exact_lines": [
+        {
+          "line": 26,
+          "text": " paths=[Path(__file__),C_MANIFEST,assetpath,source_manifest,OLD/'contract/full5_transform_matrix.txt']"
+        },
+        {
+          "line": 27,
+          "text": " for raw in range(89,138):"
+        },
+        {
+          "line": 28,
+          "text": "  p=targetroot/registered[raw]['file'];assert sha(p)==registered[raw]['sha256'];paths.append(p)"
+        },
+        {
+          "line": 29,
+          "text": "  with np.load(p,allow_pickle=False) as z:mask=z['fit_mask'].astype(bool);rgb=z['edgeblend_rgb'];protect=z['protect_mask'].astype(bool)"
+        },
+        {
+          "line": 30,
+          "text": "  assert mask.shape==(320,480) and rgb.shape==(320,480,3) and np.isfinite(rgb).all() and not (mask&protect).any()"
+        },
+        {
+          "line": 31,
+          "text": "  targets[raw]=mask;target_meta.append({'raw':raw,'path':str(p),'sha256':sha(p),'fit_pixels':int(mask.sum()),'original_role':registered[raw]['role'],'current_role':'BUILD_all49'})"
+        },
+        {
+          "line": 32,
+          "text": " inputs={str(p):ident(p) for p in paths}"
+        },
+        {
+          "line": 33,
+          "text": " write(OUT/'qualification_protocol.json',{'status':'SEALED_BEFORE_C49_VISIBLE_MASS_QUALIFICATION','raw_ids':list(range(89,138)),'states':['keep','delete'],'source_C_asset_sha256':sha(assetpath),"
+        },
+        {
+          "line": 34,
+          "text": "  'parent_rows':10098,'child_rows':40392,'eligible_predicate':'sum all49 KEEP+DELETE legal-fit-mask joint child alphaT mass, parent-shared derivative, strictly >0',"
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/qualify_C49_parent_visibility.py",
+      "sha256": "5bf4ec74943624a1b63b4cceb52958cc1eb497ac2762d8e682657431b24333e0",
+      "first_line": 50,
+      "last_line": 58,
+      "exact_lines": [
+        {
+          "line": 50,
+          "text": "   assert all(not v.requires_grad for k,v in kw.items() if torch.is_tensor(v) and k!='features')"
+        },
+        {
+          "line": 51,
+          "text": "   out=base.raster(scene['cam'],base.pipe,0,kw,scene['bg']);calls+=1;write(OUT/'kernel_progress.json',{'raw':raw,'state':state,'actual_native_forwards':calls,'actual_dummy_backwards':backs,'optimizer_updates':0})"
+        },
+        {
+          "line": 52,
+          "text": "   view=out['extra'][14];ones_error=float((view.detach()-out['extra'][7].detach()).abs().max());assert ones_error==0"
+        },
+        {
+          "line": 53,
+          "text": "   loss=view[torch.as_tensor(mask,device='cuda')].sum();mass=torch.autograd.grad(loss,probe)[0].detach().cpu().numpy()[:,0];backs+=1"
+        },
+        {
+          "line": 54,
+          "text": "   write(OUT/'kernel_progress.json',{'raw':raw,'state':state,'actual_native_forwards':calls,'actual_dummy_backwards':backs,'optimizer_updates':0})"
+        },
+        {
+          "line": 55,
+          "text": "   assert np.isfinite(mass).all() and mass.min()>=0;expected=float(view.detach().cpu().numpy()[mask].sum(dtype=np.float64));actual=float(mass.sum(dtype=np.float64));absolute=abs(expected-actual);relative=absolute/max(abs(expected),1e-30)"
+        },
+        {
+          "line": 56,
+          "text": "   assert relative<=1e-5 if expected else actual==0"
+        },
+        {
+          "line": 57,
+          "text": "   aggregate+=mass.astype(np.float64);file=OUT/f'point_mass/{raw:03d}_{state}.npz';np.savez_compressed(file,parent_mass=mass)"
+        },
+        {
+          "line": 58,
+          "text": "   item={'raw':raw,'state':state,'fit_pixels':int(mask.sum()),'positive_parents':int((mass>0).sum()),'mass_sum':actual,'mass_absolute_error':absolute,'mass_relative_error':relative,'ones_readout_error':ones_error,'file':str(file.relative_to(OUT)),'sha256':sha(file)}"
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/qualify_C49_parent_visibility.py",
+      "sha256": "5bf4ec74943624a1b63b4cceb52958cc1eb497ac2762d8e682657431b24333e0",
+      "first_line": 71,
+      "last_line": 79,
+      "exact_lines": [
+        {
+          "line": 71,
+          "text": "  write(OUT/'progress.json',{'completed_raws':raw-88,'actual_native_forwards':calls,'actual_dummy_backwards':backs,'currently_positive_parents':int((aggregate>0).sum())});print(json.dumps({'raw':raw,'calls':calls,'backs':backs,'currently_positive_parents':int((aggregate>0).sum())}),flush=True)"
+        },
+        {
+          "line": 72,
+          "text": "  rt.assert_unchanged();base._data.clear();torch.cuda.empty_cache()"
+        },
+        {
+          "line": 73,
+          "text": " assert calls==backs==98;eligible=np.flatnonzero(aggregate>0).astype(np.int64)"
+        },
+        {
+          "line": 74,
+          "text": " selection=OUT/'qualified_parent_rows.npz';np.savez_compressed(selection,parent_mass=aggregate,eligible_parent_ids=eligible,initial_parent_RGB=parent_colours[:,0],child_to_parent_ids=parentids)"
+        },
+        {
+          "line": 75,
+          "text": " rt.assert_unchanged(full=True)"
+        },
+        {
+          "line": 76,
+          "text": " for p,meta in inputs.items():assert ident(p)==meta,p"
+        },
+        {
+          "line": 77,
+          "text": " manifest={'schema':'C49-parent-visible-mass-qualification-v1','raw_ids':list(range(89,138)),'states':['keep','delete'],'parent_rows':10098,'child_rows':40392,'source_C_asset_sha256':sha(assetpath),"
+        },
+        {
+          "line": 78,
+          "text": "  'selection_file':selection.name,'selection_sha256':sha(selection),'eligible_parents':len(eligible),'eligibility':'aggregate_parent_mass>0','zero_mass_frozen':True,'same_colour_within_each_parent':uniform,"
+        },
+        {
+          "line": 79,
+          "text": "  'targets':target_meta,'model_binding':rt.receipt(),'original_BUILD40_eligible_count':2053,'current_all49_BUILD_eligible_count':len(eligible),'old_HELD9_now_BUILD':True,'optimizer_updates':0,'colour_updates':0}"
+        }
+      ]
+    }
+  ],
+  "training_source": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/C49_material_core.py",
+      "sha256": "2222d3d4da7ffafe7fa83b5c69ca6b359d046055238373775252ba0f68af3275",
+      "first_line": 49,
+      "last_line": 64,
+      "exact_lines": [
+        {
+          "line": 49,
+          "text": "  self.base=V44Runtime(B/'scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json')"
+        },
+        {
+          "line": 50,
+          "text": "  self.semantic=SemanticActor5V44Integration(self.base,semantic_sidecar_path=SEM/'semantic_actor5_calibration49/semantic_actor5_manifest.json',full5_transform_path=OLD/'contract/full5_transform_matrix.txt')"
+        },
+        {
+          "line": 51,
+          "text": "  self.road=RoadFusionV44Integration(self.semantic,C_MANIFEST);self.runtime=RoadFusionMaterialRuntime(self.road);self.binding=baseline_appearance_binding(self.semantic)"
+        },
+        {
+          "line": 52,
+          "text": "  q=json.loads(QUAL.read_text());selection=QUAL.parent/q['selection_file'];assert sha(selection)==q['selection_sha256']"
+        },
+        {
+          "line": 53,
+          "text": "  with np.load(selection,allow_pickle=False) as z:"
+        },
+        {
+          "line": 54,
+          "text": "   ids=z['eligible_parent_ids'].copy();mass=z['parent_mass'].copy();initial=z['initial_parent_RGB'].copy()"
+        },
+        {
+          "line": 55,
+          "text": "  assert len(ids)==2119 and np.array_equal(ids,np.flatnonzero(mass>0)) and np.array_equal(initial,self.runtime.initial_parent_rgb.cpu().numpy())"
+        },
+        {
+          "line": 56,
+          "text": "  self.ids=torch.as_tensor(ids,device='cuda',dtype=torch.long);self.rgb=torch.nn.Parameter(self.runtime.initial_parent_rgb[self.ids].detach().clone());self.opt=torch.optim.Adam([self.rgb],lr=.01,betas=(.9,.999),eps=1e-8)"
+        },
+        {
+          "line": 57,
+          "text": "  self.targets={};self.target_meta={};guardpaths=[CONTRACT,QUAL,selection,Path(__file__),R/'source/road_fusion_material_runtime.py']"
+        },
+        {
+          "line": 58,
+          "text": "  for item in q['targets']:"
+        },
+        {
+          "line": 59,
+          "text": "   raw=item['raw'];p=Path(item['path']);assert sha(p)==item['sha256'];guardpaths.append(p)"
+        },
+        {
+          "line": 60,
+          "text": "   with np.load(p,allow_pickle=False) as z:target=z['edgeblend_rgb'].copy();mask=z['fit_mask'].astype(bool)"
+        },
+        {
+          "line": 61,
+          "text": "   assert target.shape==(320,480,3) and np.isfinite(target).all() and mask.shape==(320,480) and mask.any()"
+        },
+        {
+          "line": 62,
+          "text": "   self.targets[raw]=(torch.as_tensor(target.transpose(2,0,1),device='cuda'),torch.as_tensor(mask,device='cuda'));self.target_meta[str(raw)]=item"
+        },
+        {
+          "line": 63,
+          "text": "  source_manifest=B/'scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/target_manifest.json';assert sha(source_manifest)=='d7cca4167e2bbb68347f63babae356320a1b0ddd60e580bf746e966f2ac8acbe';guardpaths.append(source_manifest)"
+        },
+        {
+          "line": 64,
+          "text": "  self.guard={str(p):{'sha256':sha(p),'bytes':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns} for p in guardpaths}"
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/source/C49_material_core.py",
+      "sha256": "2222d3d4da7ffafe7fa83b5c69ca6b359d046055238373775252ba0f68af3275",
+      "first_line": 75,
+      "last_line": 82,
+      "exact_lines": [
+        {
+          "line": 75,
+          "text": " def paired(self):"
+        },
+        {
+          "line": 76,
+          "text": "  start=time.time();raw=self.sampler.next();target,mask=self.targets[raw];self.opt.zero_grad(set_to_none=True);losses=[]"
+        },
+        {
+          "line": 77,
+          "text": "  for state in ['keep','delete']:"
+        },
+        {
+          "line": 78,
+          "text": "   out=self.render(raw,state);loss=.5*(out['rgb'][:,mask]-target[:,mask]).square().mean();assert torch.isfinite(loss);losses.append(float(loss.detach())*2)"
+        },
+        {
+          "line": 79,
+          "text": "   loss.backward();self.backs+=1;self.progress();del loss,out"
+        },
+        {
+          "line": 80,
+          "text": "  assert self.rgb.grad is not None and torch.isfinite(self.rgb.grad).all();nonzero=int((self.rgb.grad!=0).any(1).sum());self.opt.step()"
+        },
+        {
+          "line": 81,
+          "text": "  with torch.no_grad():self.rgb.clamp_(0,1)"
+        },
+        {
+          "line": 82,
+          "text": "  self.opt.zero_grad(set_to_none=True);self.step+=1;self.updates+=1;self.times.append(time.time()-start)"
+        }
+      ]
+    }
+  ],
+  "qualification_manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/qualification_manifest.json",
+    "sha256": "6df77ae629503373f81b4e36ba67e81332792ad66acfa9bb0518806eed9f9515"
+  },
+  "selection": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/qualified_parent_rows.npz",
+    "sha256": "dc26f1fdaeb17e1652b8eac3ee8c1563bb862d2ab811e3f471f5a1e399e998c2",
+    "eligible_parent_count": 2119
+  },
+  "actual_target_files": [
+    {
+      "raw": 128,
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_BUILD40/raw128.npz",
+      "sha256": "7d4619f119e7e2718d8fb5613c674dd11a39be444366a5a0a1222424fd7d42ec",
+      "current_role": "BUILD_all49",
+      "original_role": "BUILD_FIT",
+      "pixel_xy": [
+        301,
+        221
+      ],
+      "fit_mask_at_pixel": false,
+      "protect_mask_at_pixel": true,
+      "edgeblend_RGB_at_pixel": [
+        0.34215685725212097,
+        0.3696078360080719,
+        0.40882351994514465
+      ],
+      "observation_RGB_at_pixel": [
+        0.34215685725212097,
+        0.3696078360080719,
+        0.40882351994514465
+      ],
+      "fit_pixels": 20869,
+      "protect_pixels": 118313,
+      "fit_protect_overlap": 0,
+      "loaded_target_key": "edgeblend_rgb",
+      "loaded_loss_mask_key": "fit_mask"
+    },
+    {
+      "raw": 137,
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/targets_edgeblend_v1/projected_HELD9/raw137.npz",
+      "sha256": "d89606750bf2a35e18bb2667cf3f41f0c50d92f919c1a8e1f07265d409cfb5e3",
+      "current_role": "BUILD_all49",
+      "original_role": "HELD_PROJECT_EVAL_ONLY",
+      "pixel_xy": [
+        300,
+        227
+      ],
+      "fit_mask_at_pixel": false,
+      "protect_mask_at_pixel": true,
+      "edgeblend_RGB_at_pixel": [
+        0.3382352888584137,
+        0.36176469922065735,
+        0.40882351994514465
+      ],
+      "observation_RGB_at_pixel": [
+        0.3382352888584137,
+        0.36176469922065735,
+        0.40882351994514465
+      ],
+      "fit_pixels": 26612,
+      "protect_pixels": 118697,
+      "fit_protect_overlap": 0,
+      "loaded_target_key": "edgeblend_rgb",
+      "loaded_loss_mask_key": "fit_mask"
+    }
+  ],
+  "target_or_mask_wrong_file_read_detected": false,
+  "qualification_definition": "SUM over all49 frames and KEEP/DELETE of joint parent-shared alphaT contribution inside the registered legal fit_mask; eligible iff aggregate > 0",
+  "qualification_has_protect_dominance_rejection": false,
+  "training_loss": "Per sampled raw: sum over KEEP/DELETE of 0.5 * mean((native_rgb[:,fit_mask]-edgeblend_rgb[:,fit_mask])**2); only parent RGB is optimized",
+  "training_protect_mask_loss_present": false,
+  "training_scope": "Complete C geometry on frozen21K scene; no H2 visibility mask during this C49 training. H2 is a later inference control.",
+  "parent13": {
+    "C49_fit_mass": 0.18988596624694765,
+    "positive_legal_fit_views": [
+      {
+        "raw": 135,
+        "state": "keep",
+        "legal_fit_alphaT_mass": 0.002573409816250205
+      },
+      {
+        "raw": 135,
+        "state": "delete",
+        "legal_fit_alphaT_mass": 0.00265568308532238
+      },
+      {
+        "raw": 136,
+        "state": "keep",
+        "legal_fit_alphaT_mass": 0.019629649817943573
+      },
+      {
+        "raw": 136,
+        "state": "delete",
+        "legal_fit_alphaT_mass": 0.020540043711662292
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "legal_fit_alphaT_mass": 0.06919188797473907
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "legal_fit_alphaT_mass": 0.07529529184103012
+      }
+    ],
+    "colours": {
+      "Cwarm": [
+        0.39106571674346924,
+        0.425247460603714,
+        0.4706524610519409
+      ],
+      "formal2k": [
+        0.9903858304023743,
+        1.0,
+        1.0
+      ],
+      "J": [
+        0.9903858304023743,
+        1.0,
+        1.0
+      ],
+      "K": [
+        0.9903858304023743,
+        1.0,
+        1.0
+      ]
+    },
+    "original_source": {
+      "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/new_road_canonical_candidate.npz",
+      "source_asset_sha256": "3afc6e25b7b152f851b4eb0de4a73e6d219c9526d75453d99097a31ddd5774c5",
+      "parent_id": 13,
+      "Cwarm_RGB": [
+        0.39106571674346924,
+        0.425247460603714,
+        0.4706524610519409
+      ],
+      "reference_RGB": [
+        0.3002069592475891,
+        0.32756590843200684,
+        0.3651800751686096
+      ],
+      "valid_source_raw_ids": [
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "valid_source_RGB": [
+        [
+          0.30241701006889343,
+          0.32986798882484436,
+          0.3690836727619171
+        ],
+        [
+          0.2881092131137848,
+          0.31373462080955505,
+          0.3520573675632477
+        ],
+        [
+          0.28857913613319397,
+          0.3164547383785248,
+          0.35672637820243835
+        ],
+        [
+          0.2860482931137085,
+          0.3134992718696594,
+          0.3527149558067322
+        ],
+        [
+          0.2882860600948334,
+          0.31385791301727295,
+          0.35308244824409485
+        ],
+        [
+          0.29998576641082764,
+          0.32743674516677856,
+          0.36859893798828125
+        ],
+        [
+          0.30000409483909607,
+          0.327455073595047,
+          0.36667075753211975
+        ],
+        [
+          0.3033181428909302,
+          0.32770633697509766,
+          0.36192992329597473
+        ]
+      ],
+      "valid_source_count49": 0,
+      "role": "Historical material source provenance only; not a query colour or visibility selector"
+    }
+  },
+  "measured_consequence": "At the two registered protected pixels, parent13 contributes dominant visible mass and its RGB saturates from Cwarm about [0.391,0.425,0.471] to formal2K [0.990,1,1]. The pixels themselves have zero fit-mask loss weight.",
+  "interpretation": "Positive aggregate fit mass establishes some supervision, not coverage of a parent's principal visible footprint. Reusing that parent colour at protected pixels is unconstrained by the executed colour loss.",
+  "qualification_tail_hypothesis": "Small positive fit mass and strong protected-pixel visibility are observed; the precise spatial distribution of the saved fit mass is not available in these aggregates, so a tail-only explanation is not proved.",
+  "not_established": [
+    "Conflicting multi-view target RGB for this parent",
+    "Incorrect target reprojection",
+    "Wrong target or mask file loaded",
+    "Source-validity49=0 implies no rendered fit contribution"
+  ],
+  "source_provenance_boundary": "The original direct source RGB exists at raw153..160 outside the current49 raw89..137; this alone proves neither wrong supervision nor multi-view conflict.",
+  "qualification_mass_files": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/089_keep.npz",
+      "sha256": "e8f3c2bafbc3132640208f27cd454b5dffcc08ba52492782d704d6b364126d6d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/089_delete.npz",
+      "sha256": "a1df531dffa9364981490a6f64b21dc26d6cc4ee240eac567bcd284fc5dc62a7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/090_keep.npz",
+      "sha256": "f0575809c86352ea3ebff70b545afc5b2184496ee303ccb718e10a8689db307f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/090_delete.npz",
+      "sha256": "24737a78758aa97e0db6554f4c8a08c1233abea2c29d80dabf5fd11a7b22bfec"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/091_keep.npz",
+      "sha256": "cb6a8592c1eb68b47b2d15c2701d638373238899f80d8bb6a9c8faf0fe065f07"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/091_delete.npz",
+      "sha256": "0521e316ada3543977dc608baa4da64bef25d4d19f0a491378b415c4f62957b5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/092_keep.npz",
+      "sha256": "741a7998fedd7439c307d031bafb48a9cfb1ff2fbb59f17a5384c43aa46365b0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/092_delete.npz",
+      "sha256": "0f8b2166fad38691adcee229912974f93caa59dcfb412ed1839d76d6f00c58f8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/093_keep.npz",
+      "sha256": "e2a897b70885791050247ae65a12de73a63df6a6a878c83fbb26ef08049b71c7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/093_delete.npz",
+      "sha256": "12945e08dfd1cea5971336da25aa0e8a65c981f63bd62e0ef6b13d3044e8ab3c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/094_keep.npz",
+      "sha256": "096ba4fa51f8c32fdd3f55ba6b3cff7ba5103502f1ff995a420ed3ebb5e83a50"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/094_delete.npz",
+      "sha256": "83c5df6dd4f1e0c4afd64590aac3586dedd9df4d286a98f08d151075def14d8f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/095_keep.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/095_delete.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/096_keep.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/096_delete.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/097_keep.npz",
+      "sha256": "5992466a7dc473561c6a16530cc790bd7d0ab9e4b8d23a0cf36288cc47309ce6"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/097_delete.npz",
+      "sha256": "47e1b3ae79cba549084912f7b4b402ed877009f5363c754bae9222d8698ea3bf"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/098_keep.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/098_delete.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/099_keep.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/099_delete.npz",
+      "sha256": "e917acdae9b1674f83d37ae02abffcfc983382c2782a7352b2d17a20704ae8cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/100_keep.npz",
+      "sha256": "e18876f37a79815000d8d20f43ed63ea055d6203ce91596a97d3a50d03df0865"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/100_delete.npz",
+      "sha256": "16a36ce75996c0919cfaf7b832bddff70c91de18b6bc189270277929ea5f0d0b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/101_keep.npz",
+      "sha256": "5fdaa474276df35cdf61434dc0aa0babc3b7235474669179a233eb20c0e19d14"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/101_delete.npz",
+      "sha256": "a6c9921413ccc212812512439e206556c67b8dea03bb05adf0bfa62d9cc87586"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/102_keep.npz",
+      "sha256": "69dabf1677329e19c5b0d3bb4f3d7fe15c19d77fc2b4d74bd838108839094d90"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/102_delete.npz",
+      "sha256": "f47a236f936f2c7bfd3a09b58330e471878afab6226984186a2031c08f20517e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/103_keep.npz",
+      "sha256": "c7a430865fdcc7ad8ccb0dd4d4875b6791142b6b50c397826089da5200a9e5b0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/103_delete.npz",
+      "sha256": "34487640e3745389e6daf24f31e0a0eba6aff143166994330f49d880da647b51"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/104_keep.npz",
+      "sha256": "f917394b41550349f96fc52e86b56f812225da3c45e1b607348d7f9c4fd736e3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/104_delete.npz",
+      "sha256": "c7235be1bc31e938037f58674ea3783be111cfbdc352a9ecf921148c423ed32f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/105_keep.npz",
+      "sha256": "96a124df115708731f0b896a9aafdc3df8829214a11ff7719996cf8b4777f861"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/105_delete.npz",
+      "sha256": "3e0048ecdd8ce7e13fea92e696c42eabaf2d7d4653573442b84e77a4dc5e0d14"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/106_keep.npz",
+      "sha256": "4f36c2f55a00adfee41fa94eeef4d20242ccab46095694b10524271a7e12bf15"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/106_delete.npz",
+      "sha256": "4f36c2f55a00adfee41fa94eeef4d20242ccab46095694b10524271a7e12bf15"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/107_keep.npz",
+      "sha256": "f2ec1e92129cee5280a4e1e744787df1e18cd93208ce63065cce8eef6958387c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/107_delete.npz",
+      "sha256": "0ac472e8044299947c65bed2db499a66a43a759479552d8bfde02cafbffa133a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/108_keep.npz",
+      "sha256": "ba27d05371f40b55426b81daaa21608c0f0a5c9d02eadbcb9b721d04e020f68e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/108_delete.npz",
+      "sha256": "715417dd573ecfc4c8ed9c726e109d8927820754bebf35ae1bf31aa38ed70667"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/109_keep.npz",
+      "sha256": "6ecf792e46bdd4297329c421328f9278d3771be7bcb3874c255137c785cd116b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/109_delete.npz",
+      "sha256": "b7e57897ac93e2c29b857d7291ef5ea09d1ff8047888af6e96fa9dd11100cb5d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/110_keep.npz",
+      "sha256": "fb50e65dccd354a735ef606d215ce27567dea7887b6897261e7da67fbb081cab"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/110_delete.npz",
+      "sha256": "de9827c0a0161f3c405afdbefc625230d13834720b7231cc54de28fcaecab4cd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/111_keep.npz",
+      "sha256": "9c8c26e41304da36b4cd6251017e7f87a3a9093dbf4cf07401d93bee48118966"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/111_delete.npz",
+      "sha256": "0fb59547f49af0a68c429bd034f7055eb1c90078436ef7057bb5475cc98baf2f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/112_keep.npz",
+      "sha256": "4509f59e0ae087d5cfece7e0958f232ab35b203eeaf58b137dc9bdbf58bc4432"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/112_delete.npz",
+      "sha256": "98bb4957ccfb9e1317ce4ffa02f9ffa36e164ed0043260c336b506302ed82517"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/113_keep.npz",
+      "sha256": "145e07ca14bdc0faaa1fbe6ebfe55089bf94d73d537eeeb319131f8e249d7abc"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/113_delete.npz",
+      "sha256": "b99dcc95b922fcbb2f91426a69bd0fdc685d72e53b58ba45e5ce7c941ab8ce09"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/114_keep.npz",
+      "sha256": "638f677b7fa6000320531793c458bd23d6ae2322339314115bd8510aa994379f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/114_delete.npz",
+      "sha256": "0d6236fc81df7a46ca4c4228a44790be8ca48ee24d7fcda643594530ba1af011"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/115_keep.npz",
+      "sha256": "032dc6853826cfcce57e49aeff7afbbd09bd16ac01666f1f014c757fb3ea09c7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/115_delete.npz",
+      "sha256": "779e91fe0754bf5f660103510b07e89ca5452c0092d6eac10c390b7b51c9d4d3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/116_keep.npz",
+      "sha256": "df6d23b07a6a49a49889b9a327b23b76eac9d4cbaf6cb827dedfa348c7f83017"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/116_delete.npz",
+      "sha256": "e1fe2b1282f53315d47ac45ab564f72fdbe2e8ac540efc2b905e5893dbf8e5ab"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/117_keep.npz",
+      "sha256": "b450db2a6ff96fddecf155b4363f8ca2c161725909654abac31d965b01ef7c40"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/117_delete.npz",
+      "sha256": "d053db2c086b7ff57777caaf14a56d07d32e758c00b295e2c8f5ab938bd35b09"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/118_keep.npz",
+      "sha256": "ca050c5de061b563031f10c240c63944e4bacec0fdcc72d28ae5092feaa3836f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/118_delete.npz",
+      "sha256": "d9505d522d78eed499fd0c77d4a0f70a7a9bf4b1e5107d1e3a60158c48855ce1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/119_keep.npz",
+      "sha256": "be80051542a05323a3bc903c69ae1fc14f2913a525ca7dcd5299d31a6dbf9cba"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/119_delete.npz",
+      "sha256": "9cdd08a752b3439b8898dead5bc443a2b2b406dcdf8a558e2322d653624cf974"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/120_keep.npz",
+      "sha256": "4ff4e14d98fdc16b7b992232df606514ef27790320c7c10879a1e272c97ec0c5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/120_delete.npz",
+      "sha256": "df85d8b9885a2818e1bb391310236e687f6e37a938981252d16063cc538b4837"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/121_keep.npz",
+      "sha256": "221e123c00f69d49e340cad1a6b2958593afa268ab51467cc865e37ed17685d9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/121_delete.npz",
+      "sha256": "2b39ffe7f98ec8aab63d43b5670e61aa8843afb50bd09b6857ee47929ef816a0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/122_keep.npz",
+      "sha256": "23377286cf985be60165a4a451613c99cae54461ea50790123bc30f056cea7a0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/122_delete.npz",
+      "sha256": "1718807210e77c91fd22c495ffd6690e8058375213175b97c121e5449e53a146"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/123_keep.npz",
+      "sha256": "f2d8ad30d411e24f07251d837ff52b74675c06093ea45f8aaee3c0d2482d88b7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/123_delete.npz",
+      "sha256": "d1511d0bee349c9ab7101b71459fb1000a60665206dea786db85fbb84d12ceec"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/124_keep.npz",
+      "sha256": "208620deabb25fe4ed0250f21413bf772f513bfb90ce0566f03bca4295a78049"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/124_delete.npz",
+      "sha256": "0eb409ad7c7ffe5c591138caaeacc33a102acf786caa8a77722823dfd86b9f2c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/125_keep.npz",
+      "sha256": "6f770ea9e1b5233f2c6703591c141349e94577267f079a62e4531f2e898f004a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/125_delete.npz",
+      "sha256": "a6de14eb208ce467c85418677b8fd74bca81264c6c54c3632fda86dd23e513a5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/126_keep.npz",
+      "sha256": "ff90893e28705d0b928255a8f558a77afd93b4eb017ea04287463b8b50c7ba14"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/126_delete.npz",
+      "sha256": "29cfebfee5a2650745c87118bf808b5b5ff6ec951036d38d67a90d65976b9902"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/127_keep.npz",
+      "sha256": "8b264d3375ca4ea46e7a53211cc245e22b3f295b253dc2113ddba46cab7a6fb8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/127_delete.npz",
+      "sha256": "dffda6facf1d41a3b74c82bc60cf578bc33216795d129429e38c127d0d8ef6b2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/128_keep.npz",
+      "sha256": "6e687fd07140b5aec9c655cedbdc2a161e214c9c2d08858f956fcd22bf4bd570"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/128_delete.npz",
+      "sha256": "6fd32a7c1d4d500564225fd54df6174208b51240663d3b9957c76d4b6208c2c8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/129_keep.npz",
+      "sha256": "666eb4c0a1967c4e9ca64977b6e8ebccfa760886e1a657db615f9d047d4f0f95"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/129_delete.npz",
+      "sha256": "d02e96b41e6f8ad086f627c2dbb6560cfbaa6e580f706ea5467ed6c8be8a6b36"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/130_keep.npz",
+      "sha256": "da22e54752b152e5a1ad6826087a16f51ca94b309817af2dad7007f573f0e142"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/130_delete.npz",
+      "sha256": "99e215d583c08c61e957f48ec929d0bba9d0b7d703637a62a9dd720f60670be0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/131_keep.npz",
+      "sha256": "5282353fff546dcb34056208d3c7e899d06cb50db723aeee954e13cce504bf4c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/131_delete.npz",
+      "sha256": "beea344cd2f723aff8736fa3042e29cf25aa13c24d8fbeeda1d9b0acc7b094b5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/132_keep.npz",
+      "sha256": "904faea5068ce8955ffdfbfd8f65b992ee50f86e1e4b64c162de4ba7cf973eda"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/132_delete.npz",
+      "sha256": "815ca8a85fcaf03b52f4a38f216b2bb7863ca0928d28d4ff1b62d83b941159f4"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/133_keep.npz",
+      "sha256": "afc8e4fbb526fba96eb802fcf72c770e1d47a5d3cd5b542273fb0de28bc91d3f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/133_delete.npz",
+      "sha256": "9bb620e1a21bbb1a9e738e0dae2f66cfbc091f579d68f411567caf1cf20aa1ab"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/134_keep.npz",
+      "sha256": "32dd9d336959996a924bea68b4ac80414592a2fcbd36a95526d380b91567d030"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/134_delete.npz",
+      "sha256": "5f27f0a0af4a6ee0261bc446ba3916979260e453ab8c9ed1b13f14fd2331c2cb"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/135_keep.npz",
+      "sha256": "0c8af2194b981f57b47281a5057611e9768ed4027a70136a64eff4216b84709c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/135_delete.npz",
+      "sha256": "ec213de4243c5d2b477e655778c7001032ecaa06ec8ad788931a75367b60317d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/136_keep.npz",
+      "sha256": "f8f98e4b004512503dc2a05f5c490f52ebf7c84eccef7b6050ba6025733d7130"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/136_delete.npz",
+      "sha256": "e90b354802c12846d0b5ffb8ec9a9fdc26ec7e537c53cc1f63510a247934710d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/137_keep.npz",
+      "sha256": "2bd97e9275bb62eb3e1b1680547344d39e5e1c9a6867447481f04182600d8793"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/parent_visibility49/point_mass/137_delete.npz",
+      "sha256": "473651a96740205fcb5d4d55e241e37cfe910786d2b7330f8254098d4df82f85"
+    }
+  ],
+  "reference_probe": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/white_point_parent_diagnostic_v1/receipt.json",
+    "sha256": "8c1d1af0784b8d445df121b037dd572de683717fe74873debcf3e2329b57f50b"
+  },
+  "reference_counterfactual": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/positive_parent_union_Cwarm_counterfactual_cpu_v1.json",
+    "sha256": "d24407de9f5c7d4bdda1b3373092b0b4bec7b9d64fe43f6c4ca9a6f48ca27876"
+  },
+  "GPU_forwards": 0,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "solver_calls": 0,
+  "query_policy_changed": false,
+  "assets_written": 0,
+  "source_sha256": "31cdd317b0e2598d1ccebe0d3b30dea8dd89791f231785d34d5cc78d3d248ed2"
+}

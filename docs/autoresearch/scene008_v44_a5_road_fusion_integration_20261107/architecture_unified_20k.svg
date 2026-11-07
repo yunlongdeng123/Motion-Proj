@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1220" height="350" viewBox="0 0 1220 350" role="img" aria-labelledby="title desc">
+<title id="title">一份场景，总20K，分阶段冻结</title><desc id="desc">完整五车与背景联合训练至10K，结构检查通过后仅优化道路材质至20K，再用同一场景输出KEEP与删除a37。当前先复用已有Full5 10K，四帧验证不通过则不进入道路材质长跑。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10" fill="#346075"/></marker></defs>
+<rect width="1220" height="350" fill="#f5f8fa"/>
+<g font-family="Microsoft YaHei,Arial,sans-serif" fill="#183d4c" text-anchor="middle">
+<text x="610" y="33" font-size="22" font-weight="bold">一份场景 · 总20K · 分阶段冻结</text>
+<g fill="#fff" stroke="#789bad" stroke-width="1.6"><rect x="20" y="97" width="180" height="123" rx="10"/><rect x="238" y="97" width="225" height="123" rx="10"/><rect x="501" y="97" width="211" height="123" rx="10"/><rect x="750" y="97" width="217" height="123" rx="10"/><rect x="1005" y="97" width="195" height="123" rx="10"/></g>
+<g stroke="#346075" stroke-width="2" marker-end="url(#arrow)"><path d="M200 159H235"/><path d="M463 159H498"/><path d="M712 159H747"/><path d="M967 159H1002"/></g>
+<g font-size="17"><text x="110" y="130">RGB · 点云</text><text x="110" y="163">五车身份</text><text x="110" y="196">道路模块</text>
+<text x="350" y="130" font-weight="bold">0 → 10K</text><text x="350" y="163">背景＋五车＋环境</text><text x="350" y="196">道路接管纳入本阶段</text>
+<text x="606" y="130" font-weight="bold">10K 结构检查</text><text x="606" y="163">车顶 · a6 · 身份 · 深度</text><text x="606" y="196">通过后冻结结构</text>
+<text x="858" y="130" font-weight="bold">10 → 20K</text><text x="858" y="163">只更新 C 道路 RGB</text><text x="858" y="196">共用材质与三维身份</text>
+<text x="1102" y="130" font-weight="bold">固定模型评价</text><text x="1102" y="163">49 帧 KEEP</text><text x="1102" y="196">仅删除 a37</text></g>
+<path d="M350 254V225" stroke="#bc852a" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="610" y="280" font-size="17" fill="#98651d">当前：优先复用已有 Full5 10K，先做 4 帧实测；未通过不启动后 10K</text>
+<text x="610" y="315" font-size="15">正式上限 20K；smoke、恢复重放和实际渲染调用另计。KEEP／DELETE 配对为一次道路优化更新。</text>
+</g></svg>

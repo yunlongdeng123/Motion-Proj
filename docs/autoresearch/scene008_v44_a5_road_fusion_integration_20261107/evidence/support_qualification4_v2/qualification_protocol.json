@@ -1,0 +1,138 @@
+{
+  "schema": "fixed-road-support-v2-protocol",
+  "status": "SEALED_BEFORE_QUALIFICATION_GPU",
+  "raw_ids": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "road_domain": "KEEP obs.road; DELETE obs.road OR (obs.road_edit AND frozen reference ground)",
+  "guard_domain": "fixed_nonroad_geometry_guard OR a5 OR a6 OR latest-baseline-C2alpha>0 OR latest-baseline-a5alpha>0; KEEP additionally a37 OR latest-baseline-a37alpha>0",
+  "input_role": "Posthoc BUILD qualification on these four views; not held-out. No RGB or current-C alpha is used to select the guard.",
+  "inputs": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/fixed_build_support_amendment_v2.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/fixed_build_support_amendment_v2.json",
+      "bytes": 2268,
+      "mtime_ns": 1794032389279086904,
+      "sha256": "15aa0cd1cd1dfb6fa2b5ee2624f3f8f86d5596392442e9c7803b967aec5d69f1"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/independent_evaluation_contract_v1.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/independent_evaluation_contract_v1.json",
+      "bytes": 10989,
+      "mtime_ns": 1794031524473358331,
+      "sha256": "4560bb91f4cc3b27b89693acd0918f939d2ac07e9bcd7cbbc6e0574e885516cc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz",
+      "bytes": 18718371,
+      "mtime_ns": 1793761412998981720,
+      "sha256": "d35eb3d6958995c302bdec30066e76802224e1eb5e37c432047128219b0f747d"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz",
+      "bytes": 1622677,
+      "mtime_ns": 1793838274863382889,
+      "sha256": "45599dac31823f286103cdab9fe77c7d598636f82c1b42da03f445546e224a9a"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz",
+      "bytes": 1642096,
+      "mtime_ns": 1793838322436538574,
+      "sha256": "a34453005c56e5f69033037e3bc1ac845418e5993cca610c8641cb10e8dba259"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz",
+      "bytes": 1511832,
+      "mtime_ns": 1793838406637815783,
+      "sha256": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz",
+      "bytes": 1502902,
+      "mtime_ns": 1793838438229368535,
+      "sha256": "108d8c673fba6c08e78dc14630ba5019abb68c58ff31ba43bb48b097bd0c8528"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/keep_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/keep_float.npz",
+      "bytes": 3616893,
+      "mtime_ns": 1794031453310359486,
+      "sha256": "6109076c3284792ceac32d62a5bd5048422b742cecba81647e4514e816ab3563"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/delete_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/delete_float.npz",
+      "bytes": 3618460,
+      "mtime_ns": 1794031453909981737,
+      "sha256": "2f9a98f63fe90d91b1c9832323ded7294142a4347f9f7192695c0c3637f8dbdc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/keep_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/keep_float.npz",
+      "bytes": 3768766,
+      "mtime_ns": 1794031454837398994,
+      "sha256": "388e75fbf239b7441e7a1293e8380ea0b9774a64ba8b5b2faedc661c9e3fdd17"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/delete_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/delete_float.npz",
+      "bytes": 3776411,
+      "mtime_ns": 1794031455441020605,
+      "sha256": "3f017bb721d1df5d11b71c8651e8df1722a62c2913b34816674b3a1e85c8d3bd"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/keep_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/keep_float.npz",
+      "bytes": 3643198,
+      "mtime_ns": 1794031456344455325,
+      "sha256": "d8865d60daf3bfe3e8bcd2f1087536df92f03d40ae7941d5997b61fc28a832ef"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/delete_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/delete_float.npz",
+      "bytes": 3604345,
+      "mtime_ns": 1794031456956073312,
+      "sha256": "77fdea82d81481e00784aa1a2c762abc6c46ab20b79efe1b29b4dc13352d75fb"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/keep_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/keep_float.npz",
+      "bytes": 3613454,
+      "mtime_ns": 1794031457851515525,
+      "sha256": "088fbefc2fcd9e895d3725158914f4981d2b976a7adab4d70ed04b784fadbfb5"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/delete_float.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/delete_float.npz",
+      "bytes": 3603134,
+      "mtime_ns": 1794031458451142840,
+      "sha256": "1944148993b5de2d955c1bff4324b6e8c2c21b6db45aad033ac6ef1e0f7222b5"
+    }
+  },
+  "source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/qualify_fixed_road_support_v2.py",
+    "bytes": 10489,
+    "mtime_ns": 1794032494391309234,
+    "sha256": "009a3f219002616618b4bd8e17b7f4d12805cc15a481d6748e6e16a24a762e3b"
+  },
+  "row_count": 40392,
+  "threshold": {
+    "inside_strictly_greater_than": 0.0,
+    "outside_equal": 0.0
+  },
+  "dummy_features": "ones at full features16:18 only for newroad tail; extra14:16 must equal newroad alphaT extra7",
+  "mass_sum_relative_error_limit": 1e-05,
+  "dummy_alpha_max_abs_limit": 1e-06,
+  "cached_C_parity_limits": {
+    "rgb": 1e-06,
+    "alpha": 1e-06,
+    "depth_m": 1e-05,
+    "group_alpha_T": 1e-06
+  },
+  "planned_direct_joint_forwards": 8,
+  "planned_dummy_feature_backwards": 8,
+  "optimizer_created": false,
+  "model_updates": 0,
+  "colour_updates": 0,
+  "occluded_full_support_is_not_a_protection_proof": true,
+  "all49_auto_release": false,
+  "shutdown": false,
+  "reset_card": false
+}

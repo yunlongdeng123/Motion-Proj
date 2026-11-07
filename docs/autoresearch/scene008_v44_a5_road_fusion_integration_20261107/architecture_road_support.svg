@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="440" viewBox="0 0 1360 440">
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#4d7183"/></marker></defs>
+  <rect width="1360" height="440" rx="16" fill="#f4f8fa"/>
+  <g font-family="Microsoft YaHei,Arial,sans-serif" fill="#173c4b">
+    <text x="28" y="38" font-size="23" font-weight="700">完整道路支撑与遮挡：去银片、保轮胎分别验</text>
+    <rect x="28" y="72" width="285" height="126" rx="12" fill="#e7f1fb" stroke="#81a8c5"/>
+    <text x="46" y="101" font-size="18" font-weight="700">冻结 latest v44 ＋ a5</text>
+    <text x="46" y="130" font-size="16">C2 / a37 / oldroad / static</text>
+    <text x="46" y="157" font-size="16">固定语义 a5；原模型保持</text>
+    <text x="46" y="182" font-size="14">baseline 默认不变</text>
+    <rect x="28" y="233" width="285" height="114" rx="12" fill="#e4f5ed" stroke="#76ac94"/>
+    <text x="46" y="262" font-size="18" font-weight="700">原 C 完整道路资产</text>
+    <text x="46" y="290" font-size="16">40,392 行支撑 ＋ C 材质</text>
+    <text x="46" y="318" font-size="14">AA/C 同几何；新增遮挡须实测</text>
+    <rect x="389" y="122" width="310" height="178" rx="12" fill="#fff4df" stroke="#cba25a"/>
+    <text x="409" y="154" font-size="19" font-weight="700">完整支撑接入 / 原生深度排序</text>
+    <text x="409" y="187" font-size="16">静态银片与真实 C2 是不同组件</text>
+    <text x="409" y="218" font-size="16">遮挡控制：待独立合同与实测</text>
+    <text x="409" y="251" font-size="14">不以颜色均值或整 ROI mask 代替归属</text>
+    <text x="409" y="277" font-size="14">本图不预设新方法已通过</text>
+    <rect x="766" y="87" width="247" height="103" rx="12" fill="#e8f4f5" stroke="#80b2b8"/>
+    <text x="785" y="117" font-size="18" font-weight="700">银片去除</text>
+    <text x="785" y="146" font-size="16">原 static / oldroad 补片</text>
+    <text x="785" y="173" font-size="14">原图 + 逐组 alpha_T 核对</text>
+    <rect x="766" y="228" width="247" height="103" rx="12" fill="#fcecec" stroke="#ca9999"/>
+    <text x="785" y="258" font-size="18" font-weight="700">真实 C2 / 轮胎保持</text>
+    <text x="785" y="287" font-size="16">原 71 rays ＋ 车辆固定域</text>
+    <text x="785" y="314" font-size="14">不能把真实车轮当残片覆盖</text>
+    <rect x="1078" y="125" width="251" height="173" rx="12" fill="#fff" stroke="#80a4b5"/>
+    <text x="1096" y="158" font-size="19" font-weight="700">4 帧 KEEP / DELETE</text>
+    <text x="1096" y="190" font-size="16">a5 车顶与原保护门</text>
+    <text x="1096" y="220" font-size="16">接缝 ＋ 银片 ＋ 轮胎</text>
+    <text x="1096" y="251" font-size="16">全部实测审阅后才考虑 49</text>
+    <text x="1096" y="278" font-size="14">当前未放行 / 未发布候选</text>
+    <text x="28" y="399" font-size="15">历史控制保留：AA/C → D 固定新增行 → E/F 原表面颜色。颜色试验未解决银片几何；G 合成扰动与颜色 solve 已取消。</text>
+  </g>
+  <g stroke="#4d7183" stroke-width="2.3" fill="none" marker-end="url(#arrow)">
+    <path d="M313 135H350V180H389"/><path d="M313 289H350V239H389"/>
+    <path d="M699 174H733V139H766"/><path d="M699 248H733V279H766"/>
+    <path d="M1013 139H1045V180H1078"/><path d="M1013 279H1045V244H1078"/>
+  </g>
+</svg>

@@ -1,0 +1,107 @@
+{
+  "schema": "K_PARENT_RGB_SINGLE_LP_CPU_PROTOCOL_V1",
+  "status": "SEALED_BEFORE_K_CPU_SOLVE",
+  "root_approval": "Separate receipt required before the one solve; drafting/constant-bin checks are not a solver call.",
+  "scope": "Independent stronger local-protection control after J visible local regressions; J results and gates remain immutable.",
+  "reuse_J": {
+    "protocol_sha256": "f1adea94500d1488b3c266ca4c2645596181a08654f6bdb0892df050e8f65a76",
+    "operator_manifest_sha256": "0894a5e2d9e63f872829e8128b40a3822f32135c7a841bb92769b590a9321c25",
+    "operator_npz_sha256": "46cee7c1db5e544a076ad65cb52c41e253f3652d281ad77c97d9b0dfe676811b",
+    "native_affinity_receipt": "Existing PASS_J_OPERATOR_AND_BOUNDED_NATIVE_AFFINITY_NO_FIT; no new operator GPU",
+    "same_A_c0_mu_eligible_ids_box_objective": true,
+    "same_six_pool_constraints_and_reserves": true,
+    "delta_baseline": "Actual formalC2000/H2 palette, never the J solution",
+    "variable_parent_count": 2119,
+    "fixed_parent_count": 7979
+  },
+  "published_reference_metrics": {
+    "primary128": {
+      "keep": {
+        "latest": 0.005481387081090361,
+        "current_H2_C2000": 0.004613534469778339
+      },
+      "delete": {
+        "latest": 0.008003135114752999,
+        "current_H2_C2000": 0.00933907371169577
+      }
+    },
+    "world_near": {
+      "keep": {
+        "latest": 0.006035768960524972,
+        "current_H2_C2000": 0.00675247771141585
+      },
+      "delete": {
+        "latest": 0.0071492721714700265,
+        "current_H2_C2000": 0.0081604668860867
+      }
+    },
+    "world_lateral": {
+      "keep": {
+        "latest": 0.0038315507547889392,
+        "current_H2_C2000": 0.007582721404184628
+      },
+      "delete": {
+        "latest": 0.00352319822717539,
+        "current_H2_C2000": 0.009049042120434182
+      }
+    }
+  },
+  "per_bin_reference_file": "K_per_bin_references_v1.json",
+  "per_bin_reference_sha256": "c13876a3a80060fe4015be9370bd48d22c0eda69d05a91cbc9dfd6765644d0f6",
+  "added_constraints": {
+    "count": 106,
+    "formula": "mean_c(abs(j0[b,c]+A[b,:]*delta[:,c])) <= min(current_H2_C2000_bin_score, latest21K_bin_score)+1e-6-1e-7",
+    "original_no_regression_threshold": "min(current_H2_C2000_bin_score, latest21K_bin_score)+1e-6",
+    "reserve": 1e-07,
+    "all_constant_bins_kept": true,
+    "zero_operator_rows": 26,
+    "constant_bin_tightened_failures": 0,
+    "no_per_channel_threshold": "Use L1/3 via the existing318 residual absolute epigraphs, not channel-wise bounds."
+  },
+  "dimensions": {
+    "delta": 6357,
+    "absolute_delta": 6357,
+    "residual_absolute": 318,
+    "total_variables": 13032,
+    "inequalities": 13462,
+    "pool_constraints": 6,
+    "new_bin_constraints": 106
+  },
+  "objective": {
+    "formula": "min sum_r (mu_all49[r]/mean(mu_all49_eligible))*sum_c u[r,c]",
+    "weights": "All2119 masses strictly positive; preserve full float64 values. Mean-one normalization is only common numerical scaling.",
+    "meaning": "Original-C49 visible-mass-weighted minimum material change; a fixed observability proxy.",
+    "not_a_protection_bound": "Unculled-C49 mass is not an upper bound on H2 current/all49 pixel change: removing other road children can expose later parent contributions.",
+    "no_other_terms": "No MSE/TV/L2/seed/grid or extra colour penalties; no F/G L1 budget and no modified objective weights."
+  },
+  "solver": {
+    "library": "scipy.optimize.linprog / SciPy1.13.1 HiGHS",
+    "method": "highs",
+    "primal_feasibility_tolerance": 1e-09,
+    "dual_feasibility_tolerance": 1e-09,
+    "time_limit_seconds": 120,
+    "maximum_calls": 1,
+    "no_grid_no_retry_no_alternate_objective": true,
+    "sparse_constraints": true,
+    "coefficient_policy": "Keep complete original float64 A/j0/mass in compilation, no Python thresholding/rounding. Independently recompute all6 pools with the full undropped matrix after the solver, so an internally tolerated coefficient is never accepted blindly.",
+    "inconclusive_status": "Time/iteration limit or numerical difficulty is not infeasibility and not a scientific negative.",
+    "infeasible_scope": "Only this2119-parent boundedRGB field/7979fixed, measured operator, original6pools and corrected106local budgets; not all representations or methods."
+  },
+  "export_and_validation": {
+    "float64_certificate": "Full undropped A: box and all6pool+106bin tightened targets within1e-9 numerical audit tolerance.",
+    "float32_certificate": "One standard box/f32 conversion, unchanged7979 bytes; recompute all6pool and106bin against ORIGINAL untightened targets; report reserves separately. No shrink/grid/re-solve.",
+    "real_forward_release": "Only after root seals protocol/source and feasible CPU certificates: one actual8F four-raw validation, full original4560 and new106bin checks plus image review.",
+    "other_photo_quality": "Not included in the LP. Pending actual renderer and original full94gate evaluation; H2samegeometry is not delivered21K equivalence.",
+    "no_automatic49_or_adoption": true,
+    "human_verdict": null
+  },
+  "accounting": {
+    "maximum_solver_calls": 1,
+    "actual_solver_calls_at_seal": 0,
+    "new_GPU_operator_forwards": 0,
+    "Adam_updates": 0,
+    "Gaussian_SH_updates": 0
+  },
+  "history": "J single solve, six-pool feasibility, local regressions and31original failures are retained. C/H/I failures are not altered.",
+  "GPU_power": "KEEP_ON"
+}

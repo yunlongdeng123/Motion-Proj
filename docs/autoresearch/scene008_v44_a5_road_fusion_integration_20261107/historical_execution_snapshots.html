@@ -1,0 +1,445 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scene008：道路融合接入的无回退验证</title><style>body{margin:0;background:#f3f7f9;color:#193b4a;font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1400px;margin:auto;padding:28px}section{background:white;border:1px solid #dce7ec;border-radius:12px;padding:24px;margin:20px 0}h1{font-size:29px}h2{font-size:22px}img{display:block;max-width:100%;height:auto}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px;border-bottom:1px solid #dce6eb;text-align:left}th{background:#edf4f7}a{color:#006b83}.worse{color:#ad3636}.pending{color:#946322}.notice{background:#fff4de;border-left:4px solid #c99435;padding:14px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}footer{font-size:13px;color:#607783}</style></head><body><main><section class="notice"><strong>历史执行快照。</strong>本页“当前／下一步／待跑”均是对应时点的历史陈述。汇总结果见<a href="index.html">实验报告</a>，项目唯一状态见仓库RESEARCH_STATUS。</section><section id="latest-seam-control"><h2>当前节点：C49正式止2K，I负例后检验受限RGB可行性</h2><p class="notice">C49实际完成2000正式＋1996工程更新，完整49对照已输出；13包599,316,804B必要数据已取回逐SHA核验。没有继续5K／10K，不称RGB参数已收敛。全49对21K原门仍477通过／462失败／100空域，不替换默认结果。</p><p>H2＋2K的一项真实正收益保留：128 KEEP主缝.00461353，较21K改善15.83%；DELETE .00933907仍回退，其它边界也未整体通过。固定世界边带I在128/137 KD四次前向后，128近缝变为.00817736／.01183441、137横向.01063763，反而更差；停止该0.4m控制，不补早帧、不搜宽度。前景保护成立不能替代修缝结果。</p><a href="figures/I_v1_partial_delete_direction.png"><img src="figures/I_v1_partial_delete_direction.png" alt="21K、H2加2K材质、固定世界接管I的真实负例"></a><p><a href="evidence/review/I_v1_partial_vs_latest_cpu.json">I对21K</a> · <a href="evidence/review/I_v1_partial_vs_H2_C2000_cpu.json">I对H2＋2K</a> · <a href="evidence/I_world_v1/contract/I_world_handover_v1.json">I原合同</a></p><h3>J：先判断同一份RGB能否满足接缝边界</h3><img src="architecture_affine_seam_control.svg" alt="固定几何下测道路RGB到接缝的线性映射，一次约束求解后原生重渲验证"><p>固定H2＋2K的geometry、opacity和可见性，测原53bin／状态到2119个父RGB的signed affine映射。实际16F／16dummyB算子＋8F一次扰动验证通过，误差最大约1.21e-7；原模型参数0更新。下一步仅一次HiGHS求解，目标是原C49可见质量加权最小材质改动、满足原near／lateral／主缝要求；7979父固定。该质量权重不是H2保护保证，其余光度门未被LP约束，求解可行也必须新8F原生复验，尚无材质成功结论。</p><p><a href="contract/J_parent_RGB_operator_v1.json">J已封GPU合同</a> · <a href="current_execution_status.json">当前实账与限制</a></p></section><section id="current-21k"><h2>最新执行：回到已交付21K底座，只训练道路材质</h2><p><strong>历史执行节点：600s生命周期通过后C49正式已实际止2000；H2与I结果见顶部最新节点，当前J为受限颜色可行性控制。原场景与7979父冻结。</strong></p><p class="notice">用户已撤回端到端／单Full5替换路线。继续使用原v44＋a5车顶恢复；21K是原场景10K＋道路1K＋恢复a5的Full5 10K的组件累计，身份核对和接入为0K，并非一个模型连续训练21K。</p><p>后台对照沿用完整C道路层和既有C材质初始化，车顶、身份、背景、环境、道路几何和透明度全部冻结，仅训练父共享道路RGB。49帧均用于训练，原HELD9不再称为独立测试。先按全49真实监督测可训练父，再做约10分钟真实GPU smoke，覆盖保存、评价、完整状态恢复和后续入口；通过后新正式时钟从0开始，暂上限10K，500／2K／5K／10K检查，由效果与平台期决定是否提前停。</p><p>原C已知遮轮和部分接缝问题不会否决用户明确授权的后台对照，也不会因此宣称通过或替换默认结果。前台继续4帧H候选：基于冻结三维车辆模型的可见贡献保守裁掉相交道路图元，另验银片、接缝与真实轮胎；不是E/F颜色残差，也不是屏幕RGB覆盖。</p><p><a href="current_execution_status.json">当前状态与计数口径</a> · <a href="contract/frozen21k_C_material_cpu_plan_v1.json">独立CPU评价计划</a> · <a href="contract/foreground_road_culling_H4_v1.json">H4预注册方法</a></p></section><details><summary>已撤回的单场景20K路线（历史计划）</summary><!-- unified-training-user-steering:start --><section id="unified-training"><h2>最新执行：一份场景，总20K，分阶段冻结</h2><p class="notice">优先复用已有 Full5 10K，作为唯一场景底座；先验证 raw94/105/128/137 的车顶、a6、身份与深度，再接入完整C道路模块。旧 v44＋Full5 双底座的49帧／10K后台实验尚未启动，当前不再启动该路线。结构尚未验收，后10K材质长跑尚未放行。</p><img src="architecture_unified_20k.svg" alt="单场景训练至10K，结构检查后冻结，仅道路RGB训练至20K，固定模型49帧KEEP和DELETE37评价"><p>后半程仅优化道路RGB；车辆、背景、环境、身份归属、道路几何和接管关系全部冻结。一次KEEP／DELETE配对计一次优化更新，原生渲染调用另记。正式优化总上限20K；约10分钟真实GPU smoke、保存、评价、全状态恢复和阶段切换的工程开销单列。10K结构未通过则先修输入或实现，颜色平台期且残片来自几何时停止材质训练。</p><p>已有Full5保存的五种来源ID不自动等于正确语义归属；会保留谱系并单独核验身份。a6与旧v44 C2的差异也会实测披露。以下C/D/E/F/G是旧底座的历史诊断，不能当作新单场景方案的结果。</p><p><a href="unified_training_status.json">当前执行状态与预算</a></p></section><!-- unified-training-user-steering:end --></details>
+<h1>Scene008：道路融合接入的无回退验证</h1><p class="notice">历史C/D/E/F/G均未成为默认结果。当前已按用户要求准备完整C49材质后台对照，和4帧H可见性迭代分别执行；实际启动与完成以收据为准。C已知遮轮／接缝回退继续保留，原v44＋a5默认结果保持。</p><p>基线是已交付的最新SemanticActor5V44Integration，包含固定49BUILD语义sidecar。先比较latest、加AA支撑、加同支撑C材质；不把C对AA的收益替代对最新基线的守护。本轮首关raw94/105/128/137，raw130轮胎独立诊断。</p>
+<section><h2>当前组件与数据流</h2><img src="architecture_frozen21k_parallel.svg" alt="冻结21K组件底座，C49材质后台对照与H4可见性保护分别实测"></section><section id="H2-and-formal"><h2>最新实测：H2四帧完成，C49正式已启动</h2><p class="notice">真实600.208秒smoke与保存／评价／完整fresh恢复／next2验证全部通过，已从同C材质初始化、新Adam0自动启动正式500／2000步。smoke1992＋disposable2＋freshrestore2＝1996工程更新另计；C49资格98F／98B另计，正式步数不从这些计数累计。</p><p>恢复起点全状态逐值一致，保存材质的128KD原生RGB／alpha／depthsum／8组贡献一致。next2 RGB最大差0、Adam最大差约2.84e-14、sampler及RNG相同，不把整个next2称为bitexact。原21K背景、车辆、身份、道路几何和透明度更新仍为0。</p><p>H2复用H1三份已收敛可见性清单并重新公共渲染核对相同，其余状态补齐。仅将工程迭代上限16升至64，105KD实际各42轮收敛，保护阈值与原评价门未变。新增113F／100次dummy反向／8张公开图／0优化；原H1的54F／47B与105K资源上限失败保留。</p><table><thead><tr><th>检查</th><th>H2实测</th><th>判断</th></tr></thead><tbody><tr><td>a5／a6观测区域RGB、a6测深、KEEP37</td><td>MAE无回退；模型C2贡献最大下降约7.15e-7</td><td>保护有所改善；非全图像素exact</td></tr><tr><td>128银片诊断ROI static均值</td><td>0.37629 → 0.06541</td><td>大块减少，轮胎下薄边仍在</td></tr><tr><td>137银片诊断ROI static均值</td><td>0.82410 → 0.04294</td><td>主要由newroad接管</td></tr><tr><td>原128主接缝KEEP／DELETE</td><td>相对baseline +4.65%／+46.50%</td><td>未改善</td></tr><tr><td>原4560的94项读数</td><td>46通过／40失败／8空域</td><td>不采纳；其余区域回退继续披露</td></tr></tbody></table><a href="figures/H2_delete_four_frames.png"><img src="figures/H2_delete_four_frames.png" alt="latest、完整C与H2真实四帧DELETE"></a><details><summary>KEEP四帧</summary><a href="figures/H2_keep_four_frames.png"><img src="figures/H2_keep_four_frames.png" alt="latest、完整C与H2真实四帧KEEP"></a></details><p><a href="evidence/review/H2_fixed4560_cpu.json">原门独立CPU评价</a> · <a href="evidence/review/H2_components_v1.json">前景保护、银片与暗条诊断</a> · <a href="contract/foreground_road_culling_H4_v2.json">H2工程合同</a></p><p>下一步将正式C49材质检查点与H2的同一几何／可见性清单组合，再做4帧原生渲染；仅复用已经验证的可见性，不重复100次资格反向。材质收益与原C遮挡缺陷分别核对，不把背景对照运行许可当作默认采用。</p></section>
+<section><h2>当前关键：银片与真实轮胎不是同一组件</h2><p>raw137银片诊断矩形[207,207,274,227]的DELETE中，baseline贡献均值native_static=0.82410、oldroad=0.03286、C2=0；C插入后newroad=0.92407、static=0.04294，确有新支撑覆盖静态补片。该137矩形是实际看图后的定位，仅作组件诊断。</p><p>raw128指定矩形[210,202,302,242]同时含补片和真实C2：baseline DELETE的C2贡献均值0.04367，C后降为0.02589；C2主导像素174→94。原static均值0.37629→0.03216、newroad=0.40778。不能把整个矩形视为残片一并覆盖或退役。alpha_T归属不是RGB分解，也不是新的像素语义真值。</p><a href="evidence/review/silver_support_group_audit_v1/raw128_delete_silver_groups.png"><img src="evidence/review/silver_support_group_audit_v1/raw128_delete_silver_groups.png" alt="raw128银片/static与真实C2分开；C去片同时侵入轮胎贡献"></a><a href="evidence/review/silver_support_group_audit_v1/raw137_delete_silver_groups.png"><img src="evidence/review/silver_support_group_audit_v1/raw137_delete_silver_groups.png" alt="raw137银片由native_static占主，C新路接管"></a><p><a href="evidence/review/silver_support_group_audit_v1.json">两个ROI两状态完整贡献/源SHA</a> · <a href="evidence/review/saved_raw130_component_takeover_cpu.json">独立原130轮胎ray组件证据</a></p></section>
+<section><h2>实际四帧：道路与车体同时保留视野</h2><p>94/105直接粘贴完整480×320；128用原蓝框(165,188)–(208,234)，137用原世界mask包围盒外扩6像素。同一行三列同crop；局部NEAREST放大仅用于显示，不是新算法图或评价域。源PNG不改。</p><h3>仅DELETE a37</h3><a href="figures/initial_pilot4_delete_four_frames.png"><img src="figures/initial_pilot4_delete_four_frames.png" alt="最新基线/AA/C正式四帧delete"></a><h3>完整KEEP</h3><a href="figures/initial_pilot4_keep_four_frames.png"><img src="figures/initial_pilot4_keep_four_frames.png" alt="最新基线/AA/C正式四帧keep"></a></section>
+<section><h2>正式固定域评价：AA/C对最新基线</h2><p>AA/C首关：100项通过 / 96项失败 / 16项空域无支持。unsupported不计作通过。</p><table><thead><tr><th>候选</th><th>状态</th><th>固定世界边界</th><th>配对bin</th><th>latest</th><th>候选</th><th>Δ残差跳变</th></tr></thead><tbody><tr><td>AA</td><td>KEEP</td><td>near_x</td><td>24</td><td>0.0060358</td><td>0.0066398</td><td class="worse">0.0006041</td></tr><tr><td>AA</td><td>KEEP</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>AA</td><td>KEEP</td><td>lateral_y</td><td>23</td><td>0.0038316</td><td>0.0130089</td><td class="worse">0.0091774</td></tr><tr><td>C</td><td>KEEP</td><td>near_x</td><td>24</td><td>0.0060358</td><td>0.0075129</td><td class="worse">0.0014771</td></tr><tr><td>C</td><td>KEEP</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>C</td><td>KEEP</td><td>lateral_y</td><td>23</td><td>0.0038316</td><td>0.0082926</td><td class="worse">0.0044611</td></tr><tr><td>AA</td><td>DELETE</td><td>near_x</td><td>24</td><td>0.0071493</td><td>0.0076267</td><td class="worse">0.0004775</td></tr><tr><td>AA</td><td>DELETE</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>AA</td><td>DELETE</td><td>lateral_y</td><td>23</td><td>0.0035232</td><td>0.0172307</td><td class="worse">0.0137075</td></tr><tr><td>C</td><td>DELETE</td><td>near_x</td><td>24</td><td>0.0071493</td><td>0.0090324</td><td class="worse">0.0018831</td></tr><tr><td>C</td><td>DELETE</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>C</td><td>DELETE</td><td>lateral_y</td><td>23</td><td>0.0035232</td><td>0.0085519</td><td class="worse">0.0050287</td></tr></tbody></table><h3>原raw128蓝框独立保留</h3><table><thead><tr><th>候选</th><th>状态</th><th>原1385道路像素 RGB MAE</th><th>原6bin near残差jump</th><th>near相对变化</th></tr></thead><tbody><tr><td>AA</td><td>KEEP</td><td>0.0133528 → 0.0282548</td><td>0.0054814 → 0.0071196</td><td>+29.89%</td></tr><tr><td>C</td><td>KEEP</td><td>0.0133528 → 0.0145161</td><td>0.0054814 → 0.0077848</td><td>+42.02%</td></tr><tr><td>AA</td><td>DELETE</td><td>0.0131304 → 0.0295980</td><td>0.0080031 → 0.0097941</td><td>+22.38%</td></tr><tr><td>C</td><td>DELETE</td><td>0.0131304 → 0.0159663</td><td>0.0080031 → 0.0117246</td><td>+46.50%</td></tr></tbody></table><p>主蓝框两侧35/33像素，与worldpatch128两侧36/33分别计算，不拼接。RGB与残差jump以原观测的0–1编码为单位；评分保留原生float，不另加上界截断，PNG仅作显示。</p><h3>每帧原保护门：最坏值也保留</h3><table><thead><tr><th>候选</th><th>原门</th><th>raw/状态</th><th>最坏变化</th><th>原上限</th><th>结果</th></tr></thead><tbody><tr><td>AA</td><td>a5_RGB</td><td>105/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>C</td><td>a5_RGB</td><td>105/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>AA</td><td>a5_upper_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>C</td><td>a5_upper_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>AA</td><td>a6_RGB</td><td>94/DELETE</td><td>0.0001105</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>C</td><td>a6_RGB</td><td>94/DELETE</td><td>0.0001105</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>AA</td><td>a6_depth_m</td><td>94/KEEP</td><td>0.0028943</td><td>0.0000100</td><td>FAIL</td></tr><tr><td>C</td><td>a6_depth_m</td><td>94/KEEP</td><td>0.0028943</td><td>0.0000100</td><td>FAIL</td></tr><tr><td>AA</td><td>a37_RGB</td><td>137/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>C</td><td>a37_RGB</td><td>137/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>AA</td><td>protected_nonroad_RGB</td><td>94/DELETE</td><td>0.0004457</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>C</td><td>protected_nonroad_RGB</td><td>94/DELETE</td><td>0.0004272</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>AA</td><td>original_road_RGB</td><td>105/DELETE</td><td>0.0014731</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>C</td><td>original_road_RGB</td><td>94/DELETE</td><td>0.0006143</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>AA</td><td>nonroad_guard:alpha_pixel_max_abs</td><td>137/DELETE</td><td>0.3371057</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>C</td><td>nonroad_guard:alpha_pixel_max_abs</td><td>137/DELETE</td><td>0.3371057</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>AA</td><td>nonroad_guard:depth_pixel_max_abs_m</td><td>137/DELETE</td><td>14.1801167</td><td>0.0000100</td><td>FAIL</td></tr><tr><td>C</td><td>nonroad_guard:depth_pixel_max_abs_m</td><td>137/DELETE</td><td>14.1801167</td><td>0.0000100</td><td>FAIL</td></tr></tbody></table><p>RGB列是对原GT的MAE变化；a6_depth_m为测深MAE变化（m）。nonroad_guard两列是候选对latest的逐像素最大差（alpha或m），不是对GT的精度，也不据MAE通过宣称像素完全一致。</p><details><summary>全部失败门（不删帧、不改阈值）</summary><table><thead><tr><th>名称</th><th>raw</th><th>状态</th><th>值</th><th>上限</th></tr></thead><tbody><tr><td>AA:a6_RGB</td><td>94</td><td>keep</td><td>0.0001087</td><td>0.0000010</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>94</td><td>keep</td><td>0.0001419</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>94</td><td>keep</td><td>0.0001990</td><td>0.0000010</td></tr><tr><td>AA:a6_depth_m</td><td>94</td><td>keep</td><td>0.0028943</td><td>0.0000100</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>94</td><td>keep</td><td>0.1263984</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>94</td><td>keep</td><td>4.7181950</td><td>0.0000100</td></tr><tr><td>C:a6_RGB</td><td>94</td><td>keep</td><td>0.0001087</td><td>0.0000010</td></tr><tr><td>C:protected_nonroad_RGB</td><td>94</td><td>keep</td><td>0.0001339</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>94</td><td>keep</td><td>0.0000136</td><td>0.0000010</td></tr><tr><td>C:a6_depth_m</td><td>94</td><td>keep</td><td>0.0028943</td><td>0.0000100</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>94</td><td>keep</td><td>0.1263984</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>94</td><td>keep</td><td>4.7181950</td><td>0.0000100</td></tr><tr><td>AA:a6_RGB</td><td>94</td><td>delete</td><td>0.0001105</td><td>0.0000010</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>94</td><td>delete</td><td>0.0004457</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>94</td><td>delete</td><td>0.0012827</td><td>0.0000010</td></tr><tr><td>AA:a6_depth_m</td><td>94</td><td>delete</td><td>0.0028943</td><td>0.0000100</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>94</td><td>delete</td><td>0.2409371</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>94</td><td>delete</td><td>10.9494495</td><td>0.0000100</td></tr><tr><td>C:a6_RGB</td><td>94</td><td>delete</td><td>0.0001105</td><td>0.0000010</td></tr><tr><td>C:protected_nonroad_RGB</td><td>94</td><td>delete</td><td>0.0004272</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>94</td><td>delete</td><td>0.0006143</td><td>0.0000010</td></tr><tr><td>C:a6_depth_m</td><td>94</td><td>delete</td><td>0.0028943</td><td>0.0000100</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>94</td><td>delete</td><td>0.2409371</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>94</td><td>delete</td><td>10.9494495</td><td>0.0000100</td></tr><tr><td>AA:a6_RGB</td><td>105</td><td>keep</td><td>0.0000985</td><td>0.0000010</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>105</td><td>keep</td><td>0.0000137</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>105</td><td>keep</td><td>0.0002998</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>105</td><td>keep</td><td>0.1401888</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>105</td><td>keep</td><td>5.6426830</td><td>0.0000100</td></tr><tr><td>C:a6_RGB</td><td>105</td><td>keep</td><td>0.0000985</td><td>0.0000010</td></tr><tr><td>C:protected_nonroad_RGB</td><td>105</td><td>keep</td><td>0.0000118</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>105</td><td>keep</td><td>0.0000355</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>105</td><td>keep</td><td>0.1401888</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>105</td><td>keep</td><td>5.6426830</td><td>0.0000100</td></tr><tr><td>AA:a6_RGB</td><td>105</td><td>delete</td><td>0.0000985</td><td>0.0000010</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>105</td><td>delete</td><td>0.0002818</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>105</td><td>delete</td><td>0.0014731</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>105</td><td>delete</td><td>0.2327263</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>105</td><td>delete</td><td>11.4573841</td><td>0.0000100</td></tr><tr><td>C:a6_RGB</td><td>105</td><td>delete</td><td>0.0000985</td><td>0.0000010</td></tr><tr><td>C:protected_nonroad_RGB</td><td>105</td><td>delete</td><td>0.0002718</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>105</td><td>delete</td><td>0.0005526</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>105</td><td>delete</td><td>0.2327263</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>105</td><td>delete</td><td>11.4573841</td><td>0.0000100</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>128</td><td>keep</td><td>0.0001789</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>128</td><td>keep</td><td>0.0008505</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>128</td><td>keep</td><td>0.2331453</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>128</td><td>keep</td><td>6.9981098</td><td>0.0000100</td></tr><tr><td>C:protected_nonroad_RGB</td><td>128</td><td>keep</td><td>0.0001672</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>128</td><td>keep</td><td>0.0000762</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>128</td><td>keep</td><td>0.2331453</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>128</td><td>keep</td><td>6.9981098</td><td>0.0000100</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>128</td><td>delete</td><td>0.0003414</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>128</td><td>delete</td><td>0.0009511</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>128</td><td>delete</td><td>0.3002320</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>128</td><td>delete</td><td>13.7166920</td><td>0.0000100</td></tr><tr><td>C:protected_nonroad_RGB</td><td>128</td><td>delete</td><td>0.0003355</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>128</td><td>delete</td><td>0.0001880</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>128</td><td>delete</td><td>0.3002320</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>128</td><td>delete</td><td>13.7166920</td><td>0.0000100</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>137</td><td>keep</td><td>0.0002922</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>137</td><td>keep</td><td>0.0007643</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>137</td><td>keep</td><td>0.2188740</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>137</td><td>keep</td><td>10.5114918</td><td>0.0000100</td></tr><tr><td>C:protected_nonroad_RGB</td><td>137</td><td>keep</td><td>0.0002459</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>137</td><td>keep</td><td>0.0001367</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>137</td><td>keep</td><td>0.2188740</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>137</td><td>keep</td><td>10.5114918</td><td>0.0000100</td></tr><tr><td>AA:protected_nonroad_RGB</td><td>137</td><td>delete</td><td>0.0004186</td><td>0.0000010</td></tr><tr><td>AA:original_road_RGB</td><td>137</td><td>delete</td><td>0.0008006</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:alpha_pixel_max_abs</td><td>137</td><td>delete</td><td>0.3371057</td><td>0.0000010</td></tr><tr><td>AA:nonroad_guard:depth_pixel_max_abs_m</td><td>137</td><td>delete</td><td>14.1801167</td><td>0.0000100</td></tr><tr><td>C:protected_nonroad_RGB</td><td>137</td><td>delete</td><td>0.0003712</td><td>0.0000010</td></tr><tr><td>C:original_road_RGB</td><td>137</td><td>delete</td><td>0.0002095</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:alpha_pixel_max_abs</td><td>137</td><td>delete</td><td>0.3371057</td><td>0.0000010</td></tr><tr><td>C:nonroad_guard:depth_pixel_max_abs_m</td><td>137</td><td>delete</td><td>14.1801167</td><td>0.0000100</td></tr><tr><td>AA:near_x:equal_bin_pooled</td><td></td><td>keep</td><td>0.0006041</td><td>0.0000010</td></tr><tr><td>AA:lateral_y:equal_bin_pooled</td><td></td><td>keep</td><td>0.0091774</td><td>0.0000010</td></tr><tr><td>AA:raw128:primary_near_no_regression</td><td></td><td>keep</td><td>0.0016383</td><td>0.0000010</td></tr><tr><td>AA:raw128:primary_near_absolute_reduction</td><td></td><td>keep</td><td>0.0016383</td><td>-0.0001000</td></tr><tr><td>AA:raw128:primary_near_relative_reduction</td><td></td><td>keep</td><td>0.2988763</td><td>-0.0500000</td></tr><tr><td>C:near_x:equal_bin_pooled</td><td></td><td>keep</td><td>0.0014771</td><td>0.0000010</td></tr><tr><td>C:lateral_y:equal_bin_pooled</td><td></td><td>keep</td><td>0.0044611</td><td>0.0000010</td></tr><tr><td>C:raw128:primary_near_no_regression</td><td></td><td>keep</td><td>0.0023034</td><td>0.0000010</td></tr><tr><td>C:raw128:primary_near_absolute_reduction</td><td></td><td>keep</td><td>0.0023034</td><td>-0.0001000</td></tr><tr><td>C:raw128:primary_near_relative_reduction</td><td></td><td>keep</td><td>0.4202285</td><td>-0.0500000</td></tr><tr><td>AA:near_x:equal_bin_pooled</td><td></td><td>delete</td><td>0.0004775</td><td>0.0000010</td></tr><tr><td>AA:lateral_y:equal_bin_pooled</td><td></td><td>delete</td><td>0.0137075</td><td>0.0000010</td></tr><tr><td>AA:raw128:primary_near_no_regression</td><td></td><td>delete</td><td>0.0017909</td><td>0.0000010</td></tr><tr><td>AA:raw128:primary_near_absolute_reduction</td><td></td><td>delete</td><td>0.0017909</td><td>-0.0001000</td></tr><tr><td>AA:raw128:primary_near_relative_reduction</td><td></td><td>delete</td><td>0.2237775</td><td>-0.0500000</td></tr><tr><td>C:near_x:equal_bin_pooled</td><td></td><td>delete</td><td>0.0018831</td><td>0.0000010</td></tr><tr><td>C:lateral_y:equal_bin_pooled</td><td></td><td>delete</td><td>0.0050287</td><td>0.0000010</td></tr><tr><td>C:raw128:primary_near_no_regression</td><td></td><td>delete</td><td>0.0037215</td><td>0.0000010</td></tr><tr><td>C:raw128:primary_near_absolute_reduction</td><td></td><td>delete</td><td>0.0037215</td><td>-0.0001000</td></tr><tr><td>C:raw128:primary_near_relative_reduction</td><td></td><td>delete</td><td>0.4650015</td><td>-0.0500000</td></tr></tbody></table></details><p>raw94世界near/lateral均无配对，只检查a5早段保护。其余三帧合计near24bin/lateral23bin；far无支持。a5在本轮只有94/105可见，不能把原全49的121128/25906像素称成本轮实际分母。</p></section>
+<section><h2>原轮胎射线：颜色收益不能覆盖贡献损失</h2><table><thead><tr><th>raw</th><th>候选</th><th>固定ray</th><th>vs latest最大|WΔ|</th><th>chart-first新增下降&gt;.01</th><th>C vs AA最大|WΔ|</th></tr></thead><tbody><tr><td>128</td><td>AA</td><td>36</td><td>0.9629351</td><td>14</td><td>无支持</td></tr><tr><td>128</td><td>C</td><td>36</td><td>0.9629351</td><td>14</td><td>0.0000000</td></tr><tr><td>130</td><td>AA</td><td>35</td><td>0.9434568</td><td>13</td><td>无支持</td></tr><tr><td>130</td><td>C</td><td>35</td><td>0.9434568</td><td>13</td><td>0.0000000</td></tr></tbody></table><p>128的36条属于正式四帧诊断，130的35条单独计账，不混入pilot接缝pooled。W是原native C2的alpha贡献，既有chart-first/ground-first是诊断类别，不是隐藏轮胎真值或不透明首交。C与AA的W一致，不能据此称C相对latest保住轮胎。</p><a href="figures/initial_pilot4_wheel130_separate.png"><img src="figures/initial_pilot4_wheel130_separate.png" alt="raw130三variant独立轮胎诊断"></a></section>
+<section><h2>D：后验固定新增行控制，原评价门不变</h2><p>观察到首轮回退后另立METHOD V2。仅在4个BUILD开发视图累计新增道路child的inside/guard贡献，选inside&gt;0且outside==0；固定行mask跨query与KEEP/DELETE共用。guard额外包含已冻结baseline既有C2、语义a5以及KEEP a37的正贡献像素，保护GT可见mask以外的既有模型尾部。无RGB挑域、无阈值搜索、无参数/材质更新；四帧因此不是HELD。</p><p>QUERY只读取固定三维行mask；原v44输入依赖保持。原4560评价域与阈值没有放宽，另增加71条原轮胎ray无新增W损失&gt;1e-6的root release要求。校准时outside=0不自动保证过滤后或其它视图也为0，必须重新成像。</p><p><a href="contract/fixed_build_support_amendment_v2.json">后验方法V2合同</a> · <a href="contract/fixed_build_support_amendment_v1.json">未执行V1历史合同</a></p><p>D后验固定行控制：76项通过 / 10项失败 / 8项空域无支持。unsupported不计作通过。</p><table><thead><tr><th>候选</th><th>状态</th><th>固定世界边界</th><th>配对bin</th><th>latest</th><th>候选</th><th>Δ残差跳变</th></tr></thead><tbody><tr><td>D</td><td>KEEP</td><td>near_x</td><td>24</td><td>0.0060358</td><td>0.0060358</td><td class="">0.0000000</td></tr><tr><td>D</td><td>KEEP</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>D</td><td>KEEP</td><td>lateral_y</td><td>23</td><td>0.0038316</td><td>0.0038316</td><td class="">0.0000000</td></tr><tr><td>D</td><td>DELETE</td><td>near_x</td><td>24</td><td>0.0071493</td><td>0.0071493</td><td class="">0.0000000</td></tr><tr><td>D</td><td>DELETE</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>D</td><td>DELETE</td><td>lateral_y</td><td>23</td><td>0.0035232</td><td>0.0035232</td><td class="">0.0000000</td></tr></tbody></table><h3>原raw128蓝框独立保留</h3><table><thead><tr><th>候选</th><th>状态</th><th>原1385道路像素 RGB MAE</th><th>原6bin near残差jump</th><th>near相对变化</th></tr></thead><tbody><tr><td>D</td><td>KEEP</td><td>0.0133528 → 0.0134470</td><td>0.0054814 → 0.0054814</td><td>+0.00%</td></tr><tr><td>D</td><td>DELETE</td><td>0.0131304 → 0.0132246</td><td>0.0080031 → 0.0080031</td><td>+0.00%</td></tr></tbody></table><p>主蓝框两侧35/33像素，与worldpatch128两侧36/33分别计算，不拼接。RGB与残差jump以原观测的0–1编码为单位；评分保留原生float，不另加上界截断，PNG仅作显示。</p><h3>每帧原保护门：最坏值也保留</h3><table><thead><tr><th>候选</th><th>原门</th><th>raw/状态</th><th>最坏变化</th><th>原上限</th><th>结果</th></tr></thead><tbody><tr><td>D</td><td>a5_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>a5_upper_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>a6_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>a6_depth_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr><tr><td>D</td><td>a37_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>protected_nonroad_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>original_road_RGB</td><td>94/DELETE</td><td>0.0000152</td><td>0.0000010</td><td>FAIL</td></tr><tr><td>D</td><td>nonroad_guard:alpha_pixel_max_abs</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>D</td><td>nonroad_guard:depth_pixel_max_abs_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr></tbody></table><p>RGB列是对原GT的MAE变化；a6_depth_m为测深MAE变化（m）。nonroad_guard两列是候选对latest的逐像素最大差（alpha或m），不是对GT的精度，也不据MAE通过宣称像素完全一致。</p><details><summary>全部失败门（不删帧、不改阈值）</summary><table><thead><tr><th>名称</th><th>raw</th><th>状态</th><th>值</th><th>上限</th></tr></thead><tbody><tr><td>D:original_road_RGB</td><td>94</td><td>delete</td><td>0.0000152</td><td>0.0000010</td></tr><tr><td>D:original_road_RGB</td><td>105</td><td>delete</td><td>0.0000095</td><td>0.0000010</td></tr><tr><td>D:original_road_RGB</td><td>128</td><td>keep</td><td>0.0000053</td><td>0.0000010</td></tr><tr><td>D:original_road_RGB</td><td>128</td><td>delete</td><td>0.0000053</td><td>0.0000010</td></tr><tr><td>D:original_road_RGB</td><td>137</td><td>keep</td><td>0.0000068</td><td>0.0000010</td></tr><tr><td>D:original_road_RGB</td><td>137</td><td>delete</td><td>0.0000068</td><td>0.0000010</td></tr><tr><td>D:raw128:primary_near_absolute_reduction</td><td></td><td>keep</td><td>0.0000000</td><td>-0.0001000</td></tr><tr><td>D:raw128:primary_near_relative_reduction</td><td></td><td>keep</td><td>0.0000000</td><td>-0.0500000</td></tr><tr><td>D:raw128:primary_near_absolute_reduction</td><td></td><td>delete</td><td>0.0000000</td><td>-0.0001000</td></tr><tr><td>D:raw128:primary_near_relative_reduction</td><td></td><td>delete</td><td>0.0000000</td><td>-0.0500000</td></tr></tbody></table></details><p><a href="evidence/review/cpu_independent_D4_fixed_support_v2.json">D独立原始评价</a></p><table><thead><tr><th>raw</th><th>候选</th><th>固定ray</th><th>vs latest最大|WΔ|</th><th>chart-first新增下降&gt;.01</th><th>C vs AA最大|WΔ|</th></tr></thead><tbody><tr><td>128</td><td>D</td><td>36</td><td>0.0000000</td><td>0</td><td>无支持</td></tr></tbody></table><pre>[
+  {
+    &quot;name&quot;: &quot;D:fixed_wheel71:no_new_assetW_drop&quot;,
+    &quot;raw&quot;: 128,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;expected_rays&quot;: 36,
+    &quot;actual_rays&quot;: 36,
+    &quot;value&quot;: 0.0,
+    &quot;threshold&quot;: 1e-06,
+    &quot;passed&quot;: true,
+    &quot;role&quot;: &quot;Additional stricter root release rule from posterior V2; original4560 gates unchanged&quot;
+  },
+  {
+    &quot;name&quot;: &quot;D:fixed_wheel71:no_new_assetW_drop&quot;,
+    &quot;raw&quot;: 130,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;expected_rays&quot;: 35,
+    &quot;actual_rays&quot;: 0,
+    &quot;value&quot;: null,
+    &quot;threshold&quot;: 1e-06,
+    &quot;passed&quot;: null,
+    &quot;role&quot;: &quot;Additional stricter root release rule from posterior V2; original4560 gates unchanged&quot;
+  }
+]</pre><a href="figures/D4_v2_delete_four_frames.png"><img src="figures/D4_v2_delete_four_frames.png" alt="latest/C/D后验四帧DELETE原图"></a><p>D仅保留62/40,392个新增行，保护工程在这些BUILD视图有用，但没有带来接缝改善。D首关已经失败，130额外2次forward已取消；上方130空值表示未执行，不是自动待跑任务。</p></section>
+<section><h2>E：复用融合目标，在原有表面回写外观</h2><p>原native_static与oldroad共有34,376个合格行（15,262＋19,114），不增加或退役几何。资格在4个BUILD视图中完成，不是拟合成功。原128主68像素中这些安全行可写贡献仅约0.18363/67.54≈0.272%，且oldroad为0；整体道路可写覆盖不能冒充主接缝覆盖，也不单凭比例断言不可能改善。</p><p>一次固定预算验证：同一行δRGB zero-init，投影到[-1,1]，Adam .01、400paired steps；原C完整合成目标和原legal mask，4帧现在都属于BUILD。先真实CUDA δ0恒等、smoke4＋disposable2＋完整恢复2及保存/评价，再fresh zero开始正式。实际训练账按收据，不以合同预算冒充已执行。</p><p>QUERY在原SH/fine求色后施加同一持久δ并clamp_min(0)，没有上界clamp；原v44输入依赖保持，目标/GT/mask不参与当帧选行或调色。原Gaussian/SH/geometry/identity为0更新，新材质优化有实际更新，二者分开。仅旧400步数相同不构成公平方法比较：原C是BUILD40/6159标量，E是BUILD4/103128标量。</p><p>E原有表面回写：82项通过 / 4项失败 / 8项空域无支持。unsupported不计作通过。</p><table><thead><tr><th>候选</th><th>状态</th><th>固定世界边界</th><th>配对bin</th><th>latest</th><th>候选</th><th>Δ残差跳变</th></tr></thead><tbody><tr><td>E</td><td>KEEP</td><td>near_x</td><td>24</td><td>0.0060358</td><td>0.0060217</td><td class="">-0.0000140</td></tr><tr><td>E</td><td>KEEP</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>E</td><td>KEEP</td><td>lateral_y</td><td>23</td><td>0.0038316</td><td>0.0038129</td><td class="">-0.0000186</td></tr><tr><td>E</td><td>DELETE</td><td>near_x</td><td>24</td><td>0.0071493</td><td>0.0071352</td><td class="">-0.0000140</td></tr><tr><td>E</td><td>DELETE</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>E</td><td>DELETE</td><td>lateral_y</td><td>23</td><td>0.0035232</td><td>0.0035046</td><td class="">-0.0000186</td></tr></tbody></table><h3>原raw128蓝框独立保留</h3><table><thead><tr><th>候选</th><th>状态</th><th>原1385道路像素 RGB MAE</th><th>原6bin near残差jump</th><th>near相对变化</th></tr></thead><tbody><tr><td>E</td><td>KEEP</td><td>0.0133528 → 0.0131718</td><td>0.0054814 → 0.0054713</td><td>-0.18%</td></tr><tr><td>E</td><td>DELETE</td><td>0.0131304 → 0.0129495</td><td>0.0080031 → 0.0079930</td><td>-0.13%</td></tr></tbody></table><p>主蓝框两侧35/33像素，与worldpatch128两侧36/33分别计算，不拼接。RGB与残差jump以原观测的0–1编码为单位；评分保留原生float，不另加上界截断，PNG仅作显示。</p><h3>每帧原保护门：最坏值也保留</h3><table><thead><tr><th>候选</th><th>原门</th><th>raw/状态</th><th>最坏变化</th><th>原上限</th><th>结果</th></tr></thead><tbody><tr><td>E</td><td>a5_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>a5_upper_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>a6_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>a6_depth_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr><tr><td>E</td><td>a37_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>protected_nonroad_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>original_road_RGB</td><td>137/KEEP</td><td>-0.0004504</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>nonroad_guard:alpha_pixel_max_abs</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>E</td><td>nonroad_guard:depth_pixel_max_abs_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr></tbody></table><p>RGB列是对原GT的MAE变化；a6_depth_m为测深MAE变化（m）。nonroad_guard两列是候选对latest的逐像素最大差（alpha或m），不是对GT的精度，也不据MAE通过宣称像素完全一致。</p><details><summary>全部失败门（不删帧、不改阈值）</summary><table><thead><tr><th>名称</th><th>raw</th><th>状态</th><th>值</th><th>上限</th></tr></thead><tbody><tr><td>E:raw128:primary_near_absolute_reduction</td><td></td><td>keep</td><td>-0.0000101</td><td>-0.0001000</td></tr><tr><td>E:raw128:primary_near_relative_reduction</td><td></td><td>keep</td><td>-0.0018424</td><td>-0.0500000</td></tr><tr><td>E:raw128:primary_near_absolute_reduction</td><td></td><td>delete</td><td>-0.0000101</td><td>-0.0001000</td></tr><tr><td>E:raw128:primary_near_relative_reduction</td><td></td><td>delete</td><td>-0.0012619</td><td>-0.0500000</td></tr></tbody></table></details><p><a href="evidence/review/cpu_independent_E4_existing_surface.json">E独立CPU完整评价</a></p><p>方法另要求全图alpha/depth/原7groupW与baseline一致：24/24个实际检查通过。仅指这些几何读出，RGB仍按原门独立评价。</p><a href="figures/E4_delete_four_frames.png"><img src="figures/E4_delete_four_frames.png" alt="E原表面回写四帧DELETE"></a><a href="figures/E4_raw128_delete_original_blue_box.png"><img src="figures/E4_raw128_delete_original_blue_box.png" alt="E主128近缝同原框显示"></a><details><summary>E完整KEEP四帧</summary><a href="figures/E4_keep_four_frames.png"><img src="figures/E4_keep_four_frames.png" alt="E完整KEEP四帧"></a></details><details><summary>实际原生RGB范围（未额外截断）</summary><pre>[
+  {
+    &quot;raw&quot;: 94,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.04367917776107788,
+    &quot;max&quot;: 1.074397325515747,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 94,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.04367917776107788,
+    &quot;max&quot;: 1.074397325515747,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 94,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.04367917776107788,
+    &quot;max&quot;: 1.074397325515747,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 94,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.04367917776107788,
+    &quot;max&quot;: 1.074397325515747,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 105,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.004244059324264526,
+    &quot;max&quot;: 1.1262192726135254,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 105,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.004244059324264526,
+    &quot;max&quot;: 1.1262192726135254,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 105,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.004244059324264526,
+    &quot;max&quot;: 1.1262192726135254,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 105,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.004244059324264526,
+    &quot;max&quot;: 1.1262192726135254,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 128,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.007411573082208633,
+    &quot;max&quot;: 1.1276270151138306,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 128,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.007411573082208633,
+    &quot;max&quot;: 1.1276270151138306,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 128,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.007411573082208633,
+    &quot;max&quot;: 1.1276270151138306,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 128,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.007411573082208633,
+    &quot;max&quot;: 1.1276270151138306,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 137,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.029569320380687714,
+    &quot;max&quot;: 1.1875675916671753,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 137,
+    &quot;state&quot;: &quot;keep&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.029569320380687714,
+    &quot;max&quot;: 1.1875675916671753,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 137,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;baseline&quot;,
+    &quot;min&quot;: -0.029569320380687714,
+    &quot;max&quot;: 1.1875675916671753,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  },
+  {
+    &quot;raw&quot;: 137,
+    &quot;state&quot;: &quot;delete&quot;,
+    &quot;variant&quot;: &quot;E&quot;,
+    &quot;min&quot;: -0.029569320380687714,
+    &quot;max&quot;: 1.1875675916671753,
+    &quot;additional_upper_clamp_in_evaluator&quot;: false
+  }
+]</pre></details></section>
+<section><h2>F：分域有界原表面颜色，原门不放宽</h2><p>E的零spill支撑在主缝太少，因此另立后验资格合同。保持同一原场景与原4560评价门，测每个BUILD帧/状态、每个原保护域的非负native贡献矩阵A。若以wᵣ=maxₘ Aₘᵣ/(3Nₘ·5e−7)，限制Σᵣwᵣ‖δᵣ‖₁≤1，则固定T与ReLU的1-Lipschitz性给出每个已校准保护域RGB MAE回退≤5e−7，保留原1e−6门的一半浮点裕量。</p><p>这是均值界，不是像素max或额外49相机保证；空域N=0仍为unsupported。资格得到203,932个inside-positive原有行，不意味着每列可独立无限使用。F实际fresh zero、同4源目标/合法mask与Adam.01完成400paired更新，δ先box cap1再weighted L1预算投影；不是续训E或调整E的cap救结果。真实预算约束通过，质量仍有失败。</p><p>w0与LP只表示operator capacity，不是已实现误差改善。QUERY仍是固定三维行共享δ、原7group与相同几何；不能继承E额外all-model-alpha像素的joint RGB exact性质。</p><p>F有界原表面外观回写：82项通过 / 4项失败 / 8项空域无支持。unsupported不计作通过。</p><table><thead><tr><th>候选</th><th>状态</th><th>固定世界边界</th><th>配对bin</th><th>latest</th><th>候选</th><th>Δ残差跳变</th></tr></thead><tbody><tr><td>F</td><td>KEEP</td><td>near_x</td><td>24</td><td>0.0060358</td><td>0.0054756</td><td class="">-0.0005601</td></tr><tr><td>F</td><td>KEEP</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>F</td><td>KEEP</td><td>lateral_y</td><td>23</td><td>0.0038316</td><td>0.0040678</td><td class="worse">0.0002362</td></tr><tr><td>F</td><td>DELETE</td><td>near_x</td><td>24</td><td>0.0071493</td><td>0.0064863</td><td class="">-0.0006629</td></tr><tr><td>F</td><td>DELETE</td><td>far_x</td><td>0</td><td>无支持</td><td>无支持</td><td class="">无支持</td></tr><tr><td>F</td><td>DELETE</td><td>lateral_y</td><td>23</td><td>0.0035232</td><td>0.0038153</td><td class="worse">0.0002921</td></tr></tbody></table><h3>原raw128蓝框独立保留</h3><table><thead><tr><th>候选</th><th>状态</th><th>原1385道路像素 RGB MAE</th><th>原6bin near残差jump</th><th>near相对变化</th></tr></thead><tbody><tr><td>F</td><td>KEEP</td><td>0.0133528 → 0.0122394</td><td>0.0054814 → 0.0052376</td><td>-4.45%</td></tr><tr><td>F</td><td>DELETE</td><td>0.0131304 → 0.0117304</td><td>0.0080031 → 0.0077513</td><td>-3.15%</td></tr></tbody></table><p>主蓝框两侧35/33像素，与worldpatch128两侧36/33分别计算，不拼接。RGB与残差jump以原观测的0–1编码为单位；评分保留原生float，不另加上界截断，PNG仅作显示。</p><h3>每帧原保护门：最坏值也保留</h3><table><thead><tr><th>候选</th><th>原门</th><th>raw/状态</th><th>最坏变化</th><th>原上限</th><th>结果</th></tr></thead><tbody><tr><td>F</td><td>a5_RGB</td><td>94/DELETE</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>a5_upper_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>a6_RGB</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>a6_depth_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr><tr><td>F</td><td>a37_RGB</td><td>105/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>protected_nonroad_RGB</td><td>128/KEEP</td><td>-0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>original_road_RGB</td><td>94/KEEP</td><td>-0.0019983</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>nonroad_guard:alpha_pixel_max_abs</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000010</td><td>PASS</td></tr><tr><td>F</td><td>nonroad_guard:depth_pixel_max_abs_m</td><td>94/KEEP</td><td>0.0000000</td><td>0.0000100</td><td>PASS</td></tr></tbody></table><p>RGB列是对原GT的MAE变化；a6_depth_m为测深MAE变化（m）。nonroad_guard两列是候选对latest的逐像素最大差（alpha或m），不是对GT的精度，也不据MAE通过宣称像素完全一致。</p><details><summary>全部失败门（不删帧、不改阈值）</summary><table><thead><tr><th>名称</th><th>raw</th><th>状态</th><th>值</th><th>上限</th></tr></thead><tbody><tr><td>F:lateral_y:equal_bin_pooled</td><td></td><td>keep</td><td>0.0002362</td><td>0.0000010</td></tr><tr><td>F:raw128:primary_near_relative_reduction</td><td></td><td>keep</td><td>-0.0444824</td><td>-0.0500000</td></tr><tr><td>F:lateral_y:equal_bin_pooled</td><td></td><td>delete</td><td>0.0002921</td><td>0.0000010</td></tr><tr><td>F:raw128:primary_near_relative_reduction</td><td></td><td>delete</td><td>-0.0314619</td><td>-0.0500000</td></tr></tbody></table></details><p><a href="evidence/review/cpu_independent_F4_bounded_surface.json">F独立CPU完整评价</a></p><p>全图alpha/depth/原7groupW：24/24个实际检查通过。原有保护域的RGB均值界通过，不意味着每像素不变或删除后足迹无伪影。</p><a href="figures/F4_delete_four_frames.png"><img src="figures/F4_delete_four_frames.png" alt="latest/E/F实际四帧DELETE"></a><a href="figures/F4_raw128_delete_original_blue_box.png"><img src="figures/F4_raw128_delete_original_blue_box.png" alt="F原128蓝框接缝"></a><details><summary>F实际KEEP四帧</summary><a href="figures/F4_keep_four_frames.png"><img src="figures/F4_keep_four_frames.png" alt="F实际KEEP四帧"></a></details></section>
+<section><h2>F新增暗条：监督输入与删除足迹独立核对</h2><p>四帧实际fit_mask与actor_labels&gt;0、full37(label5)、visible37的交集全部为0。目标文件在原车体域虽然保留Observed RGB，这些像素并未进入拟合loss，不能认定直接用车尾/牌照像素监督DELETE。fit仍包含部分原观测阴影/暗路面，原观测不是删除后的隐藏道路真值。</p><p>新暗条跨入原a37投影域：raw94有638个原车体像素的编码亮度变化&lt;−0.05，最大RGB移动0.2431；例如(246,282)为label5/visible37、fit=False、road_edit=True，KEEP37W≈0.999897，而DELETE37W=0。所有geometry/group alpha与语义a5贡献保持一致，变化来自本次static/oldroad颜色场。该证据表明跨域颜色耦合，不能把横条仅称为合法阴影；尚未唯一追溯到某个源阴影。</p><p>原保护域排除了road_edit，KEEP可见a37又遮住其后表面；两者的均值通过不能覆盖DELETE暴露表面的颜色。这里的新增暗化阈值和裁剪是后验诊断，不更改原门。</p><a href="evidence/review/identity_supervision_audit_F400_v1/raw094_delete_identity_crop.png"><img src="evidence/review/identity_supervision_audit_F400_v1/raw094_delete_identity_crop.png" alt="raw94 Observed/目标/latest DELETE/F DELETE，紫色为原full37边界"></a><a href="evidence/review/identity_supervision_audit_F400_v1/raw128_source_fit_context.png"><img src="evidence/review/identity_supervision_audit_F400_v1/raw128_source_fit_context.png" alt="raw128原fit青边/原full37紫边与F暗条；显示裁剪不是优化ROI"></a><details><summary>全部4帧top20暗化位置与源文件SHA</summary><p><a href="evidence/review/identity_supervision_audit_F400_v1.json">完整逐像素诊断JSON</a> · <a href="evidence/review/F_source_fit_context.json">原fit上下文JSON</a></p></details></section>
+<section><h2>G历史诊断：后续合成扰动与颜色求解已取消</h2><p>针对F的失败读取原world near/lateral及原128独立蓝框53个pair的signed Jacobian，并补充DELETE原full37(label5)或baseline KEEP37W&gt;0.5的足迹颜色域。原primary35/33像素与world128的36/33分开，raw94无接缝pair；未使用暗条裁剪作为优化ROI。</p><p>实际22F/22dummyB读取已在远端完成，0 Adam/0原模型更新；计划8F合成扰动与CPU颜色solve在执行前取消。该操作子证据不是成功拟合或新候选图，主线已回到完整道路支撑和遮挡。</p><p><a href="contract/joint_seam_edit_safe_feasibility_v1.json">G历史诊断合同</a> · <a href="evidence/review/registered_seam_pairs_cpu_receipt.json">原53 pair逐bin数量与mask SHA</a> · <a href="evidence/G4_joint_seam_edit_operator/receipt.json">实际操作子收据</a></p></section>
+<section><h2>原道路报告：研究候选与本次整合分开</h2><p>原C基于同40,392行n2＋relativeMip支撑、400paired steps的持久共享材质；2053父RGB可拟合，8045父行保留初值。C使用已有真实RGB固定10px边缘锚定，收益不是纯Poisson或隐藏纹理恢复。原C对AA的横向均值改善，原128 near和全49 near却回退；此前就没有全场景采用。</p><p>本次增加支撑相对latest会改变遮挡/alpha/期望深度；不能把旧C-vs-AA的几何读出一致移植成新整合也无损。旧HELD9目标含query O仅供构造诊断，原native材质不以query O调色；同场景曝光限制保留。</p><details><summary>原交付独立审阅与完整49联系图（不是本轮新结果）</summary><p><a href="evidence/source_road_review.json">原manifest/review/资产SHA及像素验证</a> · <a href="evidence/source_image_review.json">实际联系图查看记录</a></p><a href="figures/source_C_all49_delete_road_contact.png"><img src="figures/source_C_all49_delete_road_contact.png" alt="旧道路C全49 DELETE对AA研究结果"></a><a href="figures/source_C_all49_keep_road_contact.png"><img src="figures/source_C_all49_keep_road_contact.png" alt="旧道路C全49 KEEP对AA研究结果"></a></details></section>
+<section><h2>数值门、来源和执行</h2><p>每帧a5 body/upper、a6 RGB、KEEP a37及protected_nonroad RGB MAE变化≤1e-6；a6测深MAE变化≤1e-5m。道路外固定guard alpha/depth最大差≤1e-6/1e-5m。near/lateral等bin双状态pooled不回退，原128 near须两状态各至少5%相对且1e-4绝对改善。旧宽松门仅历史参考，不替代本轮标准。</p><p>所有域来自原观测/冻结registry，不按候选alpha改分母。所有空域/无支持保留null，RGB均值不代表逐像素无损。Observed中a37仍在，没有删除后隐藏道路真值；human_verdict=null。</p><ul><li><a href="contract/independent_evaluation_contract_v1.json">候选前冻结的4560数值合同</a></li><li><a href="evidence/review/cpu_independent_pilot4_with_wheel_historical_v2.json">独立正式四帧＋130 CPU审查</a></li><li><a href="evidence/review/root_quick_pilot.json">root独立spot复核（不替代正式评价）</a></li><li><a href="evidence/pilot4_images_retrieval_verification.json">实际三variant36PNG逐SHA取回</a></li><li><a href="evidence/review/road_adapter_cpu_audit.json">道路资产/ABI CPU核对</a></li><li><a href="evidence/review/material_boundary_cpu_audit.json">固定材质边界source配对</a></li><li><a href="evidence/source_road_review.json">原道路交付162JSON/1137PNG读取核验</a></li><li><a href="source/evaluate_saved_road_integration.py">独立CPU评价源码</a></li><li><a href="source/fixed_domains.py">纯NumPy固定mask定义（无环境副作用）</a></li><li><a href="source/make_pilot_boards.py">实际PNG图版构建器</a></li><li><a href="source/build_report.py">报告构建器</a></li><li><a href="comparison.csv">原域逐帧RGB/深度CSV</a></li><li><a href="report_data.json">报告数据及输入manifest</a></li><li><a href="evidence/road_execution_ledger_v1.json">实际计算账本</a></li><li><span class="pending">root实际原图审阅记录（待取回）</span></li><li><a href="contract/existing_surface_fusion_bake_pilot_v1.json">E固定400paired预算/完整生命周期合同</a></li><li><a href="evidence/review/independent_E_qualification_cpu.json">E真实资格/可写覆盖独立CPU复算</a></li><li><a href="evidence/review/baseline_appearance_nonnegative_cpu_audit.json">E非负/HDR接口CPU fixture（非GPU验收）</a></li><li><span class="pending">道路外观重现包：资格/δRGB/绑定/源码，不含原Gaussweights（待取回）</span></li><li><a href="evidence/review/independent_E_formal_cpu.json">E实际100/200/400 checkpoint/导出/不变量独立CPU审计</a></li><li><a href="contract/bounded_appearance_constraint_feasibility_v1.json">F后验有界颜色资格合同（尚非拟合结果）</a></li><li><a href="contract/bounded_surface_fusion_bake_pilot_v1.json">F独立fresh400有界外观拟合合同</a></li><li><a href="evidence/review/cpu_independent_F4_bounded_surface.json">F独立CPU正式四帧评价（含全部失败门）</a></li><li><a href="evidence/review/independent_F_formal_cpu.json">F实际预算/保存/几何不变量独立CPU复算</a></li><li><a href="evidence/F_formal400_r1/returned.json">F实际400材质更新与808F/800B收据</a></li><li><a href="model/F_inference_package_v1.tar.gz">F失败候选重现元数据包：材质/矩阵/API，另依赖原模型</a></li><li><a href="evidence/review/F_inference_package_local_verification.json">F元数据包本机逐文件核验</a></li><li><a href="evidence/review/identity_supervision_audit_F400_v1.json">F监督域与暗条逐像素CPU审计</a></li><li><a href="evidence/review/F_source_fit_context.json">原拟合mask与阴影上下文图</a></li><li><a href="source/audit_supervision_identity_leakage.py">只读暗化top20/监督域审计源码</a></li><li><a href="source/audit_F_fit_context.py">原fit边界上下文图源码</a></li><li><a href="contract/joint_seam_edit_safe_feasibility_v1.json">G后验联合可达性/追加删除足迹保护合同</a></li><li><a href="source/registered_seam_pairs.py">纯NumPy原53接缝pair接口（无CUDA环境写入）</a></li><li><a href="evidence/review/registered_seam_pairs_cpu_receipt.json">原53pair每bin像素数/mask SHA独立核对</a></li><li><a href="evidence/road_execution_through_F400_v1_retrieval_verification.json">through F完整状态/源码/收据逐SHA取回</a></li><li><a href="evidence/report_scope_geometry_takeover.json">用户纠正后的完整支撑/遮挡主线</a></li><li><a href="evidence/review/silver_support_group_audit_v1.json">缓存128/137银片与C2逐组alpha_T审计</a></li><li><a href="source/audit_silver_support_groups.py">银片来源审计源码（不加载模型）</a></li><li><a href="evidence/review/saved_raw130_component_takeover_cpu.json">原130固定35轮胎ray组件接管核对</a></li><li><a href="evidence/G4_joint_seam_edit_operator/receipt.json">G实际22F/22B操作子读取收据（不含拟合）</a></li><li><a href="evidence/G4_joint_seam_edit_operator/signed_residual_J_supplement.json">G signed residual与已取消后续说明</a></li><li><a href="evidence/G4_joint_seam_edit_operator/execution_ledger_appendix.json">G实际追加账本</a></li></ul><details><summary>实际账本与root原图记录</summary><pre>{
+  &quot;through_F_ledger&quot;: {
+    &quot;schema&quot;: &quot;SCENE008_ROAD_INTEGRATION_ACTUAL_EXECUTION_LEDGER_V1&quot;,
+    &quot;scope&quot;: &quot;Only this road integration campaign; previous identity/reconstruction/training campaigns have separate ledgers.&quot;,
+    &quot;status&quot;: &quot;COMPLETED_FIXED_F400_PENDING_OR_RECORDED_QUALITY_REVIEW_NO49&quot;,
+    &quot;actual_totals&quot;: {
+      &quot;actual_native_forwards&quot;: 1747,
+      &quot;actual_native_or_dummy_backwards&quot;: 1656,
+      &quot;new_colour_residual_formal_updates&quot;: 800,
+      &quot;new_colour_residual_engineering_updates&quot;: 16,
+      &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0
+    },
+    &quot;phases&quot;: [
+      {
+        &quot;phase&quot;: &quot;latest_semantic_baseline4&quot;,
+        &quot;receipt&quot;: &quot;baseline4/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;19f15910346a806599ddb797412cb7dd0c73360105098cc9e4058e86ccd3601e&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_LATEST_SEMANTIC_BASELINE4_PENDING_CACHED_EXACT_REPLAY&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;AA_first_forward_assertion_failure&quot;,
+        &quot;receipt&quot;: &quot;contract/first_forward_engineering_failure.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;379f21d353c475ff7e4c9a3a8b4f171028a523d20590a9aae1f4e32f748e97b9&quot;,
+        &quot;actual_native_forwards&quot;: 1,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PRESERVED_FIRST_FORWARD_ENGINEERING_ASSERTION_FAILURE&quot;,
+        &quot;note&quot;: &quot;One actual native call occurred before the diagnostic unused-channel assertion. Preserved; not zero compute.&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;AA4_retry1&quot;,
+        &quot;receipt&quot;: &quot;AA4_retry1/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;80c07594d36b8e264576df0e3ed4e5bb41fc3663a9d01c07325318ed9bae92ff&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_ROAD_AA_OR_C_FOUR_FRAME_PILOT_PENDING_STRICT_INDEPENDENT_EVALUATION&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;C4_retry1&quot;,
+        &quot;receipt&quot;: &quot;C4_retry1/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;0ffaf920adca1665058df731e1fbf2adf5804dce43bbdb573772a1f6dd75d05f&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_ROAD_AA_OR_C_FOUR_FRAME_PILOT_PENDING_STRICT_INDEPENDENT_EVALUATION&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;tire130_baseline&quot;,
+        &quot;receipt&quot;: &quot;diagnostic130/baseline/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;8e97c2e0c27f814c20f16dbd11b3966bf04fdea17f3c17f7d746218922529abd&quot;,
+        &quot;actual_native_forwards&quot;: 2,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_LATEST_SEMANTIC_BASELINE4_PENDING_CACHED_EXACT_REPLAY&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;tire130_AA&quot;,
+        &quot;receipt&quot;: &quot;diagnostic130/AA/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;ecd5e62f24a1073af36f82d322f8f60312ebe362e2c7d9cb7b285d148dc6bd5b&quot;,
+        &quot;actual_native_forwards&quot;: 2,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_ROAD_AA_OR_C_FOUR_FRAME_PILOT_PENDING_STRICT_INDEPENDENT_EVALUATION&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;tire130_C&quot;,
+        &quot;receipt&quot;: &quot;diagnostic130/C/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;da1efc51206f79c609d779dfb8c704b40cb059bca0f71da5ae208f42176870ec&quot;,
+        &quot;actual_native_forwards&quot;: 2,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_ROAD_AA_OR_C_FOUR_FRAME_PILOT_PENDING_STRICT_INDEPENDENT_EVALUATION&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;D_support_qualification_v2&quot;,
+        &quot;receipt&quot;: &quot;support_qualification4_v2/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;f43eaa55dd0ce8eb0a112c44607350771055be9608d081b32d084a7e316bf460&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 8,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_FIXED_BUILD_SUPPORT_QUALIFICATION_ENGINEERING_PENDING_D_RENDER&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;D_fixed_support4_v2&quot;,
+        &quot;receipt&quot;: &quot;D4_v2/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;9635db892d148eeab2a5d12507587843684c2dfb5082d1587b2aac0e7f2508c2&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;RENDERED_ROAD_AA_OR_C_FOUR_FRAME_PILOT_PENDING_STRICT_INDEPENDENT_EVALUATION&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;E_existing_surface_qualification&quot;,
+        &quot;receipt&quot;: &quot;E4_appearance_qualification/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;c93b7b727ca03e741a4ee5597c8879e3bb66e41d63522f7641a8dade5b6cc9b7&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 8,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_EXISTING_SURFACE_QUALIFICATION_ENGINEERING_NO_FIT&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;E_public_zero_residual_identity4&quot;,
+        &quot;receipt&quot;: &quot;E_zero_identity4/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;b852a7c01c9fa4e8383de7a002b5e4c8c5bbad9f74d53b2c8741b52210a88a6e&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_PUBLIC_415_ZERO_DELTA_ALL4_KD_EXACT_BASELINE&quot;,
+        &quot;note&quot;: &quot;Fresh real public-API eight forwards, counted separately from baseline and smoke.&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;E_real_smoke_and_disposable_next2&quot;,
+        &quot;receipt&quot;: &quot;E_smoke_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;f425da4d44db8cf8a860abd65ce0217b037285e9b26b0690fd793c66a0467a5b&quot;,
+        &quot;actual_native_forwards&quot;: 20,
+        &quot;actual_native_or_dummy_backwards&quot;: 12,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 6,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_SMOKE_SAVE_PUBLIC_EVAL_AND_DISPOSABLE_NEXT2&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;E_fresh_restore_next2_and_train_public_parity&quot;,
+        &quot;receipt&quot;: &quot;E_restore_parity_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;b9da3c95229b0f628d61f527e2d5fc82bb9264400ff0e74952a02c7904587111&quot;,
+        &quot;actual_native_forwards&quot;: 6,
+        &quot;actual_native_or_dummy_backwards&quot;: 4,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 2,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_FRESH_FULL_RESTORE_NEXT2_AND_TRAIN_PUBLIC_PARITY&quot;,
+        &quot;note&quot;: &quot;Two same-delta direct128 K/D parity forwards plus four training forwards; fresh restoration begins bit exact, subsequent numeric differences are retained.&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;E_fresh_formal400&quot;,
+        &quot;receipt&quot;: &quot;E_formal400_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;3e9b1ea21ef5a8ab474ab86fcac54e5b2c2e66334d3f9674ac2a7cb3cbc7dbf0&quot;,
+        &quot;actual_native_forwards&quot;: 808,
+        &quot;actual_native_or_dummy_backwards&quot;: 800,
+        &quot;new_colour_residual_formal_updates&quot;: 400,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;COMPLETE_FIXED_400_PAIRED_COLOUR_RESIDUAL_BAKE_PENDING_GATES&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;F_bounded_mass_qualification&quot;,
+        &quot;receipt&quot;: &quot;F4_bounded_appearance_qualification/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;d94e0175f27633b932b5e40b1740c0232bad494bd14e467a7bc157f33f6131bb&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 8,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_BOUNDED_PROTECTION_MASS_FEASIBILITY_NO_FIT&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;F_public_zero_residual_identity4&quot;,
+        &quot;receipt&quot;: &quot;F_zero_identity4/receipt.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;127977812c808d16e6867b7ff1c7decb570ef4677cb1901fd4f6270335214555&quot;,
+        &quot;actual_native_forwards&quot;: 8,
+        &quot;actual_native_or_dummy_backwards&quot;: 0,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_PUBLIC_BOUNDED_F_ZERO_DELTA_ALL4_KD_EXACT_BASELINE&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;F_real_smoke_and_disposable_next2&quot;,
+        &quot;receipt&quot;: &quot;F_smoke_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;d61a8ad116339265b075ba7141028c061573a6f913fc3580d6abdbd3983b876c&quot;,
+        &quot;actual_native_forwards&quot;: 20,
+        &quot;actual_native_or_dummy_backwards&quot;: 12,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 6,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_SMOKE_SAVE_PUBLIC_EVAL_AND_DISPOSABLE_NEXT2&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;F_fresh_restore_next2_and_train_public_parity&quot;,
+        &quot;receipt&quot;: &quot;F_restore_parity_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;778f9b0a0474950a3df133b8ac7455d25d7da80e0528ce8ef287fc6fee394adb&quot;,
+        &quot;actual_native_forwards&quot;: 6,
+        &quot;actual_native_or_dummy_backwards&quot;: 4,
+        &quot;new_colour_residual_formal_updates&quot;: 0,
+        &quot;new_colour_residual_engineering_updates&quot;: 2,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;PASS_FRESH_FULL_RESTORE_NEXT2_AND_TRAIN_PUBLIC_PARITY&quot;,
+        &quot;note&quot;: &quot;&quot;
+      },
+      {
+        &quot;phase&quot;: &quot;F_fresh_formal400&quot;,
+        &quot;receipt&quot;: &quot;F_formal400_r1/returned.json&quot;,
+        &quot;receipt_sha256&quot;: &quot;726c9b39e756c87ee22066286974d9f68c60e8c7af0ee909ccde3db37f4f2201&quot;,
+        &quot;actual_native_forwards&quot;: 808,
+        &quot;actual_native_or_dummy_backwards&quot;: 800,
+        &quot;new_colour_residual_formal_updates&quot;: 400,
+        &quot;new_colour_residual_engineering_updates&quot;: 0,
+        &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+        &quot;status&quot;: &quot;COMPLETE_FIXED_400_PAIRED_BOUNDED_COLOUR_RESIDUAL_BAKE_PENDING_GATES&quot;,
+        &quot;note&quot;: &quot;&quot;
+      }
+    ],
+    &quot;not_executed&quot;: [
+      &quot;D qualification v1 GPU: superseded before execution&quot;,
+      &quot;D130 extra two forward diagnostic: cancelled before execution&quot;,
+      &quot;Any road-integration49 render&quot;,
+      &quot;Any original Gaussian or SH optimization&quot;
+    ],
+    &quot;original_source_Gaussians_optimized&quot;: false,
+    &quot;all_current_four_views_are_BUILD&quot;: true,
+    &quot;old_HELD105_137_is_historical_role_only&quot;: true,
+    &quot;source_C_targets_include_observation_anchoring&quot;: true,
+    &quot;future_or_unseen_view_protection_guarantee&quot;: false,
+    &quot;automatic_quality_adoption&quot;: false,
+    &quot;automatic49&quot;: false,
+    &quot;GPU_power&quot;: &quot;KEEP_ON&quot;,
+    &quot;shutdown&quot;: false,
+    &quot;reset_card&quot;: false,
+    &quot;created_unix&quot;: 1794036043.3440278
+  },
+  &quot;G_appendix&quot;: {
+    &quot;schema&quot;: &quot;ROAD_G_OPERATOR_ACTUAL_COMPUTE_APPENDIX_V1&quot;,
+    &quot;previous_ledger&quot;: &quot;road_execution_ledger_v1.json&quot;,
+    &quot;prior_native_forwards&quot;: 1747,
+    &quot;prior_backwards&quot;: 1656,
+    &quot;G_actual_native_forwards&quot;: 22,
+    &quot;G_actual_dummy_backwards&quot;: 22,
+    &quot;new_native_forwards_total&quot;: 1769,
+    &quot;new_native_or_dummy_backwards_total&quot;: 1678,
+    &quot;formal_colour_residual_updates_total&quot;: 800,
+    &quot;engineering_colour_residual_updates_total&quot;: 16,
+    &quot;original_Gaussian_SH_geometry_opacity_identity_updates&quot;: 0,
+    &quot;synthetic8F&quot;: &quot;Not executed; explicitly cancelled&quot;,
+    &quot;G_solver_render&quot;: &quot;Not executed&quot;,
+    &quot;all49&quot;: &quot;Not executed&quot;,
+    &quot;GPU_power&quot;: &quot;KEEP_ON&quot;
+  },
+  &quot;root_visual&quot;: null
+}</pre></details></section>
+<footer>状态：FULL_ROAD_SUPPORT_OCCLUSION_INTEGRATION_PENDING_NO_ALL49。构建于2026-11-07 07:45 UTC。本页不启动GPU、不发布中央viewer；GPU保持开机。</footer><section><h2>可见性核对的一手依据与迁移边界</h2><p><a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu">原作者光栅源码</a>按Gaussian／tile深度键排序；<a href="https://arxiv.org/abs/2402.00525v3">StopThePop（2024）</a>研究了单一view-space深度所带来的可见性伪影。这支持把当前残片的材质问题与真实三维首交分开核验，并不证明本例只有该根因。本轮未替换CUDA或接入新renderer，只在冻结资产上核对chart／ground首交；H2仍按实际失败报告。<a href="evidence/primary_source_visibility_context.json">实际迁移点与证据边界</a></p></section></main></body></html>

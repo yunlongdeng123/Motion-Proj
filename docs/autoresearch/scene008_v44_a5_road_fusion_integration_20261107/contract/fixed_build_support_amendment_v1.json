@@ -1,0 +1,22 @@
+{
+  "schema": "POSTHOC_FIXED_BUILD_ROAD_SUPPORT_ENGINEERING_V1",
+  "chronology": "Registered after actual AA/C four-view failure and before this qualification or D render; not an initial preregistration",
+  "evidence_trigger": "C vs latest baseline fails primary near seam, a6, original-road and nonroad preservation; C-vs-AA geometry is exact, so colour fitting alone cannot remove the added support effects",
+  "unchanged_evaluation_contract_sha256": "4560bb91f4cc3b27b89693acd0918f939d2ac07e9bcd7cbbc6e0574e885516cc",
+  "calibration_raws": [94, 105, 128, 137],
+  "states": ["keep", "delete"],
+  "information_role": "These four views are now BUILD calibration and diagnostic validation, not independent HELD evaluation",
+  "source_asset": "Exact original C40392 child rows with original geometry, relativeMip, opacity and colour",
+  "measurement": "Two differentiable constant-one auxiliary row features measure unnormalised native visible contribution mass inside road and inside frozen guard; no Gaussian or RGB variable requires grad",
+  "road_domain": "Original obs.road; DELETE additionally original obs.road_edit intersect original fixed ground_beneath_a37_proxy",
+  "guard": "Frozen nonroad geometry guard union original a5/a6 visible masks; KEEP additionally original a37 visible mask",
+  "selection": "Initial safe child rows = summed_inside_mass>0 AND summed_guard_mass==0, using exact zero, no threshold/colour/metric search",
+  "runtime": "One immutable checkpoint/asset/row-order-bound 3D child-row sidecar intersects only additional road.mask; same selected rows for every query and edit state",
+  "prohibited": ["query GT or query mask row selection", "screen-space RGB compositing", "old static pruning", "original road changes", "opacity fitting", "colour fitting", "threshold relaxation", "automatic49 release"],
+  "occlusion_caveat": "Removing rows can expose retained rows. A zero mass measured under the full added layer is not alone a proof of preservation after filtering. Actual D replay and frozen gates are mandatory; any refinement must preserve a monotone shrinking row set and be separately logged.",
+  "approved_initial_compute": {"qualification_native_forwards": 8, "dummy_feature_backwards": 8, "D_four_view_forwards_if_nonempty": 8, "optimizer_updates": 0},
+  "empty_result": "Do not render or invent a relaxed threshold to rescue an empty safe set",
+  "same_scene_scope": "Only measured calibration views until further verification; no unseen-camera or future-topology guarantee",
+  "human_verdict": null,
+  "GPU_power": "KEEP_ON"
+}

@@ -1,0 +1,119 @@
+{
+  "status": "PASS_CPU_CONTEXT_RENDERED_NO_METHOD_CHANGE",
+  "script_sha256": "c01c9e1966ef7edbd436d80ace8dc6cb25a770df2ee408cbf73b99da501f2680",
+  "actual_gpu_forwards": 0,
+  "actual_backwards": 0,
+  "actual_optimizer_updates": 0,
+  "interpretation_limits": [
+    "The fit mask excludes every labelled observed vehicle body pixel.",
+    "It can include visually dark road/shadow pixels; the original target is observed RGB there.",
+    "A dark source-road patch is not a clean-delete road target; these arrays alone do not assign every F stripe to a particular source shadow.",
+    "The output stripe overlaps the old body footprint in raw94 while the actual fit mask excludes that footprint; direct vehicle-body loss leakage is not demonstrated."
+  ],
+  "rows": [
+    {
+      "raw": 94,
+      "crop_xyxy": [
+        180,
+        230,
+        360,
+        320
+      ],
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/identity_supervision_audit_F400_v1/raw094_source_fit_context.png",
+      "sha256": "f6737bbad4783e4a8e835a705a24769f97c93892ccdf21638776c2d52359d87c",
+      "size": [
+        1620,
+        335
+      ],
+      "diagnostic_lower_patch_xyxy": [
+        225,
+        285,
+        305,
+        305
+      ],
+      "patch_fit_pixels": 0,
+      "patch_fit_actor37_pixels": 0,
+      "patch_fit_road_pixels": 0,
+      "patch_fit_target_luma_mean": null,
+      "patch_target_observed_max_abs": null
+    },
+    {
+      "raw": 105,
+      "crop_xyxy": [
+        150,
+        250,
+        380,
+        320
+      ],
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/identity_supervision_audit_F400_v1/raw105_source_fit_context.png",
+      "sha256": "2b0e0002869559f3e0010525e83fe2bfdb5b42ea801ae2b7077d84fe30b0ef33",
+      "size": [
+        2070,
+        275
+      ],
+      "diagnostic_lower_patch_xyxy": [
+        225,
+        285,
+        305,
+        305
+      ],
+      "patch_fit_pixels": 0,
+      "patch_fit_actor37_pixels": 0,
+      "patch_fit_road_pixels": 0,
+      "patch_fit_target_luma_mean": null,
+      "patch_target_observed_max_abs": null
+    },
+    {
+      "raw": 128,
+      "crop_xyxy": [
+        150,
+        250,
+        380,
+        320
+      ],
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/identity_supervision_audit_F400_v1/raw128_source_fit_context.png",
+      "sha256": "1b18315465a36caac2412365e4391159eb875179805bc177c0a8a8ccf4e25c5d",
+      "size": [
+        2070,
+        275
+      ],
+      "diagnostic_lower_patch_xyxy": [
+        225,
+        285,
+        305,
+        305
+      ],
+      "patch_fit_pixels": 306,
+      "patch_fit_actor37_pixels": 0,
+      "patch_fit_road_pixels": 306,
+      "patch_fit_target_luma_mean": 0.2262970084179461,
+      "patch_target_observed_max_abs": 0.0
+    },
+    {
+      "raw": 137,
+      "crop_xyxy": [
+        150,
+        250,
+        380,
+        320
+      ],
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/identity_supervision_audit_F400_v1/raw137_source_fit_context.png",
+      "sha256": "24960e5c904c3cdcb9f49f18e864f64eeaa7f6d3b2688783efa39a2dfa5ffb7f",
+      "size": [
+        2070,
+        275
+      ],
+      "diagnostic_lower_patch_xyxy": [
+        225,
+        285,
+        305,
+        305
+      ],
+      "patch_fit_pixels": 1550,
+      "patch_fit_actor37_pixels": 0,
+      "patch_fit_road_pixels": 1550,
+      "patch_fit_target_luma_mean": 0.35054304443047124,
+      "patch_target_observed_max_abs": 0.0
+    }
+  ]
+}

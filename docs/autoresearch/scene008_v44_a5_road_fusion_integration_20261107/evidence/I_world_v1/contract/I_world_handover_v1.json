@@ -1,0 +1,66 @@
+{
+  "schema": "I_FIXED_WORLD_BOUNDARY_COVERAGE_HANDOVER_V1",
+  "status": "PARENT_PREAUTHORIZED_MINIMAL128_137_KD_BEFORE_GPU",
+  "base": "Delivered21K Semantic-a5/V44 plus complete C40392 road with formal2000 fixed RGB and cached H2 visibility.",
+  "material_scene_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/formal_export2000_r1/scene_manifest.json",
+  "material_scene_manifest_sha256": "8be0e27540699ec5d9091a67725a798e6d542a38a2ff79029fb9ad9c43ba7f8a",
+  "material_asset_sha256": "1287d260b80196bf7f3f4555b77f4d4879ba6bc7e56c63dbe6ac098e66a02952",
+  "material_training_steps": 2000,
+  "comparison_parents": [
+    "same formal2000 C material + fixedH2, no coverage field",
+    "delivered21K without appended C road"
+  ],
+  "runtime_source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/world_boundary_road_coverage.py",
+  "runtime_source_sha256": "1d2c12393697c4f8dc011395fd05452dc0182cc5e9b9afa727f34a41efb695b3",
+  "proof_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/I_world_handover_v1/extent_and_gain_proof.json",
+  "proof_sha256": "3a13002883e7d6ef0bdeccec779ae468d94d817a6b1817a0af27d0db00f49577",
+  "gain_file": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/I_world_handover_v1/world_boundary_gain.npz",
+  "gain_sha256": "db7dcbed25ad6d7fba62bbf573136e5776a920fa5c7352d62846d209bfdfd6e2",
+  "band_m": 0.4,
+  "formula": "u=clip(min(x-near,y-lower,upper-y)/.4,0,1); gain=u*u*(3-2*u)",
+  "source_crop_planes_m": {
+    "near_x": 19.750000594049066,
+    "lower_y": -3.3500001571235396,
+    "upper_y": 2.7100001349769953
+  },
+  "sole_change": "Effective added-road alpha *= fixed world coverage after original relativeMip; original persistent tensors and H2 visibility unchanged.",
+  "initial_raw_ids": [
+    128,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "authorized_initial_forwards": 4,
+  "authorized_initial_backwards": 0,
+  "additional94_105_require_root_release": true,
+  "no_automatic49": true,
+  "no_band_grid": true,
+  "no_material_fit": true,
+  "no_trainable_parameters": true,
+  "original_evaluation_gates_and_domains_unchanged": true,
+  "require_actual_foreground_road_mass_exact_zero": true,
+  "require_original_prefix_and_persistent_geometry_RGB_opacity_identity_unchanged": true,
+  "expected_world_field": {
+    "child_rows": 40392,
+    "attenuated_rows": 6408,
+    "interior_exact_gain1_rows": 33984,
+    "min_gain": 0.0018437168328091502,
+    "max_gain": 1.0,
+    "no_far_end_or_internal_hole_bbox_taper": true
+  },
+  "boundary_limitations": [
+    "World source support authority, not road/vehicle ground truth.",
+    "Fixed row-centre coverage is not a new continuous-surface rasterizer.",
+    "Interior coverage retained does not guarantee seam improvement or parked-object preservation."
+  ],
+  "H3_chart_ground_first_variant": "CPU-only retained, not combined with I",
+  "Gaussian_updates": 0,
+  "material_updates": 0,
+  "intrinsic_opacity_updates": 0,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "GPU_stays_on": true,
+  "shutdown": false
+}

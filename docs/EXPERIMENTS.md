@@ -358,3 +358,9 @@
 - SCENE008-FULL5-RECONSTRUCTION-IDENTITY-20261107：[完整五身份10K、a5车顶恢复与可靠身份持久化](autoresearch/scene008_identity_edit_interface_20261107/index.html)；正常可辨的连续车顶/挡风玻璃结构已由代理查看，细节仍软；49 KEEP与同域CPU复算、原生math/拓扑/完整恢复/便携推理包等价验证通过，human_verdict=null。新正式10000、工程smoke＋恢复4683；配置、源角色、seed、资源和全部实账见报告。GPU保持开机，静态残影由v44处理。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
 
 - SCENE008-V44-FULL5-INTEGRATION-20261107：[v44＋a5车顶恢复、语义身份包与49帧对照](autoresearch/scene008_v44_full5_integration_20261107/index.html)；原v44背景/道路/C2/删除路径冻结，Full5当前语义a5以固定3D行集合接入；4帧→49 BUILD归属→4复放→49图像，车顶结构恢复且旧v44保护均过，94四项严格RGB改善失败及早段软化保留。303 native前向＋49贡献反向、0优化更新；17MB身份元数据包/CLI重放已取回校验，仍为候选/原v44默认。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+- SCENE008-V44-A5-ROAD-FUSION-INTEGRATION-20261107：[21K组件底座道路接入、AA/C与D至L固定控制](autoresearch/scene008_v44_a5_road_fusion_integration_20261107/index.html)；输入、资源、正反例、四帧接缝／银片／车辆保护及实际计数见run合同与报告。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。
+
+- SCENE008-FULL5-ROAD-INTEGRATION-WITHDRAWN-20261107：[单Full5源身份与道路接口诊断归档](autoresearch/scene008_full5_road_integration_20261107/index.html)；用户撤回该路线，保留41次真实kernel前向／0训练的原始结果和来源身份误删证据，不由历史报告自动恢复。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+- SCENE008-V44-A5-C49-RGB-20261107：[冻结21K底座、C49共享父RGB材质对照](autoresearch/scene008_v44_a5_c49_rgb_20261107/index.html)；C400初始化历史、2119父资格、600s真实生命周期、新正式2000、完整49对照、H2材质移植与取回账本均在报告；不把smoke或旧C/E/F算作本轮正式步数。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。

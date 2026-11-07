@@ -1,0 +1,40 @@
+{
+  "status": "READONLY_MODEL_SURFACE_INTERFACE_LOCATED_NO_VARIANT_IMPLEMENTED",
+  "sources": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/review/probe_chart_first_hit.py": "5d8ad231ac5f403a4acb0f984f773c42c927187da6c422d6186dc6383508d725",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/review/localize_lateral_domain.py": "3711e7154ed13b3b1ef617a789c52322ba47edc408054d60ff2be17d0d463d48",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/measured_ground_support_pool.npz": "6a7a762cfd4ee6cb89aad9bae5f39682e6e5f34ec85ee6d8f696713e065cceed",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json": "d434c59f51c234ed0dd837c0a151b259ae2bb68dfe57128341bde7d9e2bdbc99",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json": "0907eae9b2d24a645329e84ac54462dca0545345a71eb05d3095a81b81ef81de"
+  },
+  "C_manifest_world_to_model_equals_ground_bundle": true,
+  "C_manifest_anchor_equals_ground_bundle": true,
+  "meter_to_model_scale": 0.09999999999999999,
+  "C_scale": 0.09999999999999999,
+  "ground_plane_anchor": [
+    -0.00532795770677883,
+    0.018610331108169613,
+    0.9998126166651025,
+    0.06703996088270742
+  ],
+  "asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+  "posterior_sha256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+  "inputs_used_for_query_kernel": [
+    "canonical C2 xyz/UV/opacity/representation_kind",
+    "frozen actor6 model_from_local transform",
+    "camera K/model_to_camera",
+    "fixed ground LiDAR support pool + anchor plane"
+  ],
+  "outputs": [
+    "chart nearest camera-z depth + valid",
+    "ground supported camera-z depth + valid",
+    "chart_first/ground_first/near_contact/unknown"
+  ],
+  "current_script_GT_use": "Only its diagnostic ray-selection in main; extract intersection kernel and use all camera rays to avoid it.",
+  "limitations": [
+    "Open chart sheet, not closed ground-truth vehicle mesh",
+    "Non-chart 2778 canonical Gaussians have no chart triangle surface",
+    "No hit or unsupported ground remains unknown; not evidence road should cover",
+    "No candidate implementation or new GPU run performed"
+  ]
+}

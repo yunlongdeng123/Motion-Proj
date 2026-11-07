@@ -1,0 +1,19 @@
+{
+  "schema": "JOINT_OPERATOR_RAW_RGB_AND_GT_RESIDUAL_SEMANTICS_V1",
+  "operator_manifest_sha256": "6f1135d53400b0d6b8a40d54dfa302068ad3c49435701b0ca2e49c780fb6e6a2",
+  "operator_file_sha256": "b2b737dcab52369b337373405facb6b271e2b6357d8aeee4c43b78e8ab87a653",
+  "original_operator_keys": {
+    "baseline_J": "Float64 side means of baseline RGB signedjump; GT not subtracted",
+    "target_J": "Float64 side means of source C target RGB signedjump; GT not subtracted",
+    "signed_g": "Signed alphaT mean-plus minus mean-minus; same derivative for raw RGB and GT residual"
+  },
+  "residual_supplement": "signed_residual_J_supplement.npz",
+  "residual_supplement_sha256": "9b7965068fc6d1ae2792c924c8a960cf4a0a22754219310b802e8c9934b3c519",
+  "residual_definition": "RGB-GT in float32, then per-side float64 mean; operator derivative unchanged",
+  "no_solver_or_material_fitting_executed": true,
+  "synthetic8F_status": "CANCELLED_BEFORE_EXECUTION_BY_PARENT_SCOPE_CHANGE_TO_GEOMETRY",
+  "actual_native_forwards": 22,
+  "actual_dummy_backwards": 22,
+  "new_GPU_calls_in_this_supplement": 0,
+  "optimizer_updates": 0
+}

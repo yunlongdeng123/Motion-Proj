@@ -1,0 +1,56 @@
+{
+  "schema": "MODEL_FOREGROUND_WHOLE_PRIMITIVE_ROAD_CULLING_H4_V2",
+  "status": "REGISTERED_BEFORE_H2_GPU",
+  "base": "Delivered21K component scene: nativev44_10K+road1K+Full5_10K semantic-a5 assembly0K",
+  "source_SHA256": "9eb7fb2f86af8a276d7b1503f119a6551d566b975b430f865af234aa55daabc8",
+  "source_file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\road_fusion_integration\\foreground_road_culling_v2.py",
+  "pilot_raws": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "road_asset_sha256": "3afc6e25b7b152f851b4eb0de4a73e6d219c9526d75453d99097a31ddd5774c5",
+  "complete_asset_rows": 40392,
+  "method": "For each frozen model camera/actor-set, conservatively cull entire road children whose native alpha*T has any positive contribution on the baseline rendered foreground. Repeat monotonically to a zero-contribution fixed point; cap64, no silent fallback.",
+  "foreground": "Frozen baseline C2/a6 OR semantic-a5 alpha_T>0; also retaineda37 alpha_T>0 inKEEP. No observed RGB/mask is used in the selection.",
+  "thresholds": {
+    "foreground_alpha_strictly_gt": 0,
+    "road_child_foreground_mass_strictly_gt": 0,
+    "maximum_iterations": 64
+  },
+  "source_of_visibility": "An intermediate render of the same frozen3D scene. This is a conservative view-dependent visibility heuristic, not a proof of a physically exact surface first-hit.",
+  "state_dependence": "Same deterministic visibility policy forKEEP/DELETE; actual actors present determine culling. Full persistent asset/geometry/material values unchanged. No screenRGBcomposite or hand-authored edit mask.",
+  "cache": "Per registered camera/time/raw and edit actor set, invalid outside same frozen bound scene. Not a learned/per-edit background model.",
+  "optimization_updates": 0,
+  "probe": "One new leaf feature per road child; autograd only for its visible mass, all original physical scene tensors detached.",
+  "counting": "Record every baseline prepass, iterative joint raster, dummy backward and public forward separately. No prebooking proposed counts.",
+  "must_check": [
+    "Native ones feature equals roadalpha_T within1e-6",
+    "mass readout conservation relative1e-5",
+    "monotonic child masks",
+    "zero final roadalpha_T on model foreground",
+    "same original model/identity/road tensor bytes",
+    "actual four-frame output comparison"
+  ],
+  "evaluation": "Keep old4560 gate readings without rewriting failures. Additionally report C2/semantic5/retained37 foreground alpha and per-pixelRGB/depth differences vs21K baseline. Distinguish intended road/background takeover from retained foreground loss. Silver removal and seam quality still require actual images and fixed seam metrics.",
+  "limitations": [
+    "Only explicit model actor components are guarded; parked cars in native_static and other environment are not guaranteed protected.",
+    "Whole-child culling may remove too much road and leave silver fragments.",
+    "Novel-camera/continuous-view consistency has not been validated.",
+    "This is a new engineering candidate, not the unmodifiedC background control."
+  ],
+  "background_control": "Separate fullC geometry all49 RGB-only run remains unmodified and independently accounted.",
+  "no_automatic49": true,
+  "no_automatic_material_fit": true,
+  "GPU_stays_on": true,
+  "shutdown": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "previous_contract_sha256": "01fbd50470830ad654c9494c7d90ec9e05b074f565e9207df02470326f03638c",
+  "amendment": "Only the engineering fixed-point iteration cap16→64. No contribution threshold, foreground definition, evaluation mask or quality gate changes. H1 failed at105KEEP after3 public outputs; actual54F47dummyB retained. Earlier converged three cases may reuse their exact immutable masks and guards, with a fresh public render checking equality; all replay costs recorded."
+}

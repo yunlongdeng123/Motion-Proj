@@ -1,0 +1,252 @@
+{
+  "status": "FOUR_RAW_SEAM_POOL_FEASIBILITY_PASSED_FULL_QUALITY_GATES_FAILED",
+  "scope": {
+    "raws": [
+      94,
+      105,
+      128,
+      137
+    ],
+    "states": [
+      "keep",
+      "delete"
+    ],
+    "J_training_updates": 0,
+    "J_solver_calls": 1,
+    "J_actual_quality_forwards": 8,
+    "J_operator_forwards": 16,
+    "J_dummy_backwards": 16,
+    "J_affinity_forwards": 8,
+    "automatic_49_authorized": false
+  },
+  "original4560_gate_counts": {
+    "passed": 55,
+    "failed": 31,
+    "unsupported": 8
+  },
+  "failed_gate_categories": {
+    "J:protected_nonroad_RGB": 7,
+    "J:original_road_RGB": 8,
+    "J:nonroad_guard:alpha_pixel_max_abs": 8,
+    "J:nonroad_guard:depth_pixel_max_abs_m": 8
+  },
+  "original_pool_constraints": [
+    {
+      "name": "primary128",
+      "state": "keep",
+      "bins": 6,
+      "actual_original_score": 0.0046098431436500205,
+      "original_target": 0.004613534469778339,
+      "tightened_reserve_target": 0.004613434469778339,
+      "original_target_margin": 3.691326128318906e-06,
+      "tightened_reserve_margin": 3.5913261283186323e-06,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": true
+    },
+    {
+      "name": "world_near",
+      "state": "keep",
+      "bins": 24,
+      "actual_original_score": 0.0060366687951803515,
+      "original_target": 0.006036768960524972,
+      "tightened_reserve_target": 0.0060366689605249714,
+      "original_target_margin": 1.0016534462021359e-07,
+      "tightened_reserve_margin": 1.6534461994011096e-10,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": true
+    },
+    {
+      "name": "world_lateral",
+      "state": "keep",
+      "bins": 23,
+      "actual_original_score": 0.0036845797161652472,
+      "original_target": 0.0038325507547889394,
+      "tightened_reserve_target": 0.0038324507547889395,
+      "original_target_margin": 0.00014797103862369213,
+      "tightened_reserve_margin": 0.0001478710386236923,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": true
+    },
+    {
+      "name": "primary128",
+      "state": "delete",
+      "bins": 6,
+      "actual_original_score": 0.007602879321590687,
+      "original_target": 0.0076029783590153485,
+      "tightened_reserve_target": 0.007602878359015348,
+      "original_target_margin": 9.903742466139259e-08,
+      "tightened_reserve_margin": -9.625753388808889e-10,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": true
+    },
+    {
+      "name": "world_near",
+      "state": "delete",
+      "bins": 24,
+      "actual_original_score": 0.007150172627007123,
+      "original_target": 0.007150272171470027,
+      "tightened_reserve_target": 0.007150172171470026,
+      "original_target_margin": 9.954446290351415e-08,
+      "tightened_reserve_margin": -4.5553709675932863e-10,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": true
+    },
+    {
+      "name": "world_lateral",
+      "state": "delete",
+      "bins": 23,
+      "actual_original_score": 0.0035241014818471823,
+      "original_target": 0.00352419822717539,
+      "tightened_reserve_target": 0.0035240982271753903,
+      "original_target_margin": 9.674532820778264e-08,
+      "tightened_reserve_margin": -3.2546717920571566e-09,
+      "original_pass": true,
+      "tightened_reserve_pass_with_1e_9_tolerance": false
+    }
+  ],
+  "per_bin_tail_summary": [
+    {
+      "reference": "latest",
+      "state": "keep",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 17,
+        "regressed": 19,
+        "equal": 17
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 17,
+        "regressed": 19,
+        "within_1e_6": 17
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "keep",
+        "kind": "world",
+        "edge": "near_x",
+        "tangent_bin": 7,
+        "minus_pixels": 6,
+        "plus_pixels": 6,
+        "latest_score": 0.010828014463186264,
+        "H2_C2000_score": 0.03873467072844505,
+        "J_actual_score": 0.025800207629799843,
+        "delta_vs_latest": 0.014972193166613579
+      }
+    },
+    {
+      "reference": "latest",
+      "state": "delete",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 22,
+        "regressed": 22,
+        "equal": 9
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 22,
+        "regressed": 22,
+        "within_1e_6": 9
+      },
+      "worst_regression": {
+        "raw": 137,
+        "state": "delete",
+        "kind": "world",
+        "edge": "near_x",
+        "tangent_bin": 7,
+        "minus_pixels": 6,
+        "plus_pixels": 6,
+        "latest_score": 0.010828014463186264,
+        "H2_C2000_score": 0.038735341280698776,
+        "J_actual_score": 0.025800881907343864,
+        "delta_vs_latest": 0.0149728674441576
+      }
+    },
+    {
+      "reference": "H2_C2000",
+      "state": "keep",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 18,
+        "regressed": 2,
+        "equal": 33
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 18,
+        "regressed": 2,
+        "within_1e_6": 33
+      },
+      "worst_regression": {
+        "raw": 128,
+        "state": "keep",
+        "kind": "primary128",
+        "edge": "near_x",
+        "tangent_bin": 12,
+        "minus_pixels": 4,
+        "plus_pixels": 6,
+        "latest_score": 0.0021537907887250185,
+        "H2_C2000_score": 0.0008385851979255676,
+        "J_actual_score": 0.0008864526753313839,
+        "delta_vs_H2_C2000": 4.7867477405816317e-05
+      }
+    },
+    {
+      "reference": "H2_C2000",
+      "state": "delete",
+      "bins": 53,
+      "strict_sign_counts": {
+        "improved": 27,
+        "regressed": 3,
+        "equal": 23
+      },
+      "diagnostic_1e_6_counts": {
+        "improved": 27,
+        "regressed": 3,
+        "within_1e_6": 23
+      },
+      "worst_regression": {
+        "raw": 128,
+        "state": "delete",
+        "kind": "primary128",
+        "edge": "near_x",
+        "tangent_bin": 12,
+        "minus_pixels": 4,
+        "plus_pixels": 6,
+        "latest_score": 0.0021537907887250185,
+        "H2_C2000_score": 0.0008385851979255676,
+        "J_actual_score": 0.0008864526753313839,
+        "delta_vs_H2_C2000": 4.7867477405816317e-05
+      }
+    }
+  ],
+  "same_H2_geometry": true,
+  "same_H2_foreground_RGB_pixel_max_abs": 0.0,
+  "H2_foreground_union_newroad_mass_all_zero": true,
+  "photo_table": "evidence/J_actual_photo_two_references.csv",
+  "source_evidence": [
+    {
+      "path": "evidence/review/J_candidate_fixed4560_cpu.json",
+      "sha256": "f64ba5b2ba744fa802c15b00a82d4024becb6d5efbbaf464dd0aceaa8f3643ec"
+    },
+    {
+      "path": "evidence/review/J_actual_pools_bins_cpu_v1.json",
+      "sha256": "7ed23121e2bc1b50b5a2c469eaad7119793d74e431260ce25eaea2ec532e1a43"
+    },
+    {
+      "path": "evidence/review/J_components_vs_latest_v1.json",
+      "sha256": "b197a6f9c27299fc57f7049a544891d60f9c1d128ff261d5fd088ec62f735b3a"
+    },
+    {
+      "path": "evidence/review/J_components_vs_H2_C2000_v1.json",
+      "sha256": "c290a5e509a851cb405216e31121e266bea57e0d45c07352ccede2b471753158"
+    }
+  ],
+  "quality_accepted": false,
+  "agent_visual_acceptance": "PARENT_REVIEW_SEPARATE",
+  "human_verdict": null,
+  "limits": [
+    "Pooled seam constraints allow local bin regressions; 53 bins/state are not independent observations.",
+    "H2 equality refers to the fixed H2+C2000 geometry and foreground domains; geometry differs from delivered21K.",
+    "The original photo/nonroad geometry failures are retained; no 49-frame J claim is made.",
+    "The LP safety reserve is reported separately from the original gates; one real lateral pool exceeds reserve by about3.25e-9."
+  ]
+}

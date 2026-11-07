@@ -1,0 +1,37 @@
+{
+  "status": "PASS_FRESH_FULL_RESTORE_NEXT2_AND_TRAIN_PUBLIC_PARITY",
+  "restore_start_bit_exact": true,
+  "native_parity_forwards": 2,
+  "next2_training_forwards": 4,
+  "actual_native_forwards": 6,
+  "actual_native_backwards": 4,
+  "actual_optimizer_updates": 2,
+  "restored_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E_restore_parity_r1/restored_state6.pth",
+  "control_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E_smoke_r1/disposable_state6.pth",
+  "next2_delta_max_abs_difference": 3.725290298461914e-09,
+  "next2_Adam_moment_differences": [
+    {
+      "parameter": 0,
+      "field": "step",
+      "max_abs_difference": 0.0
+    },
+    {
+      "parameter": 0,
+      "field": "exp_avg",
+      "max_abs_difference": 5.684341886080802e-14
+    },
+    {
+      "parameter": 0,
+      "field": "exp_avg_sq",
+      "max_abs_difference": 3.3881317890172014e-21
+    }
+  ],
+  "next2_loss_max_abs_difference": 0.0,
+  "next2_parameter_tolerance": 1e-06,
+  "next2_Adam_tolerance": 1e-08,
+  "next2_raw_schedule_sampler_RNG_exact": true,
+  "next2_complete_bitwise_equality_claim": false,
+  "all_original_models_and_files_unchanged": true,
+  "formal_not_started_by_this_GPU_worker": true,
+  "fit_contract_sha256": "62be3c0ddde3ec5421954a1e3c28d4813c9d713def0221204510d33d4c2ed6f1"
+}

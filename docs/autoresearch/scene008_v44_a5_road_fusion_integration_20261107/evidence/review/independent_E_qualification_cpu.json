@@ -1,0 +1,597 @@
+{
+  "status": "PASS_INDEPENDENT_CPU_E_QUALIFICATION_AND_COVERAGE",
+  "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/qualification_manifest.json",
+  "manifest_sha256": "48283b8f375d504553e827bdc3ba2bd846414f6e807c8c0a22520923a7686dae",
+  "safe_rows": {
+    "native_static": 15262,
+    "oldroad": 19114
+  },
+  "point_mass_hashes": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/094_keep.npz": "91d8d503da8fddd8671cccae49faa67a2e2485fa10100adb503f13e2e34b4d0f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/094_delete.npz": "c61c127c89c9951478c9251eeaef838360aa6fa61111f7e258df38d51a7a499e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/105_keep.npz": "05a473f1418f5cbb7faf2380b361c4b37b518fd23bc2ebbc74d8a05940598f8a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/105_delete.npz": "980ac063b2f582cc13dfcf0a2303b1c9d45251b73c5d5c1612d48d74ad6a11cb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/128_keep.npz": "e190742dce20c4ec7307cb439fbb498b5bd95547872b82627732d87e2bdac00b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/128_delete.npz": "408af944f33d9490ab340e2b59c845a68fae106bd4f8ff628ec46df10052aec0",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/137_keep.npz": "18b28ee27a9b9ac1cd7816fc5645c8ed9b97d512312aa68ed04f892da5a79fd1",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/137_delete.npz": "b02b799e7179dc54213d29069087757ffa455e9d6fc3058b885cb8d54859552c"
+  },
+  "all8_mass_aggregate_exact_saved_selection": true,
+  "strict_predicate_recomputed": true,
+  "safe_guard_mass_zero_in_all8_measured_states": true,
+  "coverage_recompute_max_absolute_error": 4.656612873077393e-10,
+  "coverage": [
+    {
+      "raw": 94,
+      "state": "keep",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 21188,
+          "safe_mass": 3400.1737951941495,
+          "safe_static_mass": 208.92925555865696,
+          "safe_road_mass": 3191.2445396354924,
+          "total_branch_mass": 18152.976185870935,
+          "baseline_joint_alpha_mass": 21047.495144188404,
+          "safe_fraction_of_joint_alpha_mass": 0.16154766977737012
+        },
+        {
+          "domain": "guard",
+          "pixels": 137665,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 71622.46474432434,
+          "baseline_joint_alpha_mass": 96252.98627839936,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 21188,
+          "safe_mass": 3400.173795276106,
+          "safe_static_mass": 208.92925555865696,
+          "safe_road_mass": 3191.244539717449,
+          "total_branch_mass": 18152.976187402866,
+          "baseline_joint_alpha_mass": 21047.495144188404,
+          "safe_fraction_of_joint_alpha_mass": 0.161547669781264
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    },
+    {
+      "raw": 94,
+      "state": "delete",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 27634,
+          "safe_mass": 4297.679495301108,
+          "safe_static_mass": 212.93735667847383,
+          "safe_road_mass": 4084.7421386226333,
+          "total_branch_mass": 27470.36004879868,
+          "baseline_joint_alpha_mass": 27472.014116704464,
+          "safe_fraction_of_joint_alpha_mass": 0.15643845686173724
+        },
+        {
+          "domain": "guard",
+          "pixels": 124463,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 77334.7560990006,
+          "baseline_joint_alpha_mass": 82953.2350462894,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 21188,
+          "safe_mass": 3547.3562707070855,
+          "safe_static_mass": 209.87188916434323,
+          "safe_road_mass": 3337.4843815427425,
+          "total_branch_mass": 21026.54405307375,
+          "baseline_joint_alpha_mass": 21028.19809603691,
+          "safe_fraction_of_joint_alpha_mass": 0.16869520890501977
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 17483,
+          "safe_mass": 3414.4877364995955,
+          "safe_static_mass": 228.28355994121267,
+          "safe_road_mass": 3186.2041765583826,
+          "total_branch_mass": 14718.701849626947,
+          "baseline_joint_alpha_mass": 17373.275313675404,
+          "safe_fraction_of_joint_alpha_mass": 0.19653678853588855
+        },
+        {
+          "domain": "guard",
+          "pixels": 142288,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 69038.54642244751,
+          "baseline_joint_alpha_mass": 101130.5438434477,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 17483,
+          "safe_mass": 3414.487736226718,
+          "safe_static_mass": 228.28355993655606,
+          "safe_road_mass": 3186.2041762901617,
+          "total_branch_mass": 14718.701892380412,
+          "baseline_joint_alpha_mass": 17373.275313675404,
+          "safe_fraction_of_joint_alpha_mass": 0.1965367885201818
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 71,
+          "safe_mass": 0.03625843394547701,
+          "safe_static_mass": 0.03625843394547701,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 63.87506296547872,
+          "baseline_joint_alpha_mass": 70.28520435094833,
+          "safe_fraction_of_joint_alpha_mass": 0.0005158757704456726
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 96,
+          "safe_mass": 0.01220208071754314,
+          "safe_static_mass": 0.01220208071754314,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 85.35998540538935,
+          "baseline_joint_alpha_mass": 93.73810517787933,
+          "safe_fraction_of_joint_alpha_mass": 0.00013017204363570422
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 24767,
+          "safe_mass": 4708.273498513483,
+          "safe_static_mass": 235.57045322477387,
+          "safe_road_mass": 4472.703045288709,
+          "total_branch_mass": 24583.612938741913,
+          "baseline_joint_alpha_mass": 24629.778434097767,
+          "safe_fraction_of_joint_alpha_mass": 0.1911618292105824
+        },
+        {
+          "domain": "guard",
+          "pixels": 128359,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 74291.3355149052,
+          "baseline_joint_alpha_mass": 87150.243089139,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 17483,
+          "safe_mass": 3556.263887135588,
+          "safe_static_mass": 229.30787968869842,
+          "safe_road_mass": 3326.9560074468895,
+          "total_branch_mass": 17301.93307212299,
+          "baseline_joint_alpha_mass": 17348.07634317875,
+          "safe_fraction_of_joint_alpha_mass": 0.20499471046736017
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 71,
+          "safe_mass": 0.03625843394547701,
+          "safe_static_mass": 0.03625843394547701,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 70.22595345538139,
+          "baseline_joint_alpha_mass": 70.22595018148422,
+          "safe_fraction_of_joint_alpha_mass": 0.0005163110481492197
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 96,
+          "safe_mass": 0.01220208071754314,
+          "safe_static_mass": 0.01220208071754314,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 92.79201802364628,
+          "baseline_joint_alpha_mass": 92.79202049970627,
+          "safe_fraction_of_joint_alpha_mass": 0.0001314992458600658
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 24563,
+          "safe_mass": 3732.1836894843063,
+          "safe_static_mass": 184.3307678363856,
+          "safe_road_mass": 3547.852921647921,
+          "total_branch_mass": 22317.469323356156,
+          "baseline_joint_alpha_mass": 24422.96773290634,
+          "safe_fraction_of_joint_alpha_mass": 0.15281450355665582
+        },
+        {
+          "domain": "guard",
+          "pixels": 131376,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 78044.1719864119,
+          "baseline_joint_alpha_mass": 89260.69335077843,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 24563,
+          "safe_mass": 3732.183689070559,
+          "safe_static_mass": 184.33076780820582,
+          "safe_road_mass": 3547.8529212623534,
+          "total_branch_mass": 22317.469338205163,
+          "baseline_joint_alpha_mass": 24422.96773290634,
+          "safe_fraction_of_joint_alpha_mass": 0.1528145035397149
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 69,
+          "safe_mass": 0.18363250326001435,
+          "safe_static_mass": 0.18363250326001435,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 64.03288303665744,
+          "baseline_joint_alpha_mass": 68.5533863902092,
+          "safe_fraction_of_joint_alpha_mass": 0.0026786788068319375
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 68,
+          "safe_mass": 0.18363250326001435,
+          "safe_static_mass": 0.18363250326001435,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 63.04286666883257,
+          "baseline_joint_alpha_mass": 67.56337028741837,
+          "safe_fraction_of_joint_alpha_mass": 0.002717929885362903
+        }
+      ]
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 28739,
+          "safe_mass": 4702.83125815854,
+          "safe_static_mass": 194.83156890983025,
+          "safe_road_mass": 4507.99968924871,
+          "total_branch_mass": 28596.53123699182,
+          "baseline_joint_alpha_mass": 28596.53066456318,
+          "safe_fraction_of_joint_alpha_mass": 0.16445460861398437
+        },
+        {
+          "domain": "guard",
+          "pixels": 120890,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 77251.46138396485,
+          "baseline_joint_alpha_mass": 78552.8859553202,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 24563,
+          "safe_mass": 3896.6088538138893,
+          "safe_static_mass": 184.34502392029307,
+          "safe_road_mass": 3712.2638298935963,
+          "total_branch_mass": 24421.524085215642,
+          "baseline_joint_alpha_mass": 24421.523514688015,
+          "safe_fraction_of_joint_alpha_mass": 0.15955633773094965
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 69,
+          "safe_mass": 0.18363250326001435,
+          "safe_static_mass": 0.18363250326001435,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 68.52517518028168,
+          "baseline_joint_alpha_mass": 68.52517509460449,
+          "safe_fraction_of_joint_alpha_mass": 0.002679781598609489
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 68,
+          "safe_mass": 0.18363250326001435,
+          "safe_static_mass": 0.18363250326001435,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 67.53515876332955,
+          "baseline_joint_alpha_mass": 67.53515899181366,
+          "safe_fraction_of_joint_alpha_mass": 0.0027190652395187747
+        }
+      ]
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 29048,
+          "safe_mass": 2920.51174287699,
+          "safe_static_mass": 110.45807986950757,
+          "safe_road_mass": 2810.0536630074826,
+          "total_branch_mass": 26858.190397055492,
+          "baseline_joint_alpha_mass": 28901.339915037155,
+          "safe_fraction_of_joint_alpha_mass": 0.10105108453319388
+        },
+        {
+          "domain": "guard",
+          "pixels": 128104,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 77064.94612761826,
+          "baseline_joint_alpha_mass": 85950.09096672153,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 29048,
+          "safe_mass": 2920.511742624487,
+          "safe_static_mass": 110.45807987777488,
+          "safe_road_mass": 2810.0536627467122,
+          "total_branch_mass": 26858.19036740093,
+          "baseline_joint_alpha_mass": 28901.339915037155,
+          "safe_fraction_of_joint_alpha_mass": 0.10105108452445716
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 166,
+          "safe_mass": 0.1640223214053549,
+          "safe_static_mass": 0.1640223214053549,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 159.6172965540709,
+          "baseline_joint_alpha_mass": 164.8604571223259,
+          "safe_fraction_of_joint_alpha_mass": 0.0009949160900582174
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 214,
+          "safe_mass": 0.09375084539351519,
+          "safe_static_mass": 0.09375084539351519,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 208.31844991608887,
+          "baseline_joint_alpha_mass": 208.31845080852509,
+          "safe_fraction_of_joint_alpha_mass": 0.00045003620672892696
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "domains": [
+        {
+          "domain": "inside",
+          "pixels": 31037,
+          "safe_mass": 3824.887430205597,
+          "safe_static_mass": 119.18280137930572,
+          "safe_road_mass": 3705.7046288262914,
+          "total_branch_mass": 30887.591662341372,
+          "baseline_joint_alpha_mass": 30887.591521143913,
+          "safe_fraction_of_joint_alpha_mass": 0.12383249200855605
+        },
+        {
+          "domain": "guard",
+          "pixels": 121752,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 78333.61322359732,
+          "baseline_joint_alpha_mass": 79203.85789405322,
+          "safe_fraction_of_joint_alpha_mass": 0.0
+        },
+        {
+          "domain": "original_road",
+          "pixels": 29048,
+          "safe_mass": 3593.061639647153,
+          "safe_static_mass": 111.89475491673852,
+          "safe_road_mass": 3481.166884730414,
+          "total_branch_mass": 28898.962840722073,
+          "baseline_joint_alpha_mass": 28898.96273058653,
+          "safe_fraction_of_joint_alpha_mass": 0.12433185485388626
+        },
+        {
+          "domain": "world_registered_near",
+          "pixels": 166,
+          "safe_mass": 0.16402232117252424,
+          "safe_static_mass": 0.16402232117252424,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 164.8207641476646,
+          "baseline_joint_alpha_mass": 164.82075345516205,
+          "safe_fraction_of_joint_alpha_mass": 0.000995155753957556
+        },
+        {
+          "domain": "world_registered_lateral",
+          "pixels": 214,
+          "safe_mass": 0.09375084539351519,
+          "safe_static_mass": 0.09375084539351519,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 208.31845043111025,
+          "baseline_joint_alpha_mass": 208.31845080852509,
+          "safe_fraction_of_joint_alpha_mass": 0.00045003620672892696
+        },
+        {
+          "domain": "primary128_registered_near",
+          "pixels": 0,
+          "safe_mass": 0.0,
+          "safe_static_mass": 0.0,
+          "safe_road_mass": 0.0,
+          "total_branch_mass": 0.0,
+          "baseline_joint_alpha_mass": 0.0,
+          "safe_fraction_of_joint_alpha_mass": null
+        }
+      ]
+    }
+  ],
+  "primary128_68px": [
+    {
+      "raw": 128,
+      "state": "keep",
+      "domain": "primary128_registered_near",
+      "pixels": 68,
+      "safe_mass": 0.18363250326001435,
+      "safe_static_mass": 0.18363250326001435,
+      "safe_road_mass": 0.0,
+      "total_branch_mass": 63.04286666883257,
+      "baseline_joint_alpha_mass": 67.56337028741837,
+      "safe_fraction_of_joint_alpha_mass": 0.002717929885362903
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "domain": "primary128_registered_near",
+      "pixels": 68,
+      "safe_mass": 0.18363250326001435,
+      "safe_static_mass": 0.18363250326001435,
+      "safe_road_mass": 0.0,
+      "total_branch_mass": 67.53515876332955,
+      "baseline_joint_alpha_mass": 67.53515899181366,
+      "safe_fraction_of_joint_alpha_mass": 0.0027190652395187747
+    }
+  ],
+  "native_static_checkpoint_core_tensor_hash": "317e1776e24ebdfa065336e9b74f14a071a254b2ec2398f2302fe6f628de4d1b",
+  "oldroad_checkpoint_repair_state_hash": "dab42d5e3e618fda82757c833fd53328524a546890a0eb55d31b0f8a32ec6f59",
+  "source_model_binding_and_frozen_baseline_inputs_verified": true,
+  "oldroad_final_GPU_fine_colour_hash_role": "preserved runtime before/after fingerprint; not independently recomputed with CPU GEMM",
+  "calibration_cost_only": {
+    "joint_forwards": 8,
+    "dummy_backwards": 8
+  },
+  "new_GPU_forwards_for_this_audit": 0,
+  "fit_steps": 0,
+  "model_updates": 0,
+  "cuda_initialized": false,
+  "limits": [
+    "Four calibrated BUILD views only, not independent view generalization.",
+    "Zero guard contribution at fixed geometry makes row RGB changes invisible in those measured guard pixels.",
+    "Mass coverage is representational leverage, not a guarantee of fitting quality or seam improvement."
+  ],
+  "seconds": 2.1621482372283936
+}

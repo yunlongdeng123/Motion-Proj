@@ -1,0 +1,75 @@
+{
+  "status": "RELEASED_FRESH_CWARM0_ADAM0_AFTER_ACTUAL_600S_LIFECYCLE",
+  "smoke": {
+    "status": "PASS_REAL600S_C49_SMOKE_SAVE_EVAL_DISPOSABLE_NEXT2",
+    "smoke_updates": 1992,
+    "disposable_updates": 2,
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/smoke600s_r1/state1992.pth",
+    "disposable_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/smoke600s_r1/disposable_state1994.pth",
+    "actual_training_seconds_before_disposable": 600.2084789276123,
+    "formal_not_started": true,
+    "actual_optimizer_updates": 1994,
+    "actual_native_forwards": 4012,
+    "actual_native_backwards": 3988,
+    "original_scene_Gaussian_SH_opacity_geometry_identity_updates": 0,
+    "only_new_C_parent_RGB_updates": 1994,
+    "eligible_parents": 2119,
+    "parent_RGB_bounds": [
+      0,
+      1
+    ],
+    "RGB_min": 0.0,
+    "RGB_max": 1.0,
+    "training_contract_sha256": "f56f2cc76eeadf1f7e1d5b4bb606897d4965d87b222941f5de81ae34ae7f3bd0",
+    "source_and_target_guards_unchanged": true,
+    "seconds": 669.3859424591064,
+    "max_reserved_cuda_bytes": 4836032512,
+    "quality_accepted": false,
+    "all49_auto_release": false,
+    "shutdown": false,
+    "reset_card": false
+  },
+  "fresh_restore_gate": {
+    "status": "PASS_C49_600S_FRESH_FULL_RESTORE_AND_NEXT2",
+    "initial_restore_bitexact": true,
+    "saved_public_RGB_parity_exact": true,
+    "actual_native_forwards": 6,
+    "actual_native_backwards": 4,
+    "actual_optimizer_updates": 2,
+    "restored_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/smoke_freshrestore_r1/restored_state1994.pth",
+    "next2_RGB_max_abs_difference": 0.0,
+    "next2_Adam_differences": [
+      {
+        "parameter": 0,
+        "field": "step",
+        "max_abs_difference": 0.0
+      },
+      {
+        "parameter": 0,
+        "field": "exp_avg",
+        "max_abs_difference": 2.842170943040401e-14
+      },
+      {
+        "parameter": 0,
+        "field": "exp_avg_sq",
+        "max_abs_difference": 0.0
+      }
+    ],
+    "next2_loss_max_abs_difference": 0.0,
+    "next2_sampler_and_all_RNG_exact": true,
+    "next2_bitwise_equality_claim": false,
+    "RGB_numerical_tolerance": 1e-06,
+    "Adam_numerical_tolerance": 1e-08,
+    "all_original_scene_and_source_guards_unchanged": true,
+    "formal_started_by_this_worker": false
+  },
+  "formal_start": 0,
+  "authorized_stop": 2000,
+  "intermediate_node": 500,
+  "further_nodes_require_root_release": [
+    5000,
+    10000
+  ],
+  "quality_adoption": false,
+  "shutdown": false
+}

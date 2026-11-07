@@ -1,0 +1,770 @@
+{
+  "status": "CPU_DIAGNOSTIC_ONLY_LIPSCHITZ_CAPACITY_SPECTRUM",
+  "input_hashes": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz": "45599dac31823f286103cdab9fe77c7d598636f82c1b42da03f445546e224a9a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz": "a34453005c56e5f69033037e3bc1ac845418e5993cca610c8641cb10e8dba259",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz": "108d8c673fba6c08e78dc14630ba5019abb68c58ff31ba43bb48b097bd0c8528",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/128_keep.npz": "e190742dce20c4ec7307cb439fbb498b5bd95547872b82627732d87e2bdac00b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/E4_appearance_qualification/point_mass/128_delete.npz": "408af944f33d9490ab340e2b59c845a68fae106bd4f8ff628ec46df10052aec0"
+  },
+  "qualification_manifest_sha256": "48283b8f375d504553e827bdc3ba2bd846414f6e807c8c0a22520923a7686dae",
+  "protection_original_pixel_counts": [
+    {
+      "raw": 94,
+      "a5_upper": 471,
+      "a6_RGB": 1016,
+      "a37_KEEP_RGB": 14434,
+      "protected_nonroad": 115391
+    },
+    {
+      "raw": 105,
+      "a5_upper": 2091,
+      "a6_RGB": 1042,
+      "a37_KEEP_RGB": 14296,
+      "protected_nonroad": 118864
+    },
+    {
+      "raw": 128,
+      "a5_upper": 0,
+      "a6_RGB": 506,
+      "a37_KEEP_RGB": 6299,
+      "protected_nonroad": 117833
+    },
+    {
+      "raw": 137,
+      "a5_upper": 0,
+      "a6_RGB": 384,
+      "a37_KEEP_RGB": 4449,
+      "protected_nonroad": 118542
+    }
+  ],
+  "N_min": 384,
+  "per_domain_MAE_regression_bound": 1e-06,
+  "full_L1_budget": 0.001152,
+  "normalized_y_budget": 0.000384,
+  "y_definition": "y_r=||deltaRGB_r||_1/3 in[0,1] under deltaRGB channel bounds[-1,1]",
+  "proof": [
+    "Geometry/opacity/masks/depth-sort/environment are fixed.",
+    "Selected-row clamp_min(c+delta,0) is1-Lipschitz and original c>=0, so each row color L1 change<=||delta||1.",
+    "Every measured original protection domain is a subset of its corresponding registered guard.",
+    "outside_sum sums alphaT across union guards and all8 views/states, so each domain RGB MAE regression<=sum(outside_sum*||delta||1)/(3*Ndomain).",
+    "Budget<=3*Nmin*1e-6 thus conservatively bounds each measured original protection-domain MAE regression by1e-6."
+  ],
+  "optimization_role": "Exact continuous-amplitude fractional-knapsack LP for operator leverage; whole-row greedy is feasible lower bound, not claimed integer optimum.",
+  "results": {
+    "keep": {
+      "free_primary_mass": 0.18363250326001435,
+      "free_primary_contributing_rows": 18,
+      "positive_outside_primary_contributing_rows": 1676,
+      "positive_outside_ratio_quantiles": {
+        "0": 8.112365542362287e-07,
+        "0.1": 0.0012139861370342002,
+        "0.5": 0.03791185360701134,
+        "0.9": 0.49220788073013066,
+        "0.95": 0.8715178576409516,
+        "0.99": 1.5602858744782977,
+        "1": 1002.1018132356071
+      },
+      "continuous_amplitude_LP_optimal_primary_mass": 0.20090230550213434,
+      "continuous_amplitude_LP_full_positive_rows": 3,
+      "fractional_next_row": 321359,
+      "fractional_next_amplitude": 0.08478940488144056,
+      "whole_row_greedy_feasible_primary_mass": 0.1947778319263307,
+      "whole_row_greedy_positive_rows": 5,
+      "whole_row_greedy_outside_cost": 0.00013572394209404592,
+      "primary_mean_RGB_change_Lipschitz_upper_bound": 0.0029544456691490343,
+      "top_primary_to_outside_rows": [
+        {
+          "primary_mass": 0.009475835599005222,
+          "outside_sum": 9.455960935156327e-06,
+          "ratio": 1002.1018132356071,
+          "branch": "native_static",
+          "local_row_id": 497989
+        },
+        {
+          "primary_mass": 0.0007733097299933434,
+          "outside_sum": 1.2477247764763888e-05,
+          "ratio": 61.977588693653466,
+          "branch": "native_static",
+          "local_row_id": 689014
+        },
+        {
+          "primary_mass": 0.0003615057503338903,
+          "outside_sum": 1.5407911178044742e-05,
+          "ratio": 23.462346463225476,
+          "branch": "native_static",
+          "local_row_id": 704372
+        },
+        {
+          "primary_mass": 0.07853753864765167,
+          "outside_sum": 0.004088469315320253,
+          "ratio": 19.209521361296986,
+          "branch": "native_static",
+          "local_row_id": 321359
+        },
+        {
+          "primary_mass": 0.13470327854156494,
+          "outside_sum": 0.014373281272128224,
+          "ratio": 9.371783379956057,
+          "branch": "native_static",
+          "local_row_id": 86124
+        },
+        {
+          "primary_mass": 0.0003957737935706973,
+          "outside_sum": 6.250134902074933e-05,
+          "ratio": 6.332244019873995,
+          "branch": "native_static",
+          "local_row_id": 650560
+        },
+        {
+          "primary_mass": 0.011425992473959923,
+          "outside_sum": 0.0021800489630550146,
+          "ratio": 5.241163234218416,
+          "branch": "native_static",
+          "local_row_id": 746067
+        },
+        {
+          "primary_mass": 0.011603321880102158,
+          "outside_sum": 0.0026983185671269894,
+          "ratio": 4.300204587205836,
+          "branch": "native_static",
+          "local_row_id": 857228
+        },
+        {
+          "primary_mass": 0.014489231631159782,
+          "outside_sum": 0.003673069877550006,
+          "ratio": 3.944719843125969,
+          "branch": "native_static",
+          "local_row_id": 713240
+        },
+        {
+          "primary_mass": 0.00013890379341319203,
+          "outside_sum": 3.588147319533164e-05,
+          "ratio": 3.8711842364171414,
+          "branch": "native_static",
+          "local_row_id": 688205
+        },
+        {
+          "primary_mass": 0.0011203071335330606,
+          "outside_sum": 0.0003588000172385364,
+          "ratio": 3.1223720170232356,
+          "branch": "native_static",
+          "local_row_id": 681195
+        },
+        {
+          "primary_mass": 0.015035461634397507,
+          "outside_sum": 0.005542327276998549,
+          "ratio": 2.712842616998968,
+          "branch": "native_static",
+          "local_row_id": 942235
+        },
+        {
+          "primary_mass": 0.0007093596505001187,
+          "outside_sum": 0.00028793805904570036,
+          "ratio": 2.4635841918609724,
+          "branch": "native_static",
+          "local_row_id": 703576
+        },
+        {
+          "primary_mass": 0.09899727255105972,
+          "outside_sum": 0.04031939583364874,
+          "ratio": 2.4553262891018095,
+          "branch": "native_static",
+          "local_row_id": 383567
+        },
+        {
+          "primary_mass": 0.007639454677700996,
+          "outside_sum": 0.0031667451839894056,
+          "ratio": 2.4123995565936114,
+          "branch": "native_static",
+          "local_row_id": 821758
+        },
+        {
+          "primary_mass": 0.00226296647451818,
+          "outside_sum": 0.0014316804881673306,
+          "ratio": 1.580636526949504,
+          "branch": "native_static",
+          "local_row_id": 679343
+        },
+        {
+          "primary_mass": 0.07897578179836273,
+          "outside_sum": 0.050348248332738876,
+          "ratio": 1.5685904557479677,
+          "branch": "oldroad",
+          "local_row_id": 137515
+        },
+        {
+          "primary_mass": 0.049403492361307144,
+          "outside_sum": 0.03171937819570303,
+          "ratio": 1.557517680721741,
+          "branch": "oldroad",
+          "local_row_id": 137532
+        },
+        {
+          "primary_mass": 0.05451113358139992,
+          "outside_sum": 0.03525791969150305,
+          "ratio": 1.5460677787673553,
+          "branch": "oldroad",
+          "local_row_id": 137533
+        },
+        {
+          "primary_mass": 0.062002722173929214,
+          "outside_sum": 0.04161662282422185,
+          "ratio": 1.4898547254978647,
+          "branch": "oldroad",
+          "local_row_id": 137514
+        },
+        {
+          "primary_mass": 0.0762479230761528,
+          "outside_sum": 0.051584405824542046,
+          "ratio": 1.478119634361994,
+          "branch": "oldroad",
+          "local_row_id": 137519
+        },
+        {
+          "primary_mass": 0.06309308111667633,
+          "outside_sum": 0.04278825595974922,
+          "ratio": 1.474542013958872,
+          "branch": "oldroad",
+          "local_row_id": 137510
+        },
+        {
+          "primary_mass": 0.05453657731413841,
+          "outside_sum": 0.03708312846720219,
+          "ratio": 1.4706574005041877,
+          "branch": "oldroad",
+          "local_row_id": 138432
+        },
+        {
+          "primary_mass": 0.07409519702196121,
+          "outside_sum": 0.05054051615297794,
+          "ratio": 1.466055407857076,
+          "branch": "oldroad",
+          "local_row_id": 138434
+        },
+        {
+          "primary_mass": 0.048923663794994354,
+          "outside_sum": 0.033461975399404764,
+          "ratio": 1.4620674126687878,
+          "branch": "native_static",
+          "local_row_id": 317057
+        },
+        {
+          "primary_mass": 0.046242740005254745,
+          "outside_sum": 0.032648609951138496,
+          "ratio": 1.4163769935216555,
+          "branch": "oldroad",
+          "local_row_id": 137528
+        },
+        {
+          "primary_mass": 0.06503108888864517,
+          "outside_sum": 0.046086760237812996,
+          "ratio": 1.4110579383987345,
+          "branch": "oldroad",
+          "local_row_id": 138433
+        },
+        {
+          "primary_mass": 0.06998728215694427,
+          "outside_sum": 0.049845341593027115,
+          "ratio": 1.404088725650038,
+          "branch": "oldroad",
+          "local_row_id": 138438
+        },
+        {
+          "primary_mass": 0.03858351334929466,
+          "outside_sum": 0.027885685674846172,
+          "ratio": 1.3836315089823412,
+          "branch": "oldroad",
+          "local_row_id": 138450
+        },
+        {
+          "primary_mass": 0.07689454406499863,
+          "outside_sum": 0.05729883350431919,
+          "ratio": 1.3419914396547412,
+          "branch": "oldroad",
+          "local_row_id": 137511
+        }
+      ]
+    },
+    "delete": {
+      "free_primary_mass": 0.18363250326001435,
+      "free_primary_contributing_rows": 18,
+      "positive_outside_primary_contributing_rows": 1682,
+      "positive_outside_ratio_quantiles": {
+        "0": 1.8515835926343448e-06,
+        "0.1": 0.0014718411221278386,
+        "0.5": 0.04731476873372034,
+        "0.9": 0.5685148036469355,
+        "0.95": 0.955554461709378,
+        "0.99": 1.7247060713861355,
+        "1": 1002.1018132356071
+      },
+      "continuous_amplitude_LP_optimal_primary_mass": 0.20090230550213434,
+      "continuous_amplitude_LP_full_positive_rows": 3,
+      "fractional_next_row": 321359,
+      "fractional_next_amplitude": 0.08478940488144056,
+      "whole_row_greedy_feasible_primary_mass": 0.1947778319263307,
+      "whole_row_greedy_positive_rows": 5,
+      "whole_row_greedy_outside_cost": 0.00013572394209404592,
+      "primary_mean_RGB_change_Lipschitz_upper_bound": 0.0029544456691490343,
+      "top_primary_to_outside_rows": [
+        {
+          "primary_mass": 0.009475835599005222,
+          "outside_sum": 9.455960935156327e-06,
+          "ratio": 1002.1018132356071,
+          "branch": "native_static",
+          "local_row_id": 497989
+        },
+        {
+          "primary_mass": 0.0007733097299933434,
+          "outside_sum": 1.2477247764763888e-05,
+          "ratio": 61.977588693653466,
+          "branch": "native_static",
+          "local_row_id": 689014
+        },
+        {
+          "primary_mass": 0.0003615057503338903,
+          "outside_sum": 1.5407911178044742e-05,
+          "ratio": 23.462346463225476,
+          "branch": "native_static",
+          "local_row_id": 704372
+        },
+        {
+          "primary_mass": 0.07853753864765167,
+          "outside_sum": 0.004088469315320253,
+          "ratio": 19.209521361296986,
+          "branch": "native_static",
+          "local_row_id": 321359
+        },
+        {
+          "primary_mass": 0.13470327854156494,
+          "outside_sum": 0.014373281272128224,
+          "ratio": 9.371783379956057,
+          "branch": "native_static",
+          "local_row_id": 86124
+        },
+        {
+          "primary_mass": 0.0003957737935706973,
+          "outside_sum": 6.250134902074933e-05,
+          "ratio": 6.332244019873995,
+          "branch": "native_static",
+          "local_row_id": 650560
+        },
+        {
+          "primary_mass": 0.011425992473959923,
+          "outside_sum": 0.0021800489630550146,
+          "ratio": 5.241163234218416,
+          "branch": "native_static",
+          "local_row_id": 746067
+        },
+        {
+          "primary_mass": 0.011603321880102158,
+          "outside_sum": 0.0026983185671269894,
+          "ratio": 4.300204587205836,
+          "branch": "native_static",
+          "local_row_id": 857228
+        },
+        {
+          "primary_mass": 0.014489231631159782,
+          "outside_sum": 0.003673069877550006,
+          "ratio": 3.944719843125969,
+          "branch": "native_static",
+          "local_row_id": 713240
+        },
+        {
+          "primary_mass": 0.00013890379341319203,
+          "outside_sum": 3.588147319533164e-05,
+          "ratio": 3.8711842364171414,
+          "branch": "native_static",
+          "local_row_id": 688205
+        },
+        {
+          "primary_mass": 0.0011203071335330606,
+          "outside_sum": 0.0003588000172385364,
+          "ratio": 3.1223720170232356,
+          "branch": "native_static",
+          "local_row_id": 681195
+        },
+        {
+          "primary_mass": 0.015035462565720081,
+          "outside_sum": 0.005542327276998549,
+          "ratio": 2.7128427850371453,
+          "branch": "native_static",
+          "local_row_id": 942235
+        },
+        {
+          "primary_mass": 0.0007093596505001187,
+          "outside_sum": 0.00028793805904570036,
+          "ratio": 2.4635841918609724,
+          "branch": "native_static",
+          "local_row_id": 703576
+        },
+        {
+          "primary_mass": 0.09899727255105972,
+          "outside_sum": 0.04031939583364874,
+          "ratio": 2.4553262891018095,
+          "branch": "native_static",
+          "local_row_id": 383567
+        },
+        {
+          "primary_mass": 0.007639454677700996,
+          "outside_sum": 0.0031667451839894056,
+          "ratio": 2.4123995565936114,
+          "branch": "native_static",
+          "local_row_id": 821758
+        },
+        {
+          "primary_mass": 0.0027775734197348356,
+          "outside_sum": 0.0012652632085519144,
+          "ratio": 2.1952534468411127,
+          "branch": "native_static",
+          "local_row_id": 713652
+        },
+        {
+          "primary_mass": 0.006576603278517723,
+          "outside_sum": 0.0032888553105294704,
+          "ratio": 1.9996633045735783,
+          "branch": "native_static",
+          "local_row_id": 662977
+        },
+        {
+          "primary_mass": 0.012767751701176167,
+          "outside_sum": 0.0076904441229999065,
+          "ratio": 1.6602099302680704,
+          "branch": "native_static",
+          "local_row_id": 86355
+        },
+        {
+          "primary_mass": 0.00226296647451818,
+          "outside_sum": 0.0014316804881673306,
+          "ratio": 1.580636526949504,
+          "branch": "native_static",
+          "local_row_id": 679343
+        },
+        {
+          "primary_mass": 0.07897578179836273,
+          "outside_sum": 0.050348248332738876,
+          "ratio": 1.5685904557479677,
+          "branch": "oldroad",
+          "local_row_id": 137515
+        },
+        {
+          "primary_mass": 0.049403492361307144,
+          "outside_sum": 0.03171937819570303,
+          "ratio": 1.557517680721741,
+          "branch": "oldroad",
+          "local_row_id": 137532
+        },
+        {
+          "primary_mass": 0.05451113358139992,
+          "outside_sum": 0.03525791969150305,
+          "ratio": 1.5460677787673553,
+          "branch": "oldroad",
+          "local_row_id": 137533
+        },
+        {
+          "primary_mass": 0.018787026405334473,
+          "outside_sum": 0.01240316592156887,
+          "ratio": 1.5146960481004443,
+          "branch": "native_static",
+          "local_row_id": 317777
+        },
+        {
+          "primary_mass": 0.062002722173929214,
+          "outside_sum": 0.04161662282422185,
+          "ratio": 1.4898547254978647,
+          "branch": "oldroad",
+          "local_row_id": 137514
+        },
+        {
+          "primary_mass": 0.0762479230761528,
+          "outside_sum": 0.051584405824542046,
+          "ratio": 1.478119634361994,
+          "branch": "oldroad",
+          "local_row_id": 137519
+        },
+        {
+          "primary_mass": 0.06309308111667633,
+          "outside_sum": 0.04278825595974922,
+          "ratio": 1.474542013958872,
+          "branch": "oldroad",
+          "local_row_id": 137510
+        },
+        {
+          "primary_mass": 0.05453657731413841,
+          "outside_sum": 0.03708312846720219,
+          "ratio": 1.4706574005041877,
+          "branch": "oldroad",
+          "local_row_id": 138432
+        },
+        {
+          "primary_mass": 0.07409519702196121,
+          "outside_sum": 0.05054051615297794,
+          "ratio": 1.466055407857076,
+          "branch": "oldroad",
+          "local_row_id": 138434
+        },
+        {
+          "primary_mass": 0.048923663794994354,
+          "outside_sum": 0.033461975399404764,
+          "ratio": 1.4620674126687878,
+          "branch": "native_static",
+          "local_row_id": 317057
+        },
+        {
+          "primary_mass": 0.046242740005254745,
+          "outside_sum": 0.032648609951138496,
+          "ratio": 1.4163769935216555,
+          "branch": "oldroad",
+          "local_row_id": 137528
+        }
+      ]
+    },
+    "shared_average_operator_leverage": {
+      "free_primary_mass": 0.18363250326001435,
+      "free_primary_contributing_rows": 18,
+      "positive_outside_primary_contributing_rows": 1682,
+      "positive_outside_ratio_quantiles": {
+        "0": 1.331410073435287e-06,
+        "0.1": 0.0013656793146889494,
+        "0.5": 0.04329144410807347,
+        "0.9": 0.5486889043902798,
+        "0.95": 0.8786196700895271,
+        "0.99": 1.5708792092762602,
+        "1": 1002.1018132356071
+      },
+      "continuous_amplitude_LP_optimal_primary_mass": 0.20090230550213434,
+      "continuous_amplitude_LP_full_positive_rows": 3,
+      "fractional_next_row": 321359,
+      "fractional_next_amplitude": 0.08478940488144056,
+      "whole_row_greedy_feasible_primary_mass": 0.1947778319263307,
+      "whole_row_greedy_positive_rows": 5,
+      "whole_row_greedy_outside_cost": 0.00013572394209404592,
+      "primary_mean_RGB_change_Lipschitz_upper_bound": 0.0029544456691490343,
+      "top_primary_to_outside_rows": [
+        {
+          "primary_mass": 0.009475835599005222,
+          "outside_sum": 9.455960935156327e-06,
+          "ratio": 1002.1018132356071,
+          "branch": "native_static",
+          "local_row_id": 497989
+        },
+        {
+          "primary_mass": 0.0007733097299933434,
+          "outside_sum": 1.2477247764763888e-05,
+          "ratio": 61.977588693653466,
+          "branch": "native_static",
+          "local_row_id": 689014
+        },
+        {
+          "primary_mass": 0.0003615057503338903,
+          "outside_sum": 1.5407911178044742e-05,
+          "ratio": 23.462346463225476,
+          "branch": "native_static",
+          "local_row_id": 704372
+        },
+        {
+          "primary_mass": 0.07853753864765167,
+          "outside_sum": 0.004088469315320253,
+          "ratio": 19.209521361296986,
+          "branch": "native_static",
+          "local_row_id": 321359
+        },
+        {
+          "primary_mass": 0.13470327854156494,
+          "outside_sum": 0.014373281272128224,
+          "ratio": 9.371783379956057,
+          "branch": "native_static",
+          "local_row_id": 86124
+        },
+        {
+          "primary_mass": 0.0003957737935706973,
+          "outside_sum": 6.250134902074933e-05,
+          "ratio": 6.332244019873995,
+          "branch": "native_static",
+          "local_row_id": 650560
+        },
+        {
+          "primary_mass": 0.011425992473959923,
+          "outside_sum": 0.0021800489630550146,
+          "ratio": 5.241163234218416,
+          "branch": "native_static",
+          "local_row_id": 746067
+        },
+        {
+          "primary_mass": 0.011603321880102158,
+          "outside_sum": 0.0026983185671269894,
+          "ratio": 4.300204587205836,
+          "branch": "native_static",
+          "local_row_id": 857228
+        },
+        {
+          "primary_mass": 0.014489231631159782,
+          "outside_sum": 0.003673069877550006,
+          "ratio": 3.944719843125969,
+          "branch": "native_static",
+          "local_row_id": 713240
+        },
+        {
+          "primary_mass": 0.00013890379341319203,
+          "outside_sum": 3.588147319533164e-05,
+          "ratio": 3.8711842364171414,
+          "branch": "native_static",
+          "local_row_id": 688205
+        },
+        {
+          "primary_mass": 0.0011203071335330606,
+          "outside_sum": 0.0003588000172385364,
+          "ratio": 3.1223720170232356,
+          "branch": "native_static",
+          "local_row_id": 681195
+        },
+        {
+          "primary_mass": 0.015035462100058794,
+          "outside_sum": 0.005542327276998549,
+          "ratio": 2.7128427010180567,
+          "branch": "native_static",
+          "local_row_id": 942235
+        },
+        {
+          "primary_mass": 0.0007093596505001187,
+          "outside_sum": 0.00028793805904570036,
+          "ratio": 2.4635841918609724,
+          "branch": "native_static",
+          "local_row_id": 703576
+        },
+        {
+          "primary_mass": 0.09899727255105972,
+          "outside_sum": 0.04031939583364874,
+          "ratio": 2.4553262891018095,
+          "branch": "native_static",
+          "local_row_id": 383567
+        },
+        {
+          "primary_mass": 0.007639454677700996,
+          "outside_sum": 0.0031667451839894056,
+          "ratio": 2.4123995565936114,
+          "branch": "native_static",
+          "local_row_id": 821758
+        },
+        {
+          "primary_mass": 0.0020205468754284084,
+          "outside_sum": 0.0012652632085519144,
+          "ratio": 1.596937982367251,
+          "branch": "native_static",
+          "local_row_id": 713652
+        },
+        {
+          "primary_mass": 0.00226296647451818,
+          "outside_sum": 0.0014316804881673306,
+          "ratio": 1.580636526949504,
+          "branch": "native_static",
+          "local_row_id": 679343
+        },
+        {
+          "primary_mass": 0.07897578179836273,
+          "outside_sum": 0.050348248332738876,
+          "ratio": 1.5685904557479677,
+          "branch": "oldroad",
+          "local_row_id": 137515
+        },
+        {
+          "primary_mass": 0.049403492361307144,
+          "outside_sum": 0.03171937819570303,
+          "ratio": 1.557517680721741,
+          "branch": "oldroad",
+          "local_row_id": 137532
+        },
+        {
+          "primary_mass": 0.05451113358139992,
+          "outside_sum": 0.03525791969150305,
+          "ratio": 1.5460677787673553,
+          "branch": "oldroad",
+          "local_row_id": 137533
+        },
+        {
+          "primary_mass": 0.004922430380247533,
+          "outside_sum": 0.0032888553105294704,
+          "ratio": 1.4967001936777433,
+          "branch": "native_static",
+          "local_row_id": 662977
+        },
+        {
+          "primary_mass": 0.062002722173929214,
+          "outside_sum": 0.04161662282422185,
+          "ratio": 1.4898547254978647,
+          "branch": "oldroad",
+          "local_row_id": 137514
+        },
+        {
+          "primary_mass": 0.0762479230761528,
+          "outside_sum": 0.051584405824542046,
+          "ratio": 1.478119634361994,
+          "branch": "oldroad",
+          "local_row_id": 137519
+        },
+        {
+          "primary_mass": 0.06309308111667633,
+          "outside_sum": 0.04278825595974922,
+          "ratio": 1.474542013958872,
+          "branch": "oldroad",
+          "local_row_id": 137510
+        },
+        {
+          "primary_mass": 0.05453657731413841,
+          "outside_sum": 0.03708312846720219,
+          "ratio": 1.4706574005041877,
+          "branch": "oldroad",
+          "local_row_id": 138432
+        },
+        {
+          "primary_mass": 0.07409519702196121,
+          "outside_sum": 0.05054051615297794,
+          "ratio": 1.466055407857076,
+          "branch": "oldroad",
+          "local_row_id": 138434
+        },
+        {
+          "primary_mass": 0.048923663794994354,
+          "outside_sum": 0.033461975399404764,
+          "ratio": 1.4620674126687878,
+          "branch": "native_static",
+          "local_row_id": 317057
+        },
+        {
+          "primary_mass": 0.046242740005254745,
+          "outside_sum": 0.032648609951138496,
+          "ratio": 1.4163769935216555,
+          "branch": "oldroad",
+          "local_row_id": 137528
+        },
+        {
+          "primary_mass": 0.06503108888864517,
+          "outside_sum": 0.046086760237812996,
+          "ratio": 1.4110579383987345,
+          "branch": "oldroad",
+          "local_row_id": 138433
+        },
+        {
+          "primary_mass": 0.06998728215694427,
+          "outside_sum": 0.049845341593027115,
+          "ratio": 1.404088725650038,
+          "branch": "oldroad",
+          "local_row_id": 138438
+        }
+      ]
+    }
+  },
+  "static_or_road_geometry_changes": 0,
+  "fit_steps": 0,
+  "GPU_forwards": 0,
+  "not_a_registered_new_method": true,
+  "no_selection_sidecar_created": true,
+  "limitations": [
+    "Operator leverage is not achievable target-error reduction; row color directions and all target domains can conflict.",
+    "Continuous y values do not define a chosen fitted delta; no new rows or thresholds are adopted here.",
+    "Bound covers only calibrated four BUILD views/state protection sets, not unseen49-frame claims.",
+    "Actual floating-point/replay checks remain required even for a mathematically conservative bound."
+  ]
+}

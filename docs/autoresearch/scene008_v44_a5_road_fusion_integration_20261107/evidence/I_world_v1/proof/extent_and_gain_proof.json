@@ -1,0 +1,138 @@
+{
+  "schema": "fixed-world-boundary-road-coverage-v1",
+  "band_m": 0.4,
+  "material_scene_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/formal_export2000_r1/scene_manifest.json",
+  "material_scene_manifest_sha256": "8be0e27540699ec5d9091a67725a798e6d542a38a2ff79029fb9ad9c43ba7f8a",
+  "material_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_c49_rgb_20261107_r1/formal_export2000_r1/new_road_C49_parentRGB.npz",
+  "material_asset_sha256": "1287d260b80196bf7f3f4555b77f4d4879ba6bc7e56c63dbe6ac098e66a02952",
+  "formal_material_steps": 2000,
+  "source_crop_planes_m": {
+    "near_x": 19.750000594049066,
+    "lower_y": -3.3500001571235396,
+    "upper_y": 2.7100001349769953
+  },
+  "boundary_definition": "Source MeasuredExtension x>oldroad.maxX then CorridorRuntime oldroad.minY<=y<=oldroad.maxY; not a fitted bounding box or semantic-road ground truth.",
+  "parent_grid_cell_m": 0.08,
+  "band_parent_cells": 5,
+  "source_full_rows": 53082,
+  "source_active_forward_rows": 14661,
+  "source_strip_rows": 10098,
+  "source_parent_xyz_and_extension_index_order_exact": true,
+  "source_parent_center_bounds": {
+    "min": [
+      19.799999237060547,
+      -3.319999933242798,
+      0.050596192479133606
+    ],
+    "max": [
+      31.799999237060547,
+      2.680000066757202,
+      0.21924355626106262
+    ]
+  },
+  "actual_saved_child_center_bounds": {
+    "min": [
+      19.77999864871137,
+      -3.340000094238117,
+      0.04830164970406603
+    ],
+    "max": [
+      31.82000042034152,
+      2.7000002258284135,
+      0.2232909293944796
+    ]
+  },
+  "registry_near19_8_role": "first parent centre/evaluation line, not the actual source crop plane",
+  "registry_lateral2_71_role": "matches the source upper lateral envelope",
+  "gain_file": "world_boundary_gain.npz",
+  "gain_sha256": "db7dcbed25ad6d7fba62bbf573136e5776a920fa5c7352d62846d209bfdfd6e2",
+  "gain_formula": "u=clip(min(x-near,y-lower,upper-y)/.4,0,1); gain=u*u*(3-2*u)",
+  "gain_summary": {
+    "child_rows": 40392,
+    "attenuated_rows": 6408,
+    "interior_exact_gain1_rows": 33984,
+    "min_gain": 0.0018437168328091502,
+    "max_gain": 1.0,
+    "no_far_end_or_internal_hole_bbox_taper": true
+  },
+  "geometry_array_sha256": {
+    "render_model_xyz": "bc85db290b7ad353528eb9a14e22d237fdbce70fe48130b4756b8da71dab32fe",
+    "render_scales_model": "78f8af4102f3e9f8fddec9ea41c3896a5c98d22c8ed8002e081aec5f699a0a43",
+    "render_rotation_wxyz": "e50e5c41ea56abd0787386d4eff66a86835f5a94cdba8b27a7ffc4a393cd0ba3",
+    "render_opacity_logit": "b2a9a9b68ca3999eb5807901912666bfb915b00c0b878c7545029f52b9a5f05b",
+    "active": "b7fa17def4cfdab9b24072bc166e728877fbe0f1028dab506f86bb1b8497a780",
+    "parent_render_model_xyz": "49951a5584fedf803cedf96bc26a73df0e2b456fa8461898055804dad559ca0c",
+    "parent_render_scales_model": "f1fdbebf0b3ac82ba40f031d904e0a1e7d5c95e00225722e4c6439ebca71c80c",
+    "parent_render_rotation_wxyz": "ce82de3adfe5a4558fb24404138bcf61c62a3f25b5dd0f80203533f426a93519",
+    "parent_render_opacity_logit": "ea33cb0d181fb1db169f64b634422a5d53f5fb7c2edabb8376a4f7b4b90173e4",
+    "child_to_parent_ids": "801e84488d23a4769c205b221c2481fc49942c1aeb2a8f65ff68f5397e12a02e",
+    "coordinate_anchor": "526a5b7168417f26d9a57594ec24daae1d6e866cf0804c8863cc1f13103d8f22",
+    "world_to_model": "07af06f7df2a601277991a719f7b0fecd9259405d8084cbcc7a841b046d43668",
+    "meter_to_model": "94ae3f2ebf9665f86f9a6406a06f35d9e6a376faaa1984751cd8959be8aa9382"
+  },
+  "H2_cached_visibility": [
+    {
+      "raw": 94,
+      "state": "keep",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/094/keep_visibility_mask.npz",
+      "sha256": "5189e31d4f8d8d2a86c317be9efa438a4e5c0fa4c5153e21a740525ba8868d28"
+    },
+    {
+      "raw": 94,
+      "state": "delete",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/094/delete_visibility_mask.npz",
+      "sha256": "810625696978e87fb485c256f156e4922562cbdbd864fed5acb4d985e90ccc37"
+    },
+    {
+      "raw": 105,
+      "state": "keep",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/105/keep_visibility_mask.npz",
+      "sha256": "206a938b59d77cb3b07fde859e385204485fb0ad7f7d9bf5ab2a6f2032385676"
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/105/delete_visibility_mask.npz",
+      "sha256": "f83d759ec2b1eb184ffd7eba82385e361cb09d8302a44dcb5a8e4bd42e587bdc"
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/128/keep_visibility_mask.npz",
+      "sha256": "4e4dc4e1b2e351b3d96ca3132c29c879e4cf3f6af726df08699451b588891464"
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/128/delete_visibility_mask.npz",
+      "sha256": "a9e6c1a3959ffe3f52b8bffed8cec3c5ddef832198bf9dfdf19f67785aab1fd7"
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/137/keep_visibility_mask.npz",
+      "sha256": "8caa66a337102dcf2d8fd3dfec47fbc539ef803857808174d841593d084fd8f8"
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/137/delete_visibility_mask.npz",
+      "sha256": "be2bdd2666a60309e733d71f06f07d391ddc7d7e25e95e289f6543b11ccd063a"
+    }
+  ],
+  "H2_receipt_sha256": "a5a5c457f9bdbe7368e01381b777f88cf2ff7fdc870ff9c28fc3341a04fc6a1d",
+  "H2_contract_sha256": "5621868aaf6479fc385b77d0d74f1d8b140ae77d5f69c3d6154609263dfb4532",
+  "source_input_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/source/r0_runtime.py": "105764b43880e994127a8d854905d24e2f142867d06477ce92d75ae70cbf656e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/source/corridor_runtime.py": "28c5d6a28ada61d3cb6d2e4d69b6100e47d5c9e652e7816faf974c9c8e8b2b3c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt": "b4f7e79772e3f6c924daad467ca7f6e40c545f58b2d5f03306e720a3114aaab6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/frontfill_v2/road_reference_199.npz": "6112be03108b5a9b1a6deb2f605ef850dcd8ba5018346fa822993177815807a2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/world_boundary_road_coverage.py": "1d2c12393697c4f8dc011395fd05452dc0182cc5e9b9afa727f34a41efb695b3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/prepare_I_world_handover_cpu.py": "8785de6f306bf7ff5643d319e2578ed957ad06139d64a6792f5c5a3c87f57fe1"
+  },
+  "original_intrinsic_opacity_logits_geometry_RGB_identity_unchanged": true,
+  "effective_alpha_only": "Multiply only newroad per-call alpha after original relativeMip, on the fixed H2 child mask.",
+  "field_fixed_across_query_camera_and_keep_delete": true,
+  "CPU_added_native_forwards": 0,
+  "CPU_added_model_updates": 0
+}

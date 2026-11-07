@@ -1,0 +1,88 @@
+{
+  "status": "PASS_READONLY_CPU_MODEL_ONLY_FIRST_HIT_CLASSIFICATION",
+  "raw": 128,
+  "state": "delete",
+  "selection": "saved latest-baseline C2 joint alphaT > 0; no RGB/GT",
+  "selected_pixels": 1589,
+  "chart_vertices": 42536,
+  "triangles": 84173,
+  "original_kernel_sha256": "c239c00863fecf264f6c60c2bc0f0fdfb37dbb062a7f13cf45122c7fd3a410f7",
+  "original_surface_source_sha256": "3711e7154ed13b3b1ef617a789c52322ba47edc408054d60ff2be17d0d463d48",
+  "mathematical_AST_bodies_unchanged": true,
+  "two_sided": true,
+  "UV_edge_max_px": 1.5,
+  "old_fixed_matte_thresholds": [
+    0.01,
+    0.5
+  ],
+  "ordering_margin_m": 0.05,
+  "classifications": {
+    "0.01": {
+      "unknown": 507,
+      "chart_first": 1051,
+      "ground_first": 30,
+      "near_contact": 1
+    },
+    "0.5": {
+      "unknown": 507,
+      "chart_first": 1051,
+      "ground_first": 30,
+      "near_contact": 1
+    }
+  },
+  "matte_disagreement_pixels": 0,
+  "only_allow_proposal": "valid ground_first; chart_first/contact/unknown remain protected",
+  "visibility_policy_or_mask_applied": false,
+  "old_diagnostic_comparisons": [
+    {
+      "matte": 0.01,
+      "overlap_pixels": 841,
+      "old_fixed_cohort_pixels": 36,
+      "old_cohort_in_current_model_guard": 36,
+      "old_cohort_counts": {
+        "unknown": 0,
+        "chart_first": 23,
+        "ground_first": 12,
+        "near_contact": 1
+      },
+      "label_mismatch_pixels": 0
+    },
+    {
+      "matte": 0.5,
+      "overlap_pixels": 841,
+      "old_fixed_cohort_pixels": 36,
+      "old_cohort_in_current_model_guard": 36,
+      "old_cohort_counts": {
+        "unknown": 0,
+        "chart_first": 23,
+        "ground_first": 12,
+        "near_contact": 1
+      },
+      "label_mismatch_pixels": 0
+    }
+  ],
+  "ground_map_replay_exact": true,
+  "map_file": "model_only_first_hit_maps.npz",
+  "map_sha256": "d5a69ab300d97a7c908755982124977161c5d3c63a114b6a731c57087bf3d987",
+  "small16_seconds": 0.25982022285461426,
+  "full1589_seconds": 17.671024084091187,
+  "elapsed_seconds": 19.908719062805176,
+  "input_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/128.npz": "7ea87969cda637137af6f30ca4bff388600f68b51481089256e765013f41ec25",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/delete_float.npz": "77fdea82d81481e00784aa1a2c762abc6c46ab20b79efe1b29b4dc13352d75fb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json": "d434c59f51c234ed0dd837c0a151b259ae2bb68dfe57128341bde7d9e2bdbc99",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/metadata/scene0008_089_137/CPU_readiness.json": "0907eae9b2d24a645329e84ac54462dca0545345a71eb05d3095a81b81ef81de",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_r0_v44_20261107_r1/surface/measured_ground_support_pool.npz": "6a7a762cfd4ee6cb89aad9bae5f39682e6e5f34ec85ee6d8f696713e065cceed",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/red/raw128_fixed_red_geometry_v2.npz": "a9dae1cb06849c233c8709c02dcfa4de53d12176b6e7b37c1a62fd774b7a991d"
+  },
+  "caveats": [
+    "Open chart, not closed or independently validated vehicle surface.",
+    "Non-chart rows and absent chart hits remain unknown, never ground-owned.",
+    "Classification does not prove visible thin-edge removal or vehicle preservation."
+  ],
+  "GPU_used": false,
+  "renderer_forwards": 0,
+  "model_updates": 0
+}

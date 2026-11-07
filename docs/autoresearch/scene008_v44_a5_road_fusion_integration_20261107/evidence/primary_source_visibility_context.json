@@ -1,0 +1,17 @@
+{
+  "read_date": "2026-11-07",
+  "role": "Primary-source context for checking visibility/depth operators; not evidence that this scene is fixed",
+  "sources": [
+    {
+      "url": "https://github.com/graphdeco-inria/diff-gaussian-rasterization/blob/main/cuda_rasterizer/rasterizer_impl.cu",
+      "observation": "Official rasterizer bins splats and sorts Gaussian/tile instances by a depth key. Local frozen fork/source bindings remain authoritative for this experiment."
+    },
+    {
+      "url": "https://arxiv.org/abs/2402.00525v3",
+      "title": "StopThePop: Sorted Gaussian Splatting for View-Consistent Real-time Rendering",
+      "observation": "The authors study artifacts from one view-space depth per splat and evaluate more accurate visibility ordering."
+    }
+  ],
+  "actual_transfer": "Separate material fitting from model-derived visibility; check frozen3D chart/ground first-hit before deciding whether an underwheel contribution is valid foreground. H2 is a conservative whole-primitive culling control; no StopThePop renderer, new backbone or CUDA replacement has been installed.",
+  "boundary": "These papers/code motivate a check, not the unique cause of this scene. Current H2 remains a failed complete-quality candidate because seams and other-region gates fail."
+}
