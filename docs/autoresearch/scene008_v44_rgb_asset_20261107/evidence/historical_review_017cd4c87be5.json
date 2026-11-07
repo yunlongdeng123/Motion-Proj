@@ -1,0 +1,29 @@
+{
+  "method": "v44",
+  "run": "pilot_r1",
+  "date": "2026-11-07",
+  "reviewer": "Codex root agent visual inspection; not a user acceptance verdict",
+  "engine_status": "PASS_FROZEN_NATIVE_SHARED_SORT_FOUR_FRAME_PILOT",
+  "agent_assessment": "PILOT_NOT_CLEARED_FOR_FULL49",
+  "quality_accepted": null,
+  "human_verdict": null,
+  "full49_executed": false,
+  "continuation_decision": "按用户没问题才继续49帧的条件，四帧存在可见局部问题，暂不运行49帧。",
+  "summary": "四帧工程检查通过，去蓝道路效果明显，当前a6资产保持；但银灰残片未解决，局部颜色异常与测量深度小幅回退仍需处理，未判整体无回退。",
+  "observations": [
+    "两端使用同一C2、固定RGBA与SurfaceLOD；每帧实际相机/车姿一致，keep/delete资产行相同，原生a6物理退出，delete仅物理移除a37。",
+    "raw105、113、130、137的道路蓝紫色块目视减轻。删车道路proxy RGB MAE由0.0165320降到0.0094782（19956个固定像素，约42.7%）；该proxy不是隐藏道路独立真值。",
+    "a6原可见区域删车RGB MAE由0.0517429变为0.0517987（2760像素）；同批实测相机深度MAE由0.130632m变为0.135330m（663点）。没有把资产参数未变等同于最终成像逐像素不变。",
+    "raw130、137车下方仍有明显银灰车形残片；原版与v44两端对照中，v44更容易看见这一结构。当前v44分组图用于描述组成，没有current端对应分组，不能据此声称净增亮只来自某一层。",
+    "raw105左侧来车引擎盖呈明显紫蓝色；原始RGB中的车本身也是蓝色，且两种重建已有形状问题。该局部为颜色和几何异常的开发诊断，不把蓝车变蓝直接当作完整车辆数值回退结论。",
+    "预登记蓝色ROI与原始road_edit/固定ground/非车辆域相交后为空，mean=null、计数0，不作为去蓝通过证据。新增共同可观测背景诊断须保留独立命名、目标和分母。"
+  ],
+  "images_inspected": [
+    "retrieved/pilot_delete_board.png",
+    "retrieved/results/pilot_r1/pilot_keep_board.png",
+    "retrieved/results/pilot_r1/raw105_other_vehicle_detail.png"
+  ],
+  "new_training_updates": 0,
+  "asset_updates": 0,
+  "shutdown_performed": false
+}

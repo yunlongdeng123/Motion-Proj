@@ -1,0 +1,64 @@
+{
+  "status": "PASS_REVIEW_SCOPE_VALIDATION",
+  "source_sha256": "3c0e9e833bd12db4028dcd46b2004af5c32d174fdfe62d363a9d2f4696e1e5eb",
+  "checks": [
+    {
+      "case": "explicitly_bound_null_full49_review",
+      "accepted": true
+    },
+    {
+      "case": "pilot_run",
+      "rejected": true,
+      "reason": "Visual review run does not match full49_r1"
+    },
+    {
+      "case": "pilot_mode",
+      "rejected": true,
+      "reason": "Visual review mode does not match result"
+    },
+    {
+      "case": "four_raw_scope",
+      "rejected": true,
+      "reason": "Visual review raw IDs do not match result"
+    },
+    {
+      "case": "wrong_comparison_SHA",
+      "rejected": true,
+      "reason": "Visual review comparison SHA does not match result"
+    },
+    {
+      "case": "stale_full49_flag",
+      "rejected": true,
+      "reason": "Visual review full49 execution flag does not match its scope"
+    },
+    {
+      "case": "integer_quality_flag",
+      "rejected": true,
+      "reason": "visual-review quality_accepted must be true, false or null"
+    },
+    {
+      "case": "string_quality_flag",
+      "rejected": true,
+      "reason": "visual-review quality_accepted must be true, false or null"
+    },
+    {
+      "case": "missing_mode",
+      "rejected": true
+    },
+    {
+      "case": "missing_raws",
+      "rejected": true
+    },
+    {
+      "case": "missing_comparison_sha256",
+      "rejected": true
+    },
+    {
+      "case": "legacy_pilot_review_remains_pilot_scope",
+      "accepted": true
+    }
+  ],
+  "browser_or_server_used": false,
+  "gpu_used": false,
+  "human_verdict_inferred": false
+}
