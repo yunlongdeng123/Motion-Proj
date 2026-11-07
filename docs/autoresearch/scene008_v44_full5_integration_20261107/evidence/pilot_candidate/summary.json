@@ -1,0 +1,72 @@
+{
+  "status": "REJECTED_PILOT_VISUAL_AND_PROTECTED_RGB_GATES",
+  "scope": "pilot4",
+  "raw_ids": [
+    105,
+    113,
+    130,
+    137
+  ],
+  "frame_count": 4,
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "actual_joint_forwards": 8,
+  "optimization_updates": 0,
+  "quality_accepted": false,
+  "overall_delivery_accepted": false,
+  "adapter_sha256": "88998b82ad472797b88f4a3fcacf22b9f87af078f5c20eb75774f8eb50b6666c",
+  "contract_sha256": "83bec3f33a2d7da7633089d03ee18bcd45b8f19bd6d4cfd258ee0b35cd7e1cb2",
+  "added_actor_ids": [
+    5,
+    18,
+    26
+  ],
+  "source_model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/inference10k",
+  "source_iteration": 10000,
+  "baseline_cached_v44": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/results/full49_r1/v44",
+  "independent_registered_gates": {
+    "status": "ENGINEERING_PASS_NUMERIC_GATES_FAILED",
+    "failed_gates": [
+      {
+        "name": "keep:protected_RGB:worst_frame",
+        "value": 0.01116276345046523,
+        "threshold": 0.005,
+        "passed": false,
+        "raw": 130
+      },
+      {
+        "name": "keep:protected_RGB:pooled",
+        "value": 0.0035537082685328293,
+        "threshold": 0.001,
+        "passed": false,
+        "pixels": 520738
+      },
+      {
+        "name": "delete:protected_RGB:worst_frame",
+        "value": 0.011174099709472082,
+        "threshold": 0.005,
+        "passed": false,
+        "raw": 130
+      },
+      {
+        "name": "delete:protected_RGB:pooled",
+        "value": 0.0035698793164523155,
+        "threshold": 0.001,
+        "passed": false,
+        "pixels": 520738
+      }
+    ],
+    "gate_count": 19
+  },
+  "evaluated_a5_and_upper_summary": null,
+  "legacy_blue_roi113_137": {
+    "pixels": 0,
+    "value": null,
+    "gated": false
+  },
+  "old_static_vehicle_overlap_possible": true,
+  "raw_primary_receipt": "receipt.json",
+  "independent_cpu_metrics": "paired_metrics.json"
+}

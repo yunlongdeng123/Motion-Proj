@@ -348,3 +348,5 @@
 - SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107：[历史原生重建、同10K缓存、补点与静态RGB对照](autoresearch/scene008_a5_regression_20261106/index.html)；旧研究已收口44,622更新，Single止20K、30K未执行；完整初始化和RGB配重的四格5K未恢复清晰车顶，转完整五身份重建与身份管理。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
 
 - SCENE008-FULL5-RECONSTRUCTION-IDENTITY-20261107：[完整五身份10K、a5车顶恢复与可靠身份持久化](autoresearch/scene008_identity_edit_interface_20261107/index.html)；正常可辨的连续车顶/挡风玻璃结构已由代理查看，细节仍软；49 KEEP与同域CPU复算、原生math/拓扑/完整恢复/便携推理包等价验证通过，human_verdict=null。新正式10000、工程smoke＋恢复4683；配置、源角色、seed、资源和全部实账见报告。GPU保持开机，静态残影由v44处理。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+- SCENE008-V44-FULL5-INTEGRATION-20261107：[v44＋a5车顶恢复、语义身份包与49帧对照](autoresearch/scene008_v44_full5_integration_20261107/index.html)；原v44背景/道路/C2/删除路径冻结，Full5当前语义a5以固定3D行集合接入；4帧→49 BUILD归属→4复放→49图像，车顶结构恢复且旧v44保护均过，94四项严格RGB改善失败及早段软化保留。303 native前向＋49贡献反向、0优化更新；17MB身份元数据包/CLI重放已取回校验，仍为候选/原v44默认。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_ROOT_PILOT4_VISIBLE_STRUCTURE_AND_PRESERVATION_REVIEW",
+  "reviewer": "root agent; not a human acceptance",
+  "raw_ids": [105, 113, 130, 137],
+  "states_reviewed": ["keep", "delete"],
+  "actually_viewed": ["figures/pilot_actor5_keep_four_frames.png", "figures/pilot_actor5_delete_four_frames.png", "figures/pilot_actor5_raw105_a5_delete.png", "native105delete PNG", "native130delete PNG"],
+  "a5_observation": "At105 the formerly transparent/misaligned roof and windshield have continuous recognizable structure. Body colour is blue again. Details remain soft and do not match GT sharpness.",
+  "other_frames_observation": "113,130,137 no longer show the conspicuous dark retained-car regression of the all3 trial; road, a6 and a37 states visually follow frozen v44. Small local left-edge changes at137 remain and are subject to numerical preservation gates; no claim of identical whole images.",
+  "limits": "Only105 has nonempty original a5 pixels in this pilot. This is not four independent roof views or hidden-surface ground truth.",
+  "all3_trial": "FAIL preserved separately; not adopted",
+  "numerical_gates": "PASS19/19 independent CPU gates, review/cpu_independent_candidate_a5_4.json; actual shared geometry/colour/environment hashes exact; a6 RGB/depth zero metric delta",
+  "shader_bridge_equivalence": "PASS:raw130 same Full5 model nativeSH vs precomputedRGB joint maxabs1.1920928955078125e-7 and alpha0; successful6native forwards, failed counting assertion extra3 recorded separately",
+  "full49_release": true,
+  "full49_released_configuration": "adapter59a94458a3423d1adb4e397f8bc1081029f2250d4b7a3b8087427cff8bb3934a; added_actor_ids=[5]; same19numerical gates; original formal v44 baseline reusable",
+  "release_rule": "Root visual pass plus numerical gates and shader bridge equivalence must all pass before49",
+  "human_verdict": null,
+  "quality_accepted": false,
+  "gpu_stays_on": true
+}

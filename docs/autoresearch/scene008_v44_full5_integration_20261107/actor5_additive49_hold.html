@@ -1,0 +1,1203 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scene008：v44删车效果与Full5完整车体接入</title><style>body{margin:0;background:#f3f7f9;color:#193b4a;font:16px/1.7 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1400px;margin:auto;padding:28px}section{background:white;border:1px solid #dce7ec;border-radius:12px;padding:24px;margin:20px 0}h1{font-size:29px}h2{font-size:22px}img{display:block;max-width:100%;height:auto}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border-bottom:1px solid #dce6eb;text-align:left}th{background:#edf4f7}a{color:#006b83}pre{white-space:pre-wrap;word-break:break-word;background:#f4f7f9;padding:12px;font-size:12px}.pending{color:#946322}.worse{color:#ad3636}.notice{background:#fff4de;border-left:4px solid #c99435;padding:12px}summary{cursor:pointer;font-weight:600}footer,figcaption{font-size:13px;color:#607783}.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.toolbar input{min-width:240px;flex:1}.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}@media(max-width:800px){.three{grid-template-columns:1fr}}</style></head><body><main>
+<h1>Scene008：v44删车效果与Full5完整车体接入</h1><p class="notice">全49已发现a5全域误差回退与早帧黑糊，停止发布；raw105改善不代表全片成功。原19项守护门没有覆盖全时段a5质量。 没有将接线或拼接通过写成最终成功；完整49实测与审阅完成后才发布用户旧viewer的新可选版本。</p>
+<p>目标是保住正式v44的道路去蓝、完整C2 a6与仅删a37效果，同时恢复a5车顶。三actor初试未通过后，当前最小接入只从Full5 dynamic按保存ID取actor5；18/26沿用原v44表示，不加载新Full5 static/env。原v44背景、道路、C2、a37与环境保持。这是混合表示；旧static中潜在重复车体支撑仍须核对。</p>
+<section><h2>组件与数据流</h2><img src="architecture.svg" alt="冻结v44与Full5保留身份同次深度排序，四帧门控后49实测发布"></section>
+<section><h2>49结果：保护门通过，a5全片质量未通过</h2><p>原19项门有19项通过，但a5门只检查raw105，未覆盖其余可见帧。KEEP回退帧为[89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 112]；保留近处结构改善，也保留远处黑糊回退，不据平均上部误差改善宣称成功。</p><table><thead><tr><th>状态</th><th>原始固定域</th><th>像素帧</th><th>正式v44</th><th>混合仅a5</th><th>ΔMAE / 相对变化</th></tr></thead><tbody><tr><td>KEEP</td><td>全a5可见域</td><td>121,128</td><td>0.045418</td><td>0.046182</td><td class="worse">+0.000763 (+1.68%)</td></tr><tr><td>KEEP</td><td>固定包围盒高度上25%</td><td>25,906</td><td>0.077344</td><td>0.073095</td><td class="">-0.004249 (-5.49%)</td></tr><tr><td>DELETE</td><td>全a5可见域</td><td>121,128</td><td>0.045453</td><td>0.046283</td><td class="worse">+0.000829 (+1.82%)</td></tr><tr><td>DELETE</td><td>固定包围盒高度上25%</td><td>25,906</td><td>0.077349</td><td>0.073101</td><td class="">-0.004248 (-5.49%)</td></tr></tbody></table><p>RGB通道MAE来自已保存float，单位0–1，按固定像素帧数加权；没有从PNG反算或按新alpha筛域。49视图中的a5可见帧只有24个；upper不是按像素数取上25%，也不是独立车顶标注。</p><details><summary>24个可见帧逐帧a5全域变化（正数为回退）</summary><table><thead><tr><th>raw</th><th>固定像素</th><th>KEEP ΔMAE</th><th>DELETE ΔMAE</th></tr></thead><tbody><tr><td>89</td><td>1227</td><td class="worse">+0.100204</td><td class="worse">+0.102510</td></tr><tr><td>90</td><td>1316</td><td class="worse">+0.094662</td><td class="worse">+0.096077</td></tr><tr><td>91</td><td>1470</td><td class="worse">+0.093126</td><td class="worse">+0.094091</td></tr><tr><td>92</td><td>1618</td><td class="worse">+0.100706</td><td class="worse">+0.101142</td></tr><tr><td>93</td><td>1829</td><td class="worse">+0.105131</td><td class="worse">+0.105485</td></tr><tr><td>94</td><td>2052</td><td class="worse">+0.105708</td><td class="worse">+0.105891</td></tr><tr><td>95</td><td>2276</td><td class="worse">+0.096236</td><td class="worse">+0.096322</td></tr><tr><td>96</td><td>2647</td><td class="worse">+0.066258</td><td class="worse">+0.066249</td></tr><tr><td>97</td><td>3010</td><td class="worse">+0.039547</td><td class="worse">+0.039539</td></tr><tr><td>98</td><td>3460</td><td class="worse">+0.020061</td><td class="worse">+0.020062</td></tr><tr><td>99</td><td>4021</td><td class="worse">+0.005406</td><td class="worse">+0.005406</td></tr><tr><td>100</td><td>4684</td><td class="worse">+0.000273</td><td class="worse">+0.000273</td></tr><tr><td>101</td><td>5502</td><td class="">-0.002551</td><td class="">-0.002551</td></tr><tr><td>102</td><td>6502</td><td class="">-0.004903</td><td class="">-0.004903</td></tr><tr><td>103</td><td>7840</td><td class="">-0.014017</td><td class="">-0.014017</td></tr><tr><td>104</td><td>9659</td><td class="">-0.016503</td><td class="">-0.016503</td></tr><tr><td>105</td><td>10773</td><td class="">-0.022959</td><td class="">-0.022959</td></tr><tr><td>106</td><td>11291</td><td class="">-0.030057</td><td class="">-0.030057</td></tr><tr><td>107</td><td>11367</td><td class="">-0.026815</td><td class="">-0.026815</td></tr><tr><td>108</td><td>9900</td><td class="">-0.016968</td><td class="">-0.016968</td></tr><tr><td>109</td><td>8178</td><td class="">-0.004996</td><td class="">-0.004996</td></tr><tr><td>110</td><td>6418</td><td class="">-0.007791</td><td class="">-0.007791</td></tr><tr><td>111</td><td>3451</td><td class="">-0.003600</td><td class="">-0.003600</td></tr><tr><td>112</td><td>637</td><td class="worse">+0.012574</td><td class="worse">+0.012574</td></tr></tbody></table></details><p><a href="evidence/review/cpu_independent_candidate_a5_49.json">独立CPU原始数值、19门与全部逐帧分母</a></p></section><section><h2>最坏回退示例：raw94</h2><p>三列使用原a5可见mask包围盒外扩6像素(119,167)–(191,224)，仅显示放大。冻结v44仍有较清楚的远处车体，混合版车顶/挡风玻璃明显黑糊。</p><img src="figures/full49_actor5_raw094_keep_GTmask_crop.png" alt="raw94 GT/v44/混合版最坏回退"><details><summary>原480×320完整图与原生Full5已有图的额外对照</summary><a href="figures/full49_actor5_raw094_keep_full.png"><img src="figures/full49_actor5_raw094_keep_full.png" alt="raw94原像素全图三列"></a><img src="figures/full49_actor5_raw094_native_control.png" alt="raw94原Full5整体KEEP与混合仅a5的对照"><p>原Full5整体KEEP虽软，但没有相同黑糊表现；混合相容性尚未唯一归因。没有据此声称原Full5整模型坏，也没有把SH桥接控制通过当作混合质量通过。</p></details></section><section><h2>49视图：双状态真实PNG</h2><p>共98张候选原生PNG。以下只显示已保存RGB，不借用旧Gaussian或depth面板；Observed中a37在场，不能作为DELETE隐藏道路真值。</p><div class="toolbar"><button id="allPrev">←</button><button id="allPlay">播放</button><input id="allRaw" type="range" min="89" max="137" value="105"><strong id="allLabel">raw105</strong><select id="allState"><option value="delete">仅DELETE a37</option><option value="keep">完整KEEP</option></select><button id="allNext">→</button></div><div class="three"><div><h3>Observed（a37在场）</h3><a id="allObservedLink" href="evidence/v44_all49_reference/frames/105/observed.png"><img id="allObserved" src="evidence/v44_all49_reference/frames/105/observed.png" alt="原始观测"></a></div><div><h3>冻结v44</h3><a id="allBaseLink" href="evidence/v44_all49_reference/frames/105/delete.png"><img id="allBase" src="evidence/v44_all49_reference/frames/105/delete.png" alt="冻结v44原生PNG"></a></div><div><h3>仅a5最小接入</h3><a id="allNewLink" href="evidence/full49_actor5/frames/105/delete.png"><img id="allNew" src="evidence/full49_actor5/frames/105/delete.png" alt="集成候选原生PNG"></a></div></div><p>点击任一图可看原480×320文件。全片数值与发布门仍按实际收据与root图检分别记录。<a href="evidence/review/cpu_independent_candidate_a5_49.json">49视图配对指标</a></p><details><summary>全部24个a5可见帧：GT / v44 / 集成，同原mask裁剪</summary><p>逐帧用原始GT可见mask包围盒外扩6像素，三列使用相同裁剪和显示缩放；各帧缩放可以不同。仅为显示，指标仍在原像素域。只判断实际可见部分，不推断被遮挡或出画表面。</p><h3>KEEP</h3><a href="figures/all49_actor5_a5_visible_keep.png"><img src="figures/all49_actor5_a5_visible_keep.png" alt="24可见a5帧KEEP三列联系图"></a><h3>DELETE a37</h3><a href="figures/all49_actor5_a5_visible_delete.png"><img src="figures/all49_actor5_a5_visible_delete.png" alt="24可见a5帧DELETE三列联系图"></a></details></section>
+<script>(()=>{const frames={"89":{"observed":"evidence/v44_all49_reference/frames/089/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/089/keep.png","delete":"evidence/v44_all49_reference/frames/089/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/089/keep.png","delete":"evidence/full49_actor5/frames/089/delete.png"}},"90":{"observed":"evidence/v44_all49_reference/frames/090/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/090/keep.png","delete":"evidence/v44_all49_reference/frames/090/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/090/keep.png","delete":"evidence/full49_actor5/frames/090/delete.png"}},"91":{"observed":"evidence/v44_all49_reference/frames/091/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/091/keep.png","delete":"evidence/v44_all49_reference/frames/091/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/091/keep.png","delete":"evidence/full49_actor5/frames/091/delete.png"}},"92":{"observed":"evidence/v44_all49_reference/frames/092/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/092/keep.png","delete":"evidence/v44_all49_reference/frames/092/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/092/keep.png","delete":"evidence/full49_actor5/frames/092/delete.png"}},"93":{"observed":"evidence/v44_all49_reference/frames/093/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/093/keep.png","delete":"evidence/v44_all49_reference/frames/093/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/093/keep.png","delete":"evidence/full49_actor5/frames/093/delete.png"}},"94":{"observed":"evidence/v44_all49_reference/frames/094/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/094/keep.png","delete":"evidence/v44_all49_reference/frames/094/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/094/keep.png","delete":"evidence/full49_actor5/frames/094/delete.png"}},"95":{"observed":"evidence/v44_all49_reference/frames/095/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/095/keep.png","delete":"evidence/v44_all49_reference/frames/095/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/095/keep.png","delete":"evidence/full49_actor5/frames/095/delete.png"}},"96":{"observed":"evidence/v44_all49_reference/frames/096/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/096/keep.png","delete":"evidence/v44_all49_reference/frames/096/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/096/keep.png","delete":"evidence/full49_actor5/frames/096/delete.png"}},"97":{"observed":"evidence/v44_all49_reference/frames/097/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/097/keep.png","delete":"evidence/v44_all49_reference/frames/097/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/097/keep.png","delete":"evidence/full49_actor5/frames/097/delete.png"}},"98":{"observed":"evidence/v44_all49_reference/frames/098/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/098/keep.png","delete":"evidence/v44_all49_reference/frames/098/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/098/keep.png","delete":"evidence/full49_actor5/frames/098/delete.png"}},"99":{"observed":"evidence/v44_all49_reference/frames/099/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/099/keep.png","delete":"evidence/v44_all49_reference/frames/099/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/099/keep.png","delete":"evidence/full49_actor5/frames/099/delete.png"}},"100":{"observed":"evidence/v44_all49_reference/frames/100/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/100/keep.png","delete":"evidence/v44_all49_reference/frames/100/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/100/keep.png","delete":"evidence/full49_actor5/frames/100/delete.png"}},"101":{"observed":"evidence/v44_all49_reference/frames/101/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/101/keep.png","delete":"evidence/v44_all49_reference/frames/101/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/101/keep.png","delete":"evidence/full49_actor5/frames/101/delete.png"}},"102":{"observed":"evidence/v44_all49_reference/frames/102/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/102/keep.png","delete":"evidence/v44_all49_reference/frames/102/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/102/keep.png","delete":"evidence/full49_actor5/frames/102/delete.png"}},"103":{"observed":"evidence/v44_all49_reference/frames/103/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/103/keep.png","delete":"evidence/v44_all49_reference/frames/103/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/103/keep.png","delete":"evidence/full49_actor5/frames/103/delete.png"}},"104":{"observed":"evidence/v44_all49_reference/frames/104/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/104/keep.png","delete":"evidence/v44_all49_reference/frames/104/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/104/keep.png","delete":"evidence/full49_actor5/frames/104/delete.png"}},"105":{"observed":"evidence/v44_all49_reference/frames/105/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/105/keep.png","delete":"evidence/v44_all49_reference/frames/105/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/105/keep.png","delete":"evidence/full49_actor5/frames/105/delete.png"}},"106":{"observed":"evidence/v44_all49_reference/frames/106/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/106/keep.png","delete":"evidence/v44_all49_reference/frames/106/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/106/keep.png","delete":"evidence/full49_actor5/frames/106/delete.png"}},"107":{"observed":"evidence/v44_all49_reference/frames/107/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/107/keep.png","delete":"evidence/v44_all49_reference/frames/107/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/107/keep.png","delete":"evidence/full49_actor5/frames/107/delete.png"}},"108":{"observed":"evidence/v44_all49_reference/frames/108/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/108/keep.png","delete":"evidence/v44_all49_reference/frames/108/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/108/keep.png","delete":"evidence/full49_actor5/frames/108/delete.png"}},"109":{"observed":"evidence/v44_all49_reference/frames/109/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/109/keep.png","delete":"evidence/v44_all49_reference/frames/109/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/109/keep.png","delete":"evidence/full49_actor5/frames/109/delete.png"}},"110":{"observed":"evidence/v44_all49_reference/frames/110/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/110/keep.png","delete":"evidence/v44_all49_reference/frames/110/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/110/keep.png","delete":"evidence/full49_actor5/frames/110/delete.png"}},"111":{"observed":"evidence/v44_all49_reference/frames/111/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/111/keep.png","delete":"evidence/v44_all49_reference/frames/111/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/111/keep.png","delete":"evidence/full49_actor5/frames/111/delete.png"}},"112":{"observed":"evidence/v44_all49_reference/frames/112/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/112/keep.png","delete":"evidence/v44_all49_reference/frames/112/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/112/keep.png","delete":"evidence/full49_actor5/frames/112/delete.png"}},"113":{"observed":"evidence/v44_all49_reference/frames/113/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/113/keep.png","delete":"evidence/v44_all49_reference/frames/113/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/113/keep.png","delete":"evidence/full49_actor5/frames/113/delete.png"}},"114":{"observed":"evidence/v44_all49_reference/frames/114/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/114/keep.png","delete":"evidence/v44_all49_reference/frames/114/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/114/keep.png","delete":"evidence/full49_actor5/frames/114/delete.png"}},"115":{"observed":"evidence/v44_all49_reference/frames/115/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/115/keep.png","delete":"evidence/v44_all49_reference/frames/115/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/115/keep.png","delete":"evidence/full49_actor5/frames/115/delete.png"}},"116":{"observed":"evidence/v44_all49_reference/frames/116/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/116/keep.png","delete":"evidence/v44_all49_reference/frames/116/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/116/keep.png","delete":"evidence/full49_actor5/frames/116/delete.png"}},"117":{"observed":"evidence/v44_all49_reference/frames/117/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/117/keep.png","delete":"evidence/v44_all49_reference/frames/117/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/117/keep.png","delete":"evidence/full49_actor5/frames/117/delete.png"}},"118":{"observed":"evidence/v44_all49_reference/frames/118/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/118/keep.png","delete":"evidence/v44_all49_reference/frames/118/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/118/keep.png","delete":"evidence/full49_actor5/frames/118/delete.png"}},"119":{"observed":"evidence/v44_all49_reference/frames/119/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/119/keep.png","delete":"evidence/v44_all49_reference/frames/119/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/119/keep.png","delete":"evidence/full49_actor5/frames/119/delete.png"}},"120":{"observed":"evidence/v44_all49_reference/frames/120/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/120/keep.png","delete":"evidence/v44_all49_reference/frames/120/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/120/keep.png","delete":"evidence/full49_actor5/frames/120/delete.png"}},"121":{"observed":"evidence/v44_all49_reference/frames/121/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/121/keep.png","delete":"evidence/v44_all49_reference/frames/121/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/121/keep.png","delete":"evidence/full49_actor5/frames/121/delete.png"}},"122":{"observed":"evidence/v44_all49_reference/frames/122/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/122/keep.png","delete":"evidence/v44_all49_reference/frames/122/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/122/keep.png","delete":"evidence/full49_actor5/frames/122/delete.png"}},"123":{"observed":"evidence/v44_all49_reference/frames/123/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/123/keep.png","delete":"evidence/v44_all49_reference/frames/123/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/123/keep.png","delete":"evidence/full49_actor5/frames/123/delete.png"}},"124":{"observed":"evidence/v44_all49_reference/frames/124/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/124/keep.png","delete":"evidence/v44_all49_reference/frames/124/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/124/keep.png","delete":"evidence/full49_actor5/frames/124/delete.png"}},"125":{"observed":"evidence/v44_all49_reference/frames/125/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/125/keep.png","delete":"evidence/v44_all49_reference/frames/125/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/125/keep.png","delete":"evidence/full49_actor5/frames/125/delete.png"}},"126":{"observed":"evidence/v44_all49_reference/frames/126/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/126/keep.png","delete":"evidence/v44_all49_reference/frames/126/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/126/keep.png","delete":"evidence/full49_actor5/frames/126/delete.png"}},"127":{"observed":"evidence/v44_all49_reference/frames/127/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/127/keep.png","delete":"evidence/v44_all49_reference/frames/127/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/127/keep.png","delete":"evidence/full49_actor5/frames/127/delete.png"}},"128":{"observed":"evidence/v44_all49_reference/frames/128/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/128/keep.png","delete":"evidence/v44_all49_reference/frames/128/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/128/keep.png","delete":"evidence/full49_actor5/frames/128/delete.png"}},"129":{"observed":"evidence/v44_all49_reference/frames/129/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/129/keep.png","delete":"evidence/v44_all49_reference/frames/129/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/129/keep.png","delete":"evidence/full49_actor5/frames/129/delete.png"}},"130":{"observed":"evidence/v44_all49_reference/frames/130/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/130/keep.png","delete":"evidence/v44_all49_reference/frames/130/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/130/keep.png","delete":"evidence/full49_actor5/frames/130/delete.png"}},"131":{"observed":"evidence/v44_all49_reference/frames/131/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/131/keep.png","delete":"evidence/v44_all49_reference/frames/131/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/131/keep.png","delete":"evidence/full49_actor5/frames/131/delete.png"}},"132":{"observed":"evidence/v44_all49_reference/frames/132/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/132/keep.png","delete":"evidence/v44_all49_reference/frames/132/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/132/keep.png","delete":"evidence/full49_actor5/frames/132/delete.png"}},"133":{"observed":"evidence/v44_all49_reference/frames/133/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/133/keep.png","delete":"evidence/v44_all49_reference/frames/133/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/133/keep.png","delete":"evidence/full49_actor5/frames/133/delete.png"}},"134":{"observed":"evidence/v44_all49_reference/frames/134/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/134/keep.png","delete":"evidence/v44_all49_reference/frames/134/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/134/keep.png","delete":"evidence/full49_actor5/frames/134/delete.png"}},"135":{"observed":"evidence/v44_all49_reference/frames/135/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/135/keep.png","delete":"evidence/v44_all49_reference/frames/135/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/135/keep.png","delete":"evidence/full49_actor5/frames/135/delete.png"}},"136":{"observed":"evidence/v44_all49_reference/frames/136/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/136/keep.png","delete":"evidence/v44_all49_reference/frames/136/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/136/keep.png","delete":"evidence/full49_actor5/frames/136/delete.png"}},"137":{"observed":"evidence/v44_all49_reference/frames/137/observed.png","baseline":{"keep":"evidence/v44_all49_reference/frames/137/keep.png","delete":"evidence/v44_all49_reference/frames/137/delete.png"},"integrated":{"keep":"evidence/full49_actor5/frames/137/keep.png","delete":"evidence/full49_actor5/frames/137/delete.png"}}};const $=id=>document.getElementById(id);let timer=null;function show(){const raw=Number($('allRaw').value),state=$('allState').value,row=frames[String(raw)];$('allLabel').textContent='raw'+raw+' · '+(raw-88)+'/49';for(const [image,link,path] of [['allObserved','allObservedLink',row.observed],['allBase','allBaseLink',row.baseline[state]],['allNew','allNewLink',row.integrated[state]]]){$ (image).src=path;$(link).href=path;}}function step(d){let raw=Number($('allRaw').value)+d;if(raw<89)raw=137;if(raw>137)raw=89;$('allRaw').value=raw;show();}$('allPrev').onclick=()=>step(-1);$('allNext').onclick=()=>step(1);$('allRaw').oninput=show;$('allState').onchange=show;$('allPlay').onclick=()=>{if(timer){clearInterval(timer);timer=null;$('allPlay').textContent='播放';}else{timer=setInterval(()=>step(1),200);$('allPlay').textContent='暂停';}};show();})();</script>
+<section><h2>保留的负结果：同时接入5 / 18 / 26</h2><p>初试raw105的a5上部结构恢复，但raw113/130保留车辆明显变暗、变糊，raw137左车局部偏暗。root四帧视觉判定未通过，没有放行49帧。原图与数据保留；下一候选只接actor5，18/26继续使用原v44表示，不覆盖这次初试。</p><p><a href="evidence/pilot_all3/root_visual_gate.json">root初试FAIL记录</a></p><details><summary>初试三actor四帧原始对照板</summary><img src="figures/pilot_all3_keep_four_frames.png" alt="保留的三actor初试KEEP负结果"><img src="figures/pilot_all3_delete_four_frames.png" alt="保留的三actor初试DELETE负结果"><img src="figures/pilot_all3_raw105_a5_delete.png" alt="三actor初试raw105 a5上部改善"></details></section>
+<section><h2>四帧合同与验收边界</h2><p>正式v44源comparison SHA为<code>8201fa883df9ac43274d52984c750f92513118c1152628fa0518e69cf66042e3</code>，与用户#fullclip默认v44_20261107精确同源。不是较新的未采用R0候选，也不是去蓝前current。</p><table><thead><tr><th>守护项</th><th>本次要求</th></tr></thead><tbody><tr><td>a5车顶/挡风玻璃</td><td>四帧中只有raw105含a5：固定原始可见域10,773像素，上部2,091；其余三帧该域为0，不能当四个a5视角。</td></tr><tr><td>仅删a37</td><td>KEEP/DELETE之间仅物理移除a37；保持C2、保留身份、背景、道路、环境与相机时间。</td></tr><tr><td>完整a6与道路去蓝</td><td>C2几何/材质/SurfaceLOD冻结，以正式v44为守护基准；旧road/gates索引绑定原RCR static拓扑，不移植到新Full5 static。</td></tr><tr><td>原评价域</td><td>原蓝ROI有效分母为0则保持null。固定原观测道路域与delete road proxy分开；银色残片在旧合同中明确延期。</td></tr><tr><td>发布</td><td>先root四帧图检，获准后才49实测；全部完成后作为新可选v44_full5_20261107接入#fullclip，旧v44保留。</td></tr></tbody></table><p><a href="evidence/v44_baseline_contract_findings.json">完整基准合同/路径/逐图SHA</a> · <span class="pending">原链四帧重放核对：待取回</span> · <span class="pending">实际候选工程收据：待取回</span> · <a href="evidence/review/cpu_independent_candidate_a5_4.json">实际四帧指标</a> · <a href="evidence/pilot_actor5/root_visual_gate.json">root图检门</a></p></section>
+<section><h2>KEEP完整车体：四帧同源对照（pilot_actor5）</h2><p>Observed是a37仍在的真实观测，不是删后隐藏道路真值。原图以480×320像素直接拼接；点击图版可看原尺寸。</p><a href="figures/pilot_actor5_keep_four_frames.png"><img src="figures/pilot_actor5_keep_four_frames.png" alt="105 113 130 137 Observed、正式v44与集成候选keep"></a><h3>raw105 a5同尺度裁剪</h3><img src="figures/pilot_actor5_raw105_a5_keep.png" alt="raw105原像素a5车顶固定裁剪"><p>固定窗口(0,160)–(175,320)，没有放大或增强。指标保留原始mask全域，不用裁剪图或渲染alpha选域。</p></section><section><h2>仅DELETE a37：四帧同源对照（pilot_actor5）</h2><p>Observed是a37仍在的真实观测，不是删后隐藏道路真值。原图以480×320像素直接拼接；点击图版可看原尺寸。</p><a href="figures/pilot_actor5_delete_four_frames.png"><img src="figures/pilot_actor5_delete_four_frames.png" alt="105 113 130 137 Observed、正式v44与集成候选delete"></a><h3>raw105 a5同尺度裁剪</h3><img src="figures/pilot_actor5_raw105_a5_delete.png" alt="raw105原像素a5车顶固定裁剪"><p>固定窗口(0,160)–(175,320)，没有放大或增强。指标保留原始mask全域，不用裁剪图或渲染alpha选域。</p></section>
+<section><h2>未resize的原始PNG</h2><table><thead><tr><th>raw</th><th>原生480×320文件</th></tr></thead><tbody><tr><td>105</td><td><a href="evidence/v44_formal_reference/105/observed.png">Observed</a> · <a href="evidence/v44_formal_reference/105/keep.png">v44 KEEP</a> · <a href="evidence/v44_formal_reference/105/delete.png">v44 DELETE</a> · <a href="evidence/pilot_actor5/frames/105/keep.png">集成KEEP</a> · <a href="evidence/pilot_actor5/frames/105/delete.png">集成DELETE</a></td></tr><tr><td>113</td><td><a href="evidence/v44_formal_reference/113/observed.png">Observed</a> · <a href="evidence/v44_formal_reference/113/keep.png">v44 KEEP</a> · <a href="evidence/v44_formal_reference/113/delete.png">v44 DELETE</a> · <a href="evidence/pilot_actor5/frames/113/keep.png">集成KEEP</a> · <a href="evidence/pilot_actor5/frames/113/delete.png">集成DELETE</a></td></tr><tr><td>130</td><td><a href="evidence/v44_formal_reference/130/observed.png">Observed</a> · <a href="evidence/v44_formal_reference/130/keep.png">v44 KEEP</a> · <a href="evidence/v44_formal_reference/130/delete.png">v44 DELETE</a> · <a href="evidence/pilot_actor5/frames/130/keep.png">集成KEEP</a> · <a href="evidence/pilot_actor5/frames/130/delete.png">集成DELETE</a></td></tr><tr><td>137</td><td><a href="evidence/v44_formal_reference/137/observed.png">Observed</a> · <a href="evidence/v44_formal_reference/137/keep.png">v44 KEEP</a> · <a href="evidence/v44_formal_reference/137/delete.png">v44 DELETE</a> · <a href="evidence/pilot_actor5/frames/137/keep.png">集成KEEP</a> · <a href="evidence/pilot_actor5/frames/137/delete.png">集成DELETE</a></td></tr></tbody></table><p>原始Observed含a37，不能用于声称DELETE的隐藏表面真值。human_verdict仍为空；实际代理图检单独记录。</p></section>
+<section><h2>指标与工程记录</h2><p>四帧候选的实际指标未到时不填值；先前49帧v44数字仅是已冻结参考，不冒充本次新结果。七组alpha与三个新增actor的RGB贡献由同次原生forward输出；不为旧四组捏造RGB归因，也不把身份贡献等同于车顶质量。</p><details><summary>实际指标与root视觉记录</summary><pre>{
+  &quot;metrics&quot;: {
+    &quot;status&quot;: &quot;PASS_SAVED_FLOAT_ENGINEERING_AND_NUMERIC_GATES&quot;,
+    &quot;scope&quot;: &quot;pilot4&quot;,
+    &quot;raw_ids&quot;: [
+      105,
+      113,
+      130,
+      137
+    ],
+    &quot;independent_CPU_only&quot;: true,
+    &quot;CUDA_initialized&quot;: false,
+    &quot;source_models_loaded&quot;: false,
+    &quot;candidate&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/candidate_a5_4&quot;,
+    &quot;baseline&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/baseline4/v44&quot;,
+    &quot;contract_sha256&quot;: &quot;2e5b50c7856bd053c1fd95cf4d0f2466542bdb6b464e57a1f477ce059254eb00&quot;,
+    &quot;fixed_original_domain_hashes_exact&quot;: true,
+    &quot;fixed_all49_pixels&quot;: 121128,
+    &quot;fixed_all49_upper_pixels&quot;: 25906,
+    &quot;candidate_saved_float_max_partition_error&quot;: 1.8477439880371094e-06,
+    &quot;original_baseline_metrics_recomputed_max_abs_error&quot;: 0.0,
+    &quot;exact_guards&quot;: [
+      {
+        &quot;raw&quot;: 105,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.8477439880371094e-06,
+        &quot;delete_a37_max&quot;: null,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 105,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.8477439880371094e-06,
+        &quot;delete_a37_max&quot;: 0.0,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 113,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0728836059570312e-06,
+        &quot;delete_a37_max&quot;: null,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 113,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0728836059570312e-06,
+        &quot;delete_a37_max&quot;: 0.0,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 130,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0728836059570312e-06,
+        &quot;delete_a37_max&quot;: null,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 130,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0132789611816406e-06,
+        &quot;delete_a37_max&quot;: 0.0,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 137,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0132789611816406e-06,
+        &quot;delete_a37_max&quot;: null,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      },
+      {
+        &quot;raw&quot;: 137,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;alpha_partition_max_abs&quot;: 1.0132789611816406e-06,
+        &quot;delete_a37_max&quot;: 0.0,
+        &quot;prefix_physical_and_colours_hash_exact&quot;: true,
+        &quot;environment_hash_exact&quot;: true,
+        &quot;original_v44_asset_row_hash_exact&quot;: true
+      }
+    ],
+    &quot;comparisons&quot;: [
+      {
+        &quot;raw&quot;: 105,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 1042,
+            &quot;sum&quot;: 55.530107110447716,
+            &quot;mean&quot;: 0.05329184943421086
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 228,
+            &quot;sum&quot;: 40.890089988708496,
+            &quot;mean&quot;: 0.17934249995047585
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 17483,
+            &quot;sum&quot;: 319.20953932650445,
+            &quot;mean&quot;: 0.01825828172090056
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128195,
+            &quot;sum&quot;: 2013.857002870427,
+            &quot;mean&quot;: 0.0157093256591164
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 17483,
+            &quot;sum&quot;: 149.86109367804602,
+            &quot;mean&quot;: 0.008571817976208089
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;sum&quot;: 621.6861754156998,
+            &quot;mean&quot;: 0.057707804271391425
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 2091,
+            &quot;sum&quot;: 232.33668657566886,
+            &quot;mean&quot;: 0.11111271476598224
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 14296,
+            &quot;sum&quot;: 171.4406881656687,
+            &quot;mean&quot;: 0.011992213777676881
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 1042,
+            &quot;sum&quot;: 55.530107110447716,
+            &quot;mean&quot;: 0.05329184943421086
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 228,
+            &quot;sum&quot;: 40.890089988708496,
+            &quot;mean&quot;: 0.17934249995047585
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 17483,
+            &quot;sum&quot;: 321.4898238366004,
+            &quot;mean&quot;: 0.01838871039504664
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128195,
+            &quot;sum&quot;: 1819.4584314673994,
+            &quot;mean&quot;: 0.014192897004309056
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 17483,
+            &quot;sum&quot;: 148.73024258669466,
+            &quot;mean&quot;: 0.008507135079030753
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;sum&quot;: 374.3519305139198,
+            &quot;mean&quot;: 0.03474908850959991
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 2091,
+            &quot;sum&quot;: 116.3909482229501,
+            &quot;mean&quot;: 0.05566281598419422
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 14296,
+            &quot;sum&quot;: 171.4407431068321,
+            &quot;mean&quot;: 0.011992217620791277
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.00013042867414608111,
+          &quot;protected_RGB&quot;: -0.001516428654807344,
+          &quot;fixed_road_absolute_blue&quot;: -6.468289717733583e-05,
+          &quot;a5_RGB&quot;: -0.022958715761791516,
+          &quot;a5_upper_RGB&quot;: -0.05544989878178802,
+          &quot;a37_RGB&quot;: 3.8431143961625835e-09
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 9819.26374421455,
+          &quot;mean&quot;: 0.9114697618318528
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 2091,
+          &quot;sum&quot;: 1756.8422313034534,
+          &quot;mean&quot;: 0.8401923631293416
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 879.7500353329215,
+          &quot;mean&quot;: 0.08166249283699262
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 0.004469600506126881,
+          &quot;mean&quot;: 4.1488912151925006e-07
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 105,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 1042,
+            &quot;sum&quot;: 55.53121608978836,
+            &quot;mean&quot;: 0.053292913713808406
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 228,
+            &quot;sum&quot;: 40.490981101989746,
+            &quot;mean&quot;: 0.177592022377148
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 7284,
+            &quot;sum&quot;: 74.56334697773855,
+            &quot;mean&quot;: 0.010236593489530278
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128195,
+            &quot;sum&quot;: 2039.8407367106993,
+            &quot;mean&quot;: 0.0159120147955123
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 7284,
+            &quot;sum&quot;: 20.358848050236702,
+            &quot;mean&quot;: 0.002795009342426785
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;sum&quot;: 621.6879736245028,
+            &quot;mean&quot;: 0.057707971189501786
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 2091,
+            &quot;sum&quot;: 232.33668657566886,
+            &quot;mean&quot;: 0.11111271476598224
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 1042,
+            &quot;sum&quot;: 55.53121608978836,
+            &quot;mean&quot;: 0.053292913713808406
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 228,
+            &quot;sum&quot;: 40.490981101989746,
+            &quot;mean&quot;: 0.177592022377148
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 7284,
+            &quot;sum&quot;: 78.80549417591828,
+            &quot;mean&quot;: 0.010818986020856437
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128195,
+            &quot;sum&quot;: 1847.6276221797743,
+            &quot;mean&quot;: 0.014412634051092277
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 7284,
+            &quot;sum&quot;: 20.95097255706787,
+            &quot;mean&quot;: 0.0028763004608824646
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;sum&quot;: 374.3530167238205,
+            &quot;mean&quot;: 0.034749189336658354
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 2091,
+            &quot;sum&quot;: 116.3909482229501,
+            &quot;mean&quot;: 0.05566281598419422
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.0005823925313261594,
+          &quot;protected_RGB&quot;: -0.0014993807444200237,
+          &quot;fixed_road_absolute_blue&quot;: 8.129111845567956e-05,
+          &quot;a5_RGB&quot;: -0.022958781852843432,
+          &quot;a5_upper_RGB&quot;: -0.05544989878178802
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 9819.268043259159,
+          &quot;mean&quot;: 0.9114701608891821
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 2091,
+          &quot;sum&quot;: 1756.8422313034534,
+          &quot;mean&quot;: 0.8401923631293416
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 879.7502063200209,
+          &quot;mean&quot;: 0.081662508708811
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 10773,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: 0.0
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 113,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 879,
+            &quot;sum&quot;: 42.99464072520641,
+            &quot;mean&quot;: 0.04891312938021207
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 226,
+            &quot;sum&quot;: 33.58334541320801,
+            &quot;mean&quot;: 0.14859887350976994
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 22083,
+            &quot;sum&quot;: 299.9904393170582,
+            &quot;mean&quot;: 0.013584677775531323
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128429,
+            &quot;sum&quot;: 1761.6194072240396,
+            &quot;mean&quot;: 0.013716679310934754
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 22083,
+            &quot;sum&quot;: 199.21534273028374,
+            &quot;mean&quot;: 0.009021208292817268
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 12430,
+            &quot;sum&quot;: 210.14626761744148,
+            &quot;mean&quot;: 0.016906377121274456
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 879,
+            &quot;sum&quot;: 42.9964646711087,
+            &quot;mean&quot;: 0.04891520440399169
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 226,
+            &quot;sum&quot;: 33.58554267883301,
+            &quot;mean&quot;: 0.14860859592403985
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 22083,
+            &quot;sum&quot;: 295.15262362708745,
+            &quot;mean&quot;: 0.01336560356958237
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128429,
+            &quot;sum&quot;: 1811.6792268489735,
+            &quot;mean&quot;: 0.014106465259785357
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 22083,
+            &quot;sum&quot;: 199.21335254609585,
+            &quot;mean&quot;: 0.009021118169908792
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 12430,
+            &quot;sum&quot;: 210.14626761744148,
+            &quot;mean&quot;: 0.016906377121274456
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 2.075023779621321e-06,
+          &quot;a6_depth_m&quot;: 9.722414269913715e-06,
+          &quot;road_RGB&quot;: -0.00021907420594895373,
+          &quot;protected_RGB&quot;: 0.0003897859488506024,
+          &quot;fixed_road_absolute_blue&quot;: -9.012290847626447e-08,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null,
+          &quot;a37_RGB&quot;: 0.0
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 113,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 879,
+            &quot;sum&quot;: 42.96168440752808,
+            &quot;mean&quot;: 0.04887563641357006
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 226,
+            &quot;sum&quot;: 33.54592704772949,
+            &quot;mean&quot;: 0.14843330552092696
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 7070,
+            &quot;sum&quot;: 66.44521167175844,
+            &quot;mean&quot;: 0.009398191184124249
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128429,
+            &quot;sum&quot;: 1794.2235508971135,
+            &quot;mean&quot;: 0.013970548325511476
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 7070,
+            &quot;sum&quot;: 19.722895994782448,
+            &quot;mean&quot;: 0.002789659970973472
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 879,
+            &quot;sum&quot;: 42.96350835343037,
+            &quot;mean&quot;: 0.04887771143734968
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 226,
+            &quot;sum&quot;: 33.54812431335449,
+            &quot;mean&quot;: 0.14844302793519687
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 7070,
+            &quot;sum&quot;: 66.46460919716628,
+            &quot;mean&quot;: 0.009400934822795796
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128429,
+            &quot;sum&quot;: 1844.7320534044047,
+            &quot;mean&quot;: 0.014363827900274897
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 7070,
+            &quot;sum&quot;: 19.735468670725822,
+            &quot;mean&quot;: 0.002791438284402521
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 2.075023779621321e-06,
+          &quot;a6_depth_m&quot;: 9.722414269913715e-06,
+          &quot;road_RGB&quot;: 2.7436386715474353e-06,
+          &quot;protected_RGB&quot;: 0.00039327957476342074,
+          &quot;fixed_road_absolute_blue&quot;: 1.7783134290487966e-06,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 130,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 455,
+            &quot;sum&quot;: 22.049780737957917,
+            &quot;mean&quot;: 0.048461056566940476
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 115,
+            &quot;sum&quot;: 11.96982192993164,
+            &quot;mean&quot;: 0.10408540808636209
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 24850,
+            &quot;sum&quot;: 569.2806473077799,
+            &quot;mean&quot;: 0.022908677960071625
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128752,
+            &quot;sum&quot;: 2303.2067528433836,
+            &quot;mean&quot;: 0.017888706605282897
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 24850,
+            &quot;sum&quot;: 209.94723859801888,
+            &quot;mean&quot;: 0.008448581030101364
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 5820,
+            &quot;sum&quot;: 141.4274600808858,
+            &quot;mean&quot;: 0.02430025087300443
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 455,
+            &quot;sum&quot;: 22.049780737957917,
+            &quot;mean&quot;: 0.048461056566940476
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 115,
+            &quot;sum&quot;: 11.96982192993164,
+            &quot;mean&quot;: 0.10408540808636209
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 24850,
+            &quot;sum&quot;: 569.2806473077799,
+            &quot;mean&quot;: 0.022908677960071625
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128752,
+            &quot;sum&quot;: 2303.2067528433836,
+            &quot;mean&quot;: 0.017888706605282897
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 24850,
+            &quot;sum&quot;: 209.94723859801888,
+            &quot;mean&quot;: 0.008448581030101364
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 5820,
+            &quot;sum&quot;: 141.4274600808858,
+            &quot;mean&quot;: 0.02430025087300443
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.0,
+          &quot;protected_RGB&quot;: 0.0,
+          &quot;fixed_road_absolute_blue&quot;: 0.0,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null,
+          &quot;a37_RGB&quot;: 0.0
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 130,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 455,
+            &quot;sum&quot;: 22.041596922907047,
+            &quot;mean&quot;: 0.04844307016023527
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 115,
+            &quot;sum&quot;: 9.007099151611328,
+            &quot;mean&quot;: 0.07832260131835937
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 3613,
+            &quot;sum&quot;: 31.10121544759022,
+            &quot;mean&quot;: 0.008608141557594857
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128752,
+            &quot;sum&quot;: 2302.954247879461,
+            &quot;mean&quot;: 0.01788674543214444
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 3613,
+            &quot;sum&quot;: 9.977263063192368,
+            &quot;mean&quot;: 0.002761489915082305
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 455,
+            &quot;sum&quot;: 22.041596922907047,
+            &quot;mean&quot;: 0.04844307016023527
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 115,
+            &quot;sum&quot;: 9.007099151611328,
+            &quot;mean&quot;: 0.07832260131835937
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 3613,
+            &quot;sum&quot;: 31.10121544759022,
+            &quot;mean&quot;: 0.008608141557594857
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 128752,
+            &quot;sum&quot;: 2302.954247879461,
+            &quot;mean&quot;: 0.01788674543214444
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 3613,
+            &quot;sum&quot;: 9.977263063192368,
+            &quot;mean&quot;: 0.002761489915082305
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.0,
+          &quot;protected_RGB&quot;: 0.0,
+          &quot;fixed_road_absolute_blue&quot;: 0.0,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 137,
+        &quot;state&quot;: &quot;keep&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 384,
+            &quot;sum&quot;: 22.48225829686271,
+            &quot;mean&quot;: 0.05854754764807998
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 94,
+            &quot;sum&quot;: 6.778411865234375,
+            &quot;mean&quot;: 0.07211076452376995
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 29048,
+            &quot;sum&quot;: 453.6011111876214,
+            &quot;mean&quot;: 0.015615571164542187
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 135362,
+            &quot;sum&quot;: 2621.594227595073,
+            &quot;mean&quot;: 0.01936728348868274
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 29048,
+            &quot;sum&quot;: 183.99722047243267,
+            &quot;mean&quot;: 0.0063342474687562884
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 4449,
+            &quot;sum&quot;: 134.26310724380892,
+            &quot;mean&quot;: 0.03017826640679005
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 384,
+            &quot;sum&quot;: 22.48225829686271,
+            &quot;mean&quot;: 0.05854754764807998
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 94,
+            &quot;sum&quot;: 6.778411865234375,
+            &quot;mean&quot;: 0.07211076452376995
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 29048,
+            &quot;sum&quot;: 453.6011111876214,
+            &quot;mean&quot;: 0.015615571164542187
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 135362,
+            &quot;sum&quot;: 2621.594227595073,
+            &quot;mean&quot;: 0.01936728348868274
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 29048,
+            &quot;sum&quot;: 183.99722047243267,
+            &quot;mean&quot;: 0.0063342474687562884
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a37_RGB&quot;: {
+            &quot;pixels&quot;: 4449,
+            &quot;sum&quot;: 134.26310724380892,
+            &quot;mean&quot;: 0.03017826640679005
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.0,
+          &quot;protected_RGB&quot;: 0.0,
+          &quot;fixed_road_absolute_blue&quot;: 0.0,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null,
+          &quot;a37_RGB&quot;: 0.0
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      },
+      {
+        &quot;raw&quot;: 137,
+        &quot;state&quot;: &quot;delete&quot;,
+        &quot;baseline&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 384,
+            &quot;sum&quot;: 22.429815762036014,
+            &quot;mean&quot;: 0.058410978546968785
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 94,
+            &quot;sum&quot;: 6.679676055908203,
+            &quot;mean&quot;: 0.07106038357349152
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 1989,
+            &quot;sum&quot;: 17.0370048245386,
+            &quot;mean&quot;: 0.008565613285338662
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 135362,
+            &quot;sum&quot;: 2620.887867035366,
+            &quot;mean&quot;: 0.019362065181035785
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 1989,
+            &quot;sum&quot;: 5.087755024433136,
+            &quot;mean&quot;: 0.0025579462164068054
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;candidate&quot;: {
+          &quot;a6_RGB&quot;: {
+            &quot;pixels&quot;: 384,
+            &quot;sum&quot;: 22.429815762036014,
+            &quot;mean&quot;: 0.058410978546968785
+          },
+          &quot;a6_depth_m&quot;: {
+            &quot;pixels&quot;: 94,
+            &quot;sum&quot;: 6.679676055908203,
+            &quot;mean&quot;: 0.07106038357349152
+          },
+          &quot;road_RGB&quot;: {
+            &quot;pixels&quot;: 1989,
+            &quot;sum&quot;: 17.0370048245386,
+            &quot;mean&quot;: 0.008565613285338662
+          },
+          &quot;protected_RGB&quot;: {
+            &quot;pixels&quot;: 135362,
+            &quot;sum&quot;: 2620.887867035366,
+            &quot;mean&quot;: 0.019362065181035785
+          },
+          &quot;fixed_road_absolute_blue&quot;: {
+            &quot;pixels&quot;: 1989,
+            &quot;sum&quot;: 5.087755024433136,
+            &quot;mean&quot;: 0.0025579462164068054
+          },
+          &quot;a5_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          },
+          &quot;a5_upper_RGB&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;sum&quot;: 0.0,
+            &quot;mean&quot;: null
+          }
+        },
+        &quot;delta&quot;: {
+          &quot;a6_RGB&quot;: 0.0,
+          &quot;a6_depth_m&quot;: 0.0,
+          &quot;road_RGB&quot;: 0.0,
+          &quot;protected_RGB&quot;: 0.0,
+          &quot;fixed_road_absolute_blue&quot;: 0.0,
+          &quot;a5_RGB&quot;: null,
+          &quot;a5_upper_RGB&quot;: null
+        },
+        &quot;owner5_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;owner5_alphaT_upper&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;static_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;other_actor_alphaT_a5&quot;: {
+          &quot;pixels&quot;: 0,
+          &quot;sum&quot;: 0.0,
+          &quot;mean&quot;: null
+        },
+        &quot;new_a6_asset_alpha_below09&quot;: 0,
+        &quot;new_a6_asset_alpha_below05&quot;: 0
+      }
+    ],
+    &quot;numeric_gates&quot;: [
+      {
+        &quot;name&quot;: &quot;keep:a6_RGB:worst_frame&quot;,
+        &quot;value&quot;: 2.075023779621321e-06,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;keep:a6_depth_m:worst_frame&quot;,
+        &quot;value&quot;: 9.722414269913715e-06,
+        &quot;threshold&quot;: 0.01,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;keep:a37_RGB:worst_frame&quot;,
+        &quot;value&quot;: 3.8431143961625835e-09,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 105
+      },
+      {
+        &quot;name&quot;: &quot;keep:road_RGB:worst_frame&quot;,
+        &quot;value&quot;: 0.00013042867414608111,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 105
+      },
+      {
+        &quot;name&quot;: &quot;keep:protected_RGB:worst_frame&quot;,
+        &quot;value&quot;: 0.0003897859488506024,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;keep:fixed_road_absolute_blue:worst_frame&quot;,
+        &quot;value&quot;: 0.0,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 130
+      },
+      {
+        &quot;name&quot;: &quot;keep:road_RGB:pooled&quot;,
+        &quot;value&quot;: -2.7363810449743068e-05,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 93464
+      },
+      {
+        &quot;name&quot;: &quot;keep:protected_RGB:pooled&quot;,
+        &quot;value&quot;: -0.0002771811386495586,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 520738
+      },
+      {
+        &quot;name&quot;: &quot;keep:fixed_road_absolute_blue:pooled&quot;,
+        &quot;value&quot;: -1.2120616232338111e-05,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 93464
+      },
+      {
+        &quot;name&quot;: &quot;keep:raw105_a5_RGB&quot;,
+        &quot;value&quot;: -0.022958715761791516,
+        &quot;threshold&quot;: 0.0,
+        &quot;passed&quot;: true
+      },
+      {
+        &quot;name&quot;: &quot;delete:a6_RGB:worst_frame&quot;,
+        &quot;value&quot;: 2.075023779621321e-06,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;delete:a6_depth_m:worst_frame&quot;,
+        &quot;value&quot;: 9.722414269913715e-06,
+        &quot;threshold&quot;: 0.01,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;delete:road_RGB:worst_frame&quot;,
+        &quot;value&quot;: 0.0005823925313261594,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 105
+      },
+      {
+        &quot;name&quot;: &quot;delete:protected_RGB:worst_frame&quot;,
+        &quot;value&quot;: 0.00039327957476342074,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 113
+      },
+      {
+        &quot;name&quot;: &quot;delete:fixed_road_absolute_blue:worst_frame&quot;,
+        &quot;value&quot;: 8.129111845567956e-05,
+        &quot;threshold&quot;: 0.005,
+        &quot;passed&quot;: true,
+        &quot;raw&quot;: 105
+      },
+      {
+        &quot;name&quot;: &quot;delete:road_RGB:pooled&quot;,
+        &quot;value&quot;: 0.00021354703966664542,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 19956
+      },
+      {
+        &quot;name&quot;: &quot;delete:protected_RGB:pooled&quot;,
+        &quot;value&quot;: -0.0002721226644178717,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 520738
+      },
+      {
+        &quot;name&quot;: &quot;delete:fixed_road_absolute_blue:pooled&quot;,
+        &quot;value&quot;: 3.030152248820123e-05,
+        &quot;threshold&quot;: 0.001,
+        &quot;passed&quot;: true,
+        &quot;pixels&quot;: 19956
+      },
+      {
+        &quot;name&quot;: &quot;delete:raw105_a5_RGB&quot;,
+        &quot;value&quot;: -0.022958781852843432,
+        &quot;threshold&quot;: 0.0,
+        &quot;passed&quot;: true
+      }
+    ],
+    &quot;failed_gates&quot;: [],
+    &quot;physical_row_prefix_check_basis&quot;: &quot;GPU actual-row equality assertion and paired field hashes in receipt, not inversion from pixels&quot;,
+    &quot;alpha_or_ID_is_not_visual_acceptance&quot;: true,
+    &quot;visual_review_required&quot;: true,
+    &quot;optimizer_updates&quot;: 0,
+    &quot;quality_accepted&quot;: false,
+    &quot;human_verdict&quot;: null
+  },
+  &quot;visual&quot;: {
+    &quot;status&quot;: &quot;PASS_ROOT_PILOT4_VISIBLE_STRUCTURE_AND_PRESERVATION_REVIEW&quot;,
+    &quot;reviewer&quot;: &quot;root agent; not a human acceptance&quot;,
+    &quot;raw_ids&quot;: [
+      105,
+      113,
+      130,
+      137
+    ],
+    &quot;states_reviewed&quot;: [
+      &quot;keep&quot;,
+      &quot;delete&quot;
+    ],
+    &quot;actually_viewed&quot;: [
+      &quot;figures/pilot_actor5_keep_four_frames.png&quot;,
+      &quot;figures/pilot_actor5_delete_four_frames.png&quot;,
+      &quot;figures/pilot_actor5_raw105_a5_delete.png&quot;,
+      &quot;native105delete PNG&quot;,
+      &quot;native130delete PNG&quot;
+    ],
+    &quot;a5_observation&quot;: &quot;At105 the formerly transparent/misaligned roof and windshield have continuous recognizable structure. Body colour is blue again. Details remain soft and do not match GT sharpness.&quot;,
+    &quot;other_frames_observation&quot;: &quot;113,130,137 no longer show the conspicuous dark retained-car regression of the all3 trial; road, a6 and a37 states visually follow frozen v44. Small local left-edge changes at137 remain and are subject to numerical preservation gates; no claim of identical whole images.&quot;,
+    &quot;limits&quot;: &quot;Only105 has nonempty original a5 pixels in this pilot. This is not four independent roof views or hidden-surface ground truth.&quot;,
+    &quot;all3_trial&quot;: &quot;FAIL preserved separately; not adopted&quot;,
+    &quot;numerical_gates&quot;: &quot;PASS19/19 independent CPU gates, review/cpu_independent_candidate_a5_4.json; actual shared geometry/colour/environment hashes exact; a6 RGB/depth zero metric delta&quot;,
+    &quot;shader_bridge_equivalence&quot;: &quot;PASS:raw130 same Full5 model nativeSH vs precomputedRGB joint maxabs1.1920928955078125e-7 and alpha0; successful6native forwards, failed counting assertion extra3 recorded separately&quot;,
+    &quot;full49_release&quot;: true,
+    &quot;full49_released_configuration&quot;: &quot;adapter59a94458a3423d1adb4e397f8bc1081029f2250d4b7a3b8087427cff8bb3934a; added_actor_ids=[5]; same19numerical gates; original formal v44 baseline reusable&quot;,
+    &quot;release_rule&quot;: &quot;Root visual pass plus numerical gates and shader bridge equivalence must all pass before49&quot;,
+    &quot;human_verdict&quot;: null,
+    &quot;quality_accepted&quot;: false,
+    &quot;gpu_stays_on&quot;: true
+  }
+}</pre></details><details><summary>原链重放、候选工程与来源</summary><pre>{
+  &quot;baseline_replay&quot;: null,
+  &quot;candidate&quot;: null,
+  &quot;source_integrity&quot;: null
+}</pre></details><p><span class="pending">候选源文件守恒：待取回</span> · <a href="source/frozen_actor5_additive49_build_report.py">可重复构建源码</a> · <a href="actor5_additive49_hold_data.json">报告数据与manifest</a></p></section>
+<footer>状态：HOLD_FULL49_A5_REGRESSION_NOT_PUBLISHED。更新：2026-11-07 03:17 UTC。本报告不启动GPU、训练或发布旧viewer；GPU保持开机。</footer></main></body></html>

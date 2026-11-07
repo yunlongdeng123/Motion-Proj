@@ -1,0 +1,236 @@
+{
+  "schema": "scene008.v44_full5_integration.paired.v1",
+  "status": "SEALED_BEFORE_CANDIDATE_GPU",
+  "created_unix": 1794022971.7979774,
+  "baseline": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1",
+    "input_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json",
+    "cached_formal": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/results/full49_r1/v44",
+    "replay": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/baseline4/v44",
+    "root_exact_audit": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/contract/root_baseline4_exact_png_audit.json",
+    "forbidden_substitute": "scene008_road_r0_v44_20261107_r1"
+  },
+  "candidate": {
+    "full5_model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/inference10k",
+    "iteration": 10000,
+    "requested_source_commit": "50d6daa8",
+    "retained_actor_ids": [
+      5
+    ],
+    "full5_transform_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/contract/full5_transform_matrix.txt",
+    "transform_source": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/inputs/scene0008_089_137/transform_matrix.txt",
+      "bytes": 264,
+      "mtime_ns": 1792839640540663325,
+      "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3"
+    },
+    "transform_copy": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/contract/full5_transform_matrix.txt",
+      "bytes": 264,
+      "mtime_ns": 1792839640540663325,
+      "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3"
+    },
+    "identities_from_checkpoint_only": false,
+    "no_original_full5_PLY_or_mask_for_selection": true,
+    "baseline_static_road_gates_env_C2_frozen": true,
+    "shared_single_depth_sort": true,
+    "adapter_sha256": "c177c97bea2c73e896fa925d3ecaa8ed490bb5b810e352ed77b2af23c5610c44",
+    "actors18_26": "Keep original V44 representation; no new Full5 rows for18/26",
+    "api": "SemanticActor5V44Integration",
+    "semantic_sidecar": {
+      "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/semantic_actor5_calibration49/semantic_actor5_manifest.json",
+      "manifest_sha256": "f77f33745925956cc582a0cb2b80f9e1bf2708ed41c7fcddecff8c891a4a937f",
+      "selection": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_full5_integration_20261107_r1/semantic_actor5_calibration49/semantic_actor5_rows.npz",
+      "selection_sha256": "3c3b0818a4794127915d2aed1d5b19da6b51ddbbf58fb35858d801724dbed0ec",
+      "schema": "scene008.semantic_actor5.visible_mass.v1",
+      "threshold": {
+        "purity_strictly_greater_than": 0.5,
+        "total_mass_strictly_greater_than": 0.0
+      },
+      "selected_rows": {
+        "static": 232,
+        "dynamic": 120722
+      },
+      "source_dynamic_owner_rows": {
+        "5": 118133,
+        "6": 0,
+        "18": 0,
+        "26": 0,
+        "37": 2589
+      },
+      "static_rows": 232,
+      "ancestry_and_original_owner_ids_preserved": true,
+      "source37_selected_rows_are_query_semantic5": true,
+      "calibration_raw_ids": [
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137
+      ],
+      "QUERY_reads_BUILD_masks": false,
+      "calibration_role": "Derived from all49 original BUILD actor5 masks; prior four measurements reused exactly, 45 added. Not held-out test validation"
+    },
+    "semantic_query_identity_from_fixed_visibility_sidecar": true,
+    "retire_legacy_static_actor5": false,
+    "v44_all_original_rows_masks_colours_gates_environment_and_C2_unchanged": true
+  },
+  "pilot_raws": [
+    94,
+    105,
+    130,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "new_training_updates": 0,
+  "new_background_solves": 0,
+  "pixel_composite": false,
+  "domains": {
+    "a5": "original observations actor_labels==1",
+    "upper": "original a5 y <= min_y + .25*(max_y-min_y)",
+    "full49_reference": {
+      "full_pixels": 121128,
+      "upper_pixels": 25906,
+      "full_mask_sha256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+      "upper_index_sha256": "d5c24aeee22bb804311e28f89de6f0652438465263c3e45a2f9d245d6b67379f",
+      "gt_sha256": "e1865e95d0f6e549bb104f7cec64f3a339bb23cb824ed471b269c2c6b8c0079a"
+    },
+    "pilot_a5_pixels": {
+      "94": 2052,
+      "105": 10773,
+      "130": 0,
+      "137": 0
+    },
+    "pilot_upper_pixels": {
+      "94": 471,
+      "105": 2091,
+      "130": 0,
+      "137": 0
+    },
+    "a6": "original obs.visible[0]",
+    "a6_depth": "original obs.depth_valid[0], target obs.depth_m[0] metres",
+    "a37": "original obs.visible[1], KEEP only",
+    "road_keep": "original obs.road",
+    "road_delete": "original obs.road_edit intersect fixed_reference.depth_m[:,3]>0",
+    "road_targets": "observed RGB for KEEP, original road_edit_rgb reobserved proxy for DELETE; not hidden ground truth",
+    "protect": "original obs.protect minus original a6/a37 visible",
+    "blue_absolute": "abs((B-targetB)-.5*((R-targetR)+(G-targetG))) on same original road domain; no predicted-alpha selection",
+    "original_blue_roi": {
+      "113": [
+        276,
+        175,
+        309,
+        220
+      ],
+      "137": [
+        276,
+        175,
+        309,
+        220
+      ]
+    },
+    "original_blue_roi_empty_is_null": true
+  },
+  "numeric_gates": {
+    "source": "Root pre-registration confirmed before candidate; original V44 evaluator had statistics only",
+    "a6_RGB_worst_frame_delta_max": 0.001,
+    "a6_depth_m_worst_frame_delta_max": 0.01,
+    "KEEP_a37_RGB_worst_frame_delta_max": 0.001,
+    "road_RGB_pooled_delta_max": 0.001,
+    "road_RGB_worst_frame_delta_max": 0.005,
+    "protected_RGB_pooled_delta_max": 0.001,
+    "protected_RGB_worst_frame_delta_max": 0.005,
+    "fixed_road_absolute_blue_pooled_delta_max": 0.001,
+    "fixed_road_absolute_blue_worst_frame_delta_max": 0.005,
+    "raw105_a5_mask_MAE_delta_strictly_below": 0.0,
+    "upper_MAE_report_without_visual_override": true,
+    "negative_deltas_are_improvement": true,
+    "pooled_weighting": "sum/count per state, never frame mean",
+    "inherited_alpha_conservation_maxabs_strict_below": 2e-05,
+    "raw94_a5_mask_MAE_delta_strictly_below": 0.0,
+    "raw94_a5_upper_MAE_delta_strictly_below": 0.0,
+    "raw105_a5_upper_MAE_delta_strictly_below": 0.0,
+    "additional_strict_a5_gates_states": [
+      "keep",
+      "delete"
+    ]
+  },
+  "exact_guards": {
+    "baseline_png_replay_max": 0,
+    "shared_physical_rows_and_colours_byte_equal": true,
+    "shared_env_byte_equal": true,
+    "shared_fields_exclude_retagged_diagnostic_features": true,
+    "keep_delete_changes_only_a37": true,
+    "delete_a37_joint_group_max": 0.0,
+    "added_owner_ids": [
+      5
+    ],
+    "shared_source_versions_unchanged": true,
+    "unused_added_groups18_26_exact_zero": true,
+    "semantic_rows_exact_match_fixed_sidecar_ids": true,
+    "no_source_owner37_zero_assertion_for_semantic5_rows": true
+  },
+  "visual_gates": {
+    "root_four_frame_review_required": true,
+    "raw105_roof_windshield_visible_recovery_required": true,
+    "static_potential_duplicate_must_be_annotated": true,
+    "no_quality_claim_from_alpha_or_owner_only": true,
+    "raw94_and105_a5_full_and_upper_review_required": true
+  },
+  "all49_release": {
+    "automatic": false,
+    "requires_root_explicit_four_frame_images_and_guard_approval": true
+  },
+  "shutdown": false,
+  "reset_card": false,
+  "case_id": "SEMANTIC_ACTOR5_ALL49_BUILD_FIT_FOUR_FRAME_PILOT",
+  "parent_contract_sha256": "2e5b50c7856bd053c1fd95cf4d0f2466542bdb6b464e57a1f477ce059254eb00",
+  "prior_case": "Source-owner add49 and strict legacy-static retirement4 failed quality; both preserved"
+}

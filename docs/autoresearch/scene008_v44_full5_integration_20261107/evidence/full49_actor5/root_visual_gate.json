@@ -1,0 +1,17 @@
+{
+  "status": "FAIL_FULL49_A5_APPEARANCE_REGRESSION_DO_NOT_PUBLISH_AS_SUCCESS",
+  "reviewer": "root agent; human verdict remains null",
+  "actually_viewed": ["figures/all49_actor5_a5_visible_keep.png", "figures/all49_actor5_a5_visible_delete.png", "native094 DELETE versus original v44/GT/nativeFull5", "native097 DELETE", "pilot all4 KEEP/DELETE and105crop"],
+  "visible_a5_raw_ids": [89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112],
+  "finding": "Full49 reveals dark/soft early89..100 a5, particularly94. Later roof/windshield shape improves, but the early appearance regression prevents whole-task acceptance.",
+  "keep_a5_RGB_MAE": {"v44":0.0454184441,"candidate":0.0461817341},
+  "delete_a5_RGB_MAE": {"v44":0.0454534998,"candidate":0.0462827708},
+  "keep_a5_upper_MAE": {"v44":0.0773441193,"candidate":0.0730948415},
+  "preservation_gates": "19/19 pass; this does not cover all49 a5 quality and cannot override visible regression",
+  "supersedes": "pilot_actor5/root_visual_gate.json was a valid local four-frame release gate; whole49 quality is now FAIL",
+  "next_engineering_check": "strict source-lineage identification of old static a5 representation, then fixed replacement in both edit states plus new Full5 dynamic5; no guessed spatial/2D-mask filtering",
+  "central_v44_viewer_published": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "gpu_stays_on": true
+}

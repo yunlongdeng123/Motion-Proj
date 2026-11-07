@@ -1,0 +1,43 @@
+{
+  "task_id": "SCENE008-V44-FULL5-INTEGRATION-20261107",
+  "status": "ROOT_APPROVED_THRESHOLDS_MIRROR_NOT_PRIMARY_PREREGISTRATION",
+  "primary_preregistered_contract": "contract/execution_contract.json SHA256 83bec3f33a2d7da7633089d03ee18bcd45b8f19bd6d4cfd258ee0b35cd7e1cb2; runner sealed before candidate PID30916",
+  "mirror_timing_note": "Root approved thresholds in coordination messages before candidate; this file is a mirror only. Root spare minimal worker was uploaded but never run, zero additional forwards.",
+  "pilot_raw_ids": [105, 113, 130, 137],
+  "states": ["keep", "delete"],
+  "baseline": "original displayed formal scene008_v44_rgb_asset_20261107_r1, reproduced all8 PNG exact",
+  "candidate": "original v44 rows plus strict saved-owner Full5 dynamic actors 5,18,26; one native shared depth sort",
+  "baseline_components_frozen": ["static", "environment", "road", "gates", "fine11x9 colours", "C2 SurfaceLOD a6", "original a37 rows"],
+  "engineering_quality_gates": {
+    "a6_RGB_each_state_worst_frame_MAE_delta_max": 0.001,
+    "a6_depth_m_each_state_worst_frame_MAE_delta_max": 0.01,
+    "keep_a37_RGB_worst_frame_MAE_delta_max": 0.001,
+    "road_RGB_each_state_pooled_MAE_delta_max": 0.001,
+    "road_RGB_each_state_worst_frame_MAE_delta_max": 0.005,
+    "protected_RGB_each_state_pooled_MAE_delta_max": 0.001,
+    "protected_RGB_each_state_worst_frame_MAE_delta_max": 0.005,
+    "fixed_road_absolute_blue_excess_each_state_pooled_delta_max": 0.001,
+    "fixed_road_absolute_blue_excess_each_state_worst_frame_delta_max": 0.005,
+    "a5_original_mask_RGB_MAE": "strict improvement at raw105 in both states",
+    "a5_original_bbox_top25percent_height": "report float MAE and root visual review of continuous roof/windshield; not a semantic roof GT mask"
+  },
+  "evaluation_domains": {
+    "a6": "original observed visible[0]",
+    "a6_depth": "original depth_valid[0] with original depth_m[0]",
+    "a37_keep": "original observed visible[1]",
+    "road_keep": "original observed road with observed GT RGB",
+    "road_delete": "original road_edit intersect fixed ground_beneath_a37_proxy with original road_edit_rgb proxy, not hidden-road independent GT",
+    "protected": "original protect excluding original visible a6 and a37",
+    "a5": "original actor_labels==1, fixed original yx/top25percent height; raw105 domain10773 and upper2091, other pilot frames empty/null",
+    "old_blue_ROI": "original registered ROI is empty for113/137; retain null; do not replace its denominator",
+    "fixed_road_absolute_blue_excess": "same fixed road domain and target as corresponding state; abs(residual_B - .5*(residual_R+residual_G))"
+  },
+  "wiring_gates": ["original v44 geometric row prefix exact except diagnostic features", "asset rows same across keep/delete", "delete a37 group alpha exactly zero", "seven group alphaT sum equals joint alpha within2e-5", "source model parameters and identities unchanged", "camera/time/world transform exact to saved metadata"],
+  "full49_release": "only after root sees candidate4 images and numerical gates pass",
+  "training_updates": 0,
+  "new_calibration_solves": 0,
+  "gpu_stays_on": true,
+  "human_verdict": null,
+  "failure_ledger_refs": ["V82-F06"],
+  "scope_excludes": ["R0 unadopted road candidate", "silver residue repair", "image compositing", "per-edit static holes", "training or retuning"]
+}

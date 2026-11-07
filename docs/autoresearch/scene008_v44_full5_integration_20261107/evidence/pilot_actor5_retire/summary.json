@@ -1,0 +1,84 @@
+{
+  "status": "REJECTED_PILOT_REGISTERED_QUALITY_GATES",
+  "scope": "pilot",
+  "frame_count": 4,
+  "raw_ids": [
+    94,
+    105,
+    130,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "optimization_updates": 0,
+  "actual_joint_forwards": 8,
+  "quality_accepted": false,
+  "numerical_status": "ENGINEERING_PASS_NUMERIC_GATES_FAILED",
+  "numeric_gate_count": 25,
+  "failed_gates": [
+    {
+      "name": "keep:road_RGB:worst_frame",
+      "value": 0.017522905301839867,
+      "threshold": 0.005,
+      "passed": false,
+      "raw": 105
+    },
+    {
+      "name": "keep:road_RGB:pooled",
+      "value": 0.003451155540437358,
+      "threshold": 0.001,
+      "passed": false,
+      "pixels": 92569
+    },
+    {
+      "name": "keep:protected_RGB:pooled",
+      "value": 0.001778139482654888,
+      "threshold": 0.001,
+      "passed": false,
+      "pixels": 520691
+    },
+    {
+      "name": "keep:raw94:a5_RGB",
+      "value": 0.10480435400555403,
+      "threshold": 0.0,
+      "passed": false
+    },
+    {
+      "name": "keep:raw94:a5_upper_RGB",
+      "value": 0.17007198357843892,
+      "threshold": 0.0,
+      "passed": false
+    },
+    {
+      "name": "delete:protected_RGB:pooled",
+      "value": 0.0017998870915195654,
+      "threshold": 0.001,
+      "passed": false,
+      "pixels": 520691
+    },
+    {
+      "name": "delete:raw94:a5_RGB",
+      "value": 0.10500371401504224,
+      "threshold": 0.0,
+      "passed": false
+    },
+    {
+      "name": "delete:raw94:a5_upper_RGB",
+      "value": 0.1700827100871807,
+      "threshold": 0.0,
+      "passed": false
+    }
+  ],
+  "adapter_sha256": "a1022c01aa182b2aff7c188010c241ae782c9ee8d6e99753ee71924f8a913ea1",
+  "contract_sha256": "1957917720d118e8142cf5a893c36033d48d1caf9caba4699f0d5744c740c16c",
+  "strict_retirement_target_rows": 45577,
+  "mask_changes_only_active_strict_source_descendants": true,
+  "all49_executed": false,
+  "all49_auto_release": false,
+  "new_training_authorized_or_started": false,
+  "original_baseline": "scene008_v44_rgb_asset_20261107_r1/results/full49_r1/v44",
+  "shutdown": false,
+  "reset_card": false
+}

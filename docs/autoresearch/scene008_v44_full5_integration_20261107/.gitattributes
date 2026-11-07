@@ -1,0 +1,8 @@
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.png -filter -diff -merge
+*.jpg -filter -diff -merge
+*.npz -filter -diff -merge
+*.tar.gz -filter -diff -merge
+*.patch -diff
+# Preserve exact bytes of the frozen historical HTML snapshot.
+actor5_additive49_hold.html -whitespace

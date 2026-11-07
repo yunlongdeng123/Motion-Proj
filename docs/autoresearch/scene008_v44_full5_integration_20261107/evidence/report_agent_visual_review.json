@@ -1,0 +1,58 @@
+{
+  "reviewer": "historical_evidence report agent",
+  "recorded_utc": "2026-11-07T02:56:12.813171+00:00",
+  "stage": "candidate4",
+  "raw_frames_actually_viewed": [
+    105,
+    113,
+    130,
+    137
+  ],
+  "images_actually_viewed": [
+    {
+      "path": "figures/keep_four_frames.png",
+      "sha256": "f258761fc4fd0e42393eb5f6f0d17ac30491acbb9237143f5cd369fc1a94b7b3"
+    },
+    {
+      "path": "figures/delete_four_frames.png",
+      "sha256": "4d02fe5adcf68499bcebc5d3e29b370c4e8415036039a27cc23903460931181e"
+    },
+    {
+      "path": "figures/raw105_a5_delete.png",
+      "sha256": "49a5c3b85844ed50090abad632f530a3fccd125cb7d4ae43997a8b6d9931edff"
+    }
+  ],
+  "observations": [
+    {
+      "raw": 105,
+      "region": "a5 roof/windshield",
+      "observation": "Continuous blue a5 body and upper roof/windshield outline recovered versus frozen v44; native detail remains soft.",
+      "claim_scope": "Visible raw105 only, not every a5 view or GT-level sharpness."
+    },
+    {
+      "raw": 113,
+      "region": "oncoming retained vehicle on left lane",
+      "observation": "Candidate vehicle is visibly darker than frozen v44."
+    },
+    {
+      "raw": 130,
+      "region": "near retained vehicle on left lane",
+      "observation": "Candidate near vehicle becomes a dark green/blue blurred body, visibly darker and less defined than frozen v44."
+    },
+    {
+      "raw": 137,
+      "region": "left-edge retained vehicle fragment",
+      "observation": "The visible fragment is darker/softer; it is naturally clipped at the image edge."
+    }
+  ],
+  "a5_visible_structure_improved_raw105": true,
+  "other_retained_vehicle_regressions_observed": true,
+  "no_unique_causal_mechanism_inferred": true,
+  "static_duplication_is_unproven_risk": true,
+  "agent_recommendation": "HOLD_FOR_ROOT_VISUAL_AND_CPU_GUARD; do not release49 based only on raw105 roof crop",
+  "root_gate_is_this_agent_decision": false,
+  "root_gate": null,
+  "metrics_still_pending": true,
+  "human_verdict": null,
+  "quality_accepted": false
+}
