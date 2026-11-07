@@ -1,0 +1,1372 @@
+{
+  "status": "PASS_READ_ONLY_BOUNDED_NATIVE_FULL5_OWNER_AUDIT",
+  "recorded_utc": "2026-11-07T00:59:05.373695+00:00",
+  "GPU_initialized": false,
+  "optimizer_updates": 0,
+  "old_model_or_source_modified": false,
+  "search_scope": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k"
+  ],
+  "additional_arm_RP_empty": true,
+  "initial_concat_metadata": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json",
+    "actors": [
+      {
+        "actor_index": 0,
+        "raw_track_id": "3S_GJHyCGGK4ypFPVKOOqA",
+        "real_points": 21358
+      },
+      {
+        "actor_index": 1,
+        "raw_track_id": "mSiVqee7l7dfkt8HQhXZZw",
+        "real_points": 15193
+      },
+      {
+        "actor_index": 2,
+        "raw_track_id": "Umybpe6eOenVBgQ_zgdVtw",
+        "real_points": 2444
+      },
+      {
+        "actor_index": 3,
+        "raw_track_id": "7MxwK9zTRZ9g5lc_ZC0z6A",
+        "real_points": 11625
+      },
+      {
+        "actor_index": 4,
+        "raw_track_id": "vBOasuXpjI7h7d-X_VEQdA",
+        "real_points": 98452
+      }
+    ],
+    "limitation": "This establishes initial PLY ownership only, not the surviving/densified final rows."
+  },
+  "capture_writer_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+    "SHA256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+    "methods": [
+      {
+        "class_name": "GaussianModel",
+        "method": "capture",
+        "line": 88,
+        "end_line": 108,
+        "calls_capture_sgcm_optimizer": true
+      },
+      {
+        "class_name": "GaussianModel",
+        "method": "prune_points",
+        "line": 452,
+        "end_line": 471,
+        "calls_capture_sgcm_optimizer": false
+      },
+      {
+        "class_name": "GaussianModel",
+        "method": "densification_postfix",
+        "line": 547,
+        "end_line": 575,
+        "calls_capture_sgcm_optimizer": false
+      },
+      {
+        "class_name": "GaussianModel",
+        "method": "densify_and_split",
+        "line": 577,
+        "end_line": 658,
+        "calls_capture_sgcm_optimizer": false
+      },
+      {
+        "class_name": "GaussianModel",
+        "method": "densify_and_clone",
+        "line": 660,
+        "end_line": 696,
+        "calls_capture_sgcm_optimizer": false
+      },
+      {
+        "class_name": "Dynamic_GaussianModel",
+        "method": "capture",
+        "line": 747,
+        "end_line": 767,
+        "calls_capture_sgcm_optimizer": false
+      }
+    ]
+  },
+  "runs": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+      "exists": true,
+      "direct_weight_filenames": [
+        "chkpnt30000.pth",
+        "dynamic_chkpnt30000.pth",
+        "env_light_chkpnt30000.pth",
+        "training_state30000.pth"
+      ],
+      "component_availability": [
+        {
+          "iteration": 30000,
+          "files": {
+            "chkpnt30000.pth": true,
+            "dynamic_chkpnt30000.pth": true,
+            "env_light_chkpnt30000.pth": true,
+            "training_state30000.pth": true
+          },
+          "render_components_complete": true,
+          "full_restore_components_complete": true
+        }
+      ],
+      "dynamic_capture_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/dynamic_chkpnt30000.pth",
+            "bytes": 807923678,
+            "mtime_ns": 1792839289020092218
+          },
+          "top_type": "tuple",
+          "top_length": 2,
+          "iteration": 30000,
+          "capture_length": 18,
+          "capture_fields": [
+            {
+              "type": "int",
+              "value": 3
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                15,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                4
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1030499,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "dict",
+              "keys": [
+                "state",
+                "param_groups"
+              ]
+            },
+            {
+              "type": "int",
+              "value": 1
+            },
+            {
+              "type": "float",
+              "value": 0.2
+            },
+            {
+              "type": "float",
+              "value": 1.0
+            }
+          ],
+          "optimizer_top_keys": [
+            "state",
+            "param_groups"
+          ],
+          "optimizer_group_names": [
+            "xyz",
+            "f_dc",
+            "f_rest",
+            "opacity",
+            "scaling",
+            "rotation",
+            "t",
+            "scaling_t",
+            "velocity"
+          ],
+          "optimizer_state_fields": {
+            "0": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "1": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "2": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "3": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "4": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "5": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "6": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "7": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "8": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ]
+          },
+          "actual_provenance_key_hits": [],
+          "archive_pickle_metadata_bytes": 4884,
+          "archive_pickle_metadata_sha256": "ab5afcb20f4ad0c7fffa091b86a1811011e77bb97afc7097a8899836934523d1",
+          "full_weight_sha256_recomputed": false,
+          "weights_mapped_to_CPU_not_materialized_for_geometry": true,
+          "file_stat_unchanged_after_metadata_read": true
+        }
+      ],
+      "training_state_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/training_state30000.pth",
+            "bytes": 47384,
+            "mtime_ns": 1792839402902544183
+          },
+          "top_keys": [
+            "schema_version",
+            "iteration",
+            "config",
+            "scale_index",
+            "camera_orders",
+            "viewpoint_stack",
+            "python_rng",
+            "numpy_rng",
+            "torch_rng",
+            "cuda_rng",
+            "model_runtime",
+            "ema",
+            "sgcm",
+            "hybrid_sampler"
+          ],
+          "model_runtime": {
+            "static": {
+              "no_time_split": false
+            },
+            "dynamic": {
+              "no_time_split": true
+            }
+          },
+          "actual_runtime_provenance_key_hits": [],
+          "sgcm_top_keys": [
+            "config",
+            "metadata",
+            "model_scale",
+            "plane_model",
+            "model_to_anchor",
+            "regions_anchor"
+          ],
+          "SHA256": "f6764f0bd39cf8fbfd297a33a3d2e51a153f21fb6da38ce1de77169ee8b6012c",
+          "file_stat_unchanged": true
+        }
+      ],
+      "ownership_sidecar_name_hits": [],
+      "jsonl_examples": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/gradient_diagnostics.jsonl",
+          "bytes": 350512,
+          "first_record_keys": [
+            "iteration",
+            "diagnostic"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/paired_steps.jsonl",
+          "bytes": 82681159,
+          "first_record_keys": [
+            "iteration",
+            "frame_id",
+            "time_shift",
+            "learning_rates",
+            "losses"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k",
+      "exists": true,
+      "direct_weight_filenames": [
+        "chkpnt30000.pth",
+        "dynamic_chkpnt30000.pth",
+        "env_light_chkpnt30000.pth",
+        "road_chkpnt30000.pth",
+        "training_state30000.pth"
+      ],
+      "component_availability": [
+        {
+          "iteration": 30000,
+          "files": {
+            "chkpnt30000.pth": true,
+            "dynamic_chkpnt30000.pth": true,
+            "env_light_chkpnt30000.pth": true,
+            "training_state30000.pth": true
+          },
+          "render_components_complete": true,
+          "full_restore_components_complete": true
+        }
+      ],
+      "dynamic_capture_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k/dynamic_chkpnt30000.pth",
+            "bytes": 789664606,
+            "mtime_ns": 1792830224701692464
+          },
+          "top_type": "tuple",
+          "top_length": 2,
+          "iteration": 30000,
+          "capture_length": 18,
+          "capture_fields": [
+            {
+              "type": "int",
+              "value": 3
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                15,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                4
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1007210,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "dict",
+              "keys": [
+                "state",
+                "param_groups"
+              ]
+            },
+            {
+              "type": "int",
+              "value": 1
+            },
+            {
+              "type": "float",
+              "value": 0.2
+            },
+            {
+              "type": "float",
+              "value": 1.0
+            }
+          ],
+          "optimizer_top_keys": [
+            "state",
+            "param_groups"
+          ],
+          "optimizer_group_names": [
+            "xyz",
+            "f_dc",
+            "f_rest",
+            "opacity",
+            "scaling",
+            "rotation",
+            "t",
+            "scaling_t",
+            "velocity"
+          ],
+          "optimizer_state_fields": {
+            "0": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "1": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "2": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "3": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "4": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "5": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "6": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "7": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "8": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ]
+          },
+          "actual_provenance_key_hits": [],
+          "archive_pickle_metadata_bytes": 4884,
+          "archive_pickle_metadata_sha256": "52e34d184c3b2a62624ef044eb4bbe67f2d4626b115dd87e2062985a7b43d300",
+          "full_weight_sha256_recomputed": false,
+          "weights_mapped_to_CPU_not_materialized_for_geometry": true,
+          "file_stat_unchanged_after_metadata_read": true
+        }
+      ],
+      "training_state_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k/training_state30000.pth",
+            "bytes": 47704,
+            "mtime_ns": 1792830341019890522
+          },
+          "top_keys": [
+            "schema_version",
+            "iteration",
+            "config",
+            "scale_index",
+            "camera_orders",
+            "viewpoint_stack",
+            "python_rng",
+            "numpy_rng",
+            "torch_rng",
+            "cuda_rng",
+            "model_runtime",
+            "ema",
+            "sgcm",
+            "hybrid_sampler"
+          ],
+          "model_runtime": {
+            "static": {
+              "no_time_split": false
+            },
+            "dynamic": {
+              "no_time_split": true
+            }
+          },
+          "actual_runtime_provenance_key_hits": [],
+          "sgcm_top_keys": [
+            "config",
+            "metadata",
+            "model_scale",
+            "plane_model",
+            "model_to_anchor",
+            "regions_anchor"
+          ],
+          "SHA256": "1d3d871bc09138b00d0b26ec4af21e8c709e886b56eb9fa2d6a7e1cc98313755",
+          "file_stat_unchanged": true
+        }
+      ],
+      "ownership_sidecar_name_hits": [],
+      "jsonl_examples": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k/gradient_diagnostics.jsonl",
+          "bytes": 350518,
+          "first_record_keys": [
+            "iteration",
+            "diagnostic"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k/paired_steps.jsonl",
+          "bytes": 82680542,
+          "first_record_keys": [
+            "iteration",
+            "frame_id",
+            "time_shift",
+            "learning_rates",
+            "losses"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11",
+      "exists": true,
+      "direct_weight_filenames": [
+        "chkpnt20000.pth",
+        "dynamic_chkpnt20000.pth",
+        "env_light_chkpnt20000.pth",
+        "training_state20000.pth"
+      ],
+      "component_availability": [
+        {
+          "iteration": 20000,
+          "files": {
+            "chkpnt20000.pth": true,
+            "dynamic_chkpnt20000.pth": true,
+            "env_light_chkpnt20000.pth": true,
+            "training_state20000.pth": true
+          },
+          "render_components_complete": true,
+          "full_restore_components_complete": true
+        }
+      ],
+      "dynamic_capture_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/dynamic_chkpnt20000.pth",
+            "bytes": 799562974,
+            "mtime_ns": 1792334669025744234
+          },
+          "top_type": "tuple",
+          "top_length": 2,
+          "iteration": 20000,
+          "capture_length": 18,
+          "capture_fields": [
+            {
+              "type": "int",
+              "value": 3
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                15,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                4
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "dict",
+              "keys": [
+                "state",
+                "param_groups"
+              ]
+            },
+            {
+              "type": "int",
+              "value": 1
+            },
+            {
+              "type": "float",
+              "value": 0.2
+            },
+            {
+              "type": "float",
+              "value": 1.0
+            }
+          ],
+          "optimizer_top_keys": [
+            "state",
+            "param_groups"
+          ],
+          "optimizer_group_names": [
+            "xyz",
+            "f_dc",
+            "f_rest",
+            "opacity",
+            "scaling",
+            "rotation",
+            "t",
+            "scaling_t",
+            "velocity"
+          ],
+          "optimizer_state_fields": {
+            "0": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "1": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "2": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "3": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "4": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "5": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "6": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "7": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "8": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ]
+          },
+          "actual_provenance_key_hits": [],
+          "archive_pickle_metadata_bytes": 4881,
+          "archive_pickle_metadata_sha256": "285085d2f47dee14a8cb00e59d0aeb0a30ad93c74a702762d2577389b138d825",
+          "full_weight_sha256_recomputed": false,
+          "weights_mapped_to_CPU_not_materialized_for_geometry": true,
+          "file_stat_unchanged_after_metadata_read": true
+        }
+      ],
+      "training_state_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/training_state20000.pth",
+            "bytes": 47320,
+            "mtime_ns": 1792334777478380633
+          },
+          "top_keys": [
+            "schema_version",
+            "iteration",
+            "config",
+            "scale_index",
+            "camera_orders",
+            "viewpoint_stack",
+            "python_rng",
+            "numpy_rng",
+            "torch_rng",
+            "cuda_rng",
+            "model_runtime",
+            "ema",
+            "sgcm",
+            "hybrid_sampler"
+          ],
+          "model_runtime": {
+            "static": {
+              "no_time_split": false
+            },
+            "dynamic": {
+              "no_time_split": true
+            }
+          },
+          "actual_runtime_provenance_key_hits": [],
+          "sgcm_top_keys": [
+            "config",
+            "metadata",
+            "model_scale",
+            "plane_model",
+            "model_to_anchor",
+            "regions_anchor"
+          ],
+          "SHA256": "bbe26a8d4858493f4d746411b860af5ade27bf899a1ab2ec7e2ea4453e058ed6",
+          "file_stat_unchanged": true
+        }
+      ],
+      "ownership_sidecar_name_hits": [],
+      "jsonl_examples": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/gradient_diagnostics.jsonl",
+          "bytes": 291988,
+          "first_record_keys": [
+            "iteration",
+            "diagnostic"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11/paired_steps.jsonl",
+          "bytes": 71207158,
+          "first_record_keys": [
+            "iteration",
+            "frame_id",
+            "time_shift",
+            "learning_rates",
+            "losses"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        }
+      ]
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k",
+      "exists": true,
+      "direct_weight_filenames": [
+        "chkpnt30000.pth",
+        "dynamic_chkpnt30000.pth",
+        "env_light_chkpnt30000.pth",
+        "training_state30000.pth"
+      ],
+      "component_availability": [
+        {
+          "iteration": 30000,
+          "files": {
+            "chkpnt30000.pth": true,
+            "dynamic_chkpnt30000.pth": true,
+            "env_light_chkpnt30000.pth": true,
+            "training_state30000.pth": true
+          },
+          "render_components_complete": true,
+          "full_restore_components_complete": true
+        }
+      ],
+      "dynamic_capture_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k/dynamic_chkpnt30000.pth",
+            "bytes": 799562974,
+            "mtime_ns": 1792342939188743487
+          },
+          "top_type": "tuple",
+          "top_length": 2,
+          "iteration": 30000,
+          "capture_length": 18,
+          "capture_fields": [
+            {
+              "type": "int",
+              "value": 3
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                15,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                4
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                3
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "tensor",
+              "shape": [
+                1019835,
+                1
+              ],
+              "dtype": "torch.float32",
+              "device": "cpu"
+            },
+            {
+              "type": "dict",
+              "keys": [
+                "state",
+                "param_groups"
+              ]
+            },
+            {
+              "type": "int",
+              "value": 1
+            },
+            {
+              "type": "float",
+              "value": 0.2
+            },
+            {
+              "type": "float",
+              "value": 1.0
+            }
+          ],
+          "optimizer_top_keys": [
+            "state",
+            "param_groups"
+          ],
+          "optimizer_group_names": [
+            "xyz",
+            "f_dc",
+            "f_rest",
+            "opacity",
+            "scaling",
+            "rotation",
+            "t",
+            "scaling_t",
+            "velocity"
+          ],
+          "optimizer_state_fields": {
+            "0": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "1": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "2": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "3": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "4": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "5": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "6": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "7": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ],
+            "8": [
+              "step",
+              "exp_avg",
+              "exp_avg_sq"
+            ]
+          },
+          "actual_provenance_key_hits": [],
+          "archive_pickle_metadata_bytes": 4884,
+          "archive_pickle_metadata_sha256": "14b22cb2f2d8fe1542f913e5ca7066ea23f46978205f309c9b3c4ca3929992db",
+          "full_weight_sha256_recomputed": false,
+          "weights_mapped_to_CPU_not_materialized_for_geometry": true,
+          "file_stat_unchanged_after_metadata_read": true
+        }
+      ],
+      "training_state_audits": [
+        {
+          "file": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k/training_state30000.pth",
+            "bytes": 47832,
+            "mtime_ns": 1792343048974980627
+          },
+          "top_keys": [
+            "schema_version",
+            "iteration",
+            "config",
+            "scale_index",
+            "camera_orders",
+            "viewpoint_stack",
+            "python_rng",
+            "numpy_rng",
+            "torch_rng",
+            "cuda_rng",
+            "model_runtime",
+            "ema",
+            "sgcm",
+            "hybrid_sampler"
+          ],
+          "model_runtime": {
+            "static": {
+              "no_time_split": false
+            },
+            "dynamic": {
+              "no_time_split": true
+            }
+          },
+          "actual_runtime_provenance_key_hits": [],
+          "sgcm_top_keys": [
+            "config",
+            "metadata",
+            "model_scale",
+            "plane_model",
+            "model_to_anchor",
+            "regions_anchor"
+          ],
+          "SHA256": "29f8cfae4f08302baed3ad9fa034ea1d739acd4cdc7686b0d67a0f42b4ba6e1f",
+          "file_stat_unchanged": true
+        }
+      ],
+      "ownership_sidecar_name_hits": [],
+      "jsonl_examples": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k/gradient_diagnostics.jsonl",
+          "bytes": 58514,
+          "first_record_keys": [
+            "iteration",
+            "diagnostic"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k/paired_steps.jsonl",
+          "bytes": 27603404,
+          "first_record_keys": [
+            "iteration",
+            "frame_id",
+            "time_shift",
+            "learning_rates",
+            "losses"
+          ],
+          "first_record_provenance_key_hits": [],
+          "complete_history_content_audited": false
+        }
+      ]
+    }
+  ],
+  "strict_B_R_reuse_for_actor_queries": false,
+  "conclusion": "Native B/R captures contain no actor owner or complete dynamic clone/split/prune lineage. Initial concatenation ranges cannot be propagated to final rows without the missing index history. Do not infer owners from bbox, nearest points, or learned appearance.",
+  "absence_limit": "Only the four explicit native run paths and named source writer were audited. JSONL first records are schema examples, not an exhaustive scan of every log value.",
+  "no_GB_weight_download": true,
+  "no_full_weight_hash_rescan": true,
+  "no_renderer_or_CUDA_import": true,
+  "audit_source_local_sha256": "36e2f333c656c494fc4dce1c3cd54d8cdd9b84279fb8d8b76d54c852b4d33766",
+  "audit_source_local_path": "source/audit_full5_strict_ownership.py"
+}

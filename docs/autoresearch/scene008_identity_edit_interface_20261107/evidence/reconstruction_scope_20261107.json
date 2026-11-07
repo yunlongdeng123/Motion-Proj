@@ -1,0 +1,47 @@
+{
+  "task_id": "SCENE008-FULL5-RECONSTRUCTION-IDENTITY-20261107",
+  "status": "ACTIVE_RECONSTRUCTION_AND_IDENTITY_VALIDATION",
+  "date_timezone": "2026-11-07 Asia/Singapore",
+  "authority": "最新用户澄清，优先于此前代理对编辑验收范围的扩展。",
+  "primary_objective": "恢复破损a5车顶，解决完整重建与身份管理本身的问题。",
+  "dynamic_actor_ids": [5, 6, 18, 26, 37],
+  "identity_rule": "动态建模集合固定为完整五身份，编辑目标改变不再把a5等保留车辆转到静态分支重新学习。",
+  "primary_acceptance": [
+    "原生完整KEEP中的a5车顶和挡风玻璃恢复完整可辨结构。",
+    "所有五个指定车辆均使用各自完整真实源点并保持明确动态身份。",
+    "逐高斯身份在原生clone/split/prune、检查点保存和完整状态恢复后保持正确。",
+    "查询目标集合独立于建模集合，改变查询不改重建参数或要求重新训练。"
+  ],
+  "training": {
+    "checkpoint_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1",
+    "recipe": "原Full5 B实际原生配方；仅增加身份元数据与可靠持久化，不修改已在跑的损失或训练数学。",
+    "source_ply_order": [5, 26, 18, 6, 37],
+    "source_actor_rows": [21358, 15193, 2444, 11625, 98452],
+    "initial_static_rows": 585943,
+    "initial_dynamic_rows": 149072,
+    "smoke_completed_updates": 4681,
+    "smoke_exact_restore_probe_updates": 2,
+    "new_engineering_updates_so_far": 4683,
+    "formal_first_node": 5000,
+    "formal_next_node_if_still_blurred": 10000,
+    "learning_rate_horizon": 30000
+  },
+  "evaluation": {
+    "primary_pilot_frames": [97, 105, 109],
+    "full49": "完整KEEP重建评价；先检查a5车体，再扩49帧。",
+    "fixed_a5_pixel_frames": 121128,
+    "fixed_upper_bbox25_percent_pixel_frames": 25906,
+    "query_checks": "身份独立、参数不变的辅助工程证据，不作为背景残影质量任务。"
+  },
+  "out_of_scope": {
+    "static_vehicle_appearance_residue": "由用户现有v44分支处理；本分支不修复、不新训背景、不新增RCR或残影研究。",
+    "static_a5_recovery": "不要求只建模a37并让a5在静态分支恢复，作为交付前提。",
+    "new_loss_sweeps": "不启动opacity0、per-owner新loss、背景改写或权重网格。"
+  },
+  "historical_diagnostics": "已完成的编辑mask/参数测试与零更新静态残影归因只保留历史，不作本分支主线。",
+  "prior_contract": "engineering_contract.json，保留原文，主验收范围以本文件为准。",
+  "power": "GPU保持开机。",
+  "failure_ledger_refs": ["V82-F06"],
+  "human_verdict": null,
+  "quality_accepted": false
+}

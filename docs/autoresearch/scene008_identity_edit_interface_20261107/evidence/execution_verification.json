@@ -1,0 +1,181 @@
+{
+  "status": "PASS_NATIVE_FULL5_FORMAL10000_ENGINEERING4683_AND_KEEP49_DELIVERY",
+  "actual_formal_updates": 10000,
+  "actual_new_engineering_updates": 4683,
+  "old_engineering6599_unchanged": true,
+  "formal_phase_updates": [
+    5000,
+    5000
+  ],
+  "smoke_updates": 4681,
+  "smoke_resume_updates": 2,
+  "formal_does_not_resume_smoke": true,
+  "training_iteration_records": 10000,
+  "learning_rate_horizon": 30000,
+  "dynamic_actor_ids": [
+    5,
+    6,
+    18,
+    26,
+    37
+  ],
+  "training_delete_actor_ids": [],
+  "source_full_restore_differences": [],
+  "body_scope": "GT/native KEEP reconstruction and source identity; no new editing or background task",
+  "full49": {
+    "pixels": 121128,
+    "keep_rgb_mae": 0.030329211027542595,
+    "keep_mean_alpha": 0.9996899727152027,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9999504656231425,
+      "0.99": 0.9967554983158312
+    },
+    "weighting": "Fixed pixel-frame denominator, not frame-mean"
+  },
+  "upper_all49": {
+    "pixels": 25906,
+    "keep_rgb_mae": 0.03964854106574678,
+    "keep_mean_alpha": 0.9991774327606067,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9997683934223732,
+      "0.99": 0.986180807534934
+    },
+    "weighting": "Fixed pixel-frame denominator, not frame-mean"
+  },
+  "identity_all49": {
+    "pixels": 121128,
+    "owner5_alphaT_mean": 0.9280785691724055,
+    "static_alphaT_mean": 0.054845814184244446,
+    "other_owner_alphaT_mean": 0.01676558895594917,
+    "environment_transmission_mean": 0.0003100272847972941,
+    "argmax_owner5_rate": 0.9764629152631926,
+    "argmax_domain": "raw joint static channel plus five dynamic actor alphaT channels; no alpha threshold selection"
+  },
+  "upper_identity_all49": {
+    "pixels": 25906,
+    "owner5_alphaT_mean": 0.916079334676551,
+    "static_alphaT_mean": 0.05326600025099471,
+    "other_owner_alphaT_mean": 0.02983209850020192,
+    "environment_transmission_mean": 0.0008225672393933711,
+    "argmax_owner5_rate": 0.9805064463830773,
+    "argmax_domain": "raw joint static channel plus five dynamic actor alphaT channels; no alpha threshold selection"
+  },
+  "actor_identity_coverage": {
+    "5": {
+      "model_rows": 281391,
+      "visible_frames": 40,
+      "visible_pixel_frames": 552822,
+      "joint_alphaT_sum": 126114.9590402555
+    },
+    "6": {
+      "model_rows": 42081,
+      "visible_frames": 49,
+      "visible_pixel_frames": 263009,
+      "joint_alphaT_sum": 43158.49478003537
+    },
+    "18": {
+      "model_rows": 10273,
+      "visible_frames": 49,
+      "visible_pixel_frames": 21943,
+      "joint_alphaT_sum": 3392.536057464471
+    },
+    "26": {
+      "model_rows": 135125,
+      "visible_frames": 49,
+      "visible_pixel_frames": 310329,
+      "joint_alphaT_sum": 50109.5574598868
+    },
+    "37": {
+      "model_rows": 538607,
+      "visible_frames": 49,
+      "visible_pixel_frames": 1247605,
+      "joint_alphaT_sum": 591310.5163506247
+    }
+  },
+  "static_rows": 1469977,
+  "dynamic_rows": 1007477,
+  "fixed_domain_reference": {
+    "full_pixels": 121128,
+    "upper_pixels": 25906,
+    "full_mask_sha256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+    "upper_index_sha256": "d5c24aeee22bb804311e28f89de6f0652438465263c3e45a2f9d245d6b67379f",
+    "gt_sha256": "e1865e95d0f6e549bb104f7cec64f3a339bb23cb824ed471b269c2c6b8c0079a"
+  },
+  "independent_float_recalculation": true,
+  "source_and_parameters_unchanged": true,
+  "pilot_png_replay_max": 0,
+  "public_cli_keep_png_difference_max": 0,
+  "raw_identity_partition_max_abs": 2.4437904357910156e-06,
+  "visual_structure_review": {
+    "frames": [
+      97,
+      105,
+      109
+    ],
+    "reviewer": "Root assistant actual image review, not human signoff",
+    "conclusion": "Visible roof/windshield structure recovered relative to old transparent/missing roof; fine detail remains soft",
+    "GT_level_sharpness": false
+  },
+  "quality_accepted": false,
+  "human_verdict": null,
+  "retrievals": {
+    "smoke_pilot": {
+      "status": "PASS_ARCHIVE_SHA_SOURCE_MANIFEST_AND_ALL_STAGE_PNG",
+      "stage": "smoke",
+      "scope": "pilot",
+      "files": 76,
+      "frames": 3,
+      "archive_sha256": "2756122959ee8b57352006fbcd3d4b3e6880fbead47083cc1f327afc46093f67",
+      "weights_downloaded": false
+    },
+    "formal5k_pilot": {
+      "status": "PASS_ARCHIVE_SHA_SOURCE_MANIFEST_AND_ALL_STAGE_PNG",
+      "stage": "formal5k",
+      "scope": "pilot",
+      "files": 78,
+      "frames": 3,
+      "archive_sha256": "306edc1dbebd184fa8f0f00e1c53a32138437d7e685eea61016272fc40a187be",
+      "weights_downloaded": false
+    },
+    "formal5k_keep_pilot": {
+      "status": "PASS_ARCHIVE_SHA_SOURCE_MANIFEST_AND_ALL_STAGE_PNG",
+      "stage": "formal5k",
+      "scope": "pilot",
+      "kind": "keep",
+      "files": 67,
+      "frames": 3,
+      "archive_sha256": "2873a11f2861b85f6283f6bdcaa425fc98acb8ec0040ea4fd2fbf887f6741407",
+      "weights_downloaded": false
+    },
+    "formal10k_keep_pilot": {
+      "status": "PASS_ARCHIVE_SHA_SOURCE_MANIFEST_AND_ALL_STAGE_PNG",
+      "stage": "formal10k",
+      "scope": "pilot",
+      "kind": "keep",
+      "files": 85,
+      "frames": 3,
+      "archive_sha256": "8dde45aea9b36df9664fea27ae30ebcc952056bdfb1858afcc2e2749969b8767",
+      "weights_downloaded": false
+    },
+    "formal10k_keep_all49": {
+      "status": "PASS_ARCHIVE_SHA_SOURCE_MANIFEST_AND_ALL_STAGE_PNG",
+      "stage": "formal10k",
+      "scope": "all49",
+      "kind": "keep",
+      "files": 224,
+      "frames": 49,
+      "archive_sha256": "596335aa57b5036fe31710f1247622f025d89104154cb0a20b83896d75784444",
+      "weights_downloaded": false
+    }
+  },
+  "inference_package_verification": "Tracked separately by export/compare receipts",
+  "weights_downloaded_by_this_verifier": false,
+  "new_training_auto_release": false,
+  "shutdown_performed": false,
+  "reset_card_used": false,
+  "script_sha256": "a1d5c76d0a99eddb27f11a5a508f3563c15f7b27b53bf01daa686b041db8efea"
+}

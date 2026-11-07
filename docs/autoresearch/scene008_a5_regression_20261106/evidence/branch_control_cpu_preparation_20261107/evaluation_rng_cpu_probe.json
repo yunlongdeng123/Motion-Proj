@@ -1,0 +1,33 @@
+{
+  "status": "PASS_ACTUAL_NATIVE_LPIPS_CPU_RNG_PROBE",
+  "cuda_initialized": false,
+  "optimization_updates": 0,
+  "before": {
+    "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+    "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+    "torch_cpu": "1ccf17250133dec5e96478acd63e13d728d0dbbabb30389415a302c6f872f81f",
+    "cuda_initialized": false
+  },
+  "after": {
+    "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+    "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+    "torch_cpu": "dc2ab5b7c3859a557b3046e9124d93c4803fbaad5a7f08de457862b0788925a2",
+    "cuda_initialized": false
+  },
+  "after_guard": {
+    "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+    "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+    "torch_cpu": "dc2ab5b7c3859a557b3046e9124d93c4803fbaad5a7f08de457862b0788925a2",
+    "cuda_initialized": false
+  },
+  "unguarded_changed": [
+    "torch_cpu"
+  ],
+  "guard_restored": true,
+  "lpips_zero_pair": 0.0,
+  "guarded_zero_pair": 0.0,
+  "native_complete_eval_explicit_rng_guard": false,
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/lpipsPyTorch/__init__.py",
+  "probe_source_sha256": "8319ac35af21ef71fee6919c679d78a1ab522afbdbc75d2aed0358303dda6ef5",
+  "limitation": "No CUDA evaluation run; does not prove equality to a counterfactual long-run trajectory"
+}

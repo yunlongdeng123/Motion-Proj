@@ -26,6 +26,66 @@
       "agent_observation": "Both original-weight1 cells show a dark blurred/ghost a5; appended support changes the silhouette but does not restore a clear roof/windshield.",
       "agent_body_restored": false,
       "boundary": "Agent visual inspection, separate from user verdict and per-pixel metrics."
+    },
+    {
+      "recorded_utc": "2026-11-07T00:34:15.840350+00:00",
+      "run": "native_single_longrun",
+      "iteration": 15000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "single_longrun15k/anchors/105_crop.png",
+      "agent_observation": "A5 front/lower body has formed, but the roof and windshield still have strong blue translucent overlay, with the distant vehicle visible through the expected upper body. KEEP and delete_a37 look nearly identical in this region.",
+      "agent_body_restored": false,
+      "boundary": "Fresh49 metrics improved, including upper-region MAE; this agent visual observation does not constitute a user quality verdict or prove the30K endpoint cannot recover."
+    },
+    {
+      "recorded_utc": "2026-11-07T00:38:20.494921+00:00",
+      "run": "static_rgb5_control",
+      "iteration": 5000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "loss5_control5k/anchors/105_crop.png",
+      "agent_observation": "A dark narrow/striped ghost a5 silhouette remains. Roadway markings and the distant black SUV are visible through the expected roof and windshield region; the blue car roof is not restored. KEEP and delete_a37 look nearly identical.",
+      "agent_body_restored": false,
+      "boundary": "Fixed-mask MAE improvement is real but insufficient for body completeness. This is one5K initialization cell; the support+RGB5 cell is still pending."
+    },
+    {
+      "recorded_utc": "2026-11-07T01:18:05.451055+00:00",
+      "run": "native_single_longrun",
+      "iteration": 20000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "single_longrun20k_native_early/anchors/105_crop.png",
+      "agent_observation": "Front/lower body is more defined, but roof and windshield retain strong blue translucent overlay; distant vehicle is visible through the expected upper a5 body. KEEP/delete_a37 are nearly identical. This is20K;30K was not run.",
+      "agent_body_restored": false,
+      "boundary": "Agent visual inspection only; no human acceptance and no claim about unexecuted30K."
+    },
+    {
+      "recorded_utc": "2026-11-07T01:18:05.451055+00:00",
+      "run": "static_rgb5_full_a5",
+      "iteration": 1000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "loss5_full_a5_1k/anchors/105_crop.png",
+      "agent_observation": "Almost no visible a5 foreground body; roadway/distant scene passes through the expected body. Early1K only.",
+      "agent_body_restored": false,
+      "boundary": "Agent visual inspection only; no human acceptance and no claim about unexecuted30K."
+    },
+    {
+      "recorded_utc": "2026-11-07T01:18:05.451055+00:00",
+      "run": "static_rgb5_full_a5",
+      "iteration": 5000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "loss5_full_a5_5k/anchors/105_crop.png",
+      "agent_observation": "Blue front/body and partial silhouette have formed, but the roof/windshield remain dark translucent striped/ghost structure with the parked SUV visible through them. Combined support+RGB5 has not restored the roof at5K.",
+      "agent_body_restored": false,
+      "boundary": "Agent visual inspection only; no human acceptance and no claim about unexecuted30K."
     }
   ]
 }

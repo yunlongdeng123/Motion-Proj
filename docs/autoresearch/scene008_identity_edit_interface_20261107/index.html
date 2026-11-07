@@ -1,0 +1,1132 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scene008：完整五身份重建与身份隔离</title><style>body{margin:0;background:#f3f7f9;color:#193b4a;font:16px/1.7 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1400px;margin:auto;padding:28px}section{background:white;border:1px solid #dce7ec;border-radius:12px;padding:24px;margin:20px 0}h1{font-size:30px;line-height:1.35}h2{font-size:22px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border-bottom:1px solid #dce6eb;text-align:left;vertical-align:top}th{background:#edf4f7}code,pre{word-break:break-word}pre{white-space:pre-wrap;background:#f4f7f9;padding:12px;font-size:12px}.pending{color:#946322}.tag{font-size:13px;padding:5px 12px;background:#dcecf2;border-radius:20px}img{display:block;max-width:100%;height:auto}a{color:#006b83}footer,figcaption{font-size:13px;color:#607783}details{margin:14px 0}summary{cursor:pointer;font-weight:600}.notice{background:#fff4de;padding:12px;border-left:4px solid #c99435}</style></head><body><main>
+<span class="tag">10K可见结构恢复 · 49视图评价完成 · 身份验证通过</span><h1>Scene008：完整五身份重建与身份隔离</h1>
+<p>目标是恢复a5车顶和挡风玻璃，解决完整重建与身份管理。固定建模集合<code>R=[5,6,18,26,37]</code>，所有五车都使用完整真实源点进入动态重建；编辑目标E不再决定哪些保留车辆转到静态分支学习。</p>
+<p class="notice">正式10K的97/105/109三帧已恢复连续可辨的a5车顶、挡风玻璃与蓝色车体轮廓，未见旧Single的透明缺顶；细节仍软。这是代理的可见结构判断，不是GT级清晰度或人类质量验收。49视图KEEP固定域评价与身份检查已另行完成。 身份元数据本身不改变训练数学；身份正确与车顶质量分别验收。GPU保持开机，本轮未用重置卡、未关机。</p>
+<section><h2>完整重建与身份数据流</h2><img src="figures/architecture.svg" alt="完整五身份固定建模、原生联合训练、可靠身份持久化与完整KEEP检查"><p>保留原Full5 B的输入、损失、采样和30K学习率时钟。新增可可靠保存恢复的身份元数据；不把编辑集合当作重建集合。</p></section>
+<section><h2>本轮主验收</h2><table><thead><tr><th>项</th><th>要求</th><th>当前证据</th></tr></thead><tbody><tr><td>KEEP_ROOF</td><td>完整KEEP中a5车顶、挡风玻璃的连续可见结构</td><td>三帧结构恢复；细节仍软</td></tr><tr><td>FULL5_SOURCE</td><td>完整五身份真实源点；实际初始化XYZ/time顺序正确</td><td>通过</td></tr><tr><td>IDENTITY_LIFECYCLE</td><td>身份随clone/split/prune、保存和完整恢复正确</td><td>通过</td></tr><tr><td>R_FIXED</td><td>建模集合R固定，不随编辑/查询集合E改变</td><td>通过</td></tr><tr><td>KEEP49</td><td>49训练视图固定域评价、源文件守恒、完整取回</td><td>通过</td></tr><tr><td>PUBLIC_KEEP</td><td>公开推理CLI与原生KEEP三帧逐像素相同</td><td>通过</td></tr><tr><td>WEIGHT_BACKUP</td><td>带源身份的推理权重已取回，所有文件SHA校验</td><td>通过</td></tr></tbody></table><p>旧smoke和先前研究是阶段证据；正式节点分别验收。human_verdict为空，代理实际检查不冒充用户判定。</p></section>
+<section><h2>同10K：GT / 旧Single / 新Full5身份重建</h2><p>三列使用同一原相机、时间与固定像素窗口；97/105/109的GT解码RGB逐像素相同。旧Single把a5留在时间静态分支；新Full5使用完整a5真实源点进入动态分支。新结果恢复了连续车顶/挡风玻璃轮廓，细节仍软。</p><a href="figures/same_budget_10k.png"><img src="figures/same_budget_10k.png" alt="同10K GT、旧Single与新Full5身份重建，97 105 109固定裁剪"></a><p>原像素窗口(0,160)–(175,320)，无增强。下面仅比较原生float RGB（0–1通道MAE），不用显示PNG反算指标。</p><table><thead><tr><th>模型</th><th>建模动态集合R</th><th>训练更新</th><th>全a5域MAE<br>121,128像素帧</th><th>固定上部MAE<br>25,906像素帧</th></tr></thead><tbody><tr><td>Single native10K</td><td>[37]</td><td>10,000</td><td>0.062096</td><td>0.115514</td></tr><tr><td>Full5 identity10K</td><td>[5, 6, 18, 26, 37]</td><td>10,000</td><td>0.030329</td><td>0.039649</td></tr></tbody></table><p>相对旧Single10K，全a5域MAE下降51.16%，固定上部下降65.68%。49个训练视图中，a5只在raw89–112的24帧可见。上部定义为原始a5 mask与其逐帧包围盒高度上25%的交集，并非按像素数取25%，也非独立标注的车顶真值。</p><p>同10K排除了“只有30K才完整”的解释；R、真实初始化支撑与动态/静态目标包同时变化，尚不能将差异归因单项loss、先验或某一提交。这是同场景训练视图诊断，不是独立泛化。</p><p><a href="comparison.csv">同口径指标CSV</a> · <a href="evidence/reference_single10k/summary.json">旧Single原生float49</a> · <a href="evidence/reference_single10k/upper_regions.json">旧Single固定上部</a> · <a href="evidence/formal10k_keep_all49/summary.json">新Full5原生KEEP49</a></p></section>
+<section><h2>完整KEEP：97 / 105 / 109</h2><p>当前数据：/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/formal10k，iteration=10000。只展示这个检查点真实GT与KEEP，未取回的帧保留空位。三帧先检查a5车体，再评价49个训练视图。</p><a href="figures/pilot_comparison.png"><img src="figures/pilot_comparison.png" alt="97 105 109完整KEEP与GT"></a><h3>raw105 a5上部定位</h3><img src="figures/a5_raw105_crop.png" alt="原像素GT与完整KEEP的a5固定裁剪"><p>原像素窗口(0,160)–(175,320)，未增强。当前scope=all49，实际固定a5分母=121128像素；完整49视图参考为121,128，固定上部为25,906。pilot不能冒充49视图结果。</p><table><thead><tr><th>KEEP RGB MAE（0–1）</th><th>固定上部MAE</th><th>总alpha均值</th></tr></thead><tbody><tr><td>0.030329</td><td>0.039649</td><td>0.999690</td></tr></tbody></table><p>总alpha可由背景或错误表面补满，不能单独证明车顶正常。区分完整车形但模糊、缺少上部结构与正常可辨细节。</p><details><summary>全部24个a5可见帧：GT / KEEP联系图（代理已实际查看）</summary><p>raw89–112的可见车体部分连续；近处raw101–110车顶、挡风玻璃轮廓连贯，细节偏软。111/112自然出画，只判断可见部分，不推断不可见表面。每对图采用原a5 mask包围盒外扩6像素，GT与KEEP共用裁剪；各对显示缩放不同，指标始终来自原始像素。</p><a href="figures/all_visible_a5_contact.png"><img src="figures/all_visible_a5_contact.png" alt="24个a5可见帧GT与完整KEEP联系图"></a></details></section>
+<section><h2>五身份真实输入与谱系</h2><table><thead><tr><th>actor ID</th><th>原PLY索引</th><th>完整真实源点</th></tr></thead><tbody><tr><td>5</td><td>0</td><td>21358</td></tr><tr><td>26</td><td>1</td><td>15193</td></tr><tr><td>18</td><td>2</td><td>2444</td></tr><tr><td>6</td><td>3</td><td>11625</td></tr><tr><td>37</td><td>4</td><td>98452</td></tr></tbody></table><p>实际PLY顺序<code>[5,26,18,6,37]</code>与公开ID排序不同。初始动态149,072行、静态585,943行；源XYZ/time已按原生归一化逐行核对。actor ID不是可训练参数；clone/split继承实际父身份，prune同步，保存/完整恢复后保持一致。</p><p><a href="evidence/reconstruction_scope_20261107.json">最新重建scope</a> · <a href="evidence/formal10k_keep_all49/summary.json">当前KEEP评价</a> · <a href="evidence/root_reconstruction_visual_review.json">root分阶段重建目视</a> · <a href="evidence/cpu_interface_tests.json">身份CPU测试</a> · <a href="evidence/smoke_pilot/run_receipts/campaign/smoke_lifecycle_gate.json">真实smoke保存/恢复闭环</a> · <a href="evidence/formal5k_pilot/run_receipts/model/initial_row_binding.json">实际源点XYZ/time绑定</a> · <a href="evidence/formal10k_keep_pilot/run_receipts/model/restore_audit.json">5K→10K完整恢复</a> · <a href="evidence/formal10k_keep_all49/source_integrity.json">49评价源文件守恒</a> · <a href="evidence/formal10k_keep_all49_canonical_copy.json">完整取回逐文件SHA</a> · <a href="evidence/formal10k_keep_all49/run_receipts/campaign/public_keep_png_consistency.json">公开KEEP CLI逐像素核对</a> · <a href="evidence/checkpoint_loading_contract.json">检查点身份与加载合同</a> · <a href="evidence/execution_verification.json">连续10K与49float独立复算</a> · <a href="evidence/native10k_same_domain_cpu_audit.json">旧/新98份float同域逐帧复核</a> · <a href="source/audit_same_budget_native10k.py">同域CPU复核源码</a> · <a href="evidence/first_forward_B_comparison.json">原生B首步13项raw-loss核对</a> · <a href="source/drivingeditor_dynamic_edit/ownership.py">身份继承与持久化源码</a> · <a href="source/build_report.py">报告构建源码</a> · <a href="report_data.json">报告数据与manifest</a></p><details><summary>身份CPU测试、真实恢复与分阶段目视原文</summary><pre>{
+  &quot;cpu&quot;: {
+    &quot;status&quot;: &quot;PASS_EIGHT_CPU_INTERFACE_AND_ACTUAL_NATIVE_AST_CASES&quot;,
+    &quot;command&quot;: &quot;CUDA_VISIBLE_DEVICES=&#x27;&#x27; OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /root/autodl-tmp/envs/drivingeditor/bin/python -B -m unittest discover -s tests -p test_drivingeditor_dynamic_edit.py -v&quot;,
+    &quot;actual_test_count&quot;: 8,
+    &quot;actual_test_seconds&quot;: 1.21,
+    &quot;exit_code&quot;: 0,
+    &quot;optimizer_updates&quot;: 0,
+    &quot;cases&quot;: [
+      &quot;non_contiguous_public_order_and_strict_subset&quot;,
+      &quot;direct_native_KEEP_and_read_only_joint_depth_query_toy&quot;,
+      &quot;actual_native_clone_split_repeatN_prune_Adam_alignment&quot;,
+      &quot;actual_18tuple_serialized_full_restore_legacy_and_corruption_rejection&quot;,
+      &quot;zero_append_and_three_child_split_identity&quot;,
+      &quot;paired_native_topology_with_vs_without_metadata_params_buffers_Adam_RNG_equal&quot;,
+      &quot;metadata_only_checkpoint_loader_preserves_saved_binding_and_rejects_unknown_schema&quot;,
+      &quot;inference_export_removes_only_Adam_preserves_identity_metadata_roundtrip&quot;
+    ],
+    &quot;native_methods&quot;: &quot;Actual frozen Gaussian/Dynamic class and SGCM helpers AST; only device=cuda keyword allocations adapted to cpu&quot;,
+    &quot;native_gaussian_model_sha256&quot;: &quot;e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72&quot;,
+    &quot;renderer_cpu_test_boundary&quot;: &quot;Small depth-routing test is not CUDA rasterizer or image quality validation. Real GPU pilot is required.&quot;,
+    &quot;files&quot;: {
+      &quot;source/audit_full5_strict_ownership.py&quot;: &quot;36e2f333c656c494fc4dce1c3cd54d8cdd9b84279fb8d8b76d54c852b4d33766&quot;,
+      &quot;source/audit_same_budget_native10k.py&quot;: &quot;97b245d5363a7d051eb3716b79b49030f39dacdefb21da479f22ecfa3cdf0712&quot;,
+      &quot;source/build_report.py&quot;: &quot;31936ae17a8733dd61b2c1625fe948e4a3e39f012da598e86e6c71e60e249010&quot;,
+      &quot;source/drivingeditor_dynamic_edit/__init__.py&quot;: &quot;c2992f2a2ea352dc2922f975b27d983cb4dee7971e9e78d61a49667548eee4ad&quot;,
+      &quot;source/drivingeditor_dynamic_edit/compare_inference.py&quot;: &quot;6a01adcc21599d316b4a8c09798b0585982cbdbb94245cc32da5187038120f31&quot;,
+      &quot;source/drivingeditor_dynamic_edit/export_inference.py&quot;: &quot;440d7341ff40374790fb92c16fe3b5f6b34c957b7255425646ef37bf578d10aa&quot;,
+      &quot;source/drivingeditor_dynamic_edit/ownership.py&quot;: &quot;c35abad8d37dce071ba661c7f063e4efaa8b01f1a1206ff9c1a974b4b8e8dc9a&quot;,
+      &quot;source/drivingeditor_dynamic_edit/query.py&quot;: &quot;64ecfd47795ca737a4d378069950ba9b03e4bb7a8ed604eb48a6bc7be1ae838c&quot;,
+      &quot;source/drivingeditor_dynamic_edit/query_example.json&quot;: &quot;3053c2785dd0c678473b9366228cbe57d77f2b8fcacb44bf58a96de8a670d8ba&quot;,
+      &quot;source/drivingeditor_dynamic_edit/README.md&quot;: &quot;fa03f7e362004fa6185d133409969df8c42e3f699b594b8a142c86fe5e7c2c69&quot;,
+      &quot;source/drivingeditor_dynamic_edit/render.py&quot;: &quot;918c80164466c46769fc4ebd69858dcb1b2fbf77423fd552c8269409927717cf&quot;,
+      &quot;source/drivingeditor_dynamic_edit/scene_io.py&quot;: &quot;ec02c4194c216e796daaae23951d23bf9131cbe20bb9ad787065c075545f022f&quot;,
+      &quot;source/evaluate_reconstruction.py&quot;: &quot;bb198606d16fa9593bd0da31855c295472777a5be7ee043facbf72cb0ee9ded2&quot;,
+      &quot;source/evaluate_scene.py&quot;: &quot;4de40e3bd3932db827dfef8b4101ce5b175b3aad8fa861ed7819d34be37650ea&quot;,
+      &quot;source/prepare_full5.py&quot;: &quot;11a54f2dd847e64ad6f6a59fce44fa99333a6de1ddd8b3f893517b841012596a&quot;,
+      &quot;source/test_drivingeditor_dynamic_edit.py&quot;: &quot;3df116422cf4890e08633eee0ebe3bd11ead1698fd2e49a83e2488e34d94aa11&quot;,
+      &quot;source/train_full5.py&quot;: &quot;e085ad7c60641e5c99d16399e1aaf4a5ec94f58a79e7faae90f80a9e00923f1a&quot;
+    },
+    &quot;unrelated_dirty_file&quot;: &quot;scripts/run_worldsim_v72_e3_render_bridge.py&quot;,
+    &quot;unrelated_sha256_unchanged&quot;: &quot;b7b7d4cb9dcb282ab2a7d0a88a5d3bf8486c06e0feddc741f2ac5ed2597bd5af&quot;
+  },
+  &quot;lifecycle&quot;: {
+    &quot;status&quot;: &quot;PASS_REAL_LONG540_FULL_DYNAMIC_SAVE_PILOT_FULL_RESTORE_NEXT_ENTRY&quot;,
+    &quot;smoke_iteration&quot;: 4681,
+    &quot;smoke_updates&quot;: 4681,
+    &quot;resume_extra_updates&quot;: 2,
+    &quot;total_new_engineering_updates&quot;: 4683,
+    &quot;formal_updates&quot;: 0,
+    &quot;actual_smoke_train_seconds&quot;: 543.89455941692,
+    &quot;dynamic_actor_ids&quot;: [
+      5,
+      6,
+      18,
+      26,
+      37
+    ],
+    &quot;tested_queries&quot;: {
+      &quot;keep&quot;: [],
+      &quot;delete_a37&quot;: [
+        37
+      ],
+      &quot;delete_a6&quot;: [
+        6
+      ],
+      &quot;delete_a6_a37&quot;: [
+        6,
+        37
+      ],
+      &quot;keep_again&quot;: []
+    },
+    &quot;pilot_frames&quot;: [
+      105,
+      130,
+      137
+    ],
+    &quot;all49_evaluated&quot;: false,
+    &quot;exact_full_restore_differences&quot;: [],
+    &quot;source_manifest_changed&quot;: [],
+    &quot;quality_accepted&quot;: false,
+    &quot;visual_review_required&quot;: true,
+    &quot;formal_auto_release&quot;: false,
+    &quot;shutdown&quot;: false,
+    &quot;reset_card&quot;: false
+  },
+  &quot;source_binding&quot;: {
+    &quot;status&quot;: &quot;PASS_ACTUAL_NATIVE_XYZ_TIME_ROWS_EXACT&quot;,
+    &quot;rows&quot;: 149072,
+    &quot;source_ply_order&quot;: [
+      5,
+      26,
+      18,
+      6,
+      37
+    ],
+    &quot;actor_intervals&quot;: [
+      {
+        &quot;actor_id&quot;: 5,
+        &quot;start&quot;: 0,
+        &quot;end&quot;: 21358
+      },
+      {
+        &quot;actor_id&quot;: 26,
+        &quot;start&quot;: 21358,
+        &quot;end&quot;: 36551
+      },
+      {
+        &quot;actor_id&quot;: 18,
+        &quot;start&quot;: 36551,
+        &quot;end&quot;: 38995
+      },
+      {
+        &quot;actor_id&quot;: 6,
+        &quot;start&quot;: 38995,
+        &quot;end&quot;: 50620
+      },
+      {
+        &quot;actor_id&quot;: 37,
+        &quot;start&quot;: 50620,
+        &quot;end&quot;: 149072
+      }
+    ],
+    &quot;xyz_exact&quot;: true,
+    &quot;time_exact&quot;: true,
+    &quot;normalization&quot;: &quot;original saved transform matrix, float32 native initialize&quot;
+  },
+  &quot;first_forward&quot;: {
+    &quot;status&quot;: &quot;PASS_FIRST_FORWARD_SAME_AS_FULL5_B&quot;,
+    &quot;baseline&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/paired_steps.jsonl&quot;,
+    &quot;current&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/smoke/paired_steps.jsonl&quot;,
+    &quot;compared_raw_terms&quot;: 13,
+    &quot;raw_term_deltas&quot;: {
+      &quot;loss_hybrid_global_rgb_raw&quot;: 0.0,
+      &quot;loss_hybrid_dynamic_rgb_raw&quot;: 0.0,
+      &quot;loss_hybrid_sky_rgb_raw&quot;: 0.0,
+      &quot;loss_hybrid_static_rgb_raw&quot;: 0.0,
+      &quot;loss_hybrid_sky_raw&quot;: 0.0,
+      &quot;loss_hybrid_depth_raw&quot;: 0.0,
+      &quot;loss_hybrid_inverse_depth_smoothness_raw&quot;: 0.0,
+      &quot;loss_hybrid_velocity_smoothness_raw&quot;: 0.0,
+      &quot;loss_hybrid_dynamic_opacity_raw&quot;: 0.0,
+      &quot;loss_hybrid_static_duration_raw&quot;: 0.0,
+      &quot;loss_hybrid_static_velocity_raw&quot;: 0.0,
+      &quot;loss_hybrid_opacity_entropy_raw&quot;: 0.0,
+      &quot;loss_hybrid_nps_raw&quot;: 0.0
+    },
+    &quot;sampler_lr_equal&quot;: true,
+    &quot;max_raw_difference&quot;: 0.0
+  },
+  &quot;visual&quot;: {
+    &quot;reviewer&quot;: &quot;root agent&quot;,
+    &quot;primary_scope&quot;: &quot;a5 reconstruction and stable full5 identity; static background artifacts belong to v44&quot;,
+    &quot;human_verdict&quot;: null,
+    &quot;quality_accepted&quot;: false,
+    &quot;records&quot;: [
+      {
+        &quot;recorded_utc&quot;: &quot;2026-11-07T01:37:59.296561+00:00&quot;,
+        &quot;stage&quot;: &quot;smoke&quot;,
+        &quot;iteration&quot;: 4681,
+        &quot;raw_frames_actually_viewed&quot;: [
+          105
+        ],
+        &quot;source_local&quot;: &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\smoke_pilot\\anchors\\105_a5_crop.png&quot;,
+        &quot;source_relative_to_outputs&quot;: &quot;a5_regression_20261106/evidence/full_dynamic_edit/smoke_pilot/anchors/105_a5_crop.png&quot;,
+        &quot;agent_observation&quot;: &quot;The full5 model contains a visible blue a5 body and upper silhouette, unlike the old single-static case, but roof/windshield and whole-body details remain strongly blurred. Not enough to accept normal complete reconstruction.&quot;,
+        &quot;agent_visual_acceptance&quot;: &quot;PENDING_CLEARER_ROOF_AND_WINDSHIELD_STRUCTURE&quot;,
+        &quot;human_verdict&quot;: null
+      },
+      {
+        &quot;recorded_utc&quot;: &quot;2026-11-07T01:37:59.296561+00:00&quot;,
+        &quot;stage&quot;: &quot;formal&quot;,
+        &quot;iteration&quot;: 5000,
+        &quot;raw_frames_actually_viewed&quot;: [
+          97,
+          105,
+          109
+        ],
+        &quot;source_local&quot;: &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_pilot\\anchors\\105_a5_crop.png&quot;,
+        &quot;source_relative_to_outputs&quot;: &quot;a5_regression_20261106/evidence/full_dynamic_edit/formal5k_pilot/anchors/105_a5_crop.png&quot;,
+        &quot;agent_observation&quot;: &quot;Blue body and upper silhouette support are visible; KEEP and DELETE37 agree in this a5 crop. The roof/windshield structure is still strongly blurred, so complete reconstruction is not yet verified. This is a blur/structure uncertainty, not a claim that the old transparent-hole failure is unchanged.&quot;,
+        &quot;agent_visual_acceptance&quot;: &quot;PENDING_CLEARER_ROOF_AND_WINDSHIELD_STRUCTURE&quot;,
+        &quot;human_verdict&quot;: null,
+        &quot;additional_review_utc&quot;: &quot;2026-11-07T01:45:53.920043+00:00&quot;,
+        &quot;additional_keep_only_images&quot;: [
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\097_crop.png&quot;,
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\105_crop.png&quot;,
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\109_crop.png&quot;
+        ],
+        &quot;additional_observation&quot;: &quot;All three KEEP-only native views show blue a5 silhouette/support but heavy blur. Raw105 roof/windshield details remain unresolved; raw97 and109 are also strongly blurred. Await10K before accepting clear complete reconstruction.&quot;,
+        &quot;identity_diagnostic_receipt&quot;: &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\summary.json&quot;
+      },
+      {
+        &quot;recorded_utc&quot;: &quot;2026-11-07T01:59:25.370034+00:00&quot;,
+        &quot;stage&quot;: &quot;formal&quot;,
+        &quot;iteration&quot;: 10000,
+        &quot;raw_frames_actually_viewed&quot;: [
+          97,
+          105,
+          109
+        ],
+        &quot;source_local&quot;: &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\105_crop.png&quot;,
+        &quot;additional_keep_only_images&quot;: [
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\097_crop.png&quot;,
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\105_crop.png&quot;,
+          &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\109_crop.png&quot;
+        ],
+        &quot;agent_observation&quot;: &quot;Across raw97,105,109 the a5 body, roof and windshield have continuous recognizable outlines. Raw105 no longer shows the old visibly missing/translucent roof structure, although native reconstruction details remain soft compared with GT. Raw109 retains a continuous roof/side silhouette as the car leaves the frame.&quot;,
+        &quot;agent_visual_acceptance&quot;: &quot;PASS_VISIBLE_ROOF_AND_WINDSHIELD_STRUCTURE_WITH_SOFT_DETAILS&quot;,
+        &quot;visual_scope&quot;: &quot;Three pilot frames only. Full49 KEEP evaluation is requested next; this is not GT-level image quality or user acceptance.&quot;,
+        &quot;human_verdict&quot;: null,
+        &quot;all49_additional_review&quot;: {
+          &quot;recorded_utc&quot;: &quot;2026-11-07T02:08:55.702618+00:00&quot;,
+          &quot;evaluation_frame_count&quot;: 49,
+          &quot;a5_visible_frames_actually_reviewed&quot;: [
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112
+          ],
+          &quot;contact_sheet&quot;: &quot;C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\full5_all_visible_a5_contact.png&quot;,
+          &quot;presentation&quot;: &quot;GT-mask bbox plus6px, same crop within each GT/KEEP pair; per-pair zoom for display only.&quot;,
+          &quot;observation&quot;: &quot;Across all24 frames with visible a5, visible body portions remain continuous. Nearer raw101..110 show a continuous roof/windshield/side outline with soft native details. Raw111/112 are naturally clipped as a5 leaves the frame; no assertion is made about unobserved surfaces.&quot;,
+          &quot;scope&quot;: &quot;All49 numerical/identity checks and24-frame visual contact sheet supplement the independently viewed native97/105/109 crops.&quot;
+        }
+      }
+    ],
+    &quot;primary_agent_conclusion&quot;: &quot;Visible a5 roof/windshield structure recovered at10K; the49-frame evaluation and all24 visible-frame inspection support continuity. Native fine detail is still soft. Human acceptance and hidden-surface accuracy are not inferred.&quot;
+  }
+}</pre></details></section>
+<section><h2>固定a5可见域中的身份贡献</h2><table><thead><tr><th>原观测选域</th><th>像素帧</th><th>owner5平均αT</th><th>static平均αT</th><th>其他身份平均αT</th><th>最大贡献通道为owner5的比例</th></tr></thead><tbody><tr><td>当前完整a5可见域</td><td>121128</td><td>0.928079</td><td>0.054846</td><td>0.016766</td><td>97.6463%</td></tr><tr><td>固定包围盒高度上25%</td><td>25906</td><td>0.916079</td><td>0.053266</td><td>0.029832</td><td>98.0506%</td></tr></tbody></table><p>来自原生CUDA的static＋五身份六通道，未归一化为概率，也未按渲染alpha挑像素；六通道之和与joint alpha的最大差为2.4437904357910156e-06。argmax比例用于观察当前固定域的身份贡献，不是独立识别准确率，也不代替车顶画质验收。</p></section>
+<section><h2>重建推理与身份加载</h2><p>公开CLI默认完整KEEP、先渲染97/105/109；建模R从检查点只读读取。真实10K公开入口与原生KEEP三帧PNG逐像素差为0，推理不创建优化器，也无需原PLY、mask或GT。仍需兼容的原生CUDA引擎与扩展。</p><p><a href="source/drivingeditor_dynamic_edit/README.md">重建与身份API用法</a> · <a href="source/drivingeditor_dynamic_edit/query.py">公开KEEP入口</a> · <a href="source/drivingeditor_dynamic_edit/scene_io.py">自带身份检查点加载器</a> · <a href="evidence/inference_export/inference10k_equivalence.json">推理包与原训练检查点精确一致</a> · <a href="evidence/inference_export/inference10k_cli_comparison.json">独立推理包CLI与主KEEP一致</a></p><h3>已核验的本地推理权重备份</h3><p>压缩包<code>model/inference10k_delivery.tar.gz</code>，307,768,343字节；解包目录<code>model/inference10k</code>共157个文件、932,947,821字节，逐文件SHA全部通过。</p><p>压缩包SHA-256：<code>6581bfc907f527e322aebdf674c66cd3b75b0cf7321a7f67fff22a0e67277a80</code>。权重保留在交付目录，Git仅归档报告、代码和校验凭据。<a href="evidence/inference_export/inference_package_verification.json">完整备份验证收据</a></p><details><summary>检查点与推理包的边界</summary><p>推理包保留原高斯参数、源身份表、当前逐行actor IDs与来源谱系；只去掉Adam状态，不能恢复训练。完整Adam/RNG现场仍保留在原训练目录。未保存逐点身份的旧混合权重显式拒绝按actor加载，不用框或近邻猜归属。</p><pre>{
+  &quot;checkpoint_format&quot;: &quot;Native dynamic18tuple; optimizer payload at tuple index14&quot;,
+  &quot;owner_key&quot;: &quot;dynamic_actor_ownership_v1&quot;,
+  &quot;schema_version&quot;: 1,
+  &quot;payload_fields&quot;: {
+    &quot;dynamic_actor_ids&quot;: &quot;saved canonical actor set; not source-PLY concatenation positions&quot;,
+    &quot;source_actor_ids&quot;: &quot;int64 initial-source-row -&gt; actor-ID tensor, length149072&quot;,
+    &quot;actor_ids&quot;: &quot;int64 current Gaussian-row -&gt; actor-ID tensor, length=currentN&quot;
+  },
+  &quot;lineage_key&quot;: &quot;sgcm_lineage_v1.lineage_ids&quot;,
+  &quot;invariant&quot;: &quot;current actor_ids == source_actor_ids[lineage_ids]&quot;,
+  &quot;dynamic_actor_ids&quot;: [
+    5,
+    6,
+    18,
+    26,
+    37
+  ],
+  &quot;source_ply_actor_order&quot;: [
+    5,
+    26,
+    18,
+    6,
+    37
+  ],
+  &quot;source_rows&quot;: [
+    21358,
+    15193,
+    2444,
+    11625,
+    98452
+  ],
+  &quot;loader&quot;: &quot;scripts.worldsim_v82.drivingeditor_dynamic_edit.scene_io.load_native_models&quot;,
+  &quot;read_actor_ids&quot;: &quot;scripts.worldsim_v82.drivingeditor_dynamic_edit.ownership.actor_ids&quot;,
+  &quot;cli_module&quot;: &quot;scripts.worldsim_v82.drivingeditor_dynamic_edit.query&quot;,
+  &quot;default_query&quot;: {
+    &quot;delete_actor_ids&quot;: [],
+    &quot;raw_ids&quot;: [
+      97,
+      105,
+      109
+    ],
+    &quot;optimizer_created&quot;: false,
+    &quot;optimization_updates&quot;: 0
+  },
+  &quot;legacy_compatibility&quot;: &quot;Old hard-coded a6/a37 lineage-threshold helper cannot interpret newFull5 IDs. No owner/lineage -&gt; explicit rejection; original native whole KEEP remains an uneditable reference.&quot;,
+  &quot;consumer_scope&quot;: &quot;Export contract only; existing v44 and unrelated E3 code not modified&quot;,
+  &quot;primary_acceptance&quot;: &quot;KEEP a5 roof/windshield reconstruction and identity persistence; optional editing quality is separate&quot;,
+  &quot;inference_package&quot;: {
+    &quot;directory&quot;: &quot;inference10k&quot;,
+    &quot;iteration&quot;: 10000,
+    &quot;inference_only&quot;: true,
+    &quot;training_resume_supported&quot;: false,
+    &quot;optimizer_removed_fields&quot;: [
+      &quot;state&quot;,
+      &quot;param_groups&quot;
+    ],
+    &quot;all_other_Gaussian_fields_exact&quot;: true,
+    &quot;environment_copied_unchanged&quot;: true,
+    &quot;model_source_PLY_or_GT_required&quot;: false,
+    &quot;bundled_python_source&quot;: true,
+    &quot;compatible_native_CUDA_extensions_required&quot;: true,
+    &quot;real_GPU_equivalence_frames&quot;: [
+      97,
+      105,
+      109
+    ],
+    &quot;native_RGB_alpha_owner_features_max_difference&quot;: 0,
+    &quot;standalone_default_KEEP_PNG_max_difference&quot;: 0
+  }
+}</pre></details></section>
+<section><h2>已完成更新独立记账</h2><p>旧研究已完成44,622更新；本轮重建smoke工程4683、正式完成10,000，已取回完成回执总计59305。正式0→5K＋5K→10K去重计数；smoke 4,681＋完整恢复后2步单列，不抵扣正式预算。评价为零优化更新。</p><details><summary>正式逐阶段回执</summary><p>以source_iteration、iteration和actual_additional_iterations校验阶段区间；10K回执中的formal_stop=5000是旧wrapper常量，实际phase_stop与iteration均为10000。</p><pre>{
+  &quot;historical_completed_total&quot;: 44622,
+  &quot;new_reconstruction_engineering_updates&quot;: 4683,
+  &quot;new_reconstruction_formal_updates&quot;: 10000,
+  &quot;formal_intervals&quot;: [
+    {
+      &quot;source&quot;: &quot;evidence/formal5k_pilot/run_receipts/model/returned.json&quot;,
+      &quot;from_iteration&quot;: 0,
+      &quot;to_iteration&quot;: 5000,
+      &quot;updates&quot;: 5000,
+      &quot;receipt&quot;: {
+        &quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;,
+        &quot;mode&quot;: &quot;formal&quot;,
+        &quot;iteration&quot;: 5000,
+        &quot;source_iteration&quot;: 0,
+        &quot;actual_additional_iterations&quot;: 5000,
+        &quot;accounting&quot;: &quot;fresh_formal5000_or_optional10000&quot;,
+        &quot;elapsed_seconds&quot;: 638.4580462500453,
+        &quot;learning_rate_horizon&quot;: 30000,
+        &quot;formal_stop&quot;: 5000,
+        &quot;phase_stop&quot;: 5000,
+        &quot;max_allocated_bytes&quot;: 5238363648,
+        &quot;max_reserved_bytes&quot;: 6671040512,
+        &quot;quality_accepted&quot;: false,
+        &quot;human_verdict&quot;: null
+      }
+    },
+    {
+      &quot;source&quot;: &quot;evidence/formal10k_keep_pilot/run_receipts/model/returned.json&quot;,
+      &quot;from_iteration&quot;: 5000,
+      &quot;to_iteration&quot;: 10000,
+      &quot;updates&quot;: 5000,
+      &quot;receipt&quot;: {
+        &quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;,
+        &quot;mode&quot;: &quot;extend&quot;,
+        &quot;iteration&quot;: 10000,
+        &quot;source_iteration&quot;: 5000,
+        &quot;actual_additional_iterations&quot;: 5000,
+        &quot;accounting&quot;: &quot;fresh_formal5000_or_optional10000&quot;,
+        &quot;elapsed_seconds&quot;: 1232.632595287636,
+        &quot;learning_rate_horizon&quot;: 30000,
+        &quot;formal_stop&quot;: 5000,
+        &quot;phase_stop&quot;: 10000,
+        &quot;max_allocated_bytes&quot;: 8960035840,
+        &quot;max_reserved_bytes&quot;: 10917773312,
+        &quot;quality_accepted&quot;: false,
+        &quot;human_verdict&quot;: null
+      }
+    }
+  ],
+  &quot;running_updates_not_presumed_zero&quot;: true,
+  &quot;completed_total_receipted&quot;: 59305
+}</pre></details></section>
+<section><h2>参考与历史范围</h2><p>旧Full5可作完整KEEP重建参考，但已核四处原生权重都缺动态逐点身份/完整父谱系，不能按框或近邻猜归属。新训练保存可靠身份；旧图不能代验收。</p><details><summary>历史同10K缓存PNG（与上面的原生float表分开）</summary><table><thead><tr><th>已有原生uint8 PNG / 255</th><th>全a5域MAE</th><th>边界MAE</th></tr></thead><tbody><tr><td>历史Full5 native10K PNG</td><td>0.033042</td><td>0.066414</td></tr><tr><td>历史Single native10K PNG</td><td>0.062108</td><td>0.054403</td></tr></tbody></table><p>49张已有训练图按同GT可见域评价，Full5全域误差更低但边界未更好。Full5该10K权重已清理，未恢复或重渲这些权重；本表仅为历史PNG证据，不能替代新身份检查点验收。<a href="../scene008_a5_regression_20261106/evidence/cached_native10k_comparison/summary.json">PNG独立口径与原始来源</a></p></details><details><summary>旧权重严格只读审计</summary><table><thead><tr><th>已核具体路径</th><th>节点</th><th>身份可恢复性</th></tr></thead><tbody><tr><td><code>/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k</code></td><td>30000</td><td>无可可靠恢复的动态逐点身份谱系</td></tr><tr><td><code>/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/R/run30k</code></td><td>30000</td><td>无可可靠恢复的动态逐点身份谱系</td></tr><tr><td><code>/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11</code></td><td>20000</td><td>无可可靠恢复的动态逐点身份谱系</td></tr><tr><td><code>/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/runs/scene0008_089_137_hybrid_30000_seed0_GN11_resume20k</code></td><td>30000</td><td>无可可靠恢复的动态逐点身份谱系</td></tr></tbody></table><p><a href="evidence/full5_weight_reuse_audit.json">完整CPU审计收据</a></p></details><p><a href="../scene008_a5_regression_20261106/index.html">此前静态a5诊断（历史）</a>；旧Single止20K，30K未执行，不下30K结论；旧备选与opacity0均0训练。</p>
+<details><summary>辅助R/E解耦验证与早先编辑范围记录</summary><p>改变E后的过滤、参数不变和切回KEEP仅用作R固定的辅助工程证据。静态车形残影不属于本任务的重建/身份验收范围，不在这里继续处理。</p><pre>{
+  &quot;auxiliary_query_receipt&quot;: {
+    &quot;status&quot;: &quot;PASS_NATIVE_IDENTITY_EDIT_PILOT_ENGINEERING&quot;,
+    &quot;scope&quot;: &quot;pilot&quot;,
+    &quot;frame_count&quot;: 3,
+    &quot;raw_ids&quot;: [
+      105,
+      130,
+      137
+    ],
+    &quot;frames&quot;: [
+      {
+        &quot;raw&quot;: 105,
+        &quot;fixed_mask_sha256&quot;: &quot;be3d911fcdba7d147b22afd23e7f39f41b423883b4c800cc466b15cb231c49fb&quot;,
+        &quot;queries&quot;: {
+          &quot;keep&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.9944850206375122,
+                &quot;sum&quot;: 11277.652047525284
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.9175319671630859,
+                &quot;sum&quot;: 1312.136533658635
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.6102225184440613,
+                &quot;sum&quot;: 35.0979758645783
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.623207151889801,
+                &quot;sum&quot;: 234.1747369725872
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 13834.028627154068
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.9944850206375122,
+                &quot;sum&quot;: 11474.137157838028
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 3934.5709718538915
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.6102225184440613,
+                &quot;sum&quot;: 36.134465543888496
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.633337140083313,
+                &quot;sum&quot;: 237.41694207234468
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 224527,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.9944850206375122,
+                &quot;sum&quot;: 11282.046765665182
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.6791689991950989,
+                &quot;sum&quot;: 51.41603597633548
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.6430827379226685,
+                &quot;sum&quot;: 245.34593408000546
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 13834.94063170685
+              }
+            },
+            &quot;hidden_rows&quot;: 27098,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6,
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.9944850206375122,
+                &quot;sum&quot;: 11478.677433881112
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.6791689991950989,
+                &quot;sum&quot;: 53.25075711142483
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.652181088924408,
+                &quot;sum&quot;: 248.8572933705509
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 251625,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;keep_again&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.9944850206375122,
+                &quot;sum&quot;: 11277.652047525284
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.9175319671630859,
+                &quot;sum&quot;: 1312.136533658635
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.6102225184440613,
+                &quot;sum&quot;: 35.0979758645783
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.623207151889801,
+                &quot;sum&quot;: 234.1747369725872
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 13834.028627154068
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          }
+        },
+        &quot;a5&quot;: {
+          &quot;keep&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;rgb_error_sum&quot;: 687.564602839838,
+            &quot;alpha_sum&quot;: 10768.717666387558
+          },
+          &quot;delete_a37&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;rgb_error_sum&quot;: 687.5637237706687,
+            &quot;alpha_sum&quot;: 10768.717663526535
+          },
+          &quot;delete_a6&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;rgb_error_sum&quot;: 687.564602839838,
+            &quot;alpha_sum&quot;: 10768.717666387558
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;rgb_error_sum&quot;: 687.5637237706687,
+            &quot;alpha_sum&quot;: 10768.717663526535
+          },
+          &quot;keep_again&quot;: {
+            &quot;pixels&quot;: 10773,
+            &quot;rgb_error_sum&quot;: 687.564602839838,
+            &quot;alpha_sum&quot;: 10768.717666387558
+          }
+        }
+      },
+      {
+        &quot;raw&quot;: 130,
+        &quot;fixed_mask_sha256&quot;: &quot;0c5cc90b079d0d9c1ded1376357d23a9782a704a83e01731f50ccd162e246492&quot;,
+        &quot;queries&quot;: {
+          &quot;keep&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.681491494178772,
+                &quot;sum&quot;: 205.22524639488404
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.5861589908599854,
+                &quot;sum&quot;: 134.6493484507164
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998913407325745,
+                &quot;sum&quot;: 6104.745203619419
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999009370803833,
+                &quot;sum&quot;: 6779.887952055484
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.9896515607833862,
+                &quot;sum&quot;: 1495.300761193595
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.9647915959358215,
+                &quot;sum&quot;: 294.7463135733019
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 6437.670219787838
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 224527,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.5861589908599854,
+                &quot;sum&quot;: 134.88255214934998
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998913407325745,
+                &quot;sum&quot;: 6104.74666820659
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999009370803833,
+                &quot;sum&quot;: 6779.990319056138
+              }
+            },
+            &quot;hidden_rows&quot;: 27098,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6,
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.9647915959358215,
+                &quot;sum&quot;: 295.1284424857772
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9999006986618042,
+                &quot;sum&quot;: 6437.672388336287
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 251625,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;keep_again&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.681491494178772,
+                &quot;sum&quot;: 205.22524639488404
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.5861589908599854,
+                &quot;sum&quot;: 134.6493484507164
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998913407325745,
+                &quot;sum&quot;: 6104.745203619419
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999009370803833,
+                &quot;sum&quot;: 6779.887952055484
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          }
+        },
+        &quot;a5&quot;: {
+          &quot;keep&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a37&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a6&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;keep_again&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          }
+        }
+      },
+      {
+        &quot;raw&quot;: 137,
+        &quot;fixed_mask_sha256&quot;: &quot;0c5cc90b079d0d9c1ded1376357d23a9782a704a83e01731f50ccd162e246492&quot;,
+        &quot;queries&quot;: {
+          &quot;keep&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.7299392819404602,
+                &quot;sum&quot;: 274.102590921591
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.664989709854126,
+                &quot;sum&quot;: 176.23295709479862
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998367428779602,
+                &quot;sum&quot;: 4359.8615028557015
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999005198478699,
+                &quot;sum&quot;: 5282.709968553878
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.9719747304916382,
+                &quot;sum&quot;: 1366.3251856111267
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.9315748810768127,
+                &quot;sum&quot;: 465.47597117709915
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9999003410339355,
+                &quot;sum&quot;: 4417.292091996835
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 224527,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.664989709854126,
+                &quot;sum&quot;: 176.2428285787264
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998367428779602,
+                &quot;sum&quot;: 4359.8615028557015
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999005198478699,
+                &quot;sum&quot;: 5283.061599355213
+              }
+            },
+            &quot;hidden_rows&quot;: 27098,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;delete_actor_ids&quot;: [
+              6,
+              37
+            ],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.9315748810768127,
+                &quot;sum&quot;: 465.49592137286777
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9999003410339355,
+                &quot;sum&quot;: 4417.292091996835
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              }
+            },
+            &quot;hidden_rows&quot;: 251625,
+            &quot;native_joint_depth_rerender&quot;: true
+          },
+          &quot;keep_again&quot;: {
+            &quot;delete_actor_ids&quot;: [],
+            &quot;parameters_unchanged&quot;: true,
+            &quot;owner_contribution&quot;: {
+              &quot;5&quot;: {
+                &quot;max&quot;: 0.0,
+                &quot;sum&quot;: 0.0
+              },
+              &quot;6&quot;: {
+                &quot;max&quot;: 0.7299392819404602,
+                &quot;sum&quot;: 274.102590921591
+              },
+              &quot;18&quot;: {
+                &quot;max&quot;: 0.664989709854126,
+                &quot;sum&quot;: 176.23295709479862
+              },
+              &quot;26&quot;: {
+                &quot;max&quot;: 0.9998367428779602,
+                &quot;sum&quot;: 4359.8615028557015
+              },
+              &quot;37&quot;: {
+                &quot;max&quot;: 0.9999005198478699,
+                &quot;sum&quot;: 5282.709968553878
+              }
+            },
+            &quot;hidden_rows&quot;: 0,
+            &quot;native_joint_depth_rerender&quot;: true
+          }
+        },
+        &quot;a5&quot;: {
+          &quot;keep&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a37&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a6&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;delete_a6_a37&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          },
+          &quot;keep_again&quot;: {
+            &quot;pixels&quot;: 0,
+            &quot;rgb_error_sum&quot;: 0.0,
+            &quot;alpha_sum&quot;: 0.0
+          }
+        }
+      }
+    ],
+    &quot;model&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/smoke&quot;,
+    &quot;iteration&quot;: 4681,
+    &quot;dynamic_actor_ids&quot;: [
+      5,
+      6,
+      18,
+      26,
+      37
+    ],
+    &quot;queries&quot;: {
+      &quot;keep&quot;: [],
+      &quot;delete_a37&quot;: [
+        37
+      ],
+      &quot;delete_a6&quot;: [
+        6
+      ],
+      &quot;delete_a6_a37&quot;: [
+        6,
+        37
+      ],
+      &quot;keep_again&quot;: []
+    },
+    &quot;current_owner_rows&quot;: {
+      &quot;5&quot;: 143703,
+      &quot;6&quot;: 27098,
+      &quot;18&quot;: 7746,
+      &quot;26&quot;: 49492,
+      &quot;37&quot;: 224527
+    },
+    &quot;optimizer_created&quot;: false,
+    &quot;optimization_updates&quot;: 0,
+    &quot;parameters_unchanged&quot;: true,
+    &quot;checkpoint_identity_self_contained&quot;: true,
+    &quot;keep_native_max_abs_difference&quot;: 0.0,
+    &quot;keep_again_max_abs_difference&quot;: 0.0,
+    &quot;cuda_joint_target_contribution_zero&quot;: true,
+    &quot;visible_owner37_witness&quot;: true,
+    &quot;selected_a5&quot;: {
+      &quot;keep&quot;: {
+        &quot;pixels&quot;: 10773,
+        &quot;keep_rgb_mae&quot;: 0.06382294651813218,
+        &quot;mean_alpha&quot;: 0.9996024938631354
+      },
+      &quot;delete_a37&quot;: {
+        &quot;pixels&quot;: 10773,
+        &quot;keep_rgb_mae&quot;: 0.0638228649188405,
+        &quot;mean_alpha&quot;: 0.9996024935975619
+      },
+      &quot;delete_a6&quot;: {
+        &quot;pixels&quot;: 10773,
+        &quot;keep_rgb_mae&quot;: 0.06382294651813218,
+        &quot;mean_alpha&quot;: 0.9996024938631354
+      },
+      &quot;delete_a6_a37&quot;: {
+        &quot;pixels&quot;: 10773,
+        &quot;keep_rgb_mae&quot;: 0.0638228649188405,
+        &quot;mean_alpha&quot;: 0.9996024935975619
+      },
+      &quot;keep_again&quot;: {
+        &quot;pixels&quot;: 10773,
+        &quot;keep_rgb_mae&quot;: 0.06382294651813218,
+        &quot;mean_alpha&quot;: 0.9996024938631354
+      }
+    },
+    &quot;full49_fixed_reference&quot;: {
+      &quot;pixels&quot;: 121128,
+      &quot;sha256&quot;: &quot;aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419&quot;
+    },
+    &quot;fixed_denominator&quot;: {
+      &quot;pixels&quot;: 10773,
+      &quot;selection&quot;: &quot;original observed actor_labels==1, not rendered alpha&quot;
+    },
+    &quot;native_engine&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137&quot;,
+    &quot;source_integrity&quot;: &quot;PASS_UNCHANGED_BYTES_MTIME_SHA256&quot;,
+    &quot;pilot_to_all49_max_uint8_difference&quot;: null,
+    &quot;acceptance&quot;: {
+      &quot;KEEP_BODY&quot;: &quot;PENDING_IMAGE_REVIEW&quot;,
+      &quot;TARGET_ONLY_EXACT_FILTER&quot;: &quot;PASS&quot;,
+      &quot;TARGET_ONLY_VISUAL&quot;: &quot;PENDING_IMAGE_REVIEW&quot;,
+      &quot;SWITCH_NO_TRAIN&quot;: &quot;PASS&quot;
+    },
+    &quot;caveat&quot;: &quot;Owner filtering and parameter invariance do not prove visual disappearance or roof quality. Static residual ghosts, if present, remain unmodified.&quot;,
+    &quot;quality_accepted&quot;: false,
+    &quot;human_verdict&quot;: null,
+    &quot;seconds&quot;: 21.311213701963425
+  },
+  &quot;historical_engineering_contract&quot;: {
+    &quot;task_id&quot;: &quot;SCENE008-DYNAMIC-EDIT-INTERFACE-20261107&quot;,
+    &quot;status&quot;: &quot;AUTHORIZED_ENGINEERING_IN_PROGRESS&quot;,
+    &quot;date_timezone&quot;: &quot;2026-11-07 Asia/Singapore&quot;,
+    &quot;user_request_summary&quot;: &quot;将动态建模集合与删除目标解耦，完整重建全部五辆车，同一检查点按删除集合过滤并重新渲染；单身份只约束编辑目标。&quot;,
+    &quot;build&quot;: {
+      &quot;dynamic_actor_ids&quot;: [
+        5,
+        6,
+        18,
+        26,
+        37
+      ],
+      &quot;source_ply_order&quot;: [
+        5,
+        26,
+        18,
+        6,
+        37
+      ],
+      &quot;source_order_is_not_actor_identity&quot;: true,
+      &quot;inheritance&quot;: &quot;保留原生联合重建的输入、数学、损失、采样、学习率时钟与增密策略；仅添加可靠身份元数据与其保存恢复。&quot;,
+      &quot;reuse_policy&quot;: &quot;优先使用已有可靠逐高斯身份或完整父谱系的检查点；旧混合动态池若缺身份和谱系，必须明确拒绝，不能按框或近邻猜身份。&quot;,
+      &quot;fresh_training_if_required&quot;: {
+        &quot;first_formal_check&quot;: 5000,
+        &quot;next_formal_check_if_needed&quot;: 10000,
+        &quot;learning_rate_horizon&quot;: 30000,
+        &quot;hour_scale_smoke&quot;: &quot;正式长跑前真实约10分钟smoke，覆盖保存、三帧评价、完整状态恢复及下一阶段训练入口；额外更新单列，正式预算不暗缩。&quot;
+      }
+    },
+    &quot;query&quot;: {
+      &quot;delete_actor_ids&quot;: [
+        37
+      ],
+      &quot;default_delete_actor_ids&quot;: [],
+      &quot;must_be_subset_of_checkpoint_actor_ids&quot;: true,
+      &quot;keep&quot;: &quot;直接使用完整原生场景重建输出。&quot;,
+      &quot;delete&quot;: &quot;仅按已保存actor身份排除目标动态高斯；其余动态车与静态背景使用同一原生光栅器按真实深度共同重渲染。&quot;,
+      &quot;parameter_mutation_allowed&quot;: false,
+      &quot;opacity_edit_allowed&quot;: false,
+      &quot;image_hole_painting_allowed&quot;: false,
+      &quot;retraining_on_target_switch_allowed&quot;: false
+    },
+    &quot;identity_requirements&quot;: [
+      &quot;每个动态高斯持有明确actor ID，ID不是可训练浮点参数。&quot;,
+      &quot;clone和空间/时间split按实际父索引顺序继承身份，prune同步过滤。&quot;,
+      &quot;保存和完整恢复保留逐点身份与输入ID映射；旧无身份混合池不能静默加载为可逐actor编辑。&quot;,
+      &quot;公开actor集合的顺序变化不能重新解释已保存的逐高斯身份。&quot;
+    ],
+    &quot;acceptance&quot;: [
+      {
+        &quot;id&quot;: &quot;KEEP_BODY&quot;,
+        &quot;required&quot;: &quot;完整KEEP正常，a5车顶与挡风玻璃完整。&quot;,
+        &quot;status&quot;: &quot;PENDING_ACTUAL_IMAGES&quot;
+      },
+      {
+        &quot;id&quot;: &quot;TARGET_ONLY&quot;,
+        &quot;required&quot;: &quot;删除a37后该目标消失，保留actor及背景的模型参数逐值不变。&quot;,
+        &quot;notes&quot;: &quot;需分别验收精确owner过滤与实际图像；若背景仍有车形残影，不以目标行数为0冒充视觉通过。&quot;,
+        &quot;status&quot;: &quot;PENDING&quot;
+      },
+      {
+        &quot;id&quot;: &quot;SWITCH_NO_TRAIN&quot;,
+        &quot;required&quot;: &quot;同一检查点切换空集合、a37、a6及a6+a37无需训练，切回KEEP可重现原输出。&quot;,
+        &quot;status&quot;: &quot;PENDING&quot;
+      }
+    ],
+    &quot;validation&quot;: {
+      &quot;training_frames&quot;: &quot;原49帧raw89..137，训练采样合同不改。&quot;,
+      &quot;pilot_frames&quot;: [
+        105,
+        130,
+        137
+      ],
+      &quot;pilot_reason&quot;: &quot;105检查a5车顶；130/137检查明显a37主体与保留车辆。&quot;,
+      &quot;full49&quot;: &quot;三帧工程与图像检查后，再扩完整49帧。&quot;,
+      &quot;retained_a5_metrics&quot;: {
+        &quot;mask&quot;: &quot;固定原观测actor_labels==1，非渲染alpha选域&quot;,
+        &quot;pixel_frames&quot;: 121128,
+        &quot;upper_bbox25_percent_pixel_frames&quot;: 25906
+      },
+      &quot;occlusion_note&quot;: &quot;删去前景目标后可显露后方表面；正确遮挡变化不等于保留模型参数被改写。&quot;,
+      &quot;tests&quot;: [
+        &quot;真实身份继承、剪枝、完整保存恢复&quot;,
+        &quot;非连续actor ID、输入顺序变化、非法删除集合&quot;,
+        &quot;空删除严格KEEP、独立多次query、切回KEEP&quot;,
+        &quot;删除前后完整参数不变、所有目标owner被排除&quot;,
+        &quot;原生joint-depth重渲染、三帧pilot、完整49帧&quot;
+      ]
+    },
+    &quot;research_scope_change&quot;: {
+      &quot;prior_report&quot;: &quot;../../a5_regression_20261106/index.html&quot;,
+      &quot;finish_support_rgb5_at&quot;: 5000,
+      &quot;finish_original_single_at&quot;: 20000,
+      &quot;single_30000&quot;: &quot;未执行，不下30K恢复与否结论。&quot;,
+      &quot;branch_package_fallback&quot;: &quot;CPU准备保留，0训练，不再启动。&quot;,
+      &quot;opacity_zero_ablation&quot;: &quot;仅提出过条件路线，0训练，不启动。&quot;,
+      &quot;static_a5_recovery_is_delivery_prerequisite&quot;: false
+    },
+    &quot;power&quot;: &quot;GPU按用户最新要求保持开机。&quot;,
+    &quot;failure_ledger_refs&quot;: [
+      &quot;V82-F06&quot;
+    ],
+    &quot;failure_ledger_delta&quot;: &quot;pending&quot;,
+    &quot;human_verdict&quot;: null,
+    &quot;quality_accepted&quot;: false
+  }
+}</pre></details></section>
+<footer>主scope以最新重建授权为准。更新：2026-11-07 02:25 UTC。FULL5_10K_VISIBLE_ROOF_RESTORED_IDENTITY_VERIFIED_KEEP49_COMPLETE</footer></main></body></html>

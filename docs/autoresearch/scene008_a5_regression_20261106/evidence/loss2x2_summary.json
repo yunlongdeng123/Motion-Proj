@@ -194,6 +194,70 @@
       }
     },
     {
+      "initialization": "full_a5_real_source_support",
+      "static_rgb_weight": 5,
+      "step": 1000,
+      "alias": "loss5_full_a5_1k",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\loss5_full_a5_1k\\summary.json",
+      "model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/formal1k",
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.19947492010866086,
+        "delete_rgb_mae": 0.1995961885282917,
+        "keep_delete_rgb_change": 0.00019650696087382974,
+        "keep_raw_rgb_mae": 0.19947492010866086,
+        "delete_raw_rgb_mae": 0.1995961885282917,
+        "keep_mean_alpha": 0.39729530696410403,
+        "delete_mean_alpha": 0.39688061461885127,
+        "keep_coverage": {
+          "0.1": 0.9890694141734364,
+          "0.5": 0.27797866719503334,
+          "0.9": 0.00686051119476917,
+          "0.99": 0.0
+        },
+        "delete_coverage": {
+          "0.1": 0.9889538339607687,
+          "0.5": 0.27695495673997755,
+          "0.9": 0.00686051119476917,
+          "0.99": 0.0
+        }
+      },
+      "boundary_all49": {
+        "pixels": 7530,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.18327924656974842,
+        "delete_rgb_mae": 0.18355439431262838,
+        "keep_delete_rgb_change": 0.00033855977022526475,
+        "keep_raw_rgb_mae": 0.18327924656974842,
+        "delete_raw_rgb_mae": 0.18355439431262838,
+        "keep_mean_alpha": 0.4230367978159116,
+        "delete_mean_alpha": 0.42226545491229844,
+        "keep_coverage": {
+          "0.1": 0.9551128818061089,
+          "0.5": 0.35790172642762286,
+          "0.9": 0.026294820717131476,
+          "0.99": 0.0
+        },
+        "delete_coverage": {
+          "0.1": 0.9545816733067729,
+          "0.5": 0.35737051792828683,
+          "0.9": 0.026294820717131476,
+          "0.99": 0.0
+        }
+      },
+      "source_integrity": "PASS_UNCHANGED_BYTES_MTIME_SHA256",
+      "replay": {
+        "event_status": "EVENT_PRESENT",
+        "checked_images": 98,
+        "max_uint8_difference": 0,
+        "tolerance": 1,
+        "expected_complete_images": 98,
+        "complete_all49_keep_delete_replay": true,
+        "unavailable_is_not_a_pass": false
+      }
+    },
+    {
       "initialization": "original_static",
       "static_rgb_weight": 1,
       "step": 5000,
@@ -244,6 +308,70 @@
           "0.5": 1.0,
           "0.9": 0.8350597609561753,
           "0.99": 0.5265604249667994
+        }
+      },
+      "source_integrity": "PASS_UNCHANGED_BYTES_MTIME_SHA256",
+      "replay": {
+        "event_status": "EVENT_PRESENT",
+        "checked_images": 98,
+        "max_uint8_difference": 0,
+        "tolerance": 1,
+        "expected_complete_images": 98,
+        "complete_all49_keep_delete_replay": true,
+        "unavailable_is_not_a_pass": false
+      }
+    },
+    {
+      "initialization": "original_static",
+      "static_rgb_weight": 5,
+      "step": 5000,
+      "alias": "loss5_control5k",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\loss5_control5k\\summary.json",
+      "model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal5k",
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.07286418666479515,
+        "delete_rgb_mae": 0.07292033916443398,
+        "keep_delete_rgb_change": 0.0002593843636495875,
+        "keep_raw_rgb_mae": 0.07287570630134255,
+        "delete_raw_rgb_mae": 0.07293252879324824,
+        "keep_mean_alpha": 0.8454440657801562,
+        "delete_mean_alpha": 0.8453238819850738,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 0.9919754309490787,
+          "0.9": 0.45097747836998875,
+          "0.99": 0.007851198731919952
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 0.9919093851132686,
+          "0.9": 0.45059771481408095,
+          "0.99": 0.007842943002443696
+        }
+      },
+      "boundary_all49": {
+        "pixels": 7530,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.06571023260326103,
+        "delete_rgb_mae": 0.06575183477244477,
+        "keep_delete_rgb_change": 0.00045164379383173076,
+        "keep_raw_rgb_mae": 0.06571023260326103,
+        "delete_raw_rgb_mae": 0.06575183477244477,
+        "keep_mean_alpha": 0.8527666857003532,
+        "delete_mean_alpha": 0.8525915209040699,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 0.9950863213811421,
+          "0.9": 0.4598937583001328,
+          "0.99": 0.0
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 0.9949535192563081,
+          "0.9": 0.4594953519256308,
+          "0.99": 0.0
         }
       },
       "source_integrity": "PASS_UNCHANGED_BYTES_MTIME_SHA256",
@@ -350,6 +478,72 @@
           "weight5": 0.3259747204548699,
           "delta_weight5_minus1": -0.25267773262071097,
           "relative_percent": -43.66657935652221
+        }
+      }
+    },
+    {
+      "step": 1000,
+      "initialization": "full_a5_real_source_support",
+      "metrics": {
+        "keep_rgb_mae": {
+          "weight1": 0.2253255153185487,
+          "weight5": 0.19947492010866086,
+          "delta_weight5_minus1": -0.025850595209887833,
+          "relative_percent": -11.472555681651125
+        },
+        "delete_rgb_mae": {
+          "weight1": 0.2254699105748489,
+          "weight5": 0.1995961885282917,
+          "delta_weight5_minus1": -0.02587372204655719,
+          "relative_percent": -11.475465608954474
+        },
+        "keep_mean_alpha": {
+          "weight1": 0.6749433440328939,
+          "weight5": 0.39729530696410403,
+          "delta_weight5_minus1": -0.2776480370687899,
+          "relative_percent": -41.136495310821005
+        },
+        "delete_mean_alpha": {
+          "weight1": 0.6747485327799916,
+          "weight5": 0.39688061461885127,
+          "delta_weight5_minus1": -0.2778679181611403,
+          "relative_percent": -41.180959225848646
+        }
+      }
+    },
+    {
+      "step": 1000,
+      "contrast": "additive_mae_interaction",
+      "difference_of_weight_effects": -0.01784849585144982,
+      "uncertainty": "One seed, no variance estimate or significance claim"
+    },
+    {
+      "step": 5000,
+      "initialization": "original_static",
+      "metrics": {
+        "keep_rgb_mae": {
+          "weight1": 0.09052956877127759,
+          "weight5": 0.07286418666479515,
+          "delta_weight5_minus1": -0.01766538210648244,
+          "relative_percent": -19.513383689161188
+        },
+        "delete_rgb_mae": {
+          "weight1": 0.09058421831719085,
+          "weight5": 0.07292033916443398,
+          "delta_weight5_minus1": -0.01766387915275687,
+          "relative_percent": -19.499952067704342
+        },
+        "keep_mean_alpha": {
+          "weight1": 0.9691395422793248,
+          "weight5": 0.8454440657801562,
+          "delta_weight5_minus1": -0.12369547649916857,
+          "relative_percent": -12.763433035478924
+        },
+        "delete_mean_alpha": {
+          "weight1": 0.9690916579799588,
+          "weight5": 0.8453238819850738,
+          "delta_weight5_minus1": -0.12376777599488498,
+          "relative_percent": -12.771524238777893
         }
       }
     }

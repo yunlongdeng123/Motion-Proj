@@ -646,7 +646,7 @@ class Builder:
         all_items = [item for _,item in trajectory]
         for step,item in trajectory:
             duration.append(dict(iteration=step,id=item['id'],label=item['label'],folder=item['fresh_folder'],
-                                 validated=item['validated'],status=item['status'],
+                                 validated=item['validated'],status='未执行（范围调整；不下30K恢复结论）' if step==30000 and self.scope_change else item['status'],
                                  summary=item['summary'] if item['validated'] else None,
                                  upper25=self.upper25_metrics(item)))
         for support,weight,folder in ((False,1,'support_control5k'),(True,1,'support_full_a5_5k'),
@@ -672,6 +672,12 @@ class Builder:
         if len(upper_domains)>1:
             raise ValueError('Research upper-region GT/index domains differ')
         pairing = self.read(self.evidence / 'loss2x2_comparison.json')
+        visual_review=self.read(self.evidence / 'research_agent_visual_review_20261107.json')
+        for cell in cells:
+            reviews=[row for row in (visual_review or {}).get('reviews',[]) if row.get('iteration')==5000 and
+                     (row.get('image','').startswith(cell['folder']+'/') or
+                      (cell['static_rgb_scalar']==1 and row.get('run')=='support_control_vs_full_a5'))]
+            cell['agent_body_restored']=reviews[-1].get('agent_body_restored') if reviews else None
         by_cell = {(row['initialization'],row['static_rgb_scalar']):row for row in cells}
         effects = []
         for section,label in (('all49','全a5 MAE'),('boundary_all49','边界 MAE'),('upper25','固定上部 MAE')):
@@ -683,17 +689,22 @@ class Builder:
             complete = all(finite_number(v) for v in (y00,y10,y01,y11))
             effects.append(dict(metric=label,y00=y00,y10=y10,y01=y01,y11=y11,
                                 support_effect_at_weight1=y10-y00 if finite_number(y10) and finite_number(y00) else None,
-                                support_effect_at_weight5=y11-y01 if complete else None,
-                                rgb_weight_effect_original=y01-y00 if complete else None,
-                                rgb_weight_effect_support=y11-y10 if complete else None,
+                                support_effect_at_weight5=y11-y01 if finite_number(y11) and finite_number(y01) else None,
+                                rgb_weight_effect_original=y01-y00 if finite_number(y01) and finite_number(y00) else None,
+                                rgb_weight_effect_support=y11-y10 if finite_number(y11) and finite_number(y10) else None,
                                 marginal_support=((y10-y00)+(y11-y01))/2 if complete else None,
                                 marginal_rgb_weight=((y01-y00)+(y11-y10))/2 if complete else None,
                                 interaction=(y11-y10)-(y01-y00) if complete else None))
-        return dict(status='RESEARCH_IN_PROGRESS_RESULTS_NOT_ASSUMED',
+        return dict(status='HISTORICAL_RESEARCH_FINISHING_SCOPE_MOVED_TO_ENGINEERING' if self.scope_change else 'RESEARCH_IN_PROGRESS_RESULTS_NOT_ASSUMED',
                     authorization=self.research_authorization,contract=self.research_contract,
                     duration=dict(question='Does this unchanged native single trajectory recover with more iterations?',
-                                  source_iteration=11977,target_iteration=30000,planned_new_updates=18023,
-                                  rows=duration,not_a_fresh_replication=True),
+                                  source_iteration=11977,target_iteration=20000 if self.scope_change else 30000,
+                                  planned_new_updates=8023 if self.scope_change else 18023,
+                                  scope_change=self.scope_change,
+                                  rows=duration,not_a_fresh_replication=True,
+                                  rng_boundary_audit=self.read(self.evidence / 'single_longrun_rng_boundary_audit.json'),
+                                  execution_verification=self.read(self.evidence / 'single_longrun_execution_verification.json'),
+                                  counterfactual_without_extra_evaluation_bitwise_identity_claimed=False),
                     static_rgb_supervision=dict(question='Initialization support × whole-static RGB scalar',
                                                 cells=cells,early1k_cells=early_cells,
                                                 contract=self.read(self.evidence / 'loss2x2_contract.json'),
@@ -704,7 +715,7 @@ class Builder:
                                                 scope='Whole-static RGB scalar1→5 only; global1+static nominal2→6. Not the complete dynamic training conditions.'),
                     fixed_domains=dict(full=PIXELS,boundary=7530,upper_bbox_height25=25906),
                     conditional_branch_control_preparation=self.read(self.evidence / 'branch_control_cpu_preparation_20261107.json'),
-                    agent_visual_review=self.read(self.evidence / 'research_agent_visual_review_20261107.json'),
+                    agent_visual_review=visual_review,
                     quality_accepted=False,human_verdict=None)
 
     def make_research_figures(self, data):
@@ -720,7 +731,9 @@ class Builder:
 <rect class="b" x="1115" y="140" width="260" height="170" rx="12"/><text x="1245" y="178" text-anchor="middle" class="title">DELETE保留</text><text x="1245" y="215" text-anchor="middle" class="body">原生render_s移除a37池</text><text x="1245" y="248" text-anchor="middle" class="small">a5不在删除集合</text><text x="1245" y="278" text-anchor="middle" class="small">与KEEP同一固定域比较</text>
 <path class="arrow" d="M245 225H275"/><path class="arrow" d="M505 225H535"/><path class="arrow" d="M825 225H855"/><path class="arrow" d="M1085 225H1115"/>
 <text x="28" y="366" class="small">121,128像素帧；边界7,530；包围盒高度上25%与原mask交集25,906。总alpha不是车体完整性。</text>
-<text x="28" y="400" class="small">Full5历史10K PNG单独核对；工程候选负结果保留。研究进行中，GPU保持开机；不使用重置卡、不关机。</text></svg>'''
+<text x="28" y="400" class="small">Full5历史10K PNG单独核对；工程候选负结果保留。研究进行中，GPU保持开机；本轮未用重置卡、未关机。</text></svg>'''
+        if self.scope_change:
+            architecture=architecture.replace('另：原single轨迹续训至30K','另：原single实际续训止20K').replace('研究进行中，GPU保持开机；本轮未用重置卡、未关机。','主线转工程；GPU保持开机。')
         architecture_path = self.root / 'figures/research_components.svg'
         architecture_path.write_text(architecture,encoding='utf-8')
         curve_path = self.root / 'figures/single_duration_curve.svg'
@@ -737,7 +750,7 @@ class Builder:
         ymax = math.ceil(maximum/.02)*.02
         x = lambda iteration:75+(iteration-10000)/20000*820
         y = lambda value:267-value/ymax*215
-        svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}"><rect width="940" height="340" fill="#f5f8fa"/><g font-family="Arial,sans-serif" fill="#193b4a"><text x="20" y="27" font-size="19">Unchanged single trajectory | actual retrieved native-float nodes only</text>']
+        svg = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}"><rect width="940" height="340" fill="#f5f8fa"/><g font-family="Arial,sans-serif" fill="#193b4a"><text x="20" y="27" font-size="19">Native single continuation | actual retrieved native-float nodes only</text>']
         for tick in range(5):
             value = ymax*tick/4
             svg.append(f'<path d="M75 {y(value):.2f}H895" stroke="#dce6eb"/><text x="15" y="{y(value)+5:.2f}" font-size="13">{value:.3f}</text>')
@@ -779,7 +792,83 @@ class Builder:
         preview_path=self.root/'figures/raw105_static_rgb_2x2.png'
         preview.save(preview_path)
         data['static_rgb_supervision']['raw105_figure']=dict(path=self.relative(preview_path),size=list(preview.size),crop=list(CROP),sources=preview_sources)
-        return [self.relative(architecture_path),self.relative(curve_path),self.relative(preview_path)]
+        duration_preview=Image.new('RGB',(1170,226),'#f3f7f9')
+        dd=ImageDraw.Draw(duration_preview)
+        dd.text((8,7),'raw105 | same single trajectory | KEEP | original crop, no enhancement',fill='#193b4a',font=font)
+        gt=self.evidence/'reference_single10k/frames/105/gt.png'
+        duration_sources=[('Observed GT',gt)]+[(str(row['iteration']),self.evidence/row['folder']/'frames/105/keep.png') for row in data['duration']['rows']]
+        for col,(label,path) in enumerate(duration_sources):
+            dd.text((8+195*col,34),label,fill='#193b4a',font=font)
+            image=self.load_image(path) if path.is_file() else None
+            if image is not None:
+                duration_preview.paste(image.crop(CROP),(8+195*col,58))
+            else:
+                dd.rectangle((8+195*col,58,183+195*col,218),fill='#e5ebee')
+                dd.text((20+195*col,125),'Not executed' if label=='30000' and self.scope_change else 'Not retrieved',fill='#627680',font=font)
+        duration_path=self.root/'figures/raw105_single_duration.png'
+        duration_preview.save(duration_path)
+        data['duration']['raw105_figure']=dict(path=self.relative(duration_path),size=list(duration_preview.size),crop=list(CROP),sources=[dict(label=label,path=self.relative(path) if path.is_file() else None) for label,path in duration_sources])
+        return [self.relative(architecture_path),self.relative(curve_path),self.relative(preview_path),self.relative(duration_path)]
+
+    def research_accounting_data(self):
+        """Accumulate completed new updates from returned phase receipts once."""
+        base=self.accounting_round1 or {}
+        if base.get('completed_formal_updates',{}).get('total')!=20000 or base.get('completed_engineering_total')!=6599:
+            raise ValueError('The preserved Round1 accounting baseline is missing or inconsistent')
+        entries=[]
+        pending=[]
+        lifecycle={}
+        for arm in ('control','support'):
+            rel='loss2x2_preparation/'+arm+'_1k_lifecycle.json'
+            value=self.read(self.evidence/rel)
+            if value:
+                lifecycle[arm]=(value,'evidence/'+rel)
+        specifications=[]
+        for end,start in ((15000,11977),(20000,15000),(30000,20000)):
+            if end==30000 and self.scope_change:
+                continue
+            folder='single_longrun'+str(end//1000)+'k'
+            specifications.append(('single_continuation',start,end,[folder+'/run_receipts/returned.json'],None))
+        for arm,stem in (('control','loss5_control'),('support','loss5_full_a5_')):
+            for end,start in ((1000,0),(5000,1000)):
+                node=str(end//1000)+'k'
+                candidates=[stem+node+'/run_receipts/formal'+node+'/returned.json',stem+node+'/run_receipts/returned.json']
+                specifications.append(('staticRGB5_'+arm,start,end,candidates,(arm,arm+'/formal'+node+'/returned.json')))
+        seen=set()
+        for family,start,end,candidates,fallback in specifications:
+            receipt=source=None
+            json_key=None
+            for rel in candidates:
+                receipt=self.read(self.evidence/rel)
+                if receipt is not None:
+                    source='evidence/'+rel
+                    break
+            if receipt is None and fallback and fallback[0] in lifecycle:
+                packed,source=lifecycle[fallback[0]]
+                receipt=packed.get(fallback[1])
+                json_key=fallback[1]
+            if receipt is None:
+                pending.append(dict(family=family,from_iteration=start,to_iteration=end,reason='completed returned receipt not retrieved; not a claim of zero actual consumption'))
+                continue
+            if receipt.get('status')!='PASS_COMPLETE_BOUNDARY' or receipt.get('source_iteration')!=start or receipt.get('iteration')!=end or receipt.get('actual_additional_iterations')!=end-start:
+                raise ValueError('Research phase returned receipt differs from the registered update interval: '+str(source))
+            key=(family,start,end)
+            if key in seen:
+                raise ValueError('Duplicate research interval would double-count updates')
+            seen.add(key)
+            entries.append(dict(family=family,from_iteration=start,to_iteration=end,completed_updates=end-start,
+                                source=source,json_key=json_key,source_sha256=sha256(self.root/source),returned=receipt))
+        formal=20000+sum(row['completed_updates'] for row in entries)
+        return dict(status='PASS_COMPLETED_RECEIPT_ACCOUNTING_RESEARCH_IN_PROGRESS',
+                    generated_utc=datetime.now(timezone.utc).isoformat(),
+                    base=dict(source='evidence/execution_accounting_through_round1_20261107.json',
+                              sha256=sha256(self.evidence/'execution_accounting_through_round1_20261107.json'),formal_updates=20000,engineering_updates=6599,total_updates=26599),
+                    completed_research_formal_intervals=entries,
+                    completed_formal_updates=formal,completed_engineering_updates=6599,completed_total_updates=formal+6599,
+                    preserved_engineering_entries=base['completed_engineering_updates'],
+                    incomplete_or_unretrieved_intervals=pending,
+                    scope='Completed returned phase receipts only; in-flight or unretrieved updates are not presumed zero. Prior1977 engineering is not recounted.',
+                    GPU_keep_on=True,shutdown=False,reset_card=False,quality_accepted=False,human_verdict=None)
 
     def render_research(self):
         data = self.research
@@ -791,28 +880,38 @@ class Builder:
         for row in data['static_rgb_supervision']['cells']:
             summary = row['summary'] or {}
             raw105=next((frame.get('visible',{}) for frame in summary.get('frames',[]) if frame.get('raw')==105),{})
-            cell_rows.append('<tr><td>'+h(row['label'])+'</td><td>'+str(row['nominal_global_plus_static_rgb_scalar'])+'</td><td>'+h(row['status'])+'</td><td>'+fmt(summary.get('all49',{}).get('keep_rgb_mae'))+'</td><td>'+fmt(summary.get('boundary_all49',{}).get('keep_rgb_mae'))+'</td><td>'+fmt((row['upper25'] or {}).get('keep_rgb_mae'))+'</td><td>'+fmt(raw105.get('keep_rgb_mae'))+'</td></tr>')
-        effects = ''.join('<tr><td>'+h(row['metric'])+'</td><td>'+fmt(row['support_effect_at_weight1'])+'</td><td>'+fmt(row['marginal_support'])+'</td><td>'+fmt(row['marginal_rgb_weight'])+'</td><td>'+fmt(row['interaction'])+'</td></tr>' for row in data['static_rgb_supervision']['descriptive_effects'])
+            visual='未恢复' if row['agent_body_restored'] is False else '代理观察恢复；非用户验收' if row['agent_body_restored'] is True else '未登记'
+            cell_rows.append('<tr><td>'+h(row['label'])+'</td><td>'+str(row['nominal_global_plus_static_rgb_scalar'])+'</td><td>'+h(row['status'])+'</td><td>'+fmt(summary.get('all49',{}).get('keep_rgb_mae'))+'</td><td>'+fmt(summary.get('boundary_all49',{}).get('keep_rgb_mae'))+'</td><td>'+fmt((row['upper25'] or {}).get('keep_rgb_mae'))+'</td><td>'+fmt(raw105.get('keep_rgb_mae'))+'</td><td>'+visual+'</td></tr>')
+        effects = ''.join('<tr><td>'+h(row['metric'])+'</td><td>'+fmt(row['support_effect_at_weight1'])+'</td><td>'+fmt(row['rgb_weight_effect_original'])+'</td><td>'+fmt(row['rgb_weight_effect_support'])+'</td><td>'+fmt(row['marginal_support'])+'</td><td>'+fmt(row['marginal_rgb_weight'])+'</td><td>'+fmt(row['interaction'])+'</td></tr>' for row in data['static_rgb_supervision']['descriptive_effects'])
         early_rows=[]
         for row in data['static_rgb_supervision']['early1k_cells']:
             summary=row['summary'] or {}
             early_rows.append('<tr><td>'+h(row['label'])+'</td><td>'+h(row['status'])+'</td><td>'+fmt(summary.get('all49',{}).get('keep_rgb_mae'))+'</td><td>'+fmt((row['upper25'] or {}).get('keep_rgb_mae'))+'</td><td>'+fmt(summary.get('all49',{}).get('keep_mean_alpha'))+'</td></tr>')
-        return f'''<section id="research"><h2>研究进行中：初始化支撑与静态RGB监督强度</h2>
+        duration_reviews=''.join('<p>'+h(str(row.get('iteration'))+'代理目视：'+row.get('agent_observation',''))+'</p>' for row in (data['agent_visual_review'] or {}).get('reviews',[]) if 'single_longrun' in row.get('image',''))
+        accounting=self.research_accounting
+        finished=not accounting['incomplete_or_unretrieved_intervals'] and self.scope_change is not None
+        historical_state='已完成的历史诊断' if finished else '历史诊断收尾'
+        pair_state='两条scalar对照均已逐项核对5000次实际相机、time_shift与学习率，零不匹配；这仍是单场景单seed的干预描述，不是唯一根因证明。' if data['static_rgb_supervision']['paired_audit'] else '完整日程与唯一配重差异审计到达前，不把四格数值当成已完成因果验证。'
+        scope_notice='<p class="notice">当前主线是完整五身份重建与身份隔离，目标为正常完整的a5车顶/挡风玻璃。本页保留已完成的历史研究；Single止20K，30K未执行、不对其恢复下结论。原a5+a37备选与opacity0均0训练、不再启动。旧研究负结果不代判新重建结果，编辑或静态残影不是本分支主验收。</p>' if self.scope_change else ''
+        return f'''<section id="research"><h2>{historical_state}：初始化支撑与静态RGB监督强度</h2>{scope_notice}
 <p>用户引用的同原生10K PNG已显示Full5与Single的车顶差异，因此不能仅用“30K对10K”解释。初始化支撑与静态训练条件仍待区分；既有证据尚未确定二者各自的因果贡献。</p>
 <p>后续诊断评价优先看raw97/105/109三帧，确认接线与现象后再扩49；已在执行的49帧评价继续，不打断。训练仍按原49帧采样合同进行。三帧pilot只作快速检查，不冒充全49指标。</p>
-<p>截至已完成Round1，累计新增正式20,000步、工程6,599步，共26,599步；新研究进行中的更新未提前计作完成。旧凭据不覆盖，最新授权要求<strong>GPU保持开机、不使用重置卡、不关机</strong>。{self.link('evidence/execution_accounting_through_round1_20261107.json','Round1累计账本与来源SHA')}</p>
+<p>截至已完成Round1，累计新增正式20,000步、工程6,599步，共26,599步；新研究进行中的更新未提前计作完成。旧凭据不覆盖。按最新要求<strong>GPU保持开机</strong>；本轮未使用重置卡、未关机，历史条件授权原文保留。{self.link('evidence/execution_accounting_through_round1_20261107.json','Round1累计账本与来源SHA')}</p>
+<p>本研究阶段已取回完成回执累计：正式<strong>{accounting['completed_formal_updates']:,}</strong>＋工程<strong>6,599</strong>＝<strong>{accounting['completed_total_updates']:,}</strong>更新。仅累加每个实际阶段一次；新工程接口的smoke/正式更新独立记账，未混入这里。{self.link('evidence/research_execution_accounting_current.json','逐阶段完成账目')}</p>
 <img class="architecture" src="figures/research_components.svg" alt="身份划分到初始化与训练目标、KEEP完整性，再到DELETE保留的组件与数据流">
-<h3>原Single同轨迹续训：15K / 20K / 30K</h3><p>从未修11977完整状态延续，保持原初始化、目标、动态身份和30K学习率时钟；不重新训练已花的1977步。新计划仅新增18,023更新，未有完成回执的部分不计入历史已花账。这个控制只检验本轨迹的训练时长。</p>
+<h3>原Single实际恢复链：15K / 20K（30K未执行）</h3><p>从未修11977完整状态延续，保持原初始化、目标、动态身份和30K学习率时钟；不重新训练已花的1977步。范围调整后止于20K，新增上限8,023更新，未有完成回执的部分不计作完成。这个控制只检验实际到达节点的训练时长，不能外推30K。</p>
 <div class="scroll"><table><thead><tr><th>实际iteration / 节点</th><th>状态</th><th>KEEP MAE</th><th>边界 MAE</th><th>固定上部 MAE</th></tr></thead><tbody>{''.join(duration_rows)}</tbody></table></div>
 <img class="architecture" src="figures/single_duration_curve.svg" alt="只连接已经取回的同轨迹原生浮点指标，不填未来节点">
-<p class="muted">曲线只包含已核验的原生浮点评价节点；不存在的15K/20K/30K值保持空白，未插值或外推。11977是既有工程节点；均值下降仍需与同帧车顶图片一起判断。</p>
+<figure class="scroll"><img src="figures/raw105_single_duration.png" alt="原single各实际节点的同相机KEEP固定裁剪"><figcaption>同轨迹raw105原像素裁剪；未来节点保留空位，误差曲线下降不等于车顶恢复。</figcaption></figure>{duration_reviews}
+<p class="muted">曲线只包含已核验的原生浮点评价节点；未取回的节点保持空白，30K因范围调整未执行，未插值或外推。11977是既有工程节点；均值下降仍需与同帧车顶图片一起判断。</p>
+<details><summary>实际20K结束与额外评价的随机状态边界</summary><p>15K额外原生评价会消耗Torch CPU RNG。所枚举的15K后存活训练路径未发现显式Torch CPU随机消费者，但有限源码审计不能证明未加15K节点的反事实逐位同轨。这里只断言实际已保存checkpoint的完整恢复零差；未改或重放既有基线。{self.link('evidence/single_longrun_rng_boundary_audit.json','CPU随机状态与实际恢复审计')} · {self.link('evidence/single_longrun_execution_verification.json','实际8023更新与20K停止、30K未执行')}</p></details>
 <h3>静态RGB监督强度消融：初始化 × scalar 1 / 5</h3><p>两条新5K臂只将<strong>全static域RGB scalar从1改到5</strong>；原global RGB系数1保留，a5静态像素的名义global＋static RGB系数由2变6。它影响背景，且不等于复制动态分支的alpha100、mask域、时间扰动或其他先验。a5保持static，a37共同动态池及删除语义不变。</p>
-<div class="scroll"><table><thead><tr><th>初始化 / staticRGB</th><th>名义global＋static系数</th><th>5K状态</th><th>KEEP MAE</th><th>边界 MAE</th><th>固定上部 MAE</th><th>raw105 MAE</th></tr></thead><tbody>{''.join(cell_rows)}</tbody></table></div>
+<div class="scroll"><table><thead><tr><th>初始化 / staticRGB</th><th>名义global＋static系数</th><th>5K状态</th><th>KEEP MAE</th><th>边界 MAE</th><th>固定上部 MAE</th><th>raw105 MAE</th><th>代理raw105车体检查</th></tr></thead><tbody>{''.join(cell_rows)}</tbody></table></div>
 <figure class="scroll"><img src="figures/raw105_static_rgb_2x2.png" alt="同一原生裁剪的初始化乘静态RGB权重KEEP对照"><figcaption>上排1K，下排5K；GT及四格均用相同原像素裁剪。缺项保留灰格，1K不升级为5K结论，只抽查raw105。</figcaption></figure>
-<div class="scroll"><table><thead><tr><th>描述性差值（MAE）</th><th>scalar1下补点差值</th><th>补点边际差</th><th>RGB配重边际差</th><th>交互项</th></tr></thead><tbody>{effects}</tbody></table></div><p class="muted">y00=原采样/1，y10=补点/1，y01=原采样/5，y11=补点/5；交互=(y11−y10)−(y01−y00)。边际差为另一因素两水平的平均差，误差差值为负表示下降；缺格不填。仅单场景单seed描述，不做统计显著性结论。</p>
-<p>既有scalar1两臂与新增scalar5两臂构成2×2。提高RGB系数也会相对弱化未变系数的静态duration/velocity等项；若恢复，只能归因这项目标平衡干预有效，不能独立排除prior的作用。补点同时改变支撑、局部密度/容量与KNN初始scale；只有一场景、一seed。完整日程与唯一配重差异审计到达前，不把四格数值当成已完成因果验证。</p>
+<div class="scroll"><table><thead><tr><th>描述性差值（MAE）</th><th>scalar1下补点</th><th>原采样下配重</th><th>补点下配重</th><th>补点边际差</th><th>配重边际差</th><th>交互项</th></tr></thead><tbody>{effects}</tbody></table></div><p class="muted">y00=原采样/1，y10=补点/1，y01=原采样/5，y11=补点/5；交互=(y11−y10)−(y01−y00)。边际差为另一因素两水平的平均差，误差差值为负表示下降；缺格不填。仅单场景单seed描述，不做统计显著性结论。</p>
+<p>既有scalar1两臂与新增scalar5两臂构成2×2。提高RGB系数也会相对弱化未变系数的静态duration/velocity等项；若恢复，只能归因这项目标平衡干预有效，不能独立排除prior的作用。补点同时改变支撑、局部密度/容量与KNN初始scale；只有一场景、一seed。{pair_state}</p>
 <details><summary>1K早期检查（单独列示，不作为5K终点）</summary><table><thead><tr><th>1K节点</th><th>证据</th><th>KEEP MAE</th><th>固定上部 MAE</th><th>平均总alpha</th></tr></thead><tbody>{''.join(early_rows)}</tbody></table><p>平均误差或总alpha变化不能替代车体目视；已取回的RGB5原采样1K中仍几乎没有可辨a5车体。{self.link('evidence/research_agent_visual_review_20261107.json','本轮代理目视记录（人类判定为空）')}</p></details>
-<details><summary>仅CPU准备的备选分支对照：未入队、KEEP-only</summary><p>若当前2×2结果需要，root再决定是否使用原生a5+a37动态分支诊断；此处没有自动启动。a5的21,358个唯一归一化xyz/time与fullsupport相同，但静态原生0.1m排除还移走2,053个非精确a5匹配的近邻行，其语义未知。加54重复行差异，总点数710,040对707,933（约0.30%）。KNN域和原生目标/分支责任整包改变，不能独立隔离prior。原生DELETE会删a5+a37，仅KEEP可用于此诊断，不是a37-only编辑方案。{self.link('evidence/branch_control_cpu_preparation_20261107.json','CPU合同/取回清单')} · {self.link('source/prepare_a5_branch_control.py','输入准备源码')}</p></details>
+<details><summary>历史备选分支：仅CPU准备，0训练，已取消启动</summary><p>原生a5+a37动态分支备选没有训练或入队；新工程主线不再启动它。a5的21,358个唯一归一化xyz/time与fullsupport相同，但静态原生0.1m排除还移走2,053个非精确a5匹配的近邻行，其语义未知。加54重复行差异，总点数710,040对707,933（约0.30%）。KNN域和原生目标/分支责任整包改变，不能独立隔离prior。原生DELETE会删a5+a37，不是a37-only编辑方案。{self.link('evidence/branch_control_cpu_preparation_20261107.json','CPU准备历史凭据')} · {self.link('source/prepare_a5_branch_control.py','输入准备源码')}</p></details>
 <p>{self.link('evidence/research_authorization_20261107.json','本轮授权（GPU保持开机）')} · {self.link('evidence/research_20261107_contract.json','研究合同')} · {self.link('evidence/loss2x2_contract.json','监督强度消融合同')} · {self.link('evidence/loss2x2_comparison.json','2×2实际配对审计')} · {self.link('source/aggregate_fixed_a5_regions.py','固定上部CPU汇总源码')}</p>
 <details><summary>新研究指标与可识别性边界</summary><p>49帧均为训练视图重建诊断，并非独立泛化评价；a5只在raw89..112的24帧中有固定可见像素。全域121,128、内侧1px边界7,530、固定上部25,906像素帧。上部由原mask包围盒高度上25%确定，不是按render或误差挑像素。KEEP完整性与DELETE变化分别记录；总alpha不能证明车体完整。Full5 cached PNG继续单列，不并入新float表。human_verdict为空。</p><pre>{h(json.dumps(self.research_contract,ensure_ascii=False,indent=2))}</pre></details></section>'''
 
@@ -985,6 +1084,9 @@ class Builder:
             lead = 'Single 原10K与完整双车5K/10K的49帧评价已取回，下表给出固定域数值，四个锚帧保留同一裁剪。工程评价通过不等于车体完整性通过；质量结论仍需结合全序列与边界目视。'
         state = '研究进行中 / 初始化支撑与静态RGB监督分别验证'
         lead = '同原生10K的Full5与Single已经存在车顶差异，不能仅用30K对10K解释。补齐真实a5初始化支撑的5K控制有有限改善（全域误差下降约10.1%，raw105约1.4%），仍未恢复车顶。现在分别检验原single轨迹续训到30K，以及固定初始化的静态RGB监督强度；新结果按实际取回更新，尚不认定训练条件为确定根因。time/radius两个独立短回放负结果保留，均未作为a5修复模型采用。'
+        if self.scope_change:
+            state='历史诊断保留 / 主线转向完整五身份重建与身份隔离'
+            lead='最新任务是固定完整五身份建模集合，恢复a5车顶与挡风玻璃，并保持身份在拓扑、保存和完整恢复中正确。本页保留初始化与静态RGB监督诊断的正负证据；Single止20K，30K未执行、不下30K恢复结论；备选分支与opacity0均0训练。旧研究现象不直接判定新重建是否合格，编辑过滤仅为建模集合不变的辅助证据。'
         if contract and contract.get('fixed', {}).get('total_formal_updates') == 30000:
             stale = '<p class="notice">取回的 experiment_contract.json 仍保留旧30K计划；本页已按用户最新指令取消延伸，合同文件待同步。目录名中的30k不代表当前预算。</p>'
         else:
@@ -1119,6 +1221,7 @@ class Builder:
         self.historical_goal_authorization = self.read(self.evidence / 'new_goal_authorization.json')
         self.research_authorization = self.read(self.evidence / 'research_authorization_20261107.json')
         self.research_contract = self.read(self.evidence / 'research_20261107_contract.json')
+        self.scope_change = self.read(self.evidence / 'reconstruction_scope_change_20261107.json') or self.read(self.evidence / 'engineering_scope_change_20261107.json')
         self.accounting_round1 = self.read(self.evidence / 'execution_accounting_through_round1_20261107.json')
         self.new_goal_authorization = self.research_authorization or self.historical_goal_authorization
         self.final_accounting = self.read(self.evidence / 'run_receipts/compute_accounting_through_screen_candidate.json')
@@ -1130,6 +1233,11 @@ class Builder:
         self.support_ablation = self.support_ablation_data()
         self.research = self.research_data(datasets)
         self.research_figures = self.make_research_figures(self.research)
+        self.research_accounting = self.research_accounting_data()
+        if self.scope_change and not self.research_accounting['incomplete_or_unretrieved_intervals']:
+            self.research['status']='HISTORICAL_DIAGNOSTICS_COMPLETE_SCOPE_MOVED_TO_ENGINEERING'
+        (self.evidence/'research_execution_accounting_current.json').write_text(
+            json.dumps(self.research_accounting,ensure_ascii=False,indent=2,allow_nan=False)+'\n',encoding='utf-8')
         old_rows = self.old_anchor_rows(datasets)
         receipts = self.receipt_records()
         comparison = self.comparison_rows(datasets)
@@ -1150,6 +1258,7 @@ class Builder:
                    Path(__file__).resolve(), *sorted((self.root / 'figures').glob('raw*_comparison.png'))]
         outputs.extend(self.root/item['path'] for item in self.support_ablation['preview_figures'])
         outputs.extend(self.root/path for path in self.research_figures)
+        outputs.append(self.evidence/'research_execution_accounting_current.json')
         formal_ready = all(item['validated'] for item in datasets if item['id'] in ('single10k', 'dual5k', 'dual10k'))
         both_ready = formal_ready and self.engineering['paired_ready'] and self.screen_radius['paired_ready']
         both_negative = both_ready and self.engineering['adoption_decision'] == 'NOT_ADOPTED_NEGATIVE_A5_REPLAY' and self.screen_radius['adoption_decision'] == 'NOT_ADOPTED_NEGATIVE_A5_REPLAY'
@@ -1162,18 +1271,20 @@ class Builder:
         if self.accounting_round1 and (self.accounting_round1.get('completed_formal_updates',{}).get('total') != completed_formal or
                                       self.accounting_round1.get('completed_engineering_total') != completed_engineering):
             raise ValueError('Round1 completed accounting disagrees with validated experiment receipts')
-        data = dict(status='RESEARCH_IN_PROGRESS_INITIALIZATION_AND_STATIC_RGB_NOT_YET_CAUSALLY_RESOLVED',
+        data = dict(status='HISTORICAL_DIAGNOSTICS_SCOPE_MOVED_TO_IDENTITY_EDIT_ENGINEERING' if self.scope_change else 'RESEARCH_IN_PROGRESS_INITIALIZATION_AND_STATIC_RGB_NOT_YET_CAUSALLY_RESOLVED',
                     prior_code_trials_status='COMPLETE_A5_QUALITY_NOT_ACCEPTED' if both_negative else 'PRIOR_EVIDENCE_PENDING',
                     generated_utc=datetime.now(timezone.utc).isoformat(), quality_accepted=False, human_verdict=None,
                      a5_root_cause='IDENTITY_PARTITION_COUPLES_INPUT_AND_OBJECTIVE_MECHANISM_PENDING',
                      historical_commit_attribution='NOT_UNIQUELY_ATTRIBUTED_TO_A_COMMIT',
-                     completed_accounting=dict(formal_new_updates=completed_formal,
+                     completed_accounting=dict(formal_new_updates=self.research_accounting['completed_formal_updates'],
                                               completed_receipted_engineering_updates=completed_engineering,
-                                               total_new_training_updates=completed_formal+completed_engineering if completed_engineering is not None else None,
-                                               scope='Completed through Round1; excludes new research updates without completion receipts',
-                                               receipt=self.accounting_round1,
+                                               total_new_training_updates=self.research_accounting['completed_total_updates'],
+                                               scope=self.research_accounting['scope'],
+                                               receipt=self.research_accounting,
+                                               preserved_round1_receipt=self.accounting_round1,
                                               code_trial_GPU_diagnostics_ended=both_ready,
                                               all_authorized_GPU_diagnostics_ended=False,
+                                               historical_research_diagnostics_complete=not self.research_accounting['incomplete_or_unretrieved_intervals'] and self.scope_change is not None,
                                               pending_is_not_counted_as_completed=True),
                     current_budget=dict(single_original_steps=10000, single_additional_formal_steps=0,
                                          scope='Prior baseline/code-trial phase; newly authorized support budgets are listed in support_ablation',
@@ -1192,6 +1303,7 @@ class Builder:
                     screen_radius_diagnosis=self.screen_radius,
                     support_ablation=self.support_ablation,
                      research=self.research,
+                     engineering_scope_change=self.scope_change,
                     current_stage_authorization=self.new_goal_authorization,
                      historical_goal_authorization=self.historical_goal_authorization,
                     cached_native10k_comparison=self.cached_native10k,

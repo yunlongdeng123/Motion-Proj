@@ -1,0 +1,149 @@
+{
+  "control/formal1k/returned.json": {
+    "status": "PASS_COMPLETE_BOUNDARY",
+    "mode": "formal",
+    "iteration": 1000,
+    "source_iteration": 0,
+    "actual_additional_iterations": 1000,
+    "accounting": "fresh_static_rgb5_formal5000_in_1000_then_4000_phases",
+    "elapsed_seconds": 307.21261566504836,
+    "learning_rate_horizon": 30000,
+    "formal_stop": 5000,
+    "phase_stop": 1000,
+    "max_allocated_bytes": 2751753216,
+    "max_reserved_bytes": 3196059648,
+    "quality_accepted": false,
+    "human_verdict": null
+  },
+  "control/paired_camera_shift_lr_1000.json": {
+    "status": "PASS_EXACT_CAMERA_SHIFT_LR_MATCH",
+    "baseline": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control",
+    "updates": 1000,
+    "compared_fields": [
+      "iteration",
+      "frame_id",
+      "time_shift",
+      "learning_rates"
+    ],
+    "mismatch_iterations": []
+  },
+  "control/first_forward_comparison.json": {
+    "status": "PASS_SAME_FIRST_FORWARD_ONLY_STATIC_RGB_WEIGHT_CHANGED",
+    "arm": "control",
+    "step": 1,
+    "baseline": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control/formal1k",
+    "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k",
+    "camera_shift_lr_identical": true,
+    "max_raw_term_absolute_difference": 0.0,
+    "raw_term_deltas": {
+      "loss_hybrid_global_rgb_raw": 0.0,
+      "loss_hybrid_dynamic_rgb_raw": 0.0,
+      "loss_hybrid_sky_rgb_raw": 0.0,
+      "loss_hybrid_static_rgb_raw": 0.0,
+      "loss_hybrid_sky_raw": 0.0,
+      "loss_hybrid_depth_raw": 0.0,
+      "loss_hybrid_inverse_depth_smoothness_raw": 0.0,
+      "loss_hybrid_velocity_smoothness_raw": 0.0,
+      "loss_hybrid_dynamic_opacity_raw": 0.0,
+      "loss_hybrid_static_duration_raw": 0.0,
+      "loss_hybrid_static_velocity_raw": 0.0,
+      "loss_hybrid_opacity_entropy_raw": 0.0,
+      "loss_hybrid_nps_raw": 0.0
+    },
+    "weight_differences": {
+      "loss_hybrid_static_rgb_weight": {
+        "baseline": 1.0,
+        "candidate": 5.0
+      }
+    },
+    "total_loss_delta": 1.0140113830566406,
+    "expected_four_static_rgb": 1.0140117406845093,
+    "first_frame": "image_0/0008113",
+    "first_shift": null
+  },
+  "control/real_lifecycle_smoke.json": {
+    "status": "PASS_1K_REAL_SAVE_EVAL_ENTRY",
+    "observed_1k_seconds": 307.21261566504836,
+    "conservative_5k_seconds": 1836.0630783252418,
+    "long_experiment_threshold_seconds": 3600,
+    "first_1k_is_formal": true,
+    "extra_engineering_updates": 0,
+    "long_smoke_covered": false,
+    "queue_wait_in_estimate": false
+  },
+  "control/formal5k/restore_audit.json": {
+    "status": "PASS_EXACT_FULL_RESTORE",
+    "iteration": 1000,
+    "differences": [],
+    "includes": "parameters,Adam,Python/NumPy/Torch/CUDA RNG,camera sampler,SGCM,EMA,runtime",
+    "updates": 0,
+    "bookkeeping_config_differences": {
+      "start_checkpoint": {
+        "saved": null,
+        "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k/chkpnt1000.pth"
+      },
+      "model_path": {
+        "saved": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k",
+        "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal5k"
+      }
+    },
+    "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k/chkpnt1000.pth"
+  },
+  "control/formal5k/first_step_objective.json": {
+    "status": "PASS_REGISTERED_STATIC_RGB5_ACTIVE",
+    "iteration": 1001,
+    "frame_id": "image_0/0008092",
+    "time_shift": -0.01812103200361231,
+    "losses": {
+      "loss_hybrid_total": 0.7754764556884766,
+      "loss_hybrid_global_rgb_raw": 0.07187677919864655,
+      "loss_hybrid_global_rgb_weighted": 0.07187677919864655,
+      "loss_hybrid_global_rgb_weight": 1.0,
+      "loss_hybrid_dynamic_rgb_raw": 0.014206082560122013,
+      "loss_hybrid_dynamic_rgb_weighted": 0.07103041559457779,
+      "loss_hybrid_dynamic_rgb_weight": 5.0,
+      "loss_hybrid_sky_rgb_raw": 0.019161317497491837,
+      "loss_hybrid_sky_rgb_weighted": 0.09580658376216888,
+      "loss_hybrid_sky_rgb_weight": 5.0,
+      "loss_hybrid_static_rgb_raw": 0.055636756122112274,
+      "loss_hybrid_static_rgb_weighted": 0.27818378806114197,
+      "loss_hybrid_static_rgb_weight": 5.0,
+      "loss_hybrid_sky_raw": 0.0008646862697787583,
+      "loss_hybrid_sky_weighted": 4.323431494412944e-05,
+      "loss_hybrid_sky_weight": 0.05,
+      "loss_hybrid_depth_raw": 0.04200408607721329,
+      "loss_hybrid_depth_weighted": 0.003706384217366576,
+      "loss_hybrid_depth_weight": 0.08823865973659922,
+      "loss_hybrid_inverse_depth_smoothness_raw": 0.021997328847646713,
+      "loss_hybrid_inverse_depth_smoothness_weighted": 0.0021997329313308,
+      "loss_hybrid_inverse_depth_smoothness_weight": 0.1,
+      "loss_hybrid_velocity_smoothness_raw": 0.0003671656595543027,
+      "loss_hybrid_velocity_smoothness_weighted": 3.671656668302603e-05,
+      "loss_hybrid_velocity_smoothness_weight": 0.1,
+      "loss_hybrid_dynamic_opacity_raw": 0.0017136494861915708,
+      "loss_hybrid_dynamic_opacity_weighted": 0.1713649481534958,
+      "loss_hybrid_dynamic_opacity_weight": 100.0,
+      "loss_hybrid_static_duration_raw": 0.7184301018714905,
+      "loss_hybrid_static_duration_weighted": 0.07184301316738129,
+      "loss_hybrid_static_duration_weight": 0.1,
+      "loss_hybrid_static_velocity_raw": 0.00045980222057551146,
+      "loss_hybrid_static_velocity_weighted": 4.598022314894479e-06,
+      "loss_hybrid_static_velocity_weight": 0.01,
+      "loss_hybrid_opacity_entropy_raw": 0.18160922825336456,
+      "loss_hybrid_opacity_entropy_weighted": 0.009080461226403713,
+      "loss_hybrid_opacity_entropy_weight": 0.05,
+      "loss_hybrid_nps_raw": 0.029983069747686386,
+      "loss_hybrid_nps_weighted": 0.0002998306881636381,
+      "loss_hybrid_nps_weight": 0.01,
+      "hybrid_depth_decay": 0.8823865973659921,
+      "hybrid_nps_enabled": 1.0,
+      "hybrid_static_duration_mean_abs": 1.3919239044189453,
+      "hybrid_static_duration_guard_active": 0.0,
+      "hybrid_time_reg_eps": 1e-08
+    }
+  },
+  "status": "PASS_REAL_1K_SAVE_EVAL_EXACT_FULL_RESTORE_AND_NEXT_ENTRY",
+  "additional_engineering_updates": 0,
+  "formal_update_budget": 5000,
+  "restored_at": 1000
+}

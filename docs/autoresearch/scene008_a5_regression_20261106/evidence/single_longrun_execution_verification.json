@@ -1,0 +1,112 @@
+{
+  "status": "PASS_8023_CONTIGUOUS_NATIVE_CONTINUATION_AND_SCOPE_CAPPED20K_DELIVERY",
+  "source_iteration": 11977,
+  "final_iteration": 20000,
+  "new_formal_updates": 8023,
+  "new_engineering_updates": 0,
+  "previous1977_smoke_updates_reused_without_recount": true,
+  "old_engineering_ledger6599_unchanged": true,
+  "prior_original10000_model_updates_reused": true,
+  "learning_rate_horizon": 30000,
+  "nodes": [
+    {
+      "iteration": 15000,
+      "source_iteration": 11977,
+      "new_updates": 3023,
+      "train_native_eval_wall_seconds": 1191.4642449151725,
+      "fresh_eval_wall_seconds": 39.08167158253491,
+      "max_allocated_bytes": 12021377536,
+      "max_reserved_bytes": 21460156416,
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.03401372416299679,
+        "delete_rgb_mae": 0.034021643435180327,
+        "keep_delete_rgb_change": 1.4541672002510606e-05,
+        "keep_raw_rgb_mae": 0.03405967618726252,
+        "delete_raw_rgb_mae": 0.03406753856944164,
+        "keep_mean_alpha": 0.9947293205315281,
+        "delete_mean_alpha": 0.99472916689535,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 1.0,
+          "0.99": 0.8242850538273562
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 1.0,
+          "0.99": 0.8242850538273562
+        }
+      },
+      "upper25906_keep_mae": 0.06481213108761605,
+      "global49": {
+        "frame_count": 49,
+        "l1": 0.009795726210411105,
+        "psnr": 35.093780206174266,
+        "ssim": 0.9621263851924817,
+        "lpips": 0.05198781123879004,
+        "extra_render_forward_passes": 0,
+        "source": "Existing native all49 evaluation"
+      },
+      "archive_sha256": "ff802ee940e286ae5ffdd8f1dcf9ab0c5df0dc10ad9ea689562f6bf55a853810"
+    },
+    {
+      "iteration": 20000,
+      "source_iteration": 15000,
+      "new_updates": 5000,
+      "train_native_eval_wall_seconds": 2035.019494453445,
+      "fresh_eval_wall_seconds": 35.52653332799673,
+      "max_allocated_bytes": 8736456704,
+      "max_reserved_bytes": 20199768064,
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.025734660874044357,
+        "delete_rgb_mae": 0.02574393001745519,
+        "keep_delete_rgb_change": 1.6772049930813297e-05,
+        "keep_raw_rgb_mae": 0.025797956354673177,
+        "delete_raw_rgb_mae": 0.02580721387679886,
+        "keep_mean_alpha": 0.9974035751705644,
+        "delete_mean_alpha": 0.997403509144278,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 1.0,
+          "0.99": 0.9632537481011822
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 1.0,
+          "0.99": 0.9632537481011822
+        }
+      },
+      "upper25906_keep_mae": 0.04748706922044118,
+      "global49": {
+        "frame_count": 49,
+        "l1": 0.008744323036956544,
+        "psnr": 36.29611252765266,
+        "ssim": 0.9678469774674395,
+        "lpips": 0.04167964628764561,
+        "extra_render_forward_passes": 0,
+        "source": "Existing native all49 evaluation"
+      },
+      "archive_sha256": "dc27f3d5f671130ef512097b3ac19f2620a2e0b4eb6498545434be2b82043ae0"
+    }
+  ],
+  "contiguous_camera_time_learning_rate_schedule_sha256": "752d8b496f773057a3250d3984c32d0c0b46b5ed324593e3b7d7a080106acbd6",
+  "actual_checkpoint_full_restores_passed": [
+    11977,
+    15000
+  ],
+  "source_guard_status": "PASS_UNCHANGED_BYTES_MTIME_SHA256",
+  "thirty_k_executed": false,
+  "thirty_k_conclusion": null,
+  "caveat": "Extra15K native diagnostic consumes TorchCPU RNG. Exact restores concern actual saved states, not a bitwise counterfactual without15K.",
+  "weights_downloaded": false,
+  "shutdown_performed": false,
+  "reset_card_used": false,
+  "script_sha256": "9d2596b226461e5fe4a19b897b9f55216a14e0c919402fcd8e304406cf143e7d"
+}

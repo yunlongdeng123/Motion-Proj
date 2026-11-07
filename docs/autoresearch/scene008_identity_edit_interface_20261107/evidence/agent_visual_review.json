@@ -1,0 +1,63 @@
+{
+  "status": "SMOKE_AGENT_VISUAL_NOT_ACCEPTED",
+  "recorded_utc": "2026-11-07T01:25:51.366754+00:00",
+  "reviewer": "Codex historical_evidence sub-agent; direct image inspection",
+  "model_role": "real engineering smoke, not formal5K",
+  "iteration": 4681,
+  "raw_frames_actually_viewed": [
+    105,
+    130,
+    137
+  ],
+  "sources": [
+    {
+      "path": "evidence/smoke_pilot/anchors/105_a5_crop.png",
+      "bytes": 91774,
+      "sha256": "2db35c15708f85d4e174e831f038b73a792d2b3db6b8d48b90327ccc217d7f07",
+      "size": [
+        525,
+        186
+      ]
+    },
+    {
+      "path": "evidence/smoke_pilot/anchors/130_full.png",
+      "bytes": 615457,
+      "sha256": "6798009f94e5cb68c3fa004dc88fc50176945423ca2348d088b06769225d88a3",
+      "size": [
+        2880,
+        346
+      ]
+    },
+    {
+      "path": "evidence/smoke_pilot/anchors/137_full.png",
+      "bytes": 597082,
+      "sha256": "9d8a703522de601f13bf9a0a4e41c305097dc270eec6d9d5aed756fa9280a81e",
+      "size": [
+        2880,
+        346
+      ]
+    }
+  ],
+  "keep_a5_body_restored": false,
+  "a37_visually_removed": false,
+  "residual_origin": "NOT_YET_ATTRIBUTED_TO_STATIC_OR_RETAINED_DYNAMIC",
+  "findings": [
+    {
+      "raw": 105,
+      "finding": "完整KEEP已有蓝色a5车形，但车顶/挡风玻璃和车体非常模糊，尚不接受为正常完整车体。"
+    },
+    {
+      "raw": 130,
+      "finding": "DELETE37与DELETE6+37中央仍有明显近车体形状；不能仅以owner37贡献为零判视觉删除通过。"
+    },
+    {
+      "raw": 137,
+      "finding": "DELETE37中央仍有亮白车形/近车体残留；其来源需独立static-only/retained-dynamic诊断，不先归因。"
+    }
+  ],
+  "boundary": "Three pilot frames only; no all49 or human acceptance inferred. Exact owner filtering, parameter invariance and target visual disappearance are separate checks.",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/smoke",
+  "scope": "pilot"
+}

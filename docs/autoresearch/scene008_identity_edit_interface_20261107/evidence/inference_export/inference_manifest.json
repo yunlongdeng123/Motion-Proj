@@ -1,0 +1,50 @@
+{
+  "status": "PASS_CPU_INFERENCE_EXPORT_FIELDS_AND_IDENTITY_EXACT",
+  "inference_only": true,
+  "training_resume_supported": false,
+  "source_training_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/formal10k",
+  "source_training_directory_untouched": true,
+  "iteration": 10000,
+  "dynamic_actor_ids": [
+    5,
+    6,
+    18,
+    26,
+    37
+  ],
+  "dynamic_rows": 1007477,
+  "owner_schema_version": 1,
+  "files": {
+    "chkpnt10000.pth": {
+      "original_bytes": 1165704536,
+      "inference_bytes": 413067957,
+      "all_non_optimizer_fields_exact": true,
+      "identity_metadata_exact": true,
+      "Adam_state_removed": true
+    },
+    "dynamic_chkpnt10000.pth": {
+      "original_bytes": 808195090,
+      "inference_bytes": 292358943,
+      "all_non_optimizer_fields_exact": true,
+      "identity_metadata_exact": true,
+      "Adam_state_removed": true
+    },
+    "env_light_chkpnt10000.pth": {
+      "original_bytes": 226494608,
+      "inference_bytes": 226494608,
+      "original_environment_format_copied_unchanged": true
+    }
+  },
+  "total_bytes": 931954962,
+  "optimizer_created": false,
+  "optimization_updates": 0,
+  "note": "Gaussian Adam removed; environment format copied unchanged. Full original Adam/RNG checkpoints remain in source directory.",
+  "gpu_equivalence": "PASS_EXACT_NATIVE_KEEP_AND_OWNER_INFERENCE_PACKAGE",
+  "gpu_equivalence_receipt": "equivalence.json",
+  "standalone_cli": "PASS_READ_ONLY_NATIVE_QUERY",
+  "standalone_cli_receipt": "standalone_query.json",
+  "standalone_cli_reference_comparison": "standalone_cli_comparison.json",
+  "python_engine_and_metadata_loader_bundled": true,
+  "compatible_native_CUDA_extensions_required": true,
+  "source_PLY_or_GT_required": false
+}

@@ -1,0 +1,244 @@
+{
+  "status": "PASS_SCOPED_CPU_SOURCE_AND_ACTUAL_CHECKPOINT_RNG_BOUNDARY_AUDIT",
+  "unix": 1794012392.705733,
+  "diagnostic_route": {
+    "additional_native_complete_eval_iteration": 15000,
+    "original_future_nodes": [
+      20000,
+      30000
+    ],
+    "strict_restore_precedes_added_schedule": true,
+    "native_complete_eval_rng_guard": false,
+    "lpips_torch_cpu_rng_consumption": "Observed by separate parent/remote_history CPU probe; not re-probed here",
+    "actual_post_evaluation_state_is_captured_and_restored": true
+  },
+  "scoped_source_findings": {
+    "active_explicit_torch_cpu_random_consumer_found_after15000": false,
+    "camera_time_sampler": "CameraSampler.select uses its own random.Random and np.random.RandomState; both are checkpointed",
+    "torch_cpu_randperm_in_loss_cls_3d": "Two draws in a defined helper; no AST call exists in train.py (legacy call is commented)",
+    "gaussian_cpu_rand": "create_from_pcd initialization runs before full restoration, not in the post15000 training loop",
+    "gaussian_normal": "Split tensors means/means_t explicitly CUDA; generic densification is disabled at iteration>=15000",
+    "sgcm": "refine returns when due false; due requires iteration<cfg.end=15000",
+    "renderer_and_active_hybrid_losses": "No explicit torch random calls in the enumerated modules",
+    "topology_observation": "Runtime point counts remain static2079561/dynamic1015659 since node15000"
+  },
+  "actual_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_native_longrun30k_20261107_r1/continuation15k/training_state15000.pth",
+    "bytes": 44312,
+    "sha256": "4f11600612fb0d47c81e39bced0f5e9d51069543e914257074ce4f4b6c3fbe7b",
+    "torch_cpu_rng_sha256": "7744b21d8ebea9508adf357c3710c42eb4c7230e45eb57a5f9b599c744daad88",
+    "cuda_rng_sha256": [
+      "3bb0cd67ce896cd9d79f1782cf3c1036b2939197e36e6513e9c098b3d4b91a54"
+    ],
+    "next_stage_full_restore": {
+      "status": "PASS_EXACT_FULL_RESTORE",
+      "iteration": 15000,
+      "differences": [],
+      "includes": "parameters,Adam,Python/NumPy/Torch/CUDA RNG,camera sampler,SGCM,EMA,runtime",
+      "updates": 0,
+      "bookkeeping_config_differences": {
+        "model_path": {
+          "saved": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_native_longrun30k_20261107_r1/continuation15k",
+          "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_native_longrun30k_20261107_r1/continuation20k"
+        },
+        "start_checkpoint": {
+          "saved": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/chkpnt11977.pth",
+          "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_native_longrun30k_20261107_r1/continuation15k/chkpnt15000.pth"
+        }
+      },
+      "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_native_longrun30k_20261107_r1/continuation15k/chkpnt15000.pth"
+    }
+  },
+  "explicit_torch_random_calls": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "line": 104,
+      "function": "loss_cls_3d",
+      "torch_function": "randperm"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "line": 109,
+      "function": "loss_cls_3d",
+      "torch_function": "randperm"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 205,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 206,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 207,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 216,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 216,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 217,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 235,
+      "function": "create_from_pcd",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 617,
+      "function": "densify_and_split",
+      "torch_function": "normal"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 628,
+      "function": "densify_and_split",
+      "torch_function": "normal"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 814,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 815,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 816,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 825,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 825,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 826,
+      "function": "initialize",
+      "torch_function": "rand"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "line": 844,
+      "function": "initialize",
+      "torch_function": "rand"
+    }
+  ],
+  "source_files": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py": {
+      "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce",
+      "bytes": 52627
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py": {
+      "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+      "bytes": 44338
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/paper_sgcm.py": {
+      "sha256": "b221d7e4396c0dd05405c27d022fbf8dd40d2f305b6f7c9c596f67a9c3919a50",
+      "bytes": 22335
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py": {
+      "sha256": "6731b2b81813f9da1589ae9cd61cd66713a32b604e07ab89663c3fa1e69f3c95",
+      "bytes": 6279
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py": {
+      "sha256": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837",
+      "bytes": 14362
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py": {
+      "sha256": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+      "bytes": 4991
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/loss_utils.py": {
+      "sha256": "c4b505fc8df2a4d6780968c320344dcedfdd4335164952137a7651b1d55870eb",
+      "bytes": 2537
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py": {
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+      "bytes": 20011
+    }
+  },
+  "limits": [
+    "Finite enumerated source audit, not runtime instrumentation or an exhaustive third-party/native CUDA audit",
+    "Does not establish a bitwise counterfactual trajectory without the extra15K evaluation",
+    "No GPU RNG probe performed here; no CUDA bitwise determinism claim",
+    "Exact full restore statements refer to actual saved checkpoint states"
+  ],
+  "training_restarts_requested": 0,
+  "extra_updates": 0,
+  "GPU_initialized": false,
+  "method_or_running_code_modified": false,
+  "script_sha256": "5133b7c69a4b0c4298b6ef708aa077f7ab76c43a7ffc56feb555d2d45ddd1d63",
+  "separate_cpu_only_evaluation_probe": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1/evaluation_rng_cpu_probe.json",
+    "sha256": "36f790d3ccf5c64b1774377a35ac9234af80d0d5c1b03e59d5eee2dfb10eb3c4",
+    "receipt": {
+      "status": "PASS_ACTUAL_NATIVE_LPIPS_CPU_RNG_PROBE",
+      "cuda_initialized": false,
+      "optimization_updates": 0,
+      "before": {
+        "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+        "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+        "torch_cpu": "1ccf17250133dec5e96478acd63e13d728d0dbbabb30389415a302c6f872f81f",
+        "cuda_initialized": false
+      },
+      "after": {
+        "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+        "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+        "torch_cpu": "dc2ab5b7c3859a557b3046e9124d93c4803fbaad5a7f08de457862b0788925a2",
+        "cuda_initialized": false
+      },
+      "after_guard": {
+        "python": "58ae6fb433941c12f62693dbc475e5d07ed8e961a2ee47986acad525f9defd02",
+        "numpy": "b7a5b53832e32aa9cbe9972fc70a83c749083c89e8a876d0d0bd88a06adb3a52",
+        "torch_cpu": "dc2ab5b7c3859a557b3046e9124d93c4803fbaad5a7f08de457862b0788925a2",
+        "cuda_initialized": false
+      },
+      "unguarded_changed": [
+        "torch_cpu"
+      ],
+      "guard_restored": true,
+      "lpips_zero_pair": 0.0,
+      "guarded_zero_pair": 0.0,
+      "native_complete_eval_explicit_rng_guard": false,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/lpipsPyTorch/__init__.py",
+      "probe_source_sha256": "8319ac35af21ef71fee6919c679d78a1ab522afbdbc75d2aed0358303dda6ef5",
+      "limitation": "No CUDA evaluation run; does not prove equality to a counterfactual long-run trajectory"
+    }
+  }
+}

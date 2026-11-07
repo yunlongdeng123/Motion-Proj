@@ -1,0 +1,99 @@
+{
+  "reviewer": "root agent",
+  "primary_scope": "a5 reconstruction and stable full5 identity; static background artifacts belong to v44",
+  "human_verdict": null,
+  "quality_accepted": false,
+  "records": [
+    {
+      "recorded_utc": "2026-11-07T01:37:59.296561+00:00",
+      "stage": "smoke",
+      "iteration": 4681,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "source_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\smoke_pilot\\anchors\\105_a5_crop.png",
+      "source_relative_to_outputs": "a5_regression_20261106/evidence/full_dynamic_edit/smoke_pilot/anchors/105_a5_crop.png",
+      "agent_observation": "The full5 model contains a visible blue a5 body and upper silhouette, unlike the old single-static case, but roof/windshield and whole-body details remain strongly blurred. Not enough to accept normal complete reconstruction.",
+      "agent_visual_acceptance": "PENDING_CLEARER_ROOF_AND_WINDSHIELD_STRUCTURE",
+      "human_verdict": null
+    },
+    {
+      "recorded_utc": "2026-11-07T01:37:59.296561+00:00",
+      "stage": "formal",
+      "iteration": 5000,
+      "raw_frames_actually_viewed": [
+        97,
+        105,
+        109
+      ],
+      "source_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_pilot\\anchors\\105_a5_crop.png",
+      "source_relative_to_outputs": "a5_regression_20261106/evidence/full_dynamic_edit/formal5k_pilot/anchors/105_a5_crop.png",
+      "agent_observation": "Blue body and upper silhouette support are visible; KEEP and DELETE37 agree in this a5 crop. The roof/windshield structure is still strongly blurred, so complete reconstruction is not yet verified. This is a blur/structure uncertainty, not a claim that the old transparent-hole failure is unchanged.",
+      "agent_visual_acceptance": "PENDING_CLEARER_ROOF_AND_WINDSHIELD_STRUCTURE",
+      "human_verdict": null,
+      "additional_review_utc": "2026-11-07T01:45:53.920043+00:00",
+      "additional_keep_only_images": [
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\097_crop.png",
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\105_crop.png",
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\anchors\\109_crop.png"
+      ],
+      "additional_observation": "All three KEEP-only native views show blue a5 silhouette/support but heavy blur. Raw105 roof/windshield details remain unresolved; raw97 and109 are also strongly blurred. Await10K before accepting clear complete reconstruction.",
+      "identity_diagnostic_receipt": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_keep_pilot\\summary.json"
+    },
+    {
+      "recorded_utc": "2026-11-07T01:59:25.370034+00:00",
+      "stage": "formal",
+      "iteration": 10000,
+      "raw_frames_actually_viewed": [
+        97,
+        105,
+        109
+      ],
+      "source_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\105_crop.png",
+      "additional_keep_only_images": [
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\097_crop.png",
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\105_crop.png",
+        "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal10k_keep_pilot\\anchors\\109_crop.png"
+      ],
+      "agent_observation": "Across raw97,105,109 the a5 body, roof and windshield have continuous recognizable outlines. Raw105 no longer shows the old visibly missing/translucent roof structure, although native reconstruction details remain soft compared with GT. Raw109 retains a continuous roof/side silhouette as the car leaves the frame.",
+      "agent_visual_acceptance": "PASS_VISIBLE_ROOF_AND_WINDSHIELD_STRUCTURE_WITH_SOFT_DETAILS",
+      "visual_scope": "Three pilot frames only. Full49 KEEP evaluation is requested next; this is not GT-level image quality or user acceptance.",
+      "human_verdict": null,
+      "all49_additional_review": {
+        "recorded_utc": "2026-11-07T02:08:55.702618+00:00",
+        "evaluation_frame_count": 49,
+        "a5_visible_frames_actually_reviewed": [
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112
+        ],
+        "contact_sheet": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\full5_all_visible_a5_contact.png",
+        "presentation": "GT-mask bbox plus6px, same crop within each GT/KEEP pair; per-pair zoom for display only.",
+        "observation": "Across all24 frames with visible a5, visible body portions remain continuous. Nearer raw101..110 show a continuous roof/windshield/side outline with soft native details. Raw111/112 are naturally clipped as a5 leaves the frame; no assertion is made about unobserved surfaces.",
+        "scope": "All49 numerical/identity checks and24-frame visual contact sheet supplement the independently viewed native97/105/109 crops."
+      }
+    }
+  ],
+  "primary_agent_conclusion": "Visible a5 roof/windshield structure recovered at10K; the49-frame evaluation and all24 visible-frame inspection support continuity. Native fine detail is still soft. Human acceptance and hidden-surface accuracy are not inferred."
+}

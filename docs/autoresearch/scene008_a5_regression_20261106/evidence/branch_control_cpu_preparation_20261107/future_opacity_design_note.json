@@ -1,0 +1,27 @@
+{
+  "status": "DESIGN_ONLY_NOT_PREPARED_NOT_LAUNCHED",
+  "conditional_on": [
+    "Both static2x2 initialization arms at5K fail to restore roof",
+    "Native a5+a37 KEEP-only branch5K restores roof"
+  ],
+  "next_single_mechanism": "Within the same native branch/input/union-mask/seed/cadence contract, change only hybrid_lambda_dynamic_opacity100.0->0.0 fresh5K",
+  "purpose": "Test whether removing independent foreground occupancy supervision can reproduce the deficit",
+  "fixed": [
+    "native engine",
+    "a5+a37 dynamic pool/source points",
+    "static source points",
+    "union masks",
+    "RGB losses",
+    "static priors",
+    "sampling seed0",
+    "LR horizon30000",
+    "formal5000",
+    "pilot-first"
+  ],
+  "not_production_fix": true,
+  "current_default_dynamic_opacity": 100.0,
+  "current_files_modified_for_this_future_arm": false,
+  "actual_training_updates": 0,
+  "requires_explicit_root_trigger_after_branch5K": true,
+  "architecture": "../../architecture.svg"
+}

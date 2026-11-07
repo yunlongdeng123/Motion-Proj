@@ -1,0 +1,51 @@
+{
+  "status": "RELEASED_EXACT5000_TO10000_UNDER_PREAUTHORIZED_BLUR_CONDITION",
+  "pid": 15730,
+  "unix": 1794015344.1400044,
+  "command": [
+    "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "-B",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/source/train_full5.py",
+    "--mode",
+    "extend",
+    "--checkpoint",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/formal5k/chkpnt5000.pth",
+    "--stop-iteration",
+    "10000",
+    "--output",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_full_dynamic_edit_20261107_r1/formal10k"
+  ],
+  "source_iteration": 5000,
+  "new_phase_updates_cap": 5000,
+  "total_formal_stop": 10000,
+  "learning_rate_horizon": 30000,
+  "exact_full_restore_required": true,
+  "from_original_fresh5k": true,
+  "source_smoke_not_resumed": true,
+  "decision": {
+    "status": "OWNER_ACTUAL_5K_IMAGE_REVIEW",
+    "unix": 1794015340.9896522,
+    "proceed_exact_10k": true,
+    "reason": "FIVE_K_STILL_VISIBLY_BLURRED",
+    "observed_keep": "a5 vehicle, roof and windshield remain strongly blurred; not accepted as complete reconstruction",
+    "editing_residual_not_a_release_condition": true,
+    "source_iteration": 5000,
+    "authorized_total_formal_cap": 10000,
+    "authority": "Root preauthorized exact5K->10K when5K remains blurred; latest user focus is a5 reconstruction and identity",
+    "inspected_image": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\full_dynamic_edit\\formal5k_pilot\\anchors\\105_a5_crop.png",
+    "image_sha256": "6ae46c5ffaef8887263258176d35170194fea94f774a140d23c0fd32c588933b",
+    "quality_accepted": false
+  },
+  "engineering_updates_separate": 4683,
+  "dynamic_actor_ids": [
+    5,
+    6,
+    18,
+    26,
+    37
+  ],
+  "training_delete_actor_ids": [],
+  "further_training_auto_release": false,
+  "shutdown": false,
+  "reset_card": false
+}

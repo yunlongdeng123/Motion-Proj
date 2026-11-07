@@ -341,4 +341,6 @@
 - `v44 / scene008_v44_rgb_asset_20261107_r1`：[4帧pilot＋完整49帧双状态去蓝与冻结车体对照](autoresearch/scene008_v44_rgb_asset_20261107/index.html)；道路蓝偏差98/98帧状态改善，a6整体近稳定、局部回退保留；银残片用户指定延期，0训练，215次native前向。failure_ledger_delta=none。
 
 
-- SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107：[保留a5的原生重建、同10K缓存、补点与静态RGB对照](autoresearch/scene008_a5_regression_20261106/index.html)；原生single11977→30K与staticRGB2×2进行中，已完成结果、配置、输入角色、seed、资源和预算见报告及[实验合同](autoresearch/scene008_a5_regression_20261106/evidence/research_20261107_contract.json)。与a6资产/RCR-1画质采用结论分离；GPU保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+- SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107：[历史原生重建、同10K缓存、补点与静态RGB对照](autoresearch/scene008_a5_regression_20261106/index.html)；旧研究已收口44,622更新，Single止20K、30K未执行；完整初始化和RGB配重的四格5K未恢复清晰车顶，转完整五身份重建与身份管理。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+- SCENE008-FULL5-RECONSTRUCTION-IDENTITY-20261107：[完整五身份10K、a5车顶恢复与可靠身份持久化](autoresearch/scene008_identity_edit_interface_20261107/index.html)；正常可辨的连续车顶/挡风玻璃结构已由代理查看，细节仍软；49 KEEP与同域CPU复算、原生math/拓扑/完整恢复/便携推理包等价验证通过，human_verdict=null。新正式10000、工程smoke＋恢复4683；配置、源角色、seed、资源和全部实账见报告。GPU保持开机，静态残影由v44处理。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

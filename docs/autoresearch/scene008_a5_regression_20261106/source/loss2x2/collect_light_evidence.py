@@ -27,12 +27,26 @@ def main():
     for raw in [89, 97, 105, 109]:
         files += [source / f'frames/{raw:03d}/{name}.png' for name in ['gt', 'keep', 'delete_a37']]
     assert len(list((source / 'a5_float').glob('*.npz'))) == 49
+    receipt_files=[arm/'formal1k/returned.json',arm/'formal5k/restore_audit.json',
+                   arm/'formal1k/effective_config.json',arm/'formal1k/runtime_source_manifest.json',
+                   arm/'formal1k/actual_identity_initialization.json',arm/'arm_contract.json',
+                   arm/'paired_camera_shift_lr_1000.json']
+    if args.step==5000:
+        receipt_files += [arm/'formal5k/returned.json',arm/'formal5k/effective_config.json',
+                         arm/'formal5k/runtime_source_manifest.json',arm/'paired_camera_shift_lr_5000.json',
+                         arm/'protected_sources_after.json']
+    for path in receipt_files:assert path.is_file(),path
     manifest = {str(path.relative_to(source)): dict(bytes=path.stat().st_size,
                 sha256=hashlib.sha256(path.read_bytes()).hexdigest()) for path in files}
+    for path in receipt_files:
+        manifest['run_receipts/'+str(path.relative_to(arm))]=dict(bytes=path.stat().st_size,
+            sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     archive = ROOT / f'{alias}_light.tar.gz'
     with tarfile.open(archive, 'x:gz') as tar:
         for path in files:
             tar.add(path, arcname=alias + '/' + str(path.relative_to(source)), recursive=False)
+        for path in receipt_files:
+            tar.add(path,arcname=alias+'/run_receipts/'+str(path.relative_to(arm)),recursive=False)
     receipt = dict(status='PACKAGED_COMPLETE_ALL49_NUMERICS_FOUR_NATIVE_ANCHORS', alias=alias,
                    source=str(source), archive=str(archive),
                    archive_sha256=hashlib.sha256(archive.read_bytes()).hexdigest(), files=manifest,

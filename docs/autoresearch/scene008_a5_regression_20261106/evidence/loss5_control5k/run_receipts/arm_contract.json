@@ -1,0 +1,47 @@
+{
+  "arm": "control",
+  "experiment": "static_rgb_supervision_strength_2x2",
+  "formal_stop": 5000,
+  "phase_stops": [
+    1000,
+    5000
+  ],
+  "learning_rate_horizon": 30000,
+  "expected_initial_static_rows": 591672,
+  "expected_initial_dynamic_rows": 98452,
+  "source_input": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+  "baseline_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control",
+  "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "renderer_sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+  "gmodel_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+  "source_config_sha256": "7476eaac7dec0c01f59e7d7801245db90985b8a19023f5a38a24887103b27bdc",
+  "fresh": true,
+  "seed": 0,
+  "added_static_support_rows": 0,
+  "method_changes": {
+    "hybrid_lambda_static_rgb": {
+      "baseline": 1.0,
+      "candidate": 5.0
+    }
+  },
+  "exact_config_differences": {
+    "model_path": {
+      "baseline": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control/formal1k",
+      "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k"
+    },
+    "hybrid_lambda_static_rgb": {
+      "baseline": 1.0,
+      "candidate": 5.0
+    }
+  },
+  "baseline_native_validator": "PASS_UNMODIFIED_BASE_CONFIG",
+  "candidate_registration": "Exact original baseline except static RGB weight and output path",
+  "no_engine_patch": true,
+  "dynamic_aliases": [
+    37
+  ],
+  "a5_branch": "static",
+  "delete_semantics": "native render_s deletes the complete selected a37 dynamic pool",
+  "shutdown_allowed": false,
+  "gpu_reset_allowed": false
+}

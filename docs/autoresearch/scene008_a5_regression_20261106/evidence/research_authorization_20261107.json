@@ -1,18 +1,74 @@
 {
-  "status": "ACTIVE_RESEARCH_VALIDATION",
+  "status": "PRIMARY_SCOPE_MOVED_TO_FULL_DYNAMIC_IDENTITY_EDIT_ENGINEERING",
   "recorded_utc": "2026-11-07T00:08:15.979828+00:00",
-  "latest_user_instruction_paraphrase": "Resume research. Keep the GPU instance on. Do not use a reset card and do not shut down.",
+  "latest_user_instruction_paraphrase": "Resume research and keep the GPU instance on. No new prohibition on the historical reset-card authorization is inferred.",
   "current_actions": {
     "keep_GPU_instance_on": true,
     "use_reset_card": false,
     "shutdown": false,
-    "create_goal": false
+    "create_goal": false,
+    "reset_card_used_this_round": false,
+    "shutdown_performed": false
   },
   "research_questions": [
     "Whether the existing native single trajectory recovers a5 with continued training to30K.",
     "How real a5 initialization support and staticRGB supervision weight interact while a5 remains static."
   ],
-  "new_authorized_experiments": {
+  "historical_events": [
+    {
+      "event": "bounded validation instruction",
+      "source": {
+        "path": "evidence/new_goal_authorization.json",
+        "bytes": 1063,
+        "sha256": "9616eb334790fd597d8ab6217f8882c7e80cc4e130bb880ebb313e8a9f5c1f74"
+      },
+      "current": false
+    },
+    {
+      "event": "goal paused and then cleared; report finalization was stopped",
+      "source": "parent task instruction in this conversation",
+      "exact_event_time_not_recorded_here": true,
+      "current": false
+    },
+    {
+      "event": "research resumed with explicit GPU keep-on instruction; no-card/no-shutdown were execution choices in the initial relay",
+      "source": "latest parent task relaying user instruction",
+      "current": true
+    },
+    {
+      "event": "Later evaluations should start with a few frames, then expand; existing full49 evaluations may continue",
+      "source": "latest user instruction relayed by parent",
+      "recorded_utc": "2026-11-07T00:16:59.624714+00:00",
+      "current": true
+    },
+    {
+      "event": "Clarified card wording: keep historical conditional authorization; report this round card not used as an execution fact, not a new prohibition",
+      "source": "latest parent clarification",
+      "recorded_utc": "2026-11-07T00:39:40.463822+00:00",
+      "current": true
+    },
+    {
+      "event": "User switched primary work to full dynamic actor modeling and independent deletion queries; finish existing20K/5K publications, do not launch30K or fallback",
+      "source": "latest parent task relaying user scope change",
+      "recorded_utc": "2026-11-07T01:05:39.051572+00:00",
+      "current": true
+    }
+  ],
+  "precedence": "This appended research authorization supersedes historical shutdown/card/bounded-stop instructions. Original evidence files are retained unchanged.",
+  "old_authorization_overwritten": false,
+  "evaluation_efficiency_preference": {
+    "pilot_raw_ids": [
+      97,
+      105,
+      109
+    ],
+    "expand_to49_after_pilot_check": true,
+    "already_running_full49_continue": true,
+    "training_sampling_contract_raw_ids": "89..137 unchanged",
+    "pilot_is_not_all49_evidence": true
+  },
+  "reset_card_interpretation": "No card has been used in this research round. This is an execution fact/choice, not a new user ban; historical conditional authorization is preserved.",
+  "historical_authorized_experiments": {
     "single_exact_continuation": {
       "from_iteration": 11977,
       "to_iteration": 30000,
@@ -33,48 +89,27 @@
       ],
       "fresh_updates_per_arm": 5000,
       "weight1_arms_already_completed": true,
-      "weight5_arms_results": "not yet available"
+      "weight5_arms_results": "Outcomes are reported from retrieved evidence in report_data.json; this authorization ledger does not assert completion."
     }
   },
-  "historical_events": [
-    {
-      "event": "bounded validation instruction",
-      "source": {
-        "path": "evidence/new_goal_authorization.json",
-        "bytes": 1063,
-        "sha256": "9616eb334790fd597d8ab6217f8882c7e80cc4e130bb880ebb313e8a9f5c1f74"
-      },
-      "current": false
-    },
-    {
-      "event": "goal paused and then cleared; report finalization was stopped",
-      "source": "parent task instruction in this conversation",
-      "exact_event_time_not_recorded_here": true,
-      "current": false
-    },
-    {
-      "event": "research resumed with explicit keep-on / no-card / no-shutdown instruction",
-      "source": "latest parent task relaying user instruction",
-      "current": true
-    },
-    {
-      "event": "Later evaluations should start with a few frames, then expand; existing full49 evaluations may continue",
-      "source": "latest user instruction relayed by parent",
-      "recorded_utc": "2026-11-07T00:16:59.624714+00:00",
-      "current": true
-    }
-  ],
-  "precedence": "This appended research authorization supersedes historical shutdown/card/bounded-stop instructions. Original evidence files are retained unchanged.",
-  "old_authorization_overwritten": false,
-  "evaluation_efficiency_preference": {
-    "pilot_raw_ids": [
-      97,
-      105,
-      109
+  "current_primary_interface": {
+    "dynamic_actor_ids": [
+      5,
+      6,
+      18,
+      26,
+      37
     ],
-    "expand_to49_after_pilot_check": true,
-    "already_running_full49_continue": true,
-    "training_sampling_contract_raw_ids": "89..137 unchanged",
-    "pilot_is_not_all49_evidence": true
+    "delete_actor_ids": [
+      37
+    ],
+    "engineering_contract": "../scene008_identity_edit_interface_20261107/evidence/engineering_contract.json"
+  },
+  "historical_research_finishing": {
+    "single_stop_iteration": 20000,
+    "single30000_executed": false,
+    "finish_existing_support_RGB5_at": 5000,
+    "branch_fallback_training_updates": 0,
+    "opacity_zero_training_updates": 0
   }
 }

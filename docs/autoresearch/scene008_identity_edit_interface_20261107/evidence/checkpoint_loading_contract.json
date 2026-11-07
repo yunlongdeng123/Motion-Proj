@@ -1,0 +1,71 @@
+{
+  "checkpoint_format": "Native dynamic18tuple; optimizer payload at tuple index14",
+  "owner_key": "dynamic_actor_ownership_v1",
+  "schema_version": 1,
+  "payload_fields": {
+    "dynamic_actor_ids": "saved canonical actor set; not source-PLY concatenation positions",
+    "source_actor_ids": "int64 initial-source-row -> actor-ID tensor, length149072",
+    "actor_ids": "int64 current Gaussian-row -> actor-ID tensor, length=currentN"
+  },
+  "lineage_key": "sgcm_lineage_v1.lineage_ids",
+  "invariant": "current actor_ids == source_actor_ids[lineage_ids]",
+  "dynamic_actor_ids": [
+    5,
+    6,
+    18,
+    26,
+    37
+  ],
+  "source_ply_actor_order": [
+    5,
+    26,
+    18,
+    6,
+    37
+  ],
+  "source_rows": [
+    21358,
+    15193,
+    2444,
+    11625,
+    98452
+  ],
+  "loader": "scripts.worldsim_v82.drivingeditor_dynamic_edit.scene_io.load_native_models",
+  "read_actor_ids": "scripts.worldsim_v82.drivingeditor_dynamic_edit.ownership.actor_ids",
+  "cli_module": "scripts.worldsim_v82.drivingeditor_dynamic_edit.query",
+  "default_query": {
+    "delete_actor_ids": [],
+    "raw_ids": [
+      97,
+      105,
+      109
+    ],
+    "optimizer_created": false,
+    "optimization_updates": 0
+  },
+  "legacy_compatibility": "Old hard-coded a6/a37 lineage-threshold helper cannot interpret newFull5 IDs. No owner/lineage -> explicit rejection; original native whole KEEP remains an uneditable reference.",
+  "consumer_scope": "Export contract only; existing v44 and unrelated E3 code not modified",
+  "primary_acceptance": "KEEP a5 roof/windshield reconstruction and identity persistence; optional editing quality is separate",
+  "inference_package": {
+    "directory": "inference10k",
+    "iteration": 10000,
+    "inference_only": true,
+    "training_resume_supported": false,
+    "optimizer_removed_fields": [
+      "state",
+      "param_groups"
+    ],
+    "all_other_Gaussian_fields_exact": true,
+    "environment_copied_unchanged": true,
+    "model_source_PLY_or_GT_required": false,
+    "bundled_python_source": true,
+    "compatible_native_CUDA_extensions_required": true,
+    "real_GPU_equivalence_frames": [
+      97,
+      105,
+      109
+    ],
+    "native_RGB_alpha_owner_features_max_difference": 0,
+    "standalone_default_KEEP_PNG_max_difference": 0
+  }
+}

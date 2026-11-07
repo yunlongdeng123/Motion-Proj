@@ -1,0 +1,217 @@
+{
+  "status": "PASS_COMPLETED_RECEIPT_ACCOUNTING_RESEARCH_IN_PROGRESS",
+  "generated_utc": "2026-11-07T01:52:34.353459+00:00",
+  "base": {
+    "source": "evidence/execution_accounting_through_round1_20261107.json",
+    "sha256": "6fc42e30ebab1dcd57fc81fb7bf94742e613ffec698dca69f4e3c0c694cd91ca",
+    "formal_updates": 20000,
+    "engineering_updates": 6599,
+    "total_updates": 26599
+  },
+  "completed_research_formal_intervals": [
+    {
+      "family": "single_continuation",
+      "from_iteration": 11977,
+      "to_iteration": 15000,
+      "completed_updates": 3023,
+      "source": "evidence/single_longrun15k/run_receipts/returned.json",
+      "json_key": null,
+      "source_sha256": "8358c4db1bae4d1abefc9e7a04481ffafea56fb999138daaa1ac0a5b7a8915fc",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "continue",
+        "iteration": 15000,
+        "source_iteration": 11977,
+        "actual_additional_iterations": 3023,
+        "accounting": "new_continuation_only_prior1977_engineering_retained_without_recount",
+        "elapsed_seconds": 1191.4642449151725,
+        "learning_rate_horizon": 30000,
+        "final_stop": 30000,
+        "phase_stop": 15000,
+        "max_allocated_bytes": 12021377536,
+        "max_reserved_bytes": 21460156416,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    {
+      "family": "single_continuation",
+      "from_iteration": 15000,
+      "to_iteration": 20000,
+      "completed_updates": 5000,
+      "source": "evidence/single_longrun20k/run_receipts/returned.json",
+      "json_key": null,
+      "source_sha256": "07975fe3c8cc8df769dedf30f14cfb59089fa27393aff1abb58896d2b00e6d83",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "continue",
+        "iteration": 20000,
+        "source_iteration": 15000,
+        "actual_additional_iterations": 5000,
+        "accounting": "new_continuation_only_prior1977_engineering_retained_without_recount",
+        "elapsed_seconds": 2035.019494453445,
+        "learning_rate_horizon": 30000,
+        "final_stop": 30000,
+        "phase_stop": 20000,
+        "max_allocated_bytes": 8736456704,
+        "max_reserved_bytes": 20199768064,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    {
+      "family": "staticRGB5_control",
+      "from_iteration": 0,
+      "to_iteration": 1000,
+      "completed_updates": 1000,
+      "source": "evidence/loss5_control1k/run_receipts/formal1k/returned.json",
+      "json_key": null,
+      "source_sha256": "36bd4b41b6041070e93d9d4d2b54dc6725c92fc847a1176399aef0f94a8efeb8",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "formal",
+        "iteration": 1000,
+        "source_iteration": 0,
+        "actual_additional_iterations": 1000,
+        "accounting": "fresh_static_rgb5_formal5000_in_1000_then_4000_phases",
+        "elapsed_seconds": 307.21261566504836,
+        "learning_rate_horizon": 30000,
+        "formal_stop": 5000,
+        "phase_stop": 1000,
+        "max_allocated_bytes": 2751753216,
+        "max_reserved_bytes": 3196059648,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    {
+      "family": "staticRGB5_control",
+      "from_iteration": 1000,
+      "to_iteration": 5000,
+      "completed_updates": 4000,
+      "source": "evidence/loss5_control5k/run_receipts/formal5k/returned.json",
+      "json_key": null,
+      "source_sha256": "64d4727423984a8a5432462af2a598c7da052ef4069f6be5f6937ca1a6b47e7f",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "extend",
+        "iteration": 5000,
+        "source_iteration": 1000,
+        "actual_additional_iterations": 4000,
+        "accounting": "fresh_static_rgb5_formal5000_in_1000_then_4000_phases",
+        "elapsed_seconds": 826.6217474211007,
+        "learning_rate_horizon": 30000,
+        "formal_stop": 5000,
+        "phase_stop": 5000,
+        "max_allocated_bytes": 3890917888,
+        "max_reserved_bytes": 4808769536,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    {
+      "family": "staticRGB5_support",
+      "from_iteration": 0,
+      "to_iteration": 1000,
+      "completed_updates": 1000,
+      "source": "evidence/loss5_full_a5_1k/run_receipts/formal1k/returned.json",
+      "json_key": null,
+      "source_sha256": "26a5b183f8171afab05564957b417e6b349c99f821071cfb468c62457b703bec",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "formal",
+        "iteration": 1000,
+        "source_iteration": 0,
+        "actual_additional_iterations": 1000,
+        "accounting": "fresh_static_rgb5_formal5000_in_1000_then_4000_phases",
+        "elapsed_seconds": 295.54439951479435,
+        "learning_rate_horizon": 30000,
+        "formal_stop": 5000,
+        "phase_stop": 1000,
+        "max_allocated_bytes": 2810409984,
+        "max_reserved_bytes": 3307208704,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    },
+    {
+      "family": "staticRGB5_support",
+      "from_iteration": 1000,
+      "to_iteration": 5000,
+      "completed_updates": 4000,
+      "source": "evidence/loss5_full_a5_5k/run_receipts/formal5k/returned.json",
+      "json_key": null,
+      "source_sha256": "c27934b43dc1d565a08bfae705fed2449343b1e1e08fd5c2be1dd1053586c8be",
+      "returned": {
+        "status": "PASS_COMPLETE_BOUNDARY",
+        "mode": "extend",
+        "iteration": 5000,
+        "source_iteration": 1000,
+        "actual_additional_iterations": 4000,
+        "accounting": "fresh_static_rgb5_formal5000_in_1000_then_4000_phases",
+        "elapsed_seconds": 1028.9004240632057,
+        "learning_rate_horizon": 30000,
+        "formal_stop": 5000,
+        "phase_stop": 5000,
+        "max_allocated_bytes": 4642850816,
+        "max_reserved_bytes": 6863978496,
+        "quality_accepted": false,
+        "human_verdict": null
+      }
+    }
+  ],
+  "completed_formal_updates": 38023,
+  "completed_engineering_updates": 6599,
+  "completed_total_updates": 44622,
+  "preserved_engineering_entries": [
+    {
+      "stage": "unpatched single smoke",
+      "updates": 1977,
+      "from_iteration": 10000,
+      "to_iteration": 11977
+    },
+    {
+      "stage": "unpatched single restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "full original dual smoke",
+      "updates": 500
+    },
+    {
+      "stage": "full original dual restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "time-shift candidate smoke",
+      "updates": 32
+    },
+    {
+      "stage": "time-shift candidate restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "time-shift candidate paired replay",
+      "updates": 1977
+    },
+    {
+      "stage": "screen-radius candidate smoke",
+      "updates": 128
+    },
+    {
+      "stage": "screen-radius candidate restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "screen-radius candidate paired replay",
+      "updates": 1977
+    }
+  ],
+  "incomplete_or_unretrieved_intervals": [],
+  "scope": "Completed returned phase receipts only; in-flight or unretrieved updates are not presumed zero. Prior1977 engineering is not recounted.",
+  "GPU_keep_on": true,
+  "shutdown": false,
+  "reset_card": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}
