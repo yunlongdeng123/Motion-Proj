@@ -1,0 +1,16 @@
+{
+  "reviewer": "primary Codex agent",
+  "human_verdict": null,
+  "scope": "raw105 同相机、相同左下固定裁剪的代理目视；不冒充全序列人工验收或隐藏表面真值。",
+  "reviews": [
+    {"model": "Full5 B30K KEEP", "source": "full5_30k/raw105_keep.png", "finding": "蓝色SUV车顶和挡风玻璃区域可见，作为既有外观参考；训练长度不同，不能单独用于因果归因。"},
+    {"model": "Single original10K KEEP", "source": "reference_single10k/frames/105/keep.png", "finding": "车顶/挡风玻璃上部缺失，后方车辆与背景穿到该区域；DELETE几乎不改变a5，缺损在删除前已存在。", "a5_visual_quality_accepted": false},
+    {"model": "Single unpatched11977 extra smoke KEEP", "source": "single_smoke11977/frames/105/keep.png", "finding": "平均RGB误差虽降低，车顶仍缺失，并出现蓝色错位/半透明残影；不能据均值改善宣称车体修复。", "a5_visual_quality_accepted": false},
+    {"model": "Full original-PLY dual5K KEEP / DELETE", "source": "dual5k/anchors/105_crop.png", "finding": "两种状态中左侧a5都呈暗色模糊体且缺少完整车顶；删除完整a37+a6动态集合没有造成这一初始缺损。", "a5_visual_quality_accepted": false},
+    {"model": "Full original-PLY dual10K KEEP / DELETE", "source": "dual10k/anchors/105_crop.png", "finding": "相比5K出现更多蓝色外观，但车顶/挡风玻璃仍缺失并伴蓝色错位残影；两状态目视一致，固定a5域原生RGB逐像素变化为零。未达到完整车体重建。", "a5_visual_quality_accepted": false},
+    {"model": "Time-shift-only candidate11977", "source": "time_shift_fix/fixed/anchors/105_crop.png", "finding": "车顶缺失和蓝色错位残影仍在；全域与上部误差均比同1977步未修对照更大。本次不采纳为a5修复。", "a5_visual_quality_accepted": false},
+    {"model": "Cached Full5 native10K vs cached single native10K", "source": "cached_native10k_comparison/anchors/105_crop.png", "finding": "同10K历史PNG中Full5的蓝SUV整体虽模糊，车顶/挡风玻璃结构仍在；单a37中该区域明显缺失。这个同预算证据不等于隔离了初始化/监督/RNG各项因果。", "full5_top_structure_visible": true},
+    {"model": "Screen-radius-only candidate11977", "source": "screen_radius_fix/fixed/anchors/105_crop.png", "finding": "车顶/挡风玻璃区域仍不完整，车体暗且模糊；删除前后没有恢复完整外观。同预算固定域与全图误差均变差，不作为a5修复模型。", "a5_visual_quality_accepted": false}
+  ],
+  "pending": []
+}

@@ -1,0 +1,2513 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scene008 a5 缺损研究：初始化与静态RGB监督</title><style>body{margin:0;background:#f3f7f9;color:#193b4a;font:16px/1.7 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1320px;margin:auto;padding:28px}section{background:#fff;border:1px solid #dde7ec;border-radius:12px;padding:24px;margin:20px 0}h1{font-size:30px;line-height:1.35;margin:12px 0}h2{font-size:22px;margin:0 0 12px}p{margin:10px 0}small,.muted{color:#607783;font-size:13px}.tag{font-size:13px;background:#dcecf2;border-radius:20px;padding:5px 12px;display:inline-block}a{color:#006b83}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:9px;border-bottom:1px solid #dce6eb;text-align:left;vertical-align:top}th{background:#edf4f7;white-space:nowrap}.scroll{overflow:auto}.missing{color:#946322}.notice{background:#fff4de;border-left:4px solid #c99435;padding:12px}figure{margin:20px 0}figure img{display:block;width:100%;min-width:1000px}figcaption{font-size:13px;color:#607783;margin-top:7px}.architecture{width:100%;display:block}details{margin:15px 0;border-top:1px solid #e0e8ed;padding-top:12px}summary{cursor:pointer;font-weight:600}pre{white-space:pre-wrap;word-break:break-word;background:#f4f7f9;padding:12px;font:12px/1.5 monospace}code{word-break:break-word;background:#eef3f5}li{margin:7px 0}.nav{display:flex;gap:14px;flex-wrap:wrap}footer{font-size:13px;color:#607783;padding:12px}@media(max-width:700px){main{padding:12px}section{padding:16px}h1{font-size:25px}}</style></head><body><main>
+<span class="tag">研究进行中 / 初始化支撑与静态RGB监督分别验证</span><h1>Scene008 a5 缺损研究：初始化与静态RGB监督</h1><p>同原生10K的Full5与Single已经存在车顶差异，不能仅用30K对10K解释。补齐真实a5初始化支撑的5K控制有有限改善（全域误差下降约10.1%，raw105约1.4%），仍未恢复车顶。现在分别检验原single轨迹续训到30K，以及固定初始化的静态RGB监督强度；新结果按实际取回更新，尚不认定训练条件为确定根因。time/radius两个独立短回放负结果保留，均未作为a5修复模型采用。</p>
+<p class="muted">基线主表已核对的新鲜49帧组：4；新研究节点另列。这里没有独立测试集或删除后干净背景GT。</p>
+<section id="research"><h2>研究进行中：初始化支撑与静态RGB监督强度</h2>
+<p>用户引用的同原生10K PNG已显示Full5与Single的车顶差异，因此不能仅用“30K对10K”解释。初始化支撑与静态训练条件仍待区分；既有证据尚未确定二者各自的因果贡献。</p>
+<p>后续诊断评价优先看raw97/105/109三帧，确认接线与现象后再扩49；已在执行的49帧评价继续，不打断。训练仍按原49帧采样合同进行。三帧pilot只作快速检查，不冒充全49指标。</p>
+<p>截至已完成Round1，累计新增正式20,000步、工程6,599步，共26,599步；新研究进行中的更新未提前计作完成。旧凭据不覆盖，最新授权要求<strong>GPU保持开机、不使用重置卡、不关机</strong>。<a href="evidence/execution_accounting_through_round1_20261107.json">Round1累计账本与来源SHA</a></p>
+<img class="architecture" src="figures/research_components.svg" alt="身份划分到初始化与训练目标、KEEP完整性，再到DELETE保留的组件与数据流">
+<h3>原Single同轨迹续训：15K / 20K / 30K</h3><p>从未修11977完整状态延续，保持原初始化、目标、动态身份和30K学习率时钟；不重新训练已花的1977步。新计划仅新增18,023更新，未有完成回执的部分不计入历史已花账。这个控制只检验本轨迹的训练时长。</p>
+<div class="scroll"><table><thead><tr><th>实际iteration / 节点</th><th>状态</th><th>KEEP MAE</th><th>边界 MAE</th><th>固定上部 MAE</th></tr></thead><tbody><tr><td>仅 a37 · 原10K</td><td>49帧已核验</td><td>0.06210</td><td>0.05440</td><td>0.11551</td></tr><tr><td>原single · 11977工程节点</td><td>49帧已核验</td><td>0.04357</td><td>0.04277</td><td>0.08116</td></tr><tr><td>原single续训 · 15K</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td></tr><tr><td>原single续训 · 20K</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td></tr><tr><td>原single续训 · 30K</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<img class="architecture" src="figures/single_duration_curve.svg" alt="只连接已经取回的同轨迹原生浮点指标，不填未来节点">
+<p class="muted">曲线只包含已核验的原生浮点评价节点；不存在的15K/20K/30K值保持空白，未插值或外推。11977是既有工程节点；均值下降仍需与同帧车顶图片一起判断。</p>
+<h3>静态RGB监督强度消融：初始化 × scalar 1 / 5</h3><p>两条新5K臂只将<strong>全static域RGB scalar从1改到5</strong>；原global RGB系数1保留，a5静态像素的名义global＋static RGB系数由2变6。它影响背景，且不等于复制动态分支的alpha100、mask域、时间扰动或其他先验。a5保持static，a37共同动态池及删除语义不变。</p>
+<div class="scroll"><table><thead><tr><th>初始化 / staticRGB</th><th>名义global＋static系数</th><th>5K状态</th><th>KEEP MAE</th><th>边界 MAE</th><th>固定上部 MAE</th><th>raw105 MAE</th></tr></thead><tbody><tr><td>原采样支撑 · staticRGB=1</td><td>2</td><td>49帧已核验</td><td>0.09053</td><td>0.07459</td><td>0.15676</td><td>0.09995</td></tr><tr><td>完整真实支撑 · staticRGB=1</td><td>2</td><td>49帧已核验</td><td>0.08135</td><td>0.06781</td><td>0.14462</td><td>0.09858</td></tr><tr><td>原采样支撑 · staticRGB=5</td><td>6</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>完整真实支撑 · staticRGB=5</td><td>6</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<figure class="scroll"><img src="figures/raw105_static_rgb_2x2.png" alt="同一原生裁剪的初始化乘静态RGB权重KEEP对照"><figcaption>上排1K，下排5K；GT及四格均用相同原像素裁剪。缺项保留灰格，1K不升级为5K结论，只抽查raw105。</figcaption></figure>
+<div class="scroll"><table><thead><tr><th>描述性差值（MAE）</th><th>scalar1下补点差值</th><th>补点边际差</th><th>RGB配重边际差</th><th>交互项</th></tr></thead><tbody><tr><td>全a5 MAE</td><td>-0.00918</td><td>—</td><td>—</td><td>—</td></tr><tr><td>边界 MAE</td><td>-0.00678</td><td>—</td><td>—</td><td>—</td></tr><tr><td>固定上部 MAE</td><td>-0.01214</td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div><p class="muted">y00=原采样/1，y10=补点/1，y01=原采样/5，y11=补点/5；交互=(y11−y10)−(y01−y00)。边际差为另一因素两水平的平均差，误差差值为负表示下降；缺格不填。仅单场景单seed描述，不做统计显著性结论。</p>
+<p>既有scalar1两臂与新增scalar5两臂构成2×2。提高RGB系数也会相对弱化未变系数的静态duration/velocity等项；若恢复，只能归因这项目标平衡干预有效，不能独立排除prior的作用。补点同时改变支撑、局部密度/容量与KNN初始scale；只有一场景、一seed。完整日程与唯一配重差异审计到达前，不把四格数值当成已完成因果验证。</p>
+<details><summary>1K早期检查（单独列示，不作为5K终点）</summary><table><thead><tr><th>1K节点</th><th>证据</th><th>KEEP MAE</th><th>固定上部 MAE</th><th>平均总alpha</th></tr></thead><tbody><tr><td>原采样支撑 · staticRGB=1 · 1K</td><td>49帧已核验</td><td>0.22772</td><td>0.23154</td><td>0.57898</td></tr><tr><td>完整真实支撑 · staticRGB=1 · 1K</td><td>49帧已核验</td><td>0.22533</td><td>0.19457</td><td>0.67494</td></tr><tr><td>原采样支撑 · staticRGB=5 · 1K</td><td>49帧已核验</td><td>0.21972</td><td>0.20134</td><td>0.32643</td></tr><tr><td>完整真实支撑 · staticRGB=5 · 1K</td><td>待评价/取回</td><td>—</td><td>—</td><td>—</td></tr></tbody></table><p>平均误差或总alpha变化不能替代车体目视；已取回的RGB5原采样1K中仍几乎没有可辨a5车体。<a href="evidence/research_agent_visual_review_20261107.json">本轮代理目视记录（人类判定为空）</a></p></details>
+<details><summary>仅CPU准备的备选分支对照：未入队、KEEP-only</summary><p>若当前2×2结果需要，root再决定是否使用原生a5+a37动态分支诊断；此处没有自动启动。a5的21,358个唯一归一化xyz/time与fullsupport相同，但静态原生0.1m排除还移走2,053个非精确a5匹配的近邻行，其语义未知。加54重复行差异，总点数710,040对707,933（约0.30%）。KNN域和原生目标/分支责任整包改变，不能独立隔离prior。原生DELETE会删a5+a37，仅KEEP可用于此诊断，不是a37-only编辑方案。<a href="evidence/branch_control_cpu_preparation_20261107.json">CPU合同/取回清单</a> · <a href="source/prepare_a5_branch_control.py">输入准备源码</a></p></details>
+<p><a href="evidence/research_authorization_20261107.json">本轮授权（GPU保持开机）</a> · <a href="evidence/research_20261107_contract.json">研究合同</a> · <a href="evidence/loss2x2_contract.json">监督强度消融合同</a> · <span class="missing">2×2实际配对审计：待取回</span> · <a href="source/aggregate_fixed_a5_regions.py">固定上部CPU汇总源码</a></p>
+<details><summary>新研究指标与可识别性边界</summary><p>49帧均为训练视图重建诊断，并非独立泛化评价；a5只在raw89..112的24帧中有固定可见像素。全域121,128、内侧1px边界7,530、固定上部25,906像素帧。上部由原mask包围盒高度上25%确定，不是按render或误差挑像素。KEEP完整性与DELETE变化分别记录；总alpha不能证明车体完整。Full5 cached PNG继续单列，不并入新float表。human_verdict为空。</p><pre>{
+  &quot;task_id&quot;: &quot;SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107&quot;,
+  &quot;status&quot;: &quot;AUTHORIZED_EXECUTION_IN_PROGRESS&quot;,
+  &quot;date_timezone&quot;: &quot;2026-11-07 Asia/Singapore&quot;,
+  &quot;user_direction&quot;: &quot;Keep GPU powered on; research why changing the identity set degrades reconstruction of retained a5. Focus initialization and training targets, verified by experiments.&quot;,
+  &quot;power_action&quot;: &quot;KEEP_INSTANCE_ON_NO_SHUTDOWN&quot;,
+  &quot;known_evidence&quot;: {
+    &quot;matched_cached_native10k&quot;: &quot;Full5 retains blurred roof/windshield; single-a37 visibly loses structure. Cached PNG comparison, separate from fresh-float metrics.&quot;,
+    &quot;initial_a5_full_source_unique_xyz_time&quot;: 21358,
+    &quot;single_sampled_a5_rows&quot;: 1496,
+    &quot;single_sampled_a5_unique_xyz_time&quot;: 1442,
+    &quot;support_intervention_added_unique_actual_rows&quot;: 19916,
+    &quot;prior_support5k_result&quot;: &quot;All49 fixed-mask MAE 0.0905295688 -&gt; 0.0813456506; raw105 0.0999514152 -&gt; 0.0985846240. Agent visual inspection did not find restored roof.&quot;,
+    &quot;prior_candidate_fixes&quot;: &quot;time-shift and screen-radius continuation trials did not repair a5; neither is adopted.&quot;
+  },
+  &quot;questions_and_controls&quot;: [
+    {
+      &quot;id&quot;: &quot;Q_LENGTH&quot;,
+      &quot;question&quot;: &quot;Does the original single-a37 trajectory recover retained a5 by30K?&quot;,
+      &quot;intervention&quot;: &quot;Exact full-state continuation of unchanged native single from11977 to30000, milestones15000/20000/30000.&quot;,
+      &quot;held_fixed&quot;: [
+        &quot;original initialization&quot;,
+        &quot;all losses&quot;,
+        &quot;seed and restored sampler/RNG&quot;,
+        &quot;30K LR clock&quot;,
+        &quot;native engine&quot;,
+        &quot;dynamic/delete identity a37&quot;
+      ],
+      &quot;reuse&quot;: &quot;Existing683.85s real-GPU smoke11977 plus full restore/eval/next-entry evidence. Runner verifies applicability; additional required engineering work is separately counted.&quot;,
+      &quot;planned_new_updates&quot;: 18023,
+      &quot;boundary&quot;: &quot;Tests this trajectory and budget; does not isolate support or supervision.&quot;
+    },
+    {
+      &quot;id&quot;: &quot;Q_RGB_SUPPORT&quot;,
+      &quot;question&quot;: &quot;Do source support and static-RGB supervision strength explain early a5 degradation?&quot;,
+      &quot;design&quot;: &quot;2x2: original sampled vs appended complete a5 support; native staticRGB weight vs increased staticRGB weight. Two native5K arms already exist; two new5K arms planned.&quot;,
+      &quot;planned_single_change&quot;: &quot;static RGB scalar1-&gt;5 only, pending actual-code multiplier/domain verification&quot;,
+      &quot;held_fixed&quot;: [
+        &quot;a5 remains static&quot;,
+        &quot;a37 remains dynamic/deleted&quot;,
+        &quot;all duration/velocity/opacity priors&quot;,
+        &quot;seed/camera/time-shift sequence&quot;,
+        &quot;SGCM/NPS/densification and 30K LR horizon&quot;,
+        &quot;input per support cell&quot;
+      ],
+      &quot;planned_new_updates&quot;: 10000,
+      &quot;save_eval_resume_nodes&quot;: [
+        1000,
+        5000
+      ],
+      &quot;boundary&quot;: &quot;One scene and seed; support intervention changes capacity and KNN scale as well as geometry. Static-RGB scalar applies to the whole static domain; it is not an actor-specific intervention.&quot;
+    }
+  ],
+  &quot;evaluation&quot;: {
+    &quot;frames&quot;: &quot;raw89..137 inclusive,49 native480x320&quot;,
+    &quot;a5_mask&quot;: &quot;actor_labels==1 from frozen observations&quot;,
+    &quot;fixed_pixel_frames&quot;: 121128,
+    &quot;inner_1px_boundary_pixel_frames&quot;: 7530,
+    &quot;upper_bbox25_percent_pixel_frames&quot;: 25906,
+    &quot;anchors&quot;: [
+      89,
+      97,
+      105,
+      109
+    ],
+    &quot;primary&quot;: &quot;Fresh floating-point KEEP/DELETE fixed-mask RGB MAE and raw105/upper-region values; agent visual body/roof checks are separate from user verdict.&quot;,
+    &quot;supporting&quot;: &quot;Full-frame L1/PSNR/SSIM/LPIPS; no clean-delete GT; alpha alone is not completeness.&quot;,
+    &quot;human_verdict&quot;: null,
+    &quot;efficiency_preference_20261107&quot;: {
+      &quot;user_direction&quot;: &quot;New candidates may first check a few frames and expand to49 after basic checks pass; already-running49-frame evaluations can continue.&quot;,
+      &quot;pilot_raw_frames&quot;: [
+        97,
+        105,
+        109
+      ],
+      &quot;training_sampling&quot;: &quot;Original49-frame training contract stays unchanged.&quot;,
+      &quot;pending_longrun&quot;: &quot;Do not interrupt/restart an already-launched native longrun just to change evaluation routing.&quot;,
+      &quot;reporting&quot;: &quot;Pilot and all49 results use separate labels and actual denominators.&quot;
+    }
+  },
+  &quot;accounting&quot;: {
+    &quot;prior_formal_updates&quot;: 20000,
+    &quot;prior_engineering_updates&quot;: 6599,
+    &quot;prior_total_new_updates&quot;: 26599,
+    &quot;planned_increment_formal_updates&quot;: 28023,
+    &quot;planned_increment_engineering_updates&quot;: &quot;Only if lifecycle/recovery requires extra work; record actual execution, do not double count reused1977.&quot;
+  },
+  &quot;failure_ledger_refs&quot;: [
+    &quot;V82-F06&quot;
+  ],
+  &quot;causal_mechanism_established&quot;: false,
+  &quot;execution_notes&quot;: [
+    &quot;Preserve historical artifacts and source checkpoints.&quot;,
+    &quot;Do not reinterpret old goal authorization as current shutdown authority.&quot;,
+    &quot;Do not pursue code-history archaeology as the main line.&quot;,
+    &quot;After these controls, use actual results to decide the next bounded hypothesis; do not automatically combine several mechanisms.&quot;
+  ]
+}</pre></details></section>
+<section id="support-experiment"><h2>Round1：初始化支撑单变量实验（已完成5K）</h2>
+<p>停止继续追代码改动，直接检验a5退出动态池后的真实观测支撑。两组都从头训练，使用<strong>原未修engine、仅a37动态、a5仍在static</strong>；Control沿用原single输入，Support只补入原a5完整21,358真实源点中缺失的xyz＋time观测，原sample的1,496行全部保留。</p>
+<p>损失、采样、30K学习率horizon和删除语义保持原合同；1K先看片，5K终点。输入合同核对追加19,916真实行；原1,496行中有1,442个唯一xyz＋time，保留重复采样后，a5共21,412行、覆盖21,358个唯一真实观测。static初始池591,672→611,588（＋3.366%），全模型初始池690,124→710,040（＋2.886%）。这是支撑与局部密度/容量干预，<strong>不是同点数几何对照</strong>。原生KNN会随新增邻点重新计算初始scale，不主张旧参数逐项相同；也不先预判补点会修复。两个既有代码候选负结果保留在下方，不与此实验叠加。</p>
+<p><strong>Round1完成：补齐真实支撑有一定支持作用，但5K未修复a5。</strong>全49固定域误差下降10.1%，raw105仅下降1.4%；两张已目视的raw105车顶/挡风玻璃仍不完整，Support只增加了暗色轮廓。两组raw105总alpha≥0.5覆盖均为100%，仍不能代表车体完整。5000次实际camera/shift完全相同；这轮不能排除支撑与监督的联合作用。</p><div class="scroll"><table><thead><tr><th>新实验组 / 节点</th><th>当前证据</th><th>全49 KEEP MAE</th><th>边界 KEEP MAE</th><th>固定上部 KEEP MAE</th><th>raw105 KEEP MAE</th><th>KEEP↔DELETE变化</th></tr></thead><tbody><tr><td>Control：原单车输入 1K</td><td>49帧已核验</td><td>0.22772</td><td>0.20821</td><td>0.23154</td><td>0.22118</td><td>0.0002294</td></tr><tr><td>Support：真实a5支撑 1K</td><td>49帧已核验</td><td>0.22533</td><td>0.20820</td><td>0.19457</td><td>0.21262</td><td>0.0001665</td></tr><tr><td>Control：原单车输入 fresh5K</td><td>49帧已核验</td><td>0.09053</td><td>0.07459</td><td>0.15676</td><td>0.09995</td><td>0.0002520</td></tr><tr><td>Support：补齐真实a5源点 fresh5K</td><td>49帧已核验</td><td>0.08135</td><td>0.06781</td><td>0.14462</td><td>0.09858</td><td>0.0003067</td></tr></tbody></table></div><p class="muted">RGB MAE均为0–1通道均值、越小越好；边界7,530像素帧。固定上部是原始a5 mask包围盒高度上25%与该mask的交集（25,906像素帧），由固定GT确定，不按render选择，也不是语义车顶真值。</p><p>已实际核对1K raw105：两组KEEP中蓝色SUV均几乎尚未形成，数值略有变化不等于车顶或挡风玻璃恢复。1K结论与5K终点评价分列。</p><div class="scroll"><figure><img src="figures/raw105_support_1k.png" alt="raw105支撑初始化同节点KEEP比较"><figcaption>fresh 1000：GT / Control / Support，同175×160原像素窗口；这里只抽查raw105，不代表49帧人工验收。</figcaption></figure><figure><img src="figures/raw105_support_5k.png" alt="raw105支撑初始化同节点KEEP比较"><figcaption>fresh 5000：GT / Control / Support，同175×160原像素窗口；这里只抽查raw105，不代表49帧人工验收。</figcaption></figure></div>
+<p><a href="evidence/support_control5k/summary.json">Control5K评价</a> · <a href="evidence/support_full_a5_5k/summary.json">Support5K评价</a> · <a href="evidence/support_control1k/anchors/105_crop.png">Control1K先看片</a> · <a href="evidence/support_full_a5_1k/anchors/105_crop.png">Support1K先看片</a> · <a href="evidence/a5_real_support_input_preparation.json">真实支撑输入合同与CPU核对</a> · <a href="evidence/support_round1_1k_comparison.json">1K实际日程与配对摘要</a> · <a href="evidence/support_round1_5k_comparison.json">5K实际日程与配对摘要</a> · <a href="evidence/new_goal_authorization.json">历史有界验证授权（已被新指令覆盖）</a></p><p class="muted">先依据同相机1K/5K图片观察车顶与挡风玻璃；结果未到时不填写改善结论。新实验账本与上一代码诊断阶段的正式10000／工程6599分开记录。旧回执中的权限只描述当时现场，后续执行与资源收尾以最新授权登记为准。</p><details><summary>本轮范围与资源收尾授权（以最新登记为准）</summary><pre>{
+  &quot;status&quot;: &quot;ACTIVE_RESEARCH_VALIDATION&quot;,
+  &quot;recorded_utc&quot;: &quot;2026-11-07T00:08:15.979828+00:00&quot;,
+  &quot;latest_user_instruction_paraphrase&quot;: &quot;Resume research. Keep the GPU instance on. Do not use a reset card and do not shut down.&quot;,
+  &quot;current_actions&quot;: {
+    &quot;keep_GPU_instance_on&quot;: true,
+    &quot;use_reset_card&quot;: false,
+    &quot;shutdown&quot;: false,
+    &quot;create_goal&quot;: false
+  },
+  &quot;research_questions&quot;: [
+    &quot;Whether the existing native single trajectory recovers a5 with continued training to30K.&quot;,
+    &quot;How real a5 initialization support and staticRGB supervision weight interact while a5 remains static.&quot;
+  ],
+  &quot;new_authorized_experiments&quot;: {
+    &quot;single_exact_continuation&quot;: {
+      &quot;from_iteration&quot;: 11977,
+      &quot;to_iteration&quot;: 30000,
+      &quot;evaluation_iterations&quot;: [
+        15000,
+        20000,
+        30000
+      ]
+    },
+    &quot;initialization_by_static_rgb_2x2&quot;: {
+      &quot;initialization_levels&quot;: [
+        &quot;original sampled support&quot;,
+        &quot;append missing19916 real a5 rows&quot;
+      ],
+      &quot;static_rgb_weights&quot;: [
+        1,
+        5
+      ],
+      &quot;fresh_updates_per_arm&quot;: 5000,
+      &quot;weight1_arms_already_completed&quot;: true,
+      &quot;weight5_arms_results&quot;: &quot;not yet available&quot;
+    }
+  },
+  &quot;historical_events&quot;: [
+    {
+      &quot;event&quot;: &quot;bounded validation instruction&quot;,
+      &quot;source&quot;: {
+        &quot;path&quot;: &quot;evidence/new_goal_authorization.json&quot;,
+        &quot;bytes&quot;: 1063,
+        &quot;sha256&quot;: &quot;9616eb334790fd597d8ab6217f8882c7e80cc4e130bb880ebb313e8a9f5c1f74&quot;
+      },
+      &quot;current&quot;: false
+    },
+    {
+      &quot;event&quot;: &quot;goal paused and then cleared; report finalization was stopped&quot;,
+      &quot;source&quot;: &quot;parent task instruction in this conversation&quot;,
+      &quot;exact_event_time_not_recorded_here&quot;: true,
+      &quot;current&quot;: false
+    },
+    {
+      &quot;event&quot;: &quot;research resumed with explicit keep-on / no-card / no-shutdown instruction&quot;,
+      &quot;source&quot;: &quot;latest parent task relaying user instruction&quot;,
+      &quot;current&quot;: true
+    },
+    {
+      &quot;event&quot;: &quot;Later evaluations should start with a few frames, then expand; existing full49 evaluations may continue&quot;,
+      &quot;source&quot;: &quot;latest user instruction relayed by parent&quot;,
+      &quot;recorded_utc&quot;: &quot;2026-11-07T00:16:59.624714+00:00&quot;,
+      &quot;current&quot;: true
+    }
+  ],
+  &quot;precedence&quot;: &quot;This appended research authorization supersedes historical shutdown/card/bounded-stop instructions. Original evidence files are retained unchanged.&quot;,
+  &quot;old_authorization_overwritten&quot;: false,
+  &quot;evaluation_efficiency_preference&quot;: {
+    &quot;pilot_raw_ids&quot;: [
+      97,
+      105,
+      109
+    ],
+    &quot;expand_to49_after_pilot_check&quot;: true,
+    &quot;already_running_full49_continue&quot;: true,
+    &quot;training_sampling_contract_raw_ids&quot;: &quot;89..137 unchanged&quot;,
+    &quot;pilot_is_not_all49_evidence&quot;: true
+  }
+}</pre></details></section>
+<section><h2>先把旧逻辑说清楚</h2><p>旧输入的 <code>points3d_dynamic_*.ply</code> 全部进入<strong>共同动态池</strong>，对应掩码取并集；原生 <code>render_s</code> 移除整个池。指定 actor 就是这次共同待删集合。仅 a37 / a37+a6 的子集模型中，a5 交给带时间参数的 static/background 解释。</p>
+<p>前一诊断阶段沿用Single原10K，完整原始a6（11,625点）与a37（98,452点）完成fresh10K并在5K、10K评价。新研究从未修Single11977节点精确续训，独立列在上方；历史取消延伸与暂停指令不代表当前授权。学习率horizon仍为30K。Full5 B30K仅作既有参考，<strong>不能称同训练长度配对</strong>；其10K权重已清理，但原生PNG与发布事件仍在，下方另列同10K历史图像核对。</p>
+<img class="architecture" src="architecture.svg" alt="原始观测与旧engine子集，经smoke恢复核验，在5K和10K评价a5固定域"></section>
+<section id="anchors"><h2>四个锚帧：同一固定裁剪</h2><p>固定窗口用于定位raw105左侧蓝色SUV（a5）的缺损；raw89时a5主体尚未进入此窗，不能用这一小窗判其完整性。raw97及出窗中的raw109仍能看到形体混合/蓝色残影。这里只做锚帧抽查，不是49帧人工验收。裁剪不改变全图原始a5标签数值域。</p><nav class="nav"><a href="#raw89">raw89</a><a href="#raw97">raw97</a><a href="#raw105">raw105</a><a href="#raw109">raw109</a></nav>
+<div class="scroll"><figure id="raw89"><img src="figures/raw089_comparison.png" alt="raw89同裁剪KEEP和DELETE比较"><figcaption>raw89 · 上排 KEEP，下排 DELETE；175×160 原像素裁剪，无增强。缺项保持灰色占位。</figcaption></figure><figure id="raw97"><img src="figures/raw097_comparison.png" alt="raw97同裁剪KEEP和DELETE比较"><figcaption>raw97 · 上排 KEEP，下排 DELETE；175×160 原像素裁剪，无增强。缺项保持灰色占位。</figcaption></figure><figure id="raw105"><img src="figures/raw105_comparison.png" alt="raw105同裁剪KEEP和DELETE比较"><figcaption>raw105 · 上排 KEEP，下排 DELETE；175×160 原像素裁剪，无增强。缺项保持灰色占位。</figcaption></figure><figure id="raw109"><img src="figures/raw109_comparison.png" alt="raw109同裁剪KEEP和DELETE比较"><figcaption>raw109 · 上排 KEEP，下排 DELETE；175×160 原像素裁剪，无增强。缺项保持灰色占位。</figcaption></figure></div>
+<p class="muted">Full5只展示KEEP：历史owner-selective回放不能替代旧子集训练，原生删全五车又会删a5，因此其DELETE格禁用。GT的DELETE格没有整图clean-delete真值。Single删除a37；完整Dual删除a37+a6；Current沿革列只删除a37。各列删除集合不同，不能把DELETE行当成同一编辑任务排名。Full5优先使用新鲜原生49帧；未取回时其KEEP沿用既有四帧回放。</p><p><a href="evidence/initial_raw105.png">用户原始 raw105 证据图</a></p></section>
+<section id="metrics"><h2>全49帧固定域：颜色与边界</h2><p>扫描49个训练视图，a5在raw89..112的24帧有原始 <code>actor_labels==1</code> 可见像素，共121,128像素帧；不在场的帧不补造像素。边界为同一标签向内1像素环。RGB MAE为sRGB通道平均绝对误差（0–1，越小越好）；按固定像素数加权。这是重建诊断而非独立泛化评价。新鲜同浮点评价优先，历史4帧数字不填入本表。</p>
+<div class="scroll"><table><thead><tr><th>模型 / 状态</th><th>可见域像素帧</th><th>KEEP RGB MAE</th><th>DELETE RGB MAE</th><th>边界 MAE<br>KEEP / DELETE</th><th>KEEP↔DELETE<br>平均RGB变化</th><th>alpha≥0.5覆盖率<br>KEEP / DELETE</th></tr></thead><tbody><tr><td>Full5 B30K（既有参考）<br><small>49帧已核验</small></td><td>121,128<br><small>边界 7,530</small></td><td>0.01409</td><td>—<br><small>仅KEEP参考</small></td><td>0.03594 / —</td><td>不适用</td><td>1.00000 / —</td></tr><tr><td>仅 a37 · 原10K<br><small>49帧已核验</small></td><td>121,128<br><small>边界 7,530</small></td><td>0.06210</td><td>0.06211</td><td>0.05440 / 0.05445</td><td>0.0000424</td><td>1.00000 / 1.00000</td></tr><tr><td>完整 a37+a6 · 5K<br><small>49帧已核验</small></td><td>121,128<br><small>边界 7,530</small></td><td>0.09091</td><td>0.09091</td><td>0.07356 / 0.07353</td><td>0.0001848</td><td>0.99943 / 0.99941</td></tr><tr><td>完整 a37+a6 · 10K<br><small>49帧已核验</small></td><td>121,128<br><small>边界 7,530</small></td><td>0.05903</td><td>0.05904</td><td>0.05248 / 0.05249</td><td>0.0000233</td><td>1.00000 / 1.00000</td></tr><tr><td>Current 原生10K（沿革）</td><td colspan="6" class="missing">仅历史4帧沿革</td></tr></tbody></table></div>
+<p class="notice">总alpha可被道路、背景或错误表面补满。覆盖率高、删车前后平均变化小，都不能单独证明a5车顶完整、深度正确或所有权正确。</p>
+<p><a href="comparison.csv">比较表 CSV</a> · <a href="report_data.json">报告数据与文件清单</a></p>
+<details><summary>历史四帧原始数字：仅作沿革，不冒充49帧</summary><div class="scroll"><table><thead><tr><th>来源</th><th>raw</th><th>操作</th><th>a5像素</th><th>RGB MAE</th><th>相对KEEP变化</th><th>平均alpha</th></tr></thead><tbody><tr><td>Full5 B30K（既有参考）</td><td>89</td><td>keep</td><td>1227</td><td>0.02200</td><td>0.0000000</td><td>0.99988</td></tr><tr><td>Full5 B30K（既有参考）</td><td>89</td><td>delete_a37_a6</td><td>1227</td><td>0.02193</td><td>0.0000670</td><td>0.99988</td></tr><tr><td>Full5 B30K（既有参考）</td><td>97</td><td>keep</td><td>3010</td><td>0.01426</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>Full5 B30K（既有参考）</td><td>97</td><td>delete_a37_a6</td><td>3010</td><td>0.01426</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>Full5 B30K（既有参考）</td><td>105</td><td>keep</td><td>10773</td><td>0.01308</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>Full5 B30K（既有参考）</td><td>105</td><td>delete_a37_a6</td><td>10773</td><td>0.01308</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>Full5 B30K（既有参考）</td><td>109</td><td>keep</td><td>8178</td><td>0.02462</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>Full5 B30K（既有参考）</td><td>109</td><td>delete_a37_a6</td><td>8178</td><td>0.02462</td><td>0.0000000</td><td>0.99989</td></tr><tr><td>仅 a37 · 原10K</td><td>89</td><td>native_keep</td><td>1227</td><td>0.04765</td><td>—</td><td>0.88806</td></tr><tr><td>仅 a37 · 原10K</td><td>89</td><td>native_delete</td><td>1227</td><td>0.04791</td><td>0.0007551</td><td>0.88791</td></tr><tr><td>仅 a37 · 原10K</td><td>97</td><td>native_keep</td><td>3010</td><td>0.03806</td><td>—</td><td>0.95502</td></tr><tr><td>仅 a37 · 原10K</td><td>97</td><td>native_delete</td><td>3010</td><td>0.03811</td><td>0.0001191</td><td>0.95501</td></tr><tr><td>仅 a37 · 原10K</td><td>105</td><td>native_keep</td><td>10773</td><td>0.08328</td><td>—</td><td>0.98272</td></tr><tr><td>仅 a37 · 原10K</td><td>105</td><td>native_delete</td><td>10773</td><td>0.08328</td><td>0.0000010</td><td>0.98272</td></tr><tr><td>仅 a37 · 原10K</td><td>109</td><td>native_keep</td><td>8178</td><td>0.03946</td><td>—</td><td>0.98768</td></tr><tr><td>仅 a37 · 原10K</td><td>109</td><td>native_delete</td><td>8178</td><td>0.03946</td><td>0.0000000</td><td>0.98768</td></tr><tr><td>Current 原生10K（沿革）</td><td>89</td><td>native_keep</td><td>1227</td><td>0.09729</td><td>—</td><td>0.89138</td></tr><tr><td>Current 原生10K（沿革）</td><td>89</td><td>native_delete</td><td>1227</td><td>0.03754</td><td>0.0640604</td><td>0.87201</td></tr><tr><td>Current 原生10K（沿革）</td><td>97</td><td>native_keep</td><td>3010</td><td>0.06001</td><td>—</td><td>0.90515</td></tr><tr><td>Current 原生10K（沿革）</td><td>97</td><td>native_delete</td><td>3010</td><td>0.05854</td><td>0.0019962</td><td>0.90487</td></tr><tr><td>Current 原生10K（沿革）</td><td>105</td><td>native_keep</td><td>10773</td><td>0.08538</td><td>—</td><td>0.97226</td></tr><tr><td>Current 原生10K（沿革）</td><td>105</td><td>native_delete</td><td>10773</td><td>0.08538</td><td>0.0000000</td><td>0.97226</td></tr><tr><td>Current 原生10K（沿革）</td><td>109</td><td>native_keep</td><td>8178</td><td>0.03072</td><td>—</td><td>0.98138</td></tr><tr><td>Current 原生10K（沿革）</td><td>109</td><td>native_delete</td><td>8178</td><td>0.03072</td><td>0.0000000</td><td>0.98138</td></tr></tbody></table></div><p class="muted">Full5删除两车来自历史owner-selective工程分配，不是单/双对象子集训练，不参与主比较。以上独立脚本的浮点/clamp口径与新表不保证一致；不混合计算全49帧均值。</p></details></section>
+<section id="cached-10k"><h2>同10K历史PNG证据（独立口径）</h2>
+<p>Full5 B10K的四件权重虽已清理，原生checkpoint发布事件和49帧PNG仍保留。这里仅对已存原生uint8 PNG，与Single10K的已存PNG按相同原始mask、相机和时间做CPU核对；<strong>未恢复或重新渲染Full5 10K权重</strong>。</p>
+<p>两套已有原生PNG在同10K、同49相机/时间与固定121128像素域的CPU核对已通过。</p><div class="scroll"><table><thead><tr><th>历史PNG来源</th><th>帧 / 可见像素</th><th>KEEP RGB MAE</th><th>内边界像素</th><th>边界KEEP MAE</th><th>权重状态（本次均未加载）</th></tr></thead><tbody><tr><td>Full5 cached 10K</td><td>49 / 121128</td><td>0.03304</td><td>7530</td><td>0.06641</td><td>四件权重已清理</td></tr><tr><td>Single cached 10K</td><td>49 / 121128</td><td>0.06211</td><td>7530</td><td>0.05440</td><td>仍在</td></tr></tbody></table></div><p>全可见域里Full5 cached10K误差较低，但其边界误差反而较高；不能挑一个指标称全面更好。同10K减少了训练长度混淆，仍未单独隔离输入支撑、监督责任/损失与RNG轨迹差异，不能据此认定唯一代码根因。</p><figure class="scroll"><img src="evidence/cached_native10k_comparison/anchors/105_crop.png" alt="raw105已有原生10K PNG同裁剪GT、Full5与Single"><figcaption>raw105：GT、Full5 cached10K、Single cached10K；已存原生uint8 PNG，未恢复或重新渲染Full5权重。</figcaption></figure><p class="muted">本节RGB MAE为PNG uint8/255相对固定float观测RGB的通道平均绝对误差，单位0–1；不是原生float重放分数。该证据不是隐藏表面真值，不混入新鲜float主表。</p>
+<p><a href="evidence/cached_native10k_comparison/summary.json">同10K历史PNG摘要</a> · <a href="source/compare_cached_native10k.py">只读CPU核对源码</a></p></section>
+<section id="single-bug"><h2>单车并行排查：现象、分支行为与候选验证分开</h2>
+<p>仅a37原10K与额外1977步的未修11977都在KEEP中缺顶。11977的全49帧MAE虽由0.062096降至0.043573，车顶仍明显缺失，前上方还有蓝色半透明/错位残影；这不是已恢复的车体。</p><p>raw105固定上部2091像素：10K→11977的KEEP MAE 0.18166→0.13905，总alpha均值 0.96622→0.98649；alpha≥0.5均为100%，图中车顶仍缺失并有蓝色错位残影。</p>
+<div class="scroll"><table><thead><tr><th>当前判定</th><th>已复现证据</th><th>a5因果与本轮处理</th></tr></thead><tbody>
+<tr><td>分支行为 / 候选接线缺陷<br>static time_shift</td><td>原10K实际有5119次非零shift；原static输出变化为0，dynamic正常响应。候选仅移除两处覆写None，None-shift输出保持不变。</td><td>上游2024已有该不对称；缺少static必须与dynamic采用相同自监督的设计合同。尚未证明它造成a5缺损，下面只做单变量候选验证。</td></tr>
+<tr><td>已复现实现缺陷<br>screen-radius统计清零</td><td>densify先清零max_radii2D，再检查max_screen_size；CPU半径[100,1]、阈值20，正常路径应删1却删0，prune_only对照删1。</td><td>a5因果未知。当前正式主实验及该time-shift候选回放均未施加此项修复；不把两项改动堆叠。</td></tr>
+</tbody></table></div>
+<p>检查点审计未发现所查几何/时间/opacity参数的NaN或Inf；10K→11977尚未跨12K opacity-reset节点。两快照不能定位唯一有害训练事件。投影支持proxy也不能当成CUDA逐像素归因。</p>
+<img class="architecture" src="bug_time_shift.svg" alt="同原10K完整状态、相同1977相机shift日程，未修与单变量候选独立对照，工程开销另记">
+<h3>隔离工程对照（不进入正式5K/10K表）</h3><p class="notice">负结果：time-only全可见域KEEP MAE上升15.1%，raw105未见车顶恢复，本轮明确不采纳为a5修复。工程PASS仅证明配对和执行完成。配对断言与固定域核验已通过。候选−未修的 ΔMAE：全可见域 0.0065914，边界 0.0065168，上25% 0.0110544。负值仅表示该数值下降，不自动表示车顶恢复。</p><p>共同完整起点：通过；1977次相机/shift日程：通过。即使相机/shift相同，也不宣称增密后的随机流和逐位轨迹完全相同。</p>
+<div class="scroll"><table><thead><tr><th>工程角色</th><th>全49可见域<br>KEEP RGB MAE</th><th>固定内边界<br>KEEP MAE</th><th>原mask上部区域<br>KEEP MAE（定义见下）</th><th>全49 KEEP↔DELETE<br>平均RGB变化</th></tr></thead><tbody><tr><td>仅 a37 · 原10K</td><td>0.06210</td><td>0.05440</td><td>0.11551</td><td>0.0000424</td></tr><tr><td>未修11977（既存smoke1977步）</td><td>0.04357</td><td>0.04277</td><td>0.08116</td><td>0.0000226</td></tr><tr><td>time-only11977（隔离1977步回放）</td><td>0.05016</td><td>0.04928</td><td>0.09222</td><td>0.0000244</td></tr></tbody></table></div>
+<p class="muted">上部区域＝原始a5 mask包围框<strong>高度上25%</strong>与该mask的交集；阈值只由固定GT mask决定，不是按像素数取最上25%，也不是render选择。当前计数25906 / 121128（21.4%），不是语义车顶真值。数值只从已保存float计算，缺float保持空缺；没有用PNG估算。</p>
+<figure class="scroll"><img src="figures/raw105_time_shift_engineering.png" alt="raw105原10K、未修11977、候选11977同裁剪工程比较"><figcaption>只比较KEEP的同一原像素裁剪；候选未取回时保持占位。</figcaption></figure>
+<p>未修1977步属于此前smoke。time-only另有32步真实smoke＋2步恢复探针＋1977步隔离回放，共2011工程更新；正式预算不变。完整回执到达才记完成；工程完成和科学修复通过是两件事。</p>
+<details><summary>复现源码、候选patch与审计凭据</summary><ul><li><a href="evidence/static_time_shift_cpu_probe.json">static分支CPU证明</a></li><li><a href="source/probe_static_time_shift.py">shift复现源码</a></li><li><a href="source/static_time_shift_candidate.patch">两行候选patch</a></li><li><a href="evidence/single_bug_checkpoint_audit.json">检查点支持与时间核审计</a></li><li><a href="source/probe_single_checkpoints_cpu.py">检查点CPU探针</a></li><li><a href="evidence/single_bug_source_audit.json">源码审计JSON</a></li><li><a href="evidence/single_bug_source_audit.md">源码调查说明</a></li><li><a href="evidence/screen_prune_cpu_delivery_probe.json">screen-radius独立CPU复现</a></li><li><a href="source/probe_screen_prune_cpu.py">screen-radius探针</a></li><li><a href="source/probe_a5_lineage_cpu.py">a5源谱系探针</a></li><li><a href="source/probe_a5_source_time_cpu.py">a5点源/时间探针</a></li><li><a href="evidence/time_shift_fix/isolated_fix_contract.json">隔离合同</a></li><li><a href="evidence/time_shift_fix/paired_result.json">配对结果</a></li><li><a href="evidence/time_shift_fix/fixed/summary.json">候选49帧评价</a></li><li><a href="evidence/time_shift_fix/fixed/source_integrity.json">候选来源完整性</a></li></ul></details></section>
+<section id="screen-radius"><h2>第二个独立代码验证：screen-radius窗口</h2>
+<p>已复现的缺陷是普通densify先清零累计屏幕半径，令原max_screen_size裁剪失效。候选只在gaussian_model内两处调整：postfix保留旧行半径、新行置0；普通prune消费后清空窗口。prune_only及阈值None/0的原语义保留。CPU18案例通过仍不证明a5因果。</p>
+<p class="muted">该半径次序继承旧实现，历史V82-F06已记录append会重置半径、不能冒称持续屏幕大点约束。本次18例CPU、128步真实GPU与1977步回放是补充其对a5恢复作用的证据，不是新引入commit或新科学发现；不改变原a6/RCR-1采用范围。</p>
+<p><strong>这是从同一原10K另起的screen-only回放，不是在time候选上继续。</strong>renderer保持原35b版本；actor、20px阈值、损失、采样、学习率不变，不叠加time_shift改动。</p>
+<p class="notice">负结果：screen-only全域KEEP MAE上升26.6%，raw105仍缺顶、暗糊并有蓝色残影；该模型不采纳为a5修复。screen-only配对、固定域和独立源码合同已核验。候选−未修 ΔMAE：全域 0.0115690，内边界 0.0064402，原mask上部 0.0130570。这是工程回放数值，不自动证明a5已修复。</p><div class="scroll"><table><thead><tr><th>独立工程角色</th><th>全49 KEEP MAE</th><th>固定内边界 MAE</th><th>原mask上部 MAE</th><th>全49 KEEP↔DELETE变化</th></tr></thead><tbody><tr><td>未修11977（共同旧基线）</td><td>0.04357</td><td>0.04277</td><td>0.08116</td><td>0.0000226</td></tr><tr><td>screen-only11977（独立1977回放）</td><td>0.05514</td><td>0.04921</td><td>0.09422</td><td>0.0000285</td></tr></tbody></table></div>
+<p class="muted">使用与第一工程区相同的原mask固定域及包围框高度上25%交集；各候选分别核对完整起点、1977次相机/shift、原观测与源码隔离。两个候选的结果不进入正式5K/10K表。</p>
+<figure class="scroll"><img src="figures/raw105_screen_radius_engineering.png" alt="raw105 screen-only独立候选与未修11977同裁剪KEEP比较"><figcaption>只展示raw105 KEEP原像素裁剪；screen结果缺项保留灰格。第一time图与负结果继续保留在上一节。</figcaption></figure>
+<h3>全画面原生49训练视角重建</h3><div class="scroll"><table><thead><tr><th>独立工程端点</th><th>PSNR / dB ↑</th><th>SSIM ↑</th><th>LPIPS ↓</th><th>RGB L1 ↓</th></tr></thead><tbody><tr><td>未修11977</td><td>34.1216</td><td>0.95641</td><td>0.06123</td><td>0.010783</td></tr><tr><td>screen-only11977</td><td>31.3013</td><td>0.93233</td><td>0.09665</td><td>0.014863</td></tr></tbody></table></div><p>screen-only的全局重建也退化；正确修复统计窗口不等于该回放模型达到a5或全场景质量要求。这些仍是训练视角指标，不是独立泛化结果。</p>
+<p>候选的18例CPU与真实GPU128步（覆盖首个10100变更节点）、完整恢复及下一入口可以通过工程验收；这不升级为a5质量通过。</p>
+<p>新增工程预算128步真实smoke＋2步恢复＋1977步回放＝2107；首个10100增密节点需覆盖变更代码。正式新增仍只有Dual 10,000步，Single不追加。若两个候选均完整完成，工程总数为2481＋2011＋2107＝6599；这个条件总数不是pending部分的完成声明。</p>
+<p>已有完整回执可确认的工程更新：6599；运行中/缺回执部分另记，不等于其实际消耗为0。</p><details><summary>screen-only复现、patch与回执</summary><ul><li><a href="evidence/screen_radius_candidate_cpu_test.json">候选18案例CPU核验</a></li><li><a href="source/probe_screen_radius_candidate_cpu.py">候选CPU探针</a></li><li><a href="source/screen_radius_candidate.patch">screen-radius单变量patch</a></li><li><a href="evidence/screen_radius_fix/isolated_fix_contract.json">screen独立源码合同</a></li><li><a href="evidence/screen_radius_fix/paired_result.json">screen配对结果</a></li><li><a href="evidence/screen_radius_fix/fixed/summary.json">screen49帧评价</a></li><li><a href="evidence/screen_radius_fix/fixed/source_integrity.json">screen来源完整性</a></li><li><a href="evidence/screen_radius_fix/smoke_summary.json">screen真实128步与恢复准入</a></li><li><a href="evidence/screen_radius_fix/global49_comparison.json">原生全局49指标与来源</a></li></ul></details></section>
+<section id="causal-bounds"><h2>最早形成与后续退化：两个问题不能混为一谈</h2>
+<p>已存Single 1K图就有车顶欠重建，尚无证据表明完整车顶曾先形成后被删除。static首次opacity reset在3K，9K reset最多影响后续恢复，不能单独解释1K现象。20px屏幕裁剪要求iteration&gt;3000且为100的倍数，最早3100启用，因此该bookkeeping缺陷也不能单独解释最早1K欠顶。</p>
+<p>time-only从原10K出发的短回放负结果，只说明本轮候选未修好，不等于排除它从头训练时的贡献。screen统计缺陷可复现，但其修复模型仍失败；不能把代码正确性证明替代a5根因证明。</p>
+<p>当前线索落在a5退出dynamic后，原始观测支撑、监督责任/权重和静态时间表示共同改变，尚不能唯一归因某个commit。两个代码候选短回放未修复a5。已完成的补真实支撑5K有有限改善但不足以恢复车顶；新研究分别检验原轨迹训练时长与全static域RGB监督强度，不预判训练条件的因果作用。</p>
+<p><a href="evidence/early_causal_bounds.json">最早时点与源码条件</a> · <a href="evidence/single_bug_source_audit.json">支持范围与监督的源码证据</a></p></section>
+<section><h2>目前可以说到哪里</h2><p>raw105 的历史原生 KEEP 对照已显示：Full5 B30K中的a5较完整，仅a37原10K中的a5车顶已经缺损；缺损早于后加道路和完整a6资产替换。这个时间顺序支持先检查训练输入与表示分配，但尚不能区分训练长度、初始支撑、监督分支和随机轨迹各自的作用。</p>
+<p>Nov4双对象试验只把1,023个a6种子从static迁入dynamic，不能代表本轮完整11,625点a6输入。<code>3fefd98</code>等配方提交只能帮助定位历史，不能在没有逐版本对照的情况下称为确切bug提交。</p>
+<details><summary>历史证据与未决项</summary><p><a href="evidence/historical_report_findings.json">本机报告证据与精确路径</a> · <a href="evidence/remote_history_audit.json">远端历史扫描</a></p><pre>[
+  &quot;本次本机证据链未找到10月raw89-137的only-a37或完整a37+a6历史30K权重；不能把Full5 B30K重命名为它们。&quot;,
+  &quot;旧Full5与现行两对象在动态集合、a5解释分支、训练更新量上不同；旧截图不能单独区分代码回归、表示分配或10K未收敛。&quot;,
+  &quot;旧fullclip的道路修复10K与原生模型训练10K含义不同；比较必须标明原生模型和道路层来源。&quot;,
+  &quot;a5保留种子或平均删除MAE很小，不等于车体完整。需要固定原始a5可见域、边界、覆盖、深度和全49帧同相机比较。&quot;,
+  &quot;本文件及architecture.svg只保存已知历史和后续执行合同，不包含2026-11-06新实验结果。&quot;
+]</pre><pre>{
+  &quot;schema_version&quot;: 1,
+  &quot;audit_timestamp_utc&quot;: &quot;2026-11-05T17:13:11.927903+00:00&quot;,
+  &quot;status&quot;: &quot;PASS_SOURCE_AND_CPU_INPUT_AUDIT_RUNTIME_SMOKES_TRACKED_SEPARATELY&quot;,
+  &quot;auditor&quot;: &quot;remote_history independent read-only audit; dual preparation was authored earlier by the same agent and is explicitly rechecked against original assets here&quot;,
+  &quot;audit_GPU_used&quot;: false,
+  &quot;audit_training_updates&quot;: 0,
+  &quot;remote_audit_file_writes&quot;: 0,
+  &quot;shutdown_performed&quot;: false,
+  &quot;current_source_snapshot_stable_during_audit&quot;: true,
+  &quot;latest_user_budget&quot;: {
+    &quot;active_budget&quot;: {
+      &quot;status&quot;: &quot;ACTIVE_USER_REDUCED_BUDGET&quot;,
+      &quot;single_new_formal_updates&quot;: 0,
+      &quot;single_reference_formal_iteration&quot;: 10000,
+      &quot;dual_fresh_stop&quot;: 10000,
+      &quot;dual_phase_stops&quot;: [
+        5000,
+        10000
+      ],
+      &quot;dual_checkpoint_eval_nodes&quot;: [
+        5000,
+        10000
+      ],
+      &quot;iterations_configuration&quot;: 30000,
+      &quot;learning_rate_horizon&quot;: 30000,
+      &quot;smoke_accounting&quot;: &quot;all smoke and two-step replay updates are separate from formal&quot;,
+      &quot;dual_smoke_time_policy&quot;: &quot;500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast&gt;=3600s extend smoke to&gt;=540s&quot;,
+      &quot;dual_5k_action&quot;: &quot;complete checkpoint, independent zero-update a5 evaluation and four anchors, then exact full-state resume to at most10K&quot;,
+      &quot;root_names_containing_30k&quot;: &quot;existing directory identifiers only; not an active training budget&quot;,
+      &quot;old_30k_launchers_disabled&quot;: true,
+      &quot;automatic_shutdown_allowed&quot;: false
+    },
+    &quot;root_names_containing_30k_are_existing_filesystem_identifiers&quot;: true,
+    &quot;single_new_formal_updates&quot;: 0,
+    &quot;single_reference_iterations&quot;: 10000,
+    &quot;dual_fresh_formal_stop&quot;: 10000,
+    &quot;dual_user_requested_save_evaluate_nodes&quot;: [
+      5000,
+      10000
+    ],
+    &quot;learning_rate_horizon&quot;: 30000,
+    &quot;smoke_and_engineering_replay_updates_separately_accounted&quot;: true,
+    &quot;single_wrapper_mode_choices&quot;: [
+      &quot;smoke&quot;,
+      &quot;resume2step&quot;
+    ],
+    &quot;old_single_master_disabled&quot;: true,
+    &quot;dual_phase0_requires_fresh_5000&quot;: true,
+    &quot;dual_phase1_requires_exact_5000_to10000&quot;: true,
+    &quot;active_master&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py&quot;,
+    &quot;active_dual_queue&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py&quot;,
+    &quot;earlier_30k_continuation_plan_superseded&quot;: true
+  },
+  &quot;historical_search&quot;: {
+    &quot;outcome&quot;: &quot;NO_COMPATIBLE_PRE_NOVEMBER_SINGLE_OR_DUAL_089_137_RUN_FOUND_IN_INSPECTED_SCOPE&quot;,
+    &quot;not_a_proof_of_nonexistence&quot;: true,
+    &quot;scope&quot;: [
+      &quot;campaign top-level inventory&quot;,
+      &quot;90 October effective_config.json records found by a bounded metadata walk&quot;,
+      &quot;small dynamic_multi_actor_preparation.json inventories under campaign&quot;,
+      &quot;selected Git messages and readable October worldsim_v82 recipe files&quot;,
+      &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md&quot;,
+      &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json&quot;
+    ],
+    &quot;exclusions&quot;: &quot;The bounded walk excluded runtime/environment/site-packages/node_modules/.git/images/visualization/evaluation/cache/mask/depth/RGB output subtrees and new scene008_* campaign roots during the October scan; this was not a byte-for-byte exhaustive archival search.&quot;,
+    &quot;old_089_137_three_actor&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json&quot;,
+      &quot;aliases&quot;: [
+        5,
+        26,
+        18
+      ],
+      &quot;dynamic_points&quot;: [
+        21355,
+        15281,
+        2484
+      ]
+    },
+    &quot;old_089_137_full5&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json&quot;,
+      &quot;aliases&quot;: [
+        5,
+        26,
+        18,
+        6,
+        37
+      ],
+      &quot;dynamic_points&quot;: [
+        21358,
+        15193,
+        2444,
+        11625,
+        98452
+      ]
+    },
+    &quot;old_all_vehicle&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/all_vehicle_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json&quot;,
+      &quot;actor_count&quot;: 20
+    },
+    &quot;older_two_actor_other_window&quot;: {
+      &quot;window&quot;: [
+        23,
+        71
+      ],
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1/dynamic_multi_actor_preparation.json&quot;,
+      &quot;tracks&quot;: [
+        &quot;NoQttdyd4C16Y_zkGhiFKg&quot;,
+        &quot;fXVhuN-RuJDvZwnkQ-0YSQ&quot;
+      ],
+      &quot;descriptions&quot;: [
+        &quot;blue_GMC_pickup&quot;,
+        &quot;gray_Jeep_SUV&quot;
+      ]
+    },
+    &quot;first_archived_single_recipe_commit&quot;: &quot;3fefd98ecf5dfd5a73898bf46717cc8afe4ca147&quot;,
+    &quot;commit_interpretation&quot;: &quot;First recipe archival evidence, not a recorded runtime HEAD or isolated causal bug commit.&quot;,
+    &quot;november_dual_not_full_original_PLY&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/formal_dual_actor_r1/initial_parameter_transfer.json&quot;,
+      &quot;moved_a6_static_rows&quot;: 1023,
+      &quot;full5_a6_dynamic_source_rows&quot;: 11625
+    },
+    &quot;new_dual_is_constructed_control&quot;: true,
+    &quot;new_dual_historical_run_found&quot;: false
+  },
+  &quot;single_continuation&quot;: {
+    &quot;root&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1&quot;,
+    &quot;source_checkpoint&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;,
+    &quot;contract&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 3604,
+      &quot;mtime_ns&quot;: 1793897422149124823,
+      &quot;sha256&quot;: &quot;2bd62ef590fb50ddd9836ab9ffb58372dca28c42563e47c6ab7643e55353f109&quot;
+    },
+    &quot;original_iterations&quot;: 10000,
+    &quot;current_single_new_formal_updates&quot;: 0,
+    &quot;current_single_reference_iteration&quot;: 10000,
+    &quot;former_continuation_contract&quot;: {
+      &quot;formal_additional_iterations&quot;: 20000,
+      &quot;formal_total_iterations&quot;: 30000,
+      &quot;status&quot;: &quot;SUPERSEDED_BY_LATEST_USER_BUDGET_DO_NOT_RELEASE&quot;
+    },
+    &quot;learning_rate_horizon_in_saved_original_config&quot;: 30000,
+    &quot;root_config_equals_original_effective_config&quot;: true,
+    &quot;root_config_top_level_differences&quot;: [],
+    &quot;former_formal_allowed_config_differences&quot;: [
+      &quot;model_path&quot;,
+      &quot;start_checkpoint&quot;
+    ],
+    &quot;single_formal_extension_authorized&quot;: false,
+    &quot;exact_restore_receipt&quot;: {
+      &quot;file&quot;: {
+        &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/restore_audit.json&quot;,
+        &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/restore_audit.json&quot;,
+        &quot;exists&quot;: true,
+        &quot;bytes&quot;: 794,
+        &quot;mtime_ns&quot;: 1793897599627714371,
+        &quot;sha256&quot;: &quot;99dd63601af48fb2edc31828ef92fed40a8a47bce1ce62c3691f8a2bd5909f11&quot;
+      },
+      &quot;value&quot;: {
+        &quot;status&quot;: &quot;PASS_EXACT_FULL_RESTORE&quot;,
+        &quot;iteration&quot;: 10000,
+        &quot;differences&quot;: [],
+        &quot;includes&quot;: &quot;parameters,Adam,Python/NumPy/Torch/CUDA RNG,camera sampler,SGCM,EMA,runtime&quot;,
+        &quot;updates&quot;: 0,
+        &quot;bookkeeping_config_differences&quot;: {
+          &quot;start_checkpoint&quot;: {
+            &quot;saved&quot;: null,
+            &quot;current&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;
+          },
+          &quot;model_path&quot;: {
+            &quot;saved&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k&quot;,
+            &quot;current&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1&quot;
+          }
+        },
+        &quot;checkpoint&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;
+      }
+    },
+    &quot;original_checkpoint_source_artifacts&quot;: {
+      &quot;chkpnt10000.pth&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;,
+          &quot;bytes&quot;: 1205804824,
+          &quot;sha256&quot;: &quot;fe6764f8e1113e3561b2b757064f9e27f04518a0b0a980479263a6fee5275e5a&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 1205804824,
+          &quot;mtime_ns&quot;: 1793685138678879826,
+          &quot;sha256&quot;: &quot;fe6764f8e1113e3561b2b757064f9e27f04518a0b0a980479263a6fee5275e5a&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      },
+      &quot;dynamic_chkpnt10000.pth&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth&quot;,
+          &quot;bytes&quot;: 796288990,
+          &quot;sha256&quot;: &quot;93d464d0338b5203bc2ea776f4041044c950bee38b674e49482c656f7b6b14e5&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 796288990,
+          &quot;mtime_ns&quot;: 1793685141363133667,
+          &quot;sha256&quot;: &quot;93d464d0338b5203bc2ea776f4041044c950bee38b674e49482c656f7b6b14e5&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      },
+      &quot;env_light_chkpnt10000.pth&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth&quot;,
+          &quot;bytes&quot;: 226494608,
+          &quot;sha256&quot;: &quot;f3c81d0eedbae6c422eb3d3389b4950a9c1752c7818566caf548f9a116f2d577&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 226494608,
+          &quot;mtime_ns&quot;: 1793685142603250932,
+          &quot;sha256&quot;: &quot;f3c81d0eedbae6c422eb3d3389b4950a9c1752c7818566caf548f9a116f2d577&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      },
+      &quot;training_state10000.pth&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth&quot;,
+          &quot;bytes&quot;: 43800,
+          &quot;sha256&quot;: &quot;43c296803c9fcee7888c5d8d36bff3ff05bed3e0eb4da4593cffbcc5a7d0f70d&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 43800,
+          &quot;mtime_ns&quot;: 1793685263574663844,
+          &quot;sha256&quot;: &quot;43c296803c9fcee7888c5d8d36bff3ff05bed3e0eb4da4593cffbcc5a7d0f70d&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      },
+      &quot;effective_config.json&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json&quot;,
+          &quot;bytes&quot;: 8332,
+          &quot;sha256&quot;: &quot;8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 8332,
+          &quot;mtime_ns&quot;: 1793683527687665035,
+          &quot;sha256&quot;: &quot;8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      },
+      &quot;checkpoint_events/iteration_010000.json&quot;: {
+        &quot;expected&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json&quot;,
+          &quot;bytes&quot;: 162684,
+          &quot;sha256&quot;: &quot;cfeb4b0b7f390c435c2547b7a93836f5d74e8412a4ff409d89279609d0730103&quot;
+        },
+        &quot;actual&quot;: {
+          &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json&quot;,
+          &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json&quot;,
+          &quot;exists&quot;: true,
+          &quot;bytes&quot;: 162684,
+          &quot;mtime_ns&quot;: 1793685263582664597,
+          &quot;sha256&quot;: &quot;cfeb4b0b7f390c435c2547b7a93836f5d74e8412a4ff409d89279609d0730103&quot;
+        },
+        &quot;byte_hash_unchanged&quot;: true,
+        &quot;size_unchanged&quot;: true
+      }
+    },
+    &quot;restore_scope&quot;: &quot;Model parameters and Adam capture; Python/NumPy/Torch/CUDA RNG; camera order/sampler; scale; SGCM geometry/config/metadata; EMA; runtime flags. The live restore receipt reports zero differences.&quot;,
+    &quot;bitwise_future_CUDA_trajectory_claimed&quot;: false,
+    &quot;smoke_protocol&quot;: &quot;Complete the already active separate smoke branch from original10K. Configuration cadence remains unchanged through strict restore; only after540s a diagnostic complete save/eval node is added. Its extra updates and two-step probe are separately charged. The latest user budget authorizes no single formal extension; evaluate the existing original10K.&quot;,
+    &quot;full_smoke_summary&quot;: {
+      &quot;status&quot;: &quot;PASS_REAL_GPU_SMOKE_SAVE_EVAL_FULL_RESTORE_NEXT_ENTRY&quot;,
+      &quot;source_iteration&quot;: 10000,
+      &quot;smoke_model_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1&quot;,
+      &quot;smoke_stop_iteration&quot;: 11977,
+      &quot;smoke_additional_iterations&quot;: 1977,
+      &quot;resume_extra_updates&quot;: 2,
+      &quot;smoke_train_wall_seconds&quot;: 683.8545043244958,
+      &quot;native_replay_difference&quot;: 0,
+      &quot;max_allocated_bytes&quot;: 10058165760,
+      &quot;max_reserved_bytes&quot;: 21562916864,
+      &quot;formal_additional_updates&quot;: 0,
+      &quot;formal_total_budget&quot;: 30000,
+      &quot;learning_rate_horizon&quot;: 30000,
+      &quot;formal_source_checkpoint&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth&quot;,
+      &quot;formal_source_is_smoke&quot;: false,
+      &quot;shutdown&quot;: false
+    }
+  },
+  &quot;dual_fresh_control&quot;: {
+    &quot;root&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1&quot;,
+    &quot;historical_run_found&quot;: false,
+    &quot;constructed_old_engine_subset&quot;: true,
+    &quot;parent_full5_effective_config&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/effective_config.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/effective_config.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 9133,
+      &quot;mtime_ns&quot;: 1792830564540345409,
+      &quot;sha256&quot;: &quot;e50bddfb249a65893050b774d8f46623f5340649f7bb24f5717e8e40e82fd5c4&quot;
+    },
+    &quot;root_config&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 8475,
+      &quot;mtime_ns&quot;: 1793897474498523322,
+      &quot;sha256&quot;: &quot;50b6dd817efbf41862b6eeaac5cb77079fa57dd6e3cb785f8bf3f7edbddc82a6&quot;
+    },
+    &quot;top_level_config_differences&quot;: [
+      &quot;followup_scene_spec&quot;,
+      &quot;model_path&quot;,
+      &quot;source_path&quot;
+    ],
+    &quot;scene_spec_differences&quot;: [
+      &quot;actor_ply_paths&quot;,
+      &quot;source_path&quot;
+    ],
+    &quot;methods_losses_LR_sampling_densification_fields_equal_to_full5&quot;: true,
+    &quot;root_config_old30K_schedule_retained&quot;: true,
+    &quot;user_requested_diagnostic_cadence_override&quot;: &quot;Formal effective configuration adds the5000 complete save/evaluate node; stop after the10000 complete bundle. This cadence change and early stop are authorized budget/diagnostic changes and are not hidden as path-only differences.&quot;,
+    &quot;extra5000_evaluation_may_consume_RNG&quot;: true,
+    &quot;fresh_formal&quot;: true,
+    &quot;start_checkpoint&quot;: null,
+    &quot;formal_stop_after_complete_iteration&quot;: 10000,
+    &quot;formal_save_evaluate_nodes&quot;: [
+      5000,
+      10000
+    ],
+    &quot;learning_rate_horizon&quot;: 30000,
+    &quot;phase_transition&quot;: &quot;Fresh0-&gt;5000 complete native bundle and independent a5 evaluation; then strict full-state restore from5000 and exactly5000 further updates to10000.&quot;,
+    &quot;smoke_time_policy&quot;: &quot;500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast&gt;=3600s extend smoke to&gt;=540s&quot;,
+    &quot;smoke_time_policy_review&quot;: &quot;Parent-authorized500-update real smoke; forecast=max(actual per-update throughput*10000,historical1730s*110077/98452)+240s. Forecast&gt;=3600s extends smoke to&gt;=540s. Save/evaluation, exact restoration and downstream evaluator are required in either duration branch.&quot;,
+    &quot;dynamic_actor_aliases&quot;: [
+      6,
+      37
+    ],
+    &quot;original_actor_indices&quot;: [
+      3,
+      4
+    ],
+    &quot;new_actor_indices&quot;: [
+      0,
+      1
+    ],
+    &quot;dynamic_source_rows&quot;: [
+      11625,
+      98452
+    ],
+    &quot;expected_initial_dynamic_rows&quot;: 110077,
+    &quot;expected_initial_static_rows&quot;: 590681,
+    &quot;cameras&quot;: 49,
+    &quot;retained_static_aliases&quot;: [
+      5,
+      26,
+      18
+    ],
+    &quot;preparation_receipt&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 5342,
+      &quot;mtime_ns&quot;: 1793897474522537466,
+      &quot;sha256&quot;: &quot;e134d915e3877c53ad70834d932cb48c73884c9567eed6649aa4f6c49bd12bb3&quot;
+    },
+    &quot;preparation_status&quot;: &quot;PASS_CPU_PREPARATION_IDENTITY_AND_PIXEL_UNION&quot;,
+    &quot;warm_start&quot;: false,
+    &quot;smoke_and_formal_are_separate_fresh_runs&quot;: true,
+    &quot;current_dual_smoke_or_formal_status&quot;: null
+  },
+  &quot;actor_semantics&quot;: {
+    &quot;selected_actor_PLYs&quot;: &quot;Every points3d_dynamic_*.ply present in source_path is concatenated into the one native Dynamic_GaussianModel before training.&quot;,
+    &quot;selected_actor_masks&quot;: &quot;Explicit binary union dynamic_masks/dynamic_mask_0; optional shadow union only when a shadow file exists; RGB brightness is not used to infer foreground.&quot;,
+    &quot;deletion&quot;: &quot;Native render_s uses only the static Gaussian pool. Thus single removes the full a37 dynamic pool; dual removes the full a6+a37 dynamic pool.&quot;,
+    &quot;a5_selected_for_deletion&quot;: false,
+    &quot;a5_representation&quot;: &quot;Temporal static GaussianModel branch, retaining its trainable time/velocity parameters subject to native static regularizers.&quot;,
+    &quot;dual_per_actor_independent_serialized_identity_claimed&quot;: false,
+    &quot;full5_reference_keep_only_for_a5_reconstruction&quot;: &quot;Native Full5 DELETE removes a5 together with the entire selected dynamic pool; it is not a retained-a5 deletion-quality comparator. Its KEEP image is historical reconstruction context.&quot;,
+    &quot;full5_posthoc_owner_selective_render_is_same_training_semantics&quot;: false
+  },
+  &quot;static_sampling_and_exclusion&quot;: {
+    &quot;status&quot;: &quot;PASS_CPU_NATIVE_EXCLUSION_REPRODUCTION&quot;,
+    &quot;GPU_used&quot;: false,
+    &quot;existing_static_seed_rows&quot;: 600000,
+    &quot;a5_full_dynamic_source_rows&quot;: 21358,
+    &quot;raw_a5_spatial_matching_static_rows&quot;: 1496,
+    &quot;arms&quot;: {
+      &quot;full5&quot;: {
+        &quot;original_dynamic_actor_indices&quot;: [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        &quot;dynamic_rows&quot;: 149072,
+        &quot;static_rows_after_exclusion&quot;: 585943,
+        &quot;static_rows_excluded&quot;: 14057,
+        &quot;a5_matching_static_rows_retained&quot;: 0,
+        &quot;a5_matching_static_rows_excluded&quot;: 1496,
+        &quot;a5_same_time_source_points_matched&quot;: 1442,
+        &quot;a5_same_time_source_points_matched_and_retained&quot;: 0
+      },
+      &quot;single_a37&quot;: {
+        &quot;original_dynamic_actor_indices&quot;: [
+          4
+        ],
+        &quot;dynamic_rows&quot;: 98452,
+        &quot;static_rows_after_exclusion&quot;: 591672,
+        &quot;static_rows_excluded&quot;: 8328,
+        &quot;a5_matching_static_rows_retained&quot;: 1496,
+        &quot;a5_matching_static_rows_excluded&quot;: 0,
+        &quot;a5_same_time_source_points_matched&quot;: 1442,
+        &quot;a5_same_time_source_points_matched_and_retained&quot;: 1442
+      },
+      &quot;dual_a6_a37&quot;: {
+        &quot;original_dynamic_actor_indices&quot;: [
+          3,
+          4
+        ],
+        &quot;dynamic_rows&quot;: 110077,
+        &quot;static_rows_after_exclusion&quot;: 590681,
+        &quot;static_rows_excluded&quot;: 9319,
+        &quot;a5_matching_static_rows_retained&quot;: 1496,
+        &quot;a5_matching_static_rows_excluded&quot;: 0,
+        &quot;a5_same_time_source_points_matched&quot;: 1442,
+        &quot;a5_same_time_source_points_matched_and_retained&quot;: 1442
+      }
+    },
+    &quot;exclusion_rule&quot;: &quot;Retain existing seed iff nearest XYZ distance to selected dynamic PLY union is &gt;=0.1m; eps=0; timestamps are ignored in exclusion&quot;,
+    &quot;coordinate_rule&quot;: &quot;Exclusion occurs in original coordinates before shared camera-PCA transform&quot;,
+    &quot;time_matched_a5_rule&quot;: &quot;For each a5 dynamic timestamp, nearest existing static row within0.002m and same timestamp tolerance1e-7&quot;,
+    &quot;spatial_match_rule&quot;: &quot;Existing static row within2e-5m of any full a5 dynamic source XYZ&quot;,
+    &quot;no_new_static_subsample_in_this_audit&quot;: true,
+    &quot;sampling_source_note&quot;: &quot;Native loader also calls np.random.choice(...,args.num_pts,replace=True) on rebuilt LiDAR data, but for initialization=False the returned static/dynamic PCD uses existing points3d.ply and selected dynamic PLYs; this transient choice still consumes initialization RNG. Gaussian create_from_pcd retains all supplied rows; random_init_point=0.&quot;,
+    &quot;conclusion&quot;: &quot;Both new subset controls preserve all existing sampled a5 static support. They do not supply the full21358-row a5 dynamic prior after a5 exits the selected dynamic branch. Sparse support and branch-specific objective changes are simultaneous confounds, not an isolated proven cause.&quot;
+  },
+  &quot;independent_input_rechecks&quot;: [
+    {
+      &quot;arm&quot;: &quot;single_a37&quot;,
+      &quot;scene_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137&quot;,
+      &quot;frame_count&quot;: 49,
+      &quot;all_native_and480_union_exact&quot;: true,
+      &quot;dynamic_RGB_exact&quot;: true,
+      &quot;extra_dynamic_PLY_files&quot;: false,
+      &quot;ply_checks&quot;: [
+        {
+          &quot;original_actor_index&quot;: 4,
+          &quot;new_actor_index&quot;: 0,
+          &quot;original&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 3052265,
+            &quot;mtime_ns&quot;: 1792327840158338776,
+            &quot;sha256&quot;: &quot;6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3&quot;
+          },
+          &quot;prepared&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 3052265,
+            &quot;mtime_ns&quot;: 1792327840158338776,
+            &quot;sha256&quot;: &quot;6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3&quot;
+          },
+          &quot;byte_exact&quot;: true
+        }
+      ],
+      &quot;frame_checks&quot;: [
+        {
+          &quot;frame_id&quot;: &quot;0008089&quot;,
+          &quot;union_pixels&quot;: 235520,
+          &quot;union_pixels480&quot;: 14720,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008090&quot;,
+          &quot;union_pixels&quot;: 237824,
+          &quot;union_pixels480&quot;: 14864,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008091&quot;,
+          &quot;union_pixels&quot;: 237952,
+          &quot;union_pixels480&quot;: 14872,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008092&quot;,
+          &quot;union_pixels&quot;: 237968,
+          &quot;union_pixels480&quot;: 14873,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008093&quot;,
+          &quot;union_pixels&quot;: 238368,
+          &quot;union_pixels480&quot;: 14898,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008094&quot;,
+          &quot;union_pixels&quot;: 238320,
+          &quot;union_pixels480&quot;: 14895,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008095&quot;,
+          &quot;union_pixels&quot;: 238144,
+          &quot;union_pixels480&quot;: 14884,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008096&quot;,
+          &quot;union_pixels&quot;: 238080,
+          &quot;union_pixels480&quot;: 14880,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008097&quot;,
+          &quot;union_pixels&quot;: 238176,
+          &quot;union_pixels480&quot;: 14886,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008098&quot;,
+          &quot;union_pixels&quot;: 238208,
+          &quot;union_pixels480&quot;: 14888,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008099&quot;,
+          &quot;union_pixels&quot;: 238144,
+          &quot;union_pixels480&quot;: 14884,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008100&quot;,
+          &quot;union_pixels&quot;: 238064,
+          &quot;union_pixels480&quot;: 14879,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008101&quot;,
+          &quot;union_pixels&quot;: 235728,
+          &quot;union_pixels480&quot;: 14733,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008102&quot;,
+          &quot;union_pixels&quot;: 237536,
+          &quot;union_pixels480&quot;: 14846,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008103&quot;,
+          &quot;union_pixels&quot;: 237280,
+          &quot;union_pixels480&quot;: 14830,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008104&quot;,
+          &quot;union_pixels&quot;: 237072,
+          &quot;union_pixels480&quot;: 14817,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008105&quot;,
+          &quot;union_pixels&quot;: 236112,
+          &quot;union_pixels480&quot;: 14757,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008106&quot;,
+          &quot;union_pixels&quot;: 235424,
+          &quot;union_pixels480&quot;: 14714,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008107&quot;,
+          &quot;union_pixels&quot;: 233920,
+          &quot;union_pixels480&quot;: 14620,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008108&quot;,
+          &quot;union_pixels&quot;: 233056,
+          &quot;union_pixels480&quot;: 14566,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008109&quot;,
+          &quot;union_pixels&quot;: 231792,
+          &quot;union_pixels480&quot;: 14487,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008110&quot;,
+          &quot;union_pixels&quot;: 229376,
+          &quot;union_pixels480&quot;: 14336,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008111&quot;,
+          &quot;union_pixels&quot;: 225376,
+          &quot;union_pixels480&quot;: 14086,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008112&quot;,
+          &quot;union_pixels&quot;: 218992,
+          &quot;union_pixels480&quot;: 13687,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008113&quot;,
+          &quot;union_pixels&quot;: 205984,
+          &quot;union_pixels480&quot;: 12874,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008114&quot;,
+          &quot;union_pixels&quot;: 202976,
+          &quot;union_pixels480&quot;: 12686,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008115&quot;,
+          &quot;union_pixels&quot;: 195632,
+          &quot;union_pixels480&quot;: 12227,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008116&quot;,
+          &quot;union_pixels&quot;: 186688,
+          &quot;union_pixels480&quot;: 11668,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008117&quot;,
+          &quot;union_pixels&quot;: 179136,
+          &quot;union_pixels480&quot;: 11196,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008118&quot;,
+          &quot;union_pixels&quot;: 170512,
+          &quot;union_pixels480&quot;: 10657,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008119&quot;,
+          &quot;union_pixels&quot;: 162608,
+          &quot;union_pixels480&quot;: 10163,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008120&quot;,
+          &quot;union_pixels&quot;: 154736,
+          &quot;union_pixels480&quot;: 9671,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008121&quot;,
+          &quot;union_pixels&quot;: 147424,
+          &quot;union_pixels480&quot;: 9214,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008122&quot;,
+          &quot;union_pixels&quot;: 140272,
+          &quot;union_pixels480&quot;: 8767,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008123&quot;,
+          &quot;union_pixels&quot;: 133104,
+          &quot;union_pixels480&quot;: 8319,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008124&quot;,
+          &quot;union_pixels&quot;: 127632,
+          &quot;union_pixels480&quot;: 7977,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008125&quot;,
+          &quot;union_pixels&quot;: 117200,
+          &quot;union_pixels480&quot;: 7325,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008126&quot;,
+          &quot;union_pixels&quot;: 116384,
+          &quot;union_pixels480&quot;: 7274,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008127&quot;,
+          &quot;union_pixels&quot;: 111456,
+          &quot;union_pixels480&quot;: 6966,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008128&quot;,
+          &quot;union_pixels&quot;: 106096,
+          &quot;union_pixels480&quot;: 6631,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008129&quot;,
+          &quot;union_pixels&quot;: 102208,
+          &quot;union_pixels480&quot;: 6388,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008130&quot;,
+          &quot;union_pixels&quot;: 98160,
+          &quot;union_pixels480&quot;: 6135,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008131&quot;,
+          &quot;union_pixels&quot;: 94288,
+          &quot;union_pixels480&quot;: 5893,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008132&quot;,
+          &quot;union_pixels&quot;: 90608,
+          &quot;union_pixels480&quot;: 5663,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008133&quot;,
+          &quot;union_pixels&quot;: 87552,
+          &quot;union_pixels480&quot;: 5472,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008134&quot;,
+          &quot;union_pixels&quot;: 83776,
+          &quot;union_pixels480&quot;: 5236,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008135&quot;,
+          &quot;union_pixels&quot;: 80736,
+          &quot;union_pixels480&quot;: 5046,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008136&quot;,
+          &quot;union_pixels&quot;: 77952,
+          &quot;union_pixels480&quot;: 4872,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008137&quot;,
+          &quot;union_pixels&quot;: 75648,
+          &quot;union_pixels480&quot;: 4728,
+          &quot;exact&quot;: true
+        }
+      ],
+      &quot;shadow_masks_present&quot;: []
+    },
+    {
+      &quot;arm&quot;: &quot;dual_a6_a37&quot;,
+      &quot;scene_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137&quot;,
+      &quot;frame_count&quot;: 49,
+      &quot;all_native_and480_union_exact&quot;: true,
+      &quot;dynamic_RGB_exact&quot;: true,
+      &quot;extra_dynamic_PLY_files&quot;: false,
+      &quot;ply_checks&quot;: [
+        {
+          &quot;original_actor_index&quot;: 3,
+          &quot;new_actor_index&quot;: 0,
+          &quot;original&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 360628,
+            &quot;mtime_ns&quot;: 1792327840146335471,
+            &quot;sha256&quot;: &quot;0f33b6f70164cbbd7a32600419304e8acd508470e5f19c2949101de493be168d&quot;
+          },
+          &quot;prepared&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 360628,
+            &quot;mtime_ns&quot;: 1792327840146335471,
+            &quot;sha256&quot;: &quot;0f33b6f70164cbbd7a32600419304e8acd508470e5f19c2949101de493be168d&quot;
+          },
+          &quot;byte_exact&quot;: true
+        },
+        {
+          &quot;original_actor_index&quot;: 4,
+          &quot;new_actor_index&quot;: 1,
+          &quot;original&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 3052265,
+            &quot;mtime_ns&quot;: 1792327840158338776,
+            &quot;sha256&quot;: &quot;6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3&quot;
+          },
+          &quot;prepared&quot;: {
+            &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_1.ply&quot;,
+            &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_1.ply&quot;,
+            &quot;exists&quot;: true,
+            &quot;bytes&quot;: 3052265,
+            &quot;mtime_ns&quot;: 1792327840158338776,
+            &quot;sha256&quot;: &quot;6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3&quot;
+          },
+          &quot;byte_exact&quot;: true
+        }
+      ],
+      &quot;frame_checks&quot;: [
+        {
+          &quot;frame_id&quot;: &quot;0008089&quot;,
+          &quot;union_pixels&quot;: 253904,
+          &quot;union_pixels480&quot;: 15869,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008090&quot;,
+          &quot;union_pixels&quot;: 256272,
+          &quot;union_pixels480&quot;: 16017,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008091&quot;,
+          &quot;union_pixels&quot;: 256400,
+          &quot;union_pixels480&quot;: 16025,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008092&quot;,
+          &quot;union_pixels&quot;: 256384,
+          &quot;union_pixels480&quot;: 16024,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008093&quot;,
+          &quot;union_pixels&quot;: 256864,
+          &quot;union_pixels480&quot;: 16054,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008094&quot;,
+          &quot;union_pixels&quot;: 256896,
+          &quot;union_pixels480&quot;: 16056,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008095&quot;,
+          &quot;union_pixels&quot;: 257152,
+          &quot;union_pixels480&quot;: 16072,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008096&quot;,
+          &quot;union_pixels&quot;: 256864,
+          &quot;union_pixels480&quot;: 16054,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008097&quot;,
+          &quot;union_pixels&quot;: 256912,
+          &quot;union_pixels480&quot;: 16057,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008098&quot;,
+          &quot;union_pixels&quot;: 256960,
+          &quot;union_pixels480&quot;: 16060,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008099&quot;,
+          &quot;union_pixels&quot;: 256832,
+          &quot;union_pixels480&quot;: 16052,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008100&quot;,
+          &quot;union_pixels&quot;: 256944,
+          &quot;union_pixels480&quot;: 16059,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008101&quot;,
+          &quot;union_pixels&quot;: 254384,
+          &quot;union_pixels480&quot;: 15899,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008102&quot;,
+          &quot;union_pixels&quot;: 256336,
+          &quot;union_pixels480&quot;: 16021,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008103&quot;,
+          &quot;union_pixels&quot;: 256096,
+          &quot;union_pixels480&quot;: 16006,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008104&quot;,
+          &quot;union_pixels&quot;: 256128,
+          &quot;union_pixels480&quot;: 16008,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008105&quot;,
+          &quot;union_pixels&quot;: 255056,
+          &quot;union_pixels480&quot;: 15941,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008106&quot;,
+          &quot;union_pixels&quot;: 254336,
+          &quot;union_pixels480&quot;: 15896,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008107&quot;,
+          &quot;union_pixels&quot;: 253008,
+          &quot;union_pixels480&quot;: 15813,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008108&quot;,
+          &quot;union_pixels&quot;: 251904,
+          &quot;union_pixels480&quot;: 15744,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008109&quot;,
+          &quot;union_pixels&quot;: 250400,
+          &quot;union_pixels480&quot;: 15650,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008110&quot;,
+          &quot;union_pixels&quot;: 247392,
+          &quot;union_pixels480&quot;: 15462,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008111&quot;,
+          &quot;union_pixels&quot;: 243184,
+          &quot;union_pixels480&quot;: 15199,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008112&quot;,
+          &quot;union_pixels&quot;: 236336,
+          &quot;union_pixels480&quot;: 14771,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008113&quot;,
+          &quot;union_pixels&quot;: 222176,
+          &quot;union_pixels480&quot;: 13886,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008114&quot;,
+          &quot;union_pixels&quot;: 219440,
+          &quot;union_pixels480&quot;: 13715,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008115&quot;,
+          &quot;union_pixels&quot;: 211520,
+          &quot;union_pixels480&quot;: 13220,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008116&quot;,
+          &quot;union_pixels&quot;: 202080,
+          &quot;union_pixels480&quot;: 12630,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008117&quot;,
+          &quot;union_pixels&quot;: 193968,
+          &quot;union_pixels480&quot;: 12123,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008118&quot;,
+          &quot;union_pixels&quot;: 184720,
+          &quot;union_pixels480&quot;: 11545,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008119&quot;,
+          &quot;union_pixels&quot;: 176320,
+          &quot;union_pixels480&quot;: 11020,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008120&quot;,
+          &quot;union_pixels&quot;: 167792,
+          &quot;union_pixels480&quot;: 10487,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008121&quot;,
+          &quot;union_pixels&quot;: 160080,
+          &quot;union_pixels480&quot;: 10005,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008122&quot;,
+          &quot;union_pixels&quot;: 151824,
+          &quot;union_pixels480&quot;: 9489,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008123&quot;,
+          &quot;union_pixels&quot;: 144432,
+          &quot;union_pixels480&quot;: 9027,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008124&quot;,
+          &quot;union_pixels&quot;: 138896,
+          &quot;union_pixels480&quot;: 8681,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008125&quot;,
+          &quot;union_pixels&quot;: 127008,
+          &quot;union_pixels480&quot;: 7938,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008126&quot;,
+          &quot;union_pixels&quot;: 126784,
+          &quot;union_pixels480&quot;: 7924,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008127&quot;,
+          &quot;union_pixels&quot;: 121600,
+          &quot;union_pixels480&quot;: 7600,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008128&quot;,
+          &quot;union_pixels&quot;: 115712,
+          &quot;union_pixels480&quot;: 7232,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008129&quot;,
+          &quot;union_pixels&quot;: 111488,
+          &quot;union_pixels480&quot;: 6968,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008130&quot;,
+          &quot;union_pixels&quot;: 106912,
+          &quot;union_pixels480&quot;: 6682,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008131&quot;,
+          &quot;union_pixels&quot;: 102928,
+          &quot;union_pixels480&quot;: 6433,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008132&quot;,
+          &quot;union_pixels&quot;: 99024,
+          &quot;union_pixels480&quot;: 6189,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008133&quot;,
+          &quot;union_pixels&quot;: 95696,
+          &quot;union_pixels480&quot;: 5981,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008134&quot;,
+          &quot;union_pixels&quot;: 91616,
+          &quot;union_pixels480&quot;: 5726,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008135&quot;,
+          &quot;union_pixels&quot;: 88400,
+          &quot;union_pixels480&quot;: 5525,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008136&quot;,
+          &quot;union_pixels&quot;: 85440,
+          &quot;union_pixels480&quot;: 5340,
+          &quot;exact&quot;: true
+        },
+        {
+          &quot;frame_id&quot;: &quot;0008137&quot;,
+          &quot;union_pixels&quot;: 83088,
+          &quot;union_pixels480&quot;: 5193,
+          &quot;exact&quot;: true
+        }
+      ],
+      &quot;shadow_masks_present&quot;: []
+    }
+  ],
+  &quot;common_a5_evaluation_contract&quot;: {
+    &quot;source&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames&quot;,
+    &quot;fixed_label&quot;: 1,
+    &quot;frame_count&quot;: 49,
+    &quot;fixed_pixel_frame_denominator&quot;: 121128,
+    &quot;mask_sha256&quot;: &quot;aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419&quot;,
+    &quot;nonempty_a5_frames&quot;: [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112
+    ],
+    &quot;denominator_is_independent_of_rendered_alpha&quot;: true,
+    &quot;required_replays&quot;: &quot;49KEEP plus49native static/delete images, maximum uint8 replay difference &lt;=1&quot;,
+    &quot;evaluated_shapes&quot;: &quot;RGB3x320x480, alpha1x320x480, matched native cameras/timestamps&quot;
+  },
+  &quot;complete_update_boundary&quot;: {
+    &quot;status&quot;: &quot;PASS_SOURCE_ORDERING_AUDIT&quot;,
+    &quot;original10K_last_optimizer_update_missing&quot;: false,
+    &quot;ordered_operations&quot;: [
+      &quot;loss.backward&quot;,
+      &quot;generic static/dynamic densification&quot;,
+      &quot;static Adam.step&quot;,
+      &quot;dynamic Adam.step&quot;,
+      &quot;environment Adam.step if native configured iteration condition&quot;,
+      &quot;SGCM refine&quot;,
+      &quot;camera scale update&quot;,
+      &quot;save model components including Adam&quot;,
+      &quot;evaluation&quot;,
+      &quot;capture continuation including post-eval RNG&quot;,
+      &quot;atomic write training state and complete event&quot;,
+      &quot;wrapper original_publish returns&quot;,
+      &quot;wrapper raises CompleteBoundary&quot;
+    ],
+    &quot;native_loop&quot;: &quot;range(first_iter+1,args.iterations+1); no iteration&lt;iterations gate skips the final static/dynamic optimizer step&quot;,
+    &quot;resume2step&quot;: &quot;Raises at record_step of start+3, before its backward; exactly start+1 and start+2 completed updates are charged.&quot;,
+    &quot;caveat&quot;: &quot;This proves the retained source ordering and is backed by complete original10K event and zero-difference restore. Original10K did not archive its own runtime source/Git HEAD, so a transient unrecorded historical source edit cannot be excluded.&quot;
+  },
+  &quot;transform_input_write_disclosure&quot;: {
+    &quot;native_writer&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py:537&quot;,
+    &quot;observed&quot;: &quot;The currently running single smoke loaded the pre-protection wrapper and native loader rewrote the original Nov3 input transform_matrix.txt, changing its mtime.&quot;,
+    &quot;old_single_transform_observed_mtime_ns&quot;: 1793897589314292298,
+    &quot;old_input_mtime_restored_or_hidden&quot;: false,
+    &quot;all_three_transform_bytes_equal&quot;: true,
+    &quot;byte_hash&quot;: &quot;110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3&quot;,
+    &quot;records&quot;: [
+      {
+        &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;exists&quot;: true,
+        &quot;bytes&quot;: 264,
+        &quot;mtime_ns&quot;: 1793897589314292298,
+        &quot;sha256&quot;: &quot;110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3&quot;
+      },
+      {
+        &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;exists&quot;: true,
+        &quot;bytes&quot;: 264,
+        &quot;mtime_ns&quot;: 1792839640540663325,
+        &quot;sha256&quot;: &quot;110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3&quot;
+      },
+      {
+        &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/transform_matrix.txt&quot;,
+        &quot;exists&quot;: true,
+        &quot;bytes&quot;: 264,
+        &quot;mtime_ns&quot;: 1793898575483871645,
+        &quot;sha256&quot;: &quot;110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3&quot;
+      }
+    ],
+    &quot;original_checkpoint_weights_byte_hashes_unchanged&quot;: true,
+    &quot;correction_in_current_single_source&quot;: true,
+    &quot;correction&quot;: &quot;Only the exact resolved input transform path is redirected to the new output loader_transform_matrix.txt; both new output and old input bytes must equal the captured original bytes.&quot;,
+    &quot;already_running_smoke_restarted_for_this_correction&quot;: false,
+    &quot;current_smoke_loaded_old_code&quot;: &quot;source/train_single.py.before_transform_protection is preserved; subsequent resume/formal launches use the protected wrapper.&quot;
+  },
+  &quot;required_source_fixes_reviewed&quot;: [
+    {
+      &quot;issue&quot;: &quot;Native transform publication touched old single input mtime&quot;,
+      &quot;correction_in_current_source&quot;: true,
+      &quot;runtime_probe&quot;: &quot;Check loader_transform_readonly_audit.json when the smoke two-step restore launches.&quot;
+    },
+    {
+      &quot;issue&quot;: &quot;New common a5 evaluation entry was first called only after formal30K&quot;,
+      &quot;correction_in_current_dual_controller&quot;: true,
+      &quot;runtime_probe&quot;: &quot;Dual controller must complete smoke_a5_evaluation before fresh formal; single common a5 entry is managed by parent before formal release.&quot;
+    }
+  ],
+  &quot;causal_limits&quot;: [
+    &quot;No compatible October a37-only/a37+a6 run was found in the stated search scope; the fresh dual is a constructed control, not a recovered historical run.&quot;,
+    &quot;Full5-to-subset simultaneously changes dense dynamic versus sampled static initialization, loss-branch coverage/weights, applicable static duration/velocity/SGCM rules, model sizes, nearest-neighbor initialization and RNG trajectory. It is not a same-initialization single-factor causal ablation.&quot;,
+    &quot;a5 has21358 full dynamic source rows but only1442 source points matched in the existing600K sampled static seed. Both subset controls preserve all1496 matching static rows; native exclusion does not further remove them.&quot;,
+    &quot;Latest budget keeps the original single10K and requests only fresh dual10K with a5000 save/evaluate node. These comparisons do not identify a unique regularizer, densification event or bug commit; the extra5000 evaluation may also change subsequent RNG consumption.&quot;,
+    &quot;All49 raw89–137 views are observed training/BUILD views, not independent held-out evaluation.&quot;,
+    &quot;A successful exact-state restoration does not promise bitwise CUDA trajectory equivalence for future updates.&quot;,
+    &quot;The original historical runs lack immutable runtime engine/Git SHA; current source matches and retained archival hashes cannot rule out an unrecorded temporary historical edit.&quot;
+  ],
+  &quot;source_files&quot;: {
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 52627,
+      &quot;mtime_ns&quot;: 1791820904963846434,
+      &quot;sha256&quot;: &quot;61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 29310,
+      &quot;mtime_ns&quot;: 1791712908111732118,
+      &quot;sha256&quot;: &quot;5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 44338,
+      &quot;mtime_ns&quot;: 1791820345289408585,
+      &quot;sha256&quot;: &quot;e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 4926,
+      &quot;mtime_ns&quot;: 1791712908107736521,
+      &quot;sha256&quot;: &quot;e39d4482e0a128c10be88a1be2f8795de3c566a3853543d5c88d42db517cb72c&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 20011,
+      &quot;mtime_ns&quot;: 1791712908107736521,
+      &quot;sha256&quot;: &quot;35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 19994,
+      &quot;mtime_ns&quot;: 1791820345285408190,
+      &quot;sha256&quot;: &quot;d11902dbe19a933ca047a0cfc857a7d1e529dd79bf330cd2c809b2b25c36e821&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 6279,
+      &quot;mtime_ns&quot;: 1791820345293408982,
+      &quot;sha256&quot;: &quot;6731b2b81813f9da1589ae9cd61cd66713a32b604e07ab89663c3fa1e69f3c95&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 14362,
+      &quot;mtime_ns&quot;: 1791820345293408982,
+      &quot;sha256&quot;: &quot;f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 4991,
+      &quot;mtime_ns&quot;: 1791712908119723310,
+      &quot;sha256&quot;: &quot;c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 1840,
+      &quot;mtime_ns&quot;: 1791712908119723310,
+      &quot;sha256&quot;: &quot;a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 10809,
+      &quot;mtime_ns&quot;: 1793898298564520672,
+      &quot;sha256&quot;: &quot;8a9f112b49416b6aa0bde578ef8abcd72effa619ae78f211ebbae38665010c11&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 3646,
+      &quot;mtime_ns&quot;: 1793897564210688474,
+      &quot;sha256&quot;: &quot;c759ba0945e464cb42258830d63590f3f7f7e07801bccba207065d46d4f19b46&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 156,
+      &quot;mtime_ns&quot;: 1793898293912401801,
+      &quot;sha256&quot;: &quot;c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 156,
+      &quot;mtime_ns&quot;: 1793898296296464011,
+      &quot;sha256&quot;: &quot;c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 6410,
+      &quot;mtime_ns&quot;: 1793898622678498041,
+      &quot;sha256&quot;: &quot;5e581429694386705e6c13408a910356e604d474b539626527e89253e5dab273&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 881,
+      &quot;mtime_ns&quot;: 1793898623302629238,
+      &quot;sha256&quot;: &quot;039910fab7e0c3649ebc7d3b5497b4022e8576b26d4117c2d24a6b8331671cf9&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 30512,
+      &quot;mtime_ns&quot;: 1793898622002355756,
+      &quot;sha256&quot;: &quot;be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 918,
+      &quot;mtime_ns&quot;: 1793898628683752839,
+      &quot;sha256&quot;: &quot;a4d71537ef56c810f53769f06a59d9dd7d4b52ca3d451ef434717accf68eeb8b&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 2897,
+      &quot;mtime_ns&quot;: 1793897415205355032,
+      &quot;sha256&quot;: &quot;402865e7f0eb0ce41768cd054e3154afb6cab4b7fc93915aef7cf32281208d98&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 8332,
+      &quot;mtime_ns&quot;: 1793682713049903358,
+      &quot;sha256&quot;: &quot;8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 18038,
+      &quot;mtime_ns&quot;: 1793682713049903358,
+      &quot;sha256&quot;: &quot;81a90619c245ebad0d26f3f4bd24cc8f219ff63709cdb6f0184d51f4d16f383c&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 3604,
+      &quot;mtime_ns&quot;: 1793897422149124823,
+      &quot;sha256&quot;: &quot;2bd62ef590fb50ddd9836ab9ffb58372dca28c42563e47c6ab7643e55353f109&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 9392,
+      &quot;mtime_ns&quot;: 1793897563771333511,
+      &quot;sha256&quot;: &quot;650b3fac63e7e1b0cf7bb3c4770349d921c1bdc3fd502255115fc30739ae4dae&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 11975,
+      &quot;mtime_ns&quot;: 1793897440824681719,
+      &quot;sha256&quot;: &quot;3e3f10f66fcf8ae9719a28fbcc0ebdaae4ae6ab658639a988bd2359ff653558e&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 12491,
+      &quot;mtime_ns&quot;: 1793898547268513399,
+      &quot;sha256&quot;: &quot;457565ff056b10c1e76ae77480a8e3eb26043653f982a6c948660b24fd26a1a5&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 30512,
+      &quot;mtime_ns&quot;: 1793898625283044306,
+      &quot;sha256&quot;: &quot;be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 918,
+      &quot;mtime_ns&quot;: 1793898551345642618,
+      &quot;sha256&quot;: &quot;a4d71537ef56c810f53769f06a59d9dd7d4b52ca3d451ef434717accf68eeb8b&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 156,
+      &quot;mtime_ns&quot;: 1793898619833897712,
+      &quot;sha256&quot;: &quot;c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 6665,
+      &quot;mtime_ns&quot;: 1793898625811154692,
+      &quot;sha256&quot;: &quot;fef41debde71b89eebb200d6a66095398a96f9549861b5c0154acd9917a6e316&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 7523,
+      &quot;mtime_ns&quot;: 1793897755470626487,
+      &quot;sha256&quot;: &quot;bd115442977b8746f216cbfac494d0d4c99f762d82a50f40eb926347c91c2de9&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 8475,
+      &quot;mtime_ns&quot;: 1793897474498523322,
+      &quot;sha256&quot;: &quot;50b6dd817efbf41862b6eeaac5cb77079fa57dd6e3cb785f8bf3f7edbddc82a6&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 46450,
+      &quot;mtime_ns&quot;: 1793897474522537466,
+      &quot;sha256&quot;: &quot;9d716d1a4e3f9c99cef39bcd3ef65c23891036f014ed3c92022b60f331e89afc&quot;
+    },
+    &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 5342,
+      &quot;mtime_ns&quot;: 1793897474522537466,
+      &quot;sha256&quot;: &quot;e134d915e3877c53ad70834d932cb48c73884c9567eed6649aa4f6c49bd12bb3&quot;
+    },
+    &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 3907,
+      &quot;mtime_ns&quot;: 1793895413598768303,
+      &quot;sha256&quot;: &quot;5e022b013addef933a1a358bd91a8efe4c33fc7c9c50ba6901cfb8d96e71846a&quot;
+    },
+    &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 20986,
+      &quot;mtime_ns&quot;: 1793895413594767614,
+      &quot;sha256&quot;: &quot;613fd281f43e3707b21c04cd98dcd63a6b7aadee58e6c01e6a7e76418357c7b4&quot;
+    },
+    &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json&quot;,
+      &quot;resolved_path&quot;: &quot;/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json&quot;,
+      &quot;exists&quot;: true,
+      &quot;bytes&quot;: 32612,
+      &quot;mtime_ns&quot;: 1793895413598768303,
+      &quot;sha256&quot;: &quot;43c4ccdf0583d30a119736d02a95f1eef519687e8c4470825a60e610138029b6&quot;
+    }
+  },
+  &quot;source_line_evidence&quot;: {
+    &quot;native_optimizer_and_publish&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py&quot;,
+      &quot;sha256&quot;: &quot;61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;loss.backward()&quot;,
+          &quot;line&quot;: 539,
+          &quot;text&quot;: &quot;loss.backward()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;record_step(args, iteration&quot;,
+          &quot;line&quot;: 428,
+          &quot;text&quot;: &quot;record_step(args, iteration, viewpoint_cam, time_shift, gaussians, dynamic_gaussians, hybrid_result.log_values())&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;gaussians.optimizer.step()&quot;,
+          &quot;line&quot;: 614,
+          &quot;text&quot;: &quot;gaussians.optimizer.step()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;gaussians.optimizer.step()&quot;,
+          &quot;line&quot;: 617,
+          &quot;text&quot;: &quot;dynamic_gaussians.optimizer.step()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;dynamic_gaussians.optimizer.step()&quot;,
+          &quot;line&quot;: 617,
+          &quot;text&quot;: &quot;dynamic_gaussians.optimizer.step()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;env_map.optimizer.step()&quot;,
+          &quot;line&quot;: 622,
+          &quot;text&quot;: &quot;env_map.optimizer.step()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;paper_sgcm.refine(&quot;,
+          &quot;line&quot;: 627,
+          &quot;text&quot;: &quot;sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration, visibility_filter=visibility_filter[:end_idx])&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;scene.upScale()&quot;,
+          &quot;line&quot;: 702,
+          &quot;text&quot;: &quot;scene.upScale()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;components = save_components&quot;,
+          &quot;line&quot;: 712,
+          &quot;text&quot;: &quot;components = save_components(scene.model_path, iteration, models_for_checkpoint) if checkpoint_due else None&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;evaluations = complete_eval&quot;,
+          &quot;line&quot;: 718,
+          &quot;text&quot;: &quot;evaluations = complete_eval(tb_writer, iteration, eval_iterations, scene, render,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;continuation = capture_training_state&quot;,
+          &quot;line&quot;: 722,
+          &quot;text&quot;: &quot;continuation = capture_training_state(iteration, scene, viewpoint_stack,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;publish_checkpoint_event(scene.model_path&quot;,
+          &quot;line&quot;: 725,
+          &quot;text&quot;: &quot;publish_checkpoint_event(scene.model_path, iteration, components,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;range(first_iter + 1, args.iterations + 1)&quot;,
+          &quot;line&quot;: 285,
+          &quot;text&quot;: &quot;progress_bar = tqdm(range(first_iter + 1, args.iterations + 1), desc=\&quot;Training progress\&quot;)&quot;
+        }
+      ]
+    },
+    &quot;native_checkpoint_contract&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py&quot;,
+      &quot;sha256&quot;: &quot;d11902dbe19a933ca047a0cfc857a7d1e529dd79bf330cd2c809b2b25c36e821&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;def _validate_resume_configuration&quot;,
+          &quot;line&quot;: 96,
+          &quot;text&quot;: &quot;def _validate_resume_configuration(saved_config, args):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;permitted = {&quot;,
+          &quot;line&quot;: 113,
+          &quot;text&quot;: &quot;permitted = {\&quot;model_path\&quot;, \&quot;start_checkpoint\&quot;}&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;def restore_training_state&quot;,
+          &quot;line&quot;: 202,
+          &quot;text&quot;: &quot;def restore_training_state(path, iteration, scene, models, args, sgcm=None):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;def save_components&quot;,
+          &quot;line&quot;: 250,
+          &quot;text&quot;: &quot;def save_components(model_path, iteration, models):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;def publish_checkpoint_event&quot;,
+          &quot;line&quot;: 270,
+          &quot;text&quot;: &quot;def publish_checkpoint_event(model_path, iteration, components, training_state, evaluations, args, scene):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;atomic_json(event_path, event)&quot;,
+          &quot;line&quot;: 329,
+          &quot;text&quot;: &quot;atomic_json(event_path, event)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;return event&quot;,
+          &quot;line&quot;: 331,
+          &quot;text&quot;: &quot;return event&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;torch.cuda.set_rng_state_all&quot;,
+          &quot;line&quot;: 242,
+          &quot;text&quot;: &quot;torch.cuda.set_rng_state_all(state[\&quot;cuda_rng\&quot;])&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;scene.hybrid_sampler.restore&quot;,
+          &quot;line&quot;: 246,
+          &quot;text&quot;: &quot;scene.hybrid_sampler.restore(state[\&quot;hybrid_sampler\&quot;])&quot;
+        }
+      ]
+    },
+    &quot;native_loader&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py&quot;,
+      &quot;sha256&quot;: &quot;5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;pcd = o3d.io.read_point_cloud&quot;,
+          &quot;line&quot;: 294,
+          &quot;text&quot;: &quot;pcd = o3d.io.read_point_cloud(os.path.join(args.source_path, \&quot;points3d.ply\&quot;))&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;dynamic_paths = sorted(glob&quot;,
+          &quot;line&quot;: 298,
+          &quot;text&quot;: &quot;dynamic_paths = sorted(glob(os.path.join(args.source_path, \&quot;points3d_dynamic_*.ply\&quot;)))&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;dynamic_pointcloud = np.concatenate&quot;,
+          &quot;line&quot;: 307,
+          &quot;text&quot;: &quot;dynamic_pointcloud = np.concatenate([np.asarray(p.points) for p in dynamic_clouds])&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;nearest, _ = cKDTree&quot;,
+          &quot;line&quot;: 313,
+          &quot;text&quot;: &quot;nearest, _ = cKDTree(dynamic_pointcloud).query(&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;mask = nearest &gt;= 0.1&quot;,
+          &quot;line&quot;: 315,
+          &quot;text&quot;: &quot;mask = nearest &gt;= 0.1&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;static_pointcloud = pointcloud1[mask]&quot;,
+          &quot;line&quot;: 316,
+          &quot;text&quot;: &quot;static_pointcloud = pointcloud1[mask]&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;indices = np.random.choice&quot;,
+          &quot;line&quot;: 522,
+          &quot;text&quot;: &quot;indices = np.random.choice(pointcloud.shape[0], args.num_pts, replace=True)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;np.savetxt(&quot;,
+          &quot;line&quot;: 537,
+          &quot;text&quot;: &quot;np.savetxt(os.path.join(args.source_path, &#x27;transform_matrix.txt&#x27;), transform, fmt=&#x27;%.17g&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;static_pcd = BasicPointCloud&quot;,
+          &quot;line&quot;: 594,
+          &quot;text&quot;: &quot;static_pcd = BasicPointCloud(static_pointcloud, colors=np.zeros([static_pointcloud.shape[0], 3]), normals=None,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;dynamic_pcd = BasicPointCloud&quot;,
+          &quot;line&quot;: 596,
+          &quot;text&quot;: &quot;dynamic_pcd = BasicPointCloud(dynamic_pointcloud, colors=np.zeros([dynamic_pointcloud.shape[0], 3]), normals=None,&quot;
+        }
+      ]
+    },
+    &quot;native_mask_loader&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py&quot;,
+      &quot;sha256&quot;: &quot;a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;def load_dynamic_mask&quot;,
+          &quot;line&quot;: 24,
+          &quot;text&quot;: &quot;def load_dynamic_mask(source_path, camera):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;filename = root /&quot;,
+          &quot;line&quot;: 37,
+          &quot;text&quot;: &quot;filename = root / f\&quot;dynamic_mask_{index}\&quot; / f\&quot;{path.stem}.png\&quot;&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;if shadow.exists()&quot;,
+          &quot;line&quot;: 40,
+          &quot;text&quot;: &quot;if shadow.exists():&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;return mask.to&quot;,
+          &quot;line&quot;: 42,
+          &quot;text&quot;: &quot;return mask.to(device=camera.world_view_transform.device)&quot;
+        }
+      ]
+    },
+    &quot;native_raster_alpha_and_env&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py&quot;,
+      &quot;sha256&quot;: &quot;35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;rasterizer(**render_kwargs)&quot;,
+          &quot;line&quot;: 103,
+          &quot;text&quot;: &quot;contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rasterizer(**render_kwargs)&quot;,
+          &quot;line&quot;: 150,
+          &quot;text&quot;: &quot;contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rasterizer(**dynamic_render_kwargs)&quot;,
+          &quot;line&quot;: 107,
+          &quot;text&quot;: &quot;contrib_d, rendered_image_d, rendered_feature_d, radii_d = rasterizer(**dynamic_render_kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rasterizer(**static_render_kwargs)&quot;,
+          &quot;line&quot;: 109,
+          &quot;text&quot;: &quot;contrib_s, rendered_image_s, rendered_feature_s, radii_s = rasterizer(**static_render_kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_feature.split&quot;,
+          &quot;line&quot;: 111,
+          &quot;text&quot;: &quot;rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_feature.split&quot;,
+          &quot;line&quot;: 151,
+          &quot;text&quot;: &quot;rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_feature_s.split&quot;,
+          &quot;line&quot;: 112,
+          &quot;text&quot;: &quot;rendered_other_s, rendered_depth_s, rendered_opacity_s = rendered_feature_s.split([S_other, 1, 1], dim=0)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_feature_d.split&quot;,
+          &quot;line&quot;: 113,
+          &quot;text&quot;: &quot;rendered_other_d, rendered_depth_d, rendered_opacity_d = rendered_feature_d.split([S_other, 1, 1], dim=0)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_image = rendered_image +&quot;,
+          &quot;line&quot;: 119,
+          &quot;text&quot;: &quot;rendered_image = rendered_image + (1 - rendered_opacity) * bg_color_from_envmap&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_image = rendered_image +&quot;,
+          &quot;line&quot;: 154,
+          &quot;text&quot;: &quot;rendered_image = rendered_image + (1 - rendered_opacity) * bg_color_from_envmap&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;rendered_image_s = rendered_image_s +&quot;,
+          &quot;line&quot;: 120,
+          &quot;text&quot;: &quot;rendered_image_s = rendered_image_s + (1 - rendered_opacity_s) * bg_color_from_envmap&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;\&quot;alpha\&quot;: rendered_opacity&quot;,
+          &quot;line&quot;: 131,
+          &quot;text&quot;: &quot;\&quot;alpha\&quot;: rendered_opacity,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;\&quot;alpha\&quot;: rendered_opacity&quot;,
+          &quot;line&quot;: 161,
+          &quot;text&quot;: &quot;\&quot;alpha\&quot;: rendered_opacity,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;\&quot;static_alpha\&quot;: rendered_opacity_s&quot;,
+          &quot;line&quot;: 134,
+          &quot;text&quot;: &quot;\&quot;static_alpha\&quot;: rendered_opacity_s,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;\&quot;dynamic_alpha\&quot;: rendered_opacity_d&quot;,
+          &quot;line&quot;: 136,
+          &quot;text&quot;: &quot;\&quot;dynamic_alpha\&quot;: rendered_opacity_d,&quot;
+        }
+      ]
+    },
+    &quot;single_wrapper&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py&quot;,
+      &quot;sha256&quot;: &quot;8a9f112b49416b6aa0bde578ef8abcd72effa619ae78f211ebbae38665010c11&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;start_iteration==10000&quot;,
+          &quot;line&quot;: 24,
+          &quot;text&quot;: &quot;if opts.mode in [&#x27;smoke&#x27;,&#x27;formal&#x27;]:assert opts.checkpoint.resolve()==source.resolve() and start_iteration==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;config[&#x27;iterations&#x27;]==config[&#x27;position_lr_max_steps&#x27;]==30000&quot;,
+          &quot;line&quot;: 26,
+          &quot;text&quot;: &quot;assert config[&#x27;iterations&#x27;]==config[&#x27;position_lr_max_steps&#x27;]==30000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;def protected_savetxt&quot;,
+          &quot;line&quot;: 38,
+          &quot;text&quot;: &quot;def protected_savetxt(filename,array,*args,**kwargs):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;source_write=False&quot;,
+          &quot;line&quot;: 45,
+          &quot;text&quot;: &quot;source_write=False,method_changes={}))&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;stack,ema=original_restore&quot;,
+          &quot;line&quot;: 113,
+          &quot;text&quot;: &quot;stack,ema=original_restore(path,iteration,scene,models,args,sgcm=sgcm)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;ignored=[&#x27;model_path&#x27;,&#x27;start_checkpoint&#x27;]&quot;,
+          &quot;line&quot;: 116,
+          &quot;text&quot;: &quot;ignored=[&#x27;model_path&#x27;,&#x27;start_checkpoint&#x27;]&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;errors+=differences&quot;,
+          &quot;line&quot;: 123,
+          &quot;text&quot;: &quot;errors+=differences(old,models[name].capture(),name);del old;gc.collect()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;event=original_publish&quot;,
+          &quot;line&quot;: 131,
+          &quot;text&quot;: &quot;event=original_publish(root,iteration,*args,**kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;formal&quot;,
+          &quot;line&quot;: 24,
+          &quot;text&quot;: &quot;if opts.mode in [&#x27;smoke&#x27;,&#x27;formal&#x27;]:assert opts.checkpoint.resolve()==source.resolve() and start_iteration==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;formal&quot;,
+          &quot;line&quot;: 29,
+          &quot;text&quot;: &quot;if opts.mode==&#x27;formal&#x27;:&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;formal&quot;,
+          &quot;line&quot;: 133,
+          &quot;text&quot;: &quot;if (opts.mode==&#x27;smoke&#x27; and time.monotonic()-started&gt;=opts.smoke_seconds) or (opts.mode==&#x27;formal&#x27; and iteration==30000):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;formal&quot;,
+          &quot;line&quot;: 136,
+          &quot;text&quot;: &quot;accounting=&#x27;smoke_only_extra&#x27; if opts.mode==&#x27;smoke&#x27; else &#x27;formal_total30000_from_original10000&#x27;,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;formal&quot;,
+          &quot;line&quot;: 138,
+          &quot;text&quot;: &quot;learning_rate_horizon=30000,formal_stop=30000,max_allocated_bytes=torch.cuda.max_memory_allocated(),&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;raise CompleteBoundary()&quot;,
+          &quot;line&quot;: 110,
+          &quot;text&quot;: &quot;raise CompleteBoundary()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;raise CompleteBoundary()&quot;,
+          &quot;line&quot;: 140,
+          &quot;text&quot;: &quot;raise CompleteBoundary()&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;diagnostic_node[0]=iteration&quot;,
+          &quot;line&quot;: 98,
+          &quot;text&quot;: &quot;diagnostic_node[0]=iteration&quot;
+        }
+      ]
+    },
+    &quot;dual_wrapper&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py&quot;,
+      &quot;sha256&quot;: &quot;457565ff056b10c1e76ae77480a8e3eb26043653f982a6c948660b24fd26a1a5&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;start_iteration=0&quot;,
+          &quot;line&quot;: 33,
+          &quot;text&quot;: &quot;start_iteration=0;config=json.loads((ROOT/&#x27;config.json&#x27;).read_text())&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;config[&#x27;iterations&#x27;]==config[&#x27;position_lr_max_steps&#x27;]==30000&quot;,
+          &quot;line&quot;: 34,
+          &quot;text&quot;: &quot;assert config[&#x27;iterations&#x27;]==config[&#x27;position_lr_max_steps&#x27;]==30000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;opts.checkpoint is None&quot;,
+          &quot;line&quot;: 32,
+          &quot;text&quot;: &quot;assert opts.checkpoint is None&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;110077&quot;,
+          &quot;line&quot;: 66,
+          &quot;text&quot;: &quot;assert len(scene.dynamic_gaussians.get_xyz)==identity[&#x27;source_real_point_count&#x27;]==110077&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;110077&quot;,
+          &quot;line&quot;: 104,
+          &quot;text&quot;: &quot;historical=1730*(110077/98452)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;110077&quot;,
+          &quot;line&quot;: 108,
+          &quot;text&quot;: &quot;historical_single10k_seconds=1730,input_point_ratio=110077/98452,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;590681&quot;,
+          &quot;line&quot;: 67,
+          &quot;text&quot;: &quot;assert len(scene.gaussians.get_xyz)==590681 and len(scene.getTrainCameras())==49&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;event=original_publish&quot;,
+          &quot;line&quot;: 151,
+          &quot;text&quot;: &quot;event=original_publish(root,iteration,*args,**kwargs)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;iteration==10000&quot;,
+          &quot;line&quot;: 46,
+          &quot;text&quot;: &quot;if opts.mode==&#x27;extend&#x27;:assert start_iteration==5000 and opts.stop_iteration==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 39,
+          &quot;text&quot;: &quot;assert opts.stop_iteration==5000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 40,
+          &quot;text&quot;: &quot;for key in diagnostic_keys:config[key]=sorted(set(config[key])|{5000})&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 43,
+          &quot;text&quot;: &quot;write(out/&#x27;user_budget_and_diagnostic_cadence.json&#x27;,dict(total_formal_budget=10000,phase_stop=5000,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 44,
+          &quot;text&quot;: &quot;added_complete_checkpoint_eval_node=5000,learning_rate_horizon=30000,method_changes={},&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 46,
+          &quot;text&quot;: &quot;if opts.mode==&#x27;extend&#x27;:assert start_iteration==5000 and opts.stop_iteration==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;5000&quot;,
+          &quot;line&quot;: 156,
+          &quot;text&quot;: &quot;accounting=&#x27;smoke_only_extra&#x27; if opts.mode==&#x27;smoke&#x27; else &#x27;fresh_formal_total10000_in_5000_then_5000_phases&#x27;,&quot;
+        }
+      ]
+    },
+    &quot;dual_controller&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py&quot;,
+      &quot;sha256&quot;: &quot;fef41debde71b89eebb200d6a66095398a96f9549861b5c0154acd9917a6e316&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;run(&#x27;smoke&#x27;&quot;,
+          &quot;line&quot;: 45,
+          &quot;text&quot;: &quot;run(&#x27;smoke&#x27;,ROOT/&#x27;source/train_dual.py&#x27;,&#x27;--mode&#x27;,&#x27;smoke&#x27;,&#x27;--output&#x27;,ROOT/&#x27;smoke&#x27;,&#x27;--smoke-policy&#x27;,&#x27;adaptive500&#x27;,&#x27;--smoke-seconds&#x27;,&#x27;540&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;run(&#x27;smoke_eval&#x27;&quot;,
+          &quot;line&quot;: 47,
+          &quot;text&quot;: &quot;run(&#x27;smoke_eval&#x27;,ROOT/&#x27;source/evaluate_dual_layers.py&#x27;,&#x27;--model&#x27;,ROOT/&#x27;smoke&#x27;,&#x27;--iteration&#x27;,step,&#x27;--output&#x27;,ROOT/&#x27;smoke_eval&#x27;,&#x27;--quick&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;run(&#x27;smoke_resume2step&#x27;&quot;,
+          &quot;line&quot;: 48,
+          &quot;text&quot;: &quot;run(&#x27;smoke_resume2step&#x27;,ROOT/&#x27;source/train_dual.py&#x27;,&#x27;--mode&#x27;,&#x27;resume2step&#x27;,&#x27;--checkpoint&#x27;,ROOT/&#x27;smoke&#x27;/f&#x27;chkpnt{step}.pth&#x27;,&#x27;--output&#x27;,ROOT/&#x27;smoke_resume2step&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;smoke_a5_evaluation&quot;,
+          &quot;line&quot;: 56,
+          &quot;text&quot;: &quot;a5(&#x27;smoke_a5_evaluation&#x27;,ROOT/&#x27;smoke&#x27;,step)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;run(&#x27;formal5k&#x27;&quot;,
+          &quot;line&quot;: 62,
+          &quot;text&quot;: &quot;run(&#x27;formal5k&#x27;,ROOT/&#x27;source/train_dual.py&#x27;,&#x27;--mode&#x27;,&#x27;formal&#x27;,&#x27;--stop-iteration&#x27;,&#x27;5000&#x27;,&#x27;--output&#x27;,ROOT/&#x27;formal5k&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;run(&#x27;formal10k&#x27;&quot;,
+          &quot;line&quot;: 71,
+          &quot;text&quot;: &quot;run(&#x27;formal10k&#x27;,ROOT/&#x27;source/train_dual.py&#x27;,&#x27;--mode&#x27;,&#x27;extend&#x27;,&#x27;--checkpoint&#x27;,ROOT/&#x27;formal5k/chkpnt5000.pth&#x27;,&#x27;--stop-iteration&#x27;,&#x27;10000&#x27;,&#x27;--output&#x27;,ROOT/&#x27;formal10k&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;&#x27;--mode&#x27;,&#x27;formal&#x27;&quot;,
+          &quot;line&quot;: 62,
+          &quot;text&quot;: &quot;run(&#x27;formal5k&#x27;,ROOT/&#x27;source/train_dual.py&#x27;,&#x27;--mode&#x27;,&#x27;formal&#x27;,&#x27;--stop-iteration&#x27;,&#x27;5000&#x27;,&#x27;--output&#x27;,ROOT/&#x27;formal5k&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;verify_inputs(&quot;,
+          &quot;line&quot;: 13,
+          &quot;text&quot;: &quot;def verify_inputs(label):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;verify_inputs(&quot;,
+          &quot;line&quot;: 39,
+          &quot;text&quot;: &quot;verify_inputs(&#x27;before_smoke&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;verify_inputs(&quot;,
+          &quot;line&quot;: 57,
+          &quot;text&quot;: &quot;verify_inputs(&#x27;after_smoke&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;verify_inputs(&quot;,
+          &quot;line&quot;: 78,
+          &quot;text&quot;: &quot;verify_inputs(&#x27;after_formal_and_eval&#x27;)&quot;
+        }
+      ]
+    },
+    &quot;revised_master&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py&quot;,
+      &quot;sha256&quot;: &quot;5e581429694386705e6c13408a910356e604d474b539626527e89253e5dab273&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;active_budget&quot;,
+          &quot;line&quot;: 49,
+          &quot;text&quot;: &quot;budget=json.loads((ROOT/&#x27;active_budget.json&#x27;).read_text())&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;active_budget&quot;,
+          &quot;line&quot;: 51,
+          &quot;text&quot;: &quot;assert sha(ROOT/&#x27;active_budget.json&#x27;)==sha(DUAL/&#x27;active_budget.json&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;active_budget&quot;,
+          &quot;line&quot;: 75,
+          &quot;text&quot;: &quot;active_budget=str(ROOT/&#x27;active_budget.json&#x27;),released_unix=time.time(),shutdown=False))&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 1,
+          &quot;text&quot;: &quot;\&quot;\&quot;\&quot;No new single formal updates; evaluate10K, then dual smoke/fresh5K-&gt;10K.\&quot;\&quot;\&quot;&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 34,
+          &quot;text&quot;: &quot;if label.startswith(&#x27;reference_a5_single10k&#x27;) and (ROOT/(label+&#x27;_launch.json&#x27;)).exists():&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 50,
+          &quot;text&quot;: &quot;assert budget[&#x27;single_new_formal_updates&#x27;]==0 and budget[&#x27;dual_fresh_stop&#x27;]==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 67,
+          &quot;text&quot;: &quot;a5(&#x27;reference_a5_single10k_retry1&#x27;,source.parent,10000,[37],&#x27;delete_a37&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 74,
+          &quot;text&quot;: &quot;single_new_formal_updates=0,dual_formal_total_budget=10000,learning_rate_horizon=30000,smoke_extra_updates_excluded=True,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;single&quot;,
+          &quot;line&quot;: 79,
+          &quot;text&quot;: &quot;status(&#x27;COMPLETE_SINGLE10K_REFERENCE_DUAL_FRESH5K_TO10K&#x27;,single_new_formal_updates=0,dual_fresh_formal_iterations=10000,quality_accepted=False,human_verdict=None)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;a5(&quot;,
+          &quot;line&quot;: 33,
+          &quot;text&quot;: &quot;def a5(label,model,step,aliases,delete_name):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;a5(&quot;,
+          &quot;line&quot;: 67,
+          &quot;text&quot;: &quot;a5(&#x27;reference_a5_single10k_retry1&#x27;,source.parent,10000,[37],&#x27;delete_a37&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;a5(&quot;,
+          &quot;line&quot;: 68,
+          &quot;text&quot;: &quot;a5(&#x27;smoke_a5_evaluation&#x27;,model,step,[37],&#x27;delete_a37&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;a5(&quot;,
+          &quot;line&quot;: 70,
+          &quot;text&quot;: &quot;a5(&#x27;reference_a5_full5_B30k&#x27;,FULL5,30000,[5,26,18,6,37],&#x27;delete_all5&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;audit_gate(&quot;,
+          &quot;line&quot;: 21,
+          &quot;text&quot;: &quot;def audit_gate(directory):&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;audit_gate(&quot;,
+          &quot;line&quot;: 59,
+          &quot;text&quot;: &quot;audit_gate(ROOT);audit_gate(DUAL);source_audit(&#x27;before_short_campaign&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;10000&quot;,
+          &quot;line&quot;: 50,
+          &quot;text&quot;: &quot;assert budget[&#x27;single_new_formal_updates&#x27;]==0 and budget[&#x27;dual_fresh_stop&#x27;]==10000&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;10000&quot;,
+          &quot;line&quot;: 67,
+          &quot;text&quot;: &quot;a5(&#x27;reference_a5_single10k_retry1&#x27;,source.parent,10000,[37],&#x27;delete_a37&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;10000&quot;,
+          &quot;line&quot;: 71,
+          &quot;text&quot;: &quot;required=[FULL5/f&#x27;{prefix}10000.pth&#x27; for prefix in [&#x27;chkpnt&#x27;,&#x27;dynamic_chkpnt&#x27;,&#x27;env_light_chkpnt&#x27;,&#x27;training_state&#x27;]]&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;10000&quot;,
+          &quot;line&quot;: 74,
+          &quot;text&quot;: &quot;single_new_formal_updates=0,dual_formal_total_budget=10000,learning_rate_horizon=30000,smoke_extra_updates_excluded=True,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;10000&quot;,
+          &quot;line&quot;: 79,
+          &quot;text&quot;: &quot;status(&#x27;COMPLETE_SINGLE10K_REFERENCE_DUAL_FRESH5K_TO10K&#x27;,single_new_formal_updates=0,dual_fresh_formal_iterations=10000,quality_accepted=False,human_verdict=None)&quot;
+        }
+      ]
+    },
+    &quot;old_master_disabled&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py&quot;,
+      &quot;sha256&quot;: &quot;c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;DISABLED&quot;,
+          &quot;line&quot;: 1,
+          &quot;text&quot;: &quot;raise SystemExit(&#x27;DISABLED: user reduced the budget. No single formal extension; dual formal stops at 5K then at most10K. Use run_short_campaign.py only.&#x27;)&quot;
+        }
+      ]
+    },
+    &quot;common_a5_evaluator&quot;: {
+      &quot;path&quot;: &quot;/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py&quot;,
+      &quot;sha256&quot;: &quot;be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc&quot;,
+      &quot;matches&quot;: [
+        {
+          &quot;needle&quot;: &quot;--dynamic-aliases&quot;,
+          &quot;line&quot;: 10,
+          &quot;text&quot;: &quot;--output RUN/a5_eval30k --dynamic-aliases 37 6 --delete-name delete_a37_a6&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;--dynamic-aliases&quot;,
+          &quot;line&quot;: 476,
+          &quot;text&quot;: &quot;parser.add_argument(&#x27;--dynamic-aliases&#x27;, type=int, nargs=&#x27;+&#x27;, required=True)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;--delete-name&quot;,
+          &quot;line&quot;: 10,
+          &quot;text&quot;: &quot;--output RUN/a5_eval30k --dynamic-aliases 37 6 --delete-name delete_a37_a6&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;--delete-name&quot;,
+          &quot;line&quot;: 477,
+          &quot;text&quot;: &quot;parser.add_argument(&#x27;--delete-name&#x27;, required=True)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;--delete-name&quot;,
+          &quot;line&quot;: 494,
+          &quot;text&quot;: &quot;parser.error(&#x27;Use a distinct simple --delete-name without path separators&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;labels == 1&quot;,
+          &quot;line&quot;: 189,
+          &quot;text&quot;: &quot;mask = np.ascontiguousarray(labels == 1)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;labels == 1&quot;,
+          &quot;line&quot;: 439,
+          &quot;text&quot;: &quot;fixed_denominator=dict(rule=&#x27;observations actor_labels == 1 (a5)&#x27;,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;&#x27;alpha&#x27;&quot;,
+          &quot;line&quot;: 385,
+          &quot;text&quot;: &quot;keep_alpha = tensor_alpha(package[&#x27;alpha&#x27;])&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;&#x27;static_alpha&#x27;&quot;,
+          &quot;line&quot;: 386,
+          &quot;text&quot;: &quot;deleted_alpha = tensor_alpha(package[&#x27;static_alpha&#x27;])&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;expected_mask_pixels&quot;,
+          &quot;line&quot;: 214,
+          &quot;text&quot;: &quot;if total != options.expected_mask_pixels:&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;expected_mask_pixels&quot;,
+          &quot;line&quot;: 215,
+          &quot;text&quot;: &quot;raise ValueError(f&#x27;Fixed a5 denominator mismatch: {total} != {options.expected_mask_pixels}&#x27;)&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;expected_mask_pixels&quot;,
+          &quot;line&quot;: 489,
+          &quot;text&quot;: &quot;if options.iteration &lt;= 0 or options.expected_mask_pixels &lt;= 0 or options.replay_tolerance &lt; 0:&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;complete_all49_keep_delete_replay&quot;,
+          &quot;line&quot;: 455,
+          &quot;text&quot;: &quot;complete_all49_keep_delete_replay=replay_checks == 98,&quot;
+        },
+        {
+          &quot;needle&quot;: &quot;optimization_updates=0&quot;,
+          &quot;line&quot;: 434,
+          &quot;text&quot;: &quot;model=str(options.model), optimizer_created=False, optimization_updates=0,&quot;
+        }
+      ]
+    }
+  },
+  &quot;unresolved_mandatory_source_defects&quot;: [],
+  &quot;runtime_acceptance_remaining&quot;: &quot;Long smoke completion, native replay, two-step exact restore, common a5 evaluator entry and later formal result acceptance are separate runtime obligations owned by the parent/experiment runner. This audit does not declare them passed before their receipts exist.&quot;
+}</pre></details></section>
+<section><h2>已完成训练与额外开销分开记账</h2><div class="scroll"><table><thead><tr><th>前阶段组</th><th>已完成正式更新</th><th>评价节点</th><th>额外开销</th></tr></thead><tbody><tr><td>Single · 仅a37</td><td>沿用原10K；前阶段新增正式0</td><td>原10K新鲜49帧评价</td><td>11977的额外1977保留工程账，后续精确续训不重记</td></tr><tr><td>Dual · 完整a37+a6</td><td>fresh 10,000更新</td><td>5K、10K</td><td>独立smoke、恢复探针、工程失败与零更新评价另记</td></tr><tr><td>Round1 原输入 / 补真实支撑</td><td>各fresh5,000；共10,000更新</td><td>1K、5K；1K→5K完整恢复</td><td>1K是正式轨迹节点，不重复加算</td></tr></tbody></table></div><p>累计已完成正式20,000＋工程6,599＝26,599更新，范围截至Round1；当前研究新增步骤另按实际回执计账。<a href="evidence/execution_accounting_through_round1_20261107.json">累计账目与旧凭据引用</a></p>
+<p>诊断节点发布不改原30K学习率时钟。旧目录中即使仍含 <code>30k</code>，也不表示继续执行30K。没有回执的工程失败更新数保持未知，不计成0。</p><p>已取回实账：Single新增正式0步，Dual正式10000步；既有smoke/恢复合计2481工程更新。time-only2011工程已完整执行，但负结果不采纳；screen-only2107另按独立回执记账。</p><details><summary>逐项执行回执与预算合同</summary><p><a href="evidence/experiment_contract.json">实验合同</a> · <a href="evidence/run_receipts/dual/execution_accounting_final.json">已完成实账</a> · <a href="evidence/agent_visual_review.json">代理目视记录（human_verdict为空）</a></p><ul><li><a href="evidence/run_receipts/compute_accounting_through_screen_candidate.json">compute_accounting_through_screen_candidate.json</a> <small>{&quot;status&quot;: &quot;COMPLETED_RECEIPTS_THROUGH_SCREEN_RADIUS_CANDIDATE&quot;}</small></li><li><a href="evidence/run_receipts/compute_accounting_through_time_candidate.json">compute_accounting_through_time_candidate.json</a> <small>{&quot;status&quot;: &quot;COMPLETED_RECEIPTS_THROUGH_NEGATIVE_TIME_CANDIDATE&quot;}</small></li><li><a href="evidence/run_receipts/dual/active_budget.json">active_budget.json</a> <small>{&quot;status&quot;: &quot;ACTIVE_USER_REDUCED_BUDGET&quot;}</small></li><li><a href="evidence/run_receipts/dual/after_formal_and_eval_input_readonly_audit.json">after_formal_and_eval_input_readonly_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTIVE_BUDGET_IDENTITY_CONFIG_SOURCE_READ_ONLY&quot;}</small></li><li><a href="evidence/run_receipts/dual/after_smoke_input_readonly_audit.json">after_smoke_input_readonly_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTIVE_BUDGET_IDENTITY_CONFIG_SOURCE_READ_ONLY&quot;}</small></li><li><a href="evidence/run_receipts/dual/before_smoke_input_readonly_audit.json">before_smoke_input_readonly_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTIVE_BUDGET_IDENTITY_CONFIG_SOURCE_READ_ONLY&quot;}</small></li><li><a href="evidence/run_receipts/dual/config.json">config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/dual10k_retrieval_receipt.json">dual10k_retrieval_receipt.json</a> <small>{&quot;status&quot;: &quot;PASS_LIGHT_EVIDENCE_PACK&quot;}</small></li><li><a href="evidence/run_receipts/dual/dual5k_retrieval_receipt.json">dual5k_retrieval_receipt.json</a> <small>{&quot;status&quot;: &quot;PASS_LIGHT_EVIDENCE_PACK&quot;}</small></li><li><a href="evidence/run_receipts/dual/execution_accounting_final.json">execution_accounting_final.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_REDUCED_BUDGET_ACCOUNTING&quot;}</small></li><li><a href="evidence/run_receipts/dual/formal10k/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_FULL_ORIGINAL_A6_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/dual/formal10k/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/dual/formal10k/checkpoint_events/iteration_010000.json">iteration_010000.json</a> <small>{&quot;status&quot;: &quot;complete&quot;, &quot;iteration&quot;: 10000}</small></li><li><a href="evidence/run_receipts/dual/formal10k/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/formal10k/last_complete_node.json">last_complete_node.json</a> <small>{&quot;iteration&quot;: 10000, &quot;elapsed_seconds&quot;: 1258.4843191802502}</small></li><li><a href="evidence/run_receipts/dual/formal10k/progress.json">progress.json</a> <small>{&quot;iteration&quot;: 10000, &quot;elapsed_seconds&quot;: 1105.482168380171}</small></li><li><a href="evidence/run_receipts/dual/formal10k/restore_audit.json">restore_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_EXACT_FULL_RESTORE&quot;, &quot;iteration&quot;: 5000, &quot;updates&quot;: 0}</small></li><li><a href="evidence/run_receipts/dual/formal10k/returned.json">returned.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;, &quot;mode&quot;: &quot;extend&quot;, &quot;iteration&quot;: 10000, &quot;elapsed_seconds&quot;: 1258.4844360873103}</small></li><li><a href="evidence/run_receipts/dual/formal10k/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/formal5k/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_FULL_ORIGINAL_A6_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/dual/formal5k/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/dual/formal5k/checkpoint_events/iteration_005000.json">iteration_005000.json</a> <small>{&quot;status&quot;: &quot;complete&quot;, &quot;iteration&quot;: 5000}</small></li><li><a href="evidence/run_receipts/dual/formal5k/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/formal5k/last_complete_node.json">last_complete_node.json</a> <small>{&quot;iteration&quot;: 5000, &quot;elapsed_seconds&quot;: 738.0019014514983}</small></li><li><a href="evidence/run_receipts/dual/formal5k/progress.json">progress.json</a> <small>{&quot;iteration&quot;: 5000, &quot;elapsed_seconds&quot;: 597.8594476599246}</small></li><li><a href="evidence/run_receipts/dual/formal5k/returned.json">returned.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;, &quot;mode&quot;: &quot;formal&quot;, &quot;iteration&quot;: 5000, &quot;elapsed_seconds&quot;: 738.002009531483}</small></li><li><a href="evidence/run_receipts/dual/formal5k/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/formal5k/user_budget_and_diagnostic_cadence.json">user_budget_and_diagnostic_cadence.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/identity_contract.json">identity_contract.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/independent_preflight_audit.json">independent_preflight_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_SOURCE_AND_CPU_INPUT_AUDIT_RUNTIME_SMOKES_TRACKED_SEPARATELY&quot;}</small></li><li><a href="evidence/run_receipts/dual/preparation_receipt.json">preparation_receipt.json</a> <small>{&quot;status&quot;: &quot;PASS_CPU_PREPARATION_IDENTITY_AND_PIXEL_UNION&quot;, &quot;training_updates&quot;: 0}</small></li><li><a href="evidence/run_receipts/dual/preview_5k_ready.json">preview_5k_ready.json</a> <small>{&quot;status&quot;: &quot;READY_DUAL_FRESH_5K_ZERO_UPDATE_A5_PREVIEW&quot;, &quot;iteration&quot;: 5000}</small></li><li><a href="evidence/run_receipts/dual/queue_status.json">queue_status.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_FULL_ORIGINAL_A6_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/dual/smoke/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/dual/smoke/checkpoint_events/iteration_000500.json">iteration_000500.json</a> <small>{&quot;status&quot;: &quot;complete&quot;, &quot;iteration&quot;: 500}</small></li><li><a href="evidence/run_receipts/dual/smoke/diagnostic_schedule_smoke_only.json">diagnostic_schedule_smoke_only.json</a> <small>{&quot;status&quot;: &quot;ADDED_ONE_SMOKE_ONLY_DIAGNOSTIC_NODE&quot;, &quot;iteration&quot;: 500, &quot;elapsed_seconds&quot;: 69.70136205293238}</small></li><li><a href="evidence/run_receipts/dual/smoke/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke/last_complete_node.json">last_complete_node.json</a> <small>{&quot;iteration&quot;: 500, &quot;elapsed_seconds&quot;: 202.50768623501062}</small></li><li><a href="evidence/run_receipts/dual/smoke/progress.json">progress.json</a> <small>{&quot;iteration&quot;: 500, &quot;elapsed_seconds&quot;: 69.69755361415446}</small></li><li><a href="evidence/run_receipts/dual/smoke/returned.json">returned.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;, &quot;mode&quot;: &quot;smoke&quot;, &quot;iteration&quot;: 500, &quot;elapsed_seconds&quot;: 202.50792597047985}</small></li><li><a href="evidence/run_receipts/dual/smoke/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke/smoke_time_policy.json">smoke_time_policy.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke_only_launch.json">smoke_only_launch.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_FULL_ORIGINAL_A6_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/restore_audit.json">restore_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_EXACT_FULL_RESTORE&quot;, &quot;iteration&quot;: 500, &quot;updates&quot;: 0}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/resume_entry.json">resume_entry.json</a> <small>{&quot;status&quot;: &quot;PASS_NEXT_TRAINING_ENTRY&quot;}</small></li><li><a href="evidence/run_receipts/dual/smoke_resume2step/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/dual/smoke_summary.json">smoke_summary.json</a> <small>{&quot;status&quot;: &quot;PASS_REAL_GPU_SMOKE_SAVE_EVAL_FULL_RESTORE_A5_NEXT_ENTRY&quot;}</small></li><li><a href="evidence/run_receipts/final_local_retrieval_verification.json">final_local_retrieval_verification.json</a> <small>{&quot;status&quot;: &quot;PASS_FINAL_LOCAL_ARTIFACT_SHA_AND_SHARED_FIXED_DOMAIN&quot;}</small></li><li><a href="evidence/run_receipts/final_readonly_verification.json">final_readonly_verification.json</a> <small>{&quot;status&quot;: &quot;PASS_FINAL_SCOPED_READONLY_AND_GPU_IDLE_VERIFICATION&quot;}</small></li><li><a href="evidence/run_receipts/receipt_readme.json">receipt_readme.json</a> <small>{&quot;status&quot;: &quot;ACTUAL_RECEIPTS_WITH_REDUCED_BUDGET&quot;}</small></li><li><a href="evidence/run_receipts/retrieval_manifest.json">retrieval_manifest.json</a> <small>{&quot;status&quot;: &quot;PASS_RECEIPT_ARCHIVE_SHA&quot;}</small></li><li><a href="evidence/run_receipts/single/active_budget.json">active_budget.json</a> <small>{&quot;status&quot;: &quot;ACTIVE_USER_REDUCED_BUDGET&quot;}</small></li><li><a href="evidence/run_receipts/single/after_short_campaign_source_audit.json">after_short_campaign_source_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_SOURCE_CHECKPOINT_AND_ENGINE_UNCHANGED&quot;}</small></li><li><a href="evidence/run_receipts/single/before_short_campaign_source_audit.json">before_short_campaign_source_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_SOURCE_CHECKPOINT_AND_ENGINE_UNCHANGED&quot;}</small></li><li><a href="evidence/run_receipts/single/config.json">config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/continuation_contract.json">continuation_contract.json</a> <small>{&quot;status&quot;: &quot;READY_FROM_ORIGINAL_FULL_10000&quot;}</small></li><li><a href="evidence/run_receipts/single/engineering_replay.json">engineering_replay.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/execution_accounting_final.json">execution_accounting_final.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_REDUCED_BUDGET_ACCOUNTING&quot;}</small></li><li><a href="evidence/run_receipts/single/failed_reference_a5_single10k/failure.json">failure.json</a> <small>{&quot;status&quot;: &quot;FAILED&quot;}</small></li><li><a href="evidence/run_receipts/single/failed_reference_a5_single10k/source_integrity.json">source_integrity.json</a> <small>{&quot;status&quot;: &quot;PASS_UNCHANGED&quot;, &quot;seconds&quot;: 21.63657609373331}</small></li><li><a href="evidence/run_receipts/single/failed_reference_a5_single10k/source_manifest_before.json">source_manifest_before.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/identity_contract.json">identity_contract.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/independent_preflight_audit.json">independent_preflight_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_SOURCE_AND_CPU_INPUT_AUDIT_RUNTIME_SMOKES_TRACKED_SEPARATELY&quot;}</small></li><li><a href="evidence/run_receipts/single/reference_a5_full5_B10k_unavailable.json">reference_a5_full5_B10k_unavailable.json</a> <small>{&quot;status&quot;: &quot;NOT_AVAILABLE_NO_ADDED_TRAINING&quot;}</small></li><li><a href="evidence/run_receipts/single/reference_a5_single10k_launch.json">reference_a5_single10k_launch.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/reference_a5_single10k_retry1_launch.json">reference_a5_single10k_retry1_launch.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/short_campaign_release_receipt.json">short_campaign_release_receipt.json</a> <small>{&quot;status&quot;: &quot;SINGLE_FORMAL_DISABLED_DUAL_ONLY_FRESH5K_TO_MAX10K&quot;}</small></li><li><a href="evidence/run_receipts/single/short_launch_receipt.json">short_launch_receipt.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/short_queue_status.json">short_queue_status.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_SINGLE_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_launch_receipt.json">smoke_launch_receipt.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_queue_status.json">smoke_queue_status.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_SINGLE_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/checkpoint_events/iteration_011977.json">iteration_011977.json</a> <small>{&quot;status&quot;: &quot;complete&quot;, &quot;iteration&quot;: 11977}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/diagnostic_schedule_after_exact_restore.json">diagnostic_schedule_after_exact_restore.json</a> <small>{&quot;status&quot;: &quot;ADDED_ONE_DIAGNOSTIC_NODE_AFTER_EXACT_RESTORE&quot;, &quot;iteration&quot;: 11977, &quot;elapsed_seconds&quot;: 540.2333580572158}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/last_complete_node.json">last_complete_node.json</a> <small>{&quot;iteration&quot;: 11977, &quot;elapsed_seconds&quot;: 683.8544000145048}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/progress.json">progress.json</a> <small>{&quot;iteration&quot;: 11900, &quot;elapsed_seconds&quot;: 519.1655970159918}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/restore_audit.json">restore_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_EXACT_FULL_RESTORE&quot;, &quot;iteration&quot;: 10000, &quot;updates&quot;: 0}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/returned.json">returned.json</a> <small>{&quot;status&quot;: &quot;PASS_COMPLETE_BOUNDARY&quot;, &quot;mode&quot;: &quot;smoke&quot;, &quot;iteration&quot;: 11977, &quot;elapsed_seconds&quot;: 683.8545043244958}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_launch_receipt.json">smoke_retry1_launch_receipt.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/actual_identity_initialization.json">actual_identity_initialization.json</a> <small>{&quot;status&quot;: &quot;PASS_SINGLE_A37_INITIALIZATION&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/actual_scene_binding.json">actual_scene_binding.json</a> <small>{&quot;status&quot;: &quot;PASS_ACTUAL_SCENE_BINDING&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/effective_config.json">effective_config.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/loader_transform_readonly_audit.json">loader_transform_readonly_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_BYTE_EXACT_TRANSFORM_REDIRECTION&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/restore_audit.json">restore_audit.json</a> <small>{&quot;status&quot;: &quot;PASS_EXACT_FULL_RESTORE&quot;, &quot;iteration&quot;: 11977, &quot;updates&quot;: 0}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/resume_entry.json">resume_entry.json</a> <small>{&quot;status&quot;: &quot;PASS_NEXT_TRAINING_ENTRY&quot;}</small></li><li><a href="evidence/run_receipts/single/smoke_retry1_resume2step/runtime_source_manifest.json">runtime_source_manifest.json</a> <small>{}</small></li><li><a href="evidence/run_receipts/single/smoke_summary.json">smoke_summary.json</a> <small>{&quot;status&quot;: &quot;PASS_REAL_GPU_SMOKE_SAVE_EVAL_FULL_RESTORE_NEXT_ENTRY&quot;}</small></li><li><a href="evidence/run_receipts/single/source_unchanged_after_smoke.json">source_unchanged_after_smoke.json</a> <small>{&quot;status&quot;: &quot;PASS_SOURCE_READ_ONLY&quot;}</small></li><li><a href="evidence/run_receipts/single/storage_budget.json">storage_budget.json</a> <small>{}</small></li></ul></details></section>
+<section><h2>原资产与可复核性</h2><p>新鲜评价逐项记录实际读取源的SHA256、大小与mtime，并核对原生保存图重放；该范围不等于整份远端数据从未写入。旧loader已出现 <code>transform_matrix.txt</code> 同值重写，写入事件与权重只读核验分开列账，具体前后凭据以工程回执为准。历史四帧回执的大小/mtime与张量版本检查，不自动升级为全文件SHA核验。</p>
+<details><summary>摘要、来源清单与源码</summary><ul><li>Full5 B30K（既有参考） · <a href="evidence/reference_full5_B30k/summary.json">49帧摘要</a> · <a href="evidence/reference_full5_B30k/source_integrity.json">完整性</a> · <a href="evidence/reference_full5_B30k/source_manifest_before.json">来源SHA清单</a> · <a href="evidence/full5_30k/receipt.json">历史4帧凭据</a></li><li>仅 a37 · 原10K · <a href="evidence/reference_single10k/summary.json">49帧摘要</a> · <a href="evidence/reference_single10k/source_integrity.json">完整性</a> · <a href="evidence/reference_single10k/source_manifest_before.json">来源SHA清单</a> · <a href="evidence/single10k/receipt.json">历史4帧凭据</a></li><li>完整 a37+a6 · 5K · <a href="evidence/dual5k/summary.json">49帧摘要</a> · <a href="evidence/dual5k/source_integrity.json">完整性</a> · <a href="evidence/dual5k/source_manifest_before.json">来源SHA清单</a></li><li>完整 a37+a6 · 10K · <a href="evidence/dual10k/summary.json">49帧摘要</a> · <a href="evidence/dual10k/source_integrity.json">完整性</a> · <a href="evidence/dual10k/source_manifest_before.json">来源SHA清单</a></li><li>Current 原生10K（沿革） · <a href="evidence/current10k/receipt.json">历史4帧凭据</a></li></ul><p><a href="source/evaluate_a5.py">原生评价源码</a> · <a href="source/build_report.py">可重复构建源码</a> · <a href="architecture.svg">组件图 SVG</a> · <a href="report_data.json">本页manifest与验收</a></p></details></section>
+<footer>同场景训练视角诊断；没有隐藏表面真值或跨场景泛化结论。a5质量未通过，human_verdict为空。task SCENE008-A5-REGRESSION-20261106；failure ledger V82-F06已有记录，本轮更新补充证据 · <span class="missing">研究登记：待取回</span> · <a href="evidence/execution_accounting_through_round1_20261107.json">截至Round1累计账目</a> · <a href="evidence/run_receipts/compute_accounting_through_screen_candidate.json">上一代码阶段实账</a> · <a href="evidence/run_receipts/final_readonly_verification.json">上一阶段只读核验</a>。更新：2026-11-07 00:27 UTC</footer>
+</main></body></html>

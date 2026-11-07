@@ -1,0 +1,48 @@
+{
+  "status": "PASS_FINAL_SCOPED_READONLY_AND_GPU_IDLE_VERIFICATION",
+  "checked_unix": 1793903796.6667337,
+  "checks": [
+    {
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_single_bug_20261106_r1",
+      "status": "PASS_ORIGINAL_WEIGHTS_ENGINE_EXECUTED_SOURCE_AND_PAIRED_COMPLETION",
+      "parent_files": {
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth": true
+      },
+      "original_engine_files": 134,
+      "isolated_engine_files": 48,
+      "changed_common_files": [
+        "gaussian_renderer/__init__.py"
+      ],
+      "actual_engineering_updates": 2011,
+      "executed_source_files": 4
+    },
+    {
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_screen_radius_bug_20261106_r1",
+      "status": "PASS_ORIGINAL_WEIGHTS_ENGINE_EXECUTED_SOURCE_AND_PAIRED_COMPLETION",
+      "parent_files": {
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth": true,
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth": true
+      },
+      "original_engine_files": 134,
+      "isolated_engine_files": 48,
+      "changed_common_files": [
+        "scene/gaussian_model.py"
+      ],
+      "actual_engineering_updates": 2107,
+      "executed_source_files": 3
+    }
+  ],
+  "scope": "Contract-listed original parent files, original/isolated engine Python trees, launch-recorded executed scripts; not a claim about the entire remote filesystem",
+  "formal_new_updates": 10000,
+  "engineering_updates": 6599,
+  "total_new_training_updates": 16599,
+  "gpu_compute_processes": [],
+  "no_further_gpu_experiments_started": true,
+  "shutdown_executed": false,
+  "instance_kept_running_per_user_instruction": true
+}

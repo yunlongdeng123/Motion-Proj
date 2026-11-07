@@ -1,0 +1,11 @@
+{
+  "scope": "区分a5最早欠重建与后续退化/恢复机制，不用短期坏权重回放的负结果冒充完整因果排除。",
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+  "findings": [
+    {"event": "最早已存单a37 1K图", "evidence": "single_bug_source_audit.json/早期single1K检查", "interpretation": "已有车顶不足；尚无证据说明车顶曾完整形成后才被删除。"},
+    {"event": "static opacity reset", "first_step": 3000, "subsequent_steps": [6000, 9000, 12000], "interpretation": "9K reset可能影响10K到11977恢复过程，但不能单独解释1K时的初次欠重建。11977未跨12K reset。"},
+    {"event": "max_screen_size首次启用", "condition": "iteration > opacity_reset_interval 且 iteration % densification_interval == 0", "opacity_reset_interval": 3000, "densification_interval": 100, "first_step": 3100, "interpretation": "已证屏幕半径bookkeeping错误在此后使配置的裁剪失效；不能单独解释1K时已出现的最早车顶不足。它仍会改变后续拓扑和坏权重恢复。"},
+    {"event": "候选time_shift 1977步回放", "interpretation": "同原10K起点的候选回放变差，未验证为足够的a5修复；此结果不证明从头训练时该分支行为完全无影响。"}
+  ],
+  "remaining_uncertainty": "a5退出动态池后，初始化支撑与静态监督/时间表示同时变化。现有原合同内实验尚未单变量隔离这几项，不能指定唯一bug提交。"
+}

@@ -1,0 +1,53 @@
+{
+  "status": "INSUFFICIENT_REAL_NON_TARGET_SOURCE_STOPPED",
+  "required": 19916,
+  "eligible_before_cross_actor_dedup": 13835,
+  "actors": [
+    {
+      "alias": 26,
+      "source_actor_index": 1,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_1.ply",
+      "source_rows": 15193,
+      "source_unique_xyz_time": 15193,
+      "missing_unique_rows": 14189,
+      "missing_rows_distance_to_a5_ge1m": 1537,
+      "missing_rows_retained_by_a37_exclusion": 14189,
+      "eligible_both": 1537,
+      "rejected_close_a5": 12652,
+      "rejected_original_a37_exclusion": 0,
+      "source_sha256": "21b3a0d7a78977ccf44581f2d10ae1b614d7fb89b6d193cee119a9fb09538e5c"
+    },
+    {
+      "alias": 18,
+      "source_actor_index": 2,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_2.ply",
+      "source_rows": 2444,
+      "source_unique_xyz_time": 2444,
+      "missing_unique_rows": 2293,
+      "missing_rows_distance_to_a5_ge1m": 2293,
+      "missing_rows_retained_by_a37_exclusion": 2293,
+      "eligible_both": 2293,
+      "rejected_close_a5": 0,
+      "rejected_original_a37_exclusion": 0,
+      "source_sha256": "7e1dd402cc3bc3c060bbda95306b0d36ceec2bffe03002df29125f124358b4b6"
+    },
+    {
+      "alias": 6,
+      "source_actor_index": 3,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply",
+      "source_rows": 11625,
+      "source_unique_xyz_time": 11625,
+      "missing_unique_rows": 10770,
+      "missing_rows_distance_to_a5_ge1m": 10770,
+      "missing_rows_retained_by_a37_exclusion": 10005,
+      "eligible_both": 10005,
+      "rejected_close_a5": 0,
+      "rejected_original_a37_exclusion": 765,
+      "source_sha256": "0f33b6f70164cbbd7a32600419304e8acd508470e5f19c2949101de493be168d"
+    }
+  ],
+  "criteria": "Missing exact xyz+nx model_time from old600K; full a26/a18/a6 only; Euclidean XYZ distance to full a5 >=1m; retain original selected-a37 nearest-distance>=0.1m.",
+  "GPU_used": false,
+  "training_updates": 0,
+  "new_control_root_created": false
+}

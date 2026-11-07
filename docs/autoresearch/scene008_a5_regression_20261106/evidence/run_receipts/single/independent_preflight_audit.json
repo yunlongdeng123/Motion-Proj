@@ -1,0 +1,2252 @@
+{
+  "schema_version": 1,
+  "audit_timestamp_utc": "2026-11-05T17:13:11.927903+00:00",
+  "status": "PASS_SOURCE_AND_CPU_INPUT_AUDIT_RUNTIME_SMOKES_TRACKED_SEPARATELY",
+  "auditor": "remote_history independent read-only audit; dual preparation was authored earlier by the same agent and is explicitly rechecked against original assets here",
+  "audit_GPU_used": false,
+  "audit_training_updates": 0,
+  "remote_audit_file_writes": 0,
+  "shutdown_performed": false,
+  "current_source_snapshot_stable_during_audit": true,
+  "latest_user_budget": {
+    "active_budget": {
+      "status": "ACTIVE_USER_REDUCED_BUDGET",
+      "single_new_formal_updates": 0,
+      "single_reference_formal_iteration": 10000,
+      "dual_fresh_stop": 10000,
+      "dual_phase_stops": [
+        5000,
+        10000
+      ],
+      "dual_checkpoint_eval_nodes": [
+        5000,
+        10000
+      ],
+      "iterations_configuration": 30000,
+      "learning_rate_horizon": 30000,
+      "smoke_accounting": "all smoke and two-step replay updates are separate from formal",
+      "dual_smoke_time_policy": "500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast>=3600s extend smoke to>=540s",
+      "dual_5k_action": "complete checkpoint, independent zero-update a5 evaluation and four anchors, then exact full-state resume to at most10K",
+      "root_names_containing_30k": "existing directory identifiers only; not an active training budget",
+      "old_30k_launchers_disabled": true,
+      "automatic_shutdown_allowed": false
+    },
+    "root_names_containing_30k_are_existing_filesystem_identifiers": true,
+    "single_new_formal_updates": 0,
+    "single_reference_iterations": 10000,
+    "dual_fresh_formal_stop": 10000,
+    "dual_user_requested_save_evaluate_nodes": [
+      5000,
+      10000
+    ],
+    "learning_rate_horizon": 30000,
+    "smoke_and_engineering_replay_updates_separately_accounted": true,
+    "single_wrapper_mode_choices": [
+      "smoke",
+      "resume2step"
+    ],
+    "old_single_master_disabled": true,
+    "dual_phase0_requires_fresh_5000": true,
+    "dual_phase1_requires_exact_5000_to10000": true,
+    "active_master": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py",
+    "active_dual_queue": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py",
+    "earlier_30k_continuation_plan_superseded": true
+  },
+  "historical_search": {
+    "outcome": "NO_COMPATIBLE_PRE_NOVEMBER_SINGLE_OR_DUAL_089_137_RUN_FOUND_IN_INSPECTED_SCOPE",
+    "not_a_proof_of_nonexistence": true,
+    "scope": [
+      "campaign top-level inventory",
+      "90 October effective_config.json records found by a bounded metadata walk",
+      "small dynamic_multi_actor_preparation.json inventories under campaign",
+      "selected Git messages and readable October worldsim_v82 recipe files",
+      "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md",
+      "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json"
+    ],
+    "exclusions": "The bounded walk excluded runtime/environment/site-packages/node_modules/.git/images/visualization/evaluation/cache/mask/depth/RGB output subtrees and new scene008_* campaign roots during the October scan; this was not a byte-for-byte exhaustive archival search.",
+    "old_089_137_three_actor": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json",
+      "aliases": [
+        5,
+        26,
+        18
+      ],
+      "dynamic_points": [
+        21355,
+        15281,
+        2484
+      ]
+    },
+    "old_089_137_full5": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json",
+      "aliases": [
+        5,
+        26,
+        18,
+        6,
+        37
+      ],
+      "dynamic_points": [
+        21358,
+        15193,
+        2444,
+        11625,
+        98452
+      ]
+    },
+    "old_all_vehicle": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/all_vehicle_pipeline/inputs/scene0008_089_137/dynamic_multi_actor_preparation.json",
+      "actor_count": 20
+    },
+    "older_two_actor_other_window": {
+      "window": [
+        23,
+        71
+      ],
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/followup_scene_prep_20261013/inputs/scene0008_023_071_hybrid_cpu_v1/dynamic_multi_actor_preparation.json",
+      "tracks": [
+        "NoQttdyd4C16Y_zkGhiFKg",
+        "fXVhuN-RuJDvZwnkQ-0YSQ"
+      ],
+      "descriptions": [
+        "blue_GMC_pickup",
+        "gray_Jeep_SUV"
+      ]
+    },
+    "first_archived_single_recipe_commit": "3fefd98ecf5dfd5a73898bf46717cc8afe4ca147",
+    "commit_interpretation": "First recipe archival evidence, not a recorded runtime HEAD or isolated causal bug commit.",
+    "november_dual_not_full_original_PLY": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/formal_dual_actor_r1/initial_parameter_transfer.json",
+      "moved_a6_static_rows": 1023,
+      "full5_a6_dynamic_source_rows": 11625
+    },
+    "new_dual_is_constructed_control": true,
+    "new_dual_historical_run_found": false
+  },
+  "single_continuation": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1",
+    "source_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+    "contract": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json",
+      "exists": true,
+      "bytes": 3604,
+      "mtime_ns": 1793897422149124823,
+      "sha256": "2bd62ef590fb50ddd9836ab9ffb58372dca28c42563e47c6ab7643e55353f109"
+    },
+    "original_iterations": 10000,
+    "current_single_new_formal_updates": 0,
+    "current_single_reference_iteration": 10000,
+    "former_continuation_contract": {
+      "formal_additional_iterations": 20000,
+      "formal_total_iterations": 30000,
+      "status": "SUPERSEDED_BY_LATEST_USER_BUDGET_DO_NOT_RELEASE"
+    },
+    "learning_rate_horizon_in_saved_original_config": 30000,
+    "root_config_equals_original_effective_config": true,
+    "root_config_top_level_differences": [],
+    "former_formal_allowed_config_differences": [
+      "model_path",
+      "start_checkpoint"
+    ],
+    "single_formal_extension_authorized": false,
+    "exact_restore_receipt": {
+      "file": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/restore_audit.json",
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/restore_audit.json",
+        "exists": true,
+        "bytes": 794,
+        "mtime_ns": 1793897599627714371,
+        "sha256": "99dd63601af48fb2edc31828ef92fed40a8a47bce1ce62c3691f8a2bd5909f11"
+      },
+      "value": {
+        "status": "PASS_EXACT_FULL_RESTORE",
+        "iteration": 10000,
+        "differences": [],
+        "includes": "parameters,Adam,Python/NumPy/Torch/CUDA RNG,camera sampler,SGCM,EMA,runtime",
+        "updates": 0,
+        "bookkeeping_config_differences": {
+          "start_checkpoint": {
+            "saved": null,
+            "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth"
+          },
+          "model_path": {
+            "saved": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k",
+            "current": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1"
+          }
+        },
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth"
+      }
+    },
+    "original_checkpoint_source_artifacts": {
+      "chkpnt10000.pth": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+          "bytes": 1205804824,
+          "sha256": "fe6764f8e1113e3561b2b757064f9e27f04518a0b0a980479263a6fee5275e5a"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+          "exists": true,
+          "bytes": 1205804824,
+          "mtime_ns": 1793685138678879826,
+          "sha256": "fe6764f8e1113e3561b2b757064f9e27f04518a0b0a980479263a6fee5275e5a"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      },
+      "dynamic_chkpnt10000.pth": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth",
+          "bytes": 796288990,
+          "sha256": "93d464d0338b5203bc2ea776f4041044c950bee38b674e49482c656f7b6b14e5"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/dynamic_chkpnt10000.pth",
+          "exists": true,
+          "bytes": 796288990,
+          "mtime_ns": 1793685141363133667,
+          "sha256": "93d464d0338b5203bc2ea776f4041044c950bee38b674e49482c656f7b6b14e5"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      },
+      "env_light_chkpnt10000.pth": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth",
+          "bytes": 226494608,
+          "sha256": "f3c81d0eedbae6c422eb3d3389b4950a9c1752c7818566caf548f9a116f2d577"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/env_light_chkpnt10000.pth",
+          "exists": true,
+          "bytes": 226494608,
+          "mtime_ns": 1793685142603250932,
+          "sha256": "f3c81d0eedbae6c422eb3d3389b4950a9c1752c7818566caf548f9a116f2d577"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      },
+      "training_state10000.pth": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth",
+          "bytes": 43800,
+          "sha256": "43c296803c9fcee7888c5d8d36bff3ff05bed3e0eb4da4593cffbcc5a7d0f70d"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/training_state10000.pth",
+          "exists": true,
+          "bytes": 43800,
+          "mtime_ns": 1793685263574663844,
+          "sha256": "43c296803c9fcee7888c5d8d36bff3ff05bed3e0eb4da4593cffbcc5a7d0f70d"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      },
+      "effective_config.json": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json",
+          "bytes": 8332,
+          "sha256": "8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/effective_config.json",
+          "exists": true,
+          "bytes": 8332,
+          "mtime_ns": 1793683527687665035,
+          "sha256": "8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      },
+      "checkpoint_events/iteration_010000.json": {
+        "expected": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json",
+          "bytes": 162684,
+          "sha256": "cfeb4b0b7f390c435c2547b7a93836f5d74e8412a4ff409d89279609d0730103"
+        },
+        "actual": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json",
+          "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/checkpoint_events/iteration_010000.json",
+          "exists": true,
+          "bytes": 162684,
+          "mtime_ns": 1793685263582664597,
+          "sha256": "cfeb4b0b7f390c435c2547b7a93836f5d74e8412a4ff409d89279609d0730103"
+        },
+        "byte_hash_unchanged": true,
+        "size_unchanged": true
+      }
+    },
+    "restore_scope": "Model parameters and Adam capture; Python/NumPy/Torch/CUDA RNG; camera order/sampler; scale; SGCM geometry/config/metadata; EMA; runtime flags. The live restore receipt reports zero differences.",
+    "bitwise_future_CUDA_trajectory_claimed": false,
+    "smoke_protocol": "Complete the already active separate smoke branch from original10K. Configuration cadence remains unchanged through strict restore; only after540s a diagnostic complete save/eval node is added. Its extra updates and two-step probe are separately charged. The latest user budget authorizes no single formal extension; evaluate the existing original10K.",
+    "full_smoke_summary": {
+      "status": "PASS_REAL_GPU_SMOKE_SAVE_EVAL_FULL_RESTORE_NEXT_ENTRY",
+      "source_iteration": 10000,
+      "smoke_model_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1",
+      "smoke_stop_iteration": 11977,
+      "smoke_additional_iterations": 1977,
+      "resume_extra_updates": 2,
+      "smoke_train_wall_seconds": 683.8545043244958,
+      "native_replay_difference": 0,
+      "max_allocated_bytes": 10058165760,
+      "max_reserved_bytes": 21562916864,
+      "formal_additional_updates": 0,
+      "formal_total_budget": 30000,
+      "learning_rate_horizon": 30000,
+      "formal_source_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+      "formal_source_is_smoke": false,
+      "shutdown": false
+    }
+  },
+  "dual_fresh_control": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1",
+    "historical_run_found": false,
+    "constructed_old_engine_subset": true,
+    "parent_full5_effective_config": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/effective_config.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/effective_config.json",
+      "exists": true,
+      "bytes": 9133,
+      "mtime_ns": 1792830564540345409,
+      "sha256": "e50bddfb249a65893050b774d8f46623f5340649f7bb24f5717e8e40e82fd5c4"
+    },
+    "root_config": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json",
+      "exists": true,
+      "bytes": 8475,
+      "mtime_ns": 1793897474498523322,
+      "sha256": "50b6dd817efbf41862b6eeaac5cb77079fa57dd6e3cb785f8bf3f7edbddc82a6"
+    },
+    "top_level_config_differences": [
+      "followup_scene_spec",
+      "model_path",
+      "source_path"
+    ],
+    "scene_spec_differences": [
+      "actor_ply_paths",
+      "source_path"
+    ],
+    "methods_losses_LR_sampling_densification_fields_equal_to_full5": true,
+    "root_config_old30K_schedule_retained": true,
+    "user_requested_diagnostic_cadence_override": "Formal effective configuration adds the5000 complete save/evaluate node; stop after the10000 complete bundle. This cadence change and early stop are authorized budget/diagnostic changes and are not hidden as path-only differences.",
+    "extra5000_evaluation_may_consume_RNG": true,
+    "fresh_formal": true,
+    "start_checkpoint": null,
+    "formal_stop_after_complete_iteration": 10000,
+    "formal_save_evaluate_nodes": [
+      5000,
+      10000
+    ],
+    "learning_rate_horizon": 30000,
+    "phase_transition": "Fresh0->5000 complete native bundle and independent a5 evaluation; then strict full-state restore from5000 and exactly5000 further updates to10000.",
+    "smoke_time_policy": "500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast>=3600s extend smoke to>=540s",
+    "smoke_time_policy_review": "Parent-authorized500-update real smoke; forecast=max(actual per-update throughput*10000,historical1730s*110077/98452)+240s. Forecast>=3600s extends smoke to>=540s. Save/evaluation, exact restoration and downstream evaluator are required in either duration branch.",
+    "dynamic_actor_aliases": [
+      6,
+      37
+    ],
+    "original_actor_indices": [
+      3,
+      4
+    ],
+    "new_actor_indices": [
+      0,
+      1
+    ],
+    "dynamic_source_rows": [
+      11625,
+      98452
+    ],
+    "expected_initial_dynamic_rows": 110077,
+    "expected_initial_static_rows": 590681,
+    "cameras": 49,
+    "retained_static_aliases": [
+      5,
+      26,
+      18
+    ],
+    "preparation_receipt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json",
+      "exists": true,
+      "bytes": 5342,
+      "mtime_ns": 1793897474522537466,
+      "sha256": "e134d915e3877c53ad70834d932cb48c73884c9567eed6649aa4f6c49bd12bb3"
+    },
+    "preparation_status": "PASS_CPU_PREPARATION_IDENTITY_AND_PIXEL_UNION",
+    "warm_start": false,
+    "smoke_and_formal_are_separate_fresh_runs": true,
+    "current_dual_smoke_or_formal_status": null
+  },
+  "actor_semantics": {
+    "selected_actor_PLYs": "Every points3d_dynamic_*.ply present in source_path is concatenated into the one native Dynamic_GaussianModel before training.",
+    "selected_actor_masks": "Explicit binary union dynamic_masks/dynamic_mask_0; optional shadow union only when a shadow file exists; RGB brightness is not used to infer foreground.",
+    "deletion": "Native render_s uses only the static Gaussian pool. Thus single removes the full a37 dynamic pool; dual removes the full a6+a37 dynamic pool.",
+    "a5_selected_for_deletion": false,
+    "a5_representation": "Temporal static GaussianModel branch, retaining its trainable time/velocity parameters subject to native static regularizers.",
+    "dual_per_actor_independent_serialized_identity_claimed": false,
+    "full5_reference_keep_only_for_a5_reconstruction": "Native Full5 DELETE removes a5 together with the entire selected dynamic pool; it is not a retained-a5 deletion-quality comparator. Its KEEP image is historical reconstruction context.",
+    "full5_posthoc_owner_selective_render_is_same_training_semantics": false
+  },
+  "static_sampling_and_exclusion": {
+    "status": "PASS_CPU_NATIVE_EXCLUSION_REPRODUCTION",
+    "GPU_used": false,
+    "existing_static_seed_rows": 600000,
+    "a5_full_dynamic_source_rows": 21358,
+    "raw_a5_spatial_matching_static_rows": 1496,
+    "arms": {
+      "full5": {
+        "original_dynamic_actor_indices": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "dynamic_rows": 149072,
+        "static_rows_after_exclusion": 585943,
+        "static_rows_excluded": 14057,
+        "a5_matching_static_rows_retained": 0,
+        "a5_matching_static_rows_excluded": 1496,
+        "a5_same_time_source_points_matched": 1442,
+        "a5_same_time_source_points_matched_and_retained": 0
+      },
+      "single_a37": {
+        "original_dynamic_actor_indices": [
+          4
+        ],
+        "dynamic_rows": 98452,
+        "static_rows_after_exclusion": 591672,
+        "static_rows_excluded": 8328,
+        "a5_matching_static_rows_retained": 1496,
+        "a5_matching_static_rows_excluded": 0,
+        "a5_same_time_source_points_matched": 1442,
+        "a5_same_time_source_points_matched_and_retained": 1442
+      },
+      "dual_a6_a37": {
+        "original_dynamic_actor_indices": [
+          3,
+          4
+        ],
+        "dynamic_rows": 110077,
+        "static_rows_after_exclusion": 590681,
+        "static_rows_excluded": 9319,
+        "a5_matching_static_rows_retained": 1496,
+        "a5_matching_static_rows_excluded": 0,
+        "a5_same_time_source_points_matched": 1442,
+        "a5_same_time_source_points_matched_and_retained": 1442
+      }
+    },
+    "exclusion_rule": "Retain existing seed iff nearest XYZ distance to selected dynamic PLY union is >=0.1m; eps=0; timestamps are ignored in exclusion",
+    "coordinate_rule": "Exclusion occurs in original coordinates before shared camera-PCA transform",
+    "time_matched_a5_rule": "For each a5 dynamic timestamp, nearest existing static row within0.002m and same timestamp tolerance1e-7",
+    "spatial_match_rule": "Existing static row within2e-5m of any full a5 dynamic source XYZ",
+    "no_new_static_subsample_in_this_audit": true,
+    "sampling_source_note": "Native loader also calls np.random.choice(...,args.num_pts,replace=True) on rebuilt LiDAR data, but for initialization=False the returned static/dynamic PCD uses existing points3d.ply and selected dynamic PLYs; this transient choice still consumes initialization RNG. Gaussian create_from_pcd retains all supplied rows; random_init_point=0.",
+    "conclusion": "Both new subset controls preserve all existing sampled a5 static support. They do not supply the full21358-row a5 dynamic prior after a5 exits the selected dynamic branch. Sparse support and branch-specific objective changes are simultaneous confounds, not an isolated proven cause."
+  },
+  "independent_input_rechecks": [
+    {
+      "arm": "single_a37",
+      "scene_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+      "frame_count": 49,
+      "all_native_and480_union_exact": true,
+      "dynamic_RGB_exact": true,
+      "extra_dynamic_PLY_files": false,
+      "ply_checks": [
+        {
+          "original_actor_index": 4,
+          "new_actor_index": 0,
+          "original": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply",
+            "exists": true,
+            "bytes": 3052265,
+            "mtime_ns": 1792327840158338776,
+            "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+          },
+          "prepared": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply",
+            "exists": true,
+            "bytes": 3052265,
+            "mtime_ns": 1792327840158338776,
+            "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+          },
+          "byte_exact": true
+        }
+      ],
+      "frame_checks": [
+        {
+          "frame_id": "0008089",
+          "union_pixels": 235520,
+          "union_pixels480": 14720,
+          "exact": true
+        },
+        {
+          "frame_id": "0008090",
+          "union_pixels": 237824,
+          "union_pixels480": 14864,
+          "exact": true
+        },
+        {
+          "frame_id": "0008091",
+          "union_pixels": 237952,
+          "union_pixels480": 14872,
+          "exact": true
+        },
+        {
+          "frame_id": "0008092",
+          "union_pixels": 237968,
+          "union_pixels480": 14873,
+          "exact": true
+        },
+        {
+          "frame_id": "0008093",
+          "union_pixels": 238368,
+          "union_pixels480": 14898,
+          "exact": true
+        },
+        {
+          "frame_id": "0008094",
+          "union_pixels": 238320,
+          "union_pixels480": 14895,
+          "exact": true
+        },
+        {
+          "frame_id": "0008095",
+          "union_pixels": 238144,
+          "union_pixels480": 14884,
+          "exact": true
+        },
+        {
+          "frame_id": "0008096",
+          "union_pixels": 238080,
+          "union_pixels480": 14880,
+          "exact": true
+        },
+        {
+          "frame_id": "0008097",
+          "union_pixels": 238176,
+          "union_pixels480": 14886,
+          "exact": true
+        },
+        {
+          "frame_id": "0008098",
+          "union_pixels": 238208,
+          "union_pixels480": 14888,
+          "exact": true
+        },
+        {
+          "frame_id": "0008099",
+          "union_pixels": 238144,
+          "union_pixels480": 14884,
+          "exact": true
+        },
+        {
+          "frame_id": "0008100",
+          "union_pixels": 238064,
+          "union_pixels480": 14879,
+          "exact": true
+        },
+        {
+          "frame_id": "0008101",
+          "union_pixels": 235728,
+          "union_pixels480": 14733,
+          "exact": true
+        },
+        {
+          "frame_id": "0008102",
+          "union_pixels": 237536,
+          "union_pixels480": 14846,
+          "exact": true
+        },
+        {
+          "frame_id": "0008103",
+          "union_pixels": 237280,
+          "union_pixels480": 14830,
+          "exact": true
+        },
+        {
+          "frame_id": "0008104",
+          "union_pixels": 237072,
+          "union_pixels480": 14817,
+          "exact": true
+        },
+        {
+          "frame_id": "0008105",
+          "union_pixels": 236112,
+          "union_pixels480": 14757,
+          "exact": true
+        },
+        {
+          "frame_id": "0008106",
+          "union_pixels": 235424,
+          "union_pixels480": 14714,
+          "exact": true
+        },
+        {
+          "frame_id": "0008107",
+          "union_pixels": 233920,
+          "union_pixels480": 14620,
+          "exact": true
+        },
+        {
+          "frame_id": "0008108",
+          "union_pixels": 233056,
+          "union_pixels480": 14566,
+          "exact": true
+        },
+        {
+          "frame_id": "0008109",
+          "union_pixels": 231792,
+          "union_pixels480": 14487,
+          "exact": true
+        },
+        {
+          "frame_id": "0008110",
+          "union_pixels": 229376,
+          "union_pixels480": 14336,
+          "exact": true
+        },
+        {
+          "frame_id": "0008111",
+          "union_pixels": 225376,
+          "union_pixels480": 14086,
+          "exact": true
+        },
+        {
+          "frame_id": "0008112",
+          "union_pixels": 218992,
+          "union_pixels480": 13687,
+          "exact": true
+        },
+        {
+          "frame_id": "0008113",
+          "union_pixels": 205984,
+          "union_pixels480": 12874,
+          "exact": true
+        },
+        {
+          "frame_id": "0008114",
+          "union_pixels": 202976,
+          "union_pixels480": 12686,
+          "exact": true
+        },
+        {
+          "frame_id": "0008115",
+          "union_pixels": 195632,
+          "union_pixels480": 12227,
+          "exact": true
+        },
+        {
+          "frame_id": "0008116",
+          "union_pixels": 186688,
+          "union_pixels480": 11668,
+          "exact": true
+        },
+        {
+          "frame_id": "0008117",
+          "union_pixels": 179136,
+          "union_pixels480": 11196,
+          "exact": true
+        },
+        {
+          "frame_id": "0008118",
+          "union_pixels": 170512,
+          "union_pixels480": 10657,
+          "exact": true
+        },
+        {
+          "frame_id": "0008119",
+          "union_pixels": 162608,
+          "union_pixels480": 10163,
+          "exact": true
+        },
+        {
+          "frame_id": "0008120",
+          "union_pixels": 154736,
+          "union_pixels480": 9671,
+          "exact": true
+        },
+        {
+          "frame_id": "0008121",
+          "union_pixels": 147424,
+          "union_pixels480": 9214,
+          "exact": true
+        },
+        {
+          "frame_id": "0008122",
+          "union_pixels": 140272,
+          "union_pixels480": 8767,
+          "exact": true
+        },
+        {
+          "frame_id": "0008123",
+          "union_pixels": 133104,
+          "union_pixels480": 8319,
+          "exact": true
+        },
+        {
+          "frame_id": "0008124",
+          "union_pixels": 127632,
+          "union_pixels480": 7977,
+          "exact": true
+        },
+        {
+          "frame_id": "0008125",
+          "union_pixels": 117200,
+          "union_pixels480": 7325,
+          "exact": true
+        },
+        {
+          "frame_id": "0008126",
+          "union_pixels": 116384,
+          "union_pixels480": 7274,
+          "exact": true
+        },
+        {
+          "frame_id": "0008127",
+          "union_pixels": 111456,
+          "union_pixels480": 6966,
+          "exact": true
+        },
+        {
+          "frame_id": "0008128",
+          "union_pixels": 106096,
+          "union_pixels480": 6631,
+          "exact": true
+        },
+        {
+          "frame_id": "0008129",
+          "union_pixels": 102208,
+          "union_pixels480": 6388,
+          "exact": true
+        },
+        {
+          "frame_id": "0008130",
+          "union_pixels": 98160,
+          "union_pixels480": 6135,
+          "exact": true
+        },
+        {
+          "frame_id": "0008131",
+          "union_pixels": 94288,
+          "union_pixels480": 5893,
+          "exact": true
+        },
+        {
+          "frame_id": "0008132",
+          "union_pixels": 90608,
+          "union_pixels480": 5663,
+          "exact": true
+        },
+        {
+          "frame_id": "0008133",
+          "union_pixels": 87552,
+          "union_pixels480": 5472,
+          "exact": true
+        },
+        {
+          "frame_id": "0008134",
+          "union_pixels": 83776,
+          "union_pixels480": 5236,
+          "exact": true
+        },
+        {
+          "frame_id": "0008135",
+          "union_pixels": 80736,
+          "union_pixels480": 5046,
+          "exact": true
+        },
+        {
+          "frame_id": "0008136",
+          "union_pixels": 77952,
+          "union_pixels480": 4872,
+          "exact": true
+        },
+        {
+          "frame_id": "0008137",
+          "union_pixels": 75648,
+          "union_pixels480": 4728,
+          "exact": true
+        }
+      ],
+      "shadow_masks_present": []
+    },
+    {
+      "arm": "dual_a6_a37",
+      "scene_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137",
+      "frame_count": 49,
+      "all_native_and480_union_exact": true,
+      "dynamic_RGB_exact": true,
+      "extra_dynamic_PLY_files": false,
+      "ply_checks": [
+        {
+          "original_actor_index": 3,
+          "new_actor_index": 0,
+          "original": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_3.ply",
+            "exists": true,
+            "bytes": 360628,
+            "mtime_ns": 1792327840146335471,
+            "sha256": "0f33b6f70164cbbd7a32600419304e8acd508470e5f19c2949101de493be168d"
+          },
+          "prepared": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply",
+            "exists": true,
+            "bytes": 360628,
+            "mtime_ns": 1792327840146335471,
+            "sha256": "0f33b6f70164cbbd7a32600419304e8acd508470e5f19c2949101de493be168d"
+          },
+          "byte_exact": true
+        },
+        {
+          "original_actor_index": 4,
+          "new_actor_index": 1,
+          "original": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply",
+            "exists": true,
+            "bytes": 3052265,
+            "mtime_ns": 1792327840158338776,
+            "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+          },
+          "prepared": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_1.ply",
+            "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/points3d_dynamic_1.ply",
+            "exists": true,
+            "bytes": 3052265,
+            "mtime_ns": 1792327840158338776,
+            "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+          },
+          "byte_exact": true
+        }
+      ],
+      "frame_checks": [
+        {
+          "frame_id": "0008089",
+          "union_pixels": 253904,
+          "union_pixels480": 15869,
+          "exact": true
+        },
+        {
+          "frame_id": "0008090",
+          "union_pixels": 256272,
+          "union_pixels480": 16017,
+          "exact": true
+        },
+        {
+          "frame_id": "0008091",
+          "union_pixels": 256400,
+          "union_pixels480": 16025,
+          "exact": true
+        },
+        {
+          "frame_id": "0008092",
+          "union_pixels": 256384,
+          "union_pixels480": 16024,
+          "exact": true
+        },
+        {
+          "frame_id": "0008093",
+          "union_pixels": 256864,
+          "union_pixels480": 16054,
+          "exact": true
+        },
+        {
+          "frame_id": "0008094",
+          "union_pixels": 256896,
+          "union_pixels480": 16056,
+          "exact": true
+        },
+        {
+          "frame_id": "0008095",
+          "union_pixels": 257152,
+          "union_pixels480": 16072,
+          "exact": true
+        },
+        {
+          "frame_id": "0008096",
+          "union_pixels": 256864,
+          "union_pixels480": 16054,
+          "exact": true
+        },
+        {
+          "frame_id": "0008097",
+          "union_pixels": 256912,
+          "union_pixels480": 16057,
+          "exact": true
+        },
+        {
+          "frame_id": "0008098",
+          "union_pixels": 256960,
+          "union_pixels480": 16060,
+          "exact": true
+        },
+        {
+          "frame_id": "0008099",
+          "union_pixels": 256832,
+          "union_pixels480": 16052,
+          "exact": true
+        },
+        {
+          "frame_id": "0008100",
+          "union_pixels": 256944,
+          "union_pixels480": 16059,
+          "exact": true
+        },
+        {
+          "frame_id": "0008101",
+          "union_pixels": 254384,
+          "union_pixels480": 15899,
+          "exact": true
+        },
+        {
+          "frame_id": "0008102",
+          "union_pixels": 256336,
+          "union_pixels480": 16021,
+          "exact": true
+        },
+        {
+          "frame_id": "0008103",
+          "union_pixels": 256096,
+          "union_pixels480": 16006,
+          "exact": true
+        },
+        {
+          "frame_id": "0008104",
+          "union_pixels": 256128,
+          "union_pixels480": 16008,
+          "exact": true
+        },
+        {
+          "frame_id": "0008105",
+          "union_pixels": 255056,
+          "union_pixels480": 15941,
+          "exact": true
+        },
+        {
+          "frame_id": "0008106",
+          "union_pixels": 254336,
+          "union_pixels480": 15896,
+          "exact": true
+        },
+        {
+          "frame_id": "0008107",
+          "union_pixels": 253008,
+          "union_pixels480": 15813,
+          "exact": true
+        },
+        {
+          "frame_id": "0008108",
+          "union_pixels": 251904,
+          "union_pixels480": 15744,
+          "exact": true
+        },
+        {
+          "frame_id": "0008109",
+          "union_pixels": 250400,
+          "union_pixels480": 15650,
+          "exact": true
+        },
+        {
+          "frame_id": "0008110",
+          "union_pixels": 247392,
+          "union_pixels480": 15462,
+          "exact": true
+        },
+        {
+          "frame_id": "0008111",
+          "union_pixels": 243184,
+          "union_pixels480": 15199,
+          "exact": true
+        },
+        {
+          "frame_id": "0008112",
+          "union_pixels": 236336,
+          "union_pixels480": 14771,
+          "exact": true
+        },
+        {
+          "frame_id": "0008113",
+          "union_pixels": 222176,
+          "union_pixels480": 13886,
+          "exact": true
+        },
+        {
+          "frame_id": "0008114",
+          "union_pixels": 219440,
+          "union_pixels480": 13715,
+          "exact": true
+        },
+        {
+          "frame_id": "0008115",
+          "union_pixels": 211520,
+          "union_pixels480": 13220,
+          "exact": true
+        },
+        {
+          "frame_id": "0008116",
+          "union_pixels": 202080,
+          "union_pixels480": 12630,
+          "exact": true
+        },
+        {
+          "frame_id": "0008117",
+          "union_pixels": 193968,
+          "union_pixels480": 12123,
+          "exact": true
+        },
+        {
+          "frame_id": "0008118",
+          "union_pixels": 184720,
+          "union_pixels480": 11545,
+          "exact": true
+        },
+        {
+          "frame_id": "0008119",
+          "union_pixels": 176320,
+          "union_pixels480": 11020,
+          "exact": true
+        },
+        {
+          "frame_id": "0008120",
+          "union_pixels": 167792,
+          "union_pixels480": 10487,
+          "exact": true
+        },
+        {
+          "frame_id": "0008121",
+          "union_pixels": 160080,
+          "union_pixels480": 10005,
+          "exact": true
+        },
+        {
+          "frame_id": "0008122",
+          "union_pixels": 151824,
+          "union_pixels480": 9489,
+          "exact": true
+        },
+        {
+          "frame_id": "0008123",
+          "union_pixels": 144432,
+          "union_pixels480": 9027,
+          "exact": true
+        },
+        {
+          "frame_id": "0008124",
+          "union_pixels": 138896,
+          "union_pixels480": 8681,
+          "exact": true
+        },
+        {
+          "frame_id": "0008125",
+          "union_pixels": 127008,
+          "union_pixels480": 7938,
+          "exact": true
+        },
+        {
+          "frame_id": "0008126",
+          "union_pixels": 126784,
+          "union_pixels480": 7924,
+          "exact": true
+        },
+        {
+          "frame_id": "0008127",
+          "union_pixels": 121600,
+          "union_pixels480": 7600,
+          "exact": true
+        },
+        {
+          "frame_id": "0008128",
+          "union_pixels": 115712,
+          "union_pixels480": 7232,
+          "exact": true
+        },
+        {
+          "frame_id": "0008129",
+          "union_pixels": 111488,
+          "union_pixels480": 6968,
+          "exact": true
+        },
+        {
+          "frame_id": "0008130",
+          "union_pixels": 106912,
+          "union_pixels480": 6682,
+          "exact": true
+        },
+        {
+          "frame_id": "0008131",
+          "union_pixels": 102928,
+          "union_pixels480": 6433,
+          "exact": true
+        },
+        {
+          "frame_id": "0008132",
+          "union_pixels": 99024,
+          "union_pixels480": 6189,
+          "exact": true
+        },
+        {
+          "frame_id": "0008133",
+          "union_pixels": 95696,
+          "union_pixels480": 5981,
+          "exact": true
+        },
+        {
+          "frame_id": "0008134",
+          "union_pixels": 91616,
+          "union_pixels480": 5726,
+          "exact": true
+        },
+        {
+          "frame_id": "0008135",
+          "union_pixels": 88400,
+          "union_pixels480": 5525,
+          "exact": true
+        },
+        {
+          "frame_id": "0008136",
+          "union_pixels": 85440,
+          "union_pixels480": 5340,
+          "exact": true
+        },
+        {
+          "frame_id": "0008137",
+          "union_pixels": 83088,
+          "union_pixels480": 5193,
+          "exact": true
+        }
+      ],
+      "shadow_masks_present": []
+    }
+  ],
+  "common_a5_evaluation_contract": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames",
+    "fixed_label": 1,
+    "frame_count": 49,
+    "fixed_pixel_frame_denominator": 121128,
+    "mask_sha256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+    "nonempty_a5_frames": [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112
+    ],
+    "denominator_is_independent_of_rendered_alpha": true,
+    "required_replays": "49KEEP plus49native static/delete images, maximum uint8 replay difference <=1",
+    "evaluated_shapes": "RGB3x320x480, alpha1x320x480, matched native cameras/timestamps"
+  },
+  "complete_update_boundary": {
+    "status": "PASS_SOURCE_ORDERING_AUDIT",
+    "original10K_last_optimizer_update_missing": false,
+    "ordered_operations": [
+      "loss.backward",
+      "generic static/dynamic densification",
+      "static Adam.step",
+      "dynamic Adam.step",
+      "environment Adam.step if native configured iteration condition",
+      "SGCM refine",
+      "camera scale update",
+      "save model components including Adam",
+      "evaluation",
+      "capture continuation including post-eval RNG",
+      "atomic write training state and complete event",
+      "wrapper original_publish returns",
+      "wrapper raises CompleteBoundary"
+    ],
+    "native_loop": "range(first_iter+1,args.iterations+1); no iteration<iterations gate skips the final static/dynamic optimizer step",
+    "resume2step": "Raises at record_step of start+3, before its backward; exactly start+1 and start+2 completed updates are charged.",
+    "caveat": "This proves the retained source ordering and is backed by complete original10K event and zero-difference restore. Original10K did not archive its own runtime source/Git HEAD, so a transient unrecorded historical source edit cannot be excluded."
+  },
+  "transform_input_write_disclosure": {
+    "native_writer": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py:537",
+    "observed": "The currently running single smoke loaded the pre-protection wrapper and native loader rewrote the original Nov3 input transform_matrix.txt, changing its mtime.",
+    "old_single_transform_observed_mtime_ns": 1793897589314292298,
+    "old_input_mtime_restored_or_hidden": false,
+    "all_three_transform_bytes_equal": true,
+    "byte_hash": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3",
+    "records": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/transform_matrix.txt",
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/transform_matrix.txt",
+        "exists": true,
+        "bytes": 264,
+        "mtime_ns": 1793897589314292298,
+        "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/transform_matrix.txt",
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/transform_matrix.txt",
+        "exists": true,
+        "bytes": 264,
+        "mtime_ns": 1792839640540663325,
+        "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/transform_matrix.txt",
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/inputs/scene0008_089_137/transform_matrix.txt",
+        "exists": true,
+        "bytes": 264,
+        "mtime_ns": 1793898575483871645,
+        "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3"
+      }
+    ],
+    "original_checkpoint_weights_byte_hashes_unchanged": true,
+    "correction_in_current_single_source": true,
+    "correction": "Only the exact resolved input transform path is redirected to the new output loader_transform_matrix.txt; both new output and old input bytes must equal the captured original bytes.",
+    "already_running_smoke_restarted_for_this_correction": false,
+    "current_smoke_loaded_old_code": "source/train_single.py.before_transform_protection is preserved; subsequent resume/formal launches use the protected wrapper."
+  },
+  "required_source_fixes_reviewed": [
+    {
+      "issue": "Native transform publication touched old single input mtime",
+      "correction_in_current_source": true,
+      "runtime_probe": "Check loader_transform_readonly_audit.json when the smoke two-step restore launches."
+    },
+    {
+      "issue": "New common a5 evaluation entry was first called only after formal30K",
+      "correction_in_current_dual_controller": true,
+      "runtime_probe": "Dual controller must complete smoke_a5_evaluation before fresh formal; single common a5 entry is managed by parent before formal release."
+    }
+  ],
+  "causal_limits": [
+    "No compatible October a37-only/a37+a6 run was found in the stated search scope; the fresh dual is a constructed control, not a recovered historical run.",
+    "Full5-to-subset simultaneously changes dense dynamic versus sampled static initialization, loss-branch coverage/weights, applicable static duration/velocity/SGCM rules, model sizes, nearest-neighbor initialization and RNG trajectory. It is not a same-initialization single-factor causal ablation.",
+    "a5 has21358 full dynamic source rows but only1442 source points matched in the existing600K sampled static seed. Both subset controls preserve all1496 matching static rows; native exclusion does not further remove them.",
+    "Latest budget keeps the original single10K and requests only fresh dual10K with a5000 save/evaluate node. These comparisons do not identify a unique regularizer, densification event or bug commit; the extra5000 evaluation may also change subsequent RNG consumption.",
+    "All49 raw89–137 views are observed training/BUILD views, not independent held-out evaluation.",
+    "A successful exact-state restoration does not promise bitwise CUDA trajectory equivalence for future updates.",
+    "The original historical runs lack immutable runtime engine/Git SHA; current source matches and retained archival hashes cannot rule out an unrecorded temporary historical edit."
+  ],
+  "source_files": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "exists": true,
+      "bytes": 52627,
+      "mtime_ns": 1791820904963846434,
+      "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py",
+      "exists": true,
+      "bytes": 29310,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "exists": true,
+      "bytes": 44338,
+      "mtime_ns": 1791820345289408585,
+      "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/__init__.py",
+      "exists": true,
+      "bytes": 4926,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "e39d4482e0a128c10be88a1be2f8795de3c566a3853543d5c88d42db517cb72c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+      "exists": true,
+      "bytes": 20011,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py",
+      "exists": true,
+      "bytes": 19994,
+      "mtime_ns": 1791820345285408190,
+      "sha256": "d11902dbe19a933ca047a0cfc857a7d1e529dd79bf330cd2c809b2b25c36e821"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py",
+      "exists": true,
+      "bytes": 6279,
+      "mtime_ns": 1791820345293408982,
+      "sha256": "6731b2b81813f9da1589ae9cd61cd66713a32b604e07ab89663c3fa1e69f3c95"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+      "exists": true,
+      "bytes": 14362,
+      "mtime_ns": 1791820345293408982,
+      "sha256": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py",
+      "exists": true,
+      "bytes": 4991,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py",
+      "exists": true,
+      "bytes": 1840,
+      "mtime_ns": 1791712908119723310,
+      "sha256": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py",
+      "exists": true,
+      "bytes": 10809,
+      "mtime_ns": 1793898298564520672,
+      "sha256": "8a9f112b49416b6aa0bde578ef8abcd72effa619ae78f211ebbae38665010c11"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_smoke.py",
+      "exists": true,
+      "bytes": 3646,
+      "mtime_ns": 1793897564210688474,
+      "sha256": "c759ba0945e464cb42258830d63590f3f7f7e07801bccba207065d46d4f19b46"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py",
+      "exists": true,
+      "bytes": 156,
+      "mtime_ns": 1793898293912401801,
+      "sha256": "c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_after_single_smoke.py",
+      "exists": true,
+      "bytes": 156,
+      "mtime_ns": 1793898296296464011,
+      "sha256": "c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py",
+      "exists": true,
+      "bytes": 6410,
+      "mtime_ns": 1793898622678498041,
+      "sha256": "5e581429694386705e6c13408a910356e604d474b539626527e89253e5dab273"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/launch_short_campaign.py",
+      "exists": true,
+      "bytes": 881,
+      "mtime_ns": 1793898623302629238,
+      "sha256": "039910fab7e0c3649ebc7d3b5497b4022e8576b26d4117c2d24a6b8331671cf9"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py",
+      "exists": true,
+      "bytes": 30512,
+      "mtime_ns": 1793898622002355756,
+      "sha256": "be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/active_budget.json",
+      "exists": true,
+      "bytes": 918,
+      "mtime_ns": 1793898628683752839,
+      "sha256": "a4d71537ef56c810f53769f06a59d9dd7d4b52ca3d451ef434717accf68eeb8b"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/prepare_continuation.py",
+      "exists": true,
+      "bytes": 2897,
+      "mtime_ns": 1793897415205355032,
+      "sha256": "402865e7f0eb0ce41768cd054e3154afb6cab4b7fc93915aef7cf32281208d98"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/config.json",
+      "exists": true,
+      "bytes": 8332,
+      "mtime_ns": 1793682713049903358,
+      "sha256": "8ebbaff8cc66cabbbbfd81223daacf319aa138a0f4ce93a68f9fa272ec855fdc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/identity_contract.json",
+      "exists": true,
+      "bytes": 18038,
+      "mtime_ns": 1793682713049903358,
+      "sha256": "81a90619c245ebad0d26f3f4bd24cc8f219ff63709cdb6f0184d51f4d16f383c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/continuation_contract.json",
+      "exists": true,
+      "bytes": 3604,
+      "mtime_ns": 1793897422149124823,
+      "sha256": "2bd62ef590fb50ddd9836ab9ffb58372dca28c42563e47c6ab7643e55353f109"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py.before_transform_protection",
+      "exists": true,
+      "bytes": 9392,
+      "mtime_ns": 1793897563771333511,
+      "sha256": "650b3fac63e7e1b0cf7bb3c4770349d921c1bdc3fd502255115fc30739ae4dae"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/prepare_dual_input.py",
+      "exists": true,
+      "bytes": 11975,
+      "mtime_ns": 1793897440824681719,
+      "sha256": "3e3f10f66fcf8ae9719a28fbcc0ebdaae4ae6ab658639a988bd2359ff653558e"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py",
+      "exists": true,
+      "bytes": 12491,
+      "mtime_ns": 1793898547268513399,
+      "sha256": "457565ff056b10c1e76ae77480a8e3eb26043653f982a6c948660b24fd26a1a5"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_a5.py",
+      "exists": true,
+      "bytes": 30512,
+      "mtime_ns": 1793898625283044306,
+      "sha256": "be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/active_budget.json",
+      "exists": true,
+      "bytes": 918,
+      "mtime_ns": 1793898551345642618,
+      "sha256": "a4d71537ef56c810f53769f06a59d9dd7d4b52ca3d451ef434717accf68eeb8b"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_queue.py",
+      "exists": true,
+      "bytes": 156,
+      "mtime_ns": 1793898619833897712,
+      "sha256": "c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py",
+      "exists": true,
+      "bytes": 6665,
+      "mtime_ns": 1793898625811154692,
+      "sha256": "fef41debde71b89eebb200d6a66095398a96f9549861b5c0154acd9917a6e316"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/evaluate_dual_layers.py",
+      "exists": true,
+      "bytes": 7523,
+      "mtime_ns": 1793897755470626487,
+      "sha256": "bd115442977b8746f216cbfac494d0d4c99f762d82a50f40eb926347c91c2de9"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/config.json",
+      "exists": true,
+      "bytes": 8475,
+      "mtime_ns": 1793897474498523322,
+      "sha256": "50b6dd817efbf41862b6eeaac5cb77079fa57dd6e3cb785f8bf3f7edbddc82a6"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/identity_contract.json",
+      "exists": true,
+      "bytes": 46450,
+      "mtime_ns": 1793897474522537466,
+      "sha256": "9d716d1a4e3f9c99cef39bcd3ef65c23891036f014ed3c92022b60f331e89afc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/preparation_receipt.json",
+      "exists": true,
+      "bytes": 5342,
+      "mtime_ns": 1793897474522537466,
+      "sha256": "e134d915e3877c53ad70834d932cb48c73884c9567eed6649aa4f6c49bd12bb3"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md",
+      "resolved_path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/trace.md",
+      "exists": true,
+      "bytes": 3907,
+      "mtime_ns": 1793895413598768303,
+      "sha256": "5e022b013addef933a1a358bd91a8efe4c33fc7c9c50ba6901cfb8d96e71846a"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json",
+      "resolved_path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/summary.json",
+      "exists": true,
+      "bytes": 20986,
+      "mtime_ns": 1793895413594767614,
+      "sha256": "613fd281f43e3707b21c04cd98dcd63a6b7aadee58e6c01e6a7e76418357c7b4"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json",
+      "resolved_path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/git_history_followup/verified_trace.json",
+      "exists": true,
+      "bytes": 32612,
+      "mtime_ns": 1793895413598768303,
+      "sha256": "43c4ccdf0583d30a119736d02a95f1eef519687e8c4470825a60e610138029b6"
+    }
+  },
+  "source_line_evidence": {
+    "native_optimizer_and_publish": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce",
+      "matches": [
+        {
+          "needle": "loss.backward()",
+          "line": 539,
+          "text": "loss.backward()"
+        },
+        {
+          "needle": "record_step(args, iteration",
+          "line": 428,
+          "text": "record_step(args, iteration, viewpoint_cam, time_shift, gaussians, dynamic_gaussians, hybrid_result.log_values())"
+        },
+        {
+          "needle": "gaussians.optimizer.step()",
+          "line": 614,
+          "text": "gaussians.optimizer.step()"
+        },
+        {
+          "needle": "gaussians.optimizer.step()",
+          "line": 617,
+          "text": "dynamic_gaussians.optimizer.step()"
+        },
+        {
+          "needle": "dynamic_gaussians.optimizer.step()",
+          "line": 617,
+          "text": "dynamic_gaussians.optimizer.step()"
+        },
+        {
+          "needle": "env_map.optimizer.step()",
+          "line": 622,
+          "text": "env_map.optimizer.step()"
+        },
+        {
+          "needle": "paper_sgcm.refine(",
+          "line": 627,
+          "text": "sgcm_statistics = paper_sgcm.refine(gaussians, radii[:end_idx], iteration, visibility_filter=visibility_filter[:end_idx])"
+        },
+        {
+          "needle": "scene.upScale()",
+          "line": 702,
+          "text": "scene.upScale()"
+        },
+        {
+          "needle": "components = save_components",
+          "line": 712,
+          "text": "components = save_components(scene.model_path, iteration, models_for_checkpoint) if checkpoint_due else None"
+        },
+        {
+          "needle": "evaluations = complete_eval",
+          "line": 718,
+          "text": "evaluations = complete_eval(tb_writer, iteration, eval_iterations, scene, render,"
+        },
+        {
+          "needle": "continuation = capture_training_state",
+          "line": 722,
+          "text": "continuation = capture_training_state(iteration, scene, viewpoint_stack,"
+        },
+        {
+          "needle": "publish_checkpoint_event(scene.model_path",
+          "line": 725,
+          "text": "publish_checkpoint_event(scene.model_path, iteration, components,"
+        },
+        {
+          "needle": "range(first_iter + 1, args.iterations + 1)",
+          "line": 285,
+          "text": "progress_bar = tqdm(range(first_iter + 1, args.iterations + 1), desc=\"Training progress\")"
+        }
+      ]
+    },
+    "native_checkpoint_contract": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_checkpoint.py",
+      "sha256": "d11902dbe19a933ca047a0cfc857a7d1e529dd79bf330cd2c809b2b25c36e821",
+      "matches": [
+        {
+          "needle": "def _validate_resume_configuration",
+          "line": 96,
+          "text": "def _validate_resume_configuration(saved_config, args):"
+        },
+        {
+          "needle": "permitted = {",
+          "line": 113,
+          "text": "permitted = {\"model_path\", \"start_checkpoint\"}"
+        },
+        {
+          "needle": "def restore_training_state",
+          "line": 202,
+          "text": "def restore_training_state(path, iteration, scene, models, args, sgcm=None):"
+        },
+        {
+          "needle": "def save_components",
+          "line": 250,
+          "text": "def save_components(model_path, iteration, models):"
+        },
+        {
+          "needle": "def publish_checkpoint_event",
+          "line": 270,
+          "text": "def publish_checkpoint_event(model_path, iteration, components, training_state, evaluations, args, scene):"
+        },
+        {
+          "needle": "atomic_json(event_path, event)",
+          "line": 329,
+          "text": "atomic_json(event_path, event)"
+        },
+        {
+          "needle": "return event",
+          "line": 331,
+          "text": "return event"
+        },
+        {
+          "needle": "torch.cuda.set_rng_state_all",
+          "line": 242,
+          "text": "torch.cuda.set_rng_state_all(state[\"cuda_rng\"])"
+        },
+        {
+          "needle": "scene.hybrid_sampler.restore",
+          "line": 246,
+          "text": "scene.hybrid_sampler.restore(state[\"hybrid_sampler\"])"
+        }
+      ]
+    },
+    "native_loader": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py",
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0",
+      "matches": [
+        {
+          "needle": "pcd = o3d.io.read_point_cloud",
+          "line": 294,
+          "text": "pcd = o3d.io.read_point_cloud(os.path.join(args.source_path, \"points3d.ply\"))"
+        },
+        {
+          "needle": "dynamic_paths = sorted(glob",
+          "line": 298,
+          "text": "dynamic_paths = sorted(glob(os.path.join(args.source_path, \"points3d_dynamic_*.ply\")))"
+        },
+        {
+          "needle": "dynamic_pointcloud = np.concatenate",
+          "line": 307,
+          "text": "dynamic_pointcloud = np.concatenate([np.asarray(p.points) for p in dynamic_clouds])"
+        },
+        {
+          "needle": "nearest, _ = cKDTree",
+          "line": 313,
+          "text": "nearest, _ = cKDTree(dynamic_pointcloud).query("
+        },
+        {
+          "needle": "mask = nearest >= 0.1",
+          "line": 315,
+          "text": "mask = nearest >= 0.1"
+        },
+        {
+          "needle": "static_pointcloud = pointcloud1[mask]",
+          "line": 316,
+          "text": "static_pointcloud = pointcloud1[mask]"
+        },
+        {
+          "needle": "indices = np.random.choice",
+          "line": 522,
+          "text": "indices = np.random.choice(pointcloud.shape[0], args.num_pts, replace=True)"
+        },
+        {
+          "needle": "np.savetxt(",
+          "line": 537,
+          "text": "np.savetxt(os.path.join(args.source_path, 'transform_matrix.txt'), transform, fmt='%.17g')"
+        },
+        {
+          "needle": "static_pcd = BasicPointCloud",
+          "line": 594,
+          "text": "static_pcd = BasicPointCloud(static_pointcloud, colors=np.zeros([static_pointcloud.shape[0], 3]), normals=None,"
+        },
+        {
+          "needle": "dynamic_pcd = BasicPointCloud",
+          "line": 596,
+          "text": "dynamic_pcd = BasicPointCloud(dynamic_pointcloud, colors=np.zeros([dynamic_pointcloud.shape[0], 3]), normals=None,"
+        }
+      ]
+    },
+    "native_mask_loader": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py",
+      "sha256": "a6bf34097664dd31b0ba06fffa6fb53b9fecbd2c2d5e2386ba78c1eac19ac483",
+      "matches": [
+        {
+          "needle": "def load_dynamic_mask",
+          "line": 24,
+          "text": "def load_dynamic_mask(source_path, camera):"
+        },
+        {
+          "needle": "filename = root /",
+          "line": 37,
+          "text": "filename = root / f\"dynamic_mask_{index}\" / f\"{path.stem}.png\""
+        },
+        {
+          "needle": "if shadow.exists()",
+          "line": 40,
+          "text": "if shadow.exists():"
+        },
+        {
+          "needle": "return mask.to",
+          "line": 42,
+          "text": "return mask.to(device=camera.world_view_transform.device)"
+        }
+      ]
+    },
+    "native_raster_alpha_and_env": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+      "matches": [
+        {
+          "needle": "rasterizer(**render_kwargs)",
+          "line": 103,
+          "text": "contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)"
+        },
+        {
+          "needle": "rasterizer(**render_kwargs)",
+          "line": 150,
+          "text": "contrib, rendered_image, rendered_feature, radii = rasterizer(**render_kwargs)"
+        },
+        {
+          "needle": "rasterizer(**dynamic_render_kwargs)",
+          "line": 107,
+          "text": "contrib_d, rendered_image_d, rendered_feature_d, radii_d = rasterizer(**dynamic_render_kwargs)"
+        },
+        {
+          "needle": "rasterizer(**static_render_kwargs)",
+          "line": 109,
+          "text": "contrib_s, rendered_image_s, rendered_feature_s, radii_s = rasterizer(**static_render_kwargs)"
+        },
+        {
+          "needle": "rendered_feature.split",
+          "line": 111,
+          "text": "rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)"
+        },
+        {
+          "needle": "rendered_feature.split",
+          "line": 151,
+          "text": "rendered_other, rendered_depth, rendered_opacity = rendered_feature.split([S_other, 1, 1], dim=0)"
+        },
+        {
+          "needle": "rendered_feature_s.split",
+          "line": 112,
+          "text": "rendered_other_s, rendered_depth_s, rendered_opacity_s = rendered_feature_s.split([S_other, 1, 1], dim=0)"
+        },
+        {
+          "needle": "rendered_feature_d.split",
+          "line": 113,
+          "text": "rendered_other_d, rendered_depth_d, rendered_opacity_d = rendered_feature_d.split([S_other, 1, 1], dim=0)"
+        },
+        {
+          "needle": "rendered_image = rendered_image +",
+          "line": 119,
+          "text": "rendered_image = rendered_image + (1 - rendered_opacity) * bg_color_from_envmap"
+        },
+        {
+          "needle": "rendered_image = rendered_image +",
+          "line": 154,
+          "text": "rendered_image = rendered_image + (1 - rendered_opacity) * bg_color_from_envmap"
+        },
+        {
+          "needle": "rendered_image_s = rendered_image_s +",
+          "line": 120,
+          "text": "rendered_image_s = rendered_image_s + (1 - rendered_opacity_s) * bg_color_from_envmap"
+        },
+        {
+          "needle": "\"alpha\": rendered_opacity",
+          "line": 131,
+          "text": "\"alpha\": rendered_opacity,"
+        },
+        {
+          "needle": "\"alpha\": rendered_opacity",
+          "line": 161,
+          "text": "\"alpha\": rendered_opacity,"
+        },
+        {
+          "needle": "\"static_alpha\": rendered_opacity_s",
+          "line": 134,
+          "text": "\"static_alpha\": rendered_opacity_s,"
+        },
+        {
+          "needle": "\"dynamic_alpha\": rendered_opacity_d",
+          "line": 136,
+          "text": "\"dynamic_alpha\": rendered_opacity_d,"
+        }
+      ]
+    },
+    "single_wrapper": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/train_single.py",
+      "sha256": "8a9f112b49416b6aa0bde578ef8abcd72effa619ae78f211ebbae38665010c11",
+      "matches": [
+        {
+          "needle": "start_iteration==10000",
+          "line": 24,
+          "text": "if opts.mode in ['smoke','formal']:assert opts.checkpoint.resolve()==source.resolve() and start_iteration==10000"
+        },
+        {
+          "needle": "config['iterations']==config['position_lr_max_steps']==30000",
+          "line": 26,
+          "text": "assert config['iterations']==config['position_lr_max_steps']==30000"
+        },
+        {
+          "needle": "def protected_savetxt",
+          "line": 38,
+          "text": "def protected_savetxt(filename,array,*args,**kwargs):"
+        },
+        {
+          "needle": "source_write=False",
+          "line": 45,
+          "text": "source_write=False,method_changes={}))"
+        },
+        {
+          "needle": "stack,ema=original_restore",
+          "line": 113,
+          "text": "stack,ema=original_restore(path,iteration,scene,models,args,sgcm=sgcm)"
+        },
+        {
+          "needle": "ignored=['model_path','start_checkpoint']",
+          "line": 116,
+          "text": "ignored=['model_path','start_checkpoint']"
+        },
+        {
+          "needle": "errors+=differences",
+          "line": 123,
+          "text": "errors+=differences(old,models[name].capture(),name);del old;gc.collect()"
+        },
+        {
+          "needle": "event=original_publish",
+          "line": 131,
+          "text": "event=original_publish(root,iteration,*args,**kwargs)"
+        },
+        {
+          "needle": "formal",
+          "line": 24,
+          "text": "if opts.mode in ['smoke','formal']:assert opts.checkpoint.resolve()==source.resolve() and start_iteration==10000"
+        },
+        {
+          "needle": "formal",
+          "line": 29,
+          "text": "if opts.mode=='formal':"
+        },
+        {
+          "needle": "formal",
+          "line": 133,
+          "text": "if (opts.mode=='smoke' and time.monotonic()-started>=opts.smoke_seconds) or (opts.mode=='formal' and iteration==30000):"
+        },
+        {
+          "needle": "formal",
+          "line": 136,
+          "text": "accounting='smoke_only_extra' if opts.mode=='smoke' else 'formal_total30000_from_original10000',"
+        },
+        {
+          "needle": "formal",
+          "line": 138,
+          "text": "learning_rate_horizon=30000,formal_stop=30000,max_allocated_bytes=torch.cuda.max_memory_allocated(),"
+        },
+        {
+          "needle": "raise CompleteBoundary()",
+          "line": 110,
+          "text": "raise CompleteBoundary()"
+        },
+        {
+          "needle": "raise CompleteBoundary()",
+          "line": 140,
+          "text": "raise CompleteBoundary()"
+        },
+        {
+          "needle": "diagnostic_node[0]=iteration",
+          "line": 98,
+          "text": "diagnostic_node[0]=iteration"
+        }
+      ]
+    },
+    "dual_wrapper": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/train_dual.py",
+      "sha256": "457565ff056b10c1e76ae77480a8e3eb26043653f982a6c948660b24fd26a1a5",
+      "matches": [
+        {
+          "needle": "start_iteration=0",
+          "line": 33,
+          "text": "start_iteration=0;config=json.loads((ROOT/'config.json').read_text())"
+        },
+        {
+          "needle": "config['iterations']==config['position_lr_max_steps']==30000",
+          "line": 34,
+          "text": "assert config['iterations']==config['position_lr_max_steps']==30000"
+        },
+        {
+          "needle": "opts.checkpoint is None",
+          "line": 32,
+          "text": "assert opts.checkpoint is None"
+        },
+        {
+          "needle": "110077",
+          "line": 66,
+          "text": "assert len(scene.dynamic_gaussians.get_xyz)==identity['source_real_point_count']==110077"
+        },
+        {
+          "needle": "110077",
+          "line": 104,
+          "text": "historical=1730*(110077/98452)"
+        },
+        {
+          "needle": "110077",
+          "line": 108,
+          "text": "historical_single10k_seconds=1730,input_point_ratio=110077/98452,"
+        },
+        {
+          "needle": "590681",
+          "line": 67,
+          "text": "assert len(scene.gaussians.get_xyz)==590681 and len(scene.getTrainCameras())==49"
+        },
+        {
+          "needle": "event=original_publish",
+          "line": 151,
+          "text": "event=original_publish(root,iteration,*args,**kwargs)"
+        },
+        {
+          "needle": "iteration==10000",
+          "line": 46,
+          "text": "if opts.mode=='extend':assert start_iteration==5000 and opts.stop_iteration==10000"
+        },
+        {
+          "needle": "5000",
+          "line": 39,
+          "text": "assert opts.stop_iteration==5000"
+        },
+        {
+          "needle": "5000",
+          "line": 40,
+          "text": "for key in diagnostic_keys:config[key]=sorted(set(config[key])|{5000})"
+        },
+        {
+          "needle": "5000",
+          "line": 43,
+          "text": "write(out/'user_budget_and_diagnostic_cadence.json',dict(total_formal_budget=10000,phase_stop=5000,"
+        },
+        {
+          "needle": "5000",
+          "line": 44,
+          "text": "added_complete_checkpoint_eval_node=5000,learning_rate_horizon=30000,method_changes={},"
+        },
+        {
+          "needle": "5000",
+          "line": 46,
+          "text": "if opts.mode=='extend':assert start_iteration==5000 and opts.stop_iteration==10000"
+        },
+        {
+          "needle": "5000",
+          "line": 156,
+          "text": "accounting='smoke_only_extra' if opts.mode=='smoke' else 'fresh_formal_total10000_in_5000_then_5000_phases',"
+        }
+      ]
+    },
+    "dual_controller": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/source/run_dual_short_queue.py",
+      "sha256": "fef41debde71b89eebb200d6a66095398a96f9549861b5c0154acd9917a6e316",
+      "matches": [
+        {
+          "needle": "run('smoke'",
+          "line": 45,
+          "text": "run('smoke',ROOT/'source/train_dual.py','--mode','smoke','--output',ROOT/'smoke','--smoke-policy','adaptive500','--smoke-seconds','540')"
+        },
+        {
+          "needle": "run('smoke_eval'",
+          "line": 47,
+          "text": "run('smoke_eval',ROOT/'source/evaluate_dual_layers.py','--model',ROOT/'smoke','--iteration',step,'--output',ROOT/'smoke_eval','--quick')"
+        },
+        {
+          "needle": "run('smoke_resume2step'",
+          "line": 48,
+          "text": "run('smoke_resume2step',ROOT/'source/train_dual.py','--mode','resume2step','--checkpoint',ROOT/'smoke'/f'chkpnt{step}.pth','--output',ROOT/'smoke_resume2step')"
+        },
+        {
+          "needle": "smoke_a5_evaluation",
+          "line": 56,
+          "text": "a5('smoke_a5_evaluation',ROOT/'smoke',step)"
+        },
+        {
+          "needle": "run('formal5k'",
+          "line": 62,
+          "text": "run('formal5k',ROOT/'source/train_dual.py','--mode','formal','--stop-iteration','5000','--output',ROOT/'formal5k')"
+        },
+        {
+          "needle": "run('formal10k'",
+          "line": 71,
+          "text": "run('formal10k',ROOT/'source/train_dual.py','--mode','extend','--checkpoint',ROOT/'formal5k/chkpnt5000.pth','--stop-iteration','10000','--output',ROOT/'formal10k')"
+        },
+        {
+          "needle": "'--mode','formal'",
+          "line": 62,
+          "text": "run('formal5k',ROOT/'source/train_dual.py','--mode','formal','--stop-iteration','5000','--output',ROOT/'formal5k')"
+        },
+        {
+          "needle": "verify_inputs(",
+          "line": 13,
+          "text": "def verify_inputs(label):"
+        },
+        {
+          "needle": "verify_inputs(",
+          "line": 39,
+          "text": "verify_inputs('before_smoke')"
+        },
+        {
+          "needle": "verify_inputs(",
+          "line": 57,
+          "text": "verify_inputs('after_smoke')"
+        },
+        {
+          "needle": "verify_inputs(",
+          "line": 78,
+          "text": "verify_inputs('after_formal_and_eval')"
+        }
+      ]
+    },
+    "revised_master": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_short_campaign.py",
+      "sha256": "5e581429694386705e6c13408a910356e604d474b539626527e89253e5dab273",
+      "matches": [
+        {
+          "needle": "active_budget",
+          "line": 49,
+          "text": "budget=json.loads((ROOT/'active_budget.json').read_text())"
+        },
+        {
+          "needle": "active_budget",
+          "line": 51,
+          "text": "assert sha(ROOT/'active_budget.json')==sha(DUAL/'active_budget.json')"
+        },
+        {
+          "needle": "active_budget",
+          "line": 75,
+          "text": "active_budget=str(ROOT/'active_budget.json'),released_unix=time.time(),shutdown=False))"
+        },
+        {
+          "needle": "single",
+          "line": 1,
+          "text": "\"\"\"No new single formal updates; evaluate10K, then dual smoke/fresh5K->10K.\"\"\""
+        },
+        {
+          "needle": "single",
+          "line": 34,
+          "text": "if label.startswith('reference_a5_single10k') and (ROOT/(label+'_launch.json')).exists():"
+        },
+        {
+          "needle": "single",
+          "line": 50,
+          "text": "assert budget['single_new_formal_updates']==0 and budget['dual_fresh_stop']==10000"
+        },
+        {
+          "needle": "single",
+          "line": 67,
+          "text": "a5('reference_a5_single10k_retry1',source.parent,10000,[37],'delete_a37')"
+        },
+        {
+          "needle": "single",
+          "line": 74,
+          "text": "single_new_formal_updates=0,dual_formal_total_budget=10000,learning_rate_horizon=30000,smoke_extra_updates_excluded=True,"
+        },
+        {
+          "needle": "single",
+          "line": 79,
+          "text": "status('COMPLETE_SINGLE10K_REFERENCE_DUAL_FRESH5K_TO10K',single_new_formal_updates=0,dual_fresh_formal_iterations=10000,quality_accepted=False,human_verdict=None)"
+        },
+        {
+          "needle": "a5(",
+          "line": 33,
+          "text": "def a5(label,model,step,aliases,delete_name):"
+        },
+        {
+          "needle": "a5(",
+          "line": 67,
+          "text": "a5('reference_a5_single10k_retry1',source.parent,10000,[37],'delete_a37')"
+        },
+        {
+          "needle": "a5(",
+          "line": 68,
+          "text": "a5('smoke_a5_evaluation',model,step,[37],'delete_a37')"
+        },
+        {
+          "needle": "a5(",
+          "line": 70,
+          "text": "a5('reference_a5_full5_B30k',FULL5,30000,[5,26,18,6,37],'delete_all5')"
+        },
+        {
+          "needle": "audit_gate(",
+          "line": 21,
+          "text": "def audit_gate(directory):"
+        },
+        {
+          "needle": "audit_gate(",
+          "line": 59,
+          "text": "audit_gate(ROOT);audit_gate(DUAL);source_audit('before_short_campaign')"
+        },
+        {
+          "needle": "10000",
+          "line": 50,
+          "text": "assert budget['single_new_formal_updates']==0 and budget['dual_fresh_stop']==10000"
+        },
+        {
+          "needle": "10000",
+          "line": 67,
+          "text": "a5('reference_a5_single10k_retry1',source.parent,10000,[37],'delete_a37')"
+        },
+        {
+          "needle": "10000",
+          "line": 71,
+          "text": "required=[FULL5/f'{prefix}10000.pth' for prefix in ['chkpnt','dynamic_chkpnt','env_light_chkpnt','training_state']]"
+        },
+        {
+          "needle": "10000",
+          "line": 74,
+          "text": "single_new_formal_updates=0,dual_formal_total_budget=10000,learning_rate_horizon=30000,smoke_extra_updates_excluded=True,"
+        },
+        {
+          "needle": "10000",
+          "line": 79,
+          "text": "status('COMPLETE_SINGLE10K_REFERENCE_DUAL_FRESH5K_TO10K',single_new_formal_updates=0,dual_fresh_formal_iterations=10000,quality_accepted=False,human_verdict=None)"
+        }
+      ]
+    },
+    "old_master_disabled": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/run_after_single_smoke.py",
+      "sha256": "c6ba00824cc8886e8631aa09498ce4b0981b8022a8dbfece303e1e02a003f988",
+      "matches": [
+        {
+          "needle": "DISABLED",
+          "line": 1,
+          "text": "raise SystemExit('DISABLED: user reduced the budget. No single formal extension; dual formal stops at 5K then at most10K. Use run_short_campaign.py only.')"
+        }
+      ]
+    },
+    "common_a5_evaluator": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/source/evaluate_a5.py",
+      "sha256": "be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc",
+      "matches": [
+        {
+          "needle": "--dynamic-aliases",
+          "line": 10,
+          "text": "--output RUN/a5_eval30k --dynamic-aliases 37 6 --delete-name delete_a37_a6"
+        },
+        {
+          "needle": "--dynamic-aliases",
+          "line": 476,
+          "text": "parser.add_argument('--dynamic-aliases', type=int, nargs='+', required=True)"
+        },
+        {
+          "needle": "--delete-name",
+          "line": 10,
+          "text": "--output RUN/a5_eval30k --dynamic-aliases 37 6 --delete-name delete_a37_a6"
+        },
+        {
+          "needle": "--delete-name",
+          "line": 477,
+          "text": "parser.add_argument('--delete-name', required=True)"
+        },
+        {
+          "needle": "--delete-name",
+          "line": 494,
+          "text": "parser.error('Use a distinct simple --delete-name without path separators')"
+        },
+        {
+          "needle": "labels == 1",
+          "line": 189,
+          "text": "mask = np.ascontiguousarray(labels == 1)"
+        },
+        {
+          "needle": "labels == 1",
+          "line": 439,
+          "text": "fixed_denominator=dict(rule='observations actor_labels == 1 (a5)',"
+        },
+        {
+          "needle": "'alpha'",
+          "line": 385,
+          "text": "keep_alpha = tensor_alpha(package['alpha'])"
+        },
+        {
+          "needle": "'static_alpha'",
+          "line": 386,
+          "text": "deleted_alpha = tensor_alpha(package['static_alpha'])"
+        },
+        {
+          "needle": "expected_mask_pixels",
+          "line": 214,
+          "text": "if total != options.expected_mask_pixels:"
+        },
+        {
+          "needle": "expected_mask_pixels",
+          "line": 215,
+          "text": "raise ValueError(f'Fixed a5 denominator mismatch: {total} != {options.expected_mask_pixels}')"
+        },
+        {
+          "needle": "expected_mask_pixels",
+          "line": 489,
+          "text": "if options.iteration <= 0 or options.expected_mask_pixels <= 0 or options.replay_tolerance < 0:"
+        },
+        {
+          "needle": "complete_all49_keep_delete_replay",
+          "line": 455,
+          "text": "complete_all49_keep_delete_replay=replay_checks == 98,"
+        },
+        {
+          "needle": "optimization_updates=0",
+          "line": 434,
+          "text": "model=str(options.model), optimizer_created=False, optimization_updates=0,"
+        }
+      ]
+    }
+  },
+  "unresolved_mandatory_source_defects": [],
+  "runtime_acceptance_remaining": "Long smoke completion, native replay, two-step exact restore, common a5 evaluator entry and later formal result acceptance are separate runtime obligations owned by the parent/experiment runner. This audit does not declare them passed before their receipts exist."
+}

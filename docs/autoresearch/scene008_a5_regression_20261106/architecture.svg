@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="500" viewBox="0 0 1400 500" role="img" aria-labelledby="title desc">
+  <title id="title">Scene008 a5 回归核验组件与数据流</title>
+  <desc id="desc">旧engine的单a37保留既存原10K不再追加正式训练；完整a37加a6从头只训练10K并在5K保存评价。a5保留在时间static。smoke和恢复开销单列，在固定a5域与既有Full5 30K及当前10K比较；不称同训练长度配对。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#607d8b"/></marker>
+    <style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;fill:#193b4a}.box{fill:#fff;stroke:#8aabb9;stroke-width:1.6;rx:12}.major{font-size:20px;font-weight:600}.body{font-size:17px}.small{font-size:15px;fill:#526d7a}.line{fill:none;stroke:#607d8b;stroke-width:2;marker-end:url(#arrow)}</style>
+  </defs>
+  <rect width="1400" height="500" fill="#f5f8fa"/>
+  <text x="35" y="44" font-size="27" font-weight="600">Scene008：a5 固定域回归核验</text>
+  <text x="35" y="75" class="small">前阶段基线 · Single 沿用原 10K；Dual 只到 10K（5K 发布）；新研究续训在上方独立列出</text>
+
+  <rect class="box" x="35" y="195" width="190" height="125"/>
+  <text x="130" y="230" text-anchor="middle" class="major">原始观测 / 点云</text>
+  <text x="130" y="260" text-anchor="middle" class="body">raw89–137 · seed0</text>
+  <text x="130" y="288" text-anchor="middle" class="small">RGB · LiDAR · 相机</text>
+
+  <rect class="box" x="280" y="125" width="285" height="125"/>
+  <text x="422" y="157" text-anchor="middle" class="major">旧 engine · 仅 a37 动态</text>
+  <text x="422" y="187" text-anchor="middle" class="body">原生 a37 完整 PLY</text>
+  <text x="422" y="216" text-anchor="middle" class="small">Nov3 既存原 10K · 取消延伸</text>
+
+  <rect class="box" x="280" y="285" width="285" height="125"/>
+  <text x="422" y="317" text-anchor="middle" class="major">旧 engine · a37 + a6 动态</text>
+  <text x="422" y="347" text-anchor="middle" class="body">两车完整 PLY · fresh 10K</text>
+  <text x="422" y="376" text-anchor="middle" class="small">a6 11,625 点 · a37 98,452 点</text>
+
+  <rect x="285" y="435" width="275" height="35" rx="8" fill="#e6f0f3"/>
+  <text x="422" y="458" text-anchor="middle" class="body">两组均：a5 留在时间 static</text>
+
+  <rect class="box" x="625" y="195" width="210" height="125"/>
+  <text x="730" y="222" text-anchor="middle" class="major">真实 smoke</text>
+  <text x="730" y="249" text-anchor="middle" class="major">完整恢复</text>
+  <text x="730" y="277" text-anchor="middle" class="body">保存 · 评价 · 下一步</text>
+  <text x="730" y="303" text-anchor="middle" class="small">Adam / RNG / 采样器</text>
+
+  <rect class="box" x="890" y="195" width="155" height="125"/>
+  <text x="967" y="230" text-anchor="middle" class="major">原生评价节点</text>
+  <text x="967" y="260" text-anchor="middle" class="body">Single 原 10K</text>
+  <text x="967" y="289" text-anchor="middle" class="small">Dual 5K / 10K</text>
+
+  <rect class="box" x="1100" y="175" width="265" height="165"/>
+  <text x="1232" y="210" text-anchor="middle" class="major">a5 固定域 · 49 帧比较</text>
+  <text x="1232" y="244" text-anchor="middle" class="small">颜色 · 覆盖 · 边界 · 同帧裁剪</text>
+  <text x="1232" y="275" text-anchor="middle" class="small">参考 Full5 B30K（非同长度）</text>
+  <text x="1232" y="303" text-anchor="middle" class="small">Single / Dual / 现行 native10K</text>
+
+  <path class="line" d="M225 230H250V187H280"/>
+  <path class="line" d="M225 285H250V347H280"/>
+  <path class="line" d="M565 187H595V235H625"/>
+  <path class="line" d="M565 347H595V285H625"/>
+  <path class="line" d="M835 258H890"/>
+  <path class="line" d="M1045 258H1100"/>
+  <text x="625" y="360" class="small">Single 已花约 2K smoke 更新另记</text>
+  <text x="625" y="388" class="small">Dual 学习率 horizon 仍为 30K</text>
+  <text x="1100" y="378" class="small">固定原始可见分母</text>
+  <text x="1100" y="404" class="small">不按新 alpha 缩小评价域</text>
+  <text x="1100" y="430" class="small">结果以实际日志与评价回执为准</text>
+</svg>

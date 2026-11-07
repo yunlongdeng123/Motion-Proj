@@ -1,0 +1,2379 @@
+{
+  "schema_version": 1,
+  "timestamp_utc": "2026-11-05T17:45:13.470865+00:00",
+  "status": "SOURCE_AUDIT_COMPLETED_NO_UNIQUE_A5_ROOT_CAUSE_ESTABLISHED",
+  "scope": "Single original10K plus existing11977 diagnostic continuation; current fresh dual is read-only and unchanged.",
+  "GPU_used": false,
+  "new_training_updates": 0,
+  "remote_files_changed_by_audit": false,
+  "architecture": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\architecture.svg",
+  "source_engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "findings": [
+    {
+      "id": "IMPL_STATIC_SHIFT",
+      "category": "reproduced_branch_behavior_candidate_wiring_defect",
+      "statement": "Static and split branches unconditionally overwrite the supplied time_shift with None; active dynamic branch honors it.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+          "lines": [
+            173,
+            179,
+            189,
+            265,
+            341
+          ],
+          "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+        }
+      ],
+      "historical_origin": {
+        "commit": "c49e90c2ad344326aca51c3a29850f76eeb366d4",
+        "date": "2024-12-29 16:42:38 +0800",
+        "files": [
+          "scene/gaussian_model.py",
+          "gaussian_renderer/__init__.py"
+        ],
+        "message": "Add files via upload"
+      },
+      "relevance": "Full5 a5 uses the active dynamic branch, whereas single a5 uses static. This is an actual branch-behavior difference despite a shared engine.",
+      "independent_work_here": "Source/Git provenance verified; parent real-environment CPU probe is referenced below. It finds5119 nonzero shifts in original10K, static delta0 versus dynamic nonzero delta; None-shift outputs stay identical after the two-line candidate patch.",
+      "parent_probe": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\static_time_shift_cpu_probe.json",
+        "sha256": "facff4670fb2199fe31760d76d7c723060efdc9665f2245ab0daa61f7f5595af",
+        "result": {
+          "status": "PASS_REPRODUCED_STATIC_TIME_SHIFT_ARGUMENT_DROPPED",
+          "GPU_used": false,
+          "original_engine_modified": false,
+          "optimization_updates": 0,
+          "renderer": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+            "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+          },
+          "gaussian_model": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+            "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+          },
+          "removed_assignment_lines": [
+            265,
+            341
+          ],
+          "branches": [
+            {
+              "branch": "static",
+              "original_shift_delta": {
+                "means3D": 0.0,
+                "opacities": 0.0,
+                "features": 0.0,
+                "mask": 0.0
+              },
+              "fixed_shift_delta": {
+                "means3D": 0.02290666103363037,
+                "opacities": 0.0071735382080078125,
+                "features": 0.005726814270019531,
+                "mask": 0.0
+              },
+              "unshifted_fix_delta": {
+                "means3D": 0.0,
+                "opacities": 0.0,
+                "features": 0.0,
+                "mask": 0.0
+              }
+            },
+            {
+              "branch": "dynamic",
+              "original_shift_delta": {
+                "means3D": 0.02290666103363037,
+                "opacities": 0.0071735382080078125,
+                "features": 0.005726814270019531,
+                "mask": 0.0
+              },
+              "fixed_shift_delta": {
+                "means3D": 0.02290666103363037,
+                "opacities": 0.0071735382080078125,
+                "features": 0.005726814270019531,
+                "mask": 0.0
+              },
+              "unshifted_fix_delta": {
+                "means3D": 0.0,
+                "opacities": 0.0,
+                "features": 0.0,
+                "mask": 0.0
+              }
+            }
+          ],
+          "sampler_log": {
+            "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/paired_steps.jsonl",
+            "rows": 10000,
+            "nonnull_time_shifts": 5119,
+            "nonzero_time_shifts": 5119,
+            "sha256": "d822bf8a828f4fe266b5fa85dbc610dfca09cbca0a5895ecb0deb712f81ac254"
+          },
+          "candidate_patch": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_single_bug_20261106_r1/source/static_time_shift_candidate.patch",
+          "interpretation": "Original active static path drops a nonzero time_shift; dynamic honors it. Removing two unconditional assignments restores the existing shifted formula, leaves every None-shift output unchanged, and leaves the dynamic branch unchanged.",
+          "limitation": "CPU interface proof only. Existing trained checkpoint renders normally use time_shift=None, so this fix does not repair saved a5 geometry by itself. A controlled training replay is required to test a5 causality."
+        }
+      },
+      "not_proven": "Original design intent, a requirement for identical static/dynamic self-supervision, and a unique explanation for the a5 reconstruction defect remain unproven. No GPU intervention was made in this audit.",
+      "classification_note": "The CPU probe establishes that the active static branch drops a supplied nonzero time_shift while dynamic honors it. No design document establishes that static must use the same self-supervision as dynamic. The old implementation may reflect a static-branch assumption; its original intent is unresolved. This is reproduced branch behavior and a candidate wiring defect, not an established a5 causal explanation."
+    },
+    {
+      "id": "IMPL_SCREEN_RADIUS",
+      "category": "confirmed_implementation_bug_CPU_counterexample",
+      "statement": "Normal generic densification resets max_radii2D before evaluating the screen-size pruning predicate.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+          "lines": [
+            574,
+            698,
+            706,
+            707,
+            709,
+            710,
+            721
+          ],
+          "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+        }
+      ],
+      "test": [
+        {
+          "prune_only": false,
+          "before_radii": [
+            100.0,
+            1.0
+          ],
+          "expected_screen_size_pruned_rows": 1,
+          "actual_pruned_rows": 0,
+          "survivor_rows": 2,
+          "after_radii": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "prune_only": true,
+          "before_radii": [
+            100.0,
+            1.0
+          ],
+          "expected_screen_size_pruned_rows": 1,
+          "actual_pruned_rows": 1,
+          "survivor_rows": 1,
+          "after_radii": [
+            1.0
+          ]
+        }
+      ],
+      "failed_assertion": "For radii[100,1], max_screen_size20 and no added children, normal densify_and_prune should prune the100px point by its screen predicate, but prunes0; prune_only=True prunes1.",
+      "active_state_evidence": [
+        {
+          "stage": "original_single10k",
+          "saved_screen_radius": {
+            "over20px": 0,
+            "nonzero": 0,
+            "maximum": 0.0
+          }
+        },
+        {
+          "stage": "extra_smoke11977",
+          "saved_screen_radius": {
+            "over20px": 1038376,
+            "nonzero": 1228315,
+            "maximum": 3559.0
+          }
+        }
+      ],
+      "shared_with_upstream_and_full5": true,
+      "root_cause_status": "Not established. This bug retains oversized splats; fixing it changes topology substantially and is not automatically an a5-hole fix."
+    },
+    {
+      "id": "PREP_SUPPORT_ROLE",
+      "category": "input_support_change_contract_gap_not_proven_programming_bug",
+      "statement": "Single preparation copies only a37 full PLY and keeps the original sampled scene PLY; it never transfers full nonselected a5 PLY into static.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/source/prepare_single_input.py",
+          "lines": [
+            24,
+            25,
+            28,
+            63,
+            64,
+            65
+          ],
+          "sha256": "ffb0b1853db6aea720b5b78044ca8a0aa7ec70cde0dedcc4a99934229095cf99"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/source/audit_static_seeds.py",
+          "lines": [
+            23,
+            24,
+            25
+          ],
+          "sha256": "6f5a3d7f048406a412f62edf0e7db1a5570bfb06c00fc056b76a59ba40d7f780"
+        }
+      ],
+      "known_full_a5_source_points": 21358,
+      "same_time_a5_source_points_matched_in_static": 1442,
+      "exact_matching_sampled_static_rows": 1496,
+      "missing_full_a5_source_points": 19916,
+      "missing_full_a5_source_fraction": 0.9324843150107688,
+      "acceptance_weakness": "The retained-seed audit requires only retained_after_target_exclusion>0; that passes even after a large reduction in known body support.",
+      "classification": "The saved identity_contract explicitly promises the original B temporal-static representation, not full dynamic-Ply support preservation. This is a measurable representation/input change, not a proven violation of the written recipe.",
+      "minimum_validation": "If full nonselected support preservation is required, add a CPU source-identity coverage assertion; a future matched isolated replay must separately test restoring real a5 support versus changing its loss branch. No such new run was started here."
+    },
+    {
+      "id": "DESIGN_STATIC_MOTION",
+      "category": "method_assumption_conflict",
+      "statement": "The physical a5 is moving, but its static branch receives long-duration and low-velocity preferences plus static-only opacity resets.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+          "lines": [
+            61,
+            70,
+            73,
+            75,
+            140,
+            141,
+            155,
+            157,
+            161,
+            162
+          ],
+          "sha256": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+          "lines": [
+            575,
+            576,
+            781,
+            782,
+            783
+          ],
+          "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce"
+        }
+      ],
+      "exact_terms": {
+        "static_duration": "0.1 / mean(abs(static_t_map))",
+        "static_velocity": "0.01 * mean(abs(static_v_map))",
+        "global_rgb_weight": 1,
+        "static_rgb_weight": 1,
+        "dynamic_rgb_weight": 5
+      },
+      "interpretation": "a5 RGB branch weight changes from global1+dynamic5 to global1+static1. The static Gaussian model still has trainable time and velocity; it is not a frozen rigid background.",
+      "physical_motion_evidence": {
+        "min": 6.086511689407297,
+        "median": 7.818530471452526,
+        "max": 10.362238338163731
+      },
+      "is_programming_bug": false
+    },
+    {
+      "id": "SCHEDULE_RECOVERY",
+      "category": "endpoint_evidence_not_single_factor_causality",
+      "statement": "10K→11977 improvement occurs during recovery after9K reset and continued densification/time localization; it does not cross12K reset or change SH degree.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+          "lines": [
+            293,
+            575,
+            576,
+            771,
+            779,
+            781,
+            782,
+            783
+          ],
+          "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+          "lines": [
+            414,
+            415,
+            422,
+            423
+          ],
+          "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+        }
+      ],
+      "fixed_pixel_keep_RGB_MAE": [
+        0.06209627801690489,
+        0.04357322774482324
+      ],
+      "relative_improvement": 0.29829566060366774,
+      "last_static_reset": 9000,
+      "next_static_reset": 12000,
+      "observed_endpoint": 11977,
+      "new_generic_densification_nodes": [
+        10100,
+        10200,
+        10300,
+        10400,
+        10500,
+        10600,
+        10700,
+        10800,
+        10900,
+        11000,
+        11100,
+        11200,
+        11300,
+        11400,
+        11500,
+        11600,
+        11700,
+        11800,
+        11900
+      ],
+      "SH_degree_at_both_endpoints": 3,
+      "a5_lineage_surviving_ancestors": [
+        1094,
+        1093
+      ],
+      "a5_descendant_rows": [
+        1927,
+        3488
+      ],
+      "peak_opacity_medians": [
+        0.029843623221618078,
+        0.05952728302715136
+      ],
+      "temporal_sigma_medians": [
+        0.1536053694284308,
+        0.05142677036633425
+      ],
+      "earliest_saved_single_deficit": {
+        "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/docs/autoresearch/scene008_rcr1_20261105/followup_a5/evidence/early_single/cpu_findings.json",
+        "sha256": "1cb2a5b2914ab37286760c974fdc00f54ad09e487649430066e4fe3c0a53742a",
+        "iteration": 1000,
+        "observation": "At raw105, the blue foreground a5 upper-body/roof region present in GT and existing full5 B10K is not reconstructed in single smoke1K; single smoke2K and formal single10K also show the deficit. Low-step underfitting cannot be called a destruction event.",
+        "limit": "This records failure to reconstruct at the saved smoke1K output. It does not establish that a complete body ever formed and was then destroyed, locate a triggering update, or prove identical intermediate tensors in the independent formal run. The directly supported workflow bracket remains full5 to single."
+      },
+      "limit": "The deficit is already seen in a separate same-contract single1K saved output before the first3K reset. Reset9K cannot explain its initial formation. No before/after9K rendered checkpoint pair exists in this audit."
+    },
+    {
+      "id": "EXCLUDED_COORDINATE_TIME",
+      "category": "verified_not_failing",
+      "statement": "All21358 a5 PLY points exactly reconstruct from actual LiDAR indices and per-frame pose; nx timestamps are correct, and1496 sampled a5 static rows have zero time mismatches.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py",
+          "lines": [
+            294,
+            296,
+            308,
+            316,
+            317,
+            413,
+            522,
+            592,
+            593,
+            596,
+            598
+          ],
+          "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0"
+        }
+      ],
+      "probe_status": "PASS_REAL_SOURCE_COORDINATE_AND_TIME_IDENTITY",
+      "static_sampling_note": "The transient np.random.choice on rebuilt LiDAR still consumes RNG. With initialization=False, actual returned static PCD is the existing points3d.ply after selected-only0.1m exclusion, not that transient sample.",
+      "exclusion_note": "The exclusion is time-agnostic, but independently measured a5 exact-match removal is0 for the actual selected a37 subset."
+    },
+    {
+      "id": "NPS_SGCM_DOMAIN",
+      "category": "direct_hypotheses_not_supported",
+      "statement": "Selected-a37 NPS pixel domain has zero overlap with fixed a5 pixels; exact a5 ancestry has zero SGCM-region membership at initialization,10K and11977.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py",
+          "lines": [
+            56,
+            66,
+            67,
+            71,
+            72,
+            74,
+            75,
+            76,
+            77
+          ],
+          "sha256": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8"
+        },
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/paper_sgcm.py",
+          "lines": [
+            223,
+            227,
+            230,
+            250,
+            254,
+            258,
+            360,
+            362,
+            376
+          ],
+          "sha256": "b221d7e4396c0dd05405c27d022fbf8dd40d2f305b6f7c9c596f67a9c3919a50"
+        }
+      ],
+      "nps_pixel_overlap": {
+        "a5_pixels": 121128,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      "sgcm_a5_classes": {
+        "initial": {
+          "inside": 0,
+          "prune": 0,
+          "clone": 0
+        },
+        "endpoints": [
+          {
+            "inside": 0,
+            "prune": 0,
+            "clone": 0
+          },
+          {
+            "inside": 0,
+            "prune": 0,
+            "clone": 0
+          }
+        ]
+      },
+      "limit": "No claim that all indirect 3D parameter coupling is zero, nor that the extinct402 initial lineages never entered a region at an unsaved intermediate iteration."
+    },
+    {
+      "id": "TEMPORAL_FLAG",
+      "category": "verified_behavior_intent_unresolved",
+      "statement": "time_split=False/no_time_split=True still jitters child time centers; only temporal widths remain unchanged.",
+      "source": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+          "lines": [
+            577,
+            595,
+            628,
+            629,
+            648
+          ],
+          "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+        }
+      ],
+      "test": {
+        "time_split_argument": false,
+        "no_time_split_attribute": true,
+        "parent_time": 0.123,
+        "child_times": [
+          -0.3338305354118347,
+          0.23750516772270203
+        ],
+        "child_sigmas": [
+          0.29999998211860657,
+          0.29999998211860657
+        ],
+        "time_centers_changed": true,
+        "widths_unchanged": true,
+        "classification": "Verified behavior; argument names alone do not prove the original method intended to forbid center jitter. Not asserted as an established bug or a5 cause."
+      },
+      "limit": "The flag names do not establish the original algorithm contract. Not labeled an established bug or a5 cause."
+    }
+  ],
+  "evaluation_receipts": {
+    "single10k": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/reference_a5_single10k_retry1/summary.json",
+      "sha256": "e0bfaec2769161a5af69461c74c948b4c0b36ccdd8b195c62251001090ad9a8f",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "iteration": 10000,
+      "fixed_denominator": {
+        "rule": "observations actor_labels == 1 (a5)",
+        "pixels": 121128,
+        "sha256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+        "new_alpha_used_to_select_pixels": false
+      },
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.06209627801690489,
+        "delete_rgb_mae": 0.06211102170524602,
+        "keep_delete_rgb_change": 4.240178315265135e-05,
+        "keep_raw_rgb_mae": 0.0620971517597432,
+        "delete_raw_rgb_mae": 0.06211188131948846,
+        "keep_mean_alpha": 0.9743559185397546,
+        "delete_mean_alpha": 0.974349402862105,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 0.9387424872861766,
+          "0.99": 0.5242635889307179
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 0.9387012086387954,
+          "0.99": 0.5242553332012416
+        }
+      },
+      "replay": {
+        "event_status": "EVENT_PRESENT",
+        "checked_images": 98,
+        "max_uint8_difference": 0,
+        "tolerance": 1,
+        "expected_complete_images": 98,
+        "complete_all49_keep_delete_replay": true,
+        "unavailable_is_not_a_pass": false
+      },
+      "source_integrity": "PASS_UNCHANGED_BYTES_MTIME_SHA256"
+    },
+    "smoke11977": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_a5_evaluation/summary.json",
+      "sha256": "ebad49ec7634a95bd61b45a1164d6b4ff655d805c025315342b208db44258686",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "iteration": 11977,
+      "fixed_denominator": {
+        "rule": "observations actor_labels == 1 (a5)",
+        "pixels": 121128,
+        "sha256": "aa8e7d3b56a8c35ce6177ad1e3378df7afcbc83e6db5d813bdddbfc55a717419",
+        "new_alpha_used_to_select_pixels": false
+      },
+      "all49": {
+        "pixels": 121128,
+        "weighting": "fixed pixel-frame count, not unweighted frame mean",
+        "keep_rgb_mae": 0.04357322774482324,
+        "delete_rgb_mae": 0.04358173399387494,
+        "keep_delete_rgb_change": 2.2589926001479953e-05,
+        "keep_raw_rgb_mae": 0.04362205760279715,
+        "delete_raw_rgb_mae": 0.043630522415775294,
+        "keep_mean_alpha": 0.986855138283914,
+        "delete_mean_alpha": 0.9868530674968731,
+        "keep_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 0.9670018492834027,
+          "0.99": 0.743791691433855
+        },
+        "delete_coverage": {
+          "0.1": 1.0,
+          "0.5": 1.0,
+          "0.9": 0.9670018492834027,
+          "0.99": 0.7437834357043789
+        }
+      },
+      "replay": {
+        "event_status": "EVENT_PRESENT",
+        "checked_images": 98,
+        "max_uint8_difference": 0,
+        "tolerance": 1,
+        "expected_complete_images": 98,
+        "complete_all49_keep_delete_replay": true,
+        "unavailable_is_not_a_pass": false
+      },
+      "source_integrity": "PASS_UNCHANGED_BYTES_MTIME_SHA256"
+    }
+  },
+  "cpu_lineage_probe": {
+    "status": "PASS_READ_ONLY_CPU_A5_LINEAGE_AND_SCHEDULE_PROBE",
+    "GPU_used": false,
+    "cuda_initialized": false,
+    "training_updates": 0,
+    "a5_source_rows": 21358,
+    "sampled_a5_static_rows": 1496,
+    "raw_a5_time_range": [
+      -0.47999998927116394,
+      -0.03999999910593033
+    ],
+    "static_a5_time_range": [
+      -0.47999998927116394,
+      -0.03999999910593033
+    ],
+    "initial_a5_sgcm_classes": {
+      "inside": 0,
+      "prune": 0,
+      "clone": 0
+    },
+    "config_t_grad": true,
+    "checkpoint10k_runtime_flags": {
+      "static": {
+        "no_time_split": false
+      },
+      "dynamic": {
+        "no_time_split": true
+      }
+    },
+    "schedule": {
+      "opacity_reset_static_only": [
+        3000,
+        6000,
+        9000,
+        12000
+      ],
+      "actual_latest_step": 11977,
+      "reset12000_executed_in_saved_comparison": false,
+      "SH_degree_schedule": [
+        2000,
+        4000,
+        6000
+      ],
+      "maximum_SH_degree": 3,
+      "static_time_splits_enable_after_iteration": 7500,
+      "static_no_time_split_at10k": false,
+      "generic_densification_interval": 100,
+      "generic_densification_nodes_between_saved_states": [
+        10100,
+        10200,
+        10300,
+        10400,
+        10500,
+        10600,
+        10700,
+        10800,
+        10900,
+        11000,
+        11100,
+        11200,
+        11300,
+        11400,
+        11500,
+        11600,
+        11700,
+        11800,
+        11900
+      ]
+    },
+    "stages": [
+      {
+        "stage": "original_single10k",
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/chkpnt10000.pth",
+        "iteration": 10000,
+        "bytes": 1205804824,
+        "total_static_rows": 1520544,
+        "active_SH_degree": 3,
+        "saved_screen_radius": {
+          "over20px": 0,
+          "nonzero": 0,
+          "maximum": 0.0
+        },
+        "a5_initial_lineage_ids": 1496,
+        "surviving_a5_lineages": 1094,
+        "extinct_a5_lineages": 402,
+        "a5_descendant_rows": 1927,
+        "peak_opacity": {
+          "count": 1927,
+          "quantiles": {
+            "0": 0.005012076980576386,
+            "0.1": 0.008599736572921686,
+            "0.5": 0.029843623221618078,
+            "0.9": 0.08808302232372034,
+            "1": 0.4618685191717558
+          }
+        },
+        "temporal_sigma": {
+          "count": 1927,
+          "quantiles": {
+            "0": 0.013676267098000114,
+            "0.1": 0.05079598114828432,
+            "0.5": 0.1536053694284308,
+            "0.9": 0.6634721322693223,
+            "1": 5.63280899218203
+          }
+        },
+        "temporal_center": {
+          "count": 1927,
+          "quantiles": {
+            "0": -0.6871971487998962,
+            "0.1": -0.5360333085060119,
+            "0.5": -0.2475104033946991,
+            "0.9": -0.05843599811196323,
+            "1": 1.0735141038894653
+          }
+        },
+        "raw_velocity_model": {
+          "count": 1927,
+          "quantiles": {
+            "0": 0.002698344177271426,
+            "0.1": 0.04600371051942273,
+            "0.5": 0.29087208400295295,
+            "0.9": 1.0110873351258902,
+            "1": 1.9287017014394112
+          }
+        },
+        "damped_velocity_model": {
+          "count": 1927,
+          "quantiles": {
+            "0": 1.21518352678765e-07,
+            "0.1": 0.006299113452423011,
+            "0.5": 0.16600201508235232,
+            "0.9": 0.770971603520051,
+            "1": 1.6203112895896346
+          }
+        },
+        "canonical_displacement_world_m": {
+          "count": 1927,
+          "quantiles": {
+            "0": 0.006869054966229527,
+            "0.1": 0.048321099632929396,
+            "0.5": 0.16116845082386475,
+            "0.9": 0.5926405546356703,
+            "1": 2.1375144022384966
+          }
+        },
+        "sgcm_current_classes": {
+          "inside": 0,
+          "prune": 0,
+          "clone": 0
+        },
+        "raw105_center_support_proxy": {
+          "a5_pixels": 10773,
+          "upper35pct_bbox_mask_pixels": 3384,
+          "a5_body_projected_descendants": 709,
+          "upper_projected_descendants": 319,
+          "a5_body_effective_opacity_sum": 16.05576863186255,
+          "upper_effective_opacity_sum": 10.471938709184577,
+          "upper_effective_opacity": {
+            "count": 319,
+            "quantiles": {
+              "0": 0.0019338140871871174,
+              "0.1": 0.008042395787332417,
+              "0.5": 0.02417541746284918,
+              "0.9": 0.07861464636978108,
+              "1": 0.1575161267099372
+            }
+          }
+        },
+        "source_mtime_and_size_unchanged": true
+      },
+      {
+        "stage": "extra_smoke11977",
+        "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1/chkpnt11977.pth",
+        "iteration": 11977,
+        "bytes": 1392783384,
+        "total_static_rows": 1756331,
+        "active_SH_degree": 3,
+        "saved_screen_radius": {
+          "over20px": 1038376,
+          "nonzero": 1228315,
+          "maximum": 3559.0
+        },
+        "a5_initial_lineage_ids": 1496,
+        "surviving_a5_lineages": 1093,
+        "extinct_a5_lineages": 403,
+        "a5_descendant_rows": 3488,
+        "peak_opacity": {
+          "count": 3488,
+          "quantiles": {
+            "0": 0.0049634389831602595,
+            "0.1": 0.01360202916461456,
+            "0.5": 0.05952728302715136,
+            "0.9": 0.18968423818285382,
+            "1": 0.6624160997975815
+          }
+        },
+        "temporal_sigma": {
+          "count": 3488,
+          "quantiles": {
+            "0": 0.0033371197004883834,
+            "0.1": 0.004796318455282069,
+            "0.5": 0.05142677036633425,
+            "0.9": 0.45850633245088407,
+            "1": 7.063160649187562
+          }
+        },
+        "temporal_center": {
+          "count": 3488,
+          "quantiles": {
+            "0": -0.6871971487998962,
+            "0.1": -0.4961454153060913,
+            "0.5": -0.18302404135465622,
+            "0.9": -0.09312630593776702,
+            "1": 1.0740890502929688
+          }
+        },
+        "raw_velocity_model": {
+          "count": 3488,
+          "quantiles": {
+            "0": 0.002820607649699195,
+            "0.1": 0.09484024996462666,
+            "0.5": 0.7561197855724161,
+            "0.9": 1.0942335615242562,
+            "1": 1.9419444656433207
+          }
+        },
+        "damped_velocity_model": {
+          "count": 3488,
+          "quantiles": {
+            "0": 2.975455481503229e-09,
+            "0.1": 0.01772993884361288,
+            "0.5": 0.6482449412300144,
+            "0.9": 1.0280489222870437,
+            "1": 1.7087128815847834
+          }
+        },
+        "canonical_displacement_world_m": {
+          "count": 3488,
+          "quantiles": {
+            "0": 0.008986470010206958,
+            "0.1": 0.06791536839791501,
+            "0.5": 0.5411989254068079,
+            "0.9": 2.9530619473786124,
+            "1": 5.538940725730723
+          }
+        },
+        "sgcm_current_classes": {
+          "inside": 0,
+          "prune": 0,
+          "clone": 0
+        },
+        "raw105_center_support_proxy": {
+          "a5_pixels": 10773,
+          "upper35pct_bbox_mask_pixels": 3384,
+          "a5_body_projected_descendants": 1064,
+          "upper_projected_descendants": 495,
+          "a5_body_effective_opacity_sum": 28.818759464427266,
+          "upper_effective_opacity_sum": 16.304050335758355,
+          "upper_effective_opacity": {
+            "count": 495,
+            "quantiles": {
+              "0": 0.0011980488725311913,
+              "0.1": 0.004643841075454778,
+              "0.5": 0.0214138058675707,
+              "0.9": 0.078855827060269,
+              "1": 0.1833967841898785
+            }
+          }
+        },
+        "source_mtime_and_size_unchanged": true
+      }
+    ],
+    "caveats": [
+      "Lineage membership records descendants of exact-matched initial a5 source rows; other source lineages can also learn the a5 appearance.",
+      "Projected-center/effective-opacity statistics ignore occlusion, covariance footprint and pixel transmittance; they are not actual rendered alpha attribution.",
+      "The upper35percent bbox mask is a fixed observed-pixel upper-body proxy, not a semantic roof annotation.",
+      "Two endpoints do not isolate the causal contribution of reset recovery versus densification, pruning or ordinary SGD."
+    ]
+  },
+  "cpu_source_time_probe": {
+    "status": "PASS_REAL_SOURCE_COORDINATE_AND_TIME_IDENTITY",
+    "GPU_used": false,
+    "training_updates": 0,
+    "source_points_verified": 21358,
+    "frame_rows": [
+      {
+        "frame_id": "0008089",
+        "source_rows": 290,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.48
+      },
+      {
+        "frame_id": "0008090",
+        "source_rows": 345,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.45999999999999996
+      },
+      {
+        "frame_id": "0008091",
+        "source_rows": 389,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.44
+      },
+      {
+        "frame_id": "0008092",
+        "source_rows": 370,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.42
+      },
+      {
+        "frame_id": "0008093",
+        "source_rows": 472,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.39999999999999997
+      },
+      {
+        "frame_id": "0008094",
+        "source_rows": 538,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.38
+      },
+      {
+        "frame_id": "0008095",
+        "source_rows": 603,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.36
+      },
+      {
+        "frame_id": "0008096",
+        "source_rows": 672,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.33999999999999997
+      },
+      {
+        "frame_id": "0008097",
+        "source_rows": 744,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.31999999999999995
+      },
+      {
+        "frame_id": "0008098",
+        "source_rows": 799,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.3
+      },
+      {
+        "frame_id": "0008099",
+        "source_rows": 882,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.27999999999999997
+      },
+      {
+        "frame_id": "0008100",
+        "source_rows": 1013,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.26
+      },
+      {
+        "frame_id": "0008101",
+        "source_rows": 1145,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.24
+      },
+      {
+        "frame_id": "0008102",
+        "source_rows": 1263,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.21999999999999997
+      },
+      {
+        "frame_id": "0008103",
+        "source_rows": 1468,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.19999999999999996
+      },
+      {
+        "frame_id": "0008104",
+        "source_rows": 1629,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.18
+      },
+      {
+        "frame_id": "0008105",
+        "source_rows": 1855,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.15999999999999998
+      },
+      {
+        "frame_id": "0008106",
+        "source_rows": 1921,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.13999999999999996
+      },
+      {
+        "frame_id": "0008107",
+        "source_rows": 1855,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.12
+      },
+      {
+        "frame_id": "0008108",
+        "source_rows": 1527,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.09999999999999998
+      },
+      {
+        "frame_id": "0008109",
+        "source_rows": 1164,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.07999999999999996
+      },
+      {
+        "frame_id": "0008110",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.06
+      },
+      {
+        "frame_id": "0008111",
+        "source_rows": 414,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.03999999999999998
+      },
+      {
+        "frame_id": "0008112",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": -0.019999999999999962
+      },
+      {
+        "frame_id": "0008113",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.0
+      },
+      {
+        "frame_id": "0008114",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.020000000000000018
+      },
+      {
+        "frame_id": "0008115",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.040000000000000036
+      },
+      {
+        "frame_id": "0008116",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.06000000000000005
+      },
+      {
+        "frame_id": "0008117",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.08000000000000007
+      },
+      {
+        "frame_id": "0008118",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.09999999999999998
+      },
+      {
+        "frame_id": "0008119",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.12
+      },
+      {
+        "frame_id": "0008120",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.14
+      },
+      {
+        "frame_id": "0008121",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.16000000000000003
+      },
+      {
+        "frame_id": "0008122",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.18000000000000005
+      },
+      {
+        "frame_id": "0008123",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.20000000000000007
+      },
+      {
+        "frame_id": "0008124",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.22000000000000008
+      },
+      {
+        "frame_id": "0008125",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.24
+      },
+      {
+        "frame_id": "0008126",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.26
+      },
+      {
+        "frame_id": "0008127",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.28
+      },
+      {
+        "frame_id": "0008128",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.30000000000000004
+      },
+      {
+        "frame_id": "0008129",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.32000000000000006
+      },
+      {
+        "frame_id": "0008130",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.3400000000000001
+      },
+      {
+        "frame_id": "0008131",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.36
+      },
+      {
+        "frame_id": "0008132",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.38
+      },
+      {
+        "frame_id": "0008133",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.4
+      },
+      {
+        "frame_id": "0008134",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.42000000000000004
+      },
+      {
+        "frame_id": "0008135",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.44000000000000006
+      },
+      {
+        "frame_id": "0008136",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.4600000000000001
+      },
+      {
+        "frame_id": "0008137",
+        "source_rows": 0,
+        "coordinates_exact": true,
+        "time_exact": true,
+        "model_time": 0.48
+      }
+    ],
+    "sampled_static_rows_matching_a5": 1496,
+    "matching_static_a5_time_mismatches": 0,
+    "a5_world_track_displacement_m": 39.7556005457484,
+    "a5_world_xy_speed_mps": {
+      "min": 6.086511689407297,
+      "median": 7.818530471452526,
+      "max": 10.362238338163731
+    },
+    "model_time_per_physical_second": {
+      "min": 0.19987819465028633,
+      "median": 0.1999677710024841,
+      "max": 0.20009226284893766
+    },
+    "coordinate_pipeline": "raw LiDAR xyz -> per-frame ego pose -> world float32 PLY -> shared world-to-model transform; temporal nx is the same frame model_time",
+    "note": "GT boxes/centers are read only as diagnostics; no filtering or new seeds are created."
+  },
+  "cpu_nps_domain_probe": {
+    "status": "PASS_CPU_MASK_DOMAIN_AUDIT",
+    "GPU_used": false,
+    "rows": [
+      {
+        "raw": 89,
+        "a5_pixels": 1227,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 90,
+        "a5_pixels": 1316,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 91,
+        "a5_pixels": 1470,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 92,
+        "a5_pixels": 1618,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 93,
+        "a5_pixels": 1829,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 94,
+        "a5_pixels": 2052,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 95,
+        "a5_pixels": 2276,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 96,
+        "a5_pixels": 2647,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 97,
+        "a5_pixels": 3010,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 98,
+        "a5_pixels": 3460,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 99,
+        "a5_pixels": 4021,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 100,
+        "a5_pixels": 4684,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 101,
+        "a5_pixels": 5502,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 102,
+        "a5_pixels": 6502,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 103,
+        "a5_pixels": 7840,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 104,
+        "a5_pixels": 9659,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 105,
+        "a5_pixels": 10773,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 106,
+        "a5_pixels": 11291,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 107,
+        "a5_pixels": 11367,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 108,
+        "a5_pixels": 9900,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 109,
+        "a5_pixels": 8178,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 110,
+        "a5_pixels": 6418,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 111,
+        "a5_pixels": 3451,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 112,
+        "a5_pixels": 637,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 113,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 114,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 115,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 116,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 117,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 118,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 119,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 120,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 121,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 122,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 123,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 124,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 125,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 126,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 127,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 128,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 129,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 130,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 131,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 132,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 133,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 134,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 135,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 136,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      },
+      {
+        "raw": 137,
+        "a5_pixels": 0,
+        "dynamic_a37_mask_on_a5": 0,
+        "a5_pixels_in_nps_4neighbor_domain": 0
+      }
+    ],
+    "totals": {
+      "a5_pixels": 121128,
+      "dynamic_a37_mask_on_a5": 0,
+      "a5_pixels_in_nps_4neighbor_domain": 0
+    }
+  },
+  "cpu_topology_probe": {
+    "status": "PASS_CPU_SOURCE_METHOD_COUNTEREXAMPLES",
+    "GPU_used": false,
+    "cuda_initialized": false,
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+    "source_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+    "adapter": "Only AST keyword device=cuda changed to cpu; lineage hooks are no-ops because the tiny test has no lineage metadata.",
+    "screen_radius_bookkeeping": [
+      {
+        "prune_only": false,
+        "before_radii": [
+          100.0,
+          1.0
+        ],
+        "expected_screen_size_pruned_rows": 1,
+        "actual_pruned_rows": 0,
+        "survivor_rows": 2,
+        "after_radii": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "prune_only": true,
+        "before_radii": [
+          100.0,
+          1.0
+        ],
+        "expected_screen_size_pruned_rows": 1,
+        "actual_pruned_rows": 1,
+        "survivor_rows": 1,
+        "after_radii": [
+          1.0
+        ]
+      }
+    ],
+    "confirmed_bug": "With normal prune_only=False, unconditional postfix resets accumulated max_radii2D before the screen-size predicate. An oversized100px splat survives20px pruning even when no clone or split is admitted.",
+    "scope_limit": "Shared upstream bug in static and dynamic model topology code; it retains oversized splats and does not by itself demonstrate missing-a5 causality.",
+    "temporal_split_flag_behavior": {
+      "time_split_argument": false,
+      "no_time_split_attribute": true,
+      "parent_time": 0.123,
+      "child_times": [
+        -0.3338305354118347,
+        0.23750516772270203
+      ],
+      "child_sigmas": [
+        0.29999998211860657,
+        0.29999998211860657
+      ],
+      "time_centers_changed": true,
+      "widths_unchanged": true,
+      "classification": "Verified behavior; argument names alone do not prove the original method intended to forbid center jitter. Not asserted as an established bug or a5 cause."
+    }
+  },
+  "source_lines_and_hashes": {
+    "prepare_single": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/source/prepare_single_input.py",
+      "sha256": "ffb0b1853db6aea720b5b78044ca8a0aa7ec70cde0dedcc4a99934229095cf99",
+      "matches": [
+        {
+          "line": 24,
+          "text": "for name in ['calib','image','pose','sky','velodyne','annotations','timestamp','points3d.ply']:"
+        },
+        {
+          "line": 28,
+          "text": "shutil.copy2(OLD/'points3d_dynamic_4.ply',scene/'points3d_dynamic_0.ply')"
+        },
+        {
+          "line": 59,
+          "text": "config['followup_scene_spec']['actor_ply_paths']=[str(scene/'points3d_dynamic_0.ply')]"
+        },
+        {
+          "line": 64,
+          "text": "dynamic_raw_track_ids=[TRACK],source_actor_index=4,new_actor_index=0,retained_aliases=[5,26,18,6],"
+        },
+        {
+          "line": 65,
+          "text": "retained_representation='original B temporal static/background model; initialized and trained from scratch',"
+        },
+        {
+          "line": 67,
+          "text": "source_ply_exact_bytes=(OLD/'points3d_dynamic_4.ply').read_bytes()==(scene/'points3d_dynamic_0.ply').read_bytes(),"
+        }
+      ]
+    },
+    "seed_acceptance": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/source/audit_static_seeds.py",
+      "sha256": "6f5a3d7f048406a412f62edf0e7db1a5570bfb06c00fc056b76a59ba40d7f780",
+      "matches": [
+        {
+          "line": 23,
+          "text": "before+=int(hit.sum());after+=int(keep[ids[nn[hit]]].sum())"
+        },
+        {
+          "line": 24,
+          "text": "result['retained'][str(actor)]=dict(source_real_points=len(a),same_time_sampled_scene_matches=before,retained_after_target_exclusion=after)"
+        },
+        {
+          "line": 25,
+          "text": "assert all(v['retained_after_target_exclusion']>0 for v in result['retained'].values())"
+        }
+      ]
+    },
+    "loader": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py",
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0",
+      "matches": [
+        {
+          "line": 295,
+          "text": "pointcloud1 = np.asarray(pcd.points)"
+        },
+        {
+          "line": 296,
+          "text": "pointcloud_time = np.asarray(pcd.normals)[:, 0].reshape(-1, 1)"
+        },
+        {
+          "line": 298,
+          "text": "dynamic_paths = sorted(glob(os.path.join(args.source_path, \"points3d_dynamic_*.ply\")))"
+        },
+        {
+          "line": 307,
+          "text": "dynamic_pointcloud = np.concatenate([np.asarray(p.points) for p in dynamic_clouds])"
+        },
+        {
+          "line": 308,
+          "text": "dynamic_time = np.concatenate([np.asarray(p.normals)[:, :1] for p in dynamic_clouds])"
+        },
+        {
+          "line": 313,
+          "text": "nearest, _ = cKDTree(dynamic_pointcloud).query("
+        },
+        {
+          "line": 315,
+          "text": "mask = nearest >= 0.1"
+        },
+        {
+          "line": 316,
+          "text": "static_pointcloud = pointcloud1[mask]"
+        },
+        {
+          "line": 317,
+          "text": "static_time = pointcloud_time[mask]"
+        },
+        {
+          "line": 319,
+          "text": "static_pointcloud = pointcloud1"
+        },
+        {
+          "line": 320,
+          "text": "static_time = pointcloud_time"
+        },
+        {
+          "line": 322,
+          "text": "dynamic_time = np.empty((0, 1), dtype=np.float32)"
+        },
+        {
+          "line": 413,
+          "text": "timestamp = time_duration[0] + (time_duration[1] - time_duration[0]) * idx / (len(car_list) - 1)"
+        },
+        {
+          "line": 522,
+          "text": "indices = np.random.choice(pointcloud.shape[0], args.num_pts, replace=True)"
+        },
+        {
+          "line": 524,
+          "text": "pointcloud_timestamp = np.concatenate(points_time, axis=0)"
+        },
+        {
+          "line": 525,
+          "text": "# pointcloud_timestamp = pointcloud_timestamp[mask]"
+        },
+        {
+          "line": 526,
+          "text": "pointcloud_timestamp = pointcloud_timestamp[indices]"
+        },
+        {
+          "line": 537,
+          "text": "np.savetxt(os.path.join(args.source_path, 'transform_matrix.txt'), transform, fmt='%.17g')"
+        },
+        {
+          "line": 592,
+          "text": "static_pointcloud = (np.pad(static_pointcloud, ((0, 0), (0, 1)), constant_values=1) @ transform.T)[:, :3]"
+        },
+        {
+          "line": 593,
+          "text": "dynamic_pointcloud = (np.pad(dynamic_pointcloud, ((0, 0), (0, 1)), constant_values=1) @ transform.T)[:, :3]"
+        },
+        {
+          "line": 594,
+          "text": "static_pcd = BasicPointCloud(static_pointcloud, colors=np.zeros([static_pointcloud.shape[0], 3]), normals=None,"
+        },
+        {
+          "line": 596,
+          "text": "dynamic_pcd = BasicPointCloud(dynamic_pointcloud, colors=np.zeros([dynamic_pointcloud.shape[0], 3]), normals=None,"
+        }
+      ]
+    },
+    "gaussian_model": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+      "matches": [
+        {
+          "line": 152,
+          "text": "def get_xyz_SHM(self, t, times=1):"
+        },
+        {
+          "line": 157,
+          "text": "def get_inst_velocity(self):"
+        },
+        {
+          "line": 182,
+          "text": "def get_marginal_t(self, timestamp):"
+        },
+        {
+          "line": 269,
+          "text": "self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device=\"cuda\")"
+        },
+        {
+          "line": 383,
+          "text": "# self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device=\"cuda\")"
+        },
+        {
+          "line": 414,
+          "text": "def reset_opacity(self):"
+        },
+        {
+          "line": 415,
+          "text": "opacities_new = inverse_sigmoid(torch.min(self.get_opacity, torch.ones_like(self.get_opacity) * 0.01))"
+        },
+        {
+          "line": 424,
+          "text": "stored_state[\"exp_avg\"] = torch.zeros_like(tensor)"
+        },
+        {
+          "line": 425,
+          "text": "stored_state[\"exp_avg_sq\"] = torch.zeros_like(tensor)"
+        },
+        {
+          "line": 439,
+          "text": "stored_state[\"exp_avg\"] = stored_state[\"exp_avg\"][mask]"
+        },
+        {
+          "line": 440,
+          "text": "stored_state[\"exp_avg_sq\"] = stored_state[\"exp_avg_sq\"][mask]"
+        },
+        {
+          "line": 529,
+          "text": "stored_state[\"exp_avg\"] = torch.cat((stored_state[\"exp_avg\"], torch.zeros_like(extension_tensor)),"
+        },
+        {
+          "line": 531,
+          "text": "stored_state[\"exp_avg_sq\"] = torch.cat((stored_state[\"exp_avg_sq\"], torch.zeros_like(extension_tensor)),"
+        },
+        {
+          "line": 547,
+          "text": "def densification_postfix(self, new_xyz, new_features_dc, new_features_rest, new_opacities, new_scaling,"
+        },
+        {
+          "line": 574,
+          "text": "self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device=\"cuda\")"
+        },
+        {
+          "line": 577,
+          "text": "def densify_and_split(self, grads, grad_threshold, scene_extent, grads_t, grad_t_threshold, N=2, time_split=False,"
+        },
+        {
+          "line": 595,
+          "text": "if not self.no_time_split:"
+        },
+        {
+          "line": 628,
+          "text": "samples_t = torch.normal(mean=means_t, std=stds_t)"
+        },
+        {
+          "line": 629,
+          "text": "new_t = samples_t + self.get_t[selected_pts_mask].repeat(N, 1)"
+        },
+        {
+          "line": 648,
+          "text": "if self.no_time_split:"
+        },
+        {
+          "line": 660,
+          "text": "def densify_and_clone(self, grads, grad_threshold, scene_extent, grads_t, grad_t_threshold, time_clone=False):"
+        },
+        {
+          "line": 698,
+          "text": "def densify_and_prune(self, max_grad, min_opacity, extent, max_screen_size, max_grad_t=None, prune_only=False):"
+        },
+        {
+          "line": 706,
+          "text": "self.densify_and_clone(grads, max_grad, extent, grads_t, max_grad_t, time_clone=True)"
+        },
+        {
+          "line": 707,
+          "text": "self.densify_and_split(grads, max_grad, extent, grads_t, max_grad_t, time_split=True)"
+        },
+        {
+          "line": 709,
+          "text": "self.densify_and_clone(grads, max_grad, extent, grads_t, max_grad_t, time_clone=False)"
+        },
+        {
+          "line": 710,
+          "text": "self.densify_and_split(grads, max_grad, extent, grads_t, max_grad_t, time_split=False)"
+        },
+        {
+          "line": 721,
+          "text": "big_points_vs = self.max_radii2D > max_screen_size"
+        },
+        {
+          "line": 733,
+          "text": "self.t_gradient_accum[update_filter] += self._t.grad.clone()[update_filter]"
+        },
+        {
+          "line": 878,
+          "text": "self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device=\"cuda\")"
+        }
+      ]
+    },
+    "training": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce",
+      "matches": [
+        {
+          "line": 289,
+          "text": "gaussians.update_learning_rate(iteration)"
+        },
+        {
+          "line": 291,
+          "text": "dynamic_gaussians.update_learning_rate(iteration)"
+        },
+        {
+          "line": 293,
+          "text": "if iteration % args.sh_increase_interval == 0:"
+        },
+        {
+          "line": 381,
+          "text": "legacy_static_feature = render_pkg[\"static_feature\"] / alpha.clamp_min(EPS)"
+        },
+        {
+          "line": 382,
+          "text": "legacy_static_t_map = legacy_static_feature[0:1]"
+        },
+        {
+          "line": 383,
+          "text": "legacy_static_v_map = legacy_static_feature[1:]"
+        },
+        {
+          "line": 384,
+          "text": "observed_static_mask = 1.0 - dynamic_mask"
+        },
+        {
+          "line": 385,
+          "text": "static_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(static_image * observed_static_mask, gt_image * observed_static_mask)"
+        },
+        {
+          "line": 387,
+          "text": "dynamic_rgb = ((1.0 - args.lambda_dssim) * F.l1_loss(dynamic_image, gt_dynamic_image)"
+        },
+        {
+          "line": 408,
+          "text": "\"alpha\": alpha, \"nps_features\": static_v_map,"
+        },
+        {
+          "line": 575,
+          "text": "if iteration > args.densify_until_iter * args.time_split_frac:"
+        },
+        {
+          "line": 576,
+          "text": "gaussians.no_time_split = False"
+        },
+        {
+          "line": 601,
+          "text": "#     size_threshold = args.size_threshold if (iteration > args.opacity_reset_interval and args.prune_big_point > 0) else None"
+        },
+        {
+          "line": 604,
+          "text": "#         size_threshold = size_threshold // scene.resolution_scales[0]"
+        },
+        {
+          "line": 606,
+          "text": "#     gaussians.densify_and_prune(args.densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+        },
+        {
+          "line": 607,
+          "text": "#     dynamic_gaussians.densify_and_prune(args.densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+        },
+        {
+          "line": 609,
+          "text": "# if iteration % args.opacity_reset_interval == 0 or (args.white_background and iteration == args.densify_from_iter):"
+        },
+        {
+          "line": 610,
+          "text": "#     gaussians.reset_opacity()"
+        },
+        {
+          "line": 611,
+          "text": "#     dynamic_gaussians.reset_opacity()"
+        },
+        {
+          "line": 755,
+          "text": "def densification_and_optimization(gaussians, args, iteration, viewspace_point_tensor, visibility_filter, scene,"
+        },
+        {
+          "line": 761,
+          "text": "args.densify_until_num_points < 0 or gaussians.get_xyz.shape[0] < args.dynamic_densify_until_num_points))"
+        },
+        {
+          "line": 764,
+          "text": "args.densify_until_num_points < 0 or gaussians.get_xyz.shape[0] < args.densify_until_num_points))"
+        },
+        {
+          "line": 771,
+          "text": "size_threshold = 20 if iteration > args.opacity_reset_interval else None"
+        },
+        {
+          "line": 774,
+          "text": "densify_grad_threshold *= 0.5"
+        },
+        {
+          "line": 778,
+          "text": "# gaussians.densify_and_prune(densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold, prune=do_prune)"
+        },
+        {
+          "line": 779,
+          "text": "gaussians.densify_and_prune(densify_grad_threshold, args.thresh_opa_prune, scene.cameras_extent, size_threshold, args.densify_grad_t_threshold)"
+        },
+        {
+          "line": 781,
+          "text": "if iteration < args.densify_until_iter and (iteration % args.opacity_reset_interval == 0 or ("
+        },
+        {
+          "line": 783,
+          "text": "gaussians.reset_opacity()"
+        }
+      ]
+    },
+    "hybrid_losses": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+      "sha256": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837",
+      "matches": [
+        {
+          "line": 61,
+          "text": "def static_duration_loss(static_t_map, eps=1e-8):"
+        },
+        {
+          "line": 70,
+          "text": "return static_t_map.abs().mean().clamp_min(float(eps)).reciprocal()"
+        },
+        {
+          "line": 73,
+          "text": "def static_velocity_loss(static_v_map):"
+        },
+        {
+          "line": 75,
+          "text": "return static_v_map.abs().mean()"
+        },
+        {
+          "line": 140,
+          "text": "raw[\"static_duration\"] = static_duration_loss(state[\"static_t_map\"], time_eps)"
+        },
+        {
+          "line": 141,
+          "text": "raw[\"static_velocity\"] = static_velocity_loss(state[\"static_v_map\"])"
+        },
+        {
+          "line": 147,
+          "text": "raw[\"nps\"] = nps_fn(state[\"nps_features\"], state[\"dynamic_mask\"],"
+        },
+        {
+          "line": 151,
+          "text": "raw[\"nps\"] = reference.sum() * 0.0"
+        },
+        {
+          "line": 155,
+          "text": "\"dynamic_rgb\": float(config.get(\"hybrid_lambda_dynamic_rgb\", 5.0)),"
+        },
+        {
+          "line": 157,
+          "text": "\"static_rgb\": float(config.get(\"hybrid_lambda_static_rgb\", 1.0)),"
+        },
+        {
+          "line": 161,
+          "text": "\"static_duration\": float(config.get(\"lambda_t_reg\", 0.1)),"
+        },
+        {
+          "line": 162,
+          "text": "\"static_velocity\": float(config.get(\"lambda_v_reg\", 0.01)),"
+        }
+      ]
+    },
+    "paper_nps": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_losses.py",
+      "sha256": "c56580cb502c8722c090dc8ae94b432f0ccd81d8811daa90f81b701a350053d8",
+      "matches": [
+        {
+          "line": 41,
+          "text": "def boundary_distance(dynamic_mask):"
+        },
+        {
+          "line": 56,
+          "text": "def nps_loss(static_features, dynamic_mask, distances=None):"
+        },
+        {
+          "line": 66,
+          "text": "weights = mask[0] * (distances[0] > 0).to(static_features.dtype)"
+        },
+        {
+          "line": 67,
+          "text": "weights = weights / distances[0].clamp_min(1.0)"
+        },
+        {
+          "line": 70,
+          "text": "horizontal = torch.linalg.vector_norm(static_features[:, :, 1:] - static_features[:, :, :-1], dim=0)"
+        },
+        {
+          "line": 71,
+          "text": "vertical = torch.linalg.vector_norm(static_features[:, 1:, :] - static_features[:, :-1, :], dim=0)"
+        },
+        {
+          "line": 73,
+          "text": "result = result + (horizontal * weights[:, 1:]).sum() + (horizontal * weights[:, :-1]).sum()"
+        },
+        {
+          "line": 74,
+          "text": "result = result + (vertical * weights[1:, :]).sum() + (vertical * weights[:-1, :]).sum()"
+        }
+      ]
+    },
+    "sgcm": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/paper_sgcm.py",
+      "sha256": "b221d7e4396c0dd05405c27d022fbf8dd40d2f305b6f7c9c596f67a9c3919a50",
+      "matches": [
+        {
+          "line": 217,
+          "text": "def classify_numpy(self, xyz, radii):"
+        },
+        {
+          "line": 226,
+          "text": "inside |= np.all((anchor >= bounds[0]) & (anchor <= bounds[1]), axis=1)"
+        },
+        {
+          "line": 229,
+          "text": "return {'prune':inside & (distance_m > dr),"
+        },
+        {
+          "line": 254,
+          "text": "inside |= ((anchor >= bounds[0]) & (anchor <= bounds[1])).all(dim=1)"
+        },
+        {
+          "line": 257,
+          "text": "prune = inside & (distance_m > cfg.dr_m)"
+        },
+        {
+          "line": 261,
+          "text": "if cfg.guard_enabled:"
+        },
+        {
+          "line": 262,
+          "text": "clone, split, guard_statistics = guard_additions(self, gaussians, clone, split)"
+        },
+        {
+          "line": 277,
+          "text": "if cfg.guard_enabled:"
+        },
+        {
+          "line": 285,
+          "text": "if cfg.guard_enabled:"
+        },
+        {
+          "line": 331,
+          "text": "def create_sgcm_controller(source_path, args, training_views=None, gaussians=None):"
+        },
+        {
+          "line": 361,
+          "text": "dynamic_paths = sorted(root.glob('points3d_dynamic_*.ply'))"
+        },
+        {
+          "line": 372,
+          "text": "bounds = [np.stack((points.min(axis=0),points.max(axis=0))) for points in actors_anchor]"
+        },
+        {
+          "line": 385,
+          "text": "regions.append(region)"
+        }
+      ]
+    },
+    "renderer": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+      "matches": [
+        {
+          "line": 171,
+          "text": "def prepare_rasterization(viewpoint_camera, pc: GaussianModel, pipe, scaling_modifier=1.0, override_color=None,"
+        },
+        {
+          "line": 173,
+          "text": "if dynamic:"
+        },
+        {
+          "line": 179,
+          "text": "# time_shift = None"
+        },
+        {
+          "line": 189,
+          "text": "if time_shift is not None:"
+        },
+        {
+          "line": 190,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)"
+        },
+        {
+          "line": 191,
+          "text": "means3D = means3D + pc.get_inst_velocity * time_shift"
+        },
+        {
+          "line": 194,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp)"
+        },
+        {
+          "line": 259,
+          "text": "elif split:"
+        },
+        {
+          "line": 265,
+          "text": "time_shift = None"
+        },
+        {
+          "line": 266,
+          "text": "if time_shift is not None:"
+        },
+        {
+          "line": 267,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)"
+        },
+        {
+          "line": 268,
+          "text": "means3D = means3D + pc.get_inst_velocity * time_shift"
+        },
+        {
+          "line": 271,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp)"
+        },
+        {
+          "line": 341,
+          "text": "time_shift = None"
+        },
+        {
+          "line": 342,
+          "text": "if time_shift is not None:"
+        },
+        {
+          "line": 343,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)"
+        },
+        {
+          "line": 344,
+          "text": "means3D = means3D + pc.get_inst_velocity * time_shift"
+        },
+        {
+          "line": 347,
+          "text": "means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp)"
+        }
+      ]
+    },
+    "upstream_renderer": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/DrivingEditor-run/gaussian_renderer/__init__.py",
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+      "matches": [
+        {
+          "line": 171,
+          "text": "def prepare_rasterization(viewpoint_camera, pc: GaussianModel, pipe, scaling_modifier=1.0, override_color=None,"
+        },
+        {
+          "line": 179,
+          "text": "# time_shift = None"
+        },
+        {
+          "line": 189,
+          "text": "if time_shift is not None:"
+        },
+        {
+          "line": 259,
+          "text": "elif split:"
+        },
+        {
+          "line": 265,
+          "text": "time_shift = None"
+        },
+        {
+          "line": 266,
+          "text": "if time_shift is not None:"
+        },
+        {
+          "line": 341,
+          "text": "time_shift = None"
+        },
+        {
+          "line": 342,
+          "text": "if time_shift is not None:"
+        }
+      ]
+    }
+  },
+  "active_config": {
+    "seed": 0,
+    "t_init": 0.1,
+    "cycle": 0.2,
+    "velocity_decay": 1.0,
+    "lambda_self_supervision": 0.5,
+    "frame_interval": 0.02,
+    "initialization": false,
+    "random_init_point": 0,
+    "dynamic_random_init_point": 0,
+    "t_grad": true,
+    "no_time_split": true,
+    "time_split_frac": 0.5,
+    "densification_interval": 100,
+    "densify_from_iter": 500,
+    "densify_until_iter": 15000,
+    "densify_until_num_points": 3000000,
+    "dynamic_densify_until_num_points": 1000000,
+    "dynamic_densify_until_iter": 15000,
+    "opacity_reset_interval": 3000,
+    "sh_increase_interval": 2000,
+    "sh_degree": 3,
+    "thresh_opa_prune": 0.005,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "hybrid_nps_enabled": true,
+    "paper_lambda_nps": 0.01,
+    "paper_sgcm_enabled": true,
+    "hybrid_lambda_dynamic_rgb": 5.0,
+    "hybrid_lambda_static_rgb": 1.0,
+    "hybrid_lambda_dynamic_opacity": 100.0
+  },
+  "global_sgcm_log_nodes": [
+    {
+      "iteration": 550,
+      "inside_region": 3849,
+      "pruned": 244,
+      "cloned": 9,
+      "split_parents": 436,
+      "points_before": 591672,
+      "points_after": 591873
+    },
+    {
+      "iteration": 950,
+      "inside_region": 5292,
+      "pruned": 7,
+      "cloned": 22,
+      "split_parents": 577,
+      "points_before": 594829,
+      "points_after": 595421
+    },
+    {
+      "iteration": 2950,
+      "inside_region": 24107,
+      "pruned": 16,
+      "cloned": 0,
+      "split_parents": 1338,
+      "points_before": 662847,
+      "points_after": 664169
+    },
+    {
+      "iteration": 5950,
+      "inside_region": 294914,
+      "pruned": 60,
+      "cloned": 0,
+      "split_parents": 10000,
+      "points_before": 1048269,
+      "points_after": 1058209
+    },
+    {
+      "iteration": 8950,
+      "inside_region": 578542,
+      "pruned": 26,
+      "cloned": 0,
+      "split_parents": 10000,
+      "points_before": 1401266,
+      "points_after": 1411240
+    },
+    {
+      "iteration": 9050,
+      "inside_region": 588113,
+      "pruned": 65,
+      "cloned": 0,
+      "split_parents": 10000,
+      "points_before": 1413540,
+      "points_after": 1423475
+    },
+    {
+      "iteration": 9950,
+      "inside_region": 670140,
+      "pruned": 29,
+      "cloned": 0,
+      "split_parents": 10000,
+      "points_before": 1509020,
+      "points_after": 1518991
+    }
+  ],
+  "reproduction_scripts": {
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\source\\probe_screen_prune_cpu.py": "4e0b9a26dc15aa56f66f03b3c626698002c113374c1aee72d88ad19b4e13eef8",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\source\\probe_a5_lineage_cpu.py": "206d9123b117a47f63314eac1b14e0f5969845e21497d79667fee8d8e053823f",
+    "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\source\\probe_a5_source_time_cpu.py": "07ab38e1f9e9154110bf9376a41f4a7d63075a8d25703f707ba685b00cab7775"
+  },
+  "author_review_notes": "Parent received the two independent implementation/contract findings, negative tests, and the isolated-fix queue review. The parent owns static-time-shift causal replay; no replay result is assumed here.",
+  "screen_prune_delivery_execution_receipt": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\outputs\\a5_regression_20261106\\evidence\\screen_prune_cpu_delivery_probe.json",
+    "sha256": "2f94ba2c4309f151a643394ba579427be99f4a901310749a62e4bed9d984ffaf",
+    "result": {
+      "status": "PASS_CPU_SCREEN_PRUNE_BUG_REPRODUCED",
+      "GPU_used": false,
+      "cuda_initialized": false,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "source_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+      "adapter": "Source AST unchanged except device=cuda -> cpu; no-lineage hooks are no-ops.",
+      "screen_radius_bookkeeping": [
+        {
+          "prune_only": false,
+          "before_radii": [
+            100.0,
+            1.0
+          ],
+          "expected_screen_size_pruned_rows": 1,
+          "actual_pruned_rows": 0,
+          "survivor_rows": 2,
+          "after_radii": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "prune_only": true,
+          "before_radii": [
+            100.0,
+            1.0
+          ],
+          "expected_screen_size_pruned_rows": 1,
+          "actual_pruned_rows": 1,
+          "survivor_rows": 1,
+          "after_radii": [
+            1.0
+          ]
+        }
+      ],
+      "limitation": "Shared baseline bug; this test does not establish a5 reconstruction causality."
+    },
+    "execution": "Parent independently ran the delivered unchanged probe in the real drivingeditor Python with CUDA_VISIBLE_DEVICES empty; CUDA remained uninitialized and no optimization update is performed.",
+    "delivered_probe_sha256": "4e0b9a26dc15aa56f66f03b3c626698002c113374c1aee72d88ad19b4e13eef8",
+    "a5_causality_established": false
+  }
+}

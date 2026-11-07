@@ -1,0 +1,149 @@
+{
+  "status": "PASS_COMPLETE_REDUCED_BUDGET_ACCOUNTING",
+  "created_unix": 1793901211.9256864,
+  "active_budget": {
+    "status": "ACTIVE_USER_REDUCED_BUDGET",
+    "single_new_formal_updates": 0,
+    "single_reference_formal_iteration": 10000,
+    "dual_fresh_stop": 10000,
+    "dual_phase_stops": [
+      5000,
+      10000
+    ],
+    "dual_checkpoint_eval_nodes": [
+      5000,
+      10000
+    ],
+    "iterations_configuration": 30000,
+    "learning_rate_horizon": 30000,
+    "smoke_accounting": "all smoke and two-step replay updates are separate from formal",
+    "dual_smoke_time_policy": "500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast>=3600s extend smoke to>=540s",
+    "dual_5k_action": "complete checkpoint, independent zero-update a5 evaluation and four anchors, then exact full-state resume to at most10K",
+    "root_names_containing_30k": "existing directory identifiers only; not an active training budget",
+    "old_30k_launchers_disabled": true,
+    "automatic_shutdown_allowed": false
+  },
+  "single_new_formal_updates": 0,
+  "dual_fresh_formal_updates": 10000,
+  "formal_phases": [
+    {
+      "model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/formal5k",
+      "source_iteration": 0,
+      "stop_iteration": 5000,
+      "complete_training_updates": 5000,
+      "wall_seconds": 738.002009531483,
+      "max_allocated_bytes": 4388022272,
+      "max_reserved_bytes": 6543114240,
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/formal5k/checkpoint_events/iteration_005000.json"
+    },
+    {
+      "model": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/formal10k",
+      "source_iteration": 5000,
+      "stop_iteration": 10000,
+      "complete_training_updates": 5000,
+      "wall_seconds": 1258.4844360873103,
+      "max_allocated_bytes": 9153013248,
+      "max_reserved_bytes": 25836912640,
+      "event": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/formal10k/checkpoint_events/iteration_010000.json"
+    }
+  ],
+  "single_smoke_additional_updates": 1977,
+  "single_smoke_next_entry_updates": 2,
+  "dual_smoke_updates": 500,
+  "dual_smoke_next_entry_updates": 2,
+  "smoke_updates_total": 2481,
+  "new_training_updates_total": 12481,
+  "single_original_formal10k_reused_without_new_training": true,
+  "single_smoke_train_save_native_eval_wall_seconds": 683.8545043244958,
+  "dual_smoke_train_save_native_eval_wall_seconds": 202.50792597047985,
+  "single_smoke_next2entry_wall_seconds": 29.893378088250756,
+  "dual_smoke_next2entry_wall_seconds": 17.762760067358613,
+  "initial_failed_smoke_wall_seconds": 33.598907709121704,
+  "separate_zero_update_evaluations": [
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1_eval",
+      "status": "PASS_NATIVE_LAYER_RELOAD",
+      "frames": 3,
+      "wall_seconds": 3.3880552034825087,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_a5_evaluation",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 50.52571462839842,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/reference_a5_single10k_retry1",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 41.932978346943855,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/reference_a5_full5_B30k",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 38.92965163104236,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/smoke_eval",
+      "status": "PASS_NATIVE_LAYER_RELOAD",
+      "frames": 3,
+      "wall_seconds": 3.139478897675872,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/smoke_a5_evaluation",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 40.28838003613055,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/a5_evaluation_5k",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 41.704856337979436,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/evaluation",
+      "status": "PASS_NATIVE_LAYER_RELOAD",
+      "frames": 49,
+      "wall_seconds": 27.089767260476947,
+      "optimization_updates": 0
+    },
+    {
+      "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1/a5_evaluation_10k",
+      "status": "PASS_FRESH_NATIVE49_A5_EVALUATION",
+      "frames": 49,
+      "wall_seconds": 49.36452675051987,
+      "optimization_updates": 0
+    }
+  ],
+  "failed_single_smoke_updates": 0,
+  "failed_python39_a5_evaluation_updates": 0,
+  "all_fresh_evaluation_optimizer_updates": 0,
+  "dual_smoke_time_policy": {
+    "policy": "adaptive500",
+    "observed_complete_updates_before_record": 499,
+    "observed_train_seconds_per_update": 0.10229203186720191,
+    "observed_train_10k_seconds": 1022.9203186720191,
+    "historical_single10k_seconds": 1730,
+    "input_point_ratio": 1.1180778450412383,
+    "historical_scaled_10k_seconds": 1934.2746719213424,
+    "extra5k_eval_resume_allowance_seconds": 240,
+    "predicted_formal_total_seconds": 2174.2746719213424,
+    "long_smoke_required": false,
+    "long_experiment_threshold_seconds": 3600,
+    "long_smoke_min_seconds": 540.0,
+    "excludes": "smoke updates and zero-update reference evaluations"
+  },
+  "engine_source_unchanged": "PASS_SOURCE_CHECKPOINT_AND_ENGINE_UNCHANGED",
+  "fixed_domain_all49_pixels": 121128,
+  "shutdown_executed": false,
+  "future_bug_replay": "not included; separately authorized isolated work must have separate accounting"
+}

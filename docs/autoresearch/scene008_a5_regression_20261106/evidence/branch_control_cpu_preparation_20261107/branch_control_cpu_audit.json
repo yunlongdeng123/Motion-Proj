@@ -1,0 +1,186 @@
+{
+  "status": "PASS_CPU_KEEP_ONLY_BRANCH_INPUT_PREPARED_NOT_LAUNCHED",
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1",
+  "GPU_used": false,
+  "training_updates": 0,
+  "trigger": "Not queued. Reconsider only after current staticRGB2x2 results; no automatic launch.",
+  "dynamic_actor_aliases": [
+    5,
+    37
+  ],
+  "keep_only": true,
+  "native_delete_removes": [
+    5,
+    37
+  ],
+  "a37_only_delete_solution": false,
+  "original_scene_rows": 600000,
+  "native_static_rows": 588123,
+  "removed_by_original_0p1m_rule": 11877,
+  "a5_original_sampled_rows_removed": 1496,
+  "native_dynamic_rows": 119810,
+  "dynamic_source_real_points": [
+    21358,
+    98452
+  ],
+  "fullsupport_reference_static_rows": 611588,
+  "fullsupport_a5_matching_rows": 21412,
+  "fullsupport_a5_unique_xyz_time": 21358,
+  "native_dynamic_a5_unique_xyz_time": 21358,
+  "duplicate_row_difference": 54,
+  "normalized_a5_unique_xyz_time_equal": true,
+  "normalization_transform_equal": true,
+  "model_time_field": "nx, original loader normals[:,0]",
+  "initial_rule": {
+    "time": "source pcd.time unchanged for both branches with random point counts0",
+    "velocity": [
+      0,
+      0,
+      0
+    ],
+    "sigma_t": 0.30983866769659335,
+    "log_sigma_t": -1.1717035437571504,
+    "rotation": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "opacity": 0.01,
+    "RGB": "native loader sets colors0 for both branches",
+    "spatial_scale": "Both use sqrt(clamp_min(distCUDA2(points),1e-7)), stored in log scale; KNN pool differs"
+  },
+  "KNN_domains": {
+    "static_fullsupport": "611588 retained static points including a5; a37 excluded",
+    "candidate_dynamic": "119810 pooled full a5+a37 points; static background excluded",
+    "CPU_three_neighbor_proxy_static": {
+      "min": 0.00034761108266211403,
+      "median": 0.005084876163899909,
+      "max": 0.04122610325469424,
+      "mean": 0.005712791337903918
+    },
+    "CPU_three_neighbor_proxy_dynamic": {
+      "min": 0.00043460376457605626,
+      "median": 0.005176267980760817,
+      "max": 0.04122610325469424,
+      "mean": 0.005870168392714494
+    },
+    "CPU_proxy_not_native_CUDA_initialization": true,
+    "pointwise_proxy_difference": {
+      "min": 0.0,
+      "median": 0.0,
+      "max": 0.0314243161169273,
+      "mean": 0.00015737705481057746
+    }
+  },
+  "source_method_lines": {
+    "GaussianModel.create_from_pcd": {
+      "line": 192,
+      "end_line": 272
+    },
+    "Dynamic_GaussianModel.initialize": {
+      "line": 801,
+      "end_line": 881
+    }
+  },
+  "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "engine_unmodified": true,
+  "source_files_before": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1/inputs/scene0008_089_137/points3d.ply": {
+      "bytes": 18600254,
+      "mtime_ns": 1792079705994417709,
+      "sha256": "0c412df3dbb7d36303712f1d609488db781f7d40a1c5f498a4fc46be772bfec4"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/points3d.ply": {
+      "bytes": 19217650,
+      "mtime_ns": 1793904428630652846,
+      "sha256": "62b8cf0701391a681cacf691545af3daa327974094cdcac3f5b85776b466b9af"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_0.ply": {
+      "bytes": 662351,
+      "mtime_ns": 1792327840118327760,
+      "sha256": "b5eb5ec87c6f143812b7d2deced0dcb717b2e08b4abd6d526b8365e5d96bf6a8"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply": {
+      "bytes": 3052265,
+      "mtime_ns": 1792327840158338776,
+      "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py": {
+      "bytes": 44338,
+      "mtime_ns": 1791820345289408585,
+      "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py": {
+      "bytes": 29310,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py": {
+      "bytes": 20011,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+    }
+  },
+  "source_files_after": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1/inputs/scene0008_089_137/points3d.ply": {
+      "bytes": 18600254,
+      "mtime_ns": 1792079705994417709,
+      "sha256": "0c412df3dbb7d36303712f1d609488db781f7d40a1c5f498a4fc46be772bfec4"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/points3d.ply": {
+      "bytes": 19217650,
+      "mtime_ns": 1793904428630652846,
+      "sha256": "62b8cf0701391a681cacf691545af3daa327974094cdcac3f5b85776b466b9af"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_0.ply": {
+      "bytes": 662351,
+      "mtime_ns": 1792327840118327760,
+      "sha256": "b5eb5ec87c6f143812b7d2deced0dcb717b2e08b4abd6d526b8365e5d96bf6a8"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/nearby_actors_20261015_v1/baseline_engineering_20261018/full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_4.ply": {
+      "bytes": 3052265,
+      "mtime_ns": 1792327840158338776,
+      "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py": {
+      "bytes": 44338,
+      "mtime_ns": 1791820345289408585,
+      "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/waymo_loader2.py": {
+      "bytes": 29310,
+      "mtime_ns": 1791712908111732118,
+      "sha256": "5dcd52aef59f29818f798b26ac5bacdc897e29a798c78d4850ae580471d0e2d0"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py": {
+      "bytes": 20011,
+      "mtime_ns": 1791712908107736521,
+      "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+    }
+  },
+  "scientific_boundary": "Branch-responsibility/targets/representation bundle, not a single-scalar causal isolation; 54duplicate rows and KNN domain differ.",
+  "pilot_first": {
+    "raw_ids": [
+      97,
+      105,
+      109
+    ],
+    "checkpoint_nodes": [
+      1000,
+      5000
+    ],
+    "native_automatic_full49_disabled": true,
+    "full49_only_after_pilot_acceptance": true,
+    "training_frame_sampling_unchanged": "raw89..137",
+    "future_wrapper_must_snapshot_restore_RNG_around_independent_evaluation": true,
+    "CPU_does_not_prove_future_runtime_sampler_or_RNG_preservation": true
+  },
+  "lifecycle": "Before any future long run, verify real save/evaluation/full-state restore/next-stage entry; no GPU validation performed here",
+  "weights_copied": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "shutdown": false,
+  "use_reset_card": false,
+  "preparation_script_sha256": "e45adcd14b9f5452801259fb38881cb8c9b0c6cd8429bf0c41dac807b4873021"
+}

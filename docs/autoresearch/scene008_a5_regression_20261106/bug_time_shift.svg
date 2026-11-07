@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="510" viewBox="0 0 1400 510" role="img" aria-labelledby="title desc">
+  <title id="title">static time_shift 单变量候选验证</title>
+  <desc id="desc">同一个原10K完整状态和相同1977次相机shift日程分别进入未修改分支及只移除两行覆写None的隔离候选分支，比较11977的固定a5可见域、边界和原标签上部。独立32加2 smoke与1977回放合计2011工程更新，不进入正式预算。分支行为已复现，a5因果未知。</desc>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#607d8b"/></marker>
+    <style>text{font-family:"Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;fill:#193b4a}.box{fill:#fff;stroke:#8aabb9;stroke-width:1.6;rx:12}.title{font-size:20px;font-weight:600}.body{font-size:17px}.note{font-size:15px;fill:#526d7a}.flow{fill:none;stroke:#607d8b;stroke-width:2;marker-end:url(#arr)}</style>
+  </defs>
+  <rect width="1400" height="510" fill="#f5f8fa"/>
+  <text x="32" y="40" font-size="26" font-weight="600">static time_shift：单变量候选验证</text>
+  <text x="32" y="72" class="note">CPU 已复现分支不对称；原设计合同未定，尚未证明是 a5 缺损原因</text>
+
+  <rect class="box" x="32" y="170" width="225" height="125"/>
+  <text x="144" y="204" text-anchor="middle" class="title">同原始 10K 完整状态</text>
+  <text x="144" y="236" text-anchor="middle" class="body">模型 · Adam · RNG</text>
+  <text x="144" y="266" text-anchor="middle" class="note">采样器与原学习率时钟</text>
+
+  <rect class="box" x="325" y="112" width="295" height="108"/>
+  <text x="472" y="145" text-anchor="middle" class="title">未修改旧 engine</text>
+  <text x="472" y="176" text-anchor="middle" class="body">既存 smoke：1977 更新</text>
+  <text x="472" y="204" text-anchor="middle" class="note">static 覆写 shift 为 None</text>
+
+  <rect class="box" x="325" y="270" width="295" height="108"/>
+  <text x="472" y="303" text-anchor="middle" class="title">隔离候选：仅删两行覆写</text>
+  <text x="472" y="334" text-anchor="middle" class="body">1977 更新 · 不改损失</text>
+  <text x="472" y="362" text-anchor="middle" class="note">不叠加 screen-radius 修复</text>
+
+  <rect class="box" x="690" y="112" width="200" height="108"/>
+  <text x="790" y="148" text-anchor="middle" class="title">未修 11977</text>
+  <text x="790" y="180" text-anchor="middle" class="body">已存原生 49 帧</text>
+  <text x="790" y="206" text-anchor="middle" class="note">缺顶与蓝色残影仍在</text>
+  <rect class="box" x="690" y="270" width="200" height="108"/>
+  <text x="790" y="306" text-anchor="middle" class="title">候选 11977</text>
+  <text x="790" y="338" text-anchor="middle" class="body">结果按实际回执</text>
+  <text x="790" y="364" text-anchor="middle" class="note">不预判改善</text>
+
+  <rect class="box" x="1000" y="170" width="355" height="145"/>
+  <text x="1177" y="204" text-anchor="middle" class="title">同起点 / 相机 / shift 断言</text>
+  <text x="1177" y="236" text-anchor="middle" class="body">固定可见域 · 内边界 · 上25%</text>
+  <text x="1177" y="266" text-anchor="middle" class="body">raw105 同裁剪 · 原生重放</text>
+  <text x="1177" y="295" text-anchor="middle" class="note">工程对照独立于正式 5K / 10K</text>
+
+  <path class="flow" d="M257 205H292V166H325"/>
+  <path class="flow" d="M257 267H292V324H325"/>
+  <path class="flow" d="M620 166H690"/>
+  <path class="flow" d="M620 324H690"/>
+  <path class="flow" d="M890 166H945V211H1000"/>
+  <path class="flow" d="M890 324H945V276H1000"/>
+  <text x="328" y="252" class="note">两路核对相同 1977 次相机 / shift 日程</text>
+
+  <rect x="325" y="416" width="565" height="56" rx="10" fill="#e6f0f3"/>
+  <text x="607" y="439" text-anchor="middle" class="body">独立 smoke32 + 恢复2（不并入1977回放）</text>
+  <text x="607" y="461" text-anchor="middle" class="note">新增 2011 工程更新单列；正式预算不变</text>
+  <text x="1000" y="418" class="note">相同相机/shift 不等于逐位轨迹相同</text>
+  <text x="1000" y="445" class="note">增密可能使后续随机流分叉</text>
+  <text x="1000" y="472" class="note">MAE 下降也不自动证明车顶完整</text>
+</svg>

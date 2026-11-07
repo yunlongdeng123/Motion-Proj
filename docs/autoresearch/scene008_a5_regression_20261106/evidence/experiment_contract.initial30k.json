@@ -1,0 +1,21 @@
+{
+  "task": "Scene008 a5 缺损的旧动态分支语义复现",
+  "date": "2026-11-06",
+  "automatic_shutdown_authorized": false,
+  "subagents": {"model": "gpt-6.1-sol", "reasoning_effort": "max"},
+  "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+  "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+  "semantics": "训练输入的 points3d_dynamic_*.ply 全部进入共同动态池；输入 union mask 对应此集合；render_s 移除整个集合。a5 留在时间静态层。",
+  "fixed": {"raw_first": 89, "raw_last": 137, "views": 49, "seed": 0, "render_wh": [480, 320], "learning_rate_horizon": 30000, "total_formal_updates": 30000, "stage2_updates": 0},
+  "arms": [
+    {"name": "single_a37", "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1", "dynamic_aliases": [37], "dynamic_seed_points": 98452, "initialization": "原 Nov3 fresh10K 完整状态精确恢复，正式追加20K；smoke另从原10K恢复且不并入正式。", "formal_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k"},
+    {"name": "dual_a6_a37", "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_dual30k_20261106_r1", "dynamic_aliases": [6, 37], "dynamic_seed_points_by_alias": {"6": 11625, "37": 98452}, "initialization": "旧原始完整动态 PLY 子集，从头正式30K；独立真实smoke不并入正式。"}
+  ],
+  "admission": "真实 GPU 约10分钟 smoke、finite loss/backward/显存、完整checkpoint发布、独立评价、完整状态逐值恢复、下一训练入口；通过后继续正式队列。",
+  "evaluation": "原始 actor_labels==1 固定可见域，不按新alpha缩小分母；同相机同时间比较KEEP与移除所选动态集合。全49视图，其中a5不在场的帧不伪计可见像素。四个锚帧89/97/105/109提供同裁剪目视。",
+  "limits": [
+    "没有找到可证实的October only-a37或完整a37+a6历史30K run；本次是按旧engine和报告配置构造子集对照。",
+    "Full5与子集改变初始化支持、监督分支和RNG轨迹；结果不构成单一正则项或单个源码提交的因果证明。",
+    "已有历史证据显示a5缺损早于道路和完整a6资产替换；新实验结果须等待实际回执，不能提前宣称通过。"
+  ]
+}

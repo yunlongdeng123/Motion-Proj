@@ -1,0 +1,118 @@
+{
+  "status": "READ_ONLY_HISTORICAL_REPORT_REVIEW_COMPLETE",
+  "new_experiment_results": null,
+  "scope": "仅核对本机报告、源文件和已保存凭据；本文件未运行远端实验，不证明当前 a5 已完整。",
+  "sources": {
+    "old_report": "C:/Users/dengyunlong/Documents/Codex/2026-10-20/file-c-users-dengyunlong-documents-codex-2/outputs/GS_Reconstruction_Diagnostics_20261021_Evidence_r1/index.html",
+    "old_v41": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/V41_Formal30K_Final_20261024",
+    "single_a37": "C:/Users/dengyunlong/Documents/Codex/2026-11-03/bug-a5-1k-mae-b-a5-2/outputs/scene008_a37_only_B10k_20261103",
+    "dual_a6_a37": "C:/Users/dengyunlong/Documents/Codex/2026-11-01/new-chat-2/outputs/scene008_a6_a37_dynamic_20261104",
+    "current_native10k": "C:/Users/dengyunlong/Documents/Codex/2026-11-05/j-ao-j/outputs/scene008_native10k/run_r3_review",
+    "current_assets": "C:/Users/dengyunlong/Documents/Codex/2026-11-05/j-ao-j/outputs/scene008_asset_controls"
+  },
+  "old_report_contract": {
+    "workspace": {
+      "reference": "old_report 的 data/REPORT.md:9,45-47",
+      "dynamic_aliases": [6, 37, 5, 26, 18],
+      "raw_frames": [89, 137],
+      "training_views": 49,
+      "seed": 0,
+      "stage1_steps_per_arm": 30000,
+      "stage2_steps": 0,
+      "arms": ["full", "real_only", "prior_only", "ownership_only"],
+      "deletion": "实际移除共享五车动态分支；不是只删除 a37。"
+    },
+    "fullclip": {
+      "reference": "old_report index.html:18 的 #fullclip；V42_Fullclip_Controlled_Smoke_20261026/c_mechanism/scene_binding.json:3-6",
+      "display_groups": ["原静态层/删车基线", "199帧初始化零更新", "smoke1000", "fresh10K道路修复", "同一10K加固定ProPainter"],
+      "frozen_master": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k",
+      "distinction": "页面名称中的 fresh10K 是道路修复，不是原生模型仅训练10K，也不是 only-a37 的历史30K权重。"
+    },
+    "v41_B": {
+      "reference": "old_v41/delivery/formal_authorization.json:384-423,698-703；FINAL30K.md:3-11",
+      "fresh": true,
+      "seed": 0,
+      "raw_frames": [89, 137],
+      "render_wh": [480, 320],
+      "scene_seed_points": 600000,
+      "dynamic_random_init_points": 0,
+      "steps": 30000,
+      "dynamic_PLYs": "full5_pipeline/inputs/scene0008_089_137/points3d_dynamic_{0,1,2,3,4}.ply",
+      "launch_reference": "old_v41/delivery/formal_serial_launch.json:4-11",
+      "launch": "/root/autodl-tmp/envs/drivingeditor/bin/python -u /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/tools/run_v41_formal_serial.py --campaign /root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023 --execute"
+    }
+  },
+  "single_a37_20261103": {
+    "reference": "single_a37/result_report.html:5-6；actual_identity_initialization.json:2-13；static_seed_audit.json:8-11；result_summary.json:43-49",
+    "native_engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+    "dynamic_aliases": [37],
+    "retained_in_temporal_static": [5, 26, 18, 6],
+    "fresh_steps_completed": 10000,
+    "lr_horizon": 30000,
+    "initial_static_rows": 591672,
+    "initial_a37_rows": 98452,
+    "a5_source_points": 21358,
+    "a5_same_time_scene_seed_matches": 1442,
+    "a5_retained_after_target_exclusion": 1442,
+    "a5_fixed_visible_pixels_across_49_views": 121128,
+    "a5_delete_vs_keep_RGB_MAE": 0.000042415910870724766,
+    "a5_delete_vs_observed_RGB_MAE": 0.05992924677961799,
+    "a5_dynamic_alpha_mean": 0.00009798118643183157,
+    "interpretation": "证实 a5 采样种子未被 a37 排除，且删 a37 对 a5 原可见域的平均颜色影响很小；没有证明 a5 形状、边界或隐藏表面完整。",
+    "checkpoint_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k",
+    "checkpoint_components": ["chkpnt10000.pth", "dynamic_chkpnt10000.pth", "env_light_chkpnt10000.pth", "training_state10000.pth"],
+    "local_replay_archive": "single_a37/a37_B10k_replay.tar.gz",
+    "local_replay_archive_sha256": "213953bcd371ed3e78c2140f6fc4d08a21b962551dd6487c66d5608430508ed0",
+    "command_reference": "single_a37/source/run_single_queue.py:29-31",
+    "formal_command_suffix": "source/train_single.py --mode formal --output formal10k",
+    "render_command_suffix": "source/evaluate_layers.py --model formal10k --iteration 10000 --output evaluation"
+  },
+  "dual_a6_a37_20261104": {
+    "reference": "dual_a6_a37/index.html:26-30,61-62；formal_dual_actor_r1/initial_parameter_transfer.json:2-11；diagnostic_contract.json:4-6",
+    "dynamic_aliases": [6, 37],
+    "retained_in_temporal_static": [5, 26, 18],
+    "initial_a6_rows_moved_from_static": 1023,
+    "original_full5_a6_real_points": 11625,
+    "initial_a37_rows": 98452,
+    "initial_static_rows": 590649,
+    "steps_completed": 10000,
+    "lr_horizon": 30000,
+    "checkpoint_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/formal_dual_actor_r1",
+    "command_source": "C:/Users/dengyunlong/Documents/Codex/2026-11-01/new-chat-2/work/a6_a37_dynamic_20261104/source/controller_dual.py:30-34,44-51",
+    "limitation": "此组仅迁移1023个已确认a6种子，不能当作使用完整11625点a6 PLY的旧engine双对象对照。报告没有a5独立完整性验收。"
+  },
+  "current_report_lineage": {
+    "reference": "current_assets/delivery/index.html:2-9；delivery/source/scene_runtime.py:1-5,85-103,228-237；current_native10k/data/audit.json:61-80,121-123",
+    "native_model_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/run_r3/formal",
+    "native_steps": 10000,
+    "native_dynamic_aliases": [6, 37],
+    "native_train_py_sha256": "61ab057679f302a2626bb5667d61172e4f8275bafbe4314c7911a5c69c3c76ce",
+    "road_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_road1k_20261105_r1/formal/checkpoint001000.pt",
+    "replacement": "完整a6资产物理替代原生a6；冻结a37、旧static、环境、道路；M1/M2/M3分别检查材质、采样、实测中心校正。",
+    "a5_scope": "未将a5独立拆成动态对象；发布表保护域为a37/road_visible/outside，没有独立a5完整性指标。",
+    "publication_commits": ["43ff6904ddf96a8bb35304a3667a5205fea13811", "153ed031dbd15c9a6fb5fa3b090c0847062305e7"],
+    "publication_commit_reference": "current_assets/publication_receipt.json:4-6"
+  },
+  "commit_provenance_caution": {
+    "old_diagnostic_delivery_source_commit": "cb267639",
+    "old_diagnostic_delivery_pushed_head": "6959ceab",
+    "reference": "old_report 同目录 git_delivery.json:3-4",
+    "training_git_commit_for_single_and_dual": null,
+    "explanation": "上述是报告/诊断代码交付记录，不能据此给训练checkpoint虚构单一训练commit。训练版本应继续绑定冻结engine路径、实际执行脚本及字节SHA。"
+  },
+  "uncertainties": [
+    "本次本机证据链未找到10月raw89-137的only-a37或完整a37+a6历史30K权重；不能把Full5 B30K重命名为它们。",
+    "旧Full5与现行两对象在动态集合、a5解释分支、训练更新量上不同；旧截图不能单独区分代码回归、表示分配或10K未收敛。",
+    "旧fullclip的道路修复10K与原生模型训练10K含义不同；比较必须标明原生模型和道路层来源。",
+    "a5保留种子或平均删除MAE很小，不等于车体完整。需要固定原始a5可见域、边界、覆盖、深度和全49帧同相机比较。",
+    "本文件及architecture.svg只保存已知历史和后续执行合同，不包含2026-11-06新实验结果。"
+  ],
+  "next_execution_contract_from_parent": {
+    "result_status": "NOT_REPORTED_IN_THIS_FILE",
+    "latest_user_budget_revision": "2026-11-06：无需30K，5K或10K已足以观察缺损；既存目录名中的30k不代表当前预算。",
+    "arm_a37": "评价Nov3既存原10K，不追加正式训练；取消原10K到30K延伸。已发生约2K恢复smoke更新单列，不并入原10K正式模型。",
+    "arm_a37_a6": "旧engine、完整原a37和a6 PLY；fresh只训练10000步，5000保存并评价。学习率horizon30000不变；5K/10K仅作诊断发布，a5留在时间static。",
+    "required_before_formal": "真实环境smoke、checkpoint保存、评价、完整状态恢复及下一步/下一阶段入口。",
+    "evaluation": "a5固定原始121128像素可见域与边界；比较Single原10K、完整Dual5K/10K与Current10K。Full5 B30K仅既有参考，不称同训练长度配对；其B10K仅四件权重已清理，原生发布事件与49帧PNG仍保留，可另作同10K历史uint8核对，不能称重新渲染或恢复模型。禁止按新alpha缩小分母。"
+  }
+}

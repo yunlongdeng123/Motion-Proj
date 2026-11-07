@@ -1,0 +1,171 @@
+{
+  "status": "PASS_PAIRED_FRESH_SUPPORT_ABLATION",
+  "step": 1000,
+  "records": 1000,
+  "identical_camera_time_shift_schedule": true,
+  "fixed_mask_pixels": 121128,
+  "control": {
+    "arm": "control",
+    "step": 1000,
+    "all49": {
+      "pixels": 121128,
+      "weighting": "fixed pixel-frame count, not unweighted frame mean",
+      "keep_rgb_mae": 0.22771770333764244,
+      "delete_rgb_mae": 0.22782498645383595,
+      "keep_delete_rgb_change": 0.00022941470936213354,
+      "keep_raw_rgb_mae": 0.22845728610258295,
+      "delete_raw_rgb_mae": 0.22856456921877644,
+      "keep_mean_alpha": 0.5789782350101588,
+      "delete_mean_alpha": 0.5786524530755809,
+      "keep_coverage": {
+        "0.1": 0.9987946634964665,
+        "0.5": 0.60601182220461,
+        "0.9": 0.07653886797437422,
+        "0.99": 0.002972062611452348
+      },
+      "delete_coverage": {
+        "0.1": 0.9987946634964665,
+        "0.5": 0.6049055544547917,
+        "0.9": 0.07653886797437422,
+        "0.99": 0.002972062611452348
+      }
+    },
+    "raw105": {
+      "pixels": 10773,
+      "keep_rgb_mae": 0.22118391954619407,
+      "delete_rgb_mae": 0.22111211298743744,
+      "keep_delete_rgb_change": 7.180655875666764e-05,
+      "keep_raw_rgb_mae": 0.22199335043300913,
+      "delete_raw_rgb_mae": 0.22192154387425245,
+      "keep_mean_alpha": 0.5576971977718149,
+      "delete_mean_alpha": 0.5575987076665004,
+      "sums": {
+        "keep_rgb_error": 2382.8143652711487,
+        "delete_rgb_error": 2382.0407932136636,
+        "keep_delete_rgb_change": 0.7735720574855804,
+        "keep_raw_rgb_error": 2391.5343642148073,
+        "delete_raw_rgb_error": 2390.7607921573217,
+        "keep_alpha": 6008.071911595762,
+        "delete_alpha": 6007.010877691209
+      },
+      "keep_coverage_counts": {
+        "0.1": 10746,
+        "0.5": 5975,
+        "0.9": 722,
+        "0.99": 71
+      },
+      "keep_coverage": {
+        "0.1": 0.9974937343358395,
+        "0.5": 0.554627309013274,
+        "0.9": 0.06701940035273368,
+        "0.99": 0.006590550450199573
+      },
+      "delete_coverage_counts": {
+        "0.1": 10746,
+        "0.5": 5961,
+        "0.9": 722,
+        "0.99": 71
+      },
+      "delete_coverage": {
+        "0.1": 0.9974937343358395,
+        "0.5": 0.5533277638540797,
+        "0.9": 0.06701940035273368,
+        "0.99": 0.006590550450199573
+      }
+    },
+    "global49": {
+      "l1": 0.046336988025173845,
+      "psnr": 22.258438655308314,
+      "ssim": 0.760187661161228,
+      "lpips": 0.2217761083525054
+    },
+    "initial_static_rows": 591672,
+    "initial_dynamic_rows": 98452,
+    "final_static_rows": 596300,
+    "final_dynamic_rows": 98866
+  },
+  "support": {
+    "arm": "support",
+    "step": 1000,
+    "all49": {
+      "pixels": 121128,
+      "weighting": "fixed pixel-frame count, not unweighted frame mean",
+      "keep_rgb_mae": 0.2253255153185487,
+      "delete_rgb_mae": 0.2254699105748489,
+      "keep_delete_rgb_change": 0.00016645861883202352,
+      "keep_raw_rgb_mae": 0.2253776537045309,
+      "delete_raw_rgb_mae": 0.22552207057658552,
+      "keep_mean_alpha": 0.6749433440328939,
+      "delete_mean_alpha": 0.6747485327799916,
+      "keep_coverage": {
+        "0.1": 1.0,
+        "0.5": 0.9078165246681197,
+        "0.9": 0.03336965854302886,
+        "0.99": 0.0007182484644343174
+      },
+      "delete_coverage": {
+        "0.1": 1.0,
+        "0.5": 0.9074202496532594,
+        "0.9": 0.03336965854302886,
+        "0.99": 0.0007182484644343174
+      }
+    },
+    "raw105": {
+      "pixels": 10773,
+      "keep_rgb_mae": 0.21261957277066468,
+      "delete_rgb_mae": 0.21261972054385594,
+      "keep_delete_rgb_change": 1.477731912272332e-07,
+      "keep_raw_rgb_mae": 0.21263304809005068,
+      "delete_raw_rgb_mae": 0.21263319586324195,
+      "keep_mean_alpha": 0.6898110545144642,
+      "delete_mean_alpha": 0.6898108997127975,
+      "sums": {
+        "keep_rgb_error": 2290.5506574583706,
+        "delete_rgb_error": 2290.55224941896,
+        "keep_delete_rgb_change": 0.0015919605890909831,
+        "keep_raw_rgb_error": 2290.695827074116,
+        "delete_raw_rgb_error": 2290.6974190347055,
+        "keep_alpha": 7431.334490284324,
+        "delete_alpha": 7431.3328226059675
+      },
+      "keep_coverage_counts": {
+        "0.1": 10773,
+        "0.5": 10190,
+        "0.9": 605,
+        "0.99": 18
+      },
+      "keep_coverage": {
+        "0.1": 1.0,
+        "0.5": 0.9458832265849809,
+        "0.9": 0.05615891580803861,
+        "0.99": 0.001670843776106934
+      },
+      "delete_coverage_counts": {
+        "0.1": 10773,
+        "0.5": 10190,
+        "0.9": 605,
+        "0.99": 18
+      },
+      "delete_coverage": {
+        "0.1": 1.0,
+        "0.5": 0.9458832265849809,
+        "0.9": 0.05615891580803861,
+        "0.99": 0.001670843776106934
+      }
+    },
+    "global49": {
+      "l1": 0.046302598121823094,
+      "psnr": 22.249119739143215,
+      "ssim": 0.7737869814950592,
+      "lpips": 0.21502743174835126
+    },
+    "initial_static_rows": 611588,
+    "initial_dynamic_rows": 98452,
+    "final_static_rows": 616036,
+    "final_dynamic_rows": 98840
+  },
+  "method_and_losses_unchanged": true,
+  "intervention": "append19916 missing true a5 xyz/RGB/time rows; original rows/order kept; KNN scales may naturally change",
+  "bitwise_initial_parameters_claimed": false,
+  "geometry_repair_not_assumed": true
+}

@@ -1,0 +1,98 @@
+{
+  "task_id": "SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107",
+  "status": "AUTHORIZED_EXECUTION_IN_PROGRESS",
+  "date_timezone": "2026-11-07 Asia/Singapore",
+  "user_direction": "Keep GPU powered on; research why changing the identity set degrades reconstruction of retained a5. Focus initialization and training targets, verified by experiments.",
+  "power_action": "KEEP_INSTANCE_ON_NO_SHUTDOWN",
+  "known_evidence": {
+    "matched_cached_native10k": "Full5 retains blurred roof/windshield; single-a37 visibly loses structure. Cached PNG comparison, separate from fresh-float metrics.",
+    "initial_a5_full_source_unique_xyz_time": 21358,
+    "single_sampled_a5_rows": 1496,
+    "single_sampled_a5_unique_xyz_time": 1442,
+    "support_intervention_added_unique_actual_rows": 19916,
+    "prior_support5k_result": "All49 fixed-mask MAE 0.0905295688 -> 0.0813456506; raw105 0.0999514152 -> 0.0985846240. Agent visual inspection did not find restored roof.",
+    "prior_candidate_fixes": "time-shift and screen-radius continuation trials did not repair a5; neither is adopted."
+  },
+  "questions_and_controls": [
+    {
+      "id": "Q_LENGTH",
+      "question": "Does the original single-a37 trajectory recover retained a5 by30K?",
+      "intervention": "Exact full-state continuation of unchanged native single from11977 to30000, milestones15000/20000/30000.",
+      "held_fixed": [
+        "original initialization",
+        "all losses",
+        "seed and restored sampler/RNG",
+        "30K LR clock",
+        "native engine",
+        "dynamic/delete identity a37"
+      ],
+      "reuse": "Existing683.85s real-GPU smoke11977 plus full restore/eval/next-entry evidence. Runner verifies applicability; additional required engineering work is separately counted.",
+      "planned_new_updates": 18023,
+      "boundary": "Tests this trajectory and budget; does not isolate support or supervision."
+    },
+    {
+      "id": "Q_RGB_SUPPORT",
+      "question": "Do source support and static-RGB supervision strength explain early a5 degradation?",
+      "design": "2x2: original sampled vs appended complete a5 support; native staticRGB weight vs increased staticRGB weight. Two native5K arms already exist; two new5K arms planned.",
+      "planned_single_change": "static RGB scalar1->5 only, pending actual-code multiplier/domain verification",
+      "held_fixed": [
+        "a5 remains static",
+        "a37 remains dynamic/deleted",
+        "all duration/velocity/opacity priors",
+        "seed/camera/time-shift sequence",
+        "SGCM/NPS/densification and 30K LR horizon",
+        "input per support cell"
+      ],
+      "planned_new_updates": 10000,
+      "save_eval_resume_nodes": [
+        1000,
+        5000
+      ],
+      "boundary": "One scene and seed; support intervention changes capacity and KNN scale as well as geometry. Static-RGB scalar applies to the whole static domain; it is not an actor-specific intervention."
+    }
+  ],
+  "evaluation": {
+    "frames": "raw89..137 inclusive,49 native480x320",
+    "a5_mask": "actor_labels==1 from frozen observations",
+    "fixed_pixel_frames": 121128,
+    "inner_1px_boundary_pixel_frames": 7530,
+    "upper_bbox25_percent_pixel_frames": 25906,
+    "anchors": [
+      89,
+      97,
+      105,
+      109
+    ],
+    "primary": "Fresh floating-point KEEP/DELETE fixed-mask RGB MAE and raw105/upper-region values; agent visual body/roof checks are separate from user verdict.",
+    "supporting": "Full-frame L1/PSNR/SSIM/LPIPS; no clean-delete GT; alpha alone is not completeness.",
+    "human_verdict": null,
+    "efficiency_preference_20261107": {
+      "user_direction": "New candidates may first check a few frames and expand to49 after basic checks pass; already-running49-frame evaluations can continue.",
+      "pilot_raw_frames": [
+        97,
+        105,
+        109
+      ],
+      "training_sampling": "Original49-frame training contract stays unchanged.",
+      "pending_longrun": "Do not interrupt/restart an already-launched native longrun just to change evaluation routing.",
+      "reporting": "Pilot and all49 results use separate labels and actual denominators."
+    }
+  },
+  "accounting": {
+    "prior_formal_updates": 20000,
+    "prior_engineering_updates": 6599,
+    "prior_total_new_updates": 26599,
+    "planned_increment_formal_updates": 28023,
+    "planned_increment_engineering_updates": "Only if lifecycle/recovery requires extra work; record actual execution, do not double count reused1977."
+  },
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "causal_mechanism_established": false,
+  "execution_notes": [
+    "Preserve historical artifacts and source checkpoints.",
+    "Do not reinterpret old goal authorization as current shutdown authority.",
+    "Do not pursue code-history archaeology as the main line.",
+    "After these controls, use actual results to decide the next bounded hypothesis; do not automatically combine several mechanisms."
+  ]
+}

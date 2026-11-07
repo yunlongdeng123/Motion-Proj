@@ -339,3 +339,6 @@
 - `a5 followup / scene008_rcr1_20261105`：[实际报告直接复核](autoresearch/scene008_rcr1_20261105/followup_a5/index.html#report-crosscheck)、[原生六阶段对照](autoresearch/scene008_rcr1_20261105/followup_a5/index.html)；旧Full5选择性删除a6/a37仍保留a5，新报告Native10K已缺、M0/M2非起点；3fefd98仅首次归档配方，不是唯一因果提交。本次追加0GPU/0SGD、未修复，不新增失败卡；failure_ledger_delta=none。
 
 - `v44 / scene008_v44_rgb_asset_20261107_r1`：[4帧pilot＋完整49帧双状态去蓝与冻结车体对照](autoresearch/scene008_v44_rgb_asset_20261107/index.html)；道路蓝偏差98/98帧状态改善，a6整体近稳定、局部回退保留；银残片用户指定延期，0训练，215次native前向。failure_ledger_delta=none。
+
+
+- SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107：[保留a5的原生重建、同10K缓存、补点与静态RGB对照](autoresearch/scene008_a5_regression_20261106/index.html)；原生single11977→30K与staticRGB2×2进行中，已完成结果、配置、输入角色、seed、资源和预算见报告及[实验合同](autoresearch/scene008_a5_regression_20261106/evidence/research_20261107_contract.json)。与a6资产/RCR-1画质采用结论分离；GPU保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

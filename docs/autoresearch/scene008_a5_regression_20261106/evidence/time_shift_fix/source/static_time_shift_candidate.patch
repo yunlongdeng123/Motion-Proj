@@ -1,0 +1,18 @@
+--- a/gaussian_renderer/__init__.py
++++ b/gaussian_renderer/__init__.py
+@@ -262,7 +262,6 @@
+         scales = None
+         rotations = None
+         cov3D_precomp = None
+-        time_shift = None
+         if time_shift is not None:
+             means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)
+             means3D = means3D + pc.get_inst_velocity * time_shift
+@@ -338,7 +337,6 @@
+         scales = None
+         rotations = None
+         cov3D_precomp = None
+-        time_shift = None
+         if time_shift is not None:
+             means3D = pc.get_xyz_SHM(viewpoint_camera.timestamp - time_shift)
+             means3D = means3D + pc.get_inst_velocity * time_shift

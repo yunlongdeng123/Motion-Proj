@@ -1,0 +1,11 @@
+{
+  "goal": "我先睡了，你再验证个一两轮，还不行的话就算了。然后你结束任务需要关机autodl，如果周额度低于2%或者你全部验证做完了，授权用重置卡。",
+  "status": "ACTIVE_BOUNDED_EXPERIMENT_VALIDATION",
+  "remaining_round_limit": 2,
+  "round1": "原配置control与仅补19916真实a5初始化观测support，fresh1K检查、5K终点。",
+  "round2": "仅在Round1结果需要时选择一个直接强控制；最多一轮，不延伸30K或展开新方法搜索。",
+  "shutdown": "最新用户要求任务结束必须关闭AutoDL，覆盖此前不自动关机；必须先完成所有依赖SSH/远端文件的CPU验收、报告、Git推送和取回核验。",
+  "reset_card": {"authorized_if": ["周额度剩余低于2%", "全部验证已完成"], "use_existing_credit_only": true, "initial_available_count": 2, "initial_weekly_remaining_percent": 4},
+  "old_contracts": "旧run中的shutdown=false保留为当时授权记录，不能覆盖本次最新指令。",
+  "subagent_policy": "仅 gpt-6.1-sol / max"
+}

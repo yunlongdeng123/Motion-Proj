@@ -1,0 +1,793 @@
+{
+  "status": "RUNNING_REGISTERED_STATIC_RGB5_PAIR",
+  "created_unix": 1794010536.0289972,
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2",
+  "arms": {
+    "control": {
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control",
+      "contract": {
+        "arm": "control",
+        "experiment": "static_rgb_supervision_strength_2x2",
+        "formal_stop": 5000,
+        "phase_stops": [
+          1000,
+          5000
+        ],
+        "learning_rate_horizon": 30000,
+        "expected_initial_static_rows": 591672,
+        "expected_initial_dynamic_rows": 98452,
+        "source_input": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137",
+        "baseline_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control",
+        "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+        "renderer_sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+        "gmodel_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+        "source_config_sha256": "7476eaac7dec0c01f59e7d7801245db90985b8a19023f5a38a24887103b27bdc",
+        "fresh": true,
+        "seed": 0,
+        "added_static_support_rows": 0,
+        "method_changes": {
+          "hybrid_lambda_static_rgb": {
+            "baseline": 1.0,
+            "candidate": 5.0
+          }
+        },
+        "exact_config_differences": {
+          "model_path": {
+            "baseline": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/control/formal1k",
+            "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/formal1k"
+          },
+          "hybrid_lambda_static_rgb": {
+            "baseline": 1.0,
+            "candidate": 5.0
+          }
+        },
+        "baseline_native_validator": "PASS_UNMODIFIED_BASE_CONFIG",
+        "candidate_registration": "Exact original baseline except static RGB weight and output path",
+        "no_engine_patch": true,
+        "dynamic_aliases": [
+          37
+        ],
+        "a5_branch": "static",
+        "delete_semantics": "native render_s deletes the complete selected a37 dynamic pool",
+        "shutdown_allowed": false,
+        "gpu_reset_allowed": false
+      },
+      "coverage": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/static_target_coverage.json",
+      "input_files": {
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d.ply": {
+          "sha256": "0c412df3dbb7d36303712f1d609488db781f7d40a1c5f498a4fc46be772bfec4",
+          "bytes": 18600254,
+          "mtime_ns": 1792079705994417709
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/points3d_dynamic_0.ply": {
+          "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3",
+          "bytes": 3052265,
+          "mtime_ns": 1792327840158338776
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/transform_matrix.txt": {
+          "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3",
+          "bytes": 264,
+          "mtime_ns": 1793897589314292298
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008089.png": {
+          "sha256": "6e524b70b822c81c571d69f6f35bf85391a38991ae3653fbab84914f147c81ab",
+          "bytes": 3880,
+          "mtime_ns": 1793682694019938204
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008090.png": {
+          "sha256": "a9da1f7a2904cb9625261c48b87145b757b0cb85cc34eb6bd7957d70f64cef83",
+          "bytes": 3867,
+          "mtime_ns": 1793682694507988735
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008091.png": {
+          "sha256": "17f5286b3bebe19471ccb25de1a3bdb9897de5c3eae03ab4976133d16ca99c05",
+          "bytes": 3873,
+          "mtime_ns": 1793682695032042995
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008092.png": {
+          "sha256": "c4de1ca8077357755977f4884b78f70c349a2c41b2c88aff63238bc1b87250f2",
+          "bytes": 3859,
+          "mtime_ns": 1793682695532094754
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008093.png": {
+          "sha256": "3375c2c9650c47ceb615af4192d56f8f6c14a35f29be0c4f66370816e90428ad",
+          "bytes": 3927,
+          "mtime_ns": 1793682696032146512
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008094.png": {
+          "sha256": "eb00c649a642c6277d3320cc33b0a023aae0513edf9b5c553f416ceb864b14c3",
+          "bytes": 3893,
+          "mtime_ns": 1793682696552200326
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008095.png": {
+          "sha256": "0ef2344d041e023a32bd144bdb47c12b69750d64076ef1fac3968e98e6e07ac0",
+          "bytes": 3900,
+          "mtime_ns": 1793682697040250828
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008096.png": {
+          "sha256": "0fd6eaa12013fb6490d7d01e1073b9fffbd073392e1d13de9f56d1aa88766ae8",
+          "bytes": 3868,
+          "mtime_ns": 1793682697544302971
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008097.png": {
+          "sha256": "c1eda08399b12f4a2b77aec1a4a841061db17bb5ac4b875026a7916900c11915",
+          "bytes": 3905,
+          "mtime_ns": 1793682698076358008
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008098.png": {
+          "sha256": "99771e02ce7b50d009782dd35709a3defda818f62d6ac89295e6da1ba405eca6",
+          "bytes": 3888,
+          "mtime_ns": 1793682698588410964
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008099.png": {
+          "sha256": "a663ef9a61cbf1cf3080cf99b72bc50fe3458eb9d160dc662daf92d54d200941",
+          "bytes": 3871,
+          "mtime_ns": 1793682699068460606
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008100.png": {
+          "sha256": "5e0f17a22109c08a35f69a393c50d133764f1f912d25a9be751c41a6b0f9a13e",
+          "bytes": 3921,
+          "mtime_ns": 1793682699448499897
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008101.png": {
+          "sha256": "bffc134d5570d3b3bf2a5b81e223b9b128a4fbece17a50561ea9b8c5218b21ec",
+          "bytes": 3904,
+          "mtime_ns": 1793682699732529262
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008102.png": {
+          "sha256": "33aa9282b7c4963d1a3ca4f7df0dcd862cac93c721df9daa828e0a9c758e6d51",
+          "bytes": 3921,
+          "mtime_ns": 1793682700016558628
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008103.png": {
+          "sha256": "8e13efc4fad519dfa24ee05c054d4cc4ce3d508d73b241ebd18a7bd84a14ee76",
+          "bytes": 3935,
+          "mtime_ns": 1793682700296587571
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008104.png": {
+          "sha256": "667c66dadbd0391ac92c04aac6dc6b8bc82fd3971f5abbfd9e8b3ad03419119b",
+          "bytes": 3893,
+          "mtime_ns": 1793682700768636360
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008105.png": {
+          "sha256": "5c6411ecc1a0a0d553eb269fefa031304f4705e6d3ef11279e5d1b16ef030241",
+          "bytes": 3913,
+          "mtime_ns": 1793682701264687623
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008106.png": {
+          "sha256": "ef3e38f62c2a29b42508977a0c98f3ee9bc84e47770ddc6d53700d45c9a36fa2",
+          "bytes": 3912,
+          "mtime_ns": 1793682701752738050
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008107.png": {
+          "sha256": "5e03c294fdf067655c2880a3df7fbe8d7dfd72f01c6f36751d5f39c660e2c03b",
+          "bytes": 3917,
+          "mtime_ns": 1793682702260790539
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008108.png": {
+          "sha256": "802197cecef44ac6418cbd2f2910baa9bafa7834a304a9ec37e937f924681e0d",
+          "bytes": 3939,
+          "mtime_ns": 1793682702780844257
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008109.png": {
+          "sha256": "0656342eb41664bf4886d9fe966670657c9a8b783f529fba9b447d886aabdf94",
+          "bytes": 3915,
+          "mtime_ns": 1793682703248892599
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008110.png": {
+          "sha256": "a6b444b84db38665ebe30943fe9c26bb856ad3f46df89ff5839f3768affeda5e",
+          "bytes": 3914,
+          "mtime_ns": 1793682703780947543
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008111.png": {
+          "sha256": "71c5d4b16e6f796ccfa5ab742b74e996810ccc40f4dda371a2d1ab486b95e262",
+          "bytes": 3955,
+          "mtime_ns": 1793682704276998759
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008112.png": {
+          "sha256": "c74e43dfabfe53ac41884e969498da0d5f7d3898117c3f247e5f9bbe009c8634",
+          "bytes": 3959,
+          "mtime_ns": 1793682704797052447
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008113.png": {
+          "sha256": "934bf5942a63c8b273a4daf977f7779a9ee507229e63d25f29af122765de5485",
+          "bytes": 3927,
+          "mtime_ns": 1793682705285102824
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008114.png": {
+          "sha256": "40c3d7e8257508b45db50a2740974d252e2021bdf985a6dc751efd2d40e11adb",
+          "bytes": 3917,
+          "mtime_ns": 1793682705777153607
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008115.png": {
+          "sha256": "0bd6e0646337067ad80ee2bccbfd0c2acec6e1a7030bf0cdbbd784ea97bba042",
+          "bytes": 3908,
+          "mtime_ns": 1793682706245201905
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008116.png": {
+          "sha256": "61f070ce51558bebc0129458690463c9cac124c23fffe2a80901e24b24ac6d27",
+          "bytes": 3843,
+          "mtime_ns": 1793682706705249371
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008117.png": {
+          "sha256": "7be668eb044b3957599d4a56a60e5ff998337b905551ca3135f6272a6d6ce270",
+          "bytes": 3828,
+          "mtime_ns": 1793682707161296420
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008118.png": {
+          "sha256": "3d203ebc2aa4c613ecf3bb3a3b4099aed8fe6ed24c375950f35597f772852442",
+          "bytes": 3794,
+          "mtime_ns": 1793682707609342634
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008119.png": {
+          "sha256": "feb13d1a65244bec36e4a9942baa8f8f0ed93c19f255461f37e87240e54c115e",
+          "bytes": 3792,
+          "mtime_ns": 1793682708065389672
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008120.png": {
+          "sha256": "933fa2548a2fc22bc64b46814441d8a040a197609e0f77dc92a4f16e4b510c8c",
+          "bytes": 3753,
+          "mtime_ns": 1793682708481432573
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008121.png": {
+          "sha256": "1e9e053235ff0740193ff8c6e8423d91b883502a7a36b5a93f2cc0cfc8bbfeba",
+          "bytes": 3683,
+          "mtime_ns": 1793682708737458975
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008122.png": {
+          "sha256": "d2b5b275b09095764030f64bf5b98a900ceddaad99437aa9dd29075a62855127",
+          "bytes": 3655,
+          "mtime_ns": 1793682708989484963
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008123.png": {
+          "sha256": "cf91ad4159194c6af1b74413500fa13e2a4c68a806d3c34c18445749ca3073b7",
+          "bytes": 3683,
+          "mtime_ns": 1793682709229509707
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008124.png": {
+          "sha256": "7b12311b40ff94c9c18163305d79748ccf77bdba7698ffdeb00e7c0350883f6c",
+          "bytes": 3639,
+          "mtime_ns": 1793682709473534863
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008125.png": {
+          "sha256": "6e72d6c38d7cc55b73baa06ed004c57fc2e1dd8fc5a0712a451355d3af6bea47",
+          "bytes": 3586,
+          "mtime_ns": 1793682709721560431
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008126.png": {
+          "sha256": "9a52262bc6674bb0268d0a9c5bb656c3b7d152c51f002aa536d5d28b1bbf3b1d",
+          "bytes": 3577,
+          "mtime_ns": 1793682709965585587
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008127.png": {
+          "sha256": "0a6df20f175b414e00fd0ece53317b01531b3674143c36037e93046331c0cbef",
+          "bytes": 3577,
+          "mtime_ns": 1793682710213611150
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008128.png": {
+          "sha256": "b76c08dd3782b9a49c61d6b5611b01e4835130a0a8dad2ed4948a128936fce1d",
+          "bytes": 3527,
+          "mtime_ns": 1793682710449635473
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008129.png": {
+          "sha256": "93146733ebeec4abfc95b22f35f402b6a59f1b8a9137c319515b7b51a7d757ae",
+          "bytes": 3568,
+          "mtime_ns": 1793682710685659798
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008130.png": {
+          "sha256": "8d1c72f3aff6112602ce223264fe69af98b418c108dda8dc384adabc6054f8f2",
+          "bytes": 3493,
+          "mtime_ns": 1793682710957687832
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008131.png": {
+          "sha256": "216cb4fe3fe2874fdafae3621cc3cefd5e082cae6caf9a0155c76d3383e76f29",
+          "bytes": 3506,
+          "mtime_ns": 1793682711205713388
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008132.png": {
+          "sha256": "3e242786b93158144455472144ba3431ec1ced6bd1c08b4c0ee6c13c38888403",
+          "bytes": 3453,
+          "mtime_ns": 1793682711461739766
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008133.png": {
+          "sha256": "90de8fc264299678e2aae08fa8a5ec67c2008dbdf3db803ae3804c4698f0c74b",
+          "bytes": 3413,
+          "mtime_ns": 1793682711701764495
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008134.png": {
+          "sha256": "b50e1fd68a5e6d89fff10fbb1afe2cab18bc2f50382c74bc87a9a9fae56aff60",
+          "bytes": 3462,
+          "mtime_ns": 1793682711933788400
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008135.png": {
+          "sha256": "1866b12e12d1766d781eed511ad22df25ac98d0a8553588f2fababcc6dba47b7",
+          "bytes": 3395,
+          "mtime_ns": 1793682712165812299
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008136.png": {
+          "sha256": "7a8444f5ae12b0bd121a2368c1a74a06dc609ec64723843af3601fbed3a525fb",
+          "bytes": 3443,
+          "mtime_ns": 1793682712405837022
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008137.png": {
+          "sha256": "b7aefdbe07eb5427f931e77914da235d629288c98efb95a00e70b20d65271437",
+          "bytes": 3368,
+          "mtime_ns": 1793682712829880697
+        }
+      }
+    },
+    "support": {
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support",
+      "contract": {
+        "arm": "support",
+        "experiment": "static_rgb_supervision_strength_2x2",
+        "formal_stop": 5000,
+        "phase_stops": [
+          1000,
+          5000
+        ],
+        "learning_rate_horizon": 30000,
+        "expected_initial_static_rows": 611588,
+        "expected_initial_dynamic_rows": 98452,
+        "source_input": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137",
+        "baseline_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support",
+        "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137",
+        "renderer_sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced",
+        "gmodel_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+        "source_config_sha256": "85f47a8ef28ed3b9b74cc30bcefa70c24524378716ba56ecfae0cd0f113e9d30",
+        "fresh": true,
+        "seed": 0,
+        "added_static_support_rows": 19916,
+        "method_changes": {
+          "hybrid_lambda_static_rgb": {
+            "baseline": 1.0,
+            "candidate": 5.0
+          }
+        },
+        "exact_config_differences": {
+          "model_path": {
+            "baseline": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/fresh5k",
+            "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/formal1k"
+          },
+          "hybrid_lambda_static_rgb": {
+            "baseline": 1.0,
+            "candidate": 5.0
+          }
+        },
+        "baseline_native_validator": "PASS_UNMODIFIED_BASE_CONFIG",
+        "candidate_registration": "Exact original baseline except static RGB weight and output path",
+        "no_engine_patch": true,
+        "dynamic_aliases": [
+          37
+        ],
+        "a5_branch": "static",
+        "delete_semantics": "native render_s deletes the complete selected a37 dynamic pool",
+        "shutdown_allowed": false,
+        "gpu_reset_allowed": false
+      },
+      "coverage": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/static_target_coverage.json",
+      "input_files": {
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/points3d.ply": {
+          "sha256": "62b8cf0701391a681cacf691545af3daa327974094cdcac3f5b85776b466b9af",
+          "bytes": 19217650,
+          "mtime_ns": 1793904428630652846
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/points3d_dynamic_0.ply": {
+          "sha256": "6e47276df86d70a56038335549a3930c6c1277acf63058c11686fdba4d930bf3",
+          "bytes": 3052265,
+          "mtime_ns": 1792327840158338776
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/transform_matrix.txt": {
+          "sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3",
+          "bytes": 264,
+          "mtime_ns": 1793897589314292298
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008089.png": {
+          "sha256": "6e524b70b822c81c571d69f6f35bf85391a38991ae3653fbab84914f147c81ab",
+          "bytes": 3880,
+          "mtime_ns": 1793682694019938204
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008090.png": {
+          "sha256": "a9da1f7a2904cb9625261c48b87145b757b0cb85cc34eb6bd7957d70f64cef83",
+          "bytes": 3867,
+          "mtime_ns": 1793682694507988735
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008091.png": {
+          "sha256": "17f5286b3bebe19471ccb25de1a3bdb9897de5c3eae03ab4976133d16ca99c05",
+          "bytes": 3873,
+          "mtime_ns": 1793682695032042995
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008092.png": {
+          "sha256": "c4de1ca8077357755977f4884b78f70c349a2c41b2c88aff63238bc1b87250f2",
+          "bytes": 3859,
+          "mtime_ns": 1793682695532094754
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008093.png": {
+          "sha256": "3375c2c9650c47ceb615af4192d56f8f6c14a35f29be0c4f66370816e90428ad",
+          "bytes": 3927,
+          "mtime_ns": 1793682696032146512
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008094.png": {
+          "sha256": "eb00c649a642c6277d3320cc33b0a023aae0513edf9b5c553f416ceb864b14c3",
+          "bytes": 3893,
+          "mtime_ns": 1793682696552200326
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008095.png": {
+          "sha256": "0ef2344d041e023a32bd144bdb47c12b69750d64076ef1fac3968e98e6e07ac0",
+          "bytes": 3900,
+          "mtime_ns": 1793682697040250828
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008096.png": {
+          "sha256": "0fd6eaa12013fb6490d7d01e1073b9fffbd073392e1d13de9f56d1aa88766ae8",
+          "bytes": 3868,
+          "mtime_ns": 1793682697544302971
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008097.png": {
+          "sha256": "c1eda08399b12f4a2b77aec1a4a841061db17bb5ac4b875026a7916900c11915",
+          "bytes": 3905,
+          "mtime_ns": 1793682698076358008
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008098.png": {
+          "sha256": "99771e02ce7b50d009782dd35709a3defda818f62d6ac89295e6da1ba405eca6",
+          "bytes": 3888,
+          "mtime_ns": 1793682698588410964
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008099.png": {
+          "sha256": "a663ef9a61cbf1cf3080cf99b72bc50fe3458eb9d160dc662daf92d54d200941",
+          "bytes": 3871,
+          "mtime_ns": 1793682699068460606
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008100.png": {
+          "sha256": "5e0f17a22109c08a35f69a393c50d133764f1f912d25a9be751c41a6b0f9a13e",
+          "bytes": 3921,
+          "mtime_ns": 1793682699448499897
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008101.png": {
+          "sha256": "bffc134d5570d3b3bf2a5b81e223b9b128a4fbece17a50561ea9b8c5218b21ec",
+          "bytes": 3904,
+          "mtime_ns": 1793682699732529262
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008102.png": {
+          "sha256": "33aa9282b7c4963d1a3ca4f7df0dcd862cac93c721df9daa828e0a9c758e6d51",
+          "bytes": 3921,
+          "mtime_ns": 1793682700016558628
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008103.png": {
+          "sha256": "8e13efc4fad519dfa24ee05c054d4cc4ce3d508d73b241ebd18a7bd84a14ee76",
+          "bytes": 3935,
+          "mtime_ns": 1793682700296587571
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008104.png": {
+          "sha256": "667c66dadbd0391ac92c04aac6dc6b8bc82fd3971f5abbfd9e8b3ad03419119b",
+          "bytes": 3893,
+          "mtime_ns": 1793682700768636360
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008105.png": {
+          "sha256": "5c6411ecc1a0a0d553eb269fefa031304f4705e6d3ef11279e5d1b16ef030241",
+          "bytes": 3913,
+          "mtime_ns": 1793682701264687623
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008106.png": {
+          "sha256": "ef3e38f62c2a29b42508977a0c98f3ee9bc84e47770ddc6d53700d45c9a36fa2",
+          "bytes": 3912,
+          "mtime_ns": 1793682701752738050
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008107.png": {
+          "sha256": "5e03c294fdf067655c2880a3df7fbe8d7dfd72f01c6f36751d5f39c660e2c03b",
+          "bytes": 3917,
+          "mtime_ns": 1793682702260790539
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008108.png": {
+          "sha256": "802197cecef44ac6418cbd2f2910baa9bafa7834a304a9ec37e937f924681e0d",
+          "bytes": 3939,
+          "mtime_ns": 1793682702780844257
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008109.png": {
+          "sha256": "0656342eb41664bf4886d9fe966670657c9a8b783f529fba9b447d886aabdf94",
+          "bytes": 3915,
+          "mtime_ns": 1793682703248892599
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008110.png": {
+          "sha256": "a6b444b84db38665ebe30943fe9c26bb856ad3f46df89ff5839f3768affeda5e",
+          "bytes": 3914,
+          "mtime_ns": 1793682703780947543
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008111.png": {
+          "sha256": "71c5d4b16e6f796ccfa5ab742b74e996810ccc40f4dda371a2d1ab486b95e262",
+          "bytes": 3955,
+          "mtime_ns": 1793682704276998759
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008112.png": {
+          "sha256": "c74e43dfabfe53ac41884e969498da0d5f7d3898117c3f247e5f9bbe009c8634",
+          "bytes": 3959,
+          "mtime_ns": 1793682704797052447
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008113.png": {
+          "sha256": "934bf5942a63c8b273a4daf977f7779a9ee507229e63d25f29af122765de5485",
+          "bytes": 3927,
+          "mtime_ns": 1793682705285102824
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008114.png": {
+          "sha256": "40c3d7e8257508b45db50a2740974d252e2021bdf985a6dc751efd2d40e11adb",
+          "bytes": 3917,
+          "mtime_ns": 1793682705777153607
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008115.png": {
+          "sha256": "0bd6e0646337067ad80ee2bccbfd0c2acec6e1a7030bf0cdbbd784ea97bba042",
+          "bytes": 3908,
+          "mtime_ns": 1793682706245201905
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008116.png": {
+          "sha256": "61f070ce51558bebc0129458690463c9cac124c23fffe2a80901e24b24ac6d27",
+          "bytes": 3843,
+          "mtime_ns": 1793682706705249371
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008117.png": {
+          "sha256": "7be668eb044b3957599d4a56a60e5ff998337b905551ca3135f6272a6d6ce270",
+          "bytes": 3828,
+          "mtime_ns": 1793682707161296420
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008118.png": {
+          "sha256": "3d203ebc2aa4c613ecf3bb3a3b4099aed8fe6ed24c375950f35597f772852442",
+          "bytes": 3794,
+          "mtime_ns": 1793682707609342634
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008119.png": {
+          "sha256": "feb13d1a65244bec36e4a9942baa8f8f0ed93c19f255461f37e87240e54c115e",
+          "bytes": 3792,
+          "mtime_ns": 1793682708065389672
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008120.png": {
+          "sha256": "933fa2548a2fc22bc64b46814441d8a040a197609e0f77dc92a4f16e4b510c8c",
+          "bytes": 3753,
+          "mtime_ns": 1793682708481432573
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008121.png": {
+          "sha256": "1e9e053235ff0740193ff8c6e8423d91b883502a7a36b5a93f2cc0cfc8bbfeba",
+          "bytes": 3683,
+          "mtime_ns": 1793682708737458975
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008122.png": {
+          "sha256": "d2b5b275b09095764030f64bf5b98a900ceddaad99437aa9dd29075a62855127",
+          "bytes": 3655,
+          "mtime_ns": 1793682708989484963
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008123.png": {
+          "sha256": "cf91ad4159194c6af1b74413500fa13e2a4c68a806d3c34c18445749ca3073b7",
+          "bytes": 3683,
+          "mtime_ns": 1793682709229509707
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008124.png": {
+          "sha256": "7b12311b40ff94c9c18163305d79748ccf77bdba7698ffdeb00e7c0350883f6c",
+          "bytes": 3639,
+          "mtime_ns": 1793682709473534863
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008125.png": {
+          "sha256": "6e72d6c38d7cc55b73baa06ed004c57fc2e1dd8fc5a0712a451355d3af6bea47",
+          "bytes": 3586,
+          "mtime_ns": 1793682709721560431
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008126.png": {
+          "sha256": "9a52262bc6674bb0268d0a9c5bb656c3b7d152c51f002aa536d5d28b1bbf3b1d",
+          "bytes": 3577,
+          "mtime_ns": 1793682709965585587
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008127.png": {
+          "sha256": "0a6df20f175b414e00fd0ece53317b01531b3674143c36037e93046331c0cbef",
+          "bytes": 3577,
+          "mtime_ns": 1793682710213611150
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008128.png": {
+          "sha256": "b76c08dd3782b9a49c61d6b5611b01e4835130a0a8dad2ed4948a128936fce1d",
+          "bytes": 3527,
+          "mtime_ns": 1793682710449635473
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008129.png": {
+          "sha256": "93146733ebeec4abfc95b22f35f402b6a59f1b8a9137c319515b7b51a7d757ae",
+          "bytes": 3568,
+          "mtime_ns": 1793682710685659798
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008130.png": {
+          "sha256": "8d1c72f3aff6112602ce223264fe69af98b418c108dda8dc384adabc6054f8f2",
+          "bytes": 3493,
+          "mtime_ns": 1793682710957687832
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008131.png": {
+          "sha256": "216cb4fe3fe2874fdafae3621cc3cefd5e082cae6caf9a0155c76d3383e76f29",
+          "bytes": 3506,
+          "mtime_ns": 1793682711205713388
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008132.png": {
+          "sha256": "3e242786b93158144455472144ba3431ec1ced6bd1c08b4c0ee6c13c38888403",
+          "bytes": 3453,
+          "mtime_ns": 1793682711461739766
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008133.png": {
+          "sha256": "90de8fc264299678e2aae08fa8a5ec67c2008dbdf3db803ae3804c4698f0c74b",
+          "bytes": 3413,
+          "mtime_ns": 1793682711701764495
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008134.png": {
+          "sha256": "b50e1fd68a5e6d89fff10fbb1afe2cab18bc2f50382c74bc87a9a9fae56aff60",
+          "bytes": 3462,
+          "mtime_ns": 1793682711933788400
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008135.png": {
+          "sha256": "1866b12e12d1766d781eed511ad22df25ac98d0a8553588f2fababcc6dba47b7",
+          "bytes": 3395,
+          "mtime_ns": 1793682712165812299
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008136.png": {
+          "sha256": "7a8444f5ae12b0bd121a2368c1a74a06dc609ec64723843af3601fbed3a525fb",
+          "bytes": 3443,
+          "mtime_ns": 1793682712405837022
+        },
+        "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_support_ablation_20261106_r1/support/inputs/scene0008_089_137/dynamic_masks/dynamic_mask_0/0008137.png": {
+          "sha256": "b7aefdbe07eb5427f931e77914da235d629288c98efb95a00e70b20d65271437",
+          "bytes": 3368,
+          "mtime_ns": 1793682712829880697
+        }
+      }
+    }
+  },
+  "comparison": "Initialization(original versus a5 full-source support) x static RGB multiplier(1 versus 5)",
+  "native_static_rgb": "(.8*L1(Is*(1-Md),GT*(1-Md))+.2*(1-SSIM(Is*(1-Md),GT*(1-Md))))",
+  "native_dynamic_rgb": "5*(.8*L1(Id*Md,GT*Md)+.2*(1-SSIM(Id*Md,GT*Md)))",
+  "global_rgb_weight": 1.0,
+  "static_rgb_weights": [
+    1.0,
+    5.0
+  ],
+  "dynamic_rgb_weight": 5.0,
+  "nominal_global_plus_branch_rgb_coefficient_static": "2 -> 6; distinct renders/SSIM prevent simple gradient equivalence",
+  "identifiable_hypothesis": "Effect of stronger whole-complement static RGB at each fixed initialization, including their interaction",
+  "limitations": [
+    "Static RGB includes all complementary pixels/background; not a5-local intervention",
+    "Does not equalize dynamic opacity, time/velocity priors, time_shift behavior, or densification",
+    "Support adds local density/capacity and can change native KNN initialization scales",
+    "Single seed and observed-view reconstruction; no heldout or statistical causal proof"
+  ],
+  "fixed_other_loss_weights": {
+    "lambda_dssim": 0.2,
+    "lambda_opa": 0.0,
+    "lambda_sky_opa": 0.05,
+    "lambda_opacity_entropy": 0.05,
+    "lambda_inv_depth": 0.1,
+    "lambda_self_supervision": 0.5,
+    "lambda_t_reg": 0.1,
+    "lambda_v_reg": 0.01,
+    "lambda_lidar": 0.1,
+    "lambda_v_smooth": 0.1,
+    "paper_lambda_sky": 0.05,
+    "paper_lambda_nps": 0.01,
+    "paper_lambda_depth": 0.1,
+    "hybrid_lambda_dynamic_rgb": 5.0,
+    "hybrid_lambda_sky_rgb": 5.0,
+    "hybrid_lambda_static_rgb": 5.0,
+    "hybrid_lambda_dynamic_opacity": 100.0
+  },
+  "fixed_static_regularization": {
+    "duration": ".1 / mean(abs(static_duration_feature/combined_alpha))",
+    "velocity": ".01 * mean(abs(static_velocity_feature/combined_alpha))"
+  },
+  "fixed_dynamic_opacity": "100*mean((raw dynamic_alpha-Md)^2), whole H*W",
+  "fixed_topology": "Original static/dynamic thresholds, reset, SGCM, SH progression; original known radius bookkeeping retained",
+  "mask_domain": "49 raw089-137; all121128 fixed a5 pixel-frames are in (1-Md)",
+  "lifetime": "Fresh0->1000 complete save/native eval -> independent all49 A5 evaluation -> exact full-state restore at1000 ->5000 complete save/eval -> independent all49 A5 evaluation",
+  "formal_updates_per_new_arm": 5000,
+  "additional_engineering_training_updates": 0,
+  "historical_fresh5k_wall_seconds": {
+    "control": 899.3865345604718,
+    "support": 912.367506487295
+  },
+  "smoke_policy": "1K real training/save/eval/complete restore is first lifecycle; if measured effective5K estimate approaches1h, stop for long-smoke handling before release",
+  "no_engine_or_existing_input_modifications": true,
+  "shutdown_allowed": false,
+  "gpu_reset_allowed": false,
+  "cpu_validation": {
+    "status": "PASS_NATIVE_COMPOSER_ONE_WEIGHT_ONLY_CPU",
+    "optimization_updates": 0,
+    "cuda_initialized": false,
+    "total_delta": 1.1999999999999993,
+    "expected_delta": 1.2,
+    "static_scalar_gradient1": 1.0,
+    "static_scalar_gradient5": 5.0,
+    "all_other_weighted_terms_identical": true,
+    "composer": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py",
+    "composer_sha256": "f324f08662f02f7ee1e57e738c7cf3262e9c553f401fe6c06d0e9fa8cd15b837"
+  },
+  "architecture": "outputs/a5_regression_20261106/architecture.svg",
+  "preparation_status": "PREPARED_CPU_NO_GPU_STARTED",
+  "execution_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2",
+  "execution_launch": {
+    "status": "LAUNCHED_REGISTERED_STATIC_RGB5_PAIR",
+    "controller_pid": 3949,
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2",
+    "minimum_launch_free_mib": 12288,
+    "free_mib_at_launch": 21852,
+    "launch_unix": 1794010554.6032054,
+    "shutdown_allowed": false,
+    "gpu_reset_allowed": false,
+    "source_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/source_manifest.json",
+    "python39_compile": "PASS",
+    "new_arms_concurrency": 1
+  },
+  "retry_provenance": {
+    "previous_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r1",
+    "previous_failure": "Native validator was passed a reference variable overwritten by the candidate configuration before training",
+    "previous_updates": 0,
+    "fix": "Validator receives a fresh direct read of immutable baseline_config.json",
+    "mathematics_or_engine_changed": false,
+    "previous_scene_initialized": false,
+    "old_run_preserved": true
+  },
+  "source_locations": {
+    "masked_static_rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py:384-386",
+    "dynamic_rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py:387-388",
+    "legacy_static_feature_normalization": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py:381-383",
+    "composer_dynamic_full_alpha_mse": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py:30-41",
+    "composer_static_priors": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py:61-76",
+    "composer_weighting": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_losses.py:153-171",
+    "native_densify_threshold_and_reset": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py:755-783",
+    "camera_shift_sampler": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/hybrid30k_runtime.py:11-38",
+    "native_mask_loader": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/paper_masks.py:24-42"
+  },
+  "branch_conditions": {
+    "both": "Global RGB1; temporal Gaussians; native learning rates and horizon30000; shared combined-alpha entropy.05, LiDAR, inverse-depth and velocity smoothness",
+    "static": "Complement RGB1 (candidate5), .1/mean(abs(duration map)), .01*mean(abs(velocity map)); static-only opacity reset at3000/6000/... before15000",
+    "dynamic": "Selected-a37 RGB5, full-domain alpha MSE100 against Md; no static duration/velocity priors or native opacity reset",
+    "densification": "Dynamic XYZ gradient threshold=0.5*static; screen threshold10 vs20 after3000; original known bookkeeping bug remains; static cap3M dynamic cap1M",
+    "sgcm": "Original static pool geometry controller restricted to selected-a37 regions; no modifications",
+    "time_shift": "Sampler unchanged; original renderer static/dynamic branch behavior retained; no prior time-shift candidate patch"
+  },
+  "source_manifest": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/source/prepare_loss2x2.py": {
+      "sha256": "d39a2062d1df9b5eed3106fcebfb08c95d907145f2dc44ab3e5c238c79cf106c",
+      "bytes": 12401
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/source/run_loss_arm.py": {
+      "sha256": "2f548a5884028b34ffb996e07a6329b13a756c67a88cb5df0a338e69a3655b91",
+      "bytes": 5237
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/source/run_loss_pair.py": {
+      "sha256": "bbd302062accf023cdad3cace81192dbb9df61dcbe7fb9d6870fe7ebdd1e8e68",
+      "bytes": 2313
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/source/train_loss_arm.py": {
+      "sha256": "0a804bb3ed2a801882e96747baaf3d0cc50634d09ab58a78d93b2b4023ce8a2a",
+      "bytes": 15832
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/source/evaluate_a5.py": {
+      "sha256": "be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc",
+      "bytes": 30512
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/source/run_loss_arm.py": {
+      "sha256": "2f548a5884028b34ffb996e07a6329b13a756c67a88cb5df0a338e69a3655b91",
+      "bytes": 5237
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/control/source/train_loss_arm.py": {
+      "sha256": "0a804bb3ed2a801882e96747baaf3d0cc50634d09ab58a78d93b2b4023ce8a2a",
+      "bytes": 15832
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/source/evaluate_a5.py": {
+      "sha256": "be18a16926f8ebebe345dd7e1ae5cf6ce80378efb2fa6c43ed7ab3271ecaf1dc",
+      "bytes": 30512
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/source/run_loss_arm.py": {
+      "sha256": "2f548a5884028b34ffb996e07a6329b13a756c67a88cb5df0a338e69a3655b91",
+      "bytes": 5237
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_static_rgb5_ablation_20261107_r2/support/source/train_loss_arm.py": {
+      "sha256": "0a804bb3ed2a801882e96747baaf3d0cc50634d09ab58a78d93b2b4023ce8a2a",
+      "bytes": 15832
+    }
+  },
+  "full_a5_mask_coverage_verified": true,
+  "local_results_aliases": {
+    "control1k": "loss5_control1k",
+    "control5k": "loss5_control5k",
+    "support1k": "loss5_full_a5_1k",
+    "support5k": "loss5_full_a5_5k"
+  },
+  "evaluation_scope": "This launched paired experiment retains native full49 publication cadence; future unlaunched candidates use pilot97/105/109 first."
+}

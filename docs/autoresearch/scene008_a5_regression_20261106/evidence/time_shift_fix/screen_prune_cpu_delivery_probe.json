@@ -1,0 +1,38 @@
+{
+  "status": "PASS_CPU_SCREEN_PRUNE_BUG_REPRODUCED",
+  "GPU_used": false,
+  "cuda_initialized": false,
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+  "source_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+  "adapter": "Source AST unchanged except device=cuda -> cpu; no-lineage hooks are no-ops.",
+  "screen_radius_bookkeeping": [
+    {
+      "prune_only": false,
+      "before_radii": [
+        100.0,
+        1.0
+      ],
+      "expected_screen_size_pruned_rows": 1,
+      "actual_pruned_rows": 0,
+      "survivor_rows": 2,
+      "after_radii": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "prune_only": true,
+      "before_radii": [
+        100.0,
+        1.0
+      ],
+      "expected_screen_size_pruned_rows": 1,
+      "actual_pruned_rows": 1,
+      "survivor_rows": 1,
+      "after_radii": [
+        1.0
+      ]
+    }
+  ],
+  "limitation": "Shared baseline bug; this test does not establish a5 reconstruction causality."
+}

@@ -1,0 +1,26 @@
+--- a/scene/gaussian_model.py
++++ b/scene/gaussian_model.py
+@@ -571,7 +571,10 @@
+ 
+         self.xyz_gradient_accum = torch.zeros((self.get_xyz.shape[0], 1), device="cuda")
+         self.denom = torch.zeros((self.get_xyz.shape[0], 1), device="cuda")
+-        self.max_radii2D = torch.zeros((self.get_xyz.shape[0]), device="cuda")
++        # Existing rows keep the unconsumed screen-radius window; new rows
++        # have not been rasterized yet and start with zero radius history.
++        self.max_radii2D = torch.cat(
++            (self.max_radii2D, self.max_radii2D.new_zeros((new_xyz.shape[0],))), dim=0)
+         lineage_after_append(self, sgcm_parent_indices, len(new_xyz))
+ 
+     def densify_and_split(self, grads, grad_threshold, scene_extent, grads_t, grad_t_threshold, N=2, time_split=False,
+@@ -723,6 +726,11 @@
+                 dim=1).values > self.big_point_threshold * extent * scale_factor  ## ori 0.1
+             prune_mask = torch.logical_or(torch.logical_or(prune_mask, big_points_vs), big_points_ws)
+         self.prune_points(prune_mask)
++        if not prune_only:
++            # Normal densification already reset this window in postfix.
++            # Defer that reset until pruning has consumed the old radii;
++            # preserve the existing prune-only window semantics.
++            self.max_radii2D.zero_()
+ 
+         torch.cuda.empty_cache()
+ 

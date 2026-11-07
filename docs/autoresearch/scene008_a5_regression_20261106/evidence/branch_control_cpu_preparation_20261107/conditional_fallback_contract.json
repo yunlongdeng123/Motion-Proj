@@ -1,0 +1,39 @@
+{
+  "task_id": "SCENE008-A5-BRANCH-CONTROL-20261107-R1",
+  "status": "PREPARED_CPU_ONLY_NOT_QUEUED",
+  "conditional_on": "Current staticRGB supervision2x2 result reviewed; no automatic launch",
+  "formal_stop": 5000,
+  "learning_rate_horizon": 30000,
+  "dynamic_actor_aliases": [
+    5,
+    37
+  ],
+  "KEEP_only": true,
+  "delete": "Native render_s deletes botha5+a37; never a5-preservation metric",
+  "reference": "scene008_a5_support_ablation_20261106_r1/support fresh5K, a5 static",
+  "mathematical_change": "Native identity/branch assignment bundle with native union RGB/opacity target and branch-specific priors; not an isolated single weight",
+  "input_audit": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1/branch_control_cpu_audit.json",
+  "input_audit_sha256": "c8d723e480c0a886b56dd8823a18b1985cc74c51cf46f3c04ab990f85593acd6",
+  "evaluation_plan": {
+    "raw_ids": [
+      97,
+      105,
+      109
+    ],
+    "checkpoint_nodes": [
+      1000,
+      5000
+    ],
+    "native_automatic_full49_disabled": true,
+    "full49_only_after_pilot_acceptance": true,
+    "training_frame_sampling_unchanged": "raw89..137",
+    "future_wrapper_must_snapshot_restore_RNG_around_independent_evaluation": true,
+    "CPU_does_not_prove_future_runtime_sampler_or_RNG_preservation": true
+  },
+  "native_engine_unmodified": true,
+  "training_started": false,
+  "no_launch_controller_created": true,
+  "no_large_checkpoint_copied": true,
+  "quality_accepted": false,
+  "human_verdict": null
+}

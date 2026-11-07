@@ -1,0 +1,346 @@
+{
+  "status": "PASS_STRICT_CPU_SCREEN_RADIUS_CANDIDATE",
+  "GPU_used": false,
+  "cuda_initialized": false,
+  "optimization_updates": 0,
+  "engine_files_modified": false,
+  "original_sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+  "candidate_sha256": "3b3c5f43ea46342f0e36b461af04fd1d2e52afead24d9953673894dff788ce1a",
+  "patch_sha256": "939cad8c1568eb0bbf5a70faf350dceb2f2962b37260066181cc1713ff72f58e",
+  "changed_methods": [
+    "densification_postfix",
+    "densify_and_prune"
+  ],
+  "cases": [
+    {
+      "case": "original_failure_fixed",
+      "original_survivors": 2,
+      "candidate_survivors": 1,
+      "radii": [
+        100,
+        1
+      ],
+      "threshold": 20,
+      "RNG_equal": true,
+      "optimizer_survivor_moments_preserved": true
+    },
+    {
+      "case": "normal_disabled_threshold",
+      "threshold": null,
+      "survivors": 2,
+      "no_extra_geometric_prune": true,
+      "normal_window_reset": true,
+      "all_state_equal_to_original": true
+    },
+    {
+      "case": "normal_disabled_threshold",
+      "threshold": 0.0,
+      "survivors": 2,
+      "no_extra_geometric_prune": true,
+      "normal_window_reset": true,
+      "all_state_equal_to_original": true
+    },
+    {
+      "case": "disabled_to_enabled_threshold_no_old_window_inheritance",
+      "prior_interval_radii": [
+        100,
+        1
+      ],
+      "next_interval_radii": [
+        5,
+        3
+      ],
+      "threshold": 20,
+      "survivors": 2,
+      "prior_interval_did_not_trigger_late_prune": true
+    },
+    {
+      "case": "prune_only_original_semantics",
+      "threshold": null,
+      "survivor_radii": [
+        100.0,
+        1.0
+      ],
+      "no_new_window_reset": true,
+      "all_state_equal_to_original": true
+    },
+    {
+      "case": "prune_only_original_semantics",
+      "threshold": 0.0,
+      "survivor_radii": [
+        100.0,
+        1.0
+      ],
+      "no_new_window_reset": true,
+      "all_state_equal_to_original": true
+    },
+    {
+      "case": "prune_only_original_semantics",
+      "threshold": 20.0,
+      "survivor_radii": [
+        1.0
+      ],
+      "no_new_window_reset": true,
+      "all_state_equal_to_original": true
+    },
+    {
+      "case": "direct_postfix_append",
+      "added_rows": 0,
+      "candidate_radii": [
+        11,
+        22,
+        33
+      ],
+      "old_moments_preserved_new_moments_zero": true,
+      "unrelated_buffers_and_RNG_unchanged": true
+    },
+    {
+      "case": "direct_postfix_append",
+      "added_rows": 2,
+      "candidate_radii": [
+        11,
+        22,
+        33,
+        0,
+        0
+      ],
+      "old_moments_preserved_new_moments_zero": true,
+      "unrelated_buffers_and_RNG_unchanged": true
+    },
+    {
+      "case": "actual_clone_then_split_parent_delete",
+      "temporal": false,
+      "old_rows": 3,
+      "final_rows": 5,
+      "lineage_ids": [
+        10,
+        12,
+        10,
+        11,
+        11
+      ],
+      "candidate_radii": [
+        11.0,
+        33.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "row_mapping_and_RNG_equal_except_intended_radius_buffer": true
+    },
+    {
+      "case": "actual_clone_then_split_parent_delete",
+      "temporal": true,
+      "old_rows": 3,
+      "final_rows": 6,
+      "lineage_ids": [
+        10,
+        12,
+        10,
+        11,
+        11,
+        11
+      ],
+      "candidate_radii": [
+        11.0,
+        33.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "row_mapping_and_RNG_equal_except_intended_radius_buffer": true
+    },
+    {
+      "case": "normal_actual_additions_screen_prune_and_reset",
+      "temporal": false,
+      "final_rows": 4,
+      "lineage_ids": [
+        12,
+        10,
+        11,
+        11
+      ],
+      "survivor_radii": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "old_survivor_moments_and_new_zeros_correct": true
+    },
+    {
+      "case": "normal_actual_additions_screen_prune_and_reset",
+      "temporal": true,
+      "final_rows": 5,
+      "lineage_ids": [
+        12,
+        10,
+        11,
+        11,
+        11
+      ],
+      "survivor_radii": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "old_survivor_moments_and_new_zeros_correct": true
+    },
+    {
+      "case": "actual_SGCM_refine",
+      "guard_enabled": false,
+      "no_addition": false,
+      "receipt": {
+        "iteration": 550,
+        "inside_region": 3,
+        "pruned": 1,
+        "cloned": 1,
+        "split_parents": 1,
+        "candidate_clone": 1,
+        "candidate_split": 1,
+        "points_before": 3,
+        "points_after": 4,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      },
+      "candidate_radii": [
+        11.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "every_parameter_buffer_optimizer_and_RNG_equal_to_original": true
+    },
+    {
+      "case": "actual_SGCM_refine",
+      "guard_enabled": false,
+      "no_addition": true,
+      "receipt": {
+        "iteration": 550,
+        "inside_region": 0,
+        "pruned": 0,
+        "cloned": 0,
+        "split_parents": 0,
+        "candidate_clone": 0,
+        "candidate_split": 0,
+        "points_before": 3,
+        "points_after": 3,
+        "dr_m": 0.5,
+        "dr_model": 0.5
+      },
+      "candidate_radii": [
+        11.0,
+        22.0,
+        33.0
+      ],
+      "every_parameter_buffer_optimizer_and_RNG_equal_to_original": true
+    },
+    {
+      "case": "actual_SGCM_refine",
+      "guard_enabled": true,
+      "no_addition": false,
+      "receipt": {
+        "iteration": 550,
+        "inside_region": 3,
+        "pruned": 1,
+        "cloned": 1,
+        "split_parents": 1,
+        "candidate_clone": 1,
+        "candidate_split": 1,
+        "points_before": 3,
+        "points_after": 4,
+        "dr_m": 0.5,
+        "dr_model": 0.5,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 1,
+        "geometric_candidate_split": 1,
+        "excluded_clone_training_view_support": 0,
+        "excluded_split_training_view_support": 0,
+        "excluded_split_child_training_view_support": 0,
+        "excluded_cloned_lineage": 0,
+        "training_view_count": 1,
+        "excluded_duplicate_lineage_in_step": 0
+      },
+      "candidate_radii": [
+        11.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "every_parameter_buffer_optimizer_and_RNG_equal_to_original": true
+    },
+    {
+      "case": "actual_SGCM_refine",
+      "guard_enabled": true,
+      "no_addition": true,
+      "receipt": {
+        "iteration": 550,
+        "inside_region": 0,
+        "pruned": 0,
+        "cloned": 0,
+        "split_parents": 0,
+        "candidate_clone": 0,
+        "candidate_split": 0,
+        "points_before": 3,
+        "points_after": 3,
+        "dr_m": 0.5,
+        "dr_model": 0.5,
+        "addition_guard_enabled": true,
+        "geometric_candidate_clone": 0,
+        "geometric_candidate_split": 0,
+        "excluded_clone_training_view_support": 0,
+        "excluded_split_training_view_support": 0,
+        "excluded_split_child_training_view_support": 0,
+        "excluded_cloned_lineage": 0,
+        "training_view_count": 1
+      },
+      "candidate_radii": [
+        11.0,
+        22.0,
+        33.0
+      ],
+      "every_parameter_buffer_optimizer_and_RNG_equal_to_original": true
+    },
+    {
+      "case": "all_rows_pruned_empty_buffer_alignment",
+      "rows": 0,
+      "optimizer_shapes_valid": true
+    }
+  ],
+  "case_count": 18,
+  "policy": "Postfix preserves old-row radii and appends zeros; normal generic pruning defers its existing window reset until after all predicates and row filtering, including None/0; prune_only retains its original survivor history.",
+  "native_callers": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/train.py",
+      "line": 779,
+      "role": "normal generic caller; prune_only defaults False"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+      "lines": [
+        652,
+        693
+      ],
+      "role": "split and clone call postfix; their row order and gradient padding are unchanged"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/paper_sgcm.py",
+      "line": 317,
+      "role": "SGCM append restores its saved old statistics, then filters removed parents; tested with guard on and off"
+    }
+  ],
+  "untouched": "Threshold values, loss, sampling, clone/split order, other buffer-reset rules, parameter values and optimizer remapping code are unchanged.",
+  "source_helper_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/hybrid_sgcm_helpers.py": "7fc164625c7bba4a71422c9beffed8c64714631d47de822b25c9f0d88923d4e3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/paper_sgcm.py": "b221d7e4396c0dd05405c27d022fbf8dd40d2f305b6f7c9c596f67a9c3919a50",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/utils/general_utils.py": "81bf915d817f2b6759f72c7e192d2fce5f634b2de755e97373b1df343dccbc11"
+  },
+  "limitations": [
+    "CPU interface/bookkeeping validation only; no GPU replay or a5 causal result is claimed.",
+    "Restoring the existing20px criterion may substantially alter trained scene topology; candidate is not applied to any old or running engine."
+  ]
+}

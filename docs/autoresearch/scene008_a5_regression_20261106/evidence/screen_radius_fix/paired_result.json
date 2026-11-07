@@ -1,0 +1,113 @@
+{
+  "status": "COMPLETE_CONTROLLED_1977_UPDATE_BUG_REPLAY",
+  "baseline_endpoint": 11977,
+  "fixed_endpoint": 11977,
+  "same_initial_complete_state": true,
+  "identical_camera_time_shift_schedule": true,
+  "compared_updates": 1977,
+  "baseline_all49": {
+    "pixels": 121128,
+    "weighting": "fixed pixel-frame count, not unweighted frame mean",
+    "keep_rgb_mae": 0.04357322774482324,
+    "delete_rgb_mae": 0.04358173399387494,
+    "keep_delete_rgb_change": 2.2589926001479953e-05,
+    "keep_raw_rgb_mae": 0.04362205760279715,
+    "delete_raw_rgb_mae": 0.043630522415775294,
+    "keep_mean_alpha": 0.986855138283914,
+    "delete_mean_alpha": 0.9868530674968731,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9670018492834027,
+      "0.99": 0.743791691433855
+    },
+    "delete_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9670018492834027,
+      "0.99": 0.7437834357043789
+    }
+  },
+  "fixed_all49": {
+    "pixels": 121128,
+    "weighting": "fixed pixel-frame count, not unweighted frame mean",
+    "keep_rgb_mae": 0.05514221783914906,
+    "delete_rgb_mae": 0.055155566134850384,
+    "keep_delete_rgb_change": 2.8515716407484883e-05,
+    "keep_raw_rgb_mae": 0.05514874915033858,
+    "delete_raw_rgb_mae": 0.0551620589089726,
+    "keep_mean_alpha": 0.9629591493980824,
+    "delete_mean_alpha": 0.9629559580020897,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9007661316953967,
+      "0.99": 0.35841423948220064
+    },
+    "delete_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9007578759659204,
+      "0.99": 0.35840598375272437
+    }
+  },
+  "baseline_boundary": {
+    "pixels": 7530,
+    "weighting": "fixed pixel-frame count, not unweighted frame mean",
+    "keep_rgb_mae": 0.04276701651584488,
+    "delete_rgb_mae": 0.04280446191805227,
+    "keep_delete_rgb_change": 7.631188326965872e-05,
+    "keep_raw_rgb_mae": 0.042768809531212204,
+    "delete_raw_rgb_mae": 0.04280625493341959,
+    "keep_mean_alpha": 0.9813796162051192,
+    "delete_mean_alpha": 0.9813720895395495,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9411686586985392,
+      "0.99": 0.6911022576361222
+    },
+    "delete_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.9411686586985392,
+      "0.99": 0.6911022576361222
+    }
+  },
+  "fixed_boundary": {
+    "pixels": 7530,
+    "weighting": "fixed pixel-frame count, not unweighted frame mean",
+    "keep_rgb_mae": 0.04920723360133261,
+    "delete_rgb_mae": 0.04926755974562315,
+    "keep_delete_rgb_change": 0.00012467654340295677,
+    "keep_raw_rgb_mae": 0.04920962220931861,
+    "delete_raw_rgb_mae": 0.04926994835360914,
+    "keep_mean_alpha": 0.9537486703984766,
+    "delete_mean_alpha": 0.9537358130670955,
+    "keep_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.8394422310756973,
+      "0.99": 0.3827357237715803
+    },
+    "delete_coverage": {
+      "0.1": 1.0,
+      "0.5": 1.0,
+      "0.9": 0.8393094289508632,
+      "0.99": 0.3827357237715803
+    }
+  },
+  "added_formal_updates": 0,
+  "additional_engineering_updates": 2107,
+  "engineering_accounting": {
+    "real_smoke": 128,
+    "restore_probe": 2,
+    "paired_replay": 1977
+  },
+  "previous_engineering_updates": 4492,
+  "cumulative_engineering_updates_if_complete": 6599,
+  "improvement_is_not_assumed": true,
+  "bitwise_determinism_not_claimed": true,
+  "only_semantic_engine_change": "Restore max_screen_size bookkeeping; defer existing normal radius-window reset, preserve prune_only semantics; renderer unchanged",
+  "automatic_shutdown_executed": false
+}

@@ -1,0 +1,26 @@
+{
+  "failed_smoke": {
+    "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke",
+    "controller_pid": 127066,
+    "training_pid": 127067,
+    "wall_seconds": 33.598907709121704,
+    "training_updates": 0,
+    "cause": "Strict native checkpoint resume rejected diagnostic checkpoint/save/test schedule changes before any update"
+  },
+  "replay": {
+    "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_old_single30k_20261106_r1/smoke_retry1",
+    "controller_pid": 127548,
+    "training_pid": 127549,
+    "source_checkpoint": "original formal10k; same source weights and full state",
+    "fix": "strict original-config full restore first, then one diagnostic complete node after time limit"
+  },
+  "loader_observation": {
+    "source_transform_sha256": "110b8a3f1ab2204ddbc599ba63d35149012850ff1cdd9c1de2f0262ad49c06f3",
+    "current_smoke_rewrote_identical_bytes": true,
+    "source_mtime_changed": true,
+    "subsequent_fix": "single resume/formal redirects only the exact loader transform write into run output and asserts byte equality",
+    "original_model_weights_written": false
+  },
+  "method_changes": {},
+  "shutdown": false
+}

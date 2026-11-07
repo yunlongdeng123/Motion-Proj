@@ -1,0 +1,72 @@
+{
+  "status": "PASS_REPRODUCED_STATIC_TIME_SHIFT_ARGUMENT_DROPPED",
+  "GPU_used": false,
+  "original_engine_modified": false,
+  "optimization_updates": 0,
+  "renderer": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+    "sha256": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+  },
+  "gaussian_model": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+    "sha256": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+  },
+  "removed_assignment_lines": [
+    265,
+    341
+  ],
+  "branches": [
+    {
+      "branch": "static",
+      "original_shift_delta": {
+        "means3D": 0.0,
+        "opacities": 0.0,
+        "features": 0.0,
+        "mask": 0.0
+      },
+      "fixed_shift_delta": {
+        "means3D": 0.02290666103363037,
+        "opacities": 0.0071735382080078125,
+        "features": 0.005726814270019531,
+        "mask": 0.0
+      },
+      "unshifted_fix_delta": {
+        "means3D": 0.0,
+        "opacities": 0.0,
+        "features": 0.0,
+        "mask": 0.0
+      }
+    },
+    {
+      "branch": "dynamic",
+      "original_shift_delta": {
+        "means3D": 0.02290666103363037,
+        "opacities": 0.0071735382080078125,
+        "features": 0.005726814270019531,
+        "mask": 0.0
+      },
+      "fixed_shift_delta": {
+        "means3D": 0.02290666103363037,
+        "opacities": 0.0071735382080078125,
+        "features": 0.005726814270019531,
+        "mask": 0.0
+      },
+      "unshifted_fix_delta": {
+        "means3D": 0.0,
+        "opacities": 0.0,
+        "features": 0.0,
+        "mask": 0.0
+      }
+    }
+  ],
+  "sampler_log": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_only_B10k_20261103_r1/formal10k/paired_steps.jsonl",
+    "rows": 10000,
+    "nonnull_time_shifts": 5119,
+    "nonzero_time_shifts": 5119,
+    "sha256": "d822bf8a828f4fe266b5fa85dbc610dfca09cbca0a5895ecb0deb712f81ac254"
+  },
+  "candidate_patch": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_single_bug_20261106_r1/source/static_time_shift_candidate.patch",
+  "interpretation": "Original active static path drops a nonzero time_shift; dynamic honors it. Removing two unconditional assignments restores the existing shifted formula, leaves every None-shift output unchanged, and leaves the dynamic branch unchanged.",
+  "limitation": "CPU interface proof only. Existing trained checkpoint renders normally use time_shift=None, so this fix does not repair saved a5 geometry by itself. A controlled training replay is required to test a5 causality."
+}

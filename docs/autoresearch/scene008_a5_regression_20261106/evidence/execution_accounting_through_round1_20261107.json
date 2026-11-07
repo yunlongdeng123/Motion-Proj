@@ -1,0 +1,148 @@
+{
+  "status": "PASS_COMPLETED_ACCOUNTING_THROUGH_ROUND1_RESEARCH_RESUMED",
+  "recorded_utc": "2026-11-07T00:08:15.979828+00:00",
+  "scope": "Completed new optimizer updates only, through the two fresh5K initialization-support arms. New research is separately planned and not counted before receipts arrive.",
+  "unit": "native optimizer updates; forward evaluation is not a training update",
+  "completed_formal_updates": {
+    "full_original_a6_a37": 10000,
+    "support_control5k": 5000,
+    "support_full_a5_5k": 5000,
+    "total": 20000
+  },
+  "completed_engineering_updates": [
+    {
+      "stage": "unpatched single smoke",
+      "updates": 1977,
+      "from_iteration": 10000,
+      "to_iteration": 11977
+    },
+    {
+      "stage": "unpatched single restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "full original dual smoke",
+      "updates": 500
+    },
+    {
+      "stage": "full original dual restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "time-shift candidate smoke",
+      "updates": 32
+    },
+    {
+      "stage": "time-shift candidate restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "time-shift candidate paired replay",
+      "updates": 1977
+    },
+    {
+      "stage": "screen-radius candidate smoke",
+      "updates": 128
+    },
+    {
+      "stage": "screen-radius candidate restore probe",
+      "updates": 2
+    },
+    {
+      "stage": "screen-radius candidate paired replay",
+      "updates": 1977
+    }
+  ],
+  "completed_engineering_total": 6599,
+  "completed_formal_plus_engineering_total": 26599,
+  "existing_reference_training_not_newly_counted": {
+    "single_original": 10000,
+    "Full5_B_existing": 30000,
+    "Full5_B_cached_PNG_node": 10000
+  },
+  "historical_source": {
+    "path": "evidence/final_execution_accounting.json",
+    "bytes": 2103,
+    "sha256": "4a0615767796b287411c1479ca498d1d62e6d58c07ac0d58f89177f08d3934d4"
+  },
+  "round1_returned_and_restore_sources": [
+    {
+      "path": "evidence/support_round1_5k_comparison.json",
+      "bytes": 5228,
+      "sha256": "928b0d881dd79fefa37c996afe2108bd7d0045a09c7952846cd95edfcf32dcae"
+    },
+    {
+      "path": "evidence/support_control1k/run_receipts/formal1k/returned.json",
+      "bytes": 464,
+      "sha256": "dce5229d037e3f0d1a5e2b301ba98efa1e804873f304993aa141e8f15bde50f4"
+    },
+    {
+      "path": "evidence/support_control5k/run_receipts/formal5k/returned.json",
+      "bytes": 465,
+      "sha256": "d31fa0a752e682cbf2a378290df8459def45200be38dd89531b5afc4abee3b98"
+    },
+    {
+      "path": "evidence/support_control5k/run_receipts/formal5k/restore_audit.json",
+      "bytes": 837,
+      "sha256": "e4fc0c4358d1b0d25d74bbf473da59b87a8d9a2f274678fcf8a323a0b40d1cb6"
+    },
+    {
+      "path": "evidence/support_control5k/summary.json",
+      "bytes": 115664,
+      "sha256": "44641e8f363086ec219638cb2307c21c228d8ade5ded42947bd056deca05eb0f"
+    },
+    {
+      "path": "evidence/support_control5k/source_integrity.json",
+      "bytes": 291437,
+      "sha256": "8b6bd14be11f2d609035808c135939a1c584e971702cdd564bf2e62f061eb238"
+    },
+    {
+      "path": "evidence/support_full_a5_1k/run_receipts/formal1k/returned.json",
+      "bytes": 464,
+      "sha256": "f49a2274b3babc5c4f1e4e4e17644d890b998c5aedb9129e8c4d0df97b6885e3"
+    },
+    {
+      "path": "evidence/support_full_a5_5k/run_receipts/formal5k/returned.json",
+      "bytes": 465,
+      "sha256": "80b670cc10a3ef8af8e56dad393ac321b634e186ae41820bcbe6090663cdc64d"
+    },
+    {
+      "path": "evidence/support_full_a5_5k/run_receipts/formal5k/restore_audit.json",
+      "bytes": 837,
+      "sha256": "b30e44764baa04d48270f7c8e8d272b63cbaad9528b9dd941238cb72b37509d3"
+    },
+    {
+      "path": "evidence/support_full_a5_5k/summary.json",
+      "bytes": 115651,
+      "sha256": "35181aa1bc41f88c036099efbd913fc7025c486dc74df599b442612852fe83c2"
+    },
+    {
+      "path": "evidence/support_full_a5_5k/source_integrity.json",
+      "bytes": 292367,
+      "sha256": "5712619c37a30307de9967d7985e99ca58970c57e97ca20ca80f4095ef97f0dd"
+    }
+  ],
+  "historical_accounting_file_overwritten": false,
+  "new_single_duration_plan": {
+    "source_iteration": 11977,
+    "target_iteration": 30000,
+    "planned_additional_updates": 18023,
+    "diagnostic_iterations": [
+      15000,
+      20000,
+      30000
+    ],
+    "counted_completed_updates_here": 0,
+    "note": "The prior1977 smoke updates stay in historical engineering accounting and must not be charged again."
+  },
+  "new_static_rgb_plan": {
+    "fresh_arms": 2,
+    "planned_updates_per_arm": 5000,
+    "counted_completed_updates_here": 0
+  },
+  "quality_accepted": false,
+  "human_verdict": null,
+  "GPU_should_remain_on": true,
+  "reset_card_authorized_in_current_instruction": false,
+  "automatic_shutdown_authorized_in_current_instruction": false
+}

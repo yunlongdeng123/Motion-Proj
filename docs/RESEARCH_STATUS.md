@@ -14,6 +14,6 @@ a6整体delete RGB .0549473→.0549451、深度 .171958→.170030m，无新增�
 
 RCR-1支线当前由用户采用：2026-11-05明确选择RCR-1 delete用于异常蓝色RGB修复（scope=abnormal_blue_RGB_fix）；固定完整M2资产不变，原管线仅作reference。raw130/137亮片继续开放，完整画质无回退未作新结论，没有自动后续GPU队列。HELD9只对道路RGB校准target留出，不是独立native泛化验证。见[当前交互报告](autoresearch/scene008_rcr1_20261105/index.html)及[用户采用决定](autoresearch/scene008_rcr1_20261105/evidence/user_acceptance_20261105.json)。本支线failure_ledger_refs=[V82-F13]为历史评审，本次failure_ledger_delta=none；车辆外观主线安排不变。
 
-a5补充只读诊断已归档，当前优先依据[两份实际报告直接复核](autoresearch/scene008_rcr1_20261105/followup_a5/index.html#report-crosscheck)：旧Full5 B30K保留a5独立动态身份，仅mask动态索引3/4（a6/a37）时a5仍完整；新资产报告的ownership6+37 Native10K在M0/M2前已缺损。配方提交3fefd98仅为首次归档，不是唯一causal commit；具体引入提交与单项机制仍未确定。这次追加只读图像/源码复核0GPU、0SGD，不是同预算单变量实验。既存原生重放为4帧×（旧2＋当前7）＝36次渲染，单列原有开销；RCR-1账本仍为26,609更新，采用范围保持异常蓝色RGB修复。failure_ledger_delta=none；车辆外观主线安排不变。
+a5支线当前进行身份集合耦合研究，见[原生重建、初始化与监督对照](autoresearch/scene008_a5_regression_20261106/index.html)。既存Full5与仅a37的原生缓存双方均10K时已存在车顶/挡风玻璃差异，不能仅归因旧版30K；缓存PNG与fresh float指标分表。a5从完整21,358源点动态分支变为静态1,496采样行，初始化和目标同时改变。补齐19,916缺失unique xyz/time真实源点在5K仅降低部分误差，车顶未恢复；time-shift和screen-radius两次11977工程候选也未修复，均未采用。当前原生single从既有11977完整状态续至30K（15/20/30K节点），另以两初始化各做staticRGB1→5的5K消融；其他先验及训练49帧采样不变。新候选优先97/105/109 pilot后再扩49，已启动流程继续。闭合至Round1账目20,000正式＋6,599工程＝26,599，新研究按实际收据另计；failure_ledger_refs=[V82-F06]，本次failure_ledger_delta=updated:V82-F06。人工画质verdict保持null；AutoDL按最新要求保持开机，不使用重置卡。RCR-1/a6主线采用范围不变。
 
 历史状态保存在[更新前快照](autoresearch/scene008_a6_insert_artifacts_20261105/prior_research_status.md)，实验导航见[索引](EXPERIMENTS.md)。

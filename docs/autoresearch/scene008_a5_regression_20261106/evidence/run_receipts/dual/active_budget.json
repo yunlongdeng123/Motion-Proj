@@ -1,0 +1,16 @@
+{
+  "status": "ACTIVE_USER_REDUCED_BUDGET",
+  "single_new_formal_updates": 0,
+  "single_reference_formal_iteration": 10000,
+  "dual_fresh_stop": 10000,
+  "dual_phase_stops": [5000, 10000],
+  "dual_checkpoint_eval_nodes": [5000, 10000],
+  "iterations_configuration": 30000,
+  "learning_rate_horizon": 30000,
+  "smoke_accounting": "all smoke and two-step replay updates are separate from formal",
+  "dual_smoke_time_policy": "500 real updates; forecast from actual throughput and historical1730s single10K scaled by full point ratio plus240s diagnostics; if forecast>=3600s extend smoke to>=540s",
+  "dual_5k_action": "complete checkpoint, independent zero-update a5 evaluation and four anchors, then exact full-state resume to at most10K",
+  "root_names_containing_30k": "existing directory identifiers only; not an active training budget",
+  "old_30k_launchers_disabled": true,
+  "automatic_shutdown_allowed": false
+}

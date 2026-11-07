@@ -1,0 +1,24 @@
+{
+  "created_unix": 1793898067.8900354,
+  "free_bytes_at_plan": 66555170816,
+  "old_native_full5_final_bundle_approx_GiB": 2.5,
+  "planned_nodes": {
+    "single_smoke": 1,
+    "single_formal": [
+      20000,
+      30000
+    ],
+    "dual_smoke": 1,
+    "dual_formal": [
+      10000,
+      20000,
+      30000
+    ]
+  },
+  "expected_new_total_GiB": 24,
+  "conservative_budget_GiB": 40,
+  "minimum_reserved_headroom_GiB": 8,
+  "includes": "component checkpoints, native evaluations, logs and zero-update a5 reference renders",
+  "excludes": "old checkpoints and old scene; preserved read-only model artifacts",
+  "no_old_artifacts_deleted": true
+}

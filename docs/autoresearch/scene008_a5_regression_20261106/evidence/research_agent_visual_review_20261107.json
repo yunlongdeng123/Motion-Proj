@@ -1,0 +1,31 @@
+{
+  "reviewer": "root agent; not user/human acceptance",
+  "human_verdict": null,
+  "quality_accepted": false,
+  "reviews": [
+    {
+      "recorded_utc": "2026-11-07T00:22:59.205691+00:00",
+      "run": "static_rgb5_control",
+      "iteration": 1000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "loss5_control1k/anchors/105_crop.png",
+      "agent_observation": "KEEP and delete_a37 both show almost no visible foreground a5 body; roadway and distant parked car remain visible through the expected a5 region. Roof/windshield are not reconstructed in this early node.",
+      "agent_body_restored": false,
+      "boundary": "Early1K diagnostic only; does not determine the5K result or prove loss weighting cannot help later."
+    },
+    {
+      "recorded_utc": "2026-11-07T00:22:59.205691+00:00",
+      "run": "support_control_vs_full_a5",
+      "iteration": 5000,
+      "raw_frames_actually_viewed": [
+        105
+      ],
+      "image": "../figures/raw105_support_5k.png",
+      "agent_observation": "Both original-weight1 cells show a dark blurred/ghost a5; appended support changes the silhouette but does not restore a clear roof/windshield.",
+      "agent_body_restored": false,
+      "boundary": "Agent visual inspection, separate from user verdict and per-pixel metrics."
+    }
+  ]
+}

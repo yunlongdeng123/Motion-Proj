@@ -1,0 +1,33 @@
+{
+  "status": "GPU_DIAGNOSTIC_QUEUES_COMPLETE_A5_NOT_REPAIRED",
+  "unit": "完成的原生训练循环更新步；独立前向评价不计作optimizer更新。",
+  "new_formal_updates": {"single_a37": 0, "full_original_a6_a37": 10000, "total": 10000},
+  "reference_models_not_new_training": {"single_original": 10000, "Full5_B_existing": 30000, "Full5_B_cached_PNG_node": 10000},
+  "new_engineering_updates": [
+    {"stage": "unpatched single smoke", "updates": 1977, "from_iteration": 10000, "to_iteration": 11977},
+    {"stage": "unpatched single restore probe", "updates": 2},
+    {"stage": "full original dual smoke", "updates": 500},
+    {"stage": "full original dual restore probe", "updates": 2},
+    {"stage": "time-shift candidate smoke", "updates": 32},
+    {"stage": "time-shift candidate restore probe", "updates": 2},
+    {"stage": "time-shift candidate paired replay", "updates": 1977},
+    {"stage": "screen-radius candidate smoke", "updates": 128},
+    {"stage": "screen-radius candidate restore probe", "updates": 2},
+    {"stage": "screen-radius candidate paired replay", "updates": 1977}
+  ],
+  "new_engineering_total": 6599,
+  "new_formal_plus_engineering_total": 16599,
+  "failed_attempts": [
+    {"stage": "single smoke initial strict config rejection", "updates": 0, "retained": true},
+    {"stage": "a5 evaluator initial Python3.9 zip strict incompatibility", "updates": 0, "retained": true},
+    {"stage": "screen prelaunch unused auxiliary-source inventory mismatch", "updates": 0, "retained": true}
+  ],
+  "learning_rate_horizon": 30000,
+  "formal_30K_extension_executed": false,
+  "replay_sampling": "两项独立工程候选均从同原10K完整状态恢复，1977步相机/时间扰动序列逐项匹配原未修smoke；不叠加两项修复，不声称未来CUDA逐位确定性。",
+  "a5_quality_accepted": false,
+  "unique_causal_bug_commit_identified": false,
+  "automatic_shutdown_authorized": false,
+  "automatic_shutdown_performed": false,
+  "post_GPU_work": "完成证据SHA取回、CPU报告验收、定向Git归档推送和推送核验；实例保持开机。"
+}

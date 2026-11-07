@@ -1,0 +1,11 @@
+{
+  "current_user_authorization": "仅授权子代理使用 sol6.1 max；不授权自动关机。",
+  "actual_subagents": [
+    {"task": "historical_evidence", "model": "gpt-6.1-sol", "reasoning_effort": "max"},
+    {"task": "remote_history", "model": "gpt-6.1-sol", "reasoning_effort": "max"},
+    {"task": "experiment_runner", "model": "gpt-6.1-sol", "reasoning_effort": "max"}
+  ],
+  "metadata_correction": "部分历史合同和沿用模板中存在 no_subagents=true。该字段不能描述本轮执行；本轮实际使用上列3个已授权子代理。为保留已运行输入/源码SHA，旧合同及已完成实验文件未被事后覆写，此更正单独保存。",
+  "automatic_shutdown_authorized": false,
+  "automatic_shutdown_performed": false
+}

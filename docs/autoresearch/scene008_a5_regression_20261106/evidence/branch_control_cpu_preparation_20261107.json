@@ -1,0 +1,74 @@
+{
+  "status": "PASS_CPU_ONLY_FALLBACK_PREPARATION_RETRIEVED_NOT_QUEUED",
+  "recorded_utc": "2026-11-07T00:25:50.284483+00:00",
+  "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a5_branch_control_20261107_r1",
+  "files": [
+    {
+      "path": "evidence/branch_control_cpu_preparation_20261107/branch_control_cpu_audit.json",
+      "bytes": 7982,
+      "sha256": "c8d723e480c0a886b56dd8823a18b1985cc74c51cf46f3c04ab990f85593acd6"
+    },
+    {
+      "path": "evidence/branch_control_cpu_preparation_20261107/conditional_fallback_contract.json",
+      "bytes": 1521,
+      "sha256": "e613b065ac82124b37209cc91800a690fdc2935b7f04df49e80a843c7fa46daf"
+    },
+    {
+      "path": "evidence/branch_control_cpu_preparation_20261107/config.json",
+      "bytes": 8435,
+      "sha256": "eebabd937e0c741ae979b01401b114898a19860fdb1d00ba2242896657d52e16"
+    },
+    {
+      "path": "evidence/branch_control_cpu_preparation_20261107/identity_contract.json",
+      "bytes": 46278,
+      "sha256": "7a3074b1844e7c837a2662f8fb91ea1c9931089d255fdb7ee4440f50f8309cae"
+    },
+    {
+      "path": "evidence/branch_control_cpu_preparation_20261107/preparation_receipt.json",
+      "bytes": 5479,
+      "sha256": "f2ce04697f3b9cf9f443835c47275dfb3d59e847f48f80f8361c2d7c270254e2"
+    }
+  ],
+  "script": {
+    "path": "source/prepare_a5_branch_control.py",
+    "sha256": "e45adcd14b9f5452801259fb38881cb8c9b0c6cd8429bf0c41dac807b4873021"
+  },
+  "GPU_used": false,
+  "training_updates": 0,
+  "controller_created": false,
+  "automatic_launch": false,
+  "weights_copied": false,
+  "capacity_comparison": {
+    "a37_only_original_static_rows": 591672,
+    "candidate_static_rows": 588123,
+    "additional_static_rows_removed_by_original_0p1m_exclusion": 3549,
+    "removed_exact_a5_xyz_time_rows": 1496,
+    "removed_other_nonexact_a5_xyz_time_rows": 2053,
+    "semantic_identity_of_other_removed_rows_not_established": true,
+    "fullsupport_static_plus_a37_dynamic_total": 710040,
+    "candidate_static_plus_a5_a37_dynamic_total": 707933,
+    "total_row_difference": 2107,
+    "difference_decomposition": {
+      "duplicate_a5_rows": 54,
+      "other_proximity_excluded_static_rows": 2053
+    }
+  },
+  "initialization_comparison": {
+    "a5_unique_normalized_xyz_time_equal": true,
+    "both_initial_time_from_source_nx": true,
+    "both_velocity_zero": true,
+    "both_sigma_t": 0.30983866769659335,
+    "spatial_KNN_domain_differs": true,
+    "CPU_KNN_proxy_not_native_CUDA_initialization": true
+  },
+  "cached5k_one_directory_check": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/arms/B/run30k/eval/train_5000_render",
+    "exists": false,
+    "exhaustive_search": false
+  },
+  "KEEP_only": true,
+  "native_DELETE_would_remove_a5": true,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "next_action": "No automatic launch. Only consider after the current staticRGB2x2 results are reviewed."
+}
