@@ -1,0 +1,53 @@
+{
+  "status": "PASS_FIXED10PX_TARGET_BUILD_0F",
+  "new_GPU_forwards": 0,
+  "files": 49,
+  "final_manifest_sha256": "d7cca4167e2bbb68347f63babae356320a1b0ddd60e580bf746e966f2ac8acbe",
+  "source_manifest_unchanged_sha256": "d08232bb8df0ca6cf4a2f986c36074b9a588e54d346b97188aa0c716b2a83bea",
+  "original_A_B_O_masks_exact": true,
+  "outside_equal_trueRGB": true,
+  "weights": [
+    {
+      "role": "BUILD_FIT",
+      "replace_pixels": 10492,
+      "mean_weight": 0.18655789690038946,
+      "max_weight": 0.7280110120773315,
+      "full_atlas_weight_pixels": 0,
+      "edgeblend_vs_trueRGB_on_M": {
+        "count_pixels": 10492,
+        "sum_pixel_mean_absRGB": 62.44705599684312,
+        "mean": 0.005951873427072352
+      }
+    },
+    {
+      "role": "HELD_PROJECT_EVAL_ONLY",
+      "replace_pixels": 2623,
+      "mean_weight": 0.19854379957453058,
+      "max_weight": 0.8062257766723633,
+      "full_atlas_weight_pixels": 0,
+      "edgeblend_vs_trueRGB_on_M": {
+        "count_pixels": 2623,
+        "sum_pixel_mean_absRGB": 17.187330953631317,
+        "mean": 0.006552547065814456
+      }
+    }
+  ],
+  "primary_raw128": {
+    "count": 545,
+    "sum": 114.65626968443394,
+    "mean": 0.2103784764851999,
+    "p50": 0.20000000298023224,
+    "p95": 0.41231057047843933,
+    "max": 0.6000000238418579
+  },
+  "targets_are_GT": false,
+  "whole_scene_adopted": false,
+  "query_RGB_scope": {
+    "HELD9_target": "C_HELD explicitly uses actual query observationRGB O in the deterministic validity-distance blend. It is target construction/diagnosis only; its lower MAE is not a held prediction score.",
+    "fit": "Only BUILD40 target files are used to fit the persistent10098-parent RGB table; HELD9 Ctarget never participates in fitting.",
+    "native_query": "Frozen native RGB rendering is not conditioned on query observationRGB. Existing rt.raw may read/load obs RGB for evaluation/contracts, but scene/raster colour computation uses camera/pose/env/material, not queryO as colour/image input.",
+    "exposure": "Same previously exposed scene; original parents/full199 source history prevents independent generalization claims.",
+    "control_registration": "Posthoc single fixed10px fallback chosen after the hardreplace diagnostic; replaces the unexecuted legacy fallback. No width grid or extra legacy trial."
+  },
+  "scope_adapter_target_arrays_modified": false
+}

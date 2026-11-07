@@ -1,0 +1,21 @@
+{
+  "schema": "POSTHOC_SINGLE_EDGE_BLEND_CONTROL_V1",
+  "chronology": "After fixed-budget A/B source-vs-Poisson bake and full49 review; before creating C targets or running C optimizer.",
+  "observed_gap": "The shared chart Poisson solve did not blend the projected validity mask with the actual retained image. Fixed raw128 has216 cross-mask pixel edges: additional gradient error B .041196 vs AA .016872, despite exterior newroad mass around.472. This is a concrete target construction defect, not proof of unavoidable3D failure.",
+  "main_AB_results": "Preserved unchanged. Both have lower raw128meanRGB but worse main6bin and full49near/lateral seam than previousAA; neither adopted.",
+  "only_executed_fallback": "C: fixed10pixel distance blend of B with current true observed RGB O. No width, weight, seed or budget search.",
+  "formula": "C=O+clip(distance_transform_edt(M)/10,0,1)*(B-O); M is the same frozen legal atlas replacement mask. Outside M exactly O.",
+  "information": "O was already a legal available BUILD real RGB input. Same190 source pool, same shared atlas/Poisson geometry, same fit masks. No hidden deleted-state truth.",
+  "target_state": "One C target per camera/frame shared KEEP/DELETE. Shared source atlas with view-conditioned mask weighting; do not claim the complete C target is a single view-independent atlas texture.",
+  "target_dilution": "Known before run: allBUILD atlas-weight mean approximately.1866, no pixel reaches1; raw128 mean.210/max.6. This is a strong observed-RGB anchor and prior dilution, not an isolatedPoisson improvement.",
+  "fit": "Fresh same baseline; same2053 eligible parentRGB/6159 scalars; same400pairedsteps/10epochs/Adam.01/[0,1]; same geometry/alpha/vehicles/AA frozen.",
+  "engineering": "New private source/target/output/contract, retain A/B bytes and full state. Real two-frame save/eval/full-state restore/nextsteps before formal.",
+  "query": "Full49 KEEP/DELETE, same fixed masks/bins and original metrics, 196nativeforwards for freshbaseline+C; independent C canonical export/replay if completed.",
+  "cancelled_unexecuted_fallback": "Legacy RGB take-over was reviewedCPU-only and will not run: no proven nonempty safe static support set. No legacy qualification or pruning GPU.",
+  "stopping_rule": "One C run and full49 evidence, then close this round regardless of result. No second band width, extra geometry or static method to rescue it.",
+  "failure_ledger_refs": [
+    "V82-F13"
+  ],
+  "human_verdict": null,
+  "AutoDL": "KEEP_ON"
+}

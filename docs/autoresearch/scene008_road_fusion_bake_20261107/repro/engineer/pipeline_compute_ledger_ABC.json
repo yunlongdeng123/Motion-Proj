@@ -1,0 +1,5539 @@
+{
+  "schema": "ABC_ROAD_FUSION_WRITEBACK_ACCOUNTING_V1",
+  "immutable_AB_ledger_sha256": "05ce8b7c27ef35a6ea35436dbf357b6f88a4a71a6ea88f1935084cd6880a23dc",
+  "AB_ledger": {
+    "schema": "ROAD_SHARED_FUSION_BAKE_PIPELINE_STATE_COMPUTE_LEDGER_V1",
+    "records": [
+      {
+        "role": "shared_column_qualification",
+        "forwards": 80,
+        "backwards": 80,
+        "optimizer_steps": 0,
+        "worker_window_seconds": 30.604623556137085,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/qualification_receipt.json",
+        "peak_allocated": 2149914624,
+        "peak_reserved": 2657091584
+      },
+      {
+        "role": "engineering_placeholder_smoke",
+        "forwards": 16,
+        "backwards": 8,
+        "optimizer_steps": 4,
+        "formal_steps": 0,
+        "worker_window_seconds": 11.785130023956299,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/smoke_engineering_placeholder/direct/smoke/receipt.json",
+        "peak_allocated": 2128208384,
+        "peak_reserved": 3407872000
+      },
+      {
+        "role": "engineering_placeholder_restore",
+        "forwards": 4,
+        "backwards": 4,
+        "optimizer_steps": 2,
+        "formal_steps": 0,
+        "worker_window_seconds": 7.105650901794434,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/smoke_engineering_placeholder/direct/restore/receipt.json",
+        "peak_allocated": 2125170176,
+        "peak_reserved": 3032481792
+      },
+      {
+        "role": "scientific_direct_smoke",
+        "forwards": 16,
+        "backwards": 8,
+        "optimizer_steps": 4,
+        "formal_steps": 0,
+        "worker_window_seconds": 10.800284147262573,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/direct/smoke/receipt.json",
+        "peak_allocated": 2128208384,
+        "peak_reserved": 3407872000
+      },
+      {
+        "role": "scientific_direct_restore",
+        "forwards": 4,
+        "backwards": 4,
+        "optimizer_steps": 2,
+        "formal_steps": 0,
+        "worker_window_seconds": 8.456620693206787,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/direct/restore/receipt.json",
+        "peak_allocated": 2125170176,
+        "peak_reserved": 3032481792
+      },
+      {
+        "role": "scientific_fusion_smoke",
+        "forwards": 16,
+        "backwards": 8,
+        "optimizer_steps": 4,
+        "formal_steps": 0,
+        "worker_window_seconds": 11.711738586425781,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/fusion/smoke/receipt.json",
+        "peak_allocated": 2128208384,
+        "peak_reserved": 3407872000
+      },
+      {
+        "role": "scientific_fusion_restore",
+        "forwards": 4,
+        "backwards": 4,
+        "optimizer_steps": 2,
+        "formal_steps": 0,
+        "worker_window_seconds": 11.214394092559814,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/fusion/restore/receipt.json",
+        "peak_allocated": 2125170176,
+        "peak_reserved": 3032481792
+      },
+      {
+        "role": "direct_formal",
+        "forwards": 800,
+        "backwards": 800,
+        "optimizer_steps": 400,
+        "formal_steps": 400,
+        "worker_window_seconds": 142.33994483947754,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/direct/formal/receipt.json",
+        "peak_allocated": 2180705280,
+        "peak_reserved": 3886022656
+      },
+      {
+        "role": "fusion_formal",
+        "forwards": 800,
+        "backwards": 800,
+        "optimizer_steps": 400,
+        "formal_steps": 400,
+        "worker_window_seconds": 142.7394242286682,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/fusion/formal/receipt.json",
+        "peak_allocated": 2180705280,
+        "peak_reserved": 3886022656
+      },
+      {
+        "role": "direct_fresh_canonical_replay",
+        "forwards": 10,
+        "backwards": 0,
+        "optimizer_steps": 0,
+        "worker_window_seconds": 21.801684141159058,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_direct_v1/parity/receipt.json",
+        "peak_allocated": 1712589824,
+        "peak_reserved": 2650800128
+      },
+      {
+        "role": "fusion_fresh_canonical_replay",
+        "forwards": 10,
+        "backwards": 0,
+        "optimizer_steps": 0,
+        "worker_window_seconds": 17.287219762802124,
+        "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_fusion_v1/parity/receipt.json",
+        "peak_allocated": 1712589824,
+        "peak_reserved": 2650800128
+      }
+    ],
+    "additional_native_forwards": 1760,
+    "native_backwards": 1716,
+    "formal_optimizer_steps": 800,
+    "smoke_and_disposable_optimizer_steps": 18,
+    "reported_worker_windows_seconds": 415.8467149734497,
+    "timing_definition": "reported GPU-enabled worker windows include runtime/data/output work; not CUDA-event kernel timing",
+    "maximum_allocated_bytes": 2180705280,
+    "maximum_reserved_bytes": 3886022656,
+    "root294F_full49_scope": "separate root-owned evaluation, excluded from above; full49 geometry assertions belong to root receipt",
+    "geometry_updates": 0,
+    "opacity_updates": 0,
+    "original_parameter_updates": 0,
+    "source_information_matched": true,
+    "formal_frame_order_identical": true,
+    "formal_frame_counts": {
+      "90": 10,
+      "91": 10,
+      "92": 10,
+      "93": 10,
+      "94": 10,
+      "96": 10,
+      "97": 10,
+      "98": 10,
+      "99": 10,
+      "100": 10,
+      "102": 10,
+      "103": 10,
+      "104": 10,
+      "106": 10,
+      "107": 10,
+      "108": 10,
+      "109": 10,
+      "110": 10,
+      "111": 10,
+      "112": 10,
+      "114": 10,
+      "115": 10,
+      "116": 10,
+      "117": 10,
+      "118": 10,
+      "119": 10,
+      "120": 10,
+      "122": 10,
+      "123": 10,
+      "124": 10,
+      "126": 10,
+      "127": 10,
+      "128": 10,
+      "129": 10,
+      "131": 10,
+      "132": 10,
+      "133": 10,
+      "134": 10,
+      "135": 10,
+      "136": 10
+    },
+    "restoration": [
+      {
+        "role": "engineering_placeholder",
+        "checkpoint_loaded_all_exact": true,
+        "disposable_next_state_all_exact": false,
+        "differences": [
+          {
+            "path": "/optimizer/state/0/exp_avg",
+            "exact": false,
+            "maxabs": 2.842170943040401e-14,
+            "changed_elements": 9,
+            "elements": 6159
+          },
+          {
+            "path": "/optimizer/state/0/exp_avg_sq",
+            "exact": false,
+            "maxabs": 8.470329472543003e-22,
+            "changed_elements": 7,
+            "elements": 6159
+          }
+        ]
+      },
+      {
+        "role": "scientific_direct",
+        "checkpoint_loaded_all_exact": true,
+        "disposable_next_state_all_exact": false,
+        "differences": [
+          {
+            "path": "/optimizer/state/0/exp_avg",
+            "exact": false,
+            "maxabs": 1.4210854715202004e-14,
+            "changed_elements": 18,
+            "elements": 6159
+          },
+          {
+            "path": "/optimizer/state/0/exp_avg_sq",
+            "exact": false,
+            "maxabs": 4.235164736271502e-22,
+            "changed_elements": 12,
+            "elements": 6159
+          }
+        ]
+      },
+      {
+        "role": "scientific_fusion",
+        "checkpoint_loaded_all_exact": true,
+        "disposable_next_state_all_exact": false,
+        "differences": [
+          {
+            "path": "/optimizer/state/0/exp_avg",
+            "exact": false,
+            "maxabs": 1.4210854715202004e-14,
+            "changed_elements": 19,
+            "elements": 6159
+          },
+          {
+            "path": "/optimizer/state/0/exp_avg_sq",
+            "exact": false,
+            "maxabs": 4.235164736271502e-22,
+            "changed_elements": 15,
+            "elements": 6159
+          }
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "variant": "direct",
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/direct/material_override.npz",
+        "sha256": "dc4027c50fc2ee03cf05af1c62664f2805e40579fd921369b86d2a189cd997f9",
+        "eligible_parents": 2053,
+        "frozen_zero_mass_parents": 8045,
+        "changed_parents": 2053,
+        "colour_delta_maxabs": 0.5893003642559052,
+        "initial_zero_mass_rows_byte_exact": true,
+        "zero_mass_rows_absent_from_Adam": true,
+        "colour_min": 0.0,
+        "colour_max": 1.0,
+        "canonical_asset": "5ba9e93537c92531d2e2577390223404dc15049e0d5489c6d22f3de2c649d4b3",
+        "canonical_manifest": "6e31177861d54697938e5611d395f7deeb5444a2e108bc74a73599f62112c14a",
+        "unchanged_nonmaterial_field_count": 86
+      },
+      {
+        "variant": "fusion",
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_v1/fusion/material_override.npz",
+        "sha256": "c2a8fa3c6ddb427c00e1dd18554f831d33ec5bc35dca9379e1d64a079746f3c7",
+        "eligible_parents": 2053,
+        "frozen_zero_mass_parents": 8045,
+        "changed_parents": 2053,
+        "colour_delta_maxabs": 0.5893003642559052,
+        "initial_zero_mass_rows_byte_exact": true,
+        "zero_mass_rows_absent_from_Adam": true,
+        "colour_min": 0.0,
+        "colour_max": 1.0,
+        "canonical_asset": "13b97cb5f736b3e022af9d5e9f9ee107b3297d86bf1ad33947ccaf5381535cf6",
+        "canonical_manifest": "a6f9fc6ca51359fb2462ab4772e16db0f8c6753fb389e4762b41ae5db1cee1c9",
+        "unchanged_nonmaterial_field_count": 86
+      }
+    ],
+    "replays": [
+      {
+        "variant": "direct",
+        "forwards": 10,
+        "all_float_shape_dtype_bytes_exact": true,
+        "all_PNG_byte_exact": true,
+        "field_checks": [
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          }
+        ]
+      },
+      {
+        "variant": "fusion",
+        "forwards": 10,
+        "all_float_shape_dtype_bytes_exact": true,
+        "all_PNG_byte_exact": true,
+        "field_checks": [
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 105,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 113,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 128,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 130,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "keep",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "rgb",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "alpha",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "group_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "group_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "env_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "depth_m",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "newroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "newroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "oldroad_alpha_T",
+            "shape_dtype_bytes_exact": true
+          },
+          {
+            "raw": 137,
+            "state": "delete",
+            "field": "oldroad_rgb_T",
+            "shape_dtype_bytes_exact": true
+          }
+        ]
+      }
+    ],
+    "target_manifest_sha256": "d08232bb8df0ca6cf4a2f986c36074b9a588e54d346b97188aa0c716b2a83bea",
+    "fit_contract_sha256": "2397e6343a3ec792ce467353b8e55453115687f594c346207199cac095b1fb43",
+    "capacity_probe": "atlas_target_capacity.json, CPU-only, independent-pixel relaxation not a 3D feasibility certificate",
+    "method_limit": "Only2053 qualified parent colours train;8045 remain initial bytes. This is not full-atlas writeback success.",
+    "adoption_claim": false,
+    "human_verdict": null,
+    "AutoDL_shutdown": false
+  },
+  "posthoc_C_records": [
+    {
+      "role": "posthoc_edgeblend_smoke",
+      "forwards": 16,
+      "backwards": 8,
+      "optimizer_steps": 4,
+      "formal_steps": 0,
+      "worker_window_seconds": 15.709831476211548,
+      "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/edgeblend/smoke/receipt.json",
+      "peak_allocated": 2128208384,
+      "peak_reserved": 3407872000
+    },
+    {
+      "role": "posthoc_edgeblend_restore",
+      "forwards": 4,
+      "backwards": 4,
+      "optimizer_steps": 2,
+      "formal_steps": 0,
+      "worker_window_seconds": 12.698401689529419,
+      "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/edgeblend/restore/receipt.json",
+      "peak_allocated": 2125170176,
+      "peak_reserved": 3032481792
+    },
+    {
+      "role": "posthoc_edgeblend_formal",
+      "forwards": 800,
+      "backwards": 800,
+      "optimizer_steps": 400,
+      "formal_steps": 400,
+      "worker_window_seconds": 199.39380049705505,
+      "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/edgeblend/formal/receipt.json",
+      "peak_allocated": 2180705280,
+      "peak_reserved": 3886022656
+    },
+    {
+      "role": "posthoc_C_fresh_canonical_replay",
+      "forwards": 10,
+      "backwards": 0,
+      "optimizer_steps": 0,
+      "formal_steps": 0,
+      "worker_window_seconds": 20.414138793945312,
+      "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/canonical_edgeblend_v1/parity/receipt.json",
+      "peak_allocated": 1712589824,
+      "peak_reserved": 2650800128
+    }
+  ],
+  "total_native_forwards": 2590,
+  "total_native_backwards": 2528,
+  "total_reported_worker_windows_seconds": 664.062887430191,
+  "formal_optimizer_steps": 1200,
+  "smoke_and_disposable_optimizer_steps": 24,
+  "C_material": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/material_fit_edgeblend_v1/edgeblend/material_override.npz",
+    "sha256": "f23cd35c766c52ab9018742630e99d032f293f7244c3c1fd860d25dc2aee39b6",
+    "eligible_parents": 2053,
+    "unqualified_parents_byte_frozen": 8045,
+    "actual_changed_parents": 2053,
+    "current_fit_contract_sha256": "897e57605ddeb3a5f9f8257e91754e28bd0188a4eb218f0e2d3ef60d5ec6f8a2"
+  },
+  "C_restore": {
+    "expected_sha256": "5c115bd8411cf56c7621307c3bf43b2f2a512829e10ca7e2efa17653b7506d11",
+    "actual_sha256": "391e5a1d2e6a535ec618d29fc32c971b8b4a76c67c380ceccf726b7a81ebec6b",
+    "checkpoint_restore_before_next_steps": {
+      "parameter": true,
+      "Adam": true,
+      "sampler": true,
+      "RNG": true,
+      "parent_ids": true,
+      "next_two_frames": true
+    },
+    "new_nextstep_tree_exact": false,
+    "leaves": [
+      {
+        "path": "/step",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/value",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 6159
+      },
+      {
+        "path": "/optimizer/state/0/step",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 1
+      },
+      {
+        "path": "/optimizer/state/0/exp_avg",
+        "exact": false,
+        "maxabs": 2.842170943040401e-14,
+        "changed_elements": 12,
+        "elements": 6159
+      },
+      {
+        "path": "/optimizer/state/0/exp_avg_sq",
+        "exact": false,
+        "maxabs": 1.6940658945086007e-21,
+        "changed_elements": 14,
+        "elements": 6159
+      },
+      {
+        "path": "/optimizer/param_groups/0/lr",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/betas/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/betas/1",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/eps",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/weight_decay",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/amsgrad",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/maximize",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/foreach",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/capturable",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/differentiable",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/fused",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/optimizer/param_groups/0/params/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/generator/bit_generator",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/generator/state/state",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/generator/state/inc",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/generator/has_uint32",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/generator/uinteger",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/order",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 40
+      },
+      {
+        "path": "/sampler/cursor",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/sampler/epoch",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/1",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/2",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/3",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/4",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/5",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/6",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/7",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/8",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/9",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/10",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/11",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/12",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/13",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/14",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/15",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/16",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/17",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/18",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/19",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/20",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/21",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/22",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/23",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/24",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/25",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/26",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/27",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/28",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/29",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/30",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/31",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/32",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/33",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/34",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/35",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/36",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/37",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/38",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/39",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/40",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/41",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/42",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/43",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/44",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/45",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/46",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/47",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/48",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/49",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/50",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/51",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/52",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/53",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/54",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/55",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/56",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/57",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/58",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/59",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/60",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/61",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/62",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/63",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/64",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/65",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/66",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/67",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/68",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/69",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/70",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/71",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/72",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/73",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/74",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/75",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/76",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/77",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/78",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/79",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/80",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/81",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/82",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/83",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/84",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/85",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/86",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/87",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/88",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/89",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/90",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/91",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/92",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/93",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/94",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/95",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/96",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/97",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/98",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/99",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/100",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/101",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/102",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/103",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/104",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/105",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/106",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/107",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/108",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/109",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/110",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/111",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/112",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/113",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/114",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/115",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/116",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/117",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/118",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/119",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/120",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/121",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/122",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/123",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/124",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/125",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/126",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/127",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/128",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/129",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/130",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/131",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/132",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/133",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/134",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/135",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/136",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/137",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/138",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/139",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/140",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/141",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/142",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/143",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/144",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/145",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/146",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/147",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/148",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/149",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/150",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/151",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/152",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/153",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/154",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/155",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/156",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/157",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/158",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/159",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/160",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/161",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/162",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/163",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/164",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/165",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/166",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/167",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/168",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/169",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/170",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/171",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/172",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/173",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/174",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/175",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/176",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/177",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/178",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/179",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/180",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/181",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/182",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/183",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/184",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/185",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/186",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/187",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/188",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/189",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/190",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/191",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/192",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/193",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/194",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/195",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/196",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/197",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/198",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/199",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/200",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/201",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/202",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/203",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/204",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/205",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/206",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/207",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/208",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/209",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/210",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/211",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/212",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/213",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/214",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/215",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/216",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/217",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/218",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/219",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/220",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/221",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/222",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/223",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/224",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/225",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/226",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/227",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/228",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/229",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/230",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/231",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/232",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/233",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/234",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/235",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/236",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/237",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/238",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/239",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/240",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/241",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/242",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/243",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/244",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/245",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/246",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/247",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/248",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/249",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/250",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/251",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/252",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/253",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/254",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/255",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/256",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/257",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/258",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/259",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/260",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/261",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/262",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/263",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/264",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/265",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/266",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/267",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/268",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/269",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/270",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/271",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/272",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/273",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/274",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/275",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/276",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/277",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/278",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/279",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/280",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/281",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/282",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/283",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/284",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/285",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/286",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/287",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/288",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/289",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/290",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/291",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/292",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/293",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/294",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/295",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/296",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/297",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/298",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/299",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/300",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/301",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/302",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/303",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/304",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/305",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/306",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/307",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/308",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/309",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/310",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/311",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/312",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/313",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/314",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/315",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/316",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/317",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/318",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/319",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/320",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/321",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/322",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/323",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/324",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/325",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/326",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/327",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/328",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/329",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/330",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/331",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/332",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/333",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/334",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/335",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/336",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/337",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/338",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/339",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/340",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/341",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/342",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/343",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/344",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/345",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/346",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/347",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/348",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/349",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/350",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/351",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/352",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/353",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/354",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/355",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/356",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/357",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/358",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/359",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/360",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/361",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/362",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/363",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/364",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/365",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/366",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/367",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/368",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/369",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/370",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/371",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/372",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/373",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/374",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/375",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/376",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/377",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/378",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/379",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/380",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/381",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/382",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/383",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/384",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/385",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/386",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/387",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/388",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/389",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/390",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/391",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/392",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/393",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/394",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/395",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/396",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/397",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/398",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/399",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/400",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/401",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/402",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/403",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/404",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/405",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/406",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/407",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/408",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/409",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/410",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/411",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/412",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/413",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/414",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/415",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/416",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/417",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/418",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/419",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/420",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/421",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/422",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/423",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/424",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/425",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/426",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/427",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/428",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/429",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/430",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/431",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/432",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/433",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/434",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/435",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/436",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/437",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/438",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/439",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/440",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/441",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/442",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/443",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/444",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/445",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/446",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/447",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/448",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/449",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/450",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/451",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/452",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/453",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/454",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/455",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/456",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/457",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/458",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/459",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/460",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/461",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/462",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/463",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/464",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/465",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/466",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/467",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/468",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/469",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/470",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/471",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/472",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/473",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/474",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/475",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/476",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/477",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/478",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/479",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/480",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/481",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/482",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/483",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/484",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/485",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/486",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/487",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/488",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/489",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/490",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/491",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/492",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/493",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/494",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/495",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/496",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/497",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/498",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/499",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/500",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/501",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/502",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/503",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/504",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/505",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/506",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/507",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/508",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/509",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/510",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/511",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/512",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/513",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/514",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/515",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/516",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/517",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/518",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/519",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/520",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/521",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/522",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/523",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/524",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/525",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/526",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/527",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/528",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/529",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/530",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/531",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/532",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/533",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/534",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/535",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/536",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/537",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/538",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/539",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/540",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/541",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/542",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/543",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/544",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/545",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/546",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/547",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/548",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/549",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/550",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/551",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/552",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/553",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/554",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/555",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/556",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/557",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/558",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/559",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/560",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/561",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/562",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/563",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/564",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/565",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/566",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/567",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/568",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/569",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/570",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/571",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/572",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/573",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/574",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/575",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/576",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/577",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/578",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/579",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/580",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/581",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/582",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/583",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/584",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/585",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/586",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/587",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/588",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/589",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/590",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/591",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/592",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/593",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/594",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/595",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/596",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/597",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/598",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/599",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/600",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/601",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/602",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/603",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/604",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/605",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/606",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/607",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/608",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/609",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/610",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/611",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/612",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/613",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/614",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/615",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/616",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/617",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/618",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/619",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/620",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/621",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/622",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/623",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/1/624",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/python/2",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/numpy/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/numpy/1",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 624
+      },
+      {
+        "path": "/rng/numpy/2",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/numpy/3",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/numpy/4",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/rng/torch_cpu",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 5056
+      },
+      {
+        "path": "/rng/torch_cuda/0",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 16
+      },
+      {
+        "path": "/next_two_frames/0",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/next_two_frames/1",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/contract_sha256",
+        "exact": true,
+        "maxabs": 0
+      },
+      {
+        "path": "/parameter_parent_ids",
+        "exact": true,
+        "maxabs": 0.0,
+        "changed_elements": 0,
+        "elements": 2053
+      }
+    ],
+    "numerical_policy": "report actual exactness and differences; no threshold relaxation or replacement of states",
+    "CPU_only": true
+  },
+  "C_replay": {
+    "forwards": 10,
+    "float_shape_dtype_bytes_exact": true,
+    "PNG_byte_exact": true,
+    "checks": [
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "keep",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 113,
+        "state": "delete",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "keep",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 130,
+        "state": "delete",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "rgb",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "alpha",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "group_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "group_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "env_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "depth_m",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "newroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "newroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "oldroad_alpha_T",
+        "shape_dtype_bytes_exact": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "field": "oldroad_rgb_T",
+        "shape_dtype_bytes_exact": true
+      }
+    ]
+  },
+  "qualification_reused_GPU_forwards": 0,
+  "method_roles": {
+    "AB": "same190-source information comparison, only Poisson fusion changes",
+    "C": "single posthoc fixed10pixel edgeblend, strong original RGB anchoring, not isolated Poisson gain"
+  },
+  "legacy_static_GPU_forwards": 0,
+  "legacy_static_optimizer_steps": 0,
+  "original_parameter_updates": 0,
+  "geometry_updates": 0,
+  "opacity_updates": 0,
+  "root_evaluation_forwards_separate": 490,
+  "root_evaluation_scope": "294 A/B plus196 singleC, excluded from above counts",
+  "held_scope": "C HELD target includes query O for construction diagnostics only; native RGB is not conditioned on O, evaluator may load it",
+  "adoption_claim": false,
+  "human_verdict": null,
+  "AutoDL_shutdown": false
+}

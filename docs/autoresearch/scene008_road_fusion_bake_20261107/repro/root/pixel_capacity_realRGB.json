@@ -1,0 +1,2038 @@
+{
+  "schema": "FIXED_GEOMETRY_NEWROAD_COLOUR_PIXEL_RELAXATION_V1",
+  "formula": "F=baselineRGB-newroadRGBT; feasible pixel RGB interval=[F,F+Wnew]; min MAE is distance of observed RGB to interval.",
+  "use": "Early capacity diagnostic. Zero bound does not establish shared 3D feasibility or seam success.",
+  "geometry_or_alpha_changed": false,
+  "forwards": 0,
+  "backwards": 0,
+  "records": [
+    {
+      "raw": 105,
+      "state": "keep",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 690,
+            "mean": 0.012640368434542045,
+            "sum": 8.721854219834011,
+            "max": 0.10163172086079915
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 690,
+            "mean": 0.004511161931715882,
+            "sum": 3.1127017328839583,
+            "max": 0.030390003230422735
+          },
+          "pixels_outside_any_channel_interval": 345,
+          "pixels_newroad_mass_lt001": 330,
+          "pixels_newroad_mass_lt01": 395,
+          "newroad_mass": {
+            "count": 690,
+            "mean": 0.22034901033283846,
+            "sum": 152.04081712965854,
+            "max": 0.922497570514679
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 222,
+            "mean": 0.014479766378889569,
+            "sum": 3.2145081361134844,
+            "max": 0.10163172086079915
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 222,
+            "mean": 0.0054203888389050174,
+            "sum": 1.203326322236914,
+            "max": 0.022355576356252033
+          },
+          "pixels_outside_any_channel_interval": 127,
+          "pixels_newroad_mass_lt001": 124,
+          "pixels_newroad_mass_lt01": 137,
+          "newroad_mass": {
+            "count": 222,
+            "mean": 0.1785153162350931,
+            "sum": 39.630400204190664,
+            "max": 0.9001609086990356
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 39,
+            "mean": 0.005995151069429186,
+            "sum": 0.23381089170773825,
+            "max": 0.01786649227142334
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 39,
+            "mean": 0.0027175201819493217,
+            "sum": 0.10598328709602355,
+            "max": 0.008216996987660726
+          },
+          "pixels_outside_any_channel_interval": 23,
+          "pixels_newroad_mass_lt001": 23,
+          "pixels_newroad_mass_lt01": 25,
+          "newroad_mass": {
+            "count": 39,
+            "mean": 0.18446756144746757,
+            "sum": 7.194234896451235,
+            "max": 0.7533873915672302
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 40,
+            "mean": 0.0046864663561185195,
+            "sum": 0.18745865424474079,
+            "max": 0.014422545830408732
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 40,
+            "mean": 0.0022271635631720224,
+            "sum": 0.08908654252688089,
+            "max": 0.007797867059707642
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 19,
+          "pixels_newroad_mass_lt01": 19,
+          "newroad_mass": {
+            "count": 40,
+            "mean": 0.3526601232588291,
+            "sum": 14.106404930353165,
+            "max": 0.9029120206832886
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 137,
+            "mean": 0.016919796701765407,
+            "sum": 2.318012148141861,
+            "max": 0.08304903904596965
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 137,
+            "mean": 0.0007223318673108325,
+            "sum": 0.09895946582158406,
+            "max": 0.019363264242808025
+          },
+          "pixels_outside_any_channel_interval": 9,
+          "pixels_newroad_mass_lt001": 9,
+          "pixels_newroad_mass_lt01": 17,
+          "newroad_mass": {
+            "count": 137,
+            "mean": 0.4610811631827459,
+            "sum": 63.168119356036186,
+            "max": 0.922497570514679
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 135,
+            "mean": 0.011858771833372705,
+            "sum": 1.600934197505315,
+            "max": 0.09620677431424458
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 135,
+            "mean": 0.006746576763229606,
+            "sum": 0.9107878630359968,
+            "max": 0.021126617987950642
+          },
+          "pixels_outside_any_channel_interval": 109,
+          "pixels_newroad_mass_lt001": 105,
+          "pixels_newroad_mass_lt01": 115,
+          "newroad_mass": {
+            "count": 135,
+            "mean": 0.03821373151408301,
+            "sum": 5.158853754401207,
+            "max": 0.48710834980010986
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 105,
+      "state": "delete",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 690,
+            "mean": 0.024005568992112567,
+            "sum": 16.56384260455767,
+            "max": 0.18810016413529715
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 690,
+            "mean": 0.004192292208488209,
+            "sum": 2.892681623856864,
+            "max": 0.027812282292870805
+          },
+          "pixels_outside_any_channel_interval": 286,
+          "pixels_newroad_mass_lt001": 282,
+          "pixels_newroad_mass_lt01": 298,
+          "newroad_mass": {
+            "count": 690,
+            "mean": 0.3885229005489711,
+            "sum": 268.08080137879006,
+            "max": 0.9618400931358337
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 222,
+            "mean": 0.027382908260321116,
+            "sum": 6.079005633791287,
+            "max": 0.18588496247927347
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 222,
+            "mean": 0.005484389731622104,
+            "sum": 1.2175345204201071,
+            "max": 0.025780479113260906
+          },
+          "pixels_outside_any_channel_interval": 111,
+          "pixels_newroad_mass_lt001": 108,
+          "pixels_newroad_mass_lt01": 112,
+          "newroad_mass": {
+            "count": 222,
+            "mean": 0.33060826462505255,
+            "sum": 73.39503474676167,
+            "max": 0.9474535584449768
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 39,
+            "mean": 0.005742006322257539,
+            "sum": 0.22393824656804404,
+            "max": 0.0220644474029541
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 39,
+            "mean": 0.0027175201819493217,
+            "sum": 0.10598328709602355,
+            "max": 0.008216996987660726
+          },
+          "pixels_outside_any_channel_interval": 23,
+          "pixels_newroad_mass_lt001": 23,
+          "pixels_newroad_mass_lt01": 24,
+          "newroad_mass": {
+            "count": 39,
+            "mean": 0.2279006408002132,
+            "sum": 8.888124991208315,
+            "max": 0.9580914974212646
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 40,
+            "mean": 0.005130674938360851,
+            "sum": 0.20522699753443402,
+            "max": 0.016107032696406048
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 40,
+            "mean": 0.0022271635631720224,
+            "sum": 0.08908654252688089,
+            "max": 0.007797867059707642
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 19,
+          "pixels_newroad_mass_lt01": 19,
+          "newroad_mass": {
+            "count": 40,
+            "mean": 0.4589408256113529,
+            "sum": 18.357633024454117,
+            "max": 0.9482012987136841
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 137,
+            "mean": 0.03849197793615996,
+            "sum": 5.273400977253914,
+            "max": 0.17864877978960672
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 137,
+            "mean": 0.0007223318673108325,
+            "sum": 0.09895946582158406,
+            "max": 0.019363264242808025
+          },
+          "pixels_outside_any_channel_interval": 9,
+          "pixels_newroad_mass_lt001": 9,
+          "pixels_newroad_mass_lt01": 10,
+          "newroad_mass": {
+            "count": 137,
+            "mean": 0.6378425110648148,
+            "sum": 87.38442401587963,
+            "max": 0.922497570514679
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 135,
+            "mean": 0.015394291943973966,
+            "sum": 2.0782294124364853,
+            "max": 0.16145733992258707
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 135,
+            "mean": 0.007500269558901588,
+            "sum": 1.0125363904517144,
+            "max": 0.02547279993693034
+          },
+          "pixels_outside_any_channel_interval": 108,
+          "pixels_newroad_mass_lt001": 104,
+          "pixels_newroad_mass_lt01": 115,
+          "newroad_mass": {
+            "count": 135,
+            "mean": 0.04883308867337527,
+            "sum": 6.592466970905662,
+            "max": 0.5571383833885193
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 113,
+      "state": "keep",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 641,
+            "mean": 0.010757589891932623,
+            "sum": 6.895615120728811,
+            "max": 0.063191423813502
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 641,
+            "mean": 0.0035469719093803908,
+            "sum": 2.2736089939128306,
+            "max": 0.05779682596524557
+          },
+          "pixels_outside_any_channel_interval": 285,
+          "pixels_newroad_mass_lt001": 271,
+          "pixels_newroad_mass_lt01": 317,
+          "newroad_mass": {
+            "count": 641,
+            "mean": 0.32936184105257665,
+            "sum": 211.12094011470163,
+            "max": 0.9393344521522522
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 162,
+            "mean": 0.00954844057559967,
+            "sum": 1.5468473732471466,
+            "max": 0.05779682596524557
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 162,
+            "mean": 0.004378296021858296,
+            "sum": 0.709283955541044,
+            "max": 0.05779682596524557
+          },
+          "pixels_outside_any_channel_interval": 79,
+          "pixels_newroad_mass_lt001": 77,
+          "pixels_newroad_mass_lt01": 90,
+          "newroad_mass": {
+            "count": 162,
+            "mean": 0.30288635788300455,
+            "sum": 49.06758997704674,
+            "max": 0.9267626404762268
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 43,
+            "mean": 0.00608948219654172,
+            "sum": 0.26184773445129395,
+            "max": 0.041817665100097656
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 43,
+            "mean": 0.0015444707038790681,
+            "sum": 0.06641224026679993,
+            "max": 0.006745437781016032
+          },
+          "pixels_outside_any_channel_interval": 16,
+          "pixels_newroad_mass_lt001": 16,
+          "pixels_newroad_mass_lt01": 17,
+          "newroad_mass": {
+            "count": 43,
+            "mean": 0.38486938228354206,
+            "sum": 16.549383438192308,
+            "max": 0.9393344521522522
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 42,
+            "mean": 0.007697165721938722,
+            "sum": 0.32328096032142634,
+            "max": 0.04444479942321777
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 42,
+            "mean": 0.001239578165705242,
+            "sum": 0.05206228295962016,
+            "max": 0.007280757029851277
+          },
+          "pixels_outside_any_channel_interval": 13,
+          "pixels_newroad_mass_lt001": 13,
+          "pixels_newroad_mass_lt01": 14,
+          "newroad_mass": {
+            "count": 42,
+            "mean": 0.5424317653690066,
+            "sum": 22.782134145498276,
+            "max": 0.9342794418334961
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 107,
+            "mean": 0.014409279990419051,
+            "sum": 1.5417929589748385,
+            "max": 0.05961735049883524
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 107,
+            "mean": 0.00036345862325083613,
+            "sum": 0.038890072687839464,
+            "max": 0.019774218400319416
+          },
+          "pixels_outside_any_channel_interval": 9,
+          "pixels_newroad_mass_lt001": 7,
+          "pixels_newroad_mass_lt01": 9,
+          "newroad_mass": {
+            "count": 107,
+            "mean": 0.6934004860438372,
+            "sum": 74.19385200669058,
+            "max": 0.9189029335975647
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 108,
+            "mean": 0.00816649262919838,
+            "sum": 0.881981203953425,
+            "max": 0.03894585371017456
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 108,
+            "mean": 0.006047496621721183,
+            "sum": 0.6531296351458877,
+            "max": 0.018978267908096313
+          },
+          "pixels_outside_any_channel_interval": 89,
+          "pixels_newroad_mass_lt001": 88,
+          "pixels_newroad_mass_lt01": 96,
+          "newroad_mass": {
+            "count": 108,
+            "mean": 0.036142161624782065,
+            "sum": 3.903353455476463,
+            "max": 0.45849505066871643
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 113,
+      "state": "delete",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 641,
+            "mean": 0.013174054992118355,
+            "sum": 8.444569249947866,
+            "max": 0.0821228822072347
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 641,
+            "mean": 0.0032094465426770117,
+            "sum": 2.0572552338559644,
+            "max": 0.05779682596524557
+          },
+          "pixels_outside_any_channel_interval": 254,
+          "pixels_newroad_mass_lt001": 251,
+          "pixels_newroad_mass_lt01": 268,
+          "newroad_mass": {
+            "count": 641,
+            "mean": 0.4431180808486674,
+            "sum": 284.0386898239958,
+            "max": 0.9595359563827515
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 162,
+            "mean": 0.010469028059347176,
+            "sum": 1.6959825456142426,
+            "max": 0.05779682596524557
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 162,
+            "mean": 0.004332699533316511,
+            "sum": 0.7018973243972748,
+            "max": 0.05779682596524557
+          },
+          "pixels_outside_any_channel_interval": 77,
+          "pixels_newroad_mass_lt001": 76,
+          "pixels_newroad_mass_lt01": 84,
+          "newroad_mass": {
+            "count": 162,
+            "mean": 0.39228703012441307,
+            "sum": 63.55049888015492,
+            "max": 0.9448352456092834
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 43,
+            "mean": 0.007065116666084112,
+            "sum": 0.3038000166416168,
+            "max": 0.05425001184145609
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 43,
+            "mean": 0.0015444707038790681,
+            "sum": 0.06641224026679993,
+            "max": 0.006745437781016032
+          },
+          "pixels_outside_any_channel_interval": 16,
+          "pixels_newroad_mass_lt001": 16,
+          "pixels_newroad_mass_lt01": 17,
+          "newroad_mass": {
+            "count": 43,
+            "mean": 0.40262821609111027,
+            "sum": 17.31301329191774,
+            "max": 0.9470983743667603
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 42,
+            "mean": 0.008473060906879484,
+            "sum": 0.35586855808893836,
+            "max": 0.06547072529792786
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 42,
+            "mean": 0.001239578165705242,
+            "sum": 0.05206228295962016,
+            "max": 0.007280757029851277
+          },
+          "pixels_outside_any_channel_interval": 13,
+          "pixels_newroad_mass_lt001": 13,
+          "pixels_newroad_mass_lt01": 14,
+          "newroad_mass": {
+            "count": 42,
+            "mean": 0.6013176277989433,
+            "sum": 25.25534036755562,
+            "max": 0.9495242834091187
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 107,
+            "mean": 0.014677392452305352,
+            "sum": 1.5704809923966727,
+            "max": 0.06318292021751404
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 107,
+            "mean": 0.00036345862325083613,
+            "sum": 0.038890072687839464,
+            "max": 0.019774218400319416
+          },
+          "pixels_outside_any_channel_interval": 9,
+          "pixels_newroad_mass_lt001": 7,
+          "pixels_newroad_mass_lt01": 9,
+          "newroad_mass": {
+            "count": 107,
+            "mean": 0.7158080718162356,
+            "sum": 76.59146368433721,
+            "max": 0.9189029335975647
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 108,
+            "mean": 0.008170963529451394,
+            "sum": 0.8824640611807505,
+            "max": 0.03894585371017456
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 108,
+            "mean": 0.006050219395008213,
+            "sum": 0.653423694660887,
+            "max": 0.018978267908096313
+          },
+          "pixels_outside_any_channel_interval": 89,
+          "pixels_newroad_mass_lt001": 88,
+          "pixels_newroad_mass_lt01": 96,
+          "newroad_mass": {
+            "count": 108,
+            "mean": 0.03619941561137913,
+            "sum": 3.9095368860289454,
+            "max": 0.45849505066871643
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 128,
+      "state": "keep",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 772,
+            "mean": 0.030361497932353376,
+            "sum": 23.439076403776806,
+            "max": 0.16513297955195108
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 772,
+            "mean": 0.004415724959134123,
+            "sum": 3.4089396684515427,
+            "max": 0.0807969300573556
+          },
+          "pixels_outside_any_channel_interval": 162,
+          "pixels_newroad_mass_lt001": 156,
+          "pixels_newroad_mass_lt01": 172,
+          "newroad_mass": {
+            "count": 772,
+            "mean": 0.5409427074815973,
+            "sum": 417.6077701757931,
+            "max": 0.958965003490448
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 218,
+            "mean": 0.03507920475363367,
+            "sum": 7.647266636292141,
+            "max": 0.16513297955195108
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 218,
+            "mean": 0.003972205771293064,
+            "sum": 0.8659408581418878,
+            "max": 0.06024726231892904
+          },
+          "pixels_outside_any_channel_interval": 43,
+          "pixels_newroad_mass_lt001": 41,
+          "pixels_newroad_mass_lt01": 51,
+          "newroad_mass": {
+            "count": 218,
+            "mean": 0.5071480295422371,
+            "sum": 110.5582704402077,
+            "max": 0.9418448209762573
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 43,
+            "mean": 0.019992949426636212,
+            "sum": 0.8596968253453572,
+            "max": 0.08084178964296977
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 43,
+            "mean": 0.008852910059248141,
+            "sum": 0.3806751325476701,
+            "max": 0.0807969300573556
+          },
+          "pixels_outside_any_channel_interval": 13,
+          "pixels_newroad_mass_lt001": 12,
+          "pixels_newroad_mass_lt01": 14,
+          "newroad_mass": {
+            "count": 43,
+            "mean": 0.429989523373796,
+            "sum": 18.489549505073228,
+            "max": 0.8887926936149597
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 35,
+            "mean": 0.012869565543674287,
+            "sum": 0.45043479402860004,
+            "max": 0.06987378001213074
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 35,
+            "mean": 0.0,
+            "sum": 0.0,
+            "max": 0.0
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 35,
+            "mean": 0.8581115909985133,
+            "sum": 30.033905684947968,
+            "max": 0.946088969707489
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 150,
+            "mean": 0.03992565045754115,
+            "sum": 5.988847568631173,
+            "max": 0.16196524600187936
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 150,
+            "mean": 8.173423664023479e-05,
+            "sum": 0.012260135496035218,
+            "max": 0.007023924496024847
+          },
+          "pixels_outside_any_channel_interval": 4,
+          "pixels_newroad_mass_lt001": 4,
+          "pixels_newroad_mass_lt01": 6,
+          "newroad_mass": {
+            "count": 150,
+            "mean": 0.6824500560294837,
+            "sum": 102.36750840442255,
+            "max": 0.9251443147659302
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 75,
+            "mean": 0.025354265239503647,
+            "sum": 1.9015698929627736,
+            "max": 0.13566912213961282
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 75,
+            "mean": 0.015352300619706511,
+            "sum": 1.1514225464779884,
+            "max": 0.03445654114087423
+          },
+          "pixels_outside_any_channel_interval": 57,
+          "pixels_newroad_mass_lt001": 52,
+          "pixels_newroad_mass_lt01": 59,
+          "newroad_mass": {
+            "count": 75,
+            "mean": 0.06332661929229895,
+            "sum": 4.7494964469224215,
+            "max": 0.5325903296470642
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "primary_original_road": {
+          "original_MAE": {
+            "count": 1385,
+            "mean": 0.028254776224762954,
+            "sum": 39.13286507129669,
+            "max": 0.1807976265748342
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1385,
+            "mean": 0.006737030240710146,
+            "sum": 9.330786883383553,
+            "max": 0.0807969300573556
+          },
+          "pixels_outside_any_channel_interval": 608,
+          "pixels_newroad_mass_lt001": 597,
+          "pixels_newroad_mass_lt01": 620,
+          "newroad_mass": {
+            "count": 1385,
+            "mean": 0.3610408050308639,
+            "sum": 500.0415149677465,
+            "max": 0.9595495462417603
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 128,
+      "state": "delete",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 772,
+            "mean": 0.03141287669848284,
+            "sum": 24.250740811228752,
+            "max": 0.16513297955195108
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 772,
+            "mean": 0.004549429812146197,
+            "sum": 3.5121598149768642,
+            "max": 0.09322772869563778
+          },
+          "pixels_outside_any_channel_interval": 162,
+          "pixels_newroad_mass_lt001": 156,
+          "pixels_newroad_mass_lt01": 172,
+          "newroad_mass": {
+            "count": 772,
+            "mean": 0.5703145038768822,
+            "sum": 440.2827969929531,
+            "max": 0.990799605846405
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 218,
+            "mean": 0.036392639285745244,
+            "sum": 7.933595364292463,
+            "max": 0.16513297955195108
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 218,
+            "mean": 0.004231479778641174,
+            "sum": 0.9224625917437759,
+            "max": 0.07153752446174622
+          },
+          "pixels_outside_any_channel_interval": 43,
+          "pixels_newroad_mass_lt001": 41,
+          "pixels_newroad_mass_lt01": 51,
+          "newroad_mass": {
+            "count": 218,
+            "mean": 0.5394547939879577,
+            "sum": 117.60114508937477,
+            "max": 0.9812870621681213
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 43,
+            "mean": 0.020129537628602614,
+            "sum": 0.8655701180299123,
+            "max": 0.0932735800743103
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 43,
+            "mean": 0.008865313176574435,
+            "sum": 0.38120846659270075,
+            "max": 0.09322772869563778
+          },
+          "pixels_outside_any_channel_interval": 13,
+          "pixels_newroad_mass_lt001": 12,
+          "pixels_newroad_mass_lt01": 14,
+          "newroad_mass": {
+            "count": 43,
+            "mean": 0.43011743281690434,
+            "sum": 18.495049611126888,
+            "max": 0.8887926936149597
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 35,
+            "mean": 0.010415013631184897,
+            "sum": 0.3645254770914714,
+            "max": 0.06987378001213074
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 35,
+            "mean": 0.0,
+            "sum": 0.0,
+            "max": 0.0
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 35,
+            "mean": 0.9297229817935398,
+            "sum": 32.540304362773895,
+            "max": 0.9608925580978394
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 150,
+            "mean": 0.03993041117986044,
+            "sum": 5.989561676979066,
+            "max": 0.16196524600187936
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 150,
+            "mean": 8.173423664023479e-05,
+            "sum": 0.012260135496035218,
+            "max": 0.007023924496024847
+          },
+          "pixels_outside_any_channel_interval": 4,
+          "pixels_newroad_mass_lt001": 4,
+          "pixels_newroad_mass_lt01": 6,
+          "newroad_mass": {
+            "count": 150,
+            "mean": 0.6824663165739427,
+            "sum": 102.3699474860914,
+            "max": 0.9251443147659302
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 75,
+            "mean": 0.025354265239503647,
+            "sum": 1.9015698929627736,
+            "max": 0.13566912213961282
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 75,
+            "mean": 0.015352300619706511,
+            "sum": 1.1514225464779884,
+            "max": 0.03445654114087423
+          },
+          "pixels_outside_any_channel_interval": 57,
+          "pixels_newroad_mass_lt001": 52,
+          "pixels_newroad_mass_lt01": 59,
+          "newroad_mass": {
+            "count": 75,
+            "mean": 0.06332661929229895,
+            "sum": 4.7494964469224215,
+            "max": 0.5325903296470642
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "primary_original_road": {
+          "original_MAE": {
+            "count": 1385,
+            "mean": 0.029598031466474887,
+            "sum": 40.99327358106772,
+            "max": 0.18568125863869986
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1385,
+            "mean": 0.007200789924066186,
+            "sum": 9.973094044831669,
+            "max": 0.09322772869563778
+          },
+          "pixels_outside_any_channel_interval": 608,
+          "pixels_newroad_mass_lt001": 593,
+          "pixels_newroad_mass_lt01": 616,
+          "newroad_mass": {
+            "count": 1385,
+            "mean": 0.39441073648902913,
+            "sum": 546.2588700373053,
+            "max": 0.990799605846405
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 130,
+      "state": "keep",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 1002,
+            "mean": 0.027983290334780534,
+            "sum": 28.039256915450096,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1002,
+            "mean": 0.004818497488310083,
+            "sum": 4.8281344832867035,
+            "max": 0.08661794662475586
+          },
+          "pixels_outside_any_channel_interval": 299,
+          "pixels_newroad_mass_lt001": 281,
+          "pixels_newroad_mass_lt01": 312,
+          "newroad_mass": {
+            "count": 1002,
+            "mean": 0.4810089070628829,
+            "sum": 481.97092487700866,
+            "max": 0.95879727602005
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 258,
+            "mean": 0.033652216735120276,
+            "sum": 8.682271917661032,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 258,
+            "mean": 0.004043438755973298,
+            "sum": 1.043207199041111,
+            "max": 0.06342841188112895
+          },
+          "pixels_outside_any_channel_interval": 64,
+          "pixels_newroad_mass_lt001": 62,
+          "pixels_newroad_mass_lt01": 65,
+          "newroad_mass": {
+            "count": 258,
+            "mean": 0.4931502877924115,
+            "sum": 127.23277425044216,
+            "max": 0.9440643191337585
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 50,
+            "mean": 0.014843533436457314,
+            "sum": 0.7421766718228657,
+            "max": 0.08661794662475586
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 50,
+            "mean": 0.006656455099582672,
+            "sum": 0.3328227549791336,
+            "max": 0.08661794662475586
+          },
+          "pixels_outside_any_channel_interval": 17,
+          "pixels_newroad_mass_lt001": 16,
+          "pixels_newroad_mass_lt01": 17,
+          "newroad_mass": {
+            "count": 50,
+            "mean": 0.40078985042870047,
+            "sum": 20.039492521435022,
+            "max": 0.8979397416114807
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 61,
+            "mean": 0.014021855071594154,
+            "sum": 0.8553331593672434,
+            "max": 0.09075103203455608
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 61,
+            "mean": 0.005022455863094802,
+            "sum": 0.3063698076487829,
+            "max": 0.08416887822871406
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 14,
+          "pixels_newroad_mass_lt01": 18,
+          "newroad_mass": {
+            "count": 61,
+            "mean": 0.6448008059409492,
+            "sum": 39.332849162397906,
+            "max": 0.95879727602005
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 171,
+            "mean": 0.03798651369923969,
+            "sum": 6.495693842569987,
+            "max": 0.16490517556667328
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 171,
+            "mean": 0.0005765091414521602,
+            "sum": 0.0985830631883194,
+            "max": 0.021819084882736206
+          },
+          "pixels_outside_any_channel_interval": 16,
+          "pixels_newroad_mass_lt001": 12,
+          "pixels_newroad_mass_lt01": 19,
+          "newroad_mass": {
+            "count": 171,
+            "mean": 0.6336417548407457,
+            "sum": 108.35274007776752,
+            "max": 0.927338182926178
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 140,
+            "mean": 0.01987308260230791,
+            "sum": 2.7822315643231073,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 140,
+            "mean": 0.011560559481482154,
+            "sum": 1.6184783274075016,
+            "max": 0.035134315490722656
+          },
+          "pixels_outside_any_channel_interval": 113,
+          "pixels_newroad_mass_lt001": 104,
+          "pixels_newroad_mass_lt01": 120,
+          "newroad_mass": {
+            "count": 140,
+            "mean": 0.05165748886730788,
+            "sum": 7.232048441423103,
+            "max": 0.5562495589256287
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 130,
+      "state": "delete",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 1002,
+            "mean": 0.028408841225637728,
+            "sum": 28.465658908089004,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1002,
+            "mean": 0.004918633523685649,
+            "sum": 4.92847079073302,
+            "max": 0.08661794662475586
+          },
+          "pixels_outside_any_channel_interval": 298,
+          "pixels_newroad_mass_lt001": 279,
+          "pixels_newroad_mass_lt01": 312,
+          "newroad_mass": {
+            "count": 1002,
+            "mean": 0.5055768607441811,
+            "sum": 506.5880144656694,
+            "max": 0.9912828803062439
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 258,
+            "mean": 0.03393841194089993,
+            "sum": 8.756110280752182,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 258,
+            "mean": 0.004146070599956655,
+            "sum": 1.0696862147888169,
+            "max": 0.059777259826660156
+          },
+          "pixels_outside_any_channel_interval": 64,
+          "pixels_newroad_mass_lt001": 62,
+          "pixels_newroad_mass_lt01": 65,
+          "newroad_mass": {
+            "count": 258,
+            "mean": 0.5153165514799297,
+            "sum": 132.95167028182186,
+            "max": 0.9912828803062439
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 50,
+            "mean": 0.015426231622695923,
+            "sum": 0.7713115811347961,
+            "max": 0.08661794662475586
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 50,
+            "mean": 0.007225474615891774,
+            "sum": 0.3612737307945887,
+            "max": 0.08661794662475586
+          },
+          "pixels_outside_any_channel_interval": 17,
+          "pixels_newroad_mass_lt001": 16,
+          "pixels_newroad_mass_lt01": 17,
+          "newroad_mass": {
+            "count": 50,
+            "mean": 0.40086375303566457,
+            "sum": 20.043187651783228,
+            "max": 0.8979397416114807
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 61,
+            "mean": 0.013542886803058977,
+            "sum": 0.8261160949865977,
+            "max": 0.0886940856774648
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 61,
+            "mean": 0.004310490174506552,
+            "sum": 0.26293990064489964,
+            "max": 0.08205411086479823
+          },
+          "pixels_outside_any_channel_interval": 18,
+          "pixels_newroad_mass_lt001": 12,
+          "pixels_newroad_mass_lt01": 18,
+          "newroad_mass": {
+            "count": 61,
+            "mean": 0.6462178944694031,
+            "sum": 39.41929156263359,
+            "max": 0.95879727602005
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 171,
+            "mean": 0.037990183683863865,
+            "sum": 6.4963214099407205,
+            "max": 0.16490517556667328
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 171,
+            "mean": 0.0005765091414521602,
+            "sum": 0.0985830631883194,
+            "max": 0.021819084882736206
+          },
+          "pixels_outside_any_channel_interval": 16,
+          "pixels_newroad_mass_lt001": 12,
+          "pixels_newroad_mass_lt01": 19,
+          "newroad_mass": {
+            "count": 171,
+            "mean": 0.6336541590553147,
+            "sum": 108.35486119845882,
+            "max": 0.927338182926178
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 140,
+            "mean": 0.01987308260230791,
+            "sum": 2.7822315643231073,
+            "max": 0.16878482699394226
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 140,
+            "mean": 0.011560559481482154,
+            "sum": 1.6184783274075016,
+            "max": 0.035134315490722656
+          },
+          "pixels_outside_any_channel_interval": 113,
+          "pixels_newroad_mass_lt001": 104,
+          "pixels_newroad_mass_lt01": 120,
+          "newroad_mass": {
+            "count": 140,
+            "mean": 0.05165748886730788,
+            "sum": 7.232048441423103,
+            "max": 0.5562495589256287
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 137,
+      "state": "keep",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 1447,
+            "mean": 0.02270844190852814,
+            "sum": 32.85911544164022,
+            "max": 0.15387649337450662
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1447,
+            "mean": 0.004805911343873901,
+            "sum": 6.954153714585535,
+            "max": 0.09466519951820374
+          },
+          "pixels_outside_any_channel_interval": 556,
+          "pixels_newroad_mass_lt001": 535,
+          "pixels_newroad_mass_lt01": 586,
+          "newroad_mass": {
+            "count": 1447,
+            "mean": 0.4217334102619081,
+            "sum": 610.248244648981,
+            "max": 0.9753606915473938
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 391,
+            "mean": 0.023297788160841177,
+            "sum": 9.1094351708889,
+            "max": 0.1265511562426885
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 391,
+            "mean": 0.004837297162661155,
+            "sum": 1.8913831906005119,
+            "max": 0.05728978912035624
+          },
+          "pixels_outside_any_channel_interval": 164,
+          "pixels_newroad_mass_lt001": 158,
+          "pixels_newroad_mass_lt01": 171,
+          "newroad_mass": {
+            "count": 391,
+            "mean": 0.3952134210827595,
+            "sum": 154.52844764335896,
+            "max": 0.9601844549179077
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 92,
+            "mean": 0.012753751830778261,
+            "sum": 1.1733451684316,
+            "max": 0.11401363213857015
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 92,
+            "mean": 0.006118107213647287,
+            "sum": 0.5628658636555504,
+            "max": 0.09466519951820374
+          },
+          "pixels_outside_any_channel_interval": 50,
+          "pixels_newroad_mass_lt001": 46,
+          "pixels_newroad_mass_lt01": 56,
+          "newroad_mass": {
+            "count": 92,
+            "mean": 0.1882264611274694,
+            "sum": 17.316834423727187,
+            "max": 0.8645644783973694
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 87,
+            "mean": 0.011894142033953321,
+            "sum": 1.034790356953939,
+            "max": 0.07022818922996521
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 87,
+            "mean": 0.0010814748586680013,
+            "sum": 0.0940883127041161,
+            "max": 0.007659653822580974
+          },
+          "pixels_outside_any_channel_interval": 21,
+          "pixels_newroad_mass_lt001": 21,
+          "pixels_newroad_mass_lt01": 23,
+          "newroad_mass": {
+            "count": 87,
+            "mean": 0.5779284847419891,
+            "sum": 50.27977817255305,
+            "max": 0.9584447741508484
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 200,
+            "mean": 0.029526670624812443,
+            "sum": 5.905334124962488,
+            "max": 0.1430561343828837
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 200,
+            "mean": 0.0006020223100980123,
+            "sum": 0.12040446201960245,
+            "max": 0.010786622762680054
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 19,
+          "pixels_newroad_mass_lt01": 22,
+          "newroad_mass": {
+            "count": 200,
+            "mean": 0.6434483672305942,
+            "sum": 128.68967344611883,
+            "max": 0.9252275824546814
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 200,
+            "mean": 0.014762857928872108,
+            "sum": 2.9525715857744217,
+            "max": 0.1322399526834488
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 200,
+            "mean": 0.009189957687534236,
+            "sum": 1.8379915375068474,
+            "max": 0.03445523977279663
+          },
+          "pixels_outside_any_channel_interval": 167,
+          "pixels_newroad_mass_lt001": 160,
+          "pixels_newroad_mass_lt01": 174,
+          "newroad_mass": {
+            "count": 200,
+            "mean": 0.04136098838469479,
+            "sum": 8.272197676938958,
+            "max": 0.5113264322280884
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    },
+    {
+      "raw": 137,
+      "state": "delete",
+      "regions": {
+        "world_patch_clean_road": {
+          "original_MAE": {
+            "count": 1447,
+            "mean": 0.022821808906228716,
+            "sum": 33.02315748731295,
+            "max": 0.15387649337450662
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 1447,
+            "mean": 0.004700415184086854,
+            "sum": 6.801500771373677,
+            "max": 0.09466519951820374
+          },
+          "pixels_outside_any_channel_interval": 525,
+          "pixels_newroad_mass_lt001": 513,
+          "pixels_newroad_mass_lt01": 539,
+          "newroad_mass": {
+            "count": 1447,
+            "mean": 0.4667847148804247,
+            "sum": 675.4374824319746,
+            "max": 0.9865922927856445
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "world_patch_direct_depth_qualified_road": {
+          "original_MAE": {
+            "count": 391,
+            "mean": 0.023340142875884394,
+            "sum": 9.125995864470799,
+            "max": 0.1265511562426885
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 391,
+            "mean": 0.00467775693442752,
+            "sum": 1.82900296136116,
+            "max": 0.05728978912035624
+          },
+          "pixels_outside_any_channel_interval": 152,
+          "pixels_newroad_mass_lt001": 150,
+          "pixels_newroad_mass_lt01": 154,
+          "newroad_mass": {
+            "count": 391,
+            "mean": 0.44370676243148954,
+            "sum": 173.4893441107124,
+            "max": 0.9656444191932678
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_minus": {
+          "original_MAE": {
+            "count": 92,
+            "mean": 0.012957819346068563,
+            "sum": 1.1921193798383078,
+            "max": 0.11401363213857015
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 92,
+            "mean": 0.006322174728937588,
+            "sum": 0.5816400750622581,
+            "max": 0.09466519951820374
+          },
+          "pixels_outside_any_channel_interval": 50,
+          "pixels_newroad_mass_lt001": 46,
+          "pixels_newroad_mass_lt01": 56,
+          "newroad_mass": {
+            "count": 92,
+            "mean": 0.1882264611274694,
+            "sum": 17.316834423727187,
+            "max": 0.8645644783973694
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "near_x_plus": {
+          "original_MAE": {
+            "count": 87,
+            "mean": 0.012300658157502097,
+            "sum": 1.0701572597026825,
+            "max": 0.07022818922996521
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 87,
+            "mean": 0.0010053429054988413,
+            "sum": 0.0874648327783992,
+            "max": 0.007659653822580974
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 19,
+          "pixels_newroad_mass_lt01": 19,
+          "newroad_mass": {
+            "count": 87,
+            "mean": 0.6167138077575585,
+            "sum": 53.65410127490759,
+            "max": 0.9584447741508484
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_minus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "far_x_plus": {
+          "original_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "pixels_outside_any_channel_interval": 0,
+          "pixels_newroad_mass_lt001": 0,
+          "pixels_newroad_mass_lt01": 0,
+          "newroad_mass": {
+            "count": 0,
+            "mean": null,
+            "sum": 0.0,
+            "max": null
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_minus": {
+          "original_MAE": {
+            "count": 200,
+            "mean": 0.029526670624812443,
+            "sum": 5.905334124962488,
+            "max": 0.1430561343828837
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 200,
+            "mean": 0.0006020223100980123,
+            "sum": 0.12040446201960245,
+            "max": 0.010786622762680054
+          },
+          "pixels_outside_any_channel_interval": 19,
+          "pixels_newroad_mass_lt001": 19,
+          "pixels_newroad_mass_lt01": 22,
+          "newroad_mass": {
+            "count": 200,
+            "mean": 0.6434483672305942,
+            "sum": 128.68967344611883,
+            "max": 0.9252275824546814
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        },
+        "lateral_y_plus": {
+          "original_MAE": {
+            "count": 200,
+            "mean": 0.014762857928872108,
+            "sum": 2.9525715857744217,
+            "max": 0.1322399526834488
+          },
+          "pixel_relaxed_min_MAE": {
+            "count": 200,
+            "mean": 0.009189957687534236,
+            "sum": 1.8379915375068474,
+            "max": 0.03445523977279663
+          },
+          "pixels_outside_any_channel_interval": 167,
+          "pixels_newroad_mass_lt001": 160,
+          "pixels_newroad_mass_lt01": 174,
+          "newroad_mass": {
+            "count": 200,
+            "mean": 0.04136098838469479,
+            "sum": 8.272197676938958,
+            "max": 0.5113264322280884
+          },
+          "scope": "Same fixed masks; original visible-road RGB only. Not hidden truth, not a shared-asset reachable solution."
+        }
+      }
+    }
+  ]
+}

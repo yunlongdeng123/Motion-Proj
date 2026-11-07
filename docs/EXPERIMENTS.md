@@ -1,5 +1,9 @@
 # 实验索引
 
+## Scene008道路融合目标与三维写回（2026-11-07）
+
+- `scene008_road_fusion_bake_20261107_r1`：[共享道路atlas、融合目标、10px强观测锚定与持久3D写回](autoresearch/scene008_road_fusion_bake_20261107/index.html)。A/B接缝负例保留；C改善颜色与横向边界，近端仍回退。三组同预算、完整49帧分项评价、30次精确重放及全部计算/恢复账本见报告。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。
+
 ## Scene008道路接缝与车轮遮挡分项验证（2026-11-07）
 
 - `scene008_road_seam_contact_20261107_r1`：[同面道路细分、滤波归一化、边界材质强控制与49帧分项验收](autoresearch/scene008_road_seam_contact_20261107/index.html)。红侧支撑有增量，蓝侧跨帧接缝仍开放；18系数颜色对照未选入主资产。资源、正式/短程、失败与精确重放见报告。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。

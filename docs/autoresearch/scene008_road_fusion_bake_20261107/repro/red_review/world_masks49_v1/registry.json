@@ -1,0 +1,5332 @@
+{
+  "schema": "FROZEN_49_WORLD_PATCH_ORIGINAL_INPUT_MASKS_V1",
+  "status": "FROZEN_BEFORE_OPENING_NEW_TARGET_OR_CANDIDATE_ARRAYS",
+  "raws": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "world_patch_anchor_local_m": {
+    "x": [
+      19.0,
+      32.6
+    ],
+    "y": [
+      0.5,
+      3.5
+    ]
+  },
+  "edges": {
+    "near_x": {
+      "axis": 0,
+      "anchor_local_m": 19.8,
+      "tangent_axis": 1
+    },
+    "far_x": {
+      "axis": 0,
+      "anchor_local_m": 31.8,
+      "tangent_axis": 1
+    },
+    "lateral_y": {
+      "axis": 1,
+      "anchor_local_m": 2.71,
+      "tangent_axis": 0
+    }
+  },
+  "support_rule": {
+    "neighbours": 8,
+    "radius_m": 0.8,
+    "z_median_gate_m": 0.15,
+    "weighted_z_spread_max_m": 0.08,
+    "iterations": 12,
+    "convergence_position_m": 0.02,
+    "direct_scene_depth_agreement_m": 0.3,
+    "tangent_bin_m": 0.2,
+    "min_pixels_per_side": 3,
+    "band_abs_signed_m": [
+      0.08,
+      0.4
+    ]
+  },
+  "inherited_key5_registry": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/registry.json",
+  "inherited_key5_registry_sha256": "f01c071adb2b7a1eab15c2982212c20c51129d824197af9811dd797f53350fd4",
+  "key5_file_bytes_unchanged": true,
+  "primary_raw128_separate": {
+    "fixed_masks_raw128.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/red_review/world_masks49_v1/primary_raw128/fixed_masks_raw128.npz",
+      "sha256": "53c560a34be8709d5b96267068aeabe68e76aa8a915fe2a97e93c67c8f439a06",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fixed_masks_raw128.npz"
+    },
+    "roi_registration.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/red_review/world_masks49_v1/primary_raw128/roi_registration.json",
+      "sha256": "47d651121a3ce0b900a7a695ed6ab6b432314f7152cc3db2db027b5262ff516e",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/roi_registration.json"
+    }
+  },
+  "frames": [
+    {
+      "raw": 89,
+      "mask_file": "089.npz",
+      "mask_sha256": "226afbba278a2cf7ecf2322d0dc503269ed612a55990c8e24adbc1f906336b34",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 20219,
+        "raw_patch_ground_points": 582,
+        "initial_height_m": 0.0810394287109375
+      },
+      "counts": {
+        "world_patch_clean_road": 456,
+        "world_patch_direct_depth_qualified_road": 132,
+        "near_x_minus": 34,
+        "near_x_plus": 37,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 76,
+        "lateral_y_plus": 78
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 34,
+          "band_plus_count": 37,
+          "paired_bins": 5,
+          "matched_minus_count": 33,
+          "matched_plus_count": 26,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 9,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 76,
+          "band_plus_count": 78,
+          "paired_bins": 8,
+          "matched_minus_count": 42,
+          "matched_plus_count": 55,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 7,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 4
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/089.npz",
+      "obs_sha256": "171547af4860142a5091667e2d1de34a7bcc4c8c9a7008a7f0fb1da0fe7653a9",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/089.npz",
+      "raw_ground_frame_sha256": "49c9586087d96c97202e01ef424227b372889b548d24894f59d2f928371c5f61"
+    },
+    {
+      "raw": 90,
+      "mask_file": "090.npz",
+      "mask_sha256": "bdfd91dc6fdc6c0497ddf39cf2553be16d38e9c73892593de4bf54d6dea51c08",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 20079,
+        "raw_patch_ground_points": 586,
+        "initial_height_m": 0.08020076900720596
+      },
+      "counts": {
+        "world_patch_clean_road": 410,
+        "world_patch_direct_depth_qualified_road": 111,
+        "near_x_minus": 42,
+        "near_x_plus": 39,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 66,
+        "lateral_y_plus": 66
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 42,
+          "band_plus_count": 39,
+          "paired_bins": 6,
+          "matched_minus_count": 40,
+          "matched_plus_count": 32,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 10,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 6,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 66,
+          "band_plus_count": 66,
+          "paired_bins": 6,
+          "matched_minus_count": 34,
+          "matched_plus_count": 39,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/090.npz",
+      "obs_sha256": "47e7cb7d11a7af80e8b1f23bce6456facd60deabbfaf65f0c8271afdc169a4e4",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/090.npz",
+      "raw_ground_frame_sha256": "e084b017f4b2b8b01d7b2f502cfe77fe22cb4fd16a2f46097d18ded93f43c013"
+    },
+    {
+      "raw": 91,
+      "mask_file": "091.npz",
+      "mask_sha256": "2c6f4cc226c2c206c8d6409e5f3b50fdf6328d8a3e237b7c729830c4f713e93e",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 20011,
+        "raw_patch_ground_points": 567,
+        "initial_height_m": 0.08341093361377716
+      },
+      "counts": {
+        "world_patch_clean_road": 387,
+        "world_patch_direct_depth_qualified_road": 113,
+        "near_x_minus": 36,
+        "near_x_plus": 38,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 65,
+        "lateral_y_plus": 66
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 36,
+          "band_plus_count": 38,
+          "paired_bins": 5,
+          "matched_minus_count": 33,
+          "matched_plus_count": 26,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 10,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 3,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 65,
+          "band_plus_count": 66,
+          "paired_bins": 7,
+          "matched_minus_count": 39,
+          "matched_plus_count": 45,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/091.npz",
+      "obs_sha256": "bbaebb7b8410530545e11fa9f2e453fe156d5a7f92c40c4ad9d51c1e546ac3bc",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/091.npz",
+      "raw_ground_frame_sha256": "c2a955a69c645ed164a072ba45673274250b28568b8b9be9fddc7f8cf5a99b21"
+    },
+    {
+      "raw": 92,
+      "mask_file": "092.npz",
+      "mask_sha256": "65ed64972cdb11fb95ace8a93716e01102332454c77b32be79cfef9fab2bd678",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 19873,
+        "raw_patch_ground_points": 506,
+        "initial_height_m": 0.08640842139720917
+      },
+      "counts": {
+        "world_patch_clean_road": 291,
+        "world_patch_direct_depth_qualified_road": 80,
+        "near_x_minus": 34,
+        "near_x_plus": 35,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 48,
+        "lateral_y_plus": 45
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 34,
+          "band_plus_count": 35,
+          "paired_bins": 5,
+          "matched_minus_count": 32,
+          "matched_plus_count": 25,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 4,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 48,
+          "band_plus_count": 45,
+          "paired_bins": 4,
+          "matched_minus_count": 22,
+          "matched_plus_count": 28,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 3,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 6,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 4,
+              "plus_count": 8
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/092.npz",
+      "obs_sha256": "c8d64b15e558b4db3beb284b7f2fa14b7f6f05efe1c65c853207adc62596dfa4",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/092.npz",
+      "raw_ground_frame_sha256": "f496390ab1485d8979a5a51beecfb9eda3be3f5d1a5aec1a29f8465da79bb9f6"
+    },
+    {
+      "raw": 93,
+      "mask_file": "093.npz",
+      "mask_sha256": "73f78beda1ef0603dffdbb5cb5f2681593df68205e0012582e489c1f027e8fe4",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 19760,
+        "raw_patch_ground_points": 494,
+        "initial_height_m": 0.09285233914852142
+      },
+      "counts": {
+        "world_patch_clean_road": 214,
+        "world_patch_direct_depth_qualified_road": 55,
+        "near_x_minus": 41,
+        "near_x_plus": 27,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 39,
+        "lateral_y_plus": 29
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 41,
+          "band_plus_count": 27,
+          "paired_bins": 4,
+          "matched_minus_count": 25,
+          "matched_plus_count": 22,
+          "bins": [
+            {
+              "tangent_bin": 13,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 39,
+          "band_plus_count": 29,
+          "paired_bins": 2,
+          "matched_minus_count": 15,
+          "matched_plus_count": 17,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 6,
+              "plus_count": 9
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/093.npz",
+      "obs_sha256": "7e2987cdba530c37396468ce082fe56ee234700b9ce28f5309c183962068fe3a",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/093.npz",
+      "raw_ground_frame_sha256": "56b336c40d3e7bebe93ae0b64863acdc926128abbca79b019f4091e4f3f297ce"
+    },
+    {
+      "raw": 94,
+      "mask_file": "094.npz",
+      "mask_sha256": "9b31833327dbc3417669a76a61a05e3c93ea4c0d39c145190abe8a875a6f4b89",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 19613,
+        "raw_patch_ground_points": 466,
+        "initial_height_m": 0.09078949317336082
+      },
+      "counts": {
+        "world_patch_clean_road": 151,
+        "world_patch_direct_depth_qualified_road": 41,
+        "near_x_minus": 2,
+        "near_x_plus": 3,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 31,
+        "lateral_y_plus": 9
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 2,
+          "band_plus_count": 3,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 31,
+          "band_plus_count": 9,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz",
+      "obs_sha256": "45599dac31823f286103cdab9fe77c7d598636f82c1b42da03f445546e224a9a",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/094.npz",
+      "raw_ground_frame_sha256": "161e3fd1d65ba62b79dba280f240bda430d9fb6f5f6113ad82b2adaaa2d8e861"
+    },
+    {
+      "raw": 95,
+      "mask_file": "095.npz",
+      "mask_sha256": "ae28b7cca7a71e04438ba93f120ce3222f474b804a6c15813d81c88a91916af6",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 19383,
+        "raw_patch_ground_points": 442,
+        "initial_height_m": 0.09357073530554771
+      },
+      "counts": {
+        "world_patch_clean_road": 190,
+        "world_patch_direct_depth_qualified_road": 63,
+        "near_x_minus": 5,
+        "near_x_plus": 6,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 31,
+        "lateral_y_plus": 9
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 5,
+          "band_plus_count": 6,
+          "paired_bins": 1,
+          "matched_minus_count": 5,
+          "matched_plus_count": 6,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 31,
+          "band_plus_count": 9,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/095.npz",
+      "obs_sha256": "4f0ea9a4115803dc5c3dd0ce03c82d5150feddecb4e49590af08f0ecd44a286c",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/095.npz",
+      "raw_ground_frame_sha256": "b90880f92454589e1f30d256fa61d791421a35431372bfc1aed7e66d984f894b"
+    },
+    {
+      "raw": 96,
+      "mask_file": "096.npz",
+      "mask_sha256": "7287dd2468110d1bea1ec33109b596d85495a5da5db3cf53da159c93fb91e545",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 19269,
+        "raw_patch_ground_points": 417,
+        "initial_height_m": 0.09596242010593414
+      },
+      "counts": {
+        "world_patch_clean_road": 238,
+        "world_patch_direct_depth_qualified_road": 67,
+        "near_x_minus": 12,
+        "near_x_plus": 8,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 56,
+        "lateral_y_plus": 10
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 12,
+          "band_plus_count": 8,
+          "paired_bins": 1,
+          "matched_minus_count": 10,
+          "matched_plus_count": 6,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 10,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 56,
+          "band_plus_count": 10,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/096.npz",
+      "obs_sha256": "679fc2d03207faec6cd23b3d7c3a29b69b67511b22027ed3f7ca3acdc3b92a33",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/096.npz",
+      "raw_ground_frame_sha256": "201b4cd8e350090839d13b8cbd1357c534626a42a24a03fb904677911182ab1d"
+    },
+    {
+      "raw": 97,
+      "mask_file": "097.npz",
+      "mask_sha256": "0cbe6c27d8cd485044fdd697345789605f56ee78bcc0251d2982314685dc2d42",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 18871,
+        "raw_patch_ground_points": 424,
+        "initial_height_m": 0.09666048735380173
+      },
+      "counts": {
+        "world_patch_clean_road": 312,
+        "world_patch_direct_depth_qualified_road": 95,
+        "near_x_minus": 9,
+        "near_x_plus": 11,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 70,
+        "lateral_y_plus": 20
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 9,
+          "band_plus_count": 11,
+          "paired_bins": 2,
+          "matched_minus_count": 9,
+          "matched_plus_count": 11,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 70,
+          "band_plus_count": 20,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/097.npz",
+      "obs_sha256": "ab7899928dac50edd09057706a364c605978aebd7961e6405d108a436210d417",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/097.npz",
+      "raw_ground_frame_sha256": "9d0b745567c33d3ff509554517693ca4997234bf932997df02bdc61abb33f6d4"
+    },
+    {
+      "raw": 98,
+      "mask_file": "098.npz",
+      "mask_sha256": "ba8170059733a3a19ee53a394552392b501d44502fb701a75533f04b08eddcc6",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 18603,
+        "raw_patch_ground_points": 441,
+        "initial_height_m": 0.09552690386772156
+      },
+      "counts": {
+        "world_patch_clean_road": 358,
+        "world_patch_direct_depth_qualified_road": 112,
+        "near_x_minus": 8,
+        "near_x_plus": 14,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 85,
+        "lateral_y_plus": 35
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 8,
+          "band_plus_count": 14,
+          "paired_bins": 1,
+          "matched_minus_count": 3,
+          "matched_plus_count": 6,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 3,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 85,
+          "band_plus_count": 35,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/098.npz",
+      "obs_sha256": "4be77ace12f2beb219587ff0f3f51f977a41221fe9c24193da35534db8f32dfe",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/098.npz",
+      "raw_ground_frame_sha256": "b987634a99639b1983d3d74fbcf8a9e28d38d19ccb626b431f29b89fa56db3ba"
+    },
+    {
+      "raw": 99,
+      "mask_file": "099.npz",
+      "mask_sha256": "9d4c584d6f7317da80373d26a9ee28d3710eb5c747d66d589bc8475de129b4f0",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 18203,
+        "raw_patch_ground_points": 476,
+        "initial_height_m": 0.09344687685370445
+      },
+      "counts": {
+        "world_patch_clean_road": 398,
+        "world_patch_direct_depth_qualified_road": 134,
+        "near_x_minus": 7,
+        "near_x_plus": 14,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 102,
+        "lateral_y_plus": 42
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 7,
+          "band_plus_count": 14,
+          "paired_bins": 1,
+          "matched_minus_count": 6,
+          "matched_plus_count": 6,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 102,
+          "band_plus_count": 42,
+          "paired_bins": 1,
+          "matched_minus_count": 4,
+          "matched_plus_count": 4,
+          "bins": [
+            {
+              "tangent_bin": 120,
+              "minus_count": 4,
+              "plus_count": 4
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz",
+      "obs_sha256": "85cd77dcaa368d2136797dab9d0c01359fe14a0777b2a2f12f8cadfec6d00f6e",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/099.npz",
+      "raw_ground_frame_sha256": "b1c2b8835ff19cdc072634f4e7e8dae7a5c622a3efd5661efdef749a5a2ed16d"
+    },
+    {
+      "raw": 100,
+      "mask_file": "100.npz",
+      "mask_sha256": "079c5f520d9962fe802be9e0e27750fb42d519f33735fecbf895878a65ee1535",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 17809,
+        "raw_patch_ground_points": 523,
+        "initial_height_m": 0.09097923338413239
+      },
+      "counts": {
+        "world_patch_clean_road": 474,
+        "world_patch_direct_depth_qualified_road": 151,
+        "near_x_minus": 14,
+        "near_x_plus": 16,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 124,
+        "lateral_y_plus": 73
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 14,
+          "band_plus_count": 16,
+          "paired_bins": 3,
+          "matched_minus_count": 13,
+          "matched_plus_count": 14,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 4,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 124,
+          "band_plus_count": 73,
+          "paired_bins": 1,
+          "matched_minus_count": 8,
+          "matched_plus_count": 3,
+          "bins": [
+            {
+              "tangent_bin": 117,
+              "minus_count": 8,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/100.npz",
+      "obs_sha256": "d869e4a309dbb8f016eae1f99ac6335fec552388c92bcd1d5e80d3475dbdebb1",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/100.npz",
+      "raw_ground_frame_sha256": "b12d7e4b144917fe21f66b25f4841301a36941f2b44435d459b0b819c692215d"
+    },
+    {
+      "raw": 101,
+      "mask_file": "101.npz",
+      "mask_sha256": "54ea3d00760e4582cc8dcb2773bd0ca942e8bdc0e0d6ab062d941ed74f6d683b",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 17596,
+        "raw_patch_ground_points": 519,
+        "initial_height_m": 0.0885808914899826
+      },
+      "counts": {
+        "world_patch_clean_road": 538,
+        "world_patch_direct_depth_qualified_road": 166,
+        "near_x_minus": 15,
+        "near_x_plus": 17,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 131,
+        "lateral_y_plus": 101
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 15,
+          "band_plus_count": 17,
+          "paired_bins": 3,
+          "matched_minus_count": 15,
+          "matched_plus_count": 14,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 131,
+          "band_plus_count": 101,
+          "paired_bins": 6,
+          "matched_minus_count": 33,
+          "matched_plus_count": 30,
+          "bins": [
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 122,
+              "minus_count": 7,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/101.npz",
+      "obs_sha256": "dc11b4c6fc673220499232af078faa11555e0414c80937961b8794f9b9613e5d",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/101.npz",
+      "raw_ground_frame_sha256": "f0c798d6dad62464b5c4ea0696d4e53a5f0fd84f4d283c0d1b82703c8e8d31b2"
+    },
+    {
+      "raw": 102,
+      "mask_file": "102.npz",
+      "mask_sha256": "8405a8d555507e25bf177bcf8132d327d68860d6e6d9fa939b291afd154536f6",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 17364,
+        "raw_patch_ground_points": 575,
+        "initial_height_m": 0.08638736605644226
+      },
+      "counts": {
+        "world_patch_clean_road": 589,
+        "world_patch_direct_depth_qualified_road": 199,
+        "near_x_minus": 15,
+        "near_x_plus": 26,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 135,
+        "lateral_y_plus": 116
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 15,
+          "band_plus_count": 26,
+          "paired_bins": 2,
+          "matched_minus_count": 11,
+          "matched_plus_count": 12,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 135,
+          "band_plus_count": 116,
+          "paired_bins": 6,
+          "matched_minus_count": 31,
+          "matched_plus_count": 31,
+          "bins": [
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 3,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 3,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 8,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/102.npz",
+      "obs_sha256": "0cb10c192ac174ef11849bcb0be16ac0c2338f971e14050f74a1f84513e7ef81",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/102.npz",
+      "raw_ground_frame_sha256": "8bfabb7f0bdbc01eddfaf7a895512d5843afc3cefe311cec9a13bfc2570d6e82"
+    },
+    {
+      "raw": 103,
+      "mask_file": "103.npz",
+      "mask_sha256": "b2918da19d8b055459a4c9a6239afa86ce4bb503d42d1565f9fe51055b68f768",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 16725,
+        "raw_patch_ground_points": 625,
+        "initial_height_m": 0.0809035450220108
+      },
+      "counts": {
+        "world_patch_clean_road": 637,
+        "world_patch_direct_depth_qualified_road": 212,
+        "near_x_minus": 32,
+        "near_x_plus": 35,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 135,
+        "lateral_y_plus": 135
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 32,
+          "band_plus_count": 35,
+          "paired_bins": 4,
+          "matched_minus_count": 27,
+          "matched_plus_count": 22,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 10,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 135,
+          "band_plus_count": 135,
+          "paired_bins": 9,
+          "matched_minus_count": 51,
+          "matched_plus_count": 51,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 7,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 120,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 133,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/103.npz",
+      "obs_sha256": "0120011dfe78c7b7b5314b47259886c23d9122b2174ad2c0994b687c97747d9e",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/103.npz",
+      "raw_ground_frame_sha256": "9a654ea507a46b72f4f8c1096e7cd19e7385eab82a855c6a7fc732e2774797aa"
+    },
+    {
+      "raw": 104,
+      "mask_file": "104.npz",
+      "mask_sha256": "fdd11fffb2d6305ac4339ba049583ef91695fc2cee59720c6160c1f2515a755c",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 15739,
+        "raw_patch_ground_points": 633,
+        "initial_height_m": 0.08032073825597763
+      },
+      "counts": {
+        "world_patch_clean_road": 687,
+        "world_patch_direct_depth_qualified_road": 219,
+        "near_x_minus": 33,
+        "near_x_plus": 41,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 133,
+        "lateral_y_plus": 140
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 33,
+          "band_plus_count": 41,
+          "paired_bins": 5,
+          "matched_minus_count": 31,
+          "matched_plus_count": 27,
+          "bins": [
+            {
+              "tangent_bin": 10,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 11,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 5,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 133,
+          "band_plus_count": 140,
+          "paired_bins": 6,
+          "matched_minus_count": 33,
+          "matched_plus_count": 37,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 3,
+              "plus_count": 4
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/104.npz",
+      "obs_sha256": "179be9930ea91d7791118c6ec081986845031c775557313a5fd694f68254732a",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/104.npz",
+      "raw_ground_frame_sha256": "c28c7114074db7b68819f31012cff3c4b41e7dd3c9cdac0c2e84dfe72900cfd3"
+    },
+    {
+      "raw": 105,
+      "mask_file": "105.npz",
+      "mask_sha256": "eb961a1180346af09798ac478ad91d01d3bd4ee42a1ea9f9f0fdacb72fb927a8",
+      "metadata": {
+        "status": "EXACT_OLD_KEY5_FILE_REUSE",
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/105.npz",
+        "source_sha256": "eb961a1180346af09798ac478ad91d01d3bd4ee42a1ea9f9f0fdacb72fb927a8"
+      },
+      "counts": {
+        "world_patch_clean_road": 690,
+        "world_patch_direct_depth_qualified_road": 222,
+        "near_x_minus": 39,
+        "near_x_plus": 40,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 137,
+        "lateral_y_plus": 135
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 39,
+          "band_plus_count": 40,
+          "paired_bins": 6,
+          "matched_minus_count": 38,
+          "matched_plus_count": 33,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 8,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 137,
+          "band_plus_count": 135,
+          "paired_bins": 8,
+          "matched_minus_count": 51,
+          "matched_plus_count": 45,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 7,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 5,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 122,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 133,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/105/observations.npz",
+      "obs_sha256": "a34453005c56e5f69033037e3bc1ac845418e5993cca610c8641cb10e8dba259",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/105.npz",
+      "raw_ground_frame_sha256": "577522c90b0f40eb11828599ff725e9738ae21b15dca0d01426fc0d114ed9f6a"
+    },
+    {
+      "raw": 106,
+      "mask_file": "106.npz",
+      "mask_sha256": "d91a755aed2db717e138afa9663605d4ff4ef47959a01c51de87ae3952e59caf",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 13352,
+        "raw_patch_ground_points": 710,
+        "initial_height_m": 0.07809653133153915
+      },
+      "counts": {
+        "world_patch_clean_road": 663,
+        "world_patch_direct_depth_qualified_road": 209,
+        "near_x_minus": 31,
+        "near_x_plus": 40,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 129,
+        "lateral_y_plus": 134
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 31,
+          "band_plus_count": 40,
+          "paired_bins": 5,
+          "matched_minus_count": 30,
+          "matched_plus_count": 28,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 129,
+          "band_plus_count": 134,
+          "paired_bins": 7,
+          "matched_minus_count": 41,
+          "matched_plus_count": 44,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 8,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz",
+      "obs_sha256": "4606b4a99ae7de06ec64a9192165e70d3bda83e6142dd3d5f92e77e9649aab03",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/106.npz",
+      "raw_ground_frame_sha256": "5149e1a023a0363e54ce520aa5bedd035c0754bdd84aaff3fe12e5e2863d1594"
+    },
+    {
+      "raw": 107,
+      "mask_file": "107.npz",
+      "mask_sha256": "41f6b5ab2647e258c2b08535dbf5fe4f7a5581cd34cc701ac005b4236d576d02",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 13754,
+        "raw_patch_ground_points": 717,
+        "initial_height_m": 0.07722821831703186
+      },
+      "counts": {
+        "world_patch_clean_road": 668,
+        "world_patch_direct_depth_qualified_road": 210,
+        "near_x_minus": 38,
+        "near_x_plus": 37,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 126,
+        "lateral_y_plus": 130
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 38,
+          "band_plus_count": 37,
+          "paired_bins": 6,
+          "matched_minus_count": 38,
+          "matched_plus_count": 31,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 10,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 126,
+          "band_plus_count": 130,
+          "paired_bins": 8,
+          "matched_minus_count": 48,
+          "matched_plus_count": 52,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 7,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 3,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 120,
+              "minus_count": 3,
+              "plus_count": 7
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/107.npz",
+      "obs_sha256": "e7db2e486c2e939c18bccb1a4a0a58d6524c833403c6ced0848933a8346d2974",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/107.npz",
+      "raw_ground_frame_sha256": "ed9364842c206bf397b6f436b5c483e2ffc0d1c59549505aa649734e57c96b28"
+    },
+    {
+      "raw": 108,
+      "mask_file": "108.npz",
+      "mask_sha256": "39d3255948c4e90b09bd660b3e86edca584a39e313f964ec9e56f19d537d0834",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 14748,
+        "raw_patch_ground_points": 685,
+        "initial_height_m": 0.07651542127132416
+      },
+      "counts": {
+        "world_patch_clean_road": 660,
+        "world_patch_direct_depth_qualified_road": 205,
+        "near_x_minus": 43,
+        "near_x_plus": 39,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 127,
+        "lateral_y_plus": 127
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 43,
+          "band_plus_count": 39,
+          "paired_bins": 6,
+          "matched_minus_count": 40,
+          "matched_plus_count": 33,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 11,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 127,
+          "band_plus_count": 127,
+          "paired_bins": 8,
+          "matched_minus_count": 50,
+          "matched_plus_count": 44,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 5,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 3,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 122,
+              "minus_count": 7,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/108.npz",
+      "obs_sha256": "39aeafe0110d9540ff257d47a85b53fc57e0ae61806e128f50c5fa9bacbce30f",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/108.npz",
+      "raw_ground_frame_sha256": "5c4a3885509335e768f78c54980da550dd5cd1d8654364764548e4236177f814"
+    },
+    {
+      "raw": 109,
+      "mask_file": "109.npz",
+      "mask_sha256": "b8fbffdada81eb73c8d40788df77f2c6bb5bb3e48afba2469b520887dd96eb97",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 15917,
+        "raw_patch_ground_points": 659,
+        "initial_height_m": 0.07598531246185303
+      },
+      "counts": {
+        "world_patch_clean_road": 624,
+        "world_patch_direct_depth_qualified_road": 173,
+        "near_x_minus": 31,
+        "near_x_plus": 42,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 123,
+        "lateral_y_plus": 125
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 31,
+          "band_plus_count": 42,
+          "paired_bins": 6,
+          "matched_minus_count": 31,
+          "matched_plus_count": 33,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 5,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 123,
+          "band_plus_count": 125,
+          "paired_bins": 7,
+          "matched_minus_count": 50,
+          "matched_plus_count": 38,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 5,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 8,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 122,
+              "minus_count": 7,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/109.npz",
+      "obs_sha256": "bb2bbd2516d9855870a8cf6d21c36bceb69d1bb4409ab525fc18672ecfdaf06e",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/109.npz",
+      "raw_ground_frame_sha256": "a2e148022d0ca83bba0958d26aeb71a584b62448094c72bbb2199f07a01e7600"
+    },
+    {
+      "raw": 110,
+      "mask_file": "110.npz",
+      "mask_sha256": "524962268a427badf2024542322f4674f26f53f2e1ecc27048faed956f9f455b",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 17089,
+        "raw_patch_ground_points": 658,
+        "initial_height_m": 0.07684801891446114
+      },
+      "counts": {
+        "world_patch_clean_road": 603,
+        "world_patch_direct_depth_qualified_road": 164,
+        "near_x_minus": 30,
+        "near_x_plus": 40,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 119,
+        "lateral_y_plus": 113
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 30,
+          "band_plus_count": 40,
+          "paired_bins": 5,
+          "matched_minus_count": 28,
+          "matched_plus_count": 28,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 8,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 119,
+          "band_plus_count": 113,
+          "paired_bins": 8,
+          "matched_minus_count": 47,
+          "matched_plus_count": 50,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 4,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 3,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/110.npz",
+      "obs_sha256": "0831563e3006f89737f1de570cd50d3ec4933915410568156e790bdc645adb10",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/110.npz",
+      "raw_ground_frame_sha256": "245369198fbd1c52083145b346b5cb4ca4da4de72b77b130c91f96f34e4374d4"
+    },
+    {
+      "raw": 111,
+      "mask_file": "111.npz",
+      "mask_sha256": "187fb80689de54f7b0a07e80026c0501a7a7165f666a83c940203e242fd65827",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 18560,
+        "raw_patch_ground_points": 651,
+        "initial_height_m": 0.07883036881685257
+      },
+      "counts": {
+        "world_patch_clean_road": 559,
+        "world_patch_direct_depth_qualified_road": 155,
+        "near_x_minus": 28,
+        "near_x_plus": 34,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 117,
+        "lateral_y_plus": 111
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 28,
+          "band_plus_count": 34,
+          "paired_bins": 4,
+          "matched_minus_count": 26,
+          "matched_plus_count": 21,
+          "bins": [
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 8,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 117,
+          "band_plus_count": 111,
+          "paired_bins": 7,
+          "matched_minus_count": 48,
+          "matched_plus_count": 43,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 113,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 127,
+              "minus_count": 6,
+              "plus_count": 4
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/111.npz",
+      "obs_sha256": "07fcc0a12aaaf351cb280dc5cbf8d51a8649c8efbc6cfab5906ef2d91a8a082a",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/111.npz",
+      "raw_ground_frame_sha256": "2f296bf34c0afe2618496febcfe9de19d59d7a8fa901f61aee5ba719a2d7bcb8"
+    },
+    {
+      "raw": 112,
+      "mask_file": "112.npz",
+      "mask_sha256": "4916d56c2d1271836060cf672fcdf88169a1ad24f5a67dfb7d0b89e104786268",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 20430,
+        "raw_patch_ground_points": 671,
+        "initial_height_m": 0.07631640881299973
+      },
+      "counts": {
+        "world_patch_clean_road": 608,
+        "world_patch_direct_depth_qualified_road": 177,
+        "near_x_minus": 34,
+        "near_x_plus": 41,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 117,
+        "lateral_y_plus": 112
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 34,
+          "band_plus_count": 41,
+          "paired_bins": 7,
+          "matched_minus_count": 34,
+          "matched_plus_count": 36,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 3,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 6,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 117,
+          "band_plus_count": 112,
+          "paired_bins": 7,
+          "matched_minus_count": 42,
+          "matched_plus_count": 48,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 5,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 120,
+              "minus_count": 3,
+              "plus_count": 7
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/112.npz",
+      "obs_sha256": "0d6187ac6ff4160ee6d3104dbc638b299d304c99dbe243eea1cdb237b214dba1",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/112.npz",
+      "raw_ground_frame_sha256": "5ebd8895aee64576b322c370048b8f9a2b202a0ec250e9a19350d56c07b35408"
+    },
+    {
+      "raw": 113,
+      "mask_file": "113.npz",
+      "mask_sha256": "315f61b0b95e152849b02a87933067094b6e490adfc85a9d5498eb9c04bd8398",
+      "metadata": {
+        "status": "EXACT_OLD_KEY5_FILE_REUSE",
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/113.npz",
+        "source_sha256": "315f61b0b95e152849b02a87933067094b6e490adfc85a9d5498eb9c04bd8398"
+      },
+      "counts": {
+        "world_patch_clean_road": 641,
+        "world_patch_direct_depth_qualified_road": 162,
+        "near_x_minus": 43,
+        "near_x_plus": 42,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 107,
+        "lateral_y_plus": 108
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 43,
+          "band_plus_count": 42,
+          "paired_bins": 7,
+          "matched_minus_count": 34,
+          "matched_plus_count": 34,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 5,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 107,
+          "band_plus_count": 108,
+          "paired_bins": 6,
+          "matched_minus_count": 41,
+          "matched_plus_count": 34,
+          "bins": [
+            {
+              "tangent_bin": 97,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 7,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 118,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 121,
+              "minus_count": 3,
+              "plus_count": 7
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/113/observations.npz",
+      "obs_sha256": "ff86e5a94ecf62d6201619c743ed11aae46c957e7508f1a1bc0f23f68478a420",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/113.npz",
+      "raw_ground_frame_sha256": "f005fb36840fe6e96e4e2e459b2fe112c439c0301a955bb6d645ccb13a072bc3"
+    },
+    {
+      "raw": 114,
+      "mask_file": "114.npz",
+      "mask_sha256": "859d0c7ec0f2affcdce184fa0ab5e1e3e5fbd9d3be386d3a6c24afd4ddf263fd",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 21553,
+        "raw_patch_ground_points": 625,
+        "initial_height_m": 0.07986370474100113
+      },
+      "counts": {
+        "world_patch_clean_road": 592,
+        "world_patch_direct_depth_qualified_road": 173,
+        "near_x_minus": 30,
+        "near_x_plus": 45,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 99,
+        "lateral_y_plus": 99
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 30,
+          "band_plus_count": 45,
+          "paired_bins": 4,
+          "matched_minus_count": 19,
+          "matched_plus_count": 20,
+          "bins": [
+            {
+              "tangent_bin": 12,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 4,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 99,
+          "band_plus_count": 99,
+          "paired_bins": 6,
+          "matched_minus_count": 40,
+          "matched_plus_count": 40,
+          "bins": [
+            {
+              "tangent_bin": 97,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 110,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 118,
+              "minus_count": 7,
+              "plus_count": 6
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/114.npz",
+      "obs_sha256": "6379899203ff7adb5c435c538039ce8aecdc3bde7e36bb63b5b35266891532ba",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/114.npz",
+      "raw_ground_frame_sha256": "23e97d982182a14e4855c9aeee2ca732e1a849ddabe6e79ba8284efbe1007d32"
+    },
+    {
+      "raw": 115,
+      "mask_file": "115.npz",
+      "mask_sha256": "003bf337448f5ff25693a6c46da148a2bc61b0fafc75c72176f08272e1413cd5",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 21645,
+        "raw_patch_ground_points": 580,
+        "initial_height_m": 0.0817195288836956
+      },
+      "counts": {
+        "world_patch_clean_road": 567,
+        "world_patch_direct_depth_qualified_road": 143,
+        "near_x_minus": 37,
+        "near_x_plus": 43,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 95,
+        "lateral_y_plus": 92
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 37,
+          "band_plus_count": 43,
+          "paired_bins": 7,
+          "matched_minus_count": 32,
+          "matched_plus_count": 34,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 4
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 95,
+          "band_plus_count": 92,
+          "paired_bins": 7,
+          "matched_minus_count": 43,
+          "matched_plus_count": 50,
+          "bins": [
+            {
+              "tangent_bin": 96,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 4,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 6,
+              "plus_count": 8
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/115.npz",
+      "obs_sha256": "d27b78266606c08cef3e8fe902397865a83bc7be511c2128ef1911f4ebe9e2d0",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/115.npz",
+      "raw_ground_frame_sha256": "8ea0fddcad82760656c45a03d28cced679057126d31d67ece244f6dd468cf6f0"
+    },
+    {
+      "raw": 116,
+      "mask_file": "116.npz",
+      "mask_sha256": "fa7816caaab859108acbb230a5276677b223d30b1db4f30240ec4bd2adf82402",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 21703,
+        "raw_patch_ground_points": 583,
+        "initial_height_m": 0.08395759761333466
+      },
+      "counts": {
+        "world_patch_clean_road": 492,
+        "world_patch_direct_depth_qualified_road": 138,
+        "near_x_minus": 38,
+        "near_x_plus": 41,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 81,
+        "lateral_y_plus": 87
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 38,
+          "band_plus_count": 41,
+          "paired_bins": 5,
+          "matched_minus_count": 22,
+          "matched_plus_count": 27,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 4,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 81,
+          "band_plus_count": 87,
+          "paired_bins": 5,
+          "matched_minus_count": 36,
+          "matched_plus_count": 36,
+          "bins": [
+            {
+              "tangent_bin": 97,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 5,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 7,
+              "plus_count": 8
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/116.npz",
+      "obs_sha256": "e26197f7c83b98ff56d2fdb5b0f2beb99bb43827618ac987d6dc8e849bb5c82c",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/116.npz",
+      "raw_ground_frame_sha256": "d579a190132cc7874321b92280cf23a8621b0a24a5dcdf3e3941631bb8f3f336"
+    },
+    {
+      "raw": 117,
+      "mask_file": "117.npz",
+      "mask_sha256": "14b9b84d519d97e3951fc2432c2b229782f4d8d01563c50f25acf4782e6a96fb",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 21805,
+        "raw_patch_ground_points": 561,
+        "initial_height_m": 0.08352231979370117
+      },
+      "counts": {
+        "world_patch_clean_road": 460,
+        "world_patch_direct_depth_qualified_road": 126,
+        "near_x_minus": 48,
+        "near_x_plus": 43,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 77,
+        "lateral_y_plus": 69
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 48,
+          "band_plus_count": 43,
+          "paired_bins": 6,
+          "matched_minus_count": 32,
+          "matched_plus_count": 32,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 3,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 77,
+          "band_plus_count": 69,
+          "paired_bins": 5,
+          "matched_minus_count": 36,
+          "matched_plus_count": 29,
+          "bins": [
+            {
+              "tangent_bin": 97,
+              "minus_count": 7,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 8,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 8,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 5,
+              "plus_count": 7
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/117.npz",
+      "obs_sha256": "b0edd9b3d10ac65ebed96064c43b7b47ec72e4edb9bc4010afd1dfea4ce0473a",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/117.npz",
+      "raw_ground_frame_sha256": "911b060b51330fac166ccd0034166304d61d08edcb9916171519569f5a950148"
+    },
+    {
+      "raw": 118,
+      "mask_file": "118.npz",
+      "mask_sha256": "0de1b0dbf9df2c25fa5bf7e7ac438172d16756e126a7e8a7ca32a64a70a21237",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 21997,
+        "raw_patch_ground_points": 536,
+        "initial_height_m": 0.08225191757082939
+      },
+      "counts": {
+        "world_patch_clean_road": 454,
+        "world_patch_direct_depth_qualified_road": 116,
+        "near_x_minus": 58,
+        "near_x_plus": 44,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 69,
+        "lateral_y_plus": 68
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 58,
+          "band_plus_count": 44,
+          "paired_bins": 9,
+          "matched_minus_count": 46,
+          "matched_plus_count": 41,
+          "bins": [
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 17,
+              "minus_count": 4,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 69,
+          "band_plus_count": 68,
+          "paired_bins": 7,
+          "matched_minus_count": 34,
+          "matched_plus_count": 38,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 3,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 8,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 100,
+              "minus_count": 3,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 105,
+              "minus_count": 5,
+              "plus_count": 8
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/118.npz",
+      "obs_sha256": "6bd6f5e52913c9e3c36818248d97c3bedd7e97b6f04a1701b1f4d07659eccf60",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/118.npz",
+      "raw_ground_frame_sha256": "7e37ae8450806f10422219bf375822e7119fff79dd7763d0c77f775aa5dd4f39"
+    },
+    {
+      "raw": 119,
+      "mask_file": "119.npz",
+      "mask_sha256": "066fd0a84fededf12c3f1d7dd0d9d8cac84c94c395e4b0dc9ba856e2561f2c5d",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22019,
+        "raw_patch_ground_points": 487,
+        "initial_height_m": 0.08975512534379959
+      },
+      "counts": {
+        "world_patch_clean_road": 387,
+        "world_patch_direct_depth_qualified_road": 105,
+        "near_x_minus": 51,
+        "near_x_plus": 38,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 49,
+        "lateral_y_plus": 49
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 51,
+          "band_plus_count": 38,
+          "paired_bins": 7,
+          "matched_minus_count": 38,
+          "matched_plus_count": 32,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 5,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 49,
+          "band_plus_count": 49,
+          "paired_bins": 2,
+          "matched_minus_count": 16,
+          "matched_plus_count": 11,
+          "bins": [
+            {
+              "tangent_bin": 96,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 102,
+              "minus_count": 7,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/119.npz",
+      "obs_sha256": "0be77a658eb3b3defebf6f919171b5ca699c18496d20b9275f50f18532460790",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/119.npz",
+      "raw_ground_frame_sha256": "a0a02b10ecab4f0354843a4abcda864e40165b54e7bcb53ee822b1a0d50a659d"
+    },
+    {
+      "raw": 120,
+      "mask_file": "120.npz",
+      "mask_sha256": "22c1f6e54690ab7e80924166014a5f79ff79ee76c7e81083b804cf92101adf10",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22094,
+        "raw_patch_ground_points": 454,
+        "initial_height_m": 0.09588204324245453
+      },
+      "counts": {
+        "world_patch_clean_road": 363,
+        "world_patch_direct_depth_qualified_road": 84,
+        "near_x_minus": 49,
+        "near_x_plus": 43,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 49,
+        "lateral_y_plus": 34
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 49,
+          "band_plus_count": 43,
+          "paired_bins": 5,
+          "matched_minus_count": 29,
+          "matched_plus_count": 31,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 7,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 49,
+          "band_plus_count": 34,
+          "paired_bins": 2,
+          "matched_minus_count": 18,
+          "matched_plus_count": 18,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 9,
+              "plus_count": 9
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/120.npz",
+      "obs_sha256": "115bab13331f18cbdab5314cd2ad4a8a0e5f2a371af52c9463a83d68737e865b",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/120.npz",
+      "raw_ground_frame_sha256": "a2b433dbd2c3f8164a68fca88b06398a65b0564805d93c1a955a03fe954b865a"
+    },
+    {
+      "raw": 121,
+      "mask_file": "121.npz",
+      "mask_sha256": "6288f2f0791376c19fefb1803650fbf2f7f19c4717b30270aeccc9503bb99901",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22210,
+        "raw_patch_ground_points": 423,
+        "initial_height_m": 0.08972322195768356
+      },
+      "counts": {
+        "world_patch_clean_road": 240,
+        "world_patch_direct_depth_qualified_road": 59,
+        "near_x_minus": 14,
+        "near_x_plus": 22,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 33,
+        "lateral_y_plus": 9
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 14,
+          "band_plus_count": 22,
+          "paired_bins": 2,
+          "matched_minus_count": 11,
+          "matched_plus_count": 19,
+          "bins": [
+            {
+              "tangent_bin": 7,
+              "minus_count": 5,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 11
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 33,
+          "band_plus_count": 9,
+          "paired_bins": 1,
+          "matched_minus_count": 5,
+          "matched_plus_count": 9,
+          "bins": [
+            {
+              "tangent_bin": 96,
+              "minus_count": 5,
+              "plus_count": 9
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/121.npz",
+      "obs_sha256": "efdf22db7e60344654196189b11ddf9eb7051ea19d98966ace22df56d9cf54e8",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/121.npz",
+      "raw_ground_frame_sha256": "cdb50aa9ad0520d63b1938484d16813988b6f256c9597ddd9d399b02ef738b32"
+    },
+    {
+      "raw": 122,
+      "mask_file": "122.npz",
+      "mask_sha256": "e916b118dd7a832f3c50a26c18f52e829e19215b44b90330c08fe38065d59c9b",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22408,
+        "raw_patch_ground_points": 377,
+        "initial_height_m": 0.09218843281269073
+      },
+      "counts": {
+        "world_patch_clean_road": 305,
+        "world_patch_direct_depth_qualified_road": 84,
+        "near_x_minus": 0,
+        "near_x_plus": 15,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 33,
+        "lateral_y_plus": 5
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 15,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 33,
+          "band_plus_count": 5,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/122.npz",
+      "obs_sha256": "6a0cdf8a563420250ec740428b21640578f53b0826f1348c90a7c69f79fdf5b0",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/122.npz",
+      "raw_ground_frame_sha256": "84dbc29b2de8f19ba04691122ae3a34ea3cbb7b26962c00575903ff33699274e"
+    },
+    {
+      "raw": 123,
+      "mask_file": "123.npz",
+      "mask_sha256": "1bb82f86ed062bc01b25d6597d2f419b595010e1725a51f622f2a441c18a685d",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22555,
+        "raw_patch_ground_points": 351,
+        "initial_height_m": 0.09699054062366486
+      },
+      "counts": {
+        "world_patch_clean_road": 372,
+        "world_patch_direct_depth_qualified_road": 109,
+        "near_x_minus": 11,
+        "near_x_plus": 20,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 47,
+        "lateral_y_plus": 7
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 11,
+          "band_plus_count": 20,
+          "paired_bins": 1,
+          "matched_minus_count": 4,
+          "matched_plus_count": 6,
+          "bins": [
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 47,
+          "band_plus_count": 7,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/123.npz",
+      "obs_sha256": "00819c2d61e478df26f0e081329e88e62f5e8c5b9e93a1d7ae77ca948a51e101",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/123.npz",
+      "raw_ground_frame_sha256": "4759b7b40c0799c07c8e933176092bbef253acabd0c8097cbe25ead971b9f26c"
+    },
+    {
+      "raw": 124,
+      "mask_file": "124.npz",
+      "mask_sha256": "9b3f7510d9b8bb8f4ac9dba53d2c8c837e68ca9cc5e07e485fca74e302251fc0",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22650,
+        "raw_patch_ground_points": 373,
+        "initial_height_m": 0.09217216819524765
+      },
+      "counts": {
+        "world_patch_clean_road": 420,
+        "world_patch_direct_depth_qualified_road": 132,
+        "near_x_minus": 10,
+        "near_x_plus": 22,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 65,
+        "lateral_y_plus": 17
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 10,
+          "band_plus_count": 22,
+          "paired_bins": 2,
+          "matched_minus_count": 7,
+          "matched_plus_count": 10,
+          "bins": [
+            {
+              "tangent_bin": 7,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 65,
+          "band_plus_count": 17,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/124.npz",
+      "obs_sha256": "7b2e0c09a036635c87fe64525452627a8acab935c4e3e4218711be9d0c5130a4",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/124.npz",
+      "raw_ground_frame_sha256": "94f6035223aa6287d5189e6f3029a4dfa29ae728602adb6e2d19544872f73952"
+    },
+    {
+      "raw": 125,
+      "mask_file": "125.npz",
+      "mask_sha256": "3ef93083c00a55c1d969917275f3dc551ea2b1a1dccb2ccf61057384ab94518e",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22719,
+        "raw_patch_ground_points": 409,
+        "initial_height_m": 0.09011220932006836
+      },
+      "counts": {
+        "world_patch_clean_road": 513,
+        "world_patch_direct_depth_qualified_road": 152,
+        "near_x_minus": 17,
+        "near_x_plus": 16,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 71,
+        "lateral_y_plus": 40
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 17,
+          "band_plus_count": 16,
+          "paired_bins": 2,
+          "matched_minus_count": 13,
+          "matched_plus_count": 11,
+          "bins": [
+            {
+              "tangent_bin": 9,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 10,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 71,
+          "band_plus_count": 40,
+          "paired_bins": 3,
+          "matched_minus_count": 14,
+          "matched_plus_count": 12,
+          "bins": [
+            {
+              "tangent_bin": 125,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 128,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 147,
+              "minus_count": 3,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/125.npz",
+      "obs_sha256": "a81bc6438de462c0543f59403b287c31f61330e97ab24bd8b62bc861a51adbaf",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/125.npz",
+      "raw_ground_frame_sha256": "e1180345bf2ac3d0963c5e1ef1fb664b7f78a288febd59f6e448a25776a1d308"
+    },
+    {
+      "raw": 126,
+      "mask_file": "126.npz",
+      "mask_sha256": "5f80c41f07e10d50e4a672b0780fa776e86364391d20e7b5545b63e4a20c50f0",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22840,
+        "raw_patch_ground_points": 409,
+        "initial_height_m": 0.08660118281841278
+      },
+      "counts": {
+        "world_patch_clean_road": 592,
+        "world_patch_direct_depth_qualified_road": 164,
+        "near_x_minus": 27,
+        "near_x_plus": 31,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 98,
+        "lateral_y_plus": 45
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 27,
+          "band_plus_count": 31,
+          "paired_bins": 6,
+          "matched_minus_count": 27,
+          "matched_plus_count": 31,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 3,
+              "plus_count": 4
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 98,
+          "band_plus_count": 45,
+          "paired_bins": 4,
+          "matched_minus_count": 18,
+          "matched_plus_count": 16,
+          "bins": [
+            {
+              "tangent_bin": 121,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 124,
+              "minus_count": 3,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 126,
+              "minus_count": 5,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 129,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/126.npz",
+      "obs_sha256": "19a6e79847737933c0284c61f870d54f9afd379b9138264986381a14f728c67b",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/126.npz",
+      "raw_ground_frame_sha256": "064addc939ac22333821efac99795af2874b383702bfe63c822ae314239d1618"
+    },
+    {
+      "raw": 127,
+      "mask_file": "127.npz",
+      "mask_sha256": "fb915d549a742a50697baed169640826ea85b5f266b372eebb16a3911631aaba",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22970,
+        "raw_patch_ground_points": 442,
+        "initial_height_m": 0.08514015004038811
+      },
+      "counts": {
+        "world_patch_clean_road": 670,
+        "world_patch_direct_depth_qualified_road": 195,
+        "near_x_minus": 40,
+        "near_x_plus": 37,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 124,
+        "lateral_y_plus": 52
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 40,
+          "band_plus_count": 37,
+          "paired_bins": 6,
+          "matched_minus_count": 38,
+          "matched_plus_count": 35,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 10,
+              "plus_count": 7
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 124,
+          "band_plus_count": 52,
+          "paired_bins": 3,
+          "matched_minus_count": 15,
+          "matched_plus_count": 13,
+          "bins": [
+            {
+              "tangent_bin": 119,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 129,
+              "minus_count": 6,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 138,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/127.npz",
+      "obs_sha256": "59b71e4017a3a9af005e59fb7206b65d187ddd389b9f1af52b0ee26c8f20a9ed",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/127.npz",
+      "raw_ground_frame_sha256": "1c90146ce5cb7d886fe8d842bbbb73e78e4252f6a6a3f792c41536326db29bc5"
+    },
+    {
+      "raw": 128,
+      "mask_file": "128.npz",
+      "mask_sha256": "c3118acd75304c479dd5877accab5089aa294dc3062259b870dc55a920e8365a",
+      "metadata": {
+        "status": "EXACT_OLD_KEY5_FILE_REUSE",
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/128.npz",
+        "source_sha256": "c3118acd75304c479dd5877accab5089aa294dc3062259b870dc55a920e8365a"
+      },
+      "counts": {
+        "world_patch_clean_road": 772,
+        "world_patch_direct_depth_qualified_road": 218,
+        "near_x_minus": 43,
+        "near_x_plus": 35,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 150,
+        "lateral_y_plus": 75
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 43,
+          "band_plus_count": 35,
+          "paired_bins": 6,
+          "matched_minus_count": 36,
+          "matched_plus_count": 33,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 5,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 5,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 150,
+          "band_plus_count": 75,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/128/observations.npz",
+      "obs_sha256": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/128.npz",
+      "raw_ground_frame_sha256": "7ea87969cda637137af6f30ca4bff388600f68b51481089256e765013f41ec25"
+    },
+    {
+      "raw": 129,
+      "mask_file": "129.npz",
+      "mask_sha256": "7eb8ad9dd62c0cfba82ae051e76278f6d771682dc872a1d129e865b753f9a5bb",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 23065,
+        "raw_patch_ground_points": 481,
+        "initial_height_m": 0.08337771892547607
+      },
+      "counts": {
+        "world_patch_clean_road": 905,
+        "world_patch_direct_depth_qualified_road": 230,
+        "near_x_minus": 50,
+        "near_x_plus": 33,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 143,
+        "lateral_y_plus": 116
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 50,
+          "band_plus_count": 33,
+          "paired_bins": 5,
+          "matched_minus_count": 29,
+          "matched_plus_count": 32,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 7,
+              "plus_count": 4
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 143,
+          "band_plus_count": 116,
+          "paired_bins": 5,
+          "matched_minus_count": 27,
+          "matched_plus_count": 31,
+          "bins": [
+            {
+              "tangent_bin": 102,
+              "minus_count": 9,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 107,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 109,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 139,
+              "minus_count": 4,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/129.npz",
+      "obs_sha256": "12d03a299be0494a9d330b3c50367432cda9914896c33f56840e5997ac718944",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/129.npz",
+      "raw_ground_frame_sha256": "72b0546ede5625a073ba3bdd85372ac7c99ed343d136fce63ee63bde4e2a6855"
+    },
+    {
+      "raw": 130,
+      "mask_file": "130.npz",
+      "mask_sha256": "fa0acfc443be9b2dccb321a8fb81e5530da8e9d81411b2f99d86c5a9a423f293",
+      "metadata": {
+        "status": "EXACT_OLD_KEY5_FILE_REUSE",
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/130.npz",
+        "source_sha256": "fa0acfc443be9b2dccb321a8fb81e5530da8e9d81411b2f99d86c5a9a423f293"
+      },
+      "counts": {
+        "world_patch_clean_road": 1002,
+        "world_patch_direct_depth_qualified_road": 258,
+        "near_x_minus": 50,
+        "near_x_plus": 61,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 171,
+        "lateral_y_plus": 140
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 50,
+          "band_plus_count": 61,
+          "paired_bins": 8,
+          "matched_minus_count": 41,
+          "matched_plus_count": 56,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 6,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 5,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 3,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 171,
+          "band_plus_count": 140,
+          "paired_bins": 9,
+          "matched_minus_count": 56,
+          "matched_plus_count": 53,
+          "bins": [
+            {
+              "tangent_bin": 96,
+              "minus_count": 9,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 5,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 102,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 6,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 113,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 115,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 121,
+              "minus_count": 8,
+              "plus_count": 6
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/130/observations.npz",
+      "obs_sha256": "c14b89078f758a2a1d17f75048ffe6915d4031ff0ab25b68211af5e369f36c24",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/130.npz",
+      "raw_ground_frame_sha256": "dce49e1f84f6b9c2778aeaae76735f1f3dc0856501fa85f164ff2e49a543195d"
+    },
+    {
+      "raw": 131,
+      "mask_file": "131.npz",
+      "mask_sha256": "7b1738e0556dd9c9a9139afddce720e3eccad44cf77e792955c6a9c8896c7612",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 23014,
+        "raw_patch_ground_points": 598,
+        "initial_height_m": 0.07795317843556404
+      },
+      "counts": {
+        "world_patch_clean_road": 1089,
+        "world_patch_direct_depth_qualified_road": 279,
+        "near_x_minus": 54,
+        "near_x_plus": 63,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 170,
+        "lateral_y_plus": 165
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 54,
+          "band_plus_count": 63,
+          "paired_bins": 8,
+          "matched_minus_count": 50,
+          "matched_plus_count": 47,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 11,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 5,
+              "plus_count": 6
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 170,
+          "band_plus_count": 165,
+          "paired_bins": 11,
+          "matched_minus_count": 74,
+          "matched_plus_count": 75,
+          "bins": [
+            {
+              "tangent_bin": 97,
+              "minus_count": 4,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 102,
+              "minus_count": 9,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 108,
+              "minus_count": 9,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 110,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 116,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 118,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 122,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 127,
+              "minus_count": 4,
+              "plus_count": 7
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/131.npz",
+      "obs_sha256": "c2bed93f0d6f026c8fa08f4942480414d8a1189b6b8d3ca392fbda2b44444b74",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/131.npz",
+      "raw_ground_frame_sha256": "d5c18883516abbb5938f7d9505a5e7bcfa5c99c87d5fb7be253d1e8573b50b32"
+    },
+    {
+      "raw": 132,
+      "mask_file": "132.npz",
+      "mask_sha256": "f5e9f00c4c50df5c49132b5c8dd8e105ce13d64c8946f7323018b25be0ed0a33",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22672,
+        "raw_patch_ground_points": 656,
+        "initial_height_m": 0.07136939093470573
+      },
+      "counts": {
+        "world_patch_clean_road": 1170,
+        "world_patch_direct_depth_qualified_road": 288,
+        "near_x_minus": 93,
+        "near_x_plus": 71,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 177,
+        "lateral_y_plus": 168
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 93,
+          "band_plus_count": 71,
+          "paired_bins": 10,
+          "matched_minus_count": 84,
+          "matched_plus_count": 61,
+          "bins": [
+            {
+              "tangent_bin": 6,
+              "minus_count": 13,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 10,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 7,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 12,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 7,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 9,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 177,
+          "band_plus_count": 168,
+          "paired_bins": 12,
+          "matched_minus_count": 81,
+          "matched_plus_count": 74,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 10,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 7,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 10,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 109,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 111,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 113,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 119,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 128,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 133,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 138,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/132.npz",
+      "obs_sha256": "1d63cae3f9143780f022acb1e125c3337a6cfca7f78d1736f0c1fa50a2ff5542",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/132.npz",
+      "raw_ground_frame_sha256": "7b55c46c9a0bb02eb03f0c706ab8a7f21457d5438b7b7ca0a18f731b8a170549"
+    },
+    {
+      "raw": 133,
+      "mask_file": "133.npz",
+      "mask_sha256": "1e06ed10c3a2d6b2d136cc8f1d9b09446226df969cb8a18390cfbfd4d7428061",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22379,
+        "raw_patch_ground_points": 693,
+        "initial_height_m": 0.07018303126096725
+      },
+      "counts": {
+        "world_patch_clean_road": 1280,
+        "world_patch_direct_depth_qualified_road": 330,
+        "near_x_minus": 47,
+        "near_x_plus": 75,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 176,
+        "lateral_y_plus": 189
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 47,
+          "band_plus_count": 75,
+          "paired_bins": 6,
+          "matched_minus_count": 42,
+          "matched_plus_count": 36,
+          "bins": [
+            {
+              "tangent_bin": 8,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 11,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 12,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 17,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 176,
+          "band_plus_count": 189,
+          "paired_bins": 9,
+          "matched_minus_count": 60,
+          "matched_plus_count": 58,
+          "bins": [
+            {
+              "tangent_bin": 96,
+              "minus_count": 10,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 105,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 107,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 115,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 119,
+              "minus_count": 8,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 128,
+              "minus_count": 7,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 152,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/133.npz",
+      "obs_sha256": "5079648582f3a483885c50ad0fe8d3d49691733004e4afc74beda566f50dd79c",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/133.npz",
+      "raw_ground_frame_sha256": "1f102e3d5c5f729d1569c15e16bcf2b460118c9e3f70d864c7bfc763956caf7e"
+    },
+    {
+      "raw": 134,
+      "mask_file": "134.npz",
+      "mask_sha256": "59ea6e59514435c5297b9ad9c1a66185b2dc20ba043bf30e1fad9bab7883c719",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 22467,
+        "raw_patch_ground_points": 766,
+        "initial_height_m": 0.06836453825235367
+      },
+      "counts": {
+        "world_patch_clean_road": 1303,
+        "world_patch_direct_depth_qualified_road": 350,
+        "near_x_minus": 70,
+        "near_x_plus": 89,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 183,
+        "lateral_y_plus": 189
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 70,
+          "band_plus_count": 89,
+          "paired_bins": 10,
+          "matched_minus_count": 67,
+          "matched_plus_count": 75,
+          "bins": [
+            {
+              "tangent_bin": 5,
+              "minus_count": 6,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 10,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 8,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 4
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 183,
+          "band_plus_count": 189,
+          "paired_bins": 18,
+          "matched_minus_count": 97,
+          "matched_plus_count": 120,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 10,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 4,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 6,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 99,
+              "minus_count": 5,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 100,
+              "minus_count": 9,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 6,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 102,
+              "minus_count": 3,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 5,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 105,
+              "minus_count": 4,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 114,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 116,
+              "minus_count": 3,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 118,
+              "minus_count": 4,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 120,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 124,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 129,
+              "minus_count": 4,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 134,
+              "minus_count": 6,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 139,
+              "minus_count": 3,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/134.npz",
+      "obs_sha256": "6015d59f8898bd74c49d9237b64f77a4d1dc01f0921afce3c70c525ad97ee8e9",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/134.npz",
+      "raw_ground_frame_sha256": "b96b28f87e4777e94a213bf4afb6e4efebf7d14af58712c3e0f2b94d0c1f6d27"
+    },
+    {
+      "raw": 135,
+      "mask_file": "135.npz",
+      "mask_sha256": "e3ceaff61ae4a4b37c2922fe710e5b378d8c8deb31961be5b4b157bb1bf2c41a",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 24183,
+        "raw_patch_ground_points": 756,
+        "initial_height_m": 0.06707064434885979
+      },
+      "counts": {
+        "world_patch_clean_road": 1324,
+        "world_patch_direct_depth_qualified_road": 332,
+        "near_x_minus": 70,
+        "near_x_plus": 74,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 185,
+        "lateral_y_plus": 199
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 70,
+          "band_plus_count": 74,
+          "paired_bins": 11,
+          "matched_minus_count": 67,
+          "matched_plus_count": 65,
+          "bins": [
+            {
+              "tangent_bin": 5,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 6,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 3,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 8,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 10,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 7,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 185,
+          "band_plus_count": 199,
+          "paired_bins": 16,
+          "matched_minus_count": 94,
+          "matched_plus_count": 115,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 10,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 7,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 3,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 7,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 100,
+              "minus_count": 9,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 107,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 109,
+              "minus_count": 6,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 119,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 121,
+              "minus_count": 5,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 123,
+              "minus_count": 4,
+              "plus_count": 4
+            },
+            {
+              "tangent_bin": 128,
+              "minus_count": 3,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 133,
+              "minus_count": 3,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 144,
+              "minus_count": 3,
+              "plus_count": 5
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/135.npz",
+      "obs_sha256": "55bab63da1d96842e67839883ea1d226b24a61e7f3a83922aeabb63a62e3969b",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/135.npz",
+      "raw_ground_frame_sha256": "f5a6aac48463181f1a7acfd77ee1a4bbd3eecdbde7ef94caeabd4b61cb56dff4"
+    },
+    {
+      "raw": 136,
+      "mask_file": "136.npz",
+      "mask_sha256": "896499449fabd42513cbd7c7f6a981daa6ccb62b34f89234b1829782b422f3c6",
+      "metadata": {
+        "status": "ORIGINAL_ROAD_GUARD_GROUND_ONLY",
+        "original_eligible_pixels": 25870,
+        "raw_patch_ground_points": 767,
+        "initial_height_m": 0.0667373538017273
+      },
+      "counts": {
+        "world_patch_clean_road": 1458,
+        "world_patch_direct_depth_qualified_road": 357,
+        "near_x_minus": 85,
+        "near_x_plus": 84,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 195,
+        "lateral_y_plus": 206
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 85,
+          "band_plus_count": 84,
+          "paired_bins": 10,
+          "matched_minus_count": 81,
+          "matched_plus_count": 69,
+          "bins": [
+            {
+              "tangent_bin": 5,
+              "minus_count": 11,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 6,
+              "minus_count": 12,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 4,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 13,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 12,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 5,
+              "plus_count": 5
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 195,
+          "band_plus_count": 206,
+          "paired_bins": 15,
+          "matched_minus_count": 105,
+          "matched_plus_count": 117,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 7,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 10,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 7,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 9,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 100,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 102,
+              "minus_count": 3,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 4,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 8,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 5,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 107,
+              "minus_count": 6,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 110,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 113,
+              "minus_count": 8,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 115,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 117,
+              "minus_count": 9,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 127,
+              "minus_count": 4,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/136.npz",
+      "obs_sha256": "92ec22066f41f2ae4a334d43b7e6c012c47a7c75b8bf793a3fb472aaa7b379a7",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/136.npz",
+      "raw_ground_frame_sha256": "4fa27bfe594b4bbb0a897d1bc543b0bfc02c8cd75ad5315010019067c48022b7"
+    },
+    {
+      "raw": 137,
+      "mask_file": "137.npz",
+      "mask_sha256": "41f1fe65716a84481ee946bf7c7ad0f6f33bf42ad1f74441c0076b461a25f08a",
+      "metadata": {
+        "status": "EXACT_OLD_KEY5_FILE_REUSE",
+        "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/blue/fivekey_world_patch_masks_v1/137.npz",
+        "source_sha256": "41f1fe65716a84481ee946bf7c7ad0f6f33bf42ad1f74441c0076b461a25f08a"
+      },
+      "counts": {
+        "world_patch_clean_road": 1447,
+        "world_patch_direct_depth_qualified_road": 391,
+        "near_x_minus": 92,
+        "near_x_plus": 87,
+        "far_x_minus": 0,
+        "far_x_plus": 0,
+        "lateral_y_minus": 200,
+        "lateral_y_plus": 200
+      },
+      "edges": {
+        "near_x": {
+          "band_minus_count": 92,
+          "band_plus_count": 87,
+          "paired_bins": 12,
+          "matched_minus_count": 90,
+          "matched_plus_count": 76,
+          "bins": [
+            {
+              "tangent_bin": 5,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 6,
+              "minus_count": 6,
+              "plus_count": 7
+            },
+            {
+              "tangent_bin": 7,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 9,
+              "minus_count": 7,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 10,
+              "minus_count": 11,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 11,
+              "minus_count": 12,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 12,
+              "minus_count": 13,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 13,
+              "minus_count": 8,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 14,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 15,
+              "minus_count": 6,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 16,
+              "minus_count": 6,
+              "plus_count": 5
+            },
+            {
+              "tangent_bin": 17,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        },
+        "far_x": {
+          "band_minus_count": 0,
+          "band_plus_count": 0,
+          "paired_bins": 0,
+          "matched_minus_count": 0,
+          "matched_plus_count": 0,
+          "bins": []
+        },
+        "lateral_y": {
+          "band_minus_count": 200,
+          "band_plus_count": 200,
+          "paired_bins": 15,
+          "matched_minus_count": 101,
+          "matched_plus_count": 113,
+          "bins": [
+            {
+              "tangent_bin": 95,
+              "minus_count": 9,
+              "plus_count": 11
+            },
+            {
+              "tangent_bin": 96,
+              "minus_count": 10,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 97,
+              "minus_count": 10,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 98,
+              "minus_count": 9,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 100,
+              "minus_count": 6,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 101,
+              "minus_count": 4,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 103,
+              "minus_count": 6,
+              "plus_count": 10
+            },
+            {
+              "tangent_bin": 104,
+              "minus_count": 9,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 106,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 107,
+              "minus_count": 5,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 110,
+              "minus_count": 7,
+              "plus_count": 8
+            },
+            {
+              "tangent_bin": 112,
+              "minus_count": 5,
+              "plus_count": 9
+            },
+            {
+              "tangent_bin": 120,
+              "minus_count": 8,
+              "plus_count": 3
+            },
+            {
+              "tangent_bin": 129,
+              "minus_count": 5,
+              "plus_count": 6
+            },
+            {
+              "tangent_bin": 144,
+              "minus_count": 3,
+              "plus_count": 3
+            }
+          ]
+        }
+      },
+      "obs_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/diagnostic/layers_v1/137/observations.npz",
+      "obs_sha256": "108d8c673fba6c08e78dc14630ba5019abb68c58ff31ba43bb48b097bd0c8528",
+      "raw_ground_frame_path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_fullclip_cpu_20261026/frames/137.npz",
+      "raw_ground_frame_sha256": "a9dd00dbf68795c0704aa6b9ea5ba67347be885777cd9e0e1a973b2d2c57d3b3"
+    }
+  ],
+  "seconds": 18.768168926239014,
+  "evidence_scope": "Same-scene development extension to remaining44 views; shares BUILD measurements with the road model. Not independent test, hidden GT, or all-camera evidence.",
+  "exclusions": [
+    "No new target/render/residual/alpha reads",
+    "No candidate-based denominator changes",
+    "No unsupported edge scored as zero"
+  ],
+  "GPU_used": false
+}

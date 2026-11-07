@@ -1,0 +1,3498 @@
+{
+  "status": "ENGINEERING_RUN_COMPLETE",
+  "phase": "restore",
+  "variant": "edgeblend",
+  "steps_executed": 2,
+  "formal_steps": 0,
+  "original_disposable_steps": 0,
+  "fresh_restore_disposable_steps": 2,
+  "forwards": 4,
+  "backwards": 4,
+  "records": [
+    {
+      "raw": 99,
+      "MSE": 0.0007487985130865127,
+      "gradient_norm": 0.0,
+      "seconds": 0.698096513748169,
+      "clipped_channels": 0,
+      "step": 3
+    },
+    {
+      "raw": 106,
+      "MSE": 0.0026501580141484737,
+      "gradient_norm": 9.873733688436914e-06,
+      "seconds": 0.4326331615447998,
+      "clipped_channels": 0,
+      "step": 4
+    }
+  ],
+  "restore_checks": {
+    "parameter": true,
+    "Adam": true,
+    "sampler": true,
+    "RNG": true,
+    "parent_ids": true,
+    "next_two_frames": true
+  },
+  "restore_state_all_exact": true,
+  "nextstep_comparison": {
+    "step": true,
+    "value": true,
+    "optimizer": false,
+    "sampler": true,
+    "rng": true,
+    "next_two_frames": true,
+    "contract_sha256": true,
+    "parameter_parent_ids": true,
+    "parameter_maxabs": 0.0
+  },
+  "seconds": 12.698401689529419,
+  "formal_ETA_seconds": 226.14593505859375,
+  "preflight": {
+    "gpu_memory_MiB_csv": "0, 32760 MiB, 258 MiB, 31974 MiB",
+    "concurrent_compute_apps_csv": "54049, 248 MiB, /root/autodl-tmp/envs/drivingeditor/bin/python",
+    "concurrent_commands": "PID COMMAND\n 54049 /root/autodl-tmp/envs/drivingeditor/bin/python -u /root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/fit_shared_edgeblend.py --phase restore",
+    "inspection_only": true,
+    "other_processes_stopped_or_modified": false
+  },
+  "peak_allocated_bytes": 2125170176,
+  "peak_reserved_bytes": 3032481792,
+  "eligible_parents": 2053,
+  "excluded_zero_parents": 8045,
+  "Adam_parameter_shape": [
+    2053,
+    3
+  ],
+  "parent_geometry_updates": 0,
+  "original_parameter_updates": 0,
+  "opacity_updates": 0,
+  "gpu_fraction": 0.4,
+  "placeholder_engineering_only": false,
+  "runtime": {
+    "original": {
+      "status": "GEOMETRY_SUPPORT_RESEARCH_CANDIDATE",
+      "manifest_sha256": "48ac926aafb1cb07ddd98c4ee6c9ffdc7c4501076a1cdbc7ffb99cc9736e84c7",
+      "scene_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/canonical_n2_mip_candidate_v2/scene_manifest.json",
+      "newroad_asset_sha256": "53de3cb31be234865995766eaeb11a5fced59160456bb139b08cdb3eb0031baf",
+      "native": {
+        "status": "PASS_V44_FROZEN_RUNTIME_ENGINEERING",
+        "binding": {
+          "version": "v44",
+          "native_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k",
+          "native_iteration": 10000,
+          "parent_identity": {
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/chkpnt10000.pth": [
+              826934296,
+              1793884537536887316
+            ],
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/dynamic_chkpnt10000.pth": [
+              839984408,
+              1793884540706054677
+            ],
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/env_light_chkpnt10000.pth": [
+              226494608,
+              1793884542546760397
+            ],
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/training_state10000.pth": [
+              44824,
+              1793884709726852182
+            ]
+          },
+          "road_run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1",
+          "road_iteration": 1000,
+          "road_checkpoint_sha256": "b4f7e79772e3f6c924daad467ca7f6e40c545f58b2d5f03306e720a3114aaab6",
+          "contributors_sha256": "f67f004991cb1b942073f16e334f4866594693e5d460ff72eb1349b70aa24428",
+          "repair_state_sha256": "dab42d5e3e618fda82757c833fd53328524a546890a0eb55d31b0f8a32ec6f59",
+          "road_colour_baseline_sha256": "99c8233f7cf31e66f3b5b70f084cfd440d470dc553b50c7865cba3972642ce6e",
+          "asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+          "posterior_sha256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+          "asset_canonical_rows": 45314,
+          "asset_effective_material": "frozen SH0 within SHAsset SH3 storage",
+          "sampler": "surface_lod",
+          "sampler_source_sha256": "fb3c746a04bf17b1f84b127e44769b4ff294567e98aec744131ddc3f3c4d76ca",
+          "persistent_SF_hash": "cda8991f7fd02e5feccc55f193553fe912761d450b28ee556b4a0da9d4193b50",
+          "native_metadata_sha256": {
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json": "b5679a6e1b7c3ab60bc9538a8d18dad40856bb8824541e29b2d69d7d7ceb8de8",
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455",
+            "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json": "9e7ab44337322d903e5c748c656d18e1d233a0a316980e9d8fb9074cdbe27ee5"
+          },
+          "road_source_sha256": {
+            "editor_common.py": "347a6fa29da11daef373392ac386b1fa9c907e0ced99998f5342bb539a8ee10b",
+            "native_binding.py": "0e99797b225b7ae6b362fcec515f5eeb9c2fa5e93c5fd8cfc7ad5c2364b4ae9f",
+            "repair37.py": "54968910bca402be5649f2fe3ba2e7fd9a3bfbe26e35d835c317c58cea90e272",
+            "road_runtime.py": "3baa4b0ede164baa19663dbaa8698adb3257b13765409fd23226196ea61134b5",
+            "r4_runtime.py": "4deab7ccc9aff9fae70f4a8dd25f54a9aa23fbe89885c044ca00e4e45d0f68e4"
+          },
+          "native_degrees": {
+            "static": 3,
+            "a37": 3
+          },
+          "groups": [
+            "asset",
+            "a37",
+            "road",
+            "native_static"
+          ],
+          "native_a6_rows_input": 0,
+          "native_static_opacity": "own_native_opacity * matching fresh-road1K gate",
+          "edit_operator": "physical a37 removal only; shared frozen a6/road/static/env/camera",
+          "raster": "original native GaussianRasterizer; one shared depth sort",
+          "transfer_policy": "frozen_worldspace_residual_transfer",
+          "reestimated_calibration": false,
+          "quality_accepted": false,
+          "fine_transfer_source": {
+            "source_binding_sha256": "6a955f0fa78646264366d985e45b481b7bf8698998764927bf906e5730943e00",
+            "coefficients_sha256": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3",
+            "source_asset_sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+            "policy": "frozen_worldspace_residual_transfer"
+          }
+        },
+        "binding_sha256": "57e6dd01e9fbec40c1cfe4037c634773b62deea7a9684761a2874e5b6e41ed4b",
+        "fine_binding": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9",
+          "policy": "frozen_worldspace_residual_transfer",
+          "source_binding_sha256": "6a955f0fa78646264366d985e45b481b7bf8698998764927bf906e5730943e00",
+          "source_asset_sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+          "new_asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+          "coefficients_sha256": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3",
+          "source_scene_binding": {
+            "purpose": "final",
+            "native_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k",
+            "native_iteration": 10000,
+            "parent_identity": {
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/chkpnt10000.pth": [
+                826934296,
+                1793884537536887316
+              ],
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/dynamic_chkpnt10000.pth": [
+                839984408,
+                1793884540706054677
+              ],
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/env_light_chkpnt10000.pth": [
+                226494608,
+                1793884542546760397
+              ],
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/training_state10000.pth": [
+                44824,
+                1793884709726852182
+              ]
+            },
+            "road_run": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1",
+            "road_checkpoint_sha256": "b4f7e79772e3f6c924daad467ca7f6e40c545f58b2d5f03306e720a3114aaab6",
+            "road_iteration": 1000,
+            "contributors_sha256": "f67f004991cb1b942073f16e334f4866594693e5d460ff72eb1349b70aa24428",
+            "repair_state_sha256": "dab42d5e3e618fda82757c833fd53328524a546890a0eb55d31b0f8a32ec6f59",
+            "road_colour_baseline_sha256": "99c8233f7cf31e66f3b5b70f084cfd440d470dc553b50c7865cba3972642ce6e",
+            "M2_sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+            "native_metadata_sha256": {
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json": "b5679a6e1b7c3ab60bc9538a8d18dad40856bb8824541e29b2d69d7d7ceb8de8",
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455",
+              "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json": "9e7ab44337322d903e5c748c656d18e1d233a0a316980e9d8fb9074cdbe27ee5"
+            },
+            "road_source_sha256": {
+              "editor_common.py": "347a6fa29da11daef373392ac386b1fa9c907e0ced99998f5342bb539a8ee10b",
+              "native_binding.py": "0e99797b225b7ae6b362fcec515f5eeb9c2fa5e93c5fd8cfc7ad5c2364b4ae9f",
+              "repair37.py": "54968910bca402be5649f2fe3ba2e7fd9a3bfbe26e35d835c317c58cea90e272",
+              "road_runtime.py": "3baa4b0ede164baa19663dbaa8698adb3257b13765409fd23226196ea61134b5",
+              "r4_runtime.py": "4deab7ccc9aff9fae70f4a8dd25f54a9aa23fbe89885c044ca00e4e45d0f68e4"
+            },
+            "groups": [
+              "asset",
+              "a37",
+              "road",
+              "native_static"
+            ],
+            "native_static_opacity": "own_native_opacity * fresh_road1K_gate",
+            "native_a6_rows_input": 0,
+            "complete_M2": true,
+            "M2_degree": 3,
+            "native_degrees": {
+              "static": 3,
+              "a37": 3
+            },
+            "raster": "original native GaussianRasterizer; one real shared depth sort",
+            "colour_evaluation": "per-component precomputed RGB at its own degree; M2 always SH3"
+          },
+          "new_base_scene_binding_sha256": "9be14d9fc789bcda4b320a13fd6f17b74d5a183918e7ecc25a884ed19948922a",
+          "scene_binding_changed": true,
+          "knots": {
+            "low_m": [
+              8.16999976360496,
+              -3.3500001571235396
+            ],
+            "high_m": [
+              19.750000594049066,
+              2.7100001349769953
+            ],
+            "grid": [
+              11,
+              9
+            ]
+          },
+          "coefficient_updates": 0,
+          "robust_linear_solves": 0,
+          "calibrated_on_new_C2_or_LOD": false,
+          "same_colour_table_not_same_occlusion": true,
+          "GPU_occlusion_and_RGB_comparison_required": true,
+          "quality_accepted": false,
+          "new_scene_binding_sha256": "57e6dd01e9fbec40c1cfe4037c634773b62deea7a9684761a2874e5b6e41ed4b"
+        },
+        "cpu_input_contract": {
+          "status": "PASS_V44_CPU_INPUT_CONTRACT",
+          "version": "v44",
+          "contract_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json",
+          "checked_at_utc": "2026-11-07T05:09:00.449953+00:00",
+          "checks": [
+            {
+              "name": "contract_schema",
+              "passed": true
+            },
+            {
+              "name": "fine_policy_is_explicit_frozen_transfer",
+              "passed": true
+            },
+            {
+              "name": "path_exists:native_parent",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k"
+            },
+            {
+              "name": "path_exists:road_run",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1"
+            },
+            {
+              "name": "path_exists:road_checkpoint",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt"
+            },
+            {
+              "name": "path_exists:fine",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9"
+            },
+            {
+              "name": "path_exists:coarse",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5"
+            },
+            {
+              "name": "path_exists:asset",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz"
+            },
+            {
+              "name": "path_exists:posterior",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz"
+            },
+            {
+              "name": "path_exists:asset_source",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source"
+            },
+            {
+              "name": "path_exists:lod_source",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale"
+            },
+            {
+              "name": "path_exists:observations",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames"
+            },
+            {
+              "name": "path_exists:fixed_reference",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz"
+            },
+            {
+              "name": "path_exists:engine",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137"
+            },
+            {
+              "name": "path_exists:source_finalizer",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/source_snapshot"
+            },
+            {
+              "name": "path_exists:source_receipt",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/receipt.json"
+            },
+            {
+              "name": "path_exists:scene_metadata",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json"
+            },
+            {
+              "name": "path_exists:active_rasterizer",
+              "passed": true,
+              "detail": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so"
+            },
+            {
+              "name": "small_file_exists:__init__.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py"
+            },
+            {
+              "name": "small_file_size_boundary:__init__.py",
+              "passed": true,
+              "detail": 20011
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/gaussian_renderer/__init__.py",
+              "passed": true,
+              "detail": "35b2863da1bf9173812207dbd06fbbecdb88929f95b50a7968db3b5b2aa60ced"
+            },
+            {
+              "name": "small_file_exists:envlight.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/envlight.py"
+            },
+            {
+              "name": "small_file_size_boundary:envlight.py",
+              "passed": true,
+              "detail": 1375
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/envlight.py",
+              "passed": true,
+              "detail": "d677b60c46a219b84e6fb9c4a86794cf468fc1f043a6e8c689a3ff853650c44f"
+            },
+            {
+              "name": "small_file_exists:gaussian_model.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py"
+            },
+            {
+              "name": "small_file_size_boundary:gaussian_model.py",
+              "passed": true,
+              "detail": 44338
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/r15_baseline_owner5_20261018/training_source/scene0008_089_137/scene/gaussian_model.py",
+              "passed": true,
+              "detail": "e5da10984f8836da1ac51c975823c3ca89bbf8c56f45ec4d4dcb071c06aafa72"
+            },
+            {
+              "name": "small_file_exists:bundle.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json"
+            },
+            {
+              "name": "small_file_size_boundary:bundle.json",
+              "passed": true,
+              "detail": 315007
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v3_20261020/road_multiview_002/bundle.json",
+              "passed": true,
+              "detail": "d434c59f51c234ed0dd837c0a151b259ae2bb68dfe57128341bde7d9e2bdbc99"
+            },
+            {
+              "name": "small_file_exists:v4_road_render.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py"
+            },
+            {
+              "name": "small_file_size_boundary:v4_road_render.py",
+              "passed": true,
+              "detail": 5034
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py",
+              "passed": true,
+              "detail": "888dbe0c49eff4fa0fcf0e3999b49d2b6a44c746f806d45df869c22e8520e943"
+            },
+            {
+              "name": "small_file_exists:a6_probe_reference.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz"
+            },
+            {
+              "name": "small_file_size_boundary:a6_probe_reference.npz",
+              "passed": true,
+              "detail": 18718371
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz",
+              "passed": true,
+              "detail": "d35eb3d6958995c302bdec30066e76802224e1eb5e37c432047128219b0f747d"
+            },
+            {
+              "name": "small_file_exists:sh_asset.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py"
+            },
+            {
+              "name": "small_file_size_boundary:sh_asset.py",
+              "passed": true,
+              "detail": 15189
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+              "passed": true,
+              "detail": "ff9ee4b0f6a0bc90fccedfd4be17404d2df129072d6da1562b211a8aa6469bd4"
+            },
+            {
+              "name": "small_file_exists:full_pvd.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py"
+            },
+            {
+              "name": "small_file_size_boundary:full_pvd.py",
+              "passed": true,
+              "detail": 19075
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_complete_asset_20261105/source/full_pvd.py",
+              "passed": true,
+              "detail": "dc442b68c2428f731705bf48a67b22d7ed95f232324cbac8e3cf13d1794b5728"
+            },
+            {
+              "name": "small_file_exists:surface_lod_asset.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py"
+            },
+            {
+              "name": "small_file_size_boundary:surface_lod_asset.py",
+              "passed": true,
+              "detail": 11898
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py",
+              "passed": true,
+              "detail": "fb3c746a04bf17b1f84b127e44769b4ff294567e98aec744131ddc3f3c4d76ca"
+            },
+            {
+              "name": "small_file_exists:complete_a6.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz"
+            },
+            {
+              "name": "small_file_size_boundary:complete_a6.npz",
+              "passed": true,
+              "detail": 2780990
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz",
+              "passed": true,
+              "detail": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d"
+            },
+            {
+              "name": "small_file_exists:posterior.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz"
+            },
+            {
+              "name": "small_file_size_boundary:posterior.npz",
+              "passed": true,
+              "detail": 2656257
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz",
+              "passed": true,
+              "detail": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06"
+            },
+            {
+              "name": "small_file_exists:coefficients.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5/coefficients.npz"
+            },
+            {
+              "name": "small_file_size_boundary:coefficients.npz",
+              "passed": true,
+              "detail": 1451236
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5/coefficients.npz",
+              "passed": true,
+              "detail": "dd6ce0be79c52bf6d7fb453fd9ec8faf63bea461543ae6c03fc053d9a9f37ef9"
+            },
+            {
+              "name": "small_file_exists:scene_binding.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5/scene_binding.json"
+            },
+            {
+              "name": "small_file_size_boundary:scene_binding.json",
+              "passed": true,
+              "detail": 3991
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/coarse6x5/scene_binding.json",
+              "passed": true,
+              "detail": "62db53a1b2d2c63a2696d82ffeb14ee7cf7424d439e4413c75784758752e1ed2"
+            },
+            {
+              "name": "small_file_exists:coefficients.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/coefficients.npz"
+            },
+            {
+              "name": "small_file_size_boundary:coefficients.npz",
+              "passed": true,
+              "detail": 1455119
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/coefficients.npz",
+              "passed": true,
+              "detail": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3"
+            },
+            {
+              "name": "small_file_exists:design.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/design.json"
+            },
+            {
+              "name": "small_file_size_boundary:design.json",
+              "passed": true,
+              "detail": 11887
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/design.json",
+              "passed": true,
+              "detail": "44362035597eed10036082df1023f887ce21c30ad9d21544c225d3d64107c93d"
+            },
+            {
+              "name": "small_file_exists:scene_binding.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/scene_binding.json"
+            },
+            {
+              "name": "small_file_size_boundary:scene_binding.json",
+              "passed": true,
+              "detail": 4198
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/scene_binding.json",
+              "passed": true,
+              "detail": "a38a462a887464b856f77bd245ba88845a9541ef577db66b673dedfaef37c052"
+            },
+            {
+              "name": "small_file_exists:receipt.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/receipt.json"
+            },
+            {
+              "name": "small_file_size_boundary:receipt.json",
+              "passed": true,
+              "detail": 60350
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/receipt.json",
+              "passed": true,
+              "detail": "57909831f49aaba80ab38cfc1ec4ee682fb5eee8092e5b20b5f81be9dd8fb8f6"
+            },
+            {
+              "name": "small_file_exists:calibration_method.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/source_snapshot/calibration_method.py"
+            },
+            {
+              "name": "small_file_size_boundary:calibration_method.py",
+              "passed": true,
+              "detail": 9448
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/source_snapshot/calibration_method.py",
+              "passed": true,
+              "detail": "b2eb18de80d921f202a3daadb68ad5ecc96973d8e50d1c8cc385e22cd607fcd8"
+            },
+            {
+              "name": "small_file_exists:final_runtime.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/source_snapshot/final_runtime.py"
+            },
+            {
+              "name": "small_file_size_boundary:final_runtime.py",
+              "passed": true,
+              "detail": 20204
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/source_snapshot/final_runtime.py",
+              "passed": true,
+              "detail": "0301650d526741a76a7802e35d5895166748ef6e0f559d91dd07e0bb7e890d6f"
+            },
+            {
+              "name": "small_file_exists:actual_scene_binding.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json"
+            },
+            {
+              "name": "small_file_size_boundary:actual_scene_binding.json",
+              "passed": true,
+              "detail": 2278
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json",
+              "passed": true,
+              "detail": "9e7ab44337322d903e5c748c656d18e1d233a0a316980e9d8fb9074cdbe27ee5"
+            },
+            {
+              "name": "small_file_exists:cameras.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json"
+            },
+            {
+              "name": "small_file_size_boundary:cameras.json",
+              "passed": true,
+              "detail": 22152
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json",
+              "passed": true,
+              "detail": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455"
+            },
+            {
+              "name": "small_file_exists:effective_config.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json"
+            },
+            {
+              "name": "small_file_size_boundary:effective_config.json",
+              "passed": true,
+              "detail": 8941
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json",
+              "passed": true,
+              "detail": "b5679a6e1b7c3ab60bc9538a8d18dad40856bb8824541e29b2d69d7d7ceb8de8"
+            },
+            {
+              "name": "small_file_exists:checkpoint001000.pt",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt"
+            },
+            {
+              "name": "small_file_size_boundary:checkpoint001000.pt",
+              "passed": true,
+              "detail": 11556366
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt",
+              "passed": true,
+              "detail": "b4f7e79772e3f6c924daad467ca7f6e40c545f58b2d5f03306e720a3114aaab6"
+            },
+            {
+              "name": "small_file_exists:contributors.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/contributors.npz"
+            },
+            {
+              "name": "small_file_size_boundary:contributors.npz",
+              "passed": true,
+              "detail": 518051
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/contributors.npz",
+              "passed": true,
+              "detail": "f67f004991cb1b942073f16e334f4866594693e5d460ff72eb1349b70aa24428"
+            },
+            {
+              "name": "small_file_exists:road_reference.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/road_reference.npz"
+            },
+            {
+              "name": "small_file_size_boundary:road_reference.npz",
+              "passed": true,
+              "detail": 11986109
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/road_reference.npz",
+              "passed": true,
+              "detail": "5ab33f810ea37f37645fd6349461fa173b4a7a69de0e6dfe1af64c03b6451e50"
+            },
+            {
+              "name": "small_file_exists:089.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/089.npz"
+            },
+            {
+              "name": "small_file_size_boundary:089.npz",
+              "passed": true,
+              "detail": 2257693
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/089.npz",
+              "passed": true,
+              "detail": "5a5d41305cecda1e077b0761e38909d4fde97ea711a3922f51d97c07ee40f4d7"
+            },
+            {
+              "name": "small_file_exists:090.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/090.npz"
+            },
+            {
+              "name": "small_file_size_boundary:090.npz",
+              "passed": true,
+              "detail": 2256826
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/090.npz",
+              "passed": true,
+              "detail": "e806bcdd3960c967a1f67154b7e287dd88a01f76c26c9be777633f572028ac72"
+            },
+            {
+              "name": "small_file_exists:091.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/091.npz"
+            },
+            {
+              "name": "small_file_size_boundary:091.npz",
+              "passed": true,
+              "detail": 2257112
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/091.npz",
+              "passed": true,
+              "detail": "8c5c16373313259d041be50906055b9a04eb9338f80ec94401d643fa74e2616d"
+            },
+            {
+              "name": "small_file_exists:092.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/092.npz"
+            },
+            {
+              "name": "small_file_size_boundary:092.npz",
+              "passed": true,
+              "detail": 2258600
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/092.npz",
+              "passed": true,
+              "detail": "0573f3687ce28ed5fb790590d7f094cb5d87b60c31cb6aa648d2d85c5a00d09e"
+            },
+            {
+              "name": "small_file_exists:093.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/093.npz"
+            },
+            {
+              "name": "small_file_size_boundary:093.npz",
+              "passed": true,
+              "detail": 2259079
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/093.npz",
+              "passed": true,
+              "detail": "365bc8ddee26622948622f68a0d5f8ce2dfc17854e01a5b0a10f44ace49fdeb9"
+            },
+            {
+              "name": "small_file_exists:094.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/094.npz"
+            },
+            {
+              "name": "small_file_size_boundary:094.npz",
+              "passed": true,
+              "detail": 2258209
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/094.npz",
+              "passed": true,
+              "detail": "8a6b6d3f09af99d66bd9c1021d1f333e3086bf8723fa87b75b1ec8d2c555c977"
+            },
+            {
+              "name": "small_file_exists:095.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/095.npz"
+            },
+            {
+              "name": "small_file_size_boundary:095.npz",
+              "passed": true,
+              "detail": 2259309
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/095.npz",
+              "passed": true,
+              "detail": "f7bc6964dc824b4718ab8b704549bd761329b234f081aebef7bed64e53ff2ea3"
+            },
+            {
+              "name": "small_file_exists:096.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/096.npz"
+            },
+            {
+              "name": "small_file_size_boundary:096.npz",
+              "passed": true,
+              "detail": 2256777
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/096.npz",
+              "passed": true,
+              "detail": "2eb730f90895ee411dfbd7257c7e969f2e66fde361aef702612fc1b9804dc61a"
+            },
+            {
+              "name": "small_file_exists:097.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/097.npz"
+            },
+            {
+              "name": "small_file_size_boundary:097.npz",
+              "passed": true,
+              "detail": 2260549
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/097.npz",
+              "passed": true,
+              "detail": "613d3837b2262dee418a73f4d79bdbb7108e957471523e6ef70c8762e3566fa4"
+            },
+            {
+              "name": "small_file_exists:098.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/098.npz"
+            },
+            {
+              "name": "small_file_size_boundary:098.npz",
+              "passed": true,
+              "detail": 2258828
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/098.npz",
+              "passed": true,
+              "detail": "d6f43423bf4e7a99f5088cff7228568b6ef5385922c215c8ec3683410198c33c"
+            },
+            {
+              "name": "small_file_exists:099.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/099.npz"
+            },
+            {
+              "name": "small_file_size_boundary:099.npz",
+              "passed": true,
+              "detail": 2258967
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/099.npz",
+              "passed": true,
+              "detail": "26d31c6b906436091e9fb926d602751aed4896ce93ef282a9ad48642725e2fc3"
+            },
+            {
+              "name": "small_file_exists:100.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/100.npz"
+            },
+            {
+              "name": "small_file_size_boundary:100.npz",
+              "passed": true,
+              "detail": 2261968
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/100.npz",
+              "passed": true,
+              "detail": "049cba2205ed0ff601318292cdd08a44c39b2d62b5ffdc9ead7d09cee91527e0"
+            },
+            {
+              "name": "small_file_exists:101.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/101.npz"
+            },
+            {
+              "name": "small_file_size_boundary:101.npz",
+              "passed": true,
+              "detail": 2266068
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/101.npz",
+              "passed": true,
+              "detail": "409e926767e448f2ae388558681cddf26634c28cc645a7ff0cfc82790eedbae5"
+            },
+            {
+              "name": "small_file_exists:102.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/102.npz"
+            },
+            {
+              "name": "small_file_size_boundary:102.npz",
+              "passed": true,
+              "detail": 2264464
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/102.npz",
+              "passed": true,
+              "detail": "f121653f2d52f6db6ecce6c91f00412917fef45465d87017fd9387fad54b1570"
+            },
+            {
+              "name": "small_file_exists:103.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/103.npz"
+            },
+            {
+              "name": "small_file_size_boundary:103.npz",
+              "passed": true,
+              "detail": 2268676
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/103.npz",
+              "passed": true,
+              "detail": "9a63e24e36162ea4a4497acc0d94d4c01090d3f16fd60453c3ba5c8e187a1221"
+            },
+            {
+              "name": "small_file_exists:104.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/104.npz"
+            },
+            {
+              "name": "small_file_size_boundary:104.npz",
+              "passed": true,
+              "detail": 2270187
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/104.npz",
+              "passed": true,
+              "detail": "da8fd21633bdc61d997c7b2a8ac6849acaecffcdc7a0ececaa9dea8693ffda75"
+            },
+            {
+              "name": "small_file_exists:105.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/105.npz"
+            },
+            {
+              "name": "small_file_size_boundary:105.npz",
+              "passed": true,
+              "detail": 2276403
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/105.npz",
+              "passed": true,
+              "detail": "bbc6577600232a3146ea7a7979251dec0b350a6e91b8b1e6ba6cdf8155c4c948"
+            },
+            {
+              "name": "small_file_exists:106.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/106.npz"
+            },
+            {
+              "name": "small_file_size_boundary:106.npz",
+              "passed": true,
+              "detail": 2273941
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/106.npz",
+              "passed": true,
+              "detail": "8a76c6dde47302dc2db674338cfc6fef4a449f74265ab567cfed805398386e63"
+            },
+            {
+              "name": "small_file_exists:107.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/107.npz"
+            },
+            {
+              "name": "small_file_size_boundary:107.npz",
+              "passed": true,
+              "detail": 2274124
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/107.npz",
+              "passed": true,
+              "detail": "490e6e1ae41c28016f7e4daf5c7185ef57f692cb14eafb5604f88aa8bc489c24"
+            },
+            {
+              "name": "small_file_exists:108.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/108.npz"
+            },
+            {
+              "name": "small_file_size_boundary:108.npz",
+              "passed": true,
+              "detail": 2273813
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/108.npz",
+              "passed": true,
+              "detail": "be213837462a6c009d9b82f8baa7d4867a4bfc365ccc18597a4d8c28ad6e834c"
+            },
+            {
+              "name": "small_file_exists:109.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/109.npz"
+            },
+            {
+              "name": "small_file_size_boundary:109.npz",
+              "passed": true,
+              "detail": 2270541
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/109.npz",
+              "passed": true,
+              "detail": "ae56a8b280afa71df43c6251d8e7b26a70729894bfa7b38e06af6cd9a2c13076"
+            },
+            {
+              "name": "small_file_exists:110.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/110.npz"
+            },
+            {
+              "name": "small_file_size_boundary:110.npz",
+              "passed": true,
+              "detail": 2267875
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/110.npz",
+              "passed": true,
+              "detail": "c8838dd821c5b8a9c5c4f4f8b64b3a6dc81c7a7edc21526fffbf331927049b5e"
+            },
+            {
+              "name": "small_file_exists:111.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/111.npz"
+            },
+            {
+              "name": "small_file_size_boundary:111.npz",
+              "passed": true,
+              "detail": 2263383
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/111.npz",
+              "passed": true,
+              "detail": "ad9d48e66dfd72258fc1a002f0ea6eed25b53fd13296466de4be63f0844e9339"
+            },
+            {
+              "name": "small_file_exists:112.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/112.npz"
+            },
+            {
+              "name": "small_file_size_boundary:112.npz",
+              "passed": true,
+              "detail": 2256166
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/112.npz",
+              "passed": true,
+              "detail": "2c8ced26baa2b29a4c74e0e83eebbdf82f3cf54c2fef61418ab7d6bcb6ec51d3"
+            },
+            {
+              "name": "small_file_exists:113.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/113.npz"
+            },
+            {
+              "name": "small_file_size_boundary:113.npz",
+              "passed": true,
+              "detail": 2259967
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/113.npz",
+              "passed": true,
+              "detail": "5bd17173fdf0db258e75f998bc1764a804c84d864265987a68fd091a523a194e"
+            },
+            {
+              "name": "small_file_exists:114.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/114.npz"
+            },
+            {
+              "name": "small_file_size_boundary:114.npz",
+              "passed": true,
+              "detail": 2261975
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/114.npz",
+              "passed": true,
+              "detail": "74ec3aac71b61406877a491c0abb68ae7326442533e0de561fb0a1fed485a6eb"
+            },
+            {
+              "name": "small_file_exists:115.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/115.npz"
+            },
+            {
+              "name": "small_file_size_boundary:115.npz",
+              "passed": true,
+              "detail": 2263210
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/115.npz",
+              "passed": true,
+              "detail": "41678431bf58cd6358917202f74176a2b186084e247d70589413925d68c0590a"
+            },
+            {
+              "name": "small_file_exists:116.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/116.npz"
+            },
+            {
+              "name": "small_file_size_boundary:116.npz",
+              "passed": true,
+              "detail": 2260274
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/116.npz",
+              "passed": true,
+              "detail": "dc66a94eae71f8b9748e0772de59a8a1651c0c39bd3140f060e6c894592ffe30"
+            },
+            {
+              "name": "small_file_exists:117.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/117.npz"
+            },
+            {
+              "name": "small_file_size_boundary:117.npz",
+              "passed": true,
+              "detail": 2253915
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/117.npz",
+              "passed": true,
+              "detail": "7ba42967c095fb81750458e1f09402b747eed5f276b2e731d16b64f72794dea5"
+            },
+            {
+              "name": "small_file_exists:118.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/118.npz"
+            },
+            {
+              "name": "small_file_size_boundary:118.npz",
+              "passed": true,
+              "detail": 2255868
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/118.npz",
+              "passed": true,
+              "detail": "df9f504e404725774331db397f336a99f0a9ef4ff29b0cae15aaa4004f05c211"
+            },
+            {
+              "name": "small_file_exists:119.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/119.npz"
+            },
+            {
+              "name": "small_file_size_boundary:119.npz",
+              "passed": true,
+              "detail": 2262145
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/119.npz",
+              "passed": true,
+              "detail": "66f0d5d5822aeb9e8272063cfe3e92821dbfcd35f6a8dd46b6c4aacc3638f20d"
+            },
+            {
+              "name": "small_file_exists:120.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/120.npz"
+            },
+            {
+              "name": "small_file_size_boundary:120.npz",
+              "passed": true,
+              "detail": 2263066
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/120.npz",
+              "passed": true,
+              "detail": "b563ee8756962a00ece24f61482c7aa5bd59921211a97ec9e89e77da51c03191"
+            },
+            {
+              "name": "small_file_exists:121.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/121.npz"
+            },
+            {
+              "name": "small_file_size_boundary:121.npz",
+              "passed": true,
+              "detail": 2263503
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/121.npz",
+              "passed": true,
+              "detail": "17270e607756f3f5365edbbcb7c97596b5adcfaa5dc1853004ac4eec3ba471cd"
+            },
+            {
+              "name": "small_file_exists:122.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/122.npz"
+            },
+            {
+              "name": "small_file_size_boundary:122.npz",
+              "passed": true,
+              "detail": 2264292
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/122.npz",
+              "passed": true,
+              "detail": "15f12a992e2efe048f958fee4afa180a29b437f404baab947bbc9311784a35bc"
+            },
+            {
+              "name": "small_file_exists:123.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/123.npz"
+            },
+            {
+              "name": "small_file_size_boundary:123.npz",
+              "passed": true,
+              "detail": 2263137
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/123.npz",
+              "passed": true,
+              "detail": "4abc45c933d73a2b27438a1132788e466072336fe0a66c54d2c645be524cb384"
+            },
+            {
+              "name": "small_file_exists:124.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/124.npz"
+            },
+            {
+              "name": "small_file_size_boundary:124.npz",
+              "passed": true,
+              "detail": 2253646
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/124.npz",
+              "passed": true,
+              "detail": "e41814396dbf7f3cec4cdad9da19ad84ab8b7fe691e4a0d6385d5a7b426c7257"
+            },
+            {
+              "name": "small_file_exists:125.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/125.npz"
+            },
+            {
+              "name": "small_file_size_boundary:125.npz",
+              "passed": true,
+              "detail": 2247710
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/125.npz",
+              "passed": true,
+              "detail": "b1ce7677046d092b5893fb491245de5a79e749ce801887e345bfdbace24f8bcf"
+            },
+            {
+              "name": "small_file_exists:126.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/126.npz"
+            },
+            {
+              "name": "small_file_size_boundary:126.npz",
+              "passed": true,
+              "detail": 2261287
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/126.npz",
+              "passed": true,
+              "detail": "288e16b48f853106bc7338c5c28aaafacef7631a371f941c466f8c1bc6cbf414"
+            },
+            {
+              "name": "small_file_exists:127.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/127.npz"
+            },
+            {
+              "name": "small_file_size_boundary:127.npz",
+              "passed": true,
+              "detail": 2253569
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/127.npz",
+              "passed": true,
+              "detail": "f974238a631122f61186261160f07f79deb7a555ee946d1c2e5e95acf3e36dc8"
+            },
+            {
+              "name": "small_file_exists:128.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/128.npz"
+            },
+            {
+              "name": "small_file_size_boundary:128.npz",
+              "passed": true,
+              "detail": 2245881
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/128.npz",
+              "passed": true,
+              "detail": "ecf328da7a5029d0d2ac735555f717990f88b32045576d585d65f995456c40a5"
+            },
+            {
+              "name": "small_file_exists:129.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/129.npz"
+            },
+            {
+              "name": "small_file_size_boundary:129.npz",
+              "passed": true,
+              "detail": 2255887
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/129.npz",
+              "passed": true,
+              "detail": "c3354e37cf8b7b9ee54e108a4ed850456098b31e683df8596fdf3920596b845f"
+            },
+            {
+              "name": "small_file_exists:130.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/130.npz"
+            },
+            {
+              "name": "small_file_size_boundary:130.npz",
+              "passed": true,
+              "detail": 2253904
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/130.npz",
+              "passed": true,
+              "detail": "a534e1ab7cb4f17633281f63f35a1a5f78324be4594abd99c15e22e36c7bc61c"
+            },
+            {
+              "name": "small_file_exists:131.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/131.npz"
+            },
+            {
+              "name": "small_file_size_boundary:131.npz",
+              "passed": true,
+              "detail": 2255661
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/131.npz",
+              "passed": true,
+              "detail": "251ea2e3683689ff22ba704b06dc16ea86e038bb1abfe31cdd936ddc9a59dd2e"
+            },
+            {
+              "name": "small_file_exists:132.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/132.npz"
+            },
+            {
+              "name": "small_file_size_boundary:132.npz",
+              "passed": true,
+              "detail": 2256306
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/132.npz",
+              "passed": true,
+              "detail": "398c54fd9f1b22178e13f917b9b1311e6c3fd6049a951cc8236741f3c0684230"
+            },
+            {
+              "name": "small_file_exists:133.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/133.npz"
+            },
+            {
+              "name": "small_file_size_boundary:133.npz",
+              "passed": true,
+              "detail": 2249712
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/133.npz",
+              "passed": true,
+              "detail": "4b966011815221ac631f432747bc99ee6301c4c1fcc3a0361dbfa3b167e4495d"
+            },
+            {
+              "name": "small_file_exists:134.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/134.npz"
+            },
+            {
+              "name": "small_file_size_boundary:134.npz",
+              "passed": true,
+              "detail": 2243245
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/134.npz",
+              "passed": true,
+              "detail": "cc63ff1f93bf0cb27d374a23640148fdbf7dd3b335d04e9585b73dfdfd41c403"
+            },
+            {
+              "name": "small_file_exists:135.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/135.npz"
+            },
+            {
+              "name": "small_file_size_boundary:135.npz",
+              "passed": true,
+              "detail": 2244628
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/135.npz",
+              "passed": true,
+              "detail": "11a2f0ac471c866ca2b3ec5f8dceecfb971b4fdeabffd375546d4cebcd6e9e59"
+            },
+            {
+              "name": "small_file_exists:136.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/136.npz"
+            },
+            {
+              "name": "small_file_size_boundary:136.npz",
+              "passed": true,
+              "detail": 2231086
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/136.npz",
+              "passed": true,
+              "detail": "e872d2eac9a75677cc41ee2f6ac05711369aed4b570b7a6dae04fe21214d378c"
+            },
+            {
+              "name": "small_file_exists:137.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/137.npz"
+            },
+            {
+              "name": "small_file_size_boundary:137.npz",
+              "passed": true,
+              "detail": 2229140
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/views/137.npz",
+              "passed": true,
+              "detail": "1f7e52ea25c9286b97c43e1ddc0141b797ea4a9cf0802e6661e7956e6a7b5990"
+            },
+            {
+              "name": "small_file_exists:replay_binding.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_binding.json"
+            },
+            {
+              "name": "small_file_size_boundary:replay_binding.json",
+              "passed": true,
+              "detail": 1643
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_binding.json",
+              "passed": true,
+              "detail": "2f38a0bfd2555a6b6cc67379f70a0632eb07199c639abd89ca0243812e733fba"
+            },
+            {
+              "name": "small_file_exists:selection.json",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/selection.json"
+            },
+            {
+              "name": "small_file_size_boundary:selection.json",
+              "passed": true,
+              "detail": 863
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/selection.json",
+              "passed": true,
+              "detail": "751346b6cdcfed8c9dc7376039e0805fd53e9571556038b97b18ee85cd3fba01"
+            },
+            {
+              "name": "small_file_exists:editor_common.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/editor_common.py"
+            },
+            {
+              "name": "small_file_size_boundary:editor_common.py",
+              "passed": true,
+              "detail": 11257
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/editor_common.py",
+              "passed": true,
+              "detail": "347a6fa29da11daef373392ac386b1fa9c907e0ced99998f5342bb539a8ee10b"
+            },
+            {
+              "name": "small_file_exists:native_binding.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/native_binding.py"
+            },
+            {
+              "name": "small_file_size_boundary:native_binding.py",
+              "passed": true,
+              "detail": 4710
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/native_binding.py",
+              "passed": true,
+              "detail": "0e99797b225b7ae6b362fcec515f5eeb9c2fa5e93c5fd8cfc7ad5c2364b4ae9f"
+            },
+            {
+              "name": "small_file_exists:r4_runtime.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/r4_runtime.py"
+            },
+            {
+              "name": "small_file_size_boundary:r4_runtime.py",
+              "passed": true,
+              "detail": 11353
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/r4_runtime.py",
+              "passed": true,
+              "detail": "4deab7ccc9aff9fae70f4a8dd25f54a9aa23fbe89885c044ca00e4e45d0f68e4"
+            },
+            {
+              "name": "small_file_exists:repair37.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/repair37.py"
+            },
+            {
+              "name": "small_file_size_boundary:repair37.py",
+              "passed": true,
+              "detail": 12663
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/repair37.py",
+              "passed": true,
+              "detail": "54968910bca402be5649f2fe3ba2e7fd9a3bfbe26e35d835c317c58cea90e272"
+            },
+            {
+              "name": "small_file_exists:road_runtime.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/road_runtime.py"
+            },
+            {
+              "name": "small_file_size_boundary:road_runtime.py",
+              "passed": true,
+              "detail": 15603
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/road_runtime.py",
+              "passed": true,
+              "detail": "3baa4b0ede164baa19663dbaa8698adb3257b13765409fd23226196ea61134b5"
+            },
+            {
+              "name": "small_file_exists:089.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/089.npz"
+            },
+            {
+              "name": "small_file_size_boundary:089.npz",
+              "passed": true,
+              "detail": 1624390
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/089.npz",
+              "passed": true,
+              "detail": "171547af4860142a5091667e2d1de34a7bcc4c8c9a7008a7f0fb1da0fe7653a9"
+            },
+            {
+              "name": "small_file_exists:090.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/090.npz"
+            },
+            {
+              "name": "small_file_size_boundary:090.npz",
+              "passed": true,
+              "detail": 1623357
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/090.npz",
+              "passed": true,
+              "detail": "47e7cb7d11a7af80e8b1f23bce6456facd60deabbfaf65f0c8271afdc169a4e4"
+            },
+            {
+              "name": "small_file_exists:091.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/091.npz"
+            },
+            {
+              "name": "small_file_size_boundary:091.npz",
+              "passed": true,
+              "detail": 1625228
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/091.npz",
+              "passed": true,
+              "detail": "bbaebb7b8410530545e11fa9f2e453fe156d5a7f92c40c4ad9d51c1e546ac3bc"
+            },
+            {
+              "name": "small_file_exists:092.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/092.npz"
+            },
+            {
+              "name": "small_file_size_boundary:092.npz",
+              "passed": true,
+              "detail": 1625262
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/092.npz",
+              "passed": true,
+              "detail": "c8d64b15e558b4db3beb284b7f2fa14b7f6f05efe1c65c853207adc62596dfa4"
+            },
+            {
+              "name": "small_file_exists:093.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/093.npz"
+            },
+            {
+              "name": "small_file_size_boundary:093.npz",
+              "passed": true,
+              "detail": 1625503
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/093.npz",
+              "passed": true,
+              "detail": "7e2987cdba530c37396468ce082fe56ee234700b9ce28f5309c183962068fe3a"
+            },
+            {
+              "name": "small_file_exists:094.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz"
+            },
+            {
+              "name": "small_file_size_boundary:094.npz",
+              "passed": true,
+              "detail": 1622677
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz",
+              "passed": true,
+              "detail": "45599dac31823f286103cdab9fe77c7d598636f82c1b42da03f445546e224a9a"
+            },
+            {
+              "name": "small_file_exists:095.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/095.npz"
+            },
+            {
+              "name": "small_file_size_boundary:095.npz",
+              "passed": true,
+              "detail": 1621966
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/095.npz",
+              "passed": true,
+              "detail": "4f0ea9a4115803dc5c3dd0ce03c82d5150feddecb4e49590af08f0ecd44a286c"
+            },
+            {
+              "name": "small_file_exists:096.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/096.npz"
+            },
+            {
+              "name": "small_file_size_boundary:096.npz",
+              "passed": true,
+              "detail": 1606254
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/096.npz",
+              "passed": true,
+              "detail": "679fc2d03207faec6cd23b3d7c3a29b69b67511b22027ed3f7ca3acdc3b92a33"
+            },
+            {
+              "name": "small_file_exists:097.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/097.npz"
+            },
+            {
+              "name": "small_file_size_boundary:097.npz",
+              "passed": true,
+              "detail": 1619431
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/097.npz",
+              "passed": true,
+              "detail": "ab7899928dac50edd09057706a364c605978aebd7961e6405d108a436210d417"
+            },
+            {
+              "name": "small_file_exists:098.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/098.npz"
+            },
+            {
+              "name": "small_file_size_boundary:098.npz",
+              "passed": true,
+              "detail": 1622262
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/098.npz",
+              "passed": true,
+              "detail": "4be77ace12f2beb219587ff0f3f51f977a41221fe9c24193da35534db8f32dfe"
+            },
+            {
+              "name": "small_file_exists:099.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz"
+            },
+            {
+              "name": "small_file_size_boundary:099.npz",
+              "passed": true,
+              "detail": 1626557
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz",
+              "passed": true,
+              "detail": "85cd77dcaa368d2136797dab9d0c01359fe14a0777b2a2f12f8cadfec6d00f6e"
+            },
+            {
+              "name": "small_file_exists:100.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/100.npz"
+            },
+            {
+              "name": "small_file_size_boundary:100.npz",
+              "passed": true,
+              "detail": 1630075
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/100.npz",
+              "passed": true,
+              "detail": "d869e4a309dbb8f016eae1f99ac6335fec552388c92bcd1d5e80d3475dbdebb1"
+            },
+            {
+              "name": "small_file_exists:101.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/101.npz"
+            },
+            {
+              "name": "small_file_size_boundary:101.npz",
+              "passed": true,
+              "detail": 1631605
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/101.npz",
+              "passed": true,
+              "detail": "dc11b4c6fc673220499232af078faa11555e0414c80937961b8794f9b9613e5d"
+            },
+            {
+              "name": "small_file_exists:102.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/102.npz"
+            },
+            {
+              "name": "small_file_size_boundary:102.npz",
+              "passed": true,
+              "detail": 1571110
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/102.npz",
+              "passed": true,
+              "detail": "0cb10c192ac174ef11849bcb0be16ac0c2338f971e14050f74a1f84513e7ef81"
+            },
+            {
+              "name": "small_file_exists:103.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/103.npz"
+            },
+            {
+              "name": "small_file_size_boundary:103.npz",
+              "passed": true,
+              "detail": 1634224
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/103.npz",
+              "passed": true,
+              "detail": "0120011dfe78c7b7b5314b47259886c23d9122b2174ad2c0994b687c97747d9e"
+            },
+            {
+              "name": "small_file_exists:104.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/104.npz"
+            },
+            {
+              "name": "small_file_size_boundary:104.npz",
+              "passed": true,
+              "detail": 1635405
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/104.npz",
+              "passed": true,
+              "detail": "179be9930ea91d7791118c6ec081986845031c775557313a5fd694f68254732a"
+            },
+            {
+              "name": "small_file_exists:105.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz"
+            },
+            {
+              "name": "small_file_size_boundary:105.npz",
+              "passed": true,
+              "detail": 1642096
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz",
+              "passed": true,
+              "detail": "a34453005c56e5f69033037e3bc1ac845418e5993cca610c8641cb10e8dba259"
+            },
+            {
+              "name": "small_file_exists:106.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz"
+            },
+            {
+              "name": "small_file_size_boundary:106.npz",
+              "passed": true,
+              "detail": 1639260
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz",
+              "passed": true,
+              "detail": "4606b4a99ae7de06ec64a9192165e70d3bda83e6142dd3d5f92e77e9649aab03"
+            },
+            {
+              "name": "small_file_exists:107.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/107.npz"
+            },
+            {
+              "name": "small_file_size_boundary:107.npz",
+              "passed": true,
+              "detail": 1637049
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/107.npz",
+              "passed": true,
+              "detail": "e7db2e486c2e939c18bccb1a4a0a58d6524c833403c6ced0848933a8346d2974"
+            },
+            {
+              "name": "small_file_exists:108.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/108.npz"
+            },
+            {
+              "name": "small_file_size_boundary:108.npz",
+              "passed": true,
+              "detail": 1631101
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/108.npz",
+              "passed": true,
+              "detail": "39aeafe0110d9540ff257d47a85b53fc57e0ae61806e128f50c5fa9bacbce30f"
+            },
+            {
+              "name": "small_file_exists:109.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/109.npz"
+            },
+            {
+              "name": "small_file_size_boundary:109.npz",
+              "passed": true,
+              "detail": 1624979
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/109.npz",
+              "passed": true,
+              "detail": "bb2bbd2516d9855870a8cf6d21c36bceb69d1bb4409ab525fc18672ecfdaf06e"
+            },
+            {
+              "name": "small_file_exists:110.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/110.npz"
+            },
+            {
+              "name": "small_file_size_boundary:110.npz",
+              "passed": true,
+              "detail": 1560317
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/110.npz",
+              "passed": true,
+              "detail": "0831563e3006f89737f1de570cd50d3ec4933915410568156e790bdc645adb10"
+            },
+            {
+              "name": "small_file_exists:111.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/111.npz"
+            },
+            {
+              "name": "small_file_size_boundary:111.npz",
+              "passed": true,
+              "detail": 1565276
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/111.npz",
+              "passed": true,
+              "detail": "07fcc0a12aaaf351cb280dc5cbf8d51a8649c8efbc6cfab5906ef2d91a8a082a"
+            },
+            {
+              "name": "small_file_exists:112.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/112.npz"
+            },
+            {
+              "name": "small_file_size_boundary:112.npz",
+              "passed": true,
+              "detail": 1602884
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/112.npz",
+              "passed": true,
+              "detail": "0d6187ac6ff4160ee6d3104dbc638b299d304c99dbe243eea1cdb237b214dba1"
+            },
+            {
+              "name": "small_file_exists:113.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/113.npz"
+            },
+            {
+              "name": "small_file_size_boundary:113.npz",
+              "passed": true,
+              "detail": 1591848
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/113.npz",
+              "passed": true,
+              "detail": "ff86e5a94ecf62d6201619c743ed11aae46c957e7508f1a1bc0f23f68478a420"
+            },
+            {
+              "name": "small_file_exists:114.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/114.npz"
+            },
+            {
+              "name": "small_file_size_boundary:114.npz",
+              "passed": true,
+              "detail": 1580389
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/114.npz",
+              "passed": true,
+              "detail": "6379899203ff7adb5c435c538039ce8aecdc3bde7e36bb63b5b35266891532ba"
+            },
+            {
+              "name": "small_file_exists:115.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/115.npz"
+            },
+            {
+              "name": "small_file_size_boundary:115.npz",
+              "passed": true,
+              "detail": 1551624
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/115.npz",
+              "passed": true,
+              "detail": "d27b78266606c08cef3e8fe902397865a83bc7be511c2128ef1911f4ebe9e2d0"
+            },
+            {
+              "name": "small_file_exists:116.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/116.npz"
+            },
+            {
+              "name": "small_file_size_boundary:116.npz",
+              "passed": true,
+              "detail": 1573630
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/116.npz",
+              "passed": true,
+              "detail": "e26197f7c83b98ff56d2fdb5b0f2beb99bb43827618ac987d6dc8e849bb5c82c"
+            },
+            {
+              "name": "small_file_exists:117.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/117.npz"
+            },
+            {
+              "name": "small_file_size_boundary:117.npz",
+              "passed": true,
+              "detail": 1529569
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/117.npz",
+              "passed": true,
+              "detail": "b0edd9b3d10ac65ebed96064c43b7b47ec72e4edb9bc4010afd1dfea4ce0473a"
+            },
+            {
+              "name": "small_file_exists:118.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/118.npz"
+            },
+            {
+              "name": "small_file_size_boundary:118.npz",
+              "passed": true,
+              "detail": 1549017
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/118.npz",
+              "passed": true,
+              "detail": "6bd6f5e52913c9e3c36818248d97c3bedd7e97b6f04a1701b1f4d07659eccf60"
+            },
+            {
+              "name": "small_file_exists:119.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/119.npz"
+            },
+            {
+              "name": "small_file_size_boundary:119.npz",
+              "passed": true,
+              "detail": 1558882
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/119.npz",
+              "passed": true,
+              "detail": "0be77a658eb3b3defebf6f919171b5ca699c18496d20b9275f50f18532460790"
+            },
+            {
+              "name": "small_file_exists:120.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/120.npz"
+            },
+            {
+              "name": "small_file_size_boundary:120.npz",
+              "passed": true,
+              "detail": 1554944
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/120.npz",
+              "passed": true,
+              "detail": "115bab13331f18cbdab5314cd2ad4a8a0e5f2a371af52c9463a83d68737e865b"
+            },
+            {
+              "name": "small_file_exists:121.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/121.npz"
+            },
+            {
+              "name": "small_file_size_boundary:121.npz",
+              "passed": true,
+              "detail": 1550267
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/121.npz",
+              "passed": true,
+              "detail": "efdf22db7e60344654196189b11ddf9eb7051ea19d98966ace22df56d9cf54e8"
+            },
+            {
+              "name": "small_file_exists:122.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/122.npz"
+            },
+            {
+              "name": "small_file_size_boundary:122.npz",
+              "passed": true,
+              "detail": 1550639
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/122.npz",
+              "passed": true,
+              "detail": "6a0cdf8a563420250ec740428b21640578f53b0826f1348c90a7c69f79fdf5b0"
+            },
+            {
+              "name": "small_file_exists:123.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/123.npz"
+            },
+            {
+              "name": "small_file_size_boundary:123.npz",
+              "passed": true,
+              "detail": 1545780
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/123.npz",
+              "passed": true,
+              "detail": "00819c2d61e478df26f0e081329e88e62f5e8c5b9e93a1d7ae77ca948a51e101"
+            },
+            {
+              "name": "small_file_exists:124.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/124.npz"
+            },
+            {
+              "name": "small_file_size_boundary:124.npz",
+              "passed": true,
+              "detail": 1522141
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/124.npz",
+              "passed": true,
+              "detail": "7b2e0c09a036635c87fe64525452627a8acab935c4e3e4218711be9d0c5130a4"
+            },
+            {
+              "name": "small_file_exists:125.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/125.npz"
+            },
+            {
+              "name": "small_file_size_boundary:125.npz",
+              "passed": true,
+              "detail": 1500408
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/125.npz",
+              "passed": true,
+              "detail": "a81bc6438de462c0543f59403b287c31f61330e97ab24bd8b62bc861a51adbaf"
+            },
+            {
+              "name": "small_file_exists:126.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/126.npz"
+            },
+            {
+              "name": "small_file_size_boundary:126.npz",
+              "passed": true,
+              "detail": 1501766
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/126.npz",
+              "passed": true,
+              "detail": "19a6e79847737933c0284c61f870d54f9afd379b9138264986381a14f728c67b"
+            },
+            {
+              "name": "small_file_exists:127.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/127.npz"
+            },
+            {
+              "name": "small_file_size_boundary:127.npz",
+              "passed": true,
+              "detail": 1520868
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/127.npz",
+              "passed": true,
+              "detail": "59b71e4017a3a9af005e59fb7206b65d187ddd389b9f1af52b0ee26c8f20a9ed"
+            },
+            {
+              "name": "small_file_exists:128.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz"
+            },
+            {
+              "name": "small_file_size_boundary:128.npz",
+              "passed": true,
+              "detail": 1511832
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz",
+              "passed": true,
+              "detail": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad"
+            },
+            {
+              "name": "small_file_exists:129.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/129.npz"
+            },
+            {
+              "name": "small_file_size_boundary:129.npz",
+              "passed": true,
+              "detail": 1513988
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/129.npz",
+              "passed": true,
+              "detail": "12d03a299be0494a9d330b3c50367432cda9914896c33f56840e5997ac718944"
+            },
+            {
+              "name": "small_file_exists:130.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/130.npz"
+            },
+            {
+              "name": "small_file_size_boundary:130.npz",
+              "passed": true,
+              "detail": 1516675
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/130.npz",
+              "passed": true,
+              "detail": "c14b89078f758a2a1d17f75048ffe6915d4031ff0ab25b68211af5e369f36c24"
+            },
+            {
+              "name": "small_file_exists:131.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/131.npz"
+            },
+            {
+              "name": "small_file_size_boundary:131.npz",
+              "passed": true,
+              "detail": 1517003
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/131.npz",
+              "passed": true,
+              "detail": "c2bed93f0d6f026c8fa08f4942480414d8a1189b6b8d3ca392fbda2b44444b74"
+            },
+            {
+              "name": "small_file_exists:132.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/132.npz"
+            },
+            {
+              "name": "small_file_size_boundary:132.npz",
+              "passed": true,
+              "detail": 1497895
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/132.npz",
+              "passed": true,
+              "detail": "1d63cae3f9143780f022acb1e125c3337a6cfca7f78d1736f0c1fa50a2ff5542"
+            },
+            {
+              "name": "small_file_exists:133.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/133.npz"
+            },
+            {
+              "name": "small_file_size_boundary:133.npz",
+              "passed": true,
+              "detail": 1519724
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/133.npz",
+              "passed": true,
+              "detail": "5079648582f3a483885c50ad0fe8d3d49691733004e4afc74beda566f50dd79c"
+            },
+            {
+              "name": "small_file_exists:134.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/134.npz"
+            },
+            {
+              "name": "small_file_size_boundary:134.npz",
+              "passed": true,
+              "detail": 1516450
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/134.npz",
+              "passed": true,
+              "detail": "6015d59f8898bd74c49d9237b64f77a4d1dc01f0921afce3c70c525ad97ee8e9"
+            },
+            {
+              "name": "small_file_exists:135.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/135.npz"
+            },
+            {
+              "name": "small_file_size_boundary:135.npz",
+              "passed": true,
+              "detail": 1515439
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/135.npz",
+              "passed": true,
+              "detail": "55bab63da1d96842e67839883ea1d226b24a61e7f3a83922aeabb63a62e3969b"
+            },
+            {
+              "name": "small_file_exists:136.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/136.npz"
+            },
+            {
+              "name": "small_file_size_boundary:136.npz",
+              "passed": true,
+              "detail": 1506618
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/136.npz",
+              "passed": true,
+              "detail": "92ec22066f41f2ae4a334d43b7e6c012c47a7c75b8bf793a3fb472aaa7b379a7"
+            },
+            {
+              "name": "small_file_exists:137.npz",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz"
+            },
+            {
+              "name": "small_file_size_boundary:137.npz",
+              "passed": true,
+              "detail": 1502902
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz",
+              "passed": true,
+              "detail": "108d8c673fba6c08e78dc14630ba5019abb68c58ff31ba43bb48b097bd0c8528"
+            },
+            {
+              "name": "small_file_exists:dual_actor_runtime.py",
+              "passed": true,
+              "detail": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/source/dual_actor_runtime.py"
+            },
+            {
+              "name": "small_file_size_boundary:dual_actor_runtime.py",
+              "passed": true,
+              "detail": 6613
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/drivingeditor_repro/campaign/scene008_native_ownership_20261105/source/dual_actor_runtime.py",
+              "passed": true,
+              "detail": "76b363a0f9066f5aae5716002d5f327a1f27cf80f5f859b0c475d86bf7fb3122"
+            },
+            {
+              "name": "small_file_exists:_C.cpython-39-x86_64-linux-gnu.so",
+              "passed": true,
+              "detail": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so"
+            },
+            {
+              "name": "small_file_size_boundary:_C.cpython-39-x86_64-linux-gnu.so",
+              "passed": true,
+              "detail": 1691360
+            },
+            {
+              "name": "sha256:/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/_C.cpython-39-x86_64-linux-gnu.so",
+              "passed": true,
+              "detail": "0eaff4d7a9b8ef6e711627f4c19824bf427c4387f7c6453fcb769a2c919c920e"
+            },
+            {
+              "name": "source_binding_hash",
+              "passed": true,
+              "detail": "6a955f0fa78646264366d985e45b481b7bf8698998764927bf906e5730943e00"
+            },
+            {
+              "name": "source_complete_m2_receipt",
+              "passed": true
+            },
+            {
+              "name": "native10k_parent",
+              "passed": true
+            },
+            {
+              "name": "freshroad_parent",
+              "passed": true
+            },
+            {
+              "name": "native_checkpoint_identity:chkpnt10000.pth",
+              "passed": true,
+              "detail": [
+                826934296,
+                1793884537536887316
+              ]
+            },
+            {
+              "name": "native_checkpoint_identity:dynamic_chkpnt10000.pth",
+              "passed": true,
+              "detail": [
+                839984408,
+                1793884540706054677
+              ]
+            },
+            {
+              "name": "native_checkpoint_identity:env_light_chkpnt10000.pth",
+              "passed": true,
+              "detail": [
+                226494608,
+                1793884542546760397
+              ]
+            },
+            {
+              "name": "native_checkpoint_identity:training_state10000.pth",
+              "passed": true,
+              "detail": [
+                44824,
+                1793884709726852182
+              ]
+            },
+            {
+              "name": "native_metadata:effective_config.json",
+              "passed": true
+            },
+            {
+              "name": "native_metadata:cameras.json",
+              "passed": true
+            },
+            {
+              "name": "native_metadata:actual_scene_binding.json",
+              "passed": true
+            },
+            {
+              "name": "freshroad_replay_binding",
+              "passed": true
+            },
+            {
+              "name": "road_checkpoint_step_and_native_identity",
+              "passed": true
+            },
+            {
+              "name": "road_checkpoint_method",
+              "passed": true
+            },
+            {
+              "name": "road_repair_cpu_finite",
+              "passed": true
+            },
+            {
+              "name": "road_repair_state_hash",
+              "passed": true
+            },
+            {
+              "name": "freshroad_contributor_ids",
+              "passed": true
+            },
+            {
+              "name": "road_tensor_schema",
+              "passed": true
+            },
+            {
+              "name": "road_baseline_hash",
+              "passed": true
+            },
+            {
+              "name": "fine_keeps_original_m2_source_binding",
+              "passed": true
+            },
+            {
+              "name": "fine_baseline_and_coarse_provenance",
+              "passed": true
+            },
+            {
+              "name": "fine_coefficients_finite_bounded_99x3",
+              "passed": true
+            },
+            {
+              "name": "fine_exact_same_road_baseline",
+              "passed": true
+            },
+            {
+              "name": "fine_source_coefficients_hash",
+              "passed": true
+            },
+            {
+              "name": "fine_world_knots",
+              "passed": true
+            },
+            {
+              "name": "current_asset_is_c2_not_old_m2",
+              "passed": true
+            },
+            {
+              "name": "current_posterior_hash",
+              "passed": true
+            },
+            {
+              "name": "c2_schema_rows",
+              "passed": true
+            },
+            {
+              "name": "canonical_sh3_actual_nonDC_exact_zero",
+              "passed": true
+            },
+            {
+              "name": "canonical_rgb_exact_dc",
+              "passed": true
+            },
+            {
+              "name": "c2_required_geometry_finite",
+              "passed": true
+            },
+            {
+              "name": "c2_positive_scales_and_peak_opacity",
+              "passed": true
+            },
+            {
+              "name": "c2_stored_geometry_hash",
+              "passed": true
+            },
+            {
+              "name": "c2_stored_provenance_hash",
+              "passed": true
+            },
+            {
+              "name": "c2_chart_unique_integer_uv",
+              "passed": true
+            },
+            {
+              "name": "posterior_finite_used_arrays",
+              "passed": true
+            },
+            {
+              "name": "posterior_reproduces_canonical_c2_surface",
+              "passed": true,
+              "detail": {
+                "xyz_maxabs_m": 0.0,
+                "sigma_maxabs_m": 0.0
+              }
+            },
+            {
+              "name": "native_same_49_raws",
+              "passed": true
+            },
+            {
+              "name": "fixed_reference_49raw_ground_proxy",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw089",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw089",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw090",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw090",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw091",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw091",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw092",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw092",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw093",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw093",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw094",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw094",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw095",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw095",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw096",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw096",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw097",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw097",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw098",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw098",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw099",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw099",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw100",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw100",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw101",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw101",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw102",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw102",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw103",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw103",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw104",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw104",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw105",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw105",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw106",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw106",
+              "passed": true
+            },
+            {
+              "name": "posterior_uses_current_raw106_camera_and_local_pose",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw107",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw107",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw108",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw108",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw109",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw109",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw110",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw110",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw111",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw111",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw112",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw112",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw113",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw113",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw114",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw114",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw115",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw115",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw116",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw116",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw117",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw117",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw118",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw118",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw119",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw119",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw120",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw120",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw121",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw121",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw122",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw122",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw123",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw123",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw124",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw124",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw125",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw125",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw126",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw126",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw127",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw127",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw128",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw128",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw129",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw129",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw130",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw130",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw131",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw131",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw132",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw132",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw133",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw133",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw134",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw134",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw135",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw135",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw136",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw136",
+              "passed": true
+            },
+            {
+              "name": "observation_rgb_depth_schema_raw137",
+              "passed": true
+            },
+            {
+              "name": "camera_time_pose_raw137",
+              "passed": true
+            }
+          ],
+          "failures": [],
+          "device": "cpu",
+          "cuda_operations_requested": 0,
+          "renderer_imports": 0,
+          "native_checkpoint_payloads_loaded": 0,
+          "multi_GB_checkpoints_hashed": 0,
+          "training_updates": 0,
+          "calibration_updates": 0,
+          "new_calibration": false,
+          "gpu_render_verified": false,
+          "quality_accepted": false,
+          "scope": "Frozen inputs and CPU structural compatibility only",
+          "contract_sha256": "719b0660cbb952e4a8ed4595dc5e56a7f358d1a633c1eb42eaadef186f530a17",
+          "small_files_hashed": 132,
+          "small_file_bytes_hashed": 241285078,
+          "native_checkpoint_identity": {
+            "chkpnt10000.pth": [
+              826934296,
+              1793884537536887316
+            ],
+            "dynamic_chkpnt10000.pth": [
+              839984408,
+              1793884540706054677
+            ],
+            "env_light_chkpnt10000.pth": [
+              226494608,
+              1793884542546760397
+            ],
+            "training_state10000.pth": [
+              44824,
+              1793884709726852182
+            ]
+          },
+          "fine_transfer": {
+            "mode": "frozen_transfer_from_rcr1_m2",
+            "source_binding_sha256": "6a955f0fa78646264366d985e45b481b7bf8698998764927bf906e5730943e00",
+            "source_M2_sha256": "d84133bb1a9767e00301857cc1d8f293f506faaafc58da598c8d0d7c0c8ae0e6",
+            "source_coefficients_sha256": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3",
+            "source_gpu_colour_table_sha256": "1e87f7f3f3076986427a330128e2666480c05a5b275fdec7d6fa9761656d2cd6",
+            "recalibrated_for_current_asset": false,
+            "source_metadata_rewritten": false,
+            "current_asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d"
+          },
+          "asset": {
+            "rows": 45314,
+            "chart_rows": 42536,
+            "retained_rows": 2778,
+            "nonDC_nonzero": 0,
+            "geometry_hash": "ada81d3ff04d142b063de0088c27b6bc9f75dc7ec2d098a0f2344ef7f08cd5e9",
+            "provenance_hash": "a68121ff890a537f80193f459c36ad42a533b99ea293d270f1445983ba905caa"
+          },
+          "native_raws": [
+            89,
+            90,
+            91,
+            92,
+            93,
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105,
+            106,
+            107,
+            108,
+            109,
+            110,
+            111,
+            112,
+            113,
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126,
+            127,
+            128,
+            129,
+            130,
+            131,
+            132,
+            133,
+            134,
+            135,
+            136,
+            137
+          ],
+          "runtime_checks_deferred": [
+            "GPU native static/dynamic identity and full actor labels",
+            "Original shared-depth CUDA rendering and finite RGB/alpha/depth",
+            "Keep/delete asset rows equality and complete a37 removal",
+            "49 keep/delete visual acceptance including raw130/raw137 silver residual"
+          ],
+          "seconds": 2.8401569798588753,
+          "checks_passed": 552
+        },
+        "asset_tensor_schema": {
+          "xyz": {
+            "shape": [
+              45314,
+              3
+            ],
+            "dtype": "torch.float32"
+          },
+          "normal": {
+            "shape": [
+              45314,
+              3
+            ],
+            "dtype": "torch.float32"
+          },
+          "sigma": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "opacity": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "thickness": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "box": {
+            "shape": [
+              3
+            ],
+            "dtype": "torch.float32"
+          },
+          "knn_spacing": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "normal_radius": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "normal_confidence": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "generated": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "conditioning": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "normal_valid": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "out_of_box": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "conditioning_held": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "source_index": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "conditioning_observation_index": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "conditioning_raw_frame": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "conditioning_cloud_row": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "sampling_parent_index": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "sampling_child_index": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "sampling_asset_row_id": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "sampling_uv_m": {
+            "shape": [
+              45314,
+              2
+            ],
+            "dtype": "torch.float32"
+          },
+          "sampling_exact_source_point": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "sampling_interpolated": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "sampling_source_out_of_box": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "representation_kind": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int16"
+          },
+          "resample_source_row": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "resample_source_parent": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int64"
+          },
+          "resample_source_distance_local_m": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.float32"
+          },
+          "resample_reference_pixel_xy": {
+            "shape": [
+              45314,
+              2
+            ],
+            "dtype": "torch.int32"
+          },
+          "resample_reference_raw": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.int16"
+          },
+          "resample_rgb_real": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "resample_rgb_generated": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "resample_rgb_prior_fallback": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          },
+          "coefficients": {
+            "shape": [
+              45314,
+              16,
+              3
+            ],
+            "dtype": "torch.float32"
+          },
+          "colour_inferred": {
+            "shape": [
+              45314
+            ],
+            "dtype": "torch.bool"
+          }
+        },
+        "asset_all_named_tensors_bitwise_hash_unchanged": true,
+        "frozen_native_road_gates_environment_unchanged": true,
+        "persistent_SF_unchanged": true,
+        "canonical_asset_sha256": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+        "posterior_sha256": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+        "native_a6_rows_removed": 116769,
+        "native_a37_rows": 942463,
+        "render_calls": 0,
+        "input_identities": {
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json",
+            "bytes": 29238,
+            "mtime_ns": 1794008917115865945
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/v44_contract.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/v44_contract.py",
+            "bytes": 19989,
+            "mtime_ns": 1794008965757034540
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_binding.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_binding.json",
+            "bytes": 1643,
+            "mtime_ns": 1793884938711587553
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt",
+            "bytes": 11556366,
+            "mtime_ns": 1793885125148884756
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/contributors.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/contributors.npz",
+            "bytes": 518051,
+            "mtime_ns": 1793885014254394298
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz",
+            "bytes": 2780990,
+            "mtime_ns": 1793891891692066796
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz",
+            "bytes": 2656257,
+            "mtime_ns": 1793890987152871377
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz",
+            "bytes": 18718371,
+            "mtime_ns": 1793761412998981720
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/road_reference.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/road_reference.npz",
+            "bytes": 11986109,
+            "mtime_ns": 1793884993227132065
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json",
+            "bytes": 8941,
+            "mtime_ns": 1793884259130773870
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json",
+            "bytes": 22152,
+            "mtime_ns": 1793884280231422563
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json",
+            "bytes": 2278,
+            "mtime_ns": 1793884282573941539
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py",
+            "bytes": 15189,
+            "mtime_ns": 1793865583648316723
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py",
+            "bytes": 11898,
+            "mtime_ns": 1793893624341403654
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/source/v44_runtime.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/source/v44_runtime.py",
+            "bytes": 32736,
+            "mtime_ns": 1794009000906888484
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py",
+            "bytes": 5034,
+            "mtime_ns": 1792666319574796205
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/editor_common.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/editor_common.py",
+            "bytes": 11257,
+            "mtime_ns": 1793880179000000000
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/native_binding.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/native_binding.py",
+            "bytes": 4710,
+            "mtime_ns": 1793880179000000000
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/repair37.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/repair37.py",
+            "bytes": 12663,
+            "mtime_ns": 1793880179000000000
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/road_runtime.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/road_runtime.py",
+            "bytes": 15603,
+            "mtime_ns": 1793880096000000000
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/r4_runtime.py": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/r4_runtime.py",
+            "bytes": 11353,
+            "mtime_ns": 1793880095000000000
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/scene_binding.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/scene_binding.json",
+            "bytes": 4198,
+            "mtime_ns": 1793885427998069554
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/coefficients.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/coefficients.npz",
+            "bytes": 1455119,
+            "mtime_ns": 1793885485722742791
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/design.json": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/design.json",
+            "bytes": 11887,
+            "mtime_ns": 1793885461601213834
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz",
+            "bytes": 1626557,
+            "mtime_ns": 1793838291916223289
+          },
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz": {
+            "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz",
+            "bytes": 1639260,
+            "mtime_ns": 1793838326213540541
+          }
+        },
+        "input_sha256": {
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/input_contract.json": "719b0660cbb952e4a8ed4595dc5e56a7f358d1a633c1eb42eaadef186f530a17",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/contract/v44_contract.py": "b1c44e92b98b49577f17aebc3386898caa601f33deb497fc6c0070c3324be0c2",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/replay_binding.json": "2f38a0bfd2555a6b6cc67379f70a0632eb07199c639abd89ca0243812e733fba",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/formal/checkpoint001000.pt": "b4f7e79772e3f6c924daad467ca7f6e40c545f58b2d5f03306e720a3114aaab6",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/contributors.npz": "f67f004991cb1b942073f16e334f4866594693e5d460ff72eb1349b70aa24428",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/combined_v1/observed_fit/formal/complete_a6.npz": "0b1f69e13d0e54328734325c8f118bc27dc7b75080869f2d52f55038afc0b20d",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/surface_fit/masked_depth_v1/posterior.npz": "b98a0d932730fbf1462e555eb7d5eb931030b51fe68848990f073b9752879e06",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_a37_dynamic_20261104_r1/inputs/a6_probe_reference.npz": "d35eb3d6958995c302bdec30066e76802224e1eb5e37c432047128219b0f747d",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/inputs/road_reference.npz": "5ab33f810ea37f37645fd6349461fa173b4a7a69de0e6dfe1af64c03b6451e50",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/effective_config.json": "b5679a6e1b7c3ab60bc9538a8d18dad40856bb8824541e29b2d69d7d7ceb8de8",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/cameras.json": "6d080faa59449ff0f9cb92977f8f55b1da08f9e07c3e27a70b904c4d1702e455",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_rgb_probe_20261105_r1/global_10k/actual_scene_binding.json": "9e7ab44337322d903e5c748c656d18e1d233a0a316980e9d8fb9074cdbe27ee5",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/source/sh_asset.py": "ff9ee4b0f6a0bc90fccedfd4be17404d2df129072d6da1562b211a8aa6469bd4",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_insert_artifacts_20261105/source/scale/surface_lod_asset.py": "fb3c746a04bf17b1f84b127e44769b4ff294567e98aec744131ddc3f3c4d76ca",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_rgb_asset_20261107_r1/source/v44_runtime.py": "245336e5bedeb2e994d690c14df88e53c8c1303242b626b636bc7ad9de718ad9",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/engine/utils/v4_road_render.py": "888dbe0c49eff4fa0fcf0e3999b49d2b6a44c746f806d45df869c22e8520e943",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/editor_common.py": "347a6fa29da11daef373392ac386b1fa9c907e0ced99998f5342bb539a8ee10b",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/native_binding.py": "0e99797b225b7ae6b362fcec515f5eeb9c2fa5e93c5fd8cfc7ad5c2364b4ae9f",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/repair37.py": "54968910bca402be5649f2fe3ba2e7fd9a3bfbe26e35d835c317c58cea90e272",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/road_runtime.py": "3baa4b0ede164baa19663dbaa8698adb3257b13765409fd23226196ea61134b5",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_road1k_20261105_r1/source/r4_runtime.py": "4deab7ccc9aff9fae70f4a8dd25f54a9aa23fbe89885c044ca00e4e45d0f68e4",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/scene_binding.json": "a38a462a887464b856f77bd245ba88845a9541ef577db66b673dedfaef37c052",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/coefficients.npz": "131bc37ed2711701ef5526caed8021a5971fa10a56ae670d3cd6a82dffc250e3",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_blue_global_M2_final_20261105_r1/fine11x9/design.json": "44362035597eed10036082df1023f887ce21c30ad9d21544c225d3d64107c93d",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/099.npz": "85cd77dcaa368d2136797dab9d0c01359fe14a0777b2a2f12f8cadfec6d00f6e",
+          "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/106.npz": "4606b4a99ae7de06ec64a9192165e70d3bda83e6142dd3d5f92e77e9649aab03"
+        },
+        "gradient_updates": 0,
+        "colour_fit_steps": 0,
+        "calibration_solves": 0,
+        "frozen_transfer_is_not_C2_or_LOD_recalibration": true,
+        "RGB_occlusion_quality_verdict_pending": true,
+        "quality_accepted": false,
+        "human_verdict": null
+      },
+      "original_parameter_updates": 0,
+      "canonical_parameter_updates": 0,
+      "parent_newroad_loaded": false,
+      "newroad_always_enabled": true,
+      "edit_operator": "physical a37 existence only",
+      "single_joint_sort": true,
+      "native_CUDA_modified": false,
+      "view_filter_override_enabled": true,
+      "view_filter_override_receipt": {
+        "policy": "PARENT_RELATIVE_MIP_NEWROAD_ONLY",
+        "formula": "alpha_child=alpha_parent*f_child/f_parent; f=sqrt(detSigma/det(Sigma+.3I))",
+        "parent_asset_path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_seam_contact_20261107_r1/engineer/canonical_n2_mip_candidate_v2/new_road_canonical_candidate.npz",
+        "parent_asset_sha256": "53de3cb31be234865995766eaeb11a5fced59160456bb139b08cdb3eb0031baf",
+        "kernel_pixel2": 0.3,
+        "legacy_neg_fov": true,
+        "legacy_clamp_preserved": true,
+        "scaling_modifier": 1.0,
+        "cache_key": "world_view16 content bytes + FoVx/FoVy/image W/H/device",
+        "covariance_units": "model units with model-unit camera depth; converted exactly once in parent input",
+        "source": "autonomousvision/mip-splatting forward.cu L65-112/244",
+        "numerical_policy": "standard formula; reject degenerate covariance/parent denominator, no epsilon cutoff grid",
+        "no_covariance_modification": true,
+        "original_layers_untouched": true,
+        "coverage_preservation_claim": false,
+        "full_mip_splatting_claim": false,
+        "records": [
+          {
+            "identity_n1_bypass": false,
+            "rows": 40392,
+            "ratio_min": 0.3974314346677985,
+            "ratio_median": 0.47069021778611625,
+            "ratio_max": 0.5655563366313779,
+            "parent_f_min": 0.29598829191210646,
+            "child_f_min": 0.11763505149949961,
+            "alpha_min": 0.3934571444988251,
+            "alpha_max": 0.5599008202552795
+          },
+          {
+            "identity_n1_bypass": false,
+            "rows": 40392,
+            "ratio_min": 0.3974314346677985,
+            "ratio_median": 0.47069021778611625,
+            "ratio_max": 0.5655563366313779,
+            "parent_f_min": 0.29598829191210646,
+            "child_f_min": 0.11763505149949961,
+            "alpha_min": 0.3934571444988251,
+            "alpha_max": 0.5599008202552795
+          },
+          {
+            "identity_n1_bypass": false,
+            "rows": 40392,
+            "ratio_min": 0.3974268200252725,
+            "ratio_median": 0.4706795478664774,
+            "ratio_max": 0.5655414372371351,
+            "parent_f_min": 0.29595883005637014,
+            "child_f_min": 0.11762197668770323,
+            "alpha_min": 0.39345258474349976,
+            "alpha_max": 0.55988609790802
+          },
+          {
+            "identity_n1_bypass": false,
+            "rows": 40392,
+            "ratio_min": 0.3974268200252725,
+            "ratio_median": 0.4706795478664774,
+            "ratio_max": 0.5655414372371351,
+            "parent_f_min": 0.29595883005637014,
+            "child_f_min": 0.11762197668770323,
+            "alpha_min": 0.39345258474349976,
+            "alpha_max": 0.55988609790802
+          }
+        ],
+        "parent_geometry_source": "canonical exact fp32 parent render tuple",
+        "parent_geometry_reconstruction": false
+      },
+      "material_role": "persistent fitted appearance; not independently observed hidden texture",
+      "adoption_claim": false,
+      "known_unresolved": [
+        "Blue road seam and red wheel ordering require separate acceptance.",
+        "Inferred hidden vehicle/road geometry conflict is not resolved by material fit or canonical export.",
+        "Fitted road colours are not independently observed hidden-road RGB truth."
+      ]
+    },
+    "gradient_forwards": 4,
+    "trainable_role": "shared persistent parent road sRGB only; children inherit same parent colour",
+    "original_parameter_updates": 0,
+    "geometry_updates": 0,
+    "opacity_updates": 0,
+    "view_AA_policy_updates": 0,
+    "direct_native_raster": true,
+    "feature_ABI": 24,
+    "new_per_frame_material": false,
+    "adoption_claim": false
+  },
+  "actual_command": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_road_fusion_bake_20261107_r1/engineer/fit_shared_edgeblend.py",
+    "--phase",
+    "restore"
+  ],
+  "fit_contract_sha256": "897e57605ddeb3a5f9f8257e91754e28bd0188a4eb218f0e2d3ef60d5ec6f8a2"
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "CPU_RESTORE_CONTINUATION_MOMENT_AUDIT_V1",
+  "records": [
+    {
+      "method": "direct",
+      "start_restore_exact": true,
+      "continued_parameter_bitwise_equal": true,
+      "Adam_components": [
+        {
+          "parameter_index": 0,
+          "key": "step",
+          "shape": [],
+          "bitwise_equal": true,
+          "different_values": 0,
+          "max_abs_diff": 0.0,
+          "expected_abs_max": 4.0,
+          "actual_abs_max": 4.0
+        },
+        {
+          "parameter_index": 0,
+          "key": "exp_avg",
+          "shape": [
+            2053,
+            3
+          ],
+          "bitwise_equal": false,
+          "different_values": 18,
+          "max_abs_diff": 1.4210854715202004e-14,
+          "expected_abs_max": 2.81575296412484e-07,
+          "actual_abs_max": 2.81575296412484e-07
+        },
+        {
+          "parameter_index": 0,
+          "key": "exp_avg_sq",
+          "shape": [
+            2053,
+            3
+          ],
+          "bitwise_equal": false,
+          "different_values": 12,
+          "max_abs_diff": 4.235164736271502e-22,
+          "expected_abs_max": 1.206007627883041e-14,
+          "actual_abs_max": 1.206007627883041e-14
+        }
+      ]
+    },
+    {
+      "method": "fusion",
+      "start_restore_exact": true,
+      "continued_parameter_bitwise_equal": true,
+      "Adam_components": [
+        {
+          "parameter_index": 0,
+          "key": "step",
+          "shape": [],
+          "bitwise_equal": true,
+          "different_values": 0,
+          "max_abs_diff": 0.0,
+          "expected_abs_max": 4.0,
+          "actual_abs_max": 4.0
+        },
+        {
+          "parameter_index": 0,
+          "key": "exp_avg",
+          "shape": [
+            2053,
+            3
+          ],
+          "bitwise_equal": false,
+          "different_values": 19,
+          "max_abs_diff": 1.4210854715202004e-14,
+          "expected_abs_max": 3.083125363900763e-07,
+          "actual_abs_max": 3.083125363900763e-07
+        },
+        {
+          "parameter_index": 0,
+          "key": "exp_avg_sq",
+          "shape": [
+            2053,
+            3
+          ],
+          "bitwise_equal": false,
+          "different_values": 15,
+          "max_abs_diff": 4.235164736271502e-22,
+          "expected_abs_max": 1.4459167505887285e-14,
+          "actual_abs_max": 1.4459167505887285e-14
+        }
+      ]
+    }
+  ],
+  "GPU_used": false,
+  "model_updates": 0
+}

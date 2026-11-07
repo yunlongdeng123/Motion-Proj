@@ -1,0 +1,32 @@
+{
+  "schema": "FIXED10PX_VALIDITY_EDGE_FUSION_CONTRACT_V1",
+  "task_run": "scene008_road_fusion_bake_20261107_r1",
+  "parent_target_manifest_sha256": "d08232bb8df0ca6cf4a2f986c36074b9a588e54d346b97188aa0c716b2a83bea",
+  "parent_atlas_contract_sha256": "22a55c2c5002fc16c4890cbfd960dc180ce1fa7abf69384e569d23e000058aae",
+  "width_pixels": 10.0,
+  "mask": "Exactly old fusion_replace_mask M, including internal holes and all boundary classes. No dilation/filling or source changes.",
+  "formula": "C=O+clip(Euclidean distance_inside(M)/10,0,1)*(B-O)",
+  "roles": {
+    "edgeblend_rgb": "C actual new complete-joint-image RGB target for the single fallback",
+    "fusion_rgb": "Original locked B Poisson projection copied unchanged, never aliased to C",
+    "direct_rgb": "Original locked A sourcechart projection copied unchanged",
+    "observation_rgb": "Original actual rawRGB O; legal current-view anchor, not hidden roadGT",
+    "edgeblend_weight": "Fixed per-view validity-distance weight, no learned/free image colour"
+  },
+  "selected_target_key": "edgeblend_rgb",
+  "RGB_encoding": "encoded sRGB float32 HWC[320,480,3]",
+  "source": "Same190 nonHELD FRONT source witnesses, same fixed Poisson atlas and measured geometry, same old fit/protect/M masks.",
+  "state_axis": false,
+  "KEEP_DELETE_same_target": true,
+  "HELD9_policy": "Projection/evaluation only; no atlas or border fitting",
+  "shared_scope": "Atlas B remains one shared worldtexture. C is a deterministic view-conditioned observation/validity blend, not a pure world-only colour target.",
+  "required_description": "Strong realRGB anchoring / source-prior dilution. Report actual mean/max weight and no full-atlas-weight pixels; do not call algebraic mask-edge reduction native success.",
+  "comparison": "Only new actual fallback C vs already executed hardB. Width10 fixed once, no grid, no legacy extra trial. Joint3D fit400pairedsteps remains engineer/root owned.",
+  "frozen": "Original targets/manifest, source/Poisson parameters, geometry/alpha/camera and original fields remain unchanged.",
+  "extra_GPU_forwards": 0,
+  "source_code_sha256": "93536c9609fbe55f7788588acfcdec3e7a5ccf4c2410baeaaba89b3d142ec359",
+  "failure_ledger_refs": [
+    "V82-F13"
+  ],
+  "human_verdict": null
+}

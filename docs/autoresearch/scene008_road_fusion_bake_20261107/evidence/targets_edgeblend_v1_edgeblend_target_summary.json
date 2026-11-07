@@ -1,0 +1,600 @@
+{
+  "schema": "FIXED10PX_EDGE_BLEND_TARGET_SUMMARY_V1",
+  "status": "C_TARGET_LOCKED_NATIVE_ACCEPTANCE_PENDING",
+  "manifest_sha256": "d7cca4167e2bbb68347f63babae356320a1b0ddd60e580bf746e966f2ac8acbe",
+  "selected_target_key": "edgeblend_rgb",
+  "formula": "C=O+clip(distance_inside(M)/10,0,1)*(B-O)",
+  "width": 10,
+  "parameter_searches": 0,
+  "original_target_manifest_unchanged": true,
+  "interpretation": "Strong actualRGB anchoring / atlas-prior dilution. Shared atlas remains fixed; full target is view-conditioned via validity M and observedRGB O.",
+  "query_RGB_scope": {
+    "HELD9_target": "C_HELD explicitly uses actual query observationRGB O in the deterministic validity-distance blend. It is target construction/diagnosis only; its lower MAE is not a held prediction score.",
+    "fit": "Only BUILD40 target files are used to fit the persistent10098-parent RGB table; HELD9 Ctarget never participates in fitting.",
+    "native_query": "Frozen native RGB rendering is not conditioned on query observationRGB. Existing rt.raw may read/load obs RGB for evaluation/contracts, but scene/raster colour computation uses camera/pose/env/material, not queryO as colour/image input.",
+    "exposure": "Same previously exposed scene; original parents/full199 source history prevents independent generalization claims.",
+    "control_registration": "Posthoc single fixed10px fallback chosen after the hardreplace diagnostic; replaces the unexecuted legacy fallback. No width grid or extra legacy trial."
+  },
+  "weight_summary": [
+    {
+      "role": "BUILD_FIT",
+      "replace_pixels": 10492,
+      "mean_weight": 0.18655789690038946,
+      "max_weight": 0.7280110120773315,
+      "full_atlas_weight_pixels": 0,
+      "edgeblend_vs_trueRGB_on_M": {
+        "count_pixels": 10492,
+        "sum_pixel_mean_absRGB": 62.44705599684312,
+        "mean": 0.005951873427072352
+      }
+    },
+    {
+      "role": "HELD_PROJECT_EVAL_ONLY",
+      "replace_pixels": 2623,
+      "mean_weight": 0.19854379957453058,
+      "max_weight": 0.8062257766723633,
+      "full_atlas_weight_pixels": 0,
+      "edgeblend_vs_trueRGB_on_M": {
+        "count_pixels": 2623,
+        "sum_pixel_mean_absRGB": 17.187330953631317,
+        "mean": 0.006552547065814456
+      }
+    }
+  ],
+  "raw128_primary_weight": {
+    "count": 545,
+    "sum": 114.65626968443394,
+    "mean": 0.2103784764851999,
+    "p50": 0.20000000298023224,
+    "p95": 0.41231057047843933,
+    "max": 0.6000000238418579
+  },
+  "hardcopy_diagnostic": [
+    {
+      "raw": 128,
+      "native_state": "DELETE",
+      "domain": "PRIMARY raw128 original-road user bbox",
+      "pixel_boundary_edge_count": 216,
+      "mask_edge_reasons": {
+        "A37_annotation_guard": 17,
+        "chart_four_corner_geometry_edge": 117,
+        "scene_depth_reject": 11,
+        "source_qualification_edge": 71
+      },
+      "residual_gradient_means": {
+        "source_target_A": 0.04196302418481705,
+        "locked_Poisson_target_B": 0.041195548323836796,
+        "hypothetical_fixed10px_target_C": 0.0041195548288984075,
+        "AA_baseline": 0.01687205085316371,
+        "native_source400": 0.02051350672371444,
+        "native_fusion400": 0.0206825047175193
+      },
+      "current_B_world_jumps": {
+        "near_x": {
+          "paired_bins": 6,
+          "matched_minus": 35,
+          "matched_plus": 33,
+          "mean": 0.010322401998564601,
+          "bins": [
+            {
+              "bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.008202607743442059
+            },
+            {
+              "bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.025980332866311073
+            },
+            {
+              "bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.012987439520657063
+            },
+            {
+              "bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.010119881480932236
+            },
+            {
+              "bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0046441503800451756
+            }
+          ]
+        },
+        "far_x": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        }
+      },
+      "CPU_hypothetical_C_world_jumps": {
+        "near_x": {
+          "paired_bins": 6,
+          "matched_minus": 35,
+          "matched_plus": 33,
+          "mean": 0.002274988004822792,
+          "bins": [
+            {
+              "bin": 6,
+              "minus_count": 5,
+              "plus_count": 5,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 8,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.001213297247886661
+            },
+            {
+              "bin": 9,
+              "minus_count": 9,
+              "plus_count": 5,
+              "abs_channel_jump": 0.007974560415303264
+            },
+            {
+              "bin": 10,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.002597487966219589
+            },
+            {
+              "bin": 11,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.0014001673460006766
+            },
+            {
+              "bin": 12,
+              "minus_count": 4,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0004644150535265586
+            }
+          ]
+        },
+        "far_x": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        }
+      },
+      "prediction_scope": "The hypothetical C numbers precede actual C fit and are target diagnostics, never native prediction scores."
+    },
+    {
+      "raw": 137,
+      "native_state": "DELETE",
+      "domain": "SECONDARY raw137 fixed world patch",
+      "pixel_boundary_edge_count": 332,
+      "mask_edge_reasons": {
+        "A37_annotation_guard": 17,
+        "chart_four_corner_geometry_edge": 173,
+        "scene_depth_reject": 25,
+        "source_qualification_edge": 117
+      },
+      "residual_gradient_means": {
+        "source_target_A": 0.031956977741733186,
+        "locked_Poisson_target_B": 0.028144975116403483,
+        "hypothetical_fixed10px_target_C": 0.002814497520406563,
+        "AA_baseline": 0.01951359976032196,
+        "native_source400": 0.02124890815364954,
+        "native_fusion400": 0.019829456253834237
+      },
+      "current_B_world_jumps": {
+        "near_x": {
+          "paired_bins": 12,
+          "matched_minus": 90,
+          "matched_plus": 76,
+          "mean": 0.006191509416870152,
+          "bins": [
+            {
+              "bin": 5,
+              "minus_count": 7,
+              "plus_count": 6,
+              "abs_channel_jump": 0.01105841901153326
+            },
+            {
+              "bin": 6,
+              "minus_count": 6,
+              "plus_count": 7,
+              "abs_channel_jump": 0.00838447269052267
+            },
+            {
+              "bin": 7,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.010180545039474964
+            },
+            {
+              "bin": 9,
+              "minus_count": 7,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0095445541664958
+            },
+            {
+              "bin": 10,
+              "minus_count": 11,
+              "plus_count": 6,
+              "abs_channel_jump": 0.007128871977329254
+            },
+            {
+              "bin": 11,
+              "minus_count": 12,
+              "plus_count": 10,
+              "abs_channel_jump": 0.0015763061819598079
+            },
+            {
+              "bin": 12,
+              "minus_count": 13,
+              "plus_count": 9,
+              "abs_channel_jump": 0.006271951366215944
+            },
+            {
+              "bin": 13,
+              "minus_count": 8,
+              "plus_count": 6,
+              "abs_channel_jump": 0.007969564758241177
+            },
+            {
+              "bin": 14,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.00732286274433136
+            },
+            {
+              "bin": 15,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0048605650663375854
+            },
+            {
+              "bin": 16,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 17,
+              "minus_count": 3,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0
+            }
+          ]
+        },
+        "far_x": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "paired_bins": 15,
+          "matched_minus": 101,
+          "matched_plus": 113,
+          "mean": 0.013906171483298143,
+          "bins": [
+            {
+              "bin": 95,
+              "minus_count": 9,
+              "plus_count": 11,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 96,
+              "minus_count": 10,
+              "plus_count": 10,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 97,
+              "minus_count": 10,
+              "plus_count": 9,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 98,
+              "minus_count": 9,
+              "plus_count": 8,
+              "abs_channel_jump": 0.018022822216153145
+            },
+            {
+              "bin": 100,
+              "minus_count": 6,
+              "plus_count": 10,
+              "abs_channel_jump": 0.00731005659326911
+            },
+            {
+              "bin": 101,
+              "minus_count": 4,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 103,
+              "minus_count": 6,
+              "plus_count": 10,
+              "abs_channel_jump": 0.027473151683807373
+            },
+            {
+              "bin": 104,
+              "minus_count": 9,
+              "plus_count": 6,
+              "abs_channel_jump": 0.020753664895892143
+            },
+            {
+              "bin": 106,
+              "minus_count": 5,
+              "plus_count": 9,
+              "abs_channel_jump": 0.00749933160841465
+            },
+            {
+              "bin": 107,
+              "minus_count": 5,
+              "plus_count": 8,
+              "abs_channel_jump": 0.01778756082057953
+            },
+            {
+              "bin": 110,
+              "minus_count": 7,
+              "plus_count": 8,
+              "abs_channel_jump": 0.007561622187495232
+            },
+            {
+              "bin": 112,
+              "minus_count": 5,
+              "plus_count": 9,
+              "abs_channel_jump": 0.043302517384290695
+            },
+            {
+              "bin": 120,
+              "minus_count": 8,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0073984055779874325
+            },
+            {
+              "bin": 129,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.021352434530854225
+            },
+            {
+              "bin": 144,
+              "minus_count": 3,
+              "plus_count": 3,
+              "abs_channel_jump": 0.030131004750728607
+            }
+          ]
+        }
+      },
+      "CPU_hypothetical_C_world_jumps": {
+        "near_x": {
+          "paired_bins": 12,
+          "matched_minus": 90,
+          "matched_plus": 76,
+          "mean": 0.0010475956057263045,
+          "bins": [
+            {
+              "bin": 5,
+              "minus_count": 7,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0017183718227204872
+            },
+            {
+              "bin": 6,
+              "minus_count": 6,
+              "plus_count": 7,
+              "abs_channel_jump": 0.001716853729747105
+            },
+            {
+              "bin": 7,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0010180544522073517
+            },
+            {
+              "bin": 9,
+              "minus_count": 7,
+              "plus_count": 6,
+              "abs_channel_jump": 0.001553711283857763
+            },
+            {
+              "bin": 10,
+              "minus_count": 11,
+              "plus_count": 6,
+              "abs_channel_jump": 0.003276448854894348
+            },
+            {
+              "bin": 11,
+              "minus_count": 12,
+              "plus_count": 10,
+              "abs_channel_jump": 0.0006032919718159576
+            },
+            {
+              "bin": 12,
+              "minus_count": 13,
+              "plus_count": 9,
+              "abs_channel_jump": 0.0006271951643490014
+            },
+            {
+              "bin": 13,
+              "minus_count": 8,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0008388772080567449
+            },
+            {
+              "bin": 14,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0007322862744331355
+            },
+            {
+              "bin": 15,
+              "minus_count": 6,
+              "plus_count": 6,
+              "abs_channel_jump": 0.00048605650663375975
+            },
+            {
+              "bin": 16,
+              "minus_count": 6,
+              "plus_count": 5,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 17,
+              "minus_count": 3,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0
+            }
+          ]
+        },
+        "far_x": {
+          "paired_bins": 0,
+          "matched_minus": 0,
+          "matched_plus": 0,
+          "mean": null,
+          "bins": []
+        },
+        "lateral_y": {
+          "paired_bins": 15,
+          "matched_minus": 101,
+          "matched_plus": 113,
+          "mean": 0.003825305734817623,
+          "bins": [
+            {
+              "bin": 95,
+              "minus_count": 9,
+              "plus_count": 11,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 96,
+              "minus_count": 10,
+              "plus_count": 10,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 97,
+              "minus_count": 10,
+              "plus_count": 9,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 98,
+              "minus_count": 9,
+              "plus_count": 8,
+              "abs_channel_jump": 0.0018022820491481702
+            },
+            {
+              "bin": 100,
+              "minus_count": 6,
+              "plus_count": 10,
+              "abs_channel_jump": 0.000731005668640137
+            },
+            {
+              "bin": 101,
+              "minus_count": 4,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0
+            },
+            {
+              "bin": 103,
+              "minus_count": 6,
+              "plus_count": 10,
+              "abs_channel_jump": 0.0029445057040099107
+            },
+            {
+              "bin": 104,
+              "minus_count": 9,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0036258834327286588
+            },
+            {
+              "bin": 106,
+              "minus_count": 5,
+              "plus_count": 9,
+              "abs_channel_jump": 0.000716536393630251
+            },
+            {
+              "bin": 107,
+              "minus_count": 5,
+              "plus_count": 8,
+              "abs_channel_jump": 0.008013960344273985
+            },
+            {
+              "bin": 110,
+              "minus_count": 7,
+              "plus_count": 8,
+              "abs_channel_jump": 0.008541949625190793
+            },
+            {
+              "bin": 112,
+              "minus_count": 5,
+              "plus_count": 9,
+              "abs_channel_jump": 0.024123575969567518
+            },
+            {
+              "bin": 120,
+              "minus_count": 8,
+              "plus_count": 3,
+              "abs_channel_jump": 0.0021181506813890668
+            },
+            {
+              "bin": 129,
+              "minus_count": 5,
+              "plus_count": 6,
+              "abs_channel_jump": 0.0017486355958287504
+            },
+            {
+              "bin": 144,
+              "minus_count": 3,
+              "plus_count": 3,
+              "abs_channel_jump": 0.003013100557857097
+            }
+          ]
+        }
+      },
+      "prediction_scope": "The hypothetical C numbers precede actual C fit and are target diagnostics, never native prediction scores."
+    }
+  ],
+  "classification_note": "chart_four_corner_geometry_edge is geometric eligibility of the texture chart, not proof of a physical road/car surface edge.",
+  "new_GPU_forwards": 0,
+  "world_geometry_depth_updates": 0,
+  "whole_scene_adopted": false,
+  "human_verdict": null,
+  "figures": [
+    "edgeblend_components.png",
+    "edgeblend_raw128_target.png",
+    "edgeblend_raw137_target.png"
+  ]
+}
