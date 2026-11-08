@@ -29,3 +29,9 @@
 
 WS-V74-P0-STORAGE-01 done，提交 463ef199；4105 个目标，实际释放 131.802 GiB。5 处 frozen_prefix 与退役 V6/V6.3–V6.7 逐帧缓存；保留 340 代表文件。
 完整路径/大小/原因/恢复方式见 storage_plan.json，实际空间差见 storage_result.json。P0 后可用 194.126 GiB。V74 已导出的 BUILD/QUERY/geometry 和新 FINAL raw 纳入保留范围。
+
+## 2026-11-08 中间与诊断 checkpoint 清理
+
+用户授权优先清理可重训恢复的中间点、smoke 与诊断 checkpoint，为 Scene008 算法向新场景扩展腾出空间。逐文件移除 466 个文件，按清理前后 `statvfs` 实测释放 102.86 GiB，可用 140.73 GiB。当前 Scene008 正式与便携模型、V41 B/R 30K、单身份长程锚点、Waymo val029 正式 10K、预训练权重、原始输入、固定资产、指标与失败证据保留。已复核本轮盘点内 341 个保留 checkpoint、60 个预训练权重文件，以及当前流程引用的 77 个模型文件路径。
+
+逐文件删除理由、保留清单与操作日志见 `/root/autodl-tmp/cleanup_manifests/checkpoint_prune_20261108T145546Z` 中的 `plan.json`、`deleted.jsonl`、`result.json`。`metadata_before.tar.gz` 保存 2,463 个配置、命令与源码记录，`recovery.json` 索引 182 个恢复目录。旧中间／诊断状态需要按保留的输入、配置和原始阶段顺序重训，重训数值可能不同。正式保存点可继续使用。本轮清理记录及元数据已取回用户本机。
