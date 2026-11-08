@@ -1,0 +1,34 @@
+{
+  "status": "PASS_CPU_NEXT_STAGE_DEPENDENCIES",
+  "paths": {
+    "native_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+    "sam_python": "/root/autodl-tmp/envs/worldsim-v77-sam2/bin/python",
+    "sam_checkpoint": "/root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt",
+    "segformer_config": "/root/autodl-tmp/external/dggt_segformer/local_configs/segformer/B5/segformer.b5.1024x1024.city.160k.py",
+    "segformer_checkpoint": "/root/autodl-tmp/drivingeditor_repro/weights/segformer.b5.1024x1024.city.160k.pth",
+    "segformer_overlay": "/root/autodl-tmp/envs/dggt_segformer/overlay",
+    "state_compare": "/root/autodl-tmp/drivingeditor_repro/campaign/r15_gn11_stage1_v41_20261023/tools/compare_v1_states.py",
+    "engine": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val029_v44_20261108_r1/engine"
+  },
+  "entry_help_pass": [
+    "render_v1.py",
+    "evaluate_native.py"
+  ],
+  "GPU_queries": 0,
+  "native_restore_and_rasterization": "not executed; GPU smoke required",
+  "GPU_controllers_started": 0,
+  "source_sha256": {
+    "prepare_cpu.py": "730010b47b55b324c771ee1eaea160dee04882a11dc3abc23b2d6eda0e57604b",
+    "verify_cpu_bank.py": "fd51eafcc78b34c54a1d9f8eca5b11386aa82e8a7bf72b7cf39dcec351a353f1",
+    "inspect_background.py": "6e40edf12e40a4c25d8fba2805e4cbf497be270f6f88effba52a2fe40f49daec",
+    "build_point_prompts.py": "3dcd0a112cd1dff58e1408d9ea58cf4263dddd7a30550cdd82270b6e38dcd7bd",
+    "complete_cpu.py": "b60c0c72e658fadefbc2d4cb83a96522e4f4e3e6f2d17f85e77537f0436dc4de",
+    "prepare_native.py": "babbcb7c752128e2b563f3b1f7cea5d2f4b33523c3c73c12437829f16bec4655",
+    "evaluate_native.py": "2fcffcf9b5fcf4cdfa02d4ffe0a7daed87d24c9895f759f27d22715635149ea5",
+    "train_scene.py": "d0fdb7d7bb048918f7f55b7ec954a9f79d52583a3a43ea1b94ccf0a5c008c9f5",
+    "scene_binding.py": "dc3daaa989d566579970f3913b1de41146f7c00ee8f03838c81155cc4d35be2b",
+    "mask_pilot.py": "6cf2910367f07627205329a52e60ac20012fa5f4ec9c608c629b4adf985c2146",
+    "resolve_masks.py": "88713f81ecc9ab3b4fa5539b91eb89cf42d4ab6e955b52ab5753c83fa3c5b0ed",
+    "render_v1.py": "ef4b65310e4ecaa2ccdc3e523289481be5260ce2fdbca9b166f0b8a6c0a75216"
+  }
+}

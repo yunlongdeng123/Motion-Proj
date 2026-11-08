@@ -1,0 +1,48 @@
+{
+  "schema": "waymo.sam2.mask_pilot.v1",
+  "status": "CPU_PREFLIGHT_PASS",
+  "bank": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs",
+  "raws": [
+    30,
+    60,
+    150,
+    198
+  ],
+  "checkpoint": "/root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt",
+  "checkpoint_bytes": 898083611,
+  "config": "configs/sam2.1/sam2.1_hiera_l.yaml",
+  "model_source": "/root/autodl-tmp/third_party/worldsim_v32/sam2",
+  "CUDA_executed": false,
+  "training_updates": 0,
+  "input_policy": "independent image prediction, all projected visible vehicle boxes, same predictor settings for every object",
+  "mask_policy": "single mask per projected 3D box; candidates require silhouette and depth/identity review before use",
+  "point_prompts": true,
+  "method_change": "source input preparation only; no 3D reconstruction or deletion quality claim",
+  "source_sha256": "6cf2910367f07627205329a52e60ac20012fa5f4ec9c608c629b4adf985c2146",
+  "frames": [
+    {
+      "raw": 30,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065030.png",
+      "image_sha256": "3b805221d140456f2d49680f8e1c766ff498ba41fe638b06accfbac5ffd2e638",
+      "prompt_count": 8
+    },
+    {
+      "raw": 60,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065060.png",
+      "image_sha256": "71c1f9c5423cc26dd314c6bf09eff3d06179547c44aa301db7c209032ed41daf",
+      "prompt_count": 11
+    },
+    {
+      "raw": 150,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065150.png",
+      "image_sha256": "984e4f05d93e596d5cb3ab594e6c63a1acc1dfcf1198217036b6bb78c33279e8",
+      "prompt_count": 10
+    },
+    {
+      "raw": 198,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065198.png",
+      "image_sha256": "cf1faeac021c9382a1d1079c6eb436513ffd6ac940b41147ca97b2ab98526d98",
+      "prompt_count": 8
+    }
+  ]
+}

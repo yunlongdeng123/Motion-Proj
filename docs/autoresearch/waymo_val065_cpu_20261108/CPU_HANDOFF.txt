@@ -1,0 +1,37 @@
+CPU阶段完成，GPU阶段尚未开始。
+
+新case：Waymo验证集scene-065，原始context15021599536622641101_556_150_576_150。
+删除目标：a9，NTjq-OhZ_97OMJ4xwJAxXg；前方同车道白车；原生身份10。
+保持对象：a7，KOsYCOB6W_n0DzZsyDdJ-w；右侧白色皮卡；原生身份8。
+
+CPU隔离目录：/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1
+原件：/root/autodl-tmp/datasets/waymo_v1_4_3/individual_files/validation/segment-15021599536622641101_556_150_576_150_with_camera_labels.tfrecord
+已核对199条CRC/context/timestamp，159构建帧，79–118连续40帧留出。
+25,929,731实测点；5传感器×双return；TOP逐像素ego补偿和NLZ筛除；159帧均有目标正提示。
+CPU脚本与输入验收见source及evidence。实例/天空/道路语义掩码尚无，不能直接开始训练。
+背景提名主要落在车体两侧，不能当作已确认遮挡或独立删除真值。
+
+原生V1定义：原生完整场景从头训练10K，直接调用gaussian_renderer.render。
+无归属重绑，无车辆资产/道路补片插入，无图像拼接。seed0，LR时钟30K，正式停止10K。
+source/render_v1.py为独立加载/渲染入口，不导入编辑包；source/evaluate_native.py单独输出来源ID删除。
+新场景准备接口source/prepare_native.py须先有全构建帧真实分割输入，才建立新的私有native输入。
+CPU语法及CLI预检不代替GPU运行验收。
+
+后续GPU顺序：
+1. SAM2带同帧实测提示，先检查30/60/150/198四帧真实轮廓，再补齐全159帧及天空/语义输入。
+2. 使用已验证原生引擎代码创建waymo_val065_native10k_20261108_r1新目录，不复制029模型/资产。
+3. 约600秒真实smoke：前向/反向、finite loss/grad、加载/显存、完整checkpoint、评价、精确恢复、2完成更新及下一入口。
+4. fresh正式10K；分别导出V1直通、当前方法KEEP、a9DELETE；额外恢复/补路预算另记。
+5. 更新逐帧平台、分组贡献（独立静态/其他对象）、保持评价和缺失参考；不以CPU准备声称删除成功。
+
+scene-029补项：
+已有原生10K可以复用，119–197的79构建帧V1和原生来源删除已取回158原PNG。
+109–118旧导出为mode=semantic，已从V1列排除，原件保留于heldout_semantic_no_assets。
+需GPU补这些留出时刻的纯V1及原生来源红车删除；旧模型无需为这一导出再训10K。
+CPU已构造89相机表v1_camera_manifest.json，79个BUILD位姿与原生cameras.json最大差2.41e-14。
+先用render_v1.py比较130/155/160/190的保存原生float（容差2e-5），通过后用相机表导出全89帧。
+
+训练/分割解释器：/root/autodl-tmp/envs/drivingeditor/bin/python；SAM2解释器：/root/autodl-tmp/envs/worldsim-v77-sam2/bin/python。
+CPU解释器：/root/autodl-tmp/envs/motionproj/bin/python。
+SegFormer必须使用drivingeditor Python加现有dggt_segformer overlay，不使用不存在的envs/dggt_segformer/bin/python。
+本轮不启动GPU、不启动后续GPU控制器、不执行电源操作；CPU实例保持可用。

@@ -1,5 +1,9 @@
 # 实验索引
 
+## Waymo scene-065白车删除CPU准备及V1直通对照（2026-11-08）
+
+- `WAYMO-VAL065-A9-CPU-20261108`：[159构建帧真实输入、逐帧实拍、组件图及冻结合同](autoresearch/waymo_val065_cpu_20261108/index.html)。GPU阶段未运行；显露提名不作真值。scene-029原生79帧直通/来源删除已取回，10个语义通路留出导出从V1列排除，待GPU补齐。failure_ledger_refs=[]，failure_ledger_delta=none。
+
 ## Scene008道路融合目标与三维写回（2026-11-07）
 
 - `scene008_road_fusion_bake_20261107_r1`：[共享道路atlas、融合目标、10px强观测锚定与持久3D写回](autoresearch/scene008_road_fusion_bake_20261107/index.html)。A/B接缝负例保留；C改善颜色与横向边界，近端仍回退。三组同预算、完整49帧分项评价、30次精确重放及全部计算/恢复账本见报告。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。

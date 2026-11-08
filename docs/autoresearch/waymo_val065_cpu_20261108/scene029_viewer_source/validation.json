@@ -1,0 +1,79 @@
+{
+  "status": "PASS_OFFLINE_VIEWER_INSTALLATION",
+  "page_checks": [
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-07\\https-arxiv-org-html-2509-19937\\outputs\\waymo_val029_experiment\\index.html",
+      "ids": 54,
+      "local_resources": 8,
+      "missing": []
+    },
+    {
+      "page": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\outputs\\GS_Scene_Diagnostics_20261027\\12820461091157089924_5202_916_5222_916\\index.html",
+      "ids": 54,
+      "local_resources": 9,
+      "missing": []
+    }
+  ],
+  "continuous_frames": 89,
+  "window": [
+    109,
+    197
+  ],
+  "native_10k_original_pngs": 158,
+  "native_direct_raws": [
+    119,
+    197
+  ],
+  "native_heldout_direct_export_missing": [
+    109,
+    118
+  ],
+  "native_no_edit_direct_route": true,
+  "old_platform_links_preserved": true,
+  "scene_entry_unique": true,
+  "required_controls_present": true,
+  "payload_checks": [
+    {
+      "raw": 130,
+      "group_alpha_RGB_and_alpha_bit_exact": true,
+      "labels_exact": true
+    },
+    {
+      "raw": 155,
+      "group_alpha_RGB_and_alpha_bit_exact": true,
+      "labels_exact": true
+    },
+    {
+      "raw": 160,
+      "group_alpha_RGB_and_alpha_bit_exact": true,
+      "labels_exact": true
+    },
+    {
+      "raw": 190,
+      "group_alpha_RGB_and_alpha_bit_exact": true,
+      "labels_exact": true
+    }
+  ],
+  "interaction": {
+    "status": "PASS_SAVED_DATA_AND_INTERACTION_LOGIC",
+    "scope": "Node DOM/Canvas替身执行真实viewer.js；不是浏览器交互或视觉验收",
+    "checks": [
+      "无编辑原生KEEP和红车DELETE使用各自原始PNG，五列不串帧",
+      "67锚点读数与原始浮点汇总一致",
+      "非锚帧不显示旧浮点数据",
+      "时间窗边界、上一帧及留出标记",
+      "编辑状态与贡献通道切换",
+      "图像选像素与播放暂停",
+      "快速跳帧不串帧",
+      "诊断记录导出／载入与错误记录拒绝",
+      "独立表面控件",
+      "各阶段保留／删除切换及缺帧明确留空"
+    ],
+    "GPU_started": false
+  },
+  "browser_visual_acceptance": "not performed; local file browser protocol was previously blocked, no bypass attempted",
+  "GPU_started": false,
+  "rerender_calls": 0,
+  "precision_limit": "nativeKEEP/DELETE are original PNGs; current-method continuous imagery is H264 decoded,6 original keyframes; exact float maps only on4 saved anchor frames; other group remains combined",
+  "source_builder": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-07\\https-arxiv-org-html-2509-19937\\work\\val029_visualization\\build_visualization.py"
+}
