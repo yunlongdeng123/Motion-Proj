@@ -1,0 +1,1357 @@
+{
+  "schema": "T_CHILD_ORIGINAL_METRICS_OSQP_RESULT_V1",
+  "status": "QP_PREPARED_NOT_LAUNCHED",
+  "source_sha256": "6bc0718ddc097674b22ad1675776a7511645208f313f33bea2e9d252e0354c0a",
+  "protocol_sha256": "caa2531cbb6e350ed5fc4c17ff0bb447bc58312b4cbf6505011eef64a1793014",
+  "osqp_version": "1.0.4",
+  "mode": "inspect",
+  "material_basis": "child_RGB",
+  "variable_child_count": 20725,
+  "fixed_child_count": 19667,
+  "protected_pixels": 9966,
+  "residual_channels": 29898,
+  "QP_variables": 122289,
+  "constraint_shape": [
+    152639,
+    122289
+  ],
+  "constraint_nnz": 2134116,
+  "P_nnz": 29898,
+  "P_only_lifted_r_diagonal": true,
+  "formed_B_transpose_B": false,
+  "strict_pixel_cap_constraints": 0,
+  "entire_seam_RGB_guard_constraints": 0,
+  "original118_seam_constraints": 118,
+  "original16_full_domain_MAE_constraints": 16,
+  "warm_start_matrix_certificate": {
+    "full_original_matrix_max_violation": 0.0001248230795621103,
+    "per_block": [
+      {
+        "name": "RGB_box",
+        "first_row": 0,
+        "rows": 62175,
+        "max_violation": 0.0
+      },
+      {
+        "name": "lifted_native_photo_residual",
+        "first_row": 62175,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "photo_absolute_positive",
+        "first_row": 92073,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "photo_absolute_negative",
+        "first_row": 121971,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "seam_absolute_positive",
+        "first_row": 151869,
+        "rows": 318,
+        "max_violation": 0.0
+      },
+      {
+        "name": "seam_absolute_negative",
+        "first_row": 152187,
+        "rows": 318,
+        "max_violation": 0.0
+      },
+      {
+        "name": "original118_seam_metrics",
+        "first_row": 152505,
+        "rows": 118,
+        "max_violation": 0.0
+      },
+      {
+        "name": "original16_complete_photo_MAE",
+        "first_row": 152623,
+        "rows": 16,
+        "max_violation": 0.0001248230795621103
+      }
+    ],
+    "objective": 0.0007410428220715003
+  },
+  "warm_start_original_scientific_certificate": {
+    "seams": [
+      {
+        "name": "primary128",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.0037760456713537374,
+        "original_target": 0.004613534469778339,
+        "margin": 0.000837488798424602,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.0037760456713537374,
+        "original_target": 0.0037770457392626755,
+        "margin": 1.0000679089381542e-06,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.005003136048293931,
+        "original_target": 0.006036768960524972,
+        "margin": 0.0010336329122310403,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.005003136048293931,
+        "original_target": 0.005004136085482159,
+        "margin": 1.0000371882274567e-06,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.003688909582020985,
+        "original_target": 0.0038325507547889394,
+        "margin": 0.00014364117276795436,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.003688909582020985,
+        "original_target": 0.0036899095259222974,
+        "margin": 9.999439013123716e-07,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.006297946855839755,
+        "original_target": 0.0076029783590153485,
+        "margin": 0.001305031503175593,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.006297946855839755,
+        "original_target": 0.00629894650982755,
+        "margin": 9.996539877942662e-07,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.005607530224854902,
+        "original_target": 0.007150272171470027,
+        "margin": 0.0015427419466151242,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.005607530224854902,
+        "original_target": 0.00560853011329022,
+        "margin": 9.998884353172935e-07,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.0034304095513990446,
+        "original_target": 0.00352419822717539,
+        "margin": 9.37886757763455e-05,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.0034304095513990446,
+        "original_target": 0.0034314095265131606,
+        "margin": 9.999751141159807e-07,
+        "passed": true
+      },
+      {
+        "name": "bin0",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006219261015454928,
+        "original_target": 0.006220260860234499,
+        "margin": 9.99844779570741e-07,
+        "passed": true
+      },
+      {
+        "name": "bin1",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008127732823292414,
+        "original_target": 0.008128733133733272,
+        "margin": 1.0003104408580488e-06,
+        "passed": true
+      },
+      {
+        "name": "bin2",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0015564331163962681,
+        "original_target": 0.0015565270947515964,
+        "margin": 9.397835532823015e-08,
+        "passed": true
+      },
+      {
+        "name": "bin3",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002196510788053274,
+        "original_target": 0.0021975107880532743,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin4",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001605142451201876,
+        "original_target": 0.0016061424900069832,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin5",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0022162024397403,
+        "original_target": 0.0022172024397403003,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin6",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00798214009652535,
+        "original_target": 0.007983139475643634,
+        "margin": 9.993791182834333e-07,
+        "passed": true
+      },
+      {
+        "name": "bin7",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0012229304411448538,
+        "original_target": 0.0012230266507938503,
+        "margin": 9.620964899650745e-08,
+        "passed": true
+      },
+      {
+        "name": "bin8",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.003627982921898365,
+        "original_target": 0.003628080237492919,
+        "margin": 9.731559455408018e-08,
+        "passed": true
+      },
+      {
+        "name": "bin9",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.004877686500549316,
+        "original_target": 0.004877788705587387,
+        "margin": 1.0220503807081144e-07,
+        "passed": true
+      },
+      {
+        "name": "bin10",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0023662234113241234,
+        "original_target": 0.002366324413403869,
+        "margin": 1.01002079745411e-07,
+        "passed": true
+      },
+      {
+        "name": "bin11",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0018576649793734152,
+        "original_target": 0.0018586650181785225,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin12",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.007086444801340501,
+        "original_target": 0.0070874446461200715,
+        "margin": 9.99844779570741e-07,
+        "passed": true
+      },
+      {
+        "name": "bin13",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008625172544270754,
+        "original_target": 0.008626172078609466,
+        "margin": 9.995343387119576e-07,
+        "passed": true
+      },
+      {
+        "name": "bin14",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003613778234769901,
+        "original_target": 0.0036138794308751823,
+        "margin": 1.0119610528150011e-07,
+        "passed": true
+      },
+      {
+        "name": "bin15",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0027430118061602116,
+        "original_target": 0.0028744710067510606,
+        "margin": 0.00013145920059084906,
+        "passed": true
+      },
+      {
+        "name": "bin16",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0015564331163962681,
+        "original_target": 0.0015565270947515964,
+        "margin": 9.397835532823015e-08,
+        "passed": true
+      },
+      {
+        "name": "bin17",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002196510788053274,
+        "original_target": 0.0021975107880532743,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin18",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001605142451201876,
+        "original_target": 0.0016061424900069832,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin19",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0022162024397403,
+        "original_target": 0.0022172024397403003,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin20",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.00798214009652535,
+        "original_target": 0.007983139475643634,
+        "margin": 9.993791182834333e-07,
+        "passed": true
+      },
+      {
+        "name": "bin21",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002265453261012832,
+        "original_target": 0.002265544600620866,
+        "margin": 9.133960803377542e-08,
+        "passed": true
+      },
+      {
+        "name": "bin22",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003880090701083342,
+        "original_target": 0.003880183903336525,
+        "margin": 9.320225318300637e-08,
+        "passed": true
+      },
+      {
+        "name": "bin23",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005002092570066452,
+        "original_target": 0.005002191049814224,
+        "margin": 9.847974777234952e-08,
+        "passed": true
+      },
+      {
+        "name": "bin24",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002481874699393908,
+        "original_target": 0.0024819744209051134,
+        "margin": 9.972151120531472e-08,
+        "passed": true
+      },
+      {
+        "name": "bin25",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0015941514478375514,
+        "original_target": 0.0015942517126202582,
+        "margin": 1.0026478270688463e-07,
+        "passed": true
+      },
+      {
+        "name": "bin26",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.004568748098487656,
+        "original_target": 0.0045688485184907915,
+        "margin": 1.0042000313584265e-07,
+        "passed": true
+      },
+      {
+        "name": "bin27",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003926194117714961,
+        "original_target": 0.0039262876304090024,
+        "margin": 9.351269404135609e-08,
+        "passed": true
+      },
+      {
+        "name": "bin28",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00868198275566101,
+        "original_target": 0.00868298275566101,
+        "margin": 9.999999999992654e-07,
+        "passed": true
+      },
+      {
+        "name": "bin29",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0020348158044119677,
+        "original_target": 0.0020349156035333873,
+        "margin": 9.979912141957689e-08,
+        "passed": true
+      },
+      {
+        "name": "bin30",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin31",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin32",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin33",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0006488578316445152,
+        "original_target": 0.0006489468429461122,
+        "margin": 8.901130159701988e-08,
+        "passed": true
+      },
+      {
+        "name": "bin34",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00868198275566101,
+        "original_target": 0.00868298275566101,
+        "margin": 9.999999999992654e-07,
+        "passed": true
+      },
+      {
+        "name": "bin35",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0020348158044119677,
+        "original_target": 0.0020349156035333873,
+        "margin": 9.979912141957689e-08,
+        "passed": true
+      },
+      {
+        "name": "bin36",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin37",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin38",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin39",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0008395098460217317,
+        "original_target": 0.0008395851979255677,
+        "margin": 7.535190383592058e-08,
+        "passed": true
+      },
+      {
+        "name": "bin40",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.023813378686706226,
+        "original_target": 0.023813470957636834,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin41",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002034826980282863,
+        "original_target": 0.0020349156035333873,
+        "margin": 8.862325052419115e-08,
+        "passed": true
+      },
+      {
+        "name": "bin42",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin43",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin44",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin45",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0006488578316445152,
+        "original_target": 0.0006489468429461122,
+        "margin": 8.901130159701988e-08,
+        "passed": true
+      },
+      {
+        "name": "bin46",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.023813378686706226,
+        "original_target": 0.023813470957636834,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin47",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002034826980282863,
+        "original_target": 0.0020349156035333873,
+        "margin": 8.862325052419115e-08,
+        "passed": true
+      },
+      {
+        "name": "bin48",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin49",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin50",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin51",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0008395098460217317,
+        "original_target": 0.0008395851979255677,
+        "margin": 7.535190383592058e-08,
+        "passed": true
+      },
+      {
+        "name": "bin52",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.01950785641868909,
+        "original_target": 0.01950885703957081,
+        "margin": 1.0006208817185669e-06,
+        "passed": true
+      },
+      {
+        "name": "bin53",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008040116789440313,
+        "original_target": 0.008393137475311755,
+        "margin": 0.000353020685871442,
+        "passed": true
+      },
+      {
+        "name": "bin54",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.010828230995684862,
+        "original_target": 0.010829014463186263,
+        "margin": 7.834675014011666e-07,
+        "passed": true
+      },
+      {
+        "name": "bin55",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.021415585031112034,
+        "original_target": 0.021415684131741525,
+        "margin": 9.910062949078369e-08,
+        "passed": true
+      },
+      {
+        "name": "bin56",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0014843428507447243,
+        "original_target": 0.0014844454050287603,
+        "margin": 1.025542840360754e-07,
+        "passed": true
+      },
+      {
+        "name": "bin57",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001518098870292306,
+        "original_target": 0.0015181995619311928,
+        "margin": 1.0069163888684445e-07,
+        "passed": true
+      },
+      {
+        "name": "bin58",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001303770501787464,
+        "original_target": 0.002470182247295976,
+        "margin": 0.001166411745508512,
+        "passed": true
+      },
+      {
+        "name": "bin59",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010184744993845622,
+        "original_target": 0.0010185753850489854,
+        "margin": 1.0088566442315039e-07,
+        "passed": true
+      },
+      {
+        "name": "bin60",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0021015101422866187,
+        "original_target": 0.002101609475746751,
+        "margin": 9.933346013226915e-08,
+        "passed": true
+      },
+      {
+        "name": "bin61",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002010570625619342,
+        "original_target": 0.0020115706062167884,
+        "margin": 9.999805974463503e-07,
+        "passed": true
+      },
+      {
+        "name": "bin62",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002835434085379044,
+        "original_target": 0.002836434162989259,
+        "margin": 1.0000776102148286e-06,
+        "passed": true
+      },
+      {
+        "name": "bin63",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0036243697007497153,
+        "original_target": 0.0036253696231395008,
+        "margin": 9.999223897854369e-07,
+        "passed": true
+      },
+      {
+        "name": "bin64",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0008565186775134256,
+        "original_target": 0.0008575186872147024,
+        "margin": 1.000009701276807e-06,
+        "passed": true
+      },
+      {
+        "name": "bin65",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0032650886569172144,
+        "original_target": 0.003266088424086571,
+        "margin": 9.997671693564789e-07,
+        "passed": true
+      },
+      {
+        "name": "bin66",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017340084693084161,
+        "original_target": 0.0017342197166979312,
+        "margin": 2.112473895150846e-07,
+        "passed": true
+      },
+      {
+        "name": "bin67",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001049811253324151,
+        "original_target": 0.0010498898260518908,
+        "margin": 7.857272773972683e-08,
+        "passed": true
+      },
+      {
+        "name": "bin68",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.003308868035674095,
+        "original_target": 0.0033089616259783508,
+        "margin": 9.359030425561826e-08,
+        "passed": true
+      },
+      {
+        "name": "bin69",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.004383902220676343,
+        "original_target": 0.004383994491606951,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin70",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017937924324845274,
+        "original_target": 0.0017938952584043144,
+        "margin": 1.028259197870772e-07,
+        "passed": true
+      },
+      {
+        "name": "bin71",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017935466797401507,
+        "original_target": 0.0017936422879099845,
+        "margin": 9.560816983380724e-08,
+        "passed": true
+      },
+      {
+        "name": "bin72",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00344732489126424,
+        "original_target": 0.005017113165766001,
+        "margin": 0.001569788274501761,
+        "passed": true
+      },
+      {
+        "name": "bin73",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006190894326816003,
+        "original_target": 0.006190994513988495,
+        "margin": 1.0018717249218878e-07,
+        "passed": true
+      },
+      {
+        "name": "bin74",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.005926922274132569,
+        "original_target": 0.005927026497036219,
+        "margin": 1.042229036494341e-07,
+        "passed": true
+      },
+      {
+        "name": "bin75",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0018728042487055063,
+        "original_target": 0.001872910411864519,
+        "margin": 1.0616315901271038e-07,
+        "passed": true
+      },
+      {
+        "name": "bin76",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.005908788492282231,
+        "original_target": 0.0059088861959278585,
+        "margin": 9.770364562712575e-08,
+        "passed": true
+      },
+      {
+        "name": "bin77",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035089446852604547,
+        "original_target": 0.0035090425441265108,
+        "margin": 9.785886605608377e-08,
+        "passed": true
+      },
+      {
+        "name": "bin78",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0021574593459566436,
+        "original_target": 0.0021575395873039962,
+        "margin": 8.024134735265184e-08,
+        "passed": true
+      },
+      {
+        "name": "bin79",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.024273709083596866,
+        "original_target": 0.02427381253039837,
+        "margin": 1.0344680150334296e-07,
+        "passed": true
+      },
+      {
+        "name": "bin80",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.01063784584403038,
+        "original_target": 0.01572266942059994,
+        "margin": 0.005084823576569558,
+        "passed": true
+      },
+      {
+        "name": "bin81",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.010828906204551458,
+        "original_target": 0.010829014463186263,
+        "margin": 1.0825863480494469e-07,
+        "passed": true
+      },
+      {
+        "name": "bin82",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.021415585031112034,
+        "original_target": 0.021415684131741525,
+        "margin": 9.910062949078369e-08,
+        "passed": true
+      },
+      {
+        "name": "bin83",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0014843428507447243,
+        "original_target": 0.0014844454050287603,
+        "margin": 1.025542840360754e-07,
+        "passed": true
+      },
+      {
+        "name": "bin84",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001518098870292306,
+        "original_target": 0.0015181995619311928,
+        "margin": 1.0069163888684445e-07,
+        "passed": true
+      },
+      {
+        "name": "bin85",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001303770501787464,
+        "original_target": 0.002470182247295976,
+        "margin": 0.001166411745508512,
+        "passed": true
+      },
+      {
+        "name": "bin86",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010184744993845622,
+        "original_target": 0.0010185753850489854,
+        "margin": 1.0088566442315039e-07,
+        "passed": true
+      },
+      {
+        "name": "bin87",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0021015101422866187,
+        "original_target": 0.002101609475746751,
+        "margin": 9.933346013226915e-08,
+        "passed": true
+      },
+      {
+        "name": "bin88",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002010570625619342,
+        "original_target": 0.0020115706062167884,
+        "margin": 9.999805974463503e-07,
+        "passed": true
+      },
+      {
+        "name": "bin89",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002835434085379044,
+        "original_target": 0.002836434162989259,
+        "margin": 1.0000776102148286e-06,
+        "passed": true
+      },
+      {
+        "name": "bin90",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0036243697007497153,
+        "original_target": 0.0036253696231395008,
+        "margin": 9.999223897854369e-07,
+        "passed": true
+      },
+      {
+        "name": "bin91",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0008565186775134256,
+        "original_target": 0.0008575186872147024,
+        "margin": 1.000009701276807e-06,
+        "passed": true
+      },
+      {
+        "name": "bin92",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0032650886569172144,
+        "original_target": 0.003266088424086571,
+        "margin": 9.997671693564789e-07,
+        "passed": true
+      },
+      {
+        "name": "bin93",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017340084693084161,
+        "original_target": 0.0017342197166979312,
+        "margin": 2.112473895150846e-07,
+        "passed": true
+      },
+      {
+        "name": "bin94",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001049811253324151,
+        "original_target": 0.0010498898260518908,
+        "margin": 7.857272773972683e-08,
+        "passed": true
+      },
+      {
+        "name": "bin95",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003308868035674095,
+        "original_target": 0.0033089616259783508,
+        "margin": 9.359030425561826e-08,
+        "passed": true
+      },
+      {
+        "name": "bin96",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.004383902220676343,
+        "original_target": 0.004383994491606951,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin97",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017937924324845274,
+        "original_target": 0.0017938952584043144,
+        "margin": 1.028259197870772e-07,
+        "passed": true
+      },
+      {
+        "name": "bin98",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017935466797401507,
+        "original_target": 0.0017936422879099845,
+        "margin": 9.560816983380724e-08,
+        "passed": true
+      },
+      {
+        "name": "bin99",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.00344732489126424,
+        "original_target": 0.005017113165766001,
+        "margin": 0.001569788274501761,
+        "passed": true
+      },
+      {
+        "name": "bin100",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006190894326816003,
+        "original_target": 0.006190994513988495,
+        "margin": 1.0018717249218878e-07,
+        "passed": true
+      },
+      {
+        "name": "bin101",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005926922274132569,
+        "original_target": 0.005927026497036219,
+        "margin": 1.042229036494341e-07,
+        "passed": true
+      },
+      {
+        "name": "bin102",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0018728042487055063,
+        "original_target": 0.001872910411864519,
+        "margin": 1.0616315901271038e-07,
+        "passed": true
+      },
+      {
+        "name": "bin103",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005908788492282231,
+        "original_target": 0.0059088861959278585,
+        "margin": 9.770364562712575e-08,
+        "passed": true
+      },
+      {
+        "name": "bin104",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035089446852604547,
+        "original_target": 0.0035090425441265108,
+        "margin": 9.785886605608377e-08,
+        "passed": true
+      },
+      {
+        "name": "bin105",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0021574593459566436,
+        "original_target": 0.0021575395873039962,
+        "margin": 8.024134735265184e-08,
+        "passed": true
+      }
+    ],
+    "domains": [
+      {
+        "raw": 94,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 115391,
+        "latest21K_MAE": 0.017109172335392563,
+        "value": 0.017141149825308493,
+        "original_target": 0.017110172335392564,
+        "margin": -3.0977489915928746e-05,
+        "constant_error_sum": 1973.89537922843,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 21188,
+        "latest21K_MAE": 0.014601848005501796,
+        "value": 0.01460392591675068,
+        "original_target": 0.014602848005501795,
+        "margin": -1.0779112488857462e-06,
+        "constant_error_sum": 309.3466143645346,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 115391,
+        "latest21K_MAE": 0.017435320143535504,
+        "value": 0.017561143223097615,
+        "original_target": 0.017436320143535505,
+        "margin": -0.00012482307956210997,
+        "constant_error_sum": 2001.9394915009905,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 21188,
+        "latest21K_MAE": 0.01660710041891206,
+        "value": 0.016657999293908796,
+        "original_target": 0.016608100418912062,
+        "margin": -4.98988749967344e-05,
+        "constant_error_sum": 345.3899673111737,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 118864,
+        "latest21K_MAE": 0.013801472150879224,
+        "value": 0.01380203353518158,
+        "original_target": 0.013802472150879224,
+        "margin": 4.386156976440847e-07,
+        "constant_error_sum": 1640.455668795728,
+        "passed": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 17483,
+        "latest21K_MAE": 0.018294985334767817,
+        "value": 0.01831384871588856,
+        "original_target": 0.01829598533476782,
+        "margin": -1.786338112074251e-05,
+        "constant_error_sum": 319.5439281255628,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 118864,
+        "latest21K_MAE": 0.013916590380249505,
+        "value": 0.013943543177947023,
+        "original_target": 0.013917590380249504,
+        "margin": -2.5952797697518376e-05,
+        "constant_error_sum": 1648.0398273081812,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 17483,
+        "latest21K_MAE": 0.019589513585136418,
+        "value": 0.019638057520023587,
+        "original_target": 0.01959051358513642,
+        "margin": -4.7543934887168265e-05,
+        "constant_error_sum": 335.2809131086494,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 117833,
+        "latest21K_MAE": 0.01738080963469712,
+        "value": 0.017385138293255015,
+        "original_target": 0.01738180963469712,
+        "margin": -3.3286585578960748e-06,
+        "constant_error_sum": 2046.8750077285124,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 24563,
+        "latest21K_MAE": 0.02191588189495749,
+        "value": 0.021841557624143856,
+        "original_target": 0.021916881894957493,
+        "margin": 7.532427081363702e-05,
+        "constant_error_sum": 532.3141278301675,
+        "passed": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 117833,
+        "latest21K_MAE": 0.017371698902373844,
+        "value": 0.017376158619596002,
+        "original_target": 0.017372698902373845,
+        "margin": -3.45971722215746e-06,
+        "constant_error_sum": 2038.6901013513657,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 24563,
+        "latest21K_MAE": 0.035907348155726444,
+        "value": 0.0358473499205689,
+        "original_target": 0.035908348155726445,
+        "margin": 6.099823515754582e-05,
+        "constant_error_sum": 872.8272166724006,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 118542,
+        "latest21K_MAE": 0.02046562380100424,
+        "value": 0.020466084930040748,
+        "original_target": 0.020466623801004242,
+        "margin": 5.388709634936151e-07,
+        "constant_error_sum": 2418.542724916741,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 29048,
+        "latest21K_MAE": 0.015615571164542187,
+        "value": 0.01557860339777663,
+        "original_target": 0.015616571164542186,
+        "margin": 3.796776676555716e-05,
+        "constant_error_sum": 443.1648250911384,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 118542,
+        "latest21K_MAE": 0.02046282594675406,
+        "value": 0.02043331801995539,
+        "original_target": 0.020463825946754062,
+        "margin": 3.0507926798671592e-05,
+        "constant_error_sum": 2411.4302966029986,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 29048,
+        "latest21K_MAE": 0.027687586610345528,
+        "value": 0.027599165799564927,
+        "original_target": 0.02768858661034553,
+        "margin": 8.942081078060216e-05,
+        "constant_error_sum": 791.021880791833,
+        "passed": true
+      }
+    ],
+    "original118_pass": 118,
+    "original16_pass": 7,
+    "box_max_violation": 0.0,
+    "equal_9966_pixel_channel_MSE": 0.0007410428220715002,
+    "passed": false
+  },
+  "warm_start_feasibility_claim": false,
+  "actual_setup_calls": 0,
+  "actual_QP_calls": 0,
+  "actual_LP_calls": 0,
+  "actual_LS_calls": 0,
+  "GPU_forwards": 0,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "original_model_updates": 0,
+  "automatic49": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

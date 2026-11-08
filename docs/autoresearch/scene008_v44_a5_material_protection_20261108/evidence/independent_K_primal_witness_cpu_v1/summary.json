@@ -1,0 +1,154 @@
+{
+  "schema": "INDEPENDENT_K_COMPLETE_PRIMAL_WITNESS_MATRIX_DIAGNOSIS_CPU_V1",
+  "status": "COMPLETE_NO_SOLVE_K_WITNESS_DIAGNOSIS",
+  "source_r2": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/cpu_source_r2/solve_M4_protected_parent_RGB_cpu.py",
+  "source_r2_sha256": "2532c7601f00e491175e3cf420cce9d299bab89041624ef4b29ee21bb18cfa22",
+  "recovery_protocol_sha256": "900f297eb8bf51692d7c8d2574f11b2de90060abad5ba1217e7b76bde269223b",
+  "source_compile_equals_saved_r3_fallback_CSR_exact": true,
+  "saved_r2_primary_matrix_equals_fallback_without_z_exact": true,
+  "saved_r2_primary_b_and_deltaK_exact": true,
+  "matrix_shape": [
+    102008,
+    61693
+  ],
+  "matrix_nnz": 1450554,
+  "witness_definition": "deltaK; seam_epi=abs(J0+SA deltaK); photo_epi=abs(r0+PA deltaK); u=0; z=max(pixelerror-cap+8e-7,0)+1e-6",
+  "shared_z": 0.4418614956799825,
+  "arbitrary_positive_witness_margin": 1e-06,
+  "witness_bound_max_violation": 0.0,
+  "categories": [
+    {
+      "category": "seam_abs_positive",
+      "first_matrix_row": 0,
+      "row_count": 318,
+      "positive_residual_count": 0,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 0.0,
+      "max_violation": 0.0
+    },
+    {
+      "category": "seam_abs_negative",
+      "first_matrix_row": 318,
+      "row_count": 318,
+      "positive_residual_count": 2,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 4.336808689942018e-19,
+      "max_violation": 4.336808689942018e-19
+    },
+    {
+      "category": "photo_abs_positive",
+      "first_matrix_row": 636,
+      "row_count": 29898,
+      "positive_residual_count": 9,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 2.7755575615628914e-17,
+      "max_violation": 2.7755575615628914e-17
+    },
+    {
+      "category": "photo_abs_negative",
+      "first_matrix_row": 30534,
+      "row_count": 29898,
+      "positive_residual_count": 6,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 3.469446951953614e-18,
+      "max_violation": 3.469446951953614e-18
+    },
+    {
+      "category": "K_colour_delta_abs_positive",
+      "first_matrix_row": 60432,
+      "row_count": 15738,
+      "positive_residual_count": 0,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 0.0,
+      "max_violation": 0.0
+    },
+    {
+      "category": "K_colour_delta_abs_negative",
+      "first_matrix_row": 76170,
+      "row_count": 15738,
+      "positive_residual_count": 0,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": 0.0,
+      "max_violation": 0.0
+    },
+    {
+      "category": "seam118",
+      "first_matrix_row": 91908,
+      "row_count": 118,
+      "positive_residual_count": 45,
+      "violation_gt1e9_count": 14,
+      "max_signed_residual": 2.828400697679756e-09,
+      "max_violation": 2.828400697679756e-09
+    },
+    {
+      "category": "photo16",
+      "first_matrix_row": 92026,
+      "row_count": 16,
+      "positive_residual_count": 15,
+      "violation_gt1e9_count": 15,
+      "max_signed_residual": 0.0005936037430016329,
+      "max_violation": 0.0005936037430016329
+    },
+    {
+      "category": "per_pixel_cap_with_shared_z",
+      "first_matrix_row": 92042,
+      "row_count": 9966,
+      "positive_residual_count": 0,
+      "violation_gt1e9_count": 0,
+      "max_signed_residual": -1.0000000000634501e-06,
+      "max_violation": 0.0
+    }
+  ],
+  "direct_algebra_checks": [
+    {
+      "category": "seam_abs_positive",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "seam_abs_negative",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "photo_abs_positive",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "photo_abs_negative",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "K_colour_delta_abs_positive",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "K_colour_delta_abs_negative",
+      "max_matrix_vs_direct_abs": 0.0
+    },
+    {
+      "category": "seam118",
+      "max_matrix_vs_direct_abs": 3.469446951953614e-18
+    },
+    {
+      "category": "photo16",
+      "max_matrix_vs_direct_abs": 3.7947076036992655e-18
+    },
+    {
+      "category": "per_pixel_cap_with_shared_z",
+      "max_matrix_vs_direct_abs": 1.1102230246251565e-16
+    }
+  ],
+  "seam_original_gate_failures": 0,
+  "seam_reserved_gate_failures_gt1e9": 14,
+  "photo_original_gate_failures": 15,
+  "photo_reserved_gate_failures_gt1e9": 15,
+  "independent_pixel_box_lower_bounds_exceed_original16": 0,
+  "independent_pixel_box_lower_bounds_exceed_reserved16": 0,
+  "interpretation": "K witness may fail the added photo/reserve constraints. A witness failure is not an infeasibility proof. Per-pixel box lower bounds ignore shared-parent coupling and prove impossibility only if a lower bound exceeds a target.",
+  "GPU_forwards": 0,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "solver_calls": 0,
+  "original_inputs_modified": false,
+  "material_candidate_exported": false,
+  "automatic49": false
+}

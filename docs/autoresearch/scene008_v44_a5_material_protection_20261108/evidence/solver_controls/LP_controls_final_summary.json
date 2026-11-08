@@ -1,0 +1,369 @@
+{
+  "schema": "M4_LP_ENGINEERING_BRANCH_FINAL_ACCOUNTING_V1",
+  "status": "STOPPED_BY_ROOT_NO_MORE_LP_OR_SOLVER_OPTIONS",
+  "task_id": "SCENE008-V44-A5-MATERIAL-PROTECTION-20261108",
+  "actual_LP_calls": 9,
+  "actual_LP_seconds": 1370.7511763609946,
+  "actual_native_F": 0,
+  "actual_native_B": 0,
+  "actual_least_squares_calls": 0,
+  "actual_Adam_updates": 0,
+  "actual_original_model_updates": 0,
+  "native_images_generated_by_this_branch": 0,
+  "automatic49": false,
+  "GPU_keep_on": true,
+  "duplicate_accounting_boundary": "Native parent/child operator extraction, visibility closure, R/Rchild least-squares and their8F are separate root/agent ledgers; none counted here.",
+  "calls": [
+    {
+      "call_index": 1,
+      "stage": "main_photo",
+      "started_unix": 1794107374.9207253,
+      "method": "highs",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "time_limit": 300
+      },
+      "matrix_shape": [
+        102008,
+        61692
+      ],
+      "matrix_nnz": 1440588,
+      "seconds": 0.660528277978301,
+      "status": 2,
+      "success": false,
+      "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "iterations": 0,
+      "warnings": [],
+      "run": "parent_r2"
+    },
+    {
+      "call_index": 2,
+      "stage": "fallback_minimax",
+      "started_unix": 1794107375.9680846,
+      "method": "highs",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "time_limit": 300
+      },
+      "matrix_shape": [
+        102008,
+        61693
+      ],
+      "matrix_nnz": 1450554,
+      "seconds": 301.7429918255657,
+      "status": 1,
+      "success": false,
+      "message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
+      "iterations": 23868,
+      "warnings": [],
+      "run": "parent_r2"
+    },
+    {
+      "call_index": 1,
+      "stage": "identical_fallback_minimax_ipm",
+      "started_unix": 1794107844.5886908,
+      "method": "highs-ipm",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "ipm_optimality_tolerance": 1e-10,
+        "time_limit": 600,
+        "disp": true
+      },
+      "matrix_shape": [
+        102008,
+        61693
+      ],
+      "matrix_nnz": 1450554,
+      "seconds": 37.06765926070511,
+      "status": 2,
+      "success": false,
+      "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "iterations": 14,
+      "crossover_iterations": 0,
+      "warnings": [],
+      "run": "parent_r3_ipm"
+    },
+    {
+      "call_index": 1,
+      "stage": "scaled_identical_fallback_ipm",
+      "started_unix": 1794108373.7076895,
+      "method": "highs-ipm",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "ipm_optimality_tolerance": 1e-10,
+        "time_limit": 600,
+        "disp": true
+      },
+      "matrix_shape": [
+        102008,
+        61693
+      ],
+      "matrix_nnz": 1450554,
+      "seconds": 40.41545349545777,
+      "status": 2,
+      "success": false,
+      "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "iterations": 13,
+      "crossover_iterations": 0,
+      "warnings": [],
+      "run": "parent_r4_scaled_phaseI"
+    },
+    {
+      "call_index": 2,
+      "stage": "witnessed_phaseI_min_photo_excess_ipm",
+      "started_unix": 1794108415.1882646,
+      "method": "highs-ipm",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "ipm_optimality_tolerance": 1e-10,
+        "time_limit": 600,
+        "disp": true
+      },
+      "matrix_shape": [
+        60566,
+        45955
+      ],
+      "matrix_nnz": 1347754,
+      "seconds": 600.2554330565035,
+      "status": 1,
+      "success": false,
+      "message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
+      "iterations": 19196,
+      "crossover_iterations": 22782,
+      "warnings": [],
+      "run": "parent_r4_scaled_phaseI"
+    },
+    {
+      "call_index": 1,
+      "stage": "child_main_photo_ipm_no_crossover",
+      "method": "highs-ipm",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "ipm_optimality_tolerance": 1e-10,
+        "time_limit": 600,
+        "disp": true,
+        "run_crossover": "off"
+      },
+      "started_unix": 1794109016.4044993,
+      "matrix_shape": [
+        194882,
+        154566
+      ],
+      "matrix_nnz": 4096440,
+      "seconds": 56.337598675861955,
+      "status": 2,
+      "success": false,
+      "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "iterations": 11,
+      "crossover_iterations": 0,
+      "warnings": [
+        "Unrecognized options detected: {'run_crossover': 'off'}. These will be passed to HiGHS verbatim."
+      ],
+      "run": "child_v1_ipm"
+    },
+    {
+      "call_index": 2,
+      "stage": "child_unique_fallback_minimax_ipm_no_crossover",
+      "method": "highs-ipm",
+      "options": {
+        "primal_feasibility_tolerance": 1e-09,
+        "dual_feasibility_tolerance": 1e-09,
+        "ipm_optimality_tolerance": 1e-10,
+        "time_limit": 600,
+        "disp": true,
+        "run_crossover": "off"
+      },
+      "started_unix": 1794109073.4265482,
+      "matrix_shape": [
+        194882,
+        154567
+      ],
+      "matrix_nnz": 4106406,
+      "seconds": 82.82668659463525,
+      "status": 4,
+      "success": false,
+      "message": "The HiGHS status code was not recognized. (HiGHS Status 15: model_status is Unknown; primal_status is Infeasible)",
+      "iterations": 13,
+      "crossover_iterations": 0,
+      "warnings": [
+        "Unrecognized options detected: {'run_crossover': 'off'}. These will be passed to HiGHS verbatim."
+      ],
+      "run": "child_v1_ipm"
+    },
+    {
+      "call_index": 1,
+      "stage": "parent_r5_native",
+      "status": "Unknown",
+      "seconds": 241.80309997871518,
+      "native_solution_value_valid": true,
+      "original_matrix_max_violation": 0.5528224319175422,
+      "run": "parent_r5_native"
+    },
+    {
+      "call_index": 1,
+      "stage": "parent_r6_native_no_presolve",
+      "status": "Unknown",
+      "seconds": 9.64172519557178,
+      "native_solution_value_valid": true,
+      "original_matrix_max_violation": 0.0,
+      "run": "parent_r6_native_no_presolve"
+    }
+  ],
+  "runs": [
+    {
+      "run": "parent_r2",
+      "status": "SOLVER_TIME_OR_ITERATION_LIMIT_INCONCLUSIVE_STOP",
+      "source_sha256": "2532c7601f00e491175e3cf420cce9d299bab89041624ef4b29ee21bb18cfa22",
+      "protocol_sha256": "9321df62d1dcc90f45029237ca8ec4bf5e9657fb20ed05ef67ad4073de637926",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\cpu_solve_r2\\result.json",
+      "actual_solver_calls": 2,
+      "solver_seconds": 302.403520103544
+    },
+    {
+      "run": "parent_r3_ipm",
+      "status": "IDENTICAL_LP_IPM_REPORTED_INFEASIBLE_STOP",
+      "source_sha256": "cb519066407e735fed96a52f80f8372ef367c2fcc64a125c93c57b62e706ad1f",
+      "protocol_sha256": "900f297eb8bf51692d7c8d2574f11b2de90060abad5ba1217e7b76bde269223b",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\cpu_recovery_r3\\result.json",
+      "actual_solver_calls": 1,
+      "solver_seconds": 37.06765926070511
+    },
+    {
+      "run": "parent_r4_scaled_phaseI",
+      "status": "PHASEI_TIME_LIMIT_INCONCLUSIVE_STOP",
+      "source_sha256": "296804afaa0f220c197e88b3bb292633d3e3c2bfab645a9f4ea5fbf034b50e25",
+      "protocol_sha256": "072ecf12aeca5cf421972113d5598b9056e44965d282930e36397696d53245d0",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\cpu_recovery_r4\\result.json",
+      "actual_solver_calls": 2,
+      "solver_seconds": 640.6708865519613
+    },
+    {
+      "run": "child_v1_ipm",
+      "status": "CHILD_NUMERICAL_OR_OTHER_INCONCLUSIVE_STOP",
+      "source_sha256": "54b368ec2b3aa10018b6f81cb17834b8eeeb852ed43a11cb3e2a79c4df722e48",
+      "protocol_sha256": "3826882d7a1fb18f02405cd1fcab51935458703230c956fc50a8879ee6f776b0",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\child_solve_v1\\result.json",
+      "actual_solver_calls": 2,
+      "solver_seconds": 139.1642852704972
+    },
+    {
+      "run": "parent_r5_native",
+      "status": "NO_CERTIFIED_NATIVE_PHASEI_POINT",
+      "source_sha256": "bde982e337bdbd7fb0dce4ad6b9a916f355bf344adc67dd60345f05c463a11b3",
+      "protocol_sha256": "ee6a6806531452fb0b2695747a4ca77adf3180f7db172199953773a96fb2e5c5",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\cpu_recovery_r5\\result.json",
+      "actual_solver_calls": 1,
+      "solver_seconds": 241.80309997871518
+    },
+    {
+      "run": "parent_r6_native_no_presolve",
+      "status": "PRIMARY_DIAGNOSTIC_NO_TIEBREAK",
+      "source_sha256": "9b4332e7fcbbdda90aafa86b54e4d7db1df4cb58e32bfea062692ed67ceb3151",
+      "protocol_sha256": "5e7320b0c2ef8c433e394cd057459f2535153f5deae105bd79b880cbb245a289",
+      "local_result": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\cpu_recovery_r6\\result.json",
+      "actual_solver_calls": 1,
+      "solver_seconds": 9.64172519557178
+    }
+  ],
+  "source_protocol_index": [
+    {
+      "run": "parent_r2",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\solve_M4_protected_parent_RGB_cpu.py",
+      "source_sha256": "2532c7601f00e491175e3cf420cce9d299bab89041624ef4b29ee21bb18cfa22",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_protection_priority_lex_LP_protocol_v1.json",
+      "protocol_sha256": "9321df62d1dcc90f45029237ca8ec4bf5e9657fb20ed05ef67ad4073de637926"
+    },
+    {
+      "run": "parent_r3_ipm",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\recover_M4_identical_LP_highs_ipm_cpu.py",
+      "source_sha256": "cb519066407e735fed96a52f80f8372ef367c2fcc64a125c93c57b62e706ad1f",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_identical_LP_IPM_recovery_protocol_r3.json",
+      "protocol_sha256": "900f297eb8bf51692d7c8d2574f11b2de90060abad5ba1217e7b76bde269223b"
+    },
+    {
+      "run": "parent_r4_scaled_phaseI",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\recover_M4_scaled_and_phaseI_cpu.py",
+      "source_sha256": "296804afaa0f220c197e88b3bb292633d3e3c2bfab645a9f4ea5fbf034b50e25",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_scaled_and_witnessed_phaseI_protocol_r4.json",
+      "protocol_sha256": "072ecf12aeca5cf421972113d5598b9056e44965d282930e36397696d53245d0"
+    },
+    {
+      "run": "child_v1_ipm",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\solve_M4_child_RGB_capacity_cpu.py",
+      "source_sha256": "54b368ec2b3aa10018b6f81cb17834b8eeeb852ed43a11cb3e2a79c4df722e48",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_child_RGB_capacity_protocol_v1.json",
+      "protocol_sha256": "3826882d7a1fb18f02405cd1fcab51935458703230c956fc50a8879ee6f776b0"
+    },
+    {
+      "run": "parent_r5_native",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\recover_M4_phaseI_native_highs_cpu.py",
+      "source_sha256": "bde982e337bdbd7fb0dce4ad6b9a916f355bf344adc67dd60345f05c463a11b3",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_phaseI_native_highs_protocol_r5.json",
+      "protocol_sha256": "ee6a6806531452fb0b2695747a4ca77adf3180f7db172199953773a96fb2e5c5"
+    },
+    {
+      "run": "parent_r6_native_no_presolve",
+      "source": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\recover_M4_phaseI_native_highs_no_presolve_cpu.py",
+      "source_sha256": "9b4332e7fcbbdda90aafa86b54e4d7db1df4cb58e32bfea062692ed67ceb3151",
+      "protocol": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\M4_phaseI_native_no_presolve_protocol_r6.json",
+      "protocol_sha256": "5e7320b0c2ef8c433e394cd057459f2535153f5deae105bd79b880cbb245a289"
+    }
+  ],
+  "preflight": {
+    "version_assert_before_linprog_failed": true,
+    "original_scipy_expected": "1.13.1",
+    "actual_scipy": "1.15.3",
+    "actual_highs": "1.8.0",
+    "preflight_LP_calls": 0,
+    "old_source_and_protocol_preserved": true
+  },
+  "validated_facts": {
+    "fixed4_fit_inside_originalroad": true,
+    "targetprotect_subset_new_fullprotection": true,
+    "DELETE_visible37_intersection_newprotection": 0,
+    "old94_H2_geometry_failures": 16,
+    "parent_variables": 5246,
+    "child_variables": 20725,
+    "protected_material_pixels": 9966,
+    "positive_row_scaling_roundtrip_max_abs": 1.6940658945086007e-21,
+    "K_phaseI_witness_t": 0.0005945037430016346,
+    "K_phaseI_original_matrix_violation": 2.7755575615628914e-17
+  },
+  "failure_semantics": [
+    "Software status2 in original main/fallback problems is not an independent mathematical infeasibility certificate.",
+    "Time-limit and Unknown/imprecise/no-progress outcomes are numerical inconclusive, not material-capacity negatives.",
+    "Known K plus explicit commonMAE slack is a validated feasible phaseI witness, so lack of solver certificate is not physical infeasibility.",
+    "Frozen H2 alpha/depth failures remain original failures and cannot be repaired by RGB-only optimization.",
+    "PhaseI explicitly permits positiveMAE slack and never passes original16photo gates by redefining them."
+  ],
+  "r6_diagnostic": {
+    "candidate": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/cpu_recovery_r6/M4_candidate_parent_RGB.npz",
+      "sha256": "76baaa341e97e83950e3b5c10ab6d8b74ce8e0b2903757f2fbbf86a5ac61f11c",
+      "full_parent_rows": 10098,
+      "variable_parent_rows": 5246,
+      "fixed_parents_bitwise_unchanged": true
+    },
+    "model_status": "Unknown",
+    "optimality_claim": false,
+    "full_original_matrix_violation": 0.0,
+    "solver_t": 0.022875059923346156,
+    "actual_RGB_required_t": 0.0007057950051777111,
+    "projected_dual_lower_bound": -4.025588902502032e-06,
+    "dominated_by_known_K": true,
+    "original16photo_pass": false,
+    "not_adopted": true,
+    "GPU8F_forbidden_by_root": true,
+    "all49_forbidden": true
+  },
+  "scientific_conclusion": "No certified protection repair or positive incapacity bound from this LP branch. Material quality remains unaccepted. R/Rchild genuinely improved material and native image acceptance are the mainline.",
+  "architecture_reference": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\architecture_protection_supervision.svg",
+  "quality_accepted": false,
+  "human_verdict": null
+}

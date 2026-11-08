@@ -364,3 +364,7 @@
 - SCENE008-FULL5-ROAD-INTEGRATION-WITHDRAWN-20261107：[单Full5源身份与道路接口诊断归档](autoresearch/scene008_full5_road_integration_20261107/index.html)；用户撤回该路线，保留41次真实kernel前向／0训练的原始结果和来源身份误删证据，不由历史报告自动恢复。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
 
 - SCENE008-V44-A5-C49-RGB-20261107：[冻结21K底座、C49共享父RGB材质对照](autoresearch/scene008_v44_a5_c49_rgb_20261107/index.html)；C400初始化历史、2119父资格、600s真实生命周期、新正式2000、完整49对照、H2材质移植与取回账本均在报告；不把smoke或旧C/E/F算作本轮正式步数。failure_ledger_refs=[V82-F13]，failure_ledger_delta=updated:V82-F13。
+
+## SCENE008-V44-A5-MATERIAL-PROTECTION-20261108
+
+[单场景保护监督收口](autoresearch/scene008_v44_a5_material_protection_20261108/index.html) · R/Rchild/S四帧与受限求解证据；用户收口、不扩49、归档后关机。当前状态以RESEARCH_STATUS为准。

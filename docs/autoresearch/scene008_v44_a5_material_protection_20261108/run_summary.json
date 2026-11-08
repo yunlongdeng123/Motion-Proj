@@ -1,0 +1,77 @@
+{
+  "task_id": "SCENE008-V44-A5-MATERIAL-PROTECTION-20261108",
+  "phase": "SINGLE_SCENE_CLOSED_BY_USER",
+  "headline": "单场景精修收口：保护监督接通，整体指标尚未全过，未扩49帧",
+  "conclusion": "保守归档Rchild：真实四帧白/暗点消除，原接缝像素、车顶、身份与几何保持。原94项61通过／25失败／8空域，保护RGB7/16通过；不是整体修复成功。S虽有9/16保护域通过却接缝回退，不采用。最后一次T求解未返回合法RGB颜色表，未出图。按用户要求停止单场景新实验，转入结果与接口交接。",
+  "roof_identity_geometry_opacity_frozen": true,
+  "new_formal_neural_updates": 0,
+  "mainline_component_neural_updates": 23000,
+  "GPU_keep_on": false,
+  "release49": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "controls": [
+    {
+      "name": "K（原对照）",
+      "gates": "55 / 31 / 8",
+      "photo": 1,
+      "pools": 6,
+      "bins": 106,
+      "meaning": "既有接缝改善；保护白点/暗点仍在",
+      "link": "../scene008_v44_a5_road_fusion_integration_20261107/index.html"
+    },
+    {
+      "name": "R：父点＋接缝像素保护",
+      "gates": "57 / 29 / 8",
+      "photo": 3,
+      "pools": 6,
+      "bins": 106,
+      "meaning": "修掉四处白/暗点；接缝像素与K逐值相同",
+      "link": "evidence/independent_R_native_cpu_v1/audit.html"
+    },
+    {
+      "name": "Rchild：独立子点＋同保护",
+      "gates": "61 / 25 / 8",
+      "photo": 7,
+      "pools": 6,
+      "bins": 106,
+      "meaning": "仅放开子点颜色；全几何和身份不动",
+      "link": "evidence/independent_Rchild_native_cpu_v1/audit.html"
+    },
+    {
+      "name": "S：移除额外接缝颜色锁定",
+      "gates": "53 / 33 / 8",
+      "photo": 9,
+      "pools": 0,
+      "bins": 40,
+      "meaning": "保护更好，但接缝回退；不采用",
+      "link": "evidence/independent_S_native_cpu_v1/audit.html"
+    }
+  ],
+  "updated_utc": "2026-11-08T04:30:07.925453+00:00",
+  "user_closed_single_scene": true,
+  "original_quality_goal_fully_achieved": false,
+  "archived_conservative_control": "Rchild; comparison asset, not default adoption",
+  "default_delivery_changed": false,
+  "power_policy": {
+    "latest_user_instruction": "Close single-scene work and shut down GPU.",
+    "execute_after": [
+      "report and source archive",
+      "Git push verified",
+      "local retrieval verified",
+      "activity/controller audit"
+    ],
+    "command": "/usr/bin/shutdown",
+    "status": "PENDING_ROOT_FINAL_DELIVERY_VERIFICATION"
+  },
+  "T_QP": {
+    "calls": 1,
+    "runtime_seconds": 600.052824534,
+    "valid_palette": false,
+    "raw_RGB_box_violation": 0.003213936702169573,
+    "endpoint_fix_performed": false,
+    "original_quality_or_capacity_impossibility_proved": false
+  },
+  "experiments_queued": 0,
+  "next_phase_started": false
+}

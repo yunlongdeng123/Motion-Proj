@@ -1,0 +1,207 @@
+{
+  "schema": "SINGLE_SCENE_DELIVERY_CLOSEOUT_V1",
+  "status": "R_RCHILD_S_NATIVE_COMPLETE_T_NO_CERTIFIED_POINT",
+  "scope": "仅四帧094/105/128/137 KEEP+DELETE；本轮不扩49、不新实验，不更换既有默认交付。",
+  "success": [
+    "保护监督遗漏及资格覆盖缺口已定位并实际接入。",
+    "R/Rchild/S真实四处白点/邻暗点均显著优于K，三组geometry/identity/semantic贡献保持exact。",
+    "child仅解除4kid颜色共享的固定对照取得更低误差；所有结论限于固定迭代近似解。"
+  ],
+  "failure": [
+    "三个材料控制均未整体通过；R/Rchild仍有保护域失败，S接缝回退。",
+    "旧16项alpha/depth几何失败继承保留，没有被RGB修复或从原94门删除。",
+    "T600s时限内无认证点，原矩阵/box未过；不导出、不再8F、不作材料或几何全局不可能判断。"
+  ],
+  "controls": [
+    {
+      "control": "K",
+      "material_basis": "已有父点接缝LP对照",
+      "native4xKD_evaluated": true,
+      "original94_PASS": 55,
+      "original94_FAIL": 31,
+      "original94_UNSUPPORTED": 8,
+      "protection16_PASS": 1,
+      "original6_pools_PASS": 6,
+      "original106_bins_PASS": 106,
+      "added_Kactual6_PASS": 6,
+      "strict9966_pixel_cap_FAIL": 3206,
+      "actual_equal_protection_RGB_MSE": 0.0028615969007835212,
+      "new_this_round_CPU_LS_calls": 0,
+      "CPU_LS_seconds": 0.0,
+      "new_this_round_native_forwards": 0,
+      "geometry_identity_semantic_colour_exact": true,
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "接缝保留，整体保护未通过"
+    },
+    {
+      "control": "L",
+      "material_basis": "已有12父因果回滚，实际10父变化",
+      "native4xKD_evaluated": true,
+      "original94_PASS": 55,
+      "original94_FAIL": 31,
+      "original94_UNSUPPORTED": 8,
+      "protection16_PASS": 1,
+      "original6_pools_PASS": 6,
+      "original106_bins_PASS": 106,
+      "added_Kactual6_PASS": 6,
+      "strict9966_pixel_cap_FAIL": 3225,
+      "actual_equal_protection_RGB_MSE": 0.0027617700985305012,
+      "new_this_round_CPU_LS_calls": 0,
+      "CPU_LS_seconds": 0.0,
+      "new_this_round_native_forwards": 0,
+      "geometry_identity_semantic_colour_exact": true,
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "接缝保留，整体保护未通过"
+    },
+    {
+      "control": "R",
+      "material_basis": "父点RGB；590接缝支持父冻结，4656父可变",
+      "native4xKD_evaluated": true,
+      "original94_PASS": 57,
+      "original94_FAIL": 29,
+      "original94_UNSUPPORTED": 8,
+      "protection16_PASS": 3,
+      "original6_pools_PASS": 6,
+      "original106_bins_PASS": 106,
+      "added_Kactual6_PASS": 6,
+      "strict9966_pixel_cap_FAIL": 2918,
+      "actual_equal_protection_RGB_MSE": 0.0008261855975520445,
+      "new_this_round_CPU_LS_calls": 3,
+      "CPU_LS_seconds": 29.343772921711206,
+      "new_this_round_native_forwards": 8,
+      "geometry_identity_semantic_colour_exact": true,
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "接缝保留，整体保护未通过"
+    },
+    {
+      "control": "Rchild",
+      "material_basis": "子点RGB；2140接缝支持child冻结，18585可变",
+      "native4xKD_evaluated": true,
+      "original94_PASS": 61,
+      "original94_FAIL": 25,
+      "original94_UNSUPPORTED": 8,
+      "protection16_PASS": 7,
+      "original6_pools_PASS": 6,
+      "original106_bins_PASS": 106,
+      "added_Kactual6_PASS": 6,
+      "strict9966_pixel_cap_FAIL": 2500,
+      "actual_equal_protection_RGB_MSE": 0.0007410428220715003,
+      "new_this_round_CPU_LS_calls": 3,
+      "CPU_LS_seconds": 68.52669220604002,
+      "new_this_round_native_forwards": 8,
+      "geometry_identity_semantic_colour_exact": true,
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "接缝保留，整体保护未通过"
+    },
+    {
+      "control": "S",
+      "material_basis": "同20725子点RGB；唯一移除额外接缝颜色guard",
+      "native4xKD_evaluated": true,
+      "original94_PASS": 53,
+      "original94_FAIL": 33,
+      "original94_UNSUPPORTED": 8,
+      "protection16_PASS": 9,
+      "original6_pools_PASS": 0,
+      "original106_bins_PASS": 40,
+      "added_Kactual6_PASS": 0,
+      "strict9966_pixel_cap_FAIL": 1823,
+      "actual_equal_protection_RGB_MSE": 0.0005088616833969762,
+      "new_this_round_CPU_LS_calls": 3,
+      "CPU_LS_seconds": 82.76495324634016,
+      "new_this_round_native_forwards": 8,
+      "geometry_identity_semantic_colour_exact": true,
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "保护误差降低但接缝回退，不采用"
+    },
+    {
+      "control": "T",
+      "material_basis": "20725子点RGB，原118接缝+16整域门的唯一限时QP",
+      "native4xKD_evaluated": false,
+      "new_this_round_CPU_LS_calls": 0,
+      "CPU_LS_seconds": 0.0,
+      "new_this_round_native_forwards": 0,
+      "new_this_round_QP_calls": 1,
+      "QP_solve_wall_seconds": 597.1736369151622,
+      "QP_runtime_seconds": 600.052824534,
+      "status": "QP_RGB_BOX_NUMERICAL_ERROR_EXCEEDS_1E_MINUS7_STOP",
+      "quality_accepted": false,
+      "release49": false,
+      "interpretation": "600s内无认证点；不导出、不渲染，不作不可行结论"
+    }
+  ],
+  "mechanisms": [
+    {
+      "mechanism": "遗漏protect监督",
+      "finding": "旧C49实际损失只读取fit_mask/edgeblend_RGB，protected像素自身无颜色损失；目标文件错读未被发现。",
+      "evidence": "../../../scene008_v44_a5_road_fusion_integration_20261107/evidence/review/C49_protected_supervision_coverage_audit_v1.json",
+      "boundary": "R/Rchild/S在完整固定保护依赖上监督，真实四处白/暗点改善；不代表整域或49帧通过。"
+    },
+    {
+      "mechanism": "资格只看fit可见质量",
+      "finding": "aggregate fit mass>0只证明某处有监督，不约束同一父点主要保护足迹；不可把source-valid49=0或小正fit质量直接当作错误投影证明。",
+      "evidence": "../independent_supervision_interface_cpu_v1.json",
+      "boundary": "本轮保护依赖闭包为5246父/20725可见child，仍仅覆盖所登记四帧BUILD监督。"
+    },
+    {
+      "mechanism": "单独新路材质目标不能保证融合接缝",
+      "finding": "S全域MSE降低且16保护门9项过，但原6池全退、106仅40过；必须在联合渲染中同时衡量保护与接缝。",
+      "evidence": "../independent_S_native_hard_gates_v1/summary.json",
+      "boundary": "这是已执行控制中的目标冲突；没有证明原118+16指标下不存在可行材料。T限时未认证也不是不可行证明。"
+    },
+    {
+      "mechanism": "额外全seamRGB冻结过严",
+      "finding": "固定2140个接缝支持child的K颜色后，独立逐pixel最乐观RGBbox仍有4个完整域floor超原门。",
+      "evidence": "../independent_Rchild_guard_box_floor_cpu_v1/summary.json",
+      "boundary": "障碍属于额外整片颜色guard，不是用户要求的geometry/identity冻结，也不等于原6+106接缝指标本身不可达。"
+    }
+  ],
+  "future_module_boundaries_proposal_only": [
+    {
+      "module": "场景与监督角色适配",
+      "inputs": "scene_id、相机/时间/坐标、合法观测、编辑条件、fit/protect/unknown域",
+      "outputs": "统一场景包与不可变域注册表",
+      "rule": "训练监督与QUERY输入分离；隐藏DELETE路面不使用观测车体RGB作真值。"
+    },
+    {
+      "module": "依赖与可写表示",
+      "inputs": "联合渲染alphaT、ownership、父/child映射、任务冻结合同",
+      "outputs": "跨KEEP/DELETE共享的可写世界表示与依赖闭包",
+      "rule": "资格覆盖fit及protect；声明粒度，不用单帧像素补丁或手选点回滚替代。"
+    },
+    {
+      "module": "跨场景共享学习编辑模块",
+      "inputs": "统一合法条件与场景/依赖特征",
+      "outputs": "合同允许字段上的共享世界残差",
+      "rule": "本轮只验证RGB边界；未来可训练字段另行定义，不把单场景LS拟合当作泛化成果。"
+    },
+    {
+      "module": "联合渲染与显式监督",
+      "inputs": "候选残差、冻结场景、固定fit/protect/seam域",
+      "outputs": "联合RGB/alpha/depth/semantic贡献及分域损失",
+      "rule": "保护和融合接缝在同一输出上验；域分母、权重、未知区域与额外guard分别声明。"
+    },
+    {
+      "module": "独立多场景验收",
+      "inputs": "原生浮点、固定域、原输入角色/预算/来源",
+      "outputs": "逐场景与受影响子域指标、尾部、冻结证明、空域状态",
+      "rule": "训练/验证/QUERY按场景隔离；保留unsupported，不以背景均值或少量漂亮crop代替完整域。"
+    }
+  ],
+  "new_neural_updates": 0,
+  "new_control_LS_calls": 9,
+  "control_LS_seconds": 180.6354183740914,
+  "control_LS_status": "全部status0/max_iter100，approximate；不声称最优。",
+  "new_control_native_forwards": 24,
+  "T_result_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\osqp_preparation\\T_run_v1\\result.json",
+  "T_already_saved_CPU_audit": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\protection_formulation\\osqp_preparation\\T_run_v1\\independent_saved_CPU_audit.json",
+  "quality_accepted": false,
+  "human_verdict": null,
+  "release49": false,
+  "further_experiments_authorized": false,
+  "power": "最终关机由root完成，须在其Git/推送/回收及其它任务核查完成后执行。"
+}

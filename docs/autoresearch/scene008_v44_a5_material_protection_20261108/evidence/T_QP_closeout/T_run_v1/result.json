@@ -1,0 +1,1792 @@
+{
+  "schema": "T_CHILD_ORIGINAL_METRICS_OSQP_RESULT_V1",
+  "status": "QP_RGB_BOX_NUMERICAL_ERROR_EXCEEDS_1E_MINUS7_STOP",
+  "source_sha256": "82504970b2a6dffa1c1af09024515a7cdf63209b2d85ed3d4320fc342eb9b1eb",
+  "protocol_sha256": "b55708d19cc599c239be43384fdff1116ff58a3db375ff47713881e17e7a8d89",
+  "osqp_version": "1.0.4",
+  "mode": "solve",
+  "material_basis": "child_RGB",
+  "variable_child_count": 20725,
+  "fixed_child_count": 19667,
+  "protected_pixels": 9966,
+  "residual_channels": 29898,
+  "QP_variables": 122289,
+  "constraint_shape": [
+    152639,
+    122289
+  ],
+  "constraint_nnz": 2134116,
+  "P_nnz": 29898,
+  "P_only_lifted_r_diagonal": true,
+  "formed_B_transpose_B": false,
+  "strict_pixel_cap_constraints": 0,
+  "entire_seam_RGB_guard_constraints": 0,
+  "original118_seam_constraints": 118,
+  "original16_full_domain_MAE_constraints": 16,
+  "warm_start_matrix_certificate": {
+    "full_original_matrix_max_violation": 0.0001248230795621103,
+    "per_block": [
+      {
+        "name": "RGB_box",
+        "first_row": 0,
+        "rows": 62175,
+        "max_violation": 0.0
+      },
+      {
+        "name": "lifted_native_photo_residual",
+        "first_row": 62175,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "photo_absolute_positive",
+        "first_row": 92073,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "photo_absolute_negative",
+        "first_row": 121971,
+        "rows": 29898,
+        "max_violation": 0.0
+      },
+      {
+        "name": "seam_absolute_positive",
+        "first_row": 151869,
+        "rows": 318,
+        "max_violation": 0.0
+      },
+      {
+        "name": "seam_absolute_negative",
+        "first_row": 152187,
+        "rows": 318,
+        "max_violation": 0.0
+      },
+      {
+        "name": "original118_seam_metrics",
+        "first_row": 152505,
+        "rows": 118,
+        "max_violation": 0.0
+      },
+      {
+        "name": "original16_complete_photo_MAE",
+        "first_row": 152623,
+        "rows": 16,
+        "max_violation": 0.0001248230795621103
+      }
+    ],
+    "objective": 0.0007410428220715003
+  },
+  "warm_start_original_scientific_certificate": {
+    "seams": [
+      {
+        "name": "primary128",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.0037760456713537374,
+        "original_target": 0.004613534469778339,
+        "margin": 0.000837488798424602,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.0037760456713537374,
+        "original_target": 0.0037770457392626755,
+        "margin": 1.0000679089381542e-06,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.005003136048293931,
+        "original_target": 0.006036768960524972,
+        "margin": 0.0010336329122310403,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.005003136048293931,
+        "original_target": 0.005004136085482159,
+        "margin": 1.0000371882274567e-06,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "role": "original_K_pool",
+        "value": 0.003688909582020985,
+        "original_target": 0.0038325507547889394,
+        "margin": 0.00014364117276795436,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "keep",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.003688909582020985,
+        "original_target": 0.0036899095259222974,
+        "margin": 9.999439013123716e-07,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.006297946855839755,
+        "original_target": 0.0076029783590153485,
+        "margin": 0.001305031503175593,
+        "passed": true
+      },
+      {
+        "name": "primary128",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.006297946855839755,
+        "original_target": 0.00629894650982755,
+        "margin": 9.996539877942662e-07,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.005607530224854902,
+        "original_target": 0.007150272171470027,
+        "margin": 0.0015427419466151242,
+        "passed": true
+      },
+      {
+        "name": "world_near",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.005607530224854902,
+        "original_target": 0.00560853011329022,
+        "margin": 9.998884353172935e-07,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "role": "original_K_pool",
+        "value": 0.0034304095513990446,
+        "original_target": 0.00352419822717539,
+        "margin": 9.37886757763455e-05,
+        "passed": true
+      },
+      {
+        "name": "world_lateral",
+        "state": "delete",
+        "role": "added_K_actual_pool_preservation",
+        "value": 0.0034304095513990446,
+        "original_target": 0.0034314095265131606,
+        "margin": 9.999751141159807e-07,
+        "passed": true
+      },
+      {
+        "name": "bin0",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006219261015454928,
+        "original_target": 0.006220260860234499,
+        "margin": 9.99844779570741e-07,
+        "passed": true
+      },
+      {
+        "name": "bin1",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008127732823292414,
+        "original_target": 0.008128733133733272,
+        "margin": 1.0003104408580488e-06,
+        "passed": true
+      },
+      {
+        "name": "bin2",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0015564331163962681,
+        "original_target": 0.0015565270947515964,
+        "margin": 9.397835532823015e-08,
+        "passed": true
+      },
+      {
+        "name": "bin3",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002196510788053274,
+        "original_target": 0.0021975107880532743,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin4",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001605142451201876,
+        "original_target": 0.0016061424900069832,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin5",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0022162024397403,
+        "original_target": 0.0022172024397403003,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin6",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00798214009652535,
+        "original_target": 0.007983139475643634,
+        "margin": 9.993791182834333e-07,
+        "passed": true
+      },
+      {
+        "name": "bin7",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0012229304411448538,
+        "original_target": 0.0012230266507938503,
+        "margin": 9.620964899650745e-08,
+        "passed": true
+      },
+      {
+        "name": "bin8",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.003627982921898365,
+        "original_target": 0.003628080237492919,
+        "margin": 9.731559455408018e-08,
+        "passed": true
+      },
+      {
+        "name": "bin9",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.004877686500549316,
+        "original_target": 0.004877788705587387,
+        "margin": 1.0220503807081144e-07,
+        "passed": true
+      },
+      {
+        "name": "bin10",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0023662234113241234,
+        "original_target": 0.002366324413403869,
+        "margin": 1.01002079745411e-07,
+        "passed": true
+      },
+      {
+        "name": "bin11",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0018576649793734152,
+        "original_target": 0.0018586650181785225,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin12",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.007086444801340501,
+        "original_target": 0.0070874446461200715,
+        "margin": 9.99844779570741e-07,
+        "passed": true
+      },
+      {
+        "name": "bin13",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008625172544270754,
+        "original_target": 0.008626172078609466,
+        "margin": 9.995343387119576e-07,
+        "passed": true
+      },
+      {
+        "name": "bin14",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003613778234769901,
+        "original_target": 0.0036138794308751823,
+        "margin": 1.0119610528150011e-07,
+        "passed": true
+      },
+      {
+        "name": "bin15",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0027430118061602116,
+        "original_target": 0.0028744710067510606,
+        "margin": 0.00013145920059084906,
+        "passed": true
+      },
+      {
+        "name": "bin16",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0015564331163962681,
+        "original_target": 0.0015565270947515964,
+        "margin": 9.397835532823015e-08,
+        "passed": true
+      },
+      {
+        "name": "bin17",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002196510788053274,
+        "original_target": 0.0021975107880532743,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin18",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001605142451201876,
+        "original_target": 0.0016061424900069832,
+        "margin": 1.0000388051072638e-06,
+        "passed": true
+      },
+      {
+        "name": "bin19",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0022162024397403,
+        "original_target": 0.0022172024397403003,
+        "margin": 1.0000000000001327e-06,
+        "passed": true
+      },
+      {
+        "name": "bin20",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.00798214009652535,
+        "original_target": 0.007983139475643634,
+        "margin": 9.993791182834333e-07,
+        "passed": true
+      },
+      {
+        "name": "bin21",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002265453261012832,
+        "original_target": 0.002265544600620866,
+        "margin": 9.133960803377542e-08,
+        "passed": true
+      },
+      {
+        "name": "bin22",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003880090701083342,
+        "original_target": 0.003880183903336525,
+        "margin": 9.320225318300637e-08,
+        "passed": true
+      },
+      {
+        "name": "bin23",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005002092570066452,
+        "original_target": 0.005002191049814224,
+        "margin": 9.847974777234952e-08,
+        "passed": true
+      },
+      {
+        "name": "bin24",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002481874699393908,
+        "original_target": 0.0024819744209051134,
+        "margin": 9.972151120531472e-08,
+        "passed": true
+      },
+      {
+        "name": "bin25",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0015941514478375514,
+        "original_target": 0.0015942517126202582,
+        "margin": 1.0026478270688463e-07,
+        "passed": true
+      },
+      {
+        "name": "bin26",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.004568748098487656,
+        "original_target": 0.0045688485184907915,
+        "margin": 1.0042000313584265e-07,
+        "passed": true
+      },
+      {
+        "name": "bin27",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003926194117714961,
+        "original_target": 0.0039262876304090024,
+        "margin": 9.351269404135609e-08,
+        "passed": true
+      },
+      {
+        "name": "bin28",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00868198275566101,
+        "original_target": 0.00868298275566101,
+        "margin": 9.999999999992654e-07,
+        "passed": true
+      },
+      {
+        "name": "bin29",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0020348158044119677,
+        "original_target": 0.0020349156035333873,
+        "margin": 9.979912141957689e-08,
+        "passed": true
+      },
+      {
+        "name": "bin30",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin31",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin32",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin33",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0006488578316445152,
+        "original_target": 0.0006489468429461122,
+        "margin": 8.901130159701988e-08,
+        "passed": true
+      },
+      {
+        "name": "bin34",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00868198275566101,
+        "original_target": 0.00868298275566101,
+        "margin": 9.999999999992654e-07,
+        "passed": true
+      },
+      {
+        "name": "bin35",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0020348158044119677,
+        "original_target": 0.0020349156035333873,
+        "margin": 9.979912141957689e-08,
+        "passed": true
+      },
+      {
+        "name": "bin36",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin37",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin38",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin39",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0008395098460217317,
+        "original_target": 0.0008395851979255677,
+        "margin": 7.535190383592058e-08,
+        "passed": true
+      },
+      {
+        "name": "bin40",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.023813378686706226,
+        "original_target": 0.023813470957636834,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin41",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002034826980282863,
+        "original_target": 0.0020349156035333873,
+        "margin": 8.862325052419115e-08,
+        "passed": true
+      },
+      {
+        "name": "bin42",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin43",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin44",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin45",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0006488578316445152,
+        "original_target": 0.0006489468429461122,
+        "margin": 8.901130159701988e-08,
+        "passed": true
+      },
+      {
+        "name": "bin46",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.023813378686706226,
+        "original_target": 0.023813470957636834,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin47",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002034826980282863,
+        "original_target": 0.0020349156035333873,
+        "margin": 8.862325052419115e-08,
+        "passed": true
+      },
+      {
+        "name": "bin48",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035155072497824826,
+        "original_target": 0.004403962047606707,
+        "margin": 0.0008884547978242241,
+        "passed": true
+      },
+      {
+        "name": "bin49",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006547410972416401,
+        "original_target": 0.0065475052612125875,
+        "margin": 9.428879618657987e-08,
+        "passed": true
+      },
+      {
+        "name": "bin50",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010370473998288314,
+        "original_target": 0.0010371367603763937,
+        "margin": 8.936054756228384e-08,
+        "passed": true
+      },
+      {
+        "name": "bin51",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0008395098460217317,
+        "original_target": 0.0008395851979255677,
+        "margin": 7.535190383592058e-08,
+        "passed": true
+      },
+      {
+        "name": "bin52",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.01950785641868909,
+        "original_target": 0.01950885703957081,
+        "margin": 1.0006208817185669e-06,
+        "passed": true
+      },
+      {
+        "name": "bin53",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.008040116789440313,
+        "original_target": 0.008393137475311755,
+        "margin": 0.000353020685871442,
+        "passed": true
+      },
+      {
+        "name": "bin54",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.010828230995684862,
+        "original_target": 0.010829014463186263,
+        "margin": 7.834675014011666e-07,
+        "passed": true
+      },
+      {
+        "name": "bin55",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.021415585031112034,
+        "original_target": 0.021415684131741525,
+        "margin": 9.910062949078369e-08,
+        "passed": true
+      },
+      {
+        "name": "bin56",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0014843428507447243,
+        "original_target": 0.0014844454050287603,
+        "margin": 1.025542840360754e-07,
+        "passed": true
+      },
+      {
+        "name": "bin57",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001518098870292306,
+        "original_target": 0.0015181995619311928,
+        "margin": 1.0069163888684445e-07,
+        "passed": true
+      },
+      {
+        "name": "bin58",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001303770501787464,
+        "original_target": 0.002470182247295976,
+        "margin": 0.001166411745508512,
+        "passed": true
+      },
+      {
+        "name": "bin59",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0010184744993845622,
+        "original_target": 0.0010185753850489854,
+        "margin": 1.0088566442315039e-07,
+        "passed": true
+      },
+      {
+        "name": "bin60",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0021015101422866187,
+        "original_target": 0.002101609475746751,
+        "margin": 9.933346013226915e-08,
+        "passed": true
+      },
+      {
+        "name": "bin61",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002010570625619342,
+        "original_target": 0.0020115706062167884,
+        "margin": 9.999805974463503e-07,
+        "passed": true
+      },
+      {
+        "name": "bin62",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.002835434085379044,
+        "original_target": 0.002836434162989259,
+        "margin": 1.0000776102148286e-06,
+        "passed": true
+      },
+      {
+        "name": "bin63",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0036243697007497153,
+        "original_target": 0.0036253696231395008,
+        "margin": 9.999223897854369e-07,
+        "passed": true
+      },
+      {
+        "name": "bin64",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0008565186775134256,
+        "original_target": 0.0008575186872147024,
+        "margin": 1.000009701276807e-06,
+        "passed": true
+      },
+      {
+        "name": "bin65",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0032650886569172144,
+        "original_target": 0.003266088424086571,
+        "margin": 9.997671693564789e-07,
+        "passed": true
+      },
+      {
+        "name": "bin66",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017340084693084161,
+        "original_target": 0.0017342197166979312,
+        "margin": 2.112473895150846e-07,
+        "passed": true
+      },
+      {
+        "name": "bin67",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.001049811253324151,
+        "original_target": 0.0010498898260518908,
+        "margin": 7.857272773972683e-08,
+        "passed": true
+      },
+      {
+        "name": "bin68",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.003308868035674095,
+        "original_target": 0.0033089616259783508,
+        "margin": 9.359030425561826e-08,
+        "passed": true
+      },
+      {
+        "name": "bin69",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.004383902220676343,
+        "original_target": 0.004383994491606951,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin70",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017937924324845274,
+        "original_target": 0.0017938952584043144,
+        "margin": 1.028259197870772e-07,
+        "passed": true
+      },
+      {
+        "name": "bin71",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0017935466797401507,
+        "original_target": 0.0017936422879099845,
+        "margin": 9.560816983380724e-08,
+        "passed": true
+      },
+      {
+        "name": "bin72",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.00344732489126424,
+        "original_target": 0.005017113165766001,
+        "margin": 0.001569788274501761,
+        "passed": true
+      },
+      {
+        "name": "bin73",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.006190894326816003,
+        "original_target": 0.006190994513988495,
+        "margin": 1.0018717249218878e-07,
+        "passed": true
+      },
+      {
+        "name": "bin74",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.005926922274132569,
+        "original_target": 0.005927026497036219,
+        "margin": 1.042229036494341e-07,
+        "passed": true
+      },
+      {
+        "name": "bin75",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0018728042487055063,
+        "original_target": 0.001872910411864519,
+        "margin": 1.0616315901271038e-07,
+        "passed": true
+      },
+      {
+        "name": "bin76",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.005908788492282231,
+        "original_target": 0.0059088861959278585,
+        "margin": 9.770364562712575e-08,
+        "passed": true
+      },
+      {
+        "name": "bin77",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0035089446852604547,
+        "original_target": 0.0035090425441265108,
+        "margin": 9.785886605608377e-08,
+        "passed": true
+      },
+      {
+        "name": "bin78",
+        "state": "keep",
+        "role": "original_K_bin",
+        "value": 0.0021574593459566436,
+        "original_target": 0.0021575395873039962,
+        "margin": 8.024134735265184e-08,
+        "passed": true
+      },
+      {
+        "name": "bin79",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.024273709083596866,
+        "original_target": 0.02427381253039837,
+        "margin": 1.0344680150334296e-07,
+        "passed": true
+      },
+      {
+        "name": "bin80",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.01063784584403038,
+        "original_target": 0.01572266942059994,
+        "margin": 0.005084823576569558,
+        "passed": true
+      },
+      {
+        "name": "bin81",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.010828906204551458,
+        "original_target": 0.010829014463186263,
+        "margin": 1.0825863480494469e-07,
+        "passed": true
+      },
+      {
+        "name": "bin82",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.021415585031112034,
+        "original_target": 0.021415684131741525,
+        "margin": 9.910062949078369e-08,
+        "passed": true
+      },
+      {
+        "name": "bin83",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0014843428507447243,
+        "original_target": 0.0014844454050287603,
+        "margin": 1.025542840360754e-07,
+        "passed": true
+      },
+      {
+        "name": "bin84",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001518098870292306,
+        "original_target": 0.0015181995619311928,
+        "margin": 1.0069163888684445e-07,
+        "passed": true
+      },
+      {
+        "name": "bin85",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001303770501787464,
+        "original_target": 0.002470182247295976,
+        "margin": 0.001166411745508512,
+        "passed": true
+      },
+      {
+        "name": "bin86",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0010184744993845622,
+        "original_target": 0.0010185753850489854,
+        "margin": 1.0088566442315039e-07,
+        "passed": true
+      },
+      {
+        "name": "bin87",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0021015101422866187,
+        "original_target": 0.002101609475746751,
+        "margin": 9.933346013226915e-08,
+        "passed": true
+      },
+      {
+        "name": "bin88",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002010570625619342,
+        "original_target": 0.0020115706062167884,
+        "margin": 9.999805974463503e-07,
+        "passed": true
+      },
+      {
+        "name": "bin89",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.002835434085379044,
+        "original_target": 0.002836434162989259,
+        "margin": 1.0000776102148286e-06,
+        "passed": true
+      },
+      {
+        "name": "bin90",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0036243697007497153,
+        "original_target": 0.0036253696231395008,
+        "margin": 9.999223897854369e-07,
+        "passed": true
+      },
+      {
+        "name": "bin91",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0008565186775134256,
+        "original_target": 0.0008575186872147024,
+        "margin": 1.000009701276807e-06,
+        "passed": true
+      },
+      {
+        "name": "bin92",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0032650886569172144,
+        "original_target": 0.003266088424086571,
+        "margin": 9.997671693564789e-07,
+        "passed": true
+      },
+      {
+        "name": "bin93",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017340084693084161,
+        "original_target": 0.0017342197166979312,
+        "margin": 2.112473895150846e-07,
+        "passed": true
+      },
+      {
+        "name": "bin94",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.001049811253324151,
+        "original_target": 0.0010498898260518908,
+        "margin": 7.857272773972683e-08,
+        "passed": true
+      },
+      {
+        "name": "bin95",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.003308868035674095,
+        "original_target": 0.0033089616259783508,
+        "margin": 9.359030425561826e-08,
+        "passed": true
+      },
+      {
+        "name": "bin96",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.004383902220676343,
+        "original_target": 0.004383994491606951,
+        "margin": 9.227093060795721e-08,
+        "passed": true
+      },
+      {
+        "name": "bin97",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017937924324845274,
+        "original_target": 0.0017938952584043144,
+        "margin": 1.028259197870772e-07,
+        "passed": true
+      },
+      {
+        "name": "bin98",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0017935466797401507,
+        "original_target": 0.0017936422879099845,
+        "margin": 9.560816983380724e-08,
+        "passed": true
+      },
+      {
+        "name": "bin99",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.00344732489126424,
+        "original_target": 0.005017113165766001,
+        "margin": 0.001569788274501761,
+        "passed": true
+      },
+      {
+        "name": "bin100",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.006190894326816003,
+        "original_target": 0.006190994513988495,
+        "margin": 1.0018717249218878e-07,
+        "passed": true
+      },
+      {
+        "name": "bin101",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005926922274132569,
+        "original_target": 0.005927026497036219,
+        "margin": 1.042229036494341e-07,
+        "passed": true
+      },
+      {
+        "name": "bin102",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0018728042487055063,
+        "original_target": 0.001872910411864519,
+        "margin": 1.0616315901271038e-07,
+        "passed": true
+      },
+      {
+        "name": "bin103",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.005908788492282231,
+        "original_target": 0.0059088861959278585,
+        "margin": 9.770364562712575e-08,
+        "passed": true
+      },
+      {
+        "name": "bin104",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0035089446852604547,
+        "original_target": 0.0035090425441265108,
+        "margin": 9.785886605608377e-08,
+        "passed": true
+      },
+      {
+        "name": "bin105",
+        "state": "delete",
+        "role": "original_K_bin",
+        "value": 0.0021574593459566436,
+        "original_target": 0.0021575395873039962,
+        "margin": 8.024134735265184e-08,
+        "passed": true
+      }
+    ],
+    "domains": [
+      {
+        "raw": 94,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 115391,
+        "latest21K_MAE": 0.017109172335392563,
+        "value": 0.017141149825308493,
+        "original_target": 0.017110172335392564,
+        "margin": -3.0977489915928746e-05,
+        "constant_error_sum": 1973.89537922843,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 21188,
+        "latest21K_MAE": 0.014601848005501796,
+        "value": 0.01460392591675068,
+        "original_target": 0.014602848005501795,
+        "margin": -1.0779112488857462e-06,
+        "constant_error_sum": 309.3466143645346,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 115391,
+        "latest21K_MAE": 0.017435320143535504,
+        "value": 0.017561143223097615,
+        "original_target": 0.017436320143535505,
+        "margin": -0.00012482307956210997,
+        "constant_error_sum": 2001.9394915009905,
+        "passed": false
+      },
+      {
+        "raw": 94,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 21188,
+        "latest21K_MAE": 0.01660710041891206,
+        "value": 0.016657999293908796,
+        "original_target": 0.016608100418912062,
+        "margin": -4.98988749967344e-05,
+        "constant_error_sum": 345.3899673111737,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 118864,
+        "latest21K_MAE": 0.013801472150879224,
+        "value": 0.01380203353518158,
+        "original_target": 0.013802472150879224,
+        "margin": 4.386156976440847e-07,
+        "constant_error_sum": 1640.455668795728,
+        "passed": true
+      },
+      {
+        "raw": 105,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 17483,
+        "latest21K_MAE": 0.018294985334767817,
+        "value": 0.01831384871588856,
+        "original_target": 0.01829598533476782,
+        "margin": -1.786338112074251e-05,
+        "constant_error_sum": 319.5439281255628,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 118864,
+        "latest21K_MAE": 0.013916590380249505,
+        "value": 0.013943543177947023,
+        "original_target": 0.013917590380249504,
+        "margin": -2.5952797697518376e-05,
+        "constant_error_sum": 1648.0398273081812,
+        "passed": false
+      },
+      {
+        "raw": 105,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 17483,
+        "latest21K_MAE": 0.019589513585136418,
+        "value": 0.019638057520023587,
+        "original_target": 0.01959051358513642,
+        "margin": -4.7543934887168265e-05,
+        "constant_error_sum": 335.2809131086494,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 117833,
+        "latest21K_MAE": 0.01738080963469712,
+        "value": 0.017385138293255015,
+        "original_target": 0.01738180963469712,
+        "margin": -3.3286585578960748e-06,
+        "constant_error_sum": 2046.8750077285124,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 24563,
+        "latest21K_MAE": 0.02191588189495749,
+        "value": 0.021841557624143856,
+        "original_target": 0.021916881894957493,
+        "margin": 7.532427081363702e-05,
+        "constant_error_sum": 532.3141278301675,
+        "passed": true
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 117833,
+        "latest21K_MAE": 0.017371698902373844,
+        "value": 0.017376158619596002,
+        "original_target": 0.017372698902373845,
+        "margin": -3.45971722215746e-06,
+        "constant_error_sum": 2038.6901013513657,
+        "passed": false
+      },
+      {
+        "raw": 128,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 24563,
+        "latest21K_MAE": 0.035907348155726444,
+        "value": 0.0358473499205689,
+        "original_target": 0.035908348155726445,
+        "margin": 6.099823515754582e-05,
+        "constant_error_sum": 872.8272166724006,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "name": "protected_nonroad",
+        "pixels": 118542,
+        "latest21K_MAE": 0.02046562380100424,
+        "value": 0.020466084930040748,
+        "original_target": 0.020466623801004242,
+        "margin": 5.388709634936151e-07,
+        "constant_error_sum": 2418.542724916741,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "keep",
+        "name": "originalroad",
+        "pixels": 29048,
+        "latest21K_MAE": 0.015615571164542187,
+        "value": 0.01557860339777663,
+        "original_target": 0.015616571164542186,
+        "margin": 3.796776676555716e-05,
+        "constant_error_sum": 443.1648250911384,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "name": "protected_nonroad",
+        "pixels": 118542,
+        "latest21K_MAE": 0.02046282594675406,
+        "value": 0.02043331801995539,
+        "original_target": 0.020463825946754062,
+        "margin": 3.0507926798671592e-05,
+        "constant_error_sum": 2411.4302966029986,
+        "passed": true
+      },
+      {
+        "raw": 137,
+        "state": "delete",
+        "name": "originalroad",
+        "pixels": 29048,
+        "latest21K_MAE": 0.027687586610345528,
+        "value": 0.027599165799564927,
+        "original_target": 0.02768858661034553,
+        "margin": 8.942081078060216e-05,
+        "constant_error_sum": 791.021880791833,
+        "passed": true
+      }
+    ],
+    "original118_pass": 118,
+    "original16_pass": 7,
+    "box_max_violation": 0.0,
+    "equal_9966_pixel_channel_MSE": 0.0007410428220715002,
+    "passed": false
+  },
+  "warm_start_feasibility_claim": false,
+  "actual_setup_calls": 1,
+  "actual_QP_calls": 1,
+  "actual_LP_calls": 0,
+  "actual_LS_calls": 0,
+  "GPU_forwards": 0,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "original_model_updates": 0,
+  "automatic49": false,
+  "quality_accepted": false,
+  "human_verdict": null,
+  "setup_wall_seconds": 2.9015052262693644,
+  "solve_wall_seconds": 597.1736369151622,
+  "solve_warnings": [],
+  "solver_info": {
+    "dual_res": 1.1801627982676415e-07,
+    "iter": 16526,
+    "obj_val": 0.000959492628445611,
+    "polish_time": 0.0,
+    "prim_res": 0.024149787043665813,
+    "rho_estimate": 2.7886284491663145e-06,
+    "rho_updates": 3,
+    "run_time": 600.052824534,
+    "setup_time": 2.888673974,
+    "solve_time": 597.16415056,
+    "status": "run time limit reached",
+    "status_polish": 0,
+    "status_val": 8,
+    "update_time": 0.0
+  },
+  "optimality_claim": false,
+  "original_matrix_primal_infeasibility_certificate_check": {
+    "normalized_original_ATv_max_abs": 3.2048200112547534e-05,
+    "support_bound": 0.09113092670963518,
+    "invalid_infinite_support": false,
+    "independently_validated": false,
+    "scope": "Only this fixed anchored20725childRGB box and original118+16 constraints; no global material or geometry impossibility claim"
+  },
+  "raw_original_matrix_certificate": {
+    "full_original_matrix_max_violation": 0.02382721930896889,
+    "per_block": [
+      {
+        "name": "RGB_box",
+        "first_row": 0,
+        "rows": 62175,
+        "max_violation": 0.003213936702169573
+      },
+      {
+        "name": "lifted_native_photo_residual",
+        "first_row": 62175,
+        "rows": 29898,
+        "max_violation": 4.7974861138111446e-05
+      },
+      {
+        "name": "photo_absolute_positive",
+        "first_row": 92073,
+        "rows": 29898,
+        "max_violation": 0.023507774771904386
+      },
+      {
+        "name": "photo_absolute_negative",
+        "first_row": 121971,
+        "rows": 29898,
+        "max_violation": 0.02382721930896889
+      },
+      {
+        "name": "seam_absolute_positive",
+        "first_row": 151869,
+        "rows": 318,
+        "max_violation": 0.01909901777613579
+      },
+      {
+        "name": "seam_absolute_negative",
+        "first_row": 152187,
+        "rows": 318,
+        "max_violation": 0.01777927560880261
+      },
+      {
+        "name": "original118_seam_metrics",
+        "first_row": 152505,
+        "rows": 118,
+        "max_violation": 0.006453749303219254
+      },
+      {
+        "name": "original16_complete_photo_MAE",
+        "first_row": 152623,
+        "rows": 16,
+        "max_violation": 2.3277073646493242e-07
+      }
+    ],
+    "objective": 0.0009594926284456106,
+    "original_dual_stationarity_max_abs": 1.1801627982676415e-07
+  },
+  "raw_RGB_box_max_violation": 0.003213936702169573,
+  "source_integrity": "PASS_READ_INPUT_BYTES_UNCHANGED",
+  "input_files": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/operator_manifest.json",
+      "sha256": "ab196ad46a8b3b0238e576e26b78156a69c483e179fafc9620c7165c6d971851"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/parents.npz",
+      "sha256": "79736b12cc941e9d61c442583d18973552b6302c01105bc795029536a7e79af1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/operator_manifest.json",
+      "sha256": "0894a5e2d9e63f872829e8128b40a3822f32135c7a841bb92769b590a9321c25"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/K_parent_RGB_LP_cpu_v1.json",
+      "sha256": "90f669dde8e6b18cf886a6a3be21e6bc48ee55bb96d508f851d695f031742697"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/contract/K_per_bin_references_v1.json",
+      "sha256": "c13876a3a80060fe4015be9370bd48d22c0eda69d05a91cbc9dfd6765644d0f6"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/review/K_actual_pools_bins_cpu_v1.json",
+      "sha256": "dd8871d2f91e3f49be7c96e507c2b4b8ac8c1edae3a6a392fe9f3b0adb99f79a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_single_v1/K_candidate_parent_RGB.npz",
+      "sha256": "41a570ba2f5c7544b8ddeaef730142368f660234a3b53721d88570b0dea1903a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/road_parent_operator.npz",
+      "sha256": "46cee7c1db5e544a076ad65cb52c41e253f3652d281ad77c97d9b0dfe676811b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/094_keep/A_parent_rgb_csr.npz",
+      "sha256": "0b1d6656c13208d17381ea7f2ffeead15187648c93773208b93f8202f41fcfa2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/094_keep/pixel_domains_baseline.npz",
+      "sha256": "521fe76b2e57b782edc84c9a43a2657754ebc08d88fa50aee03e8004f88746f2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/094.npz",
+      "sha256": "45599dac31823f286103cdab9fe77c7d598636f82c1b42da03f445546e224a9a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/keep_float.npz",
+      "sha256": "6109076c3284792ceac32d62a5bd5048422b742cecba81647e4514e816ab3563"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/094/keep_float.npz",
+      "sha256": "fa002b7954814d542b791a6690e9d2021b2148b2a9f74e63d9d210ef9e573f9b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/094_delete/A_parent_rgb_csr.npz",
+      "sha256": "52f142bf0f54518833834a3bc9cb63316102c01dc7208cadc9b1a0312dbd5b76"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/094_delete/pixel_domains_baseline.npz",
+      "sha256": "e6ec9c567d8458690edc748e27c0e210ab364a01262a451a1e6b58123165bf71"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/094/delete_float.npz",
+      "sha256": "2f9a98f63fe90d91b1c9832323ded7294142a4347f9f7192695c0c3637f8dbdc"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/094/delete_float.npz",
+      "sha256": "a8930452cee63398b252c8748e1ce72b290562799712a12049a22f26a7e59473"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/105_keep/A_parent_rgb_csr.npz",
+      "sha256": "b6dc3016d8be1c052eb920b808b0dab31ff7debbd97846fcb8e2026b3bc51642"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/105_keep/pixel_domains_baseline.npz",
+      "sha256": "dc2c3bb069dbff7260665392e623c5d5e49ed9d4de42f32f2af351467031eff2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/105.npz",
+      "sha256": "a34453005c56e5f69033037e3bc1ac845418e5993cca610c8641cb10e8dba259"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/keep_float.npz",
+      "sha256": "388e75fbf239b7441e7a1293e8380ea0b9774a64ba8b5b2faedc661c9e3fdd17"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/105/keep_float.npz",
+      "sha256": "b2ec9057589fd6ada145401ffd5d4ff0b4b391fb94c376853759d7ce5a5d8c08"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/105_delete/A_parent_rgb_csr.npz",
+      "sha256": "d50e39d455b63ba6ca48d1750fd98bd3d010c78b5499666203fafe3b0cc4c645"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/105_delete/pixel_domains_baseline.npz",
+      "sha256": "ef2533026fa5c0ddbe6ba28ee13585993fff767e3c4e619dadd83bc811157357"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/105/delete_float.npz",
+      "sha256": "3f017bb721d1df5d11b71c8651e8df1722a62c2913b34816674b3a1e85c8d3bd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/105/delete_float.npz",
+      "sha256": "cc280c3baaf3b086d668897556eb5c6762022e31bf3abf6ee0e7d76cb50d2f7d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/128_keep/A_parent_rgb_csr.npz",
+      "sha256": "a293ade7e03d222aff751621779c16bff3f0908bdc326334e814ba012e9c5b6a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/128_keep/pixel_domains_baseline.npz",
+      "sha256": "ff8b5035393bf1711a70fa0d28b3f4ba8349dd7944e5346580cf0b30e0d372c2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/128.npz",
+      "sha256": "db135268596859bb535875c8b4252b99c16aa49306e5e4557f00b3382ad0e9ad"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/keep_float.npz",
+      "sha256": "d8865d60daf3bfe3e8bcd2f1087536df92f03d40ae7941d5997b61fc28a832ef"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/128/keep_float.npz",
+      "sha256": "9130247204e7055101c0a541c694b18c1246096f53c069810b7d92fcc918a039"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/128_delete/A_parent_rgb_csr.npz",
+      "sha256": "cccbbb61c22c95172e5fcab768034e55dbbafc9c3dea1f9bfb86964fe7366fc3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/128_delete/pixel_domains_baseline.npz",
+      "sha256": "2b916ab738ee41bbf0ec1db20169d09d0ae5d37b9e1fad09444d434d0bf39fbd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/128/delete_float.npz",
+      "sha256": "77fdea82d81481e00784aa1a2c762abc6c46ab20b79efe1b29b4dc13352d75fb"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/128/delete_float.npz",
+      "sha256": "a04f2f07984117fed52cc95d2f18e70f34af8cf8d702fa5e63cb8b2e1620afa7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/137_keep/A_parent_rgb_csr.npz",
+      "sha256": "96cc9f6f7bba4c8121d23154380e5f104ee868c9fa89a32d877ba0ce2ba2b398"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/137_keep/pixel_domains_baseline.npz",
+      "sha256": "4061ec1f96261723e8af4138dd9897a253c7f921db30e18a3b168c022d7fe654"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_instances_20261105_r1/observations/frames/137.npz",
+      "sha256": "108d8c673fba6c08e78dc14630ba5019abb68c58ff31ba43bb48b097bd0c8528"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/keep_float.npz",
+      "sha256": "088fbefc2fcd9e895d3725158914f4981d2b976a7adab4d70ed04b784fadbfb5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/137/keep_float.npz",
+      "sha256": "dc87f9ce4c1fca0302c4c77c27e3de0b5d36d6fcc1502457702eae38b2461605"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/137_delete/A_parent_rgb_csr.npz",
+      "sha256": "523220a5fd78429a60bc11fb63083a168ae46ce64500dacbd5e055b9912cd47c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_protected_supervision_v1/operator_v1/137_delete/pixel_domains_baseline.npz",
+      "sha256": "a68c0bd894fb604c6793dd22866d2bd0e8abdd11543ee8f14603c5c10430b259"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/baseline4/frames/137/delete_float.npz",
+      "sha256": "1944148993b5de2d955c1bff4324b6e8c2c21b6db45aad033ac6ef1e0f7222b5"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/H4_model_foreground_culling_v2/frames/137/delete_float.npz",
+      "sha256": "c9f6db594ee62b0b9547b1ef09b5394b691625236c86e8f77b6dec6010070116"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/operator_manifest.json",
+      "sha256": "bb569d6a82ad8795264f33c39b088aa64e41829fcb50f25f686a334d33c500ad"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/children.npz",
+      "sha256": "0d2f6300288adda6c7e768fe8f7bf428c454f66b1cbfdca8b21dd21866421248"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/094_keep/A_child_rgb_csr.npz",
+      "sha256": "75635b3b5e028f31613fd1b14b48a904c2183f770e9a6308a87d8b825207f762"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/094_keep/pixel_domains_baseline.npz",
+      "sha256": "521fe76b2e57b782edc84c9a43a2657754ebc08d88fa50aee03e8004f88746f2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/094_delete/A_child_rgb_csr.npz",
+      "sha256": "0603dffbbb7f006c503f01f4269c1a9b74d69d2fbc442c9f306034adb1455534"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/094_delete/pixel_domains_baseline.npz",
+      "sha256": "e6ec9c567d8458690edc748e27c0e210ab364a01262a451a1e6b58123165bf71"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/105_keep/A_child_rgb_csr.npz",
+      "sha256": "397b33e169810c5e27ea05f7614b98ea506bedd8c7fa4c9a2cc3e856d48fdffc"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/105_keep/pixel_domains_baseline.npz",
+      "sha256": "dc2c3bb069dbff7260665392e623c5d5e49ed9d4de42f32f2af351467031eff2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/105_delete/A_child_rgb_csr.npz",
+      "sha256": "abd031a04010ffbb287c58f26cc42ca8667b833908c66acec6f4d40bf914698e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/105_delete/pixel_domains_baseline.npz",
+      "sha256": "ef2533026fa5c0ddbe6ba28ee13585993fff767e3c4e619dadd83bc811157357"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/128_keep/A_child_rgb_csr.npz",
+      "sha256": "9000047c38f7a9591baa65c0916bce08f9fde8df41b82c96f0a8484ca18b246b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/128_keep/pixel_domains_baseline.npz",
+      "sha256": "ff8b5035393bf1711a70fa0d28b3f4ba8349dd7944e5346580cf0b30e0d372c2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/128_delete/A_child_rgb_csr.npz",
+      "sha256": "9c623cbe10f0c0d9daae67ff7f7dea6c99cd261aebd38dacb679c7b338634819"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/128_delete/pixel_domains_baseline.npz",
+      "sha256": "2b916ab738ee41bbf0ec1db20169d09d0ae5d37b9e1fad09444d434d0bf39fbd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/137_keep/A_child_rgb_csr.npz",
+      "sha256": "f9b5892dbebacd55f5c37488b05a9faeceb107a890712856810df1add68c9798"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/137_keep/pixel_domains_baseline.npz",
+      "sha256": "4061ec1f96261723e8af4138dd9897a253c7f921db30e18a3b168c022d7fe654"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/137_delete/A_child_rgb_csr.npz",
+      "sha256": "3f22bb0b100155b412d99ca4c7d5379ae6c9867dd6f9ff398f4472c873167801"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/137_delete/pixel_domains_baseline.npz",
+      "sha256": "a68c0bd894fb604c6793dd22866d2bd0e8abdd11543ee8f14603c5c10430b259"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/operator_v1/seam_child_operator.npz",
+      "sha256": "1822f83796d53485ec4c7f5cc241e61b8b7aa9bd9648e710a5e2b0e3510df54f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_v1/R_child_guarded_MSE_RGB.npz",
+      "sha256": "fd464a3f3b618a198e631efb6a26de8e3fe9aa93deb63c4b0b8cb1db593d06fd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/receipt.json",
+      "sha256": "937ab34647cf84e09a81227da50eca45915558b58debf583253d3c6b5f832d73"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/protocol.json",
+      "sha256": "5db3b5cd3b5486417382a56884df86bbd18d96cefdd9ef26ca5a176455769611"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_material_v1/scene_manifest.json",
+      "sha256": "6c4a02545781a012b67c9131f0588ddd8472f87a6c79af036b93bc1b8be2ab22"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_material_v1/new_road_M4_independent_child_RGB.npz",
+      "sha256": "5150dd787a9df6b6f179455bc4fec7a33bda8da4eb8bdf3067ae5c47b619ec09"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/source/registered_seam_pairs.py",
+      "sha256": "2f8598ccc0997e8a522316cddbb2290431253e5318c6cafc702c163c0a63b528"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/094/keep_float.npz",
+      "sha256": "21f4518945e45b4aa1206da40d5d1aa7ef8d462d34b5e72b58903e2a8eb0634b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/094/keep_float.npz",
+      "sha256": "21f4518945e45b4aa1206da40d5d1aa7ef8d462d34b5e72b58903e2a8eb0634b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/094/delete_float.npz",
+      "sha256": "20f318b7514755d20d31dc24a3b5b8507881030231a3df1f400fc77c50efffa3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/094/delete_float.npz",
+      "sha256": "b7216c0c3c531d5b1a52f3dc53f745f5521fd63fc90f92583985b80359a9d4e2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/105/keep_float.npz",
+      "sha256": "8517e1e40d470c1d04a6cb397aa350afd249e284c5d79ce8d1655f30988fb8be"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/105/keep_float.npz",
+      "sha256": "8517e1e40d470c1d04a6cb397aa350afd249e284c5d79ce8d1655f30988fb8be"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/105/delete_float.npz",
+      "sha256": "01850e4b825f5746dd54d7495cfe70d1077e8825539083ca4c3a29734df85537"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/105/delete_float.npz",
+      "sha256": "f5cc9e1eb316c3368f36e7407df2a01c5b56b77ebec64cceb63c06b0a4cb39a8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/128/keep_float.npz",
+      "sha256": "104d633aac6947a831098cf9f34b9cc4eb87113a19992de3b723d436421ce61e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/128/keep_float.npz",
+      "sha256": "d8855e9ec856c7045b2aaae81a2da52f860f5b4dc11c26c5487670d007f8f7f8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/128/delete_float.npz",
+      "sha256": "cfc3f303420677fe7ecf9eb9413e89ee18cd676ff9bf1cc3819f3da21e48244b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/128/delete_float.npz",
+      "sha256": "59fe9bd0ef4797f3bbefdab3bcc01f807111f32f2cdf3c44eaed127b4f677032"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/137/keep_float.npz",
+      "sha256": "aedbec1f958166b28ef1a7a792cd25a9a3096da005afcafa5f62c906ad98aad9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/137/keep_float.npz",
+      "sha256": "a3ff07557c9cd64c087d70a40f136ae8e4eca921b881423dec51ad237f0ad18f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/R_child_guarded_MSE_render_v1/frames/137/delete_float.npz",
+      "sha256": "385b0aadd045140a36b39dadc3977ba0698dfea20ac3813fe40d5b7a3800d50e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/J4_road_parent_operator/K_candidate_render_v1/frames/137/delete_float.npz",
+      "sha256": "fc23e6b595a14f80c89b097ea2b41d87a02cf32f77c867b20867890ce846b613"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/qp_source_released_v1/solve_T_child_original_metrics_osqp_cpu.py",
+      "sha256": "82504970b2a6dffa1c1af09024515a7cdf63209b2d85ed3d4320fc342eb9b1eb"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/qp_source_released_v1/T_child_original_metrics_QP_protocol_v1.json",
+      "sha256": "b55708d19cc599c239be43384fdff1116ff58a3db375ff47713881e17e7a8d89"
+    }
+  ],
+  "scope": "Same9966obsRGB MSE as S, actual Rchild native anchor, existing childRGB only. Only original118+16 quality constraints and RGBbox. Any original metric failure after tinybox canonicalization/f32 export stops adoption. Native8F and image review remain required; inherited geometry failures unchanged."
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "M4_FINAL_REMOTE_QUIESCENCE_FOR_ROOT_SHUTDOWN_V1",
+  "snapshot_time": "2026-11-08T12:25:59+08:00",
+  "status": "SCIENTIFIC_WORKERS_CLEAR_ROOT_MAY_FINISH_OWN_CLOSEOUT_THEN_SHUT_DOWN",
+  "audit_read_only": true,
+  "worker_power_actions": 0,
+  "services_stopped_by_worker": 0,
+  "T_existing_600s_run": {
+    "producer_root_outcome": "Ended without certified palette",
+    "PID8860_present": false,
+    "parent_PID8859_present": false,
+    "SSH_parent_PID8846_present": false,
+    "new8F_launched": false,
+    "retry_or_new_optimization_launched": false
+  },
+  "GPU": {
+    "name": "NVIDIA GeForce RTX 4080 SUPER",
+    "memory_used_MiB": 1,
+    "memory_total_MiB": 32760,
+    "utilization_percent": 0,
+    "compute_PIDs": []
+  },
+  "active_training_rendering_evaluation_workers": [],
+  "active_research_controllers_or_pending_launch_processes": [],
+  "other_visible_user_research_jobs": [],
+  "observed_users": ["root"],
+  "remaining_base_services": {
+    "supervisord": 854,
+    "TensorBoard": 873,
+    "TensorBoard_data_server": 984,
+    "JupyterLab_without_active_kernel_process": 875,
+    "autopanel": 874,
+    "proxies": [878, 879],
+    "SSH_listener": 876,
+    "persistent_SSH": [1272, 1274]
+  },
+  "controller_checks": {
+    "tmux": "no server",
+    "screen": "no sockets",
+    "cron_or_atd_processes": [],
+    "systemd_init_or_bus": false,
+    "cron_files": "Only e2scrub filesystem-maintenance entries; no cron daemon active",
+    "supervisor_static_config_limit": "The config path in supervisord argv is absent from the current filesystem; visible managed children are only the base services listed above"
+  },
+  "49_release_helper": {
+    "never_launched": true,
+    "preflight_status": "PREPARED49_ENTRY_ONLY_NOT_LAUNCHED",
+    "actual_native_forwards": 0,
+    "actual_backwards": 0,
+    "release_required": true,
+    "automatic49": false,
+    "process_or_research_controller_found": false
+  },
+  "shutdown_entry_metadata_only": {
+    "shell_type": "file",
+    "preferred_explicit_path": "/usr/bin/shutdown",
+    "additional_PATH_entry": "/bin/shutdown",
+    "PATH_alias_identity": "/bin is a symlink to usr/bin; both shutdown paths have the same inode22555929540",
+    "file_type": "ASCII text, executable regular wrapper rather than systemctl binary",
+    "size_bytes": 205,
+    "mode": "755",
+    "owner": "root:root",
+    "standard_poweroff_paths": "/sbin/poweroff and /usr/sbin/poweroff link to /bin/systemctl",
+    "systemd_available": false,
+    "script_contents_or_credentials_read": false,
+    "power_command_or_help_executed": false,
+    "root_execution_note": "After root verifies its final report/push/retrieval, invoke the explicit /usr/bin/shutdown entry through the SSH shell. Do not substitute systemctl poweroff in this non-systemd container."
+  },
+  "worker_retrieval_and_ledger": {
+    "receipt": "M4_worker_closeout_retrieval_receipts_v1.json",
+    "full_archives": 5,
+    "total_bytes": 187053125,
+    "all_SHA_reverified": true,
+    "native_forwards_final": 13051,
+    "dummy_feature_backwards_final": 16,
+    "Adam_updates": 0,
+    "original_model_updates": 0
+  },
+  "worker_remaining_remote_dependencies": [],
+  "root_remaining_dependencies_to_verify": [
+    "Final report and Git commit/push verification",
+    "Any T CPU result/source retrieval owned by the producer/root",
+    "Root's immediate final pre-poweroff state check if substantial time or new work intervenes"
+  ],
+  "latest_user_policy": "Close this single scene, no49, no new experiments, final GPU-instance shutdown by root",
+  "shutdown_performed_by_this_worker": false
+}

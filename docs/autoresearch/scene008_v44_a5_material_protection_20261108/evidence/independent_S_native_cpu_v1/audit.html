@@ -1,0 +1,72 @@
+<!doctype html><html><meta charset="utf-8"><title>Independent material protection audit</title><style>body{font:16px Arial;max-width:1450px;margin:28px auto;color:#153342}img{max-width:100%;height:auto}pre{background:#f4f6f8;padding:16px}a{color:#156280}</style><h1>Independent saved four-frame material protection audit</h1><p>原注册94门保留；材料相对同一 Cwarm 的冻结几何/语义色与新保护增量分开。所有图为既有真实渲染的固定显示，未新增前向或训练。</p><img src="architecture.svg"><pre>{
+  &quot;Cwarm&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 46,
+      &quot;FAIL&quot;: 40,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 0,
+    &quot;K106_pass&quot;: 40,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;formal2K&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 49,
+      &quot;FAIL&quot;: 37,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 0,
+    &quot;K106_pass&quot;: 48,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;K&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 55,
+      &quot;FAIL&quot;: 31,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 6,
+    &quot;K106_pass&quot;: 106,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;L&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 55,
+      &quot;FAIL&quot;: 31,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 6,
+    &quot;K106_pass&quot;: 106,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;R&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 57,
+      &quot;FAIL&quot;: 29,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 6,
+    &quot;K106_pass&quot;: 106,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;Rchild&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 61,
+      &quot;FAIL&quot;: 25,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 6,
+    &quot;K106_pass&quot;: 106,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  },
+  &quot;S&quot;: {
+    &quot;original94&quot;: {
+      &quot;PASS&quot;: 53,
+      &quot;FAIL&quot;: 33,
+      &quot;unsupported&quot;: 8
+    },
+    &quot;K_six_pools_pass&quot;: 0,
+    &quot;K106_pass&quot;: 40,
+    &quot;geometry_semantic_colour_byte_exact_to_Cwarm&quot;: true
+  }
+}</pre><p>完整原域和固定道路受影响子域分别计分，后者不替代任何旧域。邻暗点来自旧L输出，先于新候选固定。完整质量与人工结论仍为未接受。</p><p><a href="domain_metrics.csv">Full domain metrics CSV</a> · <a href="original94_gates.csv">Original94 gates</a> · <a href="rendered_frozen_invariants.csv">Frozen rendered invariants</a> · <a href="registered_points.csv">Fixed points</a> · <a href="K_six_pools.csv">K6 pools</a> · <a href="K106_bins.csv">K106 bins</a></p><h2>Fixed mask distribution</h2><img src="protection_distribution4.png"><h2>Full four-frame MAE</h2><img src="fourframe_domain_MAE.png"><h2>Fixed native crops</h2><img src="native_details.png"></html>

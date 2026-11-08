@@ -1,0 +1,160 @@
+{
+  "schema": "M4_GPU_ENGINEERING_NATIVE_LEDGER_V1",
+  "task_id": "SCENE008-V44-A5-MATERIAL-PROTECTION-20261108",
+  "run_id": "M4_GPU_ENGINEERING_NATIVE_V1",
+  "raw_ids": [
+    94,
+    105,
+    128,
+    137
+  ],
+  "states": [
+    "keep",
+    "delete"
+  ],
+  "input_role": "Four BUILD frames; no held-out/generalization claim",
+  "records": [
+    {
+      "run": "parent_visibility_closure",
+      "status": "PASS_M4_NATIVE_PROTECT_PARENT_CLOSURE_NO_FIT",
+      "actual_native_forwards": 8,
+      "actual_dummy_feature_backwards": 8,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 23.152612924575806,
+      "max_reserved_cuda_bytes": 4072669184
+    },
+    {
+      "run": "parent_twochunk_probe",
+      "status": "PASS_M4_TWOCHUNK_NATIVE_FEATURE_PROBE_NO_FIT",
+      "actual_native_forwards": 3,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 22.518643856048584,
+      "max_reserved_cuda_bytes": 2625634304
+    },
+    {
+      "run": "parent_pixel_operator",
+      "status": "PASS_M4_NATIVE_PIXEL_PARENT_OPERATOR_NO_FIT",
+      "actual_native_forwards": 2632,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 74.23548007011414,
+      "max_reserved_cuda_bytes": 3850371072
+    },
+    {
+      "run": "child_visibility_closure",
+      "status": "PASS_M4_NATIVE_CHILD_PROTECT_CLOSURE_NO_UPDATE",
+      "actual_native_forwards": 8,
+      "actual_dummy_feature_backwards": 8,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 21.366641998291016,
+      "max_reserved_cuda_bytes": 4072669184
+    },
+    {
+      "run": "child_pixel_operator",
+      "status": "PASS_M4_CHILD_RGB_CAPACITY_NATIVE_OPERATOR_NO_FIT",
+      "actual_native_forwards": 10376,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 189.81281042099,
+      "max_reserved_cuda_bytes": 3850371072
+    },
+    {
+      "run": "R_guarded_MSE",
+      "status": "COMPLETE_R_GUARDED_MSE_DIAGNOSTIC_NATIVE8F_PENDING_ORIGINAL_GATES",
+      "actual_native_forwards": 8,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 31.95585346221924,
+      "max_reserved_cuda_bytes": 3850371072
+    },
+    {
+      "run": "R_child_guarded_MSE",
+      "status": "COMPLETE_R_CHILD_GUARDED_MSE_DIAGNOSTIC_NATIVE8F_PENDING_ORIGINAL_GATES",
+      "actual_native_forwards": 8,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 29.110479831695557,
+      "max_reserved_cuda_bytes": 3850371072
+    },
+    {
+      "run": "S_child_all_protection_MSE",
+      "status": "COMPLETE_S_CHILD_ALL_PROTECTION_MSE_DIAGNOSTIC_NATIVE8F_PENDING_ORIGINAL_GATES",
+      "actual_native_forwards": 8,
+      "actual_dummy_feature_backwards": 0,
+      "optimizer_updates": 0,
+      "original_model_updates": 0,
+      "worker_wall_seconds_including_load_and_IO": 29.136340141296387,
+      "max_reserved_cuda_bytes": 3850371072
+    }
+  ],
+  "actual_native_forwards": 13051,
+  "actual_dummy_feature_backwards": 16,
+  "Adam_updates": 0,
+  "original_model_updates": 0,
+  "sum_worker_wall_seconds_including_load_and_IO": 421.2888627052307,
+  "CPU_optimization_accounting": "Separate producer receipts: R/Rchild/S each3 boundedLS calls; all LP recovery calls separately owned by formulation report. This ledger does not call a solver.",
+  "parent_operator": {
+    "nnz": 206651,
+    "variables": 5246,
+    "pixels": 9966
+  },
+  "child_operator": {
+    "nnz": 611865,
+    "sum4_106_vs_J_parent_A_max_abs": 1.0367615949080644E-07,
+    "variables": 20725,
+    "sum4_vs_parent_pixel_A_max_abs": 8.195638656616211E-08,
+    "pixels": 9966
+  },
+  "native_variants": [
+    {
+      "variant": "R_guarded_MSE",
+      "max_pixel_affinity_error": 6.886294789953951E-07,
+      "original_pixel_affinity_tolerance": 1E-06,
+      "all_pixel_affinity_gates_pass": true,
+      "alpha_depth_8groups_identity_RGB_byte_exact": true,
+      "max_seam_support_RGB_delta_from_K": 0.0,
+      "extra_seam_RGB_guard": true,
+      "original_quality_adopted": false,
+      "automatic49": false
+    },
+    {
+      "variant": "R_child_guarded_MSE",
+      "max_pixel_affinity_error": 9.105482654536701E-07,
+      "original_pixel_affinity_tolerance": 1E-06,
+      "all_pixel_affinity_gates_pass": true,
+      "alpha_depth_8groups_identity_RGB_byte_exact": true,
+      "max_seam_support_RGB_delta_from_K": 0.0,
+      "extra_seam_RGB_guard": true,
+      "original_quality_adopted": false,
+      "automatic49": false
+    },
+    {
+      "variant": "S_child_all_protection_MSE",
+      "max_pixel_affinity_error": 6.946884872904846E-07,
+      "original_pixel_affinity_tolerance": 1E-06,
+      "all_pixel_affinity_gates_pass": true,
+      "alpha_depth_8groups_identity_RGB_byte_exact": true,
+      "max_seam_support_RGB_delta_from_K": 0.13736149668693542,
+      "extra_seam_RGB_guard": false,
+      "original_quality_adopted": false,
+      "automatic49": false
+    }
+  ],
+  "original_geometry_opacity_actor_identity_modified": false,
+  "old_inputs_and_model_evidence_overwritten": false,
+  "GPU_power_actions": 0,
+  "GPU_keep_on_user_instruction": true,
+  "all49_launched": false,
+  "LP_recovery_r6_GPU_launched": false,
+  "original_acceptance_thresholds_changed": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

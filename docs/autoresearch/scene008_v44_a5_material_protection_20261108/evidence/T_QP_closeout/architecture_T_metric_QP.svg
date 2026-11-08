@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="390" viewBox="0 0 1180 390">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#42657b"/></marker></defs>
+<rect width="1180" height="390" fill="#f7f9fb"/>
+<g font-family="Arial, sans-serif" fill="#163546"><text x="24" y="32" font-size="21" font-weight="bold">T: same protection MSE, original quality constraints</text>
+<g fill="#fff" stroke="#8ca7b6" stroke-width="1.5"><rect x="25" y="74" width="243" height="92" rx="8"/><rect x="25" y="204" width="243" height="92" rx="8"/><rect x="332" y="118" width="303" height="132" rx="8"/><rect x="701" y="118" width="223" height="132" rx="8"/><rect x="983" y="118" width="169" height="132" rx="8"/><rect x="332" y="310" width="592" height="57" rx="8"/></g>
+<g font-size="16" text-anchor="middle"><text x="146" y="100" font-weight="bold">Actual Rchild anchor</text><text x="146" y="126">RGB + native KEEP / DELETE</text><text x="146" y="150">c0, photo residual, signed seams</text>
+<text x="146" y="230" font-weight="bold">Fixed data and metrics</text><text x="146" y="256">Measured child operator A</text><text x="146" y="280">Original 118 seams + 16 MAE</text>
+<text x="483" y="147" font-weight="bold">One constrained MSE QP</text><text x="483" y="175">r = A × RGB change + r0</text><text x="483" y="202">Minimize mean(r²)</text><text x="483" y="228">RGB box + original metric bounds</text>
+<text x="812" y="147" font-weight="bold">Full matrix validation</text><text x="812" y="175">Original masks and denominators</text><text x="812" y="202">Endpoint correction ≤ 1e-7</text><text x="812" y="228">Recheck float32 RGB and metrics</text>
+<text x="1067" y="152" font-weight="bold">Persistent RGB</text><text x="1067" y="182">Native 8-frame</text><text x="1067" y="209">quality review</text><text x="1067" y="236">then release</text>
+<text x="628" y="344" font-weight="bold">Frozen 21K scene, identities, geometry, opacity, H2 masks and cameras</text></g>
+<g stroke="#42657b" stroke-width="2" marker-end="url(#a)" fill="none"><path d="M268 120H298V158H327"/><path d="M268 250H298V212H327"/><path d="M635 184H696"/><path d="M924 184H978"/><path d="M483 310V255"/><path d="M812 310V255"/></g>
+<text x="25" y="348" font-size="14">No whole-seam RGB freeze.</text><text x="25" y="372" font-size="14">No added per-pixel caps.</text></g></svg>

@@ -1,0 +1,111 @@
+{
+  "schema": "INDEPENDENT_REAL4_SUPERVISION_API_CPU_V1",
+  "status": "PASS_REAL4_FIXED_INPUTS_AND_ACTUAL_NATIVE_OPERATOR_API_BINDING",
+  "actual_API_source": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\material_protection\\road_material_supervision.py",
+    "sha256": "be069af77026431ac599a61b83dd22859c009f6e3024743f7aa58accdf84db08"
+  },
+  "actual_native_operator_receipt": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-06\\a5-file-c-users-dengyunlong-documents-7\\work\\material_protection\\operator_manifest.json",
+    "sha256": "ab196ad46a8b3b0238e576e26b78156a69c483e179fafc9620c7165c6d971851",
+    "status": "PASS_M4_NATIVE_PIXEL_PARENT_OPERATOR_NO_FIT",
+    "supervision_api_actual_called": true,
+    "source_SHA_matches_executed_operator": true,
+    "actual_native_forwards": 2632,
+    "actual_backwards": 0,
+    "optimizer_updates": 0,
+    "variable_parent_count": 5246
+  },
+  "records": [
+    {
+      "raw": 94,
+      "schema": "road-material-fit-protect-supervision-v1",
+      "fit_pixels": 16233,
+      "protection_pixels": 136579,
+      "protection_domains": {
+        "protected_nonroad": 115391,
+        "original_road": 21188
+      },
+      "fit_and_protection_overlap": 16233,
+      "overlap_policy": "Protection constraints take priority; neither domain is erased.",
+      "input_role": "BUILD supervision, not independent held-out evaluation",
+      "optimization_scope": "Shared world road-parent RGB only",
+      "original_C_fit_domain_preserved_byte_exact": true,
+      "protection_domains_original94_masks_byte_exact": true,
+      "source_protect_pixels_covered_by_union": 117982,
+      "source_protect_pixels_outside_union": 0,
+      "retained_a37_pixels_in_protection_union": 0,
+      "actual_operator_KEEP_DELETE_mask_counts_match": true
+    },
+    {
+      "raw": 105,
+      "schema": "road-material-fit-protect-supervision-v1",
+      "fit_pixels": 12384,
+      "protection_pixels": 136347,
+      "protection_domains": {
+        "protected_nonroad": 118864,
+        "original_road": 17483
+      },
+      "fit_and_protection_overlap": 12384,
+      "overlap_policy": "Protection constraints take priority; neither domain is erased.",
+      "input_role": "BUILD supervision, not independent held-out evaluation",
+      "optimization_scope": "Shared world road-parent RGB only",
+      "original_C_fit_domain_preserved_byte_exact": true,
+      "protection_domains_original94_masks_byte_exact": true,
+      "source_protect_pixels_covered_by_union": 121635,
+      "source_protect_pixels_outside_union": 0,
+      "retained_a37_pixels_in_protection_union": 0,
+      "actual_operator_KEEP_DELETE_mask_counts_match": true
+    },
+    {
+      "raw": 128,
+      "schema": "road-material-fit-protect-supervision-v1",
+      "fit_pixels": 20869,
+      "protection_pixels": 142396,
+      "protection_domains": {
+        "protected_nonroad": 117833,
+        "original_road": 24563
+      },
+      "fit_and_protection_overlap": 20869,
+      "overlap_policy": "Protection constraints take priority; neither domain is erased.",
+      "input_role": "BUILD supervision, not independent held-out evaluation",
+      "optimization_scope": "Shared world road-parent RGB only",
+      "original_C_fit_domain_preserved_byte_exact": true,
+      "protection_domains_original94_masks_byte_exact": true,
+      "source_protect_pixels_covered_by_union": 118313,
+      "source_protect_pixels_outside_union": 0,
+      "retained_a37_pixels_in_protection_union": 0,
+      "actual_operator_KEEP_DELETE_mask_counts_match": true
+    },
+    {
+      "raw": 137,
+      "schema": "road-material-fit-protect-supervision-v1",
+      "fit_pixels": 26612,
+      "protection_pixels": 147590,
+      "protection_domains": {
+        "protected_nonroad": 118542,
+        "original_road": 29048
+      },
+      "fit_and_protection_overlap": 26612,
+      "overlap_policy": "Protection constraints take priority; neither domain is erased.",
+      "input_role": "BUILD supervision, not independent held-out evaluation",
+      "optimization_scope": "Shared world road-parent RGB only",
+      "original_C_fit_domain_preserved_byte_exact": true,
+      "protection_domains_original94_masks_byte_exact": true,
+      "source_protect_pixels_covered_by_union": 118697,
+      "source_protect_pixels_outside_union": 0,
+      "retained_a37_pixels_in_protection_union": 0,
+      "actual_operator_KEEP_DELETE_mask_counts_match": true
+    }
+  ],
+  "interpreted_scope": "API and real-input semantics only; native parent closure, LP constraints and actual candidate acceptance retain their own receipts.",
+  "original94_domains_changed": false,
+  "training_role": "All four are BUILD, including historical HELD views",
+  "material_protection_solved": false,
+  "GPU_forwards": 0,
+  "backwards": 0,
+  "optimizer_updates": 0,
+  "models_loaded": false,
+  "quality_accepted": false,
+  "human_verdict": null
+}

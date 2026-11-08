@@ -1,0 +1,73 @@
+{
+  "schema": "M4_REMOTE_ACTIVITY_READONLY_SNAPSHOT_V1",
+  "snapshot_time": "2026-11-08T12:21:44+08:00",
+  "followup_checks": "Same closeout audit; controller and49-preflight checks followed this process snapshot",
+  "read_only": true,
+  "power_actions": 0,
+  "services_stopped": 0,
+  "GPU": {
+    "name": "NVIDIA GeForce RTX 4080 SUPER",
+    "memory_used_MiB": 1,
+    "memory_total_MiB": 32760,
+    "utilization_percent": 0,
+    "power_W": 20.78,
+    "compute_PIDs": []
+  },
+  "active_scientific_processes": [
+    {
+      "name": "T_child_original_metrics_QP_v1",
+      "PID": 8860,
+      "PPID": 8859,
+      "SSH_parent_PID": 8846,
+      "elapsed_seconds_at_snapshot": 460,
+      "CPU_percent": 99.8,
+      "CUDA_VISIBLE_DEVICES": "",
+      "Python": "/root/autodl-tmp/envs/motionproj/bin/python",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/qp_source_released_v1/solve_T_child_original_metrics_osqp_cpu.py",
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_v44_a5_road_fusion_integration_20261107_r1/M4_child_material_capacity_v1/T_child_original_metrics_QP_v1",
+      "existing_time_budget_seconds": 600,
+      "worker_action": "Read only; no signal, retry, option change or new solver"
+    }
+  ],
+  "base_services_not_stopped": {
+    "supervisord": 854,
+    "TensorBoard": 873,
+    "TensorBoard_data_server": 984,
+    "JupyterLab": 875,
+    "autopanel": 874,
+    "proxy": [878, 879],
+    "SSH_listener": 876,
+    "other_persistent_SSH": [1272, 1274]
+  },
+  "other_visible_training_rendering_evaluation_processes": [],
+  "visible_process_users": ["root"],
+  "controllers": {
+    "tmux": "Installed; no server running on /tmp/tmux-0/default",
+    "screen": "Installed; no sockets in /run/screen/S-root",
+    "crontab_and_atq_tools": "Not installed",
+    "active_cron_atd_processes": [],
+    "systemd": "PID1 is boot bash; systemd init/bus is absent, so list-timers cannot operate",
+    "cron_files": "Only default e2scrub filesystem-maintenance entries were found in /etc/cron.d; no cron daemon or research job was active",
+    "research_controller_processes": [],
+    "supervisor_configuration_limit": "The -c path shown in supervisord argv is not present in the current filesystem, so restart configuration could not be statically read. Visible managed child processes are the base services listed above."
+  },
+  "all49": {
+    "preflight_status": "PREPARED49_ENTRY_ONLY_NOT_LAUNCHED",
+    "actual_native_forwards": 0,
+    "actual_backwards": 0,
+    "release_required": true,
+    "automatic49": false,
+    "render_process_or_controller_seen": false,
+    "artifact_directories_seen": ["M4_protected_supervision_v1/49_entry_preflight_v1"]
+  },
+  "remaining_SSH_dependencies_for_root": [
+    "Allow the already-running T CPU job to finish its original600s contract; inspect producer result",
+    "Only on explicit producer/root certified palette, run the preauthorized final8F and retrieve/verify that result",
+    "Root final report/Git commit/push and any remaining CPU-source or result retrieval",
+    "Fresh final process/controller check before root performs the user-authorized shutdown"
+  ],
+  "worker_completed_local_backups": "Five pre-T archives,187053125bytes, SHA reverified in M4_worker_closeout_retrieval_receipts_v1.json",
+  "latest_user_power_policy": "Root-managed final shutdown after complete closeout; supersedes the earlier keep-on instruction",
+  "shutdown_readiness_claim": false,
+  "scope": "All visible instance processes and the listed local controllers; this snapshot is not a replacement for root's final post-T check"
+}
