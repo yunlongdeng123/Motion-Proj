@@ -368,3 +368,8 @@
 ## SCENE008-V44-A5-MATERIAL-PROTECTION-20261108
 
 [单场景保护监督收口](autoresearch/scene008_v44_a5_material_protection_20261108/index.html) · R/Rchild/S四帧与受限求解证据；用户收口、不扩49、归档后关机。当前状态以RESEARCH_STATUS为准。
+
+
+## WAYMO-VAL029-V44-TRANSFER-20261108
+
+[新街段完整实验](autoresearch/waymo_val029_v44_transfer_20261108/index.html) · 四帧分割、真实10分钟smoke、fresh10K、158构建＋40留出、完整保留／删除及恢复包。自动曲面／道路适配与旧预处理有差异，质量未通过；车辆资产独立正确不代表整场景显露正确。成本、原始身份、数据角色、源码与负例均在报告，failure_ledger_delta=updated:V82-F06。
