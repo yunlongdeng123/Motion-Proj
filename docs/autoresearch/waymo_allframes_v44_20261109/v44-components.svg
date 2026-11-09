@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="630" viewBox="0 0 1120 630" role="img" aria-labelledby="title desc">
+  <title id="title">共享场景重建与编辑：组件及数据流</title>
+  <desc id="desc">真实录像、标定、测距和轨迹先形成实拍证据，再建立原生场景。无编辑时保留原生V1基线；附加世界道路和局部车辆表面后冻结归属。独立删除查询只筛保留行，所有原生行和表面行在一次联合深度渲染中输出RGB和逐帧alpha归因。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8 Z" fill="#455467"/></marker>
+    <style>
+      text { font-family: 'Microsoft YaHei','Noto Sans CJK SC','PingFang SC',sans-serif; fill:#1b2b3d; }
+      .box { fill:#f7fafc; stroke:#869bb2; stroke-width:1.5; rx:9; }
+      .main { fill:#edf5fc; stroke:#4c7a9d; }
+      .label { font-size:19px; font-weight:600; text-anchor:middle; }
+      .small { font-size:16px; text-anchor:middle; fill:#4c5e72; }
+      .note { font-size:14px; fill:#526479; }
+      .flow { fill:none; stroke:#455467; stroke-width:1.8; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1120" height="630" fill="white"/>
+  <text x="24" y="34" font-size="24" font-weight="600">共享场景重建与编辑</text>
+
+  <rect class="box" x="24" y="70" width="235" height="100"/>
+  <text class="label" x="141.5" y="110">真实输入</text>
+  <text class="small" x="141.5" y="140">录像 · 标定 · 测距 · 轨迹</text>
+
+  <rect class="box main" x="320" y="70" width="260" height="100"/>
+  <text class="label" x="450" y="106">实拍证据与身份核验</text>
+  <text class="small" x="450" y="133">可见性与身份未知分开记录</text>
+  <text class="small" x="450" y="155">未知不当作背景</text>
+
+  <rect class="box main" x="640" y="70" width="240" height="100"/>
+  <text class="label" x="760" y="110">可训练原生场景</text>
+  <text class="small" x="760" y="140">显式时钟与观测绑定</text>
+
+  <rect class="box" x="936" y="70" width="160" height="100"/>
+  <text class="label" x="1016" y="111">原生直通V1</text>
+  <text class="small" x="1016" y="140">无编辑基线</text>
+
+  <path class="flow" d="M259 120 H320"/>
+  <path class="flow" d="M580 120 H640"/>
+  <path class="flow" d="M880 120 H936"/>
+
+  <rect class="box" x="90" y="280" width="250" height="100"/>
+  <text class="label" x="215" y="318">道路与车辆表面</text>
+  <text class="small" x="215" y="347">道路用世界坐标</text>
+  <text class="small" x="215" y="369">车辆用各自局部坐标</text>
+
+  <rect class="box main" x="450" y="280" width="240" height="100"/>
+  <text class="label" x="570" y="319">固定归属与交接</text>
+  <text class="small" x="570" y="348">表面缺帧时保留原生</text>
+  <text class="small" x="570" y="370">或明确拒绝覆盖缺口</text>
+
+  <rect class="box" x="805" y="280" width="291" height="100"/>
+  <text class="label" x="950.5" y="320">独立删除查询</text>
+  <text class="small" x="950.5" y="349">只选身份，不改持久场景</text>
+
+  <path class="flow" d="M450 170 V220 H215 V280"/>
+  <text class="note" x="250" y="210">实测支持</text>
+  <path class="flow" d="M760 170 V230 H570 V280"/>
+  <text class="note" x="650" y="219">原生模型行</text>
+  <path class="flow" d="M340 330 H450"/>
+  <text class="note" x="351" y="315">固定资产</text>
+
+  <rect class="box main" x="450" y="470" width="240" height="100"/>
+  <text class="label" x="570" y="510">一遍联合深度渲染</text>
+  <text class="small" x="570" y="539">原生行与表面行统一排序</text>
+
+  <rect class="box" x="805" y="470" width="291" height="100"/>
+  <text class="label" x="950.5" y="510">RGB与逐帧alpha归因</text>
+  <text class="small" x="950.5" y="539">目标 · 保留 · 未归属 · 分支</text>
+
+  <path class="flow" d="M570 380 V470"/>
+  <text class="note" x="585" y="433">固定场景</text>
+  <path class="flow" d="M950.5 380 V425 H650 V470"/>
+  <text class="note" x="812" y="446">只过滤临时保留行</text>
+  <path class="flow" d="M690 520 H805"/>
+  <text class="note" x="706" y="505">统一排序</text>
+
+  <text class="note" x="24" y="609">可换数据清单不等于自动化或泛化成功；实拍复核、组件关系与表面支持仍须逐场景验收。</text>
+</svg>

@@ -1,3 +1,4 @@
+# Historical Scene008 replay only. Use v44_cli / SceneManifest for new scenes.
 """冻结正式 v44 底座，默认只追加 Full5 的 a5 原生动态行。
 
 这是一种显式混合表示：a6 仍为原 C2/SurfaceLOD，a37 仍走原 v44 路径。

@@ -1,3 +1,4 @@
+# Historical Scene008 replay only. Use v44_cli / SceneManifest for new scenes.
 """用固定语义身份包查询 v44 KEEP/DELETE；默认四帧，不训练或求解。"""
 import argparse
 import hashlib

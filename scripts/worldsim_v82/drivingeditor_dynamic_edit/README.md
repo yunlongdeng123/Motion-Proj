@@ -1,4 +1,21 @@
-# 完整五身份重建与身份保持
+# 共享可编辑场景接口
+
+新场景使用显式数据清单和 `v44_cli`。帧数、相机、原始轨迹、对象编号、表面及删除请求均从数据传入；公共代码不内置开发街段或逐帧例外。[完整组件图、输入边界与API说明](../../../docs/autoresearch/waymo_allframes_v44_20261109/V44_SHARED_PIPELINE_CN.md)。这表示代码入口可复用，不代表自动化或跨场景画质已经通过。
+
+```bash
+PYTHONPATH=scripts/worldsim_v82 python -m drivingeditor_dynamic_edit.v44_cli inspect --manifest scene.json
+PYTHONPATH=scripts/worldsim_v82 python -m drivingeditor_dynamic_edit.v44_cli render --manifest scene.json --query query.json --diagnostic-branch-alpha --output new_output
+```
+
+`scene.json`使用`v44.scene.v1`，明确保存图像名、帧key、模型时间、真实采集时间、track与actor的双向登记、原生引擎与模型。`query.json`独立指定`delete_track_ids`，空删除集合为共享场景KEEP。V1对照另走原始渲染器直通，不能用编辑API的KEEP冒充。逐帧PNG、float NPZ与来源清单按真实帧key关联。
+
+输入处理包括实测投影、多表面可见性、SAM图像遮挡物认证、时序断链与同帧回退；车辆前景与身份未知分别保存。无实测正点不等于背景；空三维框不作不透明遮挡。`v44_native_inputs`使用显式登记和原生像素深度比较初始化，保留完整动态alpha监督。标定、测距、轨迹、已接受mask与seed仍是输入依赖，不能声称从任意未标注录像全自动得到身份。
+
+`v44_calibrate`冻结跨时刻可见质量归属；`v44_vehicle_prior`、`v44_vehicle_surface`与`v44_vehicle_material`恢复对象局部表面；`v44_road`与`v44_gate_fit`恢复世界道路并拟合固定静态交接。各模块接受显式路径/身份，依赖的引擎、预训练模型与原生稀疏算子须由清单固定。查询阶段不训练，不按请求改变表面交接，一次联合排序后渲染。
+
+`v44_integration.py`、`v44_query.py`以及以下五身份/49帧内容是开发街段的历史回放，继续保留；不是新场景的通用默认入口。
+
+# 历史原生来源身份接口
 
 `dynamic_actor_ids` 声明完整五身份建模集合。全部真实 PLY 与原 union masks 进入原生联合重建，clone、split、prune 保持每个动态高斯的来源 actor 与谱系，checkpoint 自带完整恢复信息。来源记录可靠，并不保证训练后每个高斯只解释该语义车辆。主要输出是 KEEP 完整车体，车顶与挡风玻璃按真实重建图验收。`delete_actor_ids` 是独立的可选查询，默认空集合，不决定哪些车辆进入静态分支。
 

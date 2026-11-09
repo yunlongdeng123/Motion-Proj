@@ -1,0 +1,149 @@
+{
+  "schema": "v44.waymo.experiment_jobs.v1",
+  "experiment_id": "WAYMO-ALLFRAME-V44-SHARED-20261109",
+  "jobs": [
+    {
+      "scene": "065",
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1",
+      "bank": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs",
+      "masks": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4",
+      "semantics": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/semantics",
+      "native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/shared_native_manifest.json",
+      "delete_track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "delete_actor_id": 10,
+      "diagnostic_actor_ids": [
+        10,
+        8,
+        21,
+        20,
+        24
+      ],
+      "edit_queries": [
+        {
+          "output_name": "shared_delete_white",
+          "delete_track_ids": [
+            "NTjq-OhZ_97OMJ4xwJAxXg"
+          ]
+        }
+      ],
+      "regions": [
+        {
+          "name": "target",
+          "actor_id": 10
+        },
+        {
+          "name": "preserved_pickup",
+          "actor_id": 8
+        },
+        {
+          "name": "front_pickup",
+          "actor_id": 21
+        },
+        {
+          "name": "truck",
+          "actor_id": 20
+        },
+        {
+          "name": "boom",
+          "actor_id": 24
+        }
+      ],
+      "material_backend": {
+        "csr_library": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/libdeterministic_csr.so",
+        "replay_library": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_depth_order_20261105/libreplay_quantile.so",
+        "raster_extension": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_ray_support_20261105/private_cuda/a6_clip_rasterization/_C.cpython-39-x86_64-linux-gnu.so"
+      },
+      "vehicle_completions": [],
+      "native_diagnostic_keys": [
+        30,
+        60,
+        150,
+        198
+      ],
+      "regression_frame_keys": [
+        30,
+        60,
+        150,
+        198
+      ]
+    },
+    {
+      "scene": "029",
+      "root": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val029_allframes10k_20261109_r1",
+      "bank": "/root/autodl-tmp/codex_tmp/waymo_val029_allframes_20261109_r1/inputs",
+      "masks": "/root/autodl-tmp/codex_tmp/waymo_val029_allframes_20261109_r1/repaired_masks_all_r6_common",
+      "semantics": "/root/autodl-tmp/codex_tmp/waymo_val029_allframes_20261109_r1/semantics",
+      "native_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val029_allframes10k_20261109_r1/shared_native_manifest.json",
+      "delete_track_id": "lvxXvuSB3kueTyP2ignh7w",
+      "delete_actor_id": 70,
+      "diagnostic_actor_ids": [
+        70,
+        25,
+        20
+      ],
+      "edit_queries": [
+        {
+          "output_name": "shared_delete_red",
+          "delete_track_ids": [
+            "lvxXvuSB3kueTyP2ignh7w"
+          ]
+        },
+        {
+          "output_name": "shared_delete_white",
+          "delete_track_ids": [
+            "DwjZr_bYUSZOr-XDGregnA"
+          ]
+        }
+      ],
+      "regions": [
+        {
+          "name": "target",
+          "actor_id": 70
+        },
+        {
+          "name": "revealed_white_suv",
+          "actor_id": 25
+        },
+        {
+          "name": "preserved_gray",
+          "actor_id": 20
+        }
+      ],
+      "material_backend": {
+        "csr_library": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_asset_controls_20261105/libdeterministic_csr.so",
+        "replay_library": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_depth_order_20261105/libreplay_quantile.so",
+        "raster_extension": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a6_ray_support_20261105/private_cuda/a6_clip_rasterization/_C.cpython-39-x86_64-linux-gnu.so"
+      },
+      "vehicle_completions": [
+        {
+          "track_id": "DwjZr_bYUSZOr-XDGregnA",
+          "actor_id": 25,
+          "pvd_base": "/root/autodl-tmp/drivingeditor_repro/campaign/scene008_a37_C2_20261103_r1/source/prior/pvd",
+          "surface_dependencies": [
+            "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/drivingeditor_dynamic_edit/native/surface_helpers"
+          ],
+          "reference_hw": [
+            1280,
+            1920
+          ]
+        }
+      ],
+      "native_diagnostic_keys": [
+        130,
+        155,
+        160,
+        190
+      ],
+      "regression_frame_keys": [
+        130,
+        155,
+        160,
+        190
+      ]
+    }
+  ],
+  "all_frames_training": true,
+  "heldout": 0,
+  "automatic_shutdown": false,
+  "secondary_query_road_gate_scope": "same persistent scene; primary-target fitted road, evaluate secondary separately"
+}
