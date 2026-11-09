@@ -388,3 +388,7 @@
 ## WAYMO-VAL029-TWO-EDIT-CASES-20261109
 
 [同一街段删红车与删白色SUV、组件和同帧证据](autoresearch/waymo_val029_dual_delete_20261109/index.html)。用户澄清目标为scene029的红车70/白SUV25，非scene065。复用完整10K及冻结资产，无新训练；4帧pilot后89帧×3状态267原PNG及4帧白车float32取回275文件/60,968,960B。KEEP/删红全89对旧float差0，白车删除真实过滤白车行。主视图两目标分列，来源删红收进方法对照，贡献/诊断记录按case读取与校验。白车显露背景未另拟合，无独立真值，不以机械通过写画质成功。failure_ledger_refs=[]，failure_ledger_delta=none，human_verdict=null；GPU保持开机。
+
+## WAYMO-VAL065-V1-VISIBLE-20261109
+
+[V1原生10K独立主列与第108帧复算](autoresearch/waymo_val065_v1_visible_20261109/index.html)。复用此前fresh10K、0新增训练，不重复记正式预算；纯V1不导入编辑包，60/108/150/198对原V1 float RGB差0。199帧本地/平台398张PNG来源一致，第108帧为留出时刻。主区显式展示V1，保留原A/B及B KEEP；实际JS经DOM/Canvas替身验证，非浏览器验收。failure_ledger_refs=[]，failure_ledger_delta=none，human_verdict=null；GPU保持开机，无subagent或电源操作。
