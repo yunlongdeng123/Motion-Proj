@@ -1,0 +1,21 @@
+{
+  "user_authorized_gpu": true,
+  "automatic_shutdown_authorized": false,
+  "subagents": false,
+  "pilot_pid": 1439,
+  "command": [
+    "/root/autodl-tmp/envs/worldsim-v77-sam2/bin/python",
+    "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/source/mask_pilot.py",
+    "--bank",
+    "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs",
+    "--output",
+    "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/mask_pilot_gpu_r1",
+    "--raws",
+    "30",
+    "60",
+    "150",
+    "198",
+    "--run-gpu",
+    "--point-prompts"
+  ]
+}

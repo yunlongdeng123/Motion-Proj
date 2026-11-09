@@ -377,3 +377,7 @@
 ## WAYMO-VAL029-V44-TRANSFER-20261108
 
 [新街段完整实验](autoresearch/waymo_val029_v44_transfer_20261108/index.html) · 四帧分割、真实10分钟smoke、fresh10K、158构建＋40留出、完整保留／删除及恢复包。自动曲面／道路适配与旧预处理有差异，质量未通过；车辆资产独立正确不代表整场景显露正确。成本、原始身份、数据角色、源码与负例均在报告，failure_ledger_delta=updated:V82-F06。
+
+## WAYMO-VAL065-A9-GPU-20261109
+
+[原生完整重建、白车删除负例、组件图与分组证据](autoresearch/waymo_val065_gpu_20261109/index.html)。用户指定验证街段065/a9，159 BUILD＋40连续HELD，seed0；正式fresh10K/30K LR时钟，smoke5199额外更新、道路交接1000分别记账。独立V1与保存RGB差0；199×5原PNG、4帧双通路float32及源码已取回1106文件。第150帧仍有明显车形，目标KEEP .02747→.04090、137/159帧退化；静态残留像素αT .8953。没有专用车辆补全资产，输入适配和稀疏显露证据边界见报告。scene029的89帧纯V1/原生删红车对照补齐，无重训。human_verdict=null，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；GPU保持开机，禁止本轮自动关机。

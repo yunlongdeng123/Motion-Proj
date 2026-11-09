@@ -1,0 +1,11 @@
+# scene-065 原生重建与白车删除
+
+用户指定验证街段065删除前方白车a9。原生完整场景fresh10K完成，严格V1不导入编辑包。另执行共享归属、世界道路和1000步静态不透明度交接；没有新车辆补全资产。最终第150帧仍有明显车形残留，不能作为删除成功。
+
+输入/环境和运行合同见同名docs报告的evidence、archive_scope.json和原生effective_config。输入准备位于/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1；模型/原生引擎位于/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_native10k_20261108_r1。完整原始输入、引擎、环境、weights和全量结果持续保留远端，不随本目录复制。source是实际执行入口；input_source是已执行输入准备源。真实600秒smoke通过保存、评价、精确状态恢复、2次更新及下一入口；额外5199步不计入fresh正式10K。学习率时钟30K，seed0。道路32步检查点精确恢复后继续至1000步，总预算1000。
+
+执行次序：四帧mask_pilot→全量输入→source/train_scene.py smoke/eval/render_v1/resume2step→fresh formal10K→原生全部BUILD/V1→source/continue_edits.py→source/native_source_attribution.py四帧只读来源诊断→source/analyze_and_package.py。输入与输出目录必须全新，旧现场不覆盖。继续队列属于单任务有界进程，不是定时自动化。
+
+build_delivery.py在用户Windows工作区将取回归档生成五列逐帧工作台，沿用共享平台style/workspace模板；validate_delivery.py与test_viewer.cjs验证资源、float32和交互逻辑，不能替代浏览器视觉验收。完整归档的原始执行字节按传输清单校验，Git文本可能规范化换行。原始录像、点云、权重和995主视图PNG不进入Git。
+
+用户本轮明确不授权AutoDL自动关机。任何入口和收口均不进行电源操作。不使用subagent，人工verdict保持null。

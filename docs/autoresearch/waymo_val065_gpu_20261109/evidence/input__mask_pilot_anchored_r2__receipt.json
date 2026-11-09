@@ -1,0 +1,2483 @@
+{
+  "schema": "waymo.sam2.mask_pilot.v1",
+  "status": "GPU_MASK_PILOT_RENDERED_AWAITING_QA",
+  "bank": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs",
+  "raws": [
+    30,
+    60,
+    150,
+    198
+  ],
+  "checkpoint": "/root/autodl-tmp/third_party/worldsim_v32/sam2/checkpoints/sam2.1_hiera_large.pt",
+  "checkpoint_bytes": 898083611,
+  "config": "configs/sam2.1/sam2.1_hiera_l.yaml",
+  "model_source": "/root/autodl-tmp/third_party/worldsim_v32/sam2",
+  "CUDA_executed": true,
+  "training_updates": 0,
+  "input_policy": "independent image prediction, all projected visible vehicle boxes, same predictor settings for every object",
+  "mask_policy": "single mask per projected 3D box; candidates require silhouette and depth/identity review before use",
+  "point_prompts": true,
+  "method_change": "source input preparation only; no 3D reconstruction or deletion quality claim",
+  "source_sha256": "6cf2910367f07627205329a52e60ac20012fa5f4ec9c608c629b4adf985c2146",
+  "frames": [
+    {
+      "raw": 30,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065030.png",
+      "image_sha256": "3b805221d140456f2d49680f8e1c766ff498ba41fe638b06accfbac5ffd2e638",
+      "prompt_count": 8
+    },
+    {
+      "raw": 60,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065060.png",
+      "image_sha256": "71c1f9c5423cc26dd314c6bf09eff3d06179547c44aa301db7c209032ed41daf",
+      "prompt_count": 11
+    },
+    {
+      "raw": 150,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065150.png",
+      "image_sha256": "984e4f05d93e596d5cb3ab594e6c63a1acc1dfcf1198217036b6bb78c33279e8",
+      "prompt_count": 10
+    },
+    {
+      "raw": 198,
+      "image": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/inputs/image/image_0/0065198.png",
+      "image_sha256": "cf1faeac021c9382a1d1079c6eb436513ffd6ac940b41147ca97b2ab98526d98",
+      "prompt_count": 8
+    }
+  ],
+  "checkpoint_sha256": "2647878d5dfa5098f2f8649825738a9345572bae2d4350a2468587ece47dd318",
+  "results": [
+    {
+      "raw": 30,
+      "track_id": "DA1zcZ9jd1CMwCoxkokVSQ",
+      "alias": "a2",
+      "mask": "030/a2.png",
+      "pixels": 6020,
+      "score": 0.937361478805542,
+      "point_support": {
+        "positive": [
+          [
+            1295.809,
+            741.732
+          ],
+          [
+            1245.14,
+            750.002
+          ],
+          [
+            1336.822,
+            750.152
+          ],
+          [
+            1285.445,
+            714.84
+          ],
+          [
+            1321.206,
+            728.018
+          ]
+        ],
+        "negative": [
+          [
+            1326.722,
+            780.871
+          ],
+          [
+            1229.843,
+            756.982
+          ],
+          [
+            1326.404,
+            722.518
+          ],
+          [
+            1234.986,
+            775.101
+          ],
+          [
+            1341.898,
+            771.195
+          ]
+        ],
+        "positive_returns": 54,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1226.142,
+        705.562,
+        1343.62,
+        783.084
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "FDoqPvKui7wiOzIdTqqYiw",
+      "alias": "a3",
+      "mask": "030/a3.png",
+      "pixels": 7753,
+      "score": 0.9285941123962402,
+      "point_support": {
+        "positive": [
+          [
+            1174.525,
+            774.911
+          ],
+          [
+            1119.664,
+            794.132
+          ],
+          [
+            1219.696,
+            740.731
+          ],
+          [
+            1149.261,
+            727.101
+          ],
+          [
+            1215.058,
+            804.357
+          ]
+        ],
+        "negative": [
+          [
+            1124.519,
+            734.431
+          ],
+          [
+            1240.155,
+            776.262
+          ],
+          [
+            1109.732,
+            775.972
+          ],
+          [
+            1164.432,
+            728.032
+          ],
+          [
+            1229.991,
+            750.152
+          ]
+        ],
+        "positive_returns": 126,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1107.622,
+        723.302,
+        1242.08,
+        818.314
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "KOsYCOB6W_n0DzZsyDdJ-w",
+      "alias": "a7",
+      "mask": "030/a7.png",
+      "pixels": 5784,
+      "score": 0.9059687256813049,
+      "point_support": {
+        "positive": [
+          [
+            1094.581,
+            721.368
+          ],
+          [
+            1159.378,
+            714.948
+          ],
+          [
+            1060.039,
+            767.17
+          ],
+          [
+            1124.305,
+            691.169
+          ],
+          [
+            1104.656,
+            757.917
+          ]
+        ],
+        "negative": [
+          [
+            1154.408,
+            756.859
+          ],
+          [
+            1169.295,
+            727.079
+          ],
+          [
+            1124.467,
+            749.133
+          ],
+          [
+            1129.493,
+            774.979
+          ],
+          [
+            1169.503,
+            774.902
+          ]
+        ],
+        "positive_returns": 103,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1058.728,
+        685.006,
+        1170.912,
+        784.112
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "alias": "a9",
+      "mask": "030/a9.png",
+      "pixels": 6466,
+      "score": 0.9069226980209351,
+      "point_support": {
+        "positive": [
+          [
+            965.422,
+            749.673
+          ],
+          [
+            1010.21,
+            784.979
+          ],
+          [
+            920.908,
+            785.255
+          ],
+          [
+            995.085,
+            714.886
+          ],
+          [
+            935.592,
+            715.082
+          ]
+        ],
+        "negative": [
+          [
+            925.863,
+            721.978
+          ],
+          [
+            911.147,
+            767.412
+          ],
+          [
+            955.666,
+            709.409
+          ],
+          [
+            925.957,
+            709.52
+          ],
+          [
+            916.102,
+            728.894
+          ]
+        ],
+        "positive_returns": 146,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        906.542,
+        708.692,
+        1023.638,
+        799.71
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "OPSWYvN-v6rFs-PVaUpiaw",
+      "alias": "a10",
+      "mask": "030/a10.png",
+      "pixels": 0,
+      "score": 0.0,
+      "point_support": {
+        "positive": [],
+        "negative": [
+          [
+            1305.999,
+            734.408
+          ],
+          [
+            1285.445,
+            714.84
+          ],
+          [
+            1331.574,
+            741.834
+          ],
+          [
+            1285.619,
+            741.708
+          ],
+          [
+            1321.206,
+            728.018
+          ]
+        ],
+        "positive_returns": 0,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1283.614,
+        698.656,
+        1428.38,
+        742.358
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "QaSKydpl_Je47UnsoQkMxQ",
+      "alias": "a13",
+      "mask": "030/a13.png",
+      "pixels": 0,
+      "score": 0.0,
+      "point_support": {
+        "positive": [],
+        "negative": [
+          [
+            1099.6,
+            734.458
+          ],
+          [
+            1134.385,
+            714.981
+          ],
+          [
+            1129.659,
+            758.217
+          ],
+          [
+            1079.562,
+            702.519
+          ],
+          [
+            1064.854,
+            742.038
+          ]
+        ],
+        "positive_returns": 0,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1056.13,
+        701.328,
+        1135.868,
+        765.748
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "YvA59bBZRRmPjWGrqz0zGg",
+      "alias": "a17",
+      "mask": "030/a17.png",
+      "pixels": 60316,
+      "score": 0.9526217579841614,
+      "point_support": {
+        "positive": [
+          [
+            1441.606,
+            858.781
+          ],
+          [
+            1250.863,
+            898.698
+          ],
+          [
+            1602.149,
+            949.172
+          ],
+          [
+            1331.61,
+            771.286
+          ],
+          [
+            1563.981,
+            825.058
+          ]
+        ],
+        "negative": [
+          [
+            1270.596,
+            767.05
+          ],
+          [
+            1220.074,
+            815.015
+          ],
+          [
+            1336.786,
+            758.264
+          ],
+          [
+            1219.746,
+            756.943
+          ],
+          [
+            1306.171,
+            776.411
+          ]
+        ],
+        "positive_returns": 790,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1219.472,
+        752.62,
+        1664.972,
+        1015.02
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 30,
+      "track_id": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "mask": "030/a20.png",
+      "pixels": 2692,
+      "score": 0.689219057559967,
+      "point_support": {
+        "positive": [
+          [
+            955.64,
+            691.96
+          ],
+          [
+            985.401,
+            703.067
+          ],
+          [
+            925.969,
+            703.268
+          ],
+          [
+            950.727,
+            703.186
+          ],
+          [
+            965.538,
+            685.824
+          ]
+        ],
+        "negative": [
+          [
+            965.39,
+            741.487
+          ],
+          [
+            915.755,
+            766.608
+          ],
+          [
+            1010.14,
+            766.46
+          ],
+          [
+            930.53,
+            721.24
+          ],
+          [
+            1000.066,
+            721.137
+          ]
+        ],
+        "positive_returns": 12,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        902.792,
+        682.71,
+        1012.596,
+        772.016
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "6jnrXq-iRbx-Fo2vrjggTg",
+      "alias": "a1",
+      "mask": "060/a1.png",
+      "pixels": 17104,
+      "score": 0.9224799871444702,
+      "point_support": {
+        "positive": [
+          [
+            1593.79,
+            696.395
+          ],
+          [
+            1424.129,
+            696.605
+          ],
+          [
+            1692.201,
+            736.171
+          ],
+          [
+            1513.245,
+            658.46
+          ],
+          [
+            1664.184,
+            663.787
+          ]
+        ],
+        "negative": [
+          [
+            1440.171,
+            740.723
+          ],
+          [
+            1492.904,
+            749.444
+          ],
+          [
+            1403.453,
+            713.555
+          ],
+          [
+            1403.463,
+            749.063
+          ],
+          [
+            1450.443,
+            713.6
+          ]
+        ],
+        "positive_returns": 416,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1399.324,
+        654.448,
+        1704.736,
+        753.836
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "DA1zcZ9jd1CMwCoxkokVSQ",
+      "alias": "a2",
+      "mask": "060/a2.png",
+      "pixels": 6728,
+      "score": 0.9210510849952698,
+      "point_support": {
+        "positive": [
+          [
+            1434.931,
+            740.703
+          ],
+          [
+            1492.904,
+            749.444
+          ],
+          [
+            1387.889,
+            713.556
+          ],
+          [
+            1398.256,
+            749.046
+          ],
+          [
+            1450.443,
+            713.6
+          ]
+        ],
+        "negative": [
+          [
+            1435.306,
+            771.656
+          ],
+          [
+            1336.274,
+            712.185
+          ],
+          [
+            1508.235,
+            702.191
+          ],
+          [
+            1352.068,
+            800.903
+          ],
+          [
+            1509.737,
+            802.082
+          ]
+        ],
+        "positive_returns": 53,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1331.902,
+        699.404,
+        1512.762,
+        807.326
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "FDoqPvKui7wiOzIdTqqYiw",
+      "alias": "a3",
+      "mask": "060/a3.png",
+      "pixels": 42177,
+      "score": 0.9520162343978882,
+      "point_support": {
+        "positive": [
+          [
+            1446.471,
+            846.764
+          ],
+          [
+            1285.72,
+            871.317
+          ],
+          [
+            1574.809,
+            933.091
+          ],
+          [
+            1362.358,
+            771.545
+          ],
+          [
+            1552.45,
+            813.571
+          ]
+        ],
+        "negative": [
+          [
+            1321.21,
+            773.491
+          ],
+          [
+            1538.554,
+            967.996
+          ],
+          [
+            1498.268,
+            776.211
+          ],
+          [
+            1337.907,
+            938.018
+          ],
+          [
+            1434.619,
+            931.172
+          ]
+        ],
+        "positive_returns": 632,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1260.502,
+        751.794,
+        1610.652,
+        975.526
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "KOsYCOB6W_n0DzZsyDdJ-w",
+      "alias": "a7",
+      "mask": "060/a7.png",
+      "pixels": 23802,
+      "score": 0.9369925856590271,
+      "point_support": {
+        "positive": [
+          [
+            1229.15,
+            747.044
+          ],
+          [
+            1367.193,
+            747.392
+          ],
+          [
+            1159.097,
+            813.846
+          ],
+          [
+            1300.253,
+            687.929
+          ],
+          [
+            1260.071,
+            824.601
+          ]
+        ],
+        "negative": [
+          [
+            1352.068,
+            800.903
+          ],
+          [
+            1148.948,
+            702.642
+          ],
+          [
+            1199.72,
+            838.24
+          ],
+          [
+            1377.363,
+            720.105
+          ],
+          [
+            1290.629,
+            846.435
+          ]
+        ],
+        "positive_returns": 393,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1145.218,
+        660.2,
+        1386.492,
+        854.568
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "alias": "a9",
+      "mask": "060/a9.png",
+      "pixels": 24279,
+      "score": 0.9412042498588562,
+      "point_support": {
+        "positive": [
+          [
+            983.844,
+            811.837
+          ],
+          [
+            1078.912,
+            870.475
+          ],
+          [
+            894.473,
+            870.905
+          ],
+          [
+            884.531,
+            773.359
+          ],
+          [
+            1083.559,
+            772.73
+          ]
+        ],
+        "negative": [
+          [
+            969.407,
+            732.879
+          ],
+          [
+            1100.158,
+            788.119
+          ],
+          [
+            870.398,
+            825.55
+          ],
+          [
+            889.989,
+            740.482
+          ],
+          [
+            1049.505,
+            728.593
+          ]
+        ],
+        "positive_returns": 466,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        868.59,
+        718.366,
+        1101.896,
+        902.242
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "OPSWYvN-v6rFs-PVaUpiaw",
+      "alias": "a10",
+      "mask": "060/a10.png",
+      "pixels": 4326,
+      "score": 0.8476312160491943,
+      "point_support": {
+        "positive": [
+          [
+            1104.21,
+            734.832
+          ],
+          [
+            1079.231,
+            715.458
+          ],
+          [
+            1109.22,
+            742.086
+          ],
+          [
+            1104.165,
+            728.458
+          ],
+          [
+            1104.241,
+            742.083
+          ]
+        ],
+        "negative": [
+          [
+            1198.726,
+            725.453
+          ],
+          [
+            1043.427,
+            754.228
+          ],
+          [
+            1244.09,
+            693.875
+          ],
+          [
+            1143.817,
+            727.161
+          ],
+          [
+            1244.349,
+            747.063
+          ]
+        ],
+        "positive_returns": 5,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1040.138,
+        690.88,
+        1247.126,
+        754.658
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "OYV3u6mRdP-5m3ZyG26CRg",
+      "alias": "a11",
+      "mask": "060/a11.png",
+      "pixels": 8706,
+      "score": 0.9407835006713867,
+      "point_support": {
+        "positive": [
+          [
+            289.879,
+            734.107
+          ],
+          [
+            191.086,
+            721.347
+          ],
+          [
+            365.314,
+            747.49
+          ],
+          [
+            235.234,
+            749.107
+          ],
+          [
+            235.196,
+            701.704
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 161,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        183.142,
+        687.914,
+        384.342,
+        763.676
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "OqkdudndC-5BEEjHWrDjBw",
+      "alias": "a12",
+      "mask": "060/a12.png",
+      "pixels": 6693,
+      "score": 0.9550703167915344,
+      "point_support": {
+        "positive": [
+          [
+            691.489,
+            723.79
+          ],
+          [
+            781.747,
+            716.945
+          ],
+          [
+            625.693,
+            711.483
+          ],
+          [
+            736.774,
+            730.245
+          ],
+          [
+            651.156,
+            744.62
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 122,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        613.83,
+        690.746,
+        792.946,
+        752.558
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "QaSKydpl_Je47UnsoQkMxQ",
+      "alias": "a13",
+      "mask": "060/a13.png",
+      "pixels": 2864,
+      "score": 0.8167194724082947,
+      "point_support": {
+        "positive": [
+          [
+            1139.064,
+            775.077
+          ],
+          [
+            1143.817,
+            727.161
+          ],
+          [
+            1138.982,
+            757.108
+          ],
+          [
+            1144.14,
+            784.628
+          ],
+          [
+            1134.075,
+            766.099
+          ]
+        ],
+        "negative": [
+          [
+            1208.928,
+            755.112
+          ],
+          [
+            1135.056,
+            794.708
+          ],
+          [
+            1148.948,
+            702.642
+          ],
+          [
+            1264.392,
+            699.438
+          ],
+          [
+            1259.919,
+            802.663
+          ]
+        ],
+        "positive_returns": 10,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1122.294,
+        699.168,
+        1264.786,
+        807.056
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "_5I5hn_f7wcVb0-8HolQcg",
+      "alias": "a19",
+      "mask": "060/a19.png",
+      "pixels": 0,
+      "score": 0.0,
+      "point_support": {
+        "positive": [],
+        "negative": [],
+        "positive_returns": 0,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1905.862,
+        662.768,
+        1918.0,
+        744.552
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 60,
+      "track_id": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "mask": "060/a20.png",
+      "pixels": 8326,
+      "score": 0.8271867036819458,
+      "point_support": {
+        "positive": [
+          [
+            969.459,
+            713.792
+          ],
+          [
+            1048.952,
+            713.799
+          ],
+          [
+            900.106,
+            714.358
+          ],
+          [
+            929.652,
+            677.402
+          ],
+          [
+            1009.142,
+            713.66
+          ]
+        ],
+        "negative": [
+          [
+            978.758,
+            781.65
+          ],
+          [
+            978.448,
+            677.998
+          ],
+          [
+            889.349,
+            823.519
+          ],
+          [
+            1049.505,
+            728.593
+          ],
+          [
+            1055.648,
+            820.213
+          ]
+        ],
+        "positive_returns": 44,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        864.682,
+        671.128,
+        1056.82,
+        831.492
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "6jnrXq-iRbx-Fo2vrjggTg",
+      "alias": "a1",
+      "mask": "150/a1.png",
+      "pixels": 15617,
+      "score": 0.833277702331543,
+      "point_support": {
+        "positive": [
+          [
+            95.202,
+            757.148
+          ],
+          [
+            157.245,
+            838.195
+          ],
+          [
+            44.571,
+            840.844
+          ],
+          [
+            44.163,
+            680.722
+          ],
+          [
+            156.544,
+            719.228
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 355,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        39.09,
+        672.83,
+        200.838,
+        855.692
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "DA1zcZ9jd1CMwCoxkokVSQ",
+      "alias": "a2",
+      "mask": "150/a2.png",
+      "pixels": 0,
+      "score": 0.0,
+      "point_support": {
+        "positive": [],
+        "negative": [
+          [
+            1623.889,
+            836.217
+          ],
+          [
+            1830.998,
+            906.876
+          ],
+          [
+            1498.991,
+            734.28
+          ],
+          [
+            1500.334,
+            912.515
+          ],
+          [
+            1740.141,
+            838.208
+          ]
+        ],
+        "positive_returns": 0,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1498.402,
+        729.876,
+        1832.286,
+        912.538
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "KOsYCOB6W_n0DzZsyDdJ-w",
+      "alias": "a7",
+      "mask": "150/a7.png",
+      "pixels": 146251,
+      "score": 0.947261393070221,
+      "point_support": {
+        "positive": [
+          [
+            1564.58,
+            870.736
+          ],
+          [
+            1853.313,
+            1005.675
+          ],
+          [
+            1310.746,
+            799.389
+          ],
+          [
+            1416.39,
+            1042.746
+          ],
+          [
+            1663.463,
+            1051.35
+          ]
+        ],
+        "negative": [
+          [
+            1352.449,
+            792.128
+          ],
+          [
+            1871.82,
+            1098.952
+          ],
+          [
+            1715.967,
+            757.324
+          ],
+          [
+            1521.215,
+            1073.404
+          ],
+          [
+            1354.753,
+            986.552
+          ]
+        ],
+        "positive_returns": 2080,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1271.27,
+        685.468,
+        1895.356,
+        1130.716
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "alias": "a9",
+      "mask": "150/a9.png",
+      "pixels": 204240,
+      "score": 0.8666151762008667,
+      "point_support": {
+        "positive": [
+          [
+            990.306,
+            1064.74
+          ],
+          [
+            1260.905,
+            1261.453
+          ],
+          [
+            738.922,
+            1260.029
+          ],
+          [
+            740.628,
+            936.67
+          ],
+          [
+            1218.863,
+            935.771
+          ]
+        ],
+        "negative": [
+          [
+            1038.345,
+            832.334
+          ],
+          [
+            1332.594,
+            990.41
+          ],
+          [
+            764.249,
+            972.668
+          ],
+          [
+            1249.726,
+            791.761
+          ],
+          [
+            843.861,
+            789.688
+          ]
+        ],
+        "positive_returns": 2203,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        635.45,
+        787.368,
+        1341.63,
+        1278.0
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "QaSKydpl_Je47UnsoQkMxQ",
+      "alias": "a13",
+      "mask": "150/a13.png",
+      "pixels": 18143,
+      "score": 0.9355075359344482,
+      "point_support": {
+        "positive": [
+          [
+            1244.95,
+            772.97
+          ],
+          [
+            1270.23,
+            823.791
+          ],
+          [
+            1269.758,
+            738.299
+          ],
+          [
+            1204.145,
+            773.091
+          ],
+          [
+            1229.534,
+            802.199
+          ]
+        ],
+        "negative": [
+          [
+            1378.061,
+            821.407
+          ],
+          [
+            1189.259,
+            727.644
+          ],
+          [
+            1233.499,
+            870.212
+          ],
+          [
+            1435.344,
+            726.988
+          ],
+          [
+            1436.139,
+            897.334
+          ]
+        ],
+        "positive_returns": 57,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1186.534,
+        723.204,
+        1439.638,
+        906.632
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "_5I5hn_f7wcVb0-8HolQcg",
+      "alias": "a19",
+      "mask": "150/a19.png",
+      "pixels": 15319,
+      "score": 0.785683810710907,
+      "point_support": {
+        "positive": [
+          [
+            1144.163,
+            727.664
+          ],
+          [
+            1004.792,
+            685.03
+          ],
+          [
+            1214.38,
+            720.884
+          ],
+          [
+            1109.503,
+            784.968
+          ],
+          [
+            1094.161,
+            684.872
+          ]
+        ],
+        "negative": [
+          [
+            958.772,
+            762.153
+          ],
+          [
+            1224.446,
+            792.108
+          ],
+          [
+            1094.298,
+            772.978
+          ],
+          [
+            838.868,
+            780.343
+          ],
+          [
+            883.996,
+            697.99
+          ]
+        ],
+        "positive_returns": 222,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        837.364,
+        683.922,
+        1225.358,
+        796.768
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "mask": "150/a20.png",
+      "pixels": 35689,
+      "score": 0.9085584282875061,
+      "point_support": {
+        "positive": [
+          [
+            948.811,
+            762.176
+          ],
+          [
+            809.73,
+            754.783
+          ],
+          [
+            1083.435,
+            753.754
+          ],
+          [
+            883.996,
+            697.99
+          ],
+          [
+            1013.334,
+            716.513
+          ]
+        ],
+        "negative": [
+          [
+            1000.526,
+            887.359
+          ],
+          [
+            755.899,
+            951.77
+          ],
+          [
+            1109.103,
+            690.888
+          ],
+          [
+            955.308,
+            702.401
+          ],
+          [
+            1106.761,
+            979.402
+          ]
+        ],
+        "positive_returns": 256,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        750.87,
+        688.778,
+        1109.636,
+        988.748
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "g6vZ8hoxEyGqps9xb6bc0w",
+      "alias": "a22",
+      "mask": "150/a22.png",
+      "pixels": 4465,
+      "score": 0.9527052640914917,
+      "point_support": {
+        "positive": [
+          [
+            677.001,
+            730.768
+          ],
+          [
+            702.238,
+            752.54
+          ],
+          [
+            646.692,
+            737.429
+          ],
+          [
+            702.188,
+            723.867
+          ],
+          [
+            656.864,
+            752.947
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 44,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        637.11,
+        693.614,
+        731.15,
+        761.014
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "iRrRRH9A1cVpEnQ2FQ9ywA",
+      "alias": "a23",
+      "mask": "150/a23.png",
+      "pixels": 6022,
+      "score": 0.8900011777877808,
+      "point_support": {
+        "positive": [
+          [
+            1044.316,
+            654.59
+          ],
+          [
+            1198.995,
+            665.097
+          ],
+          [
+            940.261,
+            636.539
+          ],
+          [
+            1123.851,
+            648.088
+          ],
+          [
+            984.96,
+            672.35
+          ]
+        ],
+        "negative": [
+          [
+            962.945,
+            667.525
+          ],
+          [
+            986.528,
+            682.753
+          ],
+          [
+            950.89,
+            658.875
+          ]
+        ],
+        "positive_returns": 251,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        939.128,
+        623.868,
+        1203.592,
+        682.846
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 150,
+      "track_id": "qA2OYrSZh27Zwva9Nhj1tg",
+      "alias": "a25",
+      "mask": "150/a25.png",
+      "pixels": 3806,
+      "score": 0.9482147097587585,
+      "point_support": {
+        "positive": [
+          [
+            451.031,
+            746.648
+          ],
+          [
+            492.92,
+            754.707
+          ],
+          [
+            414.196,
+            739.607
+          ],
+          [
+            430.025,
+            755.326
+          ],
+          [
+            471.974,
+            739.011
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 22,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        401.12,
+        713.65,
+        504.26,
+        772.204
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "DA1zcZ9jd1CMwCoxkokVSQ",
+      "alias": "a2",
+      "mask": "198/a2.png",
+      "pixels": 0,
+      "score": 0.0,
+      "point_support": {
+        "positive": [],
+        "negative": [
+          [
+            1618.202,
+            823.793
+          ],
+          [
+            1830.852,
+            906.554
+          ],
+          [
+            1498.864,
+            733.974
+          ],
+          [
+            1501.61,
+            906.695
+          ],
+          [
+            1707.253,
+            902.837
+          ]
+        ],
+        "positive_returns": 0,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1498.368,
+        728.802,
+        1832.248,
+        911.198
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "KOsYCOB6W_n0DzZsyDdJ-w",
+      "alias": "a7",
+      "mask": "198/a7.png",
+      "pixels": 145656,
+      "score": 0.9346950650215149,
+      "point_support": {
+        "positive": [
+          [
+            1564.432,
+            870.407
+          ],
+          [
+            1853.192,
+            1005.265
+          ],
+          [
+            1311.004,
+            799.101
+          ],
+          [
+            1416.266,
+            1042.427
+          ],
+          [
+            1637.134,
+            1055.651
+          ]
+        ],
+        "negative": [
+          [
+            1352.326,
+            791.809
+          ],
+          [
+            1855.743,
+            1123.165
+          ],
+          [
+            1732.617,
+            766.531
+          ],
+          [
+            1504.111,
+            1113.49
+          ],
+          [
+            1689.863,
+            1047.129
+          ]
+        ],
+        "positive_returns": 2083,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1272.046,
+        685.498,
+        1894.912,
+        1129.552
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "alias": "a9",
+      "mask": "198/a9.png",
+      "pixels": 196216,
+      "score": 0.8786720037460327,
+      "point_support": {
+        "positive": [
+          [
+            990.604,
+            1064.429
+          ],
+          [
+            1259.015,
+            1270.814
+          ],
+          [
+            739.122,
+            1259.681
+          ],
+          [
+            740.76,
+            936.247
+          ],
+          [
+            1219.126,
+            935.515
+          ]
+        ],
+        "negative": [
+          [
+            1038.58,
+            832.038
+          ],
+          [
+            1337.965,
+            990.228
+          ],
+          [
+            764.462,
+            972.384
+          ],
+          [
+            1255.037,
+            791.388
+          ],
+          [
+            844.063,
+            789.411
+          ]
+        ],
+        "positive_returns": 2216,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        635.456,
+        786.992,
+        1341.58,
+        1278.0
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "QaSKydpl_Je47UnsoQkMxQ",
+      "alias": "a13",
+      "mask": "198/a13.png",
+      "pixels": 18006,
+      "score": 0.932195782661438,
+      "point_support": {
+        "positive": [
+          [
+            1249.913,
+            782.036
+          ],
+          [
+            1270.002,
+            738.021
+          ],
+          [
+            1204.393,
+            772.798
+          ],
+          [
+            1270.46,
+            823.518
+          ],
+          [
+            1239.673,
+            754.757
+          ]
+        ],
+        "negative": [
+          [
+            1383.624,
+            832.735
+          ],
+          [
+            1187.518,
+            820.511
+          ],
+          [
+            1281.001,
+            896.655
+          ],
+          [
+            1435.247,
+            726.673
+          ],
+          [
+            1436.459,
+            897.036
+          ]
+        ],
+        "positive_returns": 56,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        1186.542,
+        724.908,
+        1439.648,
+        908.712
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "ZhAu9aP292jvEwe8VV0kAg",
+      "alias": "a18",
+      "mask": "198/a18.png",
+      "pixels": 1578,
+      "score": 0.7837232351303101,
+      "point_support": {
+        "positive": [
+          [
+            626.862,
+            724.612
+          ],
+          [
+            616.694,
+            718.291
+          ],
+          [
+            631.955,
+            731.337
+          ],
+          [
+            616.695,
+            724.693
+          ],
+          [
+            626.88,
+            731.38
+          ]
+        ],
+        "negative": [
+          [
+            656.956,
+            730.613
+          ],
+          [
+            636.719,
+            744.537
+          ],
+          [
+            677.138,
+            723.722
+          ],
+          [
+            641.746,
+            723.977
+          ],
+          [
+            672.115,
+            736.928
+          ]
+        ],
+        "positive_returns": 6,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        607.336,
+        696.776,
+        681.158,
+        752.192
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "mask": "198/a20.png",
+      "pixels": 35494,
+      "score": 0.9000216126441956,
+      "point_support": {
+        "positive": [
+          [
+            949.009,
+            761.894
+          ],
+          [
+            809.938,
+            754.504
+          ],
+          [
+            1083.68,
+            753.473
+          ],
+          [
+            884.21,
+            704.1
+          ],
+          [
+            1013.521,
+            716.216
+          ]
+        ],
+        "negative": [
+          [
+            960.291,
+            915.044
+          ],
+          [
+            750.989,
+            951.478
+          ],
+          [
+            1048.317,
+            726.81
+          ],
+          [
+            1106.859,
+            978.514
+          ],
+          [
+            840.818,
+            862.149
+          ]
+        ],
+        "positive_returns": 261,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        750.876,
+        689.676,
+        1109.636,
+        989.652
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "g6vZ8hoxEyGqps9xb6bc0w",
+      "alias": "a22",
+      "mask": "198/a22.png",
+      "pixels": 4499,
+      "score": 0.9257621765136719,
+      "point_support": {
+        "positive": [
+          [
+            672.11,
+            730.498
+          ],
+          [
+            717.507,
+            744.013
+          ],
+          [
+            636.719,
+            744.537
+          ],
+          [
+            697.292,
+            723.599
+          ],
+          [
+            646.815,
+            723.943
+          ]
+        ],
+        "negative": [
+          [
+            631.935,
+            724.572
+          ],
+          [
+            631.955,
+            731.337
+          ],
+          [
+            637.008,
+            724.54
+          ]
+        ],
+        "positive_returns": 47,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        631.834,
+        692.428,
+        726.706,
+        761.078
+      ],
+      "quality_accepted": null
+    },
+    {
+      "raw": 198,
+      "track_id": "qA2OYrSZh27Zwva9Nhj1tg",
+      "alias": "a25",
+      "mask": "198/a25.png",
+      "pixels": 3817,
+      "score": 0.9485912919044495,
+      "point_support": {
+        "positive": [
+          [
+            445.938,
+            746.452
+          ],
+          [
+            493.07,
+            746.074
+          ],
+          [
+            414.347,
+            739.355
+          ],
+          [
+            472.14,
+            754.597
+          ],
+          [
+            424.898,
+            755.141
+          ]
+        ],
+        "negative": [],
+        "positive_returns": 21,
+        "policy": "same-frame measured OBB-unique body returns, camera z-buffer and occluder-box exclusion"
+      },
+      "bbox": [
+        401.116,
+        712.494,
+        504.256,
+        770.96
+      ],
+      "quality_accepted": null
+    }
+  ],
+  "seconds": 6.870529051870108,
+  "max_allocated_bytes": 1523619328,
+  "component_filter": {
+    "rule": "8-connected components containing at least one same-frame measured positive prompt; no dilation/fill",
+    "rows": [
+      {
+        "raw": 30,
+        "alias": "a2",
+        "before": 6020,
+        "after": 6020,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 30,
+        "alias": "a3",
+        "before": 7753,
+        "after": 7753,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 30,
+        "alias": "a7",
+        "before": 5784,
+        "after": 5784,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 30,
+        "alias": "a9",
+        "before": 6466,
+        "after": 6466,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 30,
+        "alias": "a10",
+        "before": 0,
+        "after": 0,
+        "components": 0,
+        "anchored_components": []
+      },
+      {
+        "raw": 30,
+        "alias": "a13",
+        "before": 0,
+        "after": 0,
+        "components": 0,
+        "anchored_components": []
+      },
+      {
+        "raw": 30,
+        "alias": "a17",
+        "before": 60316,
+        "after": 60316,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 30,
+        "alias": "a20",
+        "before": 2692,
+        "after": 2683,
+        "components": 3,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a1",
+        "before": 17104,
+        "after": 17104,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a2",
+        "before": 6728,
+        "after": 6728,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a3",
+        "before": 42177,
+        "after": 42177,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a7",
+        "before": 23802,
+        "after": 23802,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a9",
+        "before": 24279,
+        "after": 24279,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a10",
+        "before": 4326,
+        "after": 4281,
+        "components": 2,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a11",
+        "before": 8706,
+        "after": 8706,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a12",
+        "before": 6693,
+        "after": 6693,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a13",
+        "before": 2864,
+        "after": 2864,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 60,
+        "alias": "a19",
+        "before": 0,
+        "after": 0,
+        "components": 0,
+        "anchored_components": []
+      },
+      {
+        "raw": 60,
+        "alias": "a20",
+        "before": 8326,
+        "after": 8326,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a1",
+        "before": 15617,
+        "after": 15370,
+        "components": 16,
+        "anchored_components": [
+          2
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a2",
+        "before": 0,
+        "after": 0,
+        "components": 0,
+        "anchored_components": []
+      },
+      {
+        "raw": 150,
+        "alias": "a7",
+        "before": 146251,
+        "after": 146234,
+        "components": 2,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a9",
+        "before": 204240,
+        "after": 200180,
+        "components": 187,
+        "anchored_components": [
+          9
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a13",
+        "before": 18143,
+        "after": 18143,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a19",
+        "before": 15319,
+        "after": 15154,
+        "components": 18,
+        "anchored_components": [
+          3
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a20",
+        "before": 35689,
+        "after": 35688,
+        "components": 2,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a22",
+        "before": 4465,
+        "after": 4465,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a23",
+        "before": 6022,
+        "after": 6015,
+        "components": 2,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 150,
+        "alias": "a25",
+        "before": 3806,
+        "after": 3806,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a2",
+        "before": 0,
+        "after": 0,
+        "components": 0,
+        "anchored_components": []
+      },
+      {
+        "raw": 198,
+        "alias": "a7",
+        "before": 145656,
+        "after": 145636,
+        "components": 5,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a9",
+        "before": 196216,
+        "after": 196216,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a13",
+        "before": 18006,
+        "after": 18006,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a18",
+        "before": 1578,
+        "after": 1565,
+        "components": 2,
+        "anchored_components": [
+          2
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a20",
+        "before": 35494,
+        "after": 35494,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a22",
+        "before": 4499,
+        "after": 4499,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      },
+      {
+        "raw": 198,
+        "alias": "a25",
+        "before": 3817,
+        "after": 3817,
+        "components": 1,
+        "anchored_components": [
+          1
+        ]
+      }
+    ],
+    "adapter_change": true,
+    "unfiltered_source": "/root/autodl-tmp/codex_tmp/waymo_val065_cpu_20261108_r1/mask_pilot_gpu_r1"
+  }
+}
