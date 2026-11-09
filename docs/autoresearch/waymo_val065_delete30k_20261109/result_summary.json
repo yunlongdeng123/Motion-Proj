@@ -1,0 +1,123 @@
+{
+  "task": "WAYMO-065-DELETE-WHITE30K-20261109",
+  "native30k_user_verdict": "scene065 pass;scene029 not passed",
+  "frames": 199,
+  "heldout": 0,
+  "iteration": 30000,
+  "native_gaussian_updates": 0,
+  "static_gate_updates": 1000,
+  "source_native_checkpoint_unchanged": true,
+  "agent_visual_observation": "Large car-shaped ghost and coloured fragments remain in119 and198 after deleting the registered white sedan. KEEP119 is visually intact.",
+  "human_edit_verdict": null,
+  "attribution119": {
+    "schema": "v44.delete30k.visual_attribution.v1",
+    "raw": 119,
+    "region": "existing input mask10 resized nearest to480x320 as in calibration; not independent pixel ownership truth",
+    "human_verdict": null,
+    "visual_observation": "Large car-shaped ghost and coloured fragments remain in119 and198 after deleting the registered white sedan. KEEP119 is visually intact.",
+    "states": {
+      "final_keep": {
+        "mask_pixels": 11624,
+        "groups": {
+          "target": 0.9152951240539551,
+          "other_static": 0.0009393868967890739,
+          "other_dynamic": 7.519102655351162e-05,
+          "road": 0.020368654280900955,
+          "other_surface": 0.0,
+          "unassigned": 0.06319534033536911
+        },
+        "branches": {
+          "nonfocus_static": 0.06413472443819046,
+          "nonfocus_dynamic": 7.519102655351162e-05
+        },
+        "owner10_max": 0.9999001026153564,
+        "pixel_250_300": {
+          "target": 0.9762416481971741,
+          "other_static": 0.0,
+          "other_dynamic": 0.0,
+          "road": 0.0,
+          "other_surface": 0.0,
+          "unassigned": 0.023653538897633553
+        }
+      },
+      "delete_white": {
+        "mask_pixels": 11624,
+        "groups": {
+          "target": 0.0,
+          "other_static": 0.011504363268613815,
+          "other_dynamic": 0.10611492395401001,
+          "road": 0.059314388781785965,
+          "other_surface": 0.0,
+          "unassigned": 0.822700560092926
+        },
+        "branches": {
+          "nonfocus_static": 0.8342049717903137,
+          "nonfocus_dynamic": 0.10611492395401001
+        },
+        "owner10_max": 0.0,
+        "pixel_250_300": {
+          "target": 0.0,
+          "other_static": 0.0,
+          "other_dynamic": 0.15495668351650238,
+          "road": 0.0,
+          "other_surface": 0.0,
+          "unassigned": 0.8449422717094421
+        }
+      }
+    }
+  },
+  "command_wall_seconds": {
+    "native_parity": 9.025000328198075,
+    "ownership": 95.44419697113335,
+    "semantic_delete": 117.05532779172063,
+    "world_road": 54.516244223341346,
+    "gate32": 38.3309430424124,
+    "gate1000": 135.0902320444584,
+    "final_keep": 117.83921093307436,
+    "delete_white": 117.49766804091632,
+    "roundtrip": 7.597337692975998
+  },
+  "total_command_wall_seconds": 692.3961610682309,
+  "timing_scope": "command wall time includes loading/export/CPU; not GPU-kernel time",
+  "desktop_delivery": {
+    "status": "INSTALLED_065_DELETE30K_FOUR_COLUMN_VIEWER",
+    "index": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-10-22\\ni-x-a\\outputs\\GS_Scene_Diagnostics_20261027\\15021599536622641101_556_150_576_150\\index.html",
+    "frames": 199,
+    "columns": 4,
+    "default_raw": 119,
+    "default_native_step": 30000,
+    "edit_step": 30000,
+    "pngs_verified": 398,
+    "movies": [
+      {
+        "name": "delete_white_30k.mp4",
+        "codec_name": "h264",
+        "width": 480,
+        "height": 320,
+        "avg_frame_rate": "10/1",
+        "duration": "19.900000",
+        "nb_read_frames": "199"
+      },
+      {
+        "name": "keep_30k.mp4",
+        "codec_name": "h264",
+        "width": 480,
+        "height": 320,
+        "avg_frame_rate": "10/1",
+        "duration": "19.900000",
+        "nb_read_frames": "199"
+      }
+    ],
+    "archive_sha256": "493e23d7bcf2c2e64c1eee384dcebded740336d14e8293d80e6bb07a8fcb820f",
+    "history_preserved": true,
+    "scene029_unchanged": true,
+    "CPU_DOM_checks": 19,
+    "browser_qa": false,
+    "quality_accepted": null
+  },
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "updated:V82-F06",
+  "automatic_shutdown": false
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "v44.delete30k.visual_attribution.v1",
+  "raw": 119,
+  "region": "existing input mask10 resized nearest to480x320 as in calibration; not independent pixel ownership truth",
+  "human_verdict": null,
+  "visual_observation": "Large car-shaped ghost and coloured fragments remain in119 and198 after deleting the registered white sedan. KEEP119 is visually intact.",
+  "states": {
+    "final_keep": {
+      "mask_pixels": 11624,
+      "groups": {
+        "target": 0.9152951240539551,
+        "other_static": 0.0009393868967890739,
+        "other_dynamic": 7.519102655351162e-05,
+        "road": 0.020368654280900955,
+        "other_surface": 0.0,
+        "unassigned": 0.06319534033536911
+      },
+      "branches": {
+        "nonfocus_static": 0.06413472443819046,
+        "nonfocus_dynamic": 7.519102655351162e-05
+      },
+      "owner10_max": 0.9999001026153564,
+      "pixel_250_300": {
+        "target": 0.9762416481971741,
+        "other_static": 0.0,
+        "other_dynamic": 0.0,
+        "road": 0.0,
+        "other_surface": 0.0,
+        "unassigned": 0.023653538897633553
+      }
+    },
+    "delete_white": {
+      "mask_pixels": 11624,
+      "groups": {
+        "target": 0.0,
+        "other_static": 0.011504363268613815,
+        "other_dynamic": 0.10611492395401001,
+        "road": 0.059314388781785965,
+        "other_surface": 0.0,
+        "unassigned": 0.822700560092926
+      },
+      "branches": {
+        "nonfocus_static": 0.8342049717903137,
+        "nonfocus_dynamic": 0.10611492395401001
+      },
+      "owner10_max": 0.0,
+      "pixel_250_300": {
+        "target": 0.0,
+        "other_static": 0.0,
+        "other_dynamic": 0.15495668351650238,
+        "road": 0.0,
+        "other_surface": 0.0,
+        "unassigned": 0.8449422717094421
+      }
+    }
+  }
+}

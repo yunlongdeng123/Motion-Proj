@@ -1,5 +1,10 @@
 # 实验索引
 
+## Waymo scene-065：原生30K后的白车删除（2026-11-09）
+
+- `WAYMO-065-DELETE-WHITE30K-20261109`：[组件、199帧保留/删除、原始视频、资源与残影证据](autoresearch/waymo_val065_delete30k_20261109/README.md)。用户通过065原生30K、未通过029；固定30K高斯，重算共享归属/道路/1000步交接。查询回归通过，119及198仍有明显车形残留；已取回并接入原平台第四列，不调参重跑。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+
 ## Waymo scene-065白车删除CPU准备及V1直通对照（2026-11-08）
 
 - `WAYMO-VAL065-A9-CPU-20261108`：[159构建帧真实输入、逐帧实拍、组件图及冻结合同](autoresearch/waymo_val065_cpu_20261108/index.html)。GPU阶段未运行；显露提名不作真值。scene-029原生79帧直通/来源删除已取回，10个语义通路留出导出从V1列排除，待GPU补齐。failure_ledger_refs=[]，failure_ledger_delta=none。
