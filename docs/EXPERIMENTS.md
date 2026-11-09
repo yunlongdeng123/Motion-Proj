@@ -384,3 +384,7 @@
 
 
 `WAYMO-VAL065-A9-DELETE-AUDIT-20261109`：[用户所指第156帧的精确只读排查](autoresearch/waymo_val065_gpu_20261109/audit156/index.html)。6次复算匹配原输出≤1.20e-7；原生来源删除23像素变化，最终静态车形残留明确。新增训练0；页面说明改“删除尝试”，原图保留。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；未用subagent，AutoDL保持开机。
+
+## WAYMO-VAL029-TWO-EDIT-CASES-20261109
+
+[同一街段删红车与删白色SUV、组件和同帧证据](autoresearch/waymo_val029_dual_delete_20261109/index.html)。用户澄清目标为scene029的红车70/白SUV25，非scene065。复用完整10K及冻结资产，无新训练；4帧pilot后89帧×3状态267原PNG及4帧白车float32取回275文件/60,968,960B。KEEP/删红全89对旧float差0，白车删除真实过滤白车行。主视图两目标分列，来源删红收进方法对照，贡献/诊断记录按case读取与校验。白车显露背景未另拟合，无独立真值，不以机械通过写画质成功。failure_ledger_refs=[]，failure_ledger_delta=none，human_verdict=null；GPU保持开机。
