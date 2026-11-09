@@ -402,3 +402,8 @@
 ## WAYMO-NATIVE-RECON-CONTINUE30K-20261109
 
 [全帧原生重建续训与质量排查](autoresearch/waymo_native30k_20261109/README.md)。065/029各从原全帧10K完整状态续训到30K，沿用LR30K，新增正式更新各20K；输入/损失/采样/表示不变。两场景真实600秒续训smoke已覆盖保存/纯V1/完整恢复/下一入口，额外工程更新2948/4251单列。暂停新增编辑；同帧10K/20K/30K待出。failure_ledger_refs=[V82-F06]，failure_ledger_delta=none，human_verdict=null。
+
+
+## WAYMO-065-V43-V44-DIAGNOSIS-20261109
+
+[当前共享编辑入口与008修复迁移诊断](autoresearch/scene065_edit_diagnosis_20261109/index.html)。全199帧覆盖、4锚帧已保存联合alpha×T、119/198图表外跨时刻来源与原始实拍只读核验，更新0、GPU调用0。活动代码含最新归属修复；完整目标域关闭保持的规则漏迁移，图表外额外保持又覆盖目标。119有7152/11624目标像素受保持；未知参考与规则遗漏分开。未修改模型/正式代码/平台；GPU缺失，同排序RGB及开关脚本未执行。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null，不关机。
