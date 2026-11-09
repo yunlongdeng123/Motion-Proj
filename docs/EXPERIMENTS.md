@@ -396,4 +396,4 @@
 
 ## WAYMO-NATIVE-RECON-CONTINUE30K-20261109
 
-[全帧原生重建续训与质量排查](autoresearch/waymo_native30k_20261109/README.md)。065/029各从原全帧10K完整状态续训到30K，沿用LR30K，新增正式更新各20K；输入/损失/采样/表示不变。当前运行真实600秒续训smoke，保存/纯V1/完整恢复/下一入口，smoke另记。暂停新增编辑；同帧10K/20K/30K待出。failure_ledger_refs=[V82-F06]，failure_ledger_delta=none，human_verdict=null。
+[全帧原生重建续训与质量排查](autoresearch/waymo_native30k_20261109/README.md)。065/029各从原全帧10K完整状态续训到30K，沿用LR30K，新增正式更新各20K；输入/损失/采样/表示不变。两场景真实600秒续训smoke已覆盖保存/纯V1/完整恢复/下一入口，额外工程更新2948/4251单列。暂停新增编辑；同帧10K/20K/30K待出。failure_ledger_refs=[V82-F06]，failure_ledger_delta=none，human_verdict=null。
