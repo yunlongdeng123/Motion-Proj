@@ -381,3 +381,6 @@
 ## WAYMO-VAL065-A9-GPU-20261109
 
 [原生完整重建、白车删除负例、组件图与分组证据](autoresearch/waymo_val065_gpu_20261109/index.html)。用户指定验证街段065/a9，159 BUILD＋40连续HELD，seed0；正式fresh10K/30K LR时钟，smoke5199额外更新、道路交接1000分别记账。独立V1与保存RGB差0；199×5原PNG、4帧双通路float32及源码已取回1106文件。第150帧仍有明显车形，目标KEEP .02747→.04090、137/159帧退化；静态残留像素αT .8953。没有专用车辆补全资产，输入适配和稀疏显露证据边界见报告。scene029的89帧纯V1/原生删红车对照补齐，无重训。human_verdict=null，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；GPU保持开机，禁止本轮自动关机。
+
+
+`WAYMO-VAL065-A9-DELETE-AUDIT-20261109`：[用户所指第156帧的精确只读排查](autoresearch/waymo_val065_gpu_20261109/audit156/index.html)。6次复算匹配原输出≤1.20e-7；原生来源删除23像素变化，最终静态车形残留明确。新增训练0；页面说明改“删除尝试”，原图保留。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；未用subagent，AutoDL保持开机。
