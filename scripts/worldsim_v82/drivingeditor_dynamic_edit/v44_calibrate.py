@@ -33,8 +33,11 @@ def calibrate(manifest, output):
         path = Path(data['instance_mask'])
         if not path.is_absolute(): path = m.base/path
         cam = scene.camera_provider(frame.key)
-        rows = ops.merge_rows(ops.prepare_rasterization(cam, scene.static, scene.pipe, dynamic=False),
-                              ops.prepare_rasterization(cam, scene.dynamic, scene.pipe, dynamic=True))
+        static_rows=scene._native_colors(ops.prepare_rasterization(cam, scene.static, scene.pipe, dynamic=False),
+                                         scene.static.active_sh_degree,cam)
+        dynamic_rows=scene._native_colors(ops.prepare_rasterization(cam, scene.dynamic, scene.pipe, dynamic=True),
+                                          scene.dynamic.active_sh_degree,cam)
+        rows = ops.merge_rows(static_rows,dynamic_rows)
         if len(rows['means3D']) != ns+nd:
             raise ValueError('Native topology changed during ownership calibration')
         features = rows['features'].new_zeros((ns+nd, 24))
