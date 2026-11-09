@@ -392,3 +392,8 @@
 ## WAYMO-VAL065-V1-VISIBLE-20261109
 
 [V1原生10K独立主列与第108帧复算](autoresearch/waymo_val065_v1_visible_20261109/index.html)。复用此前fresh10K、0新增训练，不重复记正式预算；纯V1不导入编辑包，60/108/150/198对原V1 float RGB差0。199帧本地/平台398张PNG来源一致，第108帧为留出时刻。主区显式展示V1，保留原A/B及B KEEP；实际JS经DOM/Canvas替身验证，非浏览器验收。failure_ledger_refs=[]，failure_ledger_delta=none，human_verdict=null；GPU保持开机，无subagent或电源操作。
+
+
+## WAYMO-NATIVE-RECON-CONTINUE30K-20261109
+
+[全帧原生重建续训与质量排查](autoresearch/waymo_native30k_20261109/README.md)。065/029各从原全帧10K完整状态续训到30K，沿用LR30K，新增正式更新各20K；输入/损失/采样/表示不变。当前运行真实600秒续训smoke，保存/纯V1/完整恢复/下一入口，smoke另记。暂停新增编辑；同帧10K/20K/30K待出。failure_ledger_refs=[V82-F06]，failure_ledger_delta=none，human_verdict=null。
