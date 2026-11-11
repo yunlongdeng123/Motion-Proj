@@ -13,6 +13,7 @@ import numpy as np
 from PIL import Image
 from scipy.spatial import cKDTree
 from scipy.ndimage import binary_dilation,gaussian_filter
+from .v44_handoff_policy import handoff_domains,target_mask_from_labels,rebind_other_vehicles
 
 def linear(x):return np.where(x<=.04045,x/12.92,((x+.055)/1.055)**2.4)
 def srgb(x):return np.where(x<=.0031308,x*12.92,1.055*np.maximum(x,1e-10)**(1/2.4)-.055)
@@ -70,7 +71,13 @@ def main():
     # Query maps use exactly the same pinhole model as the native renderer.
     for raw,d in ds.items():
         lines=(BANK/'calib'/f'{frame_ids[raw]}.txt').read_text().splitlines();cal={s.split(':')[0]:np.fromstring(s.split(':')[1],sep=' ') for s in lines};K=cal['P0'].reshape(3,4)[:,:3]/4;K[2,2]=1;C=np.eye(4);C[:3]=cal['Tr_velo_to_cam_0'].reshape(3,4);C=C@np.linalg.inv(np.array(d['ego_world']).reshape(4,4))@A;invC=np.linalg.inv(C);yy,xx=np.mgrid[:320,:480];rays=np.stack((xx+.5,yy+.5,np.ones_like(xx)),2)@np.linalg.inv(K).T;rays=rays@invC[:3,:3].T;origin=invC[:3,3];depth=(coef[2]+coef[:2]@origin[:2]-origin[2])/(rays[:,:,2]-rays[:,:,:2]@coef[:2]);hit=origin+depth[:,:,None]*rays;key=np.floor(hit[:,:,:2]/cell).astype(int)-[axes[0][0],axes[1][0]];inside=(key>=0).all(2)&(key<shape).all(2)&(depth>0);key=np.clip(key,[0,0],np.array(shape)-1);index=key[:,:,0]*shape[1]+key[:,:,1];nearest,semantic,guard=frame_cache[raw];labels=np.array(Image.open(a.masks/f'{raw:03d}/labels.png'));foreground=np.array(Image.open(a.masks/f'{raw:03d}/dynamic_union.png'))>0;road=inside&active[index]&~guard&(semantic==0);reveal=inside&active[index]&(labels==target);fit=(road|reveal)*np.where(inferred[index],.25,1.);marking=inside&marked[index];keep=np.ones((320,480),np.float32);keep[road|reveal]=0;keep[foreground&(labels!=target)]=1
-        np.savez_compressed(out/'views'/f'{raw:03d}.npz',index=index,inside=inside,fit=fit.astype(np.float32),keep=keep,marking=marking,other=foreground&(labels!=target),reference_linear=reference[index].transpose(2,0,1).astype(np.float32),real_domain=(road|reveal)&real[index],inferred_domain=(road|reveal)&inferred[index],observed_road=road)
+        target_mask=target_mask_from_labels(labels,[target])
+        other=rebind_other_vehicles(foreground&(labels!=target),labels,[target])
+        domains=handoff_domains(dict(fit=fit.astype(np.float32),keep=keep,inside=inside,other=other,marking=marking),target_mask)
+        np.savez_compressed(out/'views'/f'{raw:03d}.npz',index=index,inside=inside,fit=domains['fit'],keep=domains['keep'],marking=marking,other=other,
+            target=target_mask,target_actor_ids=np.array([target],np.int64),candidate_support=domains['candidate_support'],left=domains['left'],unknown_target=domains['unknown_target'],
+            reference_linear=reference[index].transpose(2,0,1).astype(np.float32),real_domain=(road|reveal)&real[index],inferred_domain=(road|reveal)&inferred[index],observed_road=road)
+    (out/'views'/'binding.json').write_text(json.dumps(dict(schema='v44.handoff_views.v1',delete_actor_ids=[target],track_ids=[TRACK],policy='full_target_candidate_and_preservation_v1',reference_added=False),indent=2)+'\n')
     report=dict(status='PASS_BUILD_ONLY_WORLD_ROAD',frames=raws,measured_points=len(pts),plane_inliers=int(clean.sum()),plane_mae_m=float(abs(X[clean]@coef-pts[clean,2]).mean()),cells=N,real_cells=int(real.sum()),inferred_cells=int(inferred.sum()),active_cells=int(active.sum()),unknown_cells=int((~active).sum()),marking_cells=int(marked.sum()),grid_m=cell,geometry_adapter='automatic robust local measured road tangent plane; differs from old scene-specific road chart',inference='eight measured asphalt neighbours within0.60m; marked, confidence0.25; not observed truth',colour_policy='3 agreeing real source views; best resolution in upper radiance cluster',heldout_frames=receipt['holdout_raws'],target_track=TRACK,target_actor=target,source_bank=str(BANK),seconds=time.monotonic()-started)
     (out/'receipt.json').write_text(json.dumps(report,indent=2));print(json.dumps(report),flush=True)
 if __name__=='__main__':main()

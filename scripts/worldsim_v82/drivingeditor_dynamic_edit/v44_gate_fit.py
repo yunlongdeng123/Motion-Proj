@@ -1,13 +1,13 @@
-"""Inherited frozen-surface, 1000-step static-opacity handoff, shared across scenes.
+"""共享静态不透明度交接：完整目标域候选，独立的有参考 photo 域。
 
-Only explicitly selected static opacity multipliers are optimized. Native model
-parameters, ownership, surfaces and road colour remain unchanged. This fitting
-entry is separate from the read-only V44Scene.render query API.
+只在 BUILD 中固定候选与监督。原生参数、身份、道路与查询均保持只读；
+未知目标像素不产生背景参考或 opacity=0 监督。
 """
 from __future__ import annotations
 import argparse,hashlib,json,random,time
 from pathlib import Path
 import numpy as np
+from . import v44_handoff_policy as policy
 
 
 def _differences(a,b,path=''):
@@ -25,70 +25,129 @@ def _differences(a,b,path=''):
 
 def fit(manifest,views,baseline,output,delete_tracks,steps=1000,resume=None):
     import torch
+    from PIL import Image
     from .v44_factory import from_manifest
     scene,m=from_manifest(manifest);deleted=m.actor_ids(delete_tracks)
     if not deleted or m.static_gates is not None:raise ValueError('Explicit deletion and an ungated scene are required')
     out=Path(output);out.mkdir(parents=True,exist_ok=False);views=Path(views);baseline=Path(baseline)
-    # The file layout is an explicit dataset adapter, not parsing image names.
-    entries=json.loads((views/'manifest.json').read_text())['frames']
-    view_by_key={r['key']:views/r['view'] for r in entries}
-    base_by_key={r['key']:baseline/r['baseline'] for r in entries}
+    view_manifest=json.loads((views/'manifest.json').read_text());entries=view_manifest['frames']
+    view_by_key={r['key']:views/r['view'] for r in entries};base_by_key={r['key']:baseline/r['baseline'] for r in entries}
+    if len(view_by_key)!=len(entries) or set(view_by_key)!={f.key for f in m.frames}:
+        raise ValueError('Road-view BUILD keys must uniquely match the declared scene frames')
+    def checked_ids(value,name):
+        if (not isinstance(value,list) or any(type(i) is not int or i<=0 for i in value)
+                or len(set(value))!=len(value) or set(value)!=set(deleted)):
+            raise ValueError(name+' must match the complete requested delete actor set')
+    view_binding=json.loads((views/'binding.json').read_text())
+    checked_ids(view_binding.get('delete_actor_ids'),'Road-view binding')
+    baseline_provenance=json.loads((baseline/'provenance.json').read_text())
+    checked_ids(baseline_provenance.get('resolved_query',{}).get('delete_actor_ids'),'Baseline deletion identity')
+    if Path(baseline_provenance['model']).resolve()!=m.model or baseline_provenance['iteration']!=m.iteration:
+        raise ValueError('Baseline model/iteration does not match the frozen scene')
+    baseline_rows={r['frame_key']:r for r in baseline_provenance['frames']}
+    if len(baseline_rows)!=len(baseline_provenance['frames']) or set(baseline_rows)!=set(view_by_key):
+        raise ValueError('Baseline BUILD frame keys must match the scene')
+    for key,path in base_by_key.items():
+        if path.resolve()!=(baseline/baseline_rows[key]['files']['float_npz']).resolve():
+            raise ValueError('Baseline frame/file binding differs from declared export')
     def digest(path):
         h=hashlib.sha256()
         with Path(path).open('rb') as stream:
             for chunk in iter(lambda:stream.read(8*1024**2),b''):h.update(chunk)
         return h.hexdigest()
-    source_binding=dict(scene_manifest=digest(manifest),views_manifest=digest(views/'manifest.json'),
-        delete_actor_ids=list(deleted),algorithm_sha256=digest(__file__),
-        sources=[dict(key=r['key'],view=digest(view_by_key[r['key']]),baseline=digest(base_by_key[r['key']])) for r in entries])
+    labels_by_key={};targets={};bindings=[]
+    for frame,data in zip(m.frames,m.data['frames']):
+        if 'instance_mask' not in data:raise ValueError('Handoff requires explicit accepted instance masks for every BUILD frame')
+        path=Path(data['instance_mask']);path=path if path.is_absolute() else m.base/path
+        cam=scene.camera_provider(frame.key)
+        with Image.open(path) as image:labels=np.asarray(image.resize((cam.image_width,cam.image_height),Image.Resampling.NEAREST)).copy()
+        target=policy.target_mask_from_labels(labels,deleted)
+        present=set(np.unique(labels).tolist())-{0}
+        if not present<=set(m.actor_to_track):raise ValueError('Instance labels contain unregistered actors')
+        labels_by_key[frame.key]=labels;targets[frame.key]=target
+        bindings.append(dict(key=frame.key,instance_mask=digest(path),view=digest(view_by_key[frame.key]),baseline=digest(base_by_key[frame.key])))
+    source_binding=dict(scene_manifest=digest(manifest),views_manifest=digest(views/'manifest.json'),views_binding=digest(views/'binding.json'),baseline_provenance=digest(baseline/'provenance.json'),
+        delete_actor_ids=list(deleted),algorithm_sha256=digest(__file__),policy_sha256=digest(policy.__file__),sources=bindings,
+        policy='full_target_candidate_and_preservation_v1')
     torch.manual_seed(0);np.random.seed(0);random.seed(0);sampler=random.Random(0)
     N=len(scene.static.get_xyz);device=scene.static.get_xyz.device
-    score=torch.zeros(N,device=device);guard=torch.zeros_like(score);frames=[];records=[];started=time.monotonic()
-    ops=scene._bindings()
+    score=torch.zeros(N,device=device);fit_score=torch.zeros_like(score);guard=torch.zeros_like(score)
+    frames=[];selection_frames=[];records=[];domain_records=[];started=time.monotonic();ops=scene._bindings()
+    def domains(key,d):
+        view={k:d[k] for k in ['fit','keep','inside','other','marking']}
+        view['other']=policy.rebind_other_vehicles(view['other'],labels_by_key[key],deleted)
+        result=policy.handoff_domains(view,targets[key]);result['other']=view['other']
+        return result
     for frame in m.frames:
-        if frame.key not in view_by_key:raise ValueError('Missing declared road-view data')
-        d=np.load(view_by_key[frame.key]);fit_mask=(d['fit']>.05)&~d['marking'];protect=d['other']|d['marking']
-        if not fit_mask.any():continue
-        values,owners,cam,_=scene._rows(frame.key,(),(),False)
-        features=values['features'].detach().clone();features[:,8]=0;features[:N,8]=1;features.requires_grad_(True)
+        key=frame.key
+        with np.load(view_by_key[key],allow_pickle=False) as d:dom=domains(key,d)
+        support=dom['candidate_support'];fit_mask=(dom['fit']>.05)&~dom['protected'];protect=dom['protected'];target=targets[key]
+        if ((dom['fit']>0)&protect).any():
+            raise ValueError('Photo references overlap preserved vehicles/markings; prepare matching BUILD views')
+        # 候选构建视角与实际 photo 训练视角分开；不把无参考帧混入原采样。
+        if fit_mask.any():frames.append(key)
+        domain_records.append(dict(key=key,target_pixels=int(target.sum()),candidate_pixels=int(support.sum()),
+            target_candidate_pixels=int((target&support).sum()),protected_target_conflicts=int(dom['target_protected_conflict'].sum()),
+            target_keep_pixels=int((target&(dom['keep']>0)).sum()),target_left_pixels=int((target&dom['left']).sum()),
+            unknown_target_pixels=int(dom['unknown_target'].sum()),photo_pixels=int(fit_mask.sum()),
+            photo_protected_overlap=int(((dom['fit']>.05)&protect).sum())))
+        if not support.any() and not protect.any():continue
+        with torch.no_grad():values,owners,cam,_=scene._rows(key,(),(),False)
+        features=values['features'].detach().clone();features[:,8:11]=0;features[:N,8:11]=1;features.requires_grad_(True)
         mask=values['mask']&~torch.isin(owners,owners.new_tensor(deleted))
         pack=ops.raster(cam,scene.pipe,0,dict(values,features=features,mask=mask),features.new_zeros(3))
-        mass=pack['extra'][6]
-        s=torch.autograd.grad(mass[torch.as_tensor(fit_mask,device=device)].sum(),features,retain_graph=True)[0][:N,8]
-        g=torch.autograd.grad(mass[torch.as_tensor(protect,device=device)].sum(),features)[0][:N,8]
-        score=torch.maximum(score,s);guard=torch.maximum(guard,g);frames.append(frame.key)
-        del pack,values,features,s,g
-    eligible=(score>1e-4)&~(guard>20*score)&(scene._owners_s<=0)
-    indices=torch.nonzero(eligible).flatten()
-    np.savez_compressed(out/'contributors.npz',ids=indices.cpu().numpy(),fit_score=score[eligible].cpu().numpy(),guard_score=guard[eligible].cpu().numpy())
-    if not len(indices):
-        (out/'receipt.json').write_text(json.dumps(dict(status='NO_ELIGIBLE_STATIC_OPACITY_ROWS',steps=0)))
-        return
+        # 三个独立 feature marker 共用同一排序、一次反向；不修改成像参数。
+        objective=(pack['extra'][6][torch.as_tensor(support,device=device)].sum()
+            +pack['extra'][7][torch.as_tensor(fit_mask,device=device)].sum()
+            +pack['extra'][8][torch.as_tensor(protect,device=device)].sum())
+        grad=torch.autograd.grad(objective,features)[0][:N,8:11]
+        score=torch.maximum(score,grad[:,0]);fit_score=torch.maximum(fit_score,grad[:,1]);guard=torch.maximum(guard,grad[:,2]);selection_frames.append(key)
+        del pack,values,features,grad,objective
+    eligible_np=policy.eligible_static_contributors(score.detach().cpu().numpy(),guard.detach().cpu().numpy(),scene._owners_s.detach().cpu().numpy())
+    eligible=torch.as_tensor(eligible_np,device=device);indices=torch.nonzero(eligible).flatten()
+    old_eligible=(fit_score>1e-4)&~(guard>20*fit_score)&(scene._owners_s<=0)
+    np.savez_compressed(out/'contributors.npz',ids=indices.cpu().numpy(),candidate_score=score[eligible].cpu().numpy(),
+        fit_score=fit_score[eligible].cpu().numpy(),guard_score=guard[eligible].cpu().numpy())
+    coverage=dict(policy=source_binding['policy'],rows=domain_records,selection_frames=selection_frames,optimization_frames=frames,
+        candidate_rows=len(indices),reference_supported_candidate_rows=int((eligible&(fit_score>1e-4)).sum()),
+        newly_eligible_vs_fit_only=int((eligible&~old_eligible).sum()),fit_only_eligible_rows=int(old_eligible.sum()),
+        candidate_without_reference_rows=int((eligible&(fit_score<=1e-4)).sum()),
+        initialization=dict(logit=2.,opacity_multiplier=float(torch.tensor(2.).sigmoid()),retention_prior='mean over current candidate rows; expanded denominator recorded'),
+        reference_weights_unchanged=True,unknown_target_supervision_added=False)
+    (out/'coverage.json').write_text(json.dumps(coverage,indent=2)+'\n')
+    if not len(indices) or not frames:
+        status='NO_ELIGIBLE_STATIC_OPACITY_ROWS' if not len(indices) else 'NO_REFERENCE_FOR_HANDOFF'
+        (out/'receipt.json').write_text(json.dumps(dict(status=status,steps=0,updates=0,candidate_rows=len(indices),parent_unchanged=True)))
+        scene.assert_persistent_unchanged();return
     gate=torch.nn.Parameter(torch.full((len(indices),),2.,device=device));opt=torch.optim.Adam([gate],lr=.06,eps=1e-15);startstep=0
     def state(step):return dict(step=step,gate=gate.detach().clone(),contributors=indices.detach().clone(),
         fit_frames=frames,source_binding=source_binding,optimizer=opt.state_dict(),sampler=sampler.getstate(),
         torch_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),numpy_rng=np.random.get_state(),python_rng=random.getstate())
     if resume is not None:
         z=torch.load(resume,map_location=device,weights_only=False)
-        if (not torch.equal(z['contributors'],indices) or z['fit_frames']!=frames
-                or z['source_binding']!=source_binding):raise RuntimeError('Gate restore changes contributor identity or source binding')
+        if (not torch.equal(z['contributors'],indices) or z['fit_frames']!=frames or z['source_binding']!=source_binding):
+            raise RuntimeError('Gate restore changes contributor identity, accepted instance masks, policy or source binding')
         gate.data.copy_(z['gate']);opt.load_state_dict(z['optimizer']);sampler.setstate(z['sampler']);torch.set_rng_state(z['torch_rng'].cpu());torch.cuda.set_rng_state_all([v.cpu() for v in z['cuda_rng']]);np.random.set_state(z['numpy_rng']);random.setstate(z['python_rng']);startstep=z['step']
         diff=_differences(z,state(startstep))
         if diff:raise RuntimeError('Gate full-state restore mismatch: '+str(diff))
         (out/'restore.json').write_text(json.dumps(dict(exact_full_state=True,differences=diff,step=startstep)))
+    # 零更新初始化与真实保存单列，供识别扩展参数导致的初始 .880797 衰减。
+    if startstep==0:torch.save(state(0),out/'checkpoint000000.pt')
     def linear(x):
         x=x.clamp(0,1);return torch.where(x<=.04045,x/12.92,((x+.055)/1.055)**2.4)
     for step in range(startstep+1,steps+1):
-        key=sampler.choice(frames);d=np.load(view_by_key[key]);opt.zero_grad(set_to_none=True)
-        values,owners,cam,_=scene._rows(key,(),(),False)
+        key=sampler.choice(frames)
+        with np.load(view_by_key[key],allow_pickle=False) as d:
+            dom=domains(key,d);reference=d['reference_linear'].copy();marking=d['marking'].copy()
+        opt.zero_grad(set_to_none=True);values,owners,cam,_=scene._rows(key,(),(),False)
         opacity=values['opacities'].index_copy(0,indices,values['opacities'][indices]*gate.sigmoid()[:,None])
         mask=values['mask']&~torch.isin(owners,owners.new_tensor(deleted))
         pack=ops.raster(cam,scene.pipe,0,dict(values,opacities=opacity,mask=mask),opacity.new_zeros(3))
         rgb=pack['rgb']+(1-pack['alpha'])*scene.environment(cam.get_world_directions(False).permute(1,2,0)).permute(2,0,1)
-        pred=linear(rgb);weight=torch.as_tensor(d['fit'],device=device);keep=torch.as_tensor(d['keep'],device=device);target=torch.as_tensor(d['reference_linear'],device=device)
-        base=torch.as_tensor(np.load(base_by_key[key])['rgb'],device=device)
+        pred=linear(rgb);weight=torch.as_tensor(dom['fit'],device=device);keep=torch.as_tensor(dom['keep'],device=device);target=torch.as_tensor(reference,device=device)
+        with np.load(base_by_key[key],allow_pickle=False) as b:base=torch.as_tensor(b['rgb'].copy(),device=device)
         photo=((pred-target).abs()*weight).sum()/(3*weight.sum().clamp_min(1));preserve=((rgb-base).abs()*keep).sum()/(3*keep.sum().clamp_min(1))
-        marking=torch.as_tensor(d['marking'],device=device);other=torch.as_tensor(d['other'],device=device);left=torch.as_tensor(~d['inside']&~d['other'],device=device)
+        marking=torch.as_tensor(marking,device=device);other=torch.as_tensor(dom['other'],device=device);left=torch.as_tensor(dom['left'],device=device)
         lane=(rgb-base).abs()[:,marking].mean() if marking.any() else photo*0
         vehicle=(rgb-base).abs()[:,other].mean() if other.any() else photo*0
         left_keep=(rgb-base).abs()[:,left].mean() if left.any() else photo*0
@@ -99,9 +158,10 @@ def fit(manifest,views,baseline,output,delete_tracks,steps=1000,resume=None):
         opt.step();record=dict(step=step,key=key,loss=float(loss),road=float(photo),preserve=float(preserve),vehicle=float(vehicle),seconds=time.monotonic()-started);records.append(record)
         if step%100==0 or step==startstep+1:print(json.dumps(record),flush=True)
         if step in [32,500,1000] or step==steps:torch.save(state(step),out/f'checkpoint{step:06d}.pt')
-    scene.assert_persistent_unchanged()
-    (out/'training.json').write_text(json.dumps(records))
-    (out/'receipt.json').write_text(json.dumps(dict(status='PASS_FROZEN_STATIC_GATE_FIT',steps=steps,updates=steps-startstep,selected_static_rows=len(indices),fit_frames=frames,parent_unchanged=True,only_gate_trainable=True,road_colour_geometry_fixed=True,delete_tracks=delete_tracks,seconds=time.monotonic()-started),indent=2))
+    scene.assert_persistent_unchanged();(out/'training.json').write_text(json.dumps(records))
+    (out/'receipt.json').write_text(json.dumps(dict(status='PASS_FROZEN_STATIC_GATE_FIT',steps=steps,updates=steps-startstep,selected_static_rows=len(indices),
+        fit_frames=frames,selection_frames=selection_frames,policy=source_binding['policy'],parent_unchanged=True,only_gate_trainable=True,
+        road_colour_geometry_fixed=True,delete_tracks=delete_tracks,seconds=time.monotonic()-started),indent=2))
 
 
 def main():

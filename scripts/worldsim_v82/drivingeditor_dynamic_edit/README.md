@@ -2,6 +2,8 @@
 
 新场景使用显式数据清单和 `v44_cli`。帧数、相机、原始轨迹、对象编号、表面及删除请求均从数据传入；公共代码不内置开发街段或逐帧例外。[完整组件图、输入边界与API说明](../../../docs/autoresearch/waymo_allframes_v44_20261109/V44_SHARED_PIPELINE_CN.md)。这表示代码入口可复用，不代表自动化或跨场景画质已经通过。
 
+保持域与候选交接使用同一个`v44_handoff_policy`：完整目标轮廓退出原画面保持，进入候选搜索；无参考目标仍是未知，不新增道路或透明度清零监督。其余车辆按当前完整删除集合重绑定，标线及保留实例优先保护。候选在BUILD中固定，QUERY不重算。道路视图必须附`views/binding.json`声明对应删除集合，baseline的`provenance.json`也须有相同删除集合、模型、步数、帧与文件映射；不允许把另一目标的旧参考和删车底图直接换ID重用。photo与保护域冲突时明确拒绝输入。候选构建视角与有参考的训练视角分开，恢复检查同时绑定策略源码与已接受实例掩码内容。
+
 ```bash
 PYTHONPATH=scripts/worldsim_v82 python -m drivingeditor_dynamic_edit.v44_cli inspect --manifest scene.json
 PYTHONPATH=scripts/worldsim_v82 python -m drivingeditor_dynamic_edit.v44_cli render --manifest scene.json --query query.json --diagnostic-branch-alpha --output new_output
