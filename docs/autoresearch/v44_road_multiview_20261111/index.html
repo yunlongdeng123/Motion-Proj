@@ -44,6 +44,7 @@
 <section class="section" id="depth"><div class="section-head"><h2>本次道路的近裁剪复核</h2><small>正式来源资产 · 6次forward · 更新0步</small></div>
 <div class="diagnosis"><figure class="source-figure"><a href="evidence/current_multiview/119_keep_comparison.png" target="_blank" rel="noopener"><img src="evidence/current_multiview/119_keep_comparison.png" alt="本次正式道路资产近裁剪复核：KEEP乘一/乘二、目标alpha及道路alpha" loading="lazy"></a><figcaption>本次正式道路资产：左为×1，右为统一×2；保留原生近裁剪资格。道路参与度增加，但KEEP白车尾部被切片遮挡。诊断更新0步，未启用正式渲染。</figcaption></figure><div><h3>放开道路裁剪，会破坏KEEP白车</h3>
 <p>CUDA栅格化器硬编码近裁剪 z≤0.2；本场景米到模型比例为 0.01884993，对应 10.610m。模型、相机平移与高斯尺度统一×2、协方差×4，投影保持不变，物理裁剪距离缩至 5.305m。</p>
+<p class="fine">场景归一化会改变常量的物理含义。008元数据的米到模型比例为 0.1000，本场景为 0.01884993；对同一0.2裁剪常量，分别对应约 2.00m 与 10.61m。这是同一内核下的尺度换算，未重跑008历史二进制。<a href="evidence/scene_unit_comparison.json">尺度元数据</a></p>
 <p>在本次道路的目标拟合域内，纯道路alpha明显上升；同域KEEP目标alpha下降，而道路贡献上升。道路补全与目标保持仍存在遮挡冲突，不能把统一缩放直接用于正式结果。</p>
 <div class="table-wrap"><table><thead><tr><th>平均alpha · 固定目标拟合域</th><th>×1</th><th>统一×2</th></tr></thead><tbody><tr><td>帧119 · 纯道路</td><td>0.38941</td><td>0.99885</td></tr><tr><td>帧198 · 纯道路</td><td>0.36854</td><td>0.99828</td></tr><tr><td>帧119 · KEEP目标车</td><td>0.80270</td><td>0.25345</td></tr><tr><td>帧119 · KEEP道路</td><td>0.09714</td><td>0.72263</td></tr></tbody></table></div>
 <p class="fine">固定分母为 target_fit：帧119共 2,518 像素（真实来源 8，推断 2,510），帧198共 2,601 像素；既不是全车体，也不是旧资产的inside_active域。KEEP对照继续保留原生近裁剪资格。</p>
