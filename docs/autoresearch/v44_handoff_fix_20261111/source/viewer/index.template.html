@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Waymo · scene-065</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../workspace.css">
+  <style>
+    body{margin:0;background:#08101b;color:#e7edf5;font-family:system-ui,"Microsoft YaHei",sans-serif}
+    .native-main{max-width:3000px;margin:auto;padding:18px}
+    .native-main header{display:block;padding:0;background:none}
+    .native-main h1{font-size:30px;margin:10px 0}
+    .native-main nav{position:static;padding:8px 0;background:none;border:0}
+    .native-main nav a{margin-right:20px}
+    .native-main select,.native-main button,.native-main input,.native-main textarea{font:inherit}
+    .native-main button,.native-main select{padding:7px 11px}
+    .native-main .muted{color:#a7bbce;font-size:14px;line-height:1.65}
+    .native-toolbar,.native-time{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:14px 0}
+    .native-time input[type=range]{flex:1;min-width:160px}
+    .native-time input[type=number]{width:82px}
+    .native-main .buttons{display:flex;gap:8px;flex-wrap:wrap}
+    .native-main .buttons button{font-size:14px}
+    .native-comparison{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .native-comparison article{min-width:0;background:#101c2b;border:1px solid #29425d;border-radius:10px;padding:12px}
+    .native-comparison h2{font-size:17px;margin:0 0 12px}
+    .native-comparison canvas{display:block;width:100%;height:auto;aspect-ratio:3/2;background:#08101b;cursor:crosshair}
+    .native-comparison p{margin:8px 0 0}
+    .native-main .status{min-height:24px;color:#d8e6f4}
+    .native-main details{margin:16px 0;border:1px solid #29425d;border-radius:8px;padding:12px}
+    .native-main details.dataset-origin{display:inline-block;margin:0 0 10px;padding:7px 10px;color:#a7bbce}
+    .native-main code{overflow-wrap:anywhere}
+    .native-main textarea{box-sizing:border-box;width:min(780px,100%);min-height:76px;background:#101c2b;color:#e7edf5;border:1px solid #49617a;padding:10px}
+    .native-main table{border-collapse:collapse;font-size:13px}
+    .native-main td,.native-main th{border:1px solid #29425d;padding:8px;overflow-wrap:anywhere}
+    .native-main [hidden]{display:none!important}
+    @media(min-width:761px) and (max-width:1350px){.native-comparison{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:760px){.native-comparison{grid-template-columns:1fr}.native-main{padding:12px}.native-main h1{font-size:25px}}
+  </style>
+</head>
+<body>
+<main class="native-main">
+  <header>
+    <div class="eyebrow">场景诊断平台</div>
+    <h1>Waymo · scene-065</h1>
+    <details class="dataset-origin"><summary>验证分区 · 原始路段编号</summary><code>15021599536622641101_556_150_576_150</code></details>
+    <nav><a href="../index.html">全部场景</a><a href="../12820461091157089924_5202_916_5222_916/index.html">另一个场景</a></nav>
+  </header>
+  <div class="native-toolbar">
+    <label>实验视图 <select id="experiment"></select></label>
+    <label>范围 <select id="view"><option value="full">完整画面</option><option value="roi">车辆区域</option><option value="pixel">选中像素附近</option></select></label>
+    <button id="window" hidden></button>
+  </div>
+  <div class="native-time">
+    <button id="prev" aria-label="上一帧">←</button><button id="play">播放</button>
+    <input id="frame" type="range" step="1" aria-label="逐帧拖动">
+    <button id="next" aria-label="下一帧">→</button>
+    <input id="rawNumber" type="number" step="1" aria-label="原始帧号">
+    <strong id="frameLabel"></strong>
+    <label>速度 <select id="fps"><option>2</option><option selected>5</option><option>10</option></select> fps</label>
+  </div>
+  <div id="jumps" class="buttons"></div>
+  <p class="muted">← / → 切帧，空格播放；点击图像，同步定位相同像素。</p>
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+  <div class="native-comparison">
+    <article><h2>原始实拍</h2><canvas id="observed" width="960" height="640" tabindex="0" aria-label="原始实拍画面"></canvas></article>
+    <article><h2>原生重建 · 30K</h2><canvas id="native30" width="960" height="640" tabindex="0" aria-label="原生30K重建画面"></canvas></article>
+    <article><h2>修复前 · 删除白车</h2><canvas id="deleteBefore" width="960" height="640" tabindex="0" aria-label="修复前删除白车画面"></canvas></article>
+    <article><h2>修复后 · 同场景保留</h2><canvas id="fixedKeep" width="960" height="640" tabindex="0" aria-label="修复后同场景保留画面"></canvas><p class="muted"><a id="keep-video" href="@@ASSET@@/keep_30k.mp4" target="_blank" rel="noopener">播放完整视频</a></p></article>
+    <article><h2>修复后 · 删除白车</h2><canvas id="fixedDelete" width="960" height="640" tabindex="0" aria-label="修复后删除白车画面"></canvas><p class="muted"><a id="delete-video" href="@@ASSET@@/delete_white_30k.mp4" target="_blank" rel="noopener">播放完整视频</a></p></article>
+  </div>
+  <p id="pixel" class="muted"></p>
+  <details>
+    <summary>显示与车辆定位</summary>
+    <div class="native-toolbar">
+      <label>标记 <select id="overlay"><option value="none">关闭</option><option value="roles">轨迹框投影</option></select></label>
+      <label>放大显示 <select id="sampling"><option value="smooth">平滑显示</option><option value="nearest">逐像素显示</option></select></label>
+    </div>
+    <p id="origin" class="muted"></p>
+    <p class="muted">轨迹框用于定位，不代表像素分割或真实表面。</p>
+    <div id="identity"></div>
+  </details>
+  <details>
+    <summary>记录当前观察</summary>
+    <textarea id="note" maxlength="5000" placeholder="记录当前帧的模糊、重影或缺失区域"></textarea>
+    <div class="native-toolbar"><button id="save">导出诊断记录</button><button id="load">载入记录</button><input id="recordFile" type="file" accept=".json" hidden></div>
+    <p id="recordStatus" class="muted" role="status"></p>
+  </details>
+</main>
+<script>window.HANDOFF_FIX_ROOT='@@ASSET@@/';</script>
+<script src="@@ASSET@@/data.js"></script>
+<script src="@@ASSET@@/viewer.js"></script>
+</body>
+</html>

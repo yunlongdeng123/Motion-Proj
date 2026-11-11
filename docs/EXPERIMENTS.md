@@ -412,3 +412,8 @@
 ## WAYMO-065-GPU-DIAGNOSIS-20261111
 
 [白色轿车删除：GPU颜色分层、全帧候选和局部梯度](autoresearch/scene065_gpu_diagnosis_20261111/index.html)。固定30K与共享v44，227光栅前向、0更新/优化器，四帧RGB精确复现，颜色加和≤1.32e-6；199帧候选IDs一致。恢复域99.94%+静态贡献已选，图表外约76%未选；后段目标保持梯度反对恢复。极端原候选全部退出仍有残影及环境异常。完整模型/代码/平台保留，sol6.1 max独立复核。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null；不关机。
+
+
+## WAYMO-V44-HANDOFF-FIX-20261111
+
+[通用保持域/候选覆盖修复与065配对重跑](autoresearch/v44_handoff_fix_20261111/index.html)。共享代码01e029c7，18项CPU通用测试；固定30K/归属/道路，32+968完整恢复共1000gate更新，原采样与199帧参考完全相同。候选45449→76861、目标keep/left错误全清，五列199帧已安装、历史保留。真实图仍有明显残影；代理误差略降不当编辑成功。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null；GPU保持开机。

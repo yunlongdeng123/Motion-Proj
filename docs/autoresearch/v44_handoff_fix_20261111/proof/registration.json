@@ -1,0 +1,46 @@
+{
+  "task": "WAYMO-V44-HANDOFF-FIX-20261111",
+  "scene": "065",
+  "context": "15021599536622641101_556_150_576_150",
+  "target_track": "NTjq-OhZ_97OMJ4xwJAxXg",
+  "target_actor": 10,
+  "source_model": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k",
+  "iteration": 30000,
+  "frames": 199,
+  "heldout": 0,
+  "seed": 0,
+  "native_gaussian_updates": 0,
+  "formal_gate_updates": 1000,
+  "lifecycle": "32 formal steps save, native CLI initialization/pilot renders, exact full state restore, remaining968; no extra optimization updates",
+  "method": "generic full target preservation exclusion and candidate support, matching input/baseline identity; unchanged reference photo and loss weights",
+  "unknown_target_reference_added": false,
+  "initial_gate_logit": 2.0,
+  "initial_multiplier": 0.880797,
+  "road_geometry_colour_fixed": true,
+  "short_job": true,
+  "long_training_smoke_applicable": false,
+  "reason": "short1000-step opacity handoff, no hour-scale model training",
+  "baseline_run": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1",
+  "native_checkpoint_files": {
+    "chkpnt30000.pth": {
+      "bytes": 1235515672,
+      "mtime_ns": 1794212744253948394
+    },
+    "dynamic_chkpnt30000.pth": {
+      "bytes": 835970386,
+      "mtime_ns": 1794212746848457381
+    },
+    "env_light_chkpnt30000.pth": {
+      "bytes": 226494608,
+      "mtime_ns": 1794212748192642924
+    },
+    "training_state30000.pth": {
+      "bytes": 84696,
+      "mtime_ns": 1794212748482397248
+    }
+  },
+  "automatic_shutdown": false,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ]
+}
