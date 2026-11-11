@@ -407,3 +407,8 @@
 ## WAYMO-065-V43-V44-DIAGNOSIS-20261109
 
 [当前共享编辑入口与008修复迁移诊断](autoresearch/scene065_edit_diagnosis_20261109/index.html)。全199帧覆盖、4锚帧已保存联合alpha×T、119/198图表外跨时刻来源与原始实拍只读核验，更新0、GPU调用0。活动代码含最新归属修复；完整目标域关闭保持的规则漏迁移，图表外额外保持又覆盖目标。119有7152/11624目标像素受保持；未知参考与规则遗漏分开。未修改模型/正式代码/平台；GPU缺失，同排序RGB及开关脚本未执行。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null，不关机。
+
+
+## WAYMO-065-GPU-DIAGNOSIS-20261111
+
+[白色轿车删除：GPU颜色分层、全帧候选和局部梯度](autoresearch/scene065_gpu_diagnosis_20261111/index.html)。固定30K与共享v44，227光栅前向、0更新/优化器，四帧RGB精确复现，颜色加和≤1.32e-6；199帧候选IDs一致。恢复域99.94%+静态贡献已选，图表外约76%未选；后段目标保持梯度反对恢复。极端原候选全部退出仍有残影及环境异常。完整模型/代码/平台保留，sol6.1 max独立复核。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null；不关机。

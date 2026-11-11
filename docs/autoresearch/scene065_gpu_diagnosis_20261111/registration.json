@@ -1,0 +1,32 @@
+{
+  "task": "WAYMO-065-GPU-DIAGNOSIS-20261111",
+  "created_singapore": "2026-11-11T17:46:11.363044+08:00",
+  "source_run": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1",
+  "source_model": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k",
+  "frames": [
+    60,
+    119,
+    150,
+    198
+  ],
+  "target_native_actor": 10,
+  "target_track": "NTjq-OhZ_97OMJ4xwJAxXg",
+  "scene": "065",
+  "training_frames": 199,
+  "holdout_frames": 0,
+  "scope": "read-only same-sort RGB attribution and finite interventions on private raster rows; no native training or production edit replacement",
+  "initial_variants": [
+    "final",
+    "gates_off",
+    "road_off",
+    "road_only"
+  ],
+  "formal_training_updates": 0,
+  "engineering_training_updates": 0,
+  "long_training_smoke_applicable": false,
+  "reason": "short zero-optimization GPU diagnostics, not an hour-scale experiment",
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "automatic_shutdown": false
+}
