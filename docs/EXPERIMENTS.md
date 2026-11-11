@@ -417,3 +417,11 @@
 ## WAYMO-V44-HANDOFF-FIX-20261111
 
 [通用保持域/候选覆盖修复与065配对重跑](autoresearch/v44_handoff_fix_20261111/index.html)。共享代码01e029c7，18项CPU通用测试；固定30K/归属/道路，32+968完整恢复共1000gate更新，原采样与199帧参考完全相同。候选45449→76861、目标keep/left错误全清，五列199帧已安装、历史保留。真实图仍有明显残影；代理误差略降不当编辑成功。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict=null；GPU保持开机。
+
+## 2026-11-11：065复用008道路来源链，整体编辑仍失败
+
+task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_20261111_r1/multiview008_r2`。[组件、来源实拍、全帧分母及负例](autoresearch/v44_road_multiview_20261111/index.html)。代码bfe72f2a提供无场景条件的8cm父测距认证→2cm继承取色/独立推断、原始全标注导出、无颜色几何准备及全帧交接入口；原生默认渲染不改。
+
+199源/训练帧，无留出；32+完整恢复968正式gate更新，199帧各5/6次，原生0更新。额外未采用原型1064单列。25800实拍支持/82416推断格；目标域真实支持仅1923像素帧，当前BUILD代理改善而固定旧域变差。119/198仍车影，KEEP切片，quality_accepted=false/human_verdict=null。硬near .2模型单位=10.610m，统一尺度控制释放道路但破坏保留遮挡，未上线。
+
+065平台更新五列199帧及两个H264；原生/旧编辑/029保留。26生产CPU、15公式重放、10实数据、14reference接线、46DOM逻辑分别验收；均不替代删除画质。新模型/源/日志保留，AutoDL保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
