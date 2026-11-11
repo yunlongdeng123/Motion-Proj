@@ -1,0 +1,80 @@
+{
+  "status": "PASS_READ_ONLY_R2_REFERENCE",
+  "passed": 14,
+  "checks": [
+    {
+      "name": "r2 source/geometry unchanged: parent_source_valid",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: source_valid",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: source_agree",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: real",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: inferred",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: parent_ids",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: geometry_parent_ids",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: parent_xyz",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: parent_normals",
+      "pass_": true
+    },
+    {
+      "name": "r2 source/geometry unchanged: uncalibrated_linear",
+      "pass_": true
+    },
+    {
+      "name": "fine correction inherits logical 8cm parent exactly",
+      "pass_": true
+    },
+    {
+      "name": "parent correction within original cap",
+      "pass_": true
+    },
+    {
+      "name": "reference reconstruction exact",
+      "pass_": true
+    },
+    {
+      "name": "parent smoothing rectangle has expected shape",
+      "pass_": true
+    }
+  ],
+  "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_road_completion_20261111_r1/multiview008_r2/world_road",
+  "compared_previous": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_road_completion_20261111_r1/multiview008/world_road",
+  "data": {
+    "parent_cells": 37260,
+    "child_cells": 588861,
+    "real_cells": 25800,
+    "inferred_cells": 82416,
+    "unknown_cells": 480645,
+    "max_parent_correction": 0.019142115932135353,
+    "max_child_correction": 0.019142115932135353,
+    "all_parent_child_corrections_finite": true,
+    "native_colour_alignment": "8cm parent clean asphalt native-minus-reference; .8m/.4m smooth capped¡À.025; excludes shadow deficit; child inherits",
+    "source_qualification": "actual FRONT camera labels +2pixel and accepted mask+2pixel union; ALL laser OBB; measured parent triangles; not semantic-road-only",
+    "child_lidar_independently_certified": false
+  },
+  "GPU_used": false,
+  "remote_files_changed": false,
+  "scope": "source arrays and parent/child calibration wiring; QUERY guards and image quality reviewed separately"
+}
