@@ -1,0 +1,222 @@
+{
+  "status": "PASS_REAL_CUDA_MATERIAL_TO_GAUSSIAN_BRIDGE",
+  "rows": 16384,
+  "bridge_test": {
+    "device": "cuda",
+    "max_rgb_roundtrip_error": 1.080334186553955e-06,
+    "fixed_geometry": true,
+    "linear_interpolation": true,
+    "off_surface_rejected": true,
+    "material_semantics": "reference-exposure appearance, PBR maps unidentifiable"
+  },
+  "cameras": [
+    {
+      "texture": "train/eval_retrieved_D/eval/native_step000000/scene065_eval_012_seed101_output.png",
+      "file": "0_overhead.png",
+      "camera": {
+        "local_camera_origin_m": [
+          0.0,
+          0.0,
+          3.200105711038299
+        ],
+        "meter_to_model": 0.1,
+        "physical_hard_near_m": 2.0,
+        "projective_near_m": 0.09999999999999999,
+        "world_to_camera_local_m": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            0.3200105711038299
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "FoV_radians": 0.9424777960769379
+      },
+      "finite": true,
+      "same_alpha_as_first": true,
+      "geometry_unchanged": true,
+      "visible_pixel_count": 40000
+    },
+    {
+      "texture": "train/eval_retrieved_D/eval/lora_step000600/scene065_eval_012_seed101_output.png",
+      "file": "1_overhead.png",
+      "camera": {
+        "local_camera_origin_m": [
+          0.0,
+          0.0,
+          3.200105711038299
+        ],
+        "meter_to_model": 0.1,
+        "physical_hard_near_m": 2.0,
+        "projective_near_m": 0.09999999999999999,
+        "world_to_camera_local_m": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -0.0,
+            -1.0,
+            0.3200105711038299
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "FoV_radians": 0.9424777960769379
+      },
+      "finite": true,
+      "same_alpha_as_first": true,
+      "geometry_unchanged": true,
+      "visible_pixel_count": 40000
+    },
+    {
+      "texture": "train/eval_retrieved_D/eval/native_step000000/scene065_eval_012_seed101_output.png",
+      "file": "0_oblique.png",
+      "camera": {
+        "local_camera_origin_m": [
+          0.0,
+          -1.7920591981814473,
+          3.200105711038299
+        ],
+        "meter_to_model": 0.1,
+        "physical_hard_near_m": 2.0,
+        "projective_near_m": 0.09999999999999999,
+        "world_to_camera_local_m": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.87250601594972,
+            -0.4886033689318432,
+            6.065319199330017e-18
+          ],
+          [
+            -0.0,
+            0.4886033689318432,
+            -0.87250601594972,
+            0.36677176461127253
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "FoV_radians": 0.9424777960769379
+      },
+      "finite": true,
+      "same_alpha_as_first": true,
+      "geometry_unchanged": true,
+      "visible_pixel_count": 28338
+    },
+    {
+      "texture": "train/eval_retrieved_D/eval/lora_step000600/scene065_eval_012_seed101_output.png",
+      "file": "1_oblique.png",
+      "camera": {
+        "local_camera_origin_m": [
+          0.0,
+          -1.7920591981814473,
+          3.200105711038299
+        ],
+        "meter_to_model": 0.1,
+        "physical_hard_near_m": 2.0,
+        "projective_near_m": 0.09999999999999999,
+        "world_to_camera_local_m": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.87250601594972,
+            -0.4886033689318432,
+            6.065319199330017e-18
+          ],
+          [
+            -0.0,
+            0.4886033689318432,
+            -0.87250601594972,
+            0.36677176461127253
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "FoV_radians": 0.9424777960769379
+      },
+      "finite": true,
+      "same_alpha_as_first": true,
+      "geometry_unchanged": true,
+      "visible_pixel_count": 28338
+    }
+  ],
+  "raster_source": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/engine/utils/v4_road_render.py",
+  "learning_updates": 0,
+  "colour_pipeline": "reference linear RGB sampled by world coordinate, sRGB attributes in inherited alpha raster",
+  "field_files": [
+    "world_material_field_0.npz",
+    "world_material_field_1.npz"
+  ],
+  "actual_geometry_texture_roundtrip": [
+    {
+      "texture": "train/eval_retrieved_D/eval/native_step000000/scene065_eval_012_seed101_output.png",
+      "real_float32_geometry_max_linear_error": 0.004077911376953125,
+      "real_float32_geometry_mean_linear_error": 5.575711838901043e-05
+    },
+    {
+      "texture": "train/eval_retrieved_D/eval/lora_step000600/scene065_eval_012_seed101_output.png",
+      "real_float32_geometry_max_linear_error": 0.004077911376953125,
+      "real_float32_geometry_mean_linear_error": 5.466668517328799e-05
+    }
+  ],
+  "provenance_legend": {
+    "0": "unknown",
+    "1": "observed context",
+    "2": "transferred",
+    "3": "model inferred"
+  },
+  "includes_vehicles": false,
+  "full_scene_edit_quality_evaluated": false,
+  "human_verdict": null
+}

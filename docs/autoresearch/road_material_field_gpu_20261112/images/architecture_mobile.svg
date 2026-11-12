@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 588" width="390" height="588" role="img" aria-labelledby="t d">
+  <title id="t">世界坐标道路材质场</title><desc id="d">带标定的真实图像按可见性投影到固定道路坐标。原生和LoRA模型使用同样的参考、上下文与掩码，结果保存为世界纹理，由高斯取色渲染。</desc>
+  <defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#607b81"/></marker></defs>
+  <style>text{font:700 18px "Microsoft YaHei","Noto Sans CJK SC",sans-serif;fill:#203b42;text-anchor:middle}.s{font-size:13px;font-weight:400;fill:#43575e}.w{fill:none;stroke:#607b81;stroke-width:1.8;stroke-linejoin:round;marker-end:url(#a)}</style>
+  <rect width="390" height="588" rx="10" fill="#f4f6f4"/>
+  <g class="w"><path d="M195 78V103"/><path d="M195 173V198"/><path d="M139 267V288H104V310"/><path d="M250 267V288H289V310"/><path d="M104 372V394H161V419"/><path d="M289 372V394H234V419"/><path d="M195 490V517"/></g>
+  <rect x="12" y="12" width="366" height="66" rx="7" fill="#e5edef" stroke="#a4b7bc"/><text x="195" y="40">实拍 RGB 与固定的道路几何</text><text x="195" y="63" class="s">相机标定、位姿、测距与前景保护区</text>
+  <rect x="12" y="104" width="366" height="69" rx="7" fill="#e8eef3" stroke="#9eb1c0"/><text x="195" y="133">把图像特征绑定到道路坐标</text><text x="195" y="156" class="s">实际相机投影 → 可见权重融合</text>
+  <rect x="12" y="199" width="366" height="68" rx="7" fill="#dcefe7" stroke="#77a896"/><text x="195" y="228">世界特征场与参考检索</text><text x="195" y="251" class="s">读取缺口外围和清晰的异地路面</text>
+  <rect x="12" y="311" width="176" height="61" rx="7" fill="#faedd8" stroke="#c3a06b"/><text x="100" y="336">原生补全模型</text><text x="100" y="358" class="s">冻结预训练权重</text>
+  <rect x="201" y="311" width="177" height="61" rx="7" fill="#faedd8" stroke="#c3a06b"/><text x="289" y="336">道路 LoRA</text><text x="289" y="358" class="s">同参考、掩码和噪声</text>
+  <rect x="12" y="420" width="366" height="70" rx="7" fill="#dcefe7" stroke="#77a896"/><text x="195" y="448">持久的世界道路材质场</text><text x="195" y="473" class="s">参考曝光纹理、标线、支持度与来源</text>
+  <rect x="12" y="518" width="366" height="55" rx="7" fill="#253f48"/><text x="195" y="540" style="fill:white;font-size:17px">固定高斯按世界坐标取色</text><text x="195" y="561" style="fill:#e7f0ec;font-size:13px">交给同一 CUDA 深度渲染</text>
+</svg>

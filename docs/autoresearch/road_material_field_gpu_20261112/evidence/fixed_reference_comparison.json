@@ -1,0 +1,229 @@
+{
+  "terminal_step": 600,
+  "endpoint_predeclared": true,
+  "best_checkpoint_selection": false,
+  "equality_checks": {
+    "model": true,
+    "canvas_inputs": true,
+    "mask": true,
+    "reference": true,
+    "context": true,
+    "prompt": true,
+    "seeds": true,
+    "inference_steps": true,
+    "scheduler": true
+  },
+  "summary": {
+    "train": {
+      "world_tiles": 4,
+      "sample_seed_pairs": 8,
+      "valid_hole_pixel_pairs": 21000,
+      "native_mae": 0.02466442577030812,
+      "lora_mae": 0.0196629940865235,
+      "delta_mae": -0.00500143168378462,
+      "relative_improvement": 0.20277916584644406,
+      "better_seed_pairs": 6,
+      "better_world_tiles": 3,
+      "median_world_tile_delta_mae": -0.0054569920659886025
+    },
+    "eval": {
+      "world_tiles": 4,
+      "sample_seed_pairs": 8,
+      "valid_hole_pixel_pairs": 21000,
+      "native_mae": 0.029127108621226267,
+      "lora_mae": 0.01860404606286959,
+      "delta_mae": -0.010523062558356677,
+      "relative_improvement": 0.36128071258978434,
+      "better_seed_pairs": 7,
+      "better_world_tiles": 3,
+      "median_world_tile_delta_mae": -0.004874035248501889
+    }
+  },
+  "pairs": [
+    {
+      "id": "scene065_train_000",
+      "split": "train",
+      "seed": 101,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.014323162420048233,
+      "lora_mae": 0.012864981999930096,
+      "delta_mae": -0.0014581804201181364,
+      "relative_improvement": 0.10180575890678378,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_train_000",
+      "split": "train",
+      "seed": 202,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.014234618386867522,
+      "lora_mae": 0.011977677583213915,
+      "delta_mae": -0.002256940803653606,
+      "relative_improvement": 0.15855295465706332,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_train_001",
+      "split": "train",
+      "seed": 101,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.04123447879492628,
+      "lora_mae": 0.02690297659622813,
+      "delta_mae": -0.014331502198698151,
+      "relative_improvement": 0.34756113372922226,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_train_001",
+      "split": "train",
+      "seed": 202,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.03022842402127859,
+      "lora_mae": 0.023187778178756165,
+      "delta_mae": -0.007040645842522425,
+      "relative_improvement": 0.23291475061903089,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_train_002",
+      "split": "train",
+      "seed": 101,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.04065988605780992,
+      "lora_mae": 0.022401174373492712,
+      "delta_mae": -0.01825871168431721,
+      "relative_improvement": 0.44905958807550794,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_train_002",
+      "split": "train",
+      "seed": 202,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.019763028205934778,
+      "lora_mae": 0.01990889285006932,
+      "delta_mae": 0.00014586464413454334,
+      "relative_improvement": -0.007380682890020918,
+      "lora_better": false
+    },
+    {
+      "id": "scene065_train_003",
+      "split": "train",
+      "seed": 101,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.01890960610556424,
+      "lora_mae": 0.026836681502866996,
+      "delta_mae": 0.007927075397302755,
+      "relative_improvement": -0.4192089117588851,
+      "lora_better": false
+    },
+    {
+      "id": "scene065_train_003",
+      "split": "train",
+      "seed": 202,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.019387037705334346,
+      "lora_mae": 0.014916930644104948,
+      "delta_mae": -0.0044701070612293975,
+      "relative_improvement": 0.23057194859632668,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_012",
+      "split": "eval",
+      "seed": 101,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.028136497617466477,
+      "lora_mae": 0.02193375508254401,
+      "delta_mae": -0.006202742534922468,
+      "relative_improvement": 0.2204518351662913,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_012",
+      "split": "eval",
+      "seed": 202,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.02518751529132152,
+      "lora_mae": 0.024044831242063077,
+      "delta_mae": -0.0011426840492584425,
+      "relative_improvement": 0.04536708111308463,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_013",
+      "split": "eval",
+      "seed": 101,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.03388374299958565,
+      "lora_mae": 0.02321451007124049,
+      "delta_mae": -0.010669232928345162,
+      "relative_improvement": 0.31487763699764904,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_013",
+      "split": "eval",
+      "seed": 202,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.023119879171845967,
+      "lora_mae": 0.021638397690364485,
+      "delta_mae": -0.001481481481481483,
+      "relative_improvement": 0.06407825363056152,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_014",
+      "split": "eval",
+      "seed": 101,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.012036862279076811,
+      "lora_mae": 0.01192594922698729,
+      "delta_mae": -0.00011091305208952087,
+      "relative_improvement": 0.0092144488752951,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_014",
+      "split": "eval",
+      "seed": 202,
+      "valid_hole_pixels": 2805,
+      "native_mae": 0.014095744061141984,
+      "lora_mae": 0.01965258117507252,
+      "delta_mae": 0.005556837113930537,
+      "relative_improvement": -0.3942209144708564,
+      "lora_better": false
+    },
+    {
+      "id": "scene065_eval_015",
+      "split": "eval",
+      "seed": 101,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.012167288183166928,
+      "lora_mae": 0.010288570779368325,
+      "delta_mae": -0.0018787174037986024,
+      "relative_improvement": 0.15440724140961426,
+      "lora_better": true
+    },
+    {
+      "id": "scene065_eval_015",
+      "split": "eval",
+      "seed": 202,
+      "valid_hole_pixels": 2445,
+      "native_mae": 0.08984482136412847,
+      "lora_mae": 0.015671304650012697,
+      "delta_mae": -0.07417351671411578,
+      "relative_improvement": 0.8255736456250595,
+      "lora_better": true
+    }
+  ],
+  "limitations": [
+    "within-scene spatial holdout; not unseen-scene generalization",
+    "pseudo-hole on visible real supported road, not hidden road ground truth",
+    "sRGB appearance at reference exposure; not physical PBR",
+    "generated unknown support remains a prior and is rejected from pseudo-hole metrics",
+    "human_verdict remains null"
+  ],
+  "human_verdict": null,
+  "fresh_process_final_eval_exact": true
+}

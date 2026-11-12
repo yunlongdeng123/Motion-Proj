@@ -425,3 +425,8 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 199源/训练帧，无留出；32+完整恢复968正式gate更新，199帧各5/6次，原生0更新。额外未采用原型1064单列。25800实拍支持/82416推断格；目标域真实支持仅1923像素帧，当前BUILD代理改善而固定旧域变差。119/198仍车影，KEEP切片，quality_accepted=false/human_verdict=null。硬near .2模型单位=10.610m，统一尺度控制释放道路但破坏保留遮挡，未上线。
 
 065平台更新五列199帧及两个H264；原生/旧编辑/029保留。26生产CPU、15公式重放、10实数据、14reference接线、46DOM逻辑分别验收；均不替代删除画质。新模型/源/日志保留，AutoDL保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+
+## WORLD-ROAD-MATERIAL-FIELD-20261112
+
+固定道路几何与原生光栅，12个清晰可见路块训练、4个空间不交块评价、44候选。原生SD1.5对照与同输入rank4 LoRA600已实际完成。[实验图与分母](autoresearch/road_material_field_gpu_20261112/index.html)。固定参考eval MAE .0291271→.0186040，D检索参考.0263989→.0231615；仍有色差/标线误差，human_verdict=null。A/B/C/D有效fineguard检索MAE分别.04687969/.05119263/.06861912/.05038235，D未超过简单A。600正式、2101工程更新分列，checkpoint/精确恢复和字段到高斯真实GPU验证齐全。唯一有效数据连续面sourceguard，旧coarse缓存失效保留。failure_ledger_refs=[V82-F06]；failure_ledger_delta=append_small_data_road_field_boundary。

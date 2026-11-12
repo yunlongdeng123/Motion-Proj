@@ -1,0 +1,2853 @@
+{
+  "schema": "road_retrieval_controls.v1",
+  "run_id": "ROAD-MATERIAL-FIELD-20261112-R1",
+  "dataset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/data/scene065_v3_clear64/dataset_fineguard.json",
+  "native_frozen_baselines": true,
+  "learned_ranking_head_updates": 0,
+  "query_count": 4,
+  "candidate_count": 44,
+  "matched_all_method_queries": 4,
+  "same_frame_subset_C_D": true,
+  "same_encoder_tokens_C_D": true,
+  "source_raws": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60,
+    64,
+    68,
+    72,
+    76,
+    80,
+    84,
+    88,
+    92,
+    96,
+    100,
+    104,
+    108,
+    112,
+    116,
+    120,
+    124,
+    128,
+    132,
+    136,
+    140,
+    144,
+    148,
+    152,
+    156,
+    160,
+    164,
+    168,
+    172,
+    176,
+    180,
+    184,
+    188,
+    192,
+    196,
+    198
+  ],
+  "aggregate": {
+    "A_geometry_color_spectrum": {
+      "queries_ran": 4,
+      "queries_total": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.04687968988769821,
+      "mean_hole_psnr": 27.420925508250484,
+      "known_context_max_abs_change": 0.0
+    },
+    "B_native_superpoint_2d": {
+      "queries_ran": 4,
+      "queries_total": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.051192625416442754,
+      "mean_hole_psnr": 25.23962958126572,
+      "known_context_max_abs_change": 0.0
+    },
+    "C_native_dinov3_2d": {
+      "queries_ran": 4,
+      "queries_total": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.06861912409774959,
+      "mean_hole_psnr": 26.8627481346186,
+      "known_context_max_abs_change": 0.0
+    },
+    "D_native_dinov3_world": {
+      "queries_ran": 4,
+      "queries_total": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.05038234818194594,
+      "mean_hole_psnr": 26.867557302884393,
+      "known_context_max_abs_change": 0.0
+    }
+  },
+  "aggregate_C_D_matched_candidate_pool": {
+    "C_native_dinov3_2d": {
+      "queries_ran": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.06861912409774959
+    },
+    "D_native_dinov3_world": {
+      "queries_ran": 4,
+      "hole_pixels_scored": 10500,
+      "hole_mae_pixel_weighted": 0.05038234818194594
+    }
+  },
+  "queries": [
+    {
+      "query_id": "scene065_eval_012",
+      "hole_pixels": 2805,
+      "candidate_bank_count": 44,
+      "context_pixels": 13579,
+      "D_context_fine_texels_with_world_feature": 12408,
+      "D_context_unique_coarse_world_cells": 3102,
+      "C_query_tokens_per_source": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        18,
+        34,
+        13,
+        0,
+        326,
+        40,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B_query_keypoints_per_source": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        2,
+        6,
+        7,
+        16,
+        16,
+        5,
+        0,
+        171,
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "methods": {
+        "A_geometry_color_spectrum": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_024",
+              "distance": 0.029884440824389458
+            },
+            {
+              "candidate_id": "candidate_031",
+              "distance": 0.031128253787755966
+            },
+            {
+              "candidate_id": "candidate_014",
+              "distance": 0.033164188265800476
+            },
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.03883977234363556
+            },
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.03942621871829033
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.0964684933423996,
+            "hole_psnr": 16.84114381453991,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/A_geometry_color_spectrum/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "B_native_superpoint_2d": {
+          "status": "ran",
+          "eligible_candidates": 21,
+          "top5": [
+            {
+              "candidate_id": "candidate_024",
+              "distance": 0.49507611989974976,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.49507611989974976,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 150
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_032",
+              "distance": 0.5706956560413042,
+              "shared_source_views": 3,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.9303848072886467,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.4155672788619995,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 189
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.3661348819732666,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 189
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_037",
+              "distance": 0.5729540914297104,
+              "shared_source_views": 5,
+              "per_source": [
+                {
+                  "raw": 52,
+                  "distance": 0.8316401988267899,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 56,
+                  "distance": 0.756619781255722,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 60,
+                  "distance": 0.731480598449707,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 4
+                },
+                {
+                  "raw": 68,
+                  "distance": 0.3522357940673828,
+                  "query_keypoints": 171,
+                  "candidate_keypoints": 6
+                },
+                {
+                  "raw": 72,
+                  "distance": 0.1927940845489502,
+                  "query_keypoints": 13,
+                  "candidate_keypoints": 39
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_003",
+              "distance": 0.5804506689310074,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 56,
+                  "distance": 0.7765971720218658,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 68,
+                  "distance": 0.3843041658401489,
+                  "query_keypoints": 171,
+                  "candidate_keypoints": 4
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_000",
+              "distance": 0.5994622740480635,
+              "shared_source_views": 9,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.6801539957523346,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.6871376037597656,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.6167475581169128,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 4
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.6438641548156738,
+                  "query_keypoints": 7,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.627409040927887,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 56,
+                  "distance": 0.6394625902175903,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 60,
+                  "distance": 0.6761244535446167,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 68,
+                  "distance": 0.28227806091308594,
+                  "query_keypoints": 171,
+                  "candidate_keypoints": 15
+                },
+                {
+                  "raw": 72,
+                  "distance": 0.5419830083847046,
+                  "query_keypoints": 13,
+                  "candidate_keypoints": 5
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.0964684933423996,
+            "hole_psnr": 16.84114381453991,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/B_native_superpoint_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "C_native_dinov3_2d": {
+          "status": "ran",
+          "eligible_candidates": 11,
+          "top5": [
+            {
+              "candidate_id": "candidate_001",
+              "distance": 0.13410520553588867,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 68,
+                  "distance": 0.13410520553588867,
+                  "common_bins": 1,
+                  "query_tokens": 326,
+                  "candidate_tokens": 18,
+                  "query_bbox": [
+                    -298.30675658623477,
+                    -6171.251792010746,
+                    11874.346157532595,
+                    1983.6513261622526
+                  ],
+                  "candidate_bbox": [
+                    874.9022320949526,
+                    959.0833446893892,
+                    1311.2111543113,
+                    1016.6465651782632
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_000",
+              "distance": 0.20301979780197144,
+              "shared_source_views": 3,
+              "per_source": [
+                {
+                  "raw": 56,
+                  "distance": 0.19643467664718628,
+                  "common_bins": 3,
+                  "query_tokens": 34,
+                  "candidate_tokens": 7,
+                  "query_bbox": [
+                    142.75035936658514,
+                    1078.5518704408596,
+                    856.8654357635522,
+                    1207.6550483223796
+                  ],
+                  "candidate_bbox": [
+                    553.7057325018527,
+                    910.3630642231323,
+                    907.8936274198074,
+                    948.1724895002707
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                },
+                {
+                  "raw": 60,
+                  "distance": 0.28849005699157715,
+                  "common_bins": 1,
+                  "query_tokens": 13,
+                  "candidate_tokens": 2,
+                  "query_bbox": [
+                    -137.87110397703395,
+                    1177.0413517863435,
+                    826.6301274638827,
+                    1406.4537827025106
+                  ],
+                  "candidate_bbox": [
+                    484.10119042416056,
+                    938.7784186300789,
+                    898.2090911070917,
+                    988.0161174551545
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                },
+                {
+                  "raw": 72,
+                  "distance": 0.12413465976715088,
+                  "common_bins": 1,
+                  "query_tokens": 40,
+                  "candidate_tokens": 9,
+                  "query_bbox": [
+                    -78.40587141475271,
+                    -21153215.019806694,
+                    34242549.954290815,
+                    1962.9361124773295
+                  ],
+                  "candidate_bbox": [
+                    172.23780284162183,
+                    1065.116857176353,
+                    855.4658064574054,
+                    1183.151765133964
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_003",
+              "distance": 0.21638356149196625,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 56,
+                  "distance": 0.2581102252006531,
+                  "common_bins": 4,
+                  "query_tokens": 34,
+                  "candidate_tokens": 6,
+                  "query_bbox": [
+                    142.75035936658514,
+                    1078.5518704408596,
+                    856.8654357635522,
+                    1207.6550483223796
+                  ],
+                  "candidate_bbox": [
+                    613.8521008508299,
+                    882.3139402876989,
+                    916.4169908002276,
+                    910.8057662522476
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 60,
+                  "distance": 0.34820473194122314,
+                  "common_bins": 1,
+                  "query_tokens": 13,
+                  "candidate_tokens": 1,
+                  "query_bbox": [
+                    -137.87110397703395,
+                    1177.0413517863435,
+                    826.6301274638827,
+                    1406.4537827025106
+                  ],
+                  "candidate_bbox": [
+                    563.3734148447843,
+                    903.2423965526239,
+                    908.7424049965618,
+                    938.8735375420817
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 68,
+                  "distance": 0.12044715881347656,
+                  "common_bins": 1,
+                  "query_tokens": 326,
+                  "candidate_tokens": 18,
+                  "query_bbox": [
+                    -298.30675658623477,
+                    -6171.251792010746,
+                    11874.346157532595,
+                    1983.6513261622526
+                  ],
+                  "candidate_bbox": [
+                    436.21621168332194,
+                    958.7343097152408,
+                    887.82966968193,
+                    1015.644944467999
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 72,
+                  "distance": 0.1387721300125122,
+                  "common_bins": 1,
+                  "query_tokens": 40,
+                  "candidate_tokens": 1,
+                  "query_bbox": [
+                    -78.40587141475271,
+                    -21153215.019806694,
+                    34242549.954290815,
+                    1962.9361124773295
+                  ],
+                  "candidate_bbox": [
+                    358.8741162690127,
+                    993.0850889258791,
+                    876.3556325283639,
+                    1064.972510425665
+                  ],
+                  "normalized_C_view_weight": 0.25
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.22379014641046524,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 48,
+                  "distance": 0.28749215602874756,
+                  "common_bins": 3,
+                  "query_tokens": 5,
+                  "candidate_tokens": 17,
+                  "query_bbox": [
+                    466.6704748085142,
+                    953.9919013006399,
+                    894.2313408704275,
+                    1007.1697759883566
+                  ],
+                  "candidate_bbox": [
+                    -204.70348805079357,
+                    1212.9024697401392,
+                    808.3628691911135,
+                    1474.0278575507573
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.16008813679218292,
+                  "common_bins": 3,
+                  "query_tokens": 18,
+                  "candidate_tokens": 346,
+                  "query_bbox": [
+                    334.8839905616402,
+                    1005.6516284805725,
+                    877.4422230844874,
+                    1085.8441971437699
+                  ],
+                  "candidate_bbox": [
+                    -291.0156919846097,
+                    -154.2662776648673,
+                    2238.225140935983,
+                    2093.892746907508
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_008",
+              "distance": 0.2504912813504537,
+              "shared_source_views": 3,
+              "per_source": [
+                {
+                  "raw": 48,
+                  "distance": 0.23097538948059082,
+                  "common_bins": 3,
+                  "query_tokens": 5,
+                  "candidate_tokens": 22,
+                  "query_bbox": [
+                    466.6704748085142,
+                    953.9919013006399,
+                    894.2313408704275,
+                    1007.1697759883566
+                  ],
+                  "candidate_bbox": [
+                    855.514430397164,
+                    1006.4691846114754,
+                    1370.7712693044023,
+                    1085.3230174759005
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.25398966670036316,
+                  "common_bins": 6,
+                  "query_tokens": 18,
+                  "candidate_tokens": 36,
+                  "query_bbox": [
+                    334.8839905616402,
+                    1005.6516284805725,
+                    877.4422230844874,
+                    1085.8441971437699
+                  ],
+                  "candidate_bbox": [
+                    815.9058915496777,
+                    1085.427641612116,
+                    1511.6792006198352,
+                    1219.2926198451282
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                },
+                {
+                  "raw": 56,
+                  "distance": 0.2665087878704071,
+                  "common_bins": 3,
+                  "query_tokens": 34,
+                  "candidate_tokens": 21,
+                  "query_bbox": [
+                    142.75035936658514,
+                    1078.5518704408596,
+                    856.8654357635522,
+                    1207.6550483223796
+                  ],
+                  "candidate_bbox": [
+                    747.9958798616998,
+                    1207.9506743455104,
+                    1758.9732633931208,
+                    1463.4831924196335
+                  ],
+                  "normalized_C_view_weight": 0.3333333333333333
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.18017862737178802,
+            "hole_psnr": 12.516633140601222,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/C_native_dinov3_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "D_native_dinov3_world": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.060044027864933014,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.06357766687870026,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_000",
+              "distance": 0.06983546912670135,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13471
+            },
+            {
+              "candidate_id": "candidate_007",
+              "distance": 0.07862553000450134,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_031",
+              "distance": 0.07930637896060944,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.09100341796875,
+            "hole_psnr": 17.14118466297083,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/D_native_dinov3_world/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        }
+      },
+      "C_D_matched_candidate_pool": {
+        "candidate_count": 11,
+        "methods": {
+          "C_native_dinov3_2d": {
+            "metrics": {
+              "hole_pixels": 2805,
+              "hole_mae": 0.18017862737178802,
+              "hole_psnr": 12.516633140601222,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_001",
+                "distance": 0.13410520553588867
+              },
+              {
+                "candidate_id": "candidate_000",
+                "distance": 0.20301979780197144
+              },
+              {
+                "candidate_id": "candidate_003",
+                "distance": 0.21638356149196625
+              },
+              {
+                "candidate_id": "candidate_012",
+                "distance": 0.22379014641046524
+              },
+              {
+                "candidate_id": "candidate_008",
+                "distance": 0.2504912813504537
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/C_native_dinov3_2d_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          },
+          "D_native_dinov3_world": {
+            "metrics": {
+              "hole_pixels": 2805,
+              "hole_mae": 0.09100341796875,
+              "hole_psnr": 17.14118466297083,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_012",
+                "distance": 0.060044027864933014
+              },
+              {
+                "candidate_id": "candidate_000",
+                "distance": 0.06983546912670135
+              },
+              {
+                "candidate_id": "candidate_003",
+                "distance": 0.1061757355928421
+              },
+              {
+                "candidate_id": "candidate_002",
+                "distance": 0.2091696858406067
+              },
+              {
+                "candidate_id": "candidate_008",
+                "distance": 0.2111835777759552
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_012/D_native_dinov3_world_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "query_id": "scene065_eval_013",
+      "hole_pixels": 2445,
+      "candidate_bank_count": 44,
+      "context_pixels": 13939,
+      "D_context_fine_texels_with_world_feature": 12612,
+      "D_context_unique_coarse_world_cells": 3153,
+      "C_query_tokens_per_source": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        6,
+        6,
+        16,
+        39,
+        32,
+        32,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B_query_keypoints_per_source": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        9,
+        12,
+        16,
+        24,
+        13,
+        12,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "methods": {
+        "A_geometry_color_spectrum": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.010128336027264595
+            },
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.010883119888603687
+            },
+            {
+              "candidate_id": "candidate_031",
+              "distance": 0.015656376257538795
+            },
+            {
+              "candidate_id": "candidate_024",
+              "distance": 0.019470566883683205
+            },
+            {
+              "candidate_id": "candidate_014",
+              "distance": 0.020273074507713318
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.06665526330471039,
+            "hole_psnr": 18.99343724098449,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/A_geometry_color_spectrum/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "B_native_superpoint_2d": {
+          "status": "ran",
+          "eligible_candidates": 41,
+          "top5": [
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.5954028248786927,
+              "shared_source_views": 5,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.7167758345603943,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 7
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.7080338001251221,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 4
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.6271262168884277,
+                  "query_keypoints": 12,
+                  "candidate_keypoints": 9
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.6635217070579529,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 5
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.26155656576156616,
+                  "query_keypoints": 24,
+                  "candidate_keypoints": 197
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_031",
+              "distance": 0.6030298434197903,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.4754968285560608,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.44375455379486084,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 32,
+                  "distance": 0.8120283931493759,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 5
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.6808395981788635,
+                  "query_keypoints": 12,
+                  "candidate_keypoints": 12
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_008",
+              "distance": 0.6514220954850316,
+              "shared_source_views": 8,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.5760131478309631,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.7796490788459778,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 32,
+                  "distance": 0.9357510954141617,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.9511643275618553,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.5716882348060608,
+                  "query_keypoints": 12,
+                  "candidate_keypoints": 4
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.518686830997467,
+                  "query_keypoints": 16,
+                  "candidate_keypoints": 8
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.4661393165588379,
+                  "query_keypoints": 24,
+                  "candidate_keypoints": 13
+                },
+                {
+                  "raw": 56,
+                  "distance": 0.4122847318649292,
+                  "query_keypoints": 13,
+                  "candidate_keypoints": 14
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_022",
+              "distance": 0.6542173027992249,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 4,
+                  "distance": 0.6542173027992249,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 1
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_007",
+              "distance": 0.6569787934422493,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.4754968285560608,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.6932657361030579,
+                  "query_keypoints": 1,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 32,
+                  "distance": 0.7025266885757446,
+                  "query_keypoints": 2,
+                  "candidate_keypoints": 10
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.7566259205341339,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 3
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.06665526330471039,
+            "hole_psnr": 18.99343724098449,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/B_native_superpoint_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "C_native_dinov3_2d": {
+          "status": "ran",
+          "eligible_candidates": 20,
+          "top5": [
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.15800360962748528,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.02528846263885498,
+                  "common_bins": 2,
+                  "query_tokens": 2,
+                  "candidate_tokens": 4,
+                  "query_bbox": [
+                    668.4077441560091,
+                    856.1654246529961,
+                    908.0509703876668,
+                    874.7918191278936
+                  ],
+                  "candidate_bbox": [
+                    580.203674459502,
+                    897.7695795465561,
+                    891.8175005067623,
+                    927.7968169650268
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.24079811573028564,
+                  "common_bins": 4,
+                  "query_tokens": 6,
+                  "candidate_tokens": 20,
+                  "query_bbox": [
+                    563.9118897162191,
+                    909.9591003050136,
+                    901.8044237628319,
+                    944.8006494795984
+                  ],
+                  "candidate_bbox": [
+                    373.01166382272413,
+                    992.3056678665201,
+                    872.3250156583754,
+                    1061.513563391879
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.21907329559326172,
+                  "common_bins": 4,
+                  "query_tokens": 16,
+                  "candidate_tokens": 17,
+                  "query_bbox": [
+                    340.20363705339184,
+                    1006.8708946374541,
+                    877.0181808510908,
+                    1085.6872204254869
+                  ],
+                  "candidate_bbox": [
+                    -204.70348805079357,
+                    1212.9024697401392,
+                    808.3628691911135,
+                    1474.0278575507573
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.14685456454753876,
+                  "common_bins": 3,
+                  "query_tokens": 39,
+                  "candidate_tokens": 346,
+                  "query_bbox": [
+                    126.79897664176372,
+                    1086.1298314827054,
+                    852.210013335393,
+                    1219.3092509615103
+                  ],
+                  "candidate_bbox": [
+                    -291.0156919846097,
+                    -154.2662776648673,
+                    2238.225140935983,
+                    2093.892746907508
+                  ],
+                  "normalized_C_view_weight": 0.25
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_031",
+              "distance": 0.17566752433776855,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.17566752433776855,
+                  "common_bins": 2,
+                  "query_tokens": 2,
+                  "candidate_tokens": 19,
+                  "query_bbox": [
+                    668.4077441560091,
+                    856.1654246529961,
+                    908.0509703876668,
+                    874.7918191278936
+                  ],
+                  "candidate_bbox": [
+                    280.00942556442374,
+                    1024.2724199335967,
+                    842.4433585063339,
+                    1109.1474200491582
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_028",
+              "distance": 0.19292289018630981,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.19292289018630981,
+                  "common_bins": 2,
+                  "query_tokens": 2,
+                  "candidate_tokens": 17,
+                  "query_bbox": [
+                    668.4077441560091,
+                    856.1654246529961,
+                    908.0509703876668,
+                    874.7918191278936
+                  ],
+                  "candidate_bbox": [
+                    813.5103895199308,
+                    1024.2306814163476,
+                    1346.8380416550917,
+                    1109.2784616693198
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_008",
+              "distance": 0.20314094424247742,
+              "shared_source_views": 6,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.1010826826095581,
+                  "common_bins": 1,
+                  "query_tokens": 2,
+                  "candidate_tokens": 1,
+                  "query_bbox": [
+                    668.4077441560091,
+                    856.1654246529961,
+                    908.0509703876668,
+                    874.7918191278936
+                  ],
+                  "candidate_bbox": [
+                    902.7392894779805,
+                    856.039432477125,
+                    1135.5667242639017,
+                    874.4590473456428
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                },
+                {
+                  "raw": 40,
+                  "distance": 0.19667047262191772,
+                  "common_bins": 4,
+                  "query_tokens": 6,
+                  "candidate_tokens": 6,
+                  "query_bbox": [
+                    563.9118897162191,
+                    909.9591003050136,
+                    901.8044237628319,
+                    944.8006494795984
+                  ],
+                  "candidate_bbox": [
+                    892.0687483513914,
+                    909.7997538247866,
+                    1218.7825866432584,
+                    944.3044498146007
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                },
+                {
+                  "raw": 44,
+                  "distance": 0.19887052476406097,
+                  "common_bins": 3,
+                  "query_tokens": 6,
+                  "candidate_tokens": 9,
+                  "query_bbox": [
+                    474.9295166671276,
+                    950.2833158986814,
+                    892.6462115513864,
+                    1000.9149756580521
+                  ],
+                  "candidate_bbox": [
+                    878.6605831002779,
+                    950.1952110928163,
+                    1281.201759082045,
+                    1000.6101420089365
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.23325303196907043,
+                  "common_bins": 7,
+                  "query_tokens": 16,
+                  "candidate_tokens": 22,
+                  "query_bbox": [
+                    340.20363705339184,
+                    1006.8708946374541,
+                    877.0181808510908,
+                    1085.6872204254869
+                  ],
+                  "candidate_bbox": [
+                    855.514430397164,
+                    1006.4691846114754,
+                    1370.7712693044023,
+                    1085.3230174759005
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                },
+                {
+                  "raw": 52,
+                  "distance": 0.24545404314994812,
+                  "common_bins": 10,
+                  "query_tokens": 39,
+                  "candidate_tokens": 36,
+                  "query_bbox": [
+                    126.79897664176372,
+                    1086.1298314827054,
+                    852.210013335393,
+                    1219.3092509615103
+                  ],
+                  "candidate_bbox": [
+                    815.9058915496777,
+                    1085.427641612116,
+                    1511.6792006198352,
+                    1219.2926198451282
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                },
+                {
+                  "raw": 56,
+                  "distance": 0.24351491034030914,
+                  "common_bins": 4,
+                  "query_tokens": 32,
+                  "candidate_tokens": 21,
+                  "query_bbox": [
+                    -197.57344842607267,
+                    1204.515688023732,
+                    817.2805510513725,
+                    1463.4619903223252
+                  ],
+                  "candidate_bbox": [
+                    747.9958798616998,
+                    1207.9506743455104,
+                    1758.9732633931208,
+                    1463.4831924196335
+                  ],
+                  "normalized_C_view_weight": 0.16666666666666666
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.21894098818302155,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 44,
+                  "distance": 0.24227388203144073,
+                  "common_bins": 3,
+                  "query_tokens": 6,
+                  "candidate_tokens": 25,
+                  "query_bbox": [
+                    474.9295166671276,
+                    950.2833158986814,
+                    892.6462115513864,
+                    1000.9149756580521
+                  ],
+                  "candidate_bbox": [
+                    -164.2954841056876,
+                    1194.948287755856,
+                    807.6548835461201,
+                    1432.9572713757643
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 48,
+                  "distance": 0.19560809433460236,
+                  "common_bins": 3,
+                  "query_tokens": 16,
+                  "candidate_tokens": 291,
+                  "query_bbox": [
+                    340.20363705339184,
+                    1006.8708946374541,
+                    877.0181808510908,
+                    1085.6872204254869
+                  ],
+                  "candidate_bbox": [
+                    -305.1103596071441,
+                    247.08618929529052,
+                    1606.944660902076,
+                    2069.8615941244234
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.06665526330471039,
+            "hole_psnr": 18.99343724098449,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/C_native_dinov3_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "D_native_dinov3_world": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.05170298367738724,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_012",
+              "distance": 0.05290074646472931,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_007",
+              "distance": 0.07664769887924194,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_000",
+              "distance": 0.09056593477725983,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13831
+            },
+            {
+              "candidate_id": "candidate_038",
+              "distance": 0.09297829866409302,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.08594657480716705,
+            "hole_psnr": 17.14836968758,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/D_native_dinov3_world/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        }
+      },
+      "C_D_matched_candidate_pool": {
+        "candidate_count": 20,
+        "methods": {
+          "C_native_dinov3_2d": {
+            "metrics": {
+              "hole_pixels": 2445,
+              "hole_mae": 0.06665526330471039,
+              "hole_psnr": 18.99343724098449,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_012",
+                "distance": 0.15800360962748528
+              },
+              {
+                "candidate_id": "candidate_031",
+                "distance": 0.17566752433776855
+              },
+              {
+                "candidate_id": "candidate_028",
+                "distance": 0.19292289018630981
+              },
+              {
+                "candidate_id": "candidate_008",
+                "distance": 0.20314094424247742
+              },
+              {
+                "candidate_id": "candidate_016",
+                "distance": 0.21894098818302155
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/C_native_dinov3_2d_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          },
+          "D_native_dinov3_world": {
+            "metrics": {
+              "hole_pixels": 2445,
+              "hole_mae": 0.08594657480716705,
+              "hole_psnr": 17.14836968758,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_016",
+                "distance": 0.05170298367738724
+              },
+              {
+                "candidate_id": "candidate_012",
+                "distance": 0.05290074646472931
+              },
+              {
+                "candidate_id": "candidate_007",
+                "distance": 0.07664769887924194
+              },
+              {
+                "candidate_id": "candidate_000",
+                "distance": 0.09056593477725983
+              },
+              {
+                "candidate_id": "candidate_031",
+                "distance": 0.0978768989443779
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_013/D_native_dinov3_world_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "query_id": "scene065_eval_014",
+      "hole_pixels": 2805,
+      "candidate_bank_count": 44,
+      "context_pixels": 13579,
+      "D_context_fine_texels_with_world_feature": 12508,
+      "D_context_unique_coarse_world_cells": 3127,
+      "C_query_tokens_per_source": [
+        14,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B_query_keypoints_per_source": [
+        6,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "methods": {
+        "A_geometry_color_spectrum": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_027",
+              "distance": 0.002757712034508586
+            },
+            {
+              "candidate_id": "candidate_033",
+              "distance": 0.005451294593513012
+            },
+            {
+              "candidate_id": "candidate_036",
+              "distance": 0.008418739773333073
+            },
+            {
+              "candidate_id": "candidate_028",
+              "distance": 0.016854284331202507
+            },
+            {
+              "candidate_id": "candidate_011",
+              "distance": 0.019657213240861893
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.012592793442308903,
+            "hole_psnr": 35.69138383094954,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/A_geometry_color_spectrum/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "B_native_superpoint_2d": {
+          "status": "ran",
+          "eligible_candidates": 30,
+          "top5": [
+            {
+              "candidate_id": "candidate_027",
+              "distance": 0.5392380058765411,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.6222421526908875,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 1
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.4562338590621948,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 2
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_017",
+              "distance": 0.57769376039505,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.57769376039505,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 6
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_018",
+              "distance": 0.5990160703659058,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.5990160703659058,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 2
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_038",
+              "distance": 0.6146515607833862,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.5747211575508118,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.6545819640159607,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 2
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_043",
+              "distance": 0.6232045888900757,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.5998027324676514,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.6466064453125,
+                  "query_keypoints": 9,
+                  "candidate_keypoints": 3
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.012592793442308903,
+            "hole_psnr": 35.69138383094954,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/B_native_superpoint_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "C_native_dinov3_2d": {
+          "status": "ran",
+          "eligible_candidates": 21,
+          "top5": [
+            {
+              "candidate_id": "candidate_017",
+              "distance": 0.07292471081018448,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.07292471081018448,
+                  "common_bins": 6,
+                  "query_tokens": 14,
+                  "candidate_tokens": 28,
+                  "query_bbox": [
+                    796.4632766353443,
+                    991.2814300060238,
+                    1241.8153206229258,
+                    1059.7539443563392
+                  ],
+                  "candidate_bbox": [
+                    748.2268846549005,
+                    1057.829172321728,
+                    1315.757964806149,
+                    1162.9841798128366
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_004",
+              "distance": 0.1645175665616989,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 4,
+                  "distance": 0.1645175665616989,
+                  "common_bins": 3,
+                  "query_tokens": 36,
+                  "candidate_tokens": 5,
+                  "query_bbox": [
+                    685.6026819522915,
+                    1142.0265763118678,
+                    1436.3169610160376,
+                    1308.7931088951295
+                  ],
+                  "candidate_bbox": [
+                    806.0485194123352,
+                    982.3610668309765,
+                    1241.4838057455004,
+                    1046.2290247865408
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_027",
+              "distance": 0.19438866525888443,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.1536581665277481,
+                  "common_bins": 4,
+                  "query_tokens": 14,
+                  "candidate_tokens": 6,
+                  "query_bbox": [
+                    796.4632766353443,
+                    991.2814300060238,
+                    1241.8153206229258,
+                    1059.7539443563392
+                  ],
+                  "candidate_bbox": [
+                    865.5118237574258,
+                    884.1642394458648,
+                    1135.9427118220858,
+                    911.9805354800683
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.23511916399002075,
+                  "common_bins": 3,
+                  "query_tokens": 36,
+                  "candidate_tokens": 5,
+                  "query_bbox": [
+                    685.6026819522915,
+                    1142.0265763118678,
+                    1436.3169610160376,
+                    1308.7931088951295
+                  ],
+                  "candidate_bbox": [
+                    834.9502063553346,
+                    938.028506318914,
+                    1194.597872459153,
+                    983.2114298056798
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_036",
+              "distance": 0.19573739171028137,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.19573739171028137,
+                  "common_bins": 4,
+                  "query_tokens": 14,
+                  "candidate_tokens": 5,
+                  "query_bbox": [
+                    796.4632766353443,
+                    991.2814300060238,
+                    1241.8153206229258,
+                    1059.7539443563392
+                  ],
+                  "candidate_bbox": [
+                    887.6751809412433,
+                    846.3600674838519,
+                    1101.977651548098,
+                    864.5532039202757
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_043",
+              "distance": 0.2181008979678154,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 0,
+                  "distance": 0.20325471460819244,
+                  "common_bins": 3,
+                  "query_tokens": 14,
+                  "candidate_tokens": 5,
+                  "query_bbox": [
+                    796.4632766353443,
+                    991.2814300060238,
+                    1241.8153206229258,
+                    1059.7539443563392
+                  ],
+                  "candidate_bbox": [
+                    1197.2205047181003,
+                    988.9570119619774,
+                    1690.0552357975089,
+                    1057.1806787021615
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 4,
+                  "distance": 0.23294708132743835,
+                  "common_bins": 8,
+                  "query_tokens": 36,
+                  "candidate_tokens": 32,
+                  "query_bbox": [
+                    685.6026819522915,
+                    1142.0265763118678,
+                    1436.3169610160376,
+                    1308.7931088951295
+                  ],
+                  "candidate_bbox": [
+                    1318.4027138182153,
+                    1135.091339397209,
+                    2135.457721273079,
+                    1305.8807737695777
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.010746972635388374,
+            "hole_psnr": 37.25414618125113,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/C_native_dinov3_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "D_native_dinov3_world": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_004",
+              "distance": 0.06665845960378647,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_017",
+              "distance": 0.0717054158449173,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_036",
+              "distance": 0.0786542296409607,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_033",
+              "distance": 0.08558879792690277,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            },
+            {
+              "candidate_id": "candidate_020",
+              "distance": 0.09237025678157806,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13579
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2805,
+            "hole_mae": 0.014840754680335522,
+            "hole_psnr": 34.49389888534919,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/D_native_dinov3_world/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        }
+      },
+      "C_D_matched_candidate_pool": {
+        "candidate_count": 21,
+        "methods": {
+          "C_native_dinov3_2d": {
+            "metrics": {
+              "hole_pixels": 2805,
+              "hole_mae": 0.010746972635388374,
+              "hole_psnr": 37.25414618125113,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_017",
+                "distance": 0.07292471081018448
+              },
+              {
+                "candidate_id": "candidate_004",
+                "distance": 0.1645175665616989
+              },
+              {
+                "candidate_id": "candidate_027",
+                "distance": 0.19438866525888443
+              },
+              {
+                "candidate_id": "candidate_036",
+                "distance": 0.19573739171028137
+              },
+              {
+                "candidate_id": "candidate_043",
+                "distance": 0.2181008979678154
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/C_native_dinov3_2d_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          },
+          "D_native_dinov3_world": {
+            "metrics": {
+              "hole_pixels": 2805,
+              "hole_mae": 0.014840754680335522,
+              "hole_psnr": 34.49389888534919,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_004",
+                "distance": 0.06665845960378647
+              },
+              {
+                "candidate_id": "candidate_017",
+                "distance": 0.0717054158449173
+              },
+              {
+                "candidate_id": "candidate_036",
+                "distance": 0.0786542296409607
+              },
+              {
+                "candidate_id": "candidate_020",
+                "distance": 0.09237025678157806
+              },
+              {
+                "candidate_id": "candidate_008",
+                "distance": 0.10527396947145462
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_014/D_native_dinov3_world_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          }
+        }
+      }
+    },
+    {
+      "query_id": "scene065_eval_015",
+      "hole_pixels": 2445,
+      "candidate_bank_count": 44,
+      "context_pixels": 13935,
+      "D_context_fine_texels_with_world_feature": 12404,
+      "D_context_unique_coarse_world_cells": 3102,
+      "C_query_tokens_per_source": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        9,
+        21,
+        15,
+        74,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "B_query_keypoints_per_source": [
+        0,
+        0,
+        0,
+        0,
+        5,
+        6,
+        11,
+        4,
+        28,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "methods": {
+        "A_geometry_color_spectrum": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_032",
+              "distance": 0.0086669335141778
+            },
+            {
+              "candidate_id": "candidate_037",
+              "distance": 0.026757273823022842
+            },
+            {
+              "candidate_id": "candidate_035",
+              "distance": 0.03625119850039482
+            },
+            {
+              "candidate_id": "candidate_040",
+              "distance": 0.041965994983911514
+            },
+            {
+              "candidate_id": "candidate_039",
+              "distance": 0.13048133254051208
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.009549167938530445,
+            "hole_psnr": 38.157737146528,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/A_geometry_color_spectrum/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "B_native_superpoint_2d": {
+          "status": "ran",
+          "eligible_candidates": 31,
+          "top5": [
+            {
+              "candidate_id": "candidate_027",
+              "distance": 0.35736459493637085,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.35736459493637085,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 166
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_022",
+              "distance": 0.40461552888154984,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.49104875326156616,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 20,
+                  "distance": 0.46142691373825073,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 24,
+                  "distance": 0.5322738587856293,
+                  "query_keypoints": 11,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 28,
+                  "distance": 0.13371258974075317,
+                  "query_keypoints": 4,
+                  "candidate_keypoints": 2
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_039",
+              "distance": 0.4669538736343384,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.608824610710144,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 20,
+                  "distance": 0.3250831365585327,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 166
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_035",
+              "distance": 0.5009488239884377,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.7389188706874847,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 2
+                },
+                {
+                  "raw": 20,
+                  "distance": 0.5052803754806519,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 4
+                },
+                {
+                  "raw": 24,
+                  "distance": 0.39842545986175537,
+                  "query_keypoints": 11,
+                  "candidate_keypoints": 3
+                },
+                {
+                  "raw": 28,
+                  "distance": 0.36117058992385864,
+                  "query_keypoints": 4,
+                  "candidate_keypoints": 109
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_038",
+              "distance": 0.5048787742853165,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.6666496098041534,
+                  "query_keypoints": 5,
+                  "candidate_keypoints": 7
+                },
+                {
+                  "raw": 20,
+                  "distance": 0.3431079387664795,
+                  "query_keypoints": 6,
+                  "candidate_keypoints": 140
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.028070976957678795,
+            "hole_psnr": 29.432553438588943,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/B_native_superpoint_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "C_native_dinov3_2d": {
+          "status": "ran",
+          "eligible_candidates": 21,
+          "top5": [
+            {
+              "candidate_id": "candidate_035",
+              "distance": 0.12578488141298294,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 20,
+                  "distance": 0.1086258590221405,
+                  "common_bins": 4,
+                  "query_tokens": 9,
+                  "candidate_tokens": 19,
+                  "query_bbox": [
+                    1203.9813980923554,
+                    955.4413899112944,
+                    1656.27947237831,
+                    1008.2834398463867
+                  ],
+                  "candidate_bbox": [
+                    1249.5714395702087,
+                    1008.4195228863994,
+                    1818.9670065384958,
+                    1086.8430080242515
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 24,
+                  "distance": 0.14294390380382538,
+                  "common_bins": 6,
+                  "query_tokens": 21,
+                  "candidate_tokens": 29,
+                  "query_bbox": [
+                    1280.7669085790637,
+                    1044.131638256142,
+                    1923.220412984944,
+                    1141.2378787975244
+                  ],
+                  "candidate_bbox": [
+                    1366.0988875600426,
+                    1135.9146144101892,
+                    2211.01180943323,
+                    1309.7038783502921
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_040",
+              "distance": 0.16305795311927795,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.10433083772659302,
+                  "common_bins": 1,
+                  "query_tokens": 1,
+                  "candidate_tokens": 2,
+                  "query_bbox": [
+                    1153.2320508654147,
+                    901.2620829617613,
+                    1494.4388613111973,
+                    934.1532008616869
+                  ],
+                  "candidate_bbox": [
+                    1115.475777872471,
+                    856.1546111530027,
+                    1372.962841684206,
+                    876.224515594065
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 28,
+                  "distance": 0.2217850685119629,
+                  "common_bins": 3,
+                  "query_tokens": 15,
+                  "candidate_tokens": 22,
+                  "query_bbox": [
+                    1421.5410711285867,
+                    1185.1779544947988,
+                    2315.3194166770036,
+                    1416.1044146326174
+                  ],
+                  "candidate_bbox": [
+                    1249.2808648667183,
+                    1005.8543536955943,
+                    1799.9666514181863,
+                    1078.915951500207
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_016",
+              "distance": 0.23673546314239502,
+              "shared_source_views": 1,
+              "per_source": [
+                {
+                  "raw": 32,
+                  "distance": 0.23673546314239502,
+                  "common_bins": 1,
+                  "query_tokens": 74,
+                  "candidate_tokens": 7,
+                  "query_bbox": [
+                    -24944.210788335942,
+                    -11296.589294882298,
+                    2250.629269844685,
+                    1744.8764464573144
+                  ],
+                  "candidate_bbox": [
+                    513.6685298744655,
+                    927.6597119553765,
+                    880.1410744519326,
+                    967.768287609894
+                  ],
+                  "normalized_C_view_weight": 1.0
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_033",
+              "distance": 0.2470405399799347,
+              "shared_source_views": 2,
+              "per_source": [
+                {
+                  "raw": 20,
+                  "distance": 0.23870164155960083,
+                  "common_bins": 4,
+                  "query_tokens": 9,
+                  "candidate_tokens": 16,
+                  "query_bbox": [
+                    1203.9813980923554,
+                    955.4413899112944,
+                    1656.27947237831,
+                    1008.2834398463867
+                  ],
+                  "candidate_bbox": [
+                    806.0894243403397,
+                    1007.9599931371654,
+                    1312.8270801121964,
+                    1086.835395801003
+                  ],
+                  "normalized_C_view_weight": 0.5
+                },
+                {
+                  "raw": 24,
+                  "distance": 0.25537943840026855,
+                  "common_bins": 8,
+                  "query_tokens": 21,
+                  "candidate_tokens": 42,
+                  "query_bbox": [
+                    1280.7669085790637,
+                    1044.131638256142,
+                    1923.220412984944,
+                    1141.2378787975244
+                  ],
+                  "candidate_bbox": [
+                    721.8020523389705,
+                    1141.441197934426,
+                    1507.0077589422608,
+                    1310.8978229312922
+                  ],
+                  "normalized_C_view_weight": 0.5
+                }
+              ]
+            },
+            {
+              "candidate_id": "candidate_022",
+              "distance": 0.25905463472008705,
+              "shared_source_views": 4,
+              "per_source": [
+                {
+                  "raw": 16,
+                  "distance": 0.354414701461792,
+                  "common_bins": 1,
+                  "query_tokens": 1,
+                  "candidate_tokens": 4,
+                  "query_bbox": [
+                    1153.2320508654147,
+                    901.2620829617613,
+                    1494.4388613111973,
+                    934.1532008616869
+                  ],
+                  "candidate_bbox": [
+                    865.036393144696,
+                    901.5997714348989,
+                    1177.9805246492767,
+                    934.6646935422582
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 20,
+                  "distance": 0.17949536442756653,
+                  "common_bins": 4,
+                  "query_tokens": 9,
+                  "candidate_tokens": 9,
+                  "query_bbox": [
+                    1203.9813980923554,
+                    955.4413899112944,
+                    1656.27947237831,
+                    1008.2834398463867
+                  ],
+                  "candidate_bbox": [
+                    838.9466633985381,
+                    955.050246407252,
+                    1245.9184297074412,
+                    1008.0151804066503
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 24,
+                  "distance": 0.23432065546512604,
+                  "common_bins": 8,
+                  "query_tokens": 21,
+                  "candidate_tokens": 24,
+                  "query_bbox": [
+                    1280.7669085790637,
+                    1044.131638256142,
+                    1923.220412984944,
+                    1141.2378787975244
+                  ],
+                  "candidate_bbox": [
+                    790.4887679100657,
+                    1044.4018245026482,
+                    1360.7356343255674,
+                    1141.234614845356
+                  ],
+                  "normalized_C_view_weight": 0.25
+                },
+                {
+                  "raw": 28,
+                  "distance": 0.26798781752586365,
+                  "common_bins": 5,
+                  "query_tokens": 15,
+                  "candidate_tokens": 27,
+                  "query_bbox": [
+                    1421.5410711285867,
+                    1185.1779544947988,
+                    2315.3194166770036,
+                    1416.1044146326174
+                  ],
+                  "candidate_bbox": [
+                    687.249410507083,
+                    1197.9266615208721,
+                    1608.8929323658585,
+                    1420.9355065939299
+                  ],
+                  "normalized_C_view_weight": 0.25
+                }
+              ]
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.008990746922791004,
+            "hole_psnr": 38.68677597563754,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/C_native_dinov3_2d/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        },
+        "D_native_dinov3_world": {
+          "status": "ran",
+          "eligible_candidates": 44,
+          "top5": [
+            {
+              "candidate_id": "candidate_035",
+              "distance": 0.05262119695544243,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_023",
+              "distance": 0.05418870225548744,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_040",
+              "distance": 0.0827844887971878,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_041",
+              "distance": 0.08800084888935089,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            },
+            {
+              "candidate_id": "candidate_026",
+              "distance": 0.08841933310031891,
+              "common_world_bins": 16,
+              "candidate_context_fine_texels_with_world_feature": 13939
+            }
+          ],
+          "metrics": {
+            "hole_pixels": 2445,
+            "hole_mae": 0.008990746922791004,
+            "hole_psnr": 38.68677597563754,
+            "known_context_max_abs_change": 0.0
+          },
+          "candidate_missing_center_nearest_legal_fraction": 0.0,
+          "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/D_native_dinov3_world/prediction.npy",
+          "origin": "different_world_reference_copy_into_query_hole; known query pixels preserved exactly"
+        }
+      },
+      "C_D_matched_candidate_pool": {
+        "candidate_count": 21,
+        "methods": {
+          "C_native_dinov3_2d": {
+            "metrics": {
+              "hole_pixels": 2445,
+              "hole_mae": 0.008990746922791004,
+              "hole_psnr": 38.68677597563754,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_035",
+                "distance": 0.12578488141298294
+              },
+              {
+                "candidate_id": "candidate_040",
+                "distance": 0.16305795311927795
+              },
+              {
+                "candidate_id": "candidate_016",
+                "distance": 0.23673546314239502
+              },
+              {
+                "candidate_id": "candidate_033",
+                "distance": 0.2470405399799347
+              },
+              {
+                "candidate_id": "candidate_022",
+                "distance": 0.25905463472008705
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/C_native_dinov3_2d_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          },
+          "D_native_dinov3_world": {
+            "metrics": {
+              "hole_pixels": 2445,
+              "hole_mae": 0.008990746922791004,
+              "hole_psnr": 38.68677597563754,
+              "known_context_max_abs_change": 0.0
+            },
+            "top5": [
+              {
+                "candidate_id": "candidate_035",
+                "distance": 0.05262119695544243
+              },
+              {
+                "candidate_id": "candidate_023",
+                "distance": 0.05418870225548744
+              },
+              {
+                "candidate_id": "candidate_040",
+                "distance": 0.0827844887971878
+              },
+              {
+                "candidate_id": "candidate_039",
+                "distance": 0.11187510192394257
+              },
+              {
+                "candidate_id": "candidate_032",
+                "distance": 0.18867960572242737
+              }
+            ],
+            "prediction_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/features/native_controls_r3_fineguard_r1/predictions/scene065_eval_015/D_native_dinov3_world_matched_candidate_pool/prediction.npy",
+            "candidate_missing_center_nearest_legal_fraction": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "evidence_boundary": "same-scene disjoint-world pseudo-occlusion; observed appearance not intrinsic albedo; true hidden road has no GT; retrieval does not establish generated completion quality",
+  "failure_ledger_delta": "none"
+}
