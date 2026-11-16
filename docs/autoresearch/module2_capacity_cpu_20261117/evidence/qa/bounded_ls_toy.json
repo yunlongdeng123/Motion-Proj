@@ -1,0 +1,85 @@
+{
+  "schema": "bounded_RGB_certificate_CPU_toy.v1",
+  "status": "pass",
+  "checks": {
+    "primary_guarded_lower_bound_valid_at_initial": true,
+    "primary_guarded_optimality_gap_small": true,
+    "primary_guarded_KKT_small": true,
+    "primary_guarded_fixed_offset_identity": true,
+    "conditional_relaxed_lower_bound_valid_at_initial": true,
+    "conditional_relaxed_optimality_gap_small": true,
+    "conditional_relaxed_KKT_small": true,
+    "conditional_relaxed_fixed_offset_identity": true,
+    "abstract_adjoint_dot_identity": true,
+    "guard_floor_is_not_pure_capacity_failure": true,
+    "relaxed_constant_can_fit": true,
+    "unoptimized_loss_not_capacity_failure": true,
+    "unknown_native_operator_defaults_to_no_verdict": true
+  },
+  "results": {
+    "primary_guarded": {
+      "initial": {
+        "primal_objective": 0.04066514583333333,
+        "frank_wolfe_gap": 0.0785275277777778,
+        "optimal_objective_lower_bound": 0.0,
+        "RGB_RMSE": 0.2851846623973082,
+        "box_primal_feasible": true,
+        "KKT_gradient_violation_max": 0.019855000000000005,
+        "certificate_scope": "independent fixed-linear-coverage ci box only",
+        "numeric_native_operator_error_bound_verified": false
+      },
+      "solved": {
+        "primal_objective": 0.020567501375316686,
+        "frank_wolfe_gap": 3.1384713329422136e-17,
+        "optimal_objective_lower_bound": 0.020567501375316655,
+        "RGB_RMSE": 0.20281765887277511,
+        "box_primal_feasible": true,
+        "KKT_gradient_violation_max": 9.178808093612316e-18,
+        "certificate_scope": "independent fixed-linear-coverage ci box only",
+        "numeric_native_operator_error_bound_verified": false
+      },
+      "decision": "registered_RGB_tolerance_infeasible_under_this_scope",
+      "initial_decision": "optimization_or_detail_inconclusive",
+      "toy_objective_tolerance": 7.689350249903882e-06
+    },
+    "conditional_relaxed": {
+      "initial": {
+        "primal_objective": 0.04066514583333333,
+        "frank_wolfe_gap": 0.15912077777777778,
+        "optimal_objective_lower_bound": 0.0,
+        "RGB_RMSE": 0.2851846623973082,
+        "box_primal_feasible": true,
+        "KKT_gradient_violation_max": 0.02376583333333333,
+        "certificate_scope": "independent fixed-linear-coverage ci box only",
+        "numeric_native_operator_error_bound_verified": false
+      },
+      "solved": {
+        "primal_objective": 9.201665289850127e-33,
+        "frank_wolfe_gap": 5.324830083037254e-17,
+        "optimal_objective_lower_bound": 0.0,
+        "RGB_RMSE": 1.356588757866593e-16,
+        "box_primal_feasible": true,
+        "KKT_gradient_violation_max": 1.4355800498972508e-17,
+        "certificate_scope": "independent fixed-linear-coverage ci box only",
+        "numeric_native_operator_error_bound_verified": false
+      },
+      "decision": "feasible_RGB_solution_found",
+      "initial_decision": "optimization_or_detail_inconclusive",
+      "toy_objective_tolerance": 7.689350249903882e-06
+    }
+  },
+  "adjoint_dot_error": 0.0,
+  "actual_scene_operator_used": false,
+  "native_GS_render_calls": 0,
+  "actual_model_training_updates": 0,
+  "toy_small_dense_box_LS_solves": 6,
+  "GPU_executed": false,
+  "CUDA_imported": false,
+  "interpretation": "Verifies certificate algebra/interface and constraint-floor decisions only; no real road capacity verdict.",
+  "pending": [
+    "native operator linearity and adjoint consistency",
+    "fixed primary b and relaxed operator",
+    "registered pixel/detail thresholds",
+    "actual bounded-LS feasible solution or converged/lower-bound evidence"
+  ]
+}

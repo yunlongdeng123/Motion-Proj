@@ -1,0 +1,113 @@
+{
+  "schema": "road_capacity_cpu_inventory.v1",
+  "status": "cpu_inputs_present",
+  "canonical_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "road": {
+    "total_world_rows": 588861,
+    "active_rows": 151096,
+    "meter_to_model": 0.018849925866127503,
+    "fields": [
+      "active",
+      "model_xyz",
+      "gaussian_sigma_m",
+      "normal_world",
+      "reference_srgb",
+      "road_opacity",
+      "model_from_world",
+      "meter_to_model",
+      "minimum_model_depth"
+    ],
+    "XYZ_shape": [
+      588861,
+      3
+    ],
+    "RGB_shape": [
+      588861,
+      3
+    ]
+  },
+  "render_wh": [
+    480,
+    320
+  ],
+  "manifest_frames": 199,
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "inherited_build_frames": 199,
+  "primary_retained_envelope_active_rows": 38982,
+  "legacy_scope_role": "CPU basis sanity only; new A/C/S eligibility requires actual native contribution preflight after user opens GPU",
+  "resources": {
+    "cpu_max": "50000 100000",
+    "memory_max": "2147483648",
+    "threads": 1
+  },
+  "input_files": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/scene.json",
+      "exists": true,
+      "bytes": 83974,
+      "declared_binding": "36a89d4eb01acf617420566c0fc67a230c821a03d6b57a0fde6eb8ee47f04bf2",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/road.npz",
+      "exists": true,
+      "bytes": 18231366,
+      "declared_binding": "aa502238aa01a4704362b69988f81881a98e716fbf9648c051e0b912e9a3606d",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/static_indices.npz",
+      "exists": true,
+      "bytes": 134332,
+      "declared_binding": "496e9cae354f2da8cdd5c61df576450f0f6e06789e6807ccdf92099c3aaa761e",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/static_opacity.pt",
+      "exists": true,
+      "bytes": 1003330,
+      "declared_binding": "f2a1a79b3c954ef050734a12e2a148eedb2467aad43ab553149879c065f4cbab",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+      "exists": true,
+      "bytes": 1235515672,
+      "declared_binding": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+      "exists": true,
+      "bytes": 835970386,
+      "declared_binding": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+      "exists": true,
+      "bytes": 226494608,
+      "declared_binding": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae",
+      "full_large_file_rehash": "deferred to execution preflight"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz",
+      "exists": true,
+      "bytes": 7208581,
+      "declared_binding": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb",
+      "full_large_file_rehash": "deferred to execution preflight"
+    }
+  ],
+  "torch_or_native_imported": false,
+  "large_checkpoint_loaded": false,
+  "new_native_raster_calls": 0,
+  "new_real_scene_optimizer_updates": 0,
+  "gpu_authorized": false,
+  "GPU_execution": "stop until new user instruction after enabling GPU; no power operation or automatic controller"
+}

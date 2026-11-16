@@ -1,0 +1,76 @@
+{
+  "schema": "road_capacity_supervision_cpu_acceptance.v1",
+  "status": "PASS",
+  "checks": {
+    "all_frozen_bindings_unchanged": true,
+    "candidate_not_formal_ready": true,
+    "GPU_training_render_operations_zero": true,
+    "raw86_targets_and_world_geometry_exact": true,
+    "raw86_disjoint_A_C_S_K": true,
+    "raw86_outside_exact_full_authorized_complement": true,
+    "raw86_q_S_binary_and_photo_gated": true,
+    "raw86_shadow_boundary_has_no_loss_weight": true,
+    "raw86_teacher_missing_has_no_loss_weight": true,
+    "raw86_other_shadow_not_erased": true,
+    "raw86_A_has_no_target_shadow_conflict": true,
+    "raw86_C_physical_scope_has_no_old_F0_requirement": true,
+    "raw86_legacy_r3_domains_saved_exact": true,
+    "raw110_targets_and_world_geometry_exact": true,
+    "raw110_disjoint_A_C_S_K": true,
+    "raw110_outside_exact_full_authorized_complement": true,
+    "raw110_q_S_binary_and_photo_gated": true,
+    "raw110_shadow_boundary_has_no_loss_weight": true,
+    "raw110_teacher_missing_has_no_loss_weight": true,
+    "raw110_other_shadow_not_erased": true,
+    "raw110_A_has_no_target_shadow_conflict": true,
+    "raw110_C_physical_scope_has_no_old_F0_requirement": true,
+    "raw110_legacy_r3_domains_saved_exact": true,
+    "old_pair_discrete_active_world_rows_exact": true,
+    "old_pair_discrete_color_exact": true,
+    "old_pair_discrete_opacity_exact": true,
+    "old_pair_discrete_scale_exact": true,
+    "old_pair_discrete_A_seen_exact": true,
+    "old_pair_discrete_C_seen_exact": true,
+    "old_pair_discrete_physical_legal_exact": true,
+    "old_pair_discrete_conservative_K_guard_exact": true,
+    "old_pair_mass_positive_support_exact": true,
+    "torch_not_imported": true,
+    "old_scope_formula_checks_pass": true,
+    "old_source_matches_formal_binding": true
+  },
+  "check_count": 35,
+  "old_pair_attribution_mass_precision": {
+    "actual_A_mass": {
+      "different_values": 1550,
+      "max_abs": 4.76837158203125e-07,
+      "positive_support_identical": true
+    },
+    "actual_C_mass": {
+      "different_values": 1997,
+      "max_abs": 4.76837158203125e-07,
+      "positive_support_identical": true
+    },
+    "actual_coverage_mass": {
+      "different_values": 3624,
+      "max_abs": 4.76837158203125e-07,
+      "positive_support_identical": true
+    },
+    "actual_A_coverage_mass": {
+      "different_values": 1576,
+      "max_abs": 4.76837158203125e-07,
+      "positive_support_identical": true
+    },
+    "actual_C_coverage_mass": {
+      "different_values": 2086,
+      "max_abs": 4.76837158203125e-07,
+      "positive_support_identical": true
+    }
+  },
+  "note": "previous_scope_and_loss_audit matched_Fcontrol_scopes_equal_exact compares the whole NPZ, including nondeterministic floating attribution sums; all discrete scopes and mass>0 eligibility are exact",
+  "CUDA_VISIBLE_DEVICES": "",
+  "GPU_operations": 0,
+  "training_updates": 0,
+  "render_operations": 0,
+  "formal_ready": false,
+  "candidate_freeze_sha256": "73a758e748476ac6bc8edc2aca808d60ad00cd6c56653d96f65c8884203658f0"
+}

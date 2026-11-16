@@ -2,12 +2,10 @@
 
 更新：2026-11-17（Asia/Singapore）。
 
-`MODULE2-DIRECT-TEACHER-20261116 / road_direct_teacher_20261116_r1` 已完成模块2直接二维教师微调探针：[参数协议、组件、预算与证据](autoresearch/module2_direct_teacher_20261116/README.md)。训练、数值门、冻结保护与持久重载通过；多视角道路画质未通过，候选未替换默认场景，human_verdict=null。
+`MODULE2-CAPACITY-CPU-20261117 / road_capacity_cpu_20261117_r1` 已完成三道上限检查的CPU准备，**按用户要求停在GPU执行前**。[组件、输入与决策](autoresearch/module2_capacity_cpu_20261117/README.md)。本轮真实场景优化、原生渲染和新模型推理为0，无自动GPU队列或电源操作；当前不能宣布表示上限或切换TRELLIS。
 
-冻结raw86/110二维补全仅监督合法物理道路孔洞，真实可见RGB独立监督A；主C固定3544/7181像素，完整几何覆盖C为3656/7485。raw134/179/198只诊断，既有199帧BUILD缓存仍继承，不能称盲测。主试验与匹配F对照各200颜色+300覆盖+300联合，共1600正式更新；另9次工程更新分账。共享θ、街段z、成像η及SD/LoRA均不训练。
+监督审计确认旧目标影possible1665/2980像素全部outside保持、未入A/C/coverage。已准备v4物理孔洞C/目标影S/真实可见A候选；可信S1043/2144中仅820/1402充分覆盖，剩223/742包含164/609道路近乎无alpha。新A/C/S actual贡献与可写行、覆盖可控性/K原生验证待GPU；S-only known允许effective RGB修正，原观测/prior台账保持。
 
-主试验相对原阶段2的C伪教师误差下降80.964%/72.916%，同初值同预算F对照仅下降3.596%/3.315%；A真实道路误差也改善。覆盖计数保持37404/38416（97.3657%），83个缺口、929个薄像素不变，不称覆盖提升。六阶段77,266个保留像素帧的联合RGB逐值不变；公共重载最大RGB5.96e-8、alpha1.19e-7、RGB8差0。完整状态恢复精确，下一步重放存在已记录的微小浮点差异。
+理想能力准备25份独立解析目标，G_s精确38198点、fallback218单列，总主域38416不变。5case覆盖constant/lowfreq/12cm和24cm标线/不可分辨stress；158项CPU数据核验与13项toy证书检查通过，未评估实际GS能力。共享参数化I0/W4实现与10项CPU测试完成，同c0、固定coverage、4cm共享；旧78421行preview只说明参数235263→72072，不授权新S训练。
 
-实际134/179/198两组都加重水平细条纹，主试验更明显，左侧标线仍断。条纹在仅颜色200步已出现，此时opacity、scale、几何逐值冻结；覆盖阶段几乎不变，联合阶段略加重。该证据定位到颜色适配/投影链，不能把数值拟合改进升级为持久三维画质通过，也不能仅归因更换C教师来源。下一入口仍是模块2颜色表示的空间约束及跨视角高频诊断，不追加静态门控或扩展199帧来掩盖问题。
-
-候选入口：`road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_joint/asset/persistent/{scene.json,proof.json}`；对照、各阶段与所有旧现场保留。有效shader为direct-per-Gaussian RGB，旧atlas作为不可变prior另存；不冒称学习了共享材质规律。独立收据：`qa/final_acceptance/acceptance.json`；原生同曝光负例：`qa/frequency_diagnostic_r1/`。旧静态交接与新199帧运行未启动；AutoDL GPU按用户要求保持开机。
+历史TRELLIS.2单路块0训练MAE .15897与LoRA .02500已核原收据；条件不同、单样本，不否定后训练潜力，也不构成切换正证据。未来先native preflight及三门证据；CPU-only入口硬拒绝execute。此前两组各800训练与视觉失败全部保留，候选未替换默认场景。human_verdict=null；failure_ledger_refs=[V82-F06]，本轮仅更新监督与诊断证据。

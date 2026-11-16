@@ -1,0 +1,111 @@
+{
+  "schema": "fixed_native_RGB_capacity_plan.v1",
+  "status": "CPU_PREPARED_WAIT_USER_GPU",
+  "execution_authorized": false,
+  "GPU_executed": false,
+  "real_scene_render_calls": 0,
+  "actual_model_training_updates": 0,
+  "background_controller_created": false,
+  "automatic_resume": false,
+  "native_backend_imported": false,
+  "canonical_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "fixed": [
+    "geometry",
+    "opacity",
+    "all scales",
+    "active/topology/density",
+    "cameras",
+    "480x320"
+  ],
+  "target_pack": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2",
+  "target_freeze": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/freeze.json",
+  "all_five_views_supervised": true,
+  "real_data_roles": "separate check3 retains two train and three diagnose; no oracle generalization claim",
+  "field": "independent analytic world asphalt and flat-top smooth-edge curved dashed paint on frozen G_s mesh",
+  "main_domain": 38416,
+  "keep_domain": 77266,
+  "plane_fallback_pixels": 218,
+  "negative_capacity_evidence": {
+    "exact_G_s_pixel_frames": 38198,
+    "fallback_pixel_frames": 218,
+    "fallback_role": "full-domain reporting / geometry-inconclusive only; never negative model-capacity evidence",
+    "native_operator_linearity_and_adjoint_required": true,
+    "lower_bound_safety_margin": 1e-05,
+    "decision": "valid exact-G_s lower f-G minus1e-5 > registered objective tolerance; boundary cases inconclusive",
+    "denominator_policy": "full38416 unchanged; exact-G_s/fallback are predeclared evidence strata"
+  },
+  "sampling": "pixel-center main targets; \u22653px width/on/off for detail stratum; no full antialias reference claimed",
+  "cases": [
+    "constant",
+    "lowfreq",
+    "marking_w120",
+    "marking_w240",
+    "stress_highfreq"
+  ],
+  "stress_case_never_a_failure_criterion": true,
+  "primary_scope": {
+    "primary_rows": 112058,
+    "conditional_relaxed_rows": 151096,
+    "original_guard_world_rows": 3165,
+    "archived_conservative_active_guard": 38982,
+    "union_guard_world_rows": 38982,
+    "conditional_relaxed_role": "road-only capacity diagnosis; never production or keep preservation"
+  },
+  "conditional_scope": "all active road colors only, no geometry edits, no keep/production claim",
+  "fixed_contribution": {
+    "baseline_forward_saved": true,
+    "exact_frozen_b_not_evaluated": true,
+    "next_native_operator": "P(c)=P0+A_E(c-c0_E); b=P0-A_E*c0_E. Baseline RGB is offset only, never target.",
+    "actual_native_forward_adjoint_linearity_and_frozen_b": "pending explicitly authorized GPU; CPU eligibility is not alphaT proof"
+  },
+  "mathematical_operator": {
+    "prediction": "P0 + A_E*(c_E-c0_E)",
+    "fixed_term": "b=P0-A_E*c0_E",
+    "variables": "independent native-sRGB ci in [0,1]",
+    "normalization": "f=.5 weighted RGB SSE/(3*sum q)",
+    "gradient": "native matrix-free adjoint of weighted residual with identical normalization",
+    "certificate": "G=sum(g*c-min(g,0)); upper=f, lower=max(0,f-G-error_allowance)",
+    "certificate_scope": "independent fixed-linear ci box only, not W4+clip or full model/prior",
+    "CPU_exact_frozen_b_available": false,
+    "baseline_P0_role": "archived forward reference only; never teacher"
+  },
+  "future_native_preflight": [
+    "explicit user GPU enable and resume; environment/source revalidation",
+    "same fixed canonical geometry/alpha/sigma/active and fresh P0 agreement",
+    "native linearity and forward/adjoint dot identity with recorded numerical error",
+    "actual eligible/frozen contribution and fixed b verification; alpha remains detached/fixed",
+    "full primary joint K unchanged; relaxed oracle explicitly road-only",
+    "native save/eval/fullrestore/next-update replay and persistent loader entry"
+  ],
+  "convergence_rules": [
+    "feasible RGB+resolved-detail solution witnesses capacity without needing a global optimum",
+    "failure needs lower bound above registered objective tolerance including numerical allowance",
+    "small gap alone, Adam plateau, time cap or optimizer failure does not establish a representation limit",
+    "a protected-scope floor must be separated by conditional relaxed color-only oracle",
+    "fallback/sampling mismatch is geometry or sampling inconclusive, never evidence against a generation prior"
+  ],
+  "registered_reference": {
+    "reference_RGB_RMSE": 0.00784313725490196,
+    "registered_RMSE_levels": [
+      0.00392156862745098,
+      0.00784313725490196,
+      0.01568627450980392
+    ],
+    "line_center_error_px": 1,
+    "resolvable_line_edge_F1": 0.9,
+    "detail_contrast_retention": 0.9,
+    "objective_tolerances": [
+      7.689350249903882e-06,
+      3.075740099961553e-05,
+      0.00012302960399846212
+    ],
+    "interpretation": "engineering reference levels, not universal perceptual equivalence or an automatic model-switch threshold"
+  },
+  "work_cap": {
+    "max_iterations_per_case": 500,
+    "max_seconds_per_case": 300,
+    "extend_automatically": false
+  },
+  "launch": "No executable GPU entry is provided here. The project CPU entry hard-refuses --execute before backend import.",
+  "next_action": "stop and wait for user GPU authorization"
+}

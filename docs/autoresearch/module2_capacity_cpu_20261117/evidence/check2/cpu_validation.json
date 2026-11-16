@@ -1,0 +1,526 @@
+{
+  "schema": "check2_CPU_preparation_acceptance.v1",
+  "status": "READY_CPU_ONLY_WAIT_USER_GPU",
+  "teacher_data_acceptance": "pass",
+  "teacher_checks": 158,
+  "bounded_LS_toy_status": "pass",
+  "toy_checks": 13,
+  "native_capacity_verdict": "not_evaluated",
+  "GPU_executed": false,
+  "actual_model_training_updates": 0,
+  "real_scene_render_calls": 0,
+  "background_controller_created": false,
+  "threads": 1,
+  "resource": {
+    "memory_limit_GiB": 2,
+    "CPU_quota_cores": 0.5,
+    "independent_audit_peak_MiB": 112.05078125
+  },
+  "target_pack": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2",
+  "plan": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/check2/native_operator_plan.json",
+  "fixed_evaluation_pixels": 38416,
+  "keep_pixels": 77266,
+  "plane_fallback_pixels": 218,
+  "negative_capacity_exact_G_s_pixels": 38198,
+  "negative_lower_bound_safety_margin": 1e-05,
+  "negative_evidence_rule": "native numerical verification then exact-G_s lower f-G-1e-5 > objective tolerance; fallback and boundary cases inconclusive",
+  "scope": {
+    "primary_rows": 112058,
+    "conditional_relaxed_rows": 151096,
+    "original_guard_world_rows": 3165,
+    "archived_conservative_active_guard": 38982,
+    "union_guard_world_rows": 38982,
+    "conditional_relaxed_role": "road-only capacity diagnosis; never production or keep preservation"
+  },
+  "teacher_source": "independent canonical G_s mesh hit plus explicit plane fallback; analytic world RGB, not GS RGB",
+  "case_sampling": [
+    {
+      "raw": 86,
+      "cases": [
+        {
+          "case": "constant",
+          "main_pixels": 3679,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "lowfreq",
+          "main_pixels": 3679,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "marking_w120",
+          "main_pixels": 3679,
+          "paint_pixels": 77,
+          "resolved_detail_pixels": 305,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            2.273342921997078,
+            3.925206176607838,
+            4.554176103133569,
+            4.909383036309302,
+            5.621640187619361
+          ],
+          "period_px_quantiles": [
+            3.805047602110018,
+            13.582918856708975,
+            17.238794646281356,
+            20.623578205693352,
+            370.66437364099806
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "marking_w240",
+          "main_pixels": 3679,
+          "paint_pixels": 156,
+          "resolved_detail_pixels": 616,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            4.546685843994156,
+            7.879360530811756,
+            9.072036632933235,
+            9.844901412146772,
+            11.272084297602975
+          ],
+          "period_px_quantiles": [
+            3.805047602110018,
+            13.583637115378178,
+            17.671630992021242,
+            23.51161170942465,
+            380.4580168586843
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "stress_highfreq",
+          "main_pixels": 3679,
+          "paint_pixels": 19,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 66,
+          "asphalt_nyquist_exceeded_pixels": 3078,
+          "width_px_quantiles": [
+            0.6836079614141398,
+            0.827526524830936,
+            0.9411776260021534,
+            1.0241159207624868,
+            1.171175039087367
+          ],
+          "period_px_quantiles": [
+            0.35663082055926987,
+            0.46557496175723584,
+            0.5533860456860502,
+            0.6797049790521978,
+            11.997616870539963
+          ],
+          "gate_role": "diagnostic_only_never_capability_failure"
+        }
+      ]
+    },
+    {
+      "raw": 110,
+      "cases": [
+        {
+          "case": "constant",
+          "main_pixels": 7459,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "lowfreq",
+          "main_pixels": 7459,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "marking_w120",
+          "main_pixels": 7459,
+          "paint_pixels": 187,
+          "resolved_detail_pixels": 669,
+          "undersampled_line_pixels": 1,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            2.993669294639673,
+            5.080016874226374,
+            6.047262939741455,
+            6.862751038460678,
+            7.883290752026789
+          ],
+          "period_px_quantiles": [
+            6.037375310980706,
+            22.449327424790333,
+            31.67366845800676,
+            51.85720947503095,
+            473.5195488234763
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "marking_w240",
+          "main_pixels": 7459,
+          "paint_pixels": 352,
+          "resolved_detail_pixels": 1300,
+          "undersampled_line_pixels": 1,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            5.987338589279346,
+            10.154938377747332,
+            12.321476307714363,
+            13.774546760289903,
+            15.766581504053578
+          ],
+          "period_px_quantiles": [
+            5.732430844893839,
+            22.80226699704492,
+            32.849649247660984,
+            54.24886074001374,
+            491.3236434792393
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "stress_highfreq",
+          "main_pixels": 7459,
+          "paint_pixels": 45,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 149,
+          "asphalt_nyquist_exceeded_pixels": 6211,
+          "width_px_quantiles": [
+            0.8166111564272884,
+            1.0756656757958856,
+            1.2506042701023066,
+            1.4088767004426574,
+            1.633773297472337
+          ],
+          "period_px_quantiles": [
+            0.4910154244821816,
+            0.7606806436424861,
+            0.9731829974996671,
+            1.4821939174678724,
+            15.112701211347256
+          ],
+          "gate_role": "diagnostic_only_never_capability_failure"
+        }
+      ]
+    },
+    {
+      "raw": 134,
+      "cases": [
+        {
+          "case": "constant",
+          "main_pixels": 8536,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "lowfreq",
+          "main_pixels": 8536,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "marking_w120",
+          "main_pixels": 8536,
+          "paint_pixels": 197,
+          "resolved_detail_pixels": 738,
+          "undersampled_line_pixels": 1,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            1.3155412068065482,
+            5.367870237968398,
+            6.771056694331941,
+            7.8919539785847626,
+            8.54880380484954
+          ],
+          "period_px_quantiles": [
+            2.0772360605304296,
+            25.113232326959213,
+            39.2931376792894,
+            65.54016944971312,
+            501.6057822728452
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "marking_w240",
+          "main_pixels": 8536,
+          "paint_pixels": 396,
+          "resolved_detail_pixels": 1454,
+          "undersampled_line_pixels": 1,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            2.6310824136130964,
+            10.88964379113952,
+            13.602961622843369,
+            15.822880771433056,
+            17.09760760969908
+          ],
+          "period_px_quantiles": [
+            2.0772360605304296,
+            25.62669447878703,
+            40.2703435706813,
+            69.08968443489093,
+            521.3305020160274
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "stress_highfreq",
+          "main_pixels": 8536,
+          "paint_pixels": 45,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 164,
+          "asphalt_nyquist_exceeded_pixels": 7062,
+          "width_px_quantiles": [
+            0.8467032833497482,
+            1.1033492957659208,
+            1.4200293822984245,
+            1.6599202310484804,
+            1.7792309042469845
+          ],
+          "period_px_quantiles": [
+            0.5244985746366769,
+            0.8325944946659236,
+            1.2683656565732568,
+            2.0631301708033356,
+            16.061969002392743
+          ],
+          "gate_role": "diagnostic_only_never_capability_failure"
+        }
+      ]
+    },
+    {
+      "raw": 179,
+      "cases": [
+        {
+          "case": "constant",
+          "main_pixels": 9242,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "lowfreq",
+          "main_pixels": 9242,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "marking_w120",
+          "main_pixels": 9242,
+          "paint_pixels": 228,
+          "resolved_detail_pixels": 850,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            1.4914168041097897,
+            5.442152461668862,
+            6.5449989448436625,
+            7.400473219957969,
+            8.556722452870872
+          ],
+          "period_px_quantiles": [
+            2.4109002331239977,
+            25.260841033959753,
+            36.07945225857914,
+            66.25464770849037,
+            500.7745370405938
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "marking_w240",
+          "main_pixels": 9242,
+          "paint_pixels": 466,
+          "resolved_detail_pixels": 1745,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": [
+            2.9828336082195794,
+            10.988788207765442,
+            13.114066799847016,
+            14.99901200246314,
+            17.117570787886624
+          ],
+          "period_px_quantiles": [
+            2.4109002331239977,
+            25.852834318831853,
+            37.33424614059399,
+            68.56732977093185,
+            520.3394988290147
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "stress_highfreq",
+          "main_pixels": 9242,
+          "paint_pixels": 52,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 180,
+          "asphalt_nyquist_exceeded_pixels": 7706,
+          "width_px_quantiles": [
+            0.8514808212077006,
+            1.1402762852891406,
+            1.3841879140967044,
+            1.5437280914789773,
+            1.7826505110147652
+          ],
+          "period_px_quantiles": [
+            0.52857602170532,
+            0.8421421603303564,
+            1.1683672817721051,
+            2.206961122629149,
+            16.035766003487353
+          ],
+          "gate_role": "diagnostic_only_never_capability_failure"
+        }
+      ]
+    },
+    {
+      "raw": 198,
+      "cases": [
+        {
+          "case": "constant",
+          "main_pixels": 9500,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 0,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "lowfreq",
+          "main_pixels": 9500,
+          "paint_pixels": 0,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 0,
+          "asphalt_nyquist_exceeded_pixels": 2,
+          "width_px_quantiles": null,
+          "period_px_quantiles": null,
+          "gate_role": "primary"
+        },
+        {
+          "case": "marking_w120",
+          "main_pixels": 9500,
+          "paint_pixels": 250,
+          "resolved_detail_pixels": 884,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 2,
+          "width_px_quantiles": [
+            1.503765252492007,
+            5.473844099578459,
+            6.4753137110622845,
+            7.391841744616552,
+            8.559207756882394
+          ],
+          "period_px_quantiles": [
+            2.427790930279531,
+            25.452085918021375,
+            35.82158229602577,
+            62.23735162387697,
+            500.8082105244141
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "marking_w240",
+          "main_pixels": 9500,
+          "paint_pixels": 499,
+          "resolved_detail_pixels": 1796,
+          "undersampled_line_pixels": 2,
+          "asphalt_nyquist_exceeded_pixels": 2,
+          "width_px_quantiles": [
+            3.007530504984014,
+            11.017232477290868,
+            13.030816980244186,
+            14.890134925754904,
+            17.15880078673744
+          ],
+          "period_px_quantiles": [
+            2.427790930279531,
+            25.853871431730855,
+            36.94784744217403,
+            67.58568918721267,
+            520.372555977582
+          ],
+          "gate_role": "resolved_detail_only"
+        },
+        {
+          "case": "stress_highfreq",
+          "main_pixels": 9500,
+          "paint_pixels": 54,
+          "resolved_detail_pixels": 0,
+          "undersampled_line_pixels": 187,
+          "asphalt_nyquist_exceeded_pixels": 7927,
+          "width_px_quantiles": [
+            0.8531268383202485,
+            1.1521501131282255,
+            1.3646001856413885,
+            1.5414007954557891,
+            1.7831682826838324
+          ],
+          "period_px_quantiles": [
+            0.5300244344033779,
+            0.8615741175306058,
+            1.163062098025276,
+            2.01783597029491,
+            16.036944300571992
+          ],
+          "gate_role": "diagnostic_only_never_capability_failure"
+        }
+      ]
+    }
+  ],
+  "error_boundaries": [
+    "global plane differs materially from G_s; only 218 declared fallback points use it",
+    "main pixel-center convention and resolvable detail strata are explicit",
+    "fixed baseline RGB is a forward offset, not synthetic truth",
+    "CPU eligibility/center-triangle guard flags are not actual native alphaT attribution"
+  ],
+  "human_verdict": null,
+  "failure_ledger_delta": "none; preparation only"
+}

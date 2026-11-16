@@ -1,0 +1,387 @@
+{
+  "schema": "road_capacity_check1_supervision_summary.v1",
+  "status": "CPU_PREPARED_AWAIT_USER_GPU",
+  "GPU_operations": 0,
+  "training_updates": 0,
+  "new_scene_renders": 0,
+  "formal_ready": false,
+  "evidence": {
+    "report": "supervision_code/README.md",
+    "architecture": "supervision_code/architecture.svg",
+    "identity": "supervision_source_identity_r1/source_identity.json",
+    "candidate": "supervision_v4_candidate_r1",
+    "acceptance": "supervision_cpu_acceptance_r2/acceptance.json",
+    "missing_world": "supervision_missing_world_r2/full_C_missing_world_breakdown.json",
+    "visibility": "supervision_visibility_r1/shadow_coverage_and_visibility.json",
+    "crossview": "supervision_v4_candidate_r1/crossview/conflicts_and_missing_support.json"
+  },
+  "CPU_tests_passed": 8,
+  "CPU_acceptance": {
+    "status": "PASS",
+    "checks": 35
+  },
+  "candidates": [
+    {
+      "raw": 86,
+      "stats": {
+        "native_target_shadow_possible": 24541,
+        "native_target_shadow_interior": 18338,
+        "native_target_other_shadow_overlap": 0,
+        "native_safe_shadow_interior": 18338,
+        "target_shadow_possible_pixels": 1665,
+        "native_shadow_outside_original_teacher_write": 0,
+        "target_shadow_full_footprint_pixels": 1043,
+        "S_target_shadow_pixels": 1043,
+        "S_photo_pixels": 820,
+        "S_no_geometry": 0,
+        "S_projection_guarded": 0,
+        "S_initial_thin_excluded": 223,
+        "S_q_sum": 820.0,
+        "shadow_boundary_unknown_pixels": 716,
+        "other_shadow_predicted_guard_pixels": 4989,
+        "C_other_shadow_conflict_pixels": 50,
+        "A_kept_real_non_target_shadow_pixels": 1002,
+        "A_removed_target_shadow_conflict": 0,
+        "A_photo_pixels": 5409,
+        "C_photo_pixels": 3598,
+        "C_geometry_pixels": 3606,
+        "C_color_added_by_removing_F0_requirement": 102,
+        "outside_pixels": 127536,
+        "original_K_preserved_exactly": true,
+        "association_uncertainty": 0.24734288454055786,
+        "shadow_weight_mode": "binary",
+        "shadow_weights_calibrated": false,
+        "shadow_boundary_as_GT": false,
+        "formal_updates": 0,
+        "GPU_operations": 0
+      }
+    },
+    {
+      "raw": 110,
+      "stats": {
+        "native_target_shadow_possible": 45235,
+        "native_target_shadow_interior": 36748,
+        "native_target_other_shadow_overlap": 0,
+        "native_safe_shadow_interior": 36748,
+        "target_shadow_possible_pixels": 2980,
+        "native_shadow_outside_original_teacher_write": 0,
+        "target_shadow_full_footprint_pixels": 2144,
+        "S_target_shadow_pixels": 2144,
+        "S_photo_pixels": 1402,
+        "S_no_geometry": 0,
+        "S_projection_guarded": 0,
+        "S_initial_thin_excluded": 742,
+        "S_q_sum": 1402.0,
+        "shadow_boundary_unknown_pixels": 934,
+        "other_shadow_predicted_guard_pixels": 3701,
+        "C_other_shadow_conflict_pixels": 70,
+        "A_kept_real_non_target_shadow_pixels": 1696,
+        "A_removed_target_shadow_conflict": 0,
+        "A_photo_pixels": 11495,
+        "C_photo_pixels": 7232,
+        "C_geometry_pixels": 7415,
+        "C_color_added_by_removing_F0_requirement": 119,
+        "outside_pixels": 114985,
+        "original_K_preserved_exactly": true,
+        "association_uncertainty": 0.26448845863342285,
+        "shadow_weight_mode": "binary",
+        "shadow_weights_calibrated": false,
+        "shadow_boundary_as_GT": false,
+        "formal_updates": 0,
+        "GPU_operations": 0
+      }
+    }
+  ],
+  "visibility": [
+    {
+      "raw": 86,
+      "groups": {
+        "full_S_target_shadow": {
+          "pixels": 1043,
+          "road_only_coverage": {
+            "gap_lt_point05": 164,
+            "thin_point05_to_point9": 59,
+            "support_gt_point9": 820
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 150,
+            "positive_le_point05": 14,
+            "gt_point05": 879,
+            "mean": 0.7497109174728394,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.9502003192901611,
+              0.9998575329780579,
+              0.9998999238014221
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              150,
+              14,
+              0
+            ],
+            [
+              0,
+              0,
+              59
+            ],
+            [
+              0,
+              0,
+              820
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 224,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        },
+        "photo_S_target_shadow": {
+          "pixels": 820,
+          "road_only_coverage": {
+            "gap_lt_point05": 0,
+            "thin_point05_to_point9": 0,
+            "support_gt_point9": 820
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 0,
+            "positive_le_point05": 0,
+            "gt_point05": 820,
+            "mean": 0.9239230155944824,
+            "quantiles": [
+              0.38755354285240173,
+              0.7522673070430755,
+              0.9797887802124023,
+              0.9998681128025055,
+              0.9998999238014221
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              820
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 18,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        },
+        "S_excluded_low_reference_alpha": {
+          "pixels": 223,
+          "road_only_coverage": {
+            "gap_lt_point05": 164,
+            "thin_point05_to_point9": 59,
+            "support_gt_point9": 0
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 150,
+            "positive_le_point05": 14,
+            "gt_point05": 59,
+            "mean": 0.10911019146442413,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.45486422777175906,
+              0.8846637010574341
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              150,
+              14,
+              0
+            ],
+            [
+              0,
+              0,
+              59
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 206,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "groups": {
+        "full_S_target_shadow": {
+          "pixels": 2144,
+          "road_only_coverage": {
+            "gap_lt_point05": 609,
+            "thin_point05_to_point9": 133,
+            "support_gt_point9": 1402
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 560,
+            "positive_le_point05": 49,
+            "gt_point05": 1535,
+            "mean": 0.6842827796936035,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.9991244375705719,
+              0.9998888969421387,
+              0.9999000430107117
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              560,
+              49,
+              0
+            ],
+            [
+              0,
+              0,
+              133
+            ],
+            [
+              0,
+              0,
+              1402
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 666,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        },
+        "photo_S_target_shadow": {
+          "pixels": 1402,
+          "road_only_coverage": {
+            "gap_lt_point05": 0,
+            "thin_point05_to_point9": 0,
+            "support_gt_point9": 1402
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 0,
+            "positive_le_point05": 0,
+            "gt_point05": 1402,
+            "mean": 0.9968741536140442,
+            "quantiles": [
+              0.784944474697113,
+              0.9948586106300354,
+              0.9997920095920563,
+              0.9998943746089936,
+              0.9999000430107117
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1402
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 0,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        },
+        "S_excluded_low_reference_alpha": {
+          "pixels": 742,
+          "road_only_coverage": {
+            "gap_lt_point05": 609,
+            "thin_point05_to_point9": 133,
+            "support_gt_point9": 0
+          },
+          "joint_road_alphaT": {
+            "exact_zero": 560,
+            "positive_le_point05": 49,
+            "gt_point05": 133,
+            "mean": 0.09364508092403412,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.0,
+              0.5087055146694182,
+              0.8928596377372742
+            ]
+          },
+          "coverage_by_joint_contribution_matrix": [
+            [
+              560,
+              49,
+              0
+            ],
+            [
+              0,
+              0,
+              133
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "static_alphaT_dominant_pixels": 666,
+          "dynamic_alphaT_dominant_pixels": 0,
+          "joint_road_alphaT_exceeds_road_only_alpha_gt_2e_6": 0
+        }
+      }
+    }
+  ],
+  "missing_world": [
+    {
+      "raw": 86,
+      "full_2d_C": 6028,
+      "world_triangle_missing": 1070,
+      "exclusive_missing_reasons": {
+        "protected_retained_projection_or_K": 1041,
+        "legacy_near_or_outside": 0,
+        "original_raw_teacher_write_unavailable": 0,
+        "unprotected_mesh_miss_unresolved": 29
+      }
+    },
+    {
+      "raw": 110,
+      "full_2d_C": 11035,
+      "world_triangle_missing": 1269,
+      "exclusive_missing_reasons": {
+        "protected_retained_projection_or_K": 1236,
+        "legacy_near_or_outside": 0,
+        "original_raw_teacher_write_unavailable": 0,
+        "unprotected_mesh_miss_unresolved": 33
+      }
+    }
+  ],
+  "old_sources_and_runs_modified": false,
+  "prior_failed_comparator_preserved": true,
+  "future_GPU_entry_requirements": [
+    "user starts GPU; no automatic launch/controller exists",
+    "freeze common color-only initialization and rebind fixed initial alpha",
+    "actual A/C/S alphaT contribution and S_seen color eligibility, retaining prior ledgers",
+    "fixed full-S max opacity/absolute tangent-sigma coverage preflight",
+    "actual joint K and stage/save/reload lifecycle before formal comparison"
+  ],
+  "human_teacher_quality_verdict": null
+}

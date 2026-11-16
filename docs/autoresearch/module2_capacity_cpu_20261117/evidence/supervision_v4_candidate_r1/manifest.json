@@ -1,0 +1,279 @@
+{
+  "schema": "road_capacity_supervision_v4_candidate.v1",
+  "teacher_frames": [
+    86,
+    110
+  ],
+  "diagnostic_only": [
+    134,
+    179,
+    198
+  ],
+  "candidate_only": true,
+  "formal_ready": false,
+  "teacher_human_verdict": null,
+  "shadow_model_calibrated": false,
+  "q_S": "binary full-native-footprint eligibility inside inherited confident target-shadow interior; not calibrated probability of teacher correctness",
+  "C_hole": "physical teacher geometry independent of old F0 color availability; non-target-shadow prediction conflicts excluded/reported",
+  "S_target_shadow": "inherited high/low-uncertainty target pair interior, no uncertain boundary, original raw teacher W_guard, actual road geometry and retained guards",
+  "A": "original real visible road, no predicted target-shadow or uncertain boundary conflict; non-target shadow appearance may remain real A",
+  "colors": "native sRGB raw 2D completion; black-background premult photo protocol; no RGB/alpha or fitted exposure",
+  "coverage": "A/C/S full geometry domains separately recorded; proposed capacity comparison freezes geometry/opacity/scales, so no coverage updates authorized",
+  "outside": "~(A_visible|C_hole|S_target_shadow|K); unresolved boundary/teacher-missing remains preservation-only",
+  "weights_recommendation_not_training_contract": {
+    "A": 1.0,
+    "C_hole": 0.5,
+    "S_target_shadow": 0.25,
+    "shadow_edge": 0.0,
+    "normalization": "each domain divided by its own fixed q sum; no thresholds or weights tuned from crossview residuals"
+  },
+  "GPU_operations": 0,
+  "training_updates": 0,
+  "new_render_operations": 0,
+  "old_source_or_run_modified": false,
+  "rows": [
+    {
+      "raw": 86,
+      "candidate": {
+        "native_target_shadow_possible": 24541,
+        "native_target_shadow_interior": 18338,
+        "native_target_other_shadow_overlap": 0,
+        "native_safe_shadow_interior": 18338,
+        "target_shadow_possible_pixels": 1665,
+        "native_shadow_outside_original_teacher_write": 0,
+        "target_shadow_full_footprint_pixels": 1043,
+        "S_target_shadow_pixels": 1043,
+        "S_photo_pixels": 820,
+        "S_no_geometry": 0,
+        "S_projection_guarded": 0,
+        "S_initial_thin_excluded": 223,
+        "S_q_sum": 820.0,
+        "shadow_boundary_unknown_pixels": 716,
+        "other_shadow_predicted_guard_pixels": 4989,
+        "C_other_shadow_conflict_pixels": 50,
+        "A_kept_real_non_target_shadow_pixels": 1002,
+        "A_removed_target_shadow_conflict": 0,
+        "A_photo_pixels": 5409,
+        "C_photo_pixels": 3598,
+        "C_geometry_pixels": 3606,
+        "C_color_added_by_removing_F0_requirement": 102,
+        "outside_pixels": 127536,
+        "original_K_preserved_exactly": true,
+        "association_uncertainty": 0.24734288454055786,
+        "shadow_weight_mode": "binary",
+        "shadow_weights_calibrated": false,
+        "shadow_boundary_as_GT": false,
+        "formal_updates": 0,
+        "GPU_operations": 0
+      },
+      "world_mapping": {
+        "legacy_full_C_footprint": {
+          "pixels": 6028,
+          "valid_triangle_world_pixels": 4958,
+          "invalid_triangle_world_pixels": 1070,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.0262341273233914e-11,
+          "mapped_unique_world_rows": 12025,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "C_hole_geometry": {
+          "pixels": 3606,
+          "valid_triangle_world_pixels": 3606,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.0262341273233914e-11,
+          "mapped_unique_world_rows": 8316,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "C_hole_photo": {
+          "pixels": 3598,
+          "valid_triangle_world_pixels": 3598,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.0262341273233914e-11,
+          "mapped_unique_world_rows": 8316,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_possible": {
+          "pixels": 1665,
+          "valid_triangle_world_pixels": 1549,
+          "invalid_triangle_world_pixels": 116,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 2.7151049417990034e-11,
+          "mapped_unique_world_rows": 3173,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_full_footprint": {
+          "pixels": 1043,
+          "valid_triangle_world_pixels": 1043,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 2.6320712735116037e-11,
+          "mapped_unique_world_rows": 2170,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_qualified": {
+          "pixels": 1043,
+          "valid_triangle_world_pixels": 1043,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 2.6320712735116037e-11,
+          "mapped_unique_world_rows": 2170,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_photo": {
+          "pixels": 820,
+          "valid_triangle_world_pixels": 820,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 2.6320712735116037e-11,
+          "mapped_unique_world_rows": 1745,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_boundary_unknown": {
+          "pixels": 716,
+          "valid_triangle_world_pixels": 558,
+          "invalid_triangle_world_pixels": 158,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 2.939816108070925e-11,
+          "mapped_unique_world_rows": 1205,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "A_visible": {
+          "pixels": 5611,
+          "valid_triangle_world_pixels": 5611,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.901136131053526e-11,
+          "mapped_unique_world_rows": 13189,
+          "mapped_rows_are_not_renderer_contributors": true
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "candidate": {
+        "native_target_shadow_possible": 45235,
+        "native_target_shadow_interior": 36748,
+        "native_target_other_shadow_overlap": 0,
+        "native_safe_shadow_interior": 36748,
+        "target_shadow_possible_pixels": 2980,
+        "native_shadow_outside_original_teacher_write": 0,
+        "target_shadow_full_footprint_pixels": 2144,
+        "S_target_shadow_pixels": 2144,
+        "S_photo_pixels": 1402,
+        "S_no_geometry": 0,
+        "S_projection_guarded": 0,
+        "S_initial_thin_excluded": 742,
+        "S_q_sum": 1402.0,
+        "shadow_boundary_unknown_pixels": 934,
+        "other_shadow_predicted_guard_pixels": 3701,
+        "C_other_shadow_conflict_pixels": 70,
+        "A_kept_real_non_target_shadow_pixels": 1696,
+        "A_removed_target_shadow_conflict": 0,
+        "A_photo_pixels": 11495,
+        "C_photo_pixels": 7232,
+        "C_geometry_pixels": 7415,
+        "C_color_added_by_removing_F0_requirement": 119,
+        "outside_pixels": 114985,
+        "original_K_preserved_exactly": true,
+        "association_uncertainty": 0.26448845863342285,
+        "shadow_weight_mode": "binary",
+        "shadow_weights_calibrated": false,
+        "shadow_boundary_as_GT": false,
+        "formal_updates": 0,
+        "GPU_operations": 0
+      },
+      "world_mapping": {
+        "legacy_full_C_footprint": {
+          "pixels": 11035,
+          "valid_triangle_world_pixels": 9766,
+          "invalid_triangle_world_pixels": 1269,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.933844890450689e-11,
+          "mapped_unique_world_rows": 19044,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "C_hole_geometry": {
+          "pixels": 7415,
+          "valid_triangle_world_pixels": 7415,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.933844890450689e-11,
+          "mapped_unique_world_rows": 13490,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "C_hole_photo": {
+          "pixels": 7232,
+          "valid_triangle_world_pixels": 7232,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.933844890450689e-11,
+          "mapped_unique_world_rows": 13484,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_possible": {
+          "pixels": 2980,
+          "valid_triangle_world_pixels": 2859,
+          "invalid_triangle_world_pixels": 121,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 4.2500976982215356e-11,
+          "mapped_unique_world_rows": 3777,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_full_footprint": {
+          "pixels": 2144,
+          "valid_triangle_world_pixels": 2144,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 4.093934889002743e-11,
+          "mapped_unique_world_rows": 2906,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_qualified": {
+          "pixels": 2144,
+          "valid_triangle_world_pixels": 2144,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 4.093934889002743e-11,
+          "mapped_unique_world_rows": 2906,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_photo": {
+          "pixels": 1402,
+          "valid_triangle_world_pixels": 1402,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 3.256388753207713e-11,
+          "mapped_unique_world_rows": 2072,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "target_shadow_boundary_unknown": {
+          "pixels": 934,
+          "valid_triangle_world_pixels": 807,
+          "invalid_triangle_world_pixels": 127,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 4.2500976982215356e-11,
+          "mapped_unique_world_rows": 1220,
+          "mapped_rows_are_not_renderer_contributors": true
+        },
+        "A_visible": {
+          "pixels": 11901,
+          "valid_triangle_world_pixels": 11901,
+          "invalid_triangle_world_pixels": 0,
+          "barycentric_world_error_max_m": 0.0,
+          "original_camera_reprojection_error_max_pixels": 7.4693247352604e-11,
+          "mapped_unique_world_rows": 21189,
+          "mapped_rows_are_not_renderer_contributors": true
+        }
+      }
+    }
+  ],
+  "required_before_GPU_training": [
+    "confirm candidate masks/teacher quality",
+    "freeze initialization and revalidate fixed alpha gate",
+    "actual A/C/S renderer contribution scopes and protected row guard",
+    "actual joint full-K and lifecycle smoke"
+  ],
+  "prior_scope_note": "cpu_world_request is geometric mapping only, never an actual alphaT eligibility certificate"
+}

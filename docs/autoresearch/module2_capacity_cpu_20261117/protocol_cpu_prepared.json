@@ -1,0 +1,202 @@
+{
+  "schema": "road_practical_capacity_cpu_protocol.v1",
+  "task_id": "MODULE2-CAPACITY-CPU-20261117",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1",
+  "status": "CPU_PREPARED_WAIT_FOR_USER_GPU",
+  "gpu_execution_authorized": false,
+  "automatic_controller": false,
+  "real_scene_optimizer_updates_this_turn": 0,
+  "native_raster_calls_this_turn": 0,
+  "new_model_inferences_this_turn": 0,
+  "objective": "bound practical performance at declared fixed geometry, resolution and constraints; do not equate a failed run with a 3DGS representation limit",
+  "protocol_authority": "this parent governs future execution; earlier child CPU plans/targets remain preparation evidence, not authorization. In particular the color-certificate q is explicitly D_color below, while source target NPZ retain full D",
+  "canonical": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+    "frames": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "render_wh": [
+      480,
+      320
+    ],
+    "inherited_build_frames": 199,
+    "road_evaluation_pixels": 38416,
+    "keep_pixels": 77266,
+    "init": "old S2 shader c0, not the striped direct-C final",
+    "fixed": [
+      "xyz/height/normals",
+      "opacity and tangent/normal scales in color-only pair",
+      "active/topology/density",
+      "native static/gates",
+      "vehicles/trajectory",
+      "environment/cameras",
+      "all pretrained theta and SD/LoRA/TRELLIS",
+      "z/eta not introduced"
+    ],
+    "guard": "existing r4 maximum-footprint 38982 active-row guard plus original protected/near guards; conservative constraint explicitly reported"
+  },
+  "check1": {
+    "role": "supervision sufficiency",
+    "candidate": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1",
+    "domains": {
+      "A": "real visible road, with target shadow contamination excluded",
+      "C": "legal physical road hole, independent of F0 color validity",
+      "S": "target-associated high-confidence shadow interior inside original 2D teacher write domain",
+      "U": "unqualified shadow boundary/ambiguous association, not ground truth",
+      "K": "retained objects; predicted non-target shadow conflicts separately protected"
+    },
+    "shadow_policy": "reuse frozen p>=0.6/u<=0.35 and2px boundary exclusion; full4x4 native footprint; binary eligibility q is not calibrated correctness",
+    "eligibility": "actual future A_seen or S_seen may update effective known RGB; C-only trusted-known remains protected. Immutable measured/prior ledger never overwritten",
+    "disjoint_losses": "A/C/S independently normalized; outside preservation excludes their full authorized coverage, not only high-alpha photo masks",
+    "full_denominators": "full S, boundary, no-geometry, projection-protected and low-alpha pixels remain separate reported denominators",
+    "conflict": "same-world cross-view teacher disagreement reported separately from real A disagreement; no hidden-road or de-shadow GT claim",
+    "next_native_gate": "actual S_seen gradient and K constraints; full-S maximum-allowed opacity/absolute-scale controllability before interpreting color failures",
+    "stop_rule": "missing teacher, conflicting ownership/target, no writable S contribution or unresolved coverage cannot justify a larger generator"
+  },
+  "check2": {
+    "role": "world-consistent ideal-teacher capacity",
+    "targets": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2",
+    "target": "independent analytic asphalt/paint evaluated on frozen G_s mesh ray hits; never GS self-rendering as truth",
+    "cases": [
+      "constant",
+      "lowfreq",
+      "marking_w120",
+      "marking_w240",
+      "stress_highfreq"
+    ],
+    "camera_role": "all five supervised for this oracle; not novel-view generalization",
+    "geometry_missing": "218 fixed mesh-miss pixels remain in full38416 report with declared plane fallback. Exact-G_s38198 and fallback strata separate; fallback mismatch cannot certify a representation failure",
+    "opacity_strata": "soft premultiplied color feasibility is interpreted only on pre-frozen exact-G_s and reference-alpha>0.9 stratum. Full38416 still reports gaps/thin/support and the opaque-target range floor; alpha0 making both sides0 is never success",
+    "coverage_floor": "for opaque ideal T and black-background nonnegative native weights, 0.5*mean(max(T-alpha_ref,0)^2) is a conditional coverage-range floor; native operator assumptions must be revalidated after GPU authorization",
+    "detail": "known curve/width/period/phase, flat-top paint with fixed soft edge; projected width, dash-on and dash-off each>=3px as predeclared resolvable stratum; subpixel stress never a failure criterion",
+    "operator": "fixed native premult RGB is affine in bounded independent road ci; native linearity/adjoint must be verified after user GPU authorization",
+    "objective": "0.5 times fixed-q weighted mean RGB squared premult error on D_color=D_full & exact-G_s & alpha_ref>0.9; q=1 on D_color and0 elsewhere. f, gradient and FW gap use this identical fixed q and denominator3*sum(q); primary edge weight0; no RGB/alpha",
+    "color_certificate_domain": "positive feasibility and negative RGB certificate both use the same D_color, not the whole exact-G_s stratum. Full38416/exact38198/fallback218 and gap/thin remain separately reported. Counts in check2/color_strata_receipt.json; opaque coverage-floor target is separate",
+    "color_strata_counts": {
+      "D_full": 38416,
+      "D_exact": 38198,
+      "D_color": 37206,
+      "q_sum": 37206,
+      "RGB_denominator": 111618
+    },
+    "certificate": "for feasible ci in[0,1], FW gap=sum(gi*ci-min(gi,0)); f*=between max(0,f-gap) and f. Use numerical safety margin1e-5 after native linearity/adjoint validation. CPU toy validates the math only",
+    "conclusion_rule": "a feasible output meeting RGB and detail criteria witnesses capacity. A certified RGB-objective failure requires L_safe=max(0,f-gap-1e-5) strictly above the registered objective tolerance; small gap alone is insufficient. Bounds straddling tolerance, optimizer plateau or time cap mean inconclusive. RGB optimality alone cannot prove an arbitrary nonlinear detail metric impossible",
+    "numeric_certificate_gate": "native objective plus box-gradient error contribution must have a conservative combined bound<=1e-5; native linearity/adjoint spot checks alone do not establish this bound. If not established, no negative certificate and the result remains inconclusive",
+    "error_envelope": {
+      "reference_RGB_RMSE": 0.00784313725490196,
+      "registered_RMSE_levels": [
+        0.00392156862745098,
+        0.00784313725490196,
+        0.01568627450980392
+      ],
+      "line_center_error_px": 1,
+      "resolvable_line_edge_F1": 0.9,
+      "detail_contrast_retention": 0.9,
+      "objective_tolerances": [
+        7.689350249903882e-06,
+        3.075740099961553e-05,
+        0.00012302960399846212
+      ],
+      "interpretation": "engineering reference levels, not universal perceptual equivalence or an automatic model-switch threshold"
+    },
+    "work_cap": {
+      "max_iterations_per_case": 500,
+      "max_seconds_per_case": 300,
+      "extend_automatically": false
+    },
+    "conditional_scope_relaxation": "if protected-color floor dominates, a separately tagged virtual road-only all-color oracle isolates this constraint; no geometry edits and never production promotion"
+  },
+  "check3": {
+    "role": "real-teacher parameterization stability",
+    "targets": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1",
+    "training_frames": [
+      86,
+      110
+    ],
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "seed": 101,
+    "pair": [
+      {
+        "name": "I0",
+        "model": "independent per-Gaussian delta_ci",
+        "world_TV": 0
+      },
+      {
+        "name": "W4",
+        "model": "shared bilinear metric-worldXY delta_F",
+        "texel_spacing_m": 0.04,
+        "world_TV": 0
+      }
+    ],
+    "init": "both corrections zero on exact common c0; same masks/targets/scope/sampler/coverage/operator/optimizer/budget",
+    "scope": "new V4 actual alphaT requalification required; historical78421-row basis preview is not a training authorization",
+    "RGB": "clip(c0+delta,0,1), native sRGB appearance; W4 continuous correction and identical frozen-row overrides saved separately",
+    "delta_node_bounds": [
+      -1,
+      1
+    ],
+    "node_bound_boundary": "I0 row-delta box is redundant for [0,1] c0 shader reachability; W4 node box can reduce attainable clipped shared-field colors. This is the declared bounded W4 method, not an unconstrained continuous-field capacity claim. Do not attribute a W4 failure solely to basis or generative prior without separating this constraint floor",
+    "objective": {
+      "A_photo": 1,
+      "C_photo": 0.5,
+      "S_photo": 0.5,
+      "edge_A": 0.1,
+      "edge_C": 0.01,
+      "edge_S": 0,
+      "outside_RGB": 1,
+      "retained_RGB": 4,
+      "effective_row_delta_squared": 0.001
+    },
+    "prior_normalization": "same effective row RGB mean in both arms, not mean over their different parameter counts",
+    "optimizer": {
+      "name": "Adam",
+      "lr": 0.01,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0
+    },
+    "steps_per_arm": 200,
+    "coverage": "fixed old S2 for primary color comparison; low-coverage full-S pixels remain a separately reported limitation, not color-fit failures",
+    "joint_gate": {
+      "teacher_A_C_S_noninferiority": "W4 no more than I0 +1/255 absolute MAE per domain/frame",
+      "directional_striping": "on one pre-frozen baseline-alpha-qualified mask, E=mean absolute vertical second difference RGB. Compare excess E_I0-E_c0 and E_W4-E_c0; target>=50% reduction only if I0 positive excess exists. Nonpositive excess is not-applicable and does not establish shared necessity. Report both axes, delta-energy and native crops; detail/fit gates also required",
+      "details": "check ideal resolvable paint and trusted real visible detail; C/S do not supply hidden-road GT or unknown dash phase",
+      "K": "all77266 joint RGB exact unchanged",
+      "persistence": "actual native reload maxRGB/alpha<=1e-6; RGB8 separately"
+    },
+    "conditional_I_reg": {
+      "enabled": false,
+      "rule": "only if needed to distinguish basis sharing from simple regularization; fixed world-neighbor TV(delta) weight.02, no real-data spacing/LR sweep",
+      "interpretation": "if regularized independent RGB also succeeds, shared atlas is not proved necessary"
+    },
+    "clip_boundary": "shared W4 with clipping is not the independent-ci box-LS global certificate"
+  },
+  "TRELLIS_decision": {
+    "current": "not justified as a drop-in switch by existing evidence",
+    "conditional_pilot": "only after supervision/coverage problems are separated, ideal GS capacity is established, and residual real-material failure motivates a stronger joint spatial prior",
+    "promotion": "requires positive small held-out fixed-geometry material adaptation comparison against incumbent, matched legal information/regions and explicit cost/detail/K checks",
+    "no_automatic_zero_shot_veto": "historical one zero-shot negative does not rule out post-training",
+    "no_model_size_as_fix": "missing/conflicting targets or fixed-operator bandwidth limits are not repaired merely by model size",
+    "model_role": "generative material prior may coexist with3DGS renderer; no need to regenerate already trusted road geometry"
+  },
+  "runtime_gate": {
+    "stop_now": true,
+    "execute_default": "hard refusal before backend import",
+    "next": "wait for user to enable and explicitly resume GPU work; then revalidate environment, inputs, actual gradients, safe coverage, save/eval/fullresume/next-stage entry",
+    "long_runs": "if a later run is expected to exceed one hour, first complete about10min real GPU lifecycle smoke; CPU tests never substitute",
+    "scene_or_model_default_changed": false,
+    "power_operation": false
+  },
+  "human_verdict": null
+}

@@ -350,3 +350,7 @@
 ## MODULE2-DIRECT-TEACHER-20261116
 
 [协议、组件、配对训练与失败边界](autoresearch/module2_direct_teacher_20261116/README.md)。Scene065 raw86/110真实道路A+物理孔洞C，134/179/198仅诊断；direct-C和固定F目标对照各200/300/300，共1600正式、9工程更新。C伪教师拟合显著改善，覆盖/保留车辆/重载通过；颜色200步已引入跨视角水平细纹，多视角画质未通过，未默认替换场景。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；GPU保持开机。
+
+## MODULE2-CAPACITY-CPU-20261117
+
+[三道道路上限检查的CPU准备](autoresearch/module2_capacity_cpu_20261117/README.md)：监督/目标影候选、25份理想世界目标与bounded-ci证书接口、共享4cm世界纹理对照代码。当前0真实场景更新/0native render/0新模型推理；用户要求准备好后停等GPU，无自动队列。旧影区损失缺失及低覆盖已量化，不据此判3DGS极限；历史TRELLIS单样本负例纳入，未新跑。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

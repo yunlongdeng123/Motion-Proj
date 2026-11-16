@@ -1,0 +1,92 @@
+{
+  "schema": "road_color_capacity_preregister.v1",
+  "task_id": "MODULE2-CAPACITY-CPU-20261117",
+  "run_id": "road_capacity_cpu_20261117_r1",
+  "status": "CPU_PREPARED_AWAIT_USER_GPU_AUTHORIZATION",
+  "execution_authorized": false,
+  "GPU_executed": false,
+  "GPU_queue_created": false,
+  "default_entry": "code/road_capacity_cpu_entry.py; --execute always exits3 before any backend import",
+  "canonical": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+    "init": "same native-sRGB c0 from unchanged old S2; both learned corrections exactly zero",
+    "image_resolution": [480, 320],
+    "fixed_diagnostic_frames": [86, 110, 134, 179, 198],
+    "frozen_road_evaluation_pixels": 38416,
+    "frozen": ["world xyz/height/normals", "opacity", "all Gaussian scales", "active/topology/density", "native static/gates", "vehicles/trajectory", "environment/camera/ownership", "theta", "z", "eta/exposure", "SD/LoRA/TRELLIS"]
+  },
+  "primary_pair": [
+    {"name": "I0", "parameterization": "independent per-eligible-Gaussian sRGB correction delta_c_i", "world_TV_weight": 0.0},
+    {"name": "W4", "parameterization": "shared metric-world-XY bilinear sRGB correction delta_F", "texel_spacing_m": 0.04, "world_TV_weight": 0.0}
+  ],
+  "shader": {
+    "mapping": "clip(c0_i + delta_i, 0, 1); W4 delta_i=bilinear(delta_F, own fixed worldXY_i)",
+    "color_space": "native reference-camera sRGB appearance; no linearRGB-to-sRGB remap",
+    "world_chart": "global worldXY in meters; origin=floor(min canonical active worldXY/0.04)*0.04; integer texel centers",
+    "precision": "float64 coordinates/weights/accumulation, float32 correction and shader RGB",
+    "delta_node_bounds": [-1, 1],
+    "guard_policy": "same fixed eligible row scope in both arms; ineligible/K/near rows use exact c0 override; no atlas-texel freezing that erodes neighboring rows",
+    "continuous_field_boundary": "raw delta field and effective row overrides are exported separately; texture-coordinate inside is not legal-road or known-material certification",
+    "convexity_boundary": "W4 with shared basis and shader clipping is not a simple box-LS global-optimum certificate; only independent fixed-coverage RGB oracle has that convex capacity interpretation"
+  },
+  "common_color_only_draft": {
+    "steps_per_arm": 200,
+    "seed": 101,
+    "optimizer": {"name": "Adam", "lr": 0.01, "betas": [0.9, 0.999], "eps": 1e-8, "weight_decay": 0.0},
+    "photo": "actual fixed-coverage native black-background premult sRGB versus fixed alpha times same teacher; never RGB/alpha",
+    "prior_squared_weight": 0.001,
+    "prior_normalization": "same effective row RGB correction mean over common eligible rows/channels, not parameter-count mean",
+    "loss_role": "same target pack/masks/q/weights/sampler in a pair; A/C/S separated and normalized independently if real teacher pack selected",
+    "new_shadow_loss_weight": "pending parent protocol; no implicit default",
+    "steps_or_losses_locked_for_GPU": false,
+    "coverage_updates": 0,
+    "engineering_smoke_updates": "to be preregistered before any authorized GPU execution, separately counted"
+  },
+  "conditional_control": {
+    "name": "I_reg",
+    "status": "CONDITIONAL_NOT_QUEUED",
+    "parameterization": "I0 plus fixed metric-world neighbor TV of delta only; frozen c0 details unpenalized",
+    "proposed_TV_weight": 0.02,
+    "TV_reference_length_m": 0.04,
+    "interpretation": "if I_reg also meets joint fit/detail/stripe criteria, shared atlas is not established as necessary",
+    "auto_start": false
+  },
+  "target_roles": {
+    "ideal_capacity": "QA independent world analytic field through frozen G_s surface/cameras; all five views supervised oracle, never held-out generalization; same targets for I0/W4",
+    "real_teacher": "static_handoff supervision_v4 candidate, true visible A / physical-hole C / explicitly target-associated shadow S; C/S raw frozen2D teacher, not F0 projection",
+    "legacy_F_as_teacher": false,
+    "new_scope_requirement": "GPU after user authorization must recompute actual alphaT contributions for selected target pack, including new S; no automatic reuse of legacy real A/C scope",
+    "scope_API": "scope_source and source_role are mandatory; legacy static preview cannot be converted into a render packet or road bake",
+    "S_seen": "audit actual S contribution separately; S-only known prior rows must not be silently excluded by the old C-only-known rule; parent must explicitly authorize effective-RGB override while immutable observed prior ledger stays frozen",
+    "constraint_floor": "S or other targets blocked by physical/K/near scope remain explicit constraint floor; do not force fit or attribute to completion prior",
+    "candidate_is_training_permission": false
+  },
+  "frequency_detail_registration": {
+    "primary_spacing_m": 0.04,
+    "analytic_spacing_sanity_only_m": [0.02, 0.04, 0.08],
+    "GPU_resolution_search": false,
+    "QA_marking_cases": ["flat-top curved paint width0.12m", "flat-top curved paint width0.24m"],
+    "QA_fixed_soft_edges_m": {"lateral": 0.02, "longitudinal": 0.10},
+    "QA_period_m": 3.0,
+    "QA_on_length_m": 1.5,
+    "QA_phase_m": 0.45,
+    "subpixel_stress": "diagnostic only; do not force unresolvable paint/dash phase into detail truth",
+    "resolution_choice_from_real_fit": false,
+    "joint_assessment": ["same teacher residual", "paint width/phase/detail on resolvable targets", "actual native multi-view striping", "K and persistence"],
+    "numeric_acceptance_thresholds": "parent to lock before GPU; descriptive frequency quantities are not new retrospective thresholds"
+  },
+  "CPU_evidence_scope": {
+    "legacy_preview": "check3/basis_statistics_4cm.json uses historical direct-teacher r4 real A/C scopes and frozen masses only to establish sharing/rank; not new V4/ideal authorization",
+    "static_preview_rows": 78421,
+    "static_preview_I0_RGB_scalars": 235263,
+    "static_preview_W4_RGB_scalars": 72072,
+    "new_target_counts_not_locked": true,
+    "actual_optimizer_updates": 0,
+    "real_scene_render_calls": 0,
+    "GPU_or_native_imports": 0
+  },
+  "next_action": "stop after CPU preparation and wait for the user to open/authorize GPU; no controller or automatic continuation",
+  "failure_ledger_refs": ["V82-F06"],
+  "failure_ledger_delta": "none",
+  "human_verdict": null
+}
