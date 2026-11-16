@@ -1,0 +1,279 @@
+{
+  "schema": "module2_direct_teacher_protocol.v1",
+  "task_id": "MODULE2-DIRECT-TEACHER-20261116",
+  "run_id": "road_direct_teacher_20261116_r1",
+  "seed": 101,
+  "purpose": "fixed 2D teacher to persistent world road Gaussian distillation",
+  "parameter_framework": {
+    "theta": "existing frozen reusable completion prior; no new shared network training",
+    "z_s": "not introduced in this probe",
+    "eta_st": "fixed original camera color convention; no free exposure or white-balance estimates",
+    "scene_asset": "direct per-Gaussian native-sRGB road RGB, constrained effective opacity and tangent scales; prior atlas immutable, not claimed as the learned shader field"
+  },
+  "future_model_protocol": {
+    "canonical_appearance": "reference-camera appearance; do not claim identifiable intrinsic reflectance",
+    "observations": "immutable measured RGB/source/confidence ledger, distinct from optimized Gaussian shader RGB",
+    "shared_theta": "pretrain only on declared BUILD street segments; freeze during scene adaptation and evaluation",
+    "scene_z": "low-dimensional bounded corrections; no free independently optimized missing-pixel RGB as a claim of learned cross-street regularity",
+    "imaging_gauge": "anchor reference frame exposure/white balance to identity; remove duplicated global gain/color degrees from z, and constrain residual eta mean to zero",
+    "marking": "separate asphalt and paint; optimize only observable curve, width, period or phase parameters; keep unobservable phase unknown"
+  },
+  "baseline": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+    "render": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/rendered",
+    "coverage_pixels": 37404,
+    "frozen_road_domain_pixels": 38416,
+    "protected_pixel_frames": 77266
+  },
+  "frames": {
+    "training": [
+      86,
+      110
+    ],
+    "diagnostic_only": [
+      134,
+      179,
+      198
+    ],
+    "inherited_BUILD": "existing 199-frame observations and LiDAR used in baseline construction; no held-out claim"
+  },
+  "supervision": {
+    "A": "real unobstructed road RGB, excluding foreground/retained objects and C holes",
+    "B": "not run as a formal blind test; any later blind test must exclude held-out world regions before all assets/caches/retrieval",
+    "C": "frozen raw86/raw110 2D completion in physical_unknown intersect independent write permission and valid road support; shadow/effect and observed guard belt separate and not trained as holes; pseudo truth, not real hidden-road ground truth",
+    "source_version": "same frozen teacher for old-stage2 and direct3D comparison; no new SD generation or selection"
+  },
+  "formal_schedule": [
+    {
+      "stage": "color",
+      "steps": 200,
+      "train": [
+        "road world RGB"
+      ],
+      "frozen": [
+        "opacity",
+        "all scales"
+      ]
+    },
+    {
+      "stage": "coverage",
+      "steps": 300,
+      "train": [
+        "bounded road opacity",
+        "bounded tangent scales"
+      ],
+      "frozen": [
+        "RGB"
+      ]
+    },
+    {
+      "stage": "joint",
+      "steps": 300,
+      "train": [
+        "road world RGB",
+        "bounded road opacity",
+        "bounded tangent scales"
+      ]
+    }
+  ],
+  "frozen": [
+    "road xyz and height",
+    "road normals and normal scale",
+    "road topology/active rows",
+    "native static and static gates",
+    "dynamic vehicles and trajectories",
+    "environment",
+    "cameras",
+    "ownership",
+    "SD1.5/LoRA/shadow/feature models",
+    "retained-guard road rows"
+  ],
+  "rendering": {
+    "operator": "actual existing native Gaussian raster and original calibrated cameras",
+    "color": "original sRGB appearance convention, not intrinsic reflectance or recovered physical radiance",
+    "low_alpha": "no unstable RGB/alpha loss; fixed sufficient-alpha color support, full holes remain in coverage evaluation",
+    "masking": "fixed A and C masks; independent normalized losses and counts; no live shrinking of evaluation denominator"
+  },
+  "optimizer_draft": {
+    "name": "Adam",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "color_lr": 0.01,
+    "joint_color_lr": 0.003,
+    "opacity_lr": 0.05,
+    "tangent_scale_lr": 0.005,
+    "loss_weights": {
+      "A": 1,
+      "C": 0.5,
+      "edge_A": 0.1,
+      "edge_C": 0.01,
+      "alpha_A": 1,
+      "alpha_C": 0.5,
+      "outside_RGB": 1,
+      "outside_alpha": 1,
+      "retained_RGB": 4,
+      "retained_alpha": 4,
+      "color_prior_squared": 0.001
+    },
+    "parameter_constraints": "RGB [0,1]; effective loader opacity in [initial_effective,1-1e-5]; tangent scales no larger than original R8 absolute 1.15 envelope and supported-world footprint; normal scale fixed"
+  },
+  "marking": {
+    "long_term": "asphalt base plus paint layer generated from verifiable curves/width/dash period/phase",
+    "first_probe": "no new structure network; real verified segments may receive edge supervision, generated edges only low-confidence pseudo supervision",
+    "unknown": "dash phase remains unknown; no forced structure ground truth"
+  },
+  "acceptance": {
+    "teacher": "C error falls by at least 20% separately on raw86 and raw110 versus unchanged old-stage2 baseline",
+    "visible": "A real-road error increases no more than 0.002 absolute sRGB L1 per frame; visual inspection also required",
+    "diagnostics": "raw134/179/198 no obvious new blocks, marking drift or gaps; numerical metrics cannot replace image inspection",
+    "coverage": "at least 37404/38416 pixels alpha>0.9 and no per-frame regression versus baseline",
+    "retained": "all 77266 baseline retained pixel-frames unchanged in joint rendering, exact float comparison reported",
+    "persistence": "public saved loader matches live RGB/alpha within 1e-6; RGB8 differences reported separately",
+    "verdict": "mechanical and visual outcomes separate; human_verdict remains null"
+  },
+  "control": {
+    "baseline": "fixed old-stage2 reevaluated at same cameras, teacher, masks and pixel counts",
+    "matched_F_control": "same phase2 initialization, parameters, A labels, masks, optimizer, seed and 200/300/300 budget; only C target replaced by immutable old atlas projection",
+    "attribution": "matched control isolates C target source, not an exact replay of all old-stage2 implementation choices",
+    "formal_control_updates": 800,
+    "intermediate_assets": "report each stage in both runs"
+  },
+  "checkpoint": "each stage saves parameters, optimizer, sampler and RNG; test full restoration, next update and next-stage entry in real GPU smoke",
+  "accounting": "800 direct-teacher formal updates plus 800 matched-F-control formal updates; all smoke and engineering replays listed separately; failed runs preserved",
+  "scope": "module2 five-frame probe only; no static handoff training, no new199 run, no pretrained network finetuning",
+  "GPU": "keep_on",
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1",
+  "hyperparameters_status": "locked; actual source and supervision bindings recorded in each frozen_contract.json",
+  "status": "locked_before_formal",
+  "formal_authorized": true,
+  "locked_at_Asia_Singapore": "2026-11-17T00:15:22.985316+08:00",
+  "trainer_contract": {
+    "schema": "road_direct_teacher_trainer_contract.v1",
+    "status": "locked_before_formal",
+    "seed": 101,
+    "training_frames": [
+      86,
+      110
+    ],
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "schedule": [
+      {
+        "stage": "color",
+        "steps": 200,
+        "color_lr": 0.01,
+        "opacity_lr": 0.0,
+        "scale_lr": 0.0
+      },
+      {
+        "stage": "coverage",
+        "steps": 300,
+        "color_lr": 0.0,
+        "opacity_lr": 0.05,
+        "scale_lr": 0.005
+      },
+      {
+        "stage": "joint",
+        "steps": 300,
+        "color_lr": 0.003,
+        "opacity_lr": 0.05,
+        "scale_lr": 0.005
+      }
+    ],
+    "formal_runs": [
+      "direct_C",
+      "matched_F_control"
+    ],
+    "formal_updates_per_run": 800,
+    "optimizer": {
+      "name": "Adam",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.0,
+      "stage_transition": "one grouped optimizer; preserve moments; frozen groups grad=None and lr=0"
+    },
+    "color_parameter": "direct per-active-road-Gaussian native-sRGB c_i; projected to [0,1] after update; no theta/delta bound",
+    "color_scope": {
+      "A_seen": "active geometrically legal road rows with actual road-only alphaT contribution to fixed A photo domain",
+      "C_only": "same actual C contribution, excluding known measured prior rows unless also A_seen",
+      "always_frozen": "full retained-world guard, legacy-near guard, unsupported road geometry and rows not contributing to either training domain"
+    },
+    "opacity_scope": "actual A/C coverage contribution rows within physical legal supported road, excluding retained/legacy-near guards",
+    "opacity_constraint": "effective native loader initial probability hard lower; upper 1-1e-5; frozen raw values preserved",
+    "tangent_scale_constraint": "current S2 sigma lower bound; absolute upper bound from original R8 sigma*1.15 and actual world-supported boundary; no compounding; normal sigma frozen",
+    "fixed_photo_gate": "A or common-valid C mask intersect initial actual road alpha>0.9; frozen before all updates",
+    "C_pairing": "photo_C common F0-valid fixed mask; coverage_C full geometry-qualified Cteacher independent of F0 color; both arms share identical masks and q",
+    "premultiplied_photo": "actual black-background native raster P_sRGB versus stopgrad(alpha_photo)*teacher_sRGB; never RGB/alpha",
+    "joint_gradient_routing": "photo raster explicitly detaches current opacity and scales; coverage raster explicitly detaches current RGB",
+    "loss_weights": {
+      "A_photo": 1.0,
+      "C_photo": 0.5,
+      "edge": 0.1,
+      "C_edge_relative": 0.1,
+      "alpha_A": 1.0,
+      "alpha_C": 0.5,
+      "outside_RGB": 1.0,
+      "retained_RGB": 4.0,
+      "outside_alpha": 1.0,
+      "retained_alpha": 4.0,
+      "RGB_prior_squared": 0.001
+    },
+    "normalization": {
+      "photo": "A and C each divide by their own fixed q-weight sum times 3 channels; q is binary validity unless calibrated values exist",
+      "edge": "horizontal and vertical first differences; both pixels must be in the same fixed A or common-C gate; each domain divides by its own valid pair-weight sum times 3",
+      "alpha": "A/C legal geometry coverage masks independent of initial alpha gate; MSE to 1, each domain normalized independently",
+      "keep": "outside and retained masks each independently normalized; baseline road-only premult RGB/alpha are preservation references, never road truth",
+      "RGB_prior": "mean squared change from c_i initialization across eligible color rows and channels"
+    },
+    "stage_losses": {
+      "color": "L_A + 0.5 L_C + 0.1 edge_A + 0.01 edge_C + outside_RGB + 4 retained_RGB + 0.001 prior",
+      "coverage": "alpha_A + 0.5 alpha_C + outside_alpha + 4 retained_alpha",
+      "joint": "sum of color and coverage objectives with the explicitly separated gradient routes"
+    },
+    "frozen": [
+      "theta/shared prior",
+      "z/eta/exposure",
+      "road xyz/height/normals/normal sigma/topology/active",
+      "native static/gates",
+      "vehicles/trajectories",
+      "environment/cameras/ownership",
+      "SD/LoRA/shadow/features"
+    ],
+    "baseline_comparison": "same initialized old S2 road asset re-evaluated on identical true-A and pseudo-C masks",
+    "source_binding": "protocol and trainer source; immutable A/C/F supervision freeze; current source scene/proof/road; original R8 absolute scale envelope; complete row scopes",
+    "required_phase0": [
+      "actual black-background premultiplied RGB audit",
+      "actual A/C color gradients nonzero",
+      "photo gradients to opacity/scales exactly zero",
+      "coverage gradients to RGB exactly zero",
+      "full K maximum-parameter scope guard",
+      "save/fullrestore/next-update replay",
+      "stage boundary entry and independent public saved loader"
+    ],
+    "human_verdict": null
+  },
+  "independent_phase0_evidence": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/qa/supervision_r3_independent/acceptance.json",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/qa/lifecycle_r4_independent/snapshot_and_pairing.json",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/qa/lifecycle_r4_independent/render_binding.json"
+  ],
+  "engineering_updates_before_formal": 9,
+  "matched_control": "same initialized S2 and scopes; only selected_C_srgb target differs",
+  "final_coverage_C": "full legal Cteacher geometry including F0-invalid color; common photo C masks unchanged",
+  "retained_guard": "actual installed native CUDA maximum-sigma radii, 16x16 tile-expanded bounds plus rounding margin, five-frame full K union; 38982 active rows guarded",
+  "numerical_replay": "full saved state restores exactly; next update nonbitwise opacity logits max7.45e-9 and Adam max3.55e-15, below preregistered1e-6; no bitwise claim"
+}

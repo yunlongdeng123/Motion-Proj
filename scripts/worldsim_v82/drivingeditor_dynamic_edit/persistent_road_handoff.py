@@ -8,6 +8,7 @@ minimum_model_depth is applied in original model units before that scaling.
 from __future__ import annotations
 
 from dataclasses import replace
+import copy
 import hashlib
 import json
 import math
@@ -21,6 +22,100 @@ from .v44_metric_raster import metric_raster
 PROOF_SCHEMA = 'persistent_road_handoff.v1'
 CHECKPOINT_SCHEMA = 'persistent_static_opacity_handoff.v1'
 HARD_NEAR_MODEL = .2  # Inherited native CUDA center-near ABI; not a scene parameter.
+
+
+def save_persistent_road_handoff(source_manifest, source_proof, road_path, output_dir,
+                                 *, training_record=None):
+    """保存新道路并原样继承静态门控；不训练、不退役任何原生行。
+
+    先验证父资产与绑定，再写入全新目录。几何/保持/画质验收仍由调用方
+    完成；本函数只建立公共加载器可以严格重载的持久资产关系。
+    """
+    import torch
+
+    source_manifest, source_proof, road_path = [Path(p).resolve()
+        for p in (source_manifest, source_proof, road_path)]
+    output = Path(output_dir).resolve()
+    if output.exists():
+        raise FileExistsError('持久资产须保存到全新目录；保留旧现场')
+    source = json.loads(source_manifest.read_text(encoding='utf-8'))
+    previous = json.loads(source_proof.read_text(encoding='utf-8'))
+    if source.get('schema') != 'v44.scene.v1' or previous.get('schema') != PROOF_SCHEMA:
+        raise ValueError('父场景必须为显式持久道路资产')
+    _pin(previous['manifest'], source_manifest, source_proof.parent)
+    old_road = _path(source['road'], source_manifest.parent)
+    _pin(previous['road'], old_road, source_proof.parent)
+    _road_metadata(old_road, previous['road'])
+    model = _path(source['model'], source_manifest.parent)
+    native = {item['role']: item for item in previous['native_sources']}
+    if len(native) != len(previous['native_sources']):
+        raise ValueError('父模型角色重复')
+    for role, prefix in [('static', 'chkpnt'), ('dynamic', 'dynamic_chkpnt'), ('environment', 'env_light_chkpnt')]:
+        _pin(native[role], model / f'{prefix}{source["iteration"]}.pth', source_proof.parent)
+    if source.get('ownership') is not None:
+        _pin(previous['ownership'], _path(source['ownership'], source_manifest.parent), source_proof.parent)
+    index_path = _path(source['static_gates']['indices'], source_manifest.parent)
+    gate_path = _path(source['static_gates']['checkpoint'], source_manifest.parent)
+    _pin(previous['gates']['indices'], index_path, source_proof.parent)
+    _pin(previous['gates']['checkpoint'], gate_path, source_proof.parent)
+    saved = torch.load(gate_path, map_location='cpu', weights_only=False)
+    with np.load(index_path, allow_pickle=False) as data:
+        ids = data['ids'].copy()
+    ns = _count(previous['topology']['static_rows'], 'static_rows')
+    _count(previous['topology']['dynamic_rows'], 'dynamic_rows')
+    gate, contributors = saved.get('gate'), saved.get('contributors')
+    if (ids.ndim != 1 or ids.dtype.kind not in 'iu' or len(np.unique(ids)) != len(ids)
+            or (ids < 0).any() or (ids >= ns).any()
+            or saved.get('schema') != CHECKPOINT_SCHEMA
+            or not isinstance(gate, torch.Tensor) or not gate.is_floating_point()
+            or gate.shape != ids.shape or not bool(torch.isfinite(gate).all())
+            or not isinstance(contributors, torch.Tensor)
+            or contributors.dtype not in (torch.int32, torch.int64)
+            or not np.array_equal(contributors.numpy(), ids)):
+        raise ValueError('父静态门控拓扑或数值无效')
+    expected = dict(manifest_sha256=_sha(source_manifest), road_sha256=_sha(old_road), **previous['topology'])
+    if (saved.get('binding') != previous['gates']['checkpoint_binding']
+            or any(saved['binding'].get(k) != v for k, v in expected.items())):
+        raise ValueError('父静态门控绑定不一致')
+    with np.load(road_path, allow_pickle=False) as data:
+        road_record = dict(path=str(road_path), sha256=_sha(road_path),
+            total_rows=len(data['active']), active_rows=int(data['active'].sum()),
+            meter_to_model=float(data['meter_to_model']))
+        for name in ['reference_srgb', 'road_opacity', 'gaussian_sigma_m']:
+            if name in data and not np.isfinite(data[name]).all():
+                raise ValueError('新道路参数包含非有限值: ' + name)
+        for name in ['reference_srgb', 'road_opacity']:
+            if name in data and ((data[name] < 0).any() or (data[name] > 1).any()):
+                raise ValueError('新道路颜色/透明度不在[0,1]: ' + name)
+        if 'gaussian_sigma_m' in data and (data['gaussian_sigma_m'] <= 0).any():
+            raise ValueError('新道路尺度必须为正')
+    _road_metadata(road_path, road_record)
+    scene = copy.deepcopy(source)
+    scene['model'], scene['road'] = str(model), str(road_path)
+    if scene.get('ownership') is not None:
+        scene['ownership'] = str(_path(scene['ownership'], source_manifest.parent))
+    scene['static_gates'] = dict(indices=str(output / 'static_indices.npz'), checkpoint=str(output / 'static_opacity.pt'))
+    build = dict(schema='road_asset_persistent_build.v2', source_manifest=str(source_manifest),
+        source_proof=str(source_proof), road=str(road_path), retired_static_rows=0,
+        retained_old_gate_rows=len(ids), native_model_retrained=False,
+        static_gate_values_exact=True, training_record=training_record, quality_pass_claimed=False)
+    # 在创建目录前验证JSON可序列化；不留下貌似完整的NaN合同。
+    scene_text = json.dumps(scene, ensure_ascii=False, indent=2, allow_nan=False) + '\n'
+    build_text = json.dumps(build, ensure_ascii=False, indent=2, allow_nan=False) + '\n'
+    output.mkdir(parents=True, exist_ok=False)
+    (output / 'scene.json').write_text(scene_text, encoding='utf-8')
+    np.savez_compressed(output / 'static_indices.npz', ids=ids)
+    binding = dict(manifest_sha256=_sha(output / 'scene.json'), road_sha256=_sha(road_path), **previous['topology'])
+    torch.save(dict(schema=CHECKPOINT_SCHEMA, gate=gate.clone(), contributors=contributors.clone(),
+        binding=binding), output / 'static_opacity.pt')
+    def pin(path):
+        return dict(path=str(path), sha256=_sha(path))
+    proof = copy.deepcopy(previous)
+    proof.update(manifest=pin(output / 'scene.json'), road=road_record)
+    proof['gates'] = dict(indices=pin(output / 'static_indices.npz'), checkpoint=pin(output / 'static_opacity.pt'), checkpoint_binding=binding)
+    (output / 'proof.json').write_text(json.dumps(proof, ensure_ascii=False, indent=2, allow_nan=False) + '\n', encoding='utf-8')
+    (output / 'build.json').write_text(build_text, encoding='utf-8')
+    return output / 'scene.json', output / 'proof.json'
 
 
 def _sha(path):

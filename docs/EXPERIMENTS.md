@@ -346,3 +346,7 @@
 ## MODULE2-ROAD-ASSET-TRAINING-20261116
 
 [持久道路资产五帧重构与分阶段训练](autoresearch/module2_road_asset_20261116/README.md)。run=`road_asset_20261116_r1`；既存199帧观测用于资产BUILD，新增训练仅86/110/134/179/198，无留出。阶段0修正表面、射线与请求域接线，阶段1/2分别600/1200正式更新，额外72次工程更新单列。持久加载、冻结与恢复通过；道路色差/接缝/标线仍未通过图像检查，阶段3与199帧新运行未启动。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict=null，GPU保持开机。
+
+## MODULE2-DIRECT-TEACHER-20261116
+
+[协议、组件、配对训练与失败边界](autoresearch/module2_direct_teacher_20261116/README.md)。Scene065 raw86/110真实道路A+物理孔洞C，134/179/198仅诊断；direct-C和固定F目标对照各200/300/300，共1600正式、9工程更新。C伪教师拟合显著改善，覆盖/保留车辆/重载通过；颜色200步已引入跨视角水平细纹，多视角画质未通过，未默认替换场景。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06；GPU保持开机。

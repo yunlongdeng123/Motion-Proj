@@ -1,0 +1,1222 @@
+{
+  "schema": "fixed_direct_teacher_pair_receipt.v1",
+  "formal_updates_total": 1600,
+  "engineering_updates": 9,
+  "source_protocol": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/protocol_locked.json",
+    "sha256": "91062c6695995dd820aa1f842c34d28bb11f48cccfc2a19e81ed921fac3d43d2"
+  },
+  "paired": {
+    "initial_model_exact": true,
+    "input_binding_exact": true,
+    "boolean_row_scopes_exact": true,
+    "sampler_trace_exact": true,
+    "only_C_color_target_role_differs": true,
+    "control_not_exact_replay_of_old_phase2": true
+  },
+  "validation": {
+    "public_reload_RGB_float_max": 5.960464477539063e-08,
+    "public_reload_alpha_float_max": 1.1920928955078125e-07,
+    "public_reload_RGB8_max": 0,
+    "all_stage_joint_K_exact": true,
+    "all_frozen_source_fields_exact": true,
+    "paired_C_direct_vs_control": [
+      {
+        "raw": 86,
+        "direct_C": 0.009019287303090096,
+        "matched_F_C": 0.04567719250917435,
+        "relative_lower_than_matched_F": 0.8025428707931523
+      },
+      {
+        "raw": 110,
+        "direct_C": 0.014763567596673965,
+        "matched_F_C": 0.05270298197865486,
+        "relative_lower_than_matched_F": 0.7198722530984427
+      }
+    ]
+  },
+  "runs": [
+    {
+      "role": "direct_C",
+      "actual_formal_updates": 800,
+      "frame_counts": {
+        "86": 400,
+        "110": 400
+      },
+      "stage_counts": {
+        "color": 200,
+        "coverage": 300,
+        "joint": 300
+      },
+      "metrics": [
+        {
+          "raw": 86,
+          "A_before": 0.04913072660565376,
+          "A_after": 0.01754632405936718,
+          "C_before": 0.04738103970885277,
+          "C_after": 0.009019287303090096,
+          "C_relative_drop": 0.8096435333941202,
+          "A_absolute_regression": -0.03158440254628658
+        },
+        {
+          "raw": 110,
+          "A_before": 0.06837978214025497,
+          "A_after": 0.02447172813117504,
+          "C_before": 0.05450987070798874,
+          "C_after": 0.014763567596673965,
+          "C_relative_drop": 0.7291579047075178,
+          "A_absolute_regression": -0.04390805400907993
+        }
+      ],
+      "coverage_before": 37404,
+      "coverage_after": 37404,
+      "full_frozen_coverage_denominator": 38416,
+      "perframe_coverage_nonregression": true,
+      "maximum_joint_K": {
+        "rows": [
+          {
+            "raw": 86,
+            "K_pixels": 14507,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 110,
+            "K_pixels": 15716,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 134,
+            "K_pixels": 16727,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 179,
+            "K_pixels": 16788,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 198,
+            "K_pixels": 13528,
+            "joint_K_max": 0.0
+          }
+        ],
+        "all_exact": true,
+        "conservative_guard": {
+          "method": "actual native CUDA radii at absolute maximum sigma and16x16 getRect tile-expanded bbox, plus1px projection-rounding margin, intersects full retained mask",
+          "native_python_module": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py",
+          "native_install_source": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization",
+          "independent_of_road_mutual_occlusion": true,
+          "five_frame_union_rows": 38982,
+          "rows": [
+            {
+              "raw": 86,
+              "K_pixels": 14507,
+              "intersecting_maximum_radius_rows": 31435
+            },
+            {
+              "raw": 110,
+              "K_pixels": 15716,
+              "intersecting_maximum_radius_rows": 23495
+            },
+            {
+              "raw": 134,
+              "K_pixels": 16727,
+              "intersecting_maximum_radius_rows": 26383
+            },
+            {
+              "raw": 179,
+              "K_pixels": 16788,
+              "intersecting_maximum_radius_rows": 25046
+            },
+            {
+              "raw": 198,
+              "K_pixels": 13528,
+              "intersecting_maximum_radius_rows": 26917
+            }
+          ]
+        }
+      },
+      "stages": [
+        {
+          "stage": "color",
+          "step": 200,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_color/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_color/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.018365370109677315,
+                "C_actual_teacher": 0.009800039231777191,
+                "C_selected_objective": 0.009800039231777191,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.02579749934375286,
+                "C_actual_teacher": 0.01573518104851246,
+                "C_selected_objective": 0.01573518104851246,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78384,
+            "opacity": 0,
+            "tangent_scale": 0
+          }
+        },
+        {
+          "stage": "coverage",
+          "step": 500,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_coverage/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_coverage/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 5.960464477539063e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.018362998962402344,
+                "C_actual_teacher": 0.009801111184060574,
+                "C_selected_objective": 0.009801111184060574,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.02580246701836586,
+                "C_actual_teacher": 0.015735603868961334,
+                "C_selected_objective": 0.015735603868961334,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78384,
+            "opacity": 47269,
+            "tangent_scale": 149
+          }
+        },
+        {
+          "stage": "joint",
+          "step": 800,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_joint/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/direct_C/formal_r1/stage_joint/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 1.1920928955078125e-07,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 1.1920928955078125e-07,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.01754632405936718,
+                "C_actual_teacher": 0.009019287303090096,
+                "C_selected_objective": 0.009019287303090096,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.02447172813117504,
+                "C_actual_teacher": 0.014763567596673965,
+                "C_selected_objective": 0.014763567596673965,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78388,
+            "opacity": 47784,
+            "tangent_scale": 143
+          }
+        }
+      ]
+    },
+    {
+      "role": "matched_F_control",
+      "actual_formal_updates": 800,
+      "frame_counts": {
+        "86": 400,
+        "110": 400
+      },
+      "stage_counts": {
+        "color": 200,
+        "coverage": 300,
+        "joint": 300
+      },
+      "metrics": [
+        {
+          "raw": 86,
+          "A_before": 0.04913072660565376,
+          "A_after": 0.017547346651554108,
+          "C_before": 0.04738103970885277,
+          "C_after": 0.04567719250917435,
+          "C_relative_drop": 0.03596052788516735,
+          "A_absolute_regression": -0.031583379954099655
+        },
+        {
+          "raw": 110,
+          "A_before": 0.06837978214025497,
+          "A_after": 0.02446960285305977,
+          "C_before": 0.05450987070798874,
+          "C_after": 0.05270298197865486,
+          "C_relative_drop": 0.03314791809016471,
+          "A_absolute_regression": -0.043910179287195206
+        }
+      ],
+      "coverage_before": 37404,
+      "coverage_after": 37404,
+      "full_frozen_coverage_denominator": 38416,
+      "perframe_coverage_nonregression": true,
+      "maximum_joint_K": {
+        "rows": [
+          {
+            "raw": 86,
+            "K_pixels": 14507,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 110,
+            "K_pixels": 15716,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 134,
+            "K_pixels": 16727,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 179,
+            "K_pixels": 16788,
+            "joint_K_max": 0.0
+          },
+          {
+            "raw": 198,
+            "K_pixels": 13528,
+            "joint_K_max": 0.0
+          }
+        ],
+        "all_exact": true,
+        "conservative_guard": {
+          "method": "actual native CUDA radii at absolute maximum sigma and16x16 getRect tile-expanded bbox, plus1px projection-rounding margin, intersects full retained mask",
+          "native_python_module": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/diff_gaussian_rasterization/__init__.py",
+          "native_install_source": "/root/autodl-tmp/drivingeditor_repro/deps/diff-gaussian-rasterization",
+          "independent_of_road_mutual_occlusion": true,
+          "five_frame_union_rows": 38982,
+          "rows": [
+            {
+              "raw": 86,
+              "K_pixels": 14507,
+              "intersecting_maximum_radius_rows": 31435
+            },
+            {
+              "raw": 110,
+              "K_pixels": 15716,
+              "intersecting_maximum_radius_rows": 23495
+            },
+            {
+              "raw": 134,
+              "K_pixels": 16727,
+              "intersecting_maximum_radius_rows": 26383
+            },
+            {
+              "raw": 179,
+              "K_pixels": 16788,
+              "intersecting_maximum_radius_rows": 25046
+            },
+            {
+              "raw": 198,
+              "K_pixels": 13528,
+              "intersecting_maximum_radius_rows": 26917
+            }
+          ]
+        }
+      },
+      "stages": [
+        {
+          "stage": "color",
+          "step": 200,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_color/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_color/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.018333446234464645,
+                "C_actual_teacher": 0.04566901549696922,
+                "C_selected_objective": 0.005216705612838268,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.025803161785006523,
+                "C_actual_teacher": 0.05276285484433174,
+                "C_selected_objective": 0.005745835602283478,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78367,
+            "opacity": 0,
+            "tangent_scale": 0
+          }
+        },
+        {
+          "stage": "coverage",
+          "step": 500,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_coverage/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_coverage/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 1.4901161193847656e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 4.470348358154297e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 5.960464477539063e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.01833176054060459,
+                "C_actual_teacher": 0.04566892981529236,
+                "C_selected_objective": 0.005217037163674831,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.025808854028582573,
+                "C_actual_teacher": 0.05276309698820114,
+                "C_selected_objective": 0.005746231414377689,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78367,
+            "opacity": 47269,
+            "tangent_scale": 149
+          }
+        },
+        {
+          "stage": "joint",
+          "step": 800,
+          "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_joint/asset/persistent/scene.json",
+          "proof": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/matched_F_control/formal_r1/stage_joint/asset/persistent/proof.json",
+          "K": {
+            "protected_pixel_frames": 77266,
+            "all_exact": true,
+            "rows": [
+              {
+                "raw": 86,
+                "K_pixels": 14507,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 110,
+                "K_pixels": 15716,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 134,
+                "K_pixels": 16727,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 179,
+                "K_pixels": 16788,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              },
+              {
+                "raw": 198,
+                "K_pixels": 13528,
+                "joint_K_max": 0.0,
+                "changed_pixels": 0
+              }
+            ]
+          },
+          "public_reload": {
+            "public_loader": true,
+            "actual_road_raster": true,
+            "tolerance": 1e-06,
+            "rows": [
+              {
+                "raw": 86,
+                "RGB_float_max": 0.0,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 110,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 0.0,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 134,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 1.1920928955078125e-07,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 179,
+                "RGB_float_max": 2.9802322387695312e-08,
+                "alpha_float_max": 1.1920928955078125e-07,
+                "RGB8_max": 0
+              },
+              {
+                "raw": 198,
+                "RGB_float_max": 5.960464477539063e-08,
+                "alpha_float_max": 5.960464477539063e-08,
+                "RGB8_max": 0
+              }
+            ]
+          },
+          "evaluation": {
+            "rows": [
+              {
+                "raw": 86,
+                "fixed_road_pixels": 3679,
+                "supported_alpha_gt_point9": 3669,
+                "gap_alpha_lt_point05": 0,
+                "thin_alpha_point05_to_point9": 10,
+                "A": 0.017547346651554108,
+                "C_actual_teacher": 0.04567719250917435,
+                "C_selected_objective": 0.004473313223570585,
+                "photo_A_pixels": 5409,
+                "photo_C_pixels": 3544,
+                "coverage_A_pixels": 5611,
+                "coverage_C_pixels": 3656
+              },
+              {
+                "raw": 110,
+                "fixed_road_pixels": 7459,
+                "supported_alpha_gt_point9": 7275,
+                "gap_alpha_lt_point05": 11,
+                "thin_alpha_point05_to_point9": 173,
+                "A": 0.02446960285305977,
+                "C_actual_teacher": 0.05270298197865486,
+                "C_selected_objective": 0.0049725910648703575,
+                "photo_A_pixels": 11495,
+                "photo_C_pixels": 7181,
+                "coverage_A_pixels": 11901,
+                "coverage_C_pixels": 7485
+              },
+              {
+                "raw": 134,
+                "fixed_road_pixels": 8536,
+                "supported_alpha_gt_point9": 8276,
+                "gap_alpha_lt_point05": 21,
+                "thin_alpha_point05_to_point9": 239
+              },
+              {
+                "raw": 179,
+                "fixed_road_pixels": 9242,
+                "supported_alpha_gt_point9": 8962,
+                "gap_alpha_lt_point05": 27,
+                "thin_alpha_point05_to_point9": 253
+              },
+              {
+                "raw": 198,
+                "fixed_road_pixels": 9500,
+                "supported_alpha_gt_point9": 9222,
+                "gap_alpha_lt_point05": 24,
+                "thin_alpha_point05_to_point9": 254
+              }
+            ],
+            "fixed_road_pixels": 38416,
+            "supported_alpha_gt_point9": 37404,
+            "diagnostic_frames_never_used_in_loss": [
+              134,
+              179,
+              198
+            ]
+          },
+          "frozen_source_fields_exact": {
+            "all_other_road_fields": true,
+            "RGB_outside_eligible": true,
+            "opacity_outside_eligible": true,
+            "tangent_scale_outside_eligible": true,
+            "normal_scale": true
+          },
+          "changed_rows": {
+            "RGB": 78369,
+            "opacity": 47784,
+            "tangent_scale": 143
+          }
+        }
+      ]
+    }
+  ],
+  "owned_files": [
+    {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/drivingeditor_dynamic_edit/road_direct_teacher_training.py",
+      "sha256": "8654030a6c82d0ef56c5d9c96812bf0b15922aba4405bcd00943340bd1d2d8ea"
+    },
+    {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/tests/test_road_direct_teacher_training.py",
+      "sha256": "06ea0de6ed37106457ea9a7fbc8c0bef4a336bd6f28a68df6fabb0d79bc8b73f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/code/run_direct_smoke_cycle.py",
+      "sha256": "480f1458bdd9034897fa5b02ab86f485048c5c1a681b6e3f9d6ff3e7afee3776"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/code/run_direct_formal_pair.py",
+      "sha256": "0d1d704b3628cf8b8a85bfa285fc1a446fd3b794749f6c016acd84b8bdbda62b"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/code/summarize_direct_teacher_pair.py",
+      "sha256": "f726dedc5817682157c25772e488f017892aa4ad245639bb4659c0dd9f1313b4"
+    }
+  ],
+  "source_prior_frozen": true,
+  "learned_asset": "direct per-Gaussian sRGB, not a learned continuous atlas",
+  "interpretation": "world-road asset distillation of fixed 2D pseudo teachers; no hidden-road truth or held-out generalization claim",
+  "agent_visual_verdict": "FAIL",
+  "visual_verdict_pending": false,
+  "human_verdict": null,
+  "production_promoted": false,
+  "diagnostic_quality": {
+    "frames": [
+      134,
+      179,
+      198
+    ],
+    "assessors": [
+      "root",
+      "stage_qa"
+    ],
+    "observation": "both direct_C and matched_F_control visibly worsen horizontal fine striping; block color differences decrease, left road marking remains broken",
+    "interpretation": "training-view fit and mechanical persistence pass do not establish multiview road quality; no production scene replacement",
+    "onset_stage": "color200 already shows dense horizontal fine striping; coverage changes little; joint slightly worsens it",
+    "color_stage_attribution": "observed in actual public float native crops, same exposure and no resampling; color200 opacity/scales/geometry exact baseline, consistent with RGB adaptation and cross-view sampling rather than new alpha holes",
+    "evidence_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_direct_teacher_20261116_r1/qa/frequency_diagnostic_r1",
+    "descriptive_frequency": {
+      "frames": [
+        134,
+        179,
+        198
+      ],
+      "domain": "fixed eval intersect all-stage alpha>.99",
+      "statistic": "vertical RGB second-difference ratio to baseline, descriptive only; not a new acceptance threshold",
+      "direct_color": [
+        2.96,
+        3.146,
+        3.195
+      ],
+      "direct_final": [
+        3.146,
+        3.333,
+        3.405
+      ],
+      "control_final": [
+        1.746,
+        1.748,
+        1.792
+      ]
+    }
+  },
+  "GPU": "released to root for final five-frame rendering, keep instance on"
+}

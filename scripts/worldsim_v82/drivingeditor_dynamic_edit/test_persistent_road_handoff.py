@@ -142,6 +142,31 @@ class PersistentRoadHandoffTests(unittest.TestCase):
         for key in ['mask', 'opacities', 'features', 'means3D']:
             self.assertTrue(torch.equal(values[key], replay[key]))
 
+    def test_save_new_road_preserves_gates_and_public_reload(self):
+        changed = self.root / 'trained_road.npz'
+        asset = dict(self.asset, reference_srgb=np.full((4, 3), .4, np.float32))
+        np.savez(changed, **asset)
+        manifest, proof = api.save_persistent_road_handoff(self.manifest, self.proof_path,
+            changed, self.root / 'trained', training_record=dict(formal_steps=200, role='teacher_distillation'))
+        scene, loaded, receipt = api.load_persistent_handoff(manifest, proof, factory=self.factory)
+        self.assertEqual(loaded.road, changed)
+        self.assertEqual(receipt['gated_static_rows'], 2)
+        saved = torch.load(self.root / 'trained' / 'static_opacity.pt', map_location='cpu', weights_only=False)
+        self.assertTrue(torch.equal(saved['gate'], self.saved['gate']))
+        self.assertTrue(torch.equal(saved['contributors'], self.saved['contributors']))
+        self.assertEqual(json.loads((self.root / 'trained' / 'build.json').read_text())['retired_static_rows'], 0)
+        scene.assert_persistent_unchanged()
+        with self.assertRaises(FileExistsError):
+            api.save_persistent_road_handoff(self.manifest, self.proof_path, changed, self.root / 'trained')
+
+    def test_save_rejects_corrupted_parent_before_creating_output(self):
+        self.saved['gate'][0] = -8.
+        torch.save(self.saved, self.checkpoint)
+        output = self.root / 'rejected'
+        with self.assertRaises(ValueError):
+            api.save_persistent_road_handoff(self.manifest, self.proof_path, self.road, output)
+        self.assertFalse(output.exists())
+
     def test_minimum_tensor_is_readonly_watched(self):
         scene, _, _ = self.load()
         scene._persistent_road_handoff['minimum_model_depth'].add_(.01)
