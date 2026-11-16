@@ -342,3 +342,7 @@
 
 
 - SCENE008-A5-IDENTITY-COUPLING-RESEARCH-20261107：[保留a5的原生重建、同10K缓存、补点与静态RGB对照](autoresearch/scene008_a5_regression_20261106/index.html)；原生single11977→30K与staticRGB2×2进行中，已完成结果、配置、输入角色、seed、资源和预算见报告及[实验合同](autoresearch/scene008_a5_regression_20261106/evidence/research_20261107_contract.json)。与a6资产/RCR-1画质采用结论分离；GPU保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## MODULE2-ROAD-ASSET-TRAINING-20261116
+
+[持久道路资产五帧重构与分阶段训练](autoresearch/module2_road_asset_20261116/README.md)。run=`road_asset_20261116_r1`；既存199帧观测用于资产BUILD，新增训练仅86/110/134/179/198，无留出。阶段0修正表面、射线与请求域接线，阶段1/2分别600/1200正式更新，额外72次工程更新单列。持久加载、冻结与恢复通过；道路色差/接缝/标线仍未通过图像检查，阶段3与199帧新运行未启动。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict=null，GPU保持开机。

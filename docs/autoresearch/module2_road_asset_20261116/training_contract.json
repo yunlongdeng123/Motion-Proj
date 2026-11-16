@@ -1,0 +1,67 @@
+{
+  "task_id": "MODULE2-ROAD-ASSET-TRAINING-20261116",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "scope": "module_2_probe_before_full199",
+  "phase0": {
+    "formal_steps": 0,
+    "required": [
+      "legal frozen supervision",
+      "world/model/camera coordinate checks",
+      "color conventions",
+      "real render gradients",
+      "coverage controllability",
+      "save/reload and next-stage entry"
+    ]
+  },
+  "phase1": {
+    "formal_steps": 600,
+    "trainable": [
+      "road opacity",
+      "bounded tangent scale only if declared before formal run"
+    ],
+    "frozen": [
+      "road positions and height",
+      "road normals",
+      "material",
+      "static scene",
+      "vehicles and trajectories",
+      "environment",
+      "cameras",
+      "all pretrained models"
+    ]
+  },
+  "phase2": {
+    "formal_steps": 1200,
+    "trainable": [
+      "local world-texture color correction at eligible texels"
+    ],
+    "frozen": [
+      "phase1 accepted geometry, scales and opacity",
+      "observed texture anchors",
+      "protected legacy fallback",
+      "static scene",
+      "vehicles and trajectories",
+      "environment",
+      "cameras",
+      "all pretrained models"
+    ],
+    "reference": "immutable legal world atlas projected into actual cameras; no old joint car remnants as road targets"
+  },
+  "phase3": {
+    "formal_steps": 1000,
+    "status": "pending_road_asset_acceptance; not_in_current_probe"
+  },
+  "phase4": {
+    "status": "not_in_first_round"
+  },
+  "training_seed": 101,
+  "smoke_and_replay": "extra accounting; formal budgets unchanged",
+  "human_verdict": null,
+  "GPU": "keep_on"
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "module2_road_asset_probe.v1",
+  "task_id": "MODULE2-ROAD-ASSET-TRAINING-20261116",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "build_observations": 199,
+  "heldout_frames": 0,
+  "formal_updates": {
+    "coverage": 600,
+    "texture": 1200
+  },
+  "extra_updates": {
+    "coverage_smoke_replay": 6,
+    "texture_failed_smoke": 32,
+    "texture_corrected_smoke": 32,
+    "texture_nextstep_replays": 2,
+    "total": 72
+  },
+  "road_domain_pixels": 38416,
+  "stages": {
+    "old": {
+      "supported": 33417,
+      "gap": 3364,
+      "thin": 1635
+    },
+    "initialization": {
+      "supported": 37364,
+      "gap": 85,
+      "thin": 967
+    },
+    "coverage600": {
+      "supported": 37404,
+      "gap": 83,
+      "thin": 929
+    },
+    "texture1200": {
+      "supported": 37404,
+      "gap": 83,
+      "thin": 929
+    }
+  },
+  "photo_reference": {
+    "role": "immutable world-atlas projection self consistency; not hidden-road GT",
+    "units": "normalized sRGB confidence weighted L1, macro over five training views",
+    "before": 0.019959937781095505,
+    "after": 0.014923225343227386,
+    "reduction_percent": 25.234108909089386
+  },
+  "texture": {
+    "eligible": 43986,
+    "nonzero_delta": 40074,
+    "delta_units": "linear RGB",
+    "maximum_abs_delta": 0.07989944,
+    "known_and_retained_delta": 0
+  },
+  "retained": {
+    "pixel_frames": 77266,
+    "max_abs_rgb_difference": 0
+  },
+  "persistence": {
+    "full_state_restore_exact": true,
+    "next_step_bitexact": false,
+    "maximum_bake_rgb_error": 1.1920928955078125e-7,
+    "maximum_RGB8_rounding_difference": 1
+  },
+  "validation": {
+    "CPU_tests": 46,
+    "browser_checks": 35,
+    "phase1_independent_checks": 22,
+    "phase2_independent_checks": 25,
+    "supervision_checks": 100,
+    "material_checks": 43
+  },
+  "quality": {
+    "mechanical_pass": true,
+    "road_visual_pass": false,
+    "unknown_material_cells": 1793,
+    "physical_requested_cells": 66775,
+    "dash_phase_known": false,
+    "human_verdict": null
+  },
+  "phase3_started": false,
+  "new_full199_run": false,
+  "GPU": "keep_on",
+  "final_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/scene.json"
+}
