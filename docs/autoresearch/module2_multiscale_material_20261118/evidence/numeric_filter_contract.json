@@ -1,0 +1,24 @@
+{
+  "schema": "world_material_filter_numeric_gate.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "registered_UTC": "2026-11-18T10:12:13Z",
+  "before_formal_or_smoke_optimizer": true,
+  "candidate": "physical world tangent GH15 + exact fixed chart inverse; bilinear world materials, mH*H inside filter",
+  "reference": "dense GH41 actual-world queries; numerical reference only, not an exact global error certificate",
+  "kernel_failure_preserved": {
+    "GH7_maxsigma_m": 0.01955,
+    "wavelength_m": 0.04,
+    "analytic_response": 0.0089577666,
+    "GH7_response": 0.0500198248
+  },
+  "chart_worldXY_max_error_m": 1e-07,
+  "kernel_unit_Nyquist_response_abs_error_max": 0.0001,
+  "material_kernel_valid_mass_primary_min": 0.9,
+  "actual_RGB_primary_abs_error_p99_max": 0.00392156862745098,
+  "actual_RGB_primary_abs_error_max": 0.01568627450980392,
+  "sample_policy": "seed101 stratified fixed rows including source-view S, new892, true observed paint/detail, actual largest-sigma rows; counts/source/overlap explicit, do not select by low error",
+  "high_test": "use actual allowed H±.04 and source1 mH, include near-Nyquist/oriented structure and real A0 white-paint edges",
+  "low_valid_mass": "report rows/errors/source and training-pixel contribution separately; never silently remove fullS or call them accurate",
+  "scope": "engineering accuracy gate only; no hidden-road GT or3DGS upper-limit certificate",
+  "on_failure": "fix integration/query engineering before optimization; preserve old attempt, no visually selected resolution/bounds/extra training"
+}

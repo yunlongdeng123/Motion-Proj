@@ -1,0 +1,70 @@
+{
+  "schema": "stage_QA_owned_code.v1",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1",
+  "files": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/road_chart_sampling.py",
+      "relative_path": "code/road_chart_sampling.py",
+      "sha256": "39a4eb1126a3c966360d2593faade59e2e45394d2e6e51907a645693fc3b5f3f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/prepare_chart_plan_cpu.py",
+      "relative_path": "code/prepare_chart_plan_cpu.py",
+      "sha256": "491fffb0d3668195307ac14a16651aae02ff5bdc7d9208e3e57144fc7123f648"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/check_chart_against_aabb_cpu.py",
+      "relative_path": "code/check_chart_against_aabb_cpu.py",
+      "sha256": "055a51415ef1595cd771d2bd3005304bd7aff06fe3b0d4c588fc85eff4ac6483"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/qualify_filter_cpu.py",
+      "relative_path": "code/qualify_filter_cpu.py",
+      "sha256": "fcdc7dc979f3d77bb92aae32534fe9b9deb77cb4f1ca5f6b3c6cab94aa54db15"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/matched_i0_training.py",
+      "relative_path": "code/matched_i0_training.py",
+      "sha256": "3a55b206f62c73834f7420d1570d6d432866190068404cf1451109846e24c176"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/prepare_matched_i0_cpu.py",
+      "relative_path": "code/prepare_matched_i0_cpu.py",
+      "sha256": "1a23d1caf0fad8b9bcba60046ea645b30dff1e6b4235536cbd9d848b1c1ca10f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/run_matched_i0.py",
+      "relative_path": "code/run_matched_i0.py",
+      "sha256": "be9419c70c986cbe821dc6b10c54acc8bf810c7e17634ded30151a6716a43813"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/qa_world_material_results.py",
+      "relative_path": "code/qa_world_material_results.py",
+      "sha256": "6bed0b0535b4c3a3ae206c3d4bb8e9008aabbf8609d34179e4d3dc543fea0070"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/audit_field_states_cpu.py",
+      "relative_path": "code/audit_field_states_cpu.py",
+      "sha256": "84ada2065f90615c7c62fb676b95887fedf6bb82cfbf5b5cf2ead08fb3123bf0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/audit_comparator_fairness_cpu.py",
+      "relative_path": "code/audit_comparator_fairness_cpu.py",
+      "sha256": "989d4f4bfa4d0b0fa4f313b227fffb594d07102df09c7d708ddbec019ab1a5c8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/decompose_native_stripes_cpu.py",
+      "relative_path": "code/decompose_native_stripes_cpu.py",
+      "sha256": "62ac93fac00aa4f41f5bf5e7cf9a43fc7973dc66095eb7512dccf1dc0f62dd93"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/assemble_world_material_acceptance_cpu.py",
+      "relative_path": "code/assemble_world_material_acceptance_cpu.py",
+      "sha256": "012061abdd631ee846ed4c57d0ef68ac1ade1f50e833398759ccfed4c842f4a8"
+    }
+  ],
+  "data_NPZ_in_publication": false,
+  "CPU_fixture_entry": "CUDA_VISIBLE_DEVICES= drivingeditor/bin/python code/prepare_matched_i0_cpu.py --mode fixture",
+  "native_sources_frozen_at": "matched_I0/smoke_r1_sources + formal_r1_sources; QA result readers remain separate",
+  "ownership_boundary": "chart fix implemented here; independent geometry/numeric acceptance supplied by root and static AABB crosscheck, not self-certified"
+}

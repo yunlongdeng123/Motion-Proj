@@ -1,0 +1,76 @@
+{
+  "schema": "module2_multiscale_material_preparation.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "run_id": "road_multiscale_material_20261118_r1",
+  "user_request": "继续3D道路材质微调：共享低频/受约束高频世界颜色场，按Gaussian足迹过滤；报告追加TRELLIS.2推理经最终GS渲染一列；GPU保持开机",
+  "input_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "historical_comparator": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/asset_guarded",
+  "base_material_policy": "locate real frozen world atlas and explicit source initialization; never embed striped learned I0 RGB as A0",
+  "render_parameterization": "eligible ci = S_Sigma[A0+Delta_L+mH*Delta_H]; no trainable perGaussian RGB or bypass residual",
+  "freeze": [
+    "world geometry/normal",
+    "all scale/opacity/active/density",
+    "static/native gates",
+    "vehicles/trajectories",
+    "environment/cameras",
+    "SD/LoRA/shadow/pretrained networks"
+  ],
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "training_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "inherited_BUILD_frames": 199,
+  "denominators": {
+    "fullS": 3187,
+    "old_photoS": 2222,
+    "new_supported_diagnostic_stratum": 909,
+    "remaining_thin": 56,
+    "originalD": 38416,
+    "K_pixel_frames": 77266
+  },
+  "training_supervision": "refresh supported S using fixed repaired native alpha, including new909; retain fullS denominator; no zero-alpha color advantage or de-premult optimization",
+  "stages": [
+    "A: low-frequency only",
+    "B: freeze L, constrained high-frequency only",
+    "C: joint L+H"
+  ],
+  "proposed_exploration_updates": [
+    200,
+    300,
+    300
+  ],
+  "formal_contract_status": "pending coordinate/filter/source/Hmask CPU qualification; this registration does not launch training",
+  "preflight": "actual native gradient, field filter correctness and K protection; save/eval/full state restore/next-stage entry on actual GPU before formal; if>=1h estimate first real about10m smoke",
+  "TRELLIS2": {
+    "authorized": true,
+    "role": "zero-shot fixed geometry material prior, no finetuning",
+    "new_inference": true,
+    "no_historical_PNG_substitution": true,
+    "source_frames": [
+      86,
+      110
+    ],
+    "output": "worldUV/baseColor -> same footprint material read -> actual native Gaussian render",
+    "budget": "one qualified fixed road patch under inherited512/12steps/texture1024/seed101; patch domain shown, exterior same A0, no full-road quality claim",
+    "input_status": "pending legal mesh/reference manifest; GPU lease will be exclusive"
+  },
+  "GPU_keep_on": true,
+  "shutdown_authorized": false,
+  "production_promoted": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ]
+}

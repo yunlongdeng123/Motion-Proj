@@ -1,0 +1,135 @@
+{
+  "schema": "world_material_CPU_result_manifest.v1",
+  "coverage_baseline": "coverage_parent",
+  "historical_I0": "historical_I0",
+  "L_control": "L800",
+  "ABC": "ABC800",
+  "stripe_reference": "filtered_A0",
+  "stripe_I0_comparator": "matched_I0",
+  "fit_reference": "matched_I0",
+  "A_guard_reference": "filtered_A0",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "targets": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1",
+  "fixed_original_D": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/{raw:03d}.npz",
+  "source_scope": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/method_scope_r1/scope.npz",
+  "frozen_frequency": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check3/frozen_frequency_masks.npz",
+  "fixed_material_masks": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/qa/material_masks.npz",
+  "stages": [
+    {
+      "name": "coverage_parent",
+      "role": "fixed repaired coverage, zero optimization",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "historical_I0",
+      "role": "historical olderS2222 training, same repaired coverage",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "center_A0",
+      "role": "zero-step center-only sampling diagnostic",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/center_A0/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "filtered_A0",
+      "role": "shared physical Sigma filtered zero-step initialization",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/filtered_A0/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "A200",
+      "role": "common low-only200, stage diagnostic not final800",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/A200/rendered/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "L800",
+      "role": "matched low-only800",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/L800/rendered/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    },
+    {
+      "name": "B500",
+      "role": "stage diagnostic200low+300high",
+      "array_template": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/B500/rendered/{raw:03d}_native.npz",
+      "keys": {
+        "P": "road_rgb",
+        "alpha": "road_alpha",
+        "J": "joint_rgb"
+      }
+    }
+  ],
+  "pending_stages": [
+    "center_A0",
+    "filtered_A0",
+    "A200",
+    "B500",
+    "matched_I0",
+    "L800",
+    "ABC800",
+    "A0_midpoint",
+    "TRELLIS2"
+  ],
+  "append_stage_schema": {
+    "name": "L800",
+    "role": "matched final",
+    "array_template": "absolute/{raw:03d}_native.npz",
+    "keys": {
+      "P": "road_rgb",
+      "alpha": "road_alpha",
+      "J": "joint_rgb"
+    },
+    "field_asset": "absolute/asset",
+    "reload_receipt": "absolute/reload.json"
+  },
+  "optional_common_visibility": "same-geometry current N parent actual branch-alphaT arrays only; olderA1 is not current state",
+  "thresholds": {
+    "K_max": 0,
+    "alpha_max_change": 0,
+    "reload_float": 1e-06,
+    "stripe_excess_fraction": 0.5,
+    "fit_MAE_tolerance": 0.00392156862745098,
+    "A_initial_guard_tolerance": 0.00392156862745098,
+    "quality_threshold_policy": "root frozen before formal:ABC vs matchedI0 A/C/S <=1code; A vs filteredA0<=1code; diagnostic positive stripe excess <=half; no automatic visual pass"
+  },
+  "source_roles": {
+    "A": "real visible",
+    "C": "frozen hole pseudo",
+    "S": "frozen target-shadow pseudo"
+  },
+  "evaluation_only": true,
+  "GPU_executed_by_auditor": false
+}

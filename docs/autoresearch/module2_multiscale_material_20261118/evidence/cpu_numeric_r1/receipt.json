@@ -1,0 +1,143 @@
+{
+  "schema": "multiscale_numeric_qualification.v1",
+  "CPU_only": true,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "chosen_rows": 3947,
+  "choice_rule": "seed101 up to1024 each all-active/max-sigma/observed-white/newactivation plus allnew892",
+  "sampled_world_rows_file": "A0_only.npz",
+  "frequency": [
+    {
+      "angle_degrees": 0,
+      "analytic": 0.008957768340279304,
+      "GH15": 0.008957975025510878,
+      "absolute_error": 2.0668523157373053e-07
+    },
+    {
+      "angle_degrees": 22.5,
+      "analytic": 0.008957768340279297,
+      "GH15": 0.008957781822338494,
+      "absolute_error": 1.348205919647627e-08
+    },
+    {
+      "angle_degrees": 45,
+      "analytic": 0.008957768340279304,
+      "GH15": 0.008957768344036887,
+      "absolute_error": 3.757582786589886e-12
+    },
+    {
+      "angle_degrees": 67.5,
+      "analytic": 0.008957768340279297,
+      "GH15": 0.0089577818223385,
+      "absolute_error": 1.3482059203415164e-08
+    },
+    {
+      "angle_degrees": 90,
+      "analytic": 0.008957768340279304,
+      "GH15": 0.008957975025510892,
+      "absolute_error": 2.0668523158760832e-07
+    }
+  ],
+  "tests": [
+    {
+      "case": "A0_only",
+      "mass_ge_point9": {
+        "rows": 3736,
+        "RGB_error_p50": 0.0001728534698486328,
+        "RGB_error_p99": 0.002813267055898905,
+        "RGB_error_max": 0.011994361877441406
+      },
+      "mass_lt_point9": {
+        "rows": 211,
+        "RGB_error_p50": 8.180737495422363e-05,
+        "RGB_error_p99": 0.0016598021611571312,
+        "RGB_error_max": 0.0032324790954589844
+      }
+    },
+    {
+      "case": "H_Nyquist_u",
+      "mass_ge_point9": {
+        "rows": 3736,
+        "RGB_error_p50": 0.00020631402730941772,
+        "RGB_error_p99": 0.002915153047069907,
+        "RGB_error_max": 0.011397898197174072
+      },
+      "mass_lt_point9": {
+        "rows": 211,
+        "RGB_error_p50": 0.00017777085304260254,
+        "RGB_error_p99": 0.0017155559035018086,
+        "RGB_error_max": 0.002008497714996338
+      }
+    },
+    {
+      "case": "H_period6cm_diagonal",
+      "mass_ge_point9": {
+        "rows": 3736,
+        "RGB_error_p50": 0.0001932382583618164,
+        "RGB_error_p99": 0.0028894657734781504,
+        "RGB_error_max": 0.01249733567237854
+      },
+      "mass_lt_point9": {
+        "rows": 211,
+        "RGB_error_p50": 0.00012749433517456055,
+        "RGB_error_p99": 0.001680992660112679,
+        "RGB_error_max": 0.002520143985748291
+      }
+    },
+    {
+      "case": "H_observed_white_edge",
+      "mass_ge_point9": {
+        "rows": 3736,
+        "RGB_error_p50": 0.00017987191677093506,
+        "RGB_error_p99": 0.0029862287919968367,
+        "RGB_error_max": 0.011974066495895386
+      },
+      "mass_lt_point9": {
+        "rows": 211,
+        "RGB_error_p50": 9.843707084655762e-05,
+        "RGB_error_p99": 0.001653387793339789,
+        "RGB_error_max": 0.0032465457916259766
+      }
+    }
+  ],
+  "chart": [
+    {
+      "center_is_world_key_node": true,
+      "source": "actual canonical G_s XY triangles",
+      "global_affine_role": "local candidate seed only",
+      "seed_error_max_uv": 0.2023006532375916,
+      "mapped_points": 888075,
+      "unmapped_points": 6098,
+      "worldXY_reconstruction_max_m": 9.094947017729282e-13,
+      "dtype": "float64",
+      "invalid_query_uv_sentinel": [
+        -4.0,
+        -4.0
+      ],
+      "local_chart_covariance_role": "diagnostic/local approximation only; sample_uv uses exact physical-world quadrature"
+    },
+    {
+      "center_is_world_key_node": true,
+      "source": "actual canonical G_s XY triangles",
+      "global_affine_role": "local candidate seed only",
+      "seed_error_max_uv": 0.2023006532375916,
+      "mapped_points": 6634907,
+      "unmapped_points": 79226,
+      "worldXY_reconstruction_max_m": 9.094947017729282e-13,
+      "dtype": "float64",
+      "invalid_query_uv_sentinel": [
+        -4.0,
+        -4.0
+      ],
+      "local_chart_covariance_role": "diagnostic/local approximation only; sample_uv uses exact physical-world quadrature"
+    }
+  ],
+  "numeric_gate_pass": true,
+  "kernel_candidate": "GH15",
+  "dense_reference": "GH41 exactworldchart",
+  "thresholds": {
+    "frequency_max": 0.0001,
+    "mass_ge_point9_RGB_p99": 0.00392156862745098,
+    "mass_ge_point9_RGB_max": 0.01568627450980392
+  }
+}

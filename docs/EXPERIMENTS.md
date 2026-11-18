@@ -362,3 +362,8 @@
 ## MODULE2-ROAD-ACTIVATION-20261118 / MODULE2-MARKING-SOLVER-20261118
 
 [道路资产覆盖、来源与组件](autoresearch/module2_activation_20261118/report.md)。固定几何/尺度/不透明度，0训练重激活860真实来源+32教师来源既有道路点，原965低覆盖降至56thin，773原gap全部关闭；K77266与公共重载保持，覆盖主链169前向，另一次25前向/0更新材料组合单独记账。12cm理想标线L-BFGS-B500正式FG+3工程FG，目标f下降7.60%、对比度.82168仍未过，缺严格负证书。五帧探针，199BUILD继承，默认场景不替换，GPU保持开机。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
+
+## MODULE2-MULTISCALE-MATERIAL-20261118
+
+[固定覆盖的多尺度世界材质、匹配颜色对照与TRELLIS.2原生列](autoresearch/module2_multiscale_material_20261118/report.md)。run=`road_multiscale_material_20261118_r1`；A200共用后L800/ABC800共1400物理正式更新，匹配独立RGB800另列，工程开销独立。86/110训练、三帧诊断，继承199BUILD；几何/Σ/opacity/active全冻。权威场与公共重载、K/alpha通过；横纹增量下降约78%–80%，但六项拟合非劣门全失败，高频额外收益有限，联合不晋升。TRELLIS.2仅一次固定mesh推理，无微调；局部S改善但A/C退化，不切换默认场景，不作表示上限结论。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict/problem_solved=null，GPU保持开机。
+

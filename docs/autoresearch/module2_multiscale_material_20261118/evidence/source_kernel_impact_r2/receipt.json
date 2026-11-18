@@ -1,0 +1,103 @@
+{
+  "schema": "fixed_GH15_source_kernel_native_mass_CPU_audit.v1",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "active_rows": 151988,
+  "eligible_rows": 84266,
+  "unavailable_readonly_rows": 1864,
+  "kernel_source_decomposition_max_error": 3.980149543281186e-14,
+  "source_codes": {
+    "0": "unavailable, separately geometry/unknown",
+    "1": "measured prior",
+    "2": "retrieved prior",
+    "3": "frozen generated or B32 pseudo prior"
+  },
+  "region_rows": [
+    {
+      "region": "A",
+      "actual_road_only_contributing_rows": 65499,
+      "unavailable_readonly_rows": 134,
+      "kernel_mass_below_point9_rows": 3711,
+      "eligible_rows": 46087,
+      "eligible_mass_below_point9_rows": 1462,
+      "readonly_rows": 19412,
+      "max_over_two_frame_native_region_mass_sum": 11905.689285179933,
+      "unavailable_native_maxmass_fraction": 0.0004991808990771646,
+      "low_kernel_mass_native_maxmass_fraction": 0.06711848634205239,
+      "all_rows_base_query_including_readonly_counterfactual_source_mean": {
+        "1": 0.8923453673846219,
+        "2": 0.1076546326153779,
+        "3": 0.0
+      },
+      "eligible_field_base_source_native_maxmass_mean": {
+        "1": 0.9172566817928881,
+        "2": 0.08274331820711202,
+        "3": 0.0
+      }
+    },
+    {
+      "region": "C",
+      "actual_road_only_contributing_rows": 47886,
+      "unavailable_readonly_rows": 450,
+      "kernel_mass_below_point9_rows": 4435,
+      "eligible_rows": 34831,
+      "eligible_mass_below_point9_rows": 2120,
+      "readonly_rows": 13055,
+      "max_over_two_frame_native_region_mass_sum": 7577.949723029318,
+      "unavailable_native_maxmass_fraction": 0.0030074039195165563,
+      "low_kernel_mass_native_maxmass_fraction": 0.026925431527621425,
+      "all_rows_base_query_including_readonly_counterfactual_source_mean": {
+        "1": 0.26617392078477103,
+        "2": 0.5696386181127547,
+        "3": 0.16418746110247423
+      },
+      "eligible_field_base_source_native_maxmass_mean": {
+        "1": 0.0915135254290714,
+        "2": 0.7024255951109419,
+        "3": 0.2060608794599868
+      }
+    },
+    {
+      "region": "S",
+      "actual_road_only_contributing_rows": 6707,
+      "unavailable_readonly_rows": 0,
+      "kernel_mass_below_point9_rows": 160,
+      "eligible_rows": 6707,
+      "eligible_mass_below_point9_rows": 160,
+      "readonly_rows": 0,
+      "max_over_two_frame_native_region_mass_sum": 2234.5111525354687,
+      "unavailable_native_maxmass_fraction": 0.0,
+      "low_kernel_mass_native_maxmass_fraction": 0.06898732238967943,
+      "all_rows_base_query_including_readonly_counterfactual_source_mean": {
+        "1": 0.8634488169759155,
+        "2": 0.12815404707786562,
+        "3": 0.008397135946219013
+      },
+      "eligible_field_base_source_native_maxmass_mean": {
+        "1": 0.8634488169759155,
+        "2": 0.12815404707786562,
+        "3": 0.008397135946219013
+      }
+    }
+  ],
+  "statistic_boundary": "native masses are actual road-only alphaT from frozen masks; saved row mass is max across frames86/110, not their sum. Weighted summaries are aggregate row-max diagnostics, not per-pixel fractions or joint visibility. Only eligible_field_base_source means describe consumed field baseF; readonly all_rows query proportions are counterfactual and not their actual legacy shader source. Learned L/H terms are separate.",
+  "fixed_denominators": {
+    "S_supported": 3131,
+    "S_full": 3187,
+    "S_thin": 56
+  },
+  "mask_or_qualification_changed": false,
+  "valid_mass_point9_is_numeric_stratum_not_training_gate": true,
+  "mass_quadrature_not_certified_confidence": true,
+  "inputs": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/audit_source_kernel_impact.py": "7c6b66be1d627ec7cf2690355c1b9b6f6e9a71513dc877c6a443a5f2525bbfb2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/cpu_exact_r1/A0.npz": "5a6f5f108a5bf529deeefbc36b86d29a218a1bb0644e24147d86abab8314b704",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/chart_plan_candidate_r1/geometry_plan.npz": "186c00bebaf63a56634e5b293cb0a3a500a795b9aefbc9135be3c053621903a9",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/chart_plan_candidate_r1/sample_uv_f64.npy": "d34d85abdbc6024e11d10555a11d368aa0f5b06519cd90e9b462d1f03ed62082",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/method_scope_r1/scope.npz": "8ed4bc65a5eb080b0e685fe737ebbccf4440723bb13a6b3a6e7344928b4568bc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/scope.npz": "2aa55aced9ab216ebc337844cdcc9d15914b33703eb63e04907c8f66928a17ce",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/cpu_exact_r1/initial_row_queries.npz": "af057bbe1651d91dd19ccb214a9be73eb778b621f130c5b33ee4ca567174ed9a"
+  },
+  "elapsed_seconds": 5.818285588175058
+}

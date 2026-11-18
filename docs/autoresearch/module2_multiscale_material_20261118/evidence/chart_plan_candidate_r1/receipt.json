@@ -1,0 +1,45 @@
+{
+  "schema": "true_chart_GH15_CPU_candidate_plan.v1",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "training_updates": 0,
+  "formal_authorized": false,
+  "independent_review_status": "pending root/main/independent locator review",
+  "source_atlas": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/base_atlas.npz",
+  "source_road": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded/road.npz",
+  "source_geometry": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded/provenance.npz",
+  "sample_uv": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/chart_plan_candidate_r1/sample_uv_f64.npy",
+  "sample_uv_shape": [
+    151988,
+    225,
+    2
+  ],
+  "sample_uv_bytes": 547156800,
+  "geometry_plan": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/chart_plan_candidate_r1/geometry_plan.npz",
+  "center": {
+    "key_origin": [
+      -99,
+      -144
+    ],
+    "rows": 151988,
+    "center_is_exact_node": true
+  },
+  "mapping": {
+    "center_is_world_key_node": true,
+    "source": "actual canonical G_s XY triangles",
+    "global_affine_role": "local candidate seed only",
+    "seed_error_max_uv": 0.2023006532375916,
+    "mapped_points": 34197300,
+    "unmapped_points": 401720,
+    "worldXY_reconstruction_max_m": 9.094947017729282e-13,
+    "dtype": "float64",
+    "invalid_query_uv_sentinel": [
+      -4.0,
+      -4.0
+    ],
+    "local_chart_covariance_role": "diagnostic/local approximation only; sample_uv uses exact physical-world quadrature"
+  },
+  "elapsed_seconds": 28.782161632552743,
+  "invalid_query_policy": "outside actual chart mesh -> UV[-4,-4] zero sample; never use affine extrapolation as valid material",
+  "reload_authority": "fixed surface_world_xyz/world_keys/normals/sigma plus helper; sampleUV is reproducible cache, not learned rowRGB"
+}

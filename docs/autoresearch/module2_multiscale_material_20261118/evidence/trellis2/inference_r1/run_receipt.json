@@ -1,0 +1,131 @@
+{
+  "task": "MODULE2-MULTISCALE-MATERIAL-20261118-TRELLIS2",
+  "status": "completed",
+  "seed": 101,
+  "resolution": 512,
+  "texture_size": 1024,
+  "learning_updates": 0,
+  "preprocess_image": false,
+  "input_roles": {
+    "mesh": "current repaired fixed GS world centers triangulated into one road patch",
+    "reference": "legal raw86/110 A/C/S worldwarp; explicit neutral unknowns"
+  },
+  "input_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/manifest.json",
+  "input_manifest_sha256": "57f7529847a80711e2f29a8f70c54ec8cedc4dd5c2731230090432d07eb6ea98",
+  "GPU_lease": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/gpu_lease.json",
+    "owner": "static_handoff"
+  },
+  "new_inference": true,
+  "historical_output_reused": false,
+  "model_root": "/root/autodl-tmp/models/TRELLIS.2-4B-texturing",
+  "dino_root": "/root/autodl-tmp/models/TRELLIS.2-4B-texturing/aux/dinov3-vitl16-pretrain-lvd1689m",
+  "mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/canonical_yup_open.obj",
+  "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/reference_worldwarp_rgb128.png",
+  "mesh_sha256": "77e4204e776be7c1ba61f7345abb0e9b2900ad99e8893a302db20161f348bd0c",
+  "reference_sha256": "4a3c78f4ce84d7c75edb13aafbd5bf3877bf312a0da66d4168ea0149f65b6f9b",
+  "loading_adapter": "official models and constructor, only used resolution; unused background remover omitted",
+  "official_run_modified": false,
+  "geometry_generation": false,
+  "conditions_differ_from_inpainting": "TRELLIS accepts fixed mesh plus reference, no hole-mask/context channel",
+  "human_verdict": null,
+  "stages": [
+    {
+      "name": "load_shape_slat_encoder",
+      "seconds": 2.904400920495391,
+      "parameters": 354385392
+    },
+    {
+      "name": "load_tex_slat_decoder",
+      "seconds": 3.6640303134918213,
+      "parameters": 474216006
+    },
+    {
+      "name": "load_tex_slat_flow_model_512",
+      "seconds": 15.58890244551003,
+      "parameters": 1292302880
+    },
+    {
+      "name": "load_dinov3_vitl",
+      "seconds": 0.3230709470808506,
+      "parameters": 303129600
+    },
+    {
+      "name": "get_cond",
+      "seconds": 1.4140285328030586
+    },
+    {
+      "name": "encode_shape_slat",
+      "seconds": 29.65026575513184,
+      "sparse_rows": 1492,
+      "channels": 32
+    },
+    {
+      "name": "sample_tex_slat",
+      "seconds": 2.394126920029521,
+      "sparse_rows": 1492,
+      "channels": 32
+    },
+    {
+      "name": "decode_tex_slat",
+      "seconds": 7.273914031684399,
+      "sparse_rows": 382039,
+      "channels": 6
+    },
+    {
+      "name": "postprocess_mesh",
+      "seconds": 15.476507473737001
+    }
+  ],
+  "official_config_sha256": "64009974a391fe9c948b2943fd2846dc4526bc569c1d56dafb8f9e5c181fcac3",
+  "sampler": {
+    "name": "FlowEulerGuidanceIntervalSampler",
+    "args": {
+      "sigma_min": 1e-05
+    },
+    "params": {
+      "steps": 12,
+      "guidance_strength": 1.0,
+      "guidance_rescale": 0.0,
+      "guidance_interval": [
+        0.6,
+        0.9
+      ],
+      "rescale_t": 3.0
+    }
+  },
+  "input_vertices": 16384,
+  "input_faces": 32258,
+  "reference_size": [
+    128,
+    128
+  ],
+  "torch": "2.9.1+cu128",
+  "device": "NVIDIA GeForce RTX 4080 SUPER",
+  "load_seconds": 22.549108361825347,
+  "official_git_sha": "75fbf0183001ed9876c8dbb35de6b68552ee08bd",
+  "inference_seconds": 56.32751256786287,
+  "peak_allocated_bytes": 2784424960,
+  "peak_reserved_bytes": 2814377984,
+  "geometry_identity": {
+    "source_vertices": 16384,
+    "output_vertices": 21777,
+    "max_world_vertex_error_m": 5.272079354863696e-08,
+    "tolerance_m": 1e-05,
+    "faces_same_geometry": true,
+    "source_vertex_identity_covered": true,
+    "UV_seam_reindexing_allowed": true,
+    "GS_geometry_changed": false,
+    "passed": true
+  },
+  "output_vertices": 21777,
+  "output_faces": 32258,
+  "finite_vertices": true,
+  "output_files": [
+    "textured.glb",
+    "basecolor_rgba.png",
+    "metallic_roughness.png",
+    "generated_mesh.npz"
+  ],
+  "total_process_seconds": 80.05171612277627
+}

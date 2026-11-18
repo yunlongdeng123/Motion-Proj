@@ -1,0 +1,33 @@
+{
+  "schema": "trellis2_fixed_prior_native_columns_execution.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "gpu_authorized": true,
+  "optimizer_updates": 0,
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "variants": [
+    "T2_mid",
+    "A0_mid"
+  ],
+  "prepared_manifest_sha256": "8d7c740bc56238031210ad6f889983dc80d9779b37f83ce19f22c38ea30f8a95",
+  "coverage_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "shader": "same original native Gaussian renderer; current common84266 write mask, all other rows readonly legacy",
+  "prior": "one previously executed fixedmesh TRELLIS2 inference; literalPNG colors, midpoint physical Sigma source-normalized read",
+  "numerical_reference": "same-integrator A0_mid isolates integration effects; exteriorsamefilteredA0",
+  "expected_native_forward_calls": 30,
+  "expected_native_backward_calls": 0,
+  "world_geometry_sigma_opacity_active_frozen": true,
+  "prior_observed_ledger_unchanged": true,
+  "effective_T2_prior_separate": true,
+  "public_reload": "fiveframe road RGB/alpha/RGB8 from actual public loader vs saved float outputs; not claiming separate public joint replay",
+  "queue": "after shared pair and matchedI0; root grants exclusive static_handoff lease then execute",
+  "expected_owner": "static_handoff",
+  "GPU_keep_on": true,
+  "production_promoted": false,
+  "human_verdict": null
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "world_multiscale_material_CPU_preparation.v1",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "A0_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/base_atlas.npz",
+  "coverage_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "active_rows": 151988,
+  "B32_pseudo_texels": 32,
+  "active_prior_unknown_rows": 1864,
+  "center_vs_filtered_RGB_abs_max": 0.18712463974952698,
+  "center_vs_filtered_RGB_mean": 0.005782368127256632,
+  "kernel_valid_mass_quantiles": [
+    0.28496214668403785,
+    0.7927910502695398,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "H_draft": {
+    "low_spacing_m": 0.12,
+    "high_spacing_m": 0.02,
+    "low_bound_sRGB": 0.3,
+    "high_bound_sRGB": 0.04,
+    "source_gate": "confidence*(.25+.75*observed marking7x7 support)",
+    "highpass_sigma_m": 0.06,
+    "product_mH_H_inside_filter": true,
+    "strict_band_separation_claim": false
+  },
+  "kernel_numerical_qualification": "PENDING; GH7 moment tests do not imply highfrequency accuracy",
+  "formal_authorized": false
+}

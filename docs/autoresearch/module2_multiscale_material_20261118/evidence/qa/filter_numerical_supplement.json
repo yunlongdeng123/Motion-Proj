@@ -1,0 +1,27 @@
+{
+  "schema": "independent_NumPy_filter_supplement_recovered.v1",
+  "sampling_rows": 359,
+  "main_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/cpu_numeric_r1/receipt.json",
+  "reference": "GH41 exactchart; same fixedA0, fresh observed-only Hmask, bounded deterministic H fixture",
+  "comparisons": {
+    "A0": {
+      "rows": 326,
+      "p99": 0.0021461730455408826,
+      "max": 0.006264484276052973,
+      "pass_root_engineering_limits": true
+    },
+    "A0_plus_H": {
+      "rows": 326,
+      "p99": 0.0020592388111044893,
+      "max": 0.0062333744387945145,
+      "pass_root_engineering_limits": true
+    }
+  },
+  "lowmass_reference_rows": 33,
+  "GH15_vs_GH41_mass_max": 0.06652656855388805,
+  "recovery": "numeric arrays computed once; JSON NumPybool serialization fixed; recovered only metrics from saved arrays, no repeated quadrature run",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "training_updates": 0,
+  "formal_authorized": false
+}

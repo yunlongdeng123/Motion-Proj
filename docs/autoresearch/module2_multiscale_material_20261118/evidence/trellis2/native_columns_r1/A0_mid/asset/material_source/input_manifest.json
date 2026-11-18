@@ -1,0 +1,129 @@
+{
+  "schema": "trellis2_new_fixed_road_patch_input.v1",
+  "task": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "status": "PASS_CPU_INPUT",
+  "parent_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/canonical_yup_open.obj",
+  "reference": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/reference_worldwarp_rgb128.png",
+  "geometry": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/fixed_geometry.npz",
+  "transforms": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/transforms.json",
+  "reference_sources": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/input_r1/reference_sources.npz",
+  "mesh_sha256": "77e4204e776be7c1ba61f7345abb0e9b2900ad99e8893a302db20161f348bd0c",
+  "reference_sha256": "4a3c78f4ce84d7c75edb13aafbd5bf3877bf312a0da66d4168ea0149f65b6f9b",
+  "patch": {
+    "world_key_min": [
+      -99,
+      -66
+    ],
+    "world_key_max": [
+      28,
+      61
+    ],
+    "vertices": 16384,
+    "faces": 32258,
+    "geometry_supported_vertices": 16384,
+    "full_texel_footprint_m": [
+      2.56,
+      2.56
+    ],
+    "world_bbox": [
+      [
+        2315.8217101316936,
+        1365.5430995822587,
+        -20.889799310911084
+      ],
+      [
+        2318.3690664074475,
+        1368.0901602296947,
+        -20.60038399705426
+      ]
+    ],
+    "mean_normal_world": [
+      -0.014972811769360335,
+      -0.016327887502913672,
+      0.9997545773825751
+    ],
+    "actual_GS_world_vertex_error_m": 9.094947017729282e-13,
+    "shape_generated": false
+  },
+  "source_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames_not_consumed": [
+    134,
+    179,
+    198
+  ],
+  "sources": [
+    {
+      "raw": 86,
+      "teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw086/B/raw_native.png",
+      "teacher_sha256": "dff07aa5e78ea510e19d268f7794fac51a866504146e2f1cca2a7c919e9b205c",
+      "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/observation.png",
+      "Brown_calibration": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+      "original_teacher_guard": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/output_guard_probe/scene065_raw086/native_guard_roles.npz",
+      "trusted_shadow": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_source_identity_r1/086_native_routing_evidence.npz",
+      "qualified_reference_rows": 10672
+    },
+    {
+      "raw": 110,
+      "teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw110/B/raw_native.png",
+      "teacher_sha256": "a4c86ff48916b948c22ec12c055a28c28a60a25ff3932498d933833d93e163d5",
+      "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/observation.png",
+      "Brown_calibration": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+      "original_teacher_guard": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/output_guard_probe/scene065_raw110/native_guard_roles.npz",
+      "trusted_shadow": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_source_identity_r1/110_native_routing_evidence.npz",
+      "qualified_reference_rows": 12601
+    }
+  ],
+  "coverage": [
+    {
+      "raw": 86,
+      "fullS": 1043,
+      "patch_fullS": 701,
+      "new_supported": 222,
+      "patch_new_supported": 222
+    },
+    {
+      "raw": 110,
+      "fullS": 2144,
+      "patch_fullS": 1476,
+      "new_supported": 687,
+      "patch_new_supported": 687
+    }
+  ],
+  "fullS_denominator": 3187,
+  "newS_denominator": 909,
+  "reference_valid_rows": 13109,
+  "reference_unknown_rows": 3275,
+  "reference_role_counts": {
+    "0": 3275,
+    "1": 1726,
+    "2": 8240,
+    "3": 3143
+  },
+  "reference_raw_counts": {
+    "-1": 3275,
+    "86": 662,
+    "110": 12447
+  },
+  "reference_policy": "original observed visible A first; otherwise original frozen C/target-shadow S, original Brown projection/all4 Wguard and ~K, inherited distance<60/cos>.025; no crossview averaging",
+  "unknown_reference_fill": "RGB128 neutral; explicit unknown map, not claimed as observed/clean teacher",
+  "reference_image_orientation": "image X=+world chart i, image Y=-world chart j; canonical mesh X=+i,Y=up, Z=-j",
+  "seed": 101,
+  "resolution": 512,
+  "texture_size": 1024,
+  "sampling_steps": 12,
+  "preprocess_image": false,
+  "training_updates": 0,
+  "new_inference_required": true,
+  "historical_generated_output_reused": false,
+  "cached_reuse": "weights and compiled operators only; shape/conditioning/texture must run anew for this input",
+  "inherited_BUILD_frames": 199,
+  "blind_test": false,
+  "output_policy": "baseColor prior only; generated alpha does not change GS opacity; roughness/metallic diagnostic; later worldUV/S_Sigma sampling + fresh K and actual native GS",
+  "exterior_policy": "same root A0; patch source never claimed to cover full street",
+  "GPU_operations": 0,
+  "human_verdict": null
+}

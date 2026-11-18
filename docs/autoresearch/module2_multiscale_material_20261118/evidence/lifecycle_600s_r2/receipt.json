@@ -1,0 +1,154 @@
+{
+  "schema": "multiscale_real_lifecycle_smoke.v1",
+  "GPU_executed": true,
+  "optimizer_updates": 360,
+  "formal_updates": 0,
+  "elapsed_seconds": 511.88540101237595,
+  "target_seconds": 600,
+  "maximum_engineering_updates": 360,
+  "initial_lifecycle_updates": 7,
+  "additional_continuation_updates": 353,
+  "checks": [
+    {
+      "test": "A2_restore",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "A2_restore_for_replay",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "next_A_replay",
+      "maximum_state_difference": 1.862645149230957e-09,
+      "bitexact": false
+    },
+    {
+      "test": "A2_for_B_entry",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "B4_restore",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "B4_restore_for_C_replay",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "next_C_replay",
+      "maximum_state_difference": 1.862645149230957e-09,
+      "bitexact": false
+    },
+    {
+      "test": "A2_for_L_fork",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "C5_after_control_entry",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "authoritative_field_reload",
+      "query": {
+        "rebuilt_from_original_world_geometry": true,
+        "rows": 192,
+        "center_UV_max": 0.0,
+        "quad_UV_max": 0.0,
+        "geometric_valid_exact": true,
+        "requeried_ci_max_vs_baked_cache": 0.0,
+        "world_field_is_authority": true,
+        "public_scene_loader_still_baked_GS_cache": true
+      },
+      "ci_max": 0.0,
+      "rows": [
+        {
+          "raw": 86,
+          "field_native_RGB_max": 0.0,
+          "baked_cache_RGB_max": 0.0,
+          "RGB8_max": 0
+        },
+        {
+          "raw": 110,
+          "field_native_RGB_max": 0.0,
+          "baked_cache_RGB_max": 0.0,
+          "RGB8_max": 0
+        },
+        {
+          "raw": 134,
+          "field_native_RGB_max": 0.0,
+          "baked_cache_RGB_max": 0.0,
+          "RGB8_max": 0
+        },
+        {
+          "raw": 179,
+          "field_native_RGB_max": 0.0,
+          "baked_cache_RGB_max": 0.0,
+          "RGB8_max": 0
+        },
+        {
+          "raw": 198,
+          "field_native_RGB_max": 0.0,
+          "baked_cache_RGB_max": 0.0,
+          "RGB8_max": 0
+        }
+      ]
+    },
+    {
+      "test": "continuation_37",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_67",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_97",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_127",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_157",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_187",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_217",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_247",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_277",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_307",
+      "full_model_optimizer_RNG_sampler_exact": true
+    },
+    {
+      "test": "continuation_337",
+      "full_model_optimizer_RNG_sampler_exact": true
+    }
+  ],
+  "prior_failed_attempt_updates": 4,
+  "step_seconds_mean": 1.350867655671512,
+  "step_seconds_max": 2.171555858105421,
+  "estimated1400_core_seconds": 1891.2147179401168,
+  "peak_allocated_bytes": 3391835648,
+  "native_calls_training_context": 495,
+  "additional_public_loader_native_calls": 10,
+  "total_native_calls": 505,
+  "field_reload_path_calls": 15,
+  "field_reload_expected_calls_already_in_training_context": 5,
+  "formal_must_start_fresh_zero_fields": true,
+  "all_geometry_and_coverage_frozen": true,
+  "all_K_checks_exact": true
+}

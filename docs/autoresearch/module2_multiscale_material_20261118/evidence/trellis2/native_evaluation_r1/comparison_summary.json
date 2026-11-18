@@ -1,0 +1,135 @@
+{
+  "schema": "TRELLIS2_same_integrator_frozen_domain_comparison.v1",
+  "domains": {
+    "A": {
+      "pixels": 16904,
+      "A0_mid_MAE": 0.048823895822628825,
+      "T2_mid_MAE": 0.052786130733462,
+      "MAE_delta": 0.003962234910833175,
+      "MAE_change_percent": 8.115359997546046,
+      "A0_mid_RMSE": 0.07656066860079017,
+      "T2_mid_RMSE": 0.07964873275436507
+    },
+    "C": {
+      "pixels": 10830,
+      "A0_mid_MAE": 0.04943087306429732,
+      "T2_mid_MAE": 0.06096120233392121,
+      "MAE_delta": 0.011530329269623892,
+      "MAE_change_percent": 23.32616956739928,
+      "A0_mid_RMSE": 0.08173587086565774,
+      "T2_mid_RMSE": 0.08842303839081805
+    },
+    "S_photo": {
+      "pixels": 3131,
+      "A0_mid_MAE": 0.16889251346325995,
+      "T2_mid_MAE": 0.12014265280872517,
+      "MAE_delta": -0.04874986065453478,
+      "MAE_change_percent": -28.864429603707443,
+      "A0_mid_RMSE": 0.20687022962731486,
+      "T2_mid_RMSE": 0.15741309926631716
+    },
+    "S_full": {
+      "pixels": 3187,
+      "A0_mid_MAE": 0.16755373426067718,
+      "T2_mid_MAE": 0.11900682085298019,
+      "MAE_delta": -0.048546913407697,
+      "MAE_change_percent": -28.973937001110674,
+      "A0_mid_RMSE": 0.20563596626457367,
+      "T2_mid_RMSE": 0.15627737932293337
+    },
+    "S_oldphoto": {
+      "pixels": 2222,
+      "A0_mid_MAE": 0.2016648242583718,
+      "T2_mid_MAE": 0.14657581164570066,
+      "MAE_delta": -0.05508901261267113,
+      "MAE_change_percent": -27.317115325026343,
+      "A0_mid_RMSE": 0.22986132793498681,
+      "T2_mid_RMSE": 0.1828789656285103
+    },
+    "S_new909": {
+      "pixels": 909,
+      "A0_mid_MAE": 0.08878242040854213,
+      "T2_mid_MAE": 0.05552826454056284,
+      "MAE_delta": -0.03325415586797929,
+      "MAE_change_percent": -37.45578878674023,
+      "A0_mid_RMSE": 0.13509543430356313,
+      "T2_mid_RMSE": 0.05996447551459632
+    },
+    "S_remaining56": {
+      "pixels": 56,
+      "A0_mid_MAE": 0.09270163277341496,
+      "T2_mid_MAE": 0.05550164489873818,
+      "MAE_delta": -0.037199987874676786,
+      "MAE_change_percent": -40.12872994977605,
+      "A0_mid_RMSE": 0.11755721046881742,
+      "T2_mid_RMSE": 0.06710897701976214
+    },
+    "A_patch": {
+      "pixels": 1037,
+      "A0_mid_MAE": 0.01799072582443517,
+      "T2_mid_MAE": 0.07940275275948654,
+      "MAE_delta": 0.061412026935051364,
+      "MAE_change_percent": 341.35380381174497,
+      "A0_mid_RMSE": 0.02258044784964454,
+      "T2_mid_RMSE": 0.08975795690018852
+    },
+    "C_patch": {
+      "pixels": 3686,
+      "A0_mid_MAE": 0.03864443205535509,
+      "T2_mid_MAE": 0.07054108509692475,
+      "MAE_delta": 0.03189665304156966,
+      "MAE_change_percent": 82.53880661483196,
+      "A0_mid_RMSE": 0.06212628670359234,
+      "T2_mid_RMSE": 0.08449284638130518
+    },
+    "S_full_patch": {
+      "pixels": 2177,
+      "A0_mid_MAE": 0.13148894147410398,
+      "T2_mid_MAE": 0.06676211224418561,
+      "MAE_delta": -0.06472682922991836,
+      "MAE_change_percent": -49.22606304703271,
+      "A0_mid_RMSE": 0.1716710229763021,
+      "T2_mid_RMSE": 0.07372869668557573
+    },
+    "S_full_exterior": {
+      "pixels": 1010,
+      "A0_mid_MAE": 0.24528943118777605,
+      "T2_mid_MAE": 0.23161744525035222,
+      "MAE_delta": -0.01367198593742383,
+      "MAE_change_percent": -5.5738177838398295,
+      "A0_mid_RMSE": 0.2644024186325038,
+      "T2_mid_RMSE": 0.255631402869855
+    }
+  },
+  "macro_per_frame_source_MAE": {
+    "A0_mid": {
+      "A": 0.04726535967270061,
+      "C": 0.048104031616890086,
+      "S_photo": 0.168934491604599,
+      "weighted_photo_A_plus_halfC_plusS": 0.24025186708574464
+    },
+    "T2_mid": {
+      "A": 0.051123838230437514,
+      "C": 0.05971498074124492,
+      "S_photo": 0.12105746936539143,
+      "weighted_photo_A_plus_halfC_plusS": 0.2020387979664514
+    }
+  },
+  "pooled_metric": "3RGB-channel MAE over fixed pixels, q=1; each domain independent",
+  "train_references": [
+    86,
+    110
+  ],
+  "diagnostic_frames_no_teacher_errors": [
+    134,
+    179,
+    198
+  ],
+  "C_and_S_are_frozen_pseudo_not_GT": true,
+  "fullS": 3187,
+  "newS": 909,
+  "patch_fullS": 2177,
+  "geometry_coverage_unchanged": true,
+  "interpretation": "Target-shadow pseudo consistency improves, while measured A and physical-hole C worsen. Does not establish overall material superiority or a 3DGS capacity limit.",
+  "human_verdict": null
+}

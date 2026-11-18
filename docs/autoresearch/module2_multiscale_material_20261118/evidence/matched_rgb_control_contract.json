@@ -1,0 +1,35 @@
+{
+  "schema": "module2_matched_independent_RGB_control.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "registered_UTC": "2026-11-18T10:36:24Z",
+  "reason": "historical I0 used oldphoto-S2222; a fair current material comparison needs same input, current3131 teacher mask, starting shader, row eligibility and800-step sampler",
+  "initial": "zero-delta filteredA0 derived from cpu_exact_r1 authoritative world field; same readonly nonqualified legacy outputs",
+  "scope": "same final method_scope_r1,84266 rows, original-known C-only protection; same geometry/alpha/scales/active/static/vehicles/cameras",
+  "parameterization": "independent ci = clamp(c0_i + delta_i,0,1); train delta_i only, initial0, constrain delta to[-1,1]",
+  "loss": {
+    "photo": "same native premult A+0.5C+S, independent domain normalization, q=1 inside frozen validity masks",
+    "independent_effective_delta_squared": 0.001,
+    "comparison": "regularizers differ by method: current shared fields add registered spatial/H constraints; not a pure parameter-count-only ablation"
+  },
+  "optimizer": {
+    "name": "Adam",
+    "lr": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "seed": 101
+  },
+  "formal_updates": 800,
+  "sampler": "same800 raw86/110 trace as shared matched methods",
+  "engineer_updates_limit": 8,
+  "engineer": "actual gradient/save/evaluate/full-state restore/next update/native K and public reload; no warm-start formal",
+  "GPU_launch": "root grants exclusive lease after shared-field600s smoke; no concurrent native task",
+  "no_automatic_extension": true,
+  "accounting": "800 additional independentRGB formal updates; shared-method physical1400 and both800 effective budgets unchanged; all engineering separate",
+  "GPU_keep_on": true,
+  "production_promoted": false,
+  "human_verdict": null
+}

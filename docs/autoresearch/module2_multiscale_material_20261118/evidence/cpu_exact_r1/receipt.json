@@ -1,0 +1,40 @@
+{
+  "schema": "world_multiscale_material_CPU_preparation.v1",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "A0_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/base_atlas.npz",
+  "coverage_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "active_rows": 151988,
+  "B32_pseudo_texels": 32,
+  "active_prior_unknown_rows": 1864,
+  "center_vs_filtered_RGB_abs_max": 0.21307513117790222,
+  "center_vs_filtered_RGB_mean": 0.006459775380790234,
+  "kernel_valid_mass_quantiles": [
+    0.1803465499772482,
+    0.7660098150300578,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "H_draft": {
+    "low_spacing_m": 0.12,
+    "high_spacing_m": 0.02,
+    "low_bound_sRGB": 0.3,
+    "high_bound_sRGB": 0.04,
+    "source_gate": "source1 AND known *confidence*(.25+.75*trueobserved marking7x7 support)",
+    "highpass_sigma_m": 0.06,
+    "product_mH_H_inside_filter": true,
+    "strict_band_separation_claim": false
+  },
+  "H_gate_source_counts": {
+    "0": 0,
+    "1": 125342,
+    "2": 0,
+    "3": 0
+  },
+  "H_parameter_scalar_upper_bound": 376026,
+  "exact_chart_used": true,
+  "kernel_numerical_qualification": "PENDING; truechart helper and GH15 highfrequency qualification required",
+  "formal_authorized": false
+}

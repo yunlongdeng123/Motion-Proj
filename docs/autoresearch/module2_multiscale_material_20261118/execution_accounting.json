@@ -1,0 +1,44 @@
+{
+  "schema": "multiscale_material_execution_accounting.v1",
+  "shared_formal": {
+    "logical_updates_per_method": 800,
+    "common_A_updates": 200,
+    "physical_updates": 1400,
+    "native_forwards": 1490,
+    "native_backwards": 1400,
+    "seconds": 2315.424835126847,
+    "replay_updates": 0
+  },
+  "matched_I0_formal": {
+    "updates": 800,
+    "native_forwards": 840,
+    "native_backwards": 800,
+    "seconds_excluding_constructor": 24.722792772576213,
+    "replay_updates": 0
+  },
+  "shared_engineering": {
+    "native_forwards": 558,
+    "updates": 364,
+    "successful_smoke_updates": 360,
+    "failed_attempt_updates": 4,
+    "completed_smoke_seconds": 617.3216077629477,
+    "failed_attempt_separate": true
+  },
+  "matched_I0_engineering": {
+    "updates": 4,
+    "native_forwards": 34,
+    "seconds_excluding_constructor": 15.205369224771857
+  },
+  "trellis2": {
+    "new_inferences": 1,
+    "training_updates": 0,
+    "inference_seconds": 56.33,
+    "whole_inference_process_seconds": 80.05,
+    "native_forwards": 30,
+    "native_backwards": 0,
+    "native_seconds": 59.7513360157609
+  },
+  "total_optimizer_updates": 2568,
+  "total_native_forwards": 2952,
+  "note": "共享正式1400+RGB正式800+共享工程364+RGB工程4；正式等更新预算，不是等时长/等计算。TRELLIS模型推理不计作原生GS前向。CPU数值校验、积分缓存和报告另计；未重跑199帧。"
+}

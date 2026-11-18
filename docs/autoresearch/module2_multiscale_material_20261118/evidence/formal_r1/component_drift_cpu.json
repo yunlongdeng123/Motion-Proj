@@ -1,0 +1,203 @@
+{
+  "schema": "multiscale_bounded_field_component_CPU_audit.v1",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "actual_physical_updates_by_stage": {
+    "A": 200,
+    "L": 600,
+    "B": 300,
+    "C": 300
+  },
+  "actual_physical_updates_by_frame": {
+    "86": 700,
+    "110": 700
+  },
+  "stages": {
+    "A200": {
+      "low": {
+        "weighted_DC": [
+          -0.00047495117178186774,
+          -0.018198464065790176,
+          -0.017672697082161903
+        ],
+        "weighted_RMS": 0.11423471570014954,
+        "support_abs_max": 0.2729164659976959,
+        "support_nodes": 3953
+      },
+      "effective_mH_high": {
+        "weighted_DC": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weighted_RMS": 0.0,
+        "support_abs_max": 0.0,
+        "support_nodes": 66174
+      },
+      "effective_high_blurred_lowfrequency": {
+        "weighted_DC": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weighted_RMS": 0.0,
+        "support_abs_max": 0.0,
+        "support_nodes": 66174
+      },
+      "low_tanh_abs_over_point99": 0,
+      "high_tanh_abs_over_point99": 0,
+      "eligible_shader_channels_at_zero": 205,
+      "eligible_shader_channels_at_one": 0,
+      "eligible_shader_rows_touching_zero_or_one": 166
+    },
+    "L800": {
+      "low": {
+        "weighted_DC": [
+          -0.004630418494343758,
+          -0.024453816935420036,
+          -0.02397610805928707
+        ],
+        "weighted_RMS": 0.14085893332958221,
+        "support_abs_max": 0.29730576276779175,
+        "support_nodes": 3953
+      },
+      "effective_mH_high": {
+        "weighted_DC": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weighted_RMS": 0.0,
+        "support_abs_max": 0.0,
+        "support_nodes": 66174
+      },
+      "effective_high_blurred_lowfrequency": {
+        "weighted_DC": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weighted_RMS": 0.0,
+        "support_abs_max": 0.0,
+        "support_nodes": 66174
+      },
+      "low_tanh_abs_over_point99": 2,
+      "high_tanh_abs_over_point99": 0,
+      "eligible_shader_channels_at_zero": 550,
+      "eligible_shader_channels_at_one": 0,
+      "eligible_shader_rows_touching_zero_or_one": 373
+    },
+    "B500": {
+      "low": {
+        "weighted_DC": [
+          -0.00047495117178186774,
+          -0.018198464065790176,
+          -0.017672697082161903
+        ],
+        "weighted_RMS": 0.11423471570014954,
+        "support_abs_max": 0.2729164659976959,
+        "support_nodes": 3953
+      },
+      "effective_mH_high": {
+        "weighted_DC": [
+          1.7678646704958298e-05,
+          1.6433784972138814e-05,
+          1.6575699247073973e-05
+        ],
+        "weighted_RMS": 0.002926015355815652,
+        "support_abs_max": 0.01714503765106201,
+        "support_nodes": 66174
+      },
+      "effective_high_blurred_lowfrequency": {
+        "weighted_DC": [
+          1.438040324386949e-05,
+          1.462401358174114e-05,
+          1.4507280566414787e-05
+        ],
+        "weighted_RMS": 0.0003546992325578596,
+        "support_abs_max": 0.0032037314182811923,
+        "support_nodes": 66174
+      },
+      "low_tanh_abs_over_point99": 0,
+      "high_tanh_abs_over_point99": 0,
+      "eligible_shader_channels_at_zero": 207,
+      "eligible_shader_channels_at_one": 0,
+      "eligible_shader_rows_touching_zero_or_one": 166
+    },
+    "ABC800": {
+      "low": {
+        "weighted_DC": [
+          -0.0033056021202355623,
+          -0.022655948996543884,
+          -0.022314729169011116
+        ],
+        "weighted_RMS": 0.13312183320522308,
+        "support_abs_max": 0.29426878690719604,
+        "support_nodes": 3953
+      },
+      "effective_mH_high": {
+        "weighted_DC": [
+          2.7578886696511502e-05,
+          2.9122123962703963e-05,
+          2.9553268487228662e-05
+        ],
+        "weighted_RMS": 0.004426162890900109,
+        "support_abs_max": 0.02322164550423622,
+        "support_nodes": 66174
+      },
+      "effective_high_blurred_lowfrequency": {
+        "weighted_DC": [
+          2.3629272897853766e-05,
+          2.6518409968018327e-05,
+          2.6444652858086917e-05
+        ],
+        "weighted_RMS": 0.0005223398230458777,
+        "support_abs_max": 0.004332266758696267,
+        "support_nodes": 66174
+      },
+      "low_tanh_abs_over_point99": 0,
+      "high_tanh_abs_over_point99": 0,
+      "eligible_shader_channels_at_zero": 434,
+      "eligible_shader_channels_at_one": 0,
+      "eligible_shader_rows_touching_zero_or_one": 299
+    }
+  },
+  "drift": {
+    "C_low_bounded_spatial_delta": {
+      "weighted_DC": [
+        -0.002830651355907321,
+        -0.0044574858620762825,
+        -0.004642033949494362
+      ],
+      "weighted_RMS": 0.034908946603536606,
+      "support_abs_max": 0.2977953255176544,
+      "support_nodes": 3953
+    },
+    "C_effective_mH_high_spatial_delta": {
+      "weighted_DC": [
+        9.900239991553201e-06,
+        1.268833899056515e-05,
+        1.297756924015469e-05
+      ],
+      "weighted_RMS": 0.001673607736139356,
+      "support_abs_max": 0.015375505201518536,
+      "support_nodes": 66174
+    }
+  },
+  "B_bounded_low_exact_A": true,
+  "L_control_high_exact_zero": true,
+  "component_domain": "bounded spatial field before S_Sigma filtering; low at12cm knots, effective mH*H at2cm nodes; statistics use qualified parameter/query support, not full-atlas zeros",
+  "clamp_boundary": "cached shader counts identify exact0/1, not proof that an unclamped value exceeded the boundary",
+  "strict_band_orthogonality_claim": false,
+  "default_scene_modified": false,
+  "source_binding": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/code/summarize_field_components.py": "3c613526d910d3e0cad00b8fed78fc1ea6f586726bfbcfc11c7b8cd230c3b4d3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/results.json": "ec1b92fd2b8cfd4b6d769bf1c5099a004edb5c41090fa57efe0611a92e9daf40",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/updates.jsonl": "d1187ed1f8ebd04ce08cd128cf5e9197bbf681e5d907e8ff969930fbfbeaba8a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/A200/asset/world_field.pt": "19f5dd8ad379981a08f8dd0c6298cccb484670659dcfa269541db8b93e3f829b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/L800/asset/world_field.pt": "4496462d902087186376ba241588918ad32f00af5395e50c73ebb56483bf0d5d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/B500/asset/world_field.pt": "7f8440f8dc2cae98344cc26e2a99695e60a87577cb9b6e16c318f74e82a83f99",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/formal_r1/ABC800/asset/world_field.pt": "72d46ecfbb43a11a71e295350a6bfe7205dfa79bcfd56e2808c5993d29f63922"
+  }
+}

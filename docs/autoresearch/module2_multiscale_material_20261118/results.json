@@ -1,0 +1,344 @@
+{
+  "schema": "module2_multiscale_material_final.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "method": "c_i=S_Sigma[A0+DeltaL+mH*DeltaH]; true world A0, L12cm, H2cm, fixed geometry/coverage",
+  "train_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "inherited_BUILD_frames": 199,
+  "new_199_frame_run": false,
+  "headline": "共享材质显著减少独立RGB引入的横纹，但未通过拟合非劣门；高频增益有限，不晋升。TRELLIS局部阴影伪教师改善而真实可见道路退化，不支持切换。",
+  "metric_rows": [
+    {
+      "asset": "过滤A₀ · 零更新",
+      "A": 0.04882732586859394,
+      "C": 0.04943037106184078,
+      "S3131": 0.16890203845046056,
+      "new909": 0.08883433288745674,
+      "full3187": 0.16756369420293804
+    },
+    {
+      "asset": "低频200步",
+      "A": 0.03584565410626024,
+      "C": 0.021045073227524868,
+      "S3131": 0.029362617102179103,
+      "new909": 0.021003314207150608,
+      "full3187": 0.02907550883006326
+    },
+    {
+      "asset": "仅低频800步",
+      "A": 0.03536944178922907,
+      "C": 0.020129212760619564,
+      "S3131": 0.02308884896316019,
+      "new909": 0.018215422625068912,
+      "full3187": 0.02285501143266463
+    },
+    {
+      "asset": "冻结低频+高频 · 500步",
+      "A": 0.03514094568402361,
+      "C": 0.02102403867434622,
+      "S3131": 0.028569640586564474,
+      "new909": 0.020260537496236346,
+      "full3187": 0.028292335322595008
+    },
+    {
+      "asset": "低频+高频 · 800步",
+      "A": 0.034471930840104116,
+      "C": 0.02023256261060741,
+      "S3131": 0.022986562525149017,
+      "new909": 0.01775911109281264,
+      "full3187": 0.022755155490465178
+    },
+    {
+      "asset": "同监督独立RGB · 800步",
+      "A": 0.02167293699341002,
+      "C": 0.011903354950846986,
+      "S3131": 0.004234673214040679,
+      "new909": 0.003893863035881749,
+      "full3187": 0.004540848897823162
+    },
+    {
+      "asset": "同积分器A₀ · 零更新",
+      "A": 0.048823895842445335,
+      "C": 0.049430873044580326,
+      "S3131": 0.16889251358589535,
+      "new909": 0.08878242041595792,
+      "full3187": 0.16755373437334864
+    },
+    {
+      "asset": "TRELLIS.2 · 零训练",
+      "A": 0.052786130747523446,
+      "C": 0.06096120231642401,
+      "S3131": 0.12014265286901799,
+      "new909": 0.05552826435884133,
+      "full3187": 0.11900682091979073
+    }
+  ],
+  "stripe_gate": [
+    {
+      "raw": 134,
+      "filtered_A0_baseline": 0.011877498200088855,
+      "matched_I0": 0.060296014406711854,
+      "ABC": 0.02189423834358108,
+      "I0_positive_excess": 0.048418516206623,
+      "excess_reduction": 0.7931217036733136,
+      "applicable": true,
+      "registered_limit_fraction": 0.5,
+      "passed": true
+    },
+    {
+      "raw": 179,
+      "filtered_A0_baseline": 0.011212617469177476,
+      "matched_I0": 0.059729138169455416,
+      "ABC": 0.022013921824526952,
+      "I0_positive_excess": 0.04851652070027794,
+      "excess_reduction": 0.7773685293288644,
+      "applicable": true,
+      "registered_limit_fraction": 0.5,
+      "passed": true
+    },
+    {
+      "raw": 198,
+      "filtered_A0_baseline": 0.011316101148742232,
+      "matched_I0": 0.06108683062818221,
+      "ABC": 0.021263284011113874,
+      "I0_positive_excess": 0.049770729479439973,
+      "excess_reduction": 0.8001399021792363,
+      "applicable": true,
+      "registered_limit_fraction": 0.5,
+      "passed": true
+    }
+  ],
+  "fit_gate": [
+    {
+      "raw": 86,
+      "region": "A",
+      "ABC_minus_matchedI0_premult_MAE": 0.012302886445676023,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "ABC_minus_matchedI0_premult_MAE": 0.007347416640366538,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "ABC_minus_matchedI0_premult_MAE": 0.0189667669535998,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    },
+    {
+      "raw": 110,
+      "region": "A",
+      "ABC_minus_matchedI0_premult_MAE": 0.013032438381892598,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "ABC_minus_matchedI0_premult_MAE": 0.008817659552429009,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "ABC_minus_matchedI0_premult_MAE": 0.018644707643575502,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": false
+    }
+  ],
+  "real_A_guard": [
+    {
+      "raw": 86,
+      "ABC_minus_filteredA0_A_premult_MAE": -0.012956357554708465,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": true
+    },
+    {
+      "raw": 110,
+      "ABC_minus_filteredA0_A_premult_MAE": -0.015013715489184322,
+      "registered_tolerance": 0.00392156862745098,
+      "passed": true
+    }
+  ],
+  "native_integrity": {
+    "alpha_exact": true,
+    "K_joint_RGB_max": 0,
+    "K_pixel_frames": 77266
+  },
+  "trellis2_domains": {
+    "A": {
+      "pixels": 16904,
+      "A0_mid_MAE": 0.048823895822628825,
+      "T2_mid_MAE": 0.052786130733462,
+      "MAE_delta": 0.003962234910833175,
+      "MAE_change_percent": 8.115359997546046,
+      "A0_mid_RMSE": 0.07656066860079017,
+      "T2_mid_RMSE": 0.07964873275436507
+    },
+    "C": {
+      "pixels": 10830,
+      "A0_mid_MAE": 0.04943087306429732,
+      "T2_mid_MAE": 0.06096120233392121,
+      "MAE_delta": 0.011530329269623892,
+      "MAE_change_percent": 23.32616956739928,
+      "A0_mid_RMSE": 0.08173587086565774,
+      "T2_mid_RMSE": 0.08842303839081805
+    },
+    "S_photo": {
+      "pixels": 3131,
+      "A0_mid_MAE": 0.16889251346325995,
+      "T2_mid_MAE": 0.12014265280872517,
+      "MAE_delta": -0.04874986065453478,
+      "MAE_change_percent": -28.864429603707443,
+      "A0_mid_RMSE": 0.20687022962731486,
+      "T2_mid_RMSE": 0.15741309926631716
+    },
+    "S_full": {
+      "pixels": 3187,
+      "A0_mid_MAE": 0.16755373426067718,
+      "T2_mid_MAE": 0.11900682085298019,
+      "MAE_delta": -0.048546913407697,
+      "MAE_change_percent": -28.973937001110674,
+      "A0_mid_RMSE": 0.20563596626457367,
+      "T2_mid_RMSE": 0.15627737932293337
+    },
+    "S_oldphoto": {
+      "pixels": 2222,
+      "A0_mid_MAE": 0.2016648242583718,
+      "T2_mid_MAE": 0.14657581164570066,
+      "MAE_delta": -0.05508901261267113,
+      "MAE_change_percent": -27.317115325026343,
+      "A0_mid_RMSE": 0.22986132793498681,
+      "T2_mid_RMSE": 0.1828789656285103
+    },
+    "S_new909": {
+      "pixels": 909,
+      "A0_mid_MAE": 0.08878242040854213,
+      "T2_mid_MAE": 0.05552826454056284,
+      "MAE_delta": -0.03325415586797929,
+      "MAE_change_percent": -37.45578878674023,
+      "A0_mid_RMSE": 0.13509543430356313,
+      "T2_mid_RMSE": 0.05996447551459632
+    },
+    "S_remaining56": {
+      "pixels": 56,
+      "A0_mid_MAE": 0.09270163277341496,
+      "T2_mid_MAE": 0.05550164489873818,
+      "MAE_delta": -0.037199987874676786,
+      "MAE_change_percent": -40.12872994977605,
+      "A0_mid_RMSE": 0.11755721046881742,
+      "T2_mid_RMSE": 0.06710897701976214
+    },
+    "A_patch": {
+      "pixels": 1037,
+      "A0_mid_MAE": 0.01799072582443517,
+      "T2_mid_MAE": 0.07940275275948654,
+      "MAE_delta": 0.061412026935051364,
+      "MAE_change_percent": 341.35380381174497,
+      "A0_mid_RMSE": 0.02258044784964454,
+      "T2_mid_RMSE": 0.08975795690018852
+    },
+    "C_patch": {
+      "pixels": 3686,
+      "A0_mid_MAE": 0.03864443205535509,
+      "T2_mid_MAE": 0.07054108509692475,
+      "MAE_delta": 0.03189665304156966,
+      "MAE_change_percent": 82.53880661483196,
+      "A0_mid_RMSE": 0.06212628670359234,
+      "T2_mid_RMSE": 0.08449284638130518
+    },
+    "S_full_patch": {
+      "pixels": 2177,
+      "A0_mid_MAE": 0.13148894147410398,
+      "T2_mid_MAE": 0.06676211224418561,
+      "MAE_delta": -0.06472682922991836,
+      "MAE_change_percent": -49.22606304703271,
+      "A0_mid_RMSE": 0.1716710229763021,
+      "T2_mid_RMSE": 0.07372869668557573
+    },
+    "S_full_exterior": {
+      "pixels": 1010,
+      "A0_mid_MAE": 0.24528943118777605,
+      "T2_mid_MAE": 0.23161744525035222,
+      "MAE_delta": -0.01367198593742383,
+      "MAE_change_percent": -5.5738177838398295,
+      "A0_mid_RMSE": 0.2644024186325038,
+      "T2_mid_RMSE": 0.255631402869855
+    }
+  },
+  "actual_joint_contribution_export": null,
+  "acceptance_status": "MECHANICAL_PASS_QUALITY_FAIL",
+  "production_promoted": false,
+  "negative_3DGS_capacity_certificate": false,
+  "TRELLIS_finetuning_supported": false,
+  "human_verdict": null,
+  "problem_solved": null,
+  "accounting": {
+    "schema": "multiscale_material_execution_accounting.v1",
+    "shared_formal": {
+      "logical_updates_per_method": 800,
+      "common_A_updates": 200,
+      "physical_updates": 1400,
+      "native_forwards": 1490,
+      "native_backwards": 1400,
+      "seconds": 2315.424835126847,
+      "replay_updates": 0
+    },
+    "matched_I0_formal": {
+      "updates": 800,
+      "native_forwards": 840,
+      "native_backwards": 800,
+      "seconds_excluding_constructor": 24.722792772576213,
+      "replay_updates": 0
+    },
+    "shared_engineering": {
+      "native_forwards": 558,
+      "updates": 364,
+      "successful_smoke_updates": 360,
+      "failed_attempt_updates": 4,
+      "completed_smoke_seconds": 617.3216077629477,
+      "failed_attempt_separate": true
+    },
+    "matched_I0_engineering": {
+      "updates": 4,
+      "native_forwards": 34,
+      "seconds_excluding_constructor": 15.205369224771857
+    },
+    "trellis2": {
+      "new_inferences": 1,
+      "training_updates": 0,
+      "inference_seconds": 56.33,
+      "whole_inference_process_seconds": 80.05,
+      "native_forwards": 30,
+      "native_backwards": 0,
+      "native_seconds": 59.7513360157609
+    },
+    "total_optimizer_updates": 2568,
+    "total_native_forwards": 2952,
+    "note": "共享正式1400+RGB正式800+共享工程364+RGB工程4；正式等更新预算，不是等时长/等计算。TRELLIS模型推理不计作原生GS前向。CPU数值校验、积分缓存和报告另计；未重跑199帧。"
+  },
+  "evidence": {
+    "acceptance": "evidence/qa/final_acceptance.json",
+    "metrics": "evidence/qa/result_metrics.json",
+    "fairness": "evidence/qa/comparator_fairness.json",
+    "field_state": "evidence/formal_r1/field_and_ledger_audit.json",
+    "native_reload": "evidence/formal_r1/ABC800/field_public_reload.json",
+    "portable_loader": "evidence/qa/reusable_actual_asset.json",
+    "stripe_decomposition": "evidence/qa/stripe_product_decomposition.json",
+    "trellis": "evidence/trellis2/native_evaluation_r1/comparison_summary.json",
+    "local_copy": "evidence/local_copy_verified.json"
+  }
+}

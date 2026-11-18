@@ -1,0 +1,58 @@
+{
+  "schema": "actual_shared_world_grid_native_gradient.v1",
+  "GPU_executed": true,
+  "optimizer_updates": 0,
+  "actual_shared_field_gradient": true,
+  "independent_color_leaf_used": false,
+  "rows": [
+    {
+      "raw": 86,
+      "loss": 0.23411254584789276,
+      "seconds": 2.298695635050535,
+      "gradient": {
+        "low": {
+          "finite": true,
+          "nonzero": 11586,
+          "max_abs": 0.0016798387514427304
+        },
+        "high": {
+          "finite": true,
+          "nonzero": 226887,
+          "max_abs": 2.314713128725998e-06
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "loss": 0.24643093347549438,
+      "seconds": 1.8828298971056938,
+      "gradient": {
+        "low": {
+          "finite": true,
+          "nonzero": 11712,
+          "max_abs": 0.0015004281885921955
+        },
+        "high": {
+          "finite": true,
+          "nonzero": 231972,
+          "max_abs": 2.204996690124972e-06
+        }
+      }
+    }
+  ],
+  "scope_rows": 84266,
+  "C_only_known_protected": true,
+  "mask": {
+    "low_trainable_scalars": 11859,
+    "high_trainable_scalars": 232566,
+    "high_regularizer_support_nodes": 66174,
+    "source_mask_outside_highpass_latent_frozen": true
+  },
+  "fixed_S_photo": 3131,
+  "fixed_S_full": 3187,
+  "source": "cpu_exact_r1 authoritative field plus current native renderer",
+  "native_calls": 2,
+  "peak_allocated_GiB": 3.1442084312438965,
+  "elapsed_seconds": 19.45359876193106,
+  "estimated_physical1400_core_seconds": 2927.0678725093603
+}

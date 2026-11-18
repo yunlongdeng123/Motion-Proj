@@ -1,0 +1,23 @@
+{
+  "schema": "module2_binary_validity_premult_loss.v1",
+  "per_pixel_q": {
+    "A": 1.0,
+    "C": 1.0,
+    "S": 1.0
+  },
+  "q_meaning": "binary frozen validity mask, not calibrated teacher correctness; old zero photo-q is not reused on new909",
+  "target": "fixed_current_alpha * target_sRGB",
+  "render": "actual native premult road_sRGB",
+  "normalization": "each A/C/S sumRGB_abs/(3*fixed mask pixels)",
+  "weights": {
+    "A": 1.0,
+    "C": 0.5,
+    "S": 1.0
+  },
+  "regularizers": "execution_contract optimizer.regularizers; train-world-support normalized",
+  "fullS": 3187,
+  "photoS": 3131,
+  "old_photoS": 2222,
+  "new_supported_diagnostic": 909,
+  "low56": "kept in full-domain reporting, no opacity optimization"
+}

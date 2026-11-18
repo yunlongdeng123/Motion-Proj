@@ -1,0 +1,23 @@
+{
+  "space": "native premult sRGB",
+  "q": "binary1 inside frozen A/C/S masks",
+  "source_roles": {
+    "A": "observed",
+    "C": "pseudo hole",
+    "S": "pseudo targetshadow"
+  },
+  "S_photo": 3131,
+  "S_full": 3187,
+  "lowS": 56,
+  "weights": {
+    "A": 1,
+    "C": 0.5,
+    "S": 1
+  },
+  "regularizers": {
+    "low_adjacent_delta_squared": 0.01,
+    "effective_high_energy": 0.1,
+    "effective_high_lowfrequency_leakage": 0.1,
+    "effective_high_weighted_DC": 0.1
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "module2_multiscale_world_material_training.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "run_id": "road_multiscale_material_20261118_r1",
+  "coverage_parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+  "historical_I0_comparator": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/asset_guarded",
+  "parameterization": "eligible ci = source-normalized S_Sigma[A0+Delta_L+mH*Delta_H]; no trainable independent ci",
+  "A0": {
+    "source": "oldS2/base_atlas.npz true frozen world texture, with32 separately tagged frozen B32 pseudo nodes",
+    "I0_learned_colors_used": false,
+    "unknown_policy": "explicit invalid; never sample placeholder as credible material",
+    "availability_normalization": "exclude unknown source interpolation mass; save/report actual kernel valid mass and any readonly legacy fallback"
+  },
+  "coordinates": {
+    "center": "exact parent world_keys -> original chart nodes, never global-affine center approximation",
+    "spatial_filter": "physical fixed tangent Sigma mapped through actual road chart; numerical qualification must isolate chart inverse and quadrature errors",
+    "quadrature_candidate": "GH15 tensor product, deterministic covariance Cholesky; GH7 failure preserved",
+    "numeric_gate": "required CPU actual-field/edge and frequency qualification before optimization; revise engineering integration if failed, not train at failed accuracy",
+    "color_space": "inherited shader sRGB0..1; native road-only premult RGB, no de-premult optimization"
+  },
+  "fields": {
+    "low_nominal_spacing_m": 0.12,
+    "high_nominal_spacing_m": 0.02,
+    "low_bound": 0.3,
+    "high_bound": 0.04,
+    "low": "bounded tanh bilinear shared world grid",
+    "high": "bounded tanh, raw source1 mask and subtract Gaussian blur sigma6cm then/2; approximate scale separation, not an orthogonal band basis",
+    "mH": "real observed source1 & valid & confidence *(.25+.75*real-observed-white7x7 detail support); generated/retrieved/unknown high-frequency permission0",
+    "mH_product": "evaluate mH(u)*Delta_H(u) inside the full spatial filter, never multiply only at Gaussian center",
+    "bounds_policy": "record saturation and effective free dimensions; no post-result bound widening"
+  },
+  "qualification": {
+    "source_frames": [
+      86,
+      110
+    ],
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "inherited_BUILD_frames": 199,
+    "blind_test": false,
+    "color_rows": "(A_seen | S_seen | (C_seen & ~original_known)) & material_available & surface/near/world legal & full-packet K-safe; actual native masses from stage0; source/filter validity independent",
+    "source_geometry_mask": "fixed current geometry; no alpha/scale/density optimization",
+    "protection": "protected/nonqualified output colors readonly legacy; no trainable per-row bypass; persist exact read eligibility and fallback ledger",
+    "C_only_original_known": "retain readonly prior effective RGB; pseudo C alone cannot overwrite immutable observed-material qualification",
+    "stage0_92308_scope": "visibility proposal only, not final write scope; derive guarded scientific scope on CPU without extra native calls"
+  },
+  "supervision": {
+    "photo_space": "native premult sRGB vs fixed alpha*teacher",
+    "A": "real visible RGB",
+    "C": "frozen2D hole pseudo",
+    "S": "frozen2D target-shadow pseudo",
+    "photo_S_supported": 3131,
+    "photo_S_old": 2222,
+    "photo_S_new_diagnostic": 909,
+    "full_S": 3187,
+    "remaining_thin": 56,
+    "source_masks": "fixed stage0 current native alpha>.9; keep fullS denominator; no shrinking to easier subset after training",
+    "photo_weights": {
+      "A": 1.0,
+      "C": 0.5,
+      "S": 1.0
+    },
+    "normalization": "each source domain independently, RGB channels and fixed q/mask weights explicit in saved loss specification",
+    "no_false_GT": "C/S are pseudo teachers; projected marking predictions not real structure ground truth"
+  },
+  "optimizer": {
+    "name": "Adam",
+    "low_lr": 0.01,
+    "high_lr": 0.003,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "seed": 101,
+    "regularizers": {
+      "low_adjacent_delta_squared": 0.01,
+      "effective_high_energy": 0.1,
+      "effective_high_lowfrequency_leakage": 0.1,
+      "effective_high_weighted_DC": 0.1
+    },
+    "regularizer_support": "normalize on legal train-footprint support, not full atlas including large invalid/zero region"
+  },
+  "schedule": {
+    "common_A_low_only_updates": 200,
+    "L_control": "fork exact A200 full state; low-only600 more ->800 total",
+    "ABC": "fork same exact A200; B freeze low/train high300; C joint low+high300 ->800 total",
+    "total_physical_formal_updates": 1400,
+    "method_updates_each": 800,
+    "common_prefix_reuse": 200,
+    "sampler": "same future86/110 sequence after fork; same source targets, A0, low LR and regularizers",
+    "no_automatic_extra_epochs": true
+  },
+  "controls": [
+    "old coverage parent",
+    "zero-step center-A0 coordinate/filter diagnostic",
+    "zero-step filteredA0",
+    "historical composedI0 different old2222 supervision, no equal-supervision method claim",
+    "L-only800",
+    "ABC800",
+    "ABC stage checkpoints A200/B500 as stage diagnostics, not matched-budget H ablation",
+    "new zero-shot TRELLIS2 fixed mesh baseColor, same footprint read/native renderer"
+  ],
+  "freeze": [
+    "all XYZ/normals/scales/opacity/active/density",
+    "original static/vehicles/trajectory/environment/cameras",
+    "SD/LoRA/shadow/generation teachers",
+    "theta/z/eta networks"
+  ],
+  "lifecycle": {
+    "required_before_formal": [
+      "actual shared-grid native gradients finite and nonzero",
+      "checkpoint saving and evaluation",
+      "complete model/optimizer/RNG/sampler restore",
+      "next update and B/C stage entry",
+      "field save/reload ->requery ci->actual native and public-loader verification"
+    ],
+    "smoke": "engineering updates and duplicates counted separately, never warm-start formal from smoke",
+    "if_total_estimate_ge_one_hour": "first real about10min lifecycle smoke; retain exact formal steps/method/lr budget"
+  },
+  "acceptance": {
+    "coverage": "alpha identical to fixed current asset across all5 frames; originalD38416 and S3187 denominator fixed",
+    "K": "five-frame77266 joint float RGB exact0",
+    "material": "old2222/new909/full3187/remaining56 separate; no zero-alpha color advantage; source role and q explicit",
+    "striping": "same frozen diagnostic stripe masks as prior, and teacher-domain detail; report increments, not just training MAE",
+    "high_frequency": "effective mH*H weighted DC/lowfreq leakage, B low frozen exact, C low/high drift and amplitude hits",
+    "persistence": "serialized shared fields authoritative; requery after reload before native, ci baked cache only as derived asset",
+    "numeric": "no strict3DGS upper-limit/TRELLIS-switch conclusion from finite optimization budget"
+  },
+  "TRELLIS": "separate trellis2/execution_contract.json: one new fixed patch inference, no learning; patch domain/exterior and source masks explicit",
+  "formal_launch_status": "requires root acceptance of CPU filter/chart + GPU shared-field lifecycle, not merely this file",
+  "GPU_keep_on": true,
+  "production_promoted": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ]
+}

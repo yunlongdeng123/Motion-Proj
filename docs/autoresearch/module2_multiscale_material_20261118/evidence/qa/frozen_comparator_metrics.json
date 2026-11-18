@@ -1,0 +1,1332 @@
+{
+  "schema": "shared_world_material_independent_CPU_metrics.v1",
+  "manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/qa/result_manifest_template.json",
+  "source_counts": {
+    "A": 16904,
+    "C": 10830,
+    "S": 3131,
+    "fullS": 3187
+  },
+  "fixed_denominators": {
+    "S3131": 3131,
+    "old2222": 2222,
+    "new909": 909,
+    "full3187": 3187,
+    "remaining56": 56,
+    "originalD": 38416,
+    "frequency_domain": 37404,
+    "K": 77266
+  },
+  "GPU_executed_by_auditor": false,
+  "native_calls": 0,
+  "training_updates": 0,
+  "normalization": "pooled binary-mask pixel/channel means + per-view values; training stochastic views are balanced separately",
+  "teachers": "A real visible; C/S pseudo, notGT; two train/three diagnostic views; inherited199BUILD not blind",
+  "stages": {
+    "coverage_parent": {
+      "role": "fixed repaired coverage, zero optimization",
+      "rows": [
+        {
+          "raw": 86,
+          "role": "train-source",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/086_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 14507,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.023045217340393352,
+            "horizontal_E": 0.009231772999424348,
+            "domain_pixels": 3669,
+            "RGB_delta_energy": 0.0
+          },
+          "material": {
+            "A": {
+              "pixel_frames": 5409,
+              "RGB_denominator": 16227,
+              "opaque": {
+                "MAE": 0.04920902533050682,
+                "RMSE": 0.08459314397831871,
+                "SSE": 116.12041213203196
+              },
+              "premult": {
+                "MAE": 0.04913072837506933,
+                "RMSE": 0.08455246805964095,
+                "SSE": 116.00876788670533
+              },
+              "joint": {
+                "MAE": 0.038127980489241785,
+                "RMSE": 0.066363100050957,
+                "SSE": 71.46469863195401
+              },
+              "alpha": {
+                "mean": 0.9992443229028579,
+                "gap": 0,
+                "thin": 0,
+                "supported": 5409,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "C": {
+              "pixel_frames": 3598,
+              "RGB_denominator": 10794,
+              "opaque": {
+                "MAE": 0.047114161018690114,
+                "RMSE": 0.07781136356817905,
+                "SSE": 65.35344199386286
+              },
+              "premult": {
+                "MAE": 0.04709505988464158,
+                "RMSE": 0.07770997391969056,
+                "SSE": 65.18323946298948
+              },
+              "joint": {
+                "MAE": 0.052227068702799535,
+                "RMSE": 0.08487569917077831,
+                "SSE": 77.75872723920897
+              },
+              "alpha": {
+                "mean": 0.9993119171223686,
+                "gap": 0,
+                "thin": 0,
+                "supported": 3598,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "S": {
+              "pixel_frames": 1042,
+              "RGB_denominator": 3126,
+              "opaque": {
+                "MAE": 0.14948657654721578,
+                "RMSE": 0.1946401937910164,
+                "SSE": 118.42790055192782
+              },
+              "premult": {
+                "MAE": 0.14930768414963747,
+                "RMSE": 0.1944729363844234,
+                "SSE": 118.22445405417344
+              },
+              "joint": {
+                "MAE": 0.14734098412720958,
+                "RMSE": 0.19113190717528666,
+                "SSE": 114.19717496988545
+              },
+              "alpha": {
+                "mean": 0.9992243064685427,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1042,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "old2222": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "opaque": {
+                "MAE": 0.16324036021421595,
+                "RMSE": 0.20492856746988491,
+                "SSE": 103.30946570253758
+              },
+              "premult": {
+                "MAE": 0.16304692473180452,
+                "RMSE": 0.20474597139089615,
+                "SSE": 103.1254454899721
+              },
+              "joint": {
+                "MAE": 0.16052444767721785,
+                "RMSE": 0.2006905818956336,
+                "SSE": 99.08070576755571
+              },
+              "alpha": {
+                "mean": 0.9992223230803885,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "new909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "opaque": {
+                "MAE": 0.09868431255198992,
+                "RMSE": 0.15066636196149447,
+                "SSE": 15.118434849390237
+              },
+              "premult": {
+                "MAE": 0.0985591378551466,
+                "RMSE": 0.15056953221130873,
+                "SSE": 15.099008564201334
+              },
+              "joint": {
+                "MAE": 0.09864530795150334,
+                "RMSE": 0.15065656708122388,
+                "SSE": 15.116469202329743
+              },
+              "alpha": {
+                "mean": 0.9992316324968595,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "full3187": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "opaque": {
+                "MAE": 0.14938092621423713,
+                "RMSE": 0.19455107136485456,
+                "SSE": 118.43302350626664
+              },
+              "premult": {
+                "MAE": 0.14917274962127772,
+                "RMSE": 0.194379969234396,
+                "SSE": 118.22479816339802
+              },
+              "joint": {
+                "MAE": 0.14723010720032098,
+                "RMSE": 0.19104324421971816,
+                "SSE": 114.20074371588197
+              },
+              "alpha": {
+                "mean": 0.9991266836598872,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "remaining56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "opaque": {
+                "MAE": 0.03929327925046285,
+                "RMSE": 0.04132373950010225,
+                "SSE": 0.005122954338816932
+              },
+              "premult": {
+                "MAE": 0.00857097107041227,
+                "RMSE": 0.010709952141022917,
+                "SSE": 0.0003441092245890041
+              },
+              "joint": {
+                "MAE": 0.03169634938240051,
+                "RMSE": 0.034490317465025844,
+                "SSE": 0.0035687459965147994
+              },
+              "alpha": {
+                "mean": 0.8974037170410156,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "role": "train-source",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/110_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 15716,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.020079881791941392,
+            "horizontal_E": 0.008312376288413376,
+            "domain_pixels": 7275,
+            "RGB_delta_energy": 0.0
+          },
+          "material": {
+            "A": {
+              "pixel_frames": 11495,
+              "RGB_denominator": 34485,
+              "opaque": {
+                "MAE": 0.0681074769478194,
+                "RMSE": 0.09665100999143483,
+                "SSE": 322.13879050058756
+              },
+              "premult": {
+                "MAE": 0.0683797740887133,
+                "RMSE": 0.09678986609323367,
+                "SSE": 323.0650729802654
+              },
+              "joint": {
+                "MAE": 0.05767808419276081,
+                "RMSE": 0.0829199710895761,
+                "SSE": 237.1092595655343
+              },
+              "alpha": {
+                "mean": 0.9977768396128256,
+                "gap": 0,
+                "thin": 0,
+                "supported": 11495,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "C": {
+              "pixel_frames": 7232,
+              "RGB_denominator": 21696,
+              "opaque": {
+                "MAE": 0.053967968560068434,
+                "RMSE": 0.08805210715990609,
+                "SSE": 168.2128538896998
+              },
+              "premult": {
+                "MAE": 0.053981137172026704,
+                "RMSE": 0.0879314328227488,
+                "SSE": 167.7521025107634
+              },
+              "joint": {
+                "MAE": 0.05753641139772916,
+                "RMSE": 0.09016668443305821,
+                "SSE": 176.3891521778936
+              },
+              "alpha": {
+                "mean": 0.9989573282675933,
+                "gap": 0,
+                "thin": 0,
+                "supported": 7232,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "S": {
+              "pixel_frames": 2089,
+              "RGB_denominator": 6267,
+              "opaque": {
+                "MAE": 0.14542094737027408,
+                "RMSE": 0.18686322621779025,
+                "SSE": 218.83026191356942
+              },
+              "premult": {
+                "MAE": 0.14526901074445128,
+                "RMSE": 0.18651682479974963,
+                "SSE": 218.01969202449558
+              },
+              "joint": {
+                "MAE": 0.14534138118393763,
+                "RMSE": 0.18672904420803735,
+                "SSE": 218.5161012039592
+              },
+              "alpha": {
+                "mean": 0.9976523935709233,
+                "gap": 0,
+                "thin": 0,
+                "supported": 2089,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "old2222": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "opaque": {
+                "MAE": 0.17512223007236272,
+                "RMSE": 0.2089947829581487,
+                "SSE": 183.7131139914618
+              },
+              "premult": {
+                "MAE": 0.17463340763226812,
+                "RMSE": 0.20850986195888227,
+                "SSE": 182.86158081847566
+              },
+              "joint": {
+                "MAE": 0.1749589574043659,
+                "RMSE": 0.20881499647763016,
+                "SSE": 183.39717378312506
+              },
+              "alpha": {
+                "mean": 0.9980554335807768,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "new909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "opaque": {
+                "MAE": 0.08480784933777297,
+                "RMSE": 0.1305330911328337,
+                "SSE": 35.11714792210759
+              },
+              "premult": {
+                "MAE": 0.08534341476669409,
+                "RMSE": 0.13060920075438084,
+                "SSE": 35.158111206019896
+              },
+              "joint": {
+                "MAE": 0.08489910773264153,
+                "RMSE": 0.13053639835652114,
+                "SSE": 35.11892742083418
+              },
+              "alpha": {
+                "mean": 0.996829886884148,
+                "gap": 0,
+                "thin": 0,
+                "supported": 687,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "full3187": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "opaque": {
+                "MAE": 0.14625684694799396,
+                "RMSE": 0.1872143620920847,
+                "SSE": 225.4365661466491
+              },
+              "premult": {
+                "MAE": 0.14351377037625299,
+                "RMSE": 0.18483774449770715,
+                "SSE": 219.7492271997099
+              },
+              "joint": {
+                "MAE": 0.14539123022412204,
+                "RMSE": 0.18630105799288996,
+                "SSE": 223.24239763402556
+              },
+              "alpha": {
+                "mean": 0.9892744050541921,
+                "gap": 0,
+                "thin": 55,
+                "supported": 2089,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "remaining56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "opaque": {
+                "MAE": 0.17800583272720827,
+                "RMSE": 0.20009549588436645,
+                "SSE": 6.606304233079735
+              },
+              "premult": {
+                "MAE": 0.07684654984595742,
+                "RMSE": 0.10238179215532091,
+                "SSE": 1.7295351752143293
+              },
+              "joint": {
+                "MAE": 0.14728458740494468,
+                "RMSE": 0.1692460362557455,
+                "SSE": 4.726296430066384
+              },
+              "alpha": {
+                "mean": 0.6710631684823469,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            }
+          }
+        },
+        {
+          "raw": 134,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/134_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 16727,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.01962005133227454,
+            "horizontal_E": 0.008323397156084435,
+            "domain_pixels": 8276,
+            "RGB_delta_energy": 0.0
+          }
+        },
+        {
+          "raw": 179,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/179_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 16788,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.017869371386473702,
+            "horizontal_E": 0.00804658615646098,
+            "domain_pixels": 8962,
+            "RGB_delta_energy": 0.0
+          }
+        },
+        {
+          "raw": 198,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/198_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 13528,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.018052743192645767,
+            "horizontal_E": 0.007991714913648518,
+            "domain_pixels": 9222,
+            "RGB_delta_energy": 0.0
+          }
+        }
+      ],
+      "pooled": {
+        "A": {
+          "pixel_frames": 16904,
+          "RGB_denominator": 50712,
+          "opaque": {
+            "MAE": 0.06206028546662893,
+            "RMSE": 0.09296300479302444
+          },
+          "premult": {
+            "MAE": 0.062220398303981864,
+            "RMSE": 0.09304936471189794
+          },
+          "joint": {
+            "MAE": 0.05142237483803208,
+            "RMSE": 0.07800532781878297
+          },
+          "alpha": {
+            "mean": 0.9982464099580566,
+            "gap": 0,
+            "thin": 0,
+            "supported": 16904,
+            "exact_zero": 0
+          }
+        },
+        "C": {
+          "pixel_frames": 10830,
+          "RGB_denominator": 32490,
+          "opaque": {
+            "MAE": 0.051690960292858905,
+            "RMSE": 0.08478718781218951
+          },
+          "premult": {
+            "MAE": 0.05169340807876616,
+            "RMSE": 0.08467258868888501
+          },
+          "joint": {
+            "MAE": 0.05577251342761312,
+            "RMSE": 0.08844400276808945
+          },
+          "alpha": {
+            "mean": 0.9990751316562804,
+            "gap": 0,
+            "thin": 0,
+            "supported": 10830,
+            "exact_zero": 0
+          }
+        },
+        "S": {
+          "pixel_frames": 3131,
+          "RGB_denominator": 9393,
+          "opaque": {
+            "MAE": 0.14677399291558652,
+            "RMSE": 0.18948684884661238
+          },
+          "premult": {
+            "MAE": 0.1466130853813737,
+            "RMSE": 0.1892017743322806
+          },
+          "joint": {
+            "MAE": 0.1460068510871281,
+            "RMSE": 0.18820575714819285
+          },
+          "alpha": {
+            "mean": 0.9981755277898052,
+            "gap": 0,
+            "thin": 0,
+            "supported": 3131,
+            "exact_zero": 0
+          }
+        },
+        "old2222": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "opaque": {
+            "MAE": 0.1707373816098603,
+            "RMSE": 0.20750347641273928
+          },
+          "premult": {
+            "MAE": 0.17035756785801964,
+            "RMSE": 0.20712881060027655
+          },
+          "joint": {
+            "MAE": 0.16963209062837067,
+            "RMSE": 0.20585412195181949
+          },
+          "alpha": {
+            "mean": 0.9984860588686623,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222,
+            "exact_zero": 0
+          }
+        },
+        "new909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "opaque": {
+            "MAE": 0.08819682055180615,
+            "RMSE": 0.13572603227998079
+          },
+          "premult": {
+            "MAE": 0.08857101710512805,
+            "RMSE": 0.13575512339417334
+          },
+          "joint": {
+            "MAE": 0.08825626554186851,
+            "RMSE": 0.13572578081282555
+          },
+          "alpha": {
+            "mean": 0.9974164518192656,
+            "gap": 0,
+            "thin": 0,
+            "supported": 909,
+            "exact_zero": 0
+          }
+        },
+        "full3187": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "opaque": {
+            "MAE": 0.1472792550668178,
+            "RMSE": 0.18964667207562724
+          },
+          "premult": {
+            "MAE": 0.14536576766290527,
+            "RMSE": 0.18801391944408893
+          },
+          "joint": {
+            "MAE": 0.14599303401645825,
+            "RMSE": 0.18786619683259304
+          },
+          "alpha": {
+            "mean": 0.9924987309361312,
+            "gap": 0,
+            "thin": 56,
+            "supported": 3131,
+            "exact_zero": 0
+          }
+        },
+        "remaining56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "opaque": {
+            "MAE": 0.17552882284369495,
+            "RMSE": 0.1983777539404148
+          },
+          "premult": {
+            "MAE": 0.07562734308210839,
+            "RMSE": 0.10147364437435273
+          },
+          "joint": {
+            "MAE": 0.14522051172597067,
+            "RMSE": 0.16779141629215358
+          },
+          "alpha": {
+            "mean": 0.6751049639923232,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0,
+            "exact_zero": 0
+          }
+        }
+      },
+      "field_asset": null,
+      "reload_receipt": null
+    },
+    "historical_I0": {
+      "role": "historical olderS2222 training, same repaired coverage",
+      "rows": [
+        {
+          "raw": 86,
+          "role": "train-source",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/086_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 14507,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.0158548379446878,
+            "horizontal_E": 0.009462891789270518,
+            "domain_pixels": 3669,
+            "RGB_delta_energy": 0.004937265720700491
+          },
+          "material": {
+            "A": {
+              "pixel_frames": 5409,
+              "RGB_denominator": 16227,
+              "opaque": {
+                "MAE": 0.01851140893743231,
+                "RMSE": 0.0514734758443201,
+                "SSE": 42.99374019635042
+              },
+              "premult": {
+                "MAE": 0.01838170706971866,
+                "RMSE": 0.05143393492768094,
+                "SSE": 42.92771166762557
+              },
+              "joint": {
+                "MAE": 0.018351743020608113,
+                "RMSE": 0.04126441415697276,
+                "SSE": 27.63055468727881
+              },
+              "alpha": {
+                "mean": 0.9992443229028579,
+                "gap": 0,
+                "thin": 0,
+                "supported": 5409,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "C": {
+              "pixel_frames": 3598,
+              "RGB_denominator": 10794,
+              "opaque": {
+                "MAE": 0.009332848282429782,
+                "RMSE": 0.030573850653928553,
+                "SSE": 10.089803151071404
+              },
+              "premult": {
+                "MAE": 0.009209471596691238,
+                "RMSE": 0.030543613598557468,
+                "SSE": 10.069855707916286
+              },
+              "joint": {
+                "MAE": 0.01997349524243421,
+                "RMSE": 0.050232430522550366,
+                "SSE": 27.236468640533563
+              },
+              "alpha": {
+                "mean": 0.9993119171223686,
+                "gap": 0,
+                "thin": 0,
+                "supported": 3598,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "S": {
+              "pixel_frames": 1042,
+              "RGB_denominator": 3126,
+              "opaque": {
+                "MAE": 0.027442955413758182,
+                "RMSE": 0.07198973437262998,
+                "SSE": 16.200563318860738
+              },
+              "premult": {
+                "MAE": 0.02728665635240368,
+                "RMSE": 0.07193384013919263,
+                "SSE": 16.1754162185163
+              },
+              "joint": {
+                "MAE": 0.036968282370882316,
+                "RMSE": 0.07689634862425872,
+                "SSE": 18.48418939763029
+              },
+              "alpha": {
+                "mean": 0.9992243064685427,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1042,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "old2222": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "opaque": {
+                "MAE": 0.008152507378803036,
+                "RMSE": 0.020966982655064706,
+                "SSE": 1.0814513296781492
+              },
+              "premult": {
+                "MAE": 0.007997118108613538,
+                "RMSE": 0.020927861554818027,
+                "SSE": 1.077419457573771
+              },
+              "joint": {
+                "MAE": 0.02026764394912293,
+                "RMSE": 0.03699866529194674,
+                "SSE": 3.367497034128341
+              },
+              "alpha": {
+                "mean": 0.9992223230803885,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "new909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "opaque": {
+                "MAE": 0.09869596166899791,
+                "RMSE": 0.15066973602262337,
+                "SSE": 15.119111989182588
+              },
+              "premult": {
+                "MAE": 0.09853630211775465,
+                "RMSE": 0.15056448720139823,
+                "SSE": 15.097996760942529
+              },
+              "joint": {
+                "MAE": 0.09865532518999355,
+                "RMSE": 0.1506576791323113,
+                "SSE": 15.11669236350195
+              },
+              "alpha": {
+                "mean": 0.9992316324968595,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "full3187": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "opaque": {
+                "MAE": 0.027462012314565954,
+                "RMSE": 0.07197025710157845,
+                "SSE": 16.20733733183939
+              },
+              "premult": {
+                "MAE": 0.027270317753885605,
+                "RMSE": 0.07190010206358684,
+                "SSE": 16.175755613563908
+              },
+              "joint": {
+                "MAE": 0.03697111405677481,
+                "RMSE": 0.07686948993411999,
+                "SSE": 18.489005932467723
+              },
+              "alpha": {
+                "mean": 0.9991266836598872,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "remaining56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "opaque": {
+                "MAE": 0.04731930295626322,
+                "RMSE": 0.0475184630035183,
+                "SSE": 0.006774012978650212
+              },
+              "premult": {
+                "MAE": 0.010245498098053455,
+                "RMSE": 0.010636337834786536,
+                "SSE": 0.00033939504760713464
+              },
+              "joint": {
+                "MAE": 0.039921730756759644,
+                "RMSE": 0.04006883592615776,
+                "SSE": 0.004816534837432052
+              },
+              "alpha": {
+                "mean": 0.8974037170410156,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "role": "train-source",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/110_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 15716,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.01934727154744666,
+            "horizontal_E": 0.009808457692623184,
+            "domain_pixels": 7275,
+            "RGB_delta_energy": 0.005627652900215247
+          },
+          "material": {
+            "A": {
+              "pixel_frames": 11495,
+              "RGB_denominator": 34485,
+              "opaque": {
+                "MAE": 0.02577266129068231,
+                "RMSE": 0.05557240711084453,
+                "SSE": 106.49976452074242
+              },
+              "premult": {
+                "MAE": 0.025779741465962083,
+                "RMSE": 0.0556662250228205,
+                "SSE": 106.85965605692505
+              },
+              "joint": {
+                "MAE": 0.024025526400921524,
+                "RMSE": 0.048560689232146625,
+                "SSE": 81.32047647710816
+              },
+              "alpha": {
+                "mean": 0.9977768396128256,
+                "gap": 0,
+                "thin": 0,
+                "supported": 11495,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "C": {
+              "pixel_frames": 7232,
+              "RGB_denominator": 21696,
+              "opaque": {
+                "MAE": 0.014567828413022127,
+                "RMSE": 0.04128569253833973,
+                "SSE": 36.98101442800248
+              },
+              "premult": {
+                "MAE": 0.01445528813857316,
+                "RMSE": 0.04127060448674307,
+                "SSE": 36.95398959383674
+              },
+              "joint": {
+                "MAE": 0.019880151564315798,
+                "RMSE": 0.04821089441607374,
+                "SSE": 50.42780322527089
+              },
+              "alpha": {
+                "mean": 0.9989573282675933,
+                "gap": 0,
+                "thin": 0,
+                "supported": 7232,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "S": {
+              "pixel_frames": 2089,
+              "RGB_denominator": 6267,
+              "opaque": {
+                "MAE": 0.03174694558985689,
+                "RMSE": 0.07569823803306958,
+                "SSE": 35.91130905329767
+              },
+              "premult": {
+                "MAE": 0.03172777854169106,
+                "RMSE": 0.07571882219517906,
+                "SSE": 35.93084199699575
+              },
+              "joint": {
+                "MAE": 0.03179424774369517,
+                "RMSE": 0.07571105966551661,
+                "SSE": 35.92347527041784
+              },
+              "alpha": {
+                "mean": 0.9976523935709233,
+                "gap": 0,
+                "thin": 0,
+                "supported": 2089,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "old2222": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "opaque": {
+                "MAE": 0.005770836076847553,
+                "RMSE": 0.013926061552805092,
+                "SSE": 0.815691410706803
+              },
+              "premult": {
+                "MAE": 0.0054770580337100295,
+                "RMSE": 0.01373058152829735,
+                "SSE": 0.792952423456557
+              },
+              "joint": {
+                "MAE": 0.005796681664427065,
+                "RMSE": 0.014012841432409029,
+                "SSE": 0.8258890033913833
+              },
+              "alpha": {
+                "mean": 0.9980554335807768,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "new909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "opaque": {
+                "MAE": 0.08475787068045237,
+                "RMSE": 0.1304930701601464,
+                "SSE": 35.09561764259087
+              },
+              "premult": {
+                "MAE": 0.08529911791896821,
+                "RMSE": 0.13057163458479848,
+                "SSE": 35.13788957353919
+              },
+              "joint": {
+                "MAE": 0.08484896047023649,
+                "RMSE": 0.13049672999378775,
+                "SSE": 35.09758626702646
+              },
+              "alpha": {
+                "mean": 0.996829886884148,
+                "gap": 0,
+                "thin": 0,
+                "supported": 687,
+                "exact_zero": 0
+              },
+              "all_color_supported": true,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "full3187": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "opaque": {
+                "MAE": 0.033427176782189504,
+                "RMSE": 0.07684845517918572,
+                "SSE": 37.9853663279645
+              },
+              "premult": {
+                "MAE": 0.031438601796374144,
+                "RMSE": 0.07486654008381298,
+                "SSE": 36.0513524367474
+              },
+              "joint": {
+                "MAE": 0.0327453215691071,
+                "RMSE": 0.07585959093540404,
+                "SSE": 37.01408591725612
+              },
+              "alpha": {
+                "mean": 0.9892744050541921,
+                "gap": 0,
+                "thin": 55,
+                "supported": 2089,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            },
+            "remaining56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "opaque": {
+                "MAE": 0.09724541243278619,
+                "RMSE": 0.11211620796695641,
+                "SSE": 2.0740572746668207
+              },
+              "premult": {
+                "MAE": 0.020455143233337098,
+                "RMSE": 0.02702529003591141,
+                "SSE": 0.12051043975164687
+              },
+              "joint": {
+                "MAE": 0.06886883468338938,
+                "RMSE": 0.08130043970354352,
+                "SSE": 1.09061064683827
+              },
+              "alpha": {
+                "mean": 0.6710631684823469,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0,
+                "exact_zero": 0
+              },
+              "all_color_supported": false,
+              "comparability": "premult only compares material directly when coverage is fixed; unqualified/unsupported residual is not an advantage"
+            }
+          }
+        },
+        {
+          "raw": 134,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/134_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 16727,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.0495857138347114,
+            "horizontal_E": 0.013125814454123877,
+            "domain_pixels": 8276,
+            "RGB_delta_energy": 0.006093093866226846
+          }
+        },
+        {
+          "raw": 179,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/179_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 16788,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.04942193317529236,
+            "horizontal_E": 0.013026725903532543,
+            "domain_pixels": 8962,
+            "RGB_delta_energy": 0.005638627375133437
+          }
+        },
+        {
+          "raw": 198,
+          "role": "diagnostic, not blind",
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/198_native.npz",
+          "alpha_max_change": 0.0,
+          "K_pixels": 13528,
+          "joint_K_max": 0.0,
+          "stripe": {
+            "vertical_E": 0.05039515272401547,
+            "horizontal_E": 0.013026507407838646,
+            "domain_pixels": 9222,
+            "RGB_delta_energy": 0.005518318308348427
+          }
+        }
+      ],
+      "pooled": {
+        "A": {
+          "pixel_frames": 16904,
+          "RGB_denominator": 50712,
+          "opaque": {
+            "MAE": 0.023449180813947264,
+            "RMSE": 0.054294494294409745
+          },
+          "premult": {
+            "MAE": 0.023412493001144247,
+            "RMSE": 0.05434783209746645
+          },
+          "joint": {
+            "MAE": 0.02221000970048877,
+            "RMSE": 0.0463511275212105
+          },
+          "alpha": {
+            "mean": 0.9982464099580566,
+            "gap": 0,
+            "thin": 0,
+            "supported": 16904,
+            "exact_zero": 0
+          }
+        },
+        "C": {
+          "pixel_frames": 10830,
+          "RGB_denominator": 32490,
+          "opaque": {
+            "MAE": 0.012828635568158669,
+            "RMSE": 0.03806282473261609
+          },
+          "premult": {
+            "MAE": 0.012712495163717098,
+            "RMSE": 0.03804382842118262
+          },
+          "joint": {
+            "MAE": 0.01991116269579041,
+            "RMSE": 0.04889177244609808
+          },
+          "alpha": {
+            "mean": 0.9990751316562804,
+            "gap": 0,
+            "thin": 0,
+            "supported": 10830,
+            "exact_zero": 0
+          }
+        },
+        "S": {
+          "pixel_frames": 3131,
+          "RGB_denominator": 9393,
+          "opaque": {
+            "MAE": 0.030314573260411072,
+            "RMSE": 0.07448454645219593
+          },
+          "premult": {
+            "MAE": 0.030249768538101966,
+            "RMSE": 0.07448053413066838
+          },
+          "joint": {
+            "MAE": 0.03351617175568144,
+            "RMSE": 0.07610757448835842
+          },
+          "alpha": {
+            "mean": 0.9981755277898052,
+            "gap": 0,
+            "thin": 0,
+            "supported": 3131,
+            "exact_zero": 0
+          }
+        },
+        "old2222": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "opaque": {
+            "MAE": 0.006649760679729414,
+            "RMSE": 0.0168700880568196
+          },
+          "premult": {
+            "MAE": 0.00640705320086614,
+            "RMSE": 0.01675063701888985
+          },
+          "joint": {
+            "MAE": 0.011137000779391336,
+            "RMSE": 0.025081284112047166
+          },
+          "alpha": {
+            "mean": 0.9984860588686623,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222,
+            "exact_zero": 0
+          }
+        },
+        "new909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "opaque": {
+            "MAE": 0.08816189290207736,
+            "RMSE": 0.13569785894605163
+          },
+          "premult": {
+            "MAE": 0.08853196158467844,
+            "RMSE": 0.1357264423611905
+          },
+          "joint": {
+            "MAE": 0.08822081191994614,
+            "RMSE": 0.13569724956269738
+          },
+          "alpha": {
+            "mean": 0.9974164518192656,
+            "gap": 0,
+            "thin": 0,
+            "supported": 909,
+            "exact_zero": 0
+          }
+        },
+        "full3187": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "opaque": {
+            "MAE": 0.03147497516947179,
+            "RMSE": 0.07528678472321153
+          },
+          "premult": {
+            "MAE": 0.030074459889779998,
+            "RMSE": 0.073908830482802
+          },
+          "joint": {
+            "MAE": 0.034128284093310875,
+            "RMSE": 0.0761915711345215
+          },
+          "alpha": {
+            "mean": 0.9924987309361312,
+            "gap": 0,
+            "thin": 56,
+            "supported": 3131,
+            "exact_zero": 0
+          }
+        },
+        "remaining56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "opaque": {
+            "MAE": 0.09635387476356257,
+            "RMSE": 0.1112919607235816
+          },
+          "premult": {
+            "MAE": 0.020272828141635606,
+            "RMSE": 0.026820593855421328
+          },
+          "joint": {
+            "MAE": 0.06835192211327099,
+            "RMSE": 0.0807489931263963
+          },
+          "alpha": {
+            "mean": 0.6751049639923232,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0,
+            "exact_zero": 0
+          }
+        }
+      },
+      "field_asset": null,
+      "reload_receipt": null
+    }
+  },
+  "mechanical_checks": {
+    "coverage_parent:86:alpha_exact": true,
+    "coverage_parent:86:K_exact": true,
+    "coverage_parent:110:alpha_exact": true,
+    "coverage_parent:110:K_exact": true,
+    "coverage_parent:134:alpha_exact": true,
+    "coverage_parent:134:K_exact": true,
+    "coverage_parent:179:alpha_exact": true,
+    "coverage_parent:179:K_exact": true,
+    "coverage_parent:198:alpha_exact": true,
+    "coverage_parent:198:K_exact": true,
+    "historical_I0:86:alpha_exact": true,
+    "historical_I0:86:K_exact": true,
+    "historical_I0:110:alpha_exact": true,
+    "historical_I0:110:K_exact": true,
+    "historical_I0:134:alpha_exact": true,
+    "historical_I0:134:K_exact": true,
+    "historical_I0:179:alpha_exact": true,
+    "historical_I0:179:K_exact": true,
+    "historical_I0:198:alpha_exact": true,
+    "historical_I0:198:K_exact": true
+  },
+  "missing": [],
+  "mechanical_status": "pass_float_packets",
+  "matched_strategy_fit": [],
+  "diagnostic_stripe_comparison": [],
+  "detail_status": "requires frozen observed/source-qualified proxies and actual-image review; never transplant ideal12cm GT to real road",
+  "actual_joint_alphaT": null,
+  "visibility_boundary": "numeric branch values require current same-geometry native contribution export; road alpha is not joint contribution",
+  "authoritative_field_and_optimizer_audit": "separate lifecycle/state receipts; do not infer from low image loss",
+  "human_verdict": null,
+  "visual_verdict": null,
+  "production_promoted": false
+}

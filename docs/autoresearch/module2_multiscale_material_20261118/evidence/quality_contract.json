@@ -1,0 +1,38 @@
+{
+  "schema": "module2_material_quality_pre_registered.v1",
+  "task_id": "MODULE2-MULTISCALE-MATERIAL-20261118",
+  "baseline": "same filteredA0 zero-update and same matched independentRGB800",
+  "stripe": {
+    "frames": [
+      134,
+      179,
+      198
+    ],
+    "masks": "same previously frozen diagnostic stencils; never select after current outputs",
+    "score": "same historical vertical second-difference proxy, report horizontal counterpart and native images",
+    "excess": "score_method - score_filteredA0",
+    "criterion": "if matchedI0 excess>0, ABC excess <=0.5*matchedI0 excess in each diagnostic frame; nonpositive I0 excess=N/A, not auto win"
+  },
+  "fit": {
+    "ABC_minus_matchedI0_MAE_per_view_domain_max": 0.00392156862745098,
+    "domains": [
+      "A",
+      "C",
+      "S"
+    ],
+    "frames": [
+      86,
+      110
+    ],
+    "real_visible_ABC_minus_filteredA0_MAE_max": 0.00392156862745098,
+    "labels": "A is visible RGB; C/S frozen2D pseudo, no hidden-road GT"
+  },
+  "matched_low": "report ABC-L800 differences, high effective energy/DC/leakage/phase drift; A200/B500 are stage diagnostics not equal-compute H controls",
+  "marking": "only frozen real-observed proxy where available; no ideal12cm or predicted dash phase relabeled as real structural GT",
+  "coverage": "fixed alpha exact, fullS3187/old2222/new909/low56 and D38416 kept",
+  "keep": "all5 frames77266 joint floatRGB exact0",
+  "no_automatic_human_verdict": true,
+  "no_default_promotion": true,
+  "negative_capacity_certificate": false,
+  "TRELLIS": "numerical material sampling qualification separate; failed integration is not model quality evidence"
+}

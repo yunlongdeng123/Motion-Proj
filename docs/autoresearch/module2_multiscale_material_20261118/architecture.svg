@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="440" viewBox="0 0 1440 440">
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#6bd4bf"/></marker></defs>
+<rect width="1440" height="440" rx="18" fill="#101a2a"/>
+<g font-family="Microsoft YaHei,Arial,sans-serif" text-anchor="middle" fill="#e6eef8">
+<text x="720" y="36" font-size="23" font-weight="700">三维道路材质：共享世界颜色场 → 足迹过滤 → 统一高斯渲染</text>
+<g fill="#182a40" stroke="#526e8a" stroke-width="1.3">
+<rect x="25" y="75" width="225" height="130" rx="12"/><rect x="290" y="75" width="245" height="130" rx="12"/>
+<rect x="575" y="75" width="235" height="130" rx="12"/><rect x="850" y="75" width="245" height="130" rx="12"/>
+<rect x="1135" y="75" width="280" height="130" rx="12"/>
+<rect x="290" y="270" width="245" height="105" rx="12"/><rect x="575" y="270" width="235" height="105" rx="12"/>
+<rect x="850" y="270" width="245" height="105" rx="12"/><rect x="1135" y="270" width="280" height="105" rx="12"/>
+</g>
+<g font-size="18"><text x="137" y="104">固定输入</text><text x="412" y="104">共享世界材质</text><text x="692" y="104">空间足迹采样</text><text x="972" y="104">原生3DGS光栅化</text><text x="1275" y="104">分阶段优化与保存</text></g>
+<g font-size="15" fill="#adc2d9">
+<text x="137" y="136">修复覆盖的道路几何</text><text x="137" y="163">真实观测 / 冻结二维教师</text><text x="137" y="188">相机、车辆与背景保持</text>
+<text x="412" y="136">A₀：冻结基底</text><text x="412" y="163">ΔL：12cm / ΔH：2cm</text><text x="412" y="188">mH：真实来源与细节许可</text>
+<text x="692" y="136">真实道路坐标 / 固定Σ</text><text x="692" y="163">过滤 A₀ + ΔL + mH·ΔH</text><text x="692" y="188">保护区域只读</text>
+<text x="972" y="136">道路单独 / 最终联合渲染</text><text x="972" y="163">梯度回传共享纹理网格</text><text x="972" y="188">覆盖与透明度保持</text>
+<text x="1275" y="136">A：低频 → B：高频 → C：联合</text><text x="1275" y="163">等预算仅低频控制</text><text x="1275" y="188">共享场重载 / 重新查询 / 渲染</text>
+</g>
+<g font-size="17"><text x="412" y="302">TRELLIS.2 固定几何推理</text><text x="692" y="302">世界材质先验</text><text x="972" y="302">相同足迹与高斯渲染</text><text x="1275" y="302">五帧统一对照</text></g>
+<g font-size="14" fill="#adc2d9"><text x="412" y="331">一次新推理 / 零训练</text><text x="412" y="354">仅合法86/110参考</text><text x="692" y="331">固定mesh面 / UV / baseColor</text><text x="692" y="354">标明路块范围与来源</text><text x="972" y="331">不改变道路几何或不透明度</text><text x="972" y="354">路块外沿用同一基底</text><text x="1275" y="331">材质 / 条纹 / 标线 / 保留区域</text><text x="1275" y="354">二维教师是伪监督，非隐藏真值</text></g>
+<g stroke="#6bd4bf" stroke-width="3" fill="none" marker-end="url(#arrow)"><path d="M251 140H283"/><path d="M536 140H568"/><path d="M811 140H843"/><path d="M1096 140H1128"/><path d="M536 324H568"/><path d="M811 324H843"/><path d="M1096 324H1128"/><path d="M137 206V324H283"/></g>
+<text x="720" y="413" font-size="14" fill="#82daca">几何、覆盖、预训练生成模型保持冻结；先验证共享材质参数化，再决定后续生成先验适配</text>
+</g></svg>
