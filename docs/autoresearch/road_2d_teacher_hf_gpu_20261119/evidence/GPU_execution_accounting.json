@@ -1,0 +1,47 @@
+{
+  "schema": "road_2d_teacher_GPU_accounting.v1",
+  "task_id": "ROAD-2D-TEACHER-HF-GPU-20261119",
+  "GPU_mode_confirmed": true,
+  "GPU": "RTX 4080 SUPER 32760 MiB",
+  "frozen_pilot": {
+    "diffusion_attempted": 48,
+    "diffusion_completed": 48,
+    "configured_denoising_steps_per_call": 20,
+    "configured_denoising_steps_total": 960,
+    "VAE_only_roundtrips": 4,
+    "historical_exact_replays_within_48": 6,
+    "failed_diffusion_calls": 0,
+    "extra_diffusion_replays": 0,
+    "wall_seconds": 245.23183070123196,
+    "model_load_seconds": 4.083384852856398,
+    "sum_diffusion_pipeline_seconds": 95.81241104379296,
+    "sum_recorded_VAE_control_seconds": 7.733880585059524,
+    "peak_torch_allocated_bytes": 5268407808
+  },
+  "independent_precision_probe": {
+    "VAE_roundtrips": 9,
+    "matched_BF16_engineering_replay": 1,
+    "FP32_FP16_scientific_roundtrips": 8,
+    "diffusion_calls": 0,
+    "UNet_calls": 0,
+    "failed_calls": 0,
+    "wall_seconds": 24.922307895496488,
+    "peak_torch_allocated_bytes": 3270715904
+  },
+  "total": {
+    "diffusion_calls": 48,
+    "VAE_only_roundtrips": 13,
+    "training_updates": 0,
+    "three_dimensional_renderer_calls": 0,
+    "failed_calls": 0,
+    "sequential_GPU_run_wall_seconds": 270.15413859672844,
+    "peak_torch_allocated_bytes": 5268407808
+  },
+  "timing_limits": "Wall includes CPU, model load, image IO and synchronized inference. Per-pipeline seconds are not pure CUDA kernel time; VAE timer scopes differ. No equal-compute claim across resolutions.",
+  "adapter_unchanged": true,
+  "checkpoint_unchanged": true,
+  "parent_CPU_preparation_is_not_GPU_smoke": true,
+  "long_training_started": false,
+  "human_verdict": null,
+  "problem_solved": null
+}

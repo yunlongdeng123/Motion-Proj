@@ -1,0 +1,54 @@
+{
+  "schema": "road_2d_teacher_actual_PNG_independent_review.v1",
+  "source": "outputs/road_2d_teacher_hf_gpu_20261119_r1/assets/asset_manifest.json",
+  "all_48_raw_native_ROI_PNGs_reviewed": true,
+  "case_count": 6,
+  "seeds_reviewed": [101, 202],
+  "arms_reviewed": ["full768_T0", "full768_base", "crop768_T0", "full1152_T0"],
+  "review_display": "all methods use the same frozen W-bbox+96 native ROI; PNG sheets paste native pixels without resampling",
+  "not_used_for_grain_judgment": "lossy WebP previews",
+  "human_verdict": null,
+  "automatic_asset_promotion": false,
+  "cases": [
+    {
+      "id": "visible_scene081_raw000_v0",
+      "full768_vs1152": "Both seeds remove the synthetic car. Highres remains smoother/blotchier than original native asphalt; no claim that the original grain was restored. Baseline seed202 includes a small bright stroke absent from clean.",
+      "base_crop": "Base101 contains a conspicuous pale rectangular patch; crop202 invents long angular white paint/line structure. These would raise spectral energy without material fidelity."
+    },
+    {
+      "id": "visible_scene081_raw000_v1",
+      "full768_vs1152": "Removal succeeds for both seeds. Marking endpoints/shape remain imperfect. Independent score crosscheck shows highres color improves but common-band PSD error regresses for both seeds; apparent sharpness cannot replace these paired results.",
+      "base_crop": "Base202 creates a broad pale irregular paint-like patch crossing the left marking. Crop202 introduces an extra long oblique marking and a changed/fragmented endpoint."
+    },
+    {
+      "id": "visible_scene081_raw050_v0",
+      "full768_vs1152": "Baseline101 adds a prominent white slab inside the removed-car area, absent from clean; highres101 avoids that large slab. Seed202 is less visibly pathological in both. Highres still does not reproduce native microtexture exactly.",
+      "base_crop": "Base101 adds white marks; base202 produces thin line fragments. Crop202 invents a long white line and a large rectangular road-panel/crack pattern absent from clean."
+    },
+    {
+      "id": "visible_scene081_raw050_v1",
+      "full768_vs1152": "The important remaining highres counterexample:1152 seed101 extends a long diagonal marking through the synthesized area, and seed202 adds a sequence of small white dashes. These do not match the independent clean image. Baseline101 also has conspicuous false paint. Color gains do not establish structural correctness.",
+      "base_crop": "Both base and crop show false paint. Crop101 joins/extends a broad diagonal white stripe; crop202 makes a bright long line with a slab/crack boundary."
+    },
+    {
+      "id": "scene065_raw086",
+      "full768_vs1152": "Real target removal exposes plausible-looking asphalt, but no hidden-road GT exists. A brown/pink road cast and larger-scale texture remain. Raw reconstructions change parts of the retained truck; raw outside-W appearance must not be described as final K damage because final scope is exact by the frozen checks.",
+      "base_crop": "Crop adds line/streak structures in the road and changes reconstructed truck appearance; this is visual diagnostic evidence only, not real hidden-road error."
+    },
+    {
+      "id": "scene065_raw110",
+      "full768_vs1152": "Highres raw images look more locally defined than baseline in places, but the unknown road cannot be certified from this appearance. Color remains brown/pink; retained-truck raw details vary with seed. No full material-recovery conclusion.",
+      "base_crop": "Base202 has conspicuous white scribble-like texture; crop202 introduces a yellow/white road line. With no hidden GT these are flagged as hallucination risk/seed instability, not given a numerical true-error verdict."
+    }
+  ],
+  "independent_numeric_crosscheck": {
+    "synthetic_native_deltaE76_macro_baseline": 2.3571021488486563,
+    "synthetic_native_deltaE76_macro_highres": 2.128534552995828,
+    "color_improved_pairs_of8": 8,
+    "common_three_band_log2_error_baseline": 1.4357868449196818,
+    "common_three_band_log2_error_highres": 1.106911098853357,
+    "PSD_improved_pairs_of8": 4,
+    "note": "Read frozen scores directly;4 synthetic tasks derive from2 clean frames, not independent n4 evidence."
+  },
+  "supervision_conclusion": "Retain uniform full768_T0 and full1152_T0 paired2D candidates with both seeds. Do not select per-image winners.20 actual packs preserve sources and common-denominator counts, but remain unqualified for3D geometry/alpha/render contributions and gain no material H permission."
+}

@@ -1,0 +1,580 @@
+{
+  "schema": "teacher_pilot_independent_auxiliary_controls.v1",
+  "status": "complete",
+  "included_in_main48_metrics": false,
+  "new_diffusion_arm": false,
+  "main_prediction_jobs": 48,
+  "control_kind": "known_visible_road_VAE_compute_precision",
+  "completed_new_roundtrips": 9,
+  "engineering_BF16_replays": 1,
+  "new_scientific_precision_controls": 8,
+  "original_parent_controls": 4,
+  "UNet_calls": 0,
+  "training_updates": 0,
+  "source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/receipt.json",
+    "sha256": "4c6022ad355aa532987e068eb969c07c24cbcce3313f2d6ee195acbf2da346e3"
+  },
+  "weight_source": "same fp16 variant promoted to the requested compute dtype; not full-precision original weights",
+  "matched_rows": [
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "bfloat16",
+      "origin": "original_main4_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.6619367115199566,
+        "signed_RGB_bias_0_255": [
+          -0.009941898406395921,
+          -2.5075517082586884,
+          -0.6006211240310222
+        ],
+        "signed_luminance_bias_0_255": -1.8421850865706801,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.614783141762018,
+        "HP_RMS_prediction_Y_0_255": 2.6086949184536934,
+        "HP_RMS_ratio": 0.9976716041564941
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 3.1762735499069095,
+        "signed_RGB_bias_0_255": [
+          0.08933924007578753,
+          -2.409992655739188,
+          -0.5012598400935531
+        ],
+        "signed_luminance_bias_0_255": -1.743452490773052,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 2.6086949184536934,
+        "HP_RMS_ratio": 0.6560617089271545
+      }
+    },
+    {
+      "id": "scene065_raw086_full1152",
+      "dtype": "bfloat16",
+      "origin": "original_main4_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.478203270584345,
+        "signed_RGB_bias_0_255": [
+          -0.28531187621410936,
+          -2.7177823148667812,
+          -0.6972645444329828
+        ],
+        "signed_luminance_bias_0_255": -2.058725254610181,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.0898723611608148,
+        "HP_RMS_prediction_Y_0_255": 3.0518425768241286,
+        "HP_RMS_ratio": 0.98769211769104
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.811444438993931,
+        "signed_RGB_bias_0_255": [
+          -0.27581796690355986,
+          -2.7082958864048123,
+          -0.6855112407356501
+        ],
+        "signed_luminance_bias_0_255": -2.048693555407226,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 3.0518425768241286,
+        "HP_RMS_ratio": 0.7675091028213501
+      }
+    },
+    {
+      "id": "scene065_raw110_full768",
+      "dtype": "bfloat16",
+      "origin": "original_main4_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.5050960900262,
+        "signed_RGB_bias_0_255": [
+          -0.025452856280026026,
+          -2.5593493413180113,
+          -0.8623346337117255
+        ],
+        "signed_luminance_bias_0_255": -1.901467724237591,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.4213319597765803,
+        "HP_RMS_prediction_Y_0_255": 2.4291395908221602,
+        "HP_RMS_ratio": 1.003224492073059
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.883173427544534,
+        "signed_RGB_bias_0_255": [
+          0.06867689880891703,
+          -2.4655162263661623,
+          -0.767340799793601
+        ],
+        "signed_luminance_bias_0_255": -1.8068659817799926,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.4291395908221602,
+        "HP_RMS_ratio": 0.6809206008911133
+      }
+    },
+    {
+      "id": "scene065_raw110_full1152",
+      "dtype": "bfloat16",
+      "origin": "original_main4_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.4361153040081263,
+        "signed_RGB_bias_0_255": [
+          -0.5122528283391148,
+          -2.927608243189752,
+          -1.0180773516185582
+        ],
+        "signed_luminance_bias_0_255": -2.280523390509188,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.8507281560450792,
+        "HP_RMS_prediction_Y_0_255": 2.911470509134233,
+        "HP_RMS_ratio": 1.0213077068328857
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.667708364315331,
+        "signed_RGB_bias_0_255": [
+          -0.5076283577363938,
+          -2.9227613657712936,
+          -1.0132237058132887
+        ],
+        "signed_luminance_bias_0_255": -2.2754537500441074,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.911470509134233,
+        "HP_RMS_ratio": 0.816124439239502
+      }
+    },
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "float32",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.7405727794393897,
+        "signed_RGB_bias_0_255": [
+          -0.2680512727238238,
+          -2.7643642527982593,
+          -0.7899774913676083
+        ],
+        "signed_luminance_bias_0_255": -2.0950610423460603,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.614783141762018,
+        "HP_RMS_prediction_Y_0_255": 2.6206091791391373,
+        "HP_RMS_ratio": 1.0022281408309937
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 3.235620902851224,
+        "signed_RGB_bias_0_255": [
+          -0.16870279825525358,
+          -2.6667698146775365,
+          -0.6907325168140233
+        ],
+        "signed_luminance_bias_0_255": -1.9963280903175473,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 2.6206091791391373,
+        "HP_RMS_ratio": 0.6590580344200134
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 0.3041404299438,
+        "signed_RGB_bias_0_255": [
+          -0.25850087113212794,
+          -0.2582238719332963,
+          -0.18960894987685606
+        ],
+        "signed_luminance_bias_0_255": -0.2528755401726812,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.6086949184536934,
+        "HP_RMS_prediction_Y_0_255": 2.6206091791391373,
+        "HP_RMS_ratio": 1.0045671463012695
+      }
+    },
+    {
+      "id": "scene065_raw086_full1152",
+      "dtype": "float32",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.578721414320171,
+        "signed_RGB_bias_0_255": [
+          -0.5496802856214345,
+          -2.9844961781054735,
+          -0.8943775424268097
+        ],
+        "signed_luminance_bias_0_255": -2.3205582797527313,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.0898723611608148,
+        "HP_RMS_prediction_Y_0_255": 3.067286848090589,
+        "HP_RMS_ratio": 0.9926904439926147
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.898832862265408,
+        "signed_RGB_bias_0_255": [
+          -0.5401574622374028,
+          -2.9749971628189087,
+          -0.8827286143787205
+        ],
+        "signed_luminance_bias_0_255": -2.310526818037033,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 3.067286848090589,
+        "HP_RMS_ratio": 0.7713931798934937
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 0.29118078004103154,
+        "signed_RGB_bias_0_255": [
+          -0.26468364405445755,
+          -0.2681713522179052,
+          -0.1974124991102144
+        ],
+        "signed_luminance_bias_0_255": -0.2618335891747847,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.0518425768241286,
+        "HP_RMS_prediction_Y_0_255": 3.067286848090589,
+        "HP_RMS_ratio": 1.0050606727600098
+      }
+    },
+    {
+      "id": "scene065_raw110_full768",
+      "dtype": "float32",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.601732979528606,
+        "signed_RGB_bias_0_255": [
+          -0.33147515379823744,
+          -2.8436669474467635,
+          -0.9598738560453057
+        ],
+        "signed_luminance_bias_0_255": -2.177604725584388,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.4213319597765803,
+        "HP_RMS_prediction_Y_0_255": 2.4290476832538843,
+        "HP_RMS_ratio": 1.003186583518982
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.9643149860203266,
+        "signed_RGB_bias_0_255": [
+          -0.2372886726516299,
+          -2.7498031966388226,
+          -0.8649308444000781
+        ],
+        "signed_luminance_bias_0_255": -2.0830026268959045,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.4290476832538843,
+        "HP_RMS_ratio": 0.6808947920799255
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 0.30266420915722847,
+        "signed_RGB_bias_0_255": [
+          -0.3064224449917674,
+          -0.2858405525330454,
+          -0.09762684028828517
+        ],
+        "signed_luminance_bias_0_255": -0.2761370310327038,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.4291395908221602,
+        "HP_RMS_prediction_Y_0_255": 2.4290476832538843,
+        "HP_RMS_ratio": 0.9999621510505676
+      }
+    },
+    {
+      "id": "scene065_raw110_full1152",
+      "dtype": "float32",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.5608087005093694,
+        "signed_RGB_bias_0_255": [
+          -0.815382037544623,
+          -3.201964208856225,
+          -1.1247014114633203
+        ],
+        "signed_luminance_bias_0_255": -2.549533280543983,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.8507281560450792,
+        "HP_RMS_prediction_Y_0_255": 2.9118493013083935,
+        "HP_RMS_ratio": 1.0214405059814453
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.782964729703963,
+        "signed_RGB_bias_0_255": [
+          -0.8108659798745066,
+          -3.1971028447151184,
+          -1.1198894446715713
+        ],
+        "signed_luminance_bias_0_255": -2.5444638775661588,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.9118493013083935,
+        "HP_RMS_ratio": 0.8162305951118469
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 0.281723354710266,
+        "signed_RGB_bias_0_255": [
+          -0.30377333401702344,
+          -0.275713472510688,
+          -0.10668593269656412
+        ],
+        "signed_luminance_bias_0_255": -0.26901009783614427,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.911470509134233,
+        "HP_RMS_prediction_Y_0_255": 2.9118493013083935,
+        "HP_RMS_ratio": 1.0001300573349
+      }
+    },
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "float16",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.739814482629299,
+        "signed_RGB_bias_0_255": [
+          -0.2763302862877026,
+          -2.762541063129902,
+          -0.7934267562814057
+        ],
+        "signed_luminance_bias_0_255": -2.095754505135119,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.614783141762018,
+        "HP_RMS_prediction_Y_0_255": 2.619861806742847,
+        "HP_RMS_ratio": 1.0019422769546509
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 3.2349739875644445,
+        "signed_RGB_bias_0_255": [
+          -0.17697811592370272,
+          -2.6649390254169703,
+          -0.6941822567023337
+        ],
+        "signed_luminance_bias_0_255": -1.997022028081119,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 2.619861806742847,
+        "HP_RMS_ratio": 0.6588701009750366
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 0.3056524519342929,
+        "signed_RGB_bias_0_255": [
+          -0.2668042865116149,
+          -0.2563798724440858,
+          -0.19307148439111188
+        ],
+        "signed_luminance_bias_0_255": -0.2535693591926247,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.6086949184536934,
+        "HP_RMS_prediction_Y_0_255": 2.619861806742847,
+        "HP_RMS_ratio": 1.004280686378479
+      }
+    },
+    {
+      "id": "scene065_raw086_full1152",
+      "dtype": "float16",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.578837308101356,
+        "signed_RGB_bias_0_255": [
+          -0.5562585045117885,
+          -2.983851875178516,
+          -0.8977227285504341
+        ],
+        "signed_luminance_bias_0_255": -2.321735741570592,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.0898723611608148,
+        "HP_RMS_prediction_Y_0_255": 3.0670726345852017,
+        "HP_RMS_ratio": 0.992621123790741
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 2.8990710619837046,
+        "signed_RGB_bias_0_255": [
+          -0.5467371654231101,
+          -2.9743511974811554,
+          -0.8860841311980039
+        ],
+        "signed_luminance_bias_0_255": -2.3117038048803806,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.9762949710711837,
+        "HP_RMS_prediction_Y_0_255": 3.0670726345852017,
+        "HP_RMS_ratio": 0.7713392972946167
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "RGB_MAE_0_255": 0.29399779450614005,
+        "signed_RGB_bias_0_255": [
+          -0.2712732623331249,
+          -0.2675189747242257,
+          -0.20077729277545586
+        ],
+        "signed_luminance_bias_0_255": -0.26301024947315454,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.0518425768241286,
+        "HP_RMS_prediction_Y_0_255": 3.0670726345852017,
+        "HP_RMS_ratio": 1.0049904584884644
+      }
+    },
+    {
+      "id": "scene065_raw110_full768",
+      "dtype": "float16",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.606214126572013,
+        "signed_RGB_bias_0_255": [
+          -0.33752701187040657,
+          -2.855173205025494,
+          -0.962174751330167
+        ],
+        "signed_luminance_bias_0_255": -2.1873127296566963,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.4213319597765803,
+        "HP_RMS_prediction_Y_0_255": 2.4297259468585253,
+        "HP_RMS_ratio": 1.0034667253494263
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.968248249962926,
+        "signed_RGB_bias_0_255": [
+          -0.24333791836397722,
+          -2.76130351703614,
+          -0.8672308491077274
+        ],
+        "signed_luminance_bias_0_255": -2.0927103934809566,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.4297259468585253,
+        "HP_RMS_ratio": 0.681084930896759
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 0.3102916764328256,
+        "signed_RGB_bias_0_255": [
+          -0.3124440828105435,
+          -0.2973948122235015,
+          -0.09992805469664745
+        ],
+        "signed_luminance_bias_0_255": -0.28584479761775583,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.4291395908221602,
+        "HP_RMS_prediction_Y_0_255": 2.4297259468585253,
+        "HP_RMS_ratio": 1.0002413988113403
+      }
+    },
+    {
+      "id": "scene065_raw110_full1152",
+      "dtype": "float16",
+      "origin": "independent_new_precision_control",
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.5639824802055955,
+        "signed_RGB_bias_0_255": [
+          -0.8189346687868237,
+          -3.2087653689086437,
+          -1.1235773842781782
+        ],
+        "signed_luminance_bias_0_255": -2.5550919072702527,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.8507281560450792,
+        "HP_RMS_prediction_Y_0_255": 2.911823890171945,
+        "HP_RMS_ratio": 1.021431565284729
+      },
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 2.7861415967345238,
+        "signed_RGB_bias_0_255": [
+          -0.81442252965644,
+          -3.2039054296910763,
+          -1.1187711171805859
+        ],
+        "signed_luminance_bias_0_255": -2.5500225042924285,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 3.5674345353618264,
+        "HP_RMS_prediction_Y_0_255": 2.911823890171945,
+        "HP_RMS_ratio": 0.8162235021591187
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "RGB_MAE_0_255": 0.28824511100538075,
+        "signed_RGB_bias_0_255": [
+          -0.30731884064152837,
+          -0.2825669094454497,
+          -0.10556448076386005
+        ],
+        "signed_luminance_bias_0_255": -0.2745689026778564,
+        "HP_sigma_native_px": 2.5,
+        "HP_RMS_reference_Y_0_255": 2.911470509134233,
+        "HP_RMS_prediction_Y_0_255": 2.911823890171945,
+        "HP_RMS_ratio": 1.0001213550567627
+      }
+    }
+  ],
+  "by_dtype": {
+    "bfloat16": {
+      "increment_RGB_MAE_0_255_range": [
+        2.4361153040081263,
+        2.6619367115199566
+      ],
+      "increment_green_bias_0_255_range": [
+        -2.927608243189752,
+        -2.5075517082586884
+      ],
+      "increment_HP_sigma2p5native_RMS_ratio_range": [
+        0.98769211769104,
+        1.0213077068328857
+      ]
+    },
+    "float32": {
+      "increment_RGB_MAE_0_255_range": [
+        2.5608087005093694,
+        2.7405727794393897
+      ],
+      "increment_green_bias_0_255_range": [
+        -3.201964208856225,
+        -2.7643642527982593
+      ],
+      "increment_HP_sigma2p5native_RMS_ratio_range": [
+        0.9926904439926147,
+        1.0214405059814453
+      ]
+    },
+    "float16": {
+      "increment_RGB_MAE_0_255_range": [
+        2.5639824802055955,
+        2.739814482629299
+      ],
+      "increment_green_bias_0_255_range": [
+        -3.2087653689086437,
+        -2.762541063129902
+      ],
+      "increment_HP_sigma2p5native_RMS_ratio_range": [
+        0.992621123790741,
+        1.021431565284729
+      ]
+    }
+  },
+  "conclusion": "The green shift persists withFP32/FP16 compute on the same fixed fp16-origin weights. This control does not supportBF16 compute as the cause;FP32 did not improve the reconstruction MAE.",
+  "limits": [
+    "Known visible-road controls only; no hidden-road truth and noUNet.",
+    "HP result concerns sigma2.5 native pixels only; not all VAE frequencies.",
+    "Do not subtract these color/MAE values from hidden-region scores; different masks and nonlinear operations prevent an additive causal error split.",
+    "FP32 compute promotes the same fp16-origin weights; this does not test full-precision original model weights."
+  ]
+}

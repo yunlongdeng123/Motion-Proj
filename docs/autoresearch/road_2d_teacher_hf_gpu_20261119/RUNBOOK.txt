@@ -1,0 +1,25 @@
+二维教师GPU固定对照与监督保真
+日期：2026-11-19，Asia/Singapore
+远端：/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1
+主预测：GPU_pilot_r1/predictions.json
+评分：CPU_scoring_r1/scores.json；汇总：CPU_scoring_r1/summary/comparison.json
+传递：CPU_transfer_r1/transfer.json
+20配对候选监督：supervision_gpu_r1/build_receipt.json
+独立VAE精度诊断：VAE_precision_probe_r1/receipt.json
+
+实收：48扩散推理，主合同4次VAE；追加9次VAE（1 BF16重放+8 FP32/FP16诊断）；训练和三维调用0。
+前6张历史基线raw_model/raw_native/final_native逐像素exact，完整预测冻结后才进入独立真值评分。
+1152为单一分辨率候选，不按case/seed拼接最优图；颜色8/8配对改善，频谱仅4/8改善，仍有假标线。
+二维包的q是来源资格，不是真值置信度或三维高频许可。camera约定为显式继承假设，未作真实raster资格验证；不能把旧alpha/几何放大接入。
+
+实际执行入口：
+/root/autodl-tmp/envs/v42-freeinpaint/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/teacher_pilot.py run --manifest /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json --out NEW_DIRECTORY --execute-gpu
+CUDA_VISIBLE_DEVICES= /root/autodl-tmp/envs/v42-freeinpaint/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/score_pilot.py --predictions NEW_DIRECTORY/predictions.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json --truth-config /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/private_scoring/truth_config.json --out NEW_SCORE.json
+
+新接口CPU验证命令：
+CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 /root/autodl-tmp/envs/motionproj/bin/python -m unittest discover -s /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code -p test_teacher_supervision_view_cpu.py -v
+监督构造/传递的实际脚本快照见本报告code及远端code。已有结果目录拒绝覆盖。
+
+报告原始生成PNG为48张raw_model的无损副本；ROI PNG是固定原图坐标裁片，全帧WebP仅预览。
+完整raw_native/final_native原PNG、旧现场、源数据与模型保留远端；交付包不是全量模型/训练资产备份。
+若后续开展预计约一小时及以上训练，须先约10分钟真实GPU生命周期smoke。当前没有追加训练队列或自动默认晋升。

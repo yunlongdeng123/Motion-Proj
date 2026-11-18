@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="432" viewBox="0 0 1240 432" role="img" aria-labelledby="title desc">
+<title id="title">二维教师、源级监督和独立VAE控制的数据流</title><desc id="desc">合法观察经四组教师对照得到原始PNG，用于固定域评价与W/K合成。源级1152逐值保留，768和480从原源图独立一次面积采样进入二维候选包。独立VAE不运行UNet，二维包不证明三维训练资格。</desc>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#7a94b2" stroke-width="1.3"/></marker></defs>
+<rect width="1240" height="432" rx="16" fill="#101a27"/>
+<g fill="#172536" stroke="#334a63" stroke-width="1.2">
+<rect x="26" y="48" width="180" height="100" rx="10"/><rect x="252" y="25" width="266" height="146" rx="10"/><rect x="566" y="48" width="172" height="100" rx="10"/><rect x="786" y="26" width="195" height="64" rx="10"/><rect x="786" y="116" width="195" height="64" rx="10"/><rect x="1026" y="48" width="186" height="100" rx="10"/>
+<rect x="252" y="215" width="266" height="66" rx="10"/><rect x="566" y="215" width="172" height="66" rx="10"/><rect x="786" y="215" width="426" height="66" rx="10"/>
+<rect x="252" y="346" width="266" height="66" rx="10"/><rect x="566" y="346" width="646" height="66" rx="10"/></g>
+<g fill="none" stroke="#7a94b2" stroke-width="1.6" marker-end="url(#a)">
+<path d="M206 98H249"/><path d="M518 98H563"/><path d="M738 82H762V58H783"/><path d="M738 116H762V148H783"/><path d="M981 58H1002V82H1023"/><path d="M981 148H1002V116H1023"/>
+<path d="M652 148V192H385V212"/><path d="M518 248H563"/><path d="M738 248H783"/><path d="M518 268H542V310H998V284"/>
+<path d="M116 148V379H249"/><path d="M518 379H563"/></g>
+<g font-family="Segoe UI,Microsoft YaHei,sans-serif" fill="#e5edf7" text-anchor="middle">
+<text x="116" y="85" font-size="18">合法单帧观察</text><text x="116" y="116" font-size="14" fill="#a8bad0">输入隐藏 H · 写许可 W</text>
+<text x="385" y="53" font-size="18">固定四组教师对照</text><text x="385" y="82" font-size="13" fill="#bed1e7">整帧 768 · 注意力 LoRA / 基础模型</text><text x="385" y="109" font-size="13" fill="#bed1e7">下部裁片 768×272 · LoRA</text><text x="385" y="136" font-size="13" fill="#bed1e7">整帧 1152×768 · LoRA</text>
+<text x="652" y="84" font-size="18">原始生成 PNG</text><text x="652" y="116" font-size="14" fill="#a8bad0">保留生成分辨率</text>
+<text x="883" y="53" font-size="16">同域 / 同采样网格</text><text x="883" y="76" font-size="13" fill="#a8bad0">颜色 · 频谱 · 固定统计域</text><text x="883" y="143" font-size="16">固定 W / K 合成</text><text x="883" y="165" font-size="13" fill="#a8bad0">写区外与保留对象精确复制</text>
+<text x="1119" y="84" font-size="18">并列审阅与验收</text><text x="1119" y="115" font-size="14" fill="#a8bad0">不自动选优 · 不改三维</text>
+<text x="385" y="241" font-size="18">源级教师 RGB</text><text x="385" y="266" font-size="13" fill="#a8bad0">1152 原值保留 · 768 原值保留</text><text x="652" y="241" font-size="17">一次面积采样</text><text x="652" y="266" font-size="13" fill="#a8bad0">各自由源 → 768 / 480</text><text x="999" y="241" font-size="18">二维来源与许可包</text><text x="999" y="266" font-size="13" fill="#a8bad0">20 配对包 · 共同支持分账 · 不接三维</text><text x="770" y="328" font-size="12" fill="#a8bad0">源级 RGB 直接保留，不经降采样</text>
+<text x="385" y="372" font-size="17">独立 VAE 重建控制</text><text x="385" y="395" font-size="13" fill="#a8bad0">合法观察，不运行扩散 UNet</text><text x="889" y="372" font-size="17">只评真实可见道路的重建偏差</text><text x="889" y="395" font-size="13" fill="#a8bad0">主合同与追加精度诊断分别记账</text></g>
+<text x="28" y="22" fill="#8fa9c6" font-size="11" font-family="Segoe UI,Microsoft YaHei,sans-serif">2D TEACHER · FROZEN INPUTS / FIXED SEEDS</text></svg>

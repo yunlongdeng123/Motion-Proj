@@ -1,0 +1,999 @@
+{
+  "schema": "road_2d_gpu_uniform_paired_supervision.v1",
+  "complete": true,
+  "GPU_executed": false,
+  "training_updates": 0,
+  "native_3d_calls": 0,
+  "source_predictions": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/predictions.json",
+  "source_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json",
+  "uniform_arms": [
+    "full768_T0",
+    "full1152_T0"
+  ],
+  "raw_frames": [
+    86,
+    110
+  ],
+  "seeds": [
+    101,
+    202
+  ],
+  "per_case_or_seed_selection": false,
+  "all_candidates_training_ready": false,
+  "parent_high_frequency_policy_preserved": true,
+  "new_3d_HF_authorization": false,
+  "native_domains_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2",
+  "packages": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full768_T0_seed101/768x512",
+      "raw": 86,
+      "arm": "full768_T0",
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 101170,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 101170
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 14349,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 14349
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 2780,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 2780
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full768_T0_seed101/480x320",
+      "raw": 86,
+      "arm": "full768_T0",
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 39184,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 39184
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 5548,
+          "filter_support_excluded_pixels": 104,
+          "candidate_2d_pixels": 5444
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 1043,
+          "filter_support_excluded_pixels": 72,
+          "candidate_2d_pixels": 971
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed101/1152x768",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        1152,
+        768
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 228568,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 228568
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 32390,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 32390
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 6286,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 6286
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed101/768x512",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 101170,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 101170
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 14349,
+          "filter_support_excluded_pixels": 118,
+          "candidate_2d_pixels": 14231
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 2780,
+          "filter_support_excluded_pixels": 159,
+          "candidate_2d_pixels": 2621
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed101/480x320",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 39184,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 39184
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 5548,
+          "filter_support_excluded_pixels": 92,
+          "candidate_2d_pixels": 5456
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 1043,
+          "filter_support_excluded_pixels": 100,
+          "candidate_2d_pixels": 943
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full768_T0_seed202/768x512",
+      "raw": 86,
+      "arm": "full768_T0",
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 101170,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 101170
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 14349,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 14349
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 2780,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 2780
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full768_T0_seed202/480x320",
+      "raw": 86,
+      "arm": "full768_T0",
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 39184,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 39184
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 5548,
+          "filter_support_excluded_pixels": 104,
+          "candidate_2d_pixels": 5444
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 1043,
+          "filter_support_excluded_pixels": 72,
+          "candidate_2d_pixels": 971
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed202/1152x768",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        1152,
+        768
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 228568,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 228568
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 32390,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 32390
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 6286,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 6286
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed202/768x512",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 101170,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 101170
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 14349,
+          "filter_support_excluded_pixels": 118,
+          "candidate_2d_pixels": 14231
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 2780,
+          "filter_support_excluded_pixels": 159,
+          "candidate_2d_pixels": 2621
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw086/full1152_T0_seed202/480x320",
+      "raw": 86,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 39184,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 39184
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 5548,
+          "filter_support_excluded_pixels": 92,
+          "candidate_2d_pixels": 5456
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 1043,
+          "filter_support_excluded_pixels": 100,
+          "candidate_2d_pixels": 943
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full768_T0_seed101/768x512",
+      "raw": 110,
+      "arm": "full768_T0",
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 88505,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 88505
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 26654,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 26654
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 5643,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 5643
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full768_T0_seed101/480x320",
+      "raw": 110,
+      "arm": "full768_T0",
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 34339,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 34339
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 10365,
+          "filter_support_excluded_pixels": 120,
+          "candidate_2d_pixels": 10245
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 2144,
+          "filter_support_excluded_pixels": 126,
+          "candidate_2d_pixels": 2018
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed101/1152x768",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        1152,
+        768
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 199732,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 199732
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 60377,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 60377
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 12783,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 12783
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed101/768x512",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 88505,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 88505
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 26654,
+          "filter_support_excluded_pixels": 129,
+          "candidate_2d_pixels": 26525
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 5643,
+          "filter_support_excluded_pixels": 213,
+          "candidate_2d_pixels": 5430
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed101/480x320",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 34339,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 34339
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 10365,
+          "filter_support_excluded_pixels": 100,
+          "candidate_2d_pixels": 10265
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 2144,
+          "filter_support_excluded_pixels": 103,
+          "candidate_2d_pixels": 2041
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full768_T0_seed202/768x512",
+      "raw": 110,
+      "arm": "full768_T0",
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 88505,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 88505
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 26654,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 26654
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 5643,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 5643
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full768_T0_seed202/480x320",
+      "raw": 110,
+      "arm": "full768_T0",
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 34339,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 34339
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 10365,
+          "filter_support_excluded_pixels": 120,
+          "candidate_2d_pixels": 10245
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 2144,
+          "filter_support_excluded_pixels": 126,
+          "candidate_2d_pixels": 2018
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed202/1152x768",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        1152,
+        768
+      ],
+      "source_level": true,
+      "source_level_teacher_RGB_exact": true,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 199732,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 199732
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 60377,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 60377
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 12783,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 12783
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed202/768x512",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 88505,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 88505
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 26654,
+          "filter_support_excluded_pixels": 129,
+          "candidate_2d_pixels": 26525
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 5643,
+          "filter_support_excluded_pixels": 213,
+          "candidate_2d_pixels": 5430
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision_gpu_r1/raw110/full1152_T0_seed202/480x320",
+      "raw": 110,
+      "arm": "full1152_T0",
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "source_level": false,
+      "source_level_teacher_RGB_exact": null,
+      "baseline_seed101_all_prior_arrays_exact": null,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 34339,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 34339
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 10365,
+          "filter_support_excluded_pixels": 100,
+          "candidate_2d_pixels": 10265
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 2144,
+          "filter_support_excluded_pixels": 103,
+          "candidate_2d_pixels": 2041
+        }
+      },
+      "candidate_only": true,
+      "training_ready": false
+    }
+  ],
+  "comparisons": [
+    {
+      "raw": 86,
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 39184,
+          "highres": 39184,
+          "common": 39184,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 5444,
+          "highres": 5456,
+          "common": 5435,
+          "baseline_only": 9,
+          "highres_only": 21
+        },
+        "S": {
+          "baseline": 971,
+          "highres": 943,
+          "common": 927,
+          "baseline_only": 44,
+          "highres_only": 16
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 86,
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 101170,
+          "highres": 101170,
+          "common": 101170,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 14349,
+          "highres": 14231,
+          "common": 14231,
+          "baseline_only": 118,
+          "highres_only": 0
+        },
+        "S": {
+          "baseline": 2780,
+          "highres": 2621,
+          "common": 2621,
+          "baseline_only": 159,
+          "highres_only": 0
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 86,
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 39184,
+          "highres": 39184,
+          "common": 39184,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 5444,
+          "highres": 5456,
+          "common": 5435,
+          "baseline_only": 9,
+          "highres_only": 21
+        },
+        "S": {
+          "baseline": 971,
+          "highres": 943,
+          "common": 927,
+          "baseline_only": 44,
+          "highres_only": 16
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 86,
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 101170,
+          "highres": 101170,
+          "common": 101170,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 14349,
+          "highres": 14231,
+          "common": 14231,
+          "baseline_only": 118,
+          "highres_only": 0
+        },
+        "S": {
+          "baseline": 2780,
+          "highres": 2621,
+          "common": 2621,
+          "baseline_only": 159,
+          "highres_only": 0
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 110,
+      "seed": 101,
+      "output_wh": [
+        480,
+        320
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 34339,
+          "highres": 34339,
+          "common": 34339,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 10245,
+          "highres": 10265,
+          "common": 10231,
+          "baseline_only": 14,
+          "highres_only": 34
+        },
+        "S": {
+          "baseline": 2018,
+          "highres": 2041,
+          "common": 2008,
+          "baseline_only": 10,
+          "highres_only": 33
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 110,
+      "seed": 101,
+      "output_wh": [
+        768,
+        512
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 88505,
+          "highres": 88505,
+          "common": 88505,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 26654,
+          "highres": 26525,
+          "common": 26525,
+          "baseline_only": 129,
+          "highres_only": 0
+        },
+        "S": {
+          "baseline": 5643,
+          "highres": 5430,
+          "common": 5430,
+          "baseline_only": 213,
+          "highres_only": 0
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 110,
+      "seed": 202,
+      "output_wh": [
+        480,
+        320
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 34339,
+          "highres": 34339,
+          "common": 34339,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 10245,
+          "highres": 10265,
+          "common": 10231,
+          "baseline_only": 14,
+          "highres_only": 34
+        },
+        "S": {
+          "baseline": 2018,
+          "highres": 2041,
+          "common": 2008,
+          "baseline_only": 10,
+          "highres_only": 33
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    },
+    {
+      "raw": 110,
+      "seed": 202,
+      "output_wh": [
+        768,
+        512
+      ],
+      "two_dimensional_permission_counts": {
+        "A": {
+          "baseline": 88505,
+          "highres": 88505,
+          "common": 88505,
+          "baseline_only": 0,
+          "highres_only": 0
+        },
+        "C": {
+          "baseline": 26654,
+          "highres": 26525,
+          "common": 26525,
+          "baseline_only": 129,
+          "highres_only": 0
+        },
+        "S": {
+          "baseline": 5643,
+          "highres": 5430,
+          "common": 5430,
+          "baseline_only": 213,
+          "highres_only": 0
+        }
+      },
+      "common_training_denominator": false,
+      "note": "未来比较仍需交相同固定3D资格；此处仅为来源域共同分母"
+    }
+  ],
+  "note": "仅保留冻结教师的2D候选与配对来源许可，不是方法晋升或3D质量结论",
+  "package_count": 20,
+  "source_level_identity_checks": 8,
+  "baseline_seed101_prior_exact_checks": 4,
+  "elapsed_seconds": 27.512041851878166
+}

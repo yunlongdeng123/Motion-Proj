@@ -1,0 +1,519 @@
+{
+  "schema": "road_2d_VAE_precision_diagnostic.v1",
+  "complete": true,
+  "scientific_role": "post-pilot matched numerical precision diagnostic, not a new teacher arm",
+  "data_role": "only legal original observation and visible road; no hidden GT",
+  "parent": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/predictions.json",
+    "sha256": "d42597bb75f59a6e82876f6ded337f7db249b8326a9cb6691198892f1bc27b95"
+  },
+  "fixed_pretrained_weight_source": "same fp16 variant promoted to the requested compute dtype; not full-precision original weights",
+  "UNet_calls": 0,
+  "diffusion_calls": 0,
+  "training_updates": 0,
+  "attempted_VAE_roundtrips": 9,
+  "completed_VAE_roundtrips": 9,
+  "baseline_replay": {
+    "id": "scene065_raw086_full768",
+    "exact": true
+  },
+  "rows": [
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "bfloat16",
+      "seconds": 0.4622676782310009,
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "rgb_mae": 0.012455974705517292,
+        "signed_rgb_bias": [
+          0.0003503499610815197,
+          -0.009450951591134071,
+          -0.001965724863111973
+        ],
+        "signed_luminance_bias": -0.0068370685912668705,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.015593313612043858,
+        "highpass_rms_prediction": 0.010230176150798798,
+        "highpass_rms_ratio": 0.6560617089271545
+      },
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "rgb_mae": 0.010438967496156693,
+        "signed_rgb_bias": [
+          -3.898783688782714e-05,
+          -0.009833536110818386,
+          -0.0023553769569844007
+        ],
+        "signed_luminance_bias": -0.007224255241453648,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.01025405153632164,
+        "highpass_rms_prediction": 0.010230176150798798,
+        "highpass_rms_ratio": 0.9976716041564941
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "rgb_mae": 0.0,
+        "signed_rgb_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "signed_luminance_bias": 0.0,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.010230176150798798,
+        "highpass_rms_prediction": 0.010230176150798798,
+        "highpass_rms_ratio": 1.0
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/bfloat16/scene065_raw086_full768/roundtrip_model.png",
+        "sha256": "517c014675eb2f1abebb2115ddf01d50b5995b2cd237840c7893cc36698a031c"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/bfloat16/scene065_raw086_full768/roundtrip_native.png",
+        "sha256": "adabf8437aba5e87b6446f114d6f60c6c527f2cee8d67404c593dd1d2d302ce6"
+      }
+    },
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "float32",
+      "seconds": 0.2585202343761921,
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "rgb_mae": 0.012688709422945976,
+        "signed_rgb_bias": [
+          -0.0006615796010009944,
+          -0.010457920841872692,
+          -0.0027087549678981304
+        ],
+        "signed_luminance_bias": -0.007828737609088421,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.015593313612043858,
+        "highpass_rms_prediction": 0.010276898741722107,
+        "highpass_rms_ratio": 0.6590580344200134
+      },
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "rgb_mae": 0.010747344233095646,
+        "signed_rgb_bias": [
+          -0.001051181461662054,
+          -0.010840644128620625,
+          -0.0030979509465396404
+        ],
+        "signed_luminance_bias": -0.00821592565625906,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.01025405153632164,
+        "highpass_rms_prediction": 0.010276898741722107,
+        "highpass_rms_ratio": 1.0022281408309937
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "rgb_mae": 0.0011927075684070587,
+        "signed_rgb_bias": [
+          -0.0010137289064005017,
+          -0.0010126426350325346,
+          -0.0007435645093210042
+        ],
+        "signed_luminance_bias": -0.0009916687849909067,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.010230176150798798,
+        "highpass_rms_prediction": 0.010276898741722107,
+        "highpass_rms_ratio": 1.0045671463012695
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw086_full768/roundtrip_model.png",
+        "sha256": "ad238bc40df43d4ff979500fe3057abfcd5add91211c4f3534f5755ee998ad94"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw086_full768/roundtrip_native.png",
+        "sha256": "eb4b5c5122539dcf32dc5ad528bb4b9b49ef4ffc038c255a04d0d1e3bac2c21d"
+      }
+    },
+    {
+      "id": "scene065_raw086_full1152",
+      "dtype": "float32",
+      "seconds": 0.5413026977330446,
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "rgb_mae": 0.011367972008883953,
+        "signed_rgb_bias": [
+          -0.0021182645577937365,
+          -0.011666655540466309,
+          -0.003461680840700865
+        ],
+        "signed_luminance_bias": -0.009060889482498169,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.015593313612043858,
+        "highpass_rms_prediction": 0.012028575874865055,
+        "highpass_rms_ratio": 0.7713931798934937
+      },
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "rgb_mae": 0.010112632997334003,
+        "signed_rgb_bias": [
+          -0.0021556089632213116,
+          -0.011703906580805779,
+          -0.003507362911477685
+        ],
+        "signed_luminance_bias": -0.009100228548049927,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.012117146514356136,
+        "highpass_rms_prediction": 0.012028575874865055,
+        "highpass_rms_ratio": 0.9926904439926147
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "rgb_mae": 0.0011418854119256139,
+        "signed_rgb_bias": [
+          -0.001037975074723363,
+          -0.001051652361638844,
+          -0.0007741666631773114
+        ],
+        "signed_luminance_bias": -0.0010267983889207244,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011968010105192661,
+        "highpass_rms_prediction": 0.012028575874865055,
+        "highpass_rms_ratio": 1.0050606727600098
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw086_full1152/roundtrip_model.png",
+        "sha256": "39365a7b5b9e04cc1eeeae62fbec965f1584c959c83d02eb004379ff645df982"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw086_full1152/roundtrip_native.png",
+        "sha256": "dc33aff3cc273e89b9997c5c5e66e3155448245cdd56df6cee7678f8dc83e48b"
+      }
+    },
+    {
+      "id": "scene065_raw110_full768",
+      "dtype": "float32",
+      "seconds": 0.22136866115033627,
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "rgb_mae": 0.011624764651060104,
+        "signed_rgb_bias": [
+          -0.0009305438143201172,
+          -0.010783541947603226,
+          -0.0033918856643140316
+        ],
+        "signed_luminance_bias": -0.008168637752532959,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.013989939354360104,
+        "highpass_rms_prediction": 0.009525677189230919,
+        "highpass_rms_ratio": 0.6808947920799255
+      },
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "rgb_mae": 0.010202874429523945,
+        "signed_rgb_bias": [
+          -0.0012999025639146566,
+          -0.011151635088026524,
+          -0.0037642112001776695
+        ],
+        "signed_luminance_bias": -0.008539626374840736,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.009495419450104237,
+        "highpass_rms_prediction": 0.009525677189230919,
+        "highpass_rms_ratio": 1.003186583518982
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "rgb_mae": 0.001186918467283249,
+        "signed_rgb_bias": [
+          -0.0012016566470265388,
+          -0.0011209433432668447,
+          -0.00038285035407170653
+        ],
+        "signed_luminance_bias": -0.001082890317775309,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.009526037611067295,
+        "highpass_rms_prediction": 0.009525677189230919,
+        "highpass_rms_ratio": 0.9999621510505676
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw110_full768/roundtrip_model.png",
+        "sha256": "9408f95e29193d8a9020c76bdf88238a931e493b6ab685c53af40f76f31a6b0a"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw110_full768/roundtrip_native.png",
+        "sha256": "137adfd3a566ee989339ddace6b6e249fb09b14e724cedde16ccecb2e67ff334"
+      }
+    },
+    {
+      "id": "scene065_raw110_full1152",
+      "dtype": "float32",
+      "seconds": 0.5438326373696327,
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "rgb_mae": 0.010913587175309658,
+        "signed_rgb_bias": [
+          -0.003179866587743163,
+          -0.012537658214569092,
+          -0.004391723312437534
+        ],
+        "signed_luminance_bias": -0.00997828971594572,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.013989939354360104,
+        "highpass_rms_prediction": 0.011419016867876053,
+        "highpass_rms_ratio": 0.8162305951118469
+      },
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "rgb_mae": 0.010042387060821056,
+        "signed_rgb_bias": [
+          -0.003197576617822051,
+          -0.01255672238767147,
+          -0.004410593770444393
+        ],
+        "signed_luminance_bias": -0.009998169727623463,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011179326102137566,
+        "highpass_rms_prediction": 0.011419016867876053,
+        "highpass_rms_ratio": 1.0214405059814453
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "rgb_mae": 0.0011047974694520235,
+        "signed_rgb_bias": [
+          -0.0011912679765373468,
+          -0.0010812293039634824,
+          -0.00041837620665319264
+        ],
+        "signed_luminance_bias": -0.0010549415601417422,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011417531408369541,
+        "highpass_rms_prediction": 0.011419016867876053,
+        "highpass_rms_ratio": 1.0001300573349
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw110_full1152/roundtrip_model.png",
+        "sha256": "a955efb1bc1807aafcb06122fbba26218aa5bda5fbdb1846dcd7f25aa00a0b33"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float32/scene065_raw110_full1152/roundtrip_native.png",
+        "sha256": "6c2cae7009ead0da57c969d2ad26d7ff5864dcacb3cb61ad074af6e426228a4b"
+      }
+    },
+    {
+      "id": "scene065_raw086_full768",
+      "dtype": "float16",
+      "seconds": 0.3482420835644007,
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "rgb_mae": 0.012686172500252724,
+        "signed_rgb_bias": [
+          -0.0006940318271517754,
+          -0.010450741276144981,
+          -0.002722283359616995
+        ],
+        "signed_luminance_bias": -0.007831458933651447,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.015593313612043858,
+        "highpass_rms_prediction": 0.010273967869579792,
+        "highpass_rms_ratio": 0.6588701009750366
+      },
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "rgb_mae": 0.010744370520114899,
+        "signed_rgb_bias": [
+          -0.0010836481815204024,
+          -0.010833494365215302,
+          -0.0031114774756133556
+        ],
+        "signed_luminance_bias": -0.008218645118176937,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.01025405153632164,
+        "highpass_rms_prediction": 0.010273967869579792,
+        "highpass_rms_ratio": 1.0019422769546509
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "rgb_mae": 0.0011986370664089918,
+        "signed_rgb_bias": [
+          -0.0010462913196533918,
+          -0.0010054112644866109,
+          -0.000757143076043576
+        ],
+        "signed_luminance_bias": -0.0009943896438926458,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.010230176150798798,
+        "highpass_rms_prediction": 0.010273967869579792,
+        "highpass_rms_ratio": 1.004280686378479
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw086_full768/roundtrip_model.png",
+        "sha256": "42ec56eb00527a237ef3176442aa87f7f90019aa65e9d002eade5831d92caf5d"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw086_full768/roundtrip_native.png",
+        "sha256": "c373645ef2971c73560bccda78abea3fca9c6fc091b4969ea669ce9be9f58318"
+      }
+    },
+    {
+      "id": "scene065_raw086_full1152",
+      "dtype": "float16",
+      "seconds": 0.43157010339200497,
+      "known_road_vs_native_observation": {
+        "pixels": 485016,
+        "rgb_mae": 0.011368906125426292,
+        "signed_rgb_bias": [
+          -0.0021440673153847456,
+          -0.011664122343063354,
+          -0.0034748397301882505
+        ],
+        "signed_luminance_bias": -0.009065505117177963,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.015593313612043858,
+        "highpass_rms_prediction": 0.012027735821902752,
+        "highpass_rms_ratio": 0.7713392972946167
+      },
+      "increment_over_resampling": {
+        "pixels": 485016,
+        "rgb_mae": 0.010113087482750416,
+        "signed_rgb_bias": [
+          -0.0021814059000462294,
+          -0.011701379902660847,
+          -0.003520481288433075
+        ],
+        "signed_luminance_bias": -0.00910484604537487,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.012117146514356136,
+        "highpass_rms_prediction": 0.012027735821902752,
+        "highpass_rms_ratio": 0.992621123790741
+      },
+      "vs_parent_BF16": {
+        "pixels": 485016,
+        "rgb_mae": 0.001152932527475059,
+        "signed_rgb_bias": [
+          -0.0010638167150318623,
+          -0.0010490940185263753,
+          -0.0007873619324527681
+        ],
+        "signed_luminance_bias": -0.0010314127430319786,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011968010105192661,
+        "highpass_rms_prediction": 0.012027735821902752,
+        "highpass_rms_ratio": 1.0049904584884644
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw086_full1152/roundtrip_model.png",
+        "sha256": "75356381b1b10fbc34eab3327b29a0efd78dee678d44111ac087f4ad9b198310"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw086_full1152/roundtrip_native.png",
+        "sha256": "10f159a7eda199893ebed9852872be278060651f2513321e6f0d945eaa5d0c8b"
+      }
+    },
+    {
+      "id": "scene065_raw110_full768",
+      "dtype": "float16",
+      "seconds": 0.18340433947741985,
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "rgb_mae": 0.011640189215540886,
+        "signed_rgb_bias": [
+          -0.0009542663465254009,
+          -0.01082864124327898,
+          -0.003400905290618539
+        ],
+        "signed_luminance_bias": -0.008206707425415516,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.013989939354360104,
+        "highpass_rms_prediction": 0.00952833704650402,
+        "highpass_rms_ratio": 0.681084930896759
+      },
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "rgb_mae": 0.010220447555184364,
+        "signed_rgb_bias": [
+          -0.001323635340668261,
+          -0.011196757666766644,
+          -0.0037732343189418316
+        ],
+        "signed_luminance_bias": -0.008577696979045868,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.009495419450104237,
+        "highpass_rms_prediction": 0.00952833704650402,
+        "highpass_rms_ratio": 1.0034667253494263
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "rgb_mae": 0.0012168301036581397,
+        "signed_rgb_bias": [
+          -0.0012252709129825234,
+          -0.0011662541655823588,
+          -0.00039187472430057824
+        ],
+        "signed_luminance_bias": -0.001120959990657866,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.009526037611067295,
+        "highpass_rms_prediction": 0.00952833704650402,
+        "highpass_rms_ratio": 1.0002413988113403
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw110_full768/roundtrip_model.png",
+        "sha256": "bdb04b5a555344d5a12d6f1428d5439f218b05ddc2d7b8590a5b0f434ff1dda4"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw110_full768/roundtrip_native.png",
+        "sha256": "eb8e8b5442b3e0bf5ff0cbcf59a22abec5ab56c6ce9f28afeabbf4990637c5cb"
+      }
+    },
+    {
+      "id": "scene065_raw110_full1152",
+      "dtype": "float16",
+      "seconds": 0.42935663647949696,
+      "known_road_vs_native_observation": {
+        "pixels": 445844,
+        "rgb_mae": 0.01092604547739029,
+        "signed_rgb_bias": [
+          -0.003193813841789961,
+          -0.012564335018396378,
+          -0.00438733771443367
+        ],
+        "signed_luminance_bias": -0.01000008825212717,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.013989939354360104,
+        "highpass_rms_prediction": 0.011418917216360569,
+        "highpass_rms_ratio": 0.8162235021591187
+      },
+      "increment_over_resampling": {
+        "pixels": 445844,
+        "rgb_mae": 0.010054833255708218,
+        "signed_rgb_bias": [
+          -0.0032115085050463676,
+          -0.012583393603563309,
+          -0.004406185820698738
+        ],
+        "signed_luminance_bias": -0.010019968263804913,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011179326102137566,
+        "highpass_rms_prediction": 0.011418917216360569,
+        "highpass_rms_ratio": 1.021431565284729
+      },
+      "vs_parent_BF16": {
+        "pixels": 445844,
+        "rgb_mae": 0.0011303729843348265,
+        "signed_rgb_bias": [
+          -0.001205171924084425,
+          -0.0011081055272370577,
+          -0.00041397835593670607
+        ],
+        "signed_luminance_bias": -0.001076740794815123,
+        "highpass_sigma_native_px": 2.5,
+        "highpass_rms_reference": 0.011417531408369541,
+        "highpass_rms_prediction": 0.011418917216360569,
+        "highpass_rms_ratio": 1.0001213550567627
+      },
+      "roundtrip_model": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw110_full1152/roundtrip_model.png",
+        "sha256": "275b1d4e6a514676fcef52556833b360d93764fd768144cdb359506c293f9e0a"
+      },
+      "roundtrip_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/VAE_precision_probe_r1/float16/scene065_raw110_full1152/roundtrip_native.png",
+        "sha256": "6395abc8d7f104228d5b069edfdc2e79fa3b76f4796a0dbae95a081e4b411550"
+      }
+    }
+  ],
+  "wall_seconds": 24.922307895496488,
+  "peak_GPU_allocated_bytes": 3270715904
+}

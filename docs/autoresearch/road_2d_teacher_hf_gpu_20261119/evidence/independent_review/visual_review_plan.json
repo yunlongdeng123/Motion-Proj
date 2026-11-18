@@ -1,0 +1,19 @@
+{
+  "schema": "road_2d_teacher_gpu_independent_review_plan.v1",
+  "task_id": "ROAD-2D-TEACHER-HF-CPU-20261119",
+  "scope": "read-only independent review; no GPU execution and no 3D modifications",
+  "review_cases": ["visible_scene081_raw000_v0", "visible_scene081_raw000_v1", "visible_scene081_raw050_v0", "visible_scene081_raw050_v1", "scene065_raw086", "scene065_raw110"],
+  "arms_in_fixed_order": ["full768_T0", "full768_base", "crop768_T0", "full1152_T0"],
+  "seeds": [101, 202],
+  "source_priority": ["raw_model.png", "raw_native.png", "final_native.png only for scope and boundary review"],
+  "required_before_truth_review": ["all48 predictions complete", "actual W-outside and K pixel exact checks", "actual inverse-view including crop600 offset exact", "six historical seed101 replay checks", "prediction/manifest freezing gate"],
+  "visual_outputs": [
+    {"name": "all_case_native_context", "layout": "one case per sheet; seed rows, four arm columns", "crop": "original native W bounding box plus fixed64px padding; same rectangle for all arms/seeds", "purpose": "color continuity, false lane markings, large patches, perspective and boundary artifacts", "display": "native pixels at common scale; no per-arm sharpening, tone fit or crop selection"},
+    {"name": "fixed_material_tiles", "layout": "fixed original80x80 physical support; clean/reference or visible proxy, then all arms for both seeds", "selection": "reuse frozen CPU masks/tiles and original centroid-nearest selection; never select from generated RGB", "model_tile_geometry": "full768/crop76832x32; full115248x48 for80native pixels", "display": "nearest-neighbor only;192px panel gives integer6x and4x zoom respectively", "purpose": "separate authentic-looking grain from false high frequency; retain native-pixel coordinate labels"},
+    {"name": "synthetic_color_and_structure", "layout": "per-case paired points, seed101/202 both visible, four arm labels", "measures": ["RGB MAE with0-255 units", "DeltaE76", "signed DeltaL/Deltaa/Deltab", "paint/false-line observations separate from safe-texture metrics"], "aggregation": "case macro only, also show both source-frame groups; no independent-n4 significance or best-seed selection"},
+    {"name": "spectral_quality", "layout": "fixed physical frequency bands; per-case/seed labels", "measures": ["HP RMS ratio with sigma in native pixels", "95percent winsor sensitivity", "PSD band power ratio using cycles/native pixel", "HP pattern RMSE as phase-sensitive diagnostic"], "common_band": "compare only bands below every arm's native-unit Nyquist; out-of-band bins explicitly unavailable", "interpretation": "ratio closer1 is descriptive spectral agreement, not sufficient proof of authentic material"},
+    {"name": "VAE_controls", "layout": "raw legal observation view, VAE mode reconstruction, resampling-only reference at768/1152", "purpose": "known-visible-region compression and color error; no hidden-road truth claim"}
+  ],
+  "review_labels": ["color_cast", "false_paint_or_lane", "periodic_stripes", "stochastic_grain", "blotchy_material", "perspective_inconsistency", "boundary_seam", "known_region_preservation"],
+  "promotion_policy": "No automatic winner or default replacement. Record all regressions and uncertainty. Generated C/S remain generated provenance and gain no 3D high-frequency authorization."
+}
