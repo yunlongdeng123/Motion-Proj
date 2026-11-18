@@ -367,3 +367,9 @@
 
 [固定覆盖的多尺度世界材质、匹配颜色对照与TRELLIS.2原生列](autoresearch/module2_multiscale_material_20261118/report.md)。run=`road_multiscale_material_20261118_r1`；A200共用后L800/ABC800共1400物理正式更新，匹配独立RGB800另列，工程开销独立。86/110训练、三帧诊断，继承199BUILD；几何/Σ/opacity/active全冻。权威场与公共重载、K/alpha通过；横纹增量下降约78%–80%，但六项拟合非劣门全失败，高频额外收益有限，联合不晋升。TRELLIS.2仅一次固定mesh推理，无微调；局部S改善但A/C退化，不切换默认场景，不作表示上限结论。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06；human_verdict/problem_solved=null，GPU保持开机。
 
+## 2026-11-19 — MODULE2-TEACHER-DETAIL-CPU-20261119
+
+- 状态：CPU_READY_STOP_BEFORE_GPU；[报告与组件图](autoresearch/module2_teacher_detail_cpu_20261119/report.md)、[结果](autoresearch/module2_teacher_detail_cpu_20261119/results.json)、[协议](autoresearch/module2_teacher_detail_cpu_20261119/protocol.json)。
+- 独立教师高频许可、共同低频底色/89887 行候选范围、GH31 平均和逐像素共享材质读取已准备；H 统一 ±0.34，原来源/观测账本不改。37 项模块 CPU 测试通过，发布源另做隔离验收。
+- 未来四组主对照 2800 物理更新，次要 TRELLIS.2 部分投影 HF 初始化另 600；本轮 GPU/native/场景优化/新推理均 0，默认场景未切换。实际 native 资格、生命周期及画质仍待 GPU。
+- failure_ledger_refs：V82-F06；failure_ledger_delta：补充旧许可/幅度限制与 CPU 工程修复证据，不新增科学否定或 GPU 成功结论。

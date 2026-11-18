@@ -1,0 +1,114 @@
+{
+  "schema": "T2_HF_output_constrained_CPU_seed_projection.v1",
+  "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE",
+  "gates": {
+    "signal_energy_atleast_half": true,
+    "target_explained_atleast_half": true,
+    "cosine_atleast09": false,
+    "outside_node_max": true,
+    "outside_node_RMS": true,
+    "outside_query_max": true,
+    "outside_query_RMS": true
+  },
+  "legal_nodes": 7609,
+  "raw_unknown_nodes": 16099,
+  "model_H_bound": 0.34,
+  "effective_HF_cap": 0.02,
+  "raw_cap": 0.8,
+  "uniform_scaling": 0.8939334615377695,
+  "raw_abs_max": 0.24134651881835592,
+  "seed_latent_abs_max": 0.24620342254638672,
+  "actual": {
+    "nodes": 7609,
+    "RGB_RMS": 0.0033559751085715296,
+    "abs_max": 0.01999998066436895,
+    "DC_RGB": [
+      -2.7118023608189205e-05,
+      -2.9927980927636437e-05,
+      -2.9939314608772833e-05
+    ],
+    "LF_RMS": 0.0011129574813902774
+  },
+  "target": {
+    "nodes": 7609,
+    "RGB_RMS": 0.004393997161587148,
+    "abs_max": 0.019999999552965164,
+    "DC_RGB": [
+      -8.668049879158903e-12,
+      -6.611838280045365e-12,
+      -7.83152377953119e-12
+    ],
+    "LF_RMS": 0.002422657846735566
+  },
+  "retained_signal_energy_ratio": 0.5833348429591405,
+  "target_explained_fraction": 0.6812088867880861,
+  "cosine": 0.8278371232582266,
+  "outside_node_max": 1.0930850147228886e-05,
+  "outside_node_RMS": 2.4360247756802106e-07,
+  "outside_quarter_query_max": 2.1387529804576096e-05,
+  "outside_quarter_query_RMS": 3.2203167534345483e-07,
+  "outside_scope": "pure continuous prior window==0 or pure realA gate==1 at query; mixed boundary separately reported",
+  "continuous_window_runtime_semantics": true,
+  "frozen_node_target_unchanged": true,
+  "source_DC_offset": [
+    0.0018311173481001162,
+    0.0015863313354417636,
+    0.0010216178038332403
+  ],
+  "mixed_permission_queries": 11380,
+  "mixed_boundary_output_max": 0.009749630829796846,
+  "adjoint_relative_error": 7.148837358426634e-16,
+  "outside_constraint_weight": 1000.0,
+  "solver": [
+    {
+      "channel": 0,
+      "stop_code": 7,
+      "iterations": 5000,
+      "residual_norm": 0.49409509537336654,
+      "normal_residual_norm": 3.2444554719260465e-05,
+      "seconds": 23.73499999998603
+    },
+    {
+      "channel": 1,
+      "stop_code": 7,
+      "iterations": 5000,
+      "residual_norm": 0.4488982198109945,
+      "normal_residual_norm": 1.995935737454562e-05,
+      "seconds": 44.60999999998603
+    },
+    {
+      "channel": 2,
+      "stop_code": 7,
+      "iterations": 5000,
+      "residual_norm": 0.4367231528080876,
+      "normal_residual_norm": 9.600010499811411e-06,
+      "seconds": 65.875
+    }
+  ],
+  "solver_calls": {
+    "matvec": 15025,
+    "rmatvec": 15004
+  },
+  "maxiter": 5000,
+  "exact_column_norm_precondition": true,
+  "column_norm_spot_check_relative_max": 2.1440334155668598e-16,
+  "objective_unchanged": "same weighted output least squares +1e-10*||r||^2; original ridge is explicit augmented rows under right preconditioning",
+  "one_projection_only": true,
+  "photo_optimization": false,
+  "extra_training_loss": false,
+  "CPU_seconds": 66.07799999997951,
+  "permission_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\road_teacher_detail_20261119\\trellis_hf\\source_snapshot\\permission_final_r1_crop.npz",
+  "permission_sha256": "a269bb139652c2b32b1445bbd51504695b9e9a2195ed5601d72d419056ec1234",
+  "parent_ledger_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/final_r1/teacher_evidence.npz",
+  "parent_ledger_sha256": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+  "common_base_buffer_sha256": "a39115af971ad0b901928338202e62277613f3ca6a0095e31d7e69d978a4ce51",
+  "source_target_sha256": "52ea89224542710355a2399653cfaca6dd771b9892a9b1600adca8d87160b1c2",
+  "serialized_seed_sha256": "ad15a096c553001c62778c3271df95ca6c700d51d56118fed950f46f4486ade9",
+  "exact_CPU_serialized_operator_restore": true,
+  "low_A0_A200_Adam_H_state_not_touched": true,
+  "same_loss_same_reader_same_trace_required": true,
+  "GPU_operations": 0,
+  "new_model_inference": 0,
+  "model_training_updates": 0,
+  "GPU_entry_permitted": false
+}

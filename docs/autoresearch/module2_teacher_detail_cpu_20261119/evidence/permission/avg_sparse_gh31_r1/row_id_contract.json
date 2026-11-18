@@ -1,0 +1,22 @@
+{
+  "schema": "average_operator_row_id_contract.v1",
+  "row_id_semantics": "global_road_topology_world_row_id",
+  "operator_array": "operator/constants.npz::row_ids",
+  "not_active_local_positions": true,
+  "query_rows": 89887,
+  "full_active_rows": 151988,
+  "checks": {
+    "full_active_order_exact_parent": true,
+    "operator_global_world_ids_exact_scope": true,
+    "operator_world_ids_exact_mapping_npz": true,
+    "active_local_indices_exact": true,
+    "full_active_mapping_exact": true,
+    "future_scatter_index_exact": true
+  },
+  "context_snapshot": "CPU np.flatnonzero(parent road.active), same definition as prior actual native context; no new native context loaded",
+  "future_runtime_check": "idx=searchsorted(ctx.active_world_rows,op.row_ids); assert ctx.active_world_rows[idx]==op.row_ids; assert idx==flatnonzero(common_write_active)",
+  "CPU_only": true,
+  "native_calls": 0,
+  "CUDA_calls": 0,
+  "optimizer_updates": 0
+}

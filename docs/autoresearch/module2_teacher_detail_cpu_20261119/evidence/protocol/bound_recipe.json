@@ -1,0 +1,19 @@
+{
+  "schema":"teacher_detail_bounds_pre_GPU.v1",
+  "low_bound":0.30,
+  "high_bound":0.34,
+  "HF_prior_seed_cap":0.02,
+  "low_spacing_m":0.12,
+  "high_spacing_m":0.02,
+  "highpass_sigma_m":0.06,
+  "selection":"ceil((2*max(per-domain p99 |HF(teacher)-HF(base)|)+4/255)/0.01)*0.01",
+  "input_CPU_audit":"permission/ledger_r2/receipt.json",
+  "per_domain_p99":{"C":0.09683,"S":0.15835},
+  "reason_for_factor2":"H=0.5*b*(tanh(z)-G6cm(tanh(z))); high-frequency gain is approximately b/2",
+  "old_bound":0.04,
+  "old_bound_exceeded_fraction":{"C":0.0370,"S":0.3613},
+  "all_five_arms_identical_bounds":true,
+  "tail_is_not_a_global_feasibility_certificate":true,
+  "frozen_before_GPU_results":true,
+  "post_GPU_widening_authorized":false
+}

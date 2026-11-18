@@ -1,0 +1,43 @@
+{
+  "schema": "fixed_linear_world_material_read.v1",
+  "equation": "B+KL*L+KH*H; KH already includes separately interpolated mH, never apply gate again",
+  "low_shape": [
+    47,
+    361
+  ],
+  "high_shape": [
+    273,
+    2157
+  ],
+  "gates": [
+    "observed",
+    "teacher"
+  ],
+  "metadata": {
+    "mode": "Gaussian_footprint_average",
+    "kernel_order": 31,
+    "quadrature_points_per_row": 961,
+    "fixed_common_scope": 89887,
+    "high_bound": 0.34,
+    "units": "world metres; sigma metres; exact UV texelcentres",
+    "same_geometry_as_P": true,
+    "readonly_active_rows_retain_original_RGB": true,
+    "source_files": {
+      "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\road_teacher_detail_20261119\\permission\\inputs\\local_compile_inputs.npz": "cbe5c4fdfb0f4f560a50da476630aca56596eb3b30b662e961edae257f78d1fc",
+      "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\road_teacher_detail_20261119\\permission\\inputs\\geometry_for_consumers.npz": "cd392634b30f7aa962bf6d301630e9e4bbc639f58009575fcec1ab51c65dd19b"
+    },
+    "compiler_source_sha256": "91c5225b29ca21f30c9dc6a572e431508cb6f72505ac76254b2c5fc641fef3bd",
+    "chart_source_sha256": "39a4eb1126a3c966360d2593faade59e2e45394d2e6e51907a645693fc3b5f3f",
+    "CPU_only": true,
+    "GPU_authorized": false,
+    "native_calls": 0,
+    "optimizer_updates": 0
+  },
+  "rows": 89887,
+  "nonzeros_low": 1696136,
+  "nonzeros_high": {
+    "observed": 12644730,
+    "teacher": 20825746
+  },
+  "no_independent_trainable_row_RGB": true
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "teacher_detail_factorial_protocol.v1",
+  "task_id": "MODULE2-TEACHER-DETAIL-CPU-20261119",
+  "state": "CPU_PREPARATION_ONLY",
+  "GPU_authorized": false,
+  "auto_launch": false,
+  "scientific_objective": "distill legal frozen 2D hole/shadow teacher details into one persistent world material asset over fixed road Gaussians",
+  "hypotheses": {
+    "H_permission": "a teacher may provide HF learning evidence independently of original observed/retrieved/generated/unknown provenance",
+    "H_reader": "preaveraging world colors per Gaussian followed by splatting may erase recoverable texture; a native-weighted pixel world shader may retain it",
+    "H_T2_secondary": "a bounded HF-only seed from the existing frozen TRELLIS output may help where real material evidence is missing; no basecolor replacement"
+  },
+  "data": {
+    "train_frames": [86, 110],
+    "diagnostic_frames": [134, 179, 198],
+    "inherited_BUILD_frames": 199,
+    "new_199_frame_run": false,
+    "A": "legal real visible RGB",
+    "C": "frozen hole 2D pseudo teacher",
+    "S": "frozen target-shadow 2D pseudo teacher",
+    "fixed_denominators": {"A":16904,"C":10830,"S_supported":3131,"S_full":3187,"S_new":909,"S_thin":56,"original_D":38416,"K_pixel_frames":77266},
+    "blind_test": false
+  },
+  "common_inputs": {
+    "geometry": "same repaired 151988 active road Gaussians, fixed G_s, positions/normals/scales/opacity/active unchanged",
+    "base": "keep all existing valid A0; only independently qualified teacher-supported missing-base nodes may receive an explicit low-frequency teacher seed",
+    "scope": "same legal road/near/full-packet K-safe color eligibility across all arms; independent teacher availability may qualify prior unknown material without changing original provenance",
+    "provenance": "original source/known/unknown/observed RGB immutable; new teacher evidence, teacher-valid and seed ledgers are separate",
+    "HF_latent_support": "common physical training support and filter halo, independent of arm output gate",
+    "regularizer_normalization": "fixed common world support; do not change denominator with each permission mask",
+    "teacher_RGB_and_loss_masks": "identical across all arms; rejected/conflicting teacher HF support stays in fixed evaluation denominators"
+  },
+  "field": {
+    "low_spacing_m":0.12,
+    "high_spacing_m":0.02,
+    "low_bound":0.3,
+    "high_bound_candidate":0.04,
+    "highpass_sigma_m":0.06,
+    "HF_bound_status":"lock before GPU using CPU teacher amplitude audit; no post-GPU enlargement",
+    "observed_gate":"same frozen observed-source output gate, no new teacher permission",
+    "teacher_gate":"independent trustworthy teacher support union observed gate; not source-tag promotion; no legacy valid/raw mask may silently zero it"
+  },
+  "arms": [
+    {"id":"M00","reader":"Gaussian_footprint_average","H_permission":"observed_only","T2_seed":false},
+    {"id":"M10","reader":"Gaussian_footprint_average","H_permission":"observed_plus_teacher","T2_seed":false},
+    {"id":"M01","reader":"pixel_world_material_native_weights","H_permission":"observed_only","T2_seed":false},
+    {"id":"M11","reader":"pixel_world_material_native_weights","H_permission":"observed_plus_teacher","T2_seed":false},
+    {"id":"T11","reader":"pixel_world_material_native_weights","H_permission":"observed_plus_teacher","T2_seed":true,"role":"one secondary contrast against M11; no extra loss"}
+  ],
+  "reader_rules": {
+    "average":"source-normalized S_Sigma[A0+L+mH*H] -> per-Gaussian ci -> actual native GS",
+    "pixel":"same world field sampled at true fixed G_s ray intersections with pixel-footprint antialiasing, then accumulated with the same native road/joint eligible weights",
+    "deferred_factorization":"P=P_readonly+W_eligible_road*A(u); J=J_readonly+W_eligible_joint*A(u)",
+    "W_source":"actual preclamp native alpha*T via eligible RGB3 + unitW feature channels, same scene rows, masks and depth sorting",
+    "not_allowed":"whole-road-alpha overlay, PNG compositing, fitted substitute road plane, changing readonly Gaussian color contributions, or claiming road alpha is joint visibility",
+    "pixel_footprint":"pixel UV derivatives/EWA or qualified subpixel integration, not full Gaussian Sigma filtering a second time",
+    "persistence":"pixel mode saves authoritative world field plus renderer mode/geometry/scope; per-view W caches are derived, not a replacement for the world asset"
+  },
+  "loss": {
+    "photo_space":"premult sRGB P versus fixed alpha * frozen teacher RGB; no P/alpha training",
+    "weights":{"A":1.0,"C":0.5,"S":1.0},
+    "q":1.0,
+    "regularizers":"same low adjacency, effective HF energy/DC/low-frequency leakage and fixed normalization for all arms",
+    "TRELLIS_extra_loss":false
+  },
+  "proposed_future_GPU_budget": {
+    "authorization":"NOT_GRANTED_IN_THIS_TURN",
+    "seed":101,
+    "per_arm_stages":{"A_low":200,"B_high_only":300,"C_joint":300},
+    "logical_updates_each":800,
+    "sampling":"same balanced raw86/110 trace, 400 updates each per arm",
+    "common_prefix":"one A200 per reader; branch only declared HF permission and T2 HF seed at B entry",
+    "formal_physical_updates":3400,
+    "formal_logical_updates":4000,
+    "T2_seed":"from same pixel A200, change H initialization only; low field, frozen base, teacher, Adam H zero state, losses and trace unchanged",
+    "smoke":"about10min actual GPU lifecycle before formal; count engineering updates/calls separately",
+    "automatic_extension":false
+  },
+  "future_GPU_smoke_gates": [
+    "actual-scope native feature unit basis and constant-field identity road and joint",
+    "finite nonzero teacher-region H texel gradients, no independent ci parameters",
+    "geometry/opacity/scale/active unchanged; all five K77266 joint RGB exact",
+    "all original source/known/unknown/observed ledger unchanged",
+    "same frozen denominator and teacher binding across all arms",
+    "complete checkpoint save/eval/restore/next step/B/C entry including field masks, renderer and sampler",
+    "common A fork preserves intended arm gate rather than loading the old mask over it",
+    "persistent pixel asset save/reload/requery and native weight refresh at new camera",
+    "CPU evidence does not substitute for any native gate"
+  ],
+  "evaluation": {
+    "material":"A/C/S premult MAE, C/S teacher-qualified edge/detail measures, fixed source and unknown bins; pseudo consistency is not hidden-road GT",
+    "renderer":"clear ideal world-consistent texture and 12/24cm markings; identical cameras/geometry; CPU oracle separate from actual native GPU evidence",
+    "diagnostic":"fixed stripe stencils, cross-view world consistency, read-map failures and aliasing; never hide failed/unsupported pixels",
+    "acceptance":"fit, detail, stripe, A preservation, K and persistence reported separately; no aggregate score hiding tradeoffs",
+    "production_promoted":false,
+    "human_verdict":null
+  },
+  "stop_condition":"CPU report/code/data/tests prepared, then stop; no GPU, model inference, scene optimizer, pending controller or power operation"
+}

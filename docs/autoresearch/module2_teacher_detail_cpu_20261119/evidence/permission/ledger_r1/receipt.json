@@ -1,0 +1,60 @@
+{
+  "schema": "independent_teacher_H_permission_CPU_candidate.v1",
+  "task": "MODULE2-TEACHER-DETAIL-CPU-20261119",
+  "status": "CPU_CANDIDATE_PENDING_ROOT_SCOPE_CONTRACT",
+  "CPU_only": true,
+  "CUDA_calls": 0,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "counts": {
+    "chart_nodes": 588861,
+    "teacher_valid_nodes": 19929,
+    "C_nodes": 31678,
+    "S_nodes": 3769,
+    "teacher_conflict_nodes": 14704,
+    "dual_valid_nodes": 21236,
+    "teacher_new_H_where_old_gate_zero": 14704,
+    "base_seed_prior_invalid_nodes": 927,
+    "base_seed_active_nodes": 181,
+    "common_write_active_candidate": 87681,
+    "newly_write_candidate": 3415,
+    "newly_write_C_prior_unavailable": 179,
+    "newly_write_C_original_known": 3094,
+    "newly_write_S": 0,
+    "C_prior_unavailable_not_qualified": 271,
+    "crossview_threshold_counts": {
+      "1": 20849,
+      "2": 19252,
+      "4": 14500,
+      "8": 5225
+    }
+  },
+  "conflict_max_channel_sRGB_codes": 4,
+  "single_view_validity_is_not_calibrated_correctness": true,
+  "sampler": "frozen480 target bilinear, all4 lowres neighbors individually inherit original full4x4 native permission; runtime pinhole pixel centres; perspective-correct ground depth check .05m; no renderer imported",
+  "material_rule": "A0 valid values exact; prior-invalid but geometry+teacher qualified only receives sigma12cm lowpass frozen seed, not teacherHF; original source-known-unknown unchanged",
+  "common_factor_rule": "same common base/material_valid/write candidate/latent/reg support allarms; only output mH differs old observed vs union teacher. Root must finalize scope before any GPU.",
+  "highpass_basis_note": "common_latent_mask does not multiply legacy source/known/valid, teacher_H permit independent; no H initial tensor or optimizer created",
+  "inherited_H_bound": 0.04,
+  "lowpass_seed_sigma_chart_cells": 6,
+  "source_grid_approx_m": 0.02,
+  "full_evaluation_denominators_unchanged": {
+    "C": 10830,
+    "S": 3131,
+    "Sfull": 3187,
+    "D": 38416,
+    "K": 77266
+  },
+  "original_inputs_unmodified": true,
+  "source_sha256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/cpu_exact_r1/A0.npz": "5a6f5f108a5bf529deeefbc36b86d29a218a1bb0644e24147d86abab8314b704",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/base_atlas.npz": "04aaf1daeb0e0d4636ee2e72ec05df3c09cb235642f0b4691b95ef0b28441a3c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded/provenance.npz": "d470c64cacd9fb8195bc4bd71e4507731de2ddcba10374c7df6d4a9d9ea09ebb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded/road.npz": "241d3a209ec396c757d71bcc40718928c362cd12145bdd517d7cd0753792cb56",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/method_scope_r1/scope.npz": "8ed4bc65a5eb080b0e685fe737ebbccf4440723bb13a6b3a6e7344928b4568bc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/scope.npz": "2aa55aced9ab216ebc337844cdcc9d15914b33703eb63e04907c8f66928a17ce",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/086.npz": "911e12aa24c715f1c6db2d7f18d219054f2f94196b0b959938c63508bb44db8f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/110.npz": "d306a5d58dfab2f12654aa312df6d9f75a2b918555465853546c51aeed0d5572"
+  },
+  "seconds": 41.56149481236935
+}

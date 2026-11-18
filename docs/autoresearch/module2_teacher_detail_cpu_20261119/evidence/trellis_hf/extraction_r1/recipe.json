@@ -1,0 +1,57 @@
+{
+  "schema": "T2_HF_only_CPU_source_candidate.v1",
+  "status": "EXTRACTED_NOT_PERMISSION_QUALIFIED",
+  "nominal_patch_side_m": 2.56,
+  "physical_step_m": 0.0025,
+  "H_node_spacing_nominal_m": 0.02,
+  "anti_alias_gaussian_sigma_m": 0.02,
+  "anti_alias_truncate": 4.0,
+  "anti_alias_amplitude_at_H_Nyquist25cycles_per_m": 0.007191883355826361,
+  "highpass_sigma_m": 0.06,
+  "highpass_sigma_cells": 3.0,
+  "highpass_truncate": 3.0,
+  "frequency_policy": "soft Gaussian anti-alias then 2cm sampling then (I-G6cm); not a hard frequency cutoff",
+  "desired_prior_amplitude_candidate": 0.02,
+  "common_model_H_bound_candidate": 0.04,
+  "mean_plane_coordinate_metric_not_geodesic": true,
+  "actual_face_UV_query_inverse_max_m": 5.084229945850415e-13,
+  "fine_mesh_valid_pixels": 1031783,
+  "fine_total_pixels": 1048576,
+  "source_mass_at_H_nodes_quantiles": [
+    0.23280469530232487,
+    0.4869153263187662,
+    1.0000000000000002,
+    1.0000000000000004,
+    1.0000000000000004
+  ],
+  "unqualified_raw_HF": {
+    "nodes": 16384,
+    "RGB_RMS": 0.005886228279219574,
+    "abs_max": 0.05259056656881789,
+    "DC_RGB": [
+      5.229074678640091e-05,
+      3.503415502252559e-05,
+      1.5317284938501524e-05
+    ],
+    "LF_RMS": 0.0023947135965185534
+  },
+  "source_geometry_identity_max_m": 5.272079354863696e-08,
+  "permission": "PENDING independent Q teacher ledger; no old valid/source/known hard gate",
+  "use": "H initialization only at common A200/B entry; no extra prior loss; A0/low/A200/Adam-H state unchanged",
+  "source_hashes": {
+    "mesh_uv_source.npz": "cfe3c85100d3381d0fa5910ee1c9de04ddc305006f19588e3972a3cb6443ee54",
+    "basecolor_rgba.png": "1e441d6453804a4158464f34b576e55c77b9a311859be91fc275a2435092c045",
+    "fixed_geometry.npz": "a805261acf1cd88641415b5770b10193950c4c2108d59ffb8e5e123f8f739534",
+    "transforms.json": "401a4be5cafe4ffe9c9b06fd0748d79bb28d430c5453d51e4b17bba853b2b79e"
+  },
+  "output_hashes": {
+    "nodes_2cm.npz": "bc6e0dfff215ac2cf575b4fb197a9e1b952177d6bf5bd1a4731a179e1467a46e",
+    "physical_grid.npz": "ccb76b5bfe33ffbc7964a0cb6c51abe4840fcc61f9b4b2418197ccf7ce7433e3"
+  },
+  "CPU_seconds": 4.342999999993481,
+  "new_inference_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_operations": 0,
+  "central_contract_locked": false,
+  "GPU_entry_permitted": false
+}

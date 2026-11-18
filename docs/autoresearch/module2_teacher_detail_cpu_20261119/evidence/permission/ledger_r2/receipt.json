@@ -1,0 +1,244 @@
+{
+  "schema": "teacher_HF_permission_CPU_candidate.v2",
+  "CPU_only": true,
+  "CUDA_calls": 0,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "counts": {
+    "teacher_material_nodes": 34416,
+    "H_allowed_nodes": 34269,
+    "HF_conflict_nodes": 147,
+    "realA_HF_conflict_nodes": 0,
+    "rawRGB_conflict_nodes": 14336,
+    "H_new_on_old_gate_zero": 25378,
+    "common_latent_nodes": 92331,
+    "common_reg_nodes": 87336,
+    "base_seed_nodes": 1267,
+    "common_write_active": 89887,
+    "old84266_retained": 84266,
+    "old_excluded": 0,
+    "new_write_rows": 5621,
+    "new_C_prior_unavailable": 226,
+    "single_effective_HF_evidence": 27314,
+    "local_HF_support_insufficient": 20946
+  },
+  "node_association_conflict": {
+    "C": {
+      "node_both": 19139,
+      "RGB_half_mean_absolute_difference": 0.009421560024228313,
+      "RGB_absolute_difference": {
+        "count": 57417,
+        "mean": 0.018843120048456626,
+        "quantiles": [
+          2.3303841045763107e-07,
+          0.0011559187123614035,
+          0.006151479343773136,
+          0.01416666054727822,
+          0.024661777907332927,
+          0.043960394363486165,
+          0.12408694719738297,
+          0.27675542514943674
+        ]
+      },
+      "HF_comparable_nodes": 6902,
+      "HF_half_mean_absolute_difference": 0.0018628778728095102,
+      "HF_absolute_difference": {
+        "count": 20706,
+        "mean": 0.0037257557456190204,
+        "quantiles": [
+          2.0488409280261521e-07,
+          0.00027057640190426835,
+          0.001365004591754912,
+          0.002885907445890512,
+          0.0051196776461453625,
+          0.009788534862513923,
+          0.014956880886342871,
+          0.04699496499347966
+        ]
+      },
+      "RGB_conflict_HF_not_conflict": 12577,
+      "HF_conflict_without_RGB_conflict": 3
+    },
+    "S": {
+      "node_both": 1936,
+      "RGB_half_mean_absolute_difference": 0.01428992770943993,
+      "RGB_absolute_difference": {
+        "count": 5808,
+        "mean": 0.02857985541887986,
+        "quantiles": [
+          3.0193790001020737e-06,
+          0.0035545805492021966,
+          0.013626576889013892,
+          0.021515409983614814,
+          0.030468391514314977,
+          0.0921996511626659,
+          0.17125597546363613,
+          0.21715334061042058
+        ]
+      },
+      "HF_comparable_nodes": 200,
+      "HF_half_mean_absolute_difference": 0.0034890296495197815,
+      "HF_absolute_difference": {
+        "count": 600,
+        "mean": 0.006978059299039563,
+        "quantiles": [
+          1.1569036454772696e-05,
+          0.00044991900613614857,
+          0.0018826136021490164,
+          0.00473437673494323,
+          0.008849208833839328,
+          0.02379093846560196,
+          0.031801628652673504,
+          0.03485351860309127
+        ]
+      },
+      "RGB_conflict_HF_not_conflict": 1643,
+      "HF_conflict_without_RGB_conflict": 20
+    },
+    "all": {
+      "node_both": 21066,
+      "RGB_half_mean_absolute_difference": 0.009867227798398484,
+      "RGB_absolute_difference": {
+        "count": 63198,
+        "mean": 0.019734455596796967,
+        "quantiles": [
+          2.3303841045763107e-07,
+          0.0012455711043232148,
+          0.006538143152690551,
+          0.014988962315401533,
+          0.025345304592896745,
+          0.046081493122282505,
+          0.1355230702199266,
+          0.27675542514943674
+        ]
+      },
+      "HF_comparable_nodes": 7102,
+      "HF_half_mean_absolute_difference": 0.0019086720653386643,
+      "HF_absolute_difference": {
+        "count": 21306,
+        "mean": 0.0038173441306773286,
+        "quantiles": [
+          2.0488409280261521e-07,
+          0.0002729469708191018,
+          0.0013761316492467007,
+          0.0029190001096289775,
+          0.005196166213776374,
+          0.010060101291043129,
+          0.016571646131142783,
+          0.04699496499347966
+        ]
+      },
+      "RGB_conflict_HF_not_conflict": 14212,
+      "HF_conflict_without_RGB_conflict": 23
+    }
+  },
+  "HF_amplitude": {
+    "C": {
+      "qualified_nodes": 12609,
+      "required_HF_maxchannel": {
+        "count": 12609,
+        "mean": 0.009566329813748296,
+        "quantiles": [
+          0.00010542311025957263,
+          0.0016145939603164573,
+          0.0033985938469635046,
+          0.0055575161309814325,
+          0.009019354769842614,
+          0.027890697602210964,
+          0.09683456282729959,
+          0.1791506058572889
+        ]
+      },
+      "abs_over_old_point04_fraction": 0.036957728606550874,
+      "abs_over_point08_fraction": 0.013641050043619637
+    },
+    "S": {
+      "qualified_nodes": 714,
+      "required_HF_maxchannel": {
+        "count": 714,
+        "mean": 0.045757609491581364,
+        "quantiles": [
+          0.0019890901459819754,
+          0.006489670697136085,
+          0.013995676546605447,
+          0.025831186820323093,
+          0.06721593570693987,
+          0.14749481335145895,
+          0.15834559326795664,
+          0.1847338327847629
+        ]
+      },
+      "abs_over_old_point04_fraction": 0.36134453781512604,
+      "abs_over_point08_fraction": 0.19607843137254902
+    },
+    "all": {
+      "qualified_nodes": 13323,
+      "required_HF_maxchannel": {
+        "count": 13323,
+        "mean": 0.01150587598878191,
+        "quantiles": [
+          0.00010542311025957263,
+          0.0016531602066928274,
+          0.003521607595851628,
+          0.005804727879473226,
+          0.009886046109345625,
+          0.043801979400740924,
+          0.1193622243886191,
+          0.1847338327847629
+        ]
+      },
+      "abs_over_old_point04_fraction": 0.054342115139232906,
+      "abs_over_point08_fraction": 0.023418149065525782
+    }
+  },
+  "edge_diagnostic": {
+    "dual_strong_edges": 0,
+    "cosine": {
+      "count": 0,
+      "mean": null,
+      "quantiles": null
+    },
+    "opposed_edges": 0,
+    "used_for_permission_gate": false
+  },
+  "bound_suggestions": {
+    "pointwise_H_bound_p99_plus4codes": 0.14,
+    "half_scaled_Highpass_basis_2xp99_plus4codes": 0.26,
+    "formula": "HP=.5*b*(tanh(raw)-G6cm(tanh(raw))); b is global infinity upper bound, a sinusoidal highpass generally has only about .5b amplitude",
+    "not_a_full_renderer_or_global_feasibility_certificate": true
+  },
+  "small_Sigma_proxy": {
+    "rows": 150,
+    "quad_points": 33750,
+    "required_H_bound_for_fixedLF_HF_component": {
+      "count": 150,
+      "mean": 0.0182082595895147,
+      "quantiles": [
+        0.0007628624097999905,
+        0.0015566172204110817,
+        0.003366177014984272,
+        0.006400274236703389,
+        0.01610751330428027,
+        0.08625987884019717,
+        0.10538370503673786,
+        0.11012461767222527
+      ]
+    },
+    "over_point04_fraction": 0.14666666666666667,
+    "interpretation": "conditional HF-component proxy on fixed common base; L/H bands overlap, no global infeasibility claim"
+  },
+  "conflict_HF_max_channel_codes": 4,
+  "blur_support_threshold": 0.9,
+  "highpass_sigma_m": 0.06,
+  "base_seed_lowpass_sigma_m": 0.12,
+  "teacher_H_gate_semantics": "bool1 footprint qualification + reliable HF conflict / clean realA-HF protection; RGB offset not a hard H veto",
+  "base_seed_semantics": "prior valid A0 exact; absentbase only LF from clean realA if available else highest local blur-support teacher owner, tie110. No teacherHF baked into base.",
+  "common_arm_semantics": "same base/valid/write/latent/reg; mH_obs vs max(mH_obs,teacher_bool1); prior source/known/unknown never re-mask new H",
+  "floor_boundary": "equalweight node-associated two-color L1 proxy, not actual native renderer/global lower bound; fixed C/S train/eval denominators unchanged",
+  "mask_erosion": "all4 lowres neighboring teacher pixels each have full4x4 native permission. No extra9cell world erosion of outputmH; T2 raw initialization needs its independent9cell envelope erosion.",
+  "no_GPU_authorization": true,
+  "status": "CPU_READY_PENDING_CENTRAL_BOUND_AND_SCOPE_LOCK",
+  "source_projection_from": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/ledger_r1",
+  "original_P_unmodified": true,
+  "seconds": 28.986607497557998
+}

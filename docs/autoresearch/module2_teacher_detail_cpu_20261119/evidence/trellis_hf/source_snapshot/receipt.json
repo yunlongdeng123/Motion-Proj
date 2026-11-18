@@ -1,0 +1,119 @@
+{
+  "schema": "TRELLIS2_primary_exporter_color_semantics_CPU.v1",
+  "status": "PASS_PRIMARY_PNG_UV_SEMANTICS",
+  "checks": {
+    "GLB_vertices_same": true,
+    "GLB_faces_same": true,
+    "GLB_UV_same": true,
+    "PNG_RGBA_finite": true,
+    "query_matches_primary_PNG": true,
+    "normalized_texel_center_matches_trimesh_exact": true,
+    "trimesh_nearest_convention_exact": true,
+    "no_Torch_or_native_loaded": true
+  },
+  "trimesh_version": "5.2.0",
+  "raw_baseColor_PNG_entire_UV_image": {
+    "RGB_min": [
+      0.37254901960784315,
+      0.29411764705882354,
+      0.23137254901960785
+    ],
+    "RGB_mean": [
+      0.5065846312265745,
+      0.3925678365407148,
+      0.30748920440269534
+    ],
+    "RGB_max": [
+      0.6352941176470588,
+      0.5137254901960784,
+      0.4823529411764706
+    ],
+    "luma_quantiles": [
+      0.3082125490196078,
+      0.3569749019607843,
+      0.4089890196078431,
+      0.4736329411764706,
+      0.5275372549019607
+    ],
+    "alpha_min_mean_max": [
+      0.9921568627450981,
+      0.999415274227367,
+      1.0
+    ]
+  },
+  "queried_fixed_world_source_nodes": {
+    "RGB_min": [
+      0.3996754586696625,
+      0.3290872275829315,
+      0.25156155228614807
+    ],
+    "RGB_mean": [
+      0.505743442057792,
+      0.39155735168060346,
+      0.30626214175936184
+    ],
+    "RGB_max": [
+      0.6215269565582275,
+      0.5088992118835449,
+      0.4723362326622009
+    ],
+    "luma_quantiles": [
+      0.3400274900794029,
+      0.35620696920663114,
+      0.40876459210217,
+      0.47018471592855454,
+      0.522848071539402
+    ],
+    "alpha_min_mean_max": [
+      0.9928048253059387,
+      0.9994665173981048,
+      1.0
+    ]
+  },
+  "official_GLB_texture": {
+    "RGB_min": [
+      0.3607843137254902,
+      0.3058823529411765,
+      0.22745098039215686
+    ],
+    "RGB_mean": [
+      0.5063502143396894,
+      0.39333070867575504,
+      0.30759091844356623
+    ],
+    "RGB_max": [
+      0.6392156862745098,
+      0.5137254901960784,
+      0.49019607843137253
+    ],
+    "luma_quantiles": [
+      0.32022901960784317,
+      0.3611639215686274,
+      0.4092721568627451,
+      0.47144627450980386,
+      0.5233843137254901
+    ],
+    "alpha_min_mean_max": [
+      0.9921568627450981,
+      0.999415274227367,
+      1.0
+    ]
+  },
+  "generated_alpha_used_for_GS_opacity": false,
+  "native_RGB_premultiplied_by_generated_alpha": false,
+  "selected_same_UV_primary_vs_GLB_RGB_abs_max": 0.022362814814436693,
+  "selected_same_UV_primary_vs_GLB_RGB_MAE": 0.005519127774126002,
+  "texture_PNG_vs_GLB_RGB_abs_max": 0.07450980392156858,
+  "texture_PNG_vs_GLB_RGB_MAE": 0.005577532450358076,
+  "query_primary_PNG_reproduction_max": 2.9685450542160652e-08,
+  "bilinear_vs_trimesh_nearest_on_same_arbitraryUV_max": 0.025831478571190558,
+  "UV_policy": "official output/Trimesh V-up to image top-left: x=u*W-.5, y=(1-v)*H-.5; texel-center bilinear/clamp. Trimesh uv_to_color uses round(u*(W-1)), round((1-v)*(H-1)) nearest; differs by kernel at arbitrary UV, matches exactly at texel centers",
+  "GLB_export": "official output.export(extension_webp=True); embedded WebP may differ from primary lossless PNG. Native field uses primary PNG, not compressed GLB appearance",
+  "color_semantics": "official PBR baseColor texture RGB interpreted under glTF sRGB convention as native sRGB color prior; no EOTF/radiance conversion/exposure fit. Intrinsic albedo/lighting/PBR truth is unidentified",
+  "no_true_white_paint_GT_claim": true,
+  "geometry_or_coverage_modified": false,
+  "new_inference_calls": 0,
+  "GPU_operations": 0,
+  "optimizer_updates": 0,
+  "human_verdict": null
+}

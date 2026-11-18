@@ -1,0 +1,107 @@
+{
+  "schema": "pixel_box_sampling_budget_CPU_geometry_only.v1",
+  "rows": [
+    {
+      "raw": 86,
+      "domain": "A",
+      "pixels": 5409,
+      "axis_samples_p50_p95_p99_max": [
+        7.0,
+        16.0,
+        23.920000000000073,
+        117.0
+      ],
+      "cap16_unqualified": 265
+    },
+    {
+      "raw": 86,
+      "domain": "C",
+      "pixels": 3598,
+      "axis_samples_p50_p95_p99_max": [
+        9.0,
+        29.0,
+        53.0,
+        204.0
+      ],
+      "cap16_unqualified": 958
+    },
+    {
+      "raw": 86,
+      "domain": "S",
+      "pixels": 1042,
+      "axis_samples_p50_p95_p99_max": [
+        5.0,
+        18.949999999999932,
+        34.0,
+        47.0
+      ],
+      "cap16_unqualified": 57
+    },
+    {
+      "raw": 86,
+      "domain": "fullS",
+      "pixels": 1043,
+      "axis_samples_p50_p95_p99_max": [
+        5.0,
+        18.899999999999977,
+        34.0,
+        47.0
+      ],
+      "cap16_unqualified": 57
+    },
+    {
+      "raw": 110,
+      "domain": "A",
+      "pixels": 11495,
+      "axis_samples_p50_p95_p99_max": [
+        5.0,
+        12.0,
+        21.0,
+        164.0
+      ],
+      "cap16_unqualified": 270
+    },
+    {
+      "raw": 110,
+      "domain": "C",
+      "pixels": 7232,
+      "axis_samples_p50_p95_p99_max": [
+        6.0,
+        20.0,
+        38.6899999999996,
+        201.0
+      ],
+      "cap16_unqualified": 671
+    },
+    {
+      "raw": 110,
+      "domain": "S",
+      "pixels": 2089,
+      "axis_samples_p50_p95_p99_max": [
+        4.0,
+        11.0,
+        19.0,
+        31.0
+      ],
+      "cap16_unqualified": 31
+    },
+    {
+      "raw": 110,
+      "domain": "fullS",
+      "pixels": 2144,
+      "axis_samples_p50_p95_p99_max": [
+        4.0,
+        11.0,
+        19.0,
+        31.0
+      ],
+      "cap16_unqualified": 31
+    }
+  ],
+  "rule": "ceil(2*max column norm J_uv),cap16 is CPU candidate only",
+  "no_domain_shrunk": true,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_executed": false,
+  "next_gate": "actual field AA convergence + higherLOD/mip or adaptive shader engineering before native formal; exceedingcap is not capacityfailure"
+}

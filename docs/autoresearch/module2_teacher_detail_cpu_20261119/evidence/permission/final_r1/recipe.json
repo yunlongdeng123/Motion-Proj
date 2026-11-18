@@ -1,0 +1,175 @@
+{
+  "schema": "teacher_detail_permission_final_CPU.v1",
+  "task": "MODULE2-TEACHER-DETAIL-CPU-20261119",
+  "common_high_bound": 0.34,
+  "highpass_sigma_m": 0.06,
+  "highpass_sigma_cells": 3,
+  "base_seed_lowpass_sigma_m": 0.12,
+  "T2_H_initialization_abs_max": 0.02,
+  "prior_loss_weight": 0,
+  "immutable_ledger_sha256": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+  "source_r2_sha256": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+  "common_material_valid_and_base_same_all_five_arms": true,
+  "common_latent_and_reg_support_same_all_five_arms": true,
+  "prior_source_known_unknown_are_ledger_only_not_implicit_masks": true,
+  "output_H_permission": {
+    "observed": "observed_H_prior",
+    "union_teacher": "mH_union"
+  },
+  "source_qualification": "HF4code conflict gate, clean realA-HF protect; RGB conflict diagnostic only; localblur<.9 single-effective evidence not dual agreement",
+  "shapes": {
+    "common_base_srgb": "HWC",
+    "common_material_valid": "HW bool",
+    "observed_H_prior": "HW",
+    "teacher_H_allow": "HW bool",
+    "mH_union": "HW",
+    "common_latent_mask": "HW",
+    "common_reg_support": "HW",
+    "common_write_active": "151988 bool",
+    "active_world_rows": "151988 int64"
+  },
+  "counts": {
+    "teacher_material_nodes": 34416,
+    "H_allowed_nodes": 34269,
+    "HF_conflict_nodes": 147,
+    "realA_HF_conflict_nodes": 0,
+    "rawRGB_conflict_nodes": 14336,
+    "H_new_on_old_gate_zero": 25378,
+    "common_latent_nodes": 92331,
+    "common_reg_nodes": 87336,
+    "base_seed_nodes": 1267,
+    "common_write_active": 89887,
+    "old84266_retained": 84266,
+    "old_excluded": 0,
+    "new_write_rows": 5621,
+    "new_C_prior_unavailable": 226,
+    "single_effective_HF_evidence": 27314,
+    "local_HF_support_insufficient": 20946
+  },
+  "fixture_cases": [
+    {
+      "case": "C_unknown_seed",
+      "world_row": 74920,
+      "active_index": 71787,
+      "mode": "Sigma",
+      "origin_uv": [
+        254,
+        98
+      ],
+      "source": 0,
+      "known": false,
+      "unknown": true,
+      "prior_valid": false,
+      "teacher_H_allow": true
+    },
+    {
+      "case": "C_generated_zero_old_H",
+      "world_row": 79835,
+      "active_index": 76259,
+      "mode": "Sigma",
+      "origin_uv": [
+        272,
+        99
+      ],
+      "source": 3,
+      "known": false,
+      "unknown": false,
+      "prior_valid": true,
+      "teacher_H_allow": true
+    },
+    {
+      "case": "S_prior_observed",
+      "world_row": 20686,
+      "active_index": 19586,
+      "mode": "Sigma",
+      "origin_uv": [
+        55,
+        191
+      ],
+      "source": 1,
+      "known": true,
+      "unknown": false,
+      "prior_valid": true,
+      "teacher_H_allow": true
+    },
+    {
+      "case": "S_other_prior",
+      "world_row": 25327,
+      "active_index": 24227,
+      "mode": "Sigma",
+      "origin_uv": [
+        72,
+        191
+      ],
+      "source": 2,
+      "known": false,
+      "unknown": false,
+      "prior_valid": true,
+      "teacher_H_allow": true
+    },
+    {
+      "case": "HF_conflict",
+      "world_row": 28802,
+      "active_index": -1,
+      "mode": "point",
+      "origin_uv": [
+        85,
+        117
+      ],
+      "source": 1,
+      "known": true,
+      "unknown": false,
+      "prior_valid": true,
+      "teacher_H_allow": false
+    },
+    {
+      "case": "true_unknown_no_teacher",
+      "world_row": 323596,
+      "active_index": -1,
+      "mode": "point",
+      "origin_uv": [
+        1165,
+        71
+      ],
+      "source": 0,
+      "known": false,
+      "unknown": true,
+      "prior_valid": false,
+      "teacher_H_allow": false
+    },
+    {
+      "case": "K_readonly",
+      "world_row": 106800,
+      "active_index": -1,
+      "mode": "point",
+      "origin_uv": [
+        371,
+        37
+      ],
+      "source": 1,
+      "known": true,
+      "unknown": false,
+      "prior_valid": true,
+      "teacher_H_allow": false
+    }
+  ],
+  "GPU_authorized": false,
+  "no_training_controller_created": true,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "default_scene_changed": false,
+  "actual_native_scope_validation_required_before_future_training": true,
+  "average_query_plan": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/avg_plan_gh31_r1",
+  "average_kernel_order": 31,
+  "average_points_per_row": 961,
+  "average_query_plan_recipe_sha256": "f3a1bf4ccee1ecfbc7a78912e709100c0d74cd215c092f9c43dc70ea19512a5c",
+  "CPU_mini_Sigma_kernel_order": 31,
+  "CPU_mini_fixture_sha256": "808f29cdbd4988b39d5b0b73f9d73635b001643a33e09c0f9a94ca6da7ad1016",
+  "average_sparse_read_operator": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/avg_sparse_gh31_r1/operator",
+  "average_sparse_upload_verified": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/avg_sparse_gh31_r1/upload_verified.json",
+  "average_sparse_mode": "Gaussian_footprint_average",
+  "KH_already_contains_gate_do_not_apply_again": true,
+  "average_row_id_semantics": "global_road_topology_world_row_id",
+  "average_row_id_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/avg_sparse_gh31_r1/row_id_contract.json",
+  "average_row_id_contract_sha256": "423b17c7f248e49c47b988d20af0a1160f8df711d58a7ac37574d376b450c552"
+}

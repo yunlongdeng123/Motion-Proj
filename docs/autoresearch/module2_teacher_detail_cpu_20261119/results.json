@@ -1,0 +1,101 @@
+{
+  "schema": "teacher_detail_CPU_preparation_final.v1",
+  "task_id": "MODULE2-TEACHER-DETAIL-CPU-20261119",
+  "status": "CPU_PREPARED_STOP_BEFORE_GPU",
+  "assessment": "原来源账本不能直接充当教师细节学习许可；固定高斯均色再混合有额外细节损失风险，需与逐像素世界材质进行实际native对照",
+  "common_rows": 89887,
+  "common_high_bound": 0.34,
+  "common_low_bound": 0.3,
+  "train_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "new_199_frame_run": false,
+  "actual_scene_optimizer_updates": 0,
+  "native_forward_calls": 0,
+  "native_backward_calls": 0,
+  "new_model_inferences": 0,
+  "GPU_operations": 0,
+  "power_operations": 0,
+  "pending_GPU_controller": false,
+  "CPU_evidence": {
+    "old_H": {
+      "C_rows": 47886,
+      "C_full_kernel_zero": 25103,
+      "S_rows": 6707,
+      "S_full_kernel_zero": 170,
+      "weighted_C_gate": 0.06675339956230941,
+      "weighted_S_gate": 0.2313222576706251,
+      "weight_definition": "saved rowmax native contribution across86/110; not per-pixel or joint contribution"
+    },
+    "teacher_material_nodes": 34416,
+    "teacher_H_allowed_nodes": 34269,
+    "new_H_on_old_zero_nodes": 25378,
+    "common_write_rows": 89887,
+    "common_base_seed_nodes": 1267,
+    "average": {
+      "kernel_order": 31,
+      "points_per_row": 961,
+      "queries": 86381407,
+      "source_chart_world_error_max_m": 9.09e-13,
+      "CSR_dense_RGB_max": 1.33e-15
+    },
+    "pixel": {
+      "canonical_pixels": 122604,
+      "quadrature_samples": 6093288,
+      "density": 2.0,
+      "source_quadrature_RGB_p99": 0.00131081,
+      "source_quadrature_RGB_max": 0.0013476,
+      "CSR_dense_RGB_max": 1.81e-14
+    },
+    "geometry": {
+      "train_A_C_S_fullS_all_canonical": true,
+      "original_D": 38416,
+      "D_fallback": 218,
+      "ideal_RGB_or_marking_labels_used": false
+    },
+    "T2": {
+      "strict_faithful_gate": false,
+      "exploratory_only": true,
+      "energy_fraction": 0.5805223971791532,
+      "cosine": 0.8280024393499665,
+      "effective_HF_RMS": 0.0033478752134889706,
+      "effective_HF_abs_max": 0.01999998064511086,
+      "legal_prior_nodes_DC_abs_max": 3.1116949269685046e-05
+    },
+    "scene_optimizer_updates": 0,
+    "native_forward_calls": 0,
+    "native_backward_calls": 0,
+    "new_model_inferences": 0,
+    "power_operations": 0
+  },
+  "CPU_module_tests": {
+    "root": 11,
+    "permission": 9,
+    "pixel": 10,
+    "T2": 7,
+    "total": 37
+  },
+  "actual_native_scope_basis_gradients_K_and_persistent_reload": "not executed; mandatory future smoke",
+  "GPU_authorized": false,
+  "training_authorized": false,
+  "production_promoted": false,
+  "human_verdict": null,
+  "problem_solved": null,
+  "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1",
+  "evidence": {
+    "permission": "evidence/permission/final_r1/recipe.json",
+    "old_permission": "evidence/permission/old_audit_r1/receipt.json",
+    "average": "evidence/permission/numeric31_r1/receipt.json",
+    "average_cache": "evidence/permission/avg_sparse_gh31_r1/upload_verified.json",
+    "pixel": "evidence/pixel_render/preparation_receipt.json",
+    "pixel_cache": "evidence/pixel_render/read_operator_box_r1/verification.json",
+    "T2": "evidence/trellis_hf/seed_entry.json",
+    "local_copy": "evidence/local_copy_verified.json"
+  }
+}

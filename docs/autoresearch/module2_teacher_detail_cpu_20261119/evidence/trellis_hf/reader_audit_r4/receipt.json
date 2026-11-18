@@ -1,0 +1,48 @@
+{
+  "schema": "T2_HF_CPU_same_world_field_dual_reader_integral.v1",
+  "status": "NUMERICAL_CHECK_ONLY_DOES_NOT_OVERRIDE_SIGNAL_GATE",
+  "fixed_previous_rows": 541,
+  "GH15_vs_GH41": {
+    "RGB_RMSE": 3.163267195265418e-05,
+    "rowmax_p99": 0.00014935158252152753,
+    "abs_max": 0.00030069308334183635,
+    "p99_1code": true,
+    "max_4code": true
+  },
+  "midpoint1250_vs0625_fixed16": {
+    "RGB_RMSE": 1.4261615148963775e-07,
+    "rowmax_p99": 4.437405659658301e-07,
+    "abs_max": 4.6793819618391654e-07,
+    "p99_1code": true,
+    "max_4code": true
+  },
+  "GH41_vs_midpoint0625_fixed16": {
+    "RGB_RMSE": 1.4066211148241702e-05,
+    "rowmax_p99": 3.624620054329649e-05,
+    "abs_max": 3.6972163661487165e-05,
+    "p99_1code": true,
+    "max_4code": true
+  },
+  "point_vs_average_expected_difference": {
+    "RGB_RMSE": 0.0008340464768630901,
+    "rowmax_p99": 0.004298567983980574,
+    "abs_max": 0.006209331840601191,
+    "p99_1code": false,
+    "max_4code": true
+  },
+  "global_source_availability_used": true,
+  "normalized_filter": "sum(w*validmass*bilinear(common_mH)*bilinear(H))/sum(w*validmass); no premultiplied gate/H interpolation",
+  "mass_below09_rows": 40,
+  "global_model_H_outside_stored_crop_exact_zero": true,
+  "full_model_high_rebuild_vs_stored_crop_max": 0.0,
+  "tail_probability_bound_midpoint_box": 1.1466062875167782e-06,
+  "input_seed_sha256": "13b40321aa2ae3a2a849bb3ffc62a3d65f562a372423a4aedbcc9bd55a29dd0b",
+  "global_geometry_sha256": "cd392634b30f7aa962bf6d301630e9e4bbc639f58009575fcec1ab51c65dd19b",
+  "source_fixture_sha256": "2edaf14b4886761e494a63012a5d70bd54dea298fc0976924d17501c61e7c12c",
+  "generated_alpha_used": false,
+  "GPU_operations": 0,
+  "model_inference_calls": 0,
+  "optimizer_updates": 0,
+  "CPU_seconds": 3.2030000000959262,
+  "GPU_entry_permitted": false
+}

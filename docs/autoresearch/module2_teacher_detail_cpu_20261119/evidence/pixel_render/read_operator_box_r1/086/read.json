@@ -1,0 +1,41 @@
+{
+  "schema": "fixed_linear_world_material_read.v1",
+  "equation": "B+KL*L+KH*H; KH already includes separately interpolated mH, never apply gate again",
+  "low_shape": [
+    47,
+    361
+  ],
+  "high_shape": [
+    273,
+    2157
+  ],
+  "gates": [
+    "observed_H",
+    "observed_plus_teacher_H"
+  ],
+  "metadata": {
+    "reader": "pixel_world_local_box",
+    "raw": 86,
+    "density": 2.0,
+    "UV_axes": "outputUV,inputPixel",
+    "map_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/086.npz",
+    "map_sha256": "fe93978ff518f9fd2af2a68de98aea3abe054bec26da9d439960743f50aca3e6",
+    "field_ledger": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/final_r1/teacher_evidence.npz",
+    "field_ledger_sha256": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+    "root_compiler": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/code/fixed_material_read_operator.py",
+    "root_compiler_sha256": "91c5225b29ca21f30c9dc6a572e431508cb6f72505ac76254b2c5fc641fef3bd",
+    "quadrature": "nx=ceil(density||J[:,x]||), ny similarly, wholepixel; no cap",
+    "no_gaussian_Sigma_in_pixel_filter": true,
+    "camera_cache_not_world_asset": true,
+    "invalid_G_s_fallback": "retain native eligible averaged-ci contribution",
+    "native_basis_validated": false,
+    "formal_allowed": false
+  },
+  "rows": 13706,
+  "nonzeros_low": 78118,
+  "nonzeros_high": {
+    "observed_H": 159283,
+    "observed_plus_teacher_H": 221241
+  },
+  "no_independent_trainable_row_RGB": true
+}

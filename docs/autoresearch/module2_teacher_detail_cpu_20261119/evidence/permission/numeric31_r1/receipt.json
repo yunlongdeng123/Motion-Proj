@@ -1,0 +1,58 @@
+{
+  "schema": "teacher_H_numeric_order_repair_CPU.v1",
+  "status": "PASS",
+  "candidate_order": 31,
+  "reference_order": 41,
+  "reference61_spot": null,
+  "sample_rows": 150,
+  "quad_points": 144150,
+  "cases": [
+    {
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.0007341958351105087,
+      "RGB_abs_max": 0.0014079012107749977,
+      "mass_abs_max": 0.0005986166968126039,
+      "passed": true,
+      "case": "base_H0"
+    },
+    {
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.002263518322401532,
+      "RGB_abs_max": 0.0034740512726880723,
+      "mass_abs_max": 0.0005986166968126039,
+      "passed": true,
+      "case": "H_nyquist_u"
+    },
+    {
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.0008937553295739332,
+      "RGB_abs_max": 0.001369245224099147,
+      "mass_abs_max": 0.0005986166968126039,
+      "passed": true,
+      "case": "H_nyquist_diag45"
+    },
+    {
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 6.572393661878437e-05,
+      "RGB_abs_max": 0.00010058172923252395,
+      "mass_abs_max": 0.0005986166968126039,
+      "passed": true,
+      "case": "teacher_HF_seed"
+    }
+  ],
+  "mask_scope_bound_samples_thresholds_unchanged": true,
+  "high_bound": 0.34,
+  "p99_gate": 0.00392156862745098,
+  "max_gate": 0.01568627450980392,
+  "CPU_only": true,
+  "CUDA_calls": 0,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "old_failure_preserved": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/numeric_r1",
+  "seconds": 6.759688327088952,
+  "no_GPU_authorization": true
+}

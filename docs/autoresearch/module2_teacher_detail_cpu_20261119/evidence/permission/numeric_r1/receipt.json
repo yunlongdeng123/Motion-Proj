@@ -1,0 +1,73 @@
+{
+  "schema": "new_teacher_permission_GH_small_CPU_qualification.v1",
+  "status": "FAIL_ENGINEERING_INTEGRATION_PENDING",
+  "CPU_only": true,
+  "CUDA_calls": 0,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "source_rows": 150,
+  "GH15_points": 33750,
+  "GH41_reference_points": 252150,
+  "high_bound": 0.34,
+  "seed_H0_and_legal_Hstress": true,
+  "thresholds": {
+    "reference_mass_ge": 0.9,
+    "RGB_abs_p99_max": 0.00392156862745098,
+    "RGB_abs_max_max": 0.01568627450980392
+  },
+  "cases": [
+    {
+      "case": "base_H0",
+      "rows": 150,
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.002186116726571885,
+      "RGB_abs_max": 0.0047954455265271645,
+      "rowmax_p99": 0.0024095770043209945,
+      "low_mass_abs_max": null,
+      "mass_abs_max": 0.00062238368642209,
+      "passed": true
+    },
+    {
+      "case": "H_nyquist_u",
+      "rows": 150,
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.007453082378185439,
+      "RGB_abs_max": 0.011333214907823075,
+      "rowmax_p99": 0.007512972331103789,
+      "low_mass_abs_max": null,
+      "mass_abs_max": 0.00062238368642209,
+      "passed": false
+    },
+    {
+      "case": "H_nyquist_diag45",
+      "rows": 150,
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.002256704653451145,
+      "RGB_abs_max": 0.004694751298254751,
+      "rowmax_p99": 0.002476426462619488,
+      "low_mass_abs_max": null,
+      "mass_abs_max": 0.00062238368642209,
+      "passed": true
+    },
+    {
+      "case": "teacher_HF_seed",
+      "rows": 150,
+      "reference_mass_ge_point9": 150,
+      "mass_low_rows": 0,
+      "RGB_abs_p99": 0.0002482465895310151,
+      "RGB_abs_max": 0.0003584615058858931,
+      "rowmax_p99": 0.0002529068485100043,
+      "low_mass_abs_max": null,
+      "mass_abs_max": 0.00062238368642209,
+      "passed": true
+    }
+  ],
+  "source_scope": "same deterministic150worldrows as ledger_r2 amplitude audit; no full34M requery. Dense truechart inverse of current fixed worldSigma.",
+  "interpretation": "Numerical source qualification only; source-mass<.9 separate, no removed train/eval denominator; not a strict error certificate",
+  "old_P_numeric_not_substituted": true,
+  "GPU_future_gate_passed": false,
+  "seconds": 8.1081204675138
+}

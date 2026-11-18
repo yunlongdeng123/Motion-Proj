@@ -1,0 +1,101 @@
+{
+  "schema": "T2_HF_output_constrained_CPU_seed_projection.v1",
+  "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE",
+  "gates": {
+    "signal_energy_atleast_half": false,
+    "target_explained_atleast_half": false,
+    "cosine_atleast09": false,
+    "outside_node_max": true,
+    "outside_node_RMS": true,
+    "outside_query_max": true,
+    "outside_query_RMS": true
+  },
+  "legal_nodes": 7609,
+  "raw_unknown_nodes": 16099,
+  "model_H_bound": 0.34,
+  "effective_HF_cap": 0.02,
+  "raw_cap": 0.8,
+  "uniform_scaling": 1.0,
+  "raw_abs_max": 0.08851189650822619,
+  "seed_latent_abs_max": 0.0887441337108612,
+  "actual": {
+    "nodes": 7609,
+    "RGB_RMS": 0.0018289191194156159,
+    "abs_max": 0.014348542082036522,
+    "DC_RGB": [
+      -3.3117717571532277e-07,
+      -2.1577323636531567e-07,
+      -5.6460332030282365e-08
+    ],
+    "LF_RMS": 0.0002502368136503697
+  },
+  "target": {
+    "nodes": 7609,
+    "RGB_RMS": 0.004393997161587148,
+    "abs_max": 0.019999999552965164,
+    "DC_RGB": [
+      -8.668049879158903e-12,
+      -6.611838280045365e-12,
+      -7.83152377953119e-12
+    ],
+    "LF_RMS": 0.002422657846735566
+  },
+  "retained_signal_energy_ratio": 0.17324848916064856,
+  "target_explained_fraction": 0.3747889108908865,
+  "cosine": 0.658332770078833,
+  "outside_node_max": 5.797321910333976e-06,
+  "outside_node_RMS": 1.217021232197857e-07,
+  "outside_quarter_query_max": 2.3507931555342512e-05,
+  "outside_quarter_query_RMS": 4.6116309202793946e-07,
+  "outside_scope": "all crop output nodes and 2x2 bilinear quarter queries with any nonlegal corner; RMS restricted to nonzero common mH",
+  "adjoint_relative_error": 4.562022830980273e-16,
+  "outside_constraint_weight": 1000.0,
+  "solver": [
+    {
+      "channel": 0,
+      "stop_code": 7,
+      "iterations": 500,
+      "residual_norm": 0.7454516069347863,
+      "normal_residual_norm": 0.10949923751760424,
+      "seconds": 2.0320000000065193
+    },
+    {
+      "channel": 1,
+      "stop_code": 7,
+      "iterations": 500,
+      "residual_norm": 0.6424689474882567,
+      "normal_residual_norm": 0.08491458150369144,
+      "seconds": 4.016000000061467
+    },
+    {
+      "channel": 2,
+      "stop_code": 7,
+      "iterations": 500,
+      "residual_norm": 0.6259521713978106,
+      "normal_residual_norm": 0.08004301965387081,
+      "seconds": 5.844000000040978
+    }
+  ],
+  "solver_calls": {
+    "matvec": 1501,
+    "rmatvec": 1504
+  },
+  "one_projection_only": true,
+  "photo_optimization": false,
+  "extra_training_loss": false,
+  "CPU_seconds": 6.016000000061467,
+  "permission_path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\road_teacher_detail_20261119\\trellis_hf\\source_snapshot\\permission_final_r1_crop.npz",
+  "permission_sha256": "a269bb139652c2b32b1445bbd51504695b9e9a2195ed5601d72d419056ec1234",
+  "parent_ledger_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/final_r1/teacher_evidence.npz",
+  "parent_ledger_sha256": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+  "common_base_buffer_sha256": "a39115af971ad0b901928338202e62277613f3ca6a0095e31d7e69d978a4ce51",
+  "source_target_sha256": "52ea89224542710355a2399653cfaca6dd771b9892a9b1600adca8d87160b1c2",
+  "serialized_seed_sha256": "33bf09dfcfc31c7c1356637c53be4cb3164b974903303d2c89ea277fdd8eef30",
+  "exact_CPU_serialized_operator_restore": true,
+  "low_A0_A200_Adam_H_state_not_touched": true,
+  "same_loss_same_reader_same_trace_required": true,
+  "GPU_operations": 0,
+  "new_model_inference": 0,
+  "model_training_updates": 0,
+  "GPU_entry_permitted": false
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "pixel_world_CPU_reference_acceptance.v1",
+  "passed": true,
+  "unit_tests": 10,
+  "errors": 0,
+  "failures": 0,
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "CPU_reference_dtype": "float64",
+  "future_runtime_parameter_dtype": "float32",
+  "bound_recipe": {
+    "low_bound": 0.3,
+    "high_bound": 0.34
+  },
+  "amplitude_status": "central locked commonQ; historicalP .04 not used as new permission bound",
+  "alias": {
+    "point_RMSE": 0.2151188526038695,
+    "pixel_RMSE": 0.0009855987640065454,
+    "sample_axis": 12,
+    "sampling_qualified": true,
+    "target": "analytic box integral of world cosine, not GS output"
+  },
+  "runtime_parity": {
+    "color_max": 1.4837314710192118e-08,
+    "high_gradient_max": 7.2794310371215865e-09,
+    "low_gradient_max": 5.8792872459356715e-08,
+    "CPU_reference_dtype": "float64",
+    "runtime_parameter_dtype": "float32",
+    "high_bound": 0.34,
+    "GPU_executed": false
+  },
+  "marking": [
+    {
+      "width_m": 0.12,
+      "period_phase": "1D crosspaint only; curve/dashes separate camera oracle",
+      "projected_width_pixels": 24.0,
+      "CPU_fixture_sigma_m": 0.02,
+      "average_MAE": 0.043353759219051324,
+      "pixel_MAE": 2.3033672710065487e-18,
+      "average_core_contrast": 0.9266536368305675,
+      "pixel_core_contrast": 1.0000000000000002,
+      "native_scene_result": false,
+      "geometry_role": "synthetic fixed1D weights; not actual P Gaussian packet",
+      "target_source": "closed-form independent world top-hat pixelbox area; Gaussian ci uses analytic normal CDF, no GS self target"
+    },
+    {
+      "width_m": 0.24,
+      "period_phase": "1D crosspaint only; curve/dashes separate camera oracle",
+      "projected_width_pixels": 48.0,
+      "CPU_fixture_sigma_m": 0.02,
+      "average_MAE": 0.04335388426534523,
+      "pixel_MAE": 5.067407996214407e-18,
+      "average_core_contrast": 0.9976075338413708,
+      "pixel_core_contrast": 0.9999999999999998,
+      "native_scene_result": false,
+      "geometry_role": "synthetic fixed1D weights; not actual P Gaussian packet",
+      "target_source": "closed-form independent world top-hat pixelbox area; Gaussian ci uses analytic normal CDF, no GS self target"
+    }
+  ],
+  "camera_oracles": [
+    {
+      "camera": "A",
+      "width_m": 0.12,
+      "resolvable_ge3px_pixels": 2525,
+      "visible_pixels": 5178,
+      "target_source": "same analytic world circle120m / dash period3m,phase.45m; independent plane oracle only",
+      "plane_is_synthetic_fixture_only": true,
+      "actual_cached_G_s_maps_are_separate": true
+    },
+    {
+      "camera": "A",
+      "width_m": 0.24,
+      "resolvable_ge3px_pixels": 4748,
+      "visible_pixels": 5178,
+      "target_source": "same analytic world circle120m / dash period3m,phase.45m; independent plane oracle only",
+      "plane_is_synthetic_fixture_only": true,
+      "actual_cached_G_s_maps_are_separate": true
+    },
+    {
+      "camera": "B",
+      "width_m": 0.12,
+      "resolvable_ge3px_pixels": 3511,
+      "visible_pixels": 5911,
+      "target_source": "same analytic world circle120m / dash period3m,phase.45m; independent plane oracle only",
+      "plane_is_synthetic_fixture_only": true,
+      "actual_cached_G_s_maps_are_separate": true
+    },
+    {
+      "camera": "B",
+      "width_m": 0.24,
+      "resolvable_ge3px_pixels": 5423,
+      "visible_pixels": 5911,
+      "target_source": "same analytic world circle120m / dash period3m,phase.45m; independent plane oracle only",
+      "plane_is_synthetic_fixture_only": true,
+      "actual_cached_G_s_maps_are_separate": true
+    }
+  ],
+  "native_export_entry": "native_basis_adapter.export_native_basis; current phase blocked before ctx/import",
+  "K_gate": "joint eligible alphaT exactly0; road-only behind-K weight is diagnostic, not a joint K failure",
+  "persistence": "world texture + renderer_mode + scope + geometry reference; no five-view weight cache as world asset",
+  "native_validated": false,
+  "formal_allowed": false,
+  "evidence_boundary": "CPU analytic/synthetic GS coefficient reference only. Current actual G_s geometry cache is geometry-only. No native binary/actual scene renderer/gradient is claimed validated."
+}

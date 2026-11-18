@@ -1,0 +1,84 @@
+{
+  "schema": "T2_HF_CPU_encoding_accounting.v1",
+  "cases": [
+    {
+      "path": "seed_lsmr_r1_b034",
+      "CPU_seconds": 6.016000000061467,
+      "solver_iterations": 1500,
+      "solver_stop_codes": [
+        7,
+        7,
+        7
+      ],
+      "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE"
+    },
+    {
+      "path": "seed_lsmr_r2_b034",
+      "CPU_seconds": 71.20299999997951,
+      "solver_iterations": 15000,
+      "solver_stop_codes": [
+        7,
+        7,
+        7
+      ],
+      "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE"
+    },
+    {
+      "path": "seed_lsmr_r3_continuous_b034",
+      "CPU_seconds": 66.07799999997951,
+      "solver_iterations": 15000,
+      "solver_stop_codes": [
+        7,
+        7,
+        7
+      ],
+      "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE"
+    },
+    {
+      "path": "seed_lsmr_r4_continuous_20k_b034",
+      "CPU_seconds": 124.17200000002049,
+      "solver_iterations": 26145,
+      "solver_stop_codes": [
+        2,
+        2,
+        2
+      ],
+      "status": "T2_EFFECTIVE_SEED_NOT_READY_DO_NOT_SCHEDULE"
+    },
+    {
+      "path": "seed_r5_nodal_b034",
+      "CPU_seconds": 77.78099999995902,
+      "solver_iterations": 16449,
+      "solver_stop_codes": [
+        2,
+        2,
+        2
+      ],
+      "status": "CPU_PARTIAL_PROJECTED_INITIALIZATION_ONLY"
+    }
+  ],
+  "total_Krylov_iterations": 74094,
+  "total_projection_CPU_seconds": 345.25,
+  "original_eroded_candidates_preserved": [
+    "seed_r2_b034",
+    "seed_r3_b034"
+  ],
+  "source_preparation_CPU_seconds": 4.343,
+  "tests_passed": 7,
+  "preparation_failures": [
+    "float32 reduction used unnormalized sum instead of DC mean; checker corrected",
+    "mH dtype/layout roundtrip mismatch corrected before final source",
+    "partial SCP dependency attempt had no input file and zero solver iterations",
+    "first continuous RHS channel-shape error before solver; log preserved"
+  ],
+  "software_semantic_failures_preserved": [
+    "extra any-corner quarter veto introduced unregistered erosion",
+    "extra independent window target differed from fixed nodal H runtime reconstruction"
+  ],
+  "not_scene_or_photo_training": true,
+  "model_training_updates": 0,
+  "new_inference_calls": 0,
+  "native_calls": 0,
+  "GPU_operations": 0,
+  "power_operations": 0
+}

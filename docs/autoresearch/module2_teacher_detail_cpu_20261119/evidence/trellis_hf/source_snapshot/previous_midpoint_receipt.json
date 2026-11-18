@@ -1,0 +1,133 @@
+{
+  "schema": "T2_even_midpoint_physical_Sigma_CPU.v1",
+  "status": "PASS_MIDPOINT_CPU_QUALIFICATION",
+  "rows": 541,
+  "fixed_selection_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/quadrature_audit_r1/selected_rows.npz",
+  "eligible_filter_applied": false,
+  "core_step_upper_m": 0.0025,
+  "boundary_step_upper_m": 0.00125,
+  "reference_step_upper_m": 0.000625,
+  "radius_policy": "worldXY axis-aligned box halfwidth=5*sqrt(maxeig(physical Sigma)); even N=ceil(2R/step) rounded up to even, actual h=2R/N; no point on center zero axis",
+  "weights": "exp(-.5 delta^T Sigma^-1 delta)*cellarea/(2pi sqrt(detSigma)); same source-valid/geometry normalized numerator and denominator",
+  "probability_tail_upper_bound_outside_box": 1.1466062875167784e-06,
+  "tail_bound_role": "probability bound only; does not bound source-normalized RGB at vanishing material mass",
+  "copied_same_A0_rows": 78,
+  "density_mass_min_max": [
+    0.9999988649137802,
+    0.9999999158511164
+  ],
+  "comparisons": {
+    "rows": 541,
+    "mean": 2.3359325588490926e-05,
+    "absRGB_p99": 0.00039136495260845864,
+    "rowmax_p99": 0.00046988408835993434,
+    "maximum": 0.001375128747056864,
+    "p99_gate_1code": true,
+    "max_gate_4code": true,
+    "valid_mass_abs_max": 0.0005130116969649379
+  },
+  "strata": {
+    "core": {
+      "rows": 128,
+      "mean": 3.0271787089321066e-05,
+      "absRGB_p99": 0.00024276593267926288,
+      "rowmax_p99": 0.0003693248010501371,
+      "maximum": 0.0004719002328135158,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    },
+    "boundary": {
+      "rows": 128,
+      "mean": 1.3070439036728747e-05,
+      "absRGB_p99": 0.00018511359961970297,
+      "rowmax_p99": 0.00030933829020526513,
+      "maximum": 0.0004668598716795619,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    },
+    "actual_maxSigma": {
+      "rows": 96,
+      "mean": 1.1774048225575236e-05,
+      "absRGB_p99": 6.723357751667212e-05,
+      "rowmax_p99": 7.30997084173845e-05,
+      "maximum": 9.289684934910003e-05,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    },
+    "low_mass": {
+      "rows": 64,
+      "mean": 7.547096735553097e-05,
+      "absRGB_p99": 0.0010743562035032378,
+      "rowmax_p99": 0.0011692932545722577,
+      "maximum": 0.001375128747056864,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    },
+    "global_observed_paint_A0_only": {
+      "rows": 64,
+      "mean": 0.0,
+      "absRGB_p99": 0.0,
+      "rowmax_p99": 0.0,
+      "maximum": 0.0,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    },
+    "actual_S_visible": {
+      "rows": 64,
+      "mean": 1.8310625101391625e-05,
+      "absRGB_p99": 0.00012707794814468323,
+      "rowmax_p99": 0.00015909021132953205,
+      "maximum": 0.00021496324280245727,
+      "p99_gate_1code": true,
+      "max_gate_4code": true
+    }
+  },
+  "material_mass_strata": {
+    "below09": {
+      "rows": 62,
+      "error": {
+        "rows": 62,
+        "mean": 7.976238161379994e-05,
+        "absRGB_p99": 0.0010916565104300323,
+        "rowmax_p99": 0.0011758277146511349,
+        "maximum": 0.001375128747056864,
+        "p99_gate_1code": true,
+        "max_gate_4code": true
+      }
+    },
+    "atleast09": {
+      "rows": 479,
+      "error": {
+        "rows": 479,
+        "mean": 1.6058721259536523e-05,
+        "absRGB_p99": 0.00019840337123940062,
+        "rowmax_p99": 0.00023892583822304877,
+        "maximum": 0.0004719002328135158,
+        "p99_gate_1code": true,
+        "max_gate_4code": true
+      }
+    }
+  },
+  "A0_delta_vs_cached_GH15_on_noncopied": {
+    "rows": 463,
+    "mean": 0.0002795997253270424,
+    "absRGB_p99": 0.00355500048262562,
+    "rowmax_p99": 0.003968179114595186,
+    "maximum": 0.005227767814059647,
+    "p99_gate_1code": false,
+    "max_gate_4code": true
+  },
+  "source_mesh_or_texture_modified": false,
+  "geometry_opacity_Sigma_active_modified": false,
+  "hard_patch_width_unchanged": true,
+  "no_feather_or_visual_tuning": true,
+  "authoritative_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/trellis2/world_prior_r1",
+  "plan_sha256": "186c00bebaf63a56634e5b293cb0a3a500a795b9aefbc9135be3c053621903a9",
+  "runtime_write_mask_not_applied": true,
+  "new_inference_calls": 0,
+  "GPU_operations": 0,
+  "optimizer_updates": 0,
+  "workers": 4,
+  "seconds": 25.38226438872516,
+  "human_verdict": null
+}

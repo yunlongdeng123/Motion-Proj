@@ -1,0 +1,53 @@
+{
+  "status": "NO_NEW_DEMONSTRATED_UV_COLOR_SCALE_ALPHA_BUG",
+  "checks": {
+    "mesh_uv_source.npz": true,
+    "basecolor_rgba.png": true,
+    "fixed_face_vertex_identity": true,
+    "fixed_world_vertices_exact": true,
+    "fixed_faces_exact": true,
+    "previous_official_UV_exporter_checks": true,
+    "previous_fixed_midpoint_qualification": true
+  },
+  "source_sha256": {
+    "mesh_uv_source.npz": "cfe3c85100d3381d0fa5910ee1c9de04ddc305006f19588e3972a3cb6443ee54",
+    "basecolor_rgba.png": "1e441d6453804a4158464f34b576e55c77b9a311859be91fc275a2435092c045",
+    "fixed_geometry.npz": "a805261acf1cd88641415b5770b10193950c4c2108d59ffb8e5e123f8f739534",
+    "transforms.json": "401a4be5cafe4ffe9c9b06fd0748d79bb28d430c5453d51e4b17bba853b2b79e"
+  },
+  "geometry_identity_max_m": 5.272079354863696e-08,
+  "raw_PNG_RGB_mean": [
+    0.5065846312265745,
+    0.3925678365407148,
+    0.30748920440269534
+  ],
+  "raw_PNG_alpha_min_mean_max": [
+    0.9921568627450981,
+    0.999415274227367,
+    1.0
+  ],
+  "physical_mesh_UV_extent_m": [
+    [
+      -1.2710317939801021,
+      -1.271291403214585
+    ],
+    [
+      1.2701568323994656,
+      1.2720075978355319
+    ]
+  ],
+  "fixed_mean_plane_height_deviation_m": [
+    -0.15246245527252386,
+    0.1524624552725302
+  ],
+  "limitations": [
+    "baseColor direct native sRGB prior is not identified intrinsic albedo/radiance",
+    "gray unknown reference conditioning can affect generated style; no causal attribution claimed",
+    "original GH hard-boundary numerical failure was real and already repaired; fixed midpoint check is sample-scoped",
+    "2.56m is nominal patch footprint; actual mesh center-to-center span is recorded; mean-plane metric is not geodesic"
+  ],
+  "generated_alpha_changes_opacity": false,
+  "new_inference_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_operations": 0
+}

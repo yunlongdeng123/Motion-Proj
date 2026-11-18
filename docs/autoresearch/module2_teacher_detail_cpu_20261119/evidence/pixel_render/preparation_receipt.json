@@ -1,0 +1,299 @@
+{
+  "schema": "teacher_detail_pixel_render_CPU_preparation.v1",
+  "status": "CPU_PREPARED_GPU_BLOCKED",
+  "CPU_core_ready": true,
+  "native_feature_export_source_ready": true,
+  "actual_native_basis_prepared": false,
+  "actual_native_binary_or_adjoint_validated": false,
+  "actual_preclamp_binary_validated": false,
+  "CPU_actual_pixel_filter_qualified": true,
+  "uncapped_compiled_cache_ready": true,
+  "GPU_ready": false,
+  "native_smoke_authorized": false,
+  "formal_allowed": false,
+  "automatic_queue": false,
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "inference_calls": 0,
+  "power_actions": 0,
+  "common_Hbound": 0.34,
+  "common_low_bound": 0.3,
+  "source_ledger": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/final_r1/teacher_evidence.npz",
+  "bound_recipe": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/protocol/bound_recipe.json",
+  "true_G_s_maps": {
+    "remote": "Q/pixel_render/maps/{raw:03d}.npz",
+    "frames": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "fixed_D": 38416,
+    "exact_D": 38198,
+    "fallback_D": 218,
+    "train_domain_coverage": {
+      "A": {
+        "total": 16904,
+        "exact": 16904,
+        "fallback": 0,
+        "miss": 0
+      },
+      "C": {
+        "total": 10830,
+        "exact": 10830,
+        "fallback": 0,
+        "miss": 0
+      },
+      "S": {
+        "total": 3131,
+        "exact": 3131,
+        "fallback": 0,
+        "miss": 0
+      },
+      "fullS": {
+        "total": 3187,
+        "exact": 3187,
+        "fallback": 0,
+        "miss": 0
+      }
+    },
+    "teacher_or_baseline_RGB_read_as_input": false,
+    "real_map_uses_fitted_plane": false,
+    "fallback": "original eligible native averaged-color contribution, not fitted-plane geometry",
+    "XYZ_triangle_reconstruction_max": 0.0,
+    "ray_triangle_hit_max_m": 1.9726940081454813e-08,
+    "chart_UV_spotcheck_max": 3.745981302927248e-11
+  },
+  "CPU_tests": {
+    "passed": 10,
+    "failures": 0,
+    "errors": 0,
+    "runtime_parity": {
+      "color_max": 1.4837314710192118e-08,
+      "high_gradient_max": 7.2794310371215865e-09,
+      "low_gradient_max": 5.8792872459356715e-08,
+      "CPU_reference_dtype": "float64",
+      "runtime_parameter_dtype": "float32",
+      "high_bound": 0.34,
+      "GPU_executed": false
+    }
+  },
+  "ideal_oracle": [
+    {
+      "width_m": 0.12,
+      "period_phase": "1D crosspaint only; curve/dashes separate camera oracle",
+      "projected_width_pixels": 24.0,
+      "CPU_fixture_sigma_m": 0.02,
+      "average_MAE": 0.043353759219051324,
+      "pixel_MAE": 2.3033672710065487e-18,
+      "average_core_contrast": 0.9266536368305675,
+      "pixel_core_contrast": 1.0000000000000002,
+      "native_scene_result": false,
+      "geometry_role": "synthetic fixed1D weights; not actual P Gaussian packet",
+      "target_source": "closed-form independent world top-hat pixelbox area; Gaussian ci uses analytic normal CDF, no GS self target"
+    },
+    {
+      "width_m": 0.24,
+      "period_phase": "1D crosspaint only; curve/dashes separate camera oracle",
+      "projected_width_pixels": 48.0,
+      "CPU_fixture_sigma_m": 0.02,
+      "average_MAE": 0.04335388426534523,
+      "pixel_MAE": 5.067407996214407e-18,
+      "average_core_contrast": 0.9976075338413708,
+      "pixel_core_contrast": 0.9999999999999998,
+      "native_scene_result": false,
+      "geometry_role": "synthetic fixed1D weights; not actual P Gaussian packet",
+      "target_source": "closed-form independent world top-hat pixelbox area; Gaussian ci uses analytic normal CDF, no GS self target"
+    }
+  ],
+  "alias": {
+    "point_RMSE": 0.2151188526038695,
+    "pixel_RMSE": 0.0009855987640065454,
+    "sample_axis": 12,
+    "sampling_qualified": true,
+    "target": "analytic box integral of world cosine, not GS output"
+  },
+  "ideal_boundary": "analytic synthetic fixed-weight fixtures only; not actual P/native renderer, not a real-road GT or representation-limit proof",
+  "sampler": {
+    "current": "uncapped local pixel-UV box; independent nx/ny; sparse fixed material read",
+    "equation": "B+KL*L+KH*H, valid/mH separately bilinear; H nonlinear grid construction retained",
+    "density": 2.0,
+    "compiled_pixels": 122604,
+    "compiled_samples": 6093288,
+    "CPU_compile_seconds": 138.93226365372539,
+    "cache_bytes": 30675050,
+    "cache_files": 28,
+    "cache_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1",
+    "dense2x_selected_pixels": 48,
+    "dense2x_RGB_p99": 0.0013108103269156013,
+    "dense2x_RGB_max": 0.0013475960000019493,
+    "cached_read_vs_existing_dense_RGB_max": 1.8096635301390052e-14,
+    "cached_read_mass_max": 2.220446049250313e-16,
+    "historical_cap16_unqualified": {
+      "A": 535,
+      "C": 1629,
+      "S": 88
+    },
+    "no_supervision_domain_shrunk": true,
+    "qualification_boundary": "representative density2vs4 refinement plus exactness to fixed quadrature; not a global integration theorem. Native binary/CUDA sparse/reload still untested."
+  },
+  "material_floor": {
+    "A_full": 16904,
+    "A_source_mass_zero": 7,
+    "A_qualified_world_material": 16897,
+    "C10830_S3131_fullS3187_source_mass_zero": 0,
+    "action": "original eligible ci fallback; fullA loss denominator unchanged",
+    "future_gate": "actual We/gradient/error share of these7 in GPU smoke; no commonbase/scope modification",
+    "IDs": [
+      {
+        "raw": 86,
+        "pixel": 112164,
+        "y": 233,
+        "x": 324,
+        "center_uv": [
+          374.5153596733041,
+          7.818108735199134
+        ],
+        "original_road_alpha": 0.9998968243598938,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 86,
+        "pixel": 95788,
+        "y": 199,
+        "x": 268,
+        "center_uv": [
+          1330.4674814468865,
+          47.39148381358861
+        ],
+        "original_road_alpha": 0.9998964667320251,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 110,
+        "pixel": 118901,
+        "y": 247,
+        "x": 341,
+        "center_uv": [
+          356.06449916903824,
+          8.931827818799723
+        ],
+        "original_road_alpha": 0.9998816251754761,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 110,
+        "pixel": 102057,
+        "y": 212,
+        "x": 297,
+        "center_uv": [
+          949.415055255862,
+          2.1966198058305166
+        ],
+        "original_road_alpha": 0.9997499585151672,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 110,
+        "pixel": 118902,
+        "y": 247,
+        "x": 342,
+        "center_uv": [
+          358.76991779528896,
+          7.028921946725548
+        ],
+        "original_road_alpha": 0.9998995661735535,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 110,
+        "pixel": 118903,
+        "y": 247,
+        "x": 343,
+        "center_uv": [
+          361.6279109715712,
+          5.084975695538715
+        ],
+        "original_road_alpha": 0.9998615384101868,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      },
+      {
+        "raw": 110,
+        "pixel": 103017,
+        "y": 214,
+        "x": 297,
+        "center_uv": [
+          870.9053807213755,
+          11.035201606114285
+        ],
+        "original_road_alpha": 0.9701104760169983,
+        "material_mass": 0.0,
+        "action": "original eligible ci fallback; fullA denominator retained",
+        "actual_eligible_native_weight": "not yet exported"
+      }
+    ]
+  },
+  "contribution_contract": {
+    "scope": "explicit active subset; final candidate qualification not assumed",
+    "road_weight": "eligible native road-only alphaT",
+    "joint_weight": "eligible full-scene same-sort alphaT",
+    "readonly": "all other road and nonroad RGB remain original",
+    "joint_K": "W_e[K] exactly0; never pixel-copy protected joint output",
+    "road_only_K": "may contain road behind protected actors; diagnostic, not joint-protectionfailure",
+    "exactness": "conditional on shared pixel material/color for eligible fragments, preclamp native RGB and fixedgeometry; not a physical subpixelvisibility integral theorem"
+  },
+  "persistence": {
+    "renderer_mode": "eligible_native_weights_pixel_world",
+    "authority": "world texture + scope + geometry/source references",
+    "baked_average_RGB_is_not_pixel_asset": true,
+    "five_view_W_is_derived_cache": true,
+    "new_camera_or_edit": "regenerate native contribution and true G_s map, requalify protection; stale basis rejected in CPUfixture"
+  },
+  "next_GPU_smoke": [
+    "explicit new user/root authorization and lease",
+    "native constantfield/RGBunitbasis + actual same-sort decomposition",
+    "joint K and readonly/source/geometry exact safeguards",
+    "actual CUDA sparse/native colour + current field pixel integration checks",
+    "about10min save/eval/fullstate restore/nextstage/authoritative pixelworld asset reload"
+  ],
+  "evidence": [
+    "validation/cpu_acceptance.json",
+    "validation/pytest.xml",
+    "actual_geometry_evidence/maps_receipt.json",
+    "actual_geometry_evidence/training_domain_coverage.json",
+    "actual_geometry_evidence/footprint_budget.json",
+    "actual_geometry_evidence/final_ledger_adapter.json",
+    "actual_geometry_evidence/compiled_pixel_operator.json",
+    "actual_geometry_evidence/compiled_pixel_verification.json",
+    "actual_geometry_evidence/pixel_numeric_refinement.json",
+    "actual_geometry_evidence/cache_bytes.json"
+  ],
+  "owned_sources": [
+    "pixel_world_material.py",
+    "native_basis_adapter.py",
+    "prepare_cached_maps.py",
+    "test_pixel_render_cpu.py",
+    "run_cpu_evidence.py",
+    "assemble_preparation.py",
+    "pixel_quadrature_stream.py",
+    "audit_pixel_quadrature_cpu.py",
+    "compile_pixel_reads_cpu.py",
+    "verify_compiled_pixel_reads_cpu.py"
+  ],
+  "human_verdict": null,
+  "production_promoted": false
+}

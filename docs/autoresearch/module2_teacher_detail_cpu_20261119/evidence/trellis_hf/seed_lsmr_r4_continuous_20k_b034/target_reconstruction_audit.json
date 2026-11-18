@@ -1,0 +1,73 @@
+{
+  "schema": "T2_HF_target_node_vs_query_reconstruction_diagnostic.v1",
+  "no_solver_or_objective_change": true,
+  "seed_sha256": "13b40321aa2ae3a2a849bb3ffc62a3d65f562a372423a4aedbcc9bd55a29dd0b",
+  "node_r4_vs_frozen_target": {
+    "samples": 7609,
+    "target_RMS": 0.004393997161587148,
+    "actual_RMS": 0.0033561767157312735,
+    "RMSE": 0.00248018848204916,
+    "abs_max": 0.014348533595298611,
+    "cosine": 0.8279564326716176,
+    "energy_ratio": 0.583404931687188,
+    "explained": 0.6813970237008282
+  },
+  "quarter_r4_vs_old_separate_window_target": {
+    "samples": 36128,
+    "target_RMS": 0.003885317885980469,
+    "actual_RMS": 0.002844525791816818,
+    "RMSE": 0.0021369897803806214,
+    "abs_max": 0.013416382539728272,
+    "cosine": 0.8424035118018652,
+    "energy_ratio": 0.5360022801233557,
+    "explained": 0.6974816132197882
+  },
+  "quarter_r4_vs_nodal_reconstructed_target": {
+    "samples": 36128,
+    "target_RMS": 0.003886063606203556,
+    "actual_RMS": 0.002844525791816818,
+    "RMSE": 0.002151340268993621,
+    "abs_max": 0.013416382495652312,
+    "cosine": 0.8397204034937913,
+    "energy_ratio": 0.53579658642956,
+    "explained": 0.6935226361584803
+  },
+  "old_quarter_vs_nodal_target": {
+    "samples": 36128,
+    "target_RMS": 0.003886063606203556,
+    "actual_RMS": 0.003885317885980469,
+    "RMSE": 0.00010920054233282215,
+    "abs_max": 0.0010964975950457736,
+    "cosine": 0.9996051220536512,
+    "energy_ratio": 0.99961624474107,
+    "explained": 0.9992103588342438
+  },
+  "mixed_old_vs_nodal_target": {
+    "samples": 11380,
+    "target_RMS": 0.00031437279525715407,
+    "actual_RMS": 0.00035270463627885227,
+    "RMSE": 9.985764694051328e-05,
+    "abs_max": 0.00043881640354037307,
+    "cosine": 0.9616605217831055,
+    "energy_ratio": 1.2587295379396592,
+    "explained": 0.8991042802302194
+  },
+  "core_old_vs_nodal_target": {
+    "samples": 24748,
+    "target_RMS": 0.004690441411045945,
+    "actual_RMS": 0.004688285652261345,
+    "RMSE": 0.00011323829953316603,
+    "abs_max": 0.0010964975950457736,
+    "cosine": 0.9997085450229505,
+    "energy_ratio": 0.9990809976311293,
+    "explained": 0.9994171467168677
+  },
+  "frozen_node_source_mean_or_permission_changed": false,
+  "actual_runtime": "bilinear(common_mH) * bilinear(unmodulated_H)",
+  "actual_target_old": "bilinear(prior_window) * bilinear(HF_source)",
+  "nodal_target_definition": "target_i fixed; target_unmodulated_i=target_i/common_mH_i (0 at zero gate); same runtime reconstruction",
+  "conclusion": "Separate prior-window interpolation is a different higher-order field from reconstructing the frozen nodal H target. This diagnostic does not attribute all projection error to it.",
+  "GPU_operations": 0,
+  "new_inference_calls": 0,
+  "optimizer_updates": 0
+}
