@@ -1,0 +1,18 @@
+{
+  "schema": "fixed_ROI_timing_erratum.v1",
+  "ROI_rule": "old frozen masks/teacher only; never formal render driven",
+  "formal_completed_UTC": "2026-11-18T18:56:19.302049+00:00",
+  "ROI_file_UTC": "2026-11-18T18:56:30.366155+00:00",
+  "first_persisted_formal_metric": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/results_r1/M00/metrics.json",
+    "mtime_UTC": "2026-11-18T18:58:10.835075+00:00"
+  },
+  "exact_first_file_open_timestamp": "not separately instrumented",
+  "selection_evidence": "prepare_evaluation.py ROI code reads only prior target masks/RGB, basis and camera maps; no formal_r1 packet read",
+  "correction": "Original frozen_r2 before-output wording means before evaluator result inspection, not before GPU output production. This erratum corrects timing only.",
+  "original_manifest_SHA256": "c1b580d95bf0af548e9601c06549ae1caa76f885c0bb82f8760f20515545fe48",
+  "original_ROIs_SHA256": "eb7defd985d608729378359704e22cd271248016361397de117c2e49654d97fb",
+  "mask_or_bbox_changed": false,
+  "scientific_result_changed": false,
+  "M12_ROIs": "same unchanged frozen_r2"
+}

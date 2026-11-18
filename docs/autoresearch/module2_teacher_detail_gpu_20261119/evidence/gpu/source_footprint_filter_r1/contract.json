@@ -1,0 +1,22 @@
+{
+  "schema": "source_footprint_world_H_zero_update_diagnostic.v1",
+  "source_arm": "M11",
+  "source_stage": "C800",
+  "training_updates": 0,
+  "source_masks": "frozen teacher C union S, raw86/110",
+  "source_pixel_samples": 13961,
+  "sigma_uv": [
+    0.8225284847010147,
+    0.29998550363258897
+  ],
+  "nominal_sigma_m": [
+    0.016450569694020294,
+    0.00599971007265178
+  ],
+  "filter": "diagonal Gaussian matching median source-pixel-box per-axis second moments; spatially constant diagnostic approximation",
+  "formula": "sigma_axis=median(sqrt(sum_pixelaxes J_uv[axis,:]^2 / 12))",
+  "one_recipe_no_parameter_sweep": true,
+  "chosen_before_reading_filtered_outputs": true,
+  "L_A0_mH_geometry_coverage_readonly_unchanged": true,
+  "limitation": "Ignores off-diagonal/spatial variation. Zero-update filtering control, not a trained method or a representation upper-limit test."
+}

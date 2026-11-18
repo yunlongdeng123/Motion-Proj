@@ -1,0 +1,2875 @@
+{
+  "schema": "ideal_native_reader_control.v1",
+  "completed": true,
+  "scientific_training_updates": 0,
+  "reference": "Old independent ideal world function, actual canonical G_s, same 12/24cm world width/phase and native sRGB. Current source grid is 2cm; independent pixel-center truth is not GS self-rendered.",
+  "role": "Zero-update synthetic reader/filter control, not actual-data quality, not optimization/representation upper-bound certificate.",
+  "fixed_D_color_pixels": 37206,
+  "fixed_D_full_pixels": 38416,
+  "source_filter": "Common valid normalization; GH31 average across fixed world covariance then true native per-GS RGB raster. Pixel uses cached true G_s and uncapped anisotropic pixel-box, followed by actual road/joint eligible unit weights.",
+  "comparison": "Native paint minus native no-paint asphalt versus matching pixel delta. Details use delta/actual eligible weight only for diagnosis, with zero-weight pixels reported and kept in fixed domain; no training unpremultiplication.",
+  "sampling_convention": "Independent center-sample target retained. Pixel-box and 2cm bilinear source may attenuate near-3px paint; this is reported, not a hidden changed GT.",
+  "numerical_identity": "Native basis was separately tested with actual constant/unit color passes, max direct-readonly reconstruction 9.5367e-7; no bitexact claim.",
+  "metrics": [
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.041191986644511694,
+        "MAE": 0.0070350471371474045
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.6751440934721814,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 0.8974358974358975,
+        "edge_recall": 0.9444444444444444,
+        "edge_F1": 0.9203402938901778,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.434198255749955,
+        "contrast_retention": 0.5453307359662191,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.013954791514777269,
+        "MAE": 0.0017550787962810053
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.891213633853484,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.1729456069599143,
+        "contrast_retention": 0.8804205030652538,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.01034255624183069,
+        "MAE": 0.0010179353212896505
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.9526629712649293,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.11803325670612484,
+        "contrast_retention": 0.943826122667883,
+        "passed": true
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.0590756184195755,
+        "MAE": 0.010618169801956817
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.8166761653974298,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 0.8032786885245902,
+        "edge_recall": 0.94,
+        "edge_F1": 0.8662779763024262,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.4993978902318836,
+        "contrast_retention": 0.7103399441818431,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.014885909770562769,
+        "MAE": 0.0020279711019087193
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.9394028871417496,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.2541060587036318,
+        "contrast_retention": 0.9385780410042894,
+        "passed": true
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.0076612000494225806,
+        "MAE": 0.0006926956810666625
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 68,
+      "eligible_weight_mean_in_D": 0.9514445259899402,
+      "increment_projection_gain": 0.9879539997059242,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.11258480067878353,
+        "contrast_retention": 0.9887565598474773,
+        "passed": true
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.03426607234377202,
+        "MAE": 0.005366107612177557
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.6708441291040651,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 0.8918918918918919,
+        "edge_recall": 0.9444444444444444,
+        "edge_F1": 0.9174161896974652,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.4350220059907508,
+        "contrast_retention": 0.5636806446172125,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.011215994688170165,
+        "MAE": 0.001309396491178836
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.8979905380659526,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.1829041484369974,
+        "contrast_retention": 0.8807923380832263,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.009118753342589237,
+        "MAE": 0.0008469546850540019
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.9472887391664069,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.11803325670612484,
+        "contrast_retention": 0.9439295084828772,
+        "passed": true
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.0492983439835701,
+        "MAE": 0.008129756404562708
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.8187991161683786,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 0.7931034482758621,
+        "edge_recall": 0.94,
+        "edge_F1": 0.8603263032232391,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.5004450502002102,
+        "contrast_retention": 0.7119014629612427,
+        "passed": false
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.010718447805273977,
+        "MAE": 0.0013881089090637376
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.9512611622651549,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.29816298780258965,
+        "contrast_retention": 0.9283071951298318,
+        "passed": true
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 3642,
+        "RMSE": 0.0063575791653732085,
+        "MAE": 0.0005384613269837699
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 110,
+      "eligible_weight_mean_in_D": 0.840583885947233,
+      "increment_projection_gain": 0.9872316507499275,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 86,
+        "detail_pixels": 596,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.12316328438272758,
+        "contrast_retention": 0.9721608348582078,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.034646733555607316,
+        "MAE": 0.005890436919660416
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.7746640533807212,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 0.9482758620689655,
+        "edge_recall": 1.0,
+        "edge_F1": 0.9734513274336283,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.5881551365991262,
+        "contrast_retention": 0.6823981402876551,
+        "passed": false
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.01137256477709524,
+        "MAE": 0.0014245525381225044
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.9368832571842307,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.18939521407650356,
+        "contrast_retention": 0.9223044540951345,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.009680616507804008,
+        "MAE": 0.000975767971715536
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.962659232544358,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.05943556688442293,
+        "contrast_retention": 0.9507291117823661,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.04678311525494206,
+        "MAE": 0.008031608232481372
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.8806156787242664,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 0.9285714285714286,
+        "edge_recall": 0.9871794871794872,
+        "edge_F1": 0.9569789674952199,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.8494973356145787,
+        "contrast_retention": 0.8054236728506123,
+        "passed": false
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.01229940404634268,
+        "MAE": 0.0016150764454009657
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.965507592078284,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.15023497026403781,
+        "contrast_retention": 0.9565881921220056,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.009410314051659685,
+        "MAE": 0.0009114076532938605
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 77,
+      "eligible_weight_mean_in_D": 0.9577681273128582,
+      "increment_projection_gain": 0.9801827539279899,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.05962569838225217,
+        "contrast_retention": 0.9758035683591205,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.030506817247779025,
+        "MAE": 0.004811346669836415
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.7836987177999616,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 0.9433962264150944,
+        "edge_recall": 0.9818181818181818,
+        "edge_F1": 0.9622238061297221,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.588301622980996,
+        "contrast_retention": 0.6731063057247568,
+        "passed": false
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.01042104372442986,
+        "MAE": 0.0012050204583009898
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.9360946151406787,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 1.0,
+        "edge_recall": 0.9818181818181818,
+        "edge_F1": 0.9908256880733944,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.6664216239464299,
+        "contrast_retention": 0.9014021151780642,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.009242769004388548,
+        "MAE": 0.0008906225957982511
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.9556599106930965,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 1.0,
+        "edge_recall": 0.9818181818181818,
+        "edge_F1": 0.9908256880733944,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4885201532826412,
+        "contrast_retention": 0.9259517171541584,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.040580134139782766,
+        "MAE": 0.006449106372742406
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.8883579279242456,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 0.9390243902439024,
+        "edge_recall": 0.9871794871794872,
+        "edge_F1": 0.9625,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.8498509422660288,
+        "contrast_retention": 0.7957889689622332,
+        "passed": false
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.011210855717882618,
+        "MAE": 0.0013506055200169548
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.9655876812798591,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.48560282006065936,
+        "contrast_retention": 0.9372819734799559,
+        "passed": true
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 7246,
+        "RMSE": 0.008945290986506305,
+        "MAE": 0.0008273463233997725
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 164,
+      "eligible_weight_mean_in_D": 0.8815046097103925,
+      "increment_projection_gain": 0.9783453393215762,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 110,
+        "detail_pixels": 1263,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.3799886775044309,
+        "contrast_retention": 0.9536893828130294,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.030535319195743656,
+        "MAE": 0.004931110181934855
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.8063874438713261,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 0.9259259259259259,
+        "edge_recall": 0.9107142857142857,
+        "edge_F1": 0.9182571119913576,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.431312617598837,
+        "contrast_retention": 0.7327424092300835,
+        "passed": false
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.010471276017514379,
+        "MAE": 0.0012417843321329085
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.9505598218566633,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.21443751875926434,
+        "contrast_retention": 0.9423665103859249,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.009504308558087274,
+        "MAE": 0.000995356796802804
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.9610988213079832,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.08519164909620217,
+        "contrast_retention": 0.9556283494140388,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.039729152123470626,
+        "MAE": 0.00663948493895834
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.8912197242362243,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 0.8947368421052632,
+        "edge_recall": 0.8271604938271605,
+        "edge_F1": 0.859622641509434,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.3093839212752996,
+        "contrast_retention": 0.8445384847153696,
+        "passed": false
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.010933726119358335,
+        "MAE": 0.0013795972214478707
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.9761189013745228,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.17467396605780094,
+        "contrast_retention": 0.9714355198900624,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.00923224013113573,
+        "MAE": 0.0009398692990749838
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 114,
+      "eligible_weight_mean_in_D": 0.9507362222745164,
+      "increment_projection_gain": 0.9844583892276904,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.09971104374424586,
+        "contrast_retention": 0.9822716537592572,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.026343348869707347,
+        "MAE": 0.003928912407465432
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.815796000413653,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 0.9622641509433962,
+        "edge_recall": 0.9107142857142857,
+        "edge_F1": 0.9357798165137615,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.7888126714635056,
+        "contrast_retention": 0.725147667602052,
+        "passed": false
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.008736458580788994,
+        "MAE": 0.0009825873741301503
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.9531611268962067,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.39346597336327355,
+        "contrast_retention": 0.9213369929319504,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.008241859369245385,
+        "MAE": 0.0008202853717283745
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.9642555971581529,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4542847601072031,
+        "contrast_retention": 0.9326675602174382,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.033259163705275215,
+        "MAE": 0.0051587921367727925
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.8951951580214942,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 0.9375,
+        "edge_recall": 0.9012345679012346,
+        "edge_F1": 0.9190096516995384,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.9171063283807841,
+        "contrast_retention": 0.8384065847081207,
+        "passed": false
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.009322496573090396,
+        "MAE": 0.0010805286584153685
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.9761531788961476,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.3177852124304777,
+        "contrast_retention": 0.9554285178961053,
+        "passed": true
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8246,
+        "RMSE": 0.008688082545638064,
+        "MAE": 0.0008337430836378389
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 203,
+      "eligible_weight_mean_in_D": 0.8843038465295896,
+      "increment_projection_gain": 0.982840539800959,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 134,
+        "detail_pixels": 1414,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.34065296493646197,
+        "contrast_retention": 0.9643535615250491,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.03254040638573447,
+        "MAE": 0.005509514182625158
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.8002036734040024,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.8870967741935484,
+        "edge_recall": 0.9322033898305084,
+        "edge_F1": 0.9090909090909092,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 2.503096329049706,
+        "contrast_retention": 0.7075398699692587,
+        "passed": false
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.011158720211021614,
+        "MAE": 0.0014056919928795836
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.9404677532753158,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.9827586206896551,
+        "edge_recall": 0.9830508474576272,
+        "edge_F1": 0.9829047123532034,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.15772213486932676,
+        "contrast_retention": 0.9331357576744335,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.009957125248503925,
+        "MAE": 0.001080603827094898
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.9574683318762265,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.9830508474576272,
+        "edge_recall": 0.9830508474576272,
+        "edge_F1": 0.9830508474576272,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.12801742789676962,
+        "contrast_retention": 0.9528283629664586,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.04404851984526311,
+        "MAE": 0.007695692905530345
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.8966308698743601,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 0.898989898989899,
+        "edge_recall": 0.9239130434782609,
+        "edge_F1": 0.9112810937782329,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 2.095753990580888,
+        "contrast_retention": 0.8303897139434465,
+        "passed": false
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.012534818251925229,
+        "MAE": 0.0017419947377370437
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.965128662739623,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.20558243720408936,
+        "contrast_retention": 0.961956982843804,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.010276622600151747,
+        "MAE": 0.0011077549102839258
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 99,
+      "eligible_weight_mean_in_D": 0.9581523533255347,
+      "increment_projection_gain": 0.9812839460277278,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.07275480517620603,
+        "contrast_retention": 0.9789503073987211,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.02879602875293487,
+        "MAE": 0.004600963784847637
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.8124846684301864,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.896551724137931,
+        "edge_recall": 0.9322033898305084,
+        "edge_F1": 0.9140300415468201,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 2.503295074809778,
+        "contrast_retention": 0.6976458011940613,
+        "passed": false
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.009777315887063156,
+        "MAE": 0.0011647835103736693
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.9453667572981431,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.9824561403508771,
+        "edge_recall": 0.9830508474576272,
+        "edge_F1": 0.9827534039334342,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.5144912368518889,
+        "contrast_retention": 0.9181615433426599,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.008948171429152305,
+        "MAE": 0.0009177993577424811
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.9589810229396079,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 0.9821428571428571,
+        "edge_recall": 0.9830508474576272,
+        "edge_F1": 0.982596642538118,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4457123160622549,
+        "contrast_retention": 0.9328021315825609,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.03861458643949139,
+        "MAE": 0.0064103810480610965
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.9053798445876301,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 0.8969072164948454,
+        "edge_recall": 0.9239130434782609,
+        "edge_F1": 0.9102098590682504,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 2.096087184058727,
+        "contrast_retention": 0.8186277610496061,
+        "passed": false
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.011044242428718896,
+        "MAE": 0.0014457125557551407
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.9687025704137487,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.5174734480675374,
+        "contrast_retention": 0.947717385478734,
+        "passed": true
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 8908,
+        "RMSE": 0.009827153055040443,
+        "MAE": 0.0010078512527669562
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 197,
+      "eligible_weight_mean_in_D": 0.88869229446889,
+      "increment_projection_gain": 0.9794544860818257,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 179,
+        "detail_pixels": 1673,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.39876698581190934,
+        "contrast_retention": 0.9607985650042646,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.033013039224147035,
+        "MAE": 0.005761621500679221
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.7980283838759069,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9420289855072463,
+        "edge_recall": 0.9393939393939394,
+        "edge_F1": 0.9407096171802054,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.6609478688489296,
+        "contrast_retention": 0.7061486895454415,
+        "passed": false
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.011251361318732642,
+        "MAE": 0.0014381592508518465
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.9422959889108365,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9848484848484849,
+        "edge_recall": 1.0,
+        "edge_F1": 0.9923664122137404,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.08807212472288552,
+        "contrast_retention": 0.9353413277756921,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.010234123095596782,
+        "MAE": 0.0011393756817143145
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.9577077460351534,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9850746268656716,
+        "edge_recall": 1.0,
+        "edge_F1": 0.9924812030075187,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.06574642484222791,
+        "contrast_retention": 0.9526548845568636,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.0441637413021457,
+        "MAE": 0.007777361036050668
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.9005639977521386,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 0.9259259259259259,
+        "edge_recall": 0.9611650485436893,
+        "edge_F1": 0.943216463414634,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.7273747068670968,
+        "contrast_retention": 0.8380163390293701,
+        "passed": false
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.012297111971157147,
+        "MAE": 0.0017208233052367328
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.9669957750766577,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.1207345369915873,
+        "contrast_retention": 0.96477002573438,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.010381092820376078,
+        "MAE": 0.0011252358290361356
+      },
+      "target_weight": "Actual eligible road alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 100,
+      "eligible_weight_mean_in_D": 0.9571467843501476,
+      "increment_projection_gain": 0.9816402495609432,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.059834115960196936,
+        "contrast_retention": 0.9806972808583637,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.02981812717989592,
+        "MAE": 0.0049058538272851076
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.8049231894965772,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9545454545454546,
+        "edge_recall": 0.9393939393939394,
+        "edge_F1": 0.946909090909091,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.661212427018269,
+        "contrast_retention": 0.6970803320394486,
+        "passed": false
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.010054212529797501,
+        "MAE": 0.0012264333047752288
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.946138333907712,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9846153846153847,
+        "edge_recall": 1.0,
+        "edge_F1": 0.9922480620155039,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4492558953539411,
+        "contrast_retention": 0.919412880477151,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w120",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.009326873417834313,
+        "MAE": 0.0009917585175539616
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.9584309429597138,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 0.9848484848484849,
+        "edge_recall": 1.0,
+        "edge_F1": 0.9923664122137404,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4008988010419598,
+        "contrast_retention": 0.9329013564760116,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "average_GH31",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.03902413053225398,
+        "MAE": 0.006502927045059948
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.9075402638087029,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 0.9333333333333333,
+        "edge_recall": 0.9611650485436893,
+        "edge_F1": 0.9470447557225828,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 1.7277058466502777,
+        "contrast_retention": 0.8339270203519745,
+        "passed": false
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "pixel_box",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.011192762819728074,
+        "MAE": 0.0014637081586126345
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.9700976329356261,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.38927712415419163,
+        "contrast_retention": 0.9539709695424354,
+        "passed": true
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w240",
+      "method": "center_source_grid",
+      "increment_RGB": {
+        "pixels": 9164,
+        "RMSE": 0.009981251522064503,
+        "MAE": 0.001037639340488935
+      },
+      "target_weight": "Actual eligible joint alphaT; readonly asphalt and paint columns subtract exactly in real arithmetic",
+      "target_center_sampling": true,
+      "material_zero_pixels_in_D": 0,
+      "eligible_weight_zero_in_D": 196,
+      "eligible_weight_mean_in_D": 0.889849900575004,
+      "increment_projection_gain": 0.9799109061261077,
+      "fixed_detail_metrics_after_readonly_cancellation": {
+        "raw": 198,
+        "detail_pixels": 1721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.321362571735162,
+        "contrast_retention": 0.9673261502947585,
+        "passed": true
+      }
+    }
+  ],
+  "source_grid_and_pixel_footprint_diagnostics": [
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 3642,
+        "RMSE": 0.010384648821926766,
+        "MAE": 0.0010216584735664718
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 3642,
+        "RMSE": 0.00850489478774567,
+        "MAE": 0.0008075789732743636
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "road",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 3642,
+        "RMSE": 0.007674866939348432,
+        "MAE": 0.0006943194721723986
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 3642,
+        "RMSE": 0.011727658808086329,
+        "MAE": 0.0014237371279646489
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 3642,
+        "RMSE": 0.010384648821926766,
+        "MAE": 0.0010216584735664718
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 3642,
+        "RMSE": 0.00850489478774567,
+        "MAE": 0.0008075789732743636
+      }
+    },
+    {
+      "raw": 86,
+      "mode": "joint",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 3642,
+        "RMSE": 0.007674866939348432,
+        "MAE": 0.0006943194721723986
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 3642,
+        "RMSE": 0.011727658808086329,
+        "MAE": 0.0014237371279646489
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 7246,
+        "RMSE": 0.009696010383674417,
+        "MAE": 0.0009774280409879173
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 7246,
+        "RMSE": 0.005332651820736837,
+        "MAE": 0.0005247792088016984
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "road",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 7246,
+        "RMSE": 0.009421632714928053,
+        "MAE": 0.000912715628028892
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 7246,
+        "RMSE": 0.006963671100483376,
+        "MAE": 0.0007431622149369811
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 7246,
+        "RMSE": 0.009696010383674417,
+        "MAE": 0.0009774280409879173
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 7246,
+        "RMSE": 0.005332651820736837,
+        "MAE": 0.0005247792088016984
+      }
+    },
+    {
+      "raw": 110,
+      "mode": "joint",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 7246,
+        "RMSE": 0.009421632714928053,
+        "MAE": 0.000912715628028892
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 7246,
+        "RMSE": 0.006963671100483376,
+        "MAE": 0.0007431622149369811
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8246,
+        "RMSE": 0.009510944097866394,
+        "MAE": 0.0009961655383468955
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8246,
+        "RMSE": 0.0035849265220242797,
+        "MAE": 0.00028635504603511216
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "road",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8246,
+        "RMSE": 0.009241113153016452,
+        "MAE": 0.0009407491667672168
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8246,
+        "RMSE": 0.0051888178993025075,
+        "MAE": 0.00047654669940572843
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8246,
+        "RMSE": 0.009510944097866394,
+        "MAE": 0.0009961655383468955
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8246,
+        "RMSE": 0.0035849265220242797,
+        "MAE": 0.00028635504603511216
+      }
+    },
+    {
+      "raw": 134,
+      "mode": "joint",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8246,
+        "RMSE": 0.009241113153016452,
+        "MAE": 0.0009407491667672168
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8246,
+        "RMSE": 0.0051888178993025075,
+        "MAE": 0.00047654669940572843
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8908,
+        "RMSE": 0.009969207332702961,
+        "MAE": 0.0010820650553439231
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8908,
+        "RMSE": 0.00422235291791313,
+        "MAE": 0.00036775417232242215
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "road",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8908,
+        "RMSE": 0.010283751501090154,
+        "MAE": 0.001108566560871568
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8908,
+        "RMSE": 0.006347023650700825,
+        "MAE": 0.0006671647944505335
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8908,
+        "RMSE": 0.009969207332702961,
+        "MAE": 0.0010820650553439231
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8908,
+        "RMSE": 0.00422235291791313,
+        "MAE": 0.00036775417232242215
+      }
+    },
+    {
+      "raw": 179,
+      "mode": "joint",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 8908,
+        "RMSE": 0.010283751501090154,
+        "MAE": 0.001108566560871568
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 8908,
+        "RMSE": 0.006347023650700825,
+        "MAE": 0.0006671647944505335
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 9164,
+        "RMSE": 0.0102435789874516,
+        "MAE": 0.0011405447294978133
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 9164,
+        "RMSE": 0.0035750059185252242,
+        "MAE": 0.00034110409393418775
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "road",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 9164,
+        "RMSE": 0.010388366605520933,
+        "MAE": 0.0011260079616423554
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 9164,
+        "RMSE": 0.005660102921099126,
+        "MAE": 0.0006217501518786361
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w120",
+      "grid_center_vs_continuous_center": {
+        "pixels": 9164,
+        "RMSE": 0.0102435789874516,
+        "MAE": 0.0011405447294978133
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 9164,
+        "RMSE": 0.0035750059185252242,
+        "MAE": 0.00034110409393418775
+      }
+    },
+    {
+      "raw": 198,
+      "mode": "joint",
+      "case": "marking_w240",
+      "grid_center_vs_continuous_center": {
+        "pixels": 9164,
+        "RMSE": 0.010388366605520933,
+        "MAE": 0.0011260079616423554
+      },
+      "pixel_box_vs_grid_center": {
+        "pixels": 9164,
+        "RMSE": 0.005660102921099126,
+        "MAE": 0.0006217501518786361
+      }
+    }
+  ],
+  "detail_by_mode_method_case": {
+    "road/center_source_grid/marking_w120": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.11803325670612484,
+          "contrast_retention": 0.943826122667883,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.05943556688442293,
+          "contrast_retention": 0.9507291117823661,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.08519164909620217,
+          "contrast_retention": 0.9556283494140388,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.9830508474576272,
+          "edge_recall": 0.9830508474576272,
+          "edge_F1": 0.9830508474576272,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.12801742789676962,
+          "contrast_retention": 0.9528283629664586,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9850746268656716,
+          "edge_recall": 1.0,
+          "edge_F1": 0.9924812030075187,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.06574642484222791,
+          "contrast_retention": 0.9526548845568636,
+          "passed": true
+        }
+      ]
+    },
+    "road/center_source_grid/marking_w240": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.11258480067878353,
+          "contrast_retention": 0.9887565598474773,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.05962569838225217,
+          "contrast_retention": 0.9758035683591205,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.09971104374424586,
+          "contrast_retention": 0.9822716537592572,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.07275480517620603,
+          "contrast_retention": 0.9789503073987211,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.059834115960196936,
+          "contrast_retention": 0.9806972808583637,
+          "passed": true
+        }
+      ]
+    },
+    "road/average_GH31/marking_w120": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 0.8974358974358975,
+          "edge_recall": 0.9444444444444444,
+          "edge_F1": 0.9203402938901778,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.434198255749955,
+          "contrast_retention": 0.5453307359662191,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 0.9482758620689655,
+          "edge_recall": 1.0,
+          "edge_F1": 0.9734513274336283,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.5881551365991262,
+          "contrast_retention": 0.6823981402876551,
+          "passed": false
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 0.9259259259259259,
+          "edge_recall": 0.9107142857142857,
+          "edge_F1": 0.9182571119913576,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.431312617598837,
+          "contrast_retention": 0.7327424092300835,
+          "passed": false
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.8870967741935484,
+          "edge_recall": 0.9322033898305084,
+          "edge_F1": 0.9090909090909092,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 2.503096329049706,
+          "contrast_retention": 0.7075398699692587,
+          "passed": false
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9420289855072463,
+          "edge_recall": 0.9393939393939394,
+          "edge_F1": 0.9407096171802054,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.6609478688489296,
+          "contrast_retention": 0.7061486895454415,
+          "passed": false
+        }
+      ]
+    },
+    "road/average_GH31/marking_w240": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 0.8032786885245902,
+          "edge_recall": 0.94,
+          "edge_F1": 0.8662779763024262,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.4993978902318836,
+          "contrast_retention": 0.7103399441818431,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 0.9285714285714286,
+          "edge_recall": 0.9871794871794872,
+          "edge_F1": 0.9569789674952199,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.8494973356145787,
+          "contrast_retention": 0.8054236728506123,
+          "passed": false
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 0.8947368421052632,
+          "edge_recall": 0.8271604938271605,
+          "edge_F1": 0.859622641509434,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.3093839212752996,
+          "contrast_retention": 0.8445384847153696,
+          "passed": false
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 0.898989898989899,
+          "edge_recall": 0.9239130434782609,
+          "edge_F1": 0.9112810937782329,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 2.095753990580888,
+          "contrast_retention": 0.8303897139434465,
+          "passed": false
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 0.9259259259259259,
+          "edge_recall": 0.9611650485436893,
+          "edge_F1": 0.943216463414634,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.7273747068670968,
+          "contrast_retention": 0.8380163390293701,
+          "passed": false
+        }
+      ]
+    },
+    "road/pixel_box/marking_w120": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.1729456069599143,
+          "contrast_retention": 0.8804205030652538,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.18939521407650356,
+          "contrast_retention": 0.9223044540951345,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.21443751875926434,
+          "contrast_retention": 0.9423665103859249,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.9827586206896551,
+          "edge_recall": 0.9830508474576272,
+          "edge_F1": 0.9829047123532034,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.15772213486932676,
+          "contrast_retention": 0.9331357576744335,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9848484848484849,
+          "edge_recall": 1.0,
+          "edge_F1": 0.9923664122137404,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.08807212472288552,
+          "contrast_retention": 0.9353413277756921,
+          "passed": true
+        }
+      ]
+    },
+    "road/pixel_box/marking_w240": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.2541060587036318,
+          "contrast_retention": 0.9385780410042894,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.15023497026403781,
+          "contrast_retention": 0.9565881921220056,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.17467396605780094,
+          "contrast_retention": 0.9714355198900624,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.20558243720408936,
+          "contrast_retention": 0.961956982843804,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.1207345369915873,
+          "contrast_retention": 0.96477002573438,
+          "passed": true
+        }
+      ]
+    },
+    "joint/center_source_grid/marking_w120": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.11803325670612484,
+          "contrast_retention": 0.9439295084828772,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 1.0,
+          "edge_recall": 0.9818181818181818,
+          "edge_F1": 0.9908256880733944,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.4885201532826412,
+          "contrast_retention": 0.9259517171541584,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.4542847601072031,
+          "contrast_retention": 0.9326675602174382,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.9821428571428571,
+          "edge_recall": 0.9830508474576272,
+          "edge_F1": 0.982596642538118,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.4457123160622549,
+          "contrast_retention": 0.9328021315825609,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9848484848484849,
+          "edge_recall": 1.0,
+          "edge_F1": 0.9923664122137404,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.4008988010419598,
+          "contrast_retention": 0.9329013564760116,
+          "passed": true
+        }
+      ]
+    },
+    "joint/center_source_grid/marking_w240": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.12316328438272758,
+          "contrast_retention": 0.9721608348582078,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.3799886775044309,
+          "contrast_retention": 0.9536893828130294,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.34065296493646197,
+          "contrast_retention": 0.9643535615250491,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.39876698581190934,
+          "contrast_retention": 0.9607985650042646,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.321362571735162,
+          "contrast_retention": 0.9673261502947585,
+          "passed": true
+        }
+      ]
+    },
+    "joint/average_GH31/marking_w120": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 0.8918918918918919,
+          "edge_recall": 0.9444444444444444,
+          "edge_F1": 0.9174161896974652,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.4350220059907508,
+          "contrast_retention": 0.5636806446172125,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 0.9433962264150944,
+          "edge_recall": 0.9818181818181818,
+          "edge_F1": 0.9622238061297221,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.588301622980996,
+          "contrast_retention": 0.6731063057247568,
+          "passed": false
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 0.9622641509433962,
+          "edge_recall": 0.9107142857142857,
+          "edge_F1": 0.9357798165137615,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.7888126714635056,
+          "contrast_retention": 0.725147667602052,
+          "passed": false
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.896551724137931,
+          "edge_recall": 0.9322033898305084,
+          "edge_F1": 0.9140300415468201,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 2.503295074809778,
+          "contrast_retention": 0.6976458011940613,
+          "passed": false
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9545454545454546,
+          "edge_recall": 0.9393939393939394,
+          "edge_F1": 0.946909090909091,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.661212427018269,
+          "contrast_retention": 0.6970803320394486,
+          "passed": false
+        }
+      ]
+    },
+    "joint/average_GH31/marking_w240": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 0.7931034482758621,
+          "edge_recall": 0.94,
+          "edge_F1": 0.8603263032232391,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.5004450502002102,
+          "contrast_retention": 0.7119014629612427,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 0.9390243902439024,
+          "edge_recall": 0.9871794871794872,
+          "edge_F1": 0.9625,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.8498509422660288,
+          "contrast_retention": 0.7957889689622332,
+          "passed": false
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 0.9375,
+          "edge_recall": 0.9012345679012346,
+          "edge_F1": 0.9190096516995384,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.9171063283807841,
+          "contrast_retention": 0.8384065847081207,
+          "passed": false
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 0.8969072164948454,
+          "edge_recall": 0.9239130434782609,
+          "edge_F1": 0.9102098590682504,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 2.096087184058727,
+          "contrast_retention": 0.8186277610496061,
+          "passed": false
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 0.9333333333333333,
+          "edge_recall": 0.9611650485436893,
+          "edge_F1": 0.9470447557225828,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 1.7277058466502777,
+          "contrast_retention": 0.8339270203519745,
+          "passed": false
+        }
+      ]
+    },
+    "joint/pixel_box/marking_w120": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.1829041484369974,
+          "contrast_retention": 0.8807923380832263,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 1.0,
+          "edge_recall": 0.9818181818181818,
+          "edge_F1": 0.9908256880733944,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.6664216239464299,
+          "contrast_retention": 0.9014021151780642,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.39346597336327355,
+          "contrast_retention": 0.9213369929319504,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 0.9824561403508771,
+          "edge_recall": 0.9830508474576272,
+          "edge_F1": 0.9827534039334342,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.5144912368518889,
+          "contrast_retention": 0.9181615433426599,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 0.9846153846153847,
+          "edge_recall": 1.0,
+          "edge_F1": 0.9922480620155039,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.4492558953539411,
+          "contrast_retention": 0.919412880477151,
+          "passed": true
+        }
+      ]
+    },
+    "joint/pixel_box/marking_w240": {
+      "status": "pass",
+      "passed": true,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 596,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.29816298780258965,
+          "contrast_retention": 0.9283071951298318,
+          "passed": true
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 1263,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.48560282006065936,
+          "contrast_retention": 0.9372819734799559,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 1414,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.3177852124304777,
+          "contrast_retention": 0.9554285178961053,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 1673,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.5174734480675374,
+          "contrast_retention": 0.947717385478734,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 1721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.38927712415419163,
+          "contrast_retention": 0.9539709695424354,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "previews": [
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/ideal_read_probe/previews/086_paint_increment.png",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/ideal_read_probe/previews/110_paint_increment.png",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/ideal_read_probe/previews/134_paint_increment.png",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/ideal_read_probe/previews/179_paint_increment.png",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/ideal_read_probe/previews/198_paint_increment.png"
+  ],
+  "native_forward_calls": 30,
+  "native_backward_calls": 0,
+  "optimizer_updates": 0,
+  "human_verdict": null,
+  "production_promoted": false
+}

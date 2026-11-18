@@ -1,0 +1,71 @@
+{
+  "schema": "teacher_detail_gpu_authorization.v1",
+  "created_UTC": "2026-11-18T18:40:17.297049+00:00",
+  "user_instruction": "GPU已开，继续推进实验，目标是把高频的改善好",
+  "GPU_authorized": true,
+  "smoke_authorized": true,
+  "formal_authorized_after_real_smoke": true,
+  "GPU_power_policy": "keep_on_explicit_user_instruction",
+  "power_operations_authorized": false,
+  "scientific_protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/protocol.json",
+  "CPU_history_mutable": false,
+  "frozen_inputs_sha256": {
+    "protocol.json": "2e46ad8c13ba287907bb8aee1fa54ca86a4cc6473a161519a918fa2f31dbebc2",
+    "execution_contract.json": "f42596727cd00482cf62b3c57fc75aa098d5cad0cd0570347d33ed696140fc2b",
+    "permission/final_r1/recipe.json": "4e1c313fff954ab6aa8a828301c00aa5bb5e8402aa72517f6bc867cfdc6d437d",
+    "pixel_render/preparation_receipt.json": "1bb065767103e9af08760977b0c8bfa950560620bbbc6755723217a8adb7dc3e",
+    "trellis_hf/seed_r5_nodal_b034/H_seed.npz": "688d60a4ef405acfc3eff88dcc3b0bd6a5adef10ba9af64113ca8642c3d7ca3a"
+  },
+  "owners": {
+    "native_basis": "stage_qa",
+    "field_training": "road_asset",
+    "evaluation": "static_handoff",
+    "orchestration": "root"
+  },
+  "smoke": {
+    "lifecycle_seconds": 600,
+    "formal_budget_separate": true,
+    "complete_state_restore": true,
+    "next_stage_entry": true
+  },
+  "formal": {
+    "arms": [
+      "M00",
+      "M10",
+      "M01",
+      "M11",
+      "T11"
+    ],
+    "steps": {
+      "A": 200,
+      "B": 300,
+      "C": 300
+    },
+    "physical_updates_max": 3400,
+    "logical_updates": 4000,
+    "train_frames": [
+      86,
+      110
+    ],
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "no_new_199_run": true,
+    "high_bound": 0.34,
+    "low_bound": 0.3,
+    "no_new_TRELLIS_inference": true
+  },
+  "lease": {
+    "native_ctx_owner": "stage_qa",
+    "field_CUDA_qualification_allowed": true,
+    "one_formal_training_controller": true,
+    "smoke_optimization_after_native_qualification": true
+  },
+  "git": {
+    "active_HEAD": "e10b5c20545a2737bb799bd7f7693c3e9e7e28cc",
+    "status_before": " M docs/EXPERIMENTS.md\n M docs/RESEARCH_STATUS.md\n M docs/research_failures/entries/V82-F06.md\n M scripts/run_worldsim_v72_e3_render_bridge.py\n M scripts/worldsim_v82/drivingeditor_dynamic_edit/persistent_road_handoff.py\n M scripts/worldsim_v82/drivingeditor_dynamic_edit/test_persistent_road_handoff.py\n?? docs/autoresearch/module2_activation_20261118/\n?? docs/autoresearch/module2_capacity_cpu_20261117/\n?? docs/autoresearch/module2_capacity_gpu_20261118/\n?? docs/autoresearch/module2_direct_teacher_20261116/\n?? docs/autoresearch/module2_road_asset_20261116/\n?? docs/autoresearch/road_2d_teacher_hf_cpu_20261119/\n?? docs/autoresearch/scene065_closedloop_20261116/architecture.svg\n?? docs/autoresearch/scene065_closedloop_20261116/diagnostics/\n?? docs/autoresearch/waymo_val065_gpu_20261109/reconstruction/\n?? docs/v44/\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/native_row_contribution.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_asset.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_asset_pipeline.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_asset_quality.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_asset_supervision.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_coverage_training.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_direct_teacher_training.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_marking_structure.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_material_chart.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_multiscale_asset.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_multiscale_material.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_surface_projection.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_texture_training.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_world_texture_basis.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/road_world_texture_capacity.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/shared_road_material.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/static_visibility_handoff.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/test_native_row_contribution.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/test_road_asset.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/test_road_asset_quality.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/test_road_surface_projection.py\n?? scripts/worldsim_v82/drivingeditor_dynamic_edit/test_road_texture_training.py\n?? scripts/worldsim_v82/fixed_material_read_operator.py\n?? scripts/worldsim_v82/gpu_entry_guard.py\n?? scripts/worldsim_v82/module2_activation_state.py\n?? scripts/worldsim_v82/road_material_field/bridge/lane_structure.py\n?? scripts/worldsim_v82/road_material_field/bridge/local_color_field.py\n?? scripts/worldsim_v82/road_material_field/bridge/singleframe_adapter.py\n?? scripts/worldsim_v82/road_material_field/data/\n?? scripts/worldsim_v82/world_texture_runtime.py\n?? tests/test_road_direct_teacher_supervision.py\n?? tests/test_road_direct_teacher_training.py\n?? tests/test_road_world_texture_capacity_cpu.py\n?? tests/test_v44_road_coverage_training.py\n?? tests/test_v44_static_visibility_handoff.py\n?? tests/worldsim_v82/\n"
+  },
+  "hardware": "name, memory.total [MiB], memory.used [MiB], utilization.gpu [%]\nNVIDIA GeForce RTX 4080 SUPER, 32760 MiB, 1 MiB, 0 %\n"
+}

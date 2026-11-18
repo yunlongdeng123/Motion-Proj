@@ -1,0 +1,1291 @@
+{
+  "schema": "teacher_detail_saved_native_CPU_metrics.v1",
+  "arm_id": "M01",
+  "stage": "C800",
+  "rows": [
+    {
+      "checks": {
+        "alpha_exact": true,
+        "joint_alpha_present": true,
+        "joint_alpha_exact": true,
+        "K_mask_present": true,
+        "K_mask_exact": true,
+        "joint_K_exact": true
+      },
+      "alpha_max_change": 0.0,
+      "K_pixels": 14507,
+      "joint_K_RGB_max": 0.0,
+      "road_only_K_RGB_delta_max": 0.0,
+      "D": {
+        "pixels": 3679,
+        "gap": 0,
+        "thin": 10,
+        "supported": 3669
+      },
+      "material": {
+        "A": {
+          "pixels": 5409,
+          "RGB_denominator": 16227,
+          "MAE": 0.022870739101480686,
+          "RMSE": 0.05350420360137467,
+          "abs_sum": 371.1234833997271,
+          "squared_sum": 46.45302970356261
+        },
+        "A_source_available": {
+          "pixels": 5407,
+          "RGB_denominator": 16221,
+          "MAE": 0.022862224969251464,
+          "RMSE": 0.05350114580515329,
+          "abs_sum": 370.848151226228,
+          "squared_sum": 46.430545984572944
+        },
+        "A_readonly_floor": {
+          "pixels": 2,
+          "RGB_denominator": 6,
+          "MAE": 0.04588869558316753,
+          "RMSE": 0.061215083911393145,
+          "abs_sum": 0.2753321734990052,
+          "squared_sum": 0.022483718989673423
+        },
+        "A_native_zero_eligible_weight": {
+          "pixels": 917,
+          "RGB_denominator": 2751,
+          "MAE": 0.08165517136027435,
+          "RMSE": 0.11841834906347962,
+          "abs_sum": 224.63337641211473,
+          "squared_sum": 38.5770127414252
+        },
+        "C": {
+          "pixels": 3598,
+          "RGB_denominator": 10794,
+          "MAE": 0.010673697537737387,
+          "RMSE": 0.02212799419501662,
+          "abs_sum": 115.21189122233736,
+          "squared_sum": 5.285261883860075
+        },
+        "S": {
+          "pixels": 1042,
+          "RGB_denominator": 3126,
+          "MAE": 0.013089656608624978,
+          "RMSE": 0.027965520688189537,
+          "abs_sum": 40.91826655856168,
+          "squared_sum": 2.444751905852227
+        },
+        "S_full": {
+          "pixels": 1043,
+          "RGB_denominator": 3129,
+          "MAE": 0.013079434191462699,
+          "RMSE": 0.027952244701657105,
+          "abs_sum": 40.925549585086785,
+          "squared_sum": 2.444775261502063
+        },
+        "S_old": {
+          "pixels": 820,
+          "RGB_denominator": 2460,
+          "MAE": 0.014167455835990553,
+          "RMSE": 0.030707056148340805,
+          "abs_sum": 34.85194135653676,
+          "squared_sum": 2.3195913113514925
+        },
+        "S_new": {
+          "pixels": 222,
+          "RGB_denominator": 666,
+          "MAE": 0.00910859639943682,
+          "RMSE": 0.013708713308391624,
+          "abs_sum": 6.066325202024922,
+          "squared_sum": 0.12516059450073463
+        },
+        "S_thin": {
+          "pixels": 1,
+          "RGB_denominator": 3,
+          "MAE": 0.0024276755083671255,
+          "RMSE": 0.0027902001024998437,
+          "abs_sum": 0.007283026525101377,
+          "squared_sum": 2.3355649835970417e-05
+        }
+      },
+      "detail": {
+        "A": {
+          "full_domain_pixels": 5409,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 4286,
+              "unsupported_boundary_pixels": 1123,
+              "HF_MAE": 0.008875423276151645,
+              "HF_RMSE": 0.015796014273770708,
+              "HF_error_abs_sum": 114.12019248475787,
+              "HF_error_squared_sum": 3.2082518726781055,
+              "HF_predicted_squared_sum": 4.27947822468886,
+              "HF_teacher_squared_sum": 4.163938444933491,
+              "HF_dot_sum": 2.6175823984721225,
+              "predicted_HF_RMS": 0.018243522630150825,
+              "teacher_HF_RMS": 0.017995563055868413,
+              "HF_cosine": 0.6200872488444633,
+              "HF_energy_ratio": 1.027747715602269
+            },
+            "2px": {
+              "qualified_pixels": 3294,
+              "unsupported_boundary_pixels": 2115,
+              "HF_MAE": 0.011695322637341193,
+              "HF_RMSE": 0.021470874733675264,
+              "HF_error_abs_sum": 115.57317830220566,
+              "HF_error_squared_sum": 4.555586799795906,
+              "HF_predicted_squared_sum": 9.785034566727541,
+              "HF_teacher_squared_sum": 9.479221113357351,
+              "HF_dot_sum": 7.354334440144494,
+              "predicted_HF_RMS": 0.03146724759480608,
+              "teacher_HF_RMS": 0.03097161857230254,
+              "HF_cosine": 0.7636174894097536,
+              "HF_energy_ratio": 1.0322614537326555
+            }
+          },
+          "edges": {
+            "qualified_pixels": 4265,
+            "unsupported_boundary_pixels": 1144,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 1091,
+            "predicted_edges": 1261,
+            "matched_predicted": 1089,
+            "matched_teacher": 1052,
+            "precision": 0.8636003172085647,
+            "recall": 0.9642529789184234,
+            "F1": 0.9111553757926982,
+            "gradient_L1": 0.006751410678446178,
+            "teacher_flat_pixels": 1151,
+            "spurious_HF_RMS_on_teacher_flat": 0.008698379339631229,
+            "teacher_flat_HF_RMS": 0.003544286235845103
+          }
+        },
+        "C": {
+          "full_domain_pixels": 3598,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 3123,
+              "unsupported_boundary_pixels": 475,
+              "HF_MAE": 0.006666933231900879,
+              "HF_RMSE": 0.012673900302824077,
+              "HF_error_abs_sum": 62.46249744967933,
+              "HF_error_squared_sum": 1.504921379312224,
+              "HF_predicted_squared_sum": 1.4341264756061654,
+              "HF_teacher_squared_sum": 0.37790736369408245,
+              "HF_dot_sum": 0.15355622999401197,
+              "predicted_HF_RMS": 0.012372204996016713,
+              "teacher_HF_RMS": 0.006351057690783648,
+              "HF_cosine": 0.20858402185729114,
+              "HF_energy_ratio": 3.7949154035725448
+            },
+            "2px": {
+              "qualified_pixels": 2625,
+              "unsupported_boundary_pixels": 973,
+              "HF_MAE": 0.008039804726027671,
+              "HF_RMSE": 0.015550854551060462,
+              "HF_error_abs_sum": 63.31346221746791,
+              "HF_error_squared_sum": 1.9044039834873736,
+              "HF_predicted_squared_sum": 2.056594114440909,
+              "HF_teacher_squared_sum": 0.8101726566333087,
+              "HF_dot_sum": 0.48118139379342206,
+              "predicted_HF_RMS": 0.01616028490413992,
+              "teacher_HF_RMS": 0.010142931899061118,
+              "HF_cosine": 0.3727741088633032,
+              "HF_energy_ratio": 2.538463989869929
+            }
+          },
+          "edges": {
+            "qualified_pixels": 3093,
+            "unsupported_boundary_pixels": 505,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 131,
+            "predicted_edges": 406,
+            "matched_predicted": 137,
+            "matched_teacher": 114,
+            "precision": 0.3374384236453202,
+            "recall": 0.8702290076335878,
+            "F1": 0.486307234824306,
+            "gradient_L1": 0.004846813905736862,
+            "teacher_flat_pixels": 1476,
+            "spurious_HF_RMS_on_teacher_flat": 0.011280209656297219,
+            "teacher_flat_HF_RMS": 0.003097674021668066
+          }
+        },
+        "S": {
+          "full_domain_pixels": 1042,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 766,
+              "unsupported_boundary_pixels": 276,
+              "HF_MAE": 0.006501782905346626,
+              "HF_RMSE": 0.011406813847237728,
+              "HF_error_abs_sum": 14.941097116486546,
+              "HF_error_squared_sum": 0.299005194130438,
+              "HF_predicted_squared_sum": 0.16785534344846853,
+              "HF_teacher_squared_sum": 0.2736747906089545,
+              "HF_dot_sum": 0.0712624699634925,
+              "predicted_HF_RMS": 0.008546584154932849,
+              "teacher_HF_RMS": 0.010912955519758174,
+              "HF_cosine": 0.3324879331355499,
+              "HF_energy_ratio": 0.6133387115231664
+            },
+            "2px": {
+              "qualified_pixels": 440,
+              "unsupported_boundary_pixels": 602,
+              "HF_MAE": 0.009499219654578159,
+              "HF_RMSE": 0.017025388914249356,
+              "HF_error_abs_sum": 12.538969944043169,
+              "HF_error_squared_sum": 0.3826203053395072,
+              "HF_predicted_squared_sum": 0.16695326999742038,
+              "HF_teacher_squared_sum": 0.625721208184904,
+              "HF_dot_sum": 0.20502708642140852,
+              "predicted_HF_RMS": 0.01124632162078098,
+              "teacher_HF_RMS": 0.02177225799778004,
+              "HF_cosine": 0.6343418108902901,
+              "HF_energy_ratio": 0.26681734263366186
+            }
+          },
+          "edges": {
+            "qualified_pixels": 765,
+            "unsupported_boundary_pixels": 277,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 57,
+            "predicted_edges": 78,
+            "matched_predicted": 73,
+            "matched_teacher": 57,
+            "precision": 0.9358974358974359,
+            "recall": 1.0,
+            "F1": 0.9668874172185431,
+            "gradient_L1": 0.004917611802115803,
+            "teacher_flat_pixels": 436,
+            "spurious_HF_RMS_on_teacher_flat": 0.005850830513014689,
+            "teacher_flat_HF_RMS": 0.003103261543523995
+          }
+        },
+        "S_new": {
+          "full_domain_pixels": 222,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 113,
+              "unsupported_boundary_pixels": 109,
+              "HF_MAE": 0.004837730232175772,
+              "HF_RMSE": 0.006191879185301755,
+              "HF_error_abs_sum": 1.6399905487075865,
+              "HF_error_squared_sum": 0.01299704569958149,
+              "HF_predicted_squared_sum": 0.011067412162469963,
+              "HF_teacher_squared_sum": 0.004357967017354124,
+              "HF_dot_sum": 0.0012141667401213,
+              "predicted_HF_RMS": 0.005713775767179748,
+              "teacher_HF_RMS": 0.003585437202517708,
+              "HF_cosine": 0.17482893844597044,
+              "HF_energy_ratio": 2.5395814420801606
+            },
+            "2px": {
+              "qualified_pixels": 0,
+              "unsupported_boundary_pixels": 222,
+              "HF_MAE": null,
+              "HF_RMSE": null,
+              "HF_cosine": null
+            }
+          },
+          "edges": {
+            "qualified_pixels": 113,
+            "unsupported_boundary_pixels": 109,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 0,
+            "predicted_edges": 0,
+            "matched_predicted": 0,
+            "matched_teacher": 0,
+            "precision": null,
+            "recall": null,
+            "F1": null,
+            "gradient_L1": 0.003112398197373296,
+            "teacher_flat_pixels": 80,
+            "spurious_HF_RMS_on_teacher_flat": 0.005963288252511902,
+            "teacher_flat_HF_RMS": 0.0029202992955855737
+          }
+        }
+      },
+      "stripe": {
+        "vertical_E": 0.019377294428242268,
+        "horizontal_E": 0.009570350535425265,
+        "fixed_domain_pixels": 3669,
+        "vertical_stencils": 3440,
+        "horizontal_stencils": 3467,
+        "RGB_delta_energy": 0.005892493438979645
+      },
+      "reader_source_mass": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 140607
+      },
+      "fallback_mask": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 12993
+      },
+      "raw": 86,
+      "view_role": "teacher_source",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/086.npz",
+      "source_sha256": "d00979a7f2ec8db49e9b3184aa7538336179cc98fa2b7688c32eef314c2e714b"
+    },
+    {
+      "checks": {
+        "alpha_exact": true,
+        "joint_alpha_present": true,
+        "joint_alpha_exact": true,
+        "K_mask_present": true,
+        "K_mask_exact": true,
+        "joint_K_exact": true
+      },
+      "alpha_max_change": 0.0,
+      "K_pixels": 15716,
+      "joint_K_RGB_max": 0.0,
+      "road_only_K_RGB_delta_max": 0.0,
+      "D": {
+        "pixels": 7459,
+        "gap": 11,
+        "thin": 173,
+        "supported": 7275
+      },
+      "material": {
+        "A": {
+          "pixels": 11495,
+          "RGB_denominator": 34485,
+          "MAE": 0.03245417725804364,
+          "RMSE": 0.059027578102673436,
+          "abs_sum": 1119.182302743635,
+          "squared_sum": 120.15453287036883
+        },
+        "A_source_available": {
+          "pixels": 11490,
+          "RGB_denominator": 34470,
+          "MAE": 0.032431652814938094,
+          "RMSE": 0.059010293199921564,
+          "abs_sum": 1117.919072530916,
+          "squared_sum": 120.03194083104825
+        },
+        "A_readonly_floor": {
+          "pixels": 5,
+          "RGB_denominator": 15,
+          "MAE": 0.08421534751460037,
+          "RMSE": 0.09040355425187008,
+          "abs_sum": 1.2632302127190056,
+          "squared_sum": 0.12259203932056224
+        },
+        "A_native_zero_eligible_weight": {
+          "pixels": 2045,
+          "RGB_denominator": 6135,
+          "MAE": 0.08834755703285527,
+          "RMSE": 0.11909716055082759,
+          "abs_sum": 542.012262396567,
+          "squared_sum": 87.01965995053901
+        },
+        "C": {
+          "pixels": 7232,
+          "RGB_denominator": 21696,
+          "MAE": 0.015622606322739081,
+          "RMSE": 0.03260855990843119,
+          "abs_sum": 338.9480667781471,
+          "squared_sum": 23.06975121813068
+        },
+        "S": {
+          "pixels": 2089,
+          "RGB_denominator": 6267,
+          "MAE": 0.018662215049161626,
+          "RMSE": 0.03733719047026068,
+          "abs_sum": 116.9561017130959,
+          "squared_sum": 8.736610319795894
+        },
+        "S_full": {
+          "pixels": 2144,
+          "RGB_denominator": 6432,
+          "MAE": 0.018403789878750677,
+          "RMSE": 0.036892434378585415,
+          "abs_sum": 118.37317650012434,
+          "squared_sum": 8.754284626880782
+        },
+        "S_old": {
+          "pixels": 1402,
+          "RGB_denominator": 4206,
+          "MAE": 0.02162078950878395,
+          "RMSE": 0.04249682895743613,
+          "abs_sum": 90.93704067394529,
+          "squared_sum": 7.59595386286647
+        },
+        "S_new": {
+          "pixels": 687,
+          "RGB_denominator": 2061,
+          "MAE": 0.012624483764750422,
+          "RMSE": 0.023525476882663432,
+          "abs_sum": 26.019061039150618,
+          "squared_sum": 1.1406564569294237
+        },
+        "S_thin": {
+          "pixels": 55,
+          "RGB_denominator": 165,
+          "MAE": 0.008588332042596548,
+          "RMSE": 0.010349734906541343,
+          "abs_sum": 1.4170747870284304,
+          "squared_sum": 0.017674307084887257
+        }
+      },
+      "detail": {
+        "A": {
+          "full_domain_pixels": 11495,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 9912,
+              "unsupported_boundary_pixels": 1583,
+              "HF_MAE": 0.01121641263819303,
+              "HF_RMSE": 0.018050025874216596,
+              "HF_error_abs_sum": 333.53124620930794,
+              "HF_error_squared_sum": 9.688090915204848,
+              "HF_predicted_squared_sum": 8.942088443897765,
+              "HF_teacher_squared_sum": 7.379232938929925,
+              "HF_dot_sum": 3.3166152338114205,
+              "predicted_HF_RMS": 0.017341162442213842,
+              "teacher_HF_RMS": 0.015753038553432297,
+              "HF_cosine": 0.40829118230361866,
+              "HF_energy_ratio": 1.2117910517125472
+            },
+            "2px": {
+              "qualified_pixels": 8583,
+              "unsupported_boundary_pixels": 2912,
+              "HF_MAE": 0.015846714484299303,
+              "HF_RMSE": 0.025379334414968216,
+              "HF_error_abs_sum": 408.03705125622275,
+              "HF_error_squared_sum": 16.5852042345645,
+              "HF_predicted_squared_sum": 21.943628980937454,
+              "HF_teacher_squared_sum": 19.644857066456538,
+              "HF_dot_sum": 12.501640906414748,
+              "predicted_HF_RMS": 0.029192685075119768,
+              "teacher_HF_RMS": 0.027621308787812306,
+              "HF_cosine": 0.6021273547235033,
+              "HF_energy_ratio": 1.1170164744240392
+            }
+          },
+          "edges": {
+            "qualified_pixels": 9846,
+            "unsupported_boundary_pixels": 1649,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 2091,
+            "predicted_edges": 2934,
+            "matched_predicted": 2162,
+            "matched_teacher": 1923,
+            "precision": 0.7368779822767553,
+            "recall": 0.9196556671449068,
+            "F1": 0.8181832136421924,
+            "gradient_L1": 0.009037657773566887,
+            "teacher_flat_pixels": 3291,
+            "spurious_HF_RMS_on_teacher_flat": 0.009374212857990515,
+            "teacher_flat_HF_RMS": 0.00339026190532089
+          }
+        },
+        "C": {
+          "full_domain_pixels": 7232,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 6125,
+              "unsupported_boundary_pixels": 1107,
+              "HF_MAE": 0.006857097971543282,
+              "HF_RMSE": 0.013270421051100408,
+              "HF_error_abs_sum": 125.9991752271078,
+              "HF_error_squared_sum": 3.235912375800358,
+              "HF_predicted_squared_sum": 2.9125753346833907,
+              "HF_teacher_squared_sum": 0.8863271286041738,
+              "HF_dot_sum": 0.2814950437436034,
+              "predicted_HF_RMS": 0.012589976219487443,
+              "teacher_HF_RMS": 0.006945177462964059,
+              "HF_cosine": 0.17520042196891084,
+              "HF_energy_ratio": 3.2861177782860373
+            },
+            "2px": {
+              "qualified_pixels": 5031,
+              "unsupported_boundary_pixels": 2201,
+              "HF_MAE": 0.00920108918603786,
+              "HF_RMSE": 0.018226864768939584,
+              "HF_error_abs_sum": 138.8720390848694,
+              "HF_error_squared_sum": 5.014175319313551,
+              "HF_predicted_squared_sum": 4.5847799997992436,
+              "HF_teacher_squared_sum": 1.8411234799937062,
+              "HF_dot_sum": 0.7058640802396986,
+              "predicted_HF_RMS": 0.017428959649187545,
+              "teacher_HF_RMS": 0.01104469360105199,
+              "HF_cosine": 0.242951941202119,
+              "HF_energy_ratio": 2.4902077723841294
+            }
+          },
+          "edges": {
+            "qualified_pixels": 6044,
+            "unsupported_boundary_pixels": 1188,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 258,
+            "predicted_edges": 853,
+            "matched_predicted": 281,
+            "matched_teacher": 242,
+            "precision": 0.32942555685814773,
+            "recall": 0.937984496124031,
+            "F1": 0.4876023576314695,
+            "gradient_L1": 0.005852491945323632,
+            "teacher_flat_pixels": 3913,
+            "spurious_HF_RMS_on_teacher_flat": 0.010822013779742819,
+            "teacher_flat_HF_RMS": 0.0029614545984132886
+          }
+        },
+        "S": {
+          "full_domain_pixels": 2089,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 1607,
+              "unsupported_boundary_pixels": 482,
+              "HF_MAE": 0.00979167185195619,
+              "HF_RMSE": 0.016542155475737733,
+              "HF_error_abs_sum": 47.20564999828079,
+              "HF_error_squared_sum": 1.3192324584241566,
+              "HF_predicted_squared_sum": 0.9904175548583216,
+              "HF_teacher_squared_sum": 0.4421866455054853,
+              "HF_dot_sum": 0.05668587096982518,
+              "predicted_HF_RMS": 0.014333115449097107,
+              "teacher_HF_RMS": 0.009577104923033918,
+              "HF_cosine": 0.0856569976621833,
+              "HF_energy_ratio": 2.2398178799048227
+            },
+            "2px": {
+              "qualified_pixels": 1078,
+              "unsupported_boundary_pixels": 1011,
+              "HF_MAE": 0.011101811391209415,
+              "HF_RMSE": 0.018924862906833977,
+              "HF_error_abs_sum": 35.90325803917125,
+              "HF_error_squared_sum": 1.1582585101613172,
+              "HF_predicted_squared_sum": 0.4612475579952142,
+              "HF_teacher_squared_sum": 1.0733824425506202,
+              "HF_dot_sum": 0.18818574519225872,
+              "predicted_HF_RMS": 0.011942549007955779,
+              "teacher_HF_RMS": 0.018218274264514257,
+              "HF_cosine": 0.2674498998486856,
+              "HF_energy_ratio": 0.429714088577019
+            }
+          },
+          "edges": {
+            "qualified_pixels": 1589,
+            "unsupported_boundary_pixels": 500,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 118,
+            "predicted_edges": 332,
+            "matched_predicted": 98,
+            "matched_teacher": 110,
+            "precision": 0.29518072289156627,
+            "recall": 0.9322033898305084,
+            "F1": 0.44838199816986946,
+            "gradient_L1": 0.007750893543173479,
+            "teacher_flat_pixels": 881,
+            "spurious_HF_RMS_on_teacher_flat": 0.014745150571599586,
+            "teacher_flat_HF_RMS": 0.0031008608641224303
+          }
+        },
+        "S_new": {
+          "full_domain_pixels": 687,
+          "scales": {
+            "1px": {
+              "qualified_pixels": 517,
+              "unsupported_boundary_pixels": 170,
+              "HF_MAE": 0.009195800667177165,
+              "HF_RMSE": 0.01574442295047611,
+              "HF_error_abs_sum": 14.262686834791783,
+              "HF_error_squared_sum": 0.38447251062143567,
+              "HF_predicted_squared_sum": 0.3625182556154624,
+              "HF_teacher_squared_sum": 0.03290185749639793,
+              "HF_dot_sum": 0.0054738012452123525,
+              "predicted_HF_RMS": 0.01528829456647884,
+              "teacher_HF_RMS": 0.0046057918780857965,
+              "HF_cosine": 0.05012032457053063,
+              "HF_energy_ratio": 11.018169890716676
+            },
+            "2px": {
+              "qualified_pixels": 272,
+              "unsupported_boundary_pixels": 415,
+              "HF_MAE": 0.006461640460450885,
+              "HF_RMSE": 0.00815126294223135,
+              "HF_error_abs_sum": 5.272698615727922,
+              "HF_error_squared_sum": 0.05421755944356957,
+              "HF_predicted_squared_sum": 0.06355024067797826,
+              "HF_teacher_squared_sum": 0.021927995282937214,
+              "HF_dot_sum": 0.01563033825867296,
+              "predicted_HF_RMS": 0.008824975745535344,
+              "teacher_HF_RMS": 0.005183873381834634,
+              "HF_cosine": 0.4187070875700881,
+              "HF_energy_ratio": 2.8981327229410927
+            }
+          },
+          "edges": {
+            "qualified_pixels": 516,
+            "unsupported_boundary_pixels": 171,
+            "threshold_per_pixel": 0.01568627450980392,
+            "tolerance_pixels": 1,
+            "target_edges": 4,
+            "predicted_edges": 121,
+            "matched_predicted": 0,
+            "matched_teacher": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "F1": 0.0,
+            "gradient_L1": 0.005798806947373996,
+            "teacher_flat_pixels": 319,
+            "spurious_HF_RMS_on_teacher_flat": 0.015868273661431762,
+            "teacher_flat_HF_RMS": 0.0031038023331277503
+          }
+        }
+      },
+      "stripe": {
+        "vertical_E": 0.018996801779584613,
+        "horizontal_E": 0.008946883896110742,
+        "fixed_domain_pixels": 7275,
+        "vertical_stencils": 6541,
+        "horizontal_stencils": 6873,
+        "RGB_delta_energy": 0.006154428320976497
+      },
+      "reader_source_mass": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 127876
+      },
+      "fallback_mask": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 25724
+      },
+      "raw": 110,
+      "view_role": "teacher_source",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/110.npz",
+      "source_sha256": "cc2a8b8a7461955db9471440ae4f375b7b68b89a5046f502df342d6d46976170"
+    },
+    {
+      "checks": {
+        "alpha_exact": true,
+        "joint_alpha_present": true,
+        "joint_alpha_exact": true,
+        "K_mask_present": true,
+        "K_mask_exact": true,
+        "joint_K_exact": true
+      },
+      "alpha_max_change": 0.0,
+      "K_pixels": 16727,
+      "joint_K_RGB_max": 0.0,
+      "road_only_K_RGB_delta_max": 0.0,
+      "D": {
+        "pixels": 8536,
+        "gap": 21,
+        "thin": 239,
+        "supported": 8276
+      },
+      "material": {},
+      "detail": {},
+      "stripe": {
+        "vertical_E": 0.022856348849262208,
+        "horizontal_E": 0.009433782015322191,
+        "fixed_domain_pixels": 8276,
+        "vertical_stencils": 7253,
+        "horizontal_stencils": 7792,
+        "RGB_delta_energy": 0.006320328436271811
+      },
+      "reader_source_mass": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 127419
+      },
+      "fallback_mask": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 26181
+      },
+      "raw": 134,
+      "view_role": "diagnostic_not_blind",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/134.npz",
+      "source_sha256": "b91afabb9fc32b43481b2db7292540865954e43cbe1ab46d1197ccc1be531209"
+    },
+    {
+      "checks": {
+        "alpha_exact": true,
+        "joint_alpha_present": true,
+        "joint_alpha_exact": true,
+        "K_mask_present": true,
+        "K_mask_exact": true,
+        "joint_K_exact": true
+      },
+      "alpha_max_change": 0.0,
+      "K_pixels": 16788,
+      "joint_K_RGB_max": 0.0,
+      "road_only_K_RGB_delta_max": 0.0,
+      "D": {
+        "pixels": 9242,
+        "gap": 27,
+        "thin": 253,
+        "supported": 8962
+      },
+      "material": {},
+      "detail": {},
+      "stripe": {
+        "vertical_E": 0.022083090443045877,
+        "horizontal_E": 0.009178696310247156,
+        "fixed_domain_pixels": 8962,
+        "vertical_stencils": 8108,
+        "horizontal_stencils": 8529,
+        "RGB_delta_energy": 0.005903934648888565
+      },
+      "reader_source_mass": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 127298
+      },
+      "fallback_mask": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 26302
+      },
+      "raw": 179,
+      "view_role": "diagnostic_not_blind",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/179.npz",
+      "source_sha256": "15de00cd2b886a10606adad93759f7bdc76f1cf8ed7bfbc7490fcd03134654a9"
+    },
+    {
+      "checks": {
+        "alpha_exact": true,
+        "joint_alpha_present": true,
+        "joint_alpha_exact": true,
+        "K_mask_present": true,
+        "K_mask_exact": true,
+        "joint_K_exact": true
+      },
+      "alpha_max_change": 0.0,
+      "K_pixels": 13528,
+      "joint_K_RGB_max": 0.0,
+      "road_only_K_RGB_delta_max": 0.0,
+      "D": {
+        "pixels": 9500,
+        "gap": 24,
+        "thin": 254,
+        "supported": 9222
+      },
+      "material": {},
+      "detail": {},
+      "stripe": {
+        "vertical_E": 0.021656961345175314,
+        "horizontal_E": 0.008803640318597821,
+        "fixed_domain_pixels": 9222,
+        "vertical_stencils": 8430,
+        "horizontal_stencils": 8829,
+        "RGB_delta_energy": 0.005721579182116173
+      },
+      "reader_source_mass": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 127247
+      },
+      "fallback_mask": {
+        "min": 0.0,
+        "max": 1.0,
+        "zero_pixels": 26353
+      },
+      "raw": 198,
+      "view_role": "diagnostic_not_blind",
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/198.npz",
+      "source_sha256": "dc9149776ca68757989097945f6ad617998b2232d84908c5be424138b2e5a55d"
+    }
+  ],
+  "pooled": {
+    "A": {
+      "pixels": 16904,
+      "RGB_denominator": 50712,
+      "MAE": 0.02938763578922863,
+      "RMSE": 0.05731812642278172
+    },
+    "A_source_available": {
+      "pixels": 16897,
+      "RGB_denominator": 50691,
+      "MAE": 0.02936945855787308,
+      "RMSE": 0.05730503205250495
+    },
+    "A_readonly_floor": {
+      "pixels": 7,
+      "RGB_denominator": 21,
+      "MAE": 0.07326487553419099,
+      "RMSE": 0.08311660149058403
+    },
+    "A_native_zero_eligible_weight": {
+      "pixels": 2962,
+      "RGB_denominator": 8886,
+      "MAE": 0.0862756739600137,
+      "RMSE": 0.11888742279618222
+    },
+    "C": {
+      "pixels": 10830,
+      "RGB_denominator": 32490,
+      "MAE": 0.013978453616512296,
+      "RMSE": 0.029542012017688815
+    },
+    "S": {
+      "pixels": 3131,
+      "RGB_denominator": 9393,
+      "MAE": 0.01680766190478629,
+      "RMSE": 0.03450207359976663
+    },
+    "S_full": {
+      "pixels": 3187,
+      "RGB_denominator": 9561,
+      "MAE": 0.01666130384742298,
+      "RMSE": 0.03422465858628928
+    },
+    "S_old": {
+      "pixels": 2222,
+      "RGB_denominator": 6666,
+      "MAE": 0.01887023432800511,
+      "RMSE": 0.03856786906461274
+    },
+    "S_new": {
+      "pixels": 909,
+      "RGB_denominator": 2727,
+      "MAE": 0.011765818203584725,
+      "RMSE": 0.021544821577154077
+    },
+    "S_thin": {
+      "pixels": 56,
+      "RGB_denominator": 168,
+      "MAE": 0.008478320318771023,
+      "RMSE": 0.010263685038222321
+    }
+  },
+  "detail": {
+    "A": {
+      "1px": {
+        "qualified_pixels": 14198,
+        "unsupported_boundary_pixels": 2706,
+        "HF_MAE": 0.010509729978261394,
+        "HF_RMSE": 0.017400393545584692,
+        "HF_cosine": 0.48035019843503224,
+        "HF_energy_ratio": 1.14540157370179,
+        "predicted_HF_RMS": 0.01761843166550139,
+        "teacher_HF_RMS": 0.016462218382609032
+      },
+      "2px": {
+        "qualified_pixels": 11877,
+        "unsupported_boundary_pixels": 5027,
+        "HF_MAE": 0.014695355997822918,
+        "HF_RMSE": 0.02435827959220423,
+        "HF_cosine": 0.6531895695817834,
+        "HF_energy_ratio": 1.0894306543118801,
+        "predicted_HF_RMS": 0.029840897720659457,
+        "teacher_HF_RMS": 0.028589863937082512
+      },
+      "edges": {
+        "target_edges": 3182,
+        "predicted_edges": 4195,
+        "precision": 0.7749702026221692,
+        "recall": 0.9349465744814582,
+        "F1": 0.8474748548804816,
+        "qualified_pixels": 14111,
+        "unsupported_boundary_pixels": 2793,
+        "teacher_flat_pixels": 4442,
+        "spurious_HF_RMS_on_teacher_flat": 0.009203857284360791,
+        "teacher_flat_HF_RMS": 0.003430836106362401
+      }
+    },
+    "C": {
+      "1px": {
+        "qualified_pixels": 9248,
+        "unsupported_boundary_pixels": 1582,
+        "HF_MAE": 0.006792880358880736,
+        "HF_RMSE": 0.013072023660933484,
+        "HF_cosine": 0.1855866374052835,
+        "HF_energy_ratio": 3.43820852600507,
+        "predicted_HF_RMS": 0.012516859752051865,
+        "teacher_HF_RMS": 0.006750396449916863
+      },
+      "2px": {
+        "qualified_pixels": 7656,
+        "unsupported_boundary_pixels": 3174,
+        "HF_MAE": 0.008802921512640949,
+        "HF_RMSE": 0.01735588931922945,
+        "HF_cosine": 0.28288457327034283,
+        "HF_energy_ratio": 2.5049537177274073,
+        "predicted_HF_RMS": 0.017004637680356545,
+        "teacher_HF_RMS": 0.010744037852824455
+      },
+      "edges": {
+        "target_edges": 389,
+        "predicted_edges": 1259,
+        "precision": 0.33200953137410644,
+        "recall": 0.9151670951156813,
+        "F1": 0.48725127127107465,
+        "qualified_pixels": 9137,
+        "unsupported_boundary_pixels": 1693,
+        "teacher_flat_pixels": 5389,
+        "spurious_HF_RMS_on_teacher_flat": 0.010949416398890906,
+        "teacher_flat_HF_RMS": 0.0029993791429656514
+      }
+    },
+    "S": {
+      "1px": {
+        "qualified_pixels": 2373,
+        "unsupported_boundary_pixels": 758,
+        "HF_MAE": 0.008729701800079693,
+        "HF_RMSE": 0.015076886120523958,
+        "HF_cosine": 0.14051242463518746,
+        "HF_energy_ratio": 1.618012704516779,
+        "predicted_HF_RMS": 0.01275545488034408,
+        "teacher_HF_RMS": 0.010027784382962656
+      },
+      "2px": {
+        "qualified_pixels": 1518,
+        "unsupported_boundary_pixels": 1613,
+        "HF_MAE": 0.010637292047258325,
+        "HF_RMSE": 0.01839448906118015,
+        "HF_cosine": 0.38059974489859066,
+        "HF_energy_ratio": 0.3697248415190521,
+        "predicted_HF_RMS": 0.011744992373270619,
+        "teacher_HF_RMS": 0.01931583217418712
+      },
+      "edges": {
+        "target_edges": 175,
+        "predicted_edges": 410,
+        "precision": 0.4170731707317073,
+        "recall": 0.9542857142857143,
+        "F1": 0.5804563240002032,
+        "qualified_pixels": 2354,
+        "unsupported_boundary_pixels": 777,
+        "teacher_flat_pixels": 1317,
+        "spurious_HF_RMS_on_teacher_flat": 0.012520955734598747,
+        "teacher_flat_HF_RMS": 0.003101655827819606
+      }
+    },
+    "S_new": {
+      "1px": {
+        "qualified_pixels": 630,
+        "unsupported_boundary_pixels": 279,
+        "HF_MAE": 0.008414115017724533,
+        "HF_RMSE": 0.014501770669501111,
+        "HF_cosine": 0.05668637423895264,
+        "HF_energy_ratio": 10.026501000831269,
+        "predicted_HF_RMS": 0.01405931628798778,
+        "teacher_HF_RMS": 0.0044400667635092015
+      },
+      "2px": {
+        "qualified_pixels": 272,
+        "unsupported_boundary_pixels": 637,
+        "HF_MAE": 0.006461640460450885,
+        "HF_RMSE": 0.00815126294223135,
+        "HF_cosine": 0.4187070875700882,
+        "HF_energy_ratio": 2.8981327229410927,
+        "predicted_HF_RMS": 0.008824975745535344,
+        "teacher_HF_RMS": 0.005183873381834634
+      },
+      "edges": {
+        "target_edges": 4,
+        "predicted_edges": 121,
+        "precision": 0.0,
+        "recall": 0.0,
+        "F1": 0.0,
+        "qualified_pixels": 629,
+        "unsupported_boundary_pixels": 280,
+        "teacher_flat_pixels": 399,
+        "spurious_HF_RMS_on_teacher_flat": 0.01443764028231758,
+        "teacher_flat_HF_RMS": 0.0030678896049116436
+      }
+    }
+  },
+  "evaluator_source_sha256": "a13536cd6a0bb9b8e37811eee52b7381e97b2828f47dc3bf985b34934b464525",
+  "frozen_manifest_sha256": "c1b580d95bf0af548e9601c06549ae1caa76f885c0bb82f8760f20515545fe48",
+  "fixed_denominators": {
+    "A": 16904,
+    "C": 10830,
+    "S": 3131,
+    "S_full": 3187,
+    "S_old": 2222,
+    "S_new": 909,
+    "S_thin": 56,
+    "D": 38416,
+    "K": 77266
+  },
+  "mechanical_checks": {
+    "86:alpha_exact": true,
+    "86:joint_alpha_present": true,
+    "86:joint_alpha_exact": true,
+    "86:K_mask_present": true,
+    "86:K_mask_exact": true,
+    "86:joint_K_exact": true,
+    "110:alpha_exact": true,
+    "110:joint_alpha_present": true,
+    "110:joint_alpha_exact": true,
+    "110:K_mask_present": true,
+    "110:K_mask_exact": true,
+    "110:joint_K_exact": true,
+    "134:alpha_exact": true,
+    "134:joint_alpha_present": true,
+    "134:joint_alpha_exact": true,
+    "134:K_mask_present": true,
+    "134:K_mask_exact": true,
+    "134:joint_K_exact": true,
+    "179:alpha_exact": true,
+    "179:joint_alpha_present": true,
+    "179:joint_alpha_exact": true,
+    "179:K_mask_present": true,
+    "179:K_mask_exact": true,
+    "179:joint_K_exact": true,
+    "198:alpha_exact": true,
+    "198:joint_alpha_present": true,
+    "198:joint_alpha_exact": true,
+    "198:K_mask_present": true,
+    "198:K_mask_exact": true,
+    "198:joint_K_exact": true
+  },
+  "mechanical_pass": true,
+  "metric_space": "native premult sRGB P versus FIXED baseline alpha*T; q=1, binary-mask/channel pooled means; no P/alpha photo or HF metric",
+  "detail_policy": "per-domain mask-aware Gaussian sigma1/2px with localmass>=.9; unsupported counts retained; edge/F1 and teacher-flat noise reported separately",
+  "teacher_roles": "A measured visible; C/S frozen pseudo, not hidden-road GT",
+  "diagnostic_views": [
+    134,
+    179,
+    198
+  ],
+  "inherited199BUILD_not_blind": true,
+  "evaluator_GPU_operations": 0,
+  "evaluator_native_calls": 0,
+  "evaluator_training_updates": 0,
+  "public_reload": null,
+  "reload_status": "pending_not_inferred_from_image_metrics",
+  "actual_joint_road_visibility": "requires actual eligible joint alphaT basis; road-only alpha is not joint visibility",
+  "human_verdict": null,
+  "production_promoted": false,
+  "crossview": {
+    "policy": {
+      "pairs": [
+        {
+          "src": 86,
+          "dst": 110,
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/crossview_086_110.npz",
+          "sha256": "31c9df787120c2288ef6a3f0852ecfe2a3a3671f381ebd1cb109aab5ea7b45e8",
+          "matches": 2680,
+          "self_project_error_px_max": 3.0262341273233914e-11
+        },
+        {
+          "src": 110,
+          "dst": 86,
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/crossview_110_086.npz",
+          "sha256": "cf161a485e5da07792f7421d8e402df91b8bcb3da9ed6508e6c97762f4f2bdbb",
+          "matches": 4470,
+          "self_project_error_px_max": 3.933844890450689e-11
+        }
+      ],
+      "geometry_world_tolerance_m": 0.05,
+      "cycle_tolerance_px": 0.75,
+      "road_alpha_min": 0.9,
+      "actual_joint_visibility_threshold_alphaT": 0.05,
+      "interpretation": "actual saved road renders reprojected on fixed surface; high-alpha diagnostic P/alpha only; same field is never re-queried; exposure/view filters and alphaT occlusion remain diagnostic"
+    },
+    "rows": [
+      {
+        "src": 86,
+        "dst": 110,
+        "fixed_correspondences": 2680,
+        "roles": {
+          "A": {
+            "all": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            },
+            "joint_visible": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            }
+          },
+          "C": {
+            "all": {
+              "samples": 2663,
+              "MAE": 0.0036953084151904255,
+              "RMSE": 0.008755923474088524
+            },
+            "joint_visible": {
+              "samples": 2557,
+              "MAE": 0.0036452615578837183,
+              "RMSE": 0.008796785544266123
+            }
+          },
+          "S": {
+            "all": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            },
+            "joint_visible": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            }
+          }
+        },
+        "visibility_counts": {
+          "all_fixed_matches": 2680,
+          "actual_joint_eligible_alphaT_both_ge_.05": 2569,
+          "actual_joint_eligible_alphaT_either_zero": 47
+        },
+        "actual_render_premult": {
+          "all_fixed_matches": {
+            "samples": 2680,
+            "MAE": 0.003928460582101226,
+            "RMSE": 0.009078696062061778
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 2569,
+            "MAE": 0.0038654236055031942,
+            "RMSE": 0.009083220180771047
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 47,
+            "MAE": 0.005694612131174275,
+            "RMSE": 0.008102224103664506
+          }
+        },
+        "highalpha_unpremult_diagnostic": {
+          "all_fixed_matches": {
+            "samples": 2680,
+            "MAE": 0.003776814967383392,
+            "RMSE": 0.00896453717194646
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 2569,
+            "MAE": 0.003704346963493303,
+            "RMSE": 0.008962540319549796
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 47,
+            "MAE": 0.005706885354021984,
+            "RMSE": 0.00811206451161491
+          }
+        },
+        "HF_1px_diagnostic": {
+          "all_fixed_matches": {
+            "samples": 2680,
+            "MAE": 0.004664193266403333,
+            "RMSE": 0.008825553566250267
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 2569,
+            "MAE": 0.004477730281488963,
+            "RMSE": 0.008466082405307601
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 47,
+            "MAE": 0.0047989696867959345,
+            "RMSE": 0.006590838872163189
+          }
+        },
+        "not_independent_truth": "Actual rendered reprojection, not field equality; high-alpha division is diagnostic only, not training/detail metric. Camera exposure, footprint filtering and occlusion differ."
+      },
+      {
+        "src": 110,
+        "dst": 86,
+        "fixed_correspondences": 4470,
+        "roles": {
+          "A": {
+            "all": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            },
+            "joint_visible": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            }
+          },
+          "C": {
+            "all": {
+              "samples": 4465,
+              "MAE": 0.00497787822426085,
+              "RMSE": 0.010086500357767631
+            },
+            "joint_visible": {
+              "samples": 4312,
+              "MAE": 0.004822139138224943,
+              "RMSE": 0.009892512707457413
+            }
+          },
+          "S": {
+            "all": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            },
+            "joint_visible": {
+              "samples": 0,
+              "MAE": null,
+              "RMSE": null
+            }
+          }
+        },
+        "visibility_counts": {
+          "all_fixed_matches": 4470,
+          "actual_joint_eligible_alphaT_both_ge_.05": 4313,
+          "actual_joint_eligible_alphaT_either_zero": 66
+        },
+        "actual_render_premult": {
+          "all_fixed_matches": {
+            "samples": 4470,
+            "MAE": 0.005115983635166657,
+            "RMSE": 0.010211274512047605
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 4313,
+            "MAE": 0.004965120821641338,
+            "RMSE": 0.010025002981482699
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 66,
+            "MAE": 0.011419165046544767,
+            "RMSE": 0.01599743583544373
+          }
+        },
+        "highalpha_unpremult_diagnostic": {
+          "all_fixed_matches": {
+            "samples": 4470,
+            "MAE": 0.004980464454934582,
+            "RMSE": 0.010086781764074376
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 4313,
+            "MAE": 0.004822529068684039,
+            "RMSE": 0.009891977252651637
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 66,
+            "MAE": 0.011444364356510221,
+            "RMSE": 0.015959531586443185
+          }
+        },
+        "HF_1px_diagnostic": {
+          "all_fixed_matches": {
+            "samples": 4470,
+            "MAE": 0.005969369410680883,
+            "RMSE": 0.011702939263003784
+          },
+          "actual_joint_eligible_alphaT_both_ge_.05": {
+            "samples": 4313,
+            "MAE": 0.005537095768462811,
+            "RMSE": 0.010617177846340869
+          },
+          "actual_joint_eligible_alphaT_either_zero": {
+            "samples": 66,
+            "MAE": 0.013050908615840587,
+            "RMSE": 0.01928661323717123
+          }
+        },
+        "not_independent_truth": "Actual rendered reprojection, not field equality; high-alpha division is diagnostic only, not training/detail metric. Camera exposure, footprint filtering and occlusion differ."
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "teacher_detail_formal_completed.v1",
+  "completed": true,
+  "arms": [
+    {
+      "arm": "M11",
+      "reader": "pixel",
+      "gate": "teacher",
+      "T11_H_seed": false,
+      "logical_updates": 800,
+      "physical_branch_updates": 600,
+      "checkpoints": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/B500",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800"
+      ]
+    },
+    {
+      "arm": "M01",
+      "reader": "pixel",
+      "gate": "observed",
+      "T11_H_seed": false,
+      "logical_updates": 800,
+      "physical_branch_updates": 600,
+      "checkpoints": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/B500",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800"
+      ]
+    },
+    {
+      "arm": "T11",
+      "reader": "pixel",
+      "gate": "teacher",
+      "T11_H_seed": true,
+      "logical_updates": 800,
+      "physical_branch_updates": 600,
+      "checkpoints": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/T11/B500",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/T11/C800"
+      ]
+    },
+    {
+      "arm": "M10",
+      "reader": "avg",
+      "gate": "teacher",
+      "T11_H_seed": false,
+      "logical_updates": 800,
+      "physical_branch_updates": 600,
+      "checkpoints": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M10/B500",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M10/C800"
+      ]
+    },
+    {
+      "arm": "M00",
+      "reader": "avg",
+      "gate": "observed",
+      "T11_H_seed": false,
+      "logical_updates": 800,
+      "physical_branch_updates": 600,
+      "checkpoints": [
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M00/B500",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M00/C800"
+      ]
+    }
+  ],
+  "formal_physical_updates": 3400,
+  "formal_logical_updates": 4000,
+  "engineering_updates_separate": 17,
+  "seconds": 159.81581020355225,
+  "native_forward_calls": 1460,
+  "scene_geometric_parameters_trainable": false,
+  "world_material_low_high_only": true,
+  "all_bound_inputs_unchanged": true,
+  "joint_K_pixels": 77266,
+  "joint_K_max": 0,
+  "alpha_max": 0,
+  "GPU_keep_on": true,
+  "power_operations": 0,
+  "production_promoted": false,
+  "human_verdict": null,
+  "problem_solved": null
+}

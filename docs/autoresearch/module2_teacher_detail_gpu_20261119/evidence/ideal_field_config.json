@@ -1,0 +1,121 @@
+{
+  "schema": "ideal_world_road_teacher.v1",
+  "world_frame": {
+    "origin_xy": [
+      2319.037338203957,
+      1366.7011162614476
+    ],
+    "longitudinal_xy": [
+      0.9999961986138515,
+      0.002757309893078811
+    ],
+    "lateral_xy": [
+      -0.002757309893078811,
+      0.9999961986138515
+    ],
+    "origin_rule": "componentwise median canonical mesh hits in five historical fixed domains; no RGB used"
+  },
+  "curve": {
+    "kind": "circle arc",
+    "radius_m": 120.0,
+    "coordinates": "u=R atan2(s,R-l), v=R-hypot(s,R-l); width is world-XY outer paint width"
+  },
+  "asphalt": {
+    "constant_srgb": [
+      0.32,
+      0.33,
+      0.35
+    ],
+    "lowfreq": {
+      "amplitude_srgb": [
+        0.015,
+        0.01,
+        0.008
+      ],
+      "longitudinal_period_m": 8.0,
+      "lateral_period_m": 2.0
+    }
+  },
+  "paint_srgb": [
+    0.88,
+    0.88,
+    0.84
+  ],
+  "sampling": {
+    "main": "pixel-center canonical G_s mesh hit; plane fallback separately tagged",
+    "detail_minimum_pixels": 3.0,
+    "nyquist_cycles_per_axis_maximum": 0.5,
+    "main_domain_never_shrunk": true,
+    "pixel_footprint_supersampling": "4x4 spot-check plan only; no full AA target is claimed",
+    "marking_failure_requires_sampling_convention_review": true
+  },
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "render_wh": [
+    480,
+    320
+  ],
+  "role": "all-five-view ideal capacity oracle, not generalization; actual-data experiment remains two train and three diagnose",
+  "color": "native sRGB appearance; fixed-alpha premult RGB target; no intrinsic-radiance claim",
+  "cases": [
+    {
+      "name": "constant",
+      "asphalt": "constant",
+      "gate_role": "primary",
+      "marking": null
+    },
+    {
+      "name": "lowfreq",
+      "asphalt": "lowfreq",
+      "gate_role": "primary",
+      "marking": null
+    },
+    {
+      "name": "marking_w120",
+      "asphalt": "lowfreq",
+      "gate_role": "resolved_detail_only",
+      "marking": {
+        "width_m": 0.12,
+        "cross_edge_m": 0.02,
+        "period_m": 3.0,
+        "on_m": 1.5,
+        "phase_m": 0.45,
+        "longitudinal_edge_m": 0.1,
+        "profile": "flat top with cubic smoothstep edges"
+      }
+    },
+    {
+      "name": "marking_w240",
+      "asphalt": "lowfreq",
+      "gate_role": "resolved_detail_only",
+      "marking": {
+        "width_m": 0.24,
+        "cross_edge_m": 0.02,
+        "period_m": 3.0,
+        "on_m": 1.5,
+        "phase_m": 0.45,
+        "longitudinal_edge_m": 0.1,
+        "profile": "flat top with cubic smoothstep edges"
+      }
+    },
+    {
+      "name": "stress_highfreq",
+      "asphalt": "stress",
+      "gate_role": "diagnostic_only_never_capability_failure",
+      "marking": {
+        "width_m": 0.025,
+        "cross_edge_m": 0.004,
+        "period_m": 0.1,
+        "on_m": 0.05,
+        "phase_m": 0.012,
+        "longitudinal_edge_m": 0.01,
+        "profile": "flat top with cubic smoothstep edges"
+      }
+    }
+  ]
+}

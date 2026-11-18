@@ -1,0 +1,715 @@
+{
+  "description": "world-field diagnostics only; no new quality thresholds",
+  "axes": "u=chart columns, v=chart rows; these are not camera image horizontal/vertical",
+  "spectral_boundary": "same common reg mask for every stage; mask boundaries contribute spectrum",
+  "display": {
+    "low_delta_limit": 0.3,
+    "effective_H_display_limit": 0.04,
+    "display_clipping_is_not_model_bound": true,
+    "model_H_bound": 0.34
+  },
+  "rows": {
+    "M11_A200": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/pixel_common_A200/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.10010127496957656,
+        "abs_max": 0.26574650406837463,
+        "abs_p50_p95_p99": [
+          0.04508141800761223,
+          0.2299856722354889,
+          0.2644319486618042
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.0,
+        "abs_max": 0.0,
+        "abs_p50_p95_p99": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.0,
+        "abs_max": 0.0,
+        "abs_p50_p95_p99": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 6.815857006788493e-05,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 7.949874167476679e-05,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.1663792476219383
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 0.0
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.0017155025690476972,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.002318520504810723,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.3515109488281154
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 0.0,
+        "u_frequency_second_moment": 0.0,
+        "v_frequency_second_moment": 0.0,
+        "radial_band_fractions": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.000938902628927361,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 6.815857006788493e-05,
+          "H": 0.0,
+          "cross_terms": {
+            "A0_L": -9.681316668447855e-06,
+            "A0_H": 0.0,
+            "L_H": 0.0
+          },
+          "unclamped_total": 0.0017172581207569957,
+          "identity_error": 7.335305323222241e-19
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 7.949874167476679e-05,
+          "H": 0.0,
+          "cross_terms": {
+            "A0_L": -9.111898910022093e-06,
+            "A0_H": 0.0,
+            "L_H": 0.0
+          },
+          "unclamped_total": 0.0023195206232834746,
+          "identity_error": 8.775261333554552e-19
+        }
+      }
+    },
+    "M11_B500": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/B500/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.10010127496957656,
+        "abs_max": 0.26574650406837463,
+        "abs_p50_p95_p99": [
+          0.04508141800761223,
+          0.2299856722354889,
+          0.2644319486618042
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.03494852469211602,
+        "abs_max": 0.14909784495830536,
+        "abs_p50_p95_p99": [
+          0.015002571977674961,
+          0.08026761598885059,
+          0.1000458888709545
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.026231293560376966,
+        "abs_max": 0.14909784495830536,
+        "abs_p50_p95_p99": [
+          0.008696289733052254,
+          0.06402445472776888,
+          0.09333478018641471
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.000148926025339282,
+        3.171935639199014e-05,
+        7.471128114399476e-05
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 6.815857006788493e-05,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 7.949874167476679e-05,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.1663792476219383
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0014281818601222813,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0016691760502271405,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.1687419486508708
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.0030240451509437973,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.003422046056474572,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.1316120909790517
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 1.4936916784283607e-35,
+        "u_frequency_second_moment": 0.0351519060433892,
+        "v_frequency_second_moment": 0.03975987946418692,
+        "radial_band_fractions": [
+          0.05997973716892952,
+          0.29384298761301886,
+          0.6461772752180515
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.0009694360477542671,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 6.815857006788493e-05,
+          "H": 0.0014281818601222813,
+          "cross_terms": {
+            "A0_L": -9.681316668447855e-06,
+            "A0_H": -0.00011698332822989189,
+            "L_H": -1.0946547448282475e-06
+          },
+          "unclamped_total": 0.0030273619979045573,
+          "identity_error": 2.168404344971009e-19
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 7.949874167476679e-05,
+          "H": 0.0016691760502271405,
+          "cross_terms": {
+            "A0_L": -9.111898910022093e-06,
+            "A0_H": -0.0005429040252293682,
+            "L_H": -2.2593428049232126e-05
+          },
+          "unclamped_total": 0.003423199220232014,
+          "identity_error": 1.6263032587282567e-18
+        }
+      },
+      "drift_from_A200": {
+        "low_raw_max": 0.0,
+        "high_raw_max": 1.0440033674240112,
+        "effective_H_RMS": 0.026231293560376966
+      }
+    },
+    "M11_C800": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.11177014710915469,
+        "abs_max": 0.29072919487953186,
+        "abs_p50_p95_p99": [
+          0.04855186864733696,
+          0.2531679391860962,
+          0.2830845510959625
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.047936944261084066,
+        "abs_max": 0.18447214365005493,
+        "abs_p50_p95_p99": [
+          0.02023331355303526,
+          0.11031956821680067,
+          0.13388168901205064
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.03471059900417556,
+        "abs_max": 0.18447214365005493,
+        "abs_p50_p95_p99": [
+          0.011901253368705511,
+          0.08454044573009012,
+          0.12359324447810646
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.006595762222771869,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.00012832555425751685,
+        4.0028786157424516e-05,
+        8.346787012481856e-05
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 8.830171108623153e-05,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 9.356010172760002e-05,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.0595502689209881
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0028545117329497366,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0030635305947639803,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.0732240331688012
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.004391662828462941,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.004580457420036651,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.0429893183853067
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 3.782437619966409e-35,
+        "u_frequency_second_moment": 0.03884366287372399,
+        "v_frequency_second_moment": 0.04119580684914133,
+        "radial_band_fractions": [
+          0.04856820508701968,
+          0.2740974184190336,
+          0.6773343764939466
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.0020152056425757994,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 8.830171108623153e-05,
+          "H": 0.0028545117329497366,
+          "cross_terms": {
+            "A0_L": -1.0784643892893792e-05,
+            "A0_H": -0.00018745919955073415,
+            "L_H": -1.7118551018348413e-06
+          },
+          "unclamped_total": 0.004401638612848065,
+          "identity_error": 5.149960319306146e-19
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 9.356010172760002e-05,
+          "H": 0.0030635305947639803,
+          "cross_terms": {
+            "A0_L": -1.0076828581972253e-05,
+            "A0_H": -0.0007745547102483628,
+            "L_H": -3.3344459869800644e-05
+          },
+          "unclamped_total": 0.004588248478310175,
+          "identity_error": 6.505213034913027e-19
+        }
+      },
+      "drift_from_A200": {
+        "low_raw_max": 1.290277361869812,
+        "high_raw_max": 1.5840108394622803,
+        "effective_H_RMS": 0.03471059900417556
+      },
+      "drift_from_B500": {
+        "low_raw_max": 1.290277361869812,
+        "high_raw_max": 1.2007824182510376,
+        "effective_H_RMS": 0.012375720733144382
+      }
+    },
+    "M10_A200": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/avg_common_A200/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.10681051150038427,
+        "abs_max": 0.2693755030632019,
+        "abs_p50_p95_p99": [
+          0.05108354985713959,
+          0.23438102900981905,
+          0.2647187340259552
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.0,
+        "abs_max": 0.0,
+        "abs_p50_p95_p99": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.0,
+        "abs_max": 0.0,
+        "abs_p50_p95_p99": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 6.962113078437252e-05,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.00012874603837488322,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.8492379673296278
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 0.0
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.0017139351121367415,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.002353586905992877,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.3732065405082283
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 0.0,
+        "u_frequency_second_moment": 0.0,
+        "v_frequency_second_moment": 0.0,
+        "radial_band_fractions": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.001965588836982077,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 6.962113078437252e-05,
+          "H": 0.0,
+          "cross_terms": {
+            "A0_L": -3.7635387673407586e-06,
+            "A0_H": 0.0,
+            "L_H": 0.0
+          },
+          "unclamped_total": 0.0017246384593745912,
+          "identity_error": 9.698527246061739e-20
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 0.00012874603837488322,
+          "H": 0.0,
+          "cross_terms": {
+            "A0_L": -1.5391250018666424e-05,
+            "A0_H": 0.0,
+            "L_H": 0.0
+          },
+          "unclamped_total": 0.0023624885688749465,
+          "identity_error": 1.009663273127126e-18
+        }
+      }
+    },
+    "M10_B500": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M10/B500/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.10681051150038427,
+        "abs_max": 0.2693755030632019,
+        "abs_p50_p95_p99": [
+          0.05108354985713959,
+          0.23438102900981905,
+          0.2647187340259552
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.03596473598429088,
+        "abs_max": 0.1629577875137329,
+        "abs_p50_p95_p99": [
+          0.018058803863823414,
+          0.07757736369967459,
+          0.09569345220923421
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.028629771684784595,
+        "abs_max": 0.1629577875137329,
+        "abs_p50_p95_p99": [
+          0.010346665978431702,
+          0.06823394894599914,
+          0.09167813964188096
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.0003421500994828887,
+        -2.010589100810948e-05,
+        1.5851216345795192e-05
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 6.962113078437252e-05,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.00012874603837488322,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.8492379673296278
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0008675869567382466,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0008890183508490565,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.0247023009559557
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.002499784910965582,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.00302500035121954,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.2101042525499064
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 2.278188999122483e-35,
+        "u_frequency_second_moment": 0.023079377544113697,
+        "v_frequency_second_moment": 0.023239909068239632,
+        "radial_band_fractions": [
+          0.07114220215447958,
+          0.45214360489745864,
+          0.4767141929480616
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.001999938933162346,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 6.962113078437252e-05,
+          "H": 0.0008675869567382466,
+          "cross_terms": {
+            "A0_L": -3.7635387673407586e-06,
+            "A0_H": -7.712169623427623e-05,
+            "L_H": -6.352452170197151e-07
+          },
+          "unclamped_total": 0.002514468474661542,
+          "identity_error": 1.7618285302889447e-19
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 0.00012874603837488322,
+          "H": 0.0008890183508490565,
+          "cross_terms": {
+            "A0_L": -1.5391250018666424e-05,
+            "A0_H": -0.00019713186444691186,
+            "L_H": -1.4976217371386055e-05
+          },
+          "unclamped_total": 0.003039398837905706,
+          "identity_error": 5.421010862427522e-20
+        }
+      },
+      "drift_from_A200": {
+        "low_raw_max": 0.0,
+        "high_raw_max": 0.9782644510269165,
+        "effective_H_RMS": 0.028629771684784595
+      }
+    },
+    "M10_C800": {
+      "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M10/C800/field.pt",
+      "low_nodes": 4043,
+      "high_latent_nodes": 92331,
+      "common_reg_nodes": 87336,
+      "L": {
+        "RMS": 0.11791739476022847,
+        "abs_max": 0.29128730297088623,
+        "abs_p50_p95_p99": [
+          0.056765638291835785,
+          0.2602263092994691,
+          0.2832014000415802
+        ]
+      },
+      "H_unmodulated": {
+        "RMS": 0.05046245751290233,
+        "abs_max": 0.1968986839056015,
+        "abs_p50_p95_p99": [
+          0.026155028492212296,
+          0.10758714601397514,
+          0.12843211606144903
+        ]
+      },
+      "effective_H": {
+        "RMS": 0.038954616853053646,
+        "abs_max": 0.17747066915035248,
+        "abs_p50_p95_p99": [
+          0.015095760580152273,
+          0.09270966015756128,
+          0.12141395285725588
+        ]
+      },
+      "low_tanh_ge_095_fraction": 0.006678209250556517,
+      "high_tanh_ge_095_fraction": 0.0,
+      "high_tanh_ge_099_fraction": 0.0,
+      "effective_H_weighted_DC": [
+        0.0003936779327631104,
+        1.216137067796141e-05,
+        5.3634227212978624e-05
+      ],
+      "A0_directions": {
+        "u_second_difference_energy": 0.0016587808673575594,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0022491337805187308,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.355895660951048
+      },
+      "L_directions": {
+        "u_second_difference_energy": 0.00010568606273347639,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.00014647877967438678,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.3859800988497717
+      },
+      "H_directions": {
+        "u_second_difference_energy": 0.0017191901781586783,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.0017153224853761403,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 0.9977502821783915
+      },
+      "combined_directions": {
+        "u_second_difference_energy": 0.003337572267926675,
+        "u_stencil_nodes": 78130,
+        "v_second_difference_energy": 0.003756842812612971,
+        "v_stencil_nodes": 77742,
+        "v_over_u_second_difference_energy": 1.1256214131197675
+      },
+      "H_spectrum": {
+        "DC_energy_fraction": 2.2593120008428596e-35,
+        "u_frequency_second_moment": 0.024214209733753735,
+        "v_frequency_second_moment": 0.023716973631230206,
+        "radial_band_fractions": [
+          0.059315941964946516,
+          0.42723849555971316,
+          0.5134455624753402
+        ],
+        "bands_cycles_per_texel": [
+          "[0,1/12)",
+          "[1/12,1/6)",
+          "[1/6,Nyquist-domain]"
+        ]
+      },
+      "clamp_fraction": 0.0031525754938780495,
+      "world_second_difference_energy_decomposition": {
+        "u": {
+          "A0": 0.0016587808673575594,
+          "L": 0.00010568606273347639,
+          "H": 0.0017191901781586783,
+          "cross_terms": {
+            "A0_L": -2.527674014882036e-06,
+            "A0_H": -0.00012113936373547831,
+            "L_H": 3.3201727362857302e-06
+          },
+          "unclamped_total": 0.003363310243235639,
+          "identity_error": 4.2012834183813297e-19
+        },
+        "v": {
+          "A0": 0.0022491337805187308,
+          "L": 0.00014647877967438678,
+          "H": 0.0017153224853761403,
+          "cross_terms": {
+            "A0_L": -1.6570410959302916e-05,
+            "A0_H": -0.00029633879933645395,
+            "L_H": -1.725199892324564e-05
+          },
+          "unclamped_total": 0.0037807738363502545,
+          "identity_error": 7.589415207398531e-19
+        }
+      },
+      "drift_from_A200": {
+        "low_raw_max": 1.1292612552642822,
+        "high_raw_max": 1.5804762840270996,
+        "effective_H_RMS": 0.038954616853053646
+      },
+      "drift_from_B500": {
+        "low_raw_max": 1.1292612552642822,
+        "high_raw_max": 1.1348605155944824,
+        "effective_H_RMS": 0.01444285035701302
+      }
+    }
+  },
+  "seconds": 6.697090292349458,
+  "native_forward_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_operations": 0,
+  "numerical_fields": "NumPy/SciPy same separable Gaussian formula, not additional native render",
+  "no_energy_additivity_claim_without_cross_terms": true
+}

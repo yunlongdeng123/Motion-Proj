@@ -1,0 +1,71 @@
+{
+  "schema": "actual_CUDA_fixed_read_qualification.v1",
+  "verified": true,
+  "device": "NVIDIA GeForce RTX 4080 SUPER",
+  "torch": "2.2.2+cu118",
+  "cases": [
+    {
+      "reader": "avg",
+      "gate": "observed",
+      "rows": 89887,
+      "nonzeros_H": 12644730,
+      "RGB_CPU_CUDA_abs_max": 0.0,
+      "low_gradient_abs_max": 0.0,
+      "high_gradient_abs_max": 0.0,
+      "CUDA_H_gradient_nonzero": 237908,
+      "first_forward_seconds": 0.41724577732384205,
+      "steady_forward_backward_seconds": 0.025939116875330608,
+      "CUDA_peak_allocated_MB": 1237.736328125,
+      "verified": true
+    },
+    {
+      "reader": "avg",
+      "gate": "teacher",
+      "rows": 89887,
+      "nonzeros_H": 20825746,
+      "RGB_CPU_CUDA_abs_max": 0.0,
+      "low_gradient_abs_max": 0.0,
+      "high_gradient_abs_max": 0.0,
+      "CUDA_H_gradient_nonzero": 327333,
+      "first_forward_seconds": 0.5101011916995049,
+      "steady_forward_backward_seconds": 0.041143531600634255,
+      "CUDA_peak_allocated_MB": 2317.9541015625,
+      "verified": true,
+      "reader_total_seconds": 8.67276637069881
+    },
+    {
+      "reader": "pixel086",
+      "gate": "observed_H",
+      "rows": 13706,
+      "nonzeros_H": 159283,
+      "RGB_CPU_CUDA_abs_max": 0.0,
+      "low_gradient_abs_max": 0.0,
+      "high_gradient_abs_max": 0.0,
+      "CUDA_H_gradient_nonzero": 213135,
+      "first_forward_seconds": 0.004468357190489769,
+      "steady_forward_backward_seconds": 0.001471380392710368,
+      "CUDA_peak_allocated_MB": 2317.9541015625,
+      "verified": true
+    },
+    {
+      "reader": "pixel086",
+      "gate": "observed_plus_teacher_H",
+      "rows": 13706,
+      "nonzeros_H": 221241,
+      "RGB_CPU_CUDA_abs_max": 0.0,
+      "low_gradient_abs_max": 0.0,
+      "high_gradient_abs_max": 0.0,
+      "CUDA_H_gradient_nonzero": 289095,
+      "first_forward_seconds": 0.004998728632926941,
+      "steady_forward_backward_seconds": 0.0014649927616119385,
+      "CUDA_peak_allocated_MB": 2317.9541015625,
+      "verified": true,
+      "reader_total_seconds": 0.16454053111374378
+    }
+  ],
+  "optimizer_updates": 0,
+  "native_ctx_loaded": false,
+  "source": "/tmp/teacher_detail_qualify_cuda_reads.py",
+  "source_sha256": "a067df33983d1bf9b48e7f1874902835af4896e85d9b0f46d60be437766db05b",
+  "limitation": "Read operator only; native renderer, K protection and full state lifecycle are separate mandatory gates."
+}

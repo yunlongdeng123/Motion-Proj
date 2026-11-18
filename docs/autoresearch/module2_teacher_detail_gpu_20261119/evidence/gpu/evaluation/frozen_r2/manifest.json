@@ -1,0 +1,214 @@
+{
+  "schema": "teacher_detail_frozen_evaluation.v1",
+  "frames": {
+    "86": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/086.npz",
+      "sha256": "20a6f3a609253dca6c18db5f42995a685dd703d6a23248fe2cd61e45d51350be",
+      "baseline_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/086_baseline_packet.npz",
+      "baseline_packet_sha256": "dcc026e16bd8ff684ba5bd3043c7c65d2b7c359145e14174057e243de896a643",
+      "role": "teacher_source"
+    },
+    "110": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/110.npz",
+      "sha256": "dcd6de8de4d84f0c6e5814fe0a28715f5c70bb9ac8a1668ac3584b20372fd14d",
+      "baseline_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/110_baseline_packet.npz",
+      "baseline_packet_sha256": "84fef515d84ebf5b1d14ed6ddcd63efb6c451fbf599c82711f033e2de0a029db",
+      "role": "teacher_source"
+    },
+    "134": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/134.npz",
+      "sha256": "75e601cffb8dfb7a5f53b6fb3cbe1817ddc758856ea5af3c92ac8e91f403ae07",
+      "baseline_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/134_baseline_packet.npz",
+      "baseline_packet_sha256": "1b2178dadf960db733352b3802ba0a2be238233259ded0925b6e733d31f219b1",
+      "role": "diagnostic_not_blind"
+    },
+    "179": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/179.npz",
+      "sha256": "ce6f0282fd6ab9b260e202db0a9685b5fb2d954bf210a387f598f13e55c09c24",
+      "baseline_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/179_baseline_packet.npz",
+      "baseline_packet_sha256": "d54d02776cd7d8a967d552f07f0d0a87145add76b1655ad8968073b44a1e9d57",
+      "role": "diagnostic_not_blind"
+    },
+    "198": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/198.npz",
+      "sha256": "eca336b07bf31d3af86a9e01c2dccdf0ddc44908e3b76703cb5117533bdac6a3",
+      "baseline_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/198_baseline_packet.npz",
+      "baseline_packet_sha256": "5265945360c2719be4288889d56a3731bf61e0fd3a603f36173026f9ecbfd5e2",
+      "role": "diagnostic_not_blind"
+    }
+  },
+  "fixed_denominators": {
+    "A": 16904,
+    "C": 10830,
+    "S": 3131,
+    "S_full": 3187,
+    "S_old": 2222,
+    "S_new": 909,
+    "S_thin": 56,
+    "D": 38416,
+    "K": 77266
+  },
+  "CPU_only": true,
+  "teacher_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "historical_199BUILD_not_blind": true,
+  "policy": {
+    "photo": "native premult sRGB P vs frozen alpha*teacher; q1; A/C/S independently normalized",
+    "detail": "mask-normalized Gaussian sigma1/2px truncate3; local support>=.9; boundary counts retained",
+    "edge": "Sobel luma/8, magnitude>=4/255; 1px match; mask eroded1px; no-edge target is N/A",
+    "stripe": "frozen G/check3 37404 domain; directional absolute second differences",
+    "visibility": "road-only support is separate from actual joint eligible alphaT",
+    "no_hidden_GT": "A observed; C/S pseudo; diagnostic views have no teacher targets",
+    "ROI": "before formal outputs: masks or frozen teacher only; no result-selected crops"
+  },
+  "source_bindings": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/qa/material_masks.npz",
+      "sha256": "506478172ffe2cc9e68fde2bec3724cd05bf022455106553589671e01fd6cc30"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check3/frozen_frequency_masks.npz",
+      "sha256": "71c9fa2d8c934cba35119ef7ac6660f036048869a4eb26205ec12b19711a513f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/protocol.json",
+      "sha256": "2e46ad8c13ba287907bb8aee1fa54ca86a4cc6473a161519a918fa2f31dbebc2"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/authorization.json",
+      "sha256": "f991cf0194093f6bf23da0f8852f0f2f2c1d14032115c1b3d4e3d0d0d9700533"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/086/road_basis.npz",
+      "sha256": "347f447b6e110354ea3f30e45b1407c04ccea8ee0aa1ccd1c797036e3507293c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/086/joint_basis.npz",
+      "sha256": "42e7be80104511a2d311e045981cfcdb1d9b8b4247e2598b197aae726f2ecd6a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/086.npz",
+      "sha256": "fe93978ff518f9fd2af2a68de98aea3abe054bec26da9d439960743f50aca3e6"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/086.npz",
+      "sha256": "8522c5809efe3ae9a55e3dd61564e144db1e93e8329f6500bf72c5642fda61f4"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/086_targets.npz",
+      "sha256": "d68278bb2a314d79f5869cc707955790b8fb035cb79119349d800b87fab7efdc"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/constants.npz",
+      "sha256": "3bca972b96a693db0170a077327544a9ca0f5ed72d928856e20537162df457e7"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/110/road_basis.npz",
+      "sha256": "49ad8ec2fc386a3cc090e50c4a7206041c1c4c72923f650d85412177845f66c6"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/110/joint_basis.npz",
+      "sha256": "30ffb79f55a12296a1eebbf2ffa66f1943862f75392d35495e66f9a5f8f77ca9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/110.npz",
+      "sha256": "eb8107662b43c72e44118404e1ffdffbb13a25550882eff1718350f4c0a999f1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/110.npz",
+      "sha256": "89cee0923bf2b47c4b4a8986661d96375018266a6aee9972f4fcfdadc7681d87"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/110_targets.npz",
+      "sha256": "fcccb6c0c2797edfe16ac577c638155db108f9ac757ae01f0077d365262a66df"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/constants.npz",
+      "sha256": "f4a3b7e8d3c541bf248dd0f44cbc453504ae5efe21cc4dbb1b7d0ba0d9895eca"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/134/road_basis.npz",
+      "sha256": "eaab37510aca9b8996b2ecdce830fe2a87891e875258bb83f1fb2ccfb967551c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/134/joint_basis.npz",
+      "sha256": "7604de36b8bc56f4bd31a6029edec7a5cc2fb4831a6422b3d291b9eddbb58833"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/134.npz",
+      "sha256": "1960f56809e2d5444ec243ecfd92e7ec7197b2b1cbbc23347850db804fe813c3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/134.npz",
+      "sha256": "4162a6dc9f58fb5f96b3f9d7bf487a5f5990fb6a3fbbbef3fccb3ca3752f8694"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/179/road_basis.npz",
+      "sha256": "e0e47fe22f77bd2e420cec5a96c44242e6c018529424c166113a4d0f312aaa95"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/179/joint_basis.npz",
+      "sha256": "cc788b42e5c19b33f09653743508ec39a529032b3d204f30fdcc6e308066b946"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/179.npz",
+      "sha256": "3178d525fecba8a5ff5da057d48cecf42d30fe0e062776018054086d061ffac4"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/179.npz",
+      "sha256": "c40960a12b289c48b6ac880bd82e2e512f7f8923ff5ec74d8e2115d55ac760d9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/198/road_basis.npz",
+      "sha256": "cfa4d64d5d27e691cb856402a3a0ddc47787a6ee38e0dd45f4d646f354fe41dd"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native/basis/198/joint_basis.npz",
+      "sha256": "0e7410712ddf9c1bf6c4e972b385870e93d3aeeb5b21c9043a1e34175c3c5574"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/maps/198.npz",
+      "sha256": "28dbe7a96747672652246da9540873f7b9b182b64466cff83aa3eecc3f44f5e3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/constant/198.npz",
+      "sha256": "ea78338919e74c96acf55751eb0e5e14068a00d703794d7ddfd0705ae0964dc4"
+    }
+  ],
+  "crossview": {
+    "pairs": [
+      {
+        "src": 86,
+        "dst": 110,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/crossview_086_110.npz",
+        "sha256": "31c9df787120c2288ef6a3f0852ecfe2a3a3671f381ebd1cb109aab5ea7b45e8",
+        "matches": 2680,
+        "self_project_error_px_max": 3.0262341273233914e-11
+      },
+      {
+        "src": 110,
+        "dst": 86,
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/crossview_110_086.npz",
+        "sha256": "cf161a485e5da07792f7421d8e402df91b8bcb3da9ed6508e6c97762f4f2bdbb",
+        "matches": 4470,
+        "self_project_error_px_max": 3.933844890450689e-11
+      }
+    ],
+    "geometry_world_tolerance_m": 0.05,
+    "cycle_tolerance_px": 0.75,
+    "road_alpha_min": 0.9,
+    "actual_joint_visibility_threshold_alphaT": 0.05,
+    "interpretation": "actual saved road renders reprojected on fixed surface; high-alpha diagnostic P/alpha only; same field is never re-queried; exposure/view filters and alphaT occlusion remain diagnostic"
+  },
+  "ROIs": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/rois.json",
+    "sha256": "eb7defd985d608729378359704e22cd271248016361397de117c2e49654d97fb"
+  }
+}

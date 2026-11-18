@@ -1,0 +1,114 @@
+{
+  "schema": "before_output_fixed_ROI.v1",
+  "rois": [
+    {
+      "raw": 86,
+      "key": "C",
+      "label": "孔洞伪教师细节",
+      "bbox_xyxy": [
+        192,
+        194,
+        301,
+        284
+      ],
+      "selection": "frozen full mask bbox +8px",
+      "teacher_is_pseudo": true
+    },
+    {
+      "raw": 86,
+      "key": "S_full",
+      "label": "目标阴影伪教师",
+      "bbox_xyxy": [
+        166,
+        238,
+        285,
+        286
+      ],
+      "selection": "frozen full mask bbox +8px",
+      "teacher_is_pseudo": true
+    },
+    {
+      "raw": 86,
+      "key": "observed_white_proxy",
+      "label": "实拍亮色结构（不作标线真值）",
+      "bbox_xyxy": [
+        177,
+        224,
+        202,
+        249
+      ],
+      "selection": "largest frozen realA component, luma>.65 and RGB spread<.15",
+      "pixels": 30
+    },
+    {
+      "raw": 110,
+      "key": "C",
+      "label": "孔洞伪教师细节",
+      "bbox_xyxy": [
+        178,
+        205,
+        319,
+        320
+      ],
+      "selection": "frozen full mask bbox +8px",
+      "teacher_is_pseudo": true
+    },
+    {
+      "raw": 110,
+      "key": "S_full",
+      "label": "目标阴影伪教师",
+      "bbox_xyxy": [
+        144,
+        257,
+        300,
+        320
+      ],
+      "selection": "frozen full mask bbox +8px",
+      "teacher_is_pseudo": true
+    },
+    {
+      "raw": 110,
+      "key": "observed_white_proxy",
+      "label": "实拍标线候选不足",
+      "bbox_xyxy": null,
+      "selection": "same fixed realA white proxy rule",
+      "available": false
+    },
+    {
+      "raw": 134,
+      "key": "diagnostic_stripe",
+      "label": "诊断视角固定条纹区域（无教师）",
+      "bbox_xyxy": [
+        212,
+        259,
+        292,
+        307
+      ],
+      "selection": "80x48 centered at frozen stripe-domain coordinate medians"
+    },
+    {
+      "raw": 179,
+      "key": "diagnostic_stripe",
+      "label": "诊断视角固定条纹区域（无教师）",
+      "bbox_xyxy": [
+        214,
+        257,
+        294,
+        305
+      ],
+      "selection": "80x48 centered at frozen stripe-domain coordinate medians"
+    },
+    {
+      "raw": 198,
+      "key": "diagnostic_stripe",
+      "label": "诊断视角固定条纹区域（无教师）",
+      "bbox_xyxy": [
+        214,
+        256,
+        294,
+        304
+      ],
+      "selection": "80x48 centered at frozen stripe-domain coordinate medians"
+    }
+  ]
+}
