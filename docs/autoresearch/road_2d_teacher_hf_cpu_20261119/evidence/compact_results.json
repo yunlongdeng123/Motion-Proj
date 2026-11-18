@@ -1,0 +1,701 @@
+{
+  "schema": "teacher_stage_diagnosis_compact.v1",
+  "reproduce": [
+    "python work/pixel_diagnosis/diagnose_pixels.py",
+    "python work/pixel_diagnosis/summarize_pixels.py"
+  ],
+  "integrity": {
+    "original_source_files_verified": 63,
+    "truth_files_verified": 4,
+    "raw_native_exact_PIL_upsample_all": true,
+    "old_assets_modified": false
+  },
+  "notes": [
+    "Four synthetic cases use only two clean base frames (000 and050). They are paired descriptive evidence, not four independent scenes; no significance claim.",
+    "All metrics use original images, never report screenshots. Source digests and clean truth/certificate digests are verified.",
+    "No generated RGB selects the masks or80x80 native tiles. The fixed target_core/W/certificate mask is eroded from output boundaries; clean-reference white/yellow paint and coarse edges are excluded. All globally anchored, fully certified tiles are included.",
+    "GT768 uses Pillow BILINEAR antialiased downsampling with uint8 quantization. It is an explicit resolution control, NOT an exact reproduction of the actual input builder four-neighbor bilinear RGB sampling. AREA768 is a second resolution-control sensitivity.",
+    "PSD: Y=0.2126R+0.7152G+0.0722B on0..255 sRGB; every80x80 native support uses a linear-plane detrend and Hann window. Power sums have the same Y-squared units across native/model/sample grids. Frequencies are cycles per native pixel.",
+    "Stage3 total-energy ratio compares teacher768 radial0.025<=f<0.2 to historical sample480 radial0.025<=f<0.125, each capped at its axis Nyquist, on the same physical tiles. This compares differently available bandwidth; it is NOT a same-band ratio, RMS loss, percent authentic details, or information-theoretic loss.",
+    "Stage3 shared-band ratio integrates the same0.025<=f<0.125 on both grids. This is the preferred estimate of additional attenuation within the sample-representable band. Discrete grids/Hann windows differ, so these are PSD diagnostics, not an analytic transfer-function measurement.",
+    "Raw periodogram means can be dominated by generated lane/seam/shadow structures, especially050. Median tile-band powers and95% winsorized HP RMS are sensitivity summaries alongside, never replacements for, the primary means.",
+    "Every synthetic arm/case has HP RMS greater than the resolution-matched clean control at768, including95% winsorization. Extra high-frequency energy does not establish authentic asphalt material: generated noise, false structure, and wrong spectra can all increase it.",
+    "Real hidden RGB has no GT. Same-height nearest visible-road patch excludes mask-labelled shadows, retained objects, paint and reference coarse edges, but horizontal separations160–800 native pixels can cross material/lighting changes. Proxy color/PSD differences are not hidden-area accuracy or causal evidence.",
+    "real_scene081_raw062 has no fully valid80x80 target tile under the fixed rule; no patch texture conclusion is made for that case.",
+    "Only CPU local single-thread diagnostics and read-only SCP of four pinned truth files were used. No inference, training, GPU,3D fitting, or remote writes."
+  ],
+  "synthetic_cases": [
+    {
+      "id": "visible_scene081_raw000_v0",
+      "fixed_tile_count": 17,
+      "fixed_mask_pixels": 76600,
+      "resolution_control_native_to_bilinear768_to_native": {
+        "HP_RMS_retention_at_sigma1p25_native": 0.31181977865024,
+        "HP_energy_retention_at_sigma1p25_native": 0.09723157435748468,
+        "PSD_total_energy_retention_f0p025_to0p5": 0.26715126367524317,
+        "PSD_band_energy_retention": [
+          0.8912008331692036,
+          0.520526313047193,
+          0.15786833186428134,
+          0.06421743151266054
+        ]
+      },
+      "area768_vs_bilinear768_control": {
+        "deltaE76_mean": 0.2985623748204821,
+        "HP_sigma1model_RMS_ratio": 1.2763252175723832
+      },
+      "arms": {
+        "A": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.2998996222537413,
+            "mean_Lab_bias": [
+              -0.6356289854102407,
+              1.1932458754775659,
+              0.7198202401594892
+            ],
+            "HP_RMS_ratio_sigma1model": 1.4794076408114867,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.5244832206038488,
+            "PSD_band_power_ratio_mean": [
+              0.651357941176879,
+              0.9844033527899895,
+              2.145552333546812,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              0.7121791534558938,
+              1.070001916233261,
+              2.0657855895818753,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.1591149500480555
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.433911113934906
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.3005250095152609,
+            "PSD_total_band_energy_reduction_percent": 69.9474990484739,
+            "PSD_shared_band_energy_retention": 0.6432540240431528,
+            "PSD_shared_band_energy_reduction_percent": 35.67459759568472,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.5328050843330595,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.2925460718690791,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6259537227733847,
+            "direct_AREA480_PSD_shared_band_retention": 0.7156598049377052,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.14828014853977844
+          }
+        },
+        "B": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.2813562650529433,
+            "mean_Lab_bias": [
+              -0.8010382948721596,
+              0.9962124202813831,
+              0.8868538020924723
+            ],
+            "HP_RMS_ratio_sigma1model": 1.461588324118991,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.4967050925001888,
+            "PSD_band_power_ratio_mean": [
+              0.5863762221018493,
+              0.9370653485925025,
+              2.1572012710125335,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              0.6505034898433191,
+              0.9790651662000098,
+              2.0697241105220825,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.145153526699868
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.43079193860609494
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.2862849893247983,
+            "PSD_total_band_energy_reduction_percent": 71.37150106752017,
+            "PSD_shared_band_energy_retention": 0.6364290376864986,
+            "PSD_shared_band_energy_reduction_percent": 36.35709623135014,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.5501698188293215,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.28907363157284893,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6499838361338689,
+            "direct_AREA480_PSD_shared_band_retention": 0.7112657366048604,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.14620985289886348
+          }
+        }
+      },
+      "fixed_pixel_crop_native_xywh": [
+        800,
+        1080,
+        80
+      ]
+    },
+    {
+      "id": "visible_scene081_raw000_v1",
+      "fixed_tile_count": 12,
+      "fixed_mask_pixels": 67987,
+      "resolution_control_native_to_bilinear768_to_native": {
+        "HP_RMS_retention_at_sigma1p25_native": 0.324284759342667,
+        "HP_energy_retention_at_sigma1p25_native": 0.10516060514193144,
+        "PSD_total_energy_retention_f0p025_to0p5": 0.2897352501626251,
+        "PSD_band_energy_retention": [
+          0.9019051458003171,
+          0.5321214709369323,
+          0.16876988884756966,
+          0.07110069047044293
+        ]
+      },
+      "area768_vs_bilinear768_control": {
+        "deltaE76_mean": 0.28195911984649813,
+        "HP_sigma1model_RMS_ratio": 1.2571726809093597
+      },
+      "arms": {
+        "A": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.216670060071257,
+            "mean_Lab_bias": [
+              -0.9561248464675273,
+              1.039287710989751,
+              0.24913113532141926
+            ],
+            "HP_RMS_ratio_sigma1model": 1.5983839935905995,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.5645911882729495,
+            "PSD_band_power_ratio_mean": [
+              0.6364411707802843,
+              1.0996316809115987,
+              2.1369802671423153,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              0.7296787621403121,
+              1.0545183367039717,
+              2.2624987569172945,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.2714116508119067
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.4759017823405015
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.3129212187270186,
+            "PSD_total_band_energy_reduction_percent": 68.70787812729814,
+            "PSD_shared_band_energy_retention": 0.6343603660267251,
+            "PSD_shared_band_energy_reduction_percent": 36.56396339732749,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.5067137931599032,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.31653041195547404,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6424292895550653,
+            "direct_AREA480_PSD_shared_band_retention": 0.6986569063714144,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.14090245682315738
+          }
+        },
+        "B": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.2347714639732525,
+            "mean_Lab_bias": [
+              -0.8731095188011831,
+              1.0516411687181635,
+              0.45859446998291037
+            ],
+            "HP_RMS_ratio_sigma1model": 1.693769951888,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.6118711574431923,
+            "PSD_band_power_ratio_mean": [
+              0.6911062758735915,
+              1.1644427167747988,
+              2.2797960449244394,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              0.7297602259820126,
+              1.0922248070643283,
+              2.4576354189273353,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.3472850449333924
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.4928386567455841
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.30922836843443263,
+            "PSD_total_band_energy_reduction_percent": 69.07716315655674,
+            "PSD_shared_band_energy_retention": 0.6270488892786584,
+            "PSD_shared_band_energy_reduction_percent": 37.295111072134155,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.5068512619643402,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.3053354949770245,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6385935354233422,
+            "direct_AREA480_PSD_shared_band_retention": 0.689664094388123,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.14525814886888835
+          }
+        }
+      },
+      "fixed_pixel_crop_native_xywh": [
+        760,
+        1040,
+        80
+      ]
+    },
+    {
+      "id": "visible_scene081_raw050_v0",
+      "fixed_tile_count": 36,
+      "fixed_mask_pixels": 118809,
+      "resolution_control_native_to_bilinear768_to_native": {
+        "HP_RMS_retention_at_sigma1p25_native": 0.3325750303612947,
+        "HP_energy_retention_at_sigma1p25_native": 0.1106061508198161,
+        "PSD_total_energy_retention_f0p025_to0p5": 0.30426831820746597,
+        "PSD_band_energy_retention": [
+          0.8991257854428787,
+          0.5384824323765638,
+          0.1674012192991484,
+          0.07827265136961088
+        ]
+      },
+      "area768_vs_bilinear768_control": {
+        "deltaE76_mean": 0.2806570411628753,
+        "HP_sigma1model_RMS_ratio": 1.252194413355599
+      },
+      "arms": {
+        "A": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.28083521818458,
+            "mean_Lab_bias": [
+              -0.7043292072895059,
+              1.3347404757703618,
+              0.3961641187914475
+            ],
+            "HP_RMS_ratio_sigma1model": 1.594983544650257,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.6368852081996157,
+            "PSD_band_power_ratio_mean": [
+              1.2235583130342098,
+              1.3290449719825126,
+              2.680848070184278,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              1.1232639199087524,
+              1.3993234529845198,
+              2.955965627720243,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.2737507272341686
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.48632963193036705
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.36533128433297496,
+            "PSD_total_band_energy_reduction_percent": 63.4668715667025,
+            "PSD_shared_band_energy_retention": 0.6724577636005499,
+            "PSD_shared_band_energy_reduction_percent": 32.75422363994501,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.45672233393979045,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.34564676099396396,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6640572449698947,
+            "direct_AREA480_PSD_shared_band_retention": 0.7398597051420037,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.14646040201351537
+          }
+        },
+        "B": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.9680576903210287,
+            "mean_Lab_bias": [
+              0.11334886731859845,
+              1.3049736237947023,
+              0.3725590672031868
+            ],
+            "HP_RMS_ratio_sigma1model": 2.3284287232317267,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.710192685076074,
+            "PSD_band_power_ratio_mean": [
+              34.98147486392366,
+              5.0005847855493935,
+              4.190552236056856,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              1.0947302393115863,
+              1.265279621680459,
+              2.7806871149493704,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 1.859478606833952
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.6183026163199801
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.7925910043862936,
+            "PSD_total_band_energy_reduction_percent": 20.74089956137064,
+            "PSD_shared_band_energy_retention": 0.8715138209501186,
+            "PSD_shared_band_energy_reduction_percent": 12.848617904988135,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.0905583074721453,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.3403559748062659,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.6581717811481053,
+            "direct_AREA480_PSD_shared_band_retention": 0.8941636236572625,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.16185267549303545
+          }
+        }
+      },
+      "fixed_pixel_crop_native_xywh": [
+        840,
+        1040,
+        80
+      ]
+    },
+    {
+      "id": "visible_scene081_raw050_v1",
+      "fixed_tile_count": 25,
+      "fixed_mask_pixels": 112381,
+      "resolution_control_native_to_bilinear768_to_native": {
+        "HP_RMS_retention_at_sigma1p25_native": 0.34168557229615854,
+        "HP_energy_retention_at_sigma1p25_native": 0.11674903031535339,
+        "PSD_total_energy_retention_f0p025_to0p5": 0.329958383520531,
+        "PSD_band_energy_retention": [
+          0.891905924625919,
+          0.5373781234350589,
+          0.17414111550204886,
+          0.08565840297558767
+        ]
+      },
+      "area768_vs_bilinear768_control": {
+        "deltaE76_mean": 0.2672419983823658,
+        "HP_sigma1model_RMS_ratio": 1.2326988764931703
+      },
+      "arms": {
+        "A": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 3.079617649933748,
+            "mean_Lab_bias": [
+              -0.3902160506844233,
+              1.0171170940266467,
+              0.33735402503039674
+            ],
+            "HP_RMS_ratio_sigma1model": 2.61405445222793,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.8353640950856818,
+            "PSD_band_power_ratio_mean": [
+              79.45758086823375,
+              9.250013276742989,
+              6.366519883288896,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              1.9145108202827963,
+              1.62671777348371,
+              2.787691925483182,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 2.120594495603414
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.6802864096917085
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.8415674786000279,
+            "PSD_total_band_energy_reduction_percent": 15.84325213999721,
+            "PSD_shared_band_energy_retention": 0.88781314807249,
+            "PSD_shared_band_energy_reduction_percent": 11.218685192751,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.05208941720773674,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.4586822470572235,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.7359796236740945,
+            "direct_AREA480_PSD_shared_band_retention": 0.9116907217424389,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.17097903269024653
+          }
+        },
+        "B": {
+          "model768_vs_clean_control": {
+            "deltaE76_mean": 2.961532624202548,
+            "mean_Lab_bias": [
+              -0.20481614803714704,
+              1.0228317183787825,
+              0.6439705111106175
+            ],
+            "HP_RMS_ratio_sigma1model": 2.748523335905025,
+            "HP_winsor95_RMS_ratio_sigma1model": 1.8844500585346118,
+            "PSD_band_power_ratio_mean": [
+              93.92059322681581,
+              10.568347671661186,
+              7.046666410332375,
+              null
+            ],
+            "PSD_band_power_ratio_median": [
+              1.744235855485002,
+              1.6014356028708685,
+              3.0477589864331107,
+              null
+            ],
+            "HP_RMS_ratio_sigma1model_vs_AREA768": 2.229679436168654
+          },
+          "native_vs_actual_clean": {
+            "HP_RMS_ratio_sigma1p25native": 0.7167173097436822
+          },
+          "historical480_vs_teacher768": {
+            "PSD_total_band_energy_retention": 0.8366189319848972,
+            "PSD_total_band_energy_reduction_percent": 16.33810680151028,
+            "PSD_shared_band_energy_retention": 0.8798458661418794,
+            "PSD_shared_band_energy_reduction_percent": 12.015413385812057,
+            "teacher768_PSD_energy_fraction_f0p125_to0p2": 0.049130121331969395,
+            "PSD_total_band_retention_from_median_band_powers_sensitivity": 0.43778458575109874,
+            "PSD_shared_band_retention_from_median_band_powers_sensitivity": 0.7427629070018532,
+            "direct_AREA480_PSD_shared_band_retention": 0.9051127215403674,
+            "historical480_vs_direct_AREA480_RGB_MAE_0_255": 0.1726065417032057
+          }
+        }
+      },
+      "fixed_pixel_crop_native_xywh": [
+        720,
+        960,
+        80
+      ]
+    }
+  ],
+  "real_proxy_cases": [
+    {
+      "id": "scene065_raw086",
+      "matched_tiles": 18,
+      "proxy_distance_native_px": {
+        "min": 320,
+        "max": 600
+      },
+      "limitation": "Unlabelled real hidden road; same-height nearest certified visible-road patch is a texture/material proxy, not same-location truth. Generated lines or structures in target cannot be fully excluded without output-dependent selection.",
+      "model_proxy_mean_Lab_bias": {
+        "A": [
+          -4.326948165893555,
+          1.6592626571655273,
+          0.6781100034713745
+        ],
+        "B": [
+          -3.992447853088379,
+          1.9375615119934082,
+          0.5464789867401123
+        ]
+      }
+    },
+    {
+      "id": "scene065_raw110",
+      "matched_tiles": 51,
+      "proxy_distance_native_px": {
+        "min": 160,
+        "max": 800
+      },
+      "limitation": "Unlabelled real hidden road; same-height nearest certified visible-road patch is a texture/material proxy, not same-location truth. Generated lines or structures in target cannot be fully excluded without output-dependent selection.",
+      "model_proxy_mean_Lab_bias": {
+        "A": [
+          -2.8815672397613525,
+          2.487699508666992,
+          0.49248793721199036
+        ],
+        "B": [
+          -1.8483647108078003,
+          2.5468194484710693,
+          0.5185160636901855
+        ]
+      }
+    },
+    {
+      "id": "real_scene081_raw062",
+      "matched_tiles": 0,
+      "proxy_distance_native_px": {
+        "min": null,
+        "max": null
+      },
+      "limitation": "Unlabelled real hidden road; same-height nearest certified visible-road patch is a texture/material proxy, not same-location truth. Generated lines or structures in target cannot be fully excluded without output-dependent selection.",
+      "model_proxy_mean_Lab_bias": {
+        "A": null,
+        "B": null
+      }
+    }
+  ],
+  "hypotheses": {
+    "1_large_hole_limited_material_context": {
+      "status": "plausible_not_causally_established",
+      "evidence": "A/B fixed-W comparisons change hidden/context masks, but texture/color direction is case dependent. Existing arrays cannot isolate hole area from material reliability. A mask/context controlled teacher experiment would be required."
+    },
+    "2_generation_resolution_limits_granularity": {
+      "status": "supported_as_bandwidth_bottleneck_not_full_explanation",
+      "evidence": "GT resolution control alone removes most native near-pixel HP energy;768 independent Nyquist0.2 cyc/native becomes0.125 at480. Yet teacher768 spectrum and color remain mismatched to GT768."
+    },
+    "3_attention_LoRA_prefers_global_not_fine_material": {
+      "status": "not_identifiable_from_frozen_outputs",
+      "evidence": "Outputs show mismatch but there is no matched attention/full/convolution adapter ablation. No claim that attention LoRA caused the mismatch."
+    },
+    "4_training_steps_insufficient": {
+      "status": "not_identifiable_from_frozen_outputs",
+      "evidence": "One trained endpoint and A/B inference arms do not provide a checkpoint learning curve or longer-training control. More steps could improve, saturate or degrade."
+    }
+  },
+  "synthetic_macro": {
+    "A": {
+      "model768": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.4692556376108317,
+        "mean_Lab_bias_macro": [
+          -0.6715747724629243,
+          1.1460977890660813,
+          0.4256173798256882
+        ],
+        "HP_RMS_ratio_macro": {
+          "1.25": 1.9988680041724924,
+          "2.5": 1.8217074078200681,
+          "5.0": 1.8251418619625897,
+          "10.0": 2.189653866174754
+        },
+        "HP_winsor95_ratio_macro": {
+          "1.25": 1.8386593410281322,
+          "2.5": 1.640330928040524,
+          "5.0": 1.6720404781104783,
+          "10.0": 2.0784583533235743
+        },
+        "PSD_band_power_ratio_macro": [
+          20.49223457330628,
+          3.1657733206067724,
+          3.332475138540575,
+          null
+        ]
+      },
+      "native1920": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.4985663640273037,
+        "mean_Lab_bias_macro": [
+          -0.6278006432384757,
+          1.1446442481203052,
+          0.4236428886230709
+        ],
+        "HP_RMS_ratio_macro": {
+          "1.25": 0.5191072344743708,
+          "2.5": 0.660931950396777,
+          "5.0": 0.861725537397324,
+          "10.0": 1.1988095363100828
+        },
+        "HP_winsor95_ratio_macro": {
+          "1.25": 0.483400405008963,
+          "2.5": 0.5853172975310121,
+          "5.0": 0.7785165285925453,
+          "10.0": 1.1179493890372738
+        },
+        "PSD_band_power_ratio_macro": [
+          18.325629043900307,
+          1.6694537755287757,
+          0.49075938346141645,
+          0.2013241593452311
+        ]
+      },
+      "sample480": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.2600515595409814,
+        "mean_Lab_bias_macro": [
+          -0.6234456169814648,
+          1.1449144291074773,
+          0.42669802852412536
+        ],
+        "HP_RMS_ratio_macro": {
+          "2.5": 0.9863325018622979,
+          "5.0": 1.2174364627947636,
+          "10.0": 1.7454354698698922
+        },
+        "HP_winsor95_ratio_macro": {
+          "2.5": 0.8212792334688592,
+          "5.0": 1.0967158508063137,
+          "10.0": 1.6106921270956922
+        },
+        "PSD_band_power_ratio_macro": [
+          19.23169674688216,
+          1.563396476766921,
+          null,
+          null
+        ]
+      }
+    },
+    "B": {
+      "model768": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.6114295108874432,
+        "mean_Lab_bias_macro": [
+          -0.44140377359797284,
+          1.093914732793258,
+          0.5904944625972968
+        ],
+        "HP_RMS_ratio_macro": {
+          "1.25": 2.2076302936729326,
+          "2.5": 2.058077583785936,
+          "5.0": 2.1982395382498354,
+          "10.0": 2.773026720435322
+        },
+        "HP_winsor95_ratio_macro": {
+          "1.25": 1.8836292580309704,
+          "2.5": 1.6758047483885168,
+          "5.0": 1.7198930254967877,
+          "10.0": 2.1781330217718957
+        },
+        "PSD_band_power_ratio_macro": [
+          32.544887647178726,
+          4.41761013064447,
+          3.918553990581551,
+          null
+        ]
+      },
+      "native1920": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.6384929608473993,
+        "mean_Lab_bias_macro": [
+          -0.39473306889140386,
+          1.0910019287416644,
+          0.5882560200773537
+        ],
+        "HP_RMS_ratio_macro": {
+          "1.25": 0.5646626303538353,
+          "2.5": 0.7542123857639298,
+          "5.0": 1.0705892999464233,
+          "10.0": 1.5623182338070982
+        },
+        "HP_winsor95_ratio_macro": {
+          "1.25": 0.49384875355977975,
+          "2.5": 0.5970325845936433,
+          "5.0": 0.803585332106777,
+          "10.0": 1.1519118994926267
+        },
+        "PSD_band_power_ratio_macro": [
+          29.149178005146844,
+          2.331903621124491,
+          0.5685187663217588,
+          0.22149633173293967
+        ]
+      },
+      "sample480": {
+        "case_count": 4,
+        "base_frame_count": 2,
+        "deltaE76_mean_macro": 2.401309882906128,
+        "mean_Lab_bias_macro": [
+          -0.3928203099694756,
+          1.0926072254108457,
+          0.5912854074677341
+        ],
+        "HP_RMS_ratio_macro": {
+          "2.5": 1.2103092952679095,
+          "5.0": 1.595344252490708,
+          "10.0": 2.374296076921264
+        },
+        "HP_winsor95_ratio_macro": {
+          "2.5": 0.8353665725983095,
+          "5.0": 1.1252208675473643,
+          "10.0": 1.664815936837126
+        },
+        "PSD_band_power_ratio_macro": [
+          30.496578632560542,
+          2.1639860708365033,
+          null,
+          null
+        ]
+      }
+    }
+  },
+  "assets": {
+    "main_full_json": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\pixel_diagnosis.json",
+    "paired_csv": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\paired_synthetic.csv",
+    "fixed_pixel_crops": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\fixed_pixel_crops.png",
+    "summary_plot": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\paired_summary.png",
+    "all_case_fixed_tile_previews": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\*_fixed_tiles.png"
+  }
+}

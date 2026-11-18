@@ -1,5 +1,9 @@
 # 实验索引
 
+## 二维道路教师与监督采样 CPU 诊断（2026-11-19）
+
+- 二维教师独立范围 `ROAD-2D-TEACHER-HF-CPU-20261119`：[CPU 诊断与 GPU 前准备](autoresearch/road_2d_teacher_hf_cpu_20261119/index.html)已完成。教师色差与频谱失真、768 到 480 的额外采样衰减已分账；同尺度高频能量并非普遍不足。已准备保守双分辨率二维监督包、48 次冻结教师对照及独立评分入口；实际 GPU 重放、显存与画质尚未验证，未启动 GPU、训练、三维渲染或队列。无卡实例保持开机；原三维路径和其他并行任务保留。human_verdict/problem_solved=null。
+
 ## Waymo scene-065：原生30K后的白车删除（2026-11-09）
 
 - `WAYMO-065-DELETE-WHITE30K-20261109`：[组件、199帧保留/删除、原始视频、资源与残影证据](autoresearch/waymo_val065_delete30k_20261109/README.md)。用户通过065原生30K、未通过029；固定30K高斯，重算共享归属/道路/1000步交接。查询回归通过，119及198仍有明显车形残留；已取回并接入原平台第四列，不调参重跑。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

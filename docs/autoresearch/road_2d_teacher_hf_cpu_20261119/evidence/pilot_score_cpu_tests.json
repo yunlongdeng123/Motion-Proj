@@ -1,0 +1,54 @@
+{
+  "schema": "teacher_pilot_score_CPU_mock_tests.v1",
+  "GPU_used": false,
+  "new_inference": false,
+  "actual_pilot_results": false,
+  "tests": [
+    {
+      "name": "incomplete_gate",
+      "passed": true,
+      "detail": "47/incomplete cannot read independent truth"
+    },
+    {
+      "name": "combination_gate",
+      "passed": true,
+      "detail": "48 labels with a duplicated arm/seed rejected before truth"
+    },
+    {
+      "name": "scope_gate",
+      "passed": true,
+      "detail": "true receipt flags plus repinned illegal pixel still rejected before truth"
+    },
+    {
+      "name": "crop_inverse_gate",
+      "passed": true,
+      "detail": "repinned change outside crop caught by exact inverse transform"
+    },
+    {
+      "name": "mock_label_gate",
+      "passed": true,
+      "detail": "CPU fixture cannot enter production evaluation by default"
+    },
+    {
+      "name": "coordinate_transform",
+      "passed": true,
+      "detail": "full768/crop768/full1152 uint8 RGB exactly match frozen actual builder on random native image; crop600 offset separately distinguished"
+    },
+    {
+      "name": "full48_CPU_mock_scoring",
+      "passed": true,
+      "detail": "all48 rows scored after gates, exact coordinate/sigma units checked;18 unique reused-array computations; no GPU scientific results"
+    }
+  ],
+  "score_file": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\pilot_cpu_mock_tests\\cc6ec8b8f24044c5b719f7d467a7df17\\mock_scores.json",
+  "score_sha256": "8c84c454830d45bc7d088de82e5e727af88c19897b32aae87f9caa366e8a2c6b",
+  "passed": true,
+  "fixture_predictions": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\pixel_diagnosis\\pilot_cpu_mock\\predictions\\predictions.json",
+    "sha256": "2464c34556b4b95a99f55e037722821f441f55a029bdab5163efead478486688"
+  },
+  "score_program": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\work\\teacher_audit\\score_pilot.py",
+    "sha256": "898c990128423df71705696d8cbe35066623518153f637232a2fce30a2c61ca1"
+  }
+}

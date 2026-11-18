@@ -1,6 +1,8 @@
 # 当前研究状态
 
-更新：2026-11-12（Asia/Singapore）。
+更新：2026-11-19（Asia/Singapore）。
+
+二维教师独立范围 `ROAD-2D-TEACHER-HF-CPU-20261119`：[CPU 诊断与 GPU 前准备](autoresearch/road_2d_teacher_hf_cpu_20261119/index.html)已完成。教师色差与频谱失真、768 到 480 的额外采样衰减已分账；同尺度高频能量并非普遍不足。已准备保守双分辨率二维监督包、48 次冻结教师对照及独立评分入口；实际 GPU 重放、显存与画质尚未验证，未启动 GPU、训练、三维渲染或队列。无卡实例保持开机；原三维路径和其他并行任务保留。human_verdict/problem_solved=null。
 
 本轮任务 `WORLD-ROAD-MATERIAL-FIELD-20261112` 已完成少量真实道路数据上的预训练模型对照、600步LoRA及世界场→高斯的真实GPU验证。[图像、架构与完整分母](autoresearch/road_material_field_gpu_20261112/index.html)。当前代理图像质量未通过，human_verdict=null。用户要求AutoDL保持开机。
 

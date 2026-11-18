@@ -1,0 +1,57 @@
+{
+  "schema": "road_2d_teacher_CPU_preflight.v1",
+  "complete": true,
+  "passed": true,
+  "manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json",
+    "sha256": "9221c2bba32e67dcdd3e1e8acb05d1657c45da69ed8b43f14e20e8b8d946b2b1"
+  },
+  "CPU_only": true,
+  "GPU_model_loaded": false,
+  "checked_cases": 6,
+  "checked_views": 18,
+  "planned_diffusion_calls": 48,
+  "planned_VAE_controls": 4,
+  "package_versions": {
+    "torch": "2.9.1",
+    "diffusers": "0.36.0",
+    "transformers": "5.2.0",
+    "peft": "0.18.1",
+    "numpy": "2.2.6",
+    "Pillow": "13.0.0",
+    "scipy": "1.15.3"
+  },
+  "model_weights_present": {
+    "unet": [
+      "diffusion_pytorch_model.bin",
+      "diffusion_pytorch_model.fp16.safetensors"
+    ],
+    "vae": [
+      "diffusion_pytorch_model.bin",
+      "diffusion_pytorch_model.fp16.safetensors"
+    ],
+    "text_encoder": [
+      "model.fp16.safetensors",
+      "pytorch_model.bin"
+    ]
+  },
+  "checkpoint": {
+    "inspected": true,
+    "step": 600,
+    "arm": "T0",
+    "trainable_parameters": 797184,
+    "optimizer_steps": [
+      600
+    ],
+    "model_image_wh": [
+      768,
+      272
+    ],
+    "sampler_epoch": 8,
+    "sampler_position": 56
+  },
+  "training_updates": 0,
+  "GT_opened": false,
+  "legacy_GPU_replay": "pending; not executed",
+  "GPU_execution_gate": "explicit --execute-gpu"
+}

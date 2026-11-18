@@ -1,0 +1,31 @@
+二维教师 CPU 诊断与 GPU 前准备
+日期：2026-11-19，Asia/Singapore
+远端：/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1
+代码：/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code
+模型环境：/root/autodl-tmp/envs/v42-freeinpaint/bin/python
+监督环境：/root/autodl-tmp/envs/motionproj/bin/python
+
+本轮GPU/推理/训练/三维渲染/电源操作均为0。没有后台控制器。
+当前准备就绪的是冻结二维教师pilot；GPU显存、实际重放和图像质量尚未验收。
+768二维监督是candidate_only，不能把旧480 alpha/几何资格放大冒充新资格。
+
+已执行的远端CPU验收（模块路径可直接进入该code目录运行）：
+CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /root/autodl-tmp/envs/motionproj/bin/python -m unittest discover -s /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code -p test_teacher_supervision_cpu.py -v
+/root/autodl-tmp/envs/v42-freeinpaint/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/teacher_pilot.py preflight --manifest /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json --receipt NEW_RECEIPT.json
+
+本轮已保存：
+  prepared_r2/pilot_manifest.json：6任务×3视图，48作业；前6为seed101历史精确重放。
+  supervision/cpu_rebuild_r1：两帧×480/768，四个已CPU复建验证的包。
+  private_scoring/truth_config.json：仅供冻结后评分，不进入生成manifest。
+  CPU_preflight_r2.json 与 pilot_preparation_receipt.json：CPU验收，非GPU smoke。
+
+未来GPU执行命令（本轮没有执行；须在后续会话明确进入GPU阶段后使用）：
+/root/autodl-tmp/envs/v42-freeinpaint/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/teacher_pilot.py run --manifest /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json --out /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1 --execute-gpu
+不带 --execute-gpu 只做CPU预检。已有目录拒绝覆盖；历史重放失败或OOM会停止并保留现场，不会自动降分辨率/步数或改seed。
+
+全部48预测冻结后，评分命令：
+CUDA_VISIBLE_DEVICES= /root/autodl-tmp/envs/v42-freeinpaint/bin/python /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/score_pilot.py --predictions /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/predictions.json --manifest /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json --truth-config /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/private_scoring/truth_config.json --out /root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/scoring_r1/results.json
+生产评分不使用 --allow-cpu-mock。实际W/K、完整组合和裁片逆变换检查先于读取真值。
+
+若后续实验预计一小时及以上，先在真实GPU完成约10分钟smoke，覆盖前向/反向、finite loss、显存、数据、保存、评价、完整状态恢复及下一阶段。CPU测试不代替该门。
+保留正式方法、采样、学习率和步数合同；smoke及工程重放单列。

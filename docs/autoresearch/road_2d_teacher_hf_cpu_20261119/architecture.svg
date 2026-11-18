@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img" aria-label="二维教师生成与监督采样架构">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="#78a7c9"/></marker></defs>
+<rect width="1200" height="330" rx="18" fill="#111b27"/>
+<g font-family="Segoe UI,Microsoft YaHei,sans-serif" text-anchor="middle">
+<g fill="#172b3d" stroke="#41617d" stroke-width="1.5"><rect x="28" y="58" width="210" height="100" rx="12"/><rect x="290" y="58" width="220" height="100" rx="12"/><rect x="562" y="58" width="230" height="100" rx="12"/><rect x="844" y="58" width="326" height="100" rx="12"/><rect x="562" y="227" width="230" height="76" rx="12"/></g>
+<g fill="#ebf3fc" font-size="20"><text x="133" y="92">实拍 RGB + 掩码</text><text x="400" y="92">SD1.5 + 注意力 LoRA</text><text x="677" y="92">原始生成 768 × 512</text><text x="1007" y="92">监督包：480 / 768 两档</text><text x="677" y="259">硬回填 W</text></g>
+<g fill="#adc1d4" font-size="16"><text x="133" y="126">H 隐藏 / W 写入 / K 保护</text><text x="400" y="126">冻结 600 步检查点</text><text x="677" y="126">色差 · 纹理 · 频谱诊断</text><text x="1007" y="126">单次采样 + 完整足迹许可</text><text x="677" y="285">仅作接缝分离诊断</text></g>
+<g stroke="#78a7c9" stroke-width="2.2" fill="none" marker-end="url(#a)"><path d="M238 108H288"/><path d="M510 108H560"/><path d="M792 108H842"/><path d="M677 158V225"/><path d="M133 158V191H1007V160"/></g>
+<g fill="#adc1d4" font-size="16"><text x="361" y="184">A：实拍直接取源</text><text x="1007" y="184">C / S：生成伪监督</text><text x="1007" y="220">→ 学生端待接入</text><text x="1007" y="247">三维高斯渲染由其他对话处理</text><text x="1007" y="284" fill="#6bd4b1">本轮：CPU 完成后停在 GPU 前</text></g>
+</g></svg>

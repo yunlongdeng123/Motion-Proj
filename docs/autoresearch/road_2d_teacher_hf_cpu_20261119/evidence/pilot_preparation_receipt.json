@@ -1,0 +1,91 @@
+{
+  "schema": "road_2d_teacher_pilot_CPU_preparation.v1",
+  "complete": true,
+  "passed": true,
+  "initial_prepare": {
+    "status": "passed",
+    "cases": 6,
+    "views": 18,
+    "legacy_input_all_roles_exact_cases": 6,
+    "hidden_RGB_poison_exact_views": 18,
+    "directory_preserved": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared",
+    "start_remote_UTC_plus_8": "2026-11-19T01:10:19+08:00",
+    "end_manifest_mtime_UTC_plus_8": "2026-11-19T01:19:42.458324+08:00",
+    "approximate_wall_seconds": 563.458324,
+    "start_time_precision_seconds": 1
+  },
+  "r2_upgrade": {
+    "status": "passed",
+    "directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2",
+    "reason": "CPU review upgrade: independent legal observation RGB for VAE controls, six replay jobs first, stronger references and mask preflight",
+    "CPU_rework_only": true,
+    "original_prepare_failed": false,
+    "original_inputs_and_logs_retained": true,
+    "existing_legal_images_copied_without_redoing_double_render": true,
+    "new_VAE_reference_views": 18
+  },
+  "preflight": {
+    "passed": true,
+    "full_model_loaded_on_CPU": false,
+    "small_LoRA_state_loaded_on_CPU": true,
+    "VAE_mask_and_legacy_reference_pins_checked": true,
+    "model_config_and_fp16_weight_presence_checked": true
+  },
+  "default_run_gate": {
+    "passed": true,
+    "command": "run without --execute-gpu",
+    "GPU_model_loaded": false,
+    "GPU_output_directory_created": false,
+    "controller_started": false
+  },
+  "accounting": {
+    "CPU_prepare_invocations": 1,
+    "CPU_upgrade_invocations": 1,
+    "CPU_preflight_invocations": 2,
+    "GPU_diffusion_calls": 0,
+    "GPU_VAE_controls": 0,
+    "optimizer_updates": 0,
+    "new_training": false,
+    "ground_truth_images_opened_by_generation": false,
+    "GPU_power_changed": false,
+    "shutdown_performed": false
+  },
+  "planned_only": {
+    "diffusion_calls": 48,
+    "VAE_controls": 4,
+    "GPU_legacy_replay_validation": "pending; not executed",
+    "GPU_execution_requires_explicit_flag": true
+  },
+  "artifacts": {
+    "runner": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/teacher_pilot.py",
+      "sha256": "4b181c134e008d7ec194de2122229fc5f425ccd87f78626bcacf00215143dcfd"
+    },
+    "manifest_r2": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json",
+      "sha256": "9221c2bba32e67dcdd3e1e8acb05d1657c45da69ed8b43f14e20e8b8d946b2b1"
+    },
+    "CPU_preflight_r2": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/CPU_preflight_r2.json",
+      "sha256": "01f33e9f7bcb7c0734e2d496fc082945160f91f821d083da332b22cd2a832355"
+    },
+    "default_run_gate": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/CPU_default_run_gate_r2.json",
+      "sha256": "01f33e9f7bcb7c0734e2d496fc082945160f91f821d083da332b22cd2a832355"
+    },
+    "audit": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/teacher_audit.json",
+      "sha256": "85eac8fc95feef158e956ad9874905eb28725b431851d1149190bc44aaa3a8d1"
+    },
+    "score_script": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/score_pilot.py",
+      "sha256": "898c990128423df71705696d8cbe35066623518153f637232a2fce30a2c61ca1"
+    },
+    "private_scoring_config": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/private_scoring/truth_config.json",
+      "sha256": "4fe43d4f52e473a9890f2c91aea8d9be24d340dc219cf43013276124c1d9a621"
+    }
+  },
+  "scoring_GT_separation": "truth_config.json is in private_scoring, outside generation manifest; score script was uploaded only, not run on real predictions",
+  "failure_ledger_delta": "none; CPU engineering review refinement, no scientific/GPU replay"
+}

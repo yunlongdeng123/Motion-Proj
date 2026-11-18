@@ -1,0 +1,91 @@
+{
+  "schema": "teacher_RGB_source_and_supervision_scope_audit.v1",
+  "created_utc": "2026-11-18T10:51:46.037477+00:00",
+  "scope": "two frozen native B predictions, observation, masks, exact 4x4 block means; physical C before downstream geometry/alpha filtering",
+  "method": {
+    "outside_rgb_mae": "mean absolute RGB difference from original observation, normalized 0..1, including resizing/VAE reconstruction differences; not hidden-road accuracy",
+    "C_native": "physical_unknown & W_guard & ~K",
+    "C_renderer_footprint": "all 16 source pixels of each 4x4 block must satisfy C_native; geometry/retention/alpha/F filters only remove pixels",
+    "raw_and_composite_C_equivalence": "all candidate C footprints have exactly zero target difference for both old-W and corrected-W composites"
+  },
+  "rows": [
+    {
+      "id": "scene065_raw086",
+      "outside_old_W": {
+        "pixels": 2345580,
+        "rgb_mae_0_1": 0.01789630525766528,
+        "rgb_mae_8bit": 4.563557840704647,
+        "fraction_any_channel_difference_gt_1byte": 0.9490356329777709
+      },
+      "outside_guard_W": {
+        "pixels": 2332475,
+        "rgb_mae_0_1": 0.01739664653951485,
+        "rgb_mae_8bit": 4.436144867576287,
+        "fraction_any_channel_difference_gt_1byte": 0.9487814446028361
+      },
+      "retained_K": {
+        "pixels": 250180,
+        "rgb_mae_0_1": 0.03791308950366193,
+        "rgb_mae_8bit": 9.667837823433791,
+        "fraction_any_channel_difference_gt_1byte": 0.9842433447917499
+      },
+      "visible_road_A_candidate_vs_observation": {
+        "pixels": 640030,
+        "rgb_mae_0_1": 0.014944550699676158,
+        "rgb_mae_8bit": 3.81086042841742,
+        "fraction_any_channel_difference_gt_1byte": 0.9697967282783619
+      },
+      "C_native_outside_old_W_pixels": 0,
+      "C_native_outside_guard_W_pixels": 0,
+      "C_all4_footprints_before_geometry_count": 5711,
+      "raw_vs_old_composite_C_max_abs": 0.0,
+      "raw_vs_guard_composite_C_max_abs": 0.0
+    },
+    {
+      "id": "scene065_raw110",
+      "outside_old_W": {
+        "pixels": 2248187,
+        "rgb_mae_0_1": 0.018299103471351687,
+        "rgb_mae_8bit": 4.666271385194681,
+        "fraction_any_channel_difference_gt_1byte": 0.9439668497326957
+      },
+      "outside_guard_W": {
+        "pixels": 2235183,
+        "rgb_mae_0_1": 0.01751665848161065,
+        "rgb_mae_8bit": 4.466747912810717,
+        "fraction_any_channel_difference_gt_1byte": 0.9436574097064983
+      },
+      "retained_K": {
+        "pixels": 271846,
+        "rgb_mae_0_1": 0.04185856092398336,
+        "rgb_mae_8bit": 10.673933035615756,
+        "fraction_any_channel_difference_gt_1byte": 0.9893763380737624
+      },
+      "visible_road_A_candidate_vs_observation": {
+        "pixels": 558326,
+        "rgb_mae_0_1": 0.014877275882979702,
+        "rgb_mae_8bit": 3.793705350159824,
+        "fraction_any_channel_difference_gt_1byte": 0.9731411397642238
+      },
+      "C_native_outside_old_W_pixels": 0,
+      "C_native_outside_guard_W_pixels": 0,
+      "C_all4_footprints_before_geometry_count": 10587,
+      "raw_vs_old_composite_C_max_abs": 0.0,
+      "raw_vs_guard_composite_C_max_abs": 0.0
+    }
+  ],
+  "source_manifest": "source_manifest.json",
+  "code_scope_review": {
+    "direct_C": "only photo_C/edge_C use target_C_srgb; edge loss requires both adjacent pixels inside the mask",
+    "visible_A": "target_A_srgb from original observation",
+    "later_S": "safe target-shadow interior intersects teacher_write=W_guard; all native footprint; excludes K, other-shadow and uncertain boundaries",
+    "outside_preservation": "uses baseline render RGB, not the full raw diffusion candidate"
+  },
+  "limits": [
+    "This does not certify the correctness of generated hidden-road content.",
+    "Later S scope was reviewed in code; this numeric audit evaluates the physical C footprints.",
+    "This does not measure indirect changes outside the masks after shared 3D parameters are optimized.",
+    "No new rendering, GPU operation, inference, or training was performed."
+  ],
+  "verification_status": "passed_with_explicit_limits"
+}

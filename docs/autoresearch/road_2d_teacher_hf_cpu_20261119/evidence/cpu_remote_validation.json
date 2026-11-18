@@ -1,0 +1,1478 @@
+{
+  "schema": "road_2d_teacher_cpu_remote_validation.v1",
+  "task_id": "ROAD-2D-TEACHER-HF-CPU-20261119",
+  "complete": true,
+  "CPU_only": true,
+  "GPU_executed": false,
+  "native_render_calls": 0,
+  "training_updates": 0,
+  "parent_files_modified": false,
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/cpu_rebuild_r1",
+  "cgroup_cpu_cores": 0.5,
+  "cgroup_memory_bytes": 2147483648,
+  "threads": 1,
+  "numpy_version": "2.2.6",
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "package_comparisons": [
+    {
+      "name": "086_480x320",
+      "sources": {
+        "raw_model": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw086/B/raw_model.png",
+        "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/observation.png",
+        "native_domains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/086_native_domains.npz",
+        "output_wh": [
+          480,
+          320
+        ],
+        "source_kind": "lossless_raw_model",
+        "camera": {
+          "intrinsics": [
+            [
+              2081.696719057,
+              0.0,
+              954.9586638747
+            ],
+            [
+              0.0,
+              2081.696719057,
+              659.1282934505
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_wh": [
+            1920,
+            1280
+          ],
+          "convention": "half_pixel",
+          "convention_is_assumed_from_legacy_CPU_rays": true,
+          "actual_raster_camera_convention_verified": false
+        }
+      },
+      "counts_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 39184,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 39184
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 5548,
+          "filter_support_excluded_pixels": 104,
+          "candidate_2d_pixels": 5444
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 1043,
+          "filter_support_excluded_pixels": 72,
+          "candidate_2d_pixels": 971
+        }
+      },
+      "all_arrays_exact": true,
+      "all_arrays_allclose_atol_1e_7": true,
+      "maximum_absolute_difference": 0.0,
+      "arrays": [
+        {
+          "key": "target_A_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_C_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_S_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "K",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "protected",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_full",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_write_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_filter_full",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_A_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_C_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_C_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_S_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_S_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "outside_2d",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "camera_K",
+          "dtype": "float64",
+          "shape": [
+            3,
+            3
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "output_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ]
+    },
+    {
+      "name": "086_768x512",
+      "sources": {
+        "raw_model": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw086/B/raw_model.png",
+        "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/observation.png",
+        "native_domains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/086_native_domains.npz",
+        "output_wh": [
+          768,
+          512
+        ],
+        "source_kind": "lossless_raw_model",
+        "camera": {
+          "intrinsics": [
+            [
+              2081.696719057,
+              0.0,
+              954.9586638747
+            ],
+            [
+              0.0,
+              2081.696719057,
+              659.1282934505
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_wh": [
+            1920,
+            1280
+          ],
+          "convention": "half_pixel",
+          "convention_is_assumed_from_legacy_CPU_rays": true,
+          "actual_raster_camera_convention_verified": false
+        }
+      },
+      "counts_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 640030,
+          "full_target_footprint_pixels": 101170,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 101170
+        },
+        "C": {
+          "native_pixels": 90943,
+          "full_target_footprint_pixels": 14349,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 14349
+        },
+        "S": {
+          "native_pixels": 18338,
+          "full_target_footprint_pixels": 2780,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 2780
+        }
+      },
+      "all_arrays_exact": true,
+      "all_arrays_allclose_atol_1e_7": true,
+      "maximum_absolute_difference": 0.0,
+      "arrays": [
+        {
+          "key": "target_A_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_C_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_S_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "K",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "protected",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_full",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_write_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_filter_full",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_A_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_C_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_C_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_S_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_S_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "outside_2d",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "camera_K",
+          "dtype": "float64",
+          "shape": [
+            3,
+            3
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "output_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ]
+    },
+    {
+      "name": "110_480x320",
+      "sources": {
+        "raw_model": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw110/B/raw_model.png",
+        "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/observation.png",
+        "native_domains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/110_native_domains.npz",
+        "output_wh": [
+          480,
+          320
+        ],
+        "source_kind": "lossless_raw_model",
+        "camera": {
+          "intrinsics": [
+            [
+              2081.696719057,
+              0.0,
+              954.9586638747
+            ],
+            [
+              0.0,
+              2081.696719057,
+              659.1282934505
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_wh": [
+            1920,
+            1280
+          ],
+          "convention": "half_pixel",
+          "convention_is_assumed_from_legacy_CPU_rays": true,
+          "actual_raster_camera_convention_verified": false
+        }
+      },
+      "counts_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 34339,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 34339
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 10365,
+          "filter_support_excluded_pixels": 120,
+          "candidate_2d_pixels": 10245
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 2144,
+          "filter_support_excluded_pixels": 126,
+          "candidate_2d_pixels": 2018
+        }
+      },
+      "all_arrays_exact": true,
+      "all_arrays_allclose_atol_1e_7": true,
+      "maximum_absolute_difference": 0.0,
+      "arrays": [
+        {
+          "key": "target_A_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_C_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_S_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "K",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "protected",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_full",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_write_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_filter_full",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_A",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_A_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_C_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_C",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_C_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_S_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_S",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_S_2d",
+          "dtype": "float32",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "outside_2d",
+          "dtype": "bool",
+          "shape": [
+            320,
+            480
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "camera_K",
+          "dtype": "float64",
+          "shape": [
+            3,
+            3
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "output_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ]
+    },
+    {
+      "name": "110_768x512",
+      "sources": {
+        "raw_model": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw110/B/raw_model.png",
+        "observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/observation.png",
+        "native_domains": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/110_native_domains.npz",
+        "output_wh": [
+          768,
+          512
+        ],
+        "source_kind": "lossless_raw_model",
+        "camera": {
+          "intrinsics": [
+            [
+              2081.696719057,
+              0.0,
+              954.9586638747
+            ],
+            [
+              0.0,
+              2081.696719057,
+              659.1282934505
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "camera_wh": [
+            1920,
+            1280
+          ],
+          "convention": "half_pixel",
+          "convention_is_assumed_from_legacy_CPU_rays": true,
+          "actual_raster_camera_convention_verified": false
+        }
+      },
+      "counts_exact": true,
+      "counts": {
+        "A": {
+          "native_pixels": 558326,
+          "full_target_footprint_pixels": 88505,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 88505
+        },
+        "C": {
+          "native_pixels": 168932,
+          "full_target_footprint_pixels": 26654,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 26654
+        },
+        "S": {
+          "native_pixels": 36748,
+          "full_target_footprint_pixels": 5643,
+          "filter_support_excluded_pixels": 0,
+          "candidate_2d_pixels": 5643
+        }
+      },
+      "all_arrays_exact": true,
+      "all_arrays_allclose_atol_1e_7": true,
+      "maximum_absolute_difference": 0.0,
+      "arrays": [
+        {
+          "key": "target_A_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_C_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "target_S_srgb",
+          "dtype": "float32",
+          "shape": [
+            3,
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "K",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "protected",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_full",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_write_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_write_filter_full",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_A",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_A_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_C_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_C",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_C_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_grid_S_valid",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_footprint_S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "filter_support_S",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "q_S_2d",
+          "dtype": "float32",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "outside_2d",
+          "dtype": "bool",
+          "shape": [
+            512,
+            768
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "camera_K",
+          "dtype": "float64",
+          "shape": [
+            3,
+            3
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "output_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "teacher_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        },
+        {
+          "key": "native_wh",
+          "dtype": "int64",
+          "shape": [
+            2
+          ],
+          "exact": true,
+          "allclose_atol_1e_7": true,
+          "maximum_absolute_difference": 0.0
+        }
+      ]
+    }
+  ],
+  "unit_tests": {
+    "exit_code": 0,
+    "required_tests": 7,
+    "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/cpu_rebuild_r1/unit_tests.log"
+  },
+  "all_packages_exact": true,
+  "package_count": 4,
+  "camera_convention_assumed": true,
+  "actual_raster_camera_convention_verified": false,
+  "preserve_parent_high_frequency_policy": true,
+  "new_3d_high_frequency_authorization": false,
+  "elapsed_seconds": 116.81391457282007
+}
