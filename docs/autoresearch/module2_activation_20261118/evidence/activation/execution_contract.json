@@ -1,0 +1,106 @@
+{
+  "schema": "road_activation_repair_protocol.v1",
+  "task_id": "MODULE2-ROAD-ACTIVATION-20261118",
+  "run_id": "road_activation_20261118_r1",
+  "user_request": "继续推进；承接上一轮激活覆盖与细标线采样建议，GPU保持开机",
+  "GPU_authorized": true,
+  "GPU_keep_on": true,
+  "previous_evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1",
+  "canonical_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "main_objective": "repair measured road geometry / Gaussian activation / recovery request consistency, then isolate material appearance; no larger generation model",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "render_wh": [
+    480,
+    320
+  ],
+  "train_source_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "inherited_BUILD_frames": 199,
+  "fixed_denominators": {
+    "full_S": 3187,
+    "old_low_S": 965,
+    "original_road_D": 38416,
+    "original_keep_pixel_frames": 77266
+  },
+  "first_controls": [
+    {
+      "name": "parent",
+      "action": "original oldS2 asset"
+    },
+    {
+      "name": "A0_active_only",
+      "action": "activate only existing independently qualified mesh anchors; keep every RGB including legacy placeholders",
+      "role": "coverage mechanism only; material unqualified"
+    },
+    {
+      "name": "A1_observed_init",
+      "action": "same exact added active set; only new row RGB initialized from immutable known observed source",
+      "role": "coverage plus explicit new-material initialization"
+    }
+  ],
+  "proposal": {
+    "initial_exact_lowS_triangle_world_rows": 976,
+    "inactive_rows": 883,
+    "initial_known_legal_candidate_rows": 765,
+    "blocked_rows_pending_semantic_audit": 118,
+    "old_request_is_not_surface_existence": true,
+    "no_neighborhood_expansion_before_exact_anchor_test": true,
+    "K_near": "recompute for all new packet rows in5 views; old active-only guard cannot authorize new rows"
+  },
+  "freeze": [
+    "all world/model XYZ",
+    "world normals",
+    "all sigma and opacity values",
+    "all original active flags",
+    "all original active shader RGB",
+    "original observed/prior/source ledger",
+    "native static/gates",
+    "vehicles/trajectory",
+    "environment/cameras",
+    "SD/LoRA/shadow/DINO/TRELLIS/theta/z/eta"
+  ],
+  "new_row_initialization": {
+    "sigma_m": [
+      0.013,
+      0.013,
+      0.003
+    ],
+    "opacity": 0.99,
+    "policy": "inherit exact existing row values, never invented normal/height or repeated scale expansion",
+    "observed_RGB": "immutable source used only for new active rows; independent effective field; unknown/illegal source must be audited separately"
+  },
+  "first_round_budget": {
+    "optimizer_updates": 0,
+    "initial_native_probes_expected_about": 60,
+    "native_call_limit_before_reassessment": 200,
+    "lifecycle": "actual5frame road/joint coverage, full-K protection, persisted public reload before accepting asset"
+  },
+  "acceptance": {
+    "new_coverage": "report all3187 and old965; gap/thin/support counts and alpha deltas, no denominator shrinking",
+    "old_domain": "original38416 coverage must not regress; all new off-target contribution and material change separate",
+    "K": "five-frame77266 joint float RGB exact0; new max-footprint guard AND actual native final contribution checks",
+    "persistence": "actual public-loader5frame road/joint agreement within1e-6, RGB8 separately",
+    "geometry": "all existing geometry/covariance/opacity and original active/RGB/observations byte-value exact"
+  },
+  "later_steps": "only after measured controls: preregister any source-permission/unknown-material repair or targeted appearance correction; do not automatically repeat failed unconstrained RGB training or alter fixed historical results",
+  "science_boundary": "activation/footprint/source association is not a per-pixel causal theorem; no intrinsic3DGS limit claim",
+  "shutdown_authorized": false,
+  "default_production_promotion": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "marking_lbfgsb_independent_saved_arrays_CPU.v1",
+  "status": "PASS",
+  "checks": {
+    "086_fixed_Dcolor": true,
+    "086_same_GT": true,
+    "086_same_coverage": true,
+    "086_contrast_matches": true,
+    "110_fixed_Dcolor": true,
+    "110_same_GT": true,
+    "110_same_coverage": true,
+    "110_contrast_matches": true,
+    "134_fixed_Dcolor": true,
+    "134_same_GT": true,
+    "134_same_coverage": true,
+    "134_contrast_matches": true,
+    "179_fixed_Dcolor": true,
+    "179_same_GT": true,
+    "179_same_coverage": true,
+    "179_contrast_matches": true,
+    "198_fixed_Dcolor": true,
+    "198_same_GT": true,
+    "198_same_coverage": true,
+    "198_contrast_matches": true,
+    "total_Dcolor37206": true,
+    "f_matches_saved": true,
+    "RMSE_matches_saved": true,
+    "raw86_contrast_failed": true,
+    "no_negative": true
+  },
+  "rows": [
+    {
+      "raw": 86,
+      "D_color": 3642,
+      "RGB_RMSE": 0.020332719802469635,
+      "detail_pixels": 298,
+      "contrast_retention": 0.8216793003270115,
+      "contrast_pass": false
+    },
+    {
+      "raw": 110,
+      "D_color": 7246,
+      "RGB_RMSE": 0.011392496139908698,
+      "detail_pixels": 648,
+      "contrast_retention": 0.9307031478883178,
+      "contrast_pass": true
+    },
+    {
+      "raw": 134,
+      "D_color": 8246,
+      "RGB_RMSE": 0.009252639631517364,
+      "detail_pixels": 721,
+      "contrast_retention": 0.9445892171732377,
+      "contrast_pass": true
+    },
+    {
+      "raw": 179,
+      "D_color": 8908,
+      "RGB_RMSE": 0.009082445633325388,
+      "detail_pixels": 811,
+      "contrast_retention": 0.9427789605525176,
+      "contrast_pass": true
+    },
+    {
+      "raw": 198,
+      "D_color": 9164,
+      "RGB_RMSE": 0.00992444009073717,
+      "detail_pixels": 841,
+      "contrast_retention": 0.943360693686404,
+      "contrast_pass": true
+    }
+  ],
+  "D_color": 37206,
+  "RGB_denominator": 111618,
+  "RGB_RMSE": 0.011345899868574294,
+  "f": 6.436472191385709e-05,
+  "delta_f_vs_logged": 0.0,
+  "old_SPG_f": 6.965544660274458e-05,
+  "old_SPG_RMSE": 0.011803003567121767,
+  "f_relative_improvement": 0.07595564951383182,
+  "levels": [
+    {
+      "code": 1,
+      "RGB_pass": false,
+      "detail_pass": false,
+      "feasible_joint_witness": false,
+      "negative_certificate": false
+    },
+    {
+      "code": 2,
+      "RGB_pass": false,
+      "detail_pass": false,
+      "feasible_joint_witness": false,
+      "negative_certificate": false
+    },
+    {
+      "code": 4,
+      "RGB_pass": true,
+      "detail_pass": false,
+      "feasible_joint_witness": false,
+      "negative_certificate": false
+    }
+  ],
+  "scope": "same oldS2 relaxed allactive, frozen 12cm targets and Dcolor; source/budget/asset bytes independently reviewed by stage_qa runtime_acceptance.json",
+  "native_loaded": false,
+  "GPU_operations": 0,
+  "optimizer_updates": 0,
+  "method": "recomputed saved actual native P vs fixed alpha*T in float64; independent contrast algebra with immutable world asphalt/paint teacher",
+  "limitation": "FP32 render/adjoint logs are numerical evidence, no conservative global bound; contrast failure is not a capacity impossibility certificate",
+  "human_verdict": null
+}

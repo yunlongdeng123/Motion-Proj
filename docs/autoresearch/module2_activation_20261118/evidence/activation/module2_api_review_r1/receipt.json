@@ -1,0 +1,45 @@
+{
+  "schema": "module2_activation_API_independent_CPU_review.v1",
+  "status": "PASS",
+  "checks": {
+    "current95_request_exact": true,
+    "parent_state_preserved_before_native": true,
+    "actual95_decision_exact": true,
+    "accepted95": true,
+    "full_actual_packet151956": true,
+    "geometry_material_requested_arrays_readonly": true,
+    "oldactive_only_packet_rejected": true,
+    "wrong_frames_rejected": true,
+    "wrong_K_denominator_rejected": true,
+    "wrong_body_rejected": true,
+    "unqualified_material_rejected": true,
+    "CPU892_does_not_activate": true,
+    "mask_scene_body_binding_in_loader": true,
+    "CPU_bridge_producer_path_hash_mandatory": true
+  },
+  "tests": "13 actual remote pytest passed: API6 + builder7",
+  "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/code/module2_activation_state.py",
+  "source_sha256": "96de6b2c6b8ba62ee2845c06a6730b2f6446cdd07728bc4d308aef7e3ee4cf9c",
+  "native_gate": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/refactor_existing_native_bridge_r1/bound_existing_native_gate.json",
+  "native_producer_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/A1_beam95_native_r1/results.json",
+  "full_K_pixel_frames": 77266,
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "body_bound_fixed_state_only": true,
+  "additional_native_calls": 0,
+  "GPU_executed": false,
+  "optimizer_updates": 0,
+  "default_scene_modified": false,
+  "limits": [
+    "requested is fresh explicit activation intent, never historical generation/coverage gate; geometry/material are independent",
+    "guard applies only exact fixed geometry/opacity/Sigma/current packet+scene; no trainable maximum-envelope claim",
+    "source qualification comes from separate material review; API does not promote a shader fit or pseudo teacher into observation GT",
+    "existing native proof is consumed by CPU bridge, not newly rendered by API"
+  ],
+  "human_verdict": null
+}

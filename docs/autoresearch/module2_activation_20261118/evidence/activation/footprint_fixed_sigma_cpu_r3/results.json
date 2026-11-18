@@ -1,0 +1,47 @@
+{
+  "schema": "road_activation_fixed_sigma_footprint_CPU.v1",
+  "CPU_only": true,
+  "additional_native_calls": 0,
+  "optimizer_updates": 0,
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/asset_A1_guarded",
+  "A1_residual_pixels": 73,
+  "endpoint_strata": {
+    "improved": 21,
+    "remaining": 52
+  },
+  "candidate_rows": 95,
+  "rows": [
+    {
+      "raw": 86,
+      "A1_residual_pixels": 1,
+      "endpoint_still_thin_pixels": 0,
+      "candidate_rows": 3,
+      "pixels_with_observed_inactive_footprint": 1,
+      "actual_native_projection_error_px": 3.222719050199885e-05,
+      "actual_native_radii_mismatch_rows": 0,
+      "naive_double_depth_raw_inference_max_error": 2.055447023588397e-05,
+      "order_independent_alpha_product_max_error_vs_actual_native": 4.48720205592501e-06
+    },
+    {
+      "raw": 110,
+      "A1_residual_pixels": 72,
+      "endpoint_still_thin_pixels": 52,
+      "candidate_rows": 92,
+      "pixels_with_observed_inactive_footprint": 23,
+      "actual_native_projection_error_px": 6.365891204040963e-05,
+      "actual_native_radii_mismatch_rows": 0,
+      "naive_double_depth_raw_inference_max_error": 0.0775585069314261,
+      "order_independent_alpha_product_max_error_vs_actual_native": 3.6850614608563426e-05
+    }
+  ],
+  "no_metric_radius_or_dilation_used": true,
+  "selection": "existing inactive source1/known material-qualified supported rows of the same parent world chart whose original fixed-Σ native fragment prediction passes1/255 cutoff at an A1 residual pixel",
+  "inherited_native_negative_fov": true,
+  "native_covariance_settings_source": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/effective_config.json",
+  "isolated_fragment_calibration": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/footprint_calibration_native_r1/results.json",
+  "isolated_fragment_CPU_alpha_max_error": 3.466215583519672e-05,
+  "no_new_geometry_or_material": true,
+  "activation_authorized": false,
+  "new_packet_K_qualified": false,
+  "boundary": "CPU footprint prediction is numerically crosschecked against saved native VJP, not an actual inactive-row contribution or strict certificate; fresh native K/near and coverage are required"
+}

@@ -1,0 +1,126 @@
+{
+  "schema": "activation_source_permission_review.v1",
+  "parent_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "held_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/supervision_r1/held_legacy_gate_rows.npz",
+  "counts": {
+    "held_world_rows": 118,
+    "fresh_permission_rows": 113,
+    "no_source_view_qualified": 5,
+    "both_teachers_valid": 111,
+    "actual_A_material_rows": 0,
+    "pseudo_C_rows": 0,
+    "pseudo_target_shadow_rows": 113,
+    "remaining15_thin_associated_world_rows": 32,
+    "remaining15_thin_associated_fresh_permission_rows": 32,
+    "remaining_unknown_thin_pixels": 15,
+    "selected_source_raw_counts": {
+      "110": 113
+    },
+    "crossview_RGB_meanabs": 0.02173530248437302,
+    "crossview_RGB_maxabs": 0.05162777831857279,
+    "crossview_max_channel_quantiles": [
+      0.0037879285105932303,
+      0.021080243584075203,
+      0.02667464266237035,
+      0.03204816056332882,
+      0.03863940848597741,
+      0.05162777831857279
+    ],
+    "crossview_within_fixed_levels": {
+      "1/255": 1,
+      "2/255": 4,
+      "4/255": 18
+    },
+    "inherited_angle_failed_world_rows": [
+      7537,
+      7810,
+      8354,
+      8355,
+      8356
+    ]
+  },
+  "frames": [
+    {
+      "raw": 86,
+      "inside": 118,
+      "distance_failed": 0,
+      "view_cosine_failed": 7,
+      "ray_eligible": 111,
+      "original_W_guard_all4": 118,
+      "original_K_any4": 0,
+      "non_target_shadow_any4": 0,
+      "A_permission": 0,
+      "C_permission": 0,
+      "S_permission": 111,
+      "authorized": 111
+    },
+    {
+      "raw": 110,
+      "inside": 118,
+      "distance_failed": 0,
+      "view_cosine_failed": 5,
+      "ray_eligible": 113,
+      "original_W_guard_all4": 118,
+      "original_K_any4": 0,
+      "non_target_shadow_any4": 0,
+      "A_permission": 0,
+      "C_permission": 0,
+      "S_permission": 113,
+      "authorized": 113
+    }
+  ],
+  "source_files": [
+    {
+      "raw": 86,
+      "original_Brown_observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+      "native_teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw086/B/raw_native.png",
+      "actual_observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/observation.png",
+      "original_teacher_guard": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/output_guard_probe/scene065_raw086/native_guard_roles.npz",
+      "source_identity_and_safe_shadow": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_source_identity_r1/086_native_routing_evidence.npz",
+      "roles": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/B/roles_native.npz",
+      "common": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw086/common_native.npz"
+    },
+    {
+      "raw": 110,
+      "original_Brown_observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+      "native_teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/predictions/scene065_raw110/B/raw_native.png",
+      "actual_observation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/observation.png",
+      "original_teacher_guard": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/output_guard_probe/scene065_raw110/native_guard_roles.npz",
+      "source_identity_and_safe_shadow": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_source_identity_r1/110_native_routing_evidence.npz",
+      "roles": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/B/roles_native.npz",
+      "common": "/root/autodl-tmp/drivingeditor_repro/campaign/road_mask_decoupling_20261116_r1/prepared/scene065_raw110/common_native.npz"
+    }
+  ],
+  "projection_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/source/world_feature_field.py",
+  "original_builder": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/code/build_scene065_asset.py",
+  "historical_gate": {
+    "legal_write_line": 143,
+    "formula": "known | ((surface_supported & (base.active | requested)) & ~protected)",
+    "generation_pre_gate_line": 62,
+    "formula_generation": "requested & inside & distance<60 & cosine>.025; then native W_guard & ~K at all4 neighbors",
+    "conclusion": "old legal_write=False and W_world=False conflate legacy request/activation routing with material availability; neither proves physical illegality"
+  },
+  "permission_policy": "independent original Brown projection; inherited distance<60/cosine>.025; all4 original native W_guard for pseudo; no K/other-shadow; valid supported source world rows",
+  "material_policy": "actual visible A first; otherwise deterministic original cosine/(distance²+4) winner; NEVER average conflicting 2D teachers; explicit per-view differences",
+  "q_semantics": "source_permission_q is binary eligibility only, not calibrated shadow confidence or a chosen training loss weight",
+  "native_newrow_K_qualified": false,
+  "activation_authorized": false,
+  "source_conflict_resolved": false,
+  "old_known_status_changed": false,
+  "old_observed_ledger_modified": false,
+  "old_assets_modified": false,
+  "pseudo_is_observed_GT": false,
+  "exposure_optimized": false,
+  "active_or_geometry_modified": false,
+  "selected_effective_rgb_role": "separate proposed pseudo shader initialization, not atlas/prior/source ledger rewrite",
+  "limits": [
+    "113 native source permissions do not certify new Gaussian screen footprints or K safety",
+    "111 dual-view colors differ; conflict table is diagnostic, not a new acceptance threshold",
+    "5 inherited angle-failed rows remain unqualified, not permanently physically illegal",
+    "only 15 of remaining73 thin pixels are linked to unknown inactive triangles; other58 remain footprint associations",
+    "triangle support/association does not prove each pixel causal response"
+  ],
+  "GPU_operations": 0,
+  "optimizer_updates": 0,
+  "human_verdict": null
+}

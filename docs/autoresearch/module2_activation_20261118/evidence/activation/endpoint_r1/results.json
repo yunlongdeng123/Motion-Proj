@@ -1,0 +1,903 @@
+{
+  "schema": "road_activation_bounded_endpoint.v1",
+  "GPU_executed": true,
+  "optimizer_updates": 0,
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/asset_A1_guarded",
+  "source_visibility": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/visibility_r2",
+  "source_original_R8": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/asset_r8_guarded",
+  "original_candidate_rows": 503,
+  "maximum_K_rejected_candidate_rows": 0,
+  "effective_opacity_rows": 503,
+  "effective_scale_growth_rows": 503,
+  "maximum_tangent_factor": 1.15,
+  "opacity_upper": 0.99999,
+  "sigma_definition": "absolute originalR8 sigma times1.15; no compound enlargement of currentS2",
+  "rows": [
+    {
+      "raw": 86,
+      "baseline": {
+        "D_full": {
+          "pixels": 3679,
+          "gap": 0,
+          "thin": 10,
+          "supported": 3669,
+          "alpha_mean": 0.9988421201705933
+        },
+        "S_full": {
+          "pixels": 1043,
+          "gap": 0,
+          "thin": 1,
+          "supported": 1042,
+          "alpha_mean": 0.9991044402122498
+        },
+        "S_photo": {
+          "pixels": 820,
+          "gap": 0,
+          "thin": 0,
+          "supported": 820,
+          "alpha_mean": 0.9992175698280334
+        },
+        "fixed_low_S": {
+          "pixels": 223,
+          "gap": 0,
+          "thin": 1,
+          "supported": 222,
+          "alpha_mean": 0.9986886978149414
+        },
+        "remaining_thin": {
+          "pixels": 1,
+          "gap": 0,
+          "thin": 1,
+          "supported": 0,
+          "alpha_mean": 0.8946138620376587
+        }
+      },
+      "states": {
+        "opacity_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 3679,
+                "gap": 0,
+                "thin": 10,
+                "supported": 3669,
+                "alpha_mean": 0.9988421201705933
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 487.6225990962521,
+                "dynamic_alphaT": 11.306729753847378,
+                "old_road_alphaT": 3179.0445117147324,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 1043,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042,
+                "alpha_mean": 0.9991151690483093
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.89002369187179,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 708.7679011412074,
+                "new_road_alphaT": 271.98431658984714
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 820,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820,
+                "alpha_mean": 0.9992305636405945
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.67656781157817,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 705.7309517990798,
+                "new_road_alphaT": 52.31382106763863
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 223,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222,
+                "alpha_mean": 0.9986906051635742
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.2134558802936226,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 3.0369493421276275,
+                "new_road_alphaT": 219.6704955222085
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 1,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0,
+                "alpha_mean": 0.8971339464187622
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.10326118022203445,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 0.8856325745582581,
+                "new_road_alphaT": 0.011004594154655933
+              }
+            }
+          },
+          "K_pixels": 14507,
+          "joint_K_RGB_max": 0.0
+        },
+        "tangent_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 3679,
+                "gap": 0,
+                "thin": 10,
+                "supported": 3669,
+                "alpha_mean": 0.9988430738449097
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 487.62032607472065,
+                "dynamic_alphaT": 11.306718756005523,
+                "old_road_alphaT": 3179.048007765567,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 1043,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1043,
+                "alpha_mean": 0.9993325471878052
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.63852362533265,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 707.9508371068114,
+                "new_road_alphaT": 273.0519170091211
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 820,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820,
+                "alpha_mean": 0.9994013905525208
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.510582054240274,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 704.5627884106943,
+                "new_road_alphaT": 53.6457357323452
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 223,
+                "gap": 0,
+                "thin": 0,
+                "supported": 223,
+                "alpha_mean": 0.9990792870521545
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.12794157109237858,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 3.388048696117039,
+                "new_road_alphaT": 219.4061812767759
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 1,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1,
+                "alpha_mean": 0.939788281917572
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.060472872108221054,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 0.9263266921043396,
+                "new_road_alphaT": 0.013092652894556522
+              }
+            }
+          },
+          "K_pixels": 14507,
+          "joint_K_RGB_max": 0.0
+        },
+        "combined_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 3679,
+                "gap": 0,
+                "thin": 10,
+                "supported": 3669,
+                "alpha_mean": 0.9988430738449097
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 487.62029381087996,
+                "dynamic_alphaT": 11.30671869529516,
+                "old_road_alphaT": 3179.048048892772,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 1043,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1043,
+                "alpha_mean": 0.9993330240249634
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.62238950844372,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 707.8586961666188,
+                "new_road_alphaT": 273.14667420601927
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 820,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820,
+                "alpha_mean": 0.9993963241577148
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 61.4992135140416,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 704.452857922297,
+                "new_road_alphaT": 53.753641840540695
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 223,
+                "gap": 0,
+                "thin": 0,
+                "supported": 223,
+                "alpha_mean": 0.9990999102592468
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.1231759944021178,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 3.405838244321785,
+                "new_road_alphaT": 219.39303236547858
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 1,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1,
+                "alpha_mean": 0.9416002035140991
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 0.05865355208516121,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 0.9283699989318848,
+                "new_road_alphaT": 0.012872212566435337
+              }
+            }
+          },
+          "K_pixels": 14507,
+          "joint_K_RGB_max": 0.0
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "baseline": {
+        "D_full": {
+          "pixels": 7459,
+          "gap": 11,
+          "thin": 173,
+          "supported": 7275,
+          "alpha_mean": 0.9872063994407654
+        },
+        "S_full": {
+          "pixels": 2144,
+          "gap": 0,
+          "thin": 72,
+          "supported": 2072,
+          "alpha_mean": 0.9869310855865479
+        },
+        "S_photo": {
+          "pixels": 1402,
+          "gap": 0,
+          "thin": 0,
+          "supported": 1402,
+          "alpha_mean": 0.9980512261390686
+        },
+        "fixed_low_S": {
+          "pixels": 742,
+          "gap": 0,
+          "thin": 72,
+          "supported": 670,
+          "alpha_mean": 0.9659197330474854
+        },
+        "remaining_thin": {
+          "pixels": 72,
+          "gap": 0,
+          "thin": 72,
+          "supported": 0,
+          "alpha_mean": 0.7132387757301331
+        }
+      },
+      "states": {
+        "opacity_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 7459,
+                "gap": 11,
+                "thin": 173,
+                "supported": 7275,
+                "alpha_mean": 0.9872066378593445
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 708.1748036990627,
+                "dynamic_alphaT": 38.325655788778704,
+                "old_road_alphaT": 6709.8970242297855,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 2144,
+                "gap": 0,
+                "thin": 71,
+                "supported": 2073,
+                "alpha_mean": 0.9871653318405151
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 28.21854652973491,
+                "dynamic_alphaT": 1.8599960526444193e-05,
+                "old_road_alphaT": 1418.836902335492,
+                "new_road_alphaT": 696.4555024372685
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 1402,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402,
+                "alpha_mean": 0.9981262683868408
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 3.3606830414414617,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 1380.8510349281132,
+                "new_road_alphaT": 17.444713082005364
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 742,
+                "gap": 0,
+                "thin": 71,
+                "supported": 671,
+                "alpha_mean": 0.9664545059204102
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 24.857863488293447,
+                "dynamic_alphaT": 1.8599960526444193e-05,
+                "old_road_alphaT": 37.98586740737869,
+                "new_road_alphaT": 679.0107893552631
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 72,
+                "gap": 0,
+                "thin": 71,
+                "supported": 1,
+                "alpha_mean": 0.7169381976127625
+              },
+              "baseline_thin_to_supported": 1,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 20.482805512845516,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 32.32163920998573,
+                "new_road_alphaT": 19.185258170589805
+              }
+            }
+          },
+          "K_pixels": 15716,
+          "joint_K_RGB_max": 0.0
+        },
+        "tangent_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 7459,
+                "gap": 11,
+                "thin": 173,
+                "supported": 7275,
+                "alpha_mean": 0.9872260093688965
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 708.0341025209761,
+                "dynamic_alphaT": 38.325593482677505,
+                "old_road_alphaT": 6710.038495064398,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 2144,
+                "gap": 0,
+                "thin": 52,
+                "supported": 2092,
+                "alpha_mean": 0.9902145862579346
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 21.66143740391101,
+                "dynamic_alphaT": 1.0253608252241975e-05,
+                "old_road_alphaT": 1423.7012101610703,
+                "new_road_alphaT": 698.1490507240185
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 1402,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402,
+                "alpha_mean": 0.9985198974609375
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 2.788622464551736,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 1381.2125565446913,
+                "new_road_alphaT": 17.654870569963123
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 742,
+                "gap": 0,
+                "thin": 52,
+                "supported": 690,
+                "alpha_mean": 0.9745215773582458
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 18.872814939359273,
+                "dynamic_alphaT": 1.0253608252241975e-05,
+                "old_road_alphaT": 42.488653616379,
+                "new_road_alphaT": 680.4941801540554
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 72,
+                "gap": 0,
+                "thin": 52,
+                "supported": 20,
+                "alpha_mean": 0.7855158448219299
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 15.54551338404417,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 36.18710282444954,
+                "new_road_alphaT": 20.257846634835005
+              }
+            }
+          },
+          "K_pixels": 15716,
+          "joint_K_RGB_max": 0.0
+        },
+        "combined_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 7459,
+                "gap": 11,
+                "thin": 173,
+                "supported": 7275,
+                "alpha_mean": 0.9872262477874756
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 708.0323056333089,
+                "dynamic_alphaT": 38.32559322084785,
+                "old_road_alphaT": 6710.040305108449,
+                "new_road_alphaT": 0.0
+              }
+            },
+            "S_full": {
+              "coverage": {
+                "pixels": 2144,
+                "gap": 0,
+                "thin": 52,
+                "supported": 2092,
+                "alpha_mean": 0.9904052019119263
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 21.241914131683757,
+                "dynamic_alphaT": 8.314690290944782e-06,
+                "old_road_alphaT": 1423.9697441742562,
+                "new_road_alphaT": 698.2909247535322
+              }
+            },
+            "S_photo": {
+              "coverage": {
+                "pixels": 1402,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402,
+                "alpha_mean": 0.9985733032226562
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 2.7124224590615995,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 1381.2872516699135,
+                "new_road_alphaT": 17.65659932094104
+              }
+            },
+            "fixed_low_S": {
+              "coverage": {
+                "pixels": 742,
+                "gap": 0,
+                "thin": 52,
+                "supported": 690,
+                "alpha_mean": 0.9749714732170105
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 18.529491672622157,
+                "dynamic_alphaT": 8.314690290944782e-06,
+                "old_road_alphaT": 42.68249250434269,
+                "new_road_alphaT": 680.6343254325911
+              }
+            },
+            "remaining_thin": {
+              "coverage": {
+                "pixels": 72,
+                "gap": 0,
+                "thin": 52,
+                "supported": 20,
+                "alpha_mean": 0.7889152765274048
+              },
+              "baseline_thin_to_supported": 20,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 15.300622869282961,
+                "dynamic_alphaT": 0.0,
+                "old_road_alphaT": 36.369761526584625,
+                "new_road_alphaT": 20.320167782716453
+              }
+            }
+          },
+          "K_pixels": 15716,
+          "joint_K_RGB_max": 0.0
+        }
+      }
+    },
+    {
+      "raw": 134,
+      "baseline": {
+        "D_full": {
+          "pixels": 8536,
+          "gap": 21,
+          "thin": 239,
+          "supported": 8276,
+          "alpha_mean": 0.9817190766334534
+        }
+      },
+      "states": {
+        "opacity_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 8536,
+                "gap": 21,
+                "thin": 239,
+                "supported": 8276,
+                "alpha_mean": 0.9817191958427429
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 782.1291190964575,
+                "dynamic_alphaT": 40.95728049453578,
+                "old_road_alphaT": 7709.369590084987,
+                "new_road_alphaT": 0.37796438578516245
+              }
+            }
+          },
+          "K_pixels": 16727,
+          "joint_K_RGB_max": 0.0
+        },
+        "tangent_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 8536,
+                "gap": 21,
+                "thin": 239,
+                "supported": 8276,
+                "alpha_mean": 0.9817384481430054
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 781.9655405874173,
+                "dynamic_alphaT": 40.95716562945955,
+                "old_road_alphaT": 7709.523741748171,
+                "new_road_alphaT": 0.38797661382704973
+              }
+            }
+          },
+          "K_pixels": 16727,
+          "joint_K_RGB_max": 0.0
+        },
+        "combined_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 8536,
+                "gap": 21,
+                "thin": 239,
+                "supported": 8276,
+                "alpha_mean": 0.9817386269569397
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 781.9643938271829,
+                "dynamic_alphaT": 40.95716529321686,
+                "old_road_alphaT": 7709.524552475648,
+                "new_road_alphaT": 0.3883279995061457
+              }
+            }
+          },
+          "K_pixels": 16727,
+          "joint_K_RGB_max": 0.0
+        }
+      }
+    },
+    {
+      "raw": 179,
+      "baseline": {
+        "D_full": {
+          "pixels": 9242,
+          "gap": 27,
+          "thin": 253,
+          "supported": 8962,
+          "alpha_mean": 0.9835488200187683
+        }
+      },
+      "states": {
+        "opacity_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9242,
+                "gap": 27,
+                "thin": 253,
+                "supported": 8962,
+                "alpha_mean": 0.9835489988327026
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 858.2575233678463,
+                "dynamic_alphaT": 29.726893624694156,
+                "old_road_alphaT": 8344.65322660546,
+                "new_road_alphaT": 5.92626250628382
+              }
+            }
+          },
+          "K_pixels": 16788,
+          "joint_K_RGB_max": 0.0
+        },
+        "tangent_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9242,
+                "gap": 27,
+                "thin": 253,
+                "supported": 8962,
+                "alpha_mean": 0.9835734963417053
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 858.0318821347346,
+                "dynamic_alphaT": 29.726474650664585,
+                "old_road_alphaT": 8344.3257511359,
+                "new_road_alphaT": 6.480726136825979
+              }
+            }
+          },
+          "K_pixels": 16788,
+          "joint_K_RGB_max": 0.0
+        },
+        "combined_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9242,
+                "gap": 27,
+                "thin": 253,
+                "supported": 8962,
+                "alpha_mean": 0.983573853969574
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 858.0296350582312,
+                "dynamic_alphaT": 29.726472152721925,
+                "old_road_alphaT": 8344.304278339103,
+                "new_road_alphaT": 6.504465144127607
+              }
+            }
+          },
+          "K_pixels": 16788,
+          "joint_K_RGB_max": 0.0
+        }
+      }
+    },
+    {
+      "raw": 198,
+      "baseline": {
+        "D_full": {
+          "pixels": 9500,
+          "gap": 24,
+          "thin": 254,
+          "supported": 9222,
+          "alpha_mean": 0.9836808443069458
+        }
+      },
+      "states": {
+        "opacity_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9500,
+                "gap": 24,
+                "thin": 254,
+                "supported": 9222,
+                "alpha_mean": 0.9836811423301697
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 868.7618766869424,
+                "dynamic_alphaT": 24.04795959155058,
+                "old_road_alphaT": 8594.572455120127,
+                "new_road_alphaT": 8.896673678653315
+              }
+            }
+          },
+          "K_pixels": 13528,
+          "joint_K_RGB_max": 0.0
+        },
+        "tangent_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9500,
+                "gap": 24,
+                "thin": 254,
+                "supported": 9222,
+                "alpha_mean": 0.9837103486061096
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 868.4843026802815,
+                "dynamic_alphaT": 24.047773349310148,
+                "old_road_alphaT": 8594.016584952216,
+                "new_road_alphaT": 9.730754495365545
+              }
+            }
+          },
+          "K_pixels": 13528,
+          "joint_K_RGB_max": 0.0
+        },
+        "combined_max": {
+          "regions": {
+            "D_full": {
+              "coverage": {
+                "pixels": 9500,
+                "gap": 24,
+                "thin": 254,
+                "supported": 9222,
+                "alpha_mean": 0.9837107062339783
+              },
+              "baseline_thin_to_supported": 0,
+              "previously_supported_lost": 0,
+              "joint_group_mass": {
+                "static_alphaT": 868.4811195981389,
+                "dynamic_alphaT": 24.04777189999635,
+                "old_road_alphaT": 8593.981964346807,
+                "new_road_alphaT": 9.76857606205158
+              }
+            }
+          },
+          "K_pixels": 13528,
+          "joint_K_RGB_max": 0.0
+        }
+      }
+    }
+  ],
+  "native_calls": 35,
+  "campaign_native_calls": 91,
+  "seconds": 10.359967848286033,
+  "all_five_frame_joint_K_exact": true,
+  "stored_scene_or_asset_modified": false,
+  "default_asset_written": false,
+  "endpoint_is_control_not_proposed_final_method": true
+}

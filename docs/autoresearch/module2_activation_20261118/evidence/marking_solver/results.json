@@ -1,0 +1,285 @@
+{
+  "schema": "marking_lbfgsb_control_results.v1",
+  "configuration": {
+    "schema": "road_marking_solver_control.v1",
+    "case": "marking_w120",
+    "initial_asset": "canonical oldS2, never activation/current candidates",
+    "camera_role": "all-five supervised ideal capacity oracle, not generalization",
+    "frames": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "active_color_rows": 151096,
+    "scalar_variables": 453288,
+    "pruning": "none: all active ci retained including exact-zero Dcolor columns at c0",
+    "ci_box": [
+      0,
+      1
+    ],
+    "D_color": 37206,
+    "RGB_denominator": 111618,
+    "target": "same frozen 12cm center-sampled independent world teacher",
+    "fixed": "geometry/normal/opacity/all scales/active/density/camera/other native branches",
+    "solver": "SciPy1.13.1 Fortran L-BFGS-B setulb, reverse communication",
+    "maxcor": 10,
+    "ftol": 1e-12,
+    "gtol": 1e-06,
+    "maxls": 20,
+    "scaled_objective": "halfSSE = original normalized f *111618; g scaled by same constant",
+    "max_actual_objective_gradient_evaluations": 500,
+    "max_seconds": 300,
+    "automatic_extension": false,
+    "automatic_additional_case": false,
+    "reference_levels": [
+      0.00392156862745098,
+      0.00784313725490196,
+      0.01568627450980392
+    ],
+    "detail_standard": "unchanged frozen metric/masks",
+    "negative_certificate": "unavailable unless separately established conservative numeric bound; no solver status alone proves capacity limit",
+    "production_promoted": false,
+    "human_verdict": null
+  },
+  "GPU_executed": true,
+  "actual_objective_gradient_evaluations": 500,
+  "accepted_LBFGSB_iterations": 486,
+  "solver_elapsed_seconds": 60.309077775105834,
+  "time_overrun_seconds": 0.0,
+  "time_cap_semantics": "stop admitting new callbacks by elapsed plus last callback duration; already running native callbacks are non-preemptive",
+  "stop_reason": "actual_objective_gradient_evaluation_cap",
+  "cap_extra_call_attempted": false,
+  "automatic_extension": false,
+  "best_feasible_evaluation": 500,
+  "best_trial_may_precede_final_task": true,
+  "selected_final": "best evaluated feasible ci; not necessarily last line-search proposal",
+  "certificate": {
+    "f": 6.436472191385709e-05,
+    "RGB_RMSE": 0.011345899868574294,
+    "FW_gap_numeric_proxy": 7.347336722438312e-06,
+    "lower_numeric_proxy": 5.701738519141877e-05,
+    "L_safe_numeric_proxy": 4.7017385191418774e-05,
+    "conservative_objective_plus_boxgradient_error_bound": null,
+    "strict_numeric_bound_established": false,
+    "negative_certificate_allowed": false,
+    "certified_lower_bound": null,
+    "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+    "guarded_box_range_floor_numeric_proxy": 0.0
+  },
+  "detail": {
+    "status": "not_met_or_not_evaluable",
+    "passed": false,
+    "never_negative_capacity_evidence": false,
+    "frames": [
+      {
+        "raw": 86,
+        "detail_pixels": 298,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.4793147580094204,
+        "contrast_retention": 0.8216793003270115,
+        "passed": false
+      },
+      {
+        "raw": 110,
+        "detail_pixels": 648,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.11999069631613965,
+        "contrast_retention": 0.9307031478883178,
+        "passed": true
+      },
+      {
+        "raw": 134,
+        "detail_pixels": 721,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.15805967710979493,
+        "contrast_retention": 0.9445892171732377,
+        "passed": true
+      },
+      {
+        "raw": 179,
+        "detail_pixels": 811,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.10776565550232496,
+        "contrast_retention": 0.9427789605525176,
+        "passed": true
+      },
+      {
+        "raw": 198,
+        "detail_pixels": 841,
+        "edge_precision": 1.0,
+        "edge_recall": 1.0,
+        "edge_F1": 1.0,
+        "known_dash_fragments": 3,
+        "missing_predicted_fragments": 0,
+        "line_center_error_max_px": 0.10844010603429224,
+        "contrast_retention": 0.943360693686404,
+        "passed": true
+      }
+    ]
+  },
+  "levels": [
+    {
+      "code_values": 1,
+      "RGB_RMSE_tolerance": 0.00392156862745098,
+      "RGB_pass": false,
+      "detail_pass": false,
+      "feasible_witness": false,
+      "negative_certificate_allowed": false,
+      "status": "optimization_or_numeric_certificate_inconclusive"
+    },
+    {
+      "code_values": 2,
+      "RGB_RMSE_tolerance": 0.00784313725490196,
+      "RGB_pass": false,
+      "detail_pass": false,
+      "feasible_witness": false,
+      "negative_certificate_allowed": false,
+      "status": "optimization_or_numeric_certificate_inconclusive"
+    },
+    {
+      "code_values": 4,
+      "RGB_RMSE_tolerance": 0.01568627450980392,
+      "RGB_pass": true,
+      "detail_pass": false,
+      "feasible_witness": false,
+      "negative_certificate_allowed": false,
+      "status": "optimization_or_numeric_certificate_inconclusive"
+    }
+  ],
+  "original_spectral_solver": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120",
+    "normalized_f": 6.965544660274458e-05,
+    "RGB_RMSE": 0.011803003567121767,
+    "detail": {
+      "status": "not_met_or_not_evaluable",
+      "passed": false,
+      "never_negative_capacity_evidence": false,
+      "frames": [
+        {
+          "raw": 86,
+          "detail_pixels": 298,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.519169790487336,
+          "contrast_retention": 0.816916926855552,
+          "passed": false
+        },
+        {
+          "raw": 110,
+          "detail_pixels": 648,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.086658176582868,
+          "contrast_retention": 0.9290137076395178,
+          "passed": true
+        },
+        {
+          "raw": 134,
+          "detail_pixels": 721,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.13889001203949194,
+          "contrast_retention": 0.9437374475780522,
+          "passed": true
+        },
+        {
+          "raw": 179,
+          "detail_pixels": 811,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.10912749552810797,
+          "contrast_retention": 0.939226086046241,
+          "passed": true
+        },
+        {
+          "raw": 198,
+          "detail_pixels": 841,
+          "edge_precision": 1.0,
+          "edge_recall": 1.0,
+          "edge_F1": 1.0,
+          "known_dash_fragments": 3,
+          "missing_predicted_fragments": 0,
+          "line_center_error_max_px": 0.1023943339104265,
+          "contrast_retention": 0.9409802895254163,
+          "passed": true
+        }
+      ]
+    },
+    "budget": "500 projected spectral iterations; not equal native-callback compute"
+  },
+  "public_reload": {
+    "public_loader": true,
+    "GPU_executed": true,
+    "tolerance": 1e-06,
+    "rows": [
+      {
+        "raw": 86,
+        "RGB_max": 0.0,
+        "alpha_max": 0.0,
+        "RGB8_max": 0
+      },
+      {
+        "raw": 110,
+        "RGB_max": 0.0,
+        "alpha_max": 0.0,
+        "RGB8_max": 0
+      },
+      {
+        "raw": 134,
+        "RGB_max": 0.0,
+        "alpha_max": 0.0,
+        "RGB8_max": 0
+      },
+      {
+        "raw": 179,
+        "RGB_max": 0.0,
+        "alpha_max": 0.0,
+        "RGB8_max": 0
+      },
+      {
+        "raw": 198,
+        "RGB_max": 0.0,
+        "alpha_max": 0.0,
+        "RGB8_max": 0
+      }
+    ]
+  },
+  "original_fixed_fields_unchanged": true,
+  "strict_negative_certificate": false,
+  "production_promoted": false,
+  "human_verdict": null,
+  "native_forward_calls_in_context": 2565,
+  "additional_public_clone_forward_calls": 5,
+  "native_backward_calls": 2510,
+  "callback_calls_exclude_preflight_and_postevaluation": true
+}

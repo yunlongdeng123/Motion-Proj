@@ -358,3 +358,7 @@
 ## MODULE2-CAPACITY-GPU-20261118
 
 [五帧三道检查与组件](autoresearch/module2_capacity_gpu_20261118/report.md)。真实I0/W4各200步、工程8，目标阴影photo监督有效，965低覆盖关联旧激活/请求错配，W4联合门失败。理想主组2500+已登记虚拟诊断2500次LS，工程LS3；三档误差包络保留，严格负证书未建立，尚无TRELLIS切换依据。候选未替换默认场景，GPU保持开机。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
+
+## MODULE2-ROAD-ACTIVATION-20261118 / MODULE2-MARKING-SOLVER-20261118
+
+[道路资产覆盖、来源与组件](autoresearch/module2_activation_20261118/report.md)。固定几何/尺度/不透明度，0训练重激活860真实来源+32教师来源既有道路点，原965低覆盖降至56thin，773原gap全部关闭；K77266与公共重载保持，覆盖主链169前向，另一次25前向/0更新材料组合单独记账。12cm理想标线L-BFGS-B500正式FG+3工程FG，目标f下降7.60%、对比度.82168仍未过，缺严格负证书。五帧探针，199BUILD继承，默认场景不替换，GPU保持开机。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。

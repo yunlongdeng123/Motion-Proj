@@ -1,0 +1,3202 @@
+{
+  "schema": "road_activation_material_quality_CPU.v1",
+  "GPU_executed_by_auditor": false,
+  "additional_native_calls": 0,
+  "optimizer_updates": 0,
+  "teacher_role": "same frozen target-shadow pseudo teachers, not GT; I0 already trained on two source views",
+  "teacher_paths": {
+    "86": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/086.npz",
+    "110": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/110.npz"
+  },
+  "target_key": "target_S_srgb",
+  "measured_frames": [
+    86,
+    110
+  ],
+  "pilot_frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "generalization_claimed": false,
+  "mask_counts": {
+    "full_S": 3187,
+    "old_photo_S": 2222,
+    "fixed_low_S": 965,
+    "current_new_support_909": 909,
+    "current_remaining_56": 56
+  },
+  "masks": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/qa/material_masks.npz",
+  "current_new_support_definition": "fixed after B32+beam95 alpha>0.9 within original lowS; diagnostic post-defined stratum reused identically across comparisons, never substitutes fullS",
+  "metrics": {
+    "accumulation": "float64 pooled pixel/channel mean over both views, not equal-view macro",
+    "road_only_opaque": "P-T",
+    "road_only_premult": "P-alpha*T",
+    "joint_opaque": "J-T",
+    "alpha": "road-only alpha; not joint visibility",
+    "unsupported_parent_premult": "explicitly excluded from new-support color ranking; never count original zero-alpha residual as improvement",
+    "fullS_premult": "coverage-weighted residual only; do not rank different coverage by this number alone"
+  },
+  "stages": {
+    "parent": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/rendered",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.21746528611542357,
+            "RMSE": 0.25279672880835774
+          },
+          "road_only_premult": {
+            "MAE": 0.12047710395150188,
+            "RMSE": 0.17340585631605582
+          },
+          "joint_opaque": {
+            "MAE": 0.19426860286110104,
+            "RMSE": 0.22376766743339643
+          },
+          "alpha": {
+            "mean": 0.7253118654199302,
+            "min": 0.0,
+            "max": 0.9999000430107117,
+            "exact_zero": 710,
+            "gap": 773,
+            "thin": 192,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.17063811421841427,
+            "RMSE": 0.20739938104347758
+          },
+          "road_only_premult": {
+            "MAE": 0.17022804321158094,
+            "RMSE": 0.2070196276827517
+          },
+          "joint_opaque": {
+            "MAE": 0.16951739589105022,
+            "RMSE": 0.2057469680030352
+          },
+          "alpha": {
+            "mean": 0.9980374728098954,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.32528909539537654,
+            "RMSE": 0.33468071375051106
+          },
+          "road_only_premult": {
+            "MAE": 0.00592105520964103,
+            "RMSE": 0.02500263226748241
+          },
+          "joint_opaque": {
+            "MAE": 0.25126050119006776,
+            "RMSE": 0.26056549222320585
+          },
+          "alpha": {
+            "mean": 0.09733642539868392,
+            "min": 0.0,
+            "max": 0.8928596377372742,
+            "exact_zero": 710,
+            "gap": 773,
+            "thin": 192,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.33256188499088785,
+            "RMSE": 0.3401902622275706
+          },
+          "road_only_premult": null,
+          "joint_opaque": {
+            "MAE": 0.2561565572863802,
+            "RMSE": 0.2642472440507622
+          },
+          "alpha": {
+            "mean": 0.06688444720677482,
+            "min": 0.0,
+            "max": 0.8461846113204956,
+            "exact_zero": 705,
+            "gap": 768,
+            "thin": 141,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "unsupported_parent_premult_residual_diagnostic": {
+            "MAE": 0.0018014398978771114,
+            "RMSE": 0.005927066259487023
+          },
+          "color_ranking_qualified": false,
+          "qualification_note": "unsupported parent: low alpha causes artificial small premult residual; excluded from new-support material comparisons"
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.20723613571109517,
+            "RMSE": 0.227280155056686
+          },
+          "road_only_premult": {
+            "MAE": 0.07279123946666606,
+            "RMSE": 0.10100554613153284
+          },
+          "joint_opaque": {
+            "MAE": 0.17178701919813952,
+            "RMSE": 0.19112859093289714
+          },
+          "alpha": {
+            "mean": 0.5916372856923512,
+            "min": 0.0,
+            "max": 0.8928596377372742,
+            "exact_zero": 5,
+            "gap": 5,
+            "thin": 51,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/rendered/086/arrays.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.1975356982550999,
+                "RMSE": 0.23841476203671103
+              },
+              "road_only_premult": {
+                "MAE": 0.12869949319498317,
+                "RMSE": 0.1815001478095115
+              },
+              "joint_opaque": {
+                "MAE": 0.17840240308678582,
+                "RMSE": 0.21291622281864406
+              },
+              "alpha": {
+                "mean": 0.8085094370556887,
+                "min": 0.0,
+                "max": 0.9999000430107117,
+                "exact_zero": 150,
+                "gap": 164,
+                "thin": 59,
+                "supported": 820
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16322138795280844,
+                "RMSE": 0.20485476683558485
+              },
+              "road_only_premult": {
+                "MAE": 0.16303246653907383,
+                "RMSE": 0.2046742831054331
+              },
+              "joint_opaque": {
+                "MAE": 0.1604911436485808,
+                "RMSE": 0.2006147205690023
+              },
+              "alpha": {
+                "mean": 0.9987110392349522,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.3237138796357232,
+                "RMSE": 0.3339805960735246
+              },
+              "road_only_premult": {
+                "MAE": 0.0024526853826317306,
+                "RMSE": 0.005892054755638673
+              },
+              "joint_opaque": {
+                "MAE": 0.24426443330798805,
+                "RMSE": 0.2530594180514157
+              },
+              "alpha": {
+                "mean": 0.10911341110503327,
+                "min": 0.0,
+                "max": 0.8852179646492004,
+                "exact_zero": 150,
+                "gap": 164,
+                "thin": 59,
+                "supported": 0
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.32497472631379365,
+                "RMSE": 0.3347179275484429
+              },
+              "road_only_premult": {
+                "MAE": 0.0024259646991330167,
+                "RMSE": 0.005862585745168918
+              },
+              "joint_opaque": {
+                "MAE": 0.24520569942981094,
+                "RMSE": 0.2536159721497466
+              },
+              "alpha": {
+                "mean": 0.1056174446476271,
+                "min": 0.0,
+                "max": 0.811214804649353,
+                "exact_zero": 150,
+                "gap": 164,
+                "thin": 58,
+                "supported": 0
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.04380591710408529,
+                "RMSE": 0.0456660760597761
+              },
+              "road_only_premult": {
+                "MAE": 0.00838467711934617,
+                "RMSE": 0.010564874905480338
+              },
+              "joint_opaque": {
+                "MAE": 0.035303354263305664,
+                "RMSE": 0.03790496336718185
+              },
+              "alpha": {
+                "mean": 0.8852179646492004,
+                "min": 0.8852179646492004,
+                "max": 0.8852179646492004,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/rendered/110/arrays.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.22716051006053437,
+                "RMSE": 0.2595051508427456
+              },
+              "road_only_premult": {
+                "MAE": 0.1164771263484464,
+                "RMSE": 0.1693283536030995
+              },
+              "joint_opaque": {
+                "MAE": 0.20198709463563966,
+                "RMSE": 0.22886065400871017
+              },
+              "alpha": {
+                "mean": 0.6848384198900347,
+                "min": 0.0,
+                "max": 0.9999000430107117,
+                "exact_zero": 560,
+                "gap": 609,
+                "thin": 133,
+                "supported": 1402
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.1749759997660582,
+                "RMSE": 0.2088733044161791
+              },
+              "road_only_premult": {
+                "MAE": 0.17443658306283336,
+                "RMSE": 0.20837913560044
+              },
+              "joint_opaque": {
+                "MAE": 0.1747966589715245,
+                "RMSE": 0.20869022010524918
+              },
+              "alpha": {
+                "mean": 0.9976435181247695,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.32576250929618883,
+                "RMSE": 0.3348908404314305
+              },
+              "road_only_premult": {
+                "MAE": 0.006963435898890455,
+                "RMSE": 0.02832974579496541
+              },
+              "joint_opaque": {
+                "MAE": 0.25336309301985727,
+                "RMSE": 0.2627794628045729
+              },
+              "alpha": {
+                "mean": 0.0937969809074226,
+                "min": 0.0,
+                "max": 0.8928596377372742,
+                "exact_zero": 560,
+                "gap": 609,
+                "thin": 133,
+                "supported": 0
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.3350136305895995,
+                "RMSE": 0.341939892712272
+              },
+              "road_only_premult": {
+                "MAE": 0.0015996283900476924,
+                "RMSE": 0.0059477533158049005
+              },
+              "joint_opaque": {
+                "MAE": 0.2596952624452716,
+                "RMSE": 0.2675923957975993
+              },
+              "alpha": {
+                "mean": 0.05436810742239461,
+                "min": 0.0,
+                "max": 0.8461846113204956,
+                "exact_zero": 555,
+                "gap": 604,
+                "thin": 83,
+                "supported": 0
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.21020759423122262,
+                "RMSE": 0.22925435127911417
+              },
+              "road_only_premult": {
+                "MAE": 0.07396226787298096,
+                "RMSE": 0.10190968577222652
+              },
+              "joint_opaque": {
+                "MAE": 0.17426854037877285,
+                "RMSE": 0.19279055790646998
+              },
+              "alpha": {
+                "mean": 0.586299455165863,
+                "min": 0.0,
+                "max": 0.8928596377372742,
+                "exact_zero": 5,
+                "gap": 5,
+                "thin": 50,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "A0": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/A0",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.16659132706467208,
+            "RMSE": 0.19436737981294272
+          },
+          "road_only_premult": {
+            "MAE": 0.16362377535101896,
+            "RMSE": 0.19202716822458424
+          },
+          "joint_opaque": {
+            "MAE": 0.16514273811217045,
+            "RMSE": 0.19249499674592288
+          },
+          "alpha": {
+            "mean": 0.9909149949027709,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 73,
+            "supported": 3114
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.17372324089459604,
+            "RMSE": 0.2085176878897194
+          },
+          "road_only_premult": {
+            "MAE": 0.17332655990295437,
+            "RMSE": 0.20813886489691727
+          },
+          "joint_opaque": {
+            "MAE": 0.17261588597821645,
+            "RMSE": 0.20687573492117575
+          },
+          "alpha": {
+            "mean": 0.9984815801777999,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.1501694487951477,
+            "RMSE": 0.15700869096056322
+          },
+          "road_only_premult": {
+            "MAE": 0.14128223413402366,
+            "RMSE": 0.14842107914869082
+          },
+          "joint_opaque": {
+            "MAE": 0.14793513753356505,
+            "RMSE": 0.15436961898229165
+          },
+          "alpha": {
+            "mean": 0.9734922462176783,
+            "min": 0.3610786497592926,
+            "max": 0.999899685382843,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 73,
+            "supported": 892
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.14776459959211655,
+            "RMSE": 0.15342131335949272
+          },
+          "road_only_premult": {
+            "MAE": 0.14502071431888042,
+            "RMSE": 0.15073329132068922
+          },
+          "joint_opaque": {
+            "MAE": 0.14728484874052314,
+            "RMSE": 0.15293993977984607
+          },
+          "alpha": {
+            "mean": 0.9922797195326508,
+            "min": 0.8245118856430054,
+            "max": 0.999899685382843,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 17,
+            "supported": 892
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.18920530460863597,
+            "RMSE": 0.20670830779560018
+          },
+          "road_only_premult": {
+            "MAE": 0.08059868970483054,
+            "RMSE": 0.10392741481192891
+          },
+          "joint_opaque": {
+            "MAE": 0.15849071812062038,
+            "RMSE": 0.17595919281270142
+          },
+          "alpha": {
+            "mean": 0.6685312954442841,
+            "min": 0.3610786497592926,
+            "max": 0.8946138620376587,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/A0/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.16665884540480294,
+                "RMSE": 0.19839602645100093
+              },
+              "road_only_premult": {
+                "MAE": 0.16640044660723122,
+                "RMSE": 0.19820522818753833
+              },
+              "joint_opaque": {
+                "MAE": 0.1645132232684798,
+                "RMSE": 0.1949597818789792
+              },
+              "alpha": {
+                "mean": 0.9991044139816343,
+                "min": 0.8946138620376587,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16938693046690972,
+                "RMSE": 0.20717568036558723
+              },
+              "road_only_premult": {
+                "MAE": 0.16918197138500216,
+                "RMSE": 0.20699094648552094
+              },
+              "joint_opaque": {
+                "MAE": 0.16667272964325863,
+                "RMSE": 0.20298526568759465
+              },
+              "alpha": {
+                "mean": 0.9992174757689964,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.15662732185804257,
+                "RMSE": 0.16207262275331277
+              },
+              "road_only_premult": {
+                "MAE": 0.1561724182764143,
+                "RMSE": 0.16184854706115376
+              },
+              "joint_opaque": {
+                "MAE": 0.1565724374957505,
+                "RMSE": 0.16206684015597875
+              },
+              "alpha": {
+                "mean": 0.9986886710864011,
+                "min": 0.8946138620376587,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.15714286209584716,
+                "RMSE": 0.1624102380925691
+              },
+              "road_only_premult": {
+                "MAE": 0.15683590384378485,
+                "RMSE": 0.1622108653807497
+              },
+              "joint_opaque": {
+                "MAE": 0.15712288069026964,
+                "RMSE": 0.16241241045246654
+              },
+              "alpha": {
+                "mean": 0.9991574765325667,
+                "min": 0.9074413180351257,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.0421773890654246,
+                "RMSE": 0.044128768523797185
+              },
+              "road_only_premult": {
+                "MAE": 0.008878622320153795,
+                "RMSE": 0.011372830515414562
+              },
+              "joint_opaque": {
+                "MAE": 0.03437404831250509,
+                "RMSE": 0.03705015401254708
+              },
+              "alpha": {
+                "mean": 0.8946138620376587,
+                "min": 0.8946138620376587,
+                "max": 0.8946138620376587,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/A0/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.16655848115573715,
+                "RMSE": 0.19237704721013352
+              },
+              "road_only_premult": {
+                "MAE": 0.1622729973098672,
+                "RMSE": 0.18894867981350663
+              },
+              "joint_opaque": {
+                "MAE": 0.16544898064107408,
+                "RMSE": 0.19128446024054102
+              },
+              "alpha": {
+                "mean": 0.986931056423641,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 72,
+                "supported": 2072
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.17625945669395607,
+                "RMSE": 0.20929861141743047
+              },
+              "road_only_premult": {
+                "MAE": 0.17575064163242712,
+                "RMSE": 0.2088073331159606
+              },
+              "joint_opaque": {
+                "MAE": 0.17609191179466827,
+                "RMSE": 0.20911764403038227
+              },
+              "alpha": {
+                "mean": 0.9980511704882269,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.14822860554309172,
+                "RMSE": 0.15545454699043373
+              },
+              "road_only_premult": {
+                "MAE": 0.1368071518378604,
+                "RMSE": 0.1441413549454049
+              },
+              "joint_opaque": {
+                "MAE": 0.1453392913185147,
+                "RMSE": 0.15198013621823683
+              },
+              "alpha": {
+                "mean": 0.9659197357786955,
+                "min": 0.3610786497592926,
+                "max": 0.999899685382843,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 72,
+                "supported": 670
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.14473406935073635,
+                "RMSE": 0.1504017878520929
+              },
+              "road_only_premult": {
+                "MAE": 0.14120270547677158,
+                "RMSE": 0.14683270506442925
+              },
+              "joint_opaque": {
+                "MAE": 0.14410574671309415,
+                "RMSE": 0.14975092698452497
+              },
+              "alpha": {
+                "mean": 0.9900572129038571,
+                "min": 0.8245118856430054,
+                "max": 0.999899685382843,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 17,
+                "supported": 670
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.19187853943669433,
+                "RMSE": 0.20849411696278045
+              },
+              "road_only_premult": {
+                "MAE": 0.08190269093000647,
+                "RMSE": 0.10485674049496373
+              },
+              "joint_opaque": {
+                "MAE": 0.1607473848444043,
+                "RMSE": 0.1774813172274916
+              },
+              "alpha": {
+                "mean": 0.6644207033244046,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "A1": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.14730529206167978,
+            "RMSE": 0.18966000451937973
+          },
+          "road_only_premult": {
+            "MAE": 0.14549037418972705,
+            "RMSE": 0.1880333697918611
+          },
+          "joint_opaque": {
+            "MAE": 0.14600320740203243,
+            "RMSE": 0.187871002283735
+          },
+          "alpha": {
+            "mean": 0.9909149949027709,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 73,
+            "supported": 3114
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.1708239250090739,
+            "RMSE": 0.20751492993085627
+          },
+          "road_only_premult": {
+            "MAE": 0.17044384070263707,
+            "RMSE": 0.20714024222311678
+          },
+          "joint_opaque": {
+            "MAE": 0.1697185913258993,
+            "RMSE": 0.20586564635853624
+          },
+          "alpha": {
+            "mean": 0.9984815801777999,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.09315150718177333,
+            "RMSE": 0.14015002379284489
+          },
+          "road_only_premult": {
+            "MAE": 0.08803275492373115,
+            "RMSE": 0.13405507848739096
+          },
+          "joint_opaque": {
+            "MAE": 0.09139638555868301,
+            "RMSE": 0.1377726795395446
+          },
+          "alpha": {
+            "mean": 0.9734922462176783,
+            "min": 0.3610786497592926,
+            "max": 0.999899685382843,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 73,
+            "supported": 892
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.08790552319134379,
+            "RMSE": 0.13564495976307595
+          },
+          "road_only_premult": {
+            "MAE": 0.08882647005570343,
+            "RMSE": 0.13581303150773746
+          },
+          "joint_opaque": {
+            "MAE": 0.08793448286454102,
+            "RMSE": 0.13563804455195044
+          },
+          "alpha": {
+            "mean": 0.9922797195326508,
+            "min": 0.8245118856430054,
+            "max": 0.999899685382843,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 17,
+            "supported": 892
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.1783050687407099,
+            "RMSE": 0.19952454888430962
+          },
+          "road_only_premult": {
+            "MAE": 0.0751490575136809,
+            "RMSE": 0.10134093231830431
+          },
+          "joint_opaque": {
+            "MAE": 0.14759048464752378,
+            "RMSE": 0.16868583465198447
+          },
+          "alpha": {
+            "mean": 0.6685312954442841,
+            "min": 0.3610786497592926,
+            "max": 0.8946138620376587,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.14956012567384397,
+                "RMSE": 0.19457587501053134
+              },
+              "road_only_premult": {
+                "MAE": 0.1493516094988621,
+                "RMSE": 0.19440493285140786
+              },
+              "joint_opaque": {
+                "MAE": 0.14740882552481566,
+                "RMSE": 0.1910683265540431
+              },
+              "alpha": {
+                "mean": 0.9991044139816343,
+                "min": 0.8946138620376587,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16347381928102758,
+                "RMSE": 0.20495985188741406
+              },
+              "road_only_premult": {
+                "MAE": 0.1632810136455523,
+                "RMSE": 0.2047773959290918
+              },
+              "joint_opaque": {
+                "MAE": 0.16075806645297908,
+                "RMSE": 0.2007225123160971
+              },
+              "alpha": {
+                "mean": 0.9992174757689964,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.09839766487612853,
+                "RMSE": 0.1503469495558043
+              },
+              "road_only_premult": {
+                "MAE": 0.09813137900430607,
+                "RMSE": 0.15022684973334738
+              },
+              "joint_opaque": {
+                "MAE": 0.09832193063201747,
+                "RMSE": 0.15032847212465236
+              },
+              "alpha": {
+                "mean": 0.9986886710864011,
+                "min": 0.8946138620376587,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.09865919306493916,
+                "RMSE": 0.15065841051584195
+              },
+              "road_only_premult": {
+                "MAE": 0.09853502594888214,
+                "RMSE": 0.15056311364862837
+              },
+              "joint_opaque": {
+                "MAE": 0.09861826785915606,
+                "RMSE": 0.1506480631097238
+              },
+              "alpha": {
+                "mean": 0.9991574765325667,
+                "min": 0.9074413180351257,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.04033840696016947,
+                "RMSE": 0.04232481955687646
+              },
+              "road_only_premult": {
+                "MAE": 0.008521757308422195,
+                "RMSE": 0.010675129562994814
+              },
+              "joint_opaque": {
+                "MAE": 0.03253506620724996,
+                "RMSE": 0.03527896729222522
+              },
+              "alpha": {
+                "mean": 0.8946138620376587,
+                "min": 0.8946138620376587,
+                "max": 0.8946138620376587,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/native_r1/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.14620837440426968,
+                "RMSE": 0.18722189846732276
+              },
+              "road_only_premult": {
+                "MAE": 0.14361198406499392,
+                "RMSE": 0.184854382615488
+              },
+              "joint_opaque": {
+                "MAE": 0.14531941089920458,
+                "RMSE": 0.1862957478834269
+              },
+              "alpha": {
+                "mean": 0.986931056423641,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 72,
+                "supported": 2072
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.17512284562034205,
+                "RMSE": 0.20899486340285675
+              },
+              "road_only_premult": {
+                "MAE": 0.17463322599993342,
+                "RMSE": 0.20850981103663704
+              },
+              "joint_opaque": {
+                "MAE": 0.17495941186498246,
+                "RMSE": 0.2088150525419537
+              },
+              "alpha": {
+                "mean": 0.9980511704882269,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.09157483175611132,
+                "RMSE": 0.13693713699080634
+              },
+              "road_only_premult": {
+                "MAE": 0.0849977236973589,
+                "RMSE": 0.12879861421166777
+              },
+              "joint_opaque": {
+                "MAE": 0.0893149885892038,
+                "RMSE": 0.1337690535540826
+              },
+              "alpha": {
+                "mean": 0.9659197357786955,
+                "min": 0.3610786497592926,
+                "max": 0.999899685382843,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 72,
+                "supported": 670
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.08443053816668852,
+                "RMSE": 0.1304245068541759
+              },
+              "road_only_premult": {
+                "MAE": 0.08568920745266753,
+                "RMSE": 0.1306912226232215
+              },
+              "joint_opaque": {
+                "MAE": 0.08448208072654313,
+                "RMSE": 0.13041885322573732
+              },
+              "alpha": {
+                "mean": 0.9900572129038571,
+                "min": 0.8245118856430054,
+                "max": 0.999899685382843,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 17,
+                "supported": 670
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.1808135535003561,
+                "RMSE": 0.20124933263215217
+              },
+              "road_only_premult": {
+                "MAE": 0.07636046297195832,
+                "RMSE": 0.10224793193239377
+              },
+              "joint_opaque": {
+                "MAE": 0.14968240134643787,
+                "RMSE": 0.170145948043119
+              },
+              "alpha": {
+                "mean": 0.6644207033244046,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "B32": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_native_r1",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.14707754767637113,
+            "RMSE": 0.18962168402950105
+          },
+          "road_only_premult": {
+            "MAE": 0.1451561325774558,
+            "RMSE": 0.18797506931380356
+          },
+          "joint_opaque": {
+            "MAE": 0.14578290745668948,
+            "RMSE": 0.18783424023643416
+          },
+          "alpha": {
+            "mean": 0.9920005750274599,
+            "min": 0.3610786497592926,
+            "max": 0.9999001622200012,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 58,
+            "supported": 3129
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.17069948880974858,
+            "RMSE": 0.2074992825754305
+          },
+          "road_only_premult": {
+            "MAE": 0.17031908532120124,
+            "RMSE": 0.2071245066354817
+          },
+          "joint_opaque": {
+            "MAE": 0.16959421361799074,
+            "RMSE": 0.20584988886850558
+          },
+          "alpha": {
+            "mean": 0.9984817212492791,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.09268588633091544,
+            "RMSE": 0.14003207201571477
+          },
+          "road_only_premult": {
+            "MAE": 0.08721615227009591,
+            "RMSE": 0.1338408619077735
+          },
+          "joint_opaque": {
+            "MAE": 0.09095521596403526,
+            "RMSE": 0.137661305933205
+          },
+          "alpha": {
+            "mean": 0.9770771481830222,
+            "min": 0.3610786497592926,
+            "max": 0.9999001622200012,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 58,
+            "supported": 907
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.0874142381033051,
+            "RMSE": 0.13551730551101884
+          },
+          "road_only_premult": {
+            "MAE": 0.0879599904851804,
+            "RMSE": 0.13558861234578262
+          },
+          "joint_opaque": {
+            "MAE": 0.08746861647998933,
+            "RMSE": 0.13551910608143272
+          },
+          "alpha": {
+            "mean": 0.9960765849114513,
+            "min": 0.8720982074737549,
+            "max": 0.9999001622200012,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 2,
+            "supported": 907
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.17825603345409036,
+            "RMSE": 0.19950547373228278
+          },
+          "road_only_premult": {
+            "MAE": 0.07514206410024207,
+            "RMSE": 0.10133969403676271
+          },
+          "joint_opaque": {
+            "MAE": 0.14755019687470936,
+            "RMSE": 0.16867068327093285
+          },
+          "alpha": {
+            "mean": 0.6686755770019123,
+            "min": 0.3610786497592926,
+            "max": 0.8946138620376587,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_native_r1/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.14928048710166436,
+                "RMSE": 0.19453743647558505
+              },
+              "road_only_premult": {
+                "MAE": 0.14907245348838097,
+                "RMSE": 0.19436645258595128
+              },
+              "joint_opaque": {
+                "MAE": 0.14712897620287974,
+                "RMSE": 0.1910291615731023
+              },
+              "alpha": {
+                "mean": 0.9991016619957533,
+                "min": 0.8946138620376587,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16313662753114855,
+                "RMSE": 0.2049169199178808
+              },
+              "road_only_premult": {
+                "MAE": 0.162942956990003,
+                "RMSE": 0.20473426141814335
+              },
+              "joint_opaque": {
+                "MAE": 0.16042103320057313,
+                "RMSE": 0.20067871617962083
+              },
+              "alpha": {
+                "mean": 0.9992178580382975,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.09832965682284359,
+                "RMSE": 0.15032948960788214
+              },
+              "road_only_premult": {
+                "MAE": 0.0980688083254658,
+                "RMSE": 0.150210151225256
+              },
+              "joint_opaque": {
+                "MAE": 0.09825235405889506,
+                "RMSE": 0.15031067932753192
+              },
+              "alpha": {
+                "mean": 0.9986743940366223,
+                "min": 0.8946138620376587,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.09859087866907185,
+                "RMSE": 0.1506409081772466
+              },
+              "road_only_premult": {
+                "MAE": 0.09847217342013719,
+                "RMSE": 0.15054637738403503
+              },
+              "joint_opaque": {
+                "MAE": 0.09854837787804661,
+                "RMSE": 0.15063022808100673
+              },
+              "alpha": {
+                "mean": 0.9991431351717528,
+                "min": 0.9074413180351257,
+                "max": 0.9998984336853027,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.04033840696016947,
+                "RMSE": 0.04232481955687646
+              },
+              "road_only_premult": {
+                "MAE": 0.008521757308422195,
+                "RMSE": 0.010675129562994814
+              },
+              "joint_opaque": {
+                "MAE": 0.03253506620724996,
+                "RMSE": 0.03527896729222522
+              },
+              "alpha": {
+                "mean": 0.8946138620376587,
+                "min": 0.8946138620376587,
+                "max": 0.8946138620376587,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_native_r1/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.14600587518542857,
+                "RMSE": 0.18718362810636985
+              },
+              "road_only_premult": {
+                "MAE": 0.1432509447462548,
+                "RMSE": 0.18478591596473107
+              },
+              "joint_opaque": {
+                "MAE": 0.14512808017017997,
+                "RMSE": 0.18626018082622245
+              },
+              "alpha": {
+                "mean": 0.9885460816935372,
+                "min": 0.3610786497592926,
+                "max": 0.9999001622200012,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 57,
+                "supported": 2087
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.17512284562034205,
+                "RMSE": 0.20899486340285675
+              },
+              "road_only_premult": {
+                "MAE": 0.17463322599993342,
+                "RMSE": 0.20850981103663704
+              },
+              "joint_opaque": {
+                "MAE": 0.17495941186498246,
+                "RMSE": 0.2088150525419537
+              },
+              "alpha": {
+                "mean": 0.9980511704882269,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.09098971271945995,
+                "RMSE": 0.1367858803796297
+              },
+              "road_only_premult": {
+                "MAE": 0.08395450496504538,
+                "RMSE": 0.12851441852104678
+              },
+              "joint_opaque": {
+                "MAE": 0.08876214076841027,
+                "RMSE": 0.13362586538442064
+              },
+              "alpha": {
+                "mean": 0.9705863317068054,
+                "min": 0.3610786497592926,
+                "max": 0.9999001622200012,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 57,
+                "supported": 685
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.08380257259297001,
+                "RMSE": 0.13025534697471855
+              },
+              "road_only_premult": {
+                "MAE": 0.08456304054113324,
+                "RMSE": 0.13038878186224784
+              },
+              "joint_opaque": {
+                "MAE": 0.0838882569015778,
+                "RMSE": 0.13026181668655074
+              },
+              "alpha": {
+                "mean": 0.9950856472727513,
+                "min": 0.8720982074737549,
+                "max": 0.9999001622200012,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 2,
+                "supported": 685
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.18076362666307075,
+                "RMSE": 0.20123007711217536
+              },
+              "road_only_premult": {
+                "MAE": 0.07635334240554788,
+                "RMSE": 0.10224668232064464
+              },
+              "joint_opaque": {
+                "MAE": 0.14964138106866318,
+                "RMSE": 0.17013065356801846
+              },
+              "alpha": {
+                "mean": 0.6645676081830805,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "A1_beam95": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/A1_beam95_native_r1",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.14752347124963547,
+            "RMSE": 0.1896914269728577
+          },
+          "road_only_premult": {
+            "MAE": 0.1456146899319298,
+            "RMSE": 0.18806050924009501
+          },
+          "joint_opaque": {
+            "MAE": 0.14623706907559147,
+            "RMSE": 0.18791150916599883
+          },
+          "alpha": {
+            "mean": 0.9924678477816048,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 57,
+            "supported": 3130
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.17084486624731732,
+            "RMSE": 0.20751810093592363
+          },
+          "road_only_premult": {
+            "MAE": 0.17046523101062636,
+            "RMSE": 0.2071435131950144
+          },
+          "joint_opaque": {
+            "MAE": 0.1697395148653813,
+            "RMSE": 0.20586883984382692
+          },
+          "alpha": {
+            "mean": 0.9984855180275966,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.09382384463321154,
+            "RMSE": 0.14027960001205386
+          },
+          "road_only_premult": {
+            "MAE": 0.08839406581082739,
+            "RMSE": 0.13416912193779026
+          },
+          "joint_opaque": {
+            "MAE": 0.09212055659381631,
+            "RMSE": 0.1379440282380519
+          },
+          "alpha": {
+            "mean": 0.9786116163965334,
+            "min": 0.3610786497592926,
+            "max": 0.9998997449874878,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 57,
+            "supported": 908
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.08878818592572325,
+            "RMSE": 0.1358898016331697
+          },
+          "road_only_premult": {
+            "MAE": 0.08918044028561607,
+            "RMSE": 0.13592637285449718
+          },
+          "joint_opaque": {
+            "MAE": 0.08884753075506514,
+            "RMSE": 0.1358905470262621
+          },
+          "alpha": {
+            "mean": 0.9973158826528996,
+            "min": 0.8992403745651245,
+            "max": 0.9998997449874878,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 1,
+            "supported": 908
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.17556337615297662,
+            "RMSE": 0.19838610669487217
+          },
+          "road_only_premult": {
+            "MAE": 0.07562952299684694,
+            "RMSE": 0.10147494003842338
+          },
+          "joint_opaque": {
+            "MAE": 0.14524877958354496,
+            "RMSE": 0.1677978504877113
+          },
+          "alpha": {
+            "mean": 0.6750012944851603,
+            "min": 0.3610786497592926,
+            "max": 0.8974037170410156,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/A1_beam95_native_r1/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.1496125300051439,
+                "RMSE": 0.1945847465749344
+              },
+              "road_only_premult": {
+                "MAE": 0.1494039718590743,
+                "RMSE": 0.1944136616509816
+              },
+              "joint_opaque": {
+                "MAE": 0.14746186337453102,
+                "RMSE": 0.19107753501189587
+              },
+              "alpha": {
+                "mean": 0.9991275022951092,
+                "min": 0.8974037170410156,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16353161736595923,
+                "RMSE": 0.2049686917801296
+              },
+              "road_only_premult": {
+                "MAE": 0.16333866561606322,
+                "RMSE": 0.20478627296486396
+              },
+              "joint_opaque": {
+                "MAE": 0.1608155411584833,
+                "RMSE": 0.20073148720271616
+              },
+              "alpha": {
+                "mean": 0.9992208575330129,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.09843023567389479,
+                "RMSE": 0.1503563366004616
+              },
+              "road_only_premult": {
+                "MAE": 0.09816429077956342,
+                "RMSE": 0.1502351862935262
+              },
+              "joint_opaque": {
+                "MAE": 0.09835865358600702,
+                "RMSE": 0.15033914831441034
+              },
+              "alpha": {
+                "mean": 0.9987842229449696,
+                "min": 0.8974037170410156,
+                "max": 0.9998997449874878,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.09869661836048683,
+                "RMSE": 0.15066907211349087
+              },
+              "road_only_premult": {
+                "MAE": 0.09856786429176681,
+                "RMSE": 0.150571457919341
+              },
+              "joint_opaque": {
+                "MAE": 0.09865893423557281,
+                "RMSE": 0.15065958720383377
+              },
+              "alpha": {
+                "mean": 0.9992408918904828,
+                "min": 0.9147157073020935,
+                "max": 0.9998997449874878,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.03929327925046285,
+                "RMSE": 0.04132373950010225
+              },
+              "road_only_premult": {
+                "MAE": 0.00857097107041227,
+                "RMSE": 0.010709952141022917
+              },
+              "joint_opaque": {
+                "MAE": 0.03169634938240051,
+                "RMSE": 0.034490317465025844
+              },
+              "alpha": {
+                "mean": 0.8974037170410156,
+                "min": 0.8974037170410156,
+                "max": 0.8974037170410156,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/A1_beam95_native_r1/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.1465071987300481,
+                "RMSE": 0.18726472900158345
+              },
+              "road_only_premult": {
+                "MAE": 0.14377130324815565,
+                "RMSE": 0.1848909519923305
+              },
+              "joint_opaque": {
+                "MAE": 0.14564123864005324,
+                "RMSE": 0.18635187298713912
+              },
+              "alpha": {
+                "mean": 0.9892280998069849,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 56,
+                "supported": 2088
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.17512223007236272,
+                "RMSE": 0.2089947829581487
+              },
+              "road_only_premult": {
+                "MAE": 0.17463340763226812,
+                "RMSE": 0.20850986195888227
+              },
+              "joint_opaque": {
+                "MAE": 0.1749589574043659,
+                "RMSE": 0.20881499647763016
+              },
+              "alpha": {
+                "mean": 0.9980554335807768,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.09243944409133503,
+                "RMSE": 0.1371064872762064
+              },
+              "road_only_premult": {
+                "MAE": 0.08545773135256844,
+                "RMSE": 0.12895003952699488
+              },
+              "joint_opaque": {
+                "MAE": 0.0902457646406377,
+                "RMSE": 0.13399491497807012
+              },
+              "alpha": {
+                "mean": 0.9725489597114912,
+                "min": 0.3610786497592926,
+                "max": 0.9998994469642639,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 56,
+                "supported": 686
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.08558633439658568,
+                "RMSE": 0.13075733455027158
+              },
+              "road_only_premult": {
+                "MAE": 0.08614694955873765,
+                "RMSE": 0.13084393610886216
+              },
+              "joint_opaque": {
+                "MAE": 0.08567703356049063,
+                "RMSE": 0.13076189106759795
+              },
+              "alpha": {
+                "mean": 0.9966938272660824,
+                "min": 0.8992403745651245,
+                "max": 0.9998994469642639,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 686
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.17804101427847688,
+                "RMSE": 0.20010392749807346
+              },
+              "road_only_premult": {
+                "MAE": 0.07684876939550939,
+                "RMSE": 0.10238309967514858
+              },
+              "joint_opaque": {
+                "MAE": 0.14731336922356578,
+                "RMSE": 0.16925253113110733
+              },
+              "alpha": {
+                "mean": 0.6709576140750538,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "B32_beam95": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.1472792550668178,
+            "RMSE": 0.18964667207562724
+          },
+          "road_only_premult": {
+            "MAE": 0.14536576766290527,
+            "RMSE": 0.18801391944408893
+          },
+          "joint_opaque": {
+            "MAE": 0.14599303401645825,
+            "RMSE": 0.18786619683259304
+          },
+          "alpha": {
+            "mean": 0.9924987309361312,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 3131
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.17073738160986032,
+            "RMSE": 0.20750347641273925
+          },
+          "road_only_premult": {
+            "MAE": 0.17035756785801964,
+            "RMSE": 0.20712881060027655
+          },
+          "joint_opaque": {
+            "MAE": 0.16963209062837067,
+            "RMSE": 0.20585412195181949
+          },
+          "alpha": {
+            "mean": 0.9984860588686623,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.09326479166926292,
+            "RMSE": 0.14012948608373618
+          },
+          "road_only_premult": {
+            "MAE": 0.08781988161778181,
+            "RMSE": 0.1340056440110849
+          },
+          "joint_opaque": {
+            "MAE": 0.09156196272975423,
+            "RMSE": 0.13779068729699348
+          },
+          "alpha": {
+            "mean": 0.9787123654790493,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 909
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.08819682055180615,
+            "RMSE": 0.13572603227998079
+          },
+          "road_only_premult": {
+            "MAE": 0.08857101710512805,
+            "RMSE": 0.13575512339417334
+          },
+          "joint_opaque": {
+            "MAE": 0.08825626554186851,
+            "RMSE": 0.13572578081282557
+          },
+          "alpha": {
+            "mean": 0.9974164518192656,
+            "min": 0.9093537330627441,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 909
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": true
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.17552882284369498,
+            "RMSE": 0.1983777539404148
+          },
+          "road_only_premult": {
+            "MAE": 0.0756273430821084,
+            "RMSE": 0.10147364437435274
+          },
+          "joint_opaque": {
+            "MAE": 0.14522051172597067,
+            "RMSE": 0.16779141629215358
+          },
+          "alpha": {
+            "mean": 0.6751049639923232,
+            "min": 0.3610786497592926,
+            "max": 0.8974037170410156,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.14938092621423713,
+                "RMSE": 0.19455107136485456
+              },
+              "road_only_premult": {
+                "MAE": 0.14917274962127772,
+                "RMSE": 0.194379969234396
+              },
+              "joint_opaque": {
+                "MAE": 0.14723010720032098,
+                "RMSE": 0.19104324421971816
+              },
+              "alpha": {
+                "mean": 0.9991266836598872,
+                "min": 0.8974037170410156,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.16324036021421595,
+                "RMSE": 0.20492856746988491
+              },
+              "road_only_premult": {
+                "MAE": 0.16304692473180452,
+                "RMSE": 0.20474597139089615
+              },
+              "joint_opaque": {
+                "MAE": 0.16052444767721785,
+                "RMSE": 0.2006905818956336
+              },
+              "alpha": {
+                "mean": 0.9992223230803885,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.09841798504839563,
+                "RMSE": 0.1503536329898855
+              },
+              "road_only_premult": {
+                "MAE": 0.098155603474946,
+                "RMSE": 0.15023326492997005
+              },
+              "joint_opaque": {
+                "MAE": 0.09834508840635041,
+                "RMSE": 0.1503361353266143
+              },
+              "alpha": {
+                "mean": 0.9987750050732908,
+                "min": 0.8974037170410156,
+                "max": 0.9998995065689087,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.09868431255198992,
+                "RMSE": 0.15066636196149447
+              },
+              "road_only_premult": {
+                "MAE": 0.0985591378551466,
+                "RMSE": 0.15056953221130873
+              },
+              "joint_opaque": {
+                "MAE": 0.09864530795150334,
+                "RMSE": 0.15065656708122388
+              },
+              "alpha": {
+                "mean": 0.9992316324968595,
+                "min": 0.9147157073020935,
+                "max": 0.9998995065689087,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.03929327925046285,
+                "RMSE": 0.04132373950010225
+              },
+              "road_only_premult": {
+                "MAE": 0.00857097107041227,
+                "RMSE": 0.010709952141022917
+              },
+              "joint_opaque": {
+                "MAE": 0.03169634938240051,
+                "RMSE": 0.034490317465025844
+              },
+              "alpha": {
+                "mean": 0.8974037170410156,
+                "min": 0.8974037170410156,
+                "max": 0.8974037170410156,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.14625684694799396,
+                "RMSE": 0.1872143620920847
+              },
+              "road_only_premult": {
+                "MAE": 0.14351377037625299,
+                "RMSE": 0.18483774449770715
+              },
+              "joint_opaque": {
+                "MAE": 0.14539123022412204,
+                "RMSE": 0.18630105799288996
+              },
+              "alpha": {
+                "mean": 0.9892744050541921,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 2089
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.17512223007236272,
+                "RMSE": 0.2089947829581487
+              },
+              "road_only_premult": {
+                "MAE": 0.17463340763226812,
+                "RMSE": 0.20850986195888227
+              },
+              "joint_opaque": {
+                "MAE": 0.1749589574043659,
+                "RMSE": 0.20881499647763016
+              },
+              "alpha": {
+                "mean": 0.9980554335807768,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.09171605565370147,
+                "RMSE": 0.13690759364694627
+              },
+              "road_only_premult": {
+                "MAE": 0.08471359324291981,
+                "RMSE": 0.1287294438465545
+              },
+              "joint_opaque": {
+                "MAE": 0.0895233683552516,
+                "RMSE": 0.13379058586997303
+              },
+              "alpha": {
+                "mean": 0.9726827581616425,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 687
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.08480784933777297,
+                "RMSE": 0.1305330911328337
+              },
+              "road_only_premult": {
+                "MAE": 0.08534341476669409,
+                "RMSE": 0.13060920075438084
+              },
+              "joint_opaque": {
+                "MAE": 0.08489910773264153,
+                "RMSE": 0.13053639835652114
+              },
+              "alpha": {
+                "mean": 0.996829886884148,
+                "min": 0.9093537330627441,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 687
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.17800583272720827,
+                "RMSE": 0.20009549588436645
+              },
+              "road_only_premult": {
+                "MAE": 0.07684654984595742,
+                "RMSE": 0.10238179215532091
+              },
+              "joint_opaque": {
+                "MAE": 0.14728458740494468,
+                "RMSE": 0.1692460362557455
+              },
+              "alpha": {
+                "mean": 0.6710631684823469,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "composed_I0": {
+      "source_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1",
+      "pooled": {
+        "full_S": {
+          "pixel_frames": 3187,
+          "RGB_denominator": 9561,
+          "road_only_opaque": {
+            "MAE": 0.031474975169471786,
+            "RMSE": 0.07528678472321153
+          },
+          "road_only_premult": {
+            "MAE": 0.03007445988978,
+            "RMSE": 0.07390883048280199
+          },
+          "joint_opaque": {
+            "MAE": 0.034128284093310875,
+            "RMSE": 0.0761915711345215
+          },
+          "alpha": {
+            "mean": 0.9924987309361312,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 3131
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "old_photo_S": {
+          "pixel_frames": 2222,
+          "RGB_denominator": 6666,
+          "road_only_opaque": {
+            "MAE": 0.0066497606797294145,
+            "RMSE": 0.0168700880568196
+          },
+          "road_only_premult": {
+            "MAE": 0.006407053200866139,
+            "RMSE": 0.01675063701888985
+          },
+          "joint_opaque": {
+            "MAE": 0.011137000779391337,
+            "RMSE": 0.025081284112047166
+          },
+          "alpha": {
+            "mean": 0.9984860588686623,
+            "min": 0.9043595194816589,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 2222
+          },
+          "premult_across_coverage_comparable": true,
+          "color_ranking_qualified": true
+        },
+        "fixed_low_S": {
+          "pixel_frames": 965,
+          "RGB_denominator": 2895,
+          "road_only_opaque": {
+            "MAE": 0.08863728252305474,
+            "RMSE": 0.13440274192169116
+          },
+          "road_only_premult": {
+            "MAE": 0.08457080979938267,
+            "RMSE": 0.13188776325523952
+          },
+          "joint_opaque": {
+            "MAE": 0.0870677986254655,
+            "RMSE": 0.13312986091048967
+          },
+          "alpha": {
+            "mean": 0.9787123654790493,
+            "min": 0.3610786497592926,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 909
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        },
+        "current_new_support_909": {
+          "pixel_frames": 909,
+          "RGB_denominator": 2727,
+          "road_only_opaque": {
+            "MAE": 0.08816189290207736,
+            "RMSE": 0.13569785894605163
+          },
+          "road_only_premult": {
+            "MAE": 0.08853196158467844,
+            "RMSE": 0.1357264423611905
+          },
+          "joint_opaque": {
+            "MAE": 0.08822081191994613,
+            "RMSE": 0.13569724956269738
+          },
+          "alpha": {
+            "mean": 0.9974164518192656,
+            "min": 0.9093537330627441,
+            "max": 0.9999000430107117,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 0,
+            "supported": 909
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": true
+        },
+        "current_remaining_56": {
+          "pixel_frames": 56,
+          "RGB_denominator": 168,
+          "road_only_opaque": {
+            "MAE": 0.09635387476356257,
+            "RMSE": 0.1112919607235816
+          },
+          "road_only_premult": {
+            "MAE": 0.020272828141635606,
+            "RMSE": 0.026820593855421328
+          },
+          "joint_opaque": {
+            "MAE": 0.06835192211327099,
+            "RMSE": 0.0807489931263963
+          },
+          "alpha": {
+            "mean": 0.6751049639923232,
+            "min": 0.3610786497592926,
+            "max": 0.8974037170410156,
+            "exact_zero": 0,
+            "gap": 0,
+            "thin": 56,
+            "supported": 0
+          },
+          "premult_across_coverage_comparable": false,
+          "color_ranking_qualified": false
+        }
+      },
+      "per_frame": [
+        {
+          "raw": 86,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/086_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 1043,
+              "RGB_denominator": 3129,
+              "road_only_opaque": {
+                "MAE": 0.027462012314565954,
+                "RMSE": 0.07197025710157845
+              },
+              "road_only_premult": {
+                "MAE": 0.027270317753885605,
+                "RMSE": 0.07190010206358684
+              },
+              "joint_opaque": {
+                "MAE": 0.03697111405677481,
+                "RMSE": 0.07686948993411999
+              },
+              "alpha": {
+                "mean": 0.9991266836598872,
+                "min": 0.8974037170410156,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 1042
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 820,
+              "RGB_denominator": 2460,
+              "road_only_opaque": {
+                "MAE": 0.008152507378803036,
+                "RMSE": 0.020966982655064706
+              },
+              "road_only_premult": {
+                "MAE": 0.007997118108613538,
+                "RMSE": 0.020927861554818027
+              },
+              "joint_opaque": {
+                "MAE": 0.02026764394912293,
+                "RMSE": 0.03699866529194674
+              },
+              "alpha": {
+                "mean": 0.9992223230803885,
+                "min": 0.9201222658157349,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 820
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 223,
+              "RGB_denominator": 669,
+              "road_only_opaque": {
+                "MAE": 0.09846557306490493,
+                "RMSE": 0.1503652056510918
+              },
+              "road_only_premult": {
+                "MAE": 0.09814037922977392,
+                "RMSE": 0.15022820784881935
+              },
+              "joint_opaque": {
+                "MAE": 0.09839194584275932,
+                "RMSE": 0.15034344785992054
+              },
+              "alpha": {
+                "mean": 0.9987750050732908,
+                "min": 0.8974037170410156,
+                "max": 0.9998995065689087,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 222
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 222,
+              "RGB_denominator": 666,
+              "road_only_opaque": {
+                "MAE": 0.09869596166899791,
+                "RMSE": 0.15066973602262337
+              },
+              "road_only_premult": {
+                "MAE": 0.09853630211775465,
+                "RMSE": 0.15056448720139823
+              },
+              "joint_opaque": {
+                "MAE": 0.09865532518999355,
+                "RMSE": 0.1506576791323113
+              },
+              "alpha": {
+                "mean": 0.9992316324968595,
+                "min": 0.9147157073020935,
+                "max": 0.9998995065689087,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 222
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 1,
+              "RGB_denominator": 3,
+              "road_only_opaque": {
+                "MAE": 0.04731930295626322,
+                "RMSE": 0.0475184630035183
+              },
+              "road_only_premult": {
+                "MAE": 0.010245498098053455,
+                "RMSE": 0.010636337834786536
+              },
+              "joint_opaque": {
+                "MAE": 0.039921730756759644,
+                "RMSE": 0.04006883592615776
+              },
+              "alpha": {
+                "mean": 0.8974037170410156,
+                "min": 0.8974037170410156,
+                "max": 0.8974037170410156,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 1,
+                "supported": 0
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/composed_I0_native_r1/110_native.npz",
+          "regions": {
+            "full_S": {
+              "pixel_frames": 2144,
+              "RGB_denominator": 6432,
+              "road_only_opaque": {
+                "MAE": 0.033427176782189504,
+                "RMSE": 0.07684845517918572
+              },
+              "road_only_premult": {
+                "MAE": 0.031438601796374144,
+                "RMSE": 0.07486654008381298
+              },
+              "joint_opaque": {
+                "MAE": 0.0327453215691071,
+                "RMSE": 0.07585959093540404
+              },
+              "alpha": {
+                "mean": 0.9892744050541921,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 2089
+              }
+            },
+            "old_photo_S": {
+              "pixel_frames": 1402,
+              "RGB_denominator": 4206,
+              "road_only_opaque": {
+                "MAE": 0.005770836076847553,
+                "RMSE": 0.013926061552805092
+              },
+              "road_only_premult": {
+                "MAE": 0.0054770580337100295,
+                "RMSE": 0.01373058152829735
+              },
+              "joint_opaque": {
+                "MAE": 0.005796681664427065,
+                "RMSE": 0.014012841432409029
+              },
+              "alpha": {
+                "mean": 0.9980554335807768,
+                "min": 0.9043595194816589,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 1402
+              }
+            },
+            "fixed_low_S": {
+              "pixel_frames": 742,
+              "RGB_denominator": 2226,
+              "road_only_opaque": {
+                "MAE": 0.0856834970906658,
+                "RMSE": 0.12922061433292822
+              },
+              "road_only_premult": {
+                "MAE": 0.08049262383849691,
+                "RMSE": 0.1258544917978742
+              },
+              "joint_opaque": {
+                "MAE": 0.08366444979870469,
+                "RMSE": 0.12750314358273374
+              },
+              "alpha": {
+                "mean": 0.9726827581616425,
+                "min": 0.3610786497592926,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 687
+              }
+            },
+            "current_new_support_909": {
+              "pixel_frames": 687,
+              "RGB_denominator": 2061,
+              "road_only_opaque": {
+                "MAE": 0.08475787068045237,
+                "RMSE": 0.1304930701601464
+              },
+              "road_only_premult": {
+                "MAE": 0.08529911791896821,
+                "RMSE": 0.13057163458479848
+              },
+              "joint_opaque": {
+                "MAE": 0.08484896047023649,
+                "RMSE": 0.13049672999378775
+              },
+              "alpha": {
+                "mean": 0.996829886884148,
+                "min": 0.9093537330627441,
+                "max": 0.9999000430107117,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 0,
+                "supported": 687
+              }
+            },
+            "current_remaining_56": {
+              "pixel_frames": 55,
+              "RGB_denominator": 165,
+              "road_only_opaque": {
+                "MAE": 0.09724541243278619,
+                "RMSE": 0.11211620796695641
+              },
+              "road_only_premult": {
+                "MAE": 0.020455143233337098,
+                "RMSE": 0.02702529003591141
+              },
+              "joint_opaque": {
+                "MAE": 0.06886883468338938,
+                "RMSE": 0.08130043970354352
+              },
+              "alpha": {
+                "mean": 0.6710631684823469,
+                "min": 0.3610786497592926,
+                "max": 0.8928596377372742,
+                "exact_zero": 0,
+                "gap": 0,
+                "thin": 55,
+                "supported": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "attribution": [
+    {
+      "before": "parent",
+      "after": "A0",
+      "role": "activation only at legacy colors",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": 0.003085126676181771,
+          "joint_opaque_MAE_delta": 0.003098490087166228,
+          "support_delta": 0,
+          "premult_MAE_delta": 0.0030985166913734263
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": -0.05087395905075148,
+          "joint_opaque_MAE_delta": -0.029125864748930586,
+          "support_delta": 892,
+          "premult_MAE_delta": 0.043146671399517084
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": -0.1847972853987713,
+          "joint_opaque_MAE_delta": -0.10887170854585707,
+          "support_delta": 892
+        }
+      }
+    },
+    {
+      "before": "A0",
+      "after": "A1",
+      "role": "same-alpha observed material initialization",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": -0.0028993158855221413,
+          "joint_opaque_MAE_delta": -0.0028972946523171395,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.0028827192003172963
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": -0.019286035002992308,
+          "joint_opaque_MAE_delta": -0.01913953071013802,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.018133401161291918
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": -0.05985907640077276,
+          "joint_opaque_MAE_delta": -0.05935036587598212,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.056194244263176985
+        }
+      }
+    },
+    {
+      "before": "A1",
+      "after": "B32",
+      "role": "32 frozen-pseudo row initialization and activation",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": -0.0001244361993253118,
+          "joint_opaque_MAE_delta": -0.00012437770790857394,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.00012475538143583154
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": -0.00022774438530864805,
+          "joint_opaque_MAE_delta": -0.00022029994534294994,
+          "support_delta": 15,
+          "premult_MAE_delta": -0.0003342416122712466
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": -0.0004912850880386815,
+          "joint_opaque_MAE_delta": -0.0004658663845516914,
+          "support_delta": 15,
+          "premult_MAE_delta": -0.0008664795705230349
+        }
+      }
+    },
+    {
+      "before": "A1",
+      "after": "A1_beam95",
+      "role": "observed95 fixed-footprint control without pseudo32",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": 2.0941238243421534e-05,
+          "joint_opaque_MAE_delta": 2.092353948199288e-05,
+          "support_delta": 0,
+          "premult_MAE_delta": 2.1390307989282986e-05
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": 0.00021817918795569158,
+          "joint_opaque_MAE_delta": 0.00023386167355904375,
+          "support_delta": 16,
+          "premult_MAE_delta": 0.00012431574220275743
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": 0.0008826627343794663,
+          "joint_opaque_MAE_delta": 0.0009130478905241268,
+          "support_delta": 16,
+          "premult_MAE_delta": 0.0003539702299126396
+        }
+      }
+    },
+    {
+      "before": "B32",
+      "after": "B32_beam95",
+      "role": "observed95 fixed-footprint control after pseudo32",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": 3.7892800111738456e-05,
+          "joint_opaque_MAE_delta": 3.7877010379938625e-05,
+          "support_delta": 0,
+          "premult_MAE_delta": 3.8482536818401636e-05
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": 0.0002017073904466704,
+          "joint_opaque_MAE_delta": 0.00021012655976876404,
+          "support_delta": 2,
+          "premult_MAE_delta": 0.00020963508544946663
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": 0.0007825824485010457,
+          "joint_opaque_MAE_delta": 0.0007876490618791837,
+          "support_delta": 2,
+          "premult_MAE_delta": 0.0006110266199476494
+        }
+      }
+    },
+    {
+      "before": "B32_beam95",
+      "after": "composed_I0",
+      "role": "reuse previous I0 old-active learned RGB; no optimization",
+      "regions": {
+        "old_photo_S": {
+          "road_opaque_MAE_delta": -0.1640876209301309,
+          "joint_opaque_MAE_delta": -0.15849508984897934,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.1639505146571535
+        },
+        "full_S": {
+          "road_opaque_MAE_delta": -0.11580427989734601,
+          "joint_opaque_MAE_delta": -0.11186474992314738,
+          "support_delta": 0,
+          "premult_MAE_delta": -0.11529130777312527
+        },
+        "current_new_support_909": {
+          "road_opaque_MAE_delta": -3.49276497287887e-05,
+          "joint_opaque_MAE_delta": -3.545362192237944e-05,
+          "support_delta": 0,
+          "premult_MAE_delta": -3.905552044961014e-05
+        }
+      }
+    }
+  ],
+  "actual_contribution": {
+    "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/visibility_r2",
+    "source_asset": "A1",
+    "rows": [
+      {
+        "raw": 86,
+        "region": "full_S",
+        "pixels": 1043,
+        "mass": {
+          "joint_static_alphaT": 61.91347595785521,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 708.8452490308291,
+          "joint_new_road_alphaT": 271.89428090900697,
+          "road_only_old_road_alphaT": 770.1716232375211,
+          "road_only_new_road_alphaT": 271.89428090900697
+        },
+        "mean_joint_road_alphaT": 0.9403063566057872,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 86,
+        "region": "old_photo_S",
+        "pixels": 820,
+        "mass": {
+          "joint_static_alphaT": 61.6931190924912,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 705.8263060962781,
+          "joint_new_road_alphaT": 52.20621900857009,
+          "road_only_old_road_alphaT": 767.1521116150543,
+          "road_only_new_road_alphaT": 52.20621900857009
+        },
+        "mean_joint_road_alphaT": 0.9244299086644491,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 86,
+        "region": "fixed_low_S",
+        "pixels": 223,
+        "mass": {
+          "joint_static_alphaT": 0.22035686536401045,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 3.018942934550978,
+          "joint_new_road_alphaT": 219.68806190043688,
+          "road_only_old_road_alphaT": 3.01951162246678,
+          "road_only_new_road_alphaT": 219.68806190043688
+        },
+        "mean_joint_road_alphaT": 0.9986861203362685,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 86,
+        "region": "current_new_support_909",
+        "pixels": 222,
+        "mass": {
+          "joint_static_alphaT": 0.114563188093598,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 2.135973078288771,
+          "joint_new_road_alphaT": 219.67692674696445,
+          "road_only_old_road_alphaT": 2.1360328617474806,
+          "road_only_new_road_alphaT": 219.67692674696445
+        },
+        "mean_joint_road_alphaT": 0.9991572064200596,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 86,
+        "region": "current_remaining_56",
+        "pixels": 1,
+        "mass": {
+          "joint_static_alphaT": 0.10579367727041245,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 0.882969856262207,
+          "joint_new_road_alphaT": 0.011135153472423553,
+          "road_only_old_road_alphaT": 0.8834787607192993,
+          "road_only_new_road_alphaT": 0.011135153472423553
+        },
+        "mean_joint_road_alphaT": 0.8941050097346306,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 110,
+        "region": "full_S",
+        "pixels": 2144,
+        "mass": {
+          "joint_static_alphaT": 28.719721396687305,
+          "joint_dynamic_alphaT": 1.9623483467512415e-05,
+          "joint_old_road_alphaT": 1418.5395969643141,
+          "joint_new_road_alphaT": 696.2491898689814,
+          "road_only_old_road_alphaT": 1419.73099635978,
+          "road_only_new_road_alphaT": 696.2491898689814
+        },
+        "mean_joint_road_alphaT": 0.9863753669931415,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 110,
+        "region": "old_photo_S",
+        "pixels": 1402,
+        "mass": {
+          "joint_static_alphaT": 3.4646378917850598,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 1380.7430363409221,
+          "joint_new_road_alphaT": 17.44602358661814,
+          "road_only_old_road_alphaT": 1381.8217180483043,
+          "road_only_new_road_alphaT": 17.44602358661814
+        },
+        "mean_joint_road_alphaT": 0.9972817831152213,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 110,
+        "region": "fixed_low_S",
+        "pixels": 742,
+        "mass": {
+          "joint_static_alphaT": 25.255083504902245,
+          "joint_dynamic_alphaT": 1.9623483467512415e-05,
+          "joint_old_road_alphaT": 37.796560623392,
+          "joint_new_road_alphaT": 678.8031662823632,
+          "road_only_old_road_alphaT": 37.909278311475646,
+          "road_only_new_road_alphaT": 678.8031662823632
+        },
+        "mean_joint_road_alphaT": 0.9657678260185381,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 110,
+        "region": "current_new_support_909",
+        "pixels": 687,
+        "mass": {
+          "joint_static_alphaT": 6.693576555537106,
+          "joint_dynamic_alphaT": 1.9623483467512415e-05,
+          "joint_old_road_alphaT": 5.665575571998488,
+          "joint_new_road_alphaT": 674.5037303417921,
+          "road_only_old_road_alphaT": 5.665575571998488,
+          "road_only_new_road_alphaT": 674.5037303417921
+        },
+        "mean_joint_road_alphaT": 0.9900572138483124,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      },
+      {
+        "raw": 110,
+        "region": "current_remaining_56",
+        "pixels": 55,
+        "mass": {
+          "joint_static_alphaT": 18.56150694936514,
+          "joint_dynamic_alphaT": 0.0,
+          "joint_old_road_alphaT": 32.13098505139351,
+          "joint_new_road_alphaT": 4.299435940571129,
+          "road_only_old_road_alphaT": 32.24370273947716,
+          "road_only_new_road_alphaT": 4.299435940571129
+        },
+        "mean_joint_road_alphaT": 0.6623712907629934,
+        "source_stage": "A1 only",
+        "actual_native_measurement": true
+      }
+    ],
+    "later_stage_alphaT": null,
+    "boundary": "actual native A1 group alphaT reused only at its source state; parent/B32/beam95/composed contributions are not inferred from road-only alpha"
+  },
+  "interpretation": [
+    "Activation+lawful initialization improves fullS opaque error, while old-photoS material error stays approximately unchanged until I0 color reuse.",
+    "Composed I0 greatly reduces old-photoS pseudo-teacher error; new909 material residual remains around0.0885.",
+    "56 fixed fullS pixels remain thin; coverage and material quality are separate outcomes.",
+    "I0 stripe-quality failure is inherited; teacher fitting and mechanical acceptance are not a visual or production pass."
+  ],
+  "human_verdict": null,
+  "visual_verdict": null,
+  "production_promoted": false
+}
