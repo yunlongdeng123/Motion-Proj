@@ -1,0 +1,1162 @@
+{
+  "schema": "road_capacity_real_pair_independent_CPU_acceptance.v1",
+  "completed": true,
+  "CPU_only": true,
+  "new_GPU_operations": 0,
+  "new_render_calls": 0,
+  "formal_outputs_modified": false,
+  "status": "ENGINEERING_PASS_NUMERIC_JOINT_GATE_FAIL",
+  "summary": {
+    "engineering_acceptance": true,
+    "engineering_checks": 261,
+    "teacher_noninferiority_pass": false,
+    "teacher_noninferiority_failures": [
+      {
+        "raw": 110,
+        "domain": "A",
+        "delta": 0.0053828051717256555
+      },
+      {
+        "raw": 110,
+        "domain": "S",
+        "delta": 0.004303594424466562
+      }
+    ],
+    "vertical_positive_excess_half_gate_pass": false,
+    "vertical_applicable_frames": [
+      134,
+      179,
+      198
+    ],
+    "vertical_NA_frames": [
+      86,
+      110
+    ],
+    "combined_numeric_gate_pass": false,
+    "formal_updates": 400,
+    "engineering_updates": 8,
+    "production_promoted": false
+  },
+  "checks": {
+    "same_frozen_contract_except_arm": true,
+    "I0_formal_200_seed101": true,
+    "I0_optimizer_loss_bounds_TV_match_parent": true,
+    "pin_3": true,
+    "pin_4": true,
+    "pin_5": true,
+    "pin_6": true,
+    "pin_7": true,
+    "pin_8": true,
+    "pin_9": true,
+    "pin_10": true,
+    "pin_11": true,
+    "pin_12": true,
+    "pin_13": true,
+    "pin_14": true,
+    "pin_15": true,
+    "pin_16": true,
+    "pin_17": true,
+    "pin_18": true,
+    "pin_19": true,
+    "W4_formal_200_seed101": true,
+    "W4_optimizer_loss_bounds_TV_match_parent": true,
+    "pin_22": true,
+    "pin_23": true,
+    "pin_24": true,
+    "pin_25": true,
+    "pin_26": true,
+    "pin_27": true,
+    "pin_28": true,
+    "pin_29": true,
+    "pin_30": true,
+    "pin_31": true,
+    "pin_32": true,
+    "pin_33": true,
+    "pin_34": true,
+    "pin_35": true,
+    "pin_36": true,
+    "pin_37": true,
+    "pin_38": true,
+    "both_arm_same_teacher_scope_input_bindings": true,
+    "new_V4_actual_scope_exact": true,
+    "new_S_only_known_3637_included": true,
+    "all_shared_basis_plan_buffers_identical": true,
+    "plans_keep_common_eligible_scope": true,
+    "I0_200_actual_updates_complete": true,
+    "I0_all_training_scalars_finite": true,
+    "I0_native_gradient_receipt_pass": true,
+    "I0_trace_matches_seed101_queue": true,
+    "I0_saved_checkpoint_step_and_contract": true,
+    "I0_initial_delta_exact_zero": true,
+    "I0_Adam_step200_one_color_group": true,
+    "I0_only_delta_model_mutated": true,
+    "I0_saved_delta_matches_checkpoint": true,
+    "I0_finite_node_bounds": true,
+    "I0_reconstructed_effective_shader_matches": true,
+    "I0_all_noneligible_colors_exact_c0": true,
+    "W4_200_actual_updates_complete": true,
+    "W4_all_training_scalars_finite": true,
+    "W4_native_gradient_receipt_pass": true,
+    "W4_trace_matches_seed101_queue": true,
+    "W4_saved_checkpoint_step_and_contract": true,
+    "W4_initial_delta_exact_zero": true,
+    "W4_Adam_step200_one_color_group": true,
+    "W4_only_delta_model_mutated": true,
+    "W4_saved_delta_matches_checkpoint": true,
+    "W4_finite_node_bounds": true,
+    "W4_reconstructed_effective_shader_matches": true,
+    "W4_all_noneligible_colors_exact_c0": true,
+    "same_complete_sampling_trace": true,
+    "pair_final_torch_rng_exact": true,
+    "pair_final_cuda_rng_exact": true,
+    "pair_final_numpy_rng_exact": true,
+    "pair_final_python_rng_exact": true,
+    "pair_final_sampler_exact": true,
+    "pair_final_queue_exact": true,
+    "pair_final_trace_exact": true,
+    "I0_road_field_set_same": true,
+    "I0_road_frozen_active": true,
+    "I0_road_frozen_model_xyz": true,
+    "I0_road_frozen_gaussian_sigma_m": true,
+    "I0_road_frozen_normal_world": true,
+    "I0_road_frozen_road_opacity": true,
+    "I0_road_frozen_model_from_world": true,
+    "I0_road_frozen_meter_to_model": true,
+    "I0_road_frozen_minimum_model_depth": true,
+    "I0_world_RGB_outside_eligible_exact": true,
+    "I0_baked_RGB_matches_effective_shader": true,
+    "I0_immutable_prior_world_xyz": true,
+    "I0_immutable_prior_world_keys": true,
+    "I0_immutable_prior_atlas_uv": true,
+    "I0_immutable_prior_row_rgb": true,
+    "I0_immutable_prior_source": true,
+    "I0_immutable_prior_confidence": true,
+    "I0_immutable_prior_unknown": true,
+    "I0_immutable_prior_known": true,
+    "I0_immutable_prior_observed_reference_srgb": true,
+    "I0_immutable_prior_source_world_row": true,
+    "I0_immutable_prior_source_distance_m": true,
+    "I0_immutable_prior_source_raw": true,
+    "I0_immutable_prior_source_uv_native": true,
+    "I0_immutable_prior_legal_write": true,
+    "I0_immutable_prior_material_updated": true,
+    "I0_immutable_prior_preserved_legacy_rgb": true,
+    "I0_immutable_prior_effective_active": true,
+    "I0_immutable_prior_effective_model_xyz": true,
+    "I0_immutable_prior_effective_sigma_m": true,
+    "I0_immutable_prior_W_world": true,
+    "I0_immutable_prior_requested": true,
+    "I0_immutable_prior_surface_supported": true,
+    "I0_immutable_prior_original_surface_supported": true,
+    "I0_immutable_prior_original_active": true,
+    "I0_immutable_prior_original_world_xyz": true,
+    "I0_immutable_prior_legal_coverage": true,
+    "I0_immutable_prior_coverage_added": true,
+    "I0_immutable_prior_coverage_repaired": true,
+    "I0_immutable_prior_trusted_geometry": true,
+    "I0_immutable_prior_protected_geometry": true,
+    "I0_immutable_prior_unsupported_requested": true,
+    "I0_immutable_prior_unknown_requested": true,
+    "I0_immutable_prior_surface_interpolated": true,
+    "I0_immutable_prior_interpolation_anchor_ids": true,
+    "I0_immutable_prior_interpolation_radius_m": true,
+    "I0_immutable_prior_interpolation_triangle_max_edge_m": true,
+    "I0_immutable_prior_interpolation_inside_measurement_hull": true,
+    "I0_immutable_prior_interpolation_height_residual_m": true,
+    "I0_immutable_prior_guarded_world_rows": true,
+    "I0_immutable_prior_planned_material_updated": true,
+    "I0_immutable_prior_planned_coverage_added": true,
+    "I0_immutable_prior_planned_coverage_repaired": true,
+    "I0_immutable_prior_old_requested": true,
+    "I0_immutable_prior_coverage_requested": true,
+    "I0_immutable_prior_observed_surface_activated": true,
+    "I0_immutable_prior_coverage_trusted": true,
+    "I0_immutable_prior_coverage_boundary_distance_m": true,
+    "I0_immutable_prior_planned_observed_surface_activated": true,
+    "I0_immutable_prior_phase1_maximum_state_added_guard": true,
+    "I0_immutable_prior_phase1_trainable_world_rows": true,
+    "I0_immutable_prior_phase1_opacity_before": true,
+    "I0_immutable_prior_phase1_opacity_after": true,
+    "I0_immutable_prior_phase1_scale_trainable_world_rows": true,
+    "I0_immutable_prior_phase1_scale_upper": true,
+    "I0_immutable_prior_phase1_scale_actual_boundary_distance_m": true,
+    "I0_immutable_prior_effective_road_opacity": true,
+    "I0_immutable_prior_texture_correction_eligible": true,
+    "I0_immutable_prior_base_row_rgb": true,
+    "I0_immutable_prior_texture_delta_linear": true,
+    "I0_capacity_source_prior_c0_exact": true,
+    "I0_capacity_effective_RGB_exact": true,
+    "I0_native_K_receipt_exact_77266": true,
+    "I0_public_reload_native_receipt_pass": true,
+    "I0_S_only_known_persistence_actual": true,
+    "W4_road_field_set_same": true,
+    "W4_road_frozen_active": true,
+    "W4_road_frozen_model_xyz": true,
+    "W4_road_frozen_gaussian_sigma_m": true,
+    "W4_road_frozen_normal_world": true,
+    "W4_road_frozen_road_opacity": true,
+    "W4_road_frozen_model_from_world": true,
+    "W4_road_frozen_meter_to_model": true,
+    "W4_road_frozen_minimum_model_depth": true,
+    "W4_world_RGB_outside_eligible_exact": true,
+    "W4_baked_RGB_matches_effective_shader": true,
+    "W4_immutable_prior_world_xyz": true,
+    "W4_immutable_prior_world_keys": true,
+    "W4_immutable_prior_atlas_uv": true,
+    "W4_immutable_prior_row_rgb": true,
+    "W4_immutable_prior_source": true,
+    "W4_immutable_prior_confidence": true,
+    "W4_immutable_prior_unknown": true,
+    "W4_immutable_prior_known": true,
+    "W4_immutable_prior_observed_reference_srgb": true,
+    "W4_immutable_prior_source_world_row": true,
+    "W4_immutable_prior_source_distance_m": true,
+    "W4_immutable_prior_source_raw": true,
+    "W4_immutable_prior_source_uv_native": true,
+    "W4_immutable_prior_legal_write": true,
+    "W4_immutable_prior_material_updated": true,
+    "W4_immutable_prior_preserved_legacy_rgb": true,
+    "W4_immutable_prior_effective_active": true,
+    "W4_immutable_prior_effective_model_xyz": true,
+    "W4_immutable_prior_effective_sigma_m": true,
+    "W4_immutable_prior_W_world": true,
+    "W4_immutable_prior_requested": true,
+    "W4_immutable_prior_surface_supported": true,
+    "W4_immutable_prior_original_surface_supported": true,
+    "W4_immutable_prior_original_active": true,
+    "W4_immutable_prior_original_world_xyz": true,
+    "W4_immutable_prior_legal_coverage": true,
+    "W4_immutable_prior_coverage_added": true,
+    "W4_immutable_prior_coverage_repaired": true,
+    "W4_immutable_prior_trusted_geometry": true,
+    "W4_immutable_prior_protected_geometry": true,
+    "W4_immutable_prior_unsupported_requested": true,
+    "W4_immutable_prior_unknown_requested": true,
+    "W4_immutable_prior_surface_interpolated": true,
+    "W4_immutable_prior_interpolation_anchor_ids": true,
+    "W4_immutable_prior_interpolation_radius_m": true,
+    "W4_immutable_prior_interpolation_triangle_max_edge_m": true,
+    "W4_immutable_prior_interpolation_inside_measurement_hull": true,
+    "W4_immutable_prior_interpolation_height_residual_m": true,
+    "W4_immutable_prior_guarded_world_rows": true,
+    "W4_immutable_prior_planned_material_updated": true,
+    "W4_immutable_prior_planned_coverage_added": true,
+    "W4_immutable_prior_planned_coverage_repaired": true,
+    "W4_immutable_prior_old_requested": true,
+    "W4_immutable_prior_coverage_requested": true,
+    "W4_immutable_prior_observed_surface_activated": true,
+    "W4_immutable_prior_coverage_trusted": true,
+    "W4_immutable_prior_coverage_boundary_distance_m": true,
+    "W4_immutable_prior_planned_observed_surface_activated": true,
+    "W4_immutable_prior_phase1_maximum_state_added_guard": true,
+    "W4_immutable_prior_phase1_trainable_world_rows": true,
+    "W4_immutable_prior_phase1_opacity_before": true,
+    "W4_immutable_prior_phase1_opacity_after": true,
+    "W4_immutable_prior_phase1_scale_trainable_world_rows": true,
+    "W4_immutable_prior_phase1_scale_upper": true,
+    "W4_immutable_prior_phase1_scale_actual_boundary_distance_m": true,
+    "W4_immutable_prior_effective_road_opacity": true,
+    "W4_immutable_prior_texture_correction_eligible": true,
+    "W4_immutable_prior_base_row_rgb": true,
+    "W4_immutable_prior_texture_delta_linear": true,
+    "W4_capacity_source_prior_c0_exact": true,
+    "W4_capacity_effective_RGB_exact": true,
+    "W4_native_K_receipt_exact_77266": true,
+    "W4_public_reload_native_receipt_pass": true,
+    "W4_S_only_known_persistence_actual": true,
+    "raw86_frozen_domain_from_canonical_alpha": true,
+    "raw86_stencils_three_valid_pixels": true,
+    "I0_raw86_coverage_fixed_bitwise": true,
+    "W4_raw86_coverage_fixed_bitwise": true,
+    "raw110_frozen_domain_from_canonical_alpha": true,
+    "raw110_stencils_three_valid_pixels": true,
+    "I0_raw110_coverage_fixed_bitwise": true,
+    "W4_raw110_coverage_fixed_bitwise": true,
+    "raw134_frozen_domain_from_canonical_alpha": true,
+    "raw134_stencils_three_valid_pixels": true,
+    "I0_raw134_coverage_fixed_bitwise": true,
+    "W4_raw134_coverage_fixed_bitwise": true,
+    "raw179_frozen_domain_from_canonical_alpha": true,
+    "raw179_stencils_three_valid_pixels": true,
+    "I0_raw179_coverage_fixed_bitwise": true,
+    "W4_raw179_coverage_fixed_bitwise": true,
+    "raw198_frozen_domain_from_canonical_alpha": true,
+    "raw198_stencils_three_valid_pixels": true,
+    "I0_raw198_coverage_fixed_bitwise": true,
+    "W4_raw198_coverage_fixed_bitwise": true,
+    "frozen_full38416_frequency37404_preserved": true,
+    "independent_metrics_agree_exported_records": true,
+    "save2_engineering_actual_count_matches_records": true,
+    "restore3_engineering_actual_count_matches_records": true,
+    "restore3_full_restore_record": true,
+    "replay3_engineering_actual_count_matches_records": true,
+    "replay3_full_restore_record": true,
+    "finish4_engineering_actual_count_matches_records": true,
+    "finish4_full_restore_record": true,
+    "W4_save1_engineering_actual_count_matches_records": true,
+    "W4_restore2_engineering_actual_count_matches_records": true,
+    "W4_restore2_full_restore_record": true,
+    "engineering_updates_sum8": true,
+    "lifecycle_next_update_replay_only_small_numeric_differences": true,
+    "parent400plus8actual_budget": true
+  },
+  "failed_engineering_checks": [],
+  "input_pins": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/code/train_real_pair.py": {
+      "expected": "ca18e052d1e1d818e93b2020ff0626352dfe108ea9e15771d2f47aa7300a5b57",
+      "actual": "ca18e052d1e1d818e93b2020ff0626352dfe108ea9e15771d2f47aa7300a5b57"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/code/road_capacity_native.py": {
+      "expected": "93594524355a78b93d5a189d0b764ec29fee142a2b7666a45c51c7c29eacbd47",
+      "actual": "93594524355a78b93d5a189d0b764ec29fee142a2b7666a45c51c7c29eacbd47"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/protocol_cpu_prepared.json": {
+      "expected": "5c64f7e2365f4880f2b2c655ce52f85f825187a25cef315774b5475c878eb1f3",
+      "actual": "5c64f7e2365f4880f2b2c655ce52f85f825187a25cef315774b5475c878eb1f3"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/execution_contract.json": {
+      "expected": "778cdcdba0c9919666af46ce9288175fd0cd43fff7618faed5d6acad40f453fd",
+      "actual": "778cdcdba0c9919666af46ce9288175fd0cd43fff7618faed5d6acad40f453fd"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check1/native_r1/qualified_scope.npz": {
+      "expected": "ba5e505e876fda493ae701fa2bcc96e34fa55f054f3e4b138e4b5f6150911bbc",
+      "actual": "ba5e505e876fda493ae701fa2bcc96e34fa55f054f3e4b138e4b5f6150911bbc"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check1/native_r1/qualified_scope.json": {
+      "expected": "eb3fbb379ca86217784f82b97fcdc8574df49fbc8e8228e9850a02562971a01c",
+      "actual": "eb3fbb379ca86217784f82b97fcdc8574df49fbc8e8228e9850a02562971a01c"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/freeze.json": {
+      "expected": "73a758e748476ac6bc8edc2aca808d60ad00cd6c56653d96f65c8884203658f0",
+      "actual": "73a758e748476ac6bc8edc2aca808d60ad00cd6c56653d96f65c8884203658f0"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/manifest.json": {
+      "expected": "7b570b86bb4c98fd9a529fcba00526f79b247cb951f260227de4e5232e1ed26f",
+      "actual": "7b570b86bb4c98fd9a529fcba00526f79b247cb951f260227de4e5232e1ed26f"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/086.npz": {
+      "expected": "911e12aa24c715f1c6db2d7f18d219054f2f94196b0b959938c63508bb44db8f",
+      "actual": "911e12aa24c715f1c6db2d7f18d219054f2f94196b0b959938c63508bb44db8f"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/110.npz": {
+      "expected": "d306a5d58dfab2f12654aa312df6d9f75a2b918555465853546c51aeed0d5572",
+      "actual": "d306a5d58dfab2f12654aa312df6d9f75a2b918555465853546c51aeed0d5572"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check3/frozen_frequency_masks.npz": {
+      "expected": "71c9fa2d8c934cba35119ef7ac6660f036048869a4eb26205ec12b19711a513f",
+      "actual": "71c9fa2d8c934cba35119ef7ac6660f036048869a4eb26205ec12b19711a513f"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/road.npz": {
+      "expected": "aa502238aa01a4704362b69988f81881a98e716fbf9648c051e0b912e9a3606d",
+      "actual": "aa502238aa01a4704362b69988f81881a98e716fbf9648c051e0b912e9a3606d"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/provenance.npz": {
+      "expected": "c6e473be351f622b49e70301461c7791cce713f471100e70683b16ca02072ea5",
+      "actual": "c6e473be351f622b49e70301461c7791cce713f471100e70683b16ca02072ea5"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/scene.json": {
+      "expected": "36a89d4eb01acf617420566c0fc67a230c821a03d6b57a0fde6eb8ee47f04bf2",
+      "actual": "36a89d4eb01acf617420566c0fc67a230c821a03d6b57a0fde6eb8ee47f04bf2"
+    },
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset/persistent/proof.json": {
+      "expected": "25d472b86ba0d9bfaf631ed598329fadd569088ac8ec885743964a2f2a404e07",
+      "actual": "25d472b86ba0d9bfaf631ed598329fadd569088ac8ec885743964a2f2a404e07"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/drivingeditor_dynamic_edit/road_world_texture_basis.py": {
+      "expected": "2fd88435f482907783b2b8635a86763138aaa568317291d0348c8a754bfdf439",
+      "actual": "2fd88435f482907783b2b8635a86763138aaa568317291d0348c8a754bfdf439"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/drivingeditor_dynamic_edit/road_world_texture_capacity.py": {
+      "expected": "eb26edcdb359bbae196503c104d10946876d8253d6731e9e0cbc33ade6e3996f",
+      "actual": "eb26edcdb359bbae196503c104d10946876d8253d6731e9e0cbc33ade6e3996f"
+    }
+  },
+  "scope_rows": 83388,
+  "scope_S_only_known": 3637,
+  "teacher_metrics": [
+    {
+      "raw": 86,
+      "domain": "A",
+      "photo_pixels": 5409,
+      "fixed_q_sum": 5409.0,
+      "errors": {
+        "baseline": 0.04913072837506932,
+        "I0": 0.01838170706971866,
+        "W4": 0.022163257972153117
+      },
+      "W4_minus_I0": 0.0037815509024344586,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": true,
+      "I0_relative_improvement": 0.6258612954118915,
+      "W4_relative_improvement": 0.5488921352242858
+    },
+    {
+      "raw": 86,
+      "domain": "C",
+      "photo_pixels": 3598,
+      "fixed_q_sum": 3598.0,
+      "errors": {
+        "baseline": 0.04709505988464158,
+        "I0": 0.009209471596691238,
+        "W4": 0.010979309594112007
+      },
+      "W4_minus_I0": 0.001769837997420769,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": true,
+      "I0_relative_improvement": 0.804449307013312,
+      "W4_relative_improvement": 0.766869187107828
+    },
+    {
+      "raw": 86,
+      "domain": "S",
+      "photo_pixels": 820,
+      "fixed_q_sum": 820.0,
+      "errors": {
+        "baseline": 0.16303246653907383,
+        "I0": 0.0063296256123231125,
+        "W4": 0.010044807580481832
+      },
+      "W4_minus_I0": 0.0037151819681587196,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": true,
+      "I0_relative_improvement": 0.9611756741053409,
+      "W4_relative_improvement": 0.9383876856326995
+    },
+    {
+      "raw": 110,
+      "domain": "A",
+      "photo_pixels": 11495,
+      "fixed_q_sum": 11495.0,
+      "errors": {
+        "baseline": 0.0683797740887133,
+        "I0": 0.02577974146596208,
+        "W4": 0.031162546637687735
+      },
+      "W4_minus_I0": 0.0053828051717256555,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": false,
+      "I0_relative_improvement": 0.6229917134192864,
+      "W4_relative_improvement": 0.5442724540555129
+    },
+    {
+      "raw": 110,
+      "domain": "C",
+      "photo_pixels": 7232,
+      "fixed_q_sum": 7232.0,
+      "errors": {
+        "baseline": 0.0539811371720267,
+        "I0": 0.014455288138573157,
+        "W4": 0.017298830362314763
+      },
+      "W4_minus_I0": 0.002843542223741606,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": true,
+      "I0_relative_improvement": 0.7322159388286477,
+      "W4_relative_improvement": 0.6795393489546733
+    },
+    {
+      "raw": 110,
+      "domain": "S",
+      "photo_pixels": 1402,
+      "fixed_q_sum": 1402.0,
+      "errors": {
+        "baseline": 0.17443658306283338,
+        "I0": 0.005029903888550064,
+        "W4": 0.009333498313016626
+      },
+      "W4_minus_I0": 0.004303594424466562,
+      "noninferiority_margin": 0.00392156862745098,
+      "noninferiority_pass": false,
+      "I0_relative_improvement": 0.9711648565900981,
+      "W4_relative_improvement": 0.9464934582578092
+    }
+  ],
+  "frequency_metrics": [
+    {
+      "raw": 86,
+      "role": "train",
+      "domain_pixels": 3669,
+      "vertical_stencils": 3440,
+      "horizontal_stencils": 3467,
+      "metrics": {
+        "baseline": {
+          "E_vertical": 0.023045217340393352,
+          "E_horizontal": 0.009231772999424348,
+          "RGB_delta_energy": 0.0
+        },
+        "I0": {
+          "E_vertical": 0.0158548379446878,
+          "E_horizontal": 0.009462891789270518,
+          "RGB_delta_energy": 0.004937265720700491
+        },
+        "W4": {
+          "E_vertical": 0.01683040818185076,
+          "E_horizontal": 0.010005947746499069,
+          "RGB_delta_energy": 0.0049455597862755425
+        }
+      },
+      "excess": {
+        "E_vertical": {
+          "status": "NOT_APPLICABLE",
+          "I0_excess": -0.007190379395705552,
+          "W4_excess": -0.0062148091585425905,
+          "ratio": null,
+          "pass_gate": null
+        },
+        "E_horizontal": {
+          "status": "FAIL",
+          "I0_excess": 0.00023111878984617001,
+          "W4_excess": 0.0007741747470747205,
+          "ratio": 3.349683284470303,
+          "pass_gate": false
+        },
+        "RGB_delta_energy": {
+          "status": "FAIL",
+          "I0_excess": 0.004937265720700491,
+          "W4_excess": 0.0049455597862755425,
+          "ratio": 1.001679890458453,
+          "pass_gate": false
+        }
+      },
+      "hard_gate_metric": "E_vertical"
+    },
+    {
+      "raw": 110,
+      "role": "train",
+      "domain_pixels": 7275,
+      "vertical_stencils": 6541,
+      "horizontal_stencils": 6873,
+      "metrics": {
+        "baseline": {
+          "E_vertical": 0.020079881791941392,
+          "E_horizontal": 0.008312376288413376,
+          "RGB_delta_energy": 0.0
+        },
+        "I0": {
+          "E_vertical": 0.01934727154744666,
+          "E_horizontal": 0.009808457692623184,
+          "RGB_delta_energy": 0.005627652900215247
+        },
+        "W4": {
+          "E_vertical": 0.021819093670571294,
+          "E_horizontal": 0.010319938845153784,
+          "RGB_delta_energy": 0.005522462050010113
+        }
+      },
+      "excess": {
+        "E_vertical": {
+          "status": "NOT_APPLICABLE",
+          "I0_excess": -0.0007326102444947316,
+          "W4_excess": 0.0017392118786299024,
+          "ratio": null,
+          "pass_gate": null
+        },
+        "E_horizontal": {
+          "status": "FAIL",
+          "I0_excess": 0.0014960814042098078,
+          "W4_excess": 0.002007562556740408,
+          "ratio": 1.341880562843271,
+          "pass_gate": false
+        },
+        "RGB_delta_energy": {
+          "status": "FAIL",
+          "I0_excess": 0.005627652900215247,
+          "W4_excess": 0.005522462050010113,
+          "ratio": 0.9813082199506101,
+          "pass_gate": false
+        }
+      },
+      "hard_gate_metric": "E_vertical"
+    },
+    {
+      "raw": 134,
+      "role": "diagnostic",
+      "domain_pixels": 8276,
+      "vertical_stencils": 7253,
+      "horizontal_stencils": 7792,
+      "metrics": {
+        "baseline": {
+          "E_vertical": 0.019620086313262352,
+          "E_horizontal": 0.008323382163129639,
+          "RGB_delta_energy": 0.0
+        },
+        "I0": {
+          "E_vertical": 0.04958507788884486,
+          "E_horizontal": 0.013126113249943894,
+          "RGB_delta_energy": 0.006093179237427792
+        },
+        "W4": {
+          "E_vertical": 0.04499190109464974,
+          "E_horizontal": 0.011578984916832331,
+          "RGB_delta_energy": 0.005945280964902897
+        }
+      },
+      "excess": {
+        "E_vertical": {
+          "status": "FAIL",
+          "I0_excess": 0.029964991575582505,
+          "W4_excess": 0.02537181478138739,
+          "ratio": 0.8467152315858502,
+          "pass_gate": false
+        },
+        "E_horizontal": {
+          "status": "FAIL",
+          "I0_excess": 0.004802731086814255,
+          "W4_excess": 0.003255602753702692,
+          "ratio": 0.6778648845530506,
+          "pass_gate": false
+        },
+        "RGB_delta_energy": {
+          "status": "FAIL",
+          "I0_excess": 0.006093179237427792,
+          "W4_excess": 0.005945280964902897,
+          "ratio": 0.9757272407782757,
+          "pass_gate": false
+        }
+      },
+      "hard_gate_metric": "E_vertical"
+    },
+    {
+      "raw": 179,
+      "role": "diagnostic",
+      "domain_pixels": 8962,
+      "vertical_stencils": 8108,
+      "horizontal_stencils": 8529,
+      "metrics": {
+        "baseline": {
+          "E_vertical": 0.01786771763938246,
+          "E_horizontal": 0.00804722845259089,
+          "RGB_delta_energy": 0.0
+        },
+        "I0": {
+          "E_vertical": 0.049430449661850694,
+          "E_horizontal": 0.013037268480609729,
+          "RGB_delta_energy": 0.005640615588599858
+        },
+        "W4": {
+          "E_vertical": 0.04492109589636463,
+          "E_horizontal": 0.011539482525593324,
+          "RGB_delta_energy": 0.00556026380382882
+        }
+      },
+      "excess": {
+        "E_vertical": {
+          "status": "FAIL",
+          "I0_excess": 0.03156273202246823,
+          "W4_excess": 0.02705337825698217,
+          "ratio": 0.8571304359116938,
+          "pass_gate": false
+        },
+        "E_horizontal": {
+          "status": "FAIL",
+          "I0_excess": 0.004990040028018838,
+          "W4_excess": 0.003492254073002434,
+          "ratio": 0.6998449017229507,
+          "pass_gate": false
+        },
+        "RGB_delta_energy": {
+          "status": "FAIL",
+          "I0_excess": 0.005640615588599858,
+          "W4_excess": 0.00556026380382882,
+          "ratio": 0.9857547844718516,
+          "pass_gate": false
+        }
+      },
+      "hard_gate_metric": "E_vertical"
+    },
+    {
+      "raw": 198,
+      "role": "diagnostic",
+      "domain_pixels": 9222,
+      "vertical_stencils": 8430,
+      "horizontal_stencils": 8829,
+      "metrics": {
+        "baseline": {
+          "E_vertical": 0.018050155574481634,
+          "E_horizontal": 0.007993167515544672,
+          "RGB_delta_energy": 0.0
+        },
+        "I0": {
+          "E_vertical": 0.050404862840334005,
+          "E_horizontal": 0.013040416873042129,
+          "RGB_delta_energy": 0.005521032756956984
+        },
+        "W4": {
+          "E_vertical": 0.04456483750840146,
+          "E_horizontal": 0.011513060723718783,
+          "RGB_delta_energy": 0.005413191301834364
+        }
+      },
+      "excess": {
+        "E_vertical": {
+          "status": "FAIL",
+          "I0_excess": 0.03235470726585237,
+          "W4_excess": 0.02651468193391983,
+          "ratio": 0.8194999792782489,
+          "pass_gate": false
+        },
+        "E_horizontal": {
+          "status": "FAIL",
+          "I0_excess": 0.005047249357497457,
+          "W4_excess": 0.0035198932081741113,
+          "ratio": 0.6973884107678316,
+          "pass_gate": false
+        },
+        "RGB_delta_energy": {
+          "status": "FAIL",
+          "I0_excess": 0.005521032756956984,
+          "W4_excess": 0.005413191301834364,
+          "ratio": 0.9804671589773255,
+          "pass_gate": false
+        }
+      },
+      "hard_gate_metric": "E_vertical"
+    }
+  ],
+  "coverage": [
+    {
+      "raw": 86,
+      "arm": "I0",
+      "frozen_full_pixels": 3679,
+      "support": 3669,
+      "gap": 0,
+      "thin": 10
+    },
+    {
+      "raw": 86,
+      "arm": "W4",
+      "frozen_full_pixels": 3679,
+      "support": 3669,
+      "gap": 0,
+      "thin": 10
+    },
+    {
+      "raw": 110,
+      "arm": "I0",
+      "frozen_full_pixels": 7459,
+      "support": 7275,
+      "gap": 11,
+      "thin": 173
+    },
+    {
+      "raw": 110,
+      "arm": "W4",
+      "frozen_full_pixels": 7459,
+      "support": 7275,
+      "gap": 11,
+      "thin": 173
+    },
+    {
+      "raw": 134,
+      "arm": "I0",
+      "frozen_full_pixels": 8536,
+      "support": 8276,
+      "gap": 21,
+      "thin": 239
+    },
+    {
+      "raw": 134,
+      "arm": "W4",
+      "frozen_full_pixels": 8536,
+      "support": 8276,
+      "gap": 21,
+      "thin": 239
+    },
+    {
+      "raw": 179,
+      "arm": "I0",
+      "frozen_full_pixels": 9242,
+      "support": 8962,
+      "gap": 27,
+      "thin": 253
+    },
+    {
+      "raw": 179,
+      "arm": "W4",
+      "frozen_full_pixels": 9242,
+      "support": 8962,
+      "gap": 27,
+      "thin": 253
+    },
+    {
+      "raw": 198,
+      "arm": "I0",
+      "frozen_full_pixels": 9500,
+      "support": 9222,
+      "gap": 24,
+      "thin": 254
+    },
+    {
+      "raw": 198,
+      "arm": "W4",
+      "frozen_full_pixels": 9500,
+      "support": 9222,
+      "gap": 24,
+      "thin": 254
+    }
+  ],
+  "frozen_full_domain_pixels": 38416,
+  "frozen_frequency_domain_pixels": 37404,
+  "node_bounds": {
+    "I0": {
+      "shape": [
+        83388,
+        3
+      ],
+      "min": -0.853892982006073,
+      "max": 0.9776403903961182,
+      "active_lower_scalars": 0,
+      "active_upper_scalars": 0,
+      "active_bound_scalars": 0,
+      "active_bound_nodes": 0,
+      "near_bound_1e_6_scalars": 0
+    },
+    "W4": {
+      "shape": [
+        25409,
+        3
+      ],
+      "min": -1.0,
+      "max": 1.0,
+      "active_lower_scalars": 87,
+      "active_upper_scalars": 45,
+      "active_bound_scalars": 132,
+      "active_bound_nodes": 67,
+      "near_bound_1e_6_scalars": 132
+    }
+  },
+  "shader_reconstruction": {
+    "I0": {
+      "max_abs": 0.0,
+      "RGB_clipped_0_1": true,
+      "shared_node_box_is_declared_method_constraint": true
+    },
+    "W4": {
+      "max_abs": 0.0,
+      "RGB_clipped_0_1": true,
+      "shared_node_box_is_declared_method_constraint": true
+    }
+  },
+  "asset_immutability": {
+    "I0": {
+      "road_changed_fields": [
+        "reference_srgb"
+      ],
+      "road_unchanged_fields": [
+        "active",
+        "model_xyz",
+        "gaussian_sigma_m",
+        "normal_world",
+        "road_opacity",
+        "model_from_world",
+        "meter_to_model",
+        "minimum_model_depth"
+      ],
+      "source_prior_changed_fields": [
+        "effective_row_rgb"
+      ],
+      "source_prior_unchanged_count": 59,
+      "S_only_known_effective_rows_changed": 3637
+    },
+    "W4": {
+      "road_changed_fields": [
+        "reference_srgb"
+      ],
+      "road_unchanged_fields": [
+        "active",
+        "model_xyz",
+        "gaussian_sigma_m",
+        "normal_world",
+        "road_opacity",
+        "model_from_world",
+        "meter_to_model",
+        "minimum_model_depth"
+      ],
+      "source_prior_changed_fields": [
+        "effective_row_rgb"
+      ],
+      "source_prior_unchanged_count": 59,
+      "S_only_known_effective_rows_changed": 3637
+    }
+  },
+  "persistence": {
+    "I0": {
+      "joint_K_native_receipt": {
+        "all_exact": true,
+        "protected_pixel_frames": 77266,
+        "rows": [
+          {
+            "raw": 86,
+            "pixels": 14507,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 110,
+            "pixels": 15716,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 134,
+            "pixels": 16727,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 179,
+            "pixels": 16788,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 198,
+            "pixels": 13528,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          }
+        ]
+      },
+      "public_loader_native_receipt": {
+        "public_loader": true,
+        "GPU_executed": true,
+        "tolerance": 1e-06,
+        "rows": [
+          {
+            "raw": 86,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 110,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 134,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 179,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 198,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          }
+        ]
+      },
+      "known_effective_override": {
+        "S_only_known_eligible": 3637,
+        "effective_RGB_changed_rows": 3637,
+        "changed_effective_RGB_public_reload_verified": true,
+        "prior_ledger_fields_exact": {
+          "known": true,
+          "observed_reference_srgb": true,
+          "source_raw": true,
+          "source_world_row": true
+        },
+        "source_known_is_prior_not_learned_measurement": true
+      },
+      "verification_boundary": "existing native execution receipts and independent saved-row immutability are checked; CPU audit performs no fresh renderer replay"
+    },
+    "W4": {
+      "joint_K_native_receipt": {
+        "all_exact": true,
+        "protected_pixel_frames": 77266,
+        "rows": [
+          {
+            "raw": 86,
+            "pixels": 14507,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 110,
+            "pixels": 15716,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 134,
+            "pixels": 16727,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 179,
+            "pixels": 16788,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          },
+          {
+            "raw": 198,
+            "pixels": 13528,
+            "RGB_max": 0.0,
+            "changed_pixels": 0
+          }
+        ]
+      },
+      "public_loader_native_receipt": {
+        "public_loader": true,
+        "GPU_executed": true,
+        "tolerance": 1e-06,
+        "rows": [
+          {
+            "raw": 86,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 110,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 134,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 179,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          },
+          {
+            "raw": 198,
+            "RGB_max": 0.0,
+            "alpha_max": 0.0,
+            "RGB8_max": 0
+          }
+        ]
+      },
+      "known_effective_override": {
+        "S_only_known_eligible": 3637,
+        "effective_RGB_changed_rows": 3637,
+        "changed_effective_RGB_public_reload_verified": true,
+        "prior_ledger_fields_exact": {
+          "known": true,
+          "observed_reference_srgb": true,
+          "source_raw": true,
+          "source_world_row": true
+        },
+        "source_known_is_prior_not_learned_measurement": true
+      },
+      "verification_boundary": "existing native execution receipts and independent saved-row immutability are checked; CPU audit performs no fresh renderer replay"
+    }
+  },
+  "sampler_and_formal_budget": {
+    "I0": {
+      "step": 200,
+      "training_records": 200,
+      "frame_counts": {
+        "86": 100,
+        "110": 100
+      },
+      "Adam_steps": [
+        200
+      ]
+    },
+    "W4": {
+      "step": 200,
+      "training_records": 200,
+      "frame_counts": {
+        "86": 100,
+        "110": 100
+      },
+      "Adam_steps": [
+        200
+      ]
+    }
+  },
+  "engineering_lifecycle": [
+    {
+      "run": "save2",
+      "arm": "I0",
+      "actual_updates": 2,
+      "end_step": 2,
+      "trace_length": 2,
+      "formal": false
+    },
+    {
+      "run": "restore3",
+      "arm": "I0",
+      "actual_updates": 1,
+      "end_step": 3,
+      "trace_length": 3,
+      "formal": false
+    },
+    {
+      "run": "replay3",
+      "arm": "I0",
+      "actual_updates": 1,
+      "end_step": 3,
+      "trace_length": 3,
+      "formal": false
+    },
+    {
+      "run": "finish4",
+      "arm": "I0",
+      "actual_updates": 2,
+      "end_step": 4,
+      "trace_length": 4,
+      "formal": false
+    },
+    {
+      "run": "W4_save1",
+      "arm": "W4",
+      "actual_updates": 1,
+      "end_step": 1,
+      "trace_length": 1,
+      "formal": false
+    },
+    {
+      "run": "W4_restore2",
+      "arm": "W4",
+      "actual_updates": 1,
+      "end_step": 2,
+      "trace_length": 2,
+      "formal": false
+    }
+  ],
+  "next_update_replay_differences": [
+    {
+      "path": "/model/delta_values",
+      "type": "tensor",
+      "max_abs": 7.450580596923828e-09
+    },
+    {
+      "path": "/optimizer/state/0/exp_avg",
+      "type": "tensor",
+      "max_abs": 7.275957614183426e-12
+    },
+    {
+      "path": "/optimizer/state/0/exp_avg_sq",
+      "type": "tensor",
+      "max_abs": 2.7755575615628914e-17
+    }
+  ],
+  "independent_vs_runner_metric_max_abs": 1.5527344271459853e-09,
+  "interpretation": {
+    "teacher": "same frozen pseudo C/S and real visible A; no hidden road GT",
+    "frequency": "primary hard gate is vertical excess; horizontal/delta ratios are reported diagnostics",
+    "W4_bound": "counted active scalar/node bounds document declared bounded W4; no unbounded control isolates the cause",
+    "visual_verdict": null,
+    "human_verdict": null,
+    "I_reg_executed": false
+  },
+  "native_evidence_boundary": "K and public reload are audited existing real native receipts and saved-row invariants; no new independent GPU replay is performed",
+  "GPU_keep_on": true
+}

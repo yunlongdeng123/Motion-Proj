@@ -1,0 +1,43 @@
+{
+  "schema": "road_capacity_GPU_execution.v1",
+  "task_id": "MODULE2-CAPACITY-GPU-20261118",
+  "run_id": "road_capacity_gpu_20261118_r1",
+  "campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1",
+  "parent_protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/protocol_cpu_prepared.json",
+  "parent_protocol_sha256": "5c64f7e2365f4880f2b2c655ce52f85f825187a25cef315774b5475c878eb1f3",
+  "user_authorization": "2026-11-18: autodl GPU开好了，按准备好的协议继续。GPU保持开机。",
+  "gpu_authorized": true,
+  "keep_GPU_on": true,
+  "shutdown_authorized_for_this_task": false,
+  "supersedes_parent_fields_only": [
+    "gpu_execution_authorized",
+    "runtime_gate.stop_now",
+    "runtime_gate.next"
+  ],
+  "method_and_targets_and_formal_budget": "all other parent definitions inherited unchanged",
+  "budget": {
+    "check1": "actual contribution/gradient/maximum-coverage diagnostic only; no formal optimizer updates",
+    "check2": "5 world-consistent cases jointly supervised by5 views; <=500 solver iterations or300seconds each, whichever first; no automatic extension",
+    "check3": "I0 and W4 each200 Adam color updates; fixed coverage; seed101/lr.01 and parent weights/constraints"
+  },
+  "lifecycle_smoke": {
+    "required_before_formal": true,
+    "updates": "engineering only, separately counted by actual executed update log",
+    "coverage": [
+      "native forward/backward finite/VRAM/data",
+      "checkpoint save",
+      "evaluation all five views",
+      "full optimizer/RNG/state restore",
+      "next update replay",
+      "next-stage/public persistent reload entry"
+    ],
+    "long_run_rule": "if expected formal experiment runtime >=1h, first complete about600s real lifecycle smoke; do not change formal budgets to compensate"
+  },
+  "GPU_concurrency": "single active native process owner; no concurrent model contexts across agents",
+  "production_promotion": false,
+  "TRELLIS_started": false,
+  "human_verdict": null,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ]
+}

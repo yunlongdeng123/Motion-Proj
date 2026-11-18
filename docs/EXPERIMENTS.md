@@ -354,3 +354,7 @@
 ## MODULE2-CAPACITY-CPU-20261117
 
 [三道道路上限检查的CPU准备](autoresearch/module2_capacity_cpu_20261117/README.md)：监督/目标影候选、25份理想世界目标与bounded-ci证书接口、共享4cm世界纹理对照代码。当前0真实场景更新/0native render/0新模型推理；用户要求准备好后停等GPU，无自动队列。旧影区损失缺失及低覆盖已量化，不据此判3DGS极限；历史TRELLIS单样本负例纳入，未新跑。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## MODULE2-CAPACITY-GPU-20261118
+
+[五帧三道检查与组件](autoresearch/module2_capacity_gpu_20261118/report.md)。真实I0/W4各200步、工程8，目标阴影photo监督有效，965低覆盖关联旧激活/请求错配，W4联合门失败。理想主组2500+已登记虚拟诊断2500次LS，工程LS3；三档误差包络保留，严格负证书未建立，尚无TRELLIS切换依据。候选未替换默认场景，GPU保持开机。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。

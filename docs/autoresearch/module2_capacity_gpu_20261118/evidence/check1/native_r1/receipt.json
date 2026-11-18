@@ -1,0 +1,105 @@
+{
+  "schema": "road_capacity_native_gate1.v1",
+  "completed": true,
+  "optimizer_updates": 0,
+  "formal_updates": 0,
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "supervision": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1",
+  "scope_role": "qualified_common_actual_alphaT_v4_ACS",
+  "engineering_attempt": 1,
+  "public_loader": {
+    "schema": "persistent_road_handoff.v1",
+    "manifest_sha256": "36a89d4eb01acf617420566c0fc67a230c821a03d6b57a0fde6eb8ee47f04bf2",
+    "proof_sha256": "25d472b86ba0d9bfaf631ed598329fadd569088ac8ec885743964a2f2a404e07",
+    "road_sha256": "aa502238aa01a4704362b69988f81881a98e716fbf9648c051e0b912e9a3606d",
+    "combined_checkpoint_sha256": "f2a1a79b3c954ef050734a12e2a148eedb2467aad43ab553149879c065f4cbab",
+    "static_rows": 1558011,
+    "dynamic_rows": 1035290,
+    "gated_static_rows": 83456,
+    "road_total_rows": 588861,
+    "road_active_rows": 151096,
+    "meter_to_model": 0.018849925866127503,
+    "unit_scale": 53.05060651707689,
+    "physical_road_near_m": 0.2,
+    "native_legacy_near_preserved": true,
+    "depth_features_in_original_model_units": true,
+    "optional_minimum_model_depth": true,
+    "bounded_active_road_rows": 1592,
+    "added_minimum_tensor_is_watched": true,
+    "persistent_world_asset": true,
+    "image_space_final_paste": false,
+    "optimizer_updates": 0,
+    "quality_pass_claimed": false
+  },
+  "scope": {
+    "schema": "qualified_common_actual_alphaT_v4_ACS",
+    "source": "canonical oldS2 road-only native raster",
+    "world_rows": 588861,
+    "active_rows": 151096,
+    "eligible_color_rows": 83388,
+    "legacy_color_rows": 78421,
+    "new_vs_legacy_rows": 5413,
+    "A_seen_rows": 65499,
+    "C_seen_rows": 47886,
+    "S_seen_rows": 5832,
+    "S_only_known_rows": 3637,
+    "S_seen_known_eligible_rows": 4329,
+    "K_world_guard_rows": 38982,
+    "legacy_K_guard_rows": 38982,
+    "recomputed_K_guard_equal_legacy": true,
+    "formula": "physical_legal & ~(legacy_K_guard | recomputed_max_tile_K_guard) & (A_seen | S_seen | (C_seen & ~known))",
+    "max_coverage_probe": "all physical/legal/material-available near-unlocked K-unlocked active rows, opacity to1-1e-5 and inherited originalR8 absolute tangent sigma ceiling; read-only upper-bound diagnostic, not formal permission",
+    "immutable_observed_prior_ledger_changed": false,
+    "scope_ready_for_common_pair": true
+  },
+  "attribution": [
+    {
+      "raw": 86,
+      "region_pixels": {
+        "A": 5409,
+        "C": 3598,
+        "S": 820,
+        "A_full": 5611,
+        "C_full": 3606,
+        "S_full": 1043,
+        "S_gap": 164,
+        "S_thin": 59
+      },
+      "conservation_relative_error": 7.845231808701732e-08
+    },
+    {
+      "raw": 110,
+      "region_pixels": {
+        "A": 11495,
+        "C": 7232,
+        "S": 1402,
+        "A_full": 11901,
+        "C_full": 7415,
+        "S_full": 2144,
+        "S_gap": 609,
+        "S_thin": 133
+      },
+      "conservation_relative_error": 5.7216479286399916e-08
+    }
+  ],
+  "baseline_match": [
+    {
+      "raw": 86,
+      "road_alpha_max_abs_vs_r3_reference": 0.0
+    },
+    {
+      "raw": 110,
+      "road_alpha_max_abs_vs_r3_reference": 0.0
+    }
+  ],
+  "native_gradient_routes_pass": true,
+  "K_full_five_frame_exact_zero": true,
+  "peak_GPU_allocated_bytes": 2262174720,
+  "seconds": 12.108436822891235,
+  "scene_persistent_unchanged": true,
+  "old_supervision_modified": false,
+  "old_source_modified": false,
+  "rendering_operations": "actual native diagnostic only",
+  "formal_budget_used": 0,
+  "default_asset_written": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "qualified_common_actual_alphaT_v4_ACS",
+  "source": "canonical oldS2 road-only native raster",
+  "world_rows": 588861,
+  "active_rows": 151096,
+  "eligible_color_rows": 83388,
+  "legacy_color_rows": 78421,
+  "new_vs_legacy_rows": 5413,
+  "A_seen_rows": 65499,
+  "C_seen_rows": 47886,
+  "S_seen_rows": 5832,
+  "S_only_known_rows": 3637,
+  "S_seen_known_eligible_rows": 4329,
+  "K_world_guard_rows": 38982,
+  "legacy_K_guard_rows": 38982,
+  "recomputed_K_guard_equal_legacy": true,
+  "formula": "physical_legal & ~(legacy_K_guard | recomputed_max_tile_K_guard) & (A_seen | S_seen | (C_seen & ~known))",
+  "max_coverage_probe": "all physical/legal/material-available near-unlocked K-unlocked active rows, opacity to1-1e-5 and inherited originalR8 absolute tangent sigma ceiling; read-only upper-bound diagnostic, not formal permission",
+  "immutable_observed_prior_ledger_changed": false,
+  "scope_ready_for_common_pair": true
+}

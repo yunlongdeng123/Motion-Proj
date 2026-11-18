@@ -1,0 +1,2190 @@
+{
+  "schema": "ideal_native_capacity_results.v1",
+  "role": "five-view supervised capacity oracle, not generalization",
+  "canonical_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_asset_20261116_r1/phase2/formal_r1/asset",
+  "protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/protocol_cpu_prepared.json",
+  "protocol_sha256": "5c64f7e2365f4880f2b2c655ce52f85f825187a25cef315774b5475c878eb1f3",
+  "execution_contract": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/execution_contract.json",
+  "independent_teacher": "analytic world-continuous asphalt and flat-top markings ray-projected onto canonical mesh; GS render never used as RGB teacher",
+  "objective": {
+    "expression": "0.5*sum(q*(P-alpha_fixed*T)^2)/(3*sum(q))",
+    "edge_weight": 0,
+    "D_full": 38416,
+    "D_exact": 38198,
+    "fallback": 218,
+    "D_color": 37206,
+    "q": "one on fixed D_color",
+    "RGB_denominator": 111618,
+    "ci_box": [
+      0,
+      1
+    ],
+    "alpha_stratum": "exact G_s and frozen alpha>0.9",
+    "fallback_role": "full-domain description only; no negative representation inference"
+  },
+  "fixed_fields": [
+    "world_xyz",
+    "normals",
+    "opacity",
+    "all_scales",
+    "active_mask",
+    "GS_density",
+    "cameras480x320",
+    "static",
+    "vehicles",
+    "environment",
+    "theta",
+    "z",
+    "eta"
+  ],
+  "numeric_certificate": {
+    "strict_numeric_error_bound_established": false,
+    "conservative_objective_plus_boxgradient_error_bound": null,
+    "required_error_bound": 1e-05,
+    "negative_certificate_allowed": false,
+    "certified_lower_bound": null,
+    "FW_and_range_floor_role": "numerical proxies only; spotchecks do not establish a conservative global bound",
+    "formula": "G=sum(g*c-min(g,0)); numeric proxy max(0,f-G-1e-5), not certified"
+  },
+  "error_envelope": {
+    "reference_RGB_RMSE": 0.00784313725490196,
+    "registered_RMSE_levels": [
+      0.00392156862745098,
+      0.00784313725490196,
+      0.01568627450980392
+    ],
+    "line_center_error_px": 1,
+    "resolvable_line_edge_F1": 0.9,
+    "detail_contrast_retention": 0.9,
+    "objective_tolerances": [
+      7.689350249903882e-06,
+      3.075740099961553e-05,
+      0.00012302960399846212
+    ],
+    "interpretation": "engineering reference levels, not universal perceptual equivalence or an automatic model-switch threshold"
+  },
+  "scopes": {
+    "primary": {
+      "role": "protected primary",
+      "eligible_active_color_rows": 112058,
+      "all_active_rows": 151096,
+      "archived_Kguard_rows": 38982,
+      "initialization": "exact same canonical oldS2 c0; each case independently restarts",
+      "source_binding": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/binding.json",
+      "cases": [
+        {
+          "case": "constant",
+          "scope": "primary",
+          "RGB_RMSE": 0.013533989062320529,
+          "RGB_RMSE_in_code_values": 3.4511672108917346,
+          "objective": 9.158442996950585e-05,
+          "certificate": {
+            "f": 9.158442996950585e-05,
+            "RGB_RMSE": 0.013533989062320529,
+            "FW_gap_numeric_proxy": 4.061478746140651e-05,
+            "lower_numeric_proxy": 5.096964250809934e-05,
+            "L_safe_numeric_proxy": 4.0969642508099344e-05,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 8.555264564990834e-05
+          },
+          "range_floor_numeric_proxy": 8.555264564990834e-05,
+          "range_floor_fraction_of_final_objective": 0.9341396313586724,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "not_applicable_constant",
+            "passed": true,
+            "frames": []
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.013416542394423818,
+              "RGB_MAE": 0.0023003856404445852
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.013429518550026023,
+              "RGB_MAE": 0.0022771671603492045
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.013533989062320527,
+              "RGB_MAE": 0.0022423635909181996
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.0109070683859133,
+              "RGB_MAE": 0.006368731983028786
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03484539758741731,
+            "coverage_range_floor_numeric_proxy": 0.0002014626340174623,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": true,
+          "K_role": "hard protected joint RGB",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 20.161929788067937,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "lowfreq",
+          "scope": "primary",
+          "RGB_RMSE": 0.013450205040795896,
+          "RGB_RMSE_in_code_values": 3.4298022854029533,
+          "objective": 9.045400781972567e-05,
+          "certificate": {
+            "f": 9.045400781972567e-05,
+            "RGB_RMSE": 0.013450205040795896,
+            "FW_gap_numeric_proxy": 4.077866786863358e-05,
+            "lower_numeric_proxy": 4.967533995109209e-05,
+            "L_safe_numeric_proxy": 3.967533995109209e-05,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 8.432941243175135e-05
+          },
+          "range_floor_numeric_proxy": 8.432941243175135e-05,
+          "range_floor_fraction_of_final_objective": 0.9322905028135335,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "lowfreq_contrast",
+            "passed": true,
+            "modulation_gain": 1.0199823806909398,
+            "frames": []
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.013329981712743345,
+              "RGB_MAE": 0.002308447787209887
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.013344682081121268,
+              "RGB_MAE": 0.002286320617198315
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.013450205040795896,
+              "RGB_MAE": 0.00225438164135334
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.01043933811433243,
+              "RGB_MAE": 0.006185574576668783
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03521424176259537,
+            "coverage_range_floor_numeric_proxy": 0.00021005812013582213,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": true,
+          "K_role": "hard protected joint RGB",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 20.202544391155243,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "marking_w120",
+          "scope": "primary",
+          "RGB_RMSE": 0.017830808686648072,
+          "RGB_RMSE_in_code_values": 4.546856215095258,
+          "objective": 0.00015896886920992216,
+          "certificate": {
+            "f": 0.00015896886920992216,
+            "RGB_RMSE": 0.017830808686648072,
+            "FW_gap_numeric_proxy": 5.260299370613857e-05,
+            "lower_numeric_proxy": 0.0001063658755037836,
+            "L_safe_numeric_proxy": 9.63658755037836e-05,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 8.432941243175135e-05
+          },
+          "range_floor_numeric_proxy": 8.432941243175135e-05,
+          "range_floor_fraction_of_final_objective": 0.5304775258883697,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": false,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "not_met_or_not_evaluable",
+            "passed": false,
+            "never_negative_capacity_evidence": false,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 298,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.5191518355003726,
+                "contrast_retention": 0.8169205516895067,
+                "passed": false
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 648,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.0866749310262273,
+                "contrast_retention": 0.9290158802494664,
+                "passed": true
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 721,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.13889312265001827,
+                "contrast_retention": 0.943738608319775,
+                "passed": true
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 811,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.10911239710601853,
+                "contrast_retention": 0.9392277385981109,
+                "passed": true
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 841,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.10237525689023998,
+                "contrast_retention": 0.9409825731240247,
+                "passed": true
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.01833709101523687,
+              "RGB_MAE": 0.004138967645226995
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.017986826579728523,
+              "RGB_MAE": 0.004038309163248205
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.017830808686648072,
+              "RGB_MAE": 0.003973835223595887
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.05065146772102992,
+              "RGB_MAE": 0.021776365326996606
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.038238545342572865,
+            "coverage_range_floor_numeric_proxy": 0.00022021254261383793,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": true,
+          "K_role": "hard protected joint RGB",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.15483410283923,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "marking_w240",
+          "scope": "primary",
+          "RGB_RMSE": 0.018777205362227493,
+          "RGB_RMSE_in_code_values": 4.78818736736801,
+          "objective": 0.00017629172060763248,
+          "certificate": {
+            "f": 0.00017629172060763248,
+            "RGB_RMSE": 0.018777205362227493,
+            "FW_gap_numeric_proxy": 5.547020726220325e-05,
+            "lower_numeric_proxy": 0.00012082151334542922,
+            "L_safe_numeric_proxy": 0.00011082151334542922,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 8.432941243175135e-05
+          },
+          "range_floor_numeric_proxy": 8.432941243175135e-05,
+          "range_floor_fraction_of_final_objective": 0.47835151952167365,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "pass",
+            "passed": true,
+            "never_negative_capacity_evidence": false,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 596,
+                "edge_precision": 0.9791666666666666,
+                "edge_recall": 1.0,
+                "edge_F1": 0.9894736842105264,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.4734100138610436,
+                "contrast_retention": 0.9011884488085427,
+                "passed": true
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 1263,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.06026104206973854,
+                "contrast_retention": 0.9608443837183122,
+                "passed": true
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 1414,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.13437193890149454,
+                "contrast_retention": 0.9706889383254049,
+                "passed": true
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 1673,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.17652385165553106,
+                "contrast_retention": 0.9620868201868292,
+                "passed": true
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 1721,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.09004400163823627,
+                "contrast_retention": 0.967836720243333,
+                "passed": true
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.019979228083581598,
+              "RGB_MAE": 0.004543038372361437
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.01890561525254521,
+              "RGB_MAE": 0.00433443236552503
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.018777205362227493,
+              "RGB_MAE": 0.004283539375056013
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.0878301388635226,
+              "RGB_MAE": 0.04109502116656814
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03945936531181988,
+            "coverage_range_floor_numeric_proxy": 0.0002310451177777228,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": true,
+          "K_role": "hard protected joint RGB",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.444915814325213,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "stress_highfreq",
+          "scope": "primary",
+          "RGB_RMSE": 0.03069729624532814,
+          "RGB_RMSE_in_code_values": 7.827810542558676,
+          "objective": 0.00047116199838671856,
+          "certificate": {
+            "f": 0.00047116199838671856,
+            "RGB_RMSE": 0.03069729624532814,
+            "FW_gap_numeric_proxy": 0.0001514237729982427,
+            "lower_numeric_proxy": 0.00031973822538847586,
+            "L_safe_numeric_proxy": 0.00030973822538847584,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 8.686528584428333e-05
+          },
+          "range_floor_numeric_proxy": 8.686528584428333e-05,
+          "range_floor_fraction_of_final_objective": 0.18436394730838707,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "diagnostic_stress_only",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "stress_diagnostic_only",
+            "passed": false,
+            "never_negative_capacity_evidence": true,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.03144325567504564,
+              "RGB_MAE": 0.017392183915170004
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.030600476461636123,
+              "RGB_MAE": 0.01719514873694581
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.030697296245328135,
+              "RGB_MAE": 0.017383743936464673
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.10075115829581265,
+              "RGB_MAE": 0.051916723996856526
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.045356986522739735,
+            "coverage_range_floor_numeric_proxy": 0.00020689960176093665,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": true,
+          "K_role": "hard protected joint RGB",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.983709352090955,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        }
+      ],
+      "production_promoted": false
+    },
+    "relaxed": {
+      "role": "root-authorized conditional all-active virtual diagnostic",
+      "eligible_active_color_rows": 151096,
+      "all_active_rows": 151096,
+      "archived_Kguard_rows": null,
+      "initialization": "exact same canonical oldS2 c0; each case independently restarts",
+      "source_binding": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/binding.json",
+      "cases": [
+        {
+          "case": "constant",
+          "scope": "relaxed",
+          "RGB_RMSE": 0.0014829179481665694,
+          "RGB_RMSE_in_code_values": 0.3781440767824752,
+          "objective": 1.0995228204972742e-06,
+          "certificate": {
+            "f": 1.0995228204972742e-06,
+            "RGB_RMSE": 0.0014829179481665694,
+            "FW_gap_numeric_proxy": 4.017135197477675e-05,
+            "lower_numeric_proxy": 0.0,
+            "L_safe_numeric_proxy": 0.0,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 0.0
+          },
+          "range_floor_numeric_proxy": 0.0,
+          "range_floor_fraction_of_final_objective": 0.0,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "feasible_solution_witness",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "not_applicable_constant",
+            "passed": true,
+            "frames": []
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.0021756251089223326,
+              "RGB_MAE": 0.0009517514580601591
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.0020202841150519404,
+              "RGB_MAE": 0.000920839679671357
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.0014829179481665692,
+              "RGB_MAE": 0.0008498871452899075
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.01090602051935802,
+              "RGB_MAE": 0.006368118939232024
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03222969328257618,
+            "coverage_range_floor_numeric_proxy": 0.0002014626340174623,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": null,
+          "K_role": "not claimed: virtual road-only diagnostic",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 23.28571367636323,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "lowfreq",
+          "scope": "relaxed",
+          "RGB_RMSE": 0.0015073102193202273,
+          "RGB_RMSE_in_code_values": 0.384364105926658,
+          "objective": 1.135992048633596e-06,
+          "certificate": {
+            "f": 1.135992048633596e-06,
+            "RGB_RMSE": 0.0015073102193202273,
+            "FW_gap_numeric_proxy": 4.0591922169335256e-05,
+            "lower_numeric_proxy": 0.0,
+            "L_safe_numeric_proxy": 0.0,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 0.0
+          },
+          "range_floor_numeric_proxy": 0.0,
+          "range_floor_fraction_of_final_objective": 0.0,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "feasible_solution_witness",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "lowfreq_contrast",
+            "passed": true,
+            "modulation_gain": 0.9978569462398202,
+            "frames": []
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.0021635412005266276,
+              "RGB_MAE": 0.0009745680525513614
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.002021179472860241,
+              "RGB_MAE": 0.0009448143341982787
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.0015073102193202273,
+              "RGB_MAE": 0.0008770526213762904
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.010443528852011118,
+              "RGB_MAE": 0.00618802004177636
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03266293179452246,
+            "coverage_range_floor_numeric_proxy": 0.00021005812013582213,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": null,
+          "K_role": "not claimed: virtual road-only diagnostic",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.61983523517847,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "marking_w120",
+          "scope": "relaxed",
+          "RGB_RMSE": 0.011803003567121767,
+          "RGB_RMSE_in_code_values": 3.0097659096160507,
+          "objective": 6.965544660274458e-05,
+          "certificate": {
+            "f": 6.965544660274458e-05,
+            "RGB_RMSE": 0.011803003567121767,
+            "FW_gap_numeric_proxy": 5.2465087348110766e-05,
+            "lower_numeric_proxy": 1.7190359254633817e-05,
+            "L_safe_numeric_proxy": 7.190359254633816e-06,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 0.0
+          },
+          "range_floor_numeric_proxy": 0.0,
+          "range_floor_fraction_of_final_objective": 0.0,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": false,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "not_met_or_not_evaluable",
+            "passed": false,
+            "never_negative_capacity_evidence": false,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 298,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.519169790487336,
+                "contrast_retention": 0.816916926855552,
+                "passed": false
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 648,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.086658176582868,
+                "contrast_retention": 0.9290137076395178,
+                "passed": true
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 721,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.13889001203949194,
+                "contrast_retention": 0.9437374475780522,
+                "passed": true
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 811,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.10912749552810797,
+                "contrast_retention": 0.939226086046241,
+                "passed": true
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 841,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.1023943339104265,
+                "contrast_retention": 0.9409802895254163,
+                "passed": true
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.012776942788006966,
+              "RGB_MAE": 0.0028047222727583857
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.0122286137613249,
+              "RGB_MAE": 0.0026964481895719967
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.011803003567121766,
+              "RGB_MAE": 0.002596171447680248
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.05065315338203154,
+              "RGB_MAE": 0.0217765269954817
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.03590287885695657,
+            "coverage_range_floor_numeric_proxy": 0.00022021254261383793,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": null,
+          "K_role": "not claimed: virtual road-only diagnostic",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.562799340113997,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "marking_w240",
+          "scope": "relaxed",
+          "RGB_RMSE": 0.01318887423166616,
+          "RGB_RMSE_in_code_values": 3.363162929074871,
+          "objective": 8.697320174935383e-05,
+          "certificate": {
+            "f": 8.697320174935383e-05,
+            "RGB_RMSE": 0.01318887423166616,
+            "FW_gap_numeric_proxy": 5.5191200845691255e-05,
+            "lower_numeric_proxy": 3.178200090366258e-05,
+            "L_safe_numeric_proxy": 2.1782000903662578e-05,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 0.0
+          },
+          "range_floor_numeric_proxy": 0.0,
+          "range_floor_fraction_of_final_objective": 0.0,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "optimization_or_numeric_certificate_inconclusive",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": true,
+              "feasible_witness": false,
+              "combined_status": "optimization_or_numeric_certificate_inconclusive",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": true,
+              "detail_pass": true,
+              "feasible_witness": true,
+              "combined_status": "feasible_solution_witness",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "pass",
+            "passed": true,
+            "never_negative_capacity_evidence": false,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 596,
+                "edge_precision": 0.9791666666666666,
+                "edge_recall": 1.0,
+                "edge_F1": 0.9894736842105264,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.4734101643111242,
+                "contrast_retention": 0.901188524058182,
+                "passed": true
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 1263,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.06026104889184812,
+                "contrast_retention": 0.9608444784141912,
+                "passed": true
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 1414,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.1343718887159842,
+                "contrast_retention": 0.970688924117105,
+                "passed": true
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 1673,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.17652438811591464,
+                "contrast_retention": 0.9620868212832916,
+                "passed": true
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 1721,
+                "edge_precision": 1.0,
+                "edge_recall": 1.0,
+                "edge_F1": 1.0,
+                "known_dash_fragments": 3,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": 0.090044160576284,
+                "contrast_retention": 0.9678366747291245,
+                "passed": true
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.015038587112244269,
+              "RGB_MAE": 0.0032082869598832656
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.013543427522603619,
+              "RGB_MAE": 0.0029920632065071812
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.01318887423166616,
+              "RGB_MAE": 0.0029053797122644354
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.08783015652025143,
+              "RGB_MAE": 0.04109505270052394
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.037200198643815977,
+            "coverage_range_floor_numeric_proxy": 0.0002310451177777228,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": null,
+          "K_role": "not claimed: virtual road-only diagnostic",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 22.51385430805385,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        },
+        {
+          "case": "stress_highfreq",
+          "scope": "relaxed",
+          "RGB_RMSE": 0.02758665887973217,
+          "RGB_RMSE_in_code_values": 7.034598014331703,
+          "objective": 0.00038051187407335286,
+          "certificate": {
+            "f": 0.00038051187407335286,
+            "RGB_RMSE": 0.02758665887973217,
+            "FW_gap_numeric_proxy": 0.00015798364896363006,
+            "lower_numeric_proxy": 0.0002225282251097228,
+            "L_safe_numeric_proxy": 0.0002125282251097228,
+            "conservative_objective_plus_boxgradient_error_bound": null,
+            "strict_numeric_bound_established": false,
+            "negative_certificate_allowed": false,
+            "certified_lower_bound": null,
+            "numeric_boundary": "FP32 native forward/atomic adjoint; spot checks do not bound global objective+box-gradient error by1e-5",
+            "guarded_box_range_floor_numeric_proxy": 0.0
+          },
+          "range_floor_numeric_proxy": 0.0,
+          "range_floor_fraction_of_final_objective": 0.0,
+          "strict_negative_certificate": false,
+          "original_reference_2code_status": "diagnostic_stress_only",
+          "registered_tolerances": [
+            {
+              "RGB_code_values": 1,
+              "RGB_RMSE_tolerance": 0.00392156862745098,
+              "objective_tolerance": 7.689350249903882e-06,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 2,
+              "RGB_RMSE_tolerance": 0.00784313725490196,
+              "objective_tolerance": 3.075740099961553e-05,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            },
+            {
+              "RGB_code_values": 4,
+              "RGB_RMSE_tolerance": 0.01568627450980392,
+              "objective_tolerance": 0.00012302960399846212,
+              "RGB_pass": false,
+              "detail_pass": null,
+              "feasible_witness": false,
+              "combined_status": "diagnostic_stress_only",
+              "negative_certificate_allowed": false
+            }
+          ],
+          "detail": {
+            "status": "stress_diagnostic_only",
+            "passed": false,
+            "never_negative_capacity_evidence": true,
+            "frames": [
+              {
+                "raw": 86,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 110,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 134,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 179,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              },
+              {
+                "raw": 198,
+                "detail_pixels": 0,
+                "edge_precision": 0.0,
+                "edge_recall": 0.0,
+                "edge_F1": 0.0,
+                "known_dash_fragments": 0,
+                "missing_predicted_fragments": 0,
+                "line_center_error_max_px": null,
+                "contrast_retention": null,
+                "passed": false
+              }
+            ]
+          },
+          "strata": {
+            "D_full": {
+              "pixels": 38416,
+              "RGB_RMSE": 0.028514689550299444,
+              "RGB_MAE": 0.01619943953623576
+            },
+            "D_exact": {
+              "pixels": 38198,
+              "RGB_RMSE": 0.027564425584007138,
+              "RGB_MAE": 0.01599560239922702
+            },
+            "D_color": {
+              "pixels": 37206,
+              "RGB_RMSE": 0.027586658879732166,
+              "RGB_MAE": 0.01615221118016629
+            },
+            "fallback": {
+              "pixels": 218,
+              "RGB_RMSE": 0.10075000995157508,
+              "RGB_MAE": 0.05191582008421604
+            }
+          },
+          "opaque_target": {
+            "domain": "D_full",
+            "pixels": 38416,
+            "RGB_RMSE": 0.04337625064626853,
+            "coverage_range_floor_numeric_proxy": 0.00020689960176093665,
+            "role": "separate opaque coverage objective; not soft-RGB capacity certificate"
+          },
+          "coverage": [
+            {
+              "raw": 86,
+              "D_full": 3679,
+              "gap": 0,
+              "thin": 10,
+              "supported": 3669
+            },
+            {
+              "raw": 110,
+              "D_full": 7459,
+              "gap": 11,
+              "thin": 173,
+              "supported": 7275
+            },
+            {
+              "raw": 134,
+              "D_full": 8536,
+              "gap": 21,
+              "thin": 239,
+              "supported": 8276
+            },
+            {
+              "raw": 179,
+              "D_full": 9242,
+              "gap": 27,
+              "thin": 253,
+              "supported": 8962
+            },
+            {
+              "raw": 198,
+              "D_full": 9500,
+              "gap": 24,
+              "thin": 254,
+              "supported": 9222
+            }
+          ],
+          "frozen_alpha_max_error": 0.0,
+          "K_exact": null,
+          "K_role": "not claimed: virtual road-only diagnostic",
+          "public_reload_RGB_max": 0.0,
+          "public_reload_alpha_max": 0.0,
+          "public_reload_RGB8_max": 0,
+          "solver": {
+            "accepted_iterations": 500,
+            "attempted_iterations": 500,
+            "retries": 0,
+            "elapsed_seconds": 21.678754506632686,
+            "stop_reason": "iteration_cap",
+            "max_iterations": 500,
+            "max_seconds": 300,
+            "automatic_extension": false
+          },
+          "completed": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/completed.json",
+          "evaluation": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/evaluation/evaluation.json",
+          "PNG_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/evaluation/{raw:03d}_{road|independent_teacher}.png",
+          "human_verdict": null,
+          "production_promoted": false
+        }
+      ],
+      "production_promoted": false
+    }
+  },
+  "operator_preflights": {
+    "primary": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/operator_preflight.json",
+      "schema": "native_fixed_color_operator_preflight.v1",
+      "linearity_max_RGB_error": 5.364418029785156e-07,
+      "adjoint_dot_left": -0.12290034406476882,
+      "adjoint_dot_right": -0.1229007108477353,
+      "adjoint_dot_absolute_error": 3.667829664710798e-07,
+      "adjoint_dot_norm_relative_error": 3.118220285776565e-09,
+      "baseline_RGB_max_error": 0.0,
+      "alpha_max_errors": {
+        "86": 0.0,
+        "110": 0.0,
+        "134": 0.0,
+        "179": 0.0,
+        "198": 0.0
+      },
+      "eligible_rows": 112058,
+      "zero_Dcolor_columns": 65091,
+      "L_step_initial_numeric_bound": 0.00016907470219324408,
+      "passed": true,
+      "spotcheck_thresholds": {
+        "linearity_abs": 2e-06,
+        "adjoint_norm_relative": 0.0001,
+        "baseline_abs": 1e-06
+      },
+      "strict_error_bound_established": false,
+      "negative_certificate_allowed": false,
+      "fixed_b_and_box_upper_actual_native": true,
+      "fixed_b_min": 0.0,
+      "box_upper_max": 0.9999004602432251,
+      "note": "上述是实际接线spotchecks，不构成<=1e-5保守全局数值误差界",
+      "GPU_executed": true,
+      "elapsed_seconds": 0.29535975866019726,
+      "native_forward_calls": 50,
+      "native_backward_calls": 10
+    },
+    "relaxed": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/operator_preflight.json",
+      "schema": "native_fixed_color_operator_preflight.v1",
+      "linearity_max_RGB_error": 5.364418029785156e-07,
+      "adjoint_dot_left": 0.012190105270353122,
+      "adjoint_dot_right": 0.012189811936656261,
+      "adjoint_dot_absolute_error": 2.933336968602429e-07,
+      "adjoint_dot_norm_relative_error": 2.137092511960194e-09,
+      "baseline_RGB_max_error": 0.0,
+      "alpha_max_errors": {
+        "86": 0.0,
+        "110": 0.0,
+        "134": 0.0,
+        "179": 0.0,
+        "198": 0.0
+      },
+      "eligible_rows": 151096,
+      "zero_Dcolor_columns": 97653,
+      "L_step_initial_numeric_bound": 0.00016907470219324408,
+      "passed": true,
+      "spotcheck_thresholds": {
+        "linearity_abs": 2e-06,
+        "adjoint_norm_relative": 0.0001,
+        "baseline_abs": 1e-06
+      },
+      "strict_error_bound_established": false,
+      "negative_certificate_allowed": false,
+      "fixed_b_and_box_upper_actual_native": true,
+      "fixed_b_min": 0.0,
+      "box_upper_max": 0.9999004602432251,
+      "note": "上述是实际接线spotchecks，不构成<=1e-5保守全局数值误差界",
+      "GPU_executed": true,
+      "elapsed_seconds": 0.31677765026688576,
+      "native_forward_calls": 50,
+      "native_backward_calls": 10
+    }
+  },
+  "interpretation": [
+    "Primary and relaxed results are both retained; relaxed cannot replace protected primary or claim K preservation.",
+    "Primary constant/lowfreq satisfy4/255. Primary markings do not meet the combined registered levels.",
+    "Relaxed constant/lowfreq are feasible witnesses at1/255; marking_w240 is a feasible witness at4/255, not2/255.",
+    "Relaxed marking_w120 RGB meets4/255 but raw86 contrast retention0.8169 misses0.9; combined witness not established.",
+    "High-frequency stress is diagnostic only; no stress failure is used as negative capacity evidence.",
+    "Unsatisfied tolerances remain optimization or numerical-certificate inconclusive; no representation upper-limit claim.",
+    "Fixed coverage and mesh-fallback limitations remain separately reported; soft fitting does not establish opaque coverage."
+  ],
+  "fixed_coverage": {
+    "D_full": 38416,
+    "gap": 83,
+    "thin": 929,
+    "supported": 37404,
+    "alpha_max_change": 0.0,
+    "per_frame": [
+      {
+        "raw": 86,
+        "D_full": 3679,
+        "gap": 0,
+        "thin": 10,
+        "supported": 3669
+      },
+      {
+        "raw": 110,
+        "D_full": 7459,
+        "gap": 11,
+        "thin": 173,
+        "supported": 7275
+      },
+      {
+        "raw": 134,
+        "D_full": 8536,
+        "gap": 21,
+        "thin": 239,
+        "supported": 8276
+      },
+      {
+        "raw": 179,
+        "D_full": 9242,
+        "gap": 27,
+        "thin": 253,
+        "supported": 8962
+      },
+      {
+        "raw": 198,
+        "D_full": 9500,
+        "gap": 24,
+        "thin": 254,
+        "supported": 9222
+      }
+    ]
+  },
+  "lifecycle": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/smoke_r1/lifecycle/completed.json",
+    "extra_solver_updates": 3,
+    "full_restore_exact": true,
+    "next_update_bitwise": false,
+    "next_update_tensor_maxima": {
+      "x": 0.0,
+      "p": 0.0,
+      "g": 9.094947017729282e-13
+    },
+    "next_update_eta_absolute_difference": 5.735171725973487e-06,
+    "next_update_eta_relative_difference": 1.9812932005193354e-10,
+    "next_case_entry": "formal cases independently restart exact canonical c0; no smoke warm-start",
+    "K_exact": true,
+    "replay_pass": true
+  },
+  "engineering_accounting": {
+    "primary_solver_iterations": 2500,
+    "authorized_conditional_diagnostic_solver_iterations": 2500,
+    "formal_and_conditional_solver_iterations": 5000,
+    "lifecycle_extra_solver_updates": 3,
+    "total_solver_updates_including_engineering": 5003,
+    "formal_runs": [
+      {
+        "scope": "primary",
+        "accepted_solver_iterations": 2500,
+        "solver_attempts": 2500,
+        "retries": 0,
+        "native_backward_calls": 12535,
+        "cumulative_context_forward_calls": 25160,
+        "separately_loaded_public_asset_forward_calls": 25,
+        "actual_native_forward_calls": 25185,
+        "derivation": "last asset cumulative context counter + final expected reload5 + all public clone reload forwards25"
+      },
+      {
+        "scope": "relaxed",
+        "accepted_solver_iterations": 2500,
+        "solver_attempts": 2500,
+        "retries": 0,
+        "native_backward_calls": 12535,
+        "cumulative_context_forward_calls": 25130,
+        "separately_loaded_public_asset_forward_calls": 25,
+        "actual_native_forward_calls": 25155,
+        "derivation": "last asset cumulative context counter + final expected reload5 + all public clone reload forwards25"
+      }
+    ],
+    "lifecycle_native_forward_calls": 115,
+    "lifecycle_native_backward_calls": 30,
+    "endpoint_postevaluation_native_forward_calls": 20,
+    "endpoint_postevaluation_solver_updates": 0,
+    "total_native_forward_calls": 50475,
+    "total_native_backward_calls": 25100,
+    "call_semantics": "native raster invocations / autograd backward invocations, not CUDA kernel launches; includes saved-public-asset reload forwards",
+    "endpoint_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/endpoint_replay_r1/receipt.json"
+  },
+  "endpoint_replay": {
+    "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/endpoint_replay_r1/receipt.json",
+    "array_pattern": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/endpoint_replay_r1/{primary|relaxed}/{raw:03d}.npz",
+    "keys": [
+      "fixed_b",
+      "box_upper",
+      "fixed_alpha",
+      "D_color",
+      "q",
+      "eligible_world",
+      "active_world_rows"
+    ],
+    "floor_max_absolute_replay_difference": 1.3552527156068805e-20,
+    "original_formal_results_modified": false
+  },
+  "source_publication": {
+    "runner": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/runner_source.py",
+    "metrics": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/metrics_source.py",
+    "native_helper": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/native_helper_source.py",
+    "endpoint_replay_code": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/code/replay_capacity_endpoints.py",
+    "consolidation_code": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/code/summarize_ideal_capacity.py",
+    "new_test_file": null
+  },
+  "GPU": {
+    "executed": true,
+    "lease_active": false,
+    "keep_on": true,
+    "further_jobs_started": false
+  },
+  "original_result_fingerprints": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/completed.json": "b2216fc4239b3ad29e0da8f1f864fae2a7716334428a9ada674cc132ee1bef07",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/evaluation/evaluation.json": "eea964e6fe8f76da5f18266b9f9a45b624791ba098eddd2bf6e0461630ae0864",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/constant/trace.json": "d4b5192afe4172c43645029c74ad92ebc049c1fe87e6d410610bc078726600c4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/completed.json": "2ce49ae45f7018472cd5af3321e203c42c74177a4327f2fdaa4fdd8b4e67b12f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/evaluation/evaluation.json": "72b30541c8f28563bd0b5c69153965cbbb1b9533cba9a23e8fb383db00f17079",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/lowfreq/trace.json": "b82b87500c37e2a90515c012aa02acf538edd1217b437380ea6ad8406e2a2f90",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/completed.json": "21a822ee39d492bcc6c7b4560111893c89bdf31710f9d30d0764cc8f4dfd5b4b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/evaluation/evaluation.json": "e371a4ef91e3519190c363eb25af309163354e13f67e3b6eceb8527c9f320864",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w120/trace.json": "53e6b58dd14de209e3e7accb8d12c41992dfe3e4f739c13250c38acc08158c54",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/completed.json": "45ec12e4de1a631156319f96b29174d54d5c7354dfc8d4448660f27a9dc41d6a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/evaluation/evaluation.json": "329a70a5a3127f6bd5da0309c3fa2ff3553ae44ca342e2ed07b8cd15020d220c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/marking_w240/trace.json": "cb70e6803e17474bb9f763cd364d06aebfaa5a95c80fae70284443a4c299f730",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/completed.json": "f2376a5587997d20f3bd580c987f439ce834c80a97ff1f0258f2bc67d9134646",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/evaluation/evaluation.json": "4fa2c9b7f67d5dcf1b0d74990052f6168bd484cfa13ba31e10bb2beb224da0d6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_primary_r1/stress_highfreq/trace.json": "d19b00d64f935fcdd31afcf5306f77578d22122f8d761b05bdfef3eeff06ff84",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/completed.json": "f251ad520ad32284c39270764c57e8573dd5b24260c7c12bda64f676cfd0e72f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/evaluation/evaluation.json": "aca29a371154ff42cab8642967487628f692db2d21ab387af4bd92218928866b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/constant/trace.json": "8aba3e4149fdaccecaee414cd7db5014d426ddc6ff7911b4ac91ebce2ff7244c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/completed.json": "a557bbf8863a5a29a83cf0ec7f6595e626b760b24ea3ef46e9570e3dfcf003db",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/evaluation/evaluation.json": "9fd538cebfa1f7170f1c5df66c51e4ad00e03e0562649ec670ac855433fc9ff6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/lowfreq/trace.json": "40b1748e7b52cee404f6fb46839a8b7b090df5be37abd1af75e5026424a7acc6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/completed.json": "fbec934aaf597fe2b499677201093c135e25c04368a4d606b5828468b7a9cbe3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/evaluation/evaluation.json": "5f9bc26429fc8c575d4711d1b6722962a0c00677aaaa4104bc6e377a20180e2c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w120/trace.json": "aba98d876ac8c82de9cab5e2061afee037e4f11ec937f3248c2fcdf9a7070437",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/completed.json": "d584d34963885ecc6cad84c324f1a53d2f1004ede708f5c65f653677fabcdc7b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/evaluation/evaluation.json": "3e875bbea514eb0b62fbb374833eb2facf0bb5eeb3924d73f2eb5abcc78b8ebe",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/marking_w240/trace.json": "bb0aed3fe74426ce880cd310913493865a6d746df376db601958081efe1ef781",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/completed.json": "7a20998b9767d3cc73a560dfd9836c8d86570201b045bc1b2dcda8c1c9094abc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/evaluation/evaluation.json": "983adec467b74872aecb9679b45a10add1080a22d76a7795c0a94c3a0f59ba39",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check2/native_relaxed_r1/stress_highfreq/trace.json": "6552b77e9a84627e96425382959ca19b8c5f9d553ad8b8abef1d7457ebda1570"
+  },
+  "human_verdict": null,
+  "production_promoted": false,
+  "summary_CPU_seconds": 0.05939112976193428
+}

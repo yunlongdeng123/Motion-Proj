@@ -1,11 +1,11 @@
 # 当前研究状态
 
-更新：2026-11-17（Asia/Singapore）。
+更新：2026-11-18（Asia/Singapore）。
 
-`MODULE2-CAPACITY-CPU-20261117 / road_capacity_cpu_20261117_r1` 已完成三道上限检查的CPU准备，**按用户要求停在GPU执行前**。[组件、输入与决策](autoresearch/module2_capacity_cpu_20261117/README.md)。本轮真实场景优化、原生渲染和新模型推理为0，无自动GPU队列或电源操作；当前不能宣布表示上限或切换TRELLIS。
+`MODULE2-CAPACITY-GPU-20261118 / road_capacity_gpu_20261118_r1` 的三道检查完成，[结果与组件](autoresearch/module2_capacity_gpu_20261118/report.md)。GPU按用户明确要求保持开机。新增阴影监督可有效拟合，但965低覆盖像素仍未到充分覆盖，主要关联旧Gaussian激活/请求域错配；未做激活/补面或默认场景替换。
 
-监督审计确认旧目标影possible1665/2980像素全部outside保持、未入A/C/coverage。已准备v4物理孔洞C/目标影S/真实可见A候选；可信S1043/2144中仅820/1402充分覆盖，剩223/742包含164/609道路近乎无alpha。新A/C/S actual贡献与可写行、覆盖可控性/K原生验证待GPU；S-only known允许effective RGB修正，原观测/prior台账保持。
+真实教师两组各200步，另8工程更新，83388共同可写行，原观测台账/几何/覆盖/非RGB与五帧77266个K像素保持。4cm有界共享修正未通过raw110 A/S拟合非劣及三诊断帧条纹增量减半门；132标量触界，不能推广到无界世界场失败。原生五帧图像亦仍有细纹，候选不晋升。
 
-理想能力准备25份独立解析目标，G_s精确38198点、fallback218单列，总主域38416不变。5case覆盖constant/lowfreq/12cm和24cm标线/不可分辨stress；158项CPU数据核验与13项toy证书检查通过，未评估实际GS能力。共享参数化I0/W4实现与10项CPU测试完成，同c0、固定coverage、4cm共享；旧78421行preview只说明参数235263→72072，不授权新S训练。
+理想世界材质主组2500次有界LS迭代，按预登记条件追加全活跃颜色虚拟诊断2500次，工程LS另3、端点补证20次前向/0更新。颜色证据统一37206/111618；常量/低频虚拟见证通过1/255，24cm标线见证通过4/255及细节，12cm对比度尚未过。固定保护范围主导部分误差；严格负数值界未建立，不能宣布3DGS已达上限，也没有切换TRELLIS的充分证据。
 
-历史TRELLIS.2单路块0训练MAE .15897与LoRA .02500已核原收据；条件不同、单样本，不否定后训练潜力，也不构成切换正证据。未来先native preflight及三门证据；CPU-only入口硬拒绝execute。此前两组各800训练与视觉失败全部保留，候选未替换默认场景。human_verdict=null；failure_ledger_refs=[V82-F06]，本轮仅更新监督与诊断证据。
+下一步优先处理道路激活覆盖与监督域一致性，再隔离细标线采样/足迹；本轮不自动开启额外实验。完整输入、模型、优化状态与精度数组保留于远端campaign，当前无待启动训练控制器。human_verdict/problem_solved=null；failure_ledger_refs=[V82-F06]，仅更新既有卡，无新增失败ID。

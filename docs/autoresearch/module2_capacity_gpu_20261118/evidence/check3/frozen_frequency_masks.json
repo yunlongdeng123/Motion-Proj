@@ -1,0 +1,76 @@
+{
+  "schema": "preregistered_native_frequency_masks.v1",
+  "status": "frozen_before_formal",
+  "masks": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/check3/frozen_frequency_masks.npz",
+  "definition": "M = fixed D_full & archived oldS2 alpha>0.9; each second-difference stencil requires all3 M pixels",
+  "pixel_metric": "mean absolute second difference of road-only premult native sRGB,3-channel mean; no RGB/alpha",
+  "primary": "vertical second difference measures horizontal stripe energy; horizontal and row-RGB delta energy also reported",
+  "excess_rule": "I0_excess=E_I0-E_c0. If positive, W4 excess<=0.5*I0 excess is stripe gate; nonpositive means not-applicable",
+  "other_gates": "same teacher fit/detail/K/persistence still required; not a standalone image-quality certificate",
+  "rows": [
+    {
+      "raw": 86,
+      "role": "train",
+      "domain_pixels": 3669,
+      "vertical_stencils": 3440,
+      "horizontal_stencils": 3467,
+      "baseline_vertical_E": 0.023045217340393352,
+      "baseline_horizontal_E": 0.009231772999424348,
+      "baseline_delta_energy": 0.0,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/geometry/086.npz",
+      "source_sha256": "a4d3c4882c8729df903f7485e342484215015ce65d2acdf5b1f9bbdd5f7436c6"
+    },
+    {
+      "raw": 110,
+      "role": "train",
+      "domain_pixels": 7275,
+      "vertical_stencils": 6541,
+      "horizontal_stencils": 6873,
+      "baseline_vertical_E": 0.020079881791941392,
+      "baseline_horizontal_E": 0.008312376288413376,
+      "baseline_delta_energy": 0.0,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/geometry/110.npz",
+      "source_sha256": "9893ce3bbcd36b1ae667e89092f9b12fd991b0f3d447b25498b9a36326acc8de"
+    },
+    {
+      "raw": 134,
+      "role": "diagnostic",
+      "domain_pixels": 8276,
+      "vertical_stencils": 7253,
+      "horizontal_stencils": 7792,
+      "baseline_vertical_E": 0.019620086313262352,
+      "baseline_horizontal_E": 0.008323382163129639,
+      "baseline_delta_energy": 0.0,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/geometry/134.npz",
+      "source_sha256": "f5c723b3fb1603ab171cb3d71090668805b5fbaf16ec0ff16b53dcbd591d4842"
+    },
+    {
+      "raw": 179,
+      "role": "diagnostic",
+      "domain_pixels": 8962,
+      "vertical_stencils": 8108,
+      "horizontal_stencils": 8529,
+      "baseline_vertical_E": 0.01786771763938246,
+      "baseline_horizontal_E": 0.00804722845259089,
+      "baseline_delta_energy": 0.0,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/geometry/179.npz",
+      "source_sha256": "196ac45162e5632682c1d4f72845451c4a90842ac385505a6559968fcab54723"
+    },
+    {
+      "raw": 198,
+      "role": "diagnostic",
+      "domain_pixels": 9222,
+      "vertical_stencils": 8430,
+      "horizontal_stencils": 8829,
+      "baseline_vertical_E": 0.018050155574481634,
+      "baseline_horizontal_E": 0.007993167515544672,
+      "baseline_delta_energy": 0.0,
+      "source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/ideal_targets_r2/geometry/198.npz",
+      "source_sha256": "d46f75df21e00846bb1ce915edc8e329b193d0427605519dedb822c9ad08205a"
+    }
+  ],
+  "masks_sha256": "71c9fa2d8c934cba35119ef7ac6660f036048869a4eb26205ec12b19711a513f",
+  "selected_from_future_optimization_results": false,
+  "native_GPU_calls": 0,
+  "human_verdict": null
+}
