@@ -33,3 +33,7 @@
 - Python 优先 `/root/autodl-tmp/envs/motionproj/bin/python`；CPU 工作按当前 cgroup 配额控制线程，必要时设置 `CUDA_VISIBLE_DEVICES=`。
 - 不从旧报告自动恢复任务。电源操作只依据当前会话授权及状态中的适用范围；关机前确认没有训练、评价、数据、渲染或会启动任务的控制器，并保存、推送结果。
 - 删除或外移资产先确认当前授权与恢复入口；保留原始输入、关键 checkpoint、固定表面、指标和失败证据。轻量索引不等于完整备份。
+
+## 二维道路教师默认
+
+- 二维道路教师后续默认采用整帧1152×768的SD1.5 inpainting＋注意力LoRA T0（固定step600、DDIM20、CFG3）；除非用户后续覆盖，按[二维教师默认配置](docs/autoresearch/road_2d_teacher_prompt_20261120/teacher_defaults.json)执行。提示词保持版本化，预先冻结同任务/同seed配对，最多一至两轮，不逐图改词；离线GT诊断与不使用隐藏GT的候选选优分开。

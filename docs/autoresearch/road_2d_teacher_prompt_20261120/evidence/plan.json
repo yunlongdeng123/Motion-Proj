@@ -1,0 +1,1272 @@
+{
+  "schema": "road_2d_teacher_prompt_round_plan.v1",
+  "complete": true,
+  "preparation_role": "CPU_plan_only_not_runtime_preflight",
+  "source_pins": {
+    "config": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/next_round_config.json",
+      "sha256": "c2eb605db71ad1eaa989150125812cf86c2c29e347cc8d543ccf7f5107b88cc4"
+    },
+    "baseline_manifest": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/pilot_manifest.json",
+      "sha256": "9221c2bba32e67dcdd3e1e8acb05d1657c45da69ed8b43f14e20e8b8d946b2b1"
+    },
+    "historical_predictions": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/predictions.json",
+      "sha256": "d42597bb75f59a6e82876f6ded337f7db249b8326a9cb6691198892f1bc27b95"
+    },
+    "runner": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/code/infer_next_round.py",
+      "sha256": "a14ad5fcd39ae2a958332b95cf2907d1836a23ee7c4aeaa30353973a1be07d18"
+    }
+  },
+  "configuration": {
+    "schema": "road_2d_teacher_next_round.v1",
+    "date": "2026-11-20",
+    "task_id": "ROAD-2D-TEACHER-PROMPT-20261120",
+    "run_id": "prompt_seed_r1",
+    "selected_arm": "full1152_T0",
+    "seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "seed_selection": "fixed_before_generation",
+    "prompts": [
+      {
+        "id": "legacy",
+        "text": "a photograph of a continuous gray asphalt road surface, extending the visible lane markings in perspective, consistent natural lighting",
+        "role": "historical_baseline"
+      },
+      {
+        "id": "material_match_v1",
+        "text": "A photograph of the same road pavement, matching the surrounding color, brightness, and fine random asphalt grain, with consistent lighting and perspective. Continue lane markings only where clearly supported by visible markings.",
+        "meaning_zh": "匹配周围同一铺装路面的色调、亮度与细密随机纹理，遵循现有光照和透视；仅在有明确可见依据的位置延续标线。",
+        "role": "candidate_pending_comparison"
+      }
+    ],
+    "expected_case_ids": [
+      "visible_scene081_raw000_v0",
+      "visible_scene081_raw000_v1",
+      "visible_scene081_raw050_v0",
+      "visible_scene081_raw050_v1",
+      "scene065_raw086",
+      "scene065_raw110"
+    ],
+    "inference": {
+      "model_wh": [
+        1152,
+        768
+      ],
+      "view": "full1152",
+      "adapter": "T0",
+      "scheduler": "DDIM",
+      "inference_steps": 20,
+      "guidance": 3.0,
+      "eta": 0.0,
+      "strength": 1.0,
+      "dtype": "bfloat16",
+      "weight_variant": "fp16",
+      "negative_prompt": ""
+    },
+    "planned_diffusion_calls": 60,
+    "maximum_diffusion_calls": 60,
+    "historical_replay_expected": 12,
+    "reuse_historical_outputs": false,
+    "additional_VAE_control_calls": 0,
+    "training_updates": 0,
+    "current_prompt_comparison_round": 1,
+    "maximum_prompt_comparison_rounds": 2,
+    "second_prompt_round_automatically_enabled": false,
+    "automatic_candidate_selection": false,
+    "three_dimensional_rendering_changes": false,
+    "GT_used_for_generation_or_candidate_selection": false,
+    "comparison_policy": {
+      "pairing": "same legal model input, mask, LoRA, resolution, sampler, step count and numerical seed; only prompt changes within a pair",
+      "generation_order": "historical replay gates first; then complete the frozen matrix",
+      "review": [
+        "color and brightness agreement",
+        "fine random material texture",
+        "false or incorrectly extended markings",
+        "protected and outside-writeback pixel preservation"
+      ],
+      "report_seed_distribution": true,
+      "report_only_best_seed": false,
+      "synthetic_GT": "independent evaluation and whole-prompt comparison only after predictions are complete and pinned; never used for per-image or per-seed best-of-N teacher selection",
+      "real_hidden_road_GT": "unavailable; adjacent visible material is a proxy",
+      "if_seed_variability_persists": "design a ground-truth-free candidate score with artifact rejection before enabling best-of-N; no score implemented in this round",
+      "texture_objective": "matching plausible material statistics and visual quality; never maximize high-frequency energy alone"
+    },
+    "execution_state": "GPU_smoke_then_parallel_requested_keep_instance_running"
+  },
+  "model": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_singleframe_20261115_r1/formal/T0/checkpoint_step000600.pt",
+    "sha256": "a75423e126b93eca22e0ce587782b3dc4edd76654d6a929302118aa45bda14ae"
+  },
+  "model_configs": [
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/model_index.json",
+      "sha256": "636d700de8970a70f02b91d433ad949dc2ceb750f39ba0cf2cf39ef0b0b9d1e4"
+    },
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/vae/config.json",
+      "sha256": "4cd0ce4803567837175fbb8412689fe77d069c1ef8171beb83979db309a8bad5"
+    },
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/unet/config.json",
+      "sha256": "669f6581087fac5b16c44e42c58b359a35eadf2af5691d7945480bd7ceac8e6d"
+    },
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/scheduler/scheduler_config.json",
+      "sha256": "8b457848b74deeeab2a967b75048dd2cb6f393cfc17751eca1b5ec655cff0183"
+    }
+  ],
+  "source_files": {
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/input_builder.py": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/input_builder.py",
+      "sha256": "75b310483863f929ca71b90e093849233de348781cf48e35f30af1b4ab5ed305"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/independent_regions.py": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/independent_regions.py",
+      "sha256": "8b36f0022aac360ecfb8a1144db4a1e26535f2f289d3fe5993e7efe080b64e8f"
+    },
+    "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/shadow_composite.py": {
+      "path": "/root/autodl-tmp/motion_proj_v82_gn11_v42/scripts/worldsim_v82/road_material_field/input_construction/shadow_composite.py",
+      "sha256": "e1ee85e62fe36a739d614089b2cbc83e520f31a50deb26181034e81361808ff8"
+    }
+  },
+  "repository": "/root/autodl-tmp/motion_proj_v82_gn11_v42",
+  "cases": [
+    {
+      "id": "visible_scene081_raw000_v0",
+      "domain": "synthetic_visible_2d",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/observation.png",
+        "sha256": "6bc413599000ade87846c7cd9700a68948c15a775774bce8224606203d67fd3c"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/roles_native.npz",
+        "sha256": "00444718ff9b42cd5c316d7a85f8ca04125b9457126000e8e72238c6d2ef133a"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/full1152/I_geo.png",
+          "sha256": "b77c723997ead28d214b66c9f624b4246c46a586b7a3d96aafde5a31275f4475"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/full1152/H_input.png",
+          "sha256": "9930e50998dee17d6ddbb696d60ea6aad93a9c837ca07cd15cc45299cb7cf738"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/full1152/C_mat.png",
+          "sha256": "647d2761d57c890dd8e44f4421568660286669e5fe39405780954760a614faee"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/full1152/roles_model.npz",
+          "sha256": "dc726afeb0345207f90cbf4b06cc85fced4ecf8708f8e7ace11806f4a3777721"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v0/full1152/construction.json",
+          "sha256": "b771ab780b915ef71f35f90ab268c8455bc43b46400aaa944d5e47166bbbd49c"
+        }
+      }
+    },
+    {
+      "id": "visible_scene081_raw000_v1",
+      "domain": "synthetic_visible_2d",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/observation.png",
+        "sha256": "3c6b0f42aacf45d15f617cdc2bee526e95d81cfc370a98921d5cc2685fbd924b"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/roles_native.npz",
+        "sha256": "f1af481e9ae1bacf86482650970c1c2e4c1e4af217fd859b8e353866679c94c9"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/full1152/I_geo.png",
+          "sha256": "7f3802b970d6a60eb9e65e3a5f88f40d10539c78beb1ae4496b4f3e4402c7416"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/full1152/H_input.png",
+          "sha256": "1ebfe11c66bdc200d3f9740d6f2fb46c9982d123325306598476c72403d25f02"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/full1152/C_mat.png",
+          "sha256": "12c2ca9684fd3a84831f1e291eed4f262d072460525cf9038b1d8afa0babf1a4"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/full1152/roles_model.npz",
+          "sha256": "7c2bfafb1ae712276abf9fb1bda3f80b321864e8e92efa2ac115e7db10b273d5"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw000_v1/full1152/construction.json",
+          "sha256": "438b7381cfcda4ef0367728ae7fa11d0cbacd4579a15eeb2195218d3e1d8d8b8"
+        }
+      }
+    },
+    {
+      "id": "visible_scene081_raw050_v0",
+      "domain": "synthetic_visible_2d",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/observation.png",
+        "sha256": "7bcfe9d964088ab4ac720ffe64460b0d7bbb2055945e9fea4587f54cf333fda3"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/roles_native.npz",
+        "sha256": "10f896fa6311893888e40e10c49fe84e07c3ff265d82aba37d681c4a150f3b45"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/full1152/I_geo.png",
+          "sha256": "d7504105db07c3282fdef6f89cdc8fafb70ff856d0f28a419dd04969cdc9b7ee"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/full1152/H_input.png",
+          "sha256": "de177a165f0485681fe8db64651e3fb67a62ef41e2c27aee0470a2726f208d20"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/full1152/C_mat.png",
+          "sha256": "ac532e0d4a12602904c117908e8c55a241126a0ccb51694446d9a446e9066bd1"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/full1152/roles_model.npz",
+          "sha256": "ad2bcc46fa62379ac8039245cb199e0c6553b81e75897cbfb8cfef4367eaf213"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v0/full1152/construction.json",
+          "sha256": "4b5b4bd94f9834e02f935f34495f55894fffef9aaff814dcccf7d6c7afdd2857"
+        }
+      }
+    },
+    {
+      "id": "visible_scene081_raw050_v1",
+      "domain": "synthetic_visible_2d",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/observation.png",
+        "sha256": "9cdddd4e9b1b0cb9d81d7d1b73900b688f1f11710e03fd6ab32c7e28341dbe87"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/roles_native.npz",
+        "sha256": "8ee42803d509392fefd481a61bd17928f707ce38592b32753bc7570e27bc5735"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/full1152/I_geo.png",
+          "sha256": "dbb30e74f98bf5247a2859fc7da0dc1de0cc1deb3cf0fd55089c7b711c7da67a"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/full1152/H_input.png",
+          "sha256": "9181a00a64810d93e8aab844be9b962812e3e235f4814eb6e3e41754dc42adae"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/full1152/C_mat.png",
+          "sha256": "217a83d4d3455418490587cb4099516d112e544e91ac5e40d2856fb016ca4560"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/full1152/roles_model.npz",
+          "sha256": "af2ab92420acb5d5396ed6a344ab05a010039d743790710a5968778cdea42fbd"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/visible_scene081_raw050_v1/full1152/construction.json",
+          "sha256": "0eaf9113013f2a6086267f86f6206f3df7f6f2c3f2b6e0171dbd06b8369d20c3"
+        }
+      }
+    },
+    {
+      "id": "scene065_raw086",
+      "domain": "real_unlabelled",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/observation.png",
+        "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/roles_native.npz",
+        "sha256": "1a0181f2c9a85d519c8b84c0474799190f70ec26e1b61950b04c4cfdabba41e2"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/I_geo.png",
+          "sha256": "8ad3d44cc588b4edfcb865ea1d55113c23696b317d3556aa448a2a47c6c0e3eb"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/H_input.png",
+          "sha256": "8ac83ccd65f9b682df06ab40d7c79321afc89008b83234a07531a6e6a364968e"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/C_mat.png",
+          "sha256": "d16414d36f34af7df5de9aa3f7f507b0e21a24a870753f089bdc93bcbbf85c91"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/roles_model.npz",
+          "sha256": "e1434bf8d4e071374fa81887e39e12a38408883c838160fbb0f576e6d48f4196"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/construction.json",
+          "sha256": "1bea5fa637c89cfe2db94e9079a2a7d69fa928348ac939aeadbcff9726cb86bb"
+        }
+      }
+    },
+    {
+      "id": "scene065_raw110",
+      "domain": "real_unlabelled",
+      "native_hw": [
+        1280,
+        1920
+      ],
+      "observation": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/observation.png",
+        "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5"
+      },
+      "roles_native": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/roles_native.npz",
+        "sha256": "20424702d55f45c67ce9796f80e96bcf81c4c6c3b83298241d50a95758efce3f"
+      },
+      "view": {
+        "model_wh": [
+          1152,
+          768
+        ],
+        "plan": {
+          "output_wh": [
+            1152,
+            768
+          ],
+          "window_xyxy": [
+            0,
+            0,
+            1920,
+            1280
+          ]
+        },
+        "I_geo": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/I_geo.png",
+          "sha256": "8fa00ccfee1f2a401f0504c6cc0437019d7568417ae0a11a5350f3946b57b5e4"
+        },
+        "H_input": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/H_input.png",
+          "sha256": "fce1a08e53815721389ad4ed4baf75fb90622b736579cb140b67d41157f753bf"
+        },
+        "C_mat": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/C_mat.png",
+          "sha256": "9ca8293836e5d6d7b3d73dfe1b93812a30ac637a85bb1a8ccb79bc6ed426a814"
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/roles_model.npz",
+          "sha256": "ef113a0eaf6ee35c48900099009e6cd51d122841e0976b1e3a1ea18a011c6a7c"
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/construction.json",
+          "sha256": "e94df8c2bb7d1374552ddbbfbaff0f6f0be3a21f53881e42ab6a23a434338811"
+        }
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__legacy__seed101",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed101/raw_model.png",
+          "sha256": "2a273aec15c2687e60b542091666de4075167e14380870db2c43bcb3321813e4"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed101/raw_native.png",
+          "sha256": "2b326d0561350dfa265a2045e21917c87c444da3eb3fb13ba183ec35bad4edca"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed101/final_native.png",
+          "sha256": "dd534243265e764dd938a7556e5268b526cd4fcf32f5b5f3b472f844475c276d"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw000_v0__full1152_T0__seed101"
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__legacy__seed101",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed101/raw_model.png",
+          "sha256": "9a303e8d77f12bc2ca00d2e9192081d35248a5d88f59de93e869539d6ae8ceb0"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed101/raw_native.png",
+          "sha256": "9abca486e423347990b68c1ec1d8f9ff41f04deaba36f8ce612cc2d77238872e"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed101/final_native.png",
+          "sha256": "e246eb455da8e1ba4f52c009f84b20ebb210d8390eec68a752cfd2d75ba97cb0"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw000_v1__full1152_T0__seed101"
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__legacy__seed101",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed101/raw_model.png",
+          "sha256": "3ce8d6c1e4f14d2e0e36e6b211479dabb80ac2d7e563c8fbb361f3a06fa4fdf5"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed101/raw_native.png",
+          "sha256": "e53726fe068336fa00dc52e879fc6c5cec5fe1b2f840fe47d20bf246aa7e9b56"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed101/final_native.png",
+          "sha256": "3087a15babf86bdcc2d685beef65a0194542cd85e27e7bdae3e5dac01fb9cbd0"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw050_v0__full1152_T0__seed101"
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__legacy__seed101",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed101/raw_model.png",
+          "sha256": "b371565d993e7e52dc9ced804bcab3db738adf2cb8463cb1e51893d63e21060b"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed101/raw_native.png",
+          "sha256": "b79cfe1d900443d0c70feff0137eb60a9dd87fe54b227da229a8aacaeb882571"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed101/final_native.png",
+          "sha256": "469b3d4c4cafb93fd9c2a2fdc9ac21d1dcf805650f1e8e3e61d97c7ed4fb7c54"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw050_v1__full1152_T0__seed101"
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__legacy__seed101",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed101/raw_model.png",
+          "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed101/raw_native.png",
+          "sha256": "f07f8ecb7c4c9b9c8a39802eb8a15af2efc9046a062849cdc354d1800c6cb5e6"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed101/final_native.png",
+          "sha256": "015ba06692287865077074427b07fbcba414f27b9a0fae61751a921878bc2474"
+        }
+      },
+      "historical_job_id": "scene065_raw086__full1152_T0__seed101"
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__legacy__seed101",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 101,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed101/raw_model.png",
+          "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed101/raw_native.png",
+          "sha256": "750d12ab399eb2b9d06610068ebf5d5253034044bf2b13cbdd595a25cb140390"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed101/final_native.png",
+          "sha256": "5d130b552227a317d4def48493cdc8a64189a39664bd8251e7139b2ec04f6e2f"
+        }
+      },
+      "historical_job_id": "scene065_raw110__full1152_T0__seed101"
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__legacy__seed202",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed202/raw_model.png",
+          "sha256": "614d226b5e1982bb9f18f07f2697467c4b841d6095552c1bec0caddaa1cbe3dc"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed202/raw_native.png",
+          "sha256": "f4cccbd60045667e41333e4078246f58be77aad81d55ddd52f4b564e02023438"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v0__full1152_T0__seed202/final_native.png",
+          "sha256": "d9c3fd8cf173a8baec3a7f42f282c3d8d1f11dc635a23462db43888bfbc158b5"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw000_v0__full1152_T0__seed202"
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__legacy__seed202",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed202/raw_model.png",
+          "sha256": "5160d7ebb47ab07afe401ff4e5664e067dce98bf33afc6943cfebd95f99a7400"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed202/raw_native.png",
+          "sha256": "c9bc3154ca953935b44f0618257abf68fe94521501ee3e4608e5592304c69168"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw000_v1__full1152_T0__seed202/final_native.png",
+          "sha256": "fed855fbcdc256e10592d63eb47fd86e0ac89b8c82f0c5b5e1ea9b68a8439e2a"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw000_v1__full1152_T0__seed202"
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__legacy__seed202",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed202/raw_model.png",
+          "sha256": "4cb24a5b95789be9d552e907cb65dd40e5fbd14f8b9c4ba88ec413fa4375fcbe"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed202/raw_native.png",
+          "sha256": "738dc5d172fa8aaede33eeaa25dd1820942dc09c6f6b0810bbc84793bafc7207"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v0__full1152_T0__seed202/final_native.png",
+          "sha256": "f5588316b6aefea198c4e84d9005f590157ab254701c30aee2502afc6c06af93"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw050_v0__full1152_T0__seed202"
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__legacy__seed202",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed202/raw_model.png",
+          "sha256": "3ba71729edf90a5d98b67ff0ab9f8afaaa4a83a55bd555e6e5b80e223ff17ce5"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed202/raw_native.png",
+          "sha256": "a1dab12bcd5035f2b893abb862550c3b427c43109dd99d23bef6695b86ccb655"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/visible_scene081_raw050_v1__full1152_T0__seed202/final_native.png",
+          "sha256": "de313d0f82fd4241566d6ec0c5dabdf45fbe4a060b5d47087cf372576ed9c339"
+        }
+      },
+      "historical_job_id": "visible_scene081_raw050_v1__full1152_T0__seed202"
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__legacy__seed202",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed202/raw_model.png",
+          "sha256": "c6e5ba2f5ece8946c5958a7b185ba48eed059248b072cf91b5532a1a18f053e3"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed202/raw_native.png",
+          "sha256": "112d8b70a5cb05b6ab71e4478f5507c6fe17648b2bc4c7e3ca866e8e127d3f41"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw086__full1152_T0__seed202/final_native.png",
+          "sha256": "6df0ee59a2f6485709287fc913ee8433688e8ec05193b1c26ba4733e5b833d0f"
+        }
+      },
+      "historical_job_id": "scene065_raw086__full1152_T0__seed202"
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__legacy__seed202",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 202,
+      "historical_replay_expected": true,
+      "historical_expected": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed202/raw_model.png",
+          "sha256": "8f92dd255b9e91abd55219b2e0217ad0a4a02fb0f7f9257d5805088250c0f1e5"
+        },
+        "raw_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed202/raw_native.png",
+          "sha256": "981cfc4f04c28a53cdd2cc1d1854a6052fcfb4724da274206577d6044e4df38a"
+        },
+        "final_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/GPU_pilot_r1/scene065_raw110__full1152_T0__seed202/final_native.png",
+          "sha256": "0bd3de401cd84e80587f85cb100093a36ed613acef131393bad84f5002a137e6"
+        }
+      },
+      "historical_job_id": "scene065_raw110__full1152_T0__seed202"
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__legacy__seed303",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__legacy__seed303",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__legacy__seed303",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__legacy__seed303",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__legacy__seed303",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__legacy__seed303",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__legacy__seed404",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__legacy__seed404",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__legacy__seed404",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__legacy__seed404",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__legacy__seed404",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__legacy__seed404",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__legacy__seed505",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__legacy__seed505",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__legacy__seed505",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__legacy__seed505",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__legacy__seed505",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__legacy__seed505",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "legacy",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__material_match_v1__seed101",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed101",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__material_match_v1__seed101",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__material_match_v1__seed101",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__material_match_v1__seed101",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__material_match_v1__seed101",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 101,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__material_match_v1__seed202",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed202",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__material_match_v1__seed202",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__material_match_v1__seed202",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__material_match_v1__seed202",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__material_match_v1__seed202",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 202,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__material_match_v1__seed303",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed303",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__material_match_v1__seed303",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__material_match_v1__seed303",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__material_match_v1__seed303",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__material_match_v1__seed303",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 303,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__material_match_v1__seed404",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed404",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__material_match_v1__seed404",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__material_match_v1__seed404",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__material_match_v1__seed404",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__material_match_v1__seed404",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 404,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v0__full1152_T0__material_match_v1__seed505",
+      "case_id": "visible_scene081_raw000_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed505",
+      "case_id": "visible_scene081_raw000_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v0__full1152_T0__material_match_v1__seed505",
+      "case_id": "visible_scene081_raw050_v0",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "visible_scene081_raw050_v1__full1152_T0__material_match_v1__seed505",
+      "case_id": "visible_scene081_raw050_v1",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw086__full1152_T0__material_match_v1__seed505",
+      "case_id": "scene065_raw086",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    },
+    {
+      "id": "scene065_raw110__full1152_T0__material_match_v1__seed505",
+      "case_id": "scene065_raw110",
+      "arm": "full1152_T0",
+      "view": "full1152",
+      "adapter": "T0",
+      "prompt_id": "material_match_v1",
+      "seed": 505,
+      "historical_replay_expected": false
+    }
+  ],
+  "token_check": {
+    "checked": false,
+    "maximum_tokens_including_BOS_EOS": 77,
+    "truncation_allowed": false,
+    "status": "pending_runtime_tokenizer",
+    "tokenizer_path": null,
+    "prompts": [],
+    "reason": "未找到可用的本地SD1.5 CLIP tokenizer与transformers；未估算/伪造token数"
+  },
+  "planned_diffusion_calls": 60,
+  "maximum_diffusion_calls": 60,
+  "historical_replay_expected": 12,
+  "first_replay_required_before_remaining": true,
+  "training_updates": 0,
+  "GT_opened": false,
+  "automatic_candidate_selection": false,
+  "best_of_N_score_implemented": false,
+  "additional_VAE_control_calls": 0,
+  "runtime_preflight_passed": false,
+  "GPU_execution_performed": false,
+  "scoring_interface": "new schema and prompt_id; freeze/pixel-scope gate only; old score_pilot.py hardcoded48 is NOT compatible",
+  "remote_reprepare_required": "Local Windows plans must not be copied as executable Linux plans; rerun prepare remotely with Linux source paths."
+}

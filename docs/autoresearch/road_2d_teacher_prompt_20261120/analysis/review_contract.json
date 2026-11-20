@@ -1,0 +1,109 @@
+{
+  "schema": "road_2d_teacher_prompt_review_contract.v1",
+  "status": "CPU_code_ready_waiting_for_complete_frozen60_score",
+  "analysis_script": {
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\outputs\\road_2d_teacher_defaults_20261120\\analysis\\summarize_prompt_round.py",
+    "sha256": "7914b2747fd0b326e5206bfcb7f84eedc73f95227876107a43bb7f5819debbc4"
+  },
+  "inputs": {
+    "score_schema": "road_2d_teacher_prompt_round_postfreeze_CPU_score.v1",
+    "case_ids": [
+      "visible_scene081_raw000_v0",
+      "visible_scene081_raw000_v1",
+      "visible_scene081_raw050_v0",
+      "visible_scene081_raw050_v1",
+      "scene065_raw086",
+      "scene065_raw110"
+    ],
+    "prompt_ids": [
+      "legacy",
+      "material_match_v1"
+    ],
+    "seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "formal_calls": 60,
+    "smoke_calls_included": 0,
+    "historical_replays_required": 12
+  },
+  "fairness_reviewed_source": {
+    "next_round_config": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\outputs\\road_2d_teacher_defaults_20261120\\next_round_config.json",
+      "sha256": "c2eb605db71ad1eaa989150125812cf86c2c29e347cc8d543ccf7f5107b88cc4"
+    },
+    "inference_entry": {
+      "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-19\\autodl-worldsim-2d-file-c-users\\outputs\\road_2d_teacher_defaults_20261120\\code\\infer_next_round.py",
+      "sha256": "a14ad5fcd39ae2a958332b95cf2907d1836a23ee7c4aeaa30353973a1be07d18"
+    },
+    "checkpoint_step": 600,
+    "method": "full1152_T0; DDIM20 CFG3 eta0 BF16; prompt is the only intended paired change",
+    "shared_input": "One frozen I_geo/H_input/C_mat/roles record per case, shared by every prompt and seed",
+    "noise_pairing": "Explicit CUDA generator reset to the same numerical seed at the same1152x768 grid",
+    "token_gate": "Actual runtime CLIP tokens includingBOS/EOS <=77, no truncation allowed"
+  },
+  "review_statistics": {
+    "case_prompt_grid": "five-seed mean/min/max/range/population variance/std; worst_reference_error=max only for reference-error metrics",
+    "macro_order": "within each seed: task variants->base frame equal weight; then summarize the5 seed macros",
+    "synthetic_clean_base_frames": 2,
+    "synthetic_source_scenes": 1,
+    "real_known_visible_frames": 2,
+    "real_source_scenes": 1,
+    "native_and_same_view_separate": true,
+    "physical_HP_sigmas_native_px": [
+      2.5,
+      5.0,
+      10.0
+    ],
+    "primary_PSD_cycles_per_native_px": [
+      [
+        0.025,
+        0.0625
+      ],
+      [
+        0.0625,
+        0.125
+      ],
+      [
+        0.125,
+        0.2
+      ]
+    ],
+    "additional_shared1152_PSD_band": [
+      0.2,
+      0.3
+    ],
+    "RMS_and_energy_target_ratio": 1,
+    "automatic_seed_selection": false,
+    "automatic_prompt_winner": false
+  },
+  "visual_review": {
+    "rows": 60,
+    "fixed_full_matrix": true,
+    "unreviewed_is_not_clean": true,
+    "observations": [
+      "color and brightness",
+      "fine material texture",
+      "suspected markings or visible-topology incompatibility"
+    ],
+    "real_hidden_GT": false
+  },
+  "outputs": [
+    "comparison.json",
+    "per_seed.csv",
+    "case_seed_distributions.csv",
+    "base_frame_seed_macros.csv",
+    "prompt_seed_macros.csv",
+    "prompt_distributions.csv",
+    "paired_prompt_deltas.csv",
+    "observations_template.csv"
+  ],
+  "CPU_tests_passed": 8,
+  "new_round_GPU_outputs_or_GT_read": false,
+  "GPU_execution_by_analysis": false,
+  "run_template": "python analysis/summarize_prompt_round.py --score <complete60_score.json> --plan <frozen_plan.json> --predictions <complete60_predictions.json> --config <actual_frozen_next_round_config.json> --out-dir <fresh_review_dir>",
+  "runtime_evidence": "Original single runtime_preflight OR four pinned formal worker receipts; each worker schema/mode/manifest, source code pins,15-job partition, complete counts and token23/40 verified."
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "road_2d_teacher_defaults.v1",
+  "adopted_on": "2026-11-20",
+  "decision_source": "explicit_user_review",
+  "human_verdict": "Current reviewed 2D teacher quality is acceptable; use full1152_T0 as the subsequent default method.",
+  "selected_arm": "full1152_T0",
+  "model_family": "Stable Diffusion 1.5 inpainting",
+  "base_model_snapshot": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "model_wh": [
+    1152,
+    768
+  ],
+  "view": "full1152",
+  "adapter": "attention LoRA T0",
+  "checkpoint_step": 600,
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_singleframe_20261115_r1/formal/T0/checkpoint_step000600.pt",
+    "sha256": "a75423e126b93eca22e0ce587782b3dc4edd76654d6a929302118aa45bda14ae"
+  },
+  "lora_rank": 4,
+  "lora_alpha": 4,
+  "attention_targets": [
+    "to_q",
+    "to_k",
+    "to_v",
+    "to_out.0"
+  ],
+  "scheduler": "DDIM",
+  "inference_steps": 20,
+  "guidance": 3.0,
+  "eta": 0.0,
+  "strength": 1.0,
+  "dtype": "bfloat16",
+  "weight_variant": "fp16",
+  "negative_prompt": "",
+  "prompt_policy": {
+    "active_prompt_id": "legacy",
+    "active_prompt_text": "a photograph of a continuous gray asphalt road surface, extending the visible lane markings in perspective, consistent natural lighting",
+    "historical_baseline_id": "legacy",
+    "next_candidate_id": "material_match_v1",
+    "candidate_status": "round1_complete_no_consistent_improvement_not_promoted",
+    "maximum_prompt_comparison_rounds": 2,
+    "next_round_config": "next_round_config.json",
+    "completed_prompt_comparison_rounds": 1,
+    "second_round_planned": false
+  },
+  "seed_policy": {
+    "next_comparison_seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "user_requested_total_range": [
+      5,
+      10
+    ],
+    "seed_quality_ranking_available": false,
+    "candidate_scoring_status": "seed_variability_reported; no automatic selector deployed",
+    "automatic_best_of_N_selection": false
+  },
+  "supervision_policy": {
+    "preserve_original_model_grid": true,
+    "source_model_wh": [
+      1152,
+      768
+    ],
+    "lower_resolution_views": "direct AREA sampling with existing full-source-support C/S eligibility rules",
+    "W_K_policy": "unchanged",
+    "three_dimensional_raster_qualification": "outside this decision; no additional authorization"
+  },
+  "evidence": {
+    "source_commit": "4cb540e66591f177c452f01a413abd15f78400eb",
+    "report": "../road_2d_teacher_hf_gpu_20261119_r1/index.html",
+    "decision_scope": "reviewed 2D teacher cases; not universal hidden-road ground-truth validation or resolution of the 3D rendering problem"
+  },
+  "deployment": {
+    "local_default_recorded": true,
+    "remote_installation_pending": false,
+    "new_GPU_execution_performed": true,
+    "remote_campaign": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1",
+    "power_policy": "keep_instance_running_explicit_user_request"
+  }
+}

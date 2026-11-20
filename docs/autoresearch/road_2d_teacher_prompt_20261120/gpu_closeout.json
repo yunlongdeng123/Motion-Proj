@@ -1,0 +1,16 @@
+{
+  "task_id": "ROAD-2D-TEACHER-PROMPT-20261120",
+  "run_id": "prompt_seed_r1",
+  "publication_summary": "二维教师独立范围 `ROAD-2D-TEACHER-PROMPT-20261120`：[五seed提示词对照与组件](autoresearch/road_2d_teacher_prompt_20261120/publication.html)完成。用户已采纳整帧1152×768＋注意力LoRA T0为后续默认；本轮5seed×2prompt×6任务正式60次，另4次真实GPU smoke，4进程并行，训练与三维修改0。合成两底图等权ΔE76 2.239597→2.242254、共同频谱偏差1.201894→1.141373，但改善配对仅7/20与8/20，seed波动未降低；新prompt不晋升，不再追加调词。12次旧1152三图重放和实际W/K门通过，60原始PNG及全部对照资产已取回核验；真实隐藏道路无GT。保持历史活动提示词，原CPU/GPU报告及其他三维任务保留。method human_verdict=用户采纳当前审阅样例；prompt human_verdict/problem_solved=null。实例按用户明确要求保持开机。",
+  "longterm_rule": "- 二维道路教师后续默认采用整帧1152×768的SD1.5 inpainting＋注意力LoRA T0（固定step600、DDIM20、CFG3）；除非用户后续覆盖，按[二维教师默认配置](docs/autoresearch/road_2d_teacher_prompt_20261120/teacher_defaults.json)执行。提示词保持版本化，预先冻结同任务/同seed配对，最多一至两轮，不逐图改词；离线GT诊断与不使用隐藏GT的候选选优分开。\n",
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "updated:V82-F06",
+  "human_verdict": {
+    "method": "accepted_by_user_current_reviewed_cases",
+    "prompt": null
+  },
+  "problem_solved": null,
+  "power_policy": "keep_running_explicit_user_request"
+}

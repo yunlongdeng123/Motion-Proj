@@ -1,0 +1,67 @@
+{
+  "schema": "road_2d_teacher_next_round.v1",
+  "date": "2026-11-20",
+  "task_id": "ROAD-2D-TEACHER-PROMPT-20261120",
+  "run_id": "prompt_seed_r1",
+  "selected_arm": "full1152_T0",
+  "seeds": [101, 202, 303, 404, 505],
+  "seed_selection": "fixed_before_generation",
+  "prompts": [
+    {
+      "id": "legacy",
+      "text": "a photograph of a continuous gray asphalt road surface, extending the visible lane markings in perspective, consistent natural lighting",
+      "role": "historical_baseline"
+    },
+    {
+      "id": "material_match_v1",
+      "text": "A photograph of the same road pavement, matching the surrounding color, brightness, and fine random asphalt grain, with consistent lighting and perspective. Continue lane markings only where clearly supported by visible markings.",
+      "meaning_zh": "匹配周围同一铺装路面的色调、亮度与细密随机纹理，遵循现有光照和透视；仅在有明确可见依据的位置延续标线。",
+      "role": "candidate_pending_comparison"
+    }
+  ],
+  "expected_case_ids": [
+    "visible_scene081_raw000_v0",
+    "visible_scene081_raw000_v1",
+    "visible_scene081_raw050_v0",
+    "visible_scene081_raw050_v1",
+    "scene065_raw086",
+    "scene065_raw110"
+  ],
+  "inference": {
+    "model_wh": [1152, 768],
+    "view": "full1152",
+    "adapter": "T0",
+    "scheduler": "DDIM",
+    "inference_steps": 20,
+    "guidance": 3.0,
+    "eta": 0.0,
+    "strength": 1.0,
+    "dtype": "bfloat16",
+    "weight_variant": "fp16",
+    "negative_prompt": ""
+  },
+  "planned_diffusion_calls": 60,
+  "maximum_diffusion_calls": 60,
+  "historical_replay_expected": 12,
+  "reuse_historical_outputs": false,
+  "additional_VAE_control_calls": 0,
+  "training_updates": 0,
+  "current_prompt_comparison_round": 1,
+  "maximum_prompt_comparison_rounds": 2,
+  "second_prompt_round_automatically_enabled": false,
+  "automatic_candidate_selection": false,
+  "three_dimensional_rendering_changes": false,
+  "GT_used_for_generation_or_candidate_selection": false,
+  "comparison_policy": {
+    "pairing": "same legal model input, mask, LoRA, resolution, sampler, step count and numerical seed; only prompt changes within a pair",
+    "generation_order": "historical replay gates first; then complete the frozen matrix",
+    "review": ["color and brightness agreement", "fine random material texture", "false or incorrectly extended markings", "protected and outside-writeback pixel preservation"],
+    "report_seed_distribution": true,
+    "report_only_best_seed": false,
+    "synthetic_GT": "independent evaluation and whole-prompt comparison only after predictions are complete and pinned; never used for per-image or per-seed best-of-N teacher selection",
+    "real_hidden_road_GT": "unavailable; adjacent visible material is a proxy",
+    "if_seed_variability_persists": "design a ground-truth-free candidate score with artifact rejection before enabling best-of-N; no score implemented in this round",
+    "texture_objective": "matching plausible material statistics and visual quality; never maximize high-frequency energy alone"
+  },
+  "execution_state": "GPU_smoke_then_parallel_requested_keep_instance_running"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "road_2d_teacher_structural_review.v1",
+  "complete": true,
+  "reviewer": "root agent",
+  "coverage": {
+    "raw_fixed_ROI_contact_sheets": 6,
+    "formal_candidates_seen_in_contact_sheets": 60,
+    "full_resolution_source_and_W_K_checks": "report_code/assets_cpu_validation.json",
+    "automatic_clean_output_count": null,
+    "false_marking_error_rate_estimated": false
+  },
+  "witnesses": [
+    {
+      "case_id": "visible_scene081_raw000_v1",
+      "seed": 404,
+      "prompt_id": "material_match_v1",
+      "observation": "An additional white lane-mark segment is present inside authorized W in the final composite, absent from the independent clean road reference. The text constraint did not prevent this example.",
+      "final_ROI": "assets/roi/visible_scene081_raw000_v1__full1152_T0__material_match_v1__seed404_final.png",
+      "roles_ROI": "assets/inputs/visible_scene081_raw000_v1_roles_roi.png",
+      "clean_ROI": "assets/inputs/visible_scene081_raw000_v1_clean_roi.png",
+      "diagnostic_only_not_seed_selection": true
+    }
+  ],
+  "limits": [
+    "Contact sheets were downsampled structural checks, not full-resolution material fidelity proof.",
+    "No real hidden-road ground truth, best-of-N choice, selected seed or automatic prompt promotion.",
+    "The blank all60 observations template is not interpreted as sixty clean images."
+  ]
+}

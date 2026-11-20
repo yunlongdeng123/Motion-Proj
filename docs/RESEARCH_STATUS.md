@@ -1,8 +1,8 @@
 # 当前研究状态
 
-更新：2026-11-19（Asia/Singapore）。
+更新：2026-11-20（Asia/Singapore）。
 
-二维教师独立范围 `ROAD-2D-TEACHER-HF-GPU-20261119`：[GPU对照、监督传递与组件](autoresearch/road_2d_teacher_hf_gpu_20261119/publication.html)完成。固定48次扩散、13次独立VAE重建（主4＋精度诊断9），训练与三维修改0；历史6张三类PNG逐像素exact。1152相对768注意力LoRA的合成核心平均ΔE76为2.357→2.129，8/8配对改善；共同频谱偏差仅4/8改善，仍有假标线。20个view-aware二维候选包保留源级1152与单次768/480，许可与共同支持另计，未接入三维或晋升默认。完整评分与原图审查通过，源代码、报告、取回和资源按最终交付收口；human_verdict/problem_solved=null。CPU阶段与其他三维任务保留。
+二维教师独立范围 `ROAD-2D-TEACHER-PROMPT-20261120`：[五seed提示词对照与组件](autoresearch/road_2d_teacher_prompt_20261120/publication.html)完成。用户已采纳整帧1152×768＋注意力LoRA T0为后续默认；本轮5seed×2prompt×6任务正式60次，另4次真实GPU smoke，4进程并行，训练与三维修改0。合成两底图等权ΔE76 2.239597→2.242254、共同频谱偏差1.201894→1.141373，但改善配对仅7/20与8/20，seed波动未降低；新prompt不晋升，不再追加调词。12次旧1152三图重放和实际W/K门通过，60原始PNG及全部对照资产已取回核验；真实隐藏道路无GT。保持历史活动提示词，原CPU/GPU报告及其他三维任务保留。method human_verdict=用户采纳当前审阅样例；prompt human_verdict/problem_solved=null。实例按用户明确要求保持开机。
 
 本轮任务 `WORLD-ROAD-MATERIAL-FIELD-20261112` 已完成少量真实道路数据上的预训练模型对照、600步LoRA及世界场→高斯的真实GPU验证。[图像、架构与完整分母](autoresearch/road_material_field_gpu_20261112/index.html)。当前代理图像质量未通过，human_verdict=null。用户要求AutoDL保持开机。
 
