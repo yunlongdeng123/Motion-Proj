@@ -1,0 +1,924 @@
+{
+  "schema": "native_road_quality_handoff_attribution.v1",
+  "rows": [
+    {
+      "raw": 110,
+      "resolution": [
+        1920,
+        1280
+      ],
+      "domains": {
+        "A": {
+          "expected_pre_GS_alpha_pixels": 558326,
+          "surface_hit_pixels": 195980,
+          "no_surface_hit_pixels": 362346,
+          "source_valid_pixels": 195592,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 199789,
+              "below_pixels": 358537
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 187609,
+              "below_pixels": 370717
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 162912,
+              "below_pixels": 395414
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 150455,
+              "below_pixels": 407871
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 123766,
+              "below_pixels": 434560
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 57,
+              "largest_pixels": 262873,
+              "total_pixels": 358537,
+              "largest10_pixels": [
+                262873,
+                87664,
+                3596,
+                608,
+                490,
+                489,
+                454,
+                386,
+                373,
+                367
+              ]
+            },
+            "0.9": {
+              "components": 298,
+              "largest_pixels": 272007,
+              "total_pixels": 395414,
+              "largest10_pixels": [
+                272007,
+                97527,
+                5814,
+                5749,
+                1330,
+                959,
+                880,
+                801,
+                732,
+                726
+              ]
+            },
+            "0.95": {
+              "components": 295,
+              "largest_pixels": 277387,
+              "total_pixels": 407871,
+              "largest10_pixels": [
+                277387,
+                108027,
+                5974,
+                1490,
+                1400,
+                1359,
+                1098,
+                870,
+                832,
+                700
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 558326,
+            "mean": 0.3279822118770594,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9998705983161926,
+              0.9999003410339355
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 558326,
+            "mean": 0.27531523090544735,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9997815489768982,
+              0.9999001622200012
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 558326,
+            "mean": 0.7233196688975297,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.9984054863452911,
+              0.9998966455459595,
+              0.9999012351036072
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 558326,
+            "mean": 0.0002082530628474188,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.15645872056484222
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 558326,
+            "mean": 0.23180774130022058,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9996391236782074,
+              0.9999001622200012
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 681,
+          "high_road_alpha_static_weight_ge50": 25378,
+          "high_road_alpha_dynamic_weight_ge50": 0,
+          "stable_road_static_ge50_joint_road_below05": 681,
+          "static_dominant_over_expected": 398852,
+          "road_color_error_auxiliary": 0.01348831132054329,
+          "joint_color_error_auxiliary": 0.023890530690550804,
+          "teacher_role": "real_visible"
+        },
+        "C": {
+          "expected_pre_GS_alpha_pixels": 168932,
+          "surface_hit_pixels": 148289,
+          "no_surface_hit_pixels": 20643,
+          "source_valid_pixels": 139147,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 142266,
+              "below_pixels": 26666
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 135376,
+              "below_pixels": 33556
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 127299,
+              "below_pixels": 41633
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 123161,
+              "below_pixels": 45771
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 112259,
+              "below_pixels": 56673
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 61,
+              "largest_pixels": 23220,
+              "total_pixels": 26666,
+              "largest10_pixels": [
+                23220,
+                690,
+                564,
+                472,
+                309,
+                277,
+                251,
+                121,
+                111,
+                74
+              ]
+            },
+            "0.9": {
+              "components": 183,
+              "largest_pixels": 30591,
+              "total_pixels": 41633,
+              "largest10_pixels": [
+                30591,
+                1526,
+                975,
+                961,
+                889,
+                735,
+                716,
+                608,
+                531,
+                316
+              ]
+            },
+            "0.95": {
+              "components": 199,
+              "largest_pixels": 31384,
+              "total_pixels": 45771,
+              "largest10_pixels": [
+                31384,
+                2011,
+                1626,
+                1109,
+                1008,
+                985,
+                984,
+                768,
+                751,
+                357
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 168932,
+            "mean": 0.7955406521067416,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.9992043673992157,
+              0.9998944401741028,
+              0.9999002814292908
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 168932,
+            "mean": 0.7003046282900867,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.9499981105327606,
+              0.9998858571052551,
+              0.9999002814292908
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 168932,
+            "mean": 0.26110476825020373,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.04815443977713585,
+              0.9855492919683456,
+              0.9999006390571594
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 168932,
+            "mean": 0.038338987869653646,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              2.647361043273122e-06,
+              0.24325046166777545,
+              0.8975269198417664
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 168932,
+            "mean": 0.6413020031332752,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.9151581823825836,
+              0.9998768240213394,
+              0.9999002814292908
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 3835,
+          "high_road_alpha_static_weight_ge50": 9228,
+          "high_road_alpha_dynamic_weight_ge50": 545,
+          "stable_road_static_ge50_joint_road_below05": 3392,
+          "static_dominant_over_expected": 41503,
+          "road_color_error_auxiliary": 0.025771837681531906,
+          "joint_color_error_auxiliary": 0.08988580852746964,
+          "teacher_role": "frozen_pseudo_teacher_not_hidden_GT"
+        },
+        "S": {
+          "expected_pre_GS_alpha_pixels": 36748,
+          "surface_hit_pixels": 36342,
+          "no_surface_hit_pixels": 406,
+          "source_valid_pixels": 36297,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 36260,
+              "below_pixels": 488
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 34417,
+              "below_pixels": 2331
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 28390,
+              "below_pixels": 8358
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 24140,
+              "below_pixels": 12608
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 16977,
+              "below_pixels": 19771
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 8,
+              "largest_pixels": 161,
+              "total_pixels": 488,
+              "largest10_pixels": [
+                161,
+                145,
+                98,
+                53,
+                27,
+                2,
+                1,
+                1
+              ]
+            },
+            "0.9": {
+              "components": 166,
+              "largest_pixels": 2293,
+              "total_pixels": 8358,
+              "largest10_pixels": [
+                2293,
+                1018,
+                902,
+                728,
+                506,
+                430,
+                400,
+                292,
+                111,
+                106
+              ]
+            },
+            "0.95": {
+              "components": 64,
+              "largest_pixels": 4575,
+              "total_pixels": 12608,
+              "largest10_pixels": [
+                4575,
+                1424,
+                1345,
+                1038,
+                929,
+                692,
+                514,
+                339,
+                312,
+                212
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 36748,
+            "mean": 0.8978563493149978,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.41509322077035904,
+              0.9859554171562195,
+              0.9998805522918701,
+              0.999900221824646
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 36748,
+            "mean": 0.8968667085975902,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.4144912198185921,
+              0.9851165413856506,
+              0.9998795986175537,
+              0.999900221824646
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 36748,
+            "mean": 0.10294546991892714,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.014767156913876534,
+              0.5852423369884491,
+              0.9998995661735535
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 36748,
+            "mean": 1.0370442940688688e-06,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.00018458953127264977
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 36748,
+            "mean": 0.8958662519347714,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.4137698233127595,
+              0.9838043749332428,
+              0.9998756051063538,
+              0.999900221824646
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 0,
+          "high_road_alpha_static_weight_ge50": 0,
+          "high_road_alpha_dynamic_weight_ge50": 0,
+          "stable_road_static_ge50_joint_road_below05": 0,
+          "static_dominant_over_expected": 2337,
+          "road_color_error_auxiliary": 0.02469530701637268,
+          "joint_color_error_auxiliary": 0.04452157020568848,
+          "teacher_role": "frozen_pseudo_teacher_not_hidden_GT"
+        }
+      },
+      "K_pixels": 251456,
+      "native_basis_K_eligible_weight_max": 0.0,
+      "native_source_RGB_conservation_max": 1.2516975402832031e-06,
+      "native_source_alpha_conservation_max": 2.086162567138672e-06,
+      "interpretation": "Source weights are from the same full-scene depth sort, not a semantic residual-car detector. High static contribution inside a legal deleted-target road domain supports static occlusion; inspect source image before labelling exact ghost components."
+    },
+    {
+      "raw": 86,
+      "resolution": [
+        1920,
+        1280
+      ],
+      "domains": {
+        "A": {
+          "expected_pre_GS_alpha_pixels": 640030,
+          "surface_hit_pixels": 94762,
+          "no_surface_hit_pixels": 545268,
+          "source_valid_pixels": 94223,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 96755,
+              "below_pixels": 543275
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 92046,
+              "below_pixels": 547984
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 83996,
+              "below_pixels": 556034
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 80319,
+              "below_pixels": 559711
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 71441,
+              "below_pixels": 568589
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 23,
+              "largest_pixels": 466045,
+              "total_pixels": 543275,
+              "largest10_pixels": [
+                466045,
+                62942,
+                7302,
+                4966,
+                837,
+                378,
+                325,
+                282,
+                66,
+                54
+              ]
+            },
+            "0.9": {
+              "components": 127,
+              "largest_pixels": 471105,
+              "total_pixels": 556034,
+              "largest10_pixels": [
+                471105,
+                63773,
+                8879,
+                4966,
+                1343,
+                1176,
+                837,
+                523,
+                480,
+                236
+              ]
+            },
+            "0.95": {
+              "components": 112,
+              "largest_pixels": 472014,
+              "total_pixels": 559711,
+              "largest10_pixels": [
+                472014,
+                65707,
+                9027,
+                4966,
+                2509,
+                837,
+                829,
+                341,
+                331,
+                299
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 640030,
+            "mean": 0.14174043345369786,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9998208284378052,
+              0.999900221824646
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 640030,
+            "mean": 0.10445857264126558,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9228027552366252,
+              0.999900221824646
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 640030,
+            "mean": 0.8940221802738991,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.07706635594367982,
+              0.9996799230575562,
+              0.999897837638855,
+              0.9999014139175415
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 640030,
+            "mean": 0.0004027155793170435,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2196751832962036
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 640030,
+            "mean": 0.09180884378283768,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.9171023696660963,
+              0.999900221824646
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 591,
+          "high_road_alpha_static_weight_ge50": 20496,
+          "high_road_alpha_dynamic_weight_ge50": 0,
+          "stable_road_static_ge50_joint_road_below05": 591,
+          "static_dominant_over_expected": 570358,
+          "road_color_error_auxiliary": 0.004921920597553253,
+          "joint_color_error_auxiliary": 0.02171037532389164,
+          "teacher_role": "real_visible"
+        },
+        "C": {
+          "expected_pre_GS_alpha_pixels": 90943,
+          "surface_hit_pixels": 73778,
+          "no_surface_hit_pixels": 17165,
+          "source_valid_pixels": 66100,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 69700,
+              "below_pixels": 21243
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 66002,
+              "below_pixels": 24941
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 62289,
+              "below_pixels": 28654
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 60632,
+              "below_pixels": 30311
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 57118,
+              "below_pixels": 33825
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 50,
+              "largest_pixels": 20407,
+              "total_pixels": 21243,
+              "largest10_pixels": [
+                20407,
+                169,
+                151,
+                142,
+                82,
+                46,
+                23,
+                20,
+                19,
+                16
+              ]
+            },
+            "0.9": {
+              "components": 74,
+              "largest_pixels": 25465,
+              "total_pixels": 28654,
+              "largest10_pixels": [
+                25465,
+                529,
+                422,
+                381,
+                200,
+                194,
+                188,
+                167,
+                120,
+                95
+              ]
+            },
+            "0.95": {
+              "components": 86,
+              "largest_pixels": 26030,
+              "total_pixels": 30311,
+              "largest10_pixels": [
+                26030,
+                630,
+                554,
+                459,
+                401,
+                248,
+                208,
+                203,
+                145,
+                135
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 90943,
+            "mean": 0.7221652562408507,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.9993788003921509,
+              0.9998952150344849,
+              0.9999002814292908
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 90943,
+            "mean": 0.5919784063904968,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.8603357076644897,
+              0.9893117785453797,
+              0.9998999834060669
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 90943,
+            "mean": 0.3695440916900543,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.010412163753062488,
+              0.13604584336280823,
+              0.9880684852600098,
+              0.9999004006385803
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 90943,
+            "mean": 0.038225084319221225,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.2203161329030989,
+              0.7782405018806458
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 90943,
+            "mean": 0.5352032746240606,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.8020641803741455,
+              0.9858101725578308,
+              0.9998999238014221
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 2452,
+          "high_road_alpha_static_weight_ge50": 6069,
+          "high_road_alpha_dynamic_weight_ge50": 181,
+          "stable_road_static_ge50_joint_road_below05": 2280,
+          "static_dominant_over_expected": 31693,
+          "road_color_error_auxiliary": 0.022601449862122536,
+          "joint_color_error_auxiliary": 0.12031397223472595,
+          "teacher_role": "frozen_pseudo_teacher_not_hidden_GT"
+        },
+        "S": {
+          "expected_pre_GS_alpha_pixels": 18338,
+          "surface_hit_pixels": 18229,
+          "no_surface_hit_pixels": 109,
+          "source_valid_pixels": 18229,
+          "coverage": [
+            {
+              "alpha_threshold": 0.05,
+              "pixels": 18244,
+              "below_pixels": 94
+            },
+            {
+              "alpha_threshold": 0.5,
+              "pixels": 17787,
+              "below_pixels": 551
+            },
+            {
+              "alpha_threshold": 0.9,
+              "pixels": 16235,
+              "below_pixels": 2103
+            },
+            {
+              "alpha_threshold": 0.95,
+              "pixels": 15313,
+              "below_pixels": 3025
+            },
+            {
+              "alpha_threshold": 0.99,
+              "pixels": 11951,
+              "below_pixels": 6387
+            }
+          ],
+          "gaps": {
+            "0.05": {
+              "components": 4,
+              "largest_pixels": 33,
+              "total_pixels": 94,
+              "largest10_pixels": [
+                33,
+                33,
+                17,
+                11
+              ]
+            },
+            "0.9": {
+              "components": 29,
+              "largest_pixels": 334,
+              "total_pixels": 2103,
+              "largest10_pixels": [
+                334,
+                325,
+                315,
+                258,
+                183,
+                134,
+                130,
+                130,
+                72,
+                53
+              ]
+            },
+            "0.95": {
+              "components": 36,
+              "largest_pixels": 551,
+              "total_pixels": 3025,
+              "largest10_pixels": [
+                551,
+                483,
+                437,
+                379,
+                273,
+                221,
+                175,
+                158,
+                153,
+                44
+              ]
+            }
+          },
+          "road_alpha": {
+            "count": 18338,
+            "mean": 0.9496513870240775,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.7127867877483368,
+              0.9986579418182373,
+              0.9998942613601685,
+              0.9999001622200012
+            ]
+          },
+          "whole_road_joint_alphaT": {
+            "count": 18338,
+            "mean": 0.8898800096802237,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.4945199191570282,
+              0.9694757461547852,
+              0.9998810380697251,
+              0.9999001622200012
+            ]
+          },
+          "static_joint_alphaT": {
+            "count": 18338,
+            "mean": 0.1099357678730647,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.030395619571208954,
+              0.5053355574607845,
+              0.9998999238014221
+            ]
+          },
+          "dynamic_joint_alphaT": {
+            "count": 18338,
+            "mean": 9.942552348662176e-08,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              2.0419640350155532e-05
+            ]
+          },
+          "road_eligible_joint_alphaT": {
+            "count": 18338,
+            "mean": 0.8867954839231503,
+            "p0_p05_p50_p95_p100": [
+              0.0,
+              0.49069865643978117,
+              0.9677207767963409,
+              0.9998738765716553,
+              0.9999001622200012
+            ]
+          },
+          "high_road_alpha_but_joint_road_weight_below05": 0,
+          "high_road_alpha_static_weight_ge50": 321,
+          "high_road_alpha_dynamic_weight_ge50": 0,
+          "stable_road_static_ge50_joint_road_below05": 0,
+          "static_dominant_over_expected": 964,
+          "road_color_error_auxiliary": 0.02312699891626835,
+          "joint_color_error_auxiliary": 0.04137812554836273,
+          "teacher_role": "frozen_pseudo_teacher_not_hidden_GT"
+        }
+      },
+      "K_pixels": 232112,
+      "native_basis_K_eligible_weight_max": 0.0,
+      "native_source_RGB_conservation_max": 1.430511474609375e-06,
+      "native_source_alpha_conservation_max": 1.9669532775878906e-06,
+      "interpretation": "Source weights are from the same full-scene depth sort, not a semantic residual-car detector. High static contribution inside a legal deleted-target road domain supports static occlusion; inspect source image before labelling exact ghost components."
+    }
+  ],
+  "seconds": 9.008321408182383,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_operations": 0,
+  "source_components_not_counterfactual_renders": true
+}

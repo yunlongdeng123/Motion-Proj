@@ -1,0 +1,150 @@
+{
+  "schema": "highres_package_CPU_qualification.v1",
+  "checks": {
+    "110:initial": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "110:low_A200": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "110:M01": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "110:M11": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "110:M11_noH": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "110:M10": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:initial": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:low_A200": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:M01": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:M11": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:M11_noH": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    },
+    "86:M10": {
+      "finite": true,
+      "CHW_RGB": true,
+      "road_alpha_exact": true,
+      "joint_alpha_exact": true,
+      "K_exact": true,
+      "joint_K_RGB_max": 0.0
+    }
+  },
+  "guard_relationships": [
+    {
+      "raw": 110,
+      "prealpha_intersect_vehicle_K": {
+        "A": 0,
+        "C": 0,
+        "S": 0
+      },
+      "vehicle_K_outside_teacher_guard": 0,
+      "teacher_guard_extra_pixels": 20390,
+      "union_exclusion_equals_current_teacher_exclusion": true
+    },
+    {
+      "raw": 86,
+      "prealpha_intersect_vehicle_K": {
+        "A": 0,
+        "C": 0,
+        "S": 0
+      },
+      "vehicle_K_outside_teacher_guard": 0,
+      "teacher_guard_extra_pixels": 18068,
+      "union_exclusion_equals_current_teacher_exclusion": true
+    }
+  ],
+  "initial_reconstruction": [
+    {
+      "raw": 110,
+      "zero_L_H_vs_original480_initial_RGB_max": 0.0,
+      "numerical_reconstruction_only": true,
+      "read_only": true,
+      "optimization_updates": 0
+    },
+    {
+      "raw": 86,
+      "zero_L_H_vs_original480_initial_RGB_max": 0.0,
+      "numerical_reconstruction_only": true,
+      "read_only": true,
+      "optimization_updates": 0
+    }
+  ],
+  "source_geometry_field_files_unchanged": true,
+  "new_native_calls": 0,
+  "new_optimizer_updates": 0,
+  "GPU_operations": 0,
+  "caveats": [
+    "Context/score qualification remains the benchmark evaluator responsibility; full prealpha domains are never alpha filtered here.",
+    "Full-native observed A extends beyond the finite road-asset chart; chart-external A is a source-domain extent diagnostic, not automatically a road-repair failure.",
+    "Source branch RGB/alpha conservation and constant-basis errors are logged native floating errors, not bit-exact rendering claims."
+  ]
+}

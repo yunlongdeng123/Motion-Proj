@@ -1,0 +1,56 @@
+{
+  "schema": "native_real_A_marking_source_qualification.v1",
+  "status": "LOCAL_REAL_PAINT_ROIS_IDENTIFIED_SHAPE_REFERENCE_NOT_CREATED",
+  "selection": "Source-only T_A and fixed masks/alpha. No predicted RGB was decoded or viewed before candidate freezing and source visual review.",
+  "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/marking_reference",
+  "candidate_receipt": "source_only_r1/receipt.json",
+  "eligibility": "A_pre_alpha & surface_hit & fixed road_alpha>=.95 & ~K_vehicle",
+  "brightness_candidate_only": {
+    "encoded_srgb_luma_min": 0.65,
+    "luma_weights": [0.2126, 0.7152, 0.0722],
+    "RGB_spread_max": 0.15,
+    "morphological_bridge": false,
+    "source_material_valid_veto": false,
+    "PCA_extents_are_not_paint_width_GT": true
+  },
+  "raw86": {
+    "source_role": "real_observation",
+    "eligible_pixels": 78608,
+    "candidate_pixels": 1246,
+    "connected_candidates": 26,
+    "visually_verified_identity": "Visible white road-paint strip to the left of the foreground target vehicle in original T_A, not vehicle reflection or C/S generated structure.",
+    "verified_local_paint_candidates": [
+      {"component_id": 10, "pixels": 562, "bbox_xyxy": [735, 922, 781, 965], "source_preview": "source_only_r1/086_candidate_0010.png", "full_context_candidate_pixels_r2_r3_r6_r12": [433, 349, 120, 0]},
+      {"component_id": 18, "pixels": 475, "bbox_xyxy": [623, 1083, 672, 1114], "source_preview": "source_only_r1/086_candidate_0018.png", "full_context_candidate_pixels_r2_r3_r6_r12": [192, 81, 0, 0]},
+      {"component_id": 14, "pixels": 136, "bbox_xyxy": [668, 1059, 687, 1077], "source_preview": "source_only_r1/086_candidate_0014.png", "full_context_candidate_pixels_r2_r3_r6_r12": [48, 25, 0, 0]}
+    ],
+    "qualification": "Source identity verified for local paint ROI candidates only.",
+    "whole_lane_geometry_status": "N/A",
+    "paint_outer_boundary_or_centerline_reference_status": "N/A_PENDING_SEPARATE_SOURCE_REFERENCE",
+    "limitation": "Thresholded bright cores have worn edges and partial source-context support. Their connected-component boundaries are not paint outer-edge annotations. No full radius12 context exists in these candidate pixels."
+  },
+  "raw110": {
+    "source_role": "real_observation",
+    "eligible_pixels": 147794,
+    "candidate_pixels": 72,
+    "connected_candidates": 16,
+    "largest_component_pixels": 20,
+    "largest_component_bbox_xyxy": [532, 1260, 541, 1265],
+    "largest_component_principal_extent_px": [9.944085567712108, 3.706319764602791],
+    "largest_component_full_context_pixels_r2_r3_r6_r12": [1, 0, 0, 0],
+    "qualification": "N/A_NO_SUFFICIENT_CONTINUOUS_ELIGIBLE_REAL_PAINT_SEGMENT",
+    "limitation": "Original white road paint exists in the observation, but eligible bright samples are fragmented and partly near the bottom image boundary. Do not bridge excluded A/coverage/K positions or relax thresholds to fabricate a line reference."
+  },
+  "next_minimal_step": "A parent-reviewed local raw86 paint ROI can support observed paint-edge samples after the actual outer boundary/reference is fixed from T_A alone. Until then keep marking-shape metrics N/A; do not substitute C/S edges or bright-mask boundaries.",
+  "bench_mother_domains_modified": false,
+  "metrics_modified": false,
+  "C_or_S_teacher_used": false,
+  "lane_GT_created": false,
+  "inherited199BUILD_not_blind": true,
+  "source_visual_reviewer": "stage_qa assistant, source image identity review only; not overall human quality verdict",
+  "human_verdict": null,
+  "native_calls": 0,
+  "GPU_operations": 0,
+  "training_updates": 0,
+  "power_operations": 0
+}

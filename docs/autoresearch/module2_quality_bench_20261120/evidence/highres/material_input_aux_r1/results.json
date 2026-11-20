@@ -1,0 +1,3278 @@
+{
+  "schema": "fixed_domain_material_input_auxiliary.v1",
+  "domains": [
+    {
+      "raw": 110,
+      "region": "C",
+      "full_prealpha_pixels": 168932,
+      "source_mass_positive_pixels": 139147,
+      "alpha_ge_0p95_pixels": 123161,
+      "auxiliary_common_pixels": 122255,
+      "excluded_source_mass_zero": 29785,
+      "excluded_alpha_below_0p95": 45771,
+      "excluded_both": 28879,
+      "excluded_any": 46677,
+      "computation_bbox_y0_y1_x0_x1": [
+        835,
+        1270,
+        730,
+        1258
+      ],
+      "crop_reason": "finite-kernel acceleration only; full score bbox plus maximum Gaussian radius; no nonzero context outside crop",
+      "native_road_We_over_alpha": {
+        "mean": 0.9097122550010681,
+        "exact_zero_pixels": 6330,
+        "p05_p50_p95": [
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "full_prealpha_pixels": 36748,
+      "source_mass_positive_pixels": 36297,
+      "alpha_ge_0p95_pixels": 24140,
+      "auxiliary_common_pixels": 24049,
+      "excluded_source_mass_zero": 451,
+      "excluded_alpha_below_0p95": 12608,
+      "excluded_both": 360,
+      "excluded_any": 12699,
+      "computation_bbox_y0_y1_x0_x1": [
+        1046,
+        1280,
+        596,
+        1191
+      ],
+      "crop_reason": "finite-kernel acceleration only; full score bbox plus maximum Gaussian radius; no nonzero context outside crop",
+      "native_road_We_over_alpha": {
+        "mean": 0.9990018010139465,
+        "exact_zero_pixels": 0,
+        "p05_p50_p95": [
+          0.9992016196250916,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "full_prealpha_pixels": 90943,
+      "source_mass_positive_pixels": 66100,
+      "alpha_ge_0p95_pixels": 60632,
+      "auxiliary_common_pixels": 59932,
+      "excluded_source_mass_zero": 24843,
+      "excluded_alpha_below_0p95": 30311,
+      "excluded_both": 24143,
+      "excluded_any": 31011,
+      "computation_bbox_y0_y1_x0_x1": [
+        788,
+        1118,
+        786,
+        1186
+      ],
+      "crop_reason": "finite-kernel acceleration only; full score bbox plus maximum Gaussian radius; no nonzero context outside crop",
+      "native_road_We_over_alpha": {
+        "mean": 0.8919925689697266,
+        "exact_zero_pixels": 4106,
+        "p05_p50_p95": [
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "full_prealpha_pixels": 18338,
+      "source_mass_positive_pixels": 18229,
+      "alpha_ge_0p95_pixels": 15313,
+      "auxiliary_common_pixels": 15207,
+      "excluded_source_mass_zero": 109,
+      "excluded_alpha_below_0p95": 3025,
+      "excluded_both": 3,
+      "excluded_any": 3131,
+      "computation_bbox_y0_y1_x0_x1": [
+        970,
+        1125,
+        681,
+        1126
+      ],
+      "crop_reason": "finite-kernel acceleration only; full score bbox plus maximum Gaussian radius; no nonzero context outside crop",
+      "native_road_We_over_alpha": {
+        "mean": 0.9969325661659241,
+        "exact_zero_pixels": 0,
+        "p05_p50_p95": [
+          0.9975281178951263,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "rows": [
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 91650,
+      "partial_context_boundary_pixels": 30605,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.004733755167588932,
+        "HF_RMSE": 0.009557287368388552,
+        "HF_cosine": 0.050132221077265955,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.009265343168937621,
+        "HF_energy_ratio": 10.537582683678076,
+        "HF_relative_RMSE": 3.3484485707071885,
+        "excess_HF_energy": 7.769987842123059e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.004846046222229147,
+        "HF_RMSE": 0.009133282201335831,
+        "HF_cosine": 0.04488374335707556,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.008804891373578292,
+        "HF_energy_ratio": 9.516253040889016,
+        "HF_relative_RMSE": 3.1998960117158046,
+        "excess_HF_energy": 6.937940648356496e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.008623324817442853,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.00892191331334477,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.009179023773237042,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.00833685969511071,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.00854213365687261,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.00872424266207112,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 8.34168437692379e-05,
+        "world_input": 9.134174184195938e-05,
+        "mixing_difference": 4.585400858921865e-05,
+        "cross_term": -5.3778906661940166e-05,
+        "closure_error": 3.3881317890172014e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 68373,
+      "partial_context_boundary_pixels": 53882,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.00842979589140252,
+        "HF_RMSE": 0.015371163820710836,
+        "HF_cosine": 0.1235271970498665,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.014987561903895741,
+        "HF_energy_ratio": 6.832459668628616,
+        "HF_relative_RMSE": 2.6807992889858867,
+        "excess_HF_energy": 0.00019175056282561242,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.008603196159568454,
+        "HF_RMSE": 0.015128464648441026,
+        "HF_cosine": 0.09349700161921089,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.014546139012644158,
+        "HF_energy_ratio": 6.435918921514105,
+        "HF_relative_RMSE": 2.6384714746416194,
+        "excess_HF_energy": 0.00017871371117767387,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.012747937487188457,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.013059931342436661,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.0139224612416649,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.012951412908080929,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.01308348712393689,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.013618629654820507,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00022887044261912985,
+        "world_input": 0.00023627267720312974,
+        "mixing_difference": 0.00011426243144768084,
+        "cross_term": -0.0001216646660316807,
+        "closure_error": -4.0657581468206416e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 34740,
+      "partial_context_boundary_pixels": 87515,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.010596526811205518,
+        "HF_RMSE": 0.018630543074598046,
+        "HF_cosine": 0.20988738748166968,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.01834273545951204,
+        "HF_energy_ratio": 4.251469935337048,
+        "HF_relative_RMSE": 2.094261785353122,
+        "excess_HF_energy": 0.0002573172111217695,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.010759837491573672,
+        "HF_RMSE": 0.018637723695850608,
+        "HF_cosine": 0.1837829040062963,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.018093941964497977,
+        "HF_energy_ratio": 4.136921622803394,
+        "HF_relative_RMSE": 2.0950689599279118,
+        "excess_HF_energy": 0.0002482520027987501,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.01530497584798385,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.015466389185455376,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.015806894149469505,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.01550132040409038,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.015878704536500653,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.01624539618167904,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0003473647445628712,
+        "world_input": 0.0003470971352544532,
+        "mixing_difference": 0.00010383130172178813,
+        "cross_term": -0.00010356369241337007,
+        "closure_error": -1.3552527156068805e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 91650,
+      "partial_context_boundary_pixels": 30605,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.008931797538015918,
+        "HF_RMSE": 0.014622828965484468,
+        "HF_cosine": 0.030559110140853798,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.014429051098921406,
+        "HF_energy_ratio": 25.556037667808873,
+        "HF_relative_RMSE": 5.123189129074801,
+        "excess_HF_energy": 0.00020005080999833656,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.00896465906190397,
+        "HF_RMSE": 0.014320873836801801,
+        "HF_cosine": 0.02638998938781851,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.014109082588966034,
+        "HF_energy_ratio": 24.435179183119835,
+        "HF_relative_RMSE": 5.0173974771046606,
+        "excess_HF_energy": 0.00019091950588531604,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.014039695138971886,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.01422102303879091,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.014378362218180969,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.013837083325024322,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.013949952593637247,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.014059804600734112,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00020508742744959434,
+        "world_input": 0.00021382712695381157,
+        "mixing_difference": 4.6266743294222024e-05,
+        "cross_term": -5.500644279843921e-05,
+        "closure_error": -4.0657581468206416e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 68373,
+      "partial_context_boundary_pixels": 53882,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.0145302507720147,
+        "HF_RMSE": 0.022498597928455176,
+        "HF_cosine": 0.08211254289401115,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.022231610174907535,
+        "HF_energy_ratio": 15.033390345980436,
+        "HF_relative_RMSE": 3.92385547596049,
+        "excess_HF_energy": 0.0004613680419715577,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.014537098240563569,
+        "HF_RMSE": 0.022259114765085387,
+        "HF_cosine": 0.06312759161232012,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.021872952446016357,
+        "HF_energy_ratio": 14.552242206637137,
+        "HF_relative_RMSE": 3.882088547862255,
+        "excess_HF_energy": 0.00044554959970819836,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.02087292972464342,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.020922692421686092,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.021480865585894047,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.02089482121726641,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.020829842695417652,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.021208231623953987,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0004954681901252424,
+        "world_input": 0.0005061869087462875,
+        "mixing_difference": 0.00011216493948022316,
+        "cross_term": -0.00012288365810126826,
+        "closure_error": 0.0,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 34740,
+      "partial_context_boundary_pixels": 87515,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.016285555217512585,
+        "HF_RMSE": 0.024809742696049568,
+        "HF_cosine": 0.15677629413101898,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.02459661504960034,
+        "HF_energy_ratio": 7.644720212754705,
+        "HF_relative_RMSE": 2.7888664235248735,
+        "excess_HF_energy": 0.0005258547388823551,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.01636619669018823,
+        "HF_RMSE": 0.024810470590642873,
+        "HF_cosine": 0.13923450494188497,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.024432484748144755,
+        "HF_energy_ratio": 7.5430359852818425,
+        "HF_relative_RMSE": 2.7889482462513726,
+        "excess_HF_energy": 0.0005178075779524552,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.021761786915075947,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.02209353401664972,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.022445217878514202,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.02196210945161463,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.022412054161120742,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.02276153901902007,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0006155594509291549,
+        "world_input": 0.000615523332644185,
+        "mixing_difference": 9.779586922276055e-05,
+        "cross_term": -9.775975093779053e-05,
+        "closure_error": -6.776263578034403e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 91650,
+      "partial_context_boundary_pixels": 30605,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.004143429635563413,
+        "HF_RMSE": 0.008658574055123823,
+        "HF_cosine": 0.04658599509314787,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.008308656089283273,
+        "HF_energy_ratio": 8.473826017030206,
+        "HF_relative_RMSE": 3.033579383114245,
+        "excess_HF_energy": 6.088706039303554e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 91650,
+        "HF_MAE": 0.0043241797318813065,
+        "HF_RMSE": 0.008430459339228303,
+        "HF_cosine": 0.04204626068082097,
+        "reference_HF_RMS": 0.0028542434403793352,
+        "predicted_HF_RMS": 0.008053505175621376,
+        "HF_energy_ratio": 7.961370971700178,
+        "HF_relative_RMSE": 2.953658128792223,
+        "excess_HF_energy": 5.6712239996811814e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.23993670937998
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.007685715847928546,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.007989647909220427,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.008239042896637455,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 82424,
+          "predicted_HF_RMS": 0.007561549421388339,
+          "teacher_HF_RMS": 0.0018557694908878626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 90132,
+          "predicted_HF_RMS": 0.007785422850937852,
+          "teacher_HF_RMS": 0.0023472211171620626
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 91376,
+          "predicted_HF_RMS": 0.007982893716392424,
+          "teacher_HF_RMS": 0.0026436558222933423
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 7.107264467038172e-05,
+        "world_input": 7.49709046680634e-05,
+        "mixing_difference": 4.1702401776746646e-05,
+        "cross_term": -4.560066177442839e-05,
+        "closure_error": 6.776263578034403e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 68373,
+      "partial_context_boundary_pixels": 53882,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.007466167798950056,
+        "HF_RMSE": 0.013956101798303682,
+        "HF_cosine": 0.1141363224949913,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.013395102402621872,
+        "HF_energy_ratio": 5.457668752194021,
+        "HF_relative_RMSE": 2.434006182895329,
+        "excess_HF_energy": 0.00014655231937923176,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 68373,
+        "HF_MAE": 0.007775095510330977,
+        "HF_RMSE": 0.014101833443112203,
+        "HF_cosine": 0.08626281184695517,
+        "reference_HF_RMS": 0.005733798827783768,
+        "predicted_HF_RMS": 0.013387631102745368,
+        "HF_energy_ratio": 5.451582272673488,
+        "HF_relative_RMSE": 2.4594224294686065,
+        "excess_HF_energy": 0.00014635221754570068,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 6.743584341917077
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.011318101466388716,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.01164673181961951,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.012464351480253981,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 46020,
+          "predicted_HF_RMS": 0.01172436195379319,
+          "teacher_HF_RMS": 0.002357563951252279
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 62296,
+          "predicted_HF_RMS": 0.011928557350522688,
+          "teacher_HF_RMS": 0.0034500702732622925
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 66827,
+          "predicted_HF_RMS": 0.01248156002152546,
+          "teacher_HF_RMS": 0.004311107852915118
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00019886170645727776,
+        "world_input": 0.00019477277740461528,
+        "mixing_difference": 0.00010307372449941239,
+        "cross_term": -9.898479544674988e-05,
+        "closure_error": -2.710505431213761e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 168932,
+      "common_pixels": 122255,
+      "strict_core_pixels": 34740,
+      "partial_context_boundary_pixels": 87515,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.009577804928402826,
+        "HF_RMSE": 0.01713867706063184,
+        "HF_cosine": 0.2031280251205627,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.01656713643815416,
+        "HF_energy_ratio": 3.468213342578681,
+        "HF_relative_RMSE": 1.9265609314699932,
+        "excess_HF_energy": 0.0001953312767445444,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 34740,
+        "HF_MAE": 0.00982144706148831,
+        "HF_RMSE": 0.017554326338260127,
+        "HF_cosine": 0.18017821107873475,
+        "reference_HF_RMS": 0.008895995335872812,
+        "predicted_HF_RMS": 0.01682077551411503,
+        "HF_energy_ratio": 3.5752213627113543,
+        "HF_relative_RMSE": 1.9732841211677432,
+        "excess_HF_energy": 0.00020379975588038097,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 8.24783875491406
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.013853408180625726,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.014162444037696016,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.01451087894191029,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 17319,
+          "predicted_HF_RMS": 0.014018377929302125,
+          "teacher_HF_RMS": 0.0025757190236964443
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 29287,
+          "predicted_HF_RMS": 0.014592085040630944,
+          "teacher_HF_RMS": 0.0040782057325507584
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 33323,
+          "predicted_HF_RMS": 0.015032390282477342,
+          "teacher_HF_RMS": 0.005260515183205465
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0003081543731901332,
+        "world_input": 0.0002937342513886281,
+        "mixing_difference": 8.798567263182579e-05,
+        "cross_term": -7.356555083032068e-05,
+        "closure_error": -1.3552527156068805e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 8898,
+      "partial_context_boundary_pixels": 15151,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.009055249369823113,
+        "HF_RMSE": 0.015202602899223806,
+        "HF_cosine": 0.012536234097625673,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.014837828927169497,
+        "HF_energy_ratio": 17.956795338167282,
+        "HF_relative_RMSE": 4.34172196289864,
+        "excess_HF_energy": 0.00020790056268600633,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.009063115124811387,
+        "HF_RMSE": 0.015208478830840791,
+        "HF_cosine": 0.012990133183217838,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.014845461244535302,
+        "HF_energy_ratio": 17.975273406639662,
+        "HF_relative_RMSE": 4.343400074306474,
+        "excess_HF_energy": 0.0002081271149770581,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.015107989601732067,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.014948497801876353,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.01486038905747926,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.015112471655451386,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.01495537275271592,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.014867769235382902,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00023129782834813248,
+        "world_input": 0.00023111913491148808,
+        "mixing_difference": 2.526608535779847e-07,
+        "cross_term": -7.396741693354687e-08,
+        "closure_error": -3.126080970960402e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 1996,
+      "partial_context_boundary_pixels": 22053,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.012893258858877895,
+        "HF_RMSE": 0.020173160905118687,
+        "HF_cosine": -0.023561825534085472,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.017657333067204337,
+        "HF_energy_ratio": 3.567446150873364,
+        "HF_relative_RMSE": 2.157881325496588,
+        "excess_HF_energy": 0.00022438516234041283,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.012862457046447616,
+        "HF_RMSE": 0.02013659887047517,
+        "HF_cosine": -0.016815314877702856,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.01767846908794511,
+        "HF_energy_ratio": 3.5759918065313943,
+        "HF_relative_RMSE": 2.15397036022196,
+        "excess_HF_energy": 0.00022513202058765594,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.01836883904513612,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.018163553565630108,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.017843503121004668,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.018371891155865152,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.018167934565341808,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.017855314920776456,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00040548261407042193,
+        "world_input": 0.00040695642090380897,
+        "mixing_difference": 7.686951186356206e-07,
+        "cross_term": -2.242501952022643e-06,
+        "closure_error": -1.6517142471458857e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 69,
+      "partial_context_boundary_pixels": 23980,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.025203346529313348,
+        "HF_RMSE": 0.03221484147452854,
+        "HF_cosine": 0.15620030394765466,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.01063780488646571,
+        "HF_energy_ratio": 0.10972214254302236,
+        "HF_relative_RMSE": 1.0031159082683065,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0009181958665121094,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.02497452571134089,
+        "HF_RMSE": 0.031914822621159356,
+        "HF_cosine": 0.18388889520878052,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.010603706454243482,
+        "HF_energy_ratio": 0.10901986292576267,
+        "HF_relative_RMSE": 0.9937738264569461,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0009189201687468582,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.002657604388436935,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.004889742168603623,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.006941676924314193,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.00265699338271843,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.005022862434504069,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.00688195511984263,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0010185559029400647,
+        "world_input": 0.0010377960112290044,
+        "mixing_difference": 2.8817897944622997e-06,
+        "cross_term": -2.2121898083401964e-05,
+        "closure_error": -1.3552527156068805e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 8898,
+      "partial_context_boundary_pixels": 15151,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.012922730485913986,
+        "HF_RMSE": 0.019638950601398534,
+        "HF_cosine": 0.01813759937839776,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.01938789287678452,
+        "HF_energy_ratio": 30.65838944293831,
+        "HF_relative_RMSE": 5.608701596667167,
+        "excess_HF_energy": 0.0003636297856157303,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.012930521265222445,
+        "HF_RMSE": 0.019644367987503464,
+        "HF_cosine": 0.018488341893233742,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.019394630627561166,
+        "HF_energy_ratio": 30.679702174788527,
+        "HF_relative_RMSE": 5.610248751742465,
+        "excess_HF_energy": 0.000363891092593592,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.019373433052932706,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.01934638218067334,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.019387542743106907,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.019377231678707495,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.01935266265966714,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.019394166260202877,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00038590119362845086,
+        "world_input": 0.0003856883807241719,
+        "mixing_difference": 2.8238064892486515e-07,
+        "cross_term": -6.956774464587927e-08,
+        "closure_error": -1.6305384234645282e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 1996,
+      "partial_context_boundary_pixels": 22053,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.016653909325431492,
+        "HF_RMSE": 0.02512147971739087,
+        "HF_cosine": -0.00578785601641141,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.023263169004334634,
+        "HF_energy_ratio": 6.192199781321698,
+        "HF_relative_RMSE": 2.687192761013678,
+        "excess_HF_energy": 0.0004537787834184608,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.01664138586210693,
+        "HF_RMSE": 0.025111052796601818,
+        "HF_cosine": -0.0010347486115865818,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.02329630899168061,
+        "HF_energy_ratio": 6.209854778355012,
+        "HF_relative_RMSE": 2.686077414848594,
+        "excess_HF_energy": 0.0004553217639300841,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.021703639998750388,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.02181200563585568,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.022473169975501656,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.0217141504377855,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.02182804852324954,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.022498060524682426,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0006305649725537239,
+        "world_input": 0.000631088743191281,
+        "mixing_difference": 7.15572564716337e-07,
+        "cross_term": -1.2393432022734863e-06,
+        "closure_error": 2.2658131339052534e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 69,
+      "partial_context_boundary_pixels": 23980,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.024219151458166083,
+        "HF_RMSE": 0.03323003187650462,
+        "HF_cosine": 0.2985266439607247,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.022424134718703286,
+        "HF_energy_ratio": 0.487552767978343,
+        "HF_relative_RMSE": 1.0347272276332857,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0005285169414320689,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.024083206647300025,
+        "HF_RMSE": 0.033032209777676666,
+        "HF_cosine": 0.30845094837303655,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.02247140657017096,
+        "HF_energy_ratio": 0.48961053433772195,
+        "HF_relative_RMSE": 1.0285673806416982,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0005263946460727006,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.00408875211497797,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.005795784204642113,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.011122396136007764,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.004088808066500008,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.005947221750153538,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.011063703744132779,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0010911268827964382,
+        "world_input": 0.0011042350185135133,
+        "mixing_difference": 2.487070383646942e-06,
+        "cross_term": -1.559520610072218e-05,
+        "closure_error": 1.1858461261560205e-19,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 8898,
+      "partial_context_boundary_pixels": 15151,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.00816122670600326,
+        "HF_RMSE": 0.014733278798002871,
+        "HF_cosine": 0.011859198495215174,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.014352731391540509,
+        "HF_energy_ratio": 16.801854831361265,
+        "HF_relative_RMSE": 4.207687365567111,
+        "excess_HF_energy": 0.00019374029381177078,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 8898,
+        "HF_MAE": 0.0081691395046401,
+        "HF_RMSE": 0.014739466950065994,
+        "HF_cosine": 0.012312298366070687,
+        "reference_HF_RMS": 0.0035015146131269484,
+        "predicted_HF_RMS": 0.014360693192477007,
+        "HF_energy_ratio": 16.820500777337312,
+        "HF_relative_RMSE": 4.209454644229871,
+        "excess_HF_energy": 0.00019396890438251393,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.3272845788171241
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.014837609923994863,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.01452847953891087,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.014388462079853264,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 7615,
+          "predicted_HF_RMS": 0.014841819345718685,
+          "teacher_HF_RMS": 0.001918972354373291
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 8624,
+          "predicted_HF_RMS": 0.014535509053301383,
+          "teacher_HF_RMS": 0.002566463226476729
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 8838,
+          "predicted_HF_RMS": 0.014396202580754075,
+          "teacher_HF_RMS": 0.003040700291559877
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00021725188597208772,
+        "world_input": 0.00021706950413968092,
+        "mixing_difference": 2.407769549822784e-07,
+        "cross_term": -5.8395122575455107e-08,
+        "closure_error": -1.9322939109238726e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 1996,
+      "partial_context_boundary_pixels": 22053,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.01226127611832774,
+        "HF_RMSE": 0.019911997981932286,
+        "HF_cosine": -0.03619695826990284,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.01724586139483627,
+        "HF_energy_ratio": 3.403117864374098,
+        "HF_relative_RMSE": 2.129945267408981,
+        "excess_HF_energy": 0.00021002348654412914,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1996,
+        "HF_MAE": 0.012222258230431254,
+        "HF_RMSE": 0.01988189045943361,
+        "HF_cosine": -0.028738982182691563,
+        "reference_HF_RMS": 0.009348596082074294,
+        "predicted_HF_RMS": 0.017280276776265726,
+        "HF_energy_ratio": 3.4167137593014063,
+        "HF_relative_RMSE": 2.1267247279574577,
+        "excess_HF_energy": 0.00021121171675857377,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.5233287372501797
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.01846888296565579,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.018180057263950226,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.017632488445179013,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1096,
+          "predicted_HF_RMS": 0.018471015575888063,
+          "teacher_HF_RMS": 0.002431064701779597
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1579,
+          "predicted_HF_RMS": 0.018185358098439207,
+          "teacher_HF_RMS": 0.0036919531620916175
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1826,
+          "predicted_HF_RMS": 0.017647369111235756,
+          "teacher_HF_RMS": 0.005288661237642186
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0003952895682409171,
+        "world_input": 0.0003964876636324754,
+        "mixing_difference": 8.476528377930778e-07,
+        "cross_term": -2.0457482293514273e-06,
+        "closure_error": 3.8539999100070665e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 110,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 36748,
+      "common_pixels": 24049,
+      "strict_core_pixels": 69,
+      "partial_context_boundary_pixels": 23980,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.029984733688041755,
+        "HF_RMSE": 0.03660286639391787,
+        "HF_cosine": -0.3626916413448262,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.009425478356824009,
+        "HF_energy_ratio": 0.08613844741474357,
+        "HF_relative_RMSE": 1.1397516140810293,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0009425191170596653,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 69,
+        "HF_MAE": 0.02989539066178934,
+        "HF_RMSE": 0.03642457039272487,
+        "HF_cosine": -0.3115248028243864,
+        "reference_HF_RMS": 0.03211477478224973,
+        "predicted_HF_RMS": 0.009882169482688163,
+        "HF_energy_ratio": 0.0946879762280491,
+        "HF_relative_RMSE": 1.1341997768845393,
+        "excess_HF_energy": 0.0,
+        "missing_HF_energy": 0.0009337014856300498,
+        "reference_energy_sum": 0.213491263178127
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.007538249136585666,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.009275040003976548,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.009458993856066168,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 10,
+          "predicted_HF_RMS": 0.0075383613147678614,
+          "teacher_HF_RMS": 0.002737205704906623
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 20,
+          "predicted_HF_RMS": 0.00952162615710831,
+          "teacher_HF_RMS": 0.004471183149849265
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 26,
+          "predicted_HF_RMS": 0.00979700282376752,
+          "teacher_HF_RMS": 0.0065513612438344165
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0013267493282945692,
+        "world_input": 0.0013397698282510018,
+        "mixing_difference": 3.381331419418095e-06,
+        "cross_term": -1.6401831375850864e-05,
+        "closure_error": 9.147955830346444e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 42511,
+      "partial_context_boundary_pixels": 17421,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.006535825452169216,
+        "HF_RMSE": 0.012759515210237807,
+        "HF_cosine": 0.004116785021262028,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.012490193390680296,
+        "HF_energy_ratio": 22.053862705767507,
+        "HF_relative_RMSE": 4.797415615996046,
+        "excess_HF_energy": 0.00014893111656593498,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.006425526922713649,
+        "HF_RMSE": 0.01165100800344405,
+        "HF_cosine": 0.003015977526724153,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.01135140006172148,
+        "HF_energy_ratio": 18.215672140863717,
+        "HF_relative_RMSE": 4.380630989253365,
+        "excess_HF_energy": 0.00012178046899059162,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.011946798919657997,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.012230990160522984,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.012397762103445554,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.011194671770977034,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.011296263478944352,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.011339348309580922,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0001357459874963173,
+        "world_input": 0.00016280522840028994,
+        "mixing_difference": 8.011210858572294e-05,
+        "cross_term": -0.00010717134948969563,
+        "closure_error": 4.0657581468206416e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 29397,
+      "partial_context_boundary_pixels": 30535,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.010834771792525467,
+        "HF_RMSE": 0.019267767546296673,
+        "HF_cosine": 0.018736450893581596,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.018647717732936886,
+        "HF_energy_ratio": 12.807728224631324,
+        "HF_relative_RMSE": 3.6977859090151597,
+        "excess_HF_energy": 0.0003205867867418492,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.010895895968808373,
+        "HF_RMSE": 0.018640751241548337,
+        "HF_cosine": 0.025057537702344597,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.018028723501956855,
+        "HF_energy_ratio": 11.971558343374749,
+        "HF_relative_RMSE": 3.5774516746078744,
+        "excess_HF_energy": 0.00029788428120457183,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.018060570830970388,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.01804391775413562,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.018302701712675614,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.017690696155617493,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.017635389800892538,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.01782675202708929,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00034747760684928594,
+        "world_input": 0.00037124686621812337,
+        "mixing_difference": 0.00013525150101476965,
+        "cross_term": -0.00015902076038360708,
+        "closure_error": 0.0,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M01",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 12422,
+      "partial_context_boundary_pixels": 47510,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.013355038302944626,
+        "HF_RMSE": 0.021215832359852655,
+        "HF_cosine": 0.12356090645550101,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.020440537989403568,
+        "HF_energy_ratio": 5.463971162525596,
+        "HF_relative_RMSE": 2.4261740443673836,
+        "excess_HF_energy": 0.00034134820705493564,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.013920786015787388,
+        "HF_RMSE": 0.02281261025581503,
+        "HF_cosine": 0.07392198820345908,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.021726397792855432,
+        "HF_energy_ratio": 6.173041662019769,
+        "HF_relative_RMSE": 2.608776405665,
+        "excess_HF_energy": 0.00039556897481207866,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.018453187683238847,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.018938052497524633,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.019284325568182083,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.018431546738762006,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.019112916438511474,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.01991904262975768,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0005204151866837171,
+        "world_input": 0.0004501115427213711,
+        "mixing_difference": 0.0001160472766857225,
+        "cross_term": -4.5743632723376574e-05,
+        "closure_error": 4.743384504624082e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 42511,
+      "partial_context_boundary_pixels": 17421,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.011515630701278886,
+        "HF_RMSE": 0.01823787047215937,
+        "HF_cosine": 0.004132964253178126,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.0180538918932827,
+        "HF_energy_ratio": 46.07740540185878,
+        "HF_relative_RMSE": 6.857207594803271,
+        "excess_HF_energy": 0.00031886919812368,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.01129625016660232,
+        "HF_RMSE": 0.01740312757969862,
+        "HF_cosine": 0.003625551592121973,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.017208338287052573,
+        "HF_energy_ratio": 41.86240846663066,
+        "HF_relative_RMSE": 6.543354872215524,
+        "excess_HF_energy": 0.00028905309223098066,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.017712568447613035,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.017884883614150485,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.018009931511233625,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.017103472123199393,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.017168564085622423,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.017205887062206045,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00030286884955526677,
+        "world_input": 0.0003326199193592627,
+        "mixing_difference": 7.989848407229517e-05,
+        "cross_term": -0.0001096495538762911,
+        "closure_error": 0.0,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 29397,
+      "partial_context_boundary_pixels": 30535,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.016367769467376468,
+        "HF_RMSE": 0.025054822379432767,
+        "HF_cosine": 0.023109670252474103,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.024627721512230322,
+        "HF_energy_ratio": 22.33928135618357,
+        "HF_relative_RMSE": 4.808412231719667,
+        "excess_HF_energy": 0.0005793740769785326,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.01623287301494698,
+        "HF_RMSE": 0.024416922405089806,
+        "HF_cosine": 0.028911315311626086,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.024005586831185557,
+        "HF_energy_ratio": 21.22488686679088,
+        "HF_relative_RMSE": 4.685989250914094,
+        "excess_HF_energy": 0.0005491176092041499,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.024346236994157368,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.02416233403012924,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.024347220918861188,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.023863769169986806,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.023711639745751658,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.02383291177728445,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0005961860997361766,
+        "world_input": 0.000627744124464925,
+        "mixing_difference": 0.00013728013236758368,
+        "cross_term": -0.00016883815709633202,
+        "closure_error": 0.0,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 12422,
+      "partial_context_boundary_pixels": 47510,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.017665204342901066,
+        "HF_RMSE": 0.025707890806926002,
+        "HF_cosine": 0.11700737721333145,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.025219772334180712,
+        "HF_energy_ratio": 8.317754115208148,
+        "HF_relative_RMSE": 2.939871335391147,
+        "excess_HF_energy": 0.0005595695303465922,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.018156625721614663,
+        "HF_RMSE": 0.026844914402623706,
+        "HF_cosine": 0.07974773224100477,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.026087679147571294,
+        "HF_energy_ratio": 8.900095017749159,
+        "HF_relative_RMSE": 3.069897680288897,
+        "excess_HF_energy": 0.0006040996170653115,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.024415880888516865,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.02433946644432029,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.02438992597588102,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.024243165392465883,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.024354102457387755,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.024828807529474778,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0007206494292841937,
+        "world_input": 0.0006608956497408305,
+        "mixing_difference": 0.0001226583993080464,
+        "cross_term": -6.290461976468341e-05,
+        "closure_error": 2.168404344971009e-19,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 42511,
+      "partial_context_boundary_pixels": 17421,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.005796513379678049,
+        "HF_RMSE": 0.01170034709684307,
+        "HF_cosine": 0.0033258521815964903,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.011402896118171343,
+        "HF_energy_ratio": 18.381319196208707,
+        "HF_relative_RMSE": 4.3991818615436875,
+        "excess_HF_energy": 0.00012295222551114834,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 42511,
+        "HF_MAE": 0.005779196135597776,
+        "HF_RMSE": 0.010779892682281855,
+        "HF_cosine": 0.00039359389558450627,
+        "reference_HF_RMS": 0.0026596643342081294,
+        "predicted_HF_RMS": 0.010447686142119742,
+        "HF_energy_ratio": 15.430733689732879,
+        "HF_relative_RMSE": 4.053102695566803,
+        "excess_HF_energy": 0.00010208033135358212,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.9021447681332251
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.010905423775038166,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.011170198556604723,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.011325558368583248,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 38443,
+          "predicted_HF_RMS": 0.01029239605534659,
+          "teacher_HF_RMS": 0.0018716480583655527
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 42016,
+          "predicted_HF_RMS": 0.01038846252486957,
+          "teacher_HF_RMS": 0.0023489135193652515
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 42456,
+          "predicted_HF_RMS": 0.010433533584656911,
+          "teacher_HF_RMS": 0.0025746296673024565
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0001162060862415139,
+        "world_input": 0.00013689812218660406,
+        "mixing_difference": 7.373952921879778e-05,
+        "cross_term": -9.443156516388796e-05,
+        "closure_error": 1.3552527156068805e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 29397,
+      "partial_context_boundary_pixels": 30535,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.009924235514921094,
+        "HF_RMSE": 0.01792213514897613,
+        "HF_cosine": 0.016358020552492657,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.017233401658901994,
+        "HF_energy_ratio": 10.938625413716867,
+        "HF_relative_RMSE": 3.4395380084438982,
+        "excess_HF_energy": 0.00026983954283160645,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 29397,
+        "HF_MAE": 0.010081894685285355,
+        "HF_RMSE": 0.017569523508952245,
+        "HF_cosine": 0.019163724842284128,
+        "reference_HF_RMS": 0.0052106227943922,
+        "predicted_HF_RMS": 0.016879233280256936,
+        "HF_energy_ratio": 10.493639995359818,
+        "HF_relative_RMSE": 3.3718663204446497,
+        "excess_HF_energy": 0.0002577579262238937,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.394437674350622
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.016654789198059284,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.0166814020285905,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.016936374943510923,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 19349,
+          "predicted_HF_RMS": 0.01653259820660691,
+          "teacher_HF_RMS": 0.0024406701933186903
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 26817,
+          "predicted_HF_RMS": 0.016476410503481566,
+          "teacher_HF_RMS": 0.0035440732667676492
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 28918,
+          "predicted_HF_RMS": 0.016662821365652104,
+          "teacher_HF_RMS": 0.004438985265220126
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00030868815633162565,
+        "world_input": 0.0003212029282981656,
+        "mixing_difference": 0.00012422421065860754,
+        "cross_term": -0.00013673898262514755,
+        "closure_error": 8.131516293641283e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "C",
+      "case": "M11_noH",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 90943,
+      "common_pixels": 59932,
+      "strict_core_pixels": 12422,
+      "partial_context_boundary_pixels": 47510,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.012833131281296489,
+        "HF_RMSE": 0.020514073541080962,
+        "HF_cosine": 0.11017815936901722,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.019545388790434434,
+        "HF_energy_ratio": 4.995884412259878,
+        "HF_relative_RMSE": 2.345923173101467,
+        "excess_HF_energy": 0.00030555483672792516,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 12422,
+        "HF_MAE": 0.013386500072576371,
+        "HF_RMSE": 0.022148255120920102,
+        "HF_cosine": 0.058718594174863935,
+        "reference_HF_RMS": 0.008744563239025421,
+        "predicted_HF_RMS": 0.02086884781098075,
+        "HF_energy_ratio": 5.695353671217466,
+        "HF_relative_RMSE": 2.5328028988430664,
+        "excess_HF_energy": 0.00035904142271656135,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 2.8496336156688367
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.017608641034294253,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.018005919374961404,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.018388222689045986,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 4836,
+          "predicted_HF_RMS": 0.017560923915342155,
+          "teacher_HF_RMS": 0.0027432880814202447
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 9582,
+          "predicted_HF_RMS": 0.01817898701899413,
+          "teacher_HF_RMS": 0.0044365602256616
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 11748,
+          "predicted_HF_RMS": 0.01899833033077215,
+          "teacher_HF_RMS": 0.006107038405219704
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0004905452049013636,
+        "world_input": 0.00042082721324887795,
+        "mixing_difference": 0.00010082739956415748,
+        "cross_term": -3.110940791167202e-05,
+        "closure_error": 1.5585406229479126e-19,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 6235,
+      "partial_context_boundary_pixels": 8972,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.00640263822328125,
+        "HF_RMSE": 0.010367050651976678,
+        "HF_cosine": 0.017910772873191243,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.009890427153346827,
+        "HF_energy_ratio": 9.040200009038402,
+        "HF_relative_RMSE": 3.1515862093233147,
+        "excess_HF_energy": 8.69999314599195e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.006402764571510381,
+        "HF_RMSE": 0.010366016805308569,
+        "HF_cosine": 0.017721540112179933,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.009888710798435589,
+        "HF_energy_ratio": 9.037062663173161,
+        "HF_relative_RMSE": 3.151271919655872,
+        "excess_HF_energy": 8.696598343935593e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.009477246571754082,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.009672304468378246,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.009777335043390898,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.009475163713913583,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.009670280950730921,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.009775606279729997,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00010745430440793966,
+        "world_input": 0.00010747573922065009,
+        "mixing_difference": 6.080606209905531e-08,
+        "cross_term": -8.224087480947411e-08,
+        "closure_error": -1.3976043629695956e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 1717,
+      "partial_context_boundary_pixels": 13490,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.009815804759667797,
+        "HF_RMSE": 0.015206914237777163,
+        "HF_cosine": -0.0168865498568118,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.013256747592044432,
+        "HF_energy_ratio": 3.362062474376789,
+        "HF_relative_RMSE": 2.1033279787260253,
+        "excess_HF_energy": 0.00012346946764556417,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.009795232488700702,
+        "HF_RMSE": 0.015222990238024606,
+        "HF_cosine": -0.017646053478436924,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.013269577402092248,
+        "HF_energy_ratio": 3.3685731958558263,
+        "HF_relative_RMSE": 2.10555151340096,
+        "excess_HF_energy": 0.0001238097953565056,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.01137458121915403,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.012117678824804762,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.012659771983061365,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.011353493401845225,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.012104818090357404,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.012655647333798654,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00023173943178699246,
+        "world_input": 0.00023125024063510978,
+        "mixing_difference": 3.056973480895087e-07,
+        "cross_term": 1.834938037931399e-07,
+        "closure_error": 3.2690177808095654e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M01",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 70,
+      "partial_context_boundary_pixels": 15137,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.006561500368720177,
+        "HF_RMSE": 0.008160224663637222,
+        "HF_cosine": 0.23320261428860528,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.00805483078726227,
+        "HF_energy_ratio": 3.7366141431761193,
+        "HF_relative_RMSE": 1.9583252382672067,
+        "excess_HF_energy": 4.7516906237808764e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.006602300158530341,
+        "HF_RMSE": 0.008142769758777292,
+        "HF_cosine": 0.24705995591971677,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.008100632839693075,
+        "HF_energy_ratio": 3.779229857842783,
+        "HF_relative_RMSE": 1.954136336352401,
+        "excess_HF_energy": 4.825685962989454e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.007988449503083604,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.007994993453366121,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.00805483078726227,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.007993305791060704,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.008037544741939288,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.008100632839693075,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 6.6304699344458e-05,
+        "world_input": 6.658926656103322e-05,
+        "mixing_difference": 1.0196298846745801e-07,
+        "cross_term": -3.865302050426858e-07,
+        "closure_error": 5.717472393966527e-21,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 6235,
+      "partial_context_boundary_pixels": 8972,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.011183378997941676,
+        "HF_RMSE": 0.016636365046533378,
+        "HF_cosine": 0.014657087569324392,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.016356198263109415,
+        "HF_energy_ratio": 24.723654986961623,
+        "HF_relative_RMSE": 5.057459485251578,
+        "excess_HF_energy": 0.00025670460380640273,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.011179924267534586,
+        "HF_RMSE": 0.016631739591787903,
+        "HF_cosine": 0.014491344443744664,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.01635093283218524,
+        "HF_energy_ratio": 24.707739339404082,
+        "HF_relative_RMSE": 5.056053345754719,
+        "excess_HF_energy": 0.00025653238666689253,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.016083428702335638,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.016155607514177515,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.016252858600285722,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.01607721523463502,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.01614955853852718,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.016247314268117343,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0002766147618490453,
+        "world_input": 0.0002767686419615175,
+        "mixing_difference": 6.895886509137077e-08,
+        "cross_term": -2.2283897756359282e-07,
+        "closure_error": -1.5114244152568922e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 1717,
+      "partial_context_boundary_pixels": 13490,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.014725280810039399,
+        "HF_RMSE": 0.020956290814163,
+        "HF_cosine": 0.048125852259614514,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.020020651049018467,
+        "HF_energy_ratio": 7.668107572353127,
+        "HF_relative_RMSE": 2.8985468130180787,
+        "excess_HF_energy": 0.00034855457935295255,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.014710034846538635,
+        "HF_RMSE": 0.020936688632999047,
+        "HF_cosine": 0.0472593300073767,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.01999339374511609,
+        "HF_energy_ratio": 7.6472421512128825,
+        "HF_relative_RMSE": 2.8958355584241793,
+        "excess_HF_energy": 0.0003474639043736355,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.018580432434835505,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.01914206802695936,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.019599304659425616,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.018536994504372264,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.01910721966882367,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.019568386380367526,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0004383449309151515,
+        "world_input": 0.0004391661246877726,
+        "mixing_difference": 3.5652787546359706e-07,
+        "cross_term": -1.1777216480846206e-06,
+        "closure_error": -5.124549330888517e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 70,
+      "partial_context_boundary_pixels": 15137,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.013506824797990449,
+        "HF_RMSE": 0.017802238678002343,
+        "HF_cosine": 0.1727488287009591,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.018042491797414552,
+        "HF_energy_ratio": 18.7481510384514,
+        "HF_relative_RMSE": 4.272256553932851,
+        "excess_HF_energy": 0.000308168117486152,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.013491542284075632,
+        "HF_RMSE": 0.017777094061101898,
+        "HF_cosine": 0.17952700411269504,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.018046092722102492,
+        "HF_energy_ratio": 18.755635305877902,
+        "HF_relative_RMSE": 4.2662222423896745,
+        "excess_HF_energy": 0.0003082980697611012,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.016949253818497552,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.017545807437640927,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.018042491797414552,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.016955442187583655,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.017542815829901547,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.018046092722102492,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.0003160250732572644,
+        "world_input": 0.0003169197019485626,
+        "mixing_difference": 1.0435389462914358e-07,
+        "cross_term": -9.989825859273193e-07,
+        "closure_error": -4.573977915173222e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 1.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 6235,
+      "partial_context_boundary_pixels": 8972,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.005386335384941755,
+        "HF_RMSE": 0.00938524055631466,
+        "HF_cosine": 0.003550545643571433,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.008801574688051874,
+        "HF_energy_ratio": 7.159269304998786,
+        "HF_relative_RMSE": 2.853115674015103,
+        "excess_HF_energy": 6.664709917361473e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 6235,
+        "HF_MAE": 0.005393984636610429,
+        "HF_RMSE": 0.009388407762043272,
+        "HF_cosine": 0.0033758237416580982,
+        "reference_HF_RMS": 0.0032894707500965414,
+        "predicted_HF_RMS": 0.008804380843599887,
+        "HF_energy_ratio": 7.163835130225637,
+        "HF_relative_RMSE": 2.8540785054154183,
+        "excess_HF_energy": 6.669650422340795e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.20239965624342987
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.008231411724039484,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.008589847499433081,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.008719992068675993,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 5489,
+          "predicted_HF_RMS": 0.008234229001663443,
+          "teacher_HF_RMS": 0.0018950459039547667
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 6089,
+          "predicted_HF_RMS": 0.008592770175973135,
+          "teacher_HF_RMS": 0.002451863022693415
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 6191,
+          "predicted_HF_RMS": 0.008722922711662081,
+          "teacher_HF_RMS": 0.002772200053060292
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 8.814220030639435e-05,
+        "world_input": 8.80827402998935e-05,
+        "mixing_difference": 5.0842999705197966e-08,
+        "cross_term": 8.617006795640852e-09,
+        "closure_error": 9.223063829966259e-21,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 2.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 1717,
+      "partial_context_boundary_pixels": 13490,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.00836498180018491,
+        "HF_RMSE": 0.012500707118816788,
+        "HF_cosine": -0.05564104329555687,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.009803483169395064,
+        "HF_energy_ratio": 1.8386227082259878,
+        "HF_relative_RMSE": 1.7290218532007902,
+        "excess_HF_energy": 4.383639317900063e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 1717,
+        "HF_MAE": 0.008376227669675313,
+        "HF_RMSE": 0.01252017301659536,
+        "HF_cosine": -0.05633906025130896,
+        "reference_HF_RMS": 0.007229930087740245,
+        "predicted_HF_RMS": 0.009822470134158231,
+        "HF_energy_ratio": 1.8457515357931984,
+        "HF_relative_RMSE": 1.7317142579048936,
+        "excess_HF_energy": 4.420903046281877e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.26925250061817363
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.008753283326362273,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.00891455917964515,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.00939500210531845,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 1075,
+          "predicted_HF_RMS": 0.008768029454378604,
+          "teacher_HF_RMS": 0.0024235331598269974
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 1527,
+          "predicted_HF_RMS": 0.008927723562441064,
+          "teacher_HF_RMS": 0.0035999407809785096
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 1647,
+          "predicted_HF_RMS": 0.009411448793990312,
+          "teacher_HF_RMS": 0.004458036548418489
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 0.00015675473236548255,
+        "world_input": 0.00015626767847043673,
+        "mixing_difference": 2.6356042438693155e-07,
+        "cross_term": 2.2349347065885683e-07,
+        "closure_error": 2.4352197233561135e-20,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    },
+    {
+      "raw": 86,
+      "region": "S",
+      "case": "M11_noH",
+      "sigma_native_pixels": 4.0,
+      "full_prealpha_pixels": 18338,
+      "common_pixels": 15207,
+      "strict_core_pixels": 70,
+      "partial_context_boundary_pixels": 15137,
+      "actual_world_input": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.005850927950169489,
+        "HF_RMSE": 0.007512017624547878,
+        "HF_cosine": 0.05775263413469762,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.00649564413786445,
+        "HF_energy_ratio": 2.430020060934075,
+        "HF_relative_RMSE": 1.8027657706550348,
+        "excess_HF_energy": 2.4829999992153433e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "rendered_straight_road": {
+        "status": "defined",
+        "pixels": 70,
+        "HF_MAE": 0.0058035510252485946,
+        "HF_RMSE": 0.007466401121029346,
+        "HF_cosine": 0.07571785964836816,
+        "reference_HF_RMS": 0.004166940457172308,
+        "predicted_HF_RMS": 0.006519002816194144,
+        "HF_energy_ratio": 2.4475284451385875,
+        "HF_relative_RMSE": 1.791818529150776,
+        "excess_HF_energy": 2.513400494392782e-05,
+        "missing_HF_energy": 0.0,
+        "reference_energy_sum": 0.0036463124824600655
+      },
+      "actual_world_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.006340850160070693,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.006533826190733978,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.00649564413786445,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "rendered_straight_flat": [
+        {
+          "teacher_HF_RMS_cut": 0.00392156862745098,
+          "pixels": 42,
+          "predicted_HF_RMS": 0.00630132722714882,
+          "teacher_HF_RMS": 0.0026959263048402407
+        },
+        {
+          "teacher_HF_RMS_cut": 0.00784313725490196,
+          "pixels": 69,
+          "predicted_HF_RMS": 0.00655645566921266,
+          "teacher_HF_RMS": 0.003948438828695826
+        },
+        {
+          "teacher_HF_RMS_cut": 0.01568627450980392,
+          "pixels": 70,
+          "predicted_HF_RMS": 0.006519002816194144,
+          "teacher_HF_RMS": 0.004166940457172308
+        }
+      ],
+      "squared_HF_error_identity": {
+        "rendered": 5.5747145700108276e-05,
+        "world_input": 5.643040879151795e-05,
+        "mixing_difference": 9.027051140099142e-08,
+        "cross_term": -7.735336028106712e-07,
+        "closure_error": 5.61159327555974e-21,
+        "warning": "Signed cross term is essential. These are algebraic components, not nonnegative causal percentages. Mixing difference includes fixed readonly/eligible mixture and alpha normalization."
+      }
+    }
+  ],
+  "compact_identity": [
+    {
+      "raw": 110,
+      "image_hw": [
+        1280,
+        1920
+      ],
+      "compact_rows": 427641,
+      "pixel_ids_equal_fresh_geometry": true,
+      "pixel_ids_are_sorted_global_flat": true,
+      "pixel_value_shape": [
+        427641,
+        3
+      ],
+      "pixel_value_dtype": "float32",
+      "source_mass_exact_to_targets": true
+    },
+    {
+      "raw": 86,
+      "image_hw": [
+        1280,
+        1920
+      ],
+      "compact_rows": 219452,
+      "pixel_ids_equal_fresh_geometry": true,
+      "pixel_ids_are_sorted_global_flat": true,
+      "pixel_value_shape": [
+        219452,
+        3
+      ],
+      "pixel_value_dtype": "float32",
+      "source_mass_exact_to_targets": true
+    }
+  ],
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/metrics/road_detail_metrics.py": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/diagnose_material_input.py": "58dd082f8f5f561bf579c36274bde2b7006281b529e446f6f6eeb0b5b42f217c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/targets/110.npz": "ca05b0340345487e2b802175318cf4e11dc16e7ae645c6ccf7728c87144bfc93",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/pixel_reads/110.npz": "22dc3485d87c9376dad4992463a335d0297a365c4491cdfa56a9e6e15b804a89",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/maps/110.npz": "e9d0c081e9f3e062c6065d0deebe5a98655333e09461d14e6aacbe6d2fc23489",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M01/110.npz": "e7a7c752b9b8082d2fa498295360071b8e491654202f4ff2490a6d9c3aec2f2e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/field.pt": "60d6c522083493748228bba242bd048db5e832585086b3fd68d44ddaf5f80f6e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M11/110.npz": "e35507255a16dc926adc510600e42a30bd0234f5ece44ae6a088de0677c400c5",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800/field.pt": "6f9d680f8556dac91638ec4d30656d8a9d0f2e9650b5e0e6390d886b47364976",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M11_noH/110.npz": "dd7dc636d831ab8920a7ed95f1a5907fe2e0826934ad547ed2bdac23134179a4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/targets/086.npz": "2334b5b12a12b3d79c60516a081ad13ff6eda931189baafbe872197476c0f366",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/pixel_reads/086.npz": "a4e453234235677acdce72ee246758534fd383c5fd443491e00139af8b4c4716",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/maps/086.npz": "aef46d53fb0b5f848ff27e27135ecee0163451091c00e189a2727920ba401639",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M01/086.npz": "2f725ba266bc8f792a78cb5528868494fd658a07253a63428cd8efd7901f72ac",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M11/086.npz": "aa30a71f74dbccd76e0c8464b025824a853f2bc7541aa4e3b56b860df30d75b3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/rendered/M11_noH/086.npz": "4686343ab606a115a6f76dddd867b5728e9e950a1eaa7e12f77e1855cfba7b2c"
+  },
+  "common_domain": "same per frame/region across methods: native prealpha C/S & source_mass>0 & common road_alpha>=.95",
+  "context": "same common domain, frozen metric strict finite Gaussian core; full prealpha and excluded denominators preserved",
+  "material_input": "actual source-normalized pixelbox RGB from pixel_reads before eligible/read-only GS mixture, not unmodulated H alone",
+  "rendered_input": "actual road P divided only at common alpha>=.95; bounded amplification<=1/.95; no use at low alpha",
+  "primary_native_bench_changed": false,
+  "teacher": "frozen pseudo raw native C/S, not hidden GT",
+  "seconds": 6.5720220413059,
+  "new_native_calls": 0,
+  "new_backward_calls": 0,
+  "optimizer_updates": 0,
+  "GPU_operations": 0
+}

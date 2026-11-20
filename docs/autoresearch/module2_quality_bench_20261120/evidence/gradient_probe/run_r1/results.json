@@ -1,0 +1,1640 @@
+{
+  "schema": "RGB_HF_endpoint_gradient_alignment.v1",
+  "role": "posthoc local diagnostic, not training or causal proof",
+  "material_space": "straight R/alpha on fixed common baseline road alpha>=.95",
+  "RGB_space": "original full A+.5C+S premult-sRGB L1, normalized within each source/view",
+  "HF_space": "per-source squared signed HF residual, same frozen context/strict core as new benchmark",
+  "L_geometry_and_other_scene_parameters_frozen": true,
+  "arms": {
+    "M01": {
+      "rows": [
+        {
+          "raw": 86,
+          "cpu_render_saved_max": 1.1920928955078125e-07,
+          "old_fixed_alpha_vs_common_max": 0.0,
+          "original_RGB_objective": {
+            "RGB_A": {
+              "value": 0.022870739921927452,
+              "gradient": {
+                "L2": 0.00021693989120213512,
+                "Linf": 1.312434505962301e-05,
+                "nonzero_scalars": 154695,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_C": {
+              "value": 0.0053368485532701015,
+              "gradient": {
+                "L2": 2.0763004455275132e-05,
+                "Linf": 1.3152782685210695e-06,
+                "nonzero_scalars": 69291,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_S": {
+              "value": 0.013089654967188835,
+              "gradient": {
+                "L2": 0.00027372559974743607,
+                "Linf": 2.1525731426663697e-05,
+                "nonzero_scalars": 31209,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_full": {
+              "value": 0.04129724204540253,
+              "gradient": {
+                "L2": 0.000349870365618788,
+                "Linf": 2.1525731426663697e-05,
+                "nonzero_scalars": 219111,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            }
+          },
+          "HF": {
+            "HF_C_sigma1": {
+              "source": "C",
+              "sigma_pixels": 1.0,
+              "core_pixels": 1995,
+              "fixed_score_pixels": 3598,
+              "score_excluded_alpha95": 10,
+              "context_pixels": 3588,
+              "HF_RMSE": 0.012249973580875283,
+              "benchmark_HF_RMSE": 0.012249973645841255,
+              "RMSE_validation_error": 6.496597183824893e-11,
+              "HF_operator_max_error": 2.7755575615628914e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma1",
+              "loss_and_gradient": {
+                "value": 0.00015006185273214238,
+                "gradient": {
+                  "L2": 9.83578529730045e-07,
+                  "Linf": 3.224955378300365e-07,
+                  "nonzero_scalars": 66825,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.000349870365618788,
+                  "HF_gradient_L2": 9.83578529730045e-07,
+                  "dot_product": 3.9373625427750176e-12,
+                  "cosine": 0.011441664435207374,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.9373625427750176e-12,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.1253775482845813e-08,
+                  "RGB_derivative_along_negative_HF_gradient": -3.9373625427750176e-12,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -4.003099319233488e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 2.0763004455275132e-05,
+                  "HF_gradient_L2": 9.83578529730045e-07,
+                  "dot_product": 3.9648220620320586e-12,
+                  "cosine": 0.19414421941411433,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.9648220620320586e-12,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.9095608588692182e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -3.9648220620320586e-12,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -4.031017292661169e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 4.8967901976604545e-05,
+                  "HF_gradient_L2": 9.83578529730045e-07,
+                  "dot_product": 1.3964535561976571e-11,
+                  "cosine": 0.28993854766094157,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.3964535561976571e-11,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.8517733042041344e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.3964535561976571e-11,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.4197682381100071e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_C_sigma2": {
+              "source": "C",
+              "sigma_pixels": 2.0,
+              "core_pixels": 717,
+              "fixed_score_pixels": 3598,
+              "score_excluded_alpha95": 10,
+              "context_pixels": 3588,
+              "HF_RMSE": 0.017497145185273955,
+              "benchmark_HF_RMSE": 0.017497145309984894,
+              "RMSE_validation_error": 1.2471093949195655e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma2",
+              "loss_and_gradient": {
+                "value": 0.0003061500896345555,
+                "gradient": {
+                  "L2": 4.795545887630168e-07,
+                  "Linf": 8.787062455439809e-08,
+                  "nonzero_scalars": 44676,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.000349870365618788,
+                  "HF_gradient_L2": 4.795545887630168e-07,
+                  "dot_product": 9.647487948439882e-13,
+                  "cosine": 0.005750015757608149,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -9.647487948439882e-13,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.757446442020642e-09,
+                  "RGB_derivative_along_negative_HF_gradient": -9.647487948439882e-13,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.0117601154281555e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 2.0763004455275132e-05,
+                  "HF_gradient_L2": 4.795545887630168e-07,
+                  "dot_product": 9.65529794309965e-13,
+                  "cosine": 0.09697000803631528,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -9.65529794309965e-13,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.65024123262016e-08,
+                  "RGB_derivative_along_negative_HF_gradient": -9.65529794309965e-13,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.0133887088860792e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 5.626670379800993e-05,
+                  "HF_gradient_L2": 4.795545887630168e-07,
+                  "dot_product": 1.0041255906113672e-11,
+                  "cosine": 0.3721332794589609,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.0041255906113672e-11,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.7845822179597478e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.0041255906113672e-11,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.0938713008699403e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma1": {
+              "source": "S",
+              "sigma_pixels": 1.0,
+              "core_pixels": 359,
+              "fixed_score_pixels": 1042,
+              "score_excluded_alpha95": 3,
+              "context_pixels": 1039,
+              "HF_RMSE": 0.009402317066892915,
+              "benchmark_HF_RMSE": 0.00940231678130771,
+              "RMSE_validation_error": 2.855852047900509e-10,
+              "HF_operator_max_error": 4.440892098500626e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma1",
+              "loss_and_gradient": {
+                "value": 8.840356622638579e-05,
+                "gradient": {
+                  "L2": 5.27056812592671e-06,
+                  "Linf": 8.467306997772539e-07,
+                  "nonzero_scalars": 29289,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.000349870365618788,
+                  "HF_gradient_L2": 5.27056812592671e-06,
+                  "dot_product": 1.4740425038015878e-10,
+                  "cosine": 0.07993655292343882,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.4740425038015878e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.213110479347302e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.4740425038015878e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.7967430997629135e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00027372559974743607,
+                  "HF_gradient_L2": 5.27056812592671e-06,
+                  "dot_product": 1.4740929415479132e-10,
+                  "cosine": 0.10217673463225811,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.4740929415479132e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -5.385294407640514e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.4740929415479132e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.796838796744947e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0003911717472655524,
+                  "HF_gradient_L2": 5.27056812592671e-06,
+                  "dot_product": 5.273320216594064e-10,
+                  "cosine": 0.2557756711843224,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -5.273320216594064e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.3480830999316003e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -5.273320216594064e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00010005221620519078,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma2": {
+              "source": "S",
+              "sigma_pixels": 2.0,
+              "core_pixels": 92,
+              "fixed_score_pixels": 1042,
+              "score_excluded_alpha95": 3,
+              "context_pixels": 1039,
+              "HF_RMSE": 0.006537777500231733,
+              "benchmark_HF_RMSE": 0.006537776438091862,
+              "RMSE_validation_error": 1.0621398708471341e-09,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma2",
+              "loss_and_gradient": {
+                "value": 4.274253464253628e-05,
+                "gradient": {
+                  "L2": 1.1310900278385512e-05,
+                  "Linf": 2.2597848783334484e-06,
+                  "nonzero_scalars": 17940,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.000349870365618788,
+                  "HF_gradient_L2": 1.1310900278385512e-05,
+                  "dot_product": 2.9654022261546387e-10,
+                  "cosine": 0.07493406227567848,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.9654022261546387e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -8.475717058545289e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -2.9654022261546387e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.6217207765692657e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00027372559974743607,
+                  "HF_gradient_L2": 1.1310900278385512e-05,
+                  "dot_product": 2.965453215789631e-10,
+                  "cosine": 0.0957808059996468,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.965453215789631e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.083367145245394e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.965453215789631e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.6217658566546145e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0008660518158135797,
+                  "HF_gradient_L2": 1.1310900278385512e-05,
+                  "dot_product": 3.399176454753871e-09,
+                  "cosine": 0.3470025447904632,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.399176454753871e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.9249111804709315e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.399176454753871e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0003005221840077137,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "cpu_render_saved_max": 1.1920928955078125e-07,
+          "old_fixed_alpha_vs_common_max": 0.0,
+          "original_RGB_objective": {
+            "RGB_A": {
+              "value": 0.032454174011945724,
+              "gradient": {
+                "L2": 0.00018573972741673956,
+                "Linf": 1.4006320270709693e-05,
+                "nonzero_scalars": 151413,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_C": {
+              "value": 0.007811303716152906,
+              "gradient": {
+                "L2": 2.4853629632363493e-05,
+                "Linf": 1.1914693232029094e-06,
+                "nonzero_scalars": 82374,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_S": {
+              "value": 0.018662214279174805,
+              "gradient": {
+                "L2": 0.00022206743077026053,
+                "Linf": 1.7669599401415326e-05,
+                "nonzero_scalars": 28740,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_full": {
+              "value": 0.05892769247293472,
+              "gradient": {
+                "L2": 0.0002904228117380257,
+                "Linf": 1.7669599401415326e-05,
+                "nonzero_scalars": 221052,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            }
+          },
+          "HF": {
+            "HF_C_sigma1": {
+              "source": "C",
+              "sigma_pixels": 1.0,
+              "core_pixels": 3630,
+              "fixed_score_pixels": 7232,
+              "score_excluded_alpha95": 34,
+              "context_pixels": 7198,
+              "HF_RMSE": 0.012098979960716788,
+              "benchmark_HF_RMSE": 0.012098979783058616,
+              "RMSE_validation_error": 1.776581728951676e-10,
+              "HF_operator_max_error": 2.7755575615628914e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma1",
+              "loss_and_gradient": {
+                "value": 0.00014638531608982642,
+                "gradient": {
+                  "L2": 1.0192376706566686e-06,
+                  "Linf": 1.7116612127665576e-07,
+                  "nonzero_scalars": 79842,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0002904228117380257,
+                  "HF_gradient_L2": 1.0192376706566686e-06,
+                  "dot_product": 7.459763702404298e-13,
+                  "cosine": 0.002520106406870901,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -7.459763702404298e-13,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.5685873839460436e-09,
+                  "RGB_derivative_along_negative_HF_gradient": -7.459763702404298e-13,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -7.3189638856246e-07,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 2.4853629632363493e-05,
+                  "HF_gradient_L2": 1.0192376706566686e-06,
+                  "dot_product": 7.606818781889349e-13,
+                  "cosine": 0.030028786436502485,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -7.606818781889349e-13,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.060647034018736e-08,
+                  "RGB_derivative_along_negative_HF_gradient": -7.606818781889349e-13,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -7.463243364021731e-07,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 7.603915763046946e-05,
+                  "HF_gradient_L2": 1.0192376706566686e-06,
+                  "dot_product": 3.0481619925352557e-12,
+                  "cosine": 0.03933012075783506,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.0481619925352557e-12,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.0086740667861296e-08,
+                  "RGB_derivative_along_negative_HF_gradient": -3.0481619925352557e-12,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.9906292519304192e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_C_sigma2": {
+              "source": "C",
+              "sigma_pixels": 2.0,
+              "core_pixels": 1434,
+              "fixed_score_pixels": 7232,
+              "score_excluded_alpha95": 34,
+              "context_pixels": 7198,
+              "HF_RMSE": 0.00985694181874263,
+              "benchmark_HF_RMSE": 0.009856941977646114,
+              "RMSE_validation_error": 1.5890348412095356e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma2",
+              "loss_and_gradient": {
+                "value": 9.715930201807726e-05,
+                "gradient": {
+                  "L2": 1.0429144674563033e-06,
+                  "Linf": 1.7726880230384268e-07,
+                  "nonzero_scalars": 41760,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0002904228117380257,
+                  "HF_gradient_L2": 1.0429144674563033e-06,
+                  "dot_product": 2.031452920206658e-12,
+                  "cosine": 0.0067069851378750815,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.031452920206658e-12,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -6.994811833304331e-09,
+                  "RGB_derivative_along_negative_HF_gradient": -2.031452920206658e-12,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.947861482026831e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 2.4853629632363493e-05,
+                  "HF_gradient_L2": 1.0429144674563033e-06,
+                  "dot_product": 2.036552921216545e-12,
+                  "cosine": 0.0785700782555337,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.036552921216545e-12,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -8.194187132187001e-08,
+                  "RGB_derivative_along_negative_HF_gradient": -2.036552921216545e-12,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.952751625148851e-06,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0001431172163486584,
+                  "HF_gradient_L2": 1.0429144674563033e-06,
+                  "dot_product": 2.0687274674925754e-11,
+                  "cosine": 0.13859983338020965,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.0687274674925754e-11,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.4454777141925372e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -2.0687274674925754e-11,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.983602233976347e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma1": {
+              "source": "S",
+              "sigma_pixels": 1.0,
+              "core_pixels": 734,
+              "fixed_score_pixels": 2089,
+              "score_excluded_alpha95": 24,
+              "context_pixels": 2065,
+              "HF_RMSE": 0.01168481871178662,
+              "benchmark_HF_RMSE": 0.011684818354137434,
+              "RMSE_validation_error": 3.5764918630831755e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma1",
+              "loss_and_gradient": {
+                "value": 0.00013653498832731875,
+                "gradient": {
+                  "L2": 6.059902955231012e-06,
+                  "Linf": 8.927803492042585e-07,
+                  "nonzero_scalars": 26472,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0002904228117380257,
+                  "HF_gradient_L2": 6.059902955231012e-06,
+                  "dot_product": 1.4153883167194475e-10,
+                  "cosine": 0.08042280405925438,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.4153883167194475e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.873543879866403e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.4153883167194475e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.3356616882744964e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00022206743077026053,
+                  "HF_gradient_L2": 6.059902955231012e-06,
+                  "dot_product": 1.4153111845162533e-10,
+                  "cosine": 0.10517230722541458,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.4153111845162533e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -6.373339753637538e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.4153111845162533e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -2.3355344053728327e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.00037781703143121166,
+                  "HF_gradient_L2": 6.059902955231012e-06,
+                  "dot_product": 3.9081799632052303e-10,
+                  "cosine": 0.1706975756804691,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.9081799632052303e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.034410743316844e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.9081799632052303e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -6.449245131609942e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma2": {
+              "source": "S",
+              "sigma_pixels": 2.0,
+              "core_pixels": 212,
+              "fixed_score_pixels": 2089,
+              "score_excluded_alpha95": 24,
+              "context_pixels": 2065,
+              "HF_RMSE": 0.009770327239161478,
+              "benchmark_HF_RMSE": 0.009770327459767282,
+              "RMSE_validation_error": 2.2060580445737443e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M01_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma2",
+              "loss_and_gradient": {
+                "value": 9.545929436030075e-05,
+                "gradient": {
+                  "L2": 1.406496958179681e-05,
+                  "Linf": 1.77678498403111e-06,
+                  "nonzero_scalars": 16122,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0002904228117380257,
+                  "HF_gradient_L2": 1.406496958179681e-05,
+                  "dot_product": 1.8815754126235462e-10,
+                  "cosine": 0.04606298800956082,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.8815754126235462e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -6.478745252011441e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.8815754126235462e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.3377742494791615e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00022206743077026053,
+                  "HF_gradient_L2": 1.406496958179681e-05,
+                  "dot_product": 1.8813707014459087e-10,
+                  "cosine": 0.060235249176642226,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.8813707014459087e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -8.472069474214242e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.8813707014459087e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.337628702646339e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0006770625373397174,
+                  "HF_gradient_L2": 1.406496958179681e-05,
+                  "dot_product": 2.1011282334223985e-09,
+                  "cosine": 0.22064036985538138,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.1011282334223985e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.1033000905323366e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.1011282334223985e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0001493873286538582,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "crossview_gradient_comparisons": {
+        "RGB_full": {
+          "RGB_gradient_L2": 0.000349870365618788,
+          "HF_gradient_L2": 0.0002904228117380257,
+          "dot_product": -4.993844918295159e-08,
+          "cosine": -0.49147017399686316,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": 4.993844918295159e-08,
+          "HF_derivative_along_unit_negative_RGB_gradient": 0.00014273414981754573,
+          "RGB_derivative_along_negative_HF_gradient": 4.993844918295159e-08,
+          "RGB_derivative_along_unit_negative_HF_gradient": 0.0001719508494670119,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma1": {
+          "RGB_gradient_L2": 9.83578529730045e-07,
+          "HF_gradient_L2": 1.0192376706566686e-06,
+          "dot_product": 2.358616017707815e-13,
+          "cosine": 0.23527335027171256,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -2.358616017707815e-13,
+          "HF_derivative_along_unit_negative_RGB_gradient": -2.3979946149853084e-07,
+          "RGB_derivative_along_negative_HF_gradient": -2.358616017707815e-13,
+          "RGB_derivative_along_unit_negative_HF_gradient": -2.3140981594491295e-07,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma2": {
+          "RGB_gradient_L2": 4.795545887630168e-07,
+          "HF_gradient_L2": 1.0429144674563033e-06,
+          "dot_product": 3.182047313980672e-15,
+          "cosine": 0.006362384182972056,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -3.182047313980672e-15,
+          "HF_derivative_along_unit_negative_RGB_gradient": -6.635422511936709e-09,
+          "RGB_derivative_along_negative_HF_gradient": -3.182047313980672e-15,
+          "RGB_derivative_along_unit_negative_HF_gradient": -3.0511105304174866e-09,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma1": {
+          "RGB_gradient_L2": 5.27056812592671e-06,
+          "HF_gradient_L2": 6.059902955231012e-06,
+          "dot_product": 1.929544660327219e-13,
+          "cosine": 0.006041318526965077,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -1.929544660327219e-13,
+          "HF_derivative_along_unit_negative_RGB_gradient": -3.6609803995047536e-08,
+          "RGB_derivative_along_negative_HF_gradient": -1.929544660327219e-13,
+          "RGB_derivative_along_unit_negative_HF_gradient": -3.184118086679264e-08,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma2": {
+          "RGB_gradient_L2": 1.1310900278385512e-05,
+          "HF_gradient_L2": 1.406496958179681e-05,
+          "dot_product": 4.948044287831649e-11,
+          "cosine": 0.31102665338100444,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -4.948044287831649e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -4.3745804189318865e-06,
+          "RGB_derivative_along_negative_HF_gradient": -4.948044287831649e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -3.517991460312517e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        }
+      },
+      "balanced_view_gradient_comparisons": {
+        "HF_C_sigma1": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 7.870824850411075e-07,
+          "dot_product": 5.022846538138523e-13,
+          "cosine": 0.003904055082102081,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -5.022846538138523e-13,
+          "HF_derivative_along_unit_negative_RGB_gradient": -3.0728133757582704e-09,
+          "RGB_derivative_along_negative_HF_gradient": -5.022846538138523e-13,
+          "RGB_derivative_along_unit_negative_HF_gradient": -6.381601209022192e-07,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma1": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 4.02763022230487e-06,
+          "dot_product": 2.870973101888634e-11,
+          "cosine": 0.04360796372327512,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -2.870973101888634e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -1.7563675262503726e-07,
+          "RGB_derivative_along_negative_HF_gradient": -2.870973101888634e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -7.128194356049096e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C0.5_plus_S_sigma1": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 4.046802305864819e-06,
+          "dot_product": 2.8960873282195402e-11,
+          "cosine": 0.04378102648283007,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -2.8960873282195402e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -1.7717315892384545e-07,
+          "RGB_derivative_along_negative_HF_gradient": -2.8960873282195402e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -7.1564833400000594e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma2": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 5.753275770083196e-07,
+          "dot_product": -5.8776426624502565e-15,
+          "cosine": -6.249917186890256e-05,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": 5.8776426624502565e-15,
+          "HF_derivative_along_unit_negative_RGB_gradient": 3.595749711636224e-11,
+          "RGB_derivative_along_negative_HF_gradient": 5.8776426624502565e-15,
+          "RGB_derivative_along_unit_negative_HF_gradient": 1.0216167097384353e-08,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma2": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 1.03043767498032e-05,
+          "dot_product": 6.880421024319779e-11,
+          "cosine": 0.040848824212273004,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -6.880421024319779e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -4.209216744697439e-07,
+          "RGB_derivative_along_negative_HF_gradient": -6.880421024319779e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -6.677183095475606e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C0.5_plus_S_sigma2": {
+          "RGB_gradient_L2": 0.00016346083943021917,
+          "HF_gradient_L2": 1.0308391198939921e-05,
+          "dot_product": 6.880127144539336e-11,
+          "cosine": 0.04083117217247238,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -6.880127144539336e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -4.2090369586511496e-07,
+          "RGB_derivative_along_negative_HF_gradient": -6.880127144539336e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -6.674297678232142e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        }
+      },
+      "parameters_exactly_unchanged": true,
+      "note": "Crossview relation labels RGB/HF are generic vector slots; consult the metric key. Aggregate never replaces per-frame rows."
+    },
+    "M11": {
+      "rows": [
+        {
+          "raw": 86,
+          "cpu_render_saved_max": 1.1920928955078125e-07,
+          "old_fixed_alpha_vs_common_max": 0.0,
+          "original_RGB_objective": {
+            "RGB_A": {
+              "value": 0.022811660543084145,
+              "gradient": {
+                "L2": 0.00021797850707982994,
+                "Linf": 1.2548642189358361e-05,
+                "nonzero_scalars": 154941,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_C": {
+              "value": 0.0023494591005146503,
+              "gradient": {
+                "L2": 0.00021376100971040344,
+                "Linf": 1.0591804311843589e-05,
+                "nonzero_scalars": 122043,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_S": {
+              "value": 0.00761226424947381,
+              "gradient": {
+                "L2": 0.0010221440881944311,
+                "Linf": 5.6911190768005326e-05,
+                "nonzero_scalars": 31335,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_full": {
+              "value": 0.03277338296175003,
+              "gradient": {
+                "L2": 0.0010671331224921432,
+                "Linf": 5.6916171160992235e-05,
+                "nonzero_scalars": 265638,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            }
+          },
+          "HF": {
+            "HF_C_sigma1": {
+              "source": "C",
+              "sigma_pixels": 1.0,
+              "core_pixels": 1995,
+              "fixed_score_pixels": 3598,
+              "score_excluded_alpha95": 10,
+              "context_pixels": 3588,
+              "HF_RMSE": 0.006932739553852526,
+              "benchmark_HF_RMSE": 0.006932739558622089,
+              "RMSE_validation_error": 4.769563216600048e-12,
+              "HF_operator_max_error": 2.220446049250313e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma1",
+              "loss_and_gradient": {
+                "value": 4.806287772155132e-05,
+                "gradient": {
+                  "L2": 5.356890274780276e-06,
+                  "Linf": 1.1576216820685659e-06,
+                  "nonzero_scalars": 119277,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0010671331224921432,
+                  "HF_gradient_L2": 5.356890274780276e-06,
+                  "dot_product": 2.1523513526590704e-10,
+                  "cosine": 0.03765145959425392,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.1523513526590704e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.0169473773174134e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -2.1523513526590704e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -4.017911964320295e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00021376100971040344,
+                  "HF_gradient_L2": 5.356890274780276e-06,
+                  "dot_product": 2.159272330217745e-10,
+                  "cosine": 0.1885672105048995,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.159272330217745e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.010133856096141e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.159272330217745e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -4.0308317315801504e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0005861589707358404,
+                  "HF_gradient_L2": 5.356890274780276e-06,
+                  "dot_product": 7.686543545577718e-10,
+                  "cosine": 0.2447952154016019,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -7.686543545577718e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.3113411086975842e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -7.686543545577718e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00014348891150086133,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_C_sigma2": {
+              "source": "C",
+              "sigma_pixels": 2.0,
+              "core_pixels": 717,
+              "fixed_score_pixels": 3598,
+              "score_excluded_alpha95": 10,
+              "context_pixels": 3588,
+              "HF_RMSE": 0.005537180266966374,
+              "benchmark_HF_RMSE": 0.005537180429847892,
+              "RMSE_validation_error": 1.6288151730159406e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma2",
+              "loss_and_gradient": {
+                "value": 3.0660365308881806e-05,
+                "gradient": {
+                  "L2": 7.67853369185935e-06,
+                  "Linf": 1.13845464966289e-06,
+                  "nonzero_scalars": 95216,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0010671331224921432,
+                  "HF_gradient_L2": 7.67853369185935e-06,
+                  "dot_product": 2.4561601138458814e-10,
+                  "cosine": 0.02997504061289859,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.4561601138458814e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.3016435926099417e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -2.4561601138458814e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -3.198735868607128e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.00021376100971040344,
+                  "HF_gradient_L2": 7.67853369185935e-06,
+                  "dot_product": 2.4561621562785704e-10,
+                  "cosine": 0.14964087851503358,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.4561621562785704e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.1490225273571174e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.4561621562785704e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -3.198738528532539e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0010456520976031914,
+                  "HF_gradient_L2": 7.67853369185935e-06,
+                  "dot_product": 2.6609373192755244e-09,
+                  "cosine": 0.3314126926459366,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.6609373192755244e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.5447635263916513e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.6609373192755244e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0003465423772375453,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma1": {
+              "source": "S",
+              "sigma_pixels": 1.0,
+              "core_pixels": 359,
+              "fixed_score_pixels": 1042,
+              "score_excluded_alpha95": 3,
+              "context_pixels": 1039,
+              "HF_RMSE": 0.007108211793789675,
+              "benchmark_HF_RMSE": 0.007108211622131221,
+              "RMSE_validation_error": 1.7165845394434553e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma1",
+              "loss_and_gradient": {
+                "value": 5.052667490537063e-05,
+                "gradient": {
+                  "L2": 1.949888727471208e-05,
+                  "Linf": 3.1581917028233875e-06,
+                  "nonzero_scalars": 29445,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0010671331224921432,
+                  "HF_gradient_L2": 1.949888727471208e-05,
+                  "dot_product": 3.4318459880262197e-09,
+                  "cosine": 0.16492988683590842,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.4318459880262197e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.2159492716443978e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.4318459880262197e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00017600214513147877,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0010221440881944311,
+                  "HF_gradient_L2": 1.949888727471208e-05,
+                  "dot_product": 3.431650403693666e-09,
+                  "cosine": 0.1721793596675959,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.431650403693666e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.3573059251905598e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.431650403693666e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00017599211459333583,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0018003034322286613,
+                  "HF_gradient_L2": 1.949888727471208e-05,
+                  "dot_product": 9.793547973012584e-09,
+                  "cosine": 0.2789873533990771,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -9.793547973012584e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -5.439942954998865e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -9.793547973012584e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0005022618898727489,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma2": {
+              "source": "S",
+              "sigma_pixels": 2.0,
+              "core_pixels": 92,
+              "fixed_score_pixels": 1042,
+              "score_excluded_alpha95": 3,
+              "context_pixels": 1039,
+              "HF_RMSE": 0.005169401793506262,
+              "benchmark_HF_RMSE": 0.005169402053892248,
+              "RMSE_validation_error": 2.603859862101987e-10,
+              "HF_operator_max_error": 4.440892098500626e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma2",
+              "loss_and_gradient": {
+                "value": 2.6722714902705762e-05,
+                "gradient": {
+                  "L2": 3.62025066289934e-05,
+                  "Linf": 8.698951205587946e-06,
+                  "nonzero_scalars": 17967,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0010671331224921432,
+                  "HF_gradient_L2": 3.62025066289934e-05,
+                  "dot_product": 4.24030483413902e-09,
+                  "cosine": 0.10975892307240509,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -4.24030483413902e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -3.973548140119921e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -4.24030483413902e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00011712738229963057,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0010221440881944311,
+                  "HF_gradient_L2": 3.62025066289934e-05,
+                  "dot_product": 4.240202210205182e-09,
+                  "cosine": 0.1145871202831228,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -4.240202210205182e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.148340981647017e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -4.240202210205182e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00011712454758061818,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0038720195779315828,
+                  "HF_gradient_L2": 3.62025066289934e-05,
+                  "dot_product": 4.5167739440620746e-08,
+                  "cosine": 0.3222197595359667,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -4.5167739440620746e-08,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.1665162980593494e-05,
+                  "RGB_derivative_along_negative_HF_gradient": -4.5167739440620746e-08,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.00124764121731967,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "cpu_render_saved_max": 1.1920928955078125e-07,
+          "old_fixed_alpha_vs_common_max": 0.0,
+          "original_RGB_objective": {
+            "RGB_A": {
+              "value": 0.03247951343655586,
+              "gradient": {
+                "L2": 0.00018610829364928196,
+                "Linf": 1.4102481145528145e-05,
+                "nonzero_scalars": 151413,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_C": {
+              "value": 0.005706468131393194,
+              "gradient": {
+                "L2": 0.0001915982310212834,
+                "Linf": 9.894366485241335e-06,
+                "nonzero_scalars": 130896,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_S": {
+              "value": 0.012212852016091347,
+              "gradient": {
+                "L2": 0.0008623850380829131,
+                "Linf": 4.936053301207721e-05,
+                "nonzero_scalars": 29022,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            },
+            "RGB_full": {
+              "value": 0.05039883404970169,
+              "gradient": {
+                "L2": 0.0009023105712123793,
+                "Linf": 4.936053301207721e-05,
+                "nonzero_scalars": 266832,
+                "nonzero_scalars_outside_common_latent": 0
+              },
+              "status": "defined"
+            }
+          },
+          "HF": {
+            "HF_C_sigma1": {
+              "source": "C",
+              "sigma_pixels": 1.0,
+              "core_pixels": 3630,
+              "fixed_score_pixels": 7232,
+              "score_excluded_alpha95": 34,
+              "context_pixels": 7198,
+              "HF_RMSE": 0.009850800580588973,
+              "benchmark_HF_RMSE": 0.00985080042999668,
+              "RMSE_validation_error": 1.505922921085645e-10,
+              "HF_operator_max_error": 2.7755575615628914e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma1",
+              "loss_and_gradient": {
+                "value": 9.703827207853203e-05,
+                "gradient": {
+                  "L2": 6.681462633556069e-06,
+                  "Linf": 7.149522502913896e-07,
+                  "nonzero_scalars": 128757,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0009023105712123793,
+                  "HF_gradient_L2": 6.681462633556069e-06,
+                  "dot_product": 9.582413563777887e-11,
+                  "cosine": 0.015894516483776606,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -9.582413563777887e-11,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.0619861796479439e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -9.582413563777887e-11,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.4341790247621047e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0001915982310212834,
+                  "HF_gradient_L2": 6.681462633556069e-06,
+                  "dot_product": 9.586939106544021e-11,
+                  "cosine": 0.07488881005163822,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -9.586939106544021e-11,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -5.003667860314989e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -9.586939106544021e-11,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.4348563529182791e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0005344880557882786,
+                  "HF_gradient_L2": 6.681462633556069e-06,
+                  "dot_product": 3.5301123077305684e-10,
+                  "cosine": 0.09885052357151138,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.5301123077305684e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -6.604660795505067e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -3.5301123077305684e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -5.2834424157390515e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_C_sigma2": {
+              "source": "C",
+              "sigma_pixels": 2.0,
+              "core_pixels": 1434,
+              "fixed_score_pixels": 7232,
+              "score_excluded_alpha95": 34,
+              "context_pixels": 7198,
+              "HF_RMSE": 0.006058061847472184,
+              "benchmark_HF_RMSE": 0.0060580619865594505,
+              "RMSE_validation_error": 1.3908726687744677e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_C_sigma2",
+              "loss_and_gradient": {
+                "value": 3.670011334779809e-05,
+                "gradient": {
+                  "L2": 1.0427559953026438e-05,
+                  "Linf": 1.3248876484794891e-06,
+                  "nonzero_scalars": 75150,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0009023105712123793,
+                  "HF_gradient_L2": 1.0427559953026438e-05,
+                  "dot_product": 1.285741525773345e-10,
+                  "cosine": 0.013665166563603628,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.285741525773345e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.424943436100691e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.285741525773345e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.2330224247717496e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0001915982310212834,
+                  "HF_gradient_L2": 1.0427559953026438e-05,
+                  "dot_product": 1.2852377347638935e-10,
+                  "cosine": 0.06432936692958974,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.2852377347638935e-10,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -6.707983303985332e-07,
+                  "RGB_derivative_along_negative_HF_gradient": -1.2852377347638935e-10,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -1.2325392906428441e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0008455034179885842,
+                  "HF_gradient_L2": 1.0427559953026438e-05,
+                  "dot_product": 1.3630004143378126e-09,
+                  "cosine": 0.15459588321699314,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -1.3630004143378126e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.6120578407362696e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -1.3630004143378126e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0001307113476669317,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma1": {
+              "source": "S",
+              "sigma_pixels": 1.0,
+              "core_pixels": 734,
+              "fixed_score_pixels": 2089,
+              "score_excluded_alpha95": 24,
+              "context_pixels": 2065,
+              "HF_RMSE": 0.012399643426586886,
+              "benchmark_HF_RMSE": 0.012399643558257048,
+              "RMSE_validation_error": 1.3167016262027875e-10,
+              "HF_operator_max_error": 3.3306690738754696e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma1",
+              "loss_and_gradient": {
+                "value": 0.00015375115710649937,
+                "gradient": {
+                  "L2": 3.1373059174083886e-05,
+                  "Linf": 3.284393187641399e-06,
+                  "nonzero_scalars": 26841,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0009023105712123793,
+                  "HF_gradient_L2": 3.1373059174083886e-05,
+                  "dot_product": 2.5757620456701785e-09,
+                  "cosine": 0.09098982408626685,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.5757620456701785e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.8546291352979333e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.5757620456701785e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -8.210108014579335e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0008623850380829131,
+                  "HF_gradient_L2": 3.1373059174083886e-05,
+                  "dot_product": 2.5754697187775515e-09,
+                  "cosine": 0.09519154293318814,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -2.5754697187775515e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -2.9864499093152585e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -2.5754697187775515e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -8.209176237760871e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.0016920879006971517,
+                  "HF_gradient_L2": 3.1373059174083886e-05,
+                  "dot_product": 7.358880884623047e-09,
+                  "cosine": 0.13862194385492962,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -7.358880884623047e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.3489944473872415e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -7.358880884623047e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0002345605139680463,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            },
+            "HF_S_sigma2": {
+              "source": "S",
+              "sigma_pixels": 2.0,
+              "core_pixels": 212,
+              "fixed_score_pixels": 2089,
+              "score_excluded_alpha95": 24,
+              "context_pixels": 2065,
+              "HF_RMSE": 0.010606313219447557,
+              "benchmark_HF_RMSE": 0.010606312792635774,
+              "RMSE_validation_error": 4.2681178209769133e-10,
+              "HF_operator_max_error": 4.440892098500626e-16,
+              "benchmark_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M11_straight_road_srgb_alpha95.json",
+              "objective": "HF_MSE; unweighted per-source mean",
+              "status": "defined",
+              "matched_RGB_control": "matched_core_RGB_S_sigma2",
+              "loss_and_gradient": {
+                "value": 0.00011249388010902798,
+                "gradient": {
+                  "L2": 6.999351337511472e-05,
+                  "Linf": 1.0800662494148128e-05,
+                  "nonzero_scalars": 16131,
+                  "nonzero_scalars_outside_common_latent": 0
+                },
+                "status": "defined"
+              },
+              "comparisons": {
+                "full_original_RGB": {
+                  "RGB_gradient_L2": 0.0009023105712123793,
+                  "HF_gradient_L2": 6.999351337511472e-05,
+                  "dot_product": 3.703594548556507e-09,
+                  "cosine": 0.058642111170474236,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.703594548556507e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.104567392555553e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.703594548556507e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -5.2913396827330456e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "same_source_original_RGB": {
+                  "RGB_gradient_L2": 0.0008623850380829131,
+                  "HF_gradient_L2": 6.999351337511472e-05,
+                  "dot_product": 3.703041414282636e-09,
+                  "cosine": 0.06134788040204634,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -3.703041414282636e-09,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -4.293953687455569e-06,
+                  "RGB_derivative_along_negative_HF_gradient": -3.703041414282636e-09,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -5.2905494176824735e-05,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                },
+                "matched_core_straight_RGB": {
+                  "RGB_gradient_L2": 0.003093962915549567,
+                  "HF_gradient_L2": 6.999351337511472e-05,
+                  "dot_product": 4.020881038701573e-08,
+                  "cosine": 0.18567281704200253,
+                  "status": "defined",
+                  "HF_derivative_along_negative_RGB_gradient": -4.020881038701573e-08,
+                  "HF_derivative_along_unit_negative_RGB_gradient": -1.2995892803024634e-05,
+                  "RGB_derivative_along_negative_HF_gradient": -4.020881038701573e-08,
+                  "RGB_derivative_along_unit_negative_HF_gradient": -0.0005744648103535755,
+                  "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+                  "finite_step_test_performed": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "crossview_gradient_comparisons": {
+        "RGB_full": {
+          "RGB_gradient_L2": 0.0010671331224921432,
+          "HF_gradient_L2": 0.0009023105712123793,
+          "dot_product": -3.059881990133201e-07,
+          "cosine": -0.31778253994519184,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": 3.059881990133201e-07,
+          "HF_derivative_along_unit_negative_RGB_gradient": 0.00028673854513926677,
+          "RGB_derivative_along_negative_HF_gradient": 3.059881990133201e-07,
+          "RGB_derivative_along_unit_negative_HF_gradient": 0.00033911627412519675,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma1": {
+          "RGB_gradient_L2": 5.356890274780276e-06,
+          "HF_gradient_L2": 6.681462633556069e-06,
+          "dot_product": 4.97982879068902e-12,
+          "cosine": 0.13913298957300466,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -4.97982879068902e-12,
+          "HF_derivative_along_unit_negative_RGB_gradient": -9.296118709269769e-07,
+          "RGB_derivative_along_negative_HF_gradient": -4.97982879068902e-12,
+          "RGB_derivative_along_unit_negative_HF_gradient": -7.453201587447343e-07,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma2": {
+          "RGB_gradient_L2": 7.67853369185935e-06,
+          "HF_gradient_L2": 1.0427559953026438e-05,
+          "dot_product": 1.9258391219116393e-12,
+          "cosine": 0.02405243308603293,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -1.9258391219116393e-12,
+          "HF_derivative_along_unit_negative_RGB_gradient": -2.5080818802076506e-07,
+          "RGB_derivative_along_negative_HF_gradient": -1.9258391219116393e-12,
+          "RGB_derivative_along_unit_negative_HF_gradient": -1.846874178222964e-07,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma1": {
+          "RGB_gradient_L2": 1.949888727471208e-05,
+          "HF_gradient_L2": 3.1373059174083886e-05,
+          "dot_product": -4.1827352630236427e-11,
+          "cosine": -0.06837442396065418,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": 4.1827352630236427e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": 2.145114848911503e-06,
+          "RGB_derivative_along_negative_HF_gradient": 4.1827352630236427e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": 1.3332251852821685e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma2": {
+          "RGB_gradient_L2": 3.62025066289934e-05,
+          "HF_gradient_L2": 6.999351337511472e-05,
+          "dot_product": 2.954651239044694e-10,
+          "cosine": 0.11660301752105182,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -2.954651239044694e-10,
+          "HF_derivative_along_unit_negative_RGB_gradient": -8.161454866438476e-06,
+          "RGB_derivative_along_negative_HF_gradient": -2.954651239044694e-10,
+          "RGB_derivative_along_unit_negative_HF_gradient": -4.221321514766512e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        }
+      },
+      "balanced_view_gradient_comparisons": {
+        "HF_C_sigma1": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 4.563383452536415e-06,
+          "dot_product": 4.574357631519014e-11,
+          "cosine": 0.017312710350704946,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -4.574357631519014e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -7.900453593296287e-08,
+          "RGB_derivative_along_negative_HF_gradient": -4.574357631519014e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -1.0024048338468027e-05,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma1": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 1.7894277979997567e-05,
+          "dot_product": 5.144566303421732e-10,
+          "cosine": 0.04965425840896281,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -5.144566303421732e-10,
+          "HF_derivative_along_unit_negative_RGB_gradient": -8.885271028606123e-07,
+          "RGB_derivative_along_negative_HF_gradient": -5.144566303421732e-10,
+          "RGB_derivative_along_unit_negative_HF_gradient": -2.8749784200135864e-05,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C0.5_plus_S_sigma1": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 1.8039132629547296e-05,
+          "dot_product": 5.373284190172232e-10,
+          "cosine": 0.051445343342103295,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -5.373284190172232e-10,
+          "HF_derivative_along_unit_negative_RGB_gradient": -9.280293717207993e-07,
+          "RGB_derivative_along_negative_HF_gradient": -5.373284190172232e-10,
+          "RGB_derivative_along_unit_negative_HF_gradient": -2.978682124311804e-05,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C_sigma2": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 6.5487701942952214e-06,
+          "dot_product": 5.6445066846472834e-11,
+          "cosine": 0.014886347471106587,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -5.6445066846472834e-11,
+          "HF_derivative_along_unit_negative_RGB_gradient": -9.748726862070487e-08,
+          "RGB_derivative_along_negative_HF_gradient": -5.6445066846472834e-11,
+          "RGB_derivative_along_unit_negative_HF_gradient": -8.619185766457858e-06,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_S_sigma2": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 4.123300774722487e-05,
+          "dot_product": 8.832375072884455e-10,
+          "cosine": 0.03699596829991021,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -8.832375072884455e-10,
+          "HF_derivative_along_unit_negative_RGB_gradient": -1.5254550475262833e-06,
+          "RGB_derivative_along_negative_HF_gradient": -8.832375072884455e-10,
+          "RGB_derivative_along_unit_negative_HF_gradient": -2.1420642236507487e-05,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        },
+        "HF_C0.5_plus_S_sigma2": {
+          "RGB_gradient_L2": 0.000578999367251579,
+          "HF_gradient_L2": 4.136281645342481e-05,
+          "dot_product": 9.114600402994082e-10,
+          "cosine": 0.03805830492459728,
+          "status": "defined",
+          "HF_derivative_along_negative_RGB_gradient": -9.114600402994082e-10,
+          "HF_derivative_along_unit_negative_RGB_gradient": -1.5741986811245906e-06,
+          "RGB_derivative_along_negative_HF_gradient": -9.114600402994082e-10,
+          "RGB_derivative_along_unit_negative_HF_gradient": -2.2035734470009478e-05,
+          "sign_interpretation": "negative derivative: infinitesimal decrease; positive: infinitesimal increase; zero/N-A retained",
+          "finite_step_test_performed": false
+        }
+      },
+      "parameters_exactly_unchanged": true,
+      "note": "Crossview relation labels RGB/HF are generic vector slots; consult the metric key. Aggregate never replaces per-frame rows."
+    }
+  },
+  "input_bindings": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/086.npz": "911e12aa24c715f1c6db2d7f18d219054f2f94196b0b959938c63508bb44db8f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_cpu_20261117_r1/supervision_v4_candidate_r1/110.npz": "d306a5d58dfab2f12654aa312df6d9f75a2b918555465853546c51aeed0d5572",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/execution_contract.json": "dd78dd76fd24351ab4eae0db74960c2ef26b231a2d091e4d14cc5c3e338f175f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/086_targets.npz": "d68278bb2a314d79f5869cc707955790b8fb035cb79119349d800b87fab7efdc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_multiscale_material_20261118_r1/stage0_native_r1/110_targets.npz": "fcccb6c0c2797edfe16ac577c638155db108f9ac757ae01f0077d365262a66df",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/code/fixed_material_read_operator.py": "91c5225b29ca21f30c9dc6a572e431508cb6f72505ac76254b2c5fc641fef3bd",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/code/world_texture_runtime.py": "bf13c0f2992c9ac926824515fc109a4727585ce01aeb1210b97955ec4c2d43ae",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/086.npz": "20a6f3a609253dca6c18db5f42995a685dd703d6a23248fe2cd61e45d51350be",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/110.npz": "dcd6de8de4d84f0c6e5814fe0a28715f5c70bb9ac8a1668ac3584b20372fd14d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/evaluation/frozen_r2/manifest.json": "c1b580d95bf0af548e9601c06549ae1caa76f885c0bb82f8760f20515545fe48",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/field.pt": "60d6c522083493748228bba242bd048db5e832585086b3fd68d44ddaf5f80f6e",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/086.npz": "d00979a7f2ec8db49e9b3184aa7538336179cc98fa2b7688c32eef314c2e714b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M01/C800/rendered/110.npz": "cc2a8b8a7461955db9471440ae4f375b7b68b89a5046f502df342d6d46976170",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800/field.pt": "6f9d680f8556dac91638ec4d30656d8a9d0f2e9650b5e0e6390d886b47364976",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800/rendered/086.npz": "35fa9419617b897c79057146cc5a8873bc29a0cc0522633fe80d88df5b283c3d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/M11/C800/rendered/110.npz": "5b4b68947a8f00d3f8db31e8e4601e159994a3b48b5193121a1633607b992208",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/input_bindings.json": "5c53bae1b28c315c01f123cc377d0cb912e6f67b282174e7951b0a7e5134cfb4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_qualification_r2/basis/086/road_basis.npz": "347f447b6e110354ea3f30e45b1407c04ccea8ee0aa1ccd1c797036e3507293c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_qualification_r2/basis/110/road_basis.npz": "49ad8ec2fc386a3cc090e50c4a7206041c1c4c72923f650d85412177845f66c6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/gradient_probe/code/hf_gradient_probe.py": "6ab0c76a03d9c2b97d087bba84f56a7d29ac831b961f41006a0716341ec54bac",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M01_straight_road_srgb_alpha95.json": "29ab180e2f2c4fda467da13b98f679a56bb43b1f0e61cdc547349e7a0e36a4dc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_C_M11_straight_road_srgb_alpha95.json": "8a6259d54de7b3336770f1a664c9b321f39a37fc5823033be05482e280d3a125",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M01_straight_road_srgb_alpha95.json": "c2e2a43a48ad2e84981b54acd538a422dfc1b5bce397671ab43d1c9cc79d2178",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/086_S_M11_straight_road_srgb_alpha95.json": "5ae83615c97625cd3ac6af914fa191b5486304ac479d160e7cf2c382948792be",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M01_straight_road_srgb_alpha95.json": "11e1b6ca195fe84a0c3f20c0e6677080fcf85d245b308793fd79922387cc4313",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_C_M11_straight_road_srgb_alpha95.json": "fac4055fb0e651aedc2d71d80501fdd401b6459eb0496bfa6ecfb9744fc34c62",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M01_straight_road_srgb_alpha95.json": "b829db40f6d6d73e245ea0283f188062ccdfedd483da8cfcf1619d4c33f30e76",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/110_S_M11_straight_road_srgb_alpha95.json": "fb2d97866945a155bfd1ded0f31ccec8eef28dec0ee8d56a02e1b8283f67a4c6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/lowres_r1/input_bindings.json": "08bb7ad1a67a97f1ed2ef4fd8338937f805d909ae923dc3143689756c84fec9c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/metric_freeze.json": "44b665f98e1880a9bfffad84a35edcb38984213157e3159fc962c6d7ad6d7d4a",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/metrics/road_detail_metrics.py": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/protocol.json": "c8c56682ada38ad793ef03059d0d146229209d711b5a7161c7d21117198cda74",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/constants.npz": "3bca972b96a693db0170a077327544a9ca0f5ed72d928856e20537162df457e7",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/high_observed_H.npz": "7d2445548745675971930205d57334a39f0c8167f6b8214fb766309af0df6fde",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/high_observed_plus_teacher_H.npz": "646add41bea1420900596a5d919ea9a423eb5ce4df2dea07d973d2dd3a03b266",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/low.npz": "39c5e9d0e4a2d52501a486fb460e2c1df8999247068a6eb76ebf8afa08fa01eb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/086/read.json": "b68d41f3ede14bcc19e3289326afafaa2646158095472e5b36baf7d2682063b3",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/constants.npz": "f4a3b7e8d3c541bf248dd0f44cbc453504ae5efe21cc4dbb1b7d0ba0d9895eca",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/high_observed_H.npz": "e3c00131d780f871f596e7a5db5bff186520d0ac4a610f1e1e552e434267dece",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/high_observed_plus_teacher_H.npz": "7c3afc2608454ec3c7f9ad2d4e63c495ac9f3fc0f9b889c9d38841a9bc35285d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/low.npz": "c4d41858c86dac80acf943e49ea94b86979448a21fce57a975d11bea6cd7182b",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/pixel_render/read_operator_box_r1/110/read.json": "af23d923437bc3984b5aa9c980dbe884ac12194acaf448aafbcaa74a97b842fa"
+  },
+  "optimizer_updates": 0,
+  "finite_parameter_steps": 0,
+  "native_calls": 0,
+  "GPU_operations": 0,
+  "every_frame_source_and_zero_gradient_retained": true,
+  "seconds": 13.278477502986789,
+  "limitations": [
+    "Local endpoint/subgradient diagnostic only; no finite-step decrease or training success is inferred.",
+    "Full original RGB and conditional straight HF have different domains/spaces; matched-core RGB control is reported.",
+    "HF square residual is a diagnostic objective, not a new authorized training loss.",
+    "Frozen pseudo teacher consistency is not hidden-road truth; no structure/lane truth invented."
+  ]
+}

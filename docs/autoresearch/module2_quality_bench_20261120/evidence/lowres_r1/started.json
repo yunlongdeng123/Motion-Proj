@@ -1,0 +1,46 @@
+{
+  "optimizer_updates": 0,
+  "native_calls": 0,
+  "measurement_frozen_before_outputs": true,
+  "alpha_threshold": 0.95,
+  "signal_spaces": [
+    "straight_road_srgb_alpha95",
+    "legacy_premult_srgb"
+  ],
+  "canonical_alpha": "prior frozen road-only baseline, identical for every method",
+  "config": {
+    "pixel_scales": [
+      1.0,
+      2.0,
+      4.0
+    ],
+    "gaussian_truncate": 3.0,
+    "flat_hf_thresholds": [
+      0.00392156862745098,
+      0.00784313725490196,
+      0.01568627450980392
+    ],
+    "edge_thresholds": [
+      0.00392156862745098,
+      0.00784313725490196,
+      0.01568627450980392
+    ],
+    "edge_tolerances_pixels": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "edge_angle_tolerances_degrees": [
+      15.0,
+      30.0,
+      45.0
+    ],
+    "worst_tiles": 5
+  },
+  "tile": {
+    "height": 32,
+    "width": 32,
+    "origin_y": 0,
+    "origin_x": 0
+  }
+}

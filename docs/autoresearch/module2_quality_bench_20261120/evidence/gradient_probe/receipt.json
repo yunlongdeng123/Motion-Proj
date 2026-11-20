@@ -1,0 +1,28 @@
+{
+  "schema": "CPU_HF_gradient_probe_completion.v1",
+  "completed": true,
+  "model_reading_probe_seconds": 13.278477502986789,
+  "local_synthetic_tests_passed": 2,
+  "local_test_seconds": 2.87,
+  "remote_synthetic_tests_passed": 2,
+  "remote_test_seconds": 2.27,
+  "HF_RMSE_validation_tolerance": 1e-06,
+  "numerical_validation": {
+    "HF_RMSE_benchmark_max_abs_error": 1.0621398708471341e-09,
+    "differentiable_HF_scipy_max_abs_error": 4.440892098500626e-16,
+    "CPU_reader_saved_RGB_max_abs_error": 1.1920928955078125e-07
+  },
+  "model_parameters_unchanged": true,
+  "optimizer_updates": 0,
+  "finite_parameter_steps": 0,
+  "native_calls": 0,
+  "GPU_operations": 0,
+  "old_metric_and_assets_modified": false,
+  "old_GPU_lease_modified": false,
+  "source_sha256": {
+    "hf_gradient_probe.py": "6ab0c76a03d9c2b97d087bba84f56a7d29ac831b961f41006a0716341ec54bac",
+    "test_hf_gradient_probe.py": "2136e57018c53565ee2d90536c706432b9266990b14420db47f4e1d4777310f7",
+    "make_summary.py": "a3f8801ab95a497dd00ed68e48e402ba00fe25a7b448308502dd682a0f6acab8"
+  },
+  "interpretation": "local diagnostic only, not proof that an HF loss fixes the remaining quality problem"
+}
