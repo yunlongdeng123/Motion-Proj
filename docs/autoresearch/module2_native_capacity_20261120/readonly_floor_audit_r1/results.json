@@ -1,0 +1,1477 @@
+{
+  "schema": "fixed_native_readonly_pointwise_RGB_floor.v1",
+  "complete": true,
+  "rows": [
+    {
+      "raw": 86,
+      "source": "C",
+      "split": "full_stable_alpha95",
+      "We_over_alpha": {
+        "n": 60632,
+        "mean": 0.8875367105481079,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.3742823040415609,
+        "p25": 0.9963935947355334,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 9960,
+        "0.5": 6401,
+        "0.05": 5061
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 60632,
+        "premult_MAE_lower_proxy": 0.009870766717802619,
+        "premult_MSE_lower_proxy": 0.00206850400431297,
+        "straight_MAE_lower_proxy": 0.009919277618209217,
+        "straight_MSE_lower_proxy": 0.002089543458078414,
+        "pixels_target_below_readonly": 4231,
+        "pixels_target_above_readonly_plus_We": 1956,
+        "pixels_any_exact_interval_violation": 5547,
+        "pixels_straight_violation_gt1code": 5483,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 60632,
+          "premult_RGB_MSE": 0.003121325786709675,
+          "straight_RGB_MSE": 0.0031463318267824945,
+          "premult_actual_over_floor": 1.5089773963219315,
+          "straight_actual_over_floor": 1.5057508445772765,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 60632,
+          "premult_RGB_MSE": 0.00375204878780916,
+          "straight_RGB_MSE": 0.0037775467645870067,
+          "premult_actual_over_floor": 1.8138948631406493,
+          "straight_actual_over_floor": 1.807833548511556,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 60632,
+          "premult_RGB_MSE": 0.004485776126856961,
+          "straight_RGB_MSE": 0.0045133926320047695,
+          "premult_actual_over_floor": 2.168608867811624,
+          "straight_actual_over_floor": 2.1599898363230867,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 60632,
+          "premult_RGB_MSE": 0.002853247961439304,
+          "straight_RGB_MSE": 0.0028772555250400423,
+          "premult_actual_over_floor": 1.3793775383030877,
+          "straight_actual_over_floor": 1.3769780733280486,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "C",
+      "split": "seen",
+      "We_over_alpha": {
+        "n": 41490,
+        "mean": 0.8544166500707402,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.008381474937712647,
+        "p25": 0.9800924994942788,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 8819,
+        "0.5": 5670,
+        "0.05": 4511
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 41490,
+        "premult_MAE_lower_proxy": 0.013674866116305246,
+        "premult_MSE_lower_proxy": 0.002951202488541419,
+        "straight_MAE_lower_proxy": 0.013741311983564911,
+        "straight_MSE_lower_proxy": 0.0029807215156009243,
+        "pixels_target_below_readonly": 3777,
+        "pixels_target_above_readonly_plus_We": 1715,
+        "pixels_any_exact_interval_violation": 4950,
+        "pixels_straight_violation_gt1code": 4893,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 41490,
+          "premult_RGB_MSE": 0.0042206489832713615,
+          "straight_RGB_MSE": 0.004254201684052826,
+          "premult_actual_over_floor": 1.4301455083677923,
+          "straight_actual_over_floor": 1.4272388956118778,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 41490,
+          "premult_RGB_MSE": 0.0034729749456283744,
+          "straight_RGB_MSE": 0.003503849193151858,
+          "premult_actual_over_floor": 1.1767999515834078,
+          "straight_actual_over_floor": 1.1755037076804773,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 41490,
+          "premult_RGB_MSE": 0.003683664649923666,
+          "straight_RGB_MSE": 0.0037150016604400376,
+          "premult_actual_over_floor": 1.2481910896409731,
+          "straight_actual_over_floor": 1.2463430887440954,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 41490,
+          "premult_RGB_MSE": 0.003842865075070695,
+          "straight_RGB_MSE": 0.003875083051141887,
+          "premult_actual_over_floor": 1.3021353465210599,
+          "straight_actual_over_floor": 1.3000486730678884,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "C",
+      "split": "held",
+      "We_over_alpha": {
+        "n": 18680,
+        "mean": 0.9644373261964305,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.931281450882177,
+        "p10": 0.997675502795176,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 989,
+        "0.5": 613,
+        "0.05": 472
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 18680,
+        "premult_MAE_lower_proxy": 0.0014006833292687442,
+        "premult_MSE_lower_proxy": 0.00013226936046788516,
+        "straight_MAE_lower_proxy": 0.0014090074266867399,
+        "straight_MSE_lower_proxy": 0.00013484161004543037,
+        "pixels_target_below_readonly": 428,
+        "pixels_target_above_readonly_plus_We": 177,
+        "pixels_any_exact_interval_violation": 509,
+        "pixels_straight_violation_gt1code": 503,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 18680,
+          "premult_RGB_MSE": 0.000583978672635798,
+          "straight_RGB_MSE": 0.0005878760376691797,
+          "premult_actual_over_floor": 4.415071416162077,
+          "straight_actual_over_floor": 4.3597524345127185,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 18680,
+          "premult_RGB_MSE": 0.004384135197552471,
+          "straight_RGB_MSE": 0.004396949984004029,
+          "premult_actual_over_floor": 33.145508393207464,
+          "straight_actual_over_floor": 32.60825781094296,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 18680,
+          "premult_RGB_MSE": 0.006302795032372346,
+          "straight_RGB_MSE": 0.00632147801069865,
+          "premult_actual_over_floor": 47.65120969873183,
+          "straight_actual_over_floor": 46.880766319601484,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 18680,
+          "premult_RGB_MSE": 0.0005733041230126299,
+          "straight_RGB_MSE": 0.0005771754833029623,
+          "premult_actual_over_floor": 4.334368299541506,
+          "straight_actual_over_floor": 4.28039596314893,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "C",
+      "split": "unmapped_stable_alpha95",
+      "We_over_alpha": {
+        "n": 462,
+        "mean": 0.7525752579405586,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.0,
+        "p25": 0.38995135212054155,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 152,
+        "0.5": 118,
+        "0.05": 78
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 462,
+        "premult_MAE_lower_proxy": 0.010712917483903866,
+        "premult_MSE_lower_proxy": 0.0010851772432477608,
+        "straight_MAE_lower_proxy": 0.010775644196200956,
+        "straight_MSE_lower_proxy": 0.0010913895936784104,
+        "pixels_target_below_readonly": 26,
+        "pixels_target_above_readonly_plus_We": 64,
+        "pixels_any_exact_interval_violation": 88,
+        "pixels_straight_violation_gt1code": 87,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 462,
+          "premult_RGB_MSE": 0.0069886951926741965,
+          "straight_RGB_MSE": 0.007099651659013428,
+          "premult_actual_over_floor": 6.440141678384405,
+          "straight_actual_over_floor": 6.505148757268999,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 462,
+          "premult_RGB_MSE": 0.0032572426797479815,
+          "straight_RGB_MSE": 0.0033127417865226726,
+          "premult_actual_over_floor": 3.001576654887803,
+          "straight_actual_over_floor": 3.0353430211455796,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 462,
+          "premult_RGB_MSE": 0.0030522090769328682,
+          "straight_RGB_MSE": 0.0031069132731714744,
+          "premult_actual_over_floor": 2.812636457246466,
+          "straight_actual_over_floor": 2.846749951774746,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 462,
+          "premult_RGB_MSE": 0.0061652325009282395,
+          "straight_RGB_MSE": 0.006266067476735127,
+          "premult_actual_over_floor": 5.681313849225856,
+          "straight_actual_over_floor": 5.7413663397834185,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "S",
+      "split": "full_stable_alpha95",
+      "We_over_alpha": {
+        "n": 15313,
+        "mean": 0.9964050318676592,
+        "min": 0.03190780341236654,
+        "p01": 0.9199060290138282,
+        "p05": 0.9974497808854471,
+        "p10": 0.9999041650452871,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 195,
+        "0.5": 31,
+        "0.05": 2
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 15313,
+        "premult_MAE_lower_proxy": 1.1545535149195918e-07,
+        "premult_MSE_lower_proxy": 5.7863944247152e-10,
+        "straight_MAE_lower_proxy": 1.1547513969917038e-07,
+        "straight_MSE_lower_proxy": 5.788378086500278e-10,
+        "pixels_target_below_readonly": 1,
+        "pixels_target_above_readonly_plus_We": 1,
+        "pixels_any_exact_interval_violation": 1,
+        "pixels_straight_violation_gt1code": 1,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 15313,
+          "premult_RGB_MSE": 0.0025376669825063905,
+          "straight_RGB_MSE": 0.0025652507732621486,
+          "premult_actual_over_floor": 4385575.5350298155,
+          "straight_actual_over_floor": 4431726.357414102,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 15313,
+          "premult_RGB_MSE": 0.000540162920847501,
+          "straight_RGB_MSE": 0.0005449865356248929,
+          "premult_actual_over_floor": 933505.1868229449,
+          "straight_actual_over_floor": 941518.552314191,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 15313,
+          "premult_RGB_MSE": 0.0005929797421415358,
+          "straight_RGB_MSE": 0.0005995680932058056,
+          "premult_actual_over_floor": 1024782.789795256,
+          "straight_actual_over_floor": 1035813.6324994478,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 15313,
+          "premult_RGB_MSE": 0.00037411916203119035,
+          "straight_RGB_MSE": 0.00037814500559993954,
+          "premult_actual_over_floor": 646549.7070735963,
+          "straight_actual_over_floor": 653283.1821781886,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "S",
+      "split": "seen",
+      "We_over_alpha": {
+        "n": 14950,
+        "mean": 0.9968937550258321,
+        "min": 0.15385153950583827,
+        "p01": 0.9295466242468394,
+        "p05": 0.9976857446058337,
+        "p10": 0.9999148617337359,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 182,
+        "0.5": 22,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 14950,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 14950,
+          "premult_RGB_MSE": 0.0025602989020661565,
+          "straight_RGB_MSE": 0.002587754891339622,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 14950,
+          "premult_RGB_MSE": 0.0005192582889328546,
+          "straight_RGB_MSE": 0.0005238056617457655,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 14950,
+          "premult_RGB_MSE": 0.0005589437205032155,
+          "straight_RGB_MSE": 0.0005651993187318849,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 14950,
+          "premult_RGB_MSE": 0.00036621393513187715,
+          "straight_RGB_MSE": 0.0003701422317040594,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "S",
+      "split": "held",
+      "We_over_alpha": {
+        "n": 257,
+        "mean": 0.9991915080355321,
+        "min": 0.9717468535718634,
+        "p01": 0.9844851740870425,
+        "p05": 0.9940019785450311,
+        "p10": 0.9983059876801919,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 0,
+        "0.5": 0,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 257,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 257,
+          "premult_RGB_MSE": 0.0013251863858398383,
+          "straight_RGB_MSE": 0.0013338021251602398,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 257,
+          "premult_RGB_MSE": 0.0018626658429014582,
+          "straight_RGB_MSE": 0.0018813634402025574,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 257,
+          "premult_RGB_MSE": 0.0026861187117399464,
+          "straight_RGB_MSE": 0.0027093307605872926,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 257,
+          "premult_RGB_MSE": 0.0008546665993902838,
+          "straight_RGB_MSE": 0.0008604145762854282,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 86,
+      "source": "S",
+      "split": "unmapped_stable_alpha95",
+      "We_over_alpha": {
+        "n": 106,
+        "mean": 0.9207207338504105,
+        "min": 0.03190780341236654,
+        "p01": 0.04579615090920806,
+        "p05": 0.17100484101390123,
+        "p10": 0.7886232849211422,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 13,
+        "0.5": 9,
+        "0.05": 2
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 106,
+        "premult_MAE_lower_proxy": 1.6678941484871426e-05,
+        "premult_MSE_lower_proxy": 8.359156398647532e-08,
+        "straight_MAE_lower_proxy": 1.6681800134088643e-05,
+        "straight_MSE_lower_proxy": 8.362022041375355e-08,
+        "pixels_target_below_readonly": 1,
+        "pixels_target_above_readonly_plus_We": 1,
+        "pixels_any_exact_interval_violation": 1,
+        "pixels_straight_violation_gt1code": 1,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 106,
+          "premult_RGB_MSE": 0.0022854058119856045,
+          "straight_RGB_MSE": 0.0023770030119787105,
+          "premult_actual_over_floor": 27340.148969522466,
+          "straight_actual_over_floor": 28426.174915795244,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 106,
+          "premult_RGB_MSE": 0.0002820591109993537,
+          "straight_RGB_MSE": 0.0002922054037050074,
+          "premult_actual_over_floor": 3374.2533043763765,
+          "straight_actual_over_floor": 3494.4347462751543,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 106,
+          "premult_RGB_MSE": 0.000318468499746243,
+          "straight_RGB_MSE": 0.00033168293158384156,
+          "premult_actual_over_floor": 3809.8162608582074,
+          "straight_actual_over_floor": 3966.5397907667743,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 106,
+          "premult_RGB_MSE": 0.00032395360300706977,
+          "straight_RGB_MSE": 0.0003375618931210491,
+          "premult_actual_over_floor": 3875.434165336155,
+          "straight_actual_over_floor": 4036.8452923322857,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "C",
+      "split": "full_stable_alpha95",
+      "We_over_alpha": {
+        "n": 123161,
+        "mean": 0.9058204778363422,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.7002289133793014,
+        "p25": 0.994072417167622,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 19513,
+        "0.5": 10241,
+        "0.05": 7775
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 123161,
+        "premult_MAE_lower_proxy": 0.009050645987356044,
+        "premult_MSE_lower_proxy": 0.0020824776881437934,
+        "straight_MAE_lower_proxy": 0.009096673837089626,
+        "straight_MSE_lower_proxy": 0.0021050555346439873,
+        "pixels_target_below_readonly": 7727,
+        "pixels_target_above_readonly_plus_We": 2083,
+        "pixels_any_exact_interval_violation": 9061,
+        "pixels_straight_violation_gt1code": 8828,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 123161,
+          "premult_RGB_MSE": 0.0031792362405774076,
+          "straight_RGB_MSE": 0.003208473278302874,
+          "premult_actual_over_floor": 1.5266604097022547,
+          "straight_actual_over_floor": 1.5241751229358895,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 123161,
+          "premult_RGB_MSE": 0.003969336083092386,
+          "straight_RGB_MSE": 0.004001694363081671,
+          "premult_actual_over_floor": 1.906064158906036,
+          "straight_actual_over_floor": 1.9009923003092877,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 123161,
+          "premult_RGB_MSE": 0.004864304958875571,
+          "straight_RGB_MSE": 0.004900651684022181,
+          "premult_actual_over_floor": 2.3358257265225952,
+          "straight_actual_over_floor": 2.3280391435615937,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 123161,
+          "premult_RGB_MSE": 0.003017456193009115,
+          "straight_RGB_MSE": 0.0030452639667792637,
+          "premult_actual_over_floor": 1.448974080341149,
+          "straight_actual_over_floor": 1.4466430536685517,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "C",
+      "split": "seen",
+      "We_over_alpha": {
+        "n": 86720,
+        "mean": 0.8871959655228578,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.5258500186576057,
+        "p25": 0.9807608538313107,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 16815,
+        "0.5": 8541,
+        "0.05": 6422
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 86720,
+        "premult_MAE_lower_proxy": 0.011996125540958844,
+        "premult_MSE_lower_proxy": 0.0028716814649662843,
+        "straight_MAE_lower_proxy": 0.012058530746056532,
+        "straight_MSE_lower_proxy": 0.0029029245497609714,
+        "pixels_target_below_readonly": 6527,
+        "pixels_target_above_readonly_plus_We": 1633,
+        "pixels_any_exact_interval_violation": 7598,
+        "pixels_straight_violation_gt1code": 7388,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 86720,
+          "premult_RGB_MSE": 0.004202704873065669,
+          "straight_RGB_MSE": 0.004241644830350872,
+          "premult_actual_over_floor": 1.4634996688656108,
+          "straight_actual_over_floor": 1.4611626164035618,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 86720,
+          "premult_RGB_MSE": 0.0035553795881251345,
+          "straight_RGB_MSE": 0.003589716759040817,
+          "premult_actual_over_floor": 1.238082855462828,
+          "straight_actual_over_floor": 1.2365863106350443,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 86720,
+          "premult_RGB_MSE": 0.004057732402349956,
+          "straight_RGB_MSE": 0.004093576773203131,
+          "premult_actual_over_floor": 1.4130161899406892,
+          "straight_actual_over_floor": 1.4101561039677033,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 86720,
+          "premult_RGB_MSE": 0.0039762653242463525,
+          "straight_RGB_MSE": 0.004013196987392207,
+          "premult_actual_over_floor": 1.384647069236503,
+          "straight_actual_over_floor": 1.38246686009206,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "C",
+      "split": "held",
+      "We_over_alpha": {
+        "n": 35990,
+        "mean": 0.9526884591119525,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.7194808440641587,
+        "p10": 0.9911438555158729,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 2554,
+        "0.5": 1585,
+        "0.05": 1268
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 35990,
+        "premult_MAE_lower_proxy": 0.0019496168602396542,
+        "premult_MSE_lower_proxy": 0.0001877488167038692,
+        "straight_MAE_lower_proxy": 0.001955323151460488,
+        "straight_MSE_lower_proxy": 0.00018950458207093288,
+        "pixels_target_below_readonly": 1107,
+        "pixels_target_above_readonly_plus_We": 415,
+        "pixels_any_exact_interval_violation": 1358,
+        "pixels_straight_violation_gt1code": 1350,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 35990,
+          "premult_RGB_MSE": 0.0007157887267932291,
+          "straight_RGB_MSE": 0.0007214650179711703,
+          "premult_actual_over_floor": 3.812480628957689,
+          "straight_actual_over_floor": 3.807111205897496,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 35990,
+          "premult_RGB_MSE": 0.004981942276666578,
+          "straight_RGB_MSE": 0.005008862718449784,
+          "premult_actual_over_floor": 26.5351460751119,
+          "straight_actual_over_floor": 26.431354132508165,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 35990,
+          "premult_RGB_MSE": 0.006839645253498086,
+          "straight_RGB_MSE": 0.006876976452230879,
+          "premult_actual_over_floor": 36.42976490385056,
+          "straight_actual_over_floor": 36.28923573814579,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 35990,
+          "premult_RGB_MSE": 0.0007116278900789626,
+          "straight_RGB_MSE": 0.0007172761692344424,
+          "premult_actual_over_floor": 3.790318908914312,
+          "straight_actual_over_floor": 3.7850069976986673,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "C",
+      "split": "unmapped_stable_alpha95",
+      "We_over_alpha": {
+        "n": 451,
+        "mean": 0.746927044834436,
+        "min": 0.0,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p10": 0.0,
+        "p25": 0.36809145651988445,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 144,
+        "0.5": 115,
+        "0.05": 85
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 451,
+        "premult_MAE_lower_proxy": 0.009347877465147873,
+        "premult_MSE_lower_proxy": 0.001531569832437658,
+        "straight_MAE_lower_proxy": 0.009462483216652372,
+        "straight_MSE_lower_proxy": 0.0015495739208063295,
+        "pixels_target_below_readonly": 93,
+        "pixels_target_above_readonly_plus_We": 35,
+        "pixels_any_exact_interval_violation": 105,
+        "pixels_straight_violation_gt1code": 90,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 451,
+          "premult_RGB_MSE": 0.0029669883729737307,
+          "straight_RGB_MSE": 0.003010669055987617,
+          "premult_actual_over_floor": 1.9372204323530255,
+          "straight_actual_over_floor": 1.942901216626696,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 451,
+          "premult_RGB_MSE": 0.0027600463643004383,
+          "straight_RGB_MSE": 0.002845837850275035,
+          "premult_actual_over_floor": 1.802102852801382,
+          "straight_actual_over_floor": 1.8365292626983472,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 451,
+          "premult_RGB_MSE": 0.0023221206982038853,
+          "straight_RGB_MSE": 0.0023765005939935745,
+          "premult_actual_over_floor": 1.516170303843071,
+          "straight_actual_over_floor": 1.5336477738067178,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 451,
+          "premult_RGB_MSE": 0.002660100897139729,
+          "straight_RGB_MSE": 0.0027018699226188775,
+          "premult_actual_over_floor": 1.736845973850172,
+          "straight_actual_over_floor": 1.7436211892446825,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "S",
+      "split": "full_stable_alpha95",
+      "We_over_alpha": {
+        "n": 24140,
+        "mean": 0.9986539505069262,
+        "min": 0.33870285199999095,
+        "p01": 0.9667632906921533,
+        "p05": 0.9990574105336638,
+        "p10": 0.9999956421760825,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 171,
+        "0.5": 1,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 24140,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 24140,
+          "premult_RGB_MSE": 0.0028033658485010883,
+          "straight_RGB_MSE": 0.002842292838059759,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 24140,
+          "premult_RGB_MSE": 0.0005388057204344195,
+          "straight_RGB_MSE": 0.0005469481233556878,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 24140,
+          "premult_RGB_MSE": 0.0006951652793949859,
+          "straight_RGB_MSE": 0.0007040394731695826,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 24140,
+          "premult_RGB_MSE": 0.000556836270124773,
+          "straight_RGB_MSE": 0.0005653240741726351,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "S",
+      "split": "seen",
+      "We_over_alpha": {
+        "n": 23913,
+        "mean": 0.9990088211922067,
+        "min": 0.33870285199999095,
+        "p01": 0.9748042339484053,
+        "p05": 0.9992318539845281,
+        "p10": 0.9999984499918155,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 120,
+        "0.5": 1,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 23913,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 23913,
+          "premult_RGB_MSE": 0.00280848425040645,
+          "straight_RGB_MSE": 0.0028474354871778954,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 23913,
+          "premult_RGB_MSE": 0.0005355633247366667,
+          "straight_RGB_MSE": 0.0005436702610191939,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 23913,
+          "premult_RGB_MSE": 0.000696371028855162,
+          "straight_RGB_MSE": 0.0007052477269810447,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 23913,
+          "premult_RGB_MSE": 0.0005555595539971886,
+          "straight_RGB_MSE": 0.0005640119574313455,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "S",
+      "split": "held",
+      "We_over_alpha": {
+        "n": 171,
+        "mean": 0.9982293751004309,
+        "min": 0.9457235950159979,
+        "p01": 0.9576011828185041,
+        "p05": 0.9896070051175738,
+        "p10": 1.0,
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 1.0,
+        "p99": 1.0,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 2,
+        "0.5": 0,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 171,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 171,
+          "premult_RGB_MSE": 0.0009280604748068897,
+          "straight_RGB_MSE": 0.0009406028973701356,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 171,
+          "premult_RGB_MSE": 0.0008400637982685508,
+          "straight_RGB_MSE": 0.0008499323059073275,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 171,
+          "premult_RGB_MSE": 0.0004955204298832392,
+          "straight_RGB_MSE": 0.000502432555039838,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 171,
+          "premult_RGB_MSE": 0.0005256357894840695,
+          "straight_RGB_MSE": 0.000533058892480555,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    },
+    {
+      "raw": 110,
+      "source": "S",
+      "split": "unmapped_stable_alpha95",
+      "We_over_alpha": {
+        "n": 56,
+        "mean": 0.8484143022461369,
+        "min": 0.6195407690462302,
+        "p01": 0.6456206879191472,
+        "p05": 0.683527357905952,
+        "p10": 0.7175710655117602,
+        "p25": 0.7677729450793276,
+        "p50": 0.8768240034376996,
+        "p75": 0.9180640803739798,
+        "p90": 0.9544546741924869,
+        "p95": 0.9812563541001659,
+        "p99": 0.9905646193700138,
+        "max": 1.0
+      },
+      "We_over_alpha_below": {
+        "0.95": 49,
+        "0.5": 0,
+        "0.05": 0
+      },
+      "We_over_alpha_above1": 0,
+      "floor": {
+        "pixels": 56,
+        "premult_MAE_lower_proxy": 0.0,
+        "premult_MSE_lower_proxy": 0.0,
+        "straight_MAE_lower_proxy": 0.0,
+        "straight_MSE_lower_proxy": 0.0,
+        "pixels_target_below_readonly": 0,
+        "pixels_target_above_readonly_plus_We": 0,
+        "pixels_any_exact_interval_violation": 0,
+        "pixels_straight_violation_gt1code": 0,
+        "status": "numeric_pointwise_RGB_proxy_only"
+      },
+      "endpoints": [
+        {
+          "arm": "F0",
+          "pixels": 56,
+          "premult_RGB_MSE": 0.0063440957438367935,
+          "straight_RGB_MSE": 0.006453235900486634,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_RGB",
+          "pixels": 56,
+          "premult_RGB_MSE": 0.0010034535241974843,
+          "straight_RGB_MSE": 0.001021470031145751,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_DETAIL",
+          "pixels": 56,
+          "premult_RGB_MSE": 0.0007899185369898976,
+          "straight_RGB_MSE": 0.0008037146447176996,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        },
+        {
+          "arm": "G_ORACLE",
+          "pixels": 56,
+          "premult_RGB_MSE": 0.0011972897513477811,
+          "straight_RGB_MSE": 0.0012241453903119339,
+          "premult_actual_over_floor": null,
+          "straight_actual_over_floor": null,
+          "zero_floor_ratio_policy": "null when proxyfloor iszero; not infinity or successful fit"
+        }
+      ],
+      "teacher_role": "frozen_pseudo_teacher_not_hidden_GT",
+      "held_prior_preexposed": true,
+      "blind_test": false
+    }
+  ],
+  "bindings": [
+    {
+      "raw": 86,
+      "eligible_rows": 89887,
+      "readonly_rows": 62101,
+      "readonly_row_RGB_bitexact": true,
+      "all_nonRGB_fields_exact": true,
+      "basis_original_native_reconstruction_float32_max": 5.960464477539063e-08,
+      "basis_original_native_reconstruction_float64_max": 2.9802322387695312e-08,
+      "algebraic_readonly_vs_independent_native_direct_readonly_max": 3.2782554626464844e-07,
+      "original_constant_probe": {
+        "constant": [
+          0.17,
+          0.53,
+          0.81
+        ],
+        "RGB_max": 6.556510925292969e-07,
+        "direct_readonly_RGB_max": 5.960464477539062e-07,
+        "alpha_exact": true,
+        "joint_K_RGB_max": null
+      },
+      "initial_E0_definition": "actual publicF0 P minus immutable native readonly contribution; algebraic residual, not a newly rendered eligible feature",
+      "initial_P_recomposition_float64_max": 0.0,
+      "initial_E0_lower_interval_violation_max": 4.470348358154297e-08,
+      "initial_E0_upper_interval_violation_max": 0.0,
+      "fresh_F0_eligible_feature_pass": false,
+      "precision_note": "Old native decomposition/constant identity plus byte-exact readonly rows and samecamera/alpha/order qualify reuse. Recomposition of residualE0 is algebraic, not an independent forward proof. Floors remain numerical proxies."
+    },
+    {
+      "raw": 110,
+      "eligible_rows": 89887,
+      "readonly_rows": 62101,
+      "readonly_row_RGB_bitexact": true,
+      "all_nonRGB_fields_exact": true,
+      "basis_original_native_reconstruction_float32_max": 5.960464477539063e-08,
+      "basis_original_native_reconstruction_float64_max": 2.9802322387695312e-08,
+      "algebraic_readonly_vs_independent_native_direct_readonly_max": 3.5762786865234375e-07,
+      "original_constant_probe": {
+        "constant": [
+          0.17,
+          0.53,
+          0.81
+        ],
+        "RGB_max": 6.556510925292969e-07,
+        "direct_readonly_RGB_max": 6.556510925292969e-07,
+        "alpha_exact": true,
+        "joint_K_RGB_max": null
+      },
+      "initial_E0_definition": "actual publicF0 P minus immutable native readonly contribution; algebraic residual, not a newly rendered eligible feature",
+      "initial_P_recomposition_float64_max": 0.0,
+      "initial_E0_lower_interval_violation_max": 5.960464477539063e-08,
+      "initial_E0_upper_interval_violation_max": 0.0,
+      "fresh_F0_eligible_feature_pass": false,
+      "precision_note": "Old native decomposition/constant identity plus byte-exact readonly rows and samecamera/alpha/order qualify reuse. Recomposition of residualE0 is algebraic, not an independent forward proof. Floors remain numerical proxies."
+    }
+  ],
+  "crops": [
+    {
+      "raw": 86,
+      "source": "C",
+      "bbox_xyxy": [
+        766,
+        768,
+        1206,
+        1138
+      ],
+      "selection": "unchanged frozen source-mask bbox+32px; no error-based crop",
+      "actual_seen_context": 41490,
+      "held_stable_context": 18680,
+      "held_world_pre_alpha": 21882,
+      "unqualified_pre_alpha": 30773,
+      "full_pre_alpha": 90943,
+      "held_fraction_of_canonical_source": 0.2965924801431321,
+      "files": [
+        "crops/086_C_readonly_P.png",
+        "crops/086_C_eligible_We_over_alpha.png",
+        "crops/086_C_training_context_overlay.png",
+        "crops/086_C_world_held_overlay.png"
+      ]
+    },
+    {
+      "raw": 86,
+      "source": "S",
+      "bbox_xyxy": [
+        661,
+        950,
+        1146,
+        1145
+      ],
+      "selection": "unchanged frozen source-mask bbox+32px; no error-based crop",
+      "actual_seen_context": 14950,
+      "held_stable_context": 257,
+      "held_world_pre_alpha": 311,
+      "unqualified_pre_alpha": 3131,
+      "full_pre_alpha": 18338,
+      "held_fraction_of_canonical_source": 0.017060727412364914,
+      "files": [
+        "crops/086_S_readonly_P.png",
+        "crops/086_S_eligible_We_over_alpha.png",
+        "crops/086_S_training_context_overlay.png",
+        "crops/086_S_world_held_overlay.png"
+      ]
+    },
+    {
+      "raw": 110,
+      "source": "C",
+      "bbox_xyxy": [
+        710,
+        815,
+        1278,
+        1280
+      ],
+      "selection": "unchanged frozen source-mask bbox+32px; no error-based crop",
+      "actual_seen_context": 86720,
+      "held_stable_context": 35990,
+      "held_world_pre_alpha": 42887,
+      "unqualified_pre_alpha": 46222,
+      "full_pre_alpha": 168932,
+      "held_fraction_of_canonical_source": 0.2892122814234367,
+      "files": [
+        "crops/110_C_readonly_P.png",
+        "crops/110_C_eligible_We_over_alpha.png",
+        "crops/110_C_training_context_overlay.png",
+        "crops/110_C_world_held_overlay.png"
+      ]
+    },
+    {
+      "raw": 110,
+      "source": "S",
+      "bbox_xyxy": [
+        576,
+        1026,
+        1211,
+        1280
+      ],
+      "selection": "unchanged frozen source-mask bbox+32px; no error-based crop",
+      "actual_seen_context": 23913,
+      "held_stable_context": 171,
+      "held_world_pre_alpha": 271,
+      "unqualified_pre_alpha": 12664,
+      "full_pre_alpha": 36748,
+      "held_fraction_of_canonical_source": 0.007456936877442078,
+      "files": [
+        "crops/110_S_readonly_P.png",
+        "crops/110_S_eligible_We_over_alpha.png",
+        "crops/110_S_training_context_overlay.png",
+        "crops/110_S_world_held_overlay.png"
+      ]
+    }
+  ],
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/packets_manifest.json": "727b1263a8a8806ca844ab686670f1b4be3e5e687172ac7da6cacd2844900a8d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/visibility_manifest_r1.json": "a80efa99ac4134eb1cb04ae143c8f00c9055da86e009596d5c17bbfba132bac5",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/final_eval_plan_r1.json": "f56240e36fbed367f3d1739717fb146512edcbda4e3f3040a61eb3e2c392ebcc",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded/road.npz": "241d3a209ec396c757d71bcc40718928c362cd12145bdd517d7cd0753792cb56",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/F0_asset/road.npz": "aa4cdd4f602c3bf9f0ee5e9fd71bfe2711b1a5dd32e615a4b0695fe151396f40",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/permission/final_r1/teacher_evidence.npz": "ca865334020c686304a33ecf1efc72a2a82c29a8669b59f960bbe5f23bdd458f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/previews/roi_manifest.json": "b8a2ee8e8c5beb4f404077922cc5bf897bc8711a7cea3ee936af4e9b0836cf58",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/source_split_r1/086.npz": "38473578af6e89b923d43634b69915a4898687039faf3c5ce9c16cb335fbdff6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/targets/086.npz": "2334b5b12a12b3d79c60516a081ad13ff6eda931189baafbe872197476c0f366",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/native_r1/086/road_basis.npz": "65cef95a8ae52ac494ada165051274d5d6abd1346e4158148130d4c52c56a731",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/F0/086_native.npz": "c6879fe95000d74d7f61253414e9f7d6004f3cc3e135866aff2421e71a0ae15c",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_DETAIL/086_native.npz": "2b5e659046a2d20f192ebf935f2cf66860522afba12dc292f0c0a035589cb9b4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/source_split_r1/110.npz": "4dbf61867df80d37e76afd39144b3483d3580ab24dc00e8b4c0a0ae690c28011",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/targets/110.npz": "ca05b0340345487e2b802175318cf4e11dc16e7ae645c6ccf7728c87144bfc93",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/native_r1/110/road_basis.npz": "05b8bba316fd8d169db6ff2a175dd95cabfd99a229aac45a5244380fb44b1171",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/F0/110_native.npz": "c5afd91d9fe71d1b91271d03d5bcdd49e508b7233ab88132b5515d8888c61e34",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_DETAIL/110_native.npz": "65c2006f56ec560d27204f7c5537c868cedd0e370f9ccc04b24924d7a9836d51",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_RGB/086_native.npz": "d035fbb354a4f964909f96b74d23c354d909486232a934b632bf5ea17a88f628",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_RGB/110_native.npz": "9ebb0455acd8d02adcbe109865d4149a178dbf7814812e5c685b421a1664ea54",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_ORACLE/086_native.npz": "1b6757222b60d244d18dfe12d184dbb3d53ed734e516037c2c89c82c44c97720",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/public1920/export_r1/rendered/G_ORACLE/110_native.npz": "e562b889ff4113521ea74a731bf86340c57bc2ead19f9b976477e975b10e5989"
+  },
+  "readonly_row_RGB_exact": true,
+  "nonRGB_fields": {
+    "active": true,
+    "model_xyz": true,
+    "gaussian_sigma_m": true,
+    "normal_world": true,
+    "road_opacity": true,
+    "model_from_world": true,
+    "meter_to_model": true,
+    "minimum_model_depth": true
+  },
+  "seconds": 12.86992510408163,
+  "code_SHA256": "d9bfa150235951794816e6ed3c33d6ba6a9d3fc97699aec3027650afd27ab6bb",
+  "interval": "readonly_rgb <= premult P <= readonly_rgb+eligible_unit_alphaT perRGB channel, ci in[0,1], fixed ordinaryGS positive weights",
+  "lower_proxy": "distance of alpha*T to this pointwise interval; it relaxes cross-pixel sharedci coupling, RGB only, no HF lower bound",
+  "strict_global_certificate": false,
+  "semantic_ghost_detection": false,
+  "HF_bound_claim": false,
+  "numerical_caveat": "native float32 feature decomposition and constant-color replay errors reported, not a rigorous global error envelope",
+  "endpoint_scope": "F0+3 real formal arms only. IDEAL_ORACLE deliberately uses a different synthetic target and is not ranked against real pseudo teachers.",
+  "overlay_legend": {
+    "green": "actual seen training context",
+    "purple": "actual held stable context",
+    "orange": "inside C/S pre-alpha but outside seen/held stable contexts",
+    "separate_world_overlay": "all canonical2m held world source, including lowalpha; not a new GT split"
+  },
+  "image_units": "native1:1 crops; readonly is premult RGB. We/alpha is clipped0..1 only for grayscale display; numerical ratio is never clipped.",
+  "BUILD_QUERY": "Main arms intentionally exclude new held labels. Full qualitative residual includes held and unqualified areas; it is not an all-labels BUILD capacity result.",
+  "original_evaluation_modified": false,
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0,
+  "human_verdict": null,
+  "production_promoted": false
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "root_verified_native_smoke_qualification.v1",
+  "completed": true,
+  "elapsed_seconds": 520.9650422800332,
+  "phases": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/receipt.json",
+      "sha256": "26ab21c702b0d676a91884c1332d925d3ecaf4139b75689048c93f7b67c5ec76",
+      "elapsed_seconds_key": "total_seconds",
+      "phase_role": "prefix"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/readonly_completion_r1/failed.json",
+      "sha256": "7aaff70e44f8a3b5a2bca76d88759a5a57a1a0e736f7e622f44e8b2a4954231b",
+      "elapsed_seconds_key": "seconds",
+      "phase_role": "readonly_import_failure"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/readonly_completion_r2/receipt.json",
+      "sha256": "15f8a302ae9ed2af4b03a7207a6cf2e4af1f2d4823d113eebd2a9e1c06c54ac7",
+      "elapsed_seconds_key": "additional_readonly_seconds",
+      "phase_role": "readonly_completion"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/missing_paths_r1/failed.json",
+      "sha256": "d390e6e42ee6e40005268cf8210b238493fc5eb5ff0b1512759d60ab9bcecb37",
+      "elapsed_seconds_key": "seconds",
+      "phase_role": "RGB600_boundary_attempt"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/RGB_replay_audit_r1/receipt.json",
+      "sha256": "88ae18514bd04e6c31a9953a61667f212d52fb0fbe40d6ac86766aa81c058ef5",
+      "elapsed_seconds_key": "seconds",
+      "phase_role": "RGB601_numeric_audit"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/I_completion_r1/receipt.json",
+      "sha256": "06ab1821a0488baad0a0e8095f63b58ddefda008204a6a57c7c817eb8ee6c3f7",
+      "elapsed_seconds_key": "seconds",
+      "phase_role": "I_completion"
+    }
+  ],
+  "checks": {
+    "shared_restore": true,
+    "RGB600_boundary": true,
+    "idealI_restore": true,
+    "public1920_fiveview": true,
+    "K": true
+  },
+  "raw_time_gate_failures_preserved": true,
+  "raw_mixed_unit_assertion_preserved": true,
+  "formal_updates": 0,
+  "formal_warm_start": false,
+  "fiveview_readonly_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/smoke_r1/readonly_completion_r2/receipt.json",
+  "scope": "actual native lifecycle qualification only; does not imply road image quality PASS",
+  "GPU_keep_on": true,
+  "queue_forecast": {
+    "maximum_registered_updates": 7400,
+    "observed_seconds_per_update": 0.1025440564468503,
+    "slowdown_factor": 3,
+    "extra_IO_seconds": 300,
+    "upper_estimate_seconds": 2576.4780531200768,
+    "reason": "registered below-one-hour lifecycle branch; do not fill time with unrelated/repeated work"
+  }
+}

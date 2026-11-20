@@ -1,0 +1,204 @@
+{
+  "schema": "native_fixed_GS_capacity_protocol.v1",
+  "purpose": "Reach and measure a practical conditional color-representation limit of the existing ordinary road GS, without validation-driven hyperparameter search.",
+  "user_authorization": "2026-11-20: proceed autonomously according to new findings, aim for3DGS representation limit, do not overfit/tune; keepGPUon.",
+  "interpretation": {
+    "ceiling": "same fixed geometry/covariance/opacity/scope and registered convex image objective; not a universal3DGS or perceptual optimum theorem",
+    "visual_acceptance": "multi-axis frozen quality bench, not optimization convergence or a low color MAE",
+    "primary_reader": "physical Sigma GH31 world-field average to oneRGB perGaussian, actual native1920 raster; pixel-world shader is endpoint diagnostic only"
+  },
+  "frozen": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_activation_20261118_r1/B32_beam95_native_r1/asset_guarded",
+    "active_rows": 151988,
+    "eligible_color_rows": 89887,
+    "geometry": true,
+    "scales": true,
+    "opacity": true,
+    "activation": true,
+    "static": true,
+    "dynamic": true,
+    "environment": true,
+    "cameras": true,
+    "diffusion_and_shadow_teachers": true,
+    "no_TRELLIS": true,
+    "no_density_or_geometry_sweep_this_phase": true
+  },
+  "data": {
+    "frames": [
+      86,
+      110
+    ],
+    "native_resolution": [
+      1920,
+      1280
+    ],
+    "teacher_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/targets",
+    "A": "real visible RGB",
+    "C": "frozen hole pseudo teacher, not hidden-road truth",
+    "S": "frozen target-shadow pseudo teacher",
+    "train_split_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/source_split_r1",
+    "split": "2m worldXY cells at origin0, SHA256(scene065|101|bx|by) first8bytes big-endian modulo5==0 held, no salt retries",
+    "new_label_exclusion": "seen-only context/score for all normalization and updates; HF/Sobel kernels only consume seen-context labels",
+    "held": "prior-conditioned spatial residual-learning diagnostic, NOT blind; old A0/A200/routing previously saw both teachers",
+    "local_coupling": "physical GS Sigma and shared-field halo may transfer updates across held boundaries; no parameter-isolation claim",
+    "validation_policy": "never choose step, learning rate, loss weight, frequency, or checkpoint using held or diagnostic quality",
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "diagnostic_no_hidden_road_GT": true,
+    "inherited199BUILD_not_blind": true
+  },
+  "init": {
+    "field": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/formal_r1/avg_common_A200/field.pt",
+    "low": "exact old avg A200",
+    "high": "exact zero, no oldM11H warm start",
+    "permission": "explicit final teacher mH_union, not overwritten by A200 original buffers",
+    "common_ci0": "same physicalSigma read of L_A200/H0, readonly parent ci exact"
+  },
+  "shared_parameterization": {
+    "low_spacing_m": 0.12,
+    "high_spacing_m": 0.02,
+    "low_bound": 0.3,
+    "high_bound": 0.34,
+    "H": "0.17*(tanh(Hraw)-Gaussian_sigma3cells(tanh(Hraw))); original finite support and teacher output gate",
+    "extra_H_lowpass": "none: native source footprints are anisotropic and minor axes commonly below lattice texel; physicalSigma integrates actualGS footprints",
+    "gradients": "only low/high fields; readonly rows stay exact",
+    "private_world_regularizers": false
+  },
+  "objective": {
+    "common_module": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/code/native_capacity_loss.py",
+    "signal": "E=(native premult roadP - fixedalpha*T)*fixedInvAlpha on commonalpha>=.95; fixed inverse<=1/.95, no low-opacity optimization division",
+    "domains": "A/C/S independently normalized on fixed seen score/core, full pre-alpha coverage denominator retained in evaluation",
+    "source_weights": {
+      "A": 1.0,
+      "C": 0.5,
+      "S": 1.0
+    },
+    "frames": "full batch both views equally weighted peraccepted update",
+    "terms": [
+      "RGB squared",
+      "mean of signed mask-safeHF squared at sigma1/2/4 native pixels",
+      "signed two-direction SobelRGB squared"
+    ],
+    "term_normalization": "one-shot perview/source/component initialci0 residual mean-square, lowerbounded(1/255)^2; no held labels/statistics",
+    "weights": {
+      "RGB": 1.0,
+      "HF": 1.0,
+      "SOBEL": 1.0
+    },
+    "field_RGB": "RGBterm only; same init/parameterization/schedule",
+    "field_DETAIL": "RGB+HF+SOBEL",
+    "oracle": "same DETAIL dataobjective in the relaxed bounded independentci space",
+    "convexity": "only oracle ci and fixed affine native rendering; field tanh/clamp parameterization not convex"
+  },
+  "arms": {
+    "G_RGB": {
+      "type": "shared_field",
+      "steps": 1200,
+      "H_only_steps": 600,
+      "joint_LH_steps": 600,
+      "loss": "rgb",
+      "optimizer": {
+        "name": "Adam",
+        "low_lr": 0.01,
+        "high_lr": 0.003,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      }
+    },
+    "G_DETAIL": {
+      "type": "shared_field",
+      "steps": 1200,
+      "H_only_steps": 600,
+      "joint_LH_steps": 600,
+      "loss": "detail",
+      "optimizer": {
+        "name": "Adam",
+        "low_lr": 0.01,
+        "high_lr": 0.003,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      }
+    },
+    "G_ORACLE": {
+      "type": "independent_box_ci_capacity_control",
+      "max_accepted_steps": 2000,
+      "loss": "detail",
+      "solver": "monotone projected gradient with quadratic-majorization backtracking",
+      "recipe": {
+        "L0": 1.0,
+        "backtrack_factor": 2.0,
+        "trial_decrease": 2.0,
+        "max_backtracks": 30,
+        "comparison_atol": 2e-05
+      },
+      "stopping": "at checks every100steps, measuredFWgap/max(objective,1e-3)<=.01; this is a numeric diagnostic, not a strict certificate without global gradient error bound",
+      "continuation": "one exact2000-step continuation if not numerically converged; cap4000accepted total, no LR/loss/split change",
+      "promotion": "not automatically promoted; seen-color relaxation only, held and novel-view failures retained"
+    },
+    "IDEAL_ORACLE": {
+      "type": "world_consistent_12cm_structure_capacity_control",
+      "max_accepted_steps": 1000,
+      "loss": "detail",
+      "target_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/ideal_world_control_r2",
+      "case": "marking_w120",
+      "qualified_numeric_gate_required": true,
+      "source_spec": {
+        "I": 1.0
+      },
+      "source_I": "union of legal A/C/S source regions, known analytic synthetic material, not realA labels",
+      "target": "readonly_roadRGB + actualeligible_road_alphaT * independent continuousworld ideal_pixelAA; never multiplypremult targetalpha twice",
+      "context": "known available worldfunction, source legal region, roadalpha>=.95 and eligible roadWe>=.95",
+      "supervision": "all qualified analytic source pixels; these analytic labels are open, not held generalization or real hiddenGT",
+      "comparison": "conditional mechanism control, not a fourth method ranked against realteacher validation",
+      "structural_gate": "existing0.90 contrast retention for12cmpaint separately measured; loss optimum alone cannot prove no boxci passes this gate"
+    }
+  },
+  "engineering": {
+    "preflight": "8F/2B zero parameterupdates already separate, zeroL/H engineeringinitial not formalci0",
+    "profile": "onebounded full-objective checkpoint/replay/stage-entry/persistence profile; discard states",
+    "long_smoke": "if conservative whole formalqueue estimate is about1hour or longer, run about10min actual lifecycle smoke beforeformal; count all duplicate/engineering steps separately",
+    "short_smoke": "if demonstrably below1hour, complete realnative backward+CSRCUDA+save/eval/completeAdam+solverRNG restore+nextstep+BtoC+persistentreload; CPUtests never replace it",
+    "engineering_fixes": "preserve failed directories, exact-state restore or cleanreplay, keep methods/budgets unchanged; record extra calls and source revisions"
+  },
+  "evaluation": {
+    "bench": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/metrics/road_detail_metrics.py",
+    "steps": "report fixed final endpoints; intermediate checkpoints are diagnostic only, no best-val selection",
+    "masks": "train seen / prior-conditioned held / fullprealpha coverage separately",
+    "real_native_views": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "K": "fresh actual1920 per-view mask/weight and finalRGB protection; never copy screen pixels or silently shrinkscope",
+    "persistence": "each arm emits effective boundedci and unchanged geometry/provenance plus common reader/fieldstate as applicable; public reload before allfinal eval",
+    "no_supervised_signal_for_Gs_missing_or_static_residual": "report these independently, do not hide them in material-only score",
+    "acceptance": "no blanketqualityPASS fromconvex gap; vector detail+falseHF+edge+realpaint+coverage+K+jointscene evidence retained"
+  },
+  "anti_tuning": {
+    "seeds": [
+      101
+    ],
+    "hyperparameter_sweeps": 0,
+    "validation_selected_steps": false,
+    "extra_automatic_fallbacks": 0,
+    "representation_scope_changes": "none in primaryphase; any future density change needs an explicitly source-defined recipe, newK/coverage proof and separate comparison, never a silent retry"
+  },
+  "GPU_keep_on": true,
+  "paths": {
+    "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1",
+    "local": "outputs/road_native_capacity_20261120_r1"
+  }
+}

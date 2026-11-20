@@ -1,0 +1,399 @@
+{
+  "schema": "native_capacity_source_preparation_audit.v1",
+  "complete": true,
+  "frames": [
+    {
+      "raw": 86,
+      "domains": {
+        "A": {
+          "seen": {
+            "expected": 88752,
+            "ideal_available": 88303,
+            "We_zero": 19345,
+            "nontrivial_We_ge95": 57669,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "held": {
+            "expected": 6010,
+            "ideal_available": 5955,
+            "We_zero": 2571,
+            "nontrivial_We_ge95": 2558,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 545268,
+            "ideal_available": 0,
+            "We_zero": 538366,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        },
+        "C": {
+          "seen": {
+            "expected": 51896,
+            "ideal_available": 45944,
+            "We_zero": 11894,
+            "nontrivial_We_ge95": 32568,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 2659,
+                "paint_fraction_gt05": 556,
+                "flat_paint_fraction_ge95": 318
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 5116,
+                "paint_fraction_gt05": 1126,
+                "flat_paint_fraction_ge95": 762
+              }
+            }
+          },
+          "held": {
+            "expected": 21882,
+            "ideal_available": 20526,
+            "We_zero": 2077,
+            "nontrivial_We_ge95": 17683,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 1937,
+                "paint_fraction_gt05": 527,
+                "flat_paint_fraction_ge95": 347
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 3979,
+                "paint_fraction_gt05": 1129,
+                "flat_paint_fraction_ge95": 895
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 17165,
+            "ideal_available": 0,
+            "We_zero": 16429,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        },
+        "S": {
+          "seen": {
+            "expected": 17918,
+            "ideal_available": 17918,
+            "We_zero": 13,
+            "nontrivial_We_ge95": 14755,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 1327,
+                "paint_fraction_gt05": 642,
+                "flat_paint_fraction_ge95": 479
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 2636,
+                "paint_fraction_gt05": 1292,
+                "flat_paint_fraction_ge95": 1133
+              }
+            }
+          },
+          "held": {
+            "expected": 311,
+            "ideal_available": 311,
+            "We_zero": 0,
+            "nontrivial_We_ge95": 257,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 109,
+            "ideal_available": 0,
+            "We_zero": 0,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        }
+      },
+      "box_convergence": {
+        "source_only_rows": 254,
+        "common_available_rows": 242,
+        "selection": "seed101128canonical rows + up to64 analytic paint rows per width at fixed We>=.95",
+        "reference": "same trueG_s local pixel-box with density16, not a new training case or density-refined GS",
+        "candidate_density_override": null,
+        "rowmax_RGB_p99": 0.0009281248776412383,
+        "rowmax_RGB_max": 0.005410723055650268,
+        "pass_p99_1code_max4code": true,
+        "reference_quadrature": {
+          "points": 42750,
+          "max_points_per_pixel": 1910,
+          "density": 16.0
+        }
+      }
+    },
+    {
+      "raw": 110,
+      "domains": {
+        "A": {
+          "seen": {
+            "expected": 186362,
+            "ideal_available": 186085,
+            "We_zero": 39630,
+            "nontrivial_We_ge95": 105936,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "held": {
+            "expected": 9618,
+            "ideal_available": 9544,
+            "We_zero": 3349,
+            "nontrivial_We_ge95": 3443,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 362346,
+            "ideal_available": 0,
+            "We_zero": 351253,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        },
+        "C": {
+          "seen": {
+            "expected": 105402,
+            "ideal_available": 98805,
+            "We_zero": 16518,
+            "nontrivial_We_ge95": 69551,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 6769,
+                "paint_fraction_gt05": 1731,
+                "flat_paint_fraction_ge95": 1131
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 13120,
+                "paint_fraction_gt05": 3520,
+                "flat_paint_fraction_ge95": 2714
+              }
+            }
+          },
+          "held": {
+            "expected": 42887,
+            "ideal_available": 40856,
+            "We_zero": 3884,
+            "nontrivial_We_ge95": 33372,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 3856,
+                "paint_fraction_gt05": 979,
+                "flat_paint_fraction_ge95": 645
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 7888,
+                "paint_fraction_gt05": 2102,
+                "flat_paint_fraction_ge95": 1655
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 20643,
+            "ideal_available": 0,
+            "We_zero": 19506,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        },
+        "S": {
+          "seen": {
+            "expected": 36071,
+            "ideal_available": 36031,
+            "We_zero": 256,
+            "nontrivial_We_ge95": 23721,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 1911,
+                "paint_fraction_gt05": 925,
+                "flat_paint_fraction_ge95": 673
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 3762,
+                "paint_fraction_gt05": 1870,
+                "flat_paint_fraction_ge95": 1634
+              }
+            }
+          },
+          "held": {
+            "expected": 271,
+            "ideal_available": 271,
+            "We_zero": 0,
+            "nontrivial_We_ge95": 167,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          },
+          "unmapped": {
+            "expected": 406,
+            "ideal_available": 0,
+            "We_zero": 0,
+            "nontrivial_We_ge95": 0,
+            "paint": {
+              "marking_w120": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              },
+              "marking_w240": {
+                "resolved_corridor_nontrivial": 0,
+                "paint_fraction_gt05": 0,
+                "flat_paint_fraction_ge95": 0
+              }
+            }
+          }
+        }
+      },
+      "box_convergence": {
+        "source_only_rows": 256,
+        "common_available_rows": 243,
+        "selection": "seed101128canonical rows + up to64 analytic paint rows per width at fixed We>=.95",
+        "reference": "same trueG_s local pixel-box with density16, not a new training case or density-refined GS",
+        "candidate_density_override": null,
+        "rowmax_RGB_p99": 0.0007897158859219576,
+        "rowmax_RGB_max": 0.0010086401172249015,
+        "pass_p99_1code_max4code": true,
+        "reference_quadrature": {
+          "points": 37189,
+          "max_points_per_pixel": 7398,
+          "density": 16.0
+        }
+      }
+    }
+  ],
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/source_split_r1/086.npz": "38473578af6e89b923d43634b69915a4898687039faf3c5ce9c16cb335fbdff6",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/ideal_world_control_r2/086.npz": "40c95e7a6e7d460a55d8bd0ae3c6f7271b0aa3fb561fa8ef8e29b84c0be4eef4",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/maps/086.npz": "aef46d53fb0b5f848ff27e27135ecee0163451091c00e189a2727920ba401639",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/source_split_r1/110.npz": "4dbf61867df80d37e76afd39144b3483d3580ab24dc00e8b4c0a0ae690c28011",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/qa/ideal_world_control_r2/110.npz": "eaa9e1e99ba953762826a9104629c30eaf3e17c414e9fae2f22d4a3064d2689d",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/quality_bench_20261120_r1/highres/maps/110.npz": "e9d0c081e9f3e062c6065d0deebe5a98655333e09461d14e6aacbe6d2fc23489"
+  },
+  "seconds": 3.0342528484761715,
+  "numeric_qualified": true,
+  "full_target_qualified": true,
+  "source_note": "Native target labels were not used to choose the world split. Ideal paint labels are known analytic synthetic controls, not measured-road GT.",
+  "comparison_note": "We0/low-weight targets are trivial/weak and cannot establish meaningful marking expressivity. All full domain counts remain shown.",
+  "actual_training_held_label_isolation": "not yet executed; small CPU fixture passed. Controller must consume seen masks and mask-before-filter.",
+  "GPU_executed": false,
+  "native_calls": 0,
+  "optimizer_updates": 0
+}

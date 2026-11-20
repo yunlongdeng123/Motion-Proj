@@ -1,0 +1,100 @@
+{
+  "schema": "same_objective_box_numerical_completion.v1",
+  "arm": "G_NUMERIC",
+  "root_authorization": "2026-11-20 root approved unique target-preserving numerical completion, actualshort smoke<=20FG then fresh2000FG; no held or I extension",
+  "source_main_protocol": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/protocol.json",
+  "source_main_protocol_sha256": "998821a8f6f6a7d5febdb186aa8d86f75d2de02c31be024fcd302c6892b53064",
+  "main_four_arms_unchanged": true,
+  "seed": {
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/formal_r1/G_DETAIL/asset",
+    "road_sha256": "20ce9fc77f60e7851c8d9e804eff7838b457ec35d759bcb381354aeee9fb9cac",
+    "choice": "fixed before held evaluation, not selected by held quality"
+  },
+  "original_normalizers": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/formal_r1/common_loss_snapshot.json",
+    "sha256": "7db80fc48f6c8e48fcb5d828bd3f3789a0f15fc4dd998bc17596a257fa166f11",
+    "recalibration": false
+  },
+  "constraints": {
+    "active_rows": 151988,
+    "eligible_rows": 89887,
+    "ci_box": [
+      0,
+      1
+    ],
+    "geometry": true,
+    "opacity": true,
+    "scales": true,
+    "activation": true,
+    "cameras": true,
+    "all_other_scene": true
+  },
+  "solver": {
+    "name": "SciPy1.13.1 reverse communication L-BFGS-B",
+    "m": 10,
+    "maxls": 20,
+    "factr": 10000000.0,
+    "pgtol": 1e-08,
+    "maxFG": 2000
+  },
+  "solver_ABI": {
+    "version": "1.13.1",
+    "binary": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/scipy/optimize/_lbfgsb.cpython-39-x86_64-linux-gnu.so",
+    "sha256": "63d959ac8b65cfb32c86ce736d484bea36d50e664911409abfe8bc5a9bed57d0"
+  },
+  "precision": {
+    "native_and_E_Gaussian_Sobel": "originalFP32 unchanged",
+    "square_mean_scalar": "FP64",
+    "source_coefficients_and_normalizers": "exact original",
+    "qualification": {
+      "same_prediction": true,
+      "fixed_point": "G_DETAIL finalci",
+      "function_relative_max": 1e-06,
+      "gradient_L2_relative_max": 1e-05,
+      "unsafe": "stop and repair; no image/held-driven precision choice"
+    }
+  },
+  "stop": {
+    "relative_measured_training_FW_gap": 0.01,
+    "hard_cap_FG": 2000,
+    "internal_termination_unmet_FW": "numeric inconclusive; no automatic restart or sweep",
+    "strict_negative_certificate": false
+  },
+  "checkpoint": {
+    "arrays": [
+      "x",
+      "l",
+      "u",
+      "nbd",
+      "f",
+      "g",
+      "wa",
+      "iwa",
+      "task",
+      "csave",
+      "lsave",
+      "isave",
+      "dsave"
+    ],
+    "RNG": "Python/NumPy/TorchCPU/allCUDA",
+    "actual_cross_process_restore": true,
+    "checkpoints_at": "NEW_X",
+    "semantic_and_native_replay_units_separate": true
+  },
+  "smoke": {
+    "total_FG_cap": 20,
+    "includes_precision_reference_and_replay": true,
+    "formal_uses_no_smoke_state": true
+  },
+  "export": {
+    "point": "last accepted NEW_X",
+    "best_evaluated_point": "reported as feasible training witness only",
+    "authority": "BoundedGSColors",
+    "public_5views": "independent<=40F/0updates"
+  },
+  "no_TRELLIS": true,
+  "no_held_read": true,
+  "no_loss_LR_frequency_sweep": true,
+  "production_scene_modified": false,
+  "GPU_keep_on": true
+}
