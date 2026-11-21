@@ -23,3 +23,5 @@
 ## ROAD-GAUSSIAN-TRANSFER-20261122
 
 065相似路面高斯迁移已完成原资产/零步迁移/局部拟合400步及五视角公共重载。[算法、组件、结果与来源](autoresearch/road_gaussian_transfer_20261122/README.md)。采用局部保距三维路块与完整协方差旋转，新增扩散0次；smoke10和恢复探针2次丢弃。零步到拟合的固定C/S覆盖改善、保护区RGB/alpha差0；覆盖仍弱于原资产，细裂缝、短缺口和joint车形残留仍在，未晋升默认资产，human_verdict/problem_solved=null。原报告增加实验组，资产/完整状态取回，GPU按用户要求保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+源质量补充 `ROAD-GAUSSIAN-SOURCE-QUALITY-20261122`：[原尺寸核查与固定源RGB控制](autoresearch/road_gaussian_source_quality_20261122/README.md)。1920原生核心确认当前源块存在弱纹理对应；仅核心RGB、真实照片98/137训练400步后，本次未拟合的86/110/173查询细高频对应均下降，86颜色误差也回退。因此暂停搬运这份源修复候选，不增加目标更新或扩散；完整源几何/尺度重建尚未测试，不据此物理否定全部搬运方法。最终资格掩码重放与旧工程臂分账、资产取回验证完成，人工verdict/problem_solved保持null，GPU按用户要求开机。

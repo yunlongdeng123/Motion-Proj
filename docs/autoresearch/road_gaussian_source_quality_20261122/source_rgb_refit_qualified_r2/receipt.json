@@ -1,0 +1,371 @@
+{
+  "complete": true,
+  "contract": {
+    "task": "SOURCE-RGB-REFIT-20261122",
+    "source": "patch_00",
+    "train_frames": [
+      98,
+      137
+    ],
+    "query_frames": [
+      86,
+      110,
+      173
+    ],
+    "steps": 400,
+    "optimizer": "Adam",
+    "RGB_lr": 0.01,
+    "source_prior_MSE_weight": 0.0001,
+    "render_wh": [
+      1920,
+      1280
+    ],
+    "loss": "Equal train-view mean MSE of effective isolated native RGB on fixed eroded source core, initial alpha>=.95 AND qualified original-photo road/dynamic/shadow mask, plus RGB fidelity prior",
+    "trainable": "RGB of source core Gaussians only; halo RGB and all geometry/opacity/sigma frozen",
+    "source_selection_used_historical_BUILD": true,
+    "query_is_not_blind_benchmark": true,
+    "new_diffusion_calls": 0,
+    "target_transfer_updates": 0,
+    "source_full_3D_reconstruction": false,
+    "hyperparameter_search": false,
+    "human_verdict": null
+  },
+  "original": [
+    {
+      "raw": 98,
+      "role": "TRAIN",
+      "score_n": 4790,
+      "RGB_MAE": 0.012211930006742477,
+      "RGB_MSE": 0.00023269219673238695,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.007540549151599407,
+          "HF_RMS_ratio": 1.6494083404541016
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.011679457500576973,
+          "HF_RMS_ratio": 1.4554924964904785
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.053675346076488495,
+          "HF_RMS_ratio": 1.248655080795288
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1381,
+        1115,
+        1657,
+        1186
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/original/098"
+    },
+    {
+      "raw": 137,
+      "role": "TRAIN",
+      "score_n": 7501,
+      "RGB_MAE": 0.03325223550200462,
+      "RGB_MSE": 0.0013142499374225736,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.02748483046889305,
+          "HF_RMS_ratio": 2.4710140228271484
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.03374417498707771,
+          "HF_RMS_ratio": 2.2644083499908447
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.06814700365066528,
+          "HF_RMS_ratio": 1.9315619468688965
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1444,
+        1183,
+        1766,
+        1269
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/original/137"
+    },
+    {
+      "raw": 86,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 2309,
+      "RGB_MAE": 0.01541666779667139,
+      "RGB_MSE": 0.000299306761007756,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.1626511961221695,
+          "HF_RMS_ratio": 1.0855847597122192
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.2658589482307434,
+          "HF_RMS_ratio": 0.9718952775001526
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.4522625803947449,
+          "HF_RMS_ratio": 0.8779348134994507
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1303,
+        1037,
+        1525,
+        1093
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/original/086"
+    },
+    {
+      "raw": 110,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 6191,
+      "RGB_MAE": 0.021768778562545776,
+      "RGB_MSE": 0.0005879565724171698,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.09190601855516434,
+          "HF_RMS_ratio": 1.948656439781189
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.13887229561805725,
+          "HF_RMS_ratio": 1.7384532690048218
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.23096105456352234,
+          "HF_RMS_ratio": 1.4852415323257446
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1412,
+        1151,
+        1710,
+        1230
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/original/110"
+    },
+    {
+      "raw": 173,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 7487,
+      "RGB_MAE": 0.03357236459851265,
+      "RGB_MSE": 0.0013250530464574695,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.03304431587457657,
+          "HF_RMS_ratio": 2.4651663303375244
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.05195764824748039,
+          "HF_RMS_ratio": 2.2662980556488037
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.10043702274560928,
+          "HF_RMS_ratio": 1.9605786800384521
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1443,
+        1181,
+        1765,
+        1267
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/original/173"
+    }
+  ],
+  "refit": [
+    {
+      "raw": 98,
+      "role": "TRAIN",
+      "score_n": 4790,
+      "RGB_MAE": 0.011420142836868763,
+      "RGB_MSE": 0.00016826539649628103,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.31441113352775574,
+          "HF_RMS_ratio": 0.7007503509521484
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.38680124282836914,
+          "HF_RMS_ratio": 0.7375014424324036
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.4960835874080658,
+          "HF_RMS_ratio": 0.8228062987327576
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1381,
+        1115,
+        1657,
+        1186
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/refit/098"
+    },
+    {
+      "raw": 137,
+      "role": "TRAIN",
+      "score_n": 7501,
+      "RGB_MAE": 0.011816552840173244,
+      "RGB_MSE": 0.00018799220561049879,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.18211619555950165,
+          "HF_RMS_ratio": 1.1076936721801758
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.22100460529327393,
+          "HF_RMS_ratio": 1.1458454132080078
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.30342650413513184,
+          "HF_RMS_ratio": 1.2004512548446655
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1444,
+        1183,
+        1766,
+        1269
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/refit/137"
+    },
+    {
+      "raw": 86,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 2309,
+      "RGB_MAE": 0.03514266386628151,
+      "RGB_MSE": 0.0013635832583531737,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": -0.005128819029778242,
+          "HF_RMS_ratio": 0.6430559158325195
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.009996388107538223,
+          "HF_RMS_ratio": 0.6706796288490295
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.06403610855340958,
+          "HF_RMS_ratio": 0.7374342679977417
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1303,
+        1037,
+        1525,
+        1093
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/refit/086"
+    },
+    {
+      "raw": 110,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 6191,
+      "RGB_MAE": 0.006983295548707247,
+      "RGB_MSE": 8.135021198540926e-05,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": 0.021631183102726936,
+          "HF_RMS_ratio": 0.9278514385223389
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": 0.04400165379047394,
+          "HF_RMS_ratio": 0.9810695052146912
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.13501621782779694,
+          "HF_RMS_ratio": 1.0648298263549805
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1412,
+        1151,
+        1710,
+        1230
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/refit/110"
+    },
+    {
+      "raw": 173,
+      "role": "QUERY_not_fit_this_run",
+      "score_n": 7487,
+      "RGB_MAE": 0.013236158527433872,
+      "RGB_MSE": 0.00025327116600237787,
+      "spectral": [
+        {
+          "sigma_native_px": 1.2,
+          "HF_cosine": -0.019030705094337463,
+          "HF_RMS_ratio": 1.1560473442077637
+        },
+        {
+          "sigma_native_px": 1.6666666666666667,
+          "HF_cosine": -0.016374662518501282,
+          "HF_RMS_ratio": 1.2082380056381226
+        },
+        {
+          "sigma_native_px": 3.0,
+          "HF_cosine": 0.04790104553103447,
+          "HF_RMS_ratio": 1.2883961200714111
+        }
+      ],
+      "alpha_exact": true,
+      "bbox_xyxy": [
+        1443,
+        1181,
+        1765,
+        1267
+      ],
+      "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/refit/173"
+    }
+  ],
+  "nativeF": 827,
+  "nativeB": 812,
+  "formal_optimizer_updates": 400,
+  "discarded_smoke_and_restore_updates": 6,
+  "formal_seconds": 10.819126844406128,
+  "resume_next_step_max_abs": 5.960464477539063e-08,
+  "source_core_color_parameters": 4794,
+  "geometry_scales_opacity_unchanged": true,
+  "original_asset_modified": false,
+  "source_asset_rebuilt": false,
+  "target_migration_executed": false,
+  "new_diffusion_calls": 0,
+  "human_verdict": null,
+  "production_promoted": false
+}

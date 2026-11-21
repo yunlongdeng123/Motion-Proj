@@ -1,0 +1,30 @@
+{
+  "task": "SOURCE-RGB-REFIT-20261122",
+  "source": "patch_00",
+  "train_frames": [
+    98,
+    137
+  ],
+  "query_frames": [
+    86,
+    110,
+    173
+  ],
+  "steps": 400,
+  "optimizer": "Adam",
+  "RGB_lr": 0.01,
+  "source_prior_MSE_weight": 0.0001,
+  "render_wh": [
+    1920,
+    1280
+  ],
+  "loss": "Equal train-view mean MSE of effective isolated native RGB on fixed eroded source core, initial alpha>=.95 AND qualified original-photo road/dynamic/shadow mask, plus RGB fidelity prior",
+  "trainable": "RGB of source core Gaussians only; halo RGB and all geometry/opacity/sigma frozen",
+  "source_selection_used_historical_BUILD": true,
+  "query_is_not_blind_benchmark": true,
+  "new_diffusion_calls": 0,
+  "target_transfer_updates": 0,
+  "source_full_3D_reconstruction": false,
+  "hyperparameter_search": false,
+  "human_verdict": null
+}

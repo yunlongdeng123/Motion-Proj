@@ -1,0 +1,231 @@
+{
+  "schema": "source_quality_compact_restore.v1",
+  "complete": true,
+  "run_id": "road_gaussian_source_quality_20261122_r1",
+  "original_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1",
+  "archive": {
+    "remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/archives/road_gaussian_source_quality_20261122_r1_curated_20261121T193451Z.tar.gz",
+    "filename": "road_gaussian_source_quality_20261122_r1_curated_20261121T193451Z.tar.gz",
+    "bytes": 30844889,
+    "sha256": "51fca43a0c6aa037617d5309fd633a9a2fec976fdceabbcda4cc52c14940383c",
+    "remote_gzip_CRC_passed": true,
+    "remote_tar_readable": true,
+    "tar_members": 283,
+    "tar_payload_SHA_checked": 282,
+    "packaged_manifest": "The internal manifest is the pre-archive snapshot; external manifest adds archive SHA/CRC without a hash cycle."
+  },
+  "selected_final_output": "run/source_rgb_refit_qualified_r2",
+  "nonadopted_outputs": [
+    "run/source_rgb_refit",
+    "run/source_rgb_refit_qualified"
+  ],
+  "cumulative_resources": {
+    "nativeF": 1663,
+    "nativeB": 1624,
+    "actual_optimizer_updates": 812,
+    "final_formal_optimizer_updates": 400,
+    "nonadopted_or_smoke_restore_updates": 412,
+    "completed_native_contexts": 4,
+    "native_context_wall_seconds": 40.3625648021698,
+    "target_transfer_updates": 0,
+    "new_diffusion_calls": 0,
+    "power_operations": 0
+  },
+  "native_checkpoint_state": "RGB of1598 source-core Gaussians, Adam state, step and contract; geometry/sigma/opacity/halo RGB supplied by unchanged original source packet and parent native asset.",
+  "restore_steps": [
+    "在新目录解包本档并校验files清单。此档保存最终源packet、400步checkpoint、0步initial、4步smoke和两种工程现场；不是新完整scene asset。",
+    "先恢复prior_archive中的原始R2 parent persistent资产、source_selection、native_scene输入和轻量依赖代码；完整static/dynamic/environment权重及engine按外部依赖保持可用。",
+    "优先保持原绝对路径或创建明确路径映射。将run映射到original_root，将inputs/source_bank映射到原BANK；原照片5帧和对应obs/calib均包含。",
+    "code/render_source1920.py的PRIOR及code/refit_source_rgb.py的ROOT/OUT是绝对run路径。重定位时仅在新代码副本改路径，映射source packet路径、photo mask路径和native helper动态加载路径；保留未改原件。",
+    "调用原parent persistent loader前按prior restore manifest重绑定scene.json/proof.json和static_opacity.pt的绝对路径/哈希绑定，并验证public reload；不修改场景或冻结几何数据。",
+    "恢复最终checkpoint.pt的RGB与Adam state和step=400；按原source packet的core_mask/world_row_ids映射1598行。initial_state保存原RGB，smoke_checkpoint保存step4的非空Adam。完整scene base来自原R2 parent，halo及全部几何/σ/opacity冻结。",
+    "恢复验证记录为两独立下一步RGB最大差5.960464477539063e-8，合同容差1e-7；不得称逐位相等。原脚本默认拒绝复写已有OUT，恢复/继续必须使用新目录。",
+    "本归档与checkpoint仅表示源RGB诊断；production_promoted=false，无新目标迁移和扩散。"
+  ],
+  "path_prefix_map": [
+    [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1",
+      "run"
+    ],
+    [
+      "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs",
+      "inputs/source_bank"
+    ],
+    [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/source_selection",
+      "dependencies/source_selection"
+    ],
+    [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/code/native.py",
+      "dependencies/road_gaussian_transfer_r2/code/native.py"
+    ],
+    [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_adaptive_20261121_r1/code/run_adaptive.py",
+      "dependencies/road_surface_adaptive_20261121_r1/code/run_adaptive.py"
+    ]
+  ],
+  "prior_archive": {
+    "remote_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/archives/road_gaussian_transfer_20261122_r2_isometric_curated_20261121T184424Z.tar.gz",
+    "filename": "road_gaussian_transfer_20261122_r2_isometric_curated_20261121T184424Z.tar.gz",
+    "bytes": 672878123,
+    "sha256": "68c9bfc9741c0c5cac30446249d6d2bc37a3584e3e7764367a390803e8af2bc2",
+    "remote_full_gzip_CRC_passed": true,
+    "remote_tar_readable": true,
+    "tar_members": 3807,
+    "asset_files_hash_checked_inside_tar": 27,
+    "packaged_manifest": "restore_manifest.json inside archive has the same snapshot records; archive-level and local-delivery verification are added only to this external manifest to avoid a self-hash cycle."
+  },
+  "parent_asset": {
+    "role": "original_R2_parent",
+    "archive_path": "run/parent/asset",
+    "manifest_sha256": "85f730e3b834703d4a3d57cc4a31aebc6b9b081937c16f4c931ac88873d14946",
+    "key_files": [
+      {
+        "path": "run/parent/asset/persistent/proof.json",
+        "bytes": 2687,
+        "sha256": "684973c593b6064b9f6d1c1e0537fb2476307962d9c8ec26d3a853ac555921ec"
+      },
+      {
+        "path": "run/parent/asset/persistent/scene.json",
+        "bytes": 84003,
+        "sha256": "886dfb89bc2030c4f9c6698df4a9bdf77e3e5750f1626474bfa6bfaea0c05c2f"
+      },
+      {
+        "path": "run/parent/asset/persistent/static_indices.npz",
+        "bytes": 134332,
+        "sha256": "496e9cae354f2da8cdd5c61df576450f0f6e06789e6807ccdf92099c3aaa761e"
+      },
+      {
+        "path": "run/parent/asset/persistent/static_opacity.pt",
+        "bytes": 1003348,
+        "sha256": "7f8d256833964c857595547ec3eba94435bb1d2231af4d9bfb86e4e486f03a55"
+      },
+      {
+        "path": "run/parent/asset/provenance.npz",
+        "bytes": 86524821,
+        "sha256": "a675f1f50e2f96628d80064ad4f371886adb4f762a7dbe90470eae84656bc97f"
+      },
+      {
+        "path": "run/parent/asset/road.npz",
+        "bytes": 18628894,
+        "sha256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f"
+      }
+    ]
+  },
+  "external_large_dependencies": [
+    {
+      "role": "static",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+      "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548",
+      "bytes": 1235515672,
+      "included": false
+    },
+    {
+      "role": "dynamic",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+      "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611",
+      "bytes": 835970386,
+      "included": false
+    },
+    {
+      "role": "environment",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+      "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae",
+      "bytes": 226494608,
+      "included": false
+    },
+    {
+      "role": "native_engine",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/engine",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/engine",
+      "included": false
+    }
+  ],
+  "native_python": "/root/autodl-tmp/envs/drivingeditor/bin/python",
+  "CPU_python": "/root/autodl-tmp/envs/motionproj/bin/python",
+  "excluded": [
+    "旧640MB归档副本",
+    "完整场景权重/engine/venv",
+    "report_source/及未定稿报告文件",
+    "重复的tar.gz预览包",
+    "__pycache__"
+  ],
+  "latest_metadata_overlays": [
+    {
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/README.md",
+      "delivery_filename": "experiment_README.md",
+      "restore_overlay_path": "run/README.md",
+      "bytes": 5856,
+      "sha256": "bbbe0f2f0cb01156ccbdcec7f3801fb78b3ac6819952e74942a069603029639f",
+      "takes_precedence_over_archive_metadata": true
+    },
+    {
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/selected_run.json",
+      "delivery_filename": "selected_run.json",
+      "restore_overlay_path": "run/selected_run.json",
+      "bytes": 309,
+      "sha256": "435b356968df24acda08c9c48f4d181c5334a2fd6e5f26d5719611b7e3d36d30",
+      "takes_precedence_over_archive_metadata": true
+    }
+  ],
+  "full_manifest_filename": "road_gaussian_source_quality_20261122_r1_curated_20261121T193451Z.restore_manifest.json",
+  "full_manifest_sha256": "bd3f92b9dcd809820d8f863908c0e5415b8c0c64630c0a2f29a3905b03aff8af",
+  "state_files": [
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/checkpoint.pt",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/checkpoint.pt",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/checkpoint.pt",
+      "bytes": 60520,
+      "sha256": "70e9ae2b2573a566e418b3c570dac7f61d6668c28ca7d8bf1318c6727351dd6d",
+      "mtime_ns": 1795289409784436147
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/contract.json",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/contract.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/contract.json",
+      "bytes": 842,
+      "sha256": "1e5274d465add0e1fa2230a1d573dc1c5c36ad0d06045dee9d09a1907cac6a2c",
+      "mtime_ns": 1795289388481494483
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/history.json",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/history.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/history.json",
+      "bytes": 644,
+      "sha256": "fd3ca64cf30e379c20f27742704c47cef99a07ecc7db52083dc3ef9fb2d7da0e",
+      "mtime_ns": 1795289416446477187
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/initial_state.pt",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/initial_state.pt",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/initial_state.pt",
+      "bytes": 21434,
+      "sha256": "e881e1694464f6a7e5463ed6dce2d3ee6a39d59cac06d7c98d7a4f4e6e43d737",
+      "mtime_ns": 1795289405631137965
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/receipt.json",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/receipt.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/receipt.json",
+      "bytes": 10457,
+      "sha256": "9d7689b24f20b8fb2d3bed84238c454b612357fc3e3ad90a9623c35ddaab26b9",
+      "mtime_ns": 1795289416446477187
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/smoke_checkpoint.pt",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/smoke_checkpoint.pt",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/smoke_checkpoint.pt",
+      "bytes": 59736,
+      "sha256": "104683c0cf3db1463e987c8ec12f7922b3888eab3059f203a1e954bf061ec51b",
+      "mtime_ns": 1795289405607130394
+    },
+    {
+      "archive_path": "run/source_rgb_refit_qualified_r2/source_patch_00_refit.npz",
+      "original_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/source_patch_00_refit.npz",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/source_patch_00_refit.npz",
+      "bytes": 1608986,
+      "sha256": "25446837904b31604a37ab887d098476f05a0d8406ced84395b31457221eccd1",
+      "mtime_ns": 1795289416446477187
+    }
+  ]
+}

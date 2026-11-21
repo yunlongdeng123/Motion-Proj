@@ -446,3 +446,7 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 ## 相似道路高斯迁移（2026-11-22）
 
 - `ROAD-GAUSSIAN-TRANSFER-20261122 / road_gaussian_transfer_20261122_r2_isometric`：[算法、组件、冻结合同、五视角与资源](autoresearch/road_gaussian_transfer_20261122/README.md)。原报告同页新增三阶段及来源分层；完整数据和模型位于报告所列归档。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## 源块质量核查与源RGB控制（2026-11-22）
+
+- `ROAD-GAUSSIAN-SOURCE-QUALITY-20261122 / road_gaussian_source_quality_20261122_r1`：[原照、原生源块、固定400步与失败边界](autoresearch/road_gaussian_source_quality_20261122/README.md)。最终目录source_rgb_refit_qualified_r2；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

@@ -1,0 +1,91 @@
+{
+  "schema": "source_quality_cumulative_resource.v1",
+  "complete": true,
+  "run_id": "road_gaussian_source_quality_20261122_r1",
+  "scope": "本次源质量核查；不叠加前轮迁移或旧扩散实验",
+  "sessions": [
+    {
+      "role": "原始源块1920核验",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/native1920/receipt.json",
+      "session_PID": 73055,
+      "nativeF": 8,
+      "nativeB": 0,
+      "formal_updates_executed": 0,
+      "discarded_smoke_restore_updates": 0,
+      "actual_optimizer_updates": 0,
+      "adopted": true,
+      "native_context_wall_seconds": 2.583789110183716
+    },
+    {
+      "role": "未交照片资格mask的旧工程臂",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit/receipt.json",
+      "session_PID": 76140,
+      "nativeF": 827,
+      "nativeB": 812,
+      "formal_updates_executed": 400,
+      "discarded_smoke_restore_updates": 6,
+      "actual_optimizer_updates": 406,
+      "adopted": false,
+      "native_context_wall_seconds": 18.983250379562378
+    },
+    {
+      "role": "照片资格mask接线失败",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/refit_source_rgb_qualified.log",
+      "session_PID": 77713,
+      "nativeF": 1,
+      "nativeB": 0,
+      "formal_updates_executed": 0,
+      "discarded_smoke_restore_updates": 0,
+      "actual_optimizer_updates": 0,
+      "adopted": false,
+      "native_context_wall_seconds": 0.22709250450134277
+    },
+    {
+      "role": "最终照片资格mask源RGB诊断",
+      "evidence": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/receipt.json",
+      "session_PID": 78470,
+      "nativeF": 827,
+      "nativeB": 812,
+      "formal_updates_executed": 400,
+      "discarded_smoke_restore_updates": 6,
+      "actual_optimizer_updates": 406,
+      "adopted": true,
+      "native_context_wall_seconds": 18.568432807922363
+    }
+  ],
+  "totals": {
+    "nativeF": 1663,
+    "nativeB": 1624,
+    "actual_optimizer_updates": 812,
+    "final_formal_optimizer_updates": 400,
+    "nonadopted_or_smoke_restore_updates": 412,
+    "completed_native_contexts": 4,
+    "native_context_wall_seconds": 40.3625648021698,
+    "target_transfer_updates": 0,
+    "new_diffusion_calls": 0,
+    "power_operations": 0
+  },
+  "update_accounting": {
+    "final_formal": 400,
+    "final_discarded_smoke_restore": 6,
+    "old_nonadopted_formal": 400,
+    "old_discarded_smoke_restore": 6,
+    "failed_mask_wiring": 0
+  },
+  "forward_accounting": {
+    "optimizer_forwards": 1624,
+    "completed_refit_setup_and_evaluation": 30,
+    "initial_native_source_views": 8,
+    "failed_mask_wiring": 1
+  },
+  "backward_semantics": "nativeB按参与反向的视角计数；每次更新包含两个训练视角，共2B/更新。",
+  "final_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/receipt.json",
+  "raw_native_session_log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/runtime/native_session_log.jsonl",
+  "latest_process_only_ledger": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/resource_ledger.json",
+  "raw_last_process_ledger_is_not_cumulative": true,
+  "CPU_view_ranking_wall_seconds": 39.485522435978055,
+  "final_next_step_restore_max_abs": 5.960464477539063e-08,
+  "restoration_comparison_tolerance": 1e-07,
+  "production_promoted": false,
+  "snapshot_at_UTC": "2026-11-21T19:34:51.234271+00:00"
+}

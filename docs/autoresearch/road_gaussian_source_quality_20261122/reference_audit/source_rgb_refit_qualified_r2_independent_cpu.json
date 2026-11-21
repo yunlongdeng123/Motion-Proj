@@ -1,0 +1,1794 @@
+{
+  "schema": "source_RGB_refit_independent_CPU_audit.v2",
+  "CPU_only": true,
+  "GPU_calls": 0,
+  "refit_directory": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2",
+  "photo_legal_required": true,
+  "photo_qualification_passed": true,
+  "frozen_parameters_passed": true,
+  "frozen_checks": {
+    "world_row_ids": true,
+    "core_mask": true,
+    "world_xyz": true,
+    "normal_world": true,
+    "gaussian_sigma_m": true,
+    "road_opacity": true,
+    "minimum_model_depth": true,
+    "source_asset": true,
+    "source_tangent_frame_world": true,
+    "source_center_world": true,
+    "core_center_tangent": true,
+    "core_size_m": true,
+    "source_world_roi_corners": true,
+    "local_tangent_xyz": true,
+    "fresh_query_ids": true,
+    "fresh_world_xyz": true,
+    "fresh_source_count": true,
+    "fresh_confidence": true,
+    "witness_query_id": true,
+    "witness_source_raw": true,
+    "witness_source_uv_native": true,
+    "model_from_world": true,
+    "source_quality_all_rows": true,
+    "source_world_margin_radius_m": true,
+    "halo_RGB_exact": true,
+    "RGB_finite_in_01": true,
+    "original_parent_road_SHA256_exact": true
+  },
+  "actual_core_RGB_parameters": 4794,
+  "cases": [
+    {
+      "raw": 98,
+      "role": "TRAIN",
+      "fixed_input_checks": {
+        "observation": true,
+        "alpha": true,
+        "score_mask": true,
+        "core": true
+      },
+      "qualification": {
+        "qualified_mask_exact": true,
+        "actual_score_pixels": 4790,
+        "expected_qualified_pixels": 4790,
+        "score_pixels_outside_photo_legal": 0,
+        "photo_legal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_view_ranking/source00_probe/photos/raw098_core_photo_valid_native.png"
+      },
+      "before": {
+        "pixels": 4790,
+        "RGB_MAE": 0.012211929215021074,
+        "photo_RGB_std": 0.019487021152971132,
+        "GS_RGB_std": 0.020411453264742446,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004219687183454275,
+            "GS_RMS": 0.006959986967144636,
+            "GS_to_photo_RMS": 1.6494082770958216,
+            "cosine": 0.007540561742612408,
+            "residual_RMS": 0.00811198258620985
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005273612591921228,
+            "GS_RMS": 0.007675703163289757,
+            "GS_to_photo_RMS": 1.455492421845387,
+            "cosine": 0.011679454197607929,
+            "residual_RMS": 0.00926185029727583
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.0069179792587399595,
+            "GS_RMS": 0.008638168564653586,
+            "GS_to_photo_RMS": 1.2486548805043602,
+            "cosine": 0.053675333435630676,
+            "residual_RMS": 0.010773173162834819
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.6925755551010137,
+            "fitted_RGB_bias": [
+              0.11295884540583717,
+              0.10391321940198789,
+              0.11317879081635301
+            ],
+            "affine_residual_MSE": 0.00013757202010933594
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.7360950225556021,
+            "fitted_RGB_bias": [
+              0.09829472380464221,
+              0.09037951960581841,
+              0.09836603803170246
+            ],
+            "affine_residual_MSE": 0.0001315888457079717
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.8215519826362713,
+            "fitted_RGB_bias": [
+              0.06951154369477097,
+              0.06381503717249559,
+              0.06929029070734366
+            ],
+            "affine_residual_MSE": 0.00012020598828758319
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.8837559788970619,
+            "fitted_RGB_bias": [
+              0.048579870707544215,
+              0.04450092693421365,
+              0.04814496784196037
+            ],
+            "affine_residual_MSE": 0.00011252071641391094
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.9321788357194998,
+            "fitted_RGB_bias": [
+              0.03229876948523358,
+              0.029482760296986488,
+              0.03169608171390015
+            ],
+            "affine_residual_MSE": 0.00010728119556180582
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0007575223646503,
+            "fitted_RGB_bias": [
+              0.00924372601306267,
+              0.008225054906301155,
+              0.00839776693780081
+            ],
+            "affine_residual_MSE": 0.00010188619284723947
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3371673108640444,
+          0.3111580611146318,
+          0.3405730988635897
+        ],
+        "GS_mean_RGB": [
+          0.34647268288941874,
+          0.31941368630260913,
+          0.3490513938142761
+        ],
+        "mean_RGB_error": [
+          0.009305372025374348,
+          0.008255625187977345,
+          0.00847829495068636
+        ],
+        "centered_RGB_MSE": 0.000157149943810917,
+        "MSE": 0.00023269220415952322,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.008075041277462964,
+            "photo_RMS": 0.0024204032025069524,
+            "GS_RMS": 0.0034932153533164885,
+            "GS_to_photo_RMS": 1.44323695725504,
+            "residual_RMS": 0.004233716616266996
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.07410911262256993,
+            "photo_RMS": 0.0027048952482921222,
+            "GS_RMS": 0.0024926397845402896,
+            "GS_to_photo_RMS": 0.9215291372611005,
+            "residual_RMS": 0.0035398270135528153
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.22251533978306237,
+            "photo_RMS": 0.0028050645256401953,
+            "GS_RMS": 0.002469677932482867,
+            "GS_to_photo_RMS": 0.8804353375504673,
+            "residual_RMS": 0.0032991967046342953
+          }
+        ]
+      },
+      "after": {
+        "pixels": 4790,
+        "RGB_MAE": 0.011420142996949958,
+        "photo_RGB_std": 0.019487021152971132,
+        "GS_RGB_std": 0.017484244640960662,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004219687183454275,
+            "GS_RMS": 0.002956947095144725,
+            "GS_to_photo_RMS": 0.700750308397065,
+            "cosine": 0.31441110003015804,
+            "residual_RMS": 0.00432472370359635
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005273612591921228,
+            "GS_RMS": 0.003889296634390288,
+            "GS_to_photo_RMS": 0.7375013933235054,
+            "cosine": 0.38680127204412595,
+            "residual_RMS": 0.005202934934150128
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.0069179792587399595,
+            "GS_RMS": 0.005692156423507765,
+            "GS_to_photo_RMS": 0.8228062286131419,
+            "cosine": 0.49608359327668033,
+            "residual_RMS": 0.006417889368820377
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.8092092499949299,
+            "fitted_RGB_bias": [
+              0.05123884526146677,
+              0.050377107459316284,
+              0.05354098941000501
+            ],
+            "affine_residual_MSE": 3.3075538056926546e-05
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8520332330467558,
+            "fitted_RGB_bias": [
+              0.03681067048992437,
+              0.037061031273075806,
+              0.03896648706182532
+            ],
+            "affine_residual_MSE": 2.7578578569322496e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.924735953116933,
+            "fitted_RGB_bias": [
+              0.01233129111188036,
+              0.0144681697140156,
+              0.014237801116617155
+            ],
+            "affine_residual_MSE": 2.0831246542888533e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.965819079842049,
+            "fitted_RGB_bias": [
+              -0.0014765510153561534,
+              0.0017287017502133906,
+              0.00028813877319183723
+            ],
+            "affine_residual_MSE": 2.0130511046111633e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.9922628679061931,
+            "fitted_RGB_bias": [
+              -0.010346391074589512,
+              -0.0064494736264382735,
+              -0.00867470904230283
+            ],
+            "affine_residual_MSE": 2.181681988537781e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0244571629480446,
+            "fitted_RGB_bias": [
+              -0.021137360248762505,
+              -0.016389018847256687,
+              -0.01958499295912164
+            ],
+            "affine_residual_MSE": 2.7202142535757043e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3371673108640444,
+          0.3111580611146318,
+          0.3405730988635897
+        ],
+        "GS_mean_RGB": [
+          0.32407775200856753,
+          0.302169088723764,
+          0.3291358913098596
+        ],
+        "mean_RGB_error": [
+          -0.013089558855476857,
+          -0.008988972390867767,
+          -0.011437207553730122
+        ],
+        "centered_RGB_MSE": 4.061611311246432e-05,
+        "MSE": 0.0001682654105464231,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.3745412638060486,
+            "photo_RMS": 0.0024204032025069524,
+            "GS_RMS": 0.001787779940301464,
+            "GS_to_photo_RMS": 0.7386289765481042,
+            "residual_RMS": 0.002411040770510691
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.5052529207295343,
+            "photo_RMS": 0.0027048952482921222,
+            "GS_RMS": 0.00251890503701981,
+            "GS_to_photo_RMS": 0.9312394033041587,
+            "residual_RMS": 0.0026031493223378677
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.5375743975837595,
+            "photo_RMS": 0.0028050645256401953,
+            "GS_RMS": 0.003141418871767113,
+            "GS_to_photo_RMS": 1.1199096644845101,
+            "residual_RMS": 0.0028745111793439006
+          }
+        ]
+      },
+      "MAE_improved": true,
+      "spectral_comparison": [
+        {
+          "sigma_native1920_px": 1.2,
+          "sigma_in_1152_px": 0.72,
+          "correlation_before": 0.007540561742612408,
+          "correlation_after": 0.31441110003015804,
+          "RMS_ratio_before": 1.6494082770958216,
+          "RMS_ratio_after": 0.700750308397065,
+          "HF_residual_RMS_before": 0.00811198258620985,
+          "HF_residual_RMS_after": 0.00432472370359635,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 1.6666666666666667,
+          "sigma_in_1152_px": 1.0,
+          "correlation_before": 0.011679454197607929,
+          "correlation_after": 0.38680127204412595,
+          "RMS_ratio_before": 1.455492421845387,
+          "RMS_ratio_after": 0.7375013933235054,
+          "HF_residual_RMS_before": 0.00926185029727583,
+          "HF_residual_RMS_after": 0.005202934934150128,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 3.0,
+          "sigma_in_1152_px": 1.7999999999999998,
+          "correlation_before": 0.053675333435630676,
+          "correlation_after": 0.49608359327668033,
+          "RMS_ratio_before": 1.2486548805043602,
+          "RMS_ratio_after": 0.8228062286131419,
+          "HF_residual_RMS_before": 0.010773173162834819,
+          "HF_residual_RMS_after": 0.006417889368820377,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        }
+      ]
+    },
+    {
+      "raw": 137,
+      "role": "TRAIN",
+      "fixed_input_checks": {
+        "observation": true,
+        "alpha": true,
+        "score_mask": true,
+        "core": true
+      },
+      "qualification": {
+        "qualified_mask_exact": true,
+        "actual_score_pixels": 7501,
+        "expected_qualified_pixels": 7501,
+        "score_pixels_outside_photo_legal": 0,
+        "photo_legal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_view_ranking/source00_probe/photos/raw137_core_photo_valid_native.png"
+      },
+      "before": {
+        "pixels": 7501,
+        "RGB_MAE": 0.0332522339165669,
+        "photo_RGB_std": 0.017159336289430154,
+        "GS_RGB_std": 0.022589266641567247,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.003993852584716494,
+            "GS_RMS": 0.009868865003124252,
+            "GS_to_photo_RMS": 2.471013837839185,
+            "cosine": 0.027484811165131497,
+            "residual_RMS": 0.010544132903554439
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.004949599710105478,
+            "GS_RMS": 0.011207914909237955,
+            "GS_to_photo_RMS": 2.264408349296414,
+            "cosine": 0.033744147445038154,
+            "residual_RMS": 0.012098429712336043
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006392234606750057,
+            "GS_RMS": 0.012346996592546946,
+            "GS_to_photo_RMS": 1.9315618640637489,
+            "cosine": 0.06814702305758089,
+            "residual_RMS": 0.013511180344909031
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.7388257869641728,
+            "fitted_RGB_bias": [
+              0.11750514406168272,
+              0.1033792502577145,
+              0.11521062935857654
+            ],
+            "affine_residual_MSE": 0.00022717331192177048
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.7826142157947481,
+            "fitted_RGB_bias": [
+              0.10402838204061435,
+              0.09065726913190428,
+              0.10142940477258855
+            ],
+            "affine_residual_MSE": 0.00022137529029643205
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.8642432923144867,
+            "fitted_RGB_bias": [
+              0.07891102344777517,
+              0.06694843771924192,
+              0.07574463719103869
+            ],
+            "affine_residual_MSE": 0.0002112054907362622
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9194742576775182,
+            "fitted_RGB_bias": [
+              0.061927734488741615,
+              0.050919300357483044,
+              0.05837875462695036
+            ],
+            "affine_residual_MSE": 0.00020520618745395314
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.9596065097126951,
+            "fitted_RGB_bias": [
+              0.04959438651724074,
+              0.03928220615941935,
+              0.04576916667023628
+            ],
+            "affine_residual_MSE": 0.00020179174840202483
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0127236622153062,
+            "fitted_RGB_bias": [
+              0.03327605246772947,
+              0.023895135597705564,
+              0.029091473342178875
+            ],
+            "affine_residual_MSE": 0.0001995313064276057
+          }
+        ],
+        "photo_mean_RGB": [
+          0.30780419965351985,
+          0.29062583752909177,
+          0.314737653866591
+        ],
+        "GS_mean_RGB": [
+          0.3449188241015719,
+          0.31810111338226754,
+          0.3477469241638181
+        ],
+        "mean_RGB_error": [
+          0.037114624448052025,
+          0.027475275853175773,
+          0.033009270297227056
+        ],
+        "centered_RGB_MSE": 0.00024025058328727727,
+        "MSE": 0.0013142499355150914,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.032067787731913704,
+            "photo_RMS": 0.0022717462564863142,
+            "GS_RMS": 0.005388549719823263,
+            "GS_to_photo_RMS": 2.3719857375962734,
+            "residual_RMS": 0.005780327739076833
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.08532628492445353,
+            "photo_RMS": 0.002469908099312733,
+            "GS_RMS": 0.003700347601749246,
+            "GS_to_photo_RMS": 1.4981721800818784,
+            "residual_RMS": 0.004270051061942479
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.22616280754890716,
+            "photo_RMS": 0.002509129098456392,
+            "GS_RMS": 0.0030338795751389783,
+            "GS_to_photo_RMS": 1.2091364995947842,
+            "residual_RMS": 0.00347230076775754
+          }
+        ]
+      },
+      "after": {
+        "pixels": 7501,
+        "RGB_MAE": 0.011816553026205994,
+        "photo_RGB_std": 0.017159336289430154,
+        "GS_RGB_std": 0.01798598580469843,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.003993852584716494,
+            "GS_RMS": 0.004423965256902971,
+            "GS_to_photo_RMS": 1.1076936774863484,
+            "cosine": 0.18211622840654834,
+            "residual_RMS": 0.005393220352766981
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.004949599710105478,
+            "GS_RMS": 0.005671475973264706,
+            "GS_to_photo_RMS": 1.145845382543843,
+            "cosine": 0.2210045702441271,
+            "residual_RMS": 0.0066525409867059905
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006392234606750057,
+            "GS_RMS": 0.007673566352851985,
+            "GS_to_photo_RMS": 1.2004513014508056,
+            "cosine": 0.3034265032458086,
+            "residual_RMS": 0.008365249163005403
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.8440620676406533,
+            "fitted_RGB_bias": [
+              0.06111523795064322,
+              0.05433308569402845,
+              0.06053975169136666
+            ],
+            "affine_residual_MSE": 5.511958732557122e-05
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8877745237900072,
+            "fitted_RGB_bias": [
+              0.04766206223192321,
+              0.04163373076837251,
+              0.04678252493827462
+            ],
+            "affine_residual_MSE": 4.9580743016852536e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.9602239509149905,
+            "fitted_RGB_bias": [
+              0.025371137732699223,
+              0.020594278955185008,
+              0.02398769847228721
+            ],
+            "affine_residual_MSE": 4.28083869098273e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 1.000321928388909,
+            "fitted_RGB_bias": [
+              0.013047114469313281,
+              0.008964715395035572,
+              0.011386089143041733
+            ],
+            "affine_residual_MSE": 4.1842446159860146e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 1.0253922995626277,
+            "fitted_RGB_bias": [
+              0.005350693329751077,
+              0.0017060036230325815,
+              0.003518034752492627
+            ],
+            "affine_residual_MSE": 4.3233624368541214e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0536898993046688,
+            "fitted_RGB_bias": [
+              -0.003328116186529728,
+              -0.006467733191164837,
+              -0.005347689644402742
+            ],
+            "affine_residual_MSE": 4.849363578042258e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.30780419965351985,
+          0.29062583752909177,
+          0.314737653866591
+        ],
+        "GS_mean_RGB": [
+          0.3209210871386696,
+          0.2996393310286302,
+          0.32619786657836974
+        ],
+        "mean_RGB_error": [
+          0.013116887485149775,
+          0.00901349349953845,
+          0.011460212711778717
+        ],
+        "centered_RGB_MSE": 5.978145657940327e-05,
+        "MSE": 0.0001879922158339086,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.21682936473838268,
+            "photo_RMS": 0.0022717462564863142,
+            "GS_RMS": 0.0026357463757279757,
+            "GS_to_photo_RMS": 1.1602292149496736,
+            "residual_RMS": 0.003084047871062783
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.3073618735722872,
+            "photo_RMS": 0.002469908099312733,
+            "GS_RMS": 0.0033349358591055153,
+            "GS_to_photo_RMS": 1.3502266987316172,
+            "residual_RMS": 0.0034869431977388346
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.40083966957574735,
+            "photo_RMS": 0.002509129098456392,
+            "GS_RMS": 0.00368178808594538,
+            "GS_to_photo_RMS": 1.4673569758568437,
+            "residual_RMS": 0.003527791543408274
+          }
+        ]
+      },
+      "MAE_improved": true,
+      "spectral_comparison": [
+        {
+          "sigma_native1920_px": 1.2,
+          "sigma_in_1152_px": 0.72,
+          "correlation_before": 0.027484811165131497,
+          "correlation_after": 0.18211622840654834,
+          "RMS_ratio_before": 2.471013837839185,
+          "RMS_ratio_after": 1.1076936774863484,
+          "HF_residual_RMS_before": 0.010544132903554439,
+          "HF_residual_RMS_after": 0.005393220352766981,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 1.6666666666666667,
+          "sigma_in_1152_px": 1.0,
+          "correlation_before": 0.033744147445038154,
+          "correlation_after": 0.2210045702441271,
+          "RMS_ratio_before": 2.264408349296414,
+          "RMS_ratio_after": 1.145845382543843,
+          "HF_residual_RMS_before": 0.012098429712336043,
+          "HF_residual_RMS_after": 0.0066525409867059905,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 3.0,
+          "sigma_in_1152_px": 1.7999999999999998,
+          "correlation_before": 0.06814702305758089,
+          "correlation_after": 0.3034265032458086,
+          "RMS_ratio_before": 1.9315618640637489,
+          "RMS_ratio_after": 1.2004513014508056,
+          "HF_residual_RMS_before": 0.013511180344909031,
+          "HF_residual_RMS_after": 0.008365249163005403,
+          "correlation_improved": true,
+          "energy_ratio_closer_to_one": true
+        }
+      ]
+    },
+    {
+      "raw": 86,
+      "role": "QUERY_not_fit_this_run",
+      "fixed_input_checks": {
+        "observation": true,
+        "alpha": true,
+        "score_mask": true,
+        "core": true,
+        "before_matches_independent_native_capture": true,
+        "score_is_subset_of_original_native_score": true
+      },
+      "qualification": {
+        "qualified_mask_exact": true,
+        "actual_score_pixels": 2309,
+        "expected_qualified_pixels": 2309,
+        "score_pixels_outside_photo_legal": 0,
+        "photo_legal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_view_ranking/source00_probe/photos/raw086_core_photo_valid_native.png"
+      },
+      "before": {
+        "pixels": 2309,
+        "RGB_MAE": 0.015416667585991086,
+        "photo_RGB_std": 0.02040719683343105,
+        "GS_RGB_std": 0.0192143626792253,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004711089229102674,
+            "GS_RMS": 0.005114286294777029,
+            "GS_to_photo_RMS": 1.085584680329044,
+            "cosine": 0.16265112861618278,
+            "residual_RMS": 0.006364942991578265
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005951476751366666,
+            "GS_RMS": 0.005784212603913368,
+            "GS_to_photo_RMS": 0.971895353969939,
+            "cosine": 0.2658589348748289,
+            "residual_RMS": 0.007111470477679562
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.007964041437811091,
+            "GS_RMS": 0.006991909373729435,
+            "GS_to_photo_RMS": 0.8779348309934402,
+            "cosine": 0.452262573731238,
+            "residual_RMS": 0.007870533950781222
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.7816063205512637,
+            "fitted_RGB_bias": [
+              0.06293284853629783,
+              0.0595594730259128,
+              0.06468593918823451
+            ],
+            "affine_residual_MSE": 6.422163738820039e-05
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8368212944486264,
+            "fitted_RGB_bias": [
+              0.04281864553707804,
+              0.041138085239351696,
+              0.044531007396204525
+            ],
+            "affine_residual_MSE": 5.696260861821236e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.9367186644635103,
+            "fitted_RGB_bias": [
+              0.006440602278186602,
+              0.007803099621015275,
+              0.008046828966701502
+            ],
+            "affine_residual_MSE": 4.6679290409506825e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9964516114921985,
+            "fitted_RGB_bias": [
+              -0.015283575140373262,
+              -0.01212977371191426,
+              -0.013785123133298383
+            ],
+            "affine_residual_MSE": 4.460376549755839e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 1.031716468000156,
+            "fitted_RGB_bias": [
+              -0.02808808929808293,
+              -0.023904112890211493,
+              -0.02669642108717518
+            ],
+            "affine_residual_MSE": 4.660707039189842e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0620572618828432,
+            "fitted_RGB_bias": [
+              -0.03908641988294542,
+              -0.03408006349077308,
+              -0.037893250287280855
+            ],
+            "affine_residual_MSE": 5.406678344077189e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3643101669715668,
+          0.33344713498782985,
+          0.3646990968815534
+        ],
+        "GS_mean_RGB": [
+          0.34767997768236064,
+          0.320183861302111,
+          0.3497370584101943
+        ],
+        "mean_RGB_error": [
+          -0.016630189289206176,
+          -0.013263273685718835,
+          -0.014962038471359074
+        ],
+        "centered_RGB_MSE": 7.386000455602705e-05,
+        "MSE": 0.0002993067445145397,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.262990305668274,
+            "photo_RMS": 0.00271338598881536,
+            "GS_RMS": 0.002537571878301764,
+            "GS_to_photo_RMS": 0.9352049022003115,
+            "residual_RMS": 0.003190633379001735
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.671001154305377,
+            "photo_RMS": 0.0031992132268090345,
+            "GS_RMS": 0.0023517943133019993,
+            "GS_to_photo_RMS": 0.7351164635086642,
+            "residual_RMS": 0.002380928817715052
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.8215354110662518,
+            "photo_RMS": 0.0032932229137353666,
+            "GS_RMS": 0.002514469783030822,
+            "GS_to_photo_RMS": 0.7635285703082768,
+            "residual_RMS": 0.0018873482123058871
+          }
+        ]
+      },
+      "after": {
+        "pixels": 2309,
+        "RGB_MAE": 0.03514266308809542,
+        "photo_RGB_std": 0.02040719683343105,
+        "GS_RGB_std": 0.01711745235819087,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004711089229102674,
+            "GS_RMS": 0.0030294934602089246,
+            "GS_to_photo_RMS": 0.6430558439637016,
+            "cosine": -0.005128841185649823,
+            "residual_RMS": 0.005614142159588226
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005951476751366666,
+            "GS_RMS": 0.003991534389679284,
+            "GS_to_photo_RMS": 0.6706796575761956,
+            "cosine": 0.009996459317303684,
+            "residual_RMS": 0.007132845157799764
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.007964041437811091,
+            "GS_RMS": 0.005872956775392502,
+            "GS_to_photo_RMS": 0.7374342312571741,
+            "cosine": 0.06403613330412802,
+            "residual_RMS": 0.009587873638997107
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.5857943782944948,
+            "fitted_RGB_bias": [
+              0.11119907773266283,
+              0.10749034097140556,
+              0.11623134252085213
+            ],
+            "affine_residual_MSE": 8.655155636757268e-05
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.6341496616265839,
+            "fitted_RGB_bias": [
+              0.09358364556979212,
+              0.09135874662451524,
+              0.09858251268280124
+            ],
+            "affine_residual_MSE": 8.083235239401122e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.735092700626436,
+            "fitted_RGB_bias": [
+              0.05682133161149083,
+              0.05768008540220351,
+              0.061727620333794475
+            ],
+            "affine_residual_MSE": 6.906654238710343e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.8137071509302056,
+            "fitted_RGB_bias": [
+              0.028212152590111506,
+              0.0314528946447436,
+              0.03301607144841312
+            ],
+            "affine_residual_MSE": 6.0490882207332345e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.8739532005089128,
+            "fitted_RGB_bias": [
+              0.006301829262054914,
+              0.011349484123035436,
+              0.01099826497497891
+            ],
+            "affine_residual_MSE": 5.4672936913620153e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 0.9499104452765581,
+            "fitted_RGB_bias": [
+              -0.02131628216775,
+              -0.014034001127628648,
+              -0.016828871771920606
+            ],
+            "affine_residual_MSE": 4.901559580780136e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3643101669715668,
+          0.33344713498782985,
+          0.3646990968815534
+        ],
+        "GS_mean_RGB": [
+          0.3246099255001354,
+          0.3028217981056818,
+          0.3298700232431454
+        ],
+        "mean_RGB_error": [
+          -0.03970024147143142,
+          -0.030625336882148024,
+          -0.03482907363840798
+        ],
+        "centered_RGB_MSE": 0.00012122167389467355,
+        "MSE": 0.0013635832747428969,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.0011184658257875743,
+            "photo_RMS": 0.00271338598881536,
+            "GS_RMS": 0.0018071923946776222,
+            "GS_to_photo_RMS": 0.6660284980194161,
+            "residual_RMS": 0.0032584411662779293
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.08106242955330316,
+            "photo_RMS": 0.0031992132268090345,
+            "GS_RMS": 0.0024958056475298516,
+            "GS_to_photo_RMS": 0.7801310730448632,
+            "residual_RMS": 0.0038948050798298644
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.14490796497169384,
+            "photo_RMS": 0.0032932229137353666,
+            "GS_RMS": 0.0030506121753187247,
+            "GS_to_photo_RMS": 0.9263303017221332,
+            "residual_RMS": 0.004152103168200305
+          }
+        ]
+      },
+      "MAE_improved": false,
+      "spectral_comparison": [
+        {
+          "sigma_native1920_px": 1.2,
+          "sigma_in_1152_px": 0.72,
+          "correlation_before": 0.16265112861618278,
+          "correlation_after": -0.005128841185649823,
+          "RMS_ratio_before": 1.085584680329044,
+          "RMS_ratio_after": 0.6430558439637016,
+          "HF_residual_RMS_before": 0.006364942991578265,
+          "HF_residual_RMS_after": 0.005614142159588226,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": false
+        },
+        {
+          "sigma_native1920_px": 1.6666666666666667,
+          "sigma_in_1152_px": 1.0,
+          "correlation_before": 0.2658589348748289,
+          "correlation_after": 0.009996459317303684,
+          "RMS_ratio_before": 0.971895353969939,
+          "RMS_ratio_after": 0.6706796575761956,
+          "HF_residual_RMS_before": 0.007111470477679562,
+          "HF_residual_RMS_after": 0.007132845157799764,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": false
+        },
+        {
+          "sigma_native1920_px": 3.0,
+          "sigma_in_1152_px": 1.7999999999999998,
+          "correlation_before": 0.452262573731238,
+          "correlation_after": 0.06403613330412802,
+          "RMS_ratio_before": 0.8779348309934402,
+          "RMS_ratio_after": 0.7374342312571741,
+          "HF_residual_RMS_before": 0.007870533950781222,
+          "HF_residual_RMS_after": 0.009587873638997107,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": false
+        }
+      ]
+    },
+    {
+      "raw": 110,
+      "role": "QUERY_not_fit_this_run",
+      "fixed_input_checks": {
+        "observation": true,
+        "alpha": true,
+        "score_mask": true,
+        "core": true,
+        "before_matches_independent_native_capture": true,
+        "score_is_subset_of_original_native_score": true
+      },
+      "qualification": {
+        "qualified_mask_exact": true,
+        "actual_score_pixels": 6191,
+        "expected_qualified_pixels": 6191,
+        "score_pixels_outside_photo_legal": 0,
+        "photo_legal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_view_ranking/source00_probe/photos/raw110_core_photo_valid_native.png"
+      },
+      "before": {
+        "pixels": 6191,
+        "RGB_MAE": 0.021768779821358133,
+        "photo_RGB_std": 0.01880719213856708,
+        "GS_RGB_std": 0.020940295020720177,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004092231594087901,
+            "GS_RMS": 0.007974353529646276,
+            "GS_to_photo_RMS": 1.9486564595139058,
+            "cosine": 0.09190599348873543,
+            "residual_RMS": 0.008621969332924128
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005093395324160877,
+            "GS_RMS": 0.008854629992283035,
+            "GS_to_photo_RMS": 1.7384533162545774,
+            "cosine": 0.13887232392179344,
+            "residual_RMS": 0.009582318520387633
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006580956142086588,
+            "GS_RMS": 0.009774309504909007,
+            "GS_to_photo_RMS": 1.4852415506008707,
+            "cosine": 0.23096104350864968,
+            "residual_RMS": 0.010446688189903458
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.7823271549009089,
+            "fitted_RGB_bias": [
+              0.09297790063384626,
+              0.08448774233867509,
+              0.09228652626367595
+            ],
+            "affine_residual_MSE": 0.00013521154845811523
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8235278993986398,
+            "fitted_RGB_bias": [
+              0.07967654062555346,
+              0.07215316132601299,
+              0.07880196407291751
+            ],
+            "affine_residual_MSE": 0.00012985281152682018
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.8942037705480115,
+            "fitted_RGB_bias": [
+              0.056863902032253,
+              0.0509990240059488,
+              0.055676052907716767
+            ],
+            "affine_residual_MSE": 0.00012268930540726132
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9350327414024788,
+            "fitted_RGB_bias": [
+              0.04368859435155126,
+              0.038784389004712316,
+              0.0423206862997364
+            ],
+            "affine_residual_MSE": 0.00012101819648718092
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.9627686267833031,
+            "fitted_RGB_bias": [
+              0.034739568357694095,
+              0.030492038793613174,
+              0.03324976179022643
+            ],
+            "affine_residual_MSE": 0.00012128817344900372
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0022211239537377,
+            "fitted_RGB_bias": [
+              0.022000629972647012,
+              0.018698715216102835,
+              0.020338943061818104
+            ],
+            "affine_residual_MSE": 0.00012297556016698243
+          }
+        ],
+        "photo_mean_RGB": [
+          0.32290897708180993,
+          0.2994524112301908,
+          0.32740506696366006
+        ],
+        "GS_mean_RGB": [
+          0.3455983619662214,
+          0.3187574952446072,
+          0.34842440080149767
+        ],
+        "mean_RGB_error": [
+          0.022689384884411468,
+          0.01930508401441644,
+          0.021019333837837606
+        ],
+        "centered_RGB_MSE": 0.00014485429840571619,
+        "MSE": 0.0005879565818134159,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.13382110590820293,
+            "photo_RMS": 0.0023406726861498555,
+            "GS_RMS": 0.004152729898331239,
+            "GS_to_photo_RMS": 1.7741608738819505,
+            "residual_RMS": 0.004485797963654049
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.3900321363590461,
+            "photo_RMS": 0.0025627033758295475,
+            "GS_RMS": 0.0027788682602756637,
+            "GS_to_photo_RMS": 1.0843503335130014,
+            "residual_RMS": 0.0029554011456837796
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.5430507809399744,
+            "photo_RMS": 0.002588261885512457,
+            "GS_RMS": 0.0025399359116394173,
+            "GS_to_photo_RMS": 0.9813287928306098,
+            "residual_RMS": 0.002451595680556156
+          }
+        ]
+      },
+      "after": {
+        "pixels": 6191,
+        "RGB_MAE": 0.006983295184938356,
+        "photo_RGB_std": 0.01880719213856708,
+        "GS_RGB_std": 0.01767324124564937,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.004092231594087901,
+            "GS_RMS": 0.0037969832665278396,
+            "GS_to_photo_RMS": 0.927851510655797,
+            "cosine": 0.02163119829036073,
+            "residual_RMS": 0.005521885945254758
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.005093395324160877,
+            "GS_RMS": 0.004996975505517517,
+            "GS_to_photo_RMS": 0.9810696377353657,
+            "cosine": 0.044001638464137335,
+            "residual_RMS": 0.006976576411147026
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006580956142086588,
+            "GS_RMS": 0.007007598608107159,
+            "GS_to_photo_RMS": 1.0648298601007387,
+            "cosine": 0.13501624734078904,
+            "residual_RMS": 0.008942170580547476
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.740529837075618,
+            "fitted_RGB_bias": [
+              0.08318072270535781,
+              0.07902093883393857,
+              0.08503716653484747
+            ],
+            "affine_residual_MSE": 6.694195666785265e-05
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.7836967718734805,
+            "fitted_RGB_bias": [
+              0.06924433014585962,
+              0.06609742836476831,
+              0.07090863295370653
+            ],
+            "affine_residual_MSE": 6.0892581090513326e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.8636206778218116,
+            "fitted_RGB_bias": [
+              0.043445140930398696,
+              0.042173648999739244,
+              0.04475446641811898
+            ],
+            "affine_residual_MSE": 5.06821311704328e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9144558597446628,
+            "fitted_RGB_bias": [
+              0.02703869158471106,
+              0.02696253109894209,
+              0.028122971702092436
+            ],
+            "affine_residual_MSE": 4.583438480662272e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 0.9488159259961814,
+            "fitted_RGB_bias": [
+              0.015950710176358962,
+              0.016686547881006875,
+              0.01688334369823069
+            ],
+            "affine_residual_MSE": 4.404941350127043e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 0.9909209147624607,
+            "fitted_RGB_bias": [
+              0.0023553409328709307,
+              0.004098816555416995,
+              0.003104147575121785
+            ],
+            "affine_residual_MSE": 4.481943016502397e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.32290897708180993,
+          0.2994524112301908,
+          0.32740506696366006
+        ],
+        "GS_mean_RGB": [
+          0.322304454894005,
+          0.3007743841341327,
+          0.3274903874311785
+        ],
+        "mean_RGB_error": [
+          -0.0006045221878049345,
+          0.001321972903941926,
+          8.532046751841271e-05
+        ],
+        "centered_RGB_MSE": 8.064342926543752e-05,
+        "MSE": 8.13502089375984e-05,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.03467206088494677,
+            "photo_RMS": 0.0023406726861498555,
+            "GS_RMS": 0.0023131567368735056,
+            "GS_to_photo_RMS": 0.988244426724349,
+            "residual_RMS": 0.003233263037104242
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.12586451909343463,
+            "photo_RMS": 0.0025627033758295475,
+            "GS_RMS": 0.0031437995962718935,
+            "GS_to_photo_RMS": 1.2267512603772355,
+            "residual_RMS": 0.00379774114714278
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.2824495125290506,
+            "photo_RMS": 0.002588261885512457,
+            "GS_RMS": 0.0035678869870080197,
+            "GS_to_photo_RMS": 1.378487627924716,
+            "residual_RMS": 0.0037699185630737787
+          }
+        ]
+      },
+      "MAE_improved": true,
+      "spectral_comparison": [
+        {
+          "sigma_native1920_px": 1.2,
+          "sigma_in_1152_px": 0.72,
+          "correlation_before": 0.09190599348873543,
+          "correlation_after": 0.02163119829036073,
+          "RMS_ratio_before": 1.9486564595139058,
+          "RMS_ratio_after": 0.927851510655797,
+          "HF_residual_RMS_before": 0.008621969332924128,
+          "HF_residual_RMS_after": 0.005521885945254758,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 1.6666666666666667,
+          "sigma_in_1152_px": 1.0,
+          "correlation_before": 0.13887232392179344,
+          "correlation_after": 0.044001638464137335,
+          "RMS_ratio_before": 1.7384533162545774,
+          "RMS_ratio_after": 0.9810696377353657,
+          "HF_residual_RMS_before": 0.009582318520387633,
+          "HF_residual_RMS_after": 0.006976576411147026,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 3.0,
+          "sigma_in_1152_px": 1.7999999999999998,
+          "correlation_before": 0.23096104350864968,
+          "correlation_after": 0.13501624734078904,
+          "RMS_ratio_before": 1.4852415506008707,
+          "RMS_ratio_after": 1.0648298601007387,
+          "HF_residual_RMS_before": 0.010446688189903458,
+          "HF_residual_RMS_after": 0.008942170580547476,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        }
+      ]
+    },
+    {
+      "raw": 173,
+      "role": "QUERY_not_fit_this_run",
+      "fixed_input_checks": {
+        "observation": true,
+        "alpha": true,
+        "score_mask": true,
+        "core": true
+      },
+      "qualification": {
+        "qualified_mask_exact": true,
+        "actual_score_pixels": 7487,
+        "expected_qualified_pixels": 7487,
+        "score_pixels_outside_photo_legal": 0,
+        "photo_legal_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_view_ranking/source00_probe/photos/raw173_core_photo_valid_native.png"
+      },
+      "before": {
+        "pixels": 7487,
+        "RGB_MAE": 0.03357236258087512,
+        "photo_RGB_std": 0.01697423820406147,
+        "GS_RGB_std": 0.022625289294353906,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.0039641665007141115,
+            "GS_RMS": 0.00977232845923841,
+            "GS_to_photo_RMS": 2.4651659957971006,
+            "cosine": 0.03304431100415868,
+            "residual_RMS": 0.010423665543900368
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.004900503214135573,
+            "GS_RMS": 0.011105999470408204,
+            "GS_to_photo_RMS": 2.2662977627221608,
+            "cosine": 0.05195762231684974,
+            "residual_RMS": 0.011903888870600112
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006253312041966868,
+            "GS_RMS": 0.012260109606218716,
+            "GS_to_photo_RMS": 1.9605785740323487,
+            "cosine": 0.10043703200609065,
+            "residual_RMS": 0.013191433947735998
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.7945384801484155,
+            "fitted_RGB_bias": [
+              0.10055586854627671,
+              0.08779221478456975,
+              0.09789602282780616
+            ],
+            "affine_residual_MSE": 0.00021917801575277595
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8415215930069165,
+            "fitted_RGB_bias": [
+              0.08608812567765378,
+              0.0741613792556916,
+              0.08310774121357611
+            ],
+            "affine_residual_MSE": 0.0002129768767652202
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.9239450826729013,
+            "fitted_RGB_bias": [
+              0.06069505788997337,
+              0.05024027932650493,
+              0.05715627413749225
+            ],
+            "affine_residual_MSE": 0.00020308475863508446
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9729239820335155,
+            "fitted_RGB_bias": [
+              0.04559180915221556,
+              0.03601687845257456,
+              0.04172661556316426
+            ],
+            "affine_residual_MSE": 0.00019861358509653396
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 1.0057498773105438,
+            "fitted_RGB_bias": [
+              0.03545481923254162,
+              0.026478362855951787,
+              0.031378211485044716
+            ],
+            "affine_residual_MSE": 0.00019665159735918455
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0487732626241981,
+            "fitted_RGB_bias": [
+              0.022125486113651505,
+              0.013960278159996065,
+              0.01779171375014843
+            ],
+            "affine_residual_MSE": 0.00019552809538626626
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3077239879217042,
+          0.2900101477311357,
+          0.31463531354678337
+        ],
+        "GS_mean_RGB": [
+          0.34505441821479693,
+          0.3182164367904838,
+          0.3478858866542876
+        ],
+        "mean_RGB_error": [
+          0.03733043029309274,
+          0.028206289059348078,
+          0.03325057310750423
+        ],
+        "centered_RGB_MSE": 0.00022680089935920306,
+        "MSE": 0.0013250530261406834,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": 0.045476269015861645,
+            "photo_RMS": 0.0022497579577040626,
+            "GS_RMS": 0.00533444361775438,
+            "GS_to_photo_RMS": 2.371118901696572,
+            "residual_RMS": 0.005694397188910532
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.16180566741714936,
+            "photo_RMS": 0.0024173863519967773,
+            "GS_RMS": 0.003702484916570201,
+            "GS_to_photo_RMS": 1.5316066103839479,
+            "residual_RMS": 0.0040811421181325015
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.3016310165311329,
+            "photo_RMS": 0.002394594505500061,
+            "GS_RMS": 0.003050328628387903,
+            "GS_to_photo_RMS": 1.2738393165864654,
+            "residual_RMS": 0.003260702472499889
+          }
+        ]
+      },
+      "after": {
+        "pixels": 7487,
+        "RGB_MAE": 0.013236157774240578,
+        "photo_RGB_std": 0.01697423820406147,
+        "GS_RGB_std": 0.018496728848757114,
+        "bands": [
+          {
+            "highpass_gaussian_sigma_px": 1.2,
+            "photo_RMS": 0.0039641665007141115,
+            "GS_RMS": 0.004582763688112987,
+            "GS_to_photo_RMS": 1.156047226393604,
+            "cosine": -0.019030724870325793,
+            "residual_RMS": 0.00611619123876212
+          },
+          {
+            "highpass_gaussian_sigma_px": 1.6666666666666667,
+            "photo_RMS": 0.004900503214135573,
+            "GS_RMS": 0.005920973879132287,
+            "GS_to_photo_RMS": 1.2082379340254594,
+            "cosine": -0.01637465242010252,
+            "residual_RMS": 0.007747458236156951
+          },
+          {
+            "highpass_gaussian_sigma_px": 3.0,
+            "photo_RMS": 0.006253312041966868,
+            "GS_RMS": 0.008056742872139446,
+            "GS_to_photo_RMS": 1.2883961040276732,
+            "cosine": 0.04790103681841808,
+            "residual_RMS": 0.009959336402672289
+          }
+        ],
+        "photo_blur_affine_match_curve": [
+          {
+            "photo_blur_sigma_px": 0.0,
+            "fitted_scalar_gain": 0.7722255657429813,
+            "fitted_RGB_bias": [
+              0.08362827605401657,
+              0.07601251392471955,
+              0.08362379714306375
+            ],
+            "affine_residual_MSE": 0.00010212064401614719
+          },
+          {
+            "photo_blur_sigma_px": 0.5,
+            "fitted_scalar_gain": 0.8219097196417766,
+            "fitted_RGB_bias": [
+              0.06832958906694431,
+              0.06159847157777648,
+              0.06798580629377121
+            ],
+            "affine_residual_MSE": 9.51439094757762e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.0,
+            "fitted_scalar_gain": 0.9142035751679091,
+            "fitted_RGB_bias": [
+              0.03989935623335128,
+              0.034814982308602915,
+              0.03892889148427969
+            ],
+            "affine_residual_MSE": 8.244333552444704e-05
+          },
+          {
+            "photo_blur_sigma_px": 1.5,
+            "fitted_scalar_gain": 0.9727870711643865,
+            "fitted_RGB_bias": [
+              0.021840138345066207,
+              0.017805917403444282,
+              0.020477042107639787
+            ],
+            "affine_residual_MSE": 7.528133734673952e-05
+          },
+          {
+            "photo_blur_sigma_px": 2.0,
+            "fitted_scalar_gain": 1.0114948173502136,
+            "fitted_RGB_bias": [
+              0.009892545048316548,
+              0.006561254453226695,
+              0.0082776326955869
+            ],
+            "affine_residual_MSE": 7.171737293357354e-05
+          },
+          {
+            "photo_blur_sigma_px": 3.0,
+            "fitted_scalar_gain": 1.0558395981818816,
+            "fitted_RGB_bias": [
+              -0.0038441285574037365,
+              -0.006340385648961666,
+              -0.005725023282391994
+            ],
+            "affine_residual_MSE": 7.029689786855596e-05
+          }
+        ],
+        "photo_mean_RGB": [
+          0.3077239879217042,
+          0.2900101477311357,
+          0.31463531354678337
+        ],
+        "GS_mean_RGB": [
+          0.32126060671954093,
+          0.2999657643276014,
+          0.32659323014944885
+        ],
+        "mean_RGB_error": [
+          0.013536618797836741,
+          0.00995561659646571,
+          0.011957916602665486
+        ],
+        "centered_RGB_MSE": 0.00011148910492697705,
+        "MSE": 0.00025327114485033475,
+        "DoG_physical_bands": [
+          {
+            "scale_in_1152_px": 0.35,
+            "sigma_native1920_px": 0.5833333333333334,
+            "upper_gaussian_sigma_native1920_px": 1.1666666666666667,
+            "cosine": -0.02490078692718983,
+            "photo_RMS": 0.0022497579577040626,
+            "GS_RMS": 0.002752276883787613,
+            "GS_to_photo_RMS": 1.223365773354741,
+            "residual_RMS": 0.003597889396328611
+          },
+          {
+            "scale_in_1152_px": 0.6,
+            "sigma_native1920_px": 1.0,
+            "upper_gaussian_sigma_native1920_px": 2.0,
+            "cosine": 0.03259077260067204,
+            "photo_RMS": 0.0024173863519967773,
+            "GS_RMS": 0.0035020833838607635,
+            "GS_to_photo_RMS": 1.4487065259419618,
+            "residual_RMS": 0.004190050728030322
+          },
+          {
+            "scale_in_1152_px": 0.9,
+            "sigma_native1920_px": 1.5,
+            "upper_gaussian_sigma_native1920_px": 3.0,
+            "cosine": 0.19317268460888465,
+            "photo_RMS": 0.002394594505500061,
+            "GS_RMS": 0.0037961061598894147,
+            "GS_to_photo_RMS": 1.585281412435496,
+            "residual_RMS": 0.004078305196813459
+          }
+        ]
+      },
+      "MAE_improved": true,
+      "spectral_comparison": [
+        {
+          "sigma_native1920_px": 1.2,
+          "sigma_in_1152_px": 0.72,
+          "correlation_before": 0.03304431100415868,
+          "correlation_after": -0.019030724870325793,
+          "RMS_ratio_before": 2.4651659957971006,
+          "RMS_ratio_after": 1.156047226393604,
+          "HF_residual_RMS_before": 0.010423665543900368,
+          "HF_residual_RMS_after": 0.00611619123876212,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 1.6666666666666667,
+          "sigma_in_1152_px": 1.0,
+          "correlation_before": 0.05195762231684974,
+          "correlation_after": -0.01637465242010252,
+          "RMS_ratio_before": 2.2662977627221608,
+          "RMS_ratio_after": 1.2082379340254594,
+          "HF_residual_RMS_before": 0.011903888870600112,
+          "HF_residual_RMS_after": 0.007747458236156951,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        },
+        {
+          "sigma_native1920_px": 3.0,
+          "sigma_in_1152_px": 1.7999999999999998,
+          "correlation_before": 0.10043703200609065,
+          "correlation_after": 0.04790103681841808,
+          "RMS_ratio_before": 1.9605785740323487,
+          "RMS_ratio_after": 1.2883961040276732,
+          "HF_residual_RMS_before": 0.013191433947735998,
+          "HF_residual_RMS_after": 0.009959336402672289,
+          "correlation_improved": false,
+          "energy_ratio_closer_to_one": true
+        }
+      ]
+    }
+  ],
+  "outcome": {
+    "query_all_MAE_improved": false,
+    "query_all_correlation_improved": false,
+    "query_all_energy_ratios_closer_to_one": false,
+    "source_RGB_refit_quality_gate_passed": false,
+    "text": "Fixed-source RGB refit lowers color error in some views but does not recover corresponding fine texture in the query views; it is not accepted for target transfer.",
+    "full_3D_source_reconstruction_tested": false,
+    "target_transfer_executed": false,
+    "no_further_training_in_this_control": true,
+    "new_diffusion_calls": 0,
+    "human_verdict": null,
+    "production_promoted": false
+  },
+  "resource_scope": {
+    "formal_source_updates": 400,
+    "discarded_source_updates": 6,
+    "nativeF": 827,
+    "nativeB": 812,
+    "target_updates": 0,
+    "new_diffusion_calls": 0,
+    "note": "source-only control; separate from earlier target seam-fit400 and native1920 diagnostic8F"
+  },
+  "evidence": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/receipt.json",
+      "sha256": "9d7689b24f20b8fb2d3bed84238c454b612357fc3e3ad90a9623c35ddaab26b9"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/source_selection/candidates/patch_00.npz",
+      "sha256": "13e9a9e47c24f3bd619d4f93d2f114ba029a362302e5d86e9cf24226435771d3"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_source_quality_20261122_r1/source_rgb_refit_qualified_r2/source_patch_00_refit.npz",
+      "sha256": "25446837904b31604a37ab887d098476f05a0d8406ced84395b31457221eccd1"
+    }
+  ],
+  "original_parent_road_SHA256": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+  "source_role": "fixed-geometry/sigma/opacity core RGB optimization, not a new 3D Gaussian source reconstruction",
+  "query_scope": "86/110/173 not fitted in this source update; all were part of historical BUILD, and137/173 have almost identical camera positions"
+}

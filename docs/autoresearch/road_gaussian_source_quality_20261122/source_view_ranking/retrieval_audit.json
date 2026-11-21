@@ -1,0 +1,108 @@
+{
+  "complete": true,
+  "prior_algorithm_scope": "Only existing fixed road chart queried through five cameras; not a street-wide road-Gaussian search.",
+  "geometry_query_frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "geometry_query_pixels": 679560,
+  "query_world_bounds": [
+    [
+      2315.8190799802683,
+      1363.9852470697738,
+      -20.909906952456158
+    ],
+    [
+      2358.953817483448,
+      1369.5059604750172,
+      -20.49214972519048
+    ]
+  ],
+  "R2_Gaussian_world_bounds": [
+    [
+      2315.8180287625696,
+      1363.9847249308202,
+      -20.949011077472267
+    ],
+    [
+      2358.956406000576,
+      1369.5419660658256,
+      -20.44339987003882
+    ]
+  ],
+  "strict_real_query_count": 88806,
+  "strict_real_world_bounds": [
+    [
+      2315.8190799802683,
+      1363.9866082997162,
+      -20.858445301685435
+    ],
+    [
+      2327.506223562035,
+      1369.4244889942597,
+      -20.593554660794386
+    ]
+  ],
+  "query_pixels_are_not_independent_world_points": true,
+  "clean_asphalt_queries": 69057,
+  "occupied_4cm_cells": 2159,
+  "occupied_grid_area_proxy_m2": 3.4544,
+  "proposal_sizes": [
+    [
+      0.6,
+      0.6
+    ],
+    [
+      0.8,
+      0.8
+    ],
+    [
+      1.0,
+      1.0
+    ],
+    [
+      1.2,
+      0.8
+    ],
+    [
+      1.2,
+      1.2
+    ],
+    [
+      1.6,
+      1.0
+    ]
+  ],
+  "proposals_before_cpu_filters": 17,
+  "eligible_after_cpu_filters": 4,
+  "nonoverlap_kept": 3,
+  "rejection_reason_counts_nonexclusive": {
+    "no_cached_native_photo_fidelity_pass": 4,
+    "nonplanar_source_core": 5,
+    "core_gaussian_geometry_scale_opacity_quality": 6,
+    "halo_gaussian_geometry_scale_opacity_quality": 1,
+    "source_overlaps_target_world_domain": 3
+  },
+  "search_limitations": [
+    "Candidate centers required >=70% occupancy of the existing strict-real asphalt grid; no query or parent Gaussian outside this chart was searched.",
+    "Density maxima and .18m center spacing yielded only17 proposals; this is the result of bounded inputs/gates, not evidence that the street has only17 feasible road blocks.",
+    "CPU photo fidelity admission used existing R2 native caches in only five target cameras; no_cached_native_photo_fidelity_pass can mean too few qualified cached pixels, not intrinsically bad photo texture.",
+    "The final native qualifier explicitly hard-coded patch00/02 and raw86/110. Patch01 and other retained/overlapping alternatives had no equivalent native all-frame comparison.",
+    "Ranking favored area/coverage and HF alignment, did not require a minimum original-image shortest footprint axis or minimum native-HF energy/retention.",
+    "The prior score compared candidates only under current R2 geometry/sigma/opacity, not an upper bound after re-estimating source GS from original photographs."
+  ],
+  "native_qualified_candidate_ids": [
+    "patch_00",
+    "patch_02"
+  ],
+  "native_qualified_frames": [
+    86,
+    110
+  ],
+  "conclusion": "Cannot conclude there is no better source on this street from17→4→3, or that Gaussian transfer fails because the chosen bounded source is blurry.",
+  "new_diffusion_calls": 0,
+  "GPU_calls": 0
+}
