@@ -1,0 +1,79 @@
+{
+  "schema": "adaptive_surface_gap_diagnosis.v1",
+  "rows": [
+    {
+      "raw": 86,
+      "domains": [
+        {
+          "source": "C",
+          "denominator": 32390,
+          "no_support_n": 7094,
+          "thin_n": 2662,
+          "high_alpha_dark_n": 47,
+          "old_canonical_missing_n": 6159,
+          "certified_recovered_rayhit_n": 225,
+          "canonical_missing_n": 5934,
+          "finite_mesh_hit_but_geometry_unqualified_n": 5934,
+          "no_finite_mesh_hit_n": 0,
+          "rayhit_low_alpha_repairable_pixels": 3895,
+          "rayhit_material_invalid_vertex_pixels": 4877,
+          "static_occlusion_classification": "unavailable: standalone road alpha is not scene alphaT"
+        },
+        {
+          "source": "S",
+          "denominator": 6286,
+          "no_support_n": 2,
+          "thin_n": 518,
+          "high_alpha_dark_n": 0,
+          "old_canonical_missing_n": 5,
+          "certified_recovered_rayhit_n": 0,
+          "canonical_missing_n": 5,
+          "finite_mesh_hit_but_geometry_unqualified_n": 0,
+          "no_finite_mesh_hit_n": 5,
+          "rayhit_low_alpha_repairable_pixels": 520,
+          "rayhit_material_invalid_vertex_pixels": 112,
+          "static_occlusion_classification": "unavailable: standalone road alpha is not scene alphaT"
+        }
+      ]
+    },
+    {
+      "raw": 110,
+      "domains": [
+        {
+          "source": "C",
+          "denominator": 60377,
+          "no_support_n": 8789,
+          "thin_n": 5643,
+          "high_alpha_dark_n": 39,
+          "old_canonical_missing_n": 7396,
+          "certified_recovered_rayhit_n": 319,
+          "canonical_missing_n": 7077,
+          "finite_mesh_hit_but_geometry_unqualified_n": 7077,
+          "no_finite_mesh_hit_n": 0,
+          "rayhit_low_alpha_repairable_pixels": 7431,
+          "rayhit_material_invalid_vertex_pixels": 6347,
+          "static_occlusion_classification": "unavailable: standalone road alpha is not scene alphaT"
+        },
+        {
+          "source": "S",
+          "denominator": 12783,
+          "no_support_n": 104,
+          "thin_n": 2712,
+          "high_alpha_dark_n": 0,
+          "old_canonical_missing_n": 20,
+          "certified_recovered_rayhit_n": 0,
+          "canonical_missing_n": 20,
+          "finite_mesh_hit_but_geometry_unqualified_n": 0,
+          "no_finite_mesh_hit_n": 20,
+          "rayhit_low_alpha_repairable_pixels": 2810,
+          "rayhit_material_invalid_vertex_pixels": 383,
+          "static_occlusion_classification": "unavailable: standalone road alpha is not scene alphaT"
+        }
+      ]
+    }
+  ],
+  "denominator": "complete legal C/S source; no-hit retained",
+  "canonical_rule": "old map only geometry surface_supported triangles, no material or write mask involved",
+  "finite_unqualified_policy": "diagnostic only; finite xyz without independent surface certificate never appends geometry",
+  "teacher_used_for_candidate_selection": false
+}

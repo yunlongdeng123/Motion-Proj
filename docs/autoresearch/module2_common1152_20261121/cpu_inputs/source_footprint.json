@@ -1,0 +1,16 @@
+{
+  "schema": "common1152_source_footprint.v1",
+  "sigma_uv": [
+    0.36619183346534456,
+    0.12895649454933678
+  ],
+  "sigma_u": 0.36619183346534456,
+  "sigma_v": 0.12895649454933678,
+  "rule": "median over fixed supported C union S in raw86/110 of sqrt(sum_pixelaxes(J_uv[axis,:]^2)/12)",
+  "resolution": [
+    1152,
+    768
+  ],
+  "source_fields": "maps/{raw:03d}.npz pixel_uv_jacobian; cpu_inputs/{raw:03d}_targets.npz C|S",
+  "no_student_error_selection": true
+}

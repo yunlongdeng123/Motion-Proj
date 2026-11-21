@@ -1,0 +1,30 @@
+{
+  "schema": "road_common1152_protocol.v1",
+  "resolution": [
+    1152,
+    768
+  ],
+  "teacher_selection": "fixed legacy T0seed101, no student-error selection",
+  "teacher_manifest_sha256": "76a5cf4e07c227f767685f4e01b03cb3a90e06349e52807c90238a8d237ca5ad",
+  "signal": "stable-alpha unpremultiplied road sRGB, teacher sRGB; premult and joint RGB errors also separate",
+  "source_domains": "blackgap denominator: complete new1152 legal2D A/C/S & ~K, canonical missing retained; color core additionally canonical-valid",
+  "stable_alpha": "fixed parent alpha>=.95; same masks for every student",
+  "highpass_sigma_native_px": [
+    1,
+    2,
+    4
+  ],
+  "gaussian_truncate": 3,
+  "strict_core": "source-specific full finite gaussian support, radius round(3sigma)",
+  "edge_measurement": "RGB tensor NMS; fixed strength2/255, nearest match1nativepx; appearance edges, no geometry-GT claim",
+  "flat_measurement": "teacher per-pixel RGB HF RMS<=2/255, fixed",
+  "no_support": "road alpha<.05",
+  "low_alpha": ".05<=road alpha<.95",
+  "high_alpha_dark": "alpha>=.95, unpremult meanRGB<.05, teacher meanRGB>=.10; diagnostic category only",
+  "static_occlusion": "optional exported road alphaT contribution<.5 on high standalone alpha; absent => null, never infer from road alpha",
+  "coverage_warning": "coverage/readonly residual cannot be attributed to missing fine detail; diagnostic only, no aggregate quality pass",
+  "source_sha256": {
+    "export_manifest": "52bf0f6af9c324e89aa371e953ee32a1d8634596016ea109eb068891a2b40840",
+    "targets_manifest": "5010604d25a04052c8cd0007359ff516d5c94c260983d71062e929ae3ac37fb9"
+  }
+}

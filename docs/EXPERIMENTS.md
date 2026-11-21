@@ -391,3 +391,11 @@
 ## MODULE2-NATIVE-CAPACITY-20261120
 
 原生普通GS细节蒸馏、固定颜色容量与全标签BUILD：[报告与组件](autoresearch/module2_native_capacity_20261120/report.md)、[结果](autoresearch/module2_native_capacity_20261120/results.json)、[分阶段数据](autoresearch/module2_native_capacity_20261120/evaluation/results.json)。seed101；两帧教师/五视角，199BUILD继承不称盲测。原4臂7400更新保留；目标保持数值补证2000FG，固定方案BUILD1200Adam+2000FG，工程独立计账。总实际57419F/31678每视角B，CPU评分/归档另列。细节及只读下界有新证据，整体未验收；19.70%FW非上限证书。无超参搜索/新生成调用/默认晋升。按用户额度要求停止追加，GPU保持开机，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## 2026-11-21：1152新教师三轮正式训练
+
+`MODULE2-NEWTEACHER-1152-20261121 / road_common1152_20261121`：[报告与组件](autoresearch/module2_common1152_20261121/report.md)、[合同](autoresearch/module2_common1152_20261121/contract.json)、[指标](autoresearch/module2_common1152_20261121/bench/metrics.json)。固定legacy/T0 step600/seed101，86/110拟合、三帧诊断；11正式端点，共8000 Adam更新及2000FG数值预算，工程开销单列。实际新相机渲染1152×768，完整合法源分母保留；输入、读取与持久化通过不等于画质通过。旧几何覆盖冻结，黑缝仍在；无超参搜索、无额外生成推理、无默认晋升。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，GPU保持开机。
+
+## 2026-11-21：覆盖驱动的固定道路表面真增密
+
+`ROAD-SURFACE-ADAPTIVE-20261121-R1 / road_surface_adaptive_20261121_r1`：[报告与组件](autoresearch/module2_surface_adaptive_20261121/report.md)、[固定合同](autoresearch/module2_surface_adaptive_20261121/contract.json)、[分阶段指标](autoresearch/module2_surface_adaptive_20261121/bench/metrics.json)。先启用3108旧inactive行，覆盖200步后一次固定残余选择追加6168个新高斯，再覆盖400、外观1200步；道路总行588861→595029，active151988→161264。历史892旧激活不计append。独立固定LiDAR证据和三角重心坐标限定新几何，K保护只对五帧验收；未认证编辑域与剩余认证道路缺口均保留。独立零更新诊断使用opacity1乐观放宽、5次前向，不改变正式结果。机械执行完成，整体画质与全黑缝关闭未获通过；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null，GPU保持开机。

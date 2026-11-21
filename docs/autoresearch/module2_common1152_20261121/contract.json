@@ -1,0 +1,49 @@
+{
+  "schema": "new_teacher_common1152_fixed_queue.v1",
+  "task_id": "MODULE2-NEWTEACHER-1152-20261121",
+  "user_authorization": "New1152 default teachers must be used for training; arrange finite background queue; do not power off.",
+  "resolution_wh": [1152, 768],
+  "teacher": "full1152_T0 / legacy / step600 / seed101, frozen before student training",
+  "frames": {"fit": [86, 110], "diagnostic": [134, 179, 198]},
+  "data_role": "all_qualified_newteacher_fit; not held validation; inherited prior exposure retained",
+  "frozen": ["geometry", "scales", "opacity", "cameras", "other scene branches", "teachers", "original provenance"],
+  "round1": {
+    "methods": ["matched_I0", "L800", "ABC800"],
+    "logical_steps_each": 800,
+    "shared_prefix": "A200; L continues low-only600; ABC high-only300 then joint300",
+    "physical_Adam_updates": 2200,
+    "loss": "premult sRGB L1 A1/C0.5/S1; fixed original world regularizers; matched I0 prior0.001",
+    "field_bounds": [0.3, 0.04],
+    "reader": "original physical GH15 quadrature lowered to identical fixed sparse coefficients",
+    "scope": "original 84266 writable rows, observed-source high-frequency permission"
+  },
+  "round2": {
+    "methods": ["M00", "M10", "M01", "M11", "M12"],
+    "logical_steps_each": 800,
+    "schedule": [200, 300, 300],
+    "physical_Adam_updates": 3400,
+    "shared_prefix": "one new A200 per reader; M12 forks the same pixel A200",
+    "loss": "same fixed A1/C0.5/S1 premult sRGB L1 and world regularizers",
+    "field_bounds": [0.3, 0.34],
+    "scope": "new qualified teacher world ledger intersected with native K-safe parent scope",
+    "pixel": "true1152 canonical G_s intersections, physical pixel-box quadrature, new same-sort eligible native weights",
+    "M12": "single source-pixel-footprint formula on new1152 teacher geometry; no parameter sweep"
+  },
+  "round3": {
+    "methods": ["G_RGB", "G_DETAIL", "G_NUMERIC"],
+    "field_steps_each": 1200,
+    "field_schedule": [600, 600],
+    "initial": "new round2 average A200 low field, exactly zero high field",
+    "RGB": "fixed-alpha stable color quadratic only",
+    "DETAIL": "RGB + signed HF sigma1/2/4 + signed Sobel; one-shot shared initial-residual normalizers",
+    "no_private_field_regularizers": true,
+    "NUMERIC": "fixed G_DETAIL final seed; full-workspace SciPy1.13.1 L-BFGS-B m10 maxls20 factr1e7 pgtol1e-8 maxFG2000",
+    "numeric_gate": "relative measured training FW gap<=0.01 or registered cap/solver termination; no restart or extension",
+    "strict_capacity_certificate": false
+  },
+  "optimization": {"seed": 101, "low_lr": 0.01, "high_lr": 0.003, "betas": [0.9, 0.999], "eps": 1e-8, "sweeps": 0, "formal_Adam_physical_updates": 8000, "numeric_FG_cap": 2000},
+  "smoke": "real geometry/camera/teacher roles, finite nonzero gradients, complete Adam/RNG/sampler restore and next step, B/C entry, authority persistence reload, numeric full-workspace replay; if measured queue>=1h run about10min actual smoke; discard smoke states",
+  "engineering": "one clean or exact-checkpoint replay after failure, original failure/logs/checkpoints retained and extra compute counted",
+  "outputs": {"status": "status.json", "export_manifest": "export_manifest.json", "bench": "bench/metrics.json", "delivery": "delivery/latest_manifest.json", "final_bundle": "final_bundle.tar.gz"},
+  "end_policy": "train->export->CPUbench->reportpack; complete only after final bundle exists; GPU stays on; no production promotion; human_verdict null"
+}

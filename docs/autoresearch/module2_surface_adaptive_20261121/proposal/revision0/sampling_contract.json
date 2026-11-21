@@ -1,0 +1,48 @@
+{
+  "schema": "adaptive_surface_sampling_contract.v1",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "fit_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "resolution": [
+    1152,
+    768
+  ],
+  "gap_rule": "actual standalone road alpha<.95 on fullC/S plus3pixel confirmed-road seam; RGB not used",
+  "surface_rule": "fixed original supported canonical triangles plus previously unsupported nodes independently re-certified by the same original measured plane, anchor Delaunay hull, nearest<=1.5m/maxedge<=3m/residual<=.05m; no unqualified plane extrapolation",
+  "activation_rule": "qualified inactive existing row within max(.02m,1.5*targetsigma), nearest eligible first, 8 neighbors; retain fixed XYZ",
+  "sigma_rule": "new equal tangent sigma=clip(.70*minimum singular value of actual pixel-to-world face Jacobian,.004,.018)m; max=1.6initial cap.03m; normal.003m",
+  "spacing_rule": "greedy gap-deficit-first, world3D separation1.35max(local sigmas), merged across86/110, no RGB-based selection",
+  "point_caps": {
+    "activation": 4096,
+    "append": 8192
+  },
+  "K_rule": "all5frames protected/K nearest-pixel sphere bound at4.5maxsigma +sqrt(.3)covariance blur*4.5 +2pixel rounding; actual native exact0 gate still required",
+  "guard_scope": "five stated views only; inherited old guarded/protected flags for existing rows; no all199-frame/anyview claim",
+  "opacity_initial": 0.15,
+  "schedule": {
+    "activation_coverage_updates": 200,
+    "joint_coverage_updates": 400,
+    "appearance_updates": 1200
+  },
+  "history_892": "765+95+32 historically activated grid rows; never count as appended geometry",
+  "source_roles_definition": {
+    "1": "real A",
+    "2": "hole C",
+    "4": "shadow S",
+    "8": "confirmed-road3px seam uses realA"
+  },
+  "point_coordinate_policy": "existing activation XYZ unchanged; old placeholders off certified plane are never moved; real new samples use certified triangle/barycentric"
+}

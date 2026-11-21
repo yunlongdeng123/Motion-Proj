@@ -1,0 +1,85 @@
+{
+  "schema": "common1152_actual_smoke.v1",
+  "verified": true,
+  "native_GPU_executed": true,
+  "checks": [
+    {
+      "arm": "common_A_to_teacher_branch",
+      "gate_preserved": true,
+      "next_stage_BC": true
+    },
+    {
+      "arm": "ABC800",
+      "full_state_next_step_max": 3.725290298461914e-09,
+      "authority_reload_RGB_max": 2.9802322387695312e-08,
+      "finite_nonzero_gradient": true,
+      "save": true,
+      "real_resolution": [
+        1152,
+        768
+      ],
+      "seconds": 0.5750306658446789
+    },
+    {
+      "arm": "matched_I0",
+      "full_state_next_step_max": 5.587935447692871e-09,
+      "authority_reload_RGB_max": 5.960464477539063e-08,
+      "finite_nonzero_gradient": true,
+      "save": true,
+      "real_resolution": [
+        1152,
+        768
+      ],
+      "seconds": 0.134098332375288
+    },
+    {
+      "arm": "M11",
+      "full_state_next_step_max": 9.313225746154785e-10,
+      "authority_reload_RGB_max": 2.9802322387695312e-08,
+      "finite_nonzero_gradient": true,
+      "save": true,
+      "real_resolution": [
+        1152,
+        768
+      ],
+      "seconds": 0.4963394198566675
+    },
+    {
+      "arm": "M12",
+      "full_state_next_step_max": 9.313225746154785e-10,
+      "authority_reload_RGB_max": 0.0,
+      "finite_nonzero_gradient": true,
+      "save": true,
+      "real_resolution": [
+        1152,
+        768
+      ],
+      "seconds": 0.47591710090637207
+    },
+    {
+      "arm": "G_DETAIL",
+      "RGB_HF_Sobel_finite": true,
+      "full_state_next_step_max": 8.568167686462402e-08,
+      "next_stage_C": true
+    }
+  ],
+  "numeric_workspace": {
+    "verified": true,
+    "replay": {
+      "verified": true,
+      "complete_Fortran_workspace": true,
+      "next_accepted_max": 3.066543285967782e-08,
+      "string_workspace_bitexact": true
+    },
+    "FG": 3
+  },
+  "estimated_formal_seconds": 516.7893394827843,
+  "hour_scale_ten_minute_required": false,
+  "actual_smoke_seconds": 6.097399199381471,
+  "engineering_updates_separate": true,
+  "formal_warm_start": false,
+  "all_outputs_resolution": [
+    1152,
+    768
+  ]
+}

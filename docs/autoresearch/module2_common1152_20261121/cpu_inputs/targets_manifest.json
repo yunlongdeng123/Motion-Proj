@@ -1,0 +1,50 @@
+{
+  "schema": "common1152_training_targets.v1",
+  "resolution": [
+    1152,
+    768
+  ],
+  "rows": [
+    {
+      "raw": 86,
+      "source": {
+        "A": 228568,
+        "C": 32390,
+        "S": 6286
+      },
+      "supported90": {
+        "A": 30662,
+        "C": 22739,
+        "S": 5945
+      },
+      "core95": {
+        "A": 29767,
+        "C": 22386,
+        "S": 5761
+      },
+      "teacher_sha256": "8befc8a890dfb3f89f9fd4186c702edf3d03b7ff9bb387e5e2a17e23249aaee8"
+    },
+    {
+      "raw": 110,
+      "source": {
+        "A": 199732,
+        "C": 60377,
+        "S": 12783
+      },
+      "supported90": {
+        "A": 60728,
+        "C": 46696,
+        "S": 10906
+      },
+      "core95": {
+        "A": 57507,
+        "C": 45707,
+        "S": 9953
+      },
+      "teacher_sha256": "887c9ff5c3b5ed6f8dcd478e1400bbb6543acc40731cfead33accff6928059c4"
+    }
+  ],
+  "training_masks": "2D source & canonical valid & ~K & fixed parent alpha>.9",
+  "evaluation_masks": "stable color: same canonical domain parent alpha>=.95; blackgap fixed denominator: complete legal2D source & ~K, canonical missing retained",
+  "teacher_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/manifest.json"
+}

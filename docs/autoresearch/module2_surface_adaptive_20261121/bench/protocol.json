@@ -1,0 +1,29 @@
+{
+  "schema": "adaptive_surface_bench_protocol.v1",
+  "resolution": [
+    1152,
+    768
+  ],
+  "full_source": "C/S complete legal2D editing denominators retained, including uncertified/no-hit; uncertified editing domain is not confirmed road or a claim that densification can repair it; A only confirmed road",
+  "coverage_thresholds": {
+    "no_support": 0.05,
+    "stable": 0.95
+  },
+  "full_premult_RGB_MAE": "abs(actual road premult P - opaque teacher T) averaged on full fixed2D editing source, no division by alpha",
+  "primary_color_HF": "fixed common stable: parent and final >=.95, plus every intermediate >=.95; same domain for every stage",
+  "common_stable_partition": "parent>=.95 and final>=.95; transient alpha loss separately recorded",
+  "newly_covered_partition": "parent<.95 and final>=.95; final-only RGB/HF with full final-stable source as filter context",
+  "HF_sigma_native_px": [
+    1,
+    2,
+    4
+  ],
+  "gaussian_truncate": 3,
+  "edge": "fixed RGB tensor2/255 NMS and1px match; appearance, not lane geometry truth",
+  "flat": "fixed teacher HF RMS<=2/255",
+  "dark": "highalpha>=.95 and unpremult meanRGB<.05 and teacher meanRGB>=.10, descriptive only",
+  "joint_occlusion": "road alpha is not final alphaT; absent actual contribution export => null",
+  "surface_subset": "fixed old supported mesh plus independently recertified original measured plane; no surface evidence remains unconfirmed; certified-road gaps separate from all2D-source gaps",
+  "teacher_manifest_SHA256": "76a5cf4e07c227f767685f4e01b03cb3a90e06349e52807c90238a8d237ca5ad",
+  "proposal_manifest_SHA256": "f143c7b2b8377058bd422e12a015b5a84d3a61a8909b9f10a863827715665c09"
+}
