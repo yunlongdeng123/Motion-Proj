@@ -1,0 +1,33 @@
+{
+  "title": "从驾驶观测到可编辑三维街景",
+  "canvas": [
+    2560,
+    1600
+  ],
+  "road_true_added_gs": 7239,
+  "road_activated_anchors": 3121,
+  "historical_892": "separate historical anchor activation only",
+  "vehicle_status": "training, saving and reload verified; visual quality and render-contribution isolation failed",
+  "vehicle_representation": "native valid GS from the 30K-step endpoint, raw110 inverse-pose canonical transform, object SH0 color bake, 3D-box contamination filtering, canonical rigid GS",
+  "hidden_surface_prior": "624 added lower-body panels, bumpers and tire-prior GS, constrained by measured 3D box and visible width, visible dark-paint median initialization; hidden shape, tire shape and material are inferred",
+  "vehicle_steps": 200,
+  "vehicle_parameters": "SH0 color and visible-renderer-VJP-supported bounded alpha/scale; canonical xyz/pose frozen",
+  "joint_steps": 200,
+  "joint_parameters": "a20 SH0 color and 1191 road-GS RGB only",
+  "verified_paths": "restore, both KEEP/DELETE gradient updates, freezing, fresh disk five-frame reload passed",
+  "postfit_handoff": "75 verified unknown-static rows assigned a9 ownership in sidecar; KEEP/other-car/a20-visible maintained, outside ROI at most one gray-level code; no added training, original joint_fit retained",
+  "visual_result": "major a9 white-block ghost remains, inferred tires are rigid-looking, three observation frames and some other-car regions degraded",
+  "contribution_isolation": {
+    "physical_a20_box_roadlegal_overlap": 0,
+    "prior_roadlegal_vehicle_contribution_gt_1e_3_pixels": {
+      "86": 457,
+      "110": 482
+    },
+    "passed": false
+  },
+  "human_verdict": null,
+  "delete_target": "Scene065 / a9 / white Mazda / NTjq-OhZ_97OMJ4xwJAxXg",
+  "vehicle_completion_target": "Scene065 / a20 / black pickup / bzFbWRrSGOgEaXxnuGV0tw",
+  "font": "Microsoft YaHei",
+  "notes": "a9/a20 are scene visual aliases. HUGSIM route refers to canonical rigid Gaussian mechanisms, not a complete HUGSIM system port. Lower one quarter is occluded throughout the sequence; view variation is 0.47 degrees. Optional continuous surface and LOD are not implemented."
+}

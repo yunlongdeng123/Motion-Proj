@@ -1,0 +1,24 @@
+{
+  "scene_key": "waymo-val-065",
+  "context_id": "15021599536622641101_556_150_576_150",
+  "source": "C:/Users/dengyunlong/Documents/Codex/2026-10-22/ni-x-a/outputs/GS_Scene_Diagnostics_20261027/actor_candidates/actor_aliases.json",
+  "delete": {
+    "alias": "a9",
+    "track_id": "NTjq-OhZ_97OMJ4xwJAxXg",
+    "native_actor_id": 10,
+    "appearance": "前方白色 Mazda 轿车"
+  },
+  "restore": {
+    "alias": "a20",
+    "track_id": "bzFbWRrSGOgEaXxnuGV0tw",
+    "native_actor_id": 21,
+    "appearance": "后方黑色皮卡",
+    "region": "被 a9 遮挡的下半车身"
+  },
+  "road": "a9 删除后露出、并有固定道路表面支持的区域",
+  "supervision": {
+    "vehicle": "a20 真实跨帧可见 RGB / 实例掩码 / 对象坐标支撑",
+    "road": "冻结二维道路教师，仅合法道路区域",
+    "separation": "a20 车体区域不得采用道路教师颜色"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "task": "SCENE065-A9-DELETE-A20-COMPLETE-JOINT-20261121",
+  "target": {
+    "alias": "a20",
+    "actor_id": 21,
+    "track_id": "bzFbWRrSGOgEaXxnuGV0tw"
+  },
+  "delete": {
+    "alias": "a9",
+    "actor_id": 10,
+    "track_id": "NTjq-OhZ_97OMJ4xwJAxXg"
+  },
+  "road_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+  "train_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "resolution": [
+    1152,
+    768
+  ],
+  "few_frame_adaptation_of_allframe_pretrained_asset": true,
+  "stages": [
+    "native_before",
+    "canonical_init",
+    "canonical_prior_init",
+    "vehicle_fit",
+    "joint_fit"
+  ],
+  "vehicle_steps": 200,
+  "joint_steps": 200,
+  "vehicle_trainable": [
+    "canonical SH DC",
+    "opacity",
+    "per-axis scales bounded0.75-1.5"
+  ],
+  "joint_trainable": [
+    "vehicle SH DC",
+    "1191 approved road colors"
+  ],
+  "frozen": [
+    "vehicle local XYZ/rotation",
+    "trajectory",
+    "cameras",
+    "all native models",
+    "environment",
+    "static gates",
+    "road geometry/opacity/scales/active"
+  ],
+  "loss": {
+    "vehicle_rgb_l1": 0.8,
+    "vehicle_DSSIM": 0.2,
+    "alpha_inside_mse": 0.1,
+    "alpha_outside_mse": 0.1,
+    "scale_log_delta_l2": 0.001,
+    "joint_road_rgb_l1": 1.0,
+    "joint_road_edge_l1": 0.1
+  },
+  "alpha_normalization": "inside visible body mask and observable outside separately normalized; composited target alpha; original occluding labels inside full projected OBB dilated9px excluded from negatives",
+  "mask_content": "accepted repaired body segmentation proxy; body-only without shadow; not manual ground truth for hidden a20",
+  "road_domain": "A original observed RGB, C/S frozen generated target, DELETE composite; a9 hole included outside target full projected OBB and retained labels/K; fixed actual roadalpha>.05 support",
+  "hidden_vehicle_supervision": "only inherited native geometry and cross-view true visible RGB; never road teacher; no hidden RGB ground truth",
+  "initialization": "exact effective native packet at reference raw110, current temporal opacity/covariance/colors; shader RGB baked as canonical SH0",
+  "seed": 101,
+  "smoke": "short real GPU forward/backward, save/full optimizer-RNG restore, eval, joint entry, persistent vehicle reload",
+  "new_diffusion_updates": 0,
+  "TRELLIS": false,
+  "PVD": false,
+  "GPU_keep_on": true,
+  "power_operations": false,
+  "lower_shape_prior": true,
+  "lower_prior_scope": "explicit box-conditioned panels/bumper/tire shapes at unobserved lower body, constrained by visible width, all5 occluder masks and annotated base; not measured wheel geometry",
+  "prior_geometry_and_hidden_opacity_scale_frozen": true,
+  "visible_native_support": "actual unified-raster feature VJP over real visible masks",
+  "quality_acceptance": "not passed: residual a9 content, coarse lower shape prior and diagnostic/other-actor degradation remain"
+}

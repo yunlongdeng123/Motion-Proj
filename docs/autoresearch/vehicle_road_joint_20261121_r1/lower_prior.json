@@ -1,0 +1,78 @@
+{
+  "schema": "a20_box_conditioned_lower_shape_prior.v1",
+  "prior": "lower rear/side panels, bumper and four tire disks; engineering shape prior, not observed completion",
+  "box_lwh": [
+    5.0,
+    2.5,
+    2.08
+  ],
+  "body_half_width_from_visible_support_m": 1.1,
+  "paint_rgb_from_observed_dark_a20": [
+    0.08235294371843338,
+    0.13725490868091583,
+    0.15000000596046448
+  ],
+  "native_rows_before": 51400,
+  "native_inside_box": 9524,
+  "native_outside_box_observed_support_retained": 14912,
+  "native_outside_box_unobserved_retired": 26964,
+  "visible_support_method": "actual common-renderer feature VJP over a20 true visible masks raw86/110; contribution>1e-8",
+  "native_hidden_colors_reinitialized": 2456,
+  "new_prior_gaussians": 624,
+  "components": [
+    {
+      "component": "rear_lower_body",
+      "candidates": 410,
+      "accepted": 77
+    },
+    {
+      "component": "lower_side_body",
+      "candidates": 483,
+      "accepted": 43
+    },
+    {
+      "component": "lower_side_body",
+      "candidates": 483,
+      "accepted": 0
+    },
+    {
+      "component": "rear_bumper",
+      "candidates": 123,
+      "accepted": 50
+    },
+    {
+      "component": "tire_shape_prior",
+      "candidates": 288,
+      "accepted": 282
+    },
+    {
+      "component": "tire_shape_prior",
+      "candidates": 288,
+      "accepted": 0
+    },
+    {
+      "component": "tire_shape_prior",
+      "candidates": 288,
+      "accepted": 172
+    },
+    {
+      "component": "tire_shape_prior",
+      "candidates": 288,
+      "accepted": 0
+    }
+  ],
+  "new_prior_opacity": 0.92,
+  "prior_local_geometry_frozen": true,
+  "hidden_prior_opacity_and_scale_frozen": true,
+  "opacity_scale_trainable_visible_rows": 20582,
+  "prior_centers_inside_eroded_a9_occluder_mask_all5": true,
+  "prior_rejected_if_overlapping_observed_vehicle_masks": true,
+  "prior_bottom_above_box_base": true,
+  "new_prior_color_source": "median real visible dark truck pixels, excludes 35% brightest; no road teacher or diffusion",
+  "true_hidden_shape_and_RGB_GT": false,
+  "total_rows": 25060,
+  "prior_occluder_mask_erosion": "per-component/camera 4.5 projected sigma +2 pixels",
+  "prior_visible_contribution_mass_pixels": 0.0,
+  "prior_rows_with_real_visible_contribution": 0,
+  "support_feature_VJP_calls": 4
+}

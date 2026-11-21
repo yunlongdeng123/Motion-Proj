@@ -409,3 +409,7 @@
 ## 2026-11-21：统一主页恢复全部历史实验组
 
 [统一浏览修复](autoresearch/module2_surface_residual_20261121_r2/ui_fix/README.md)恢复55项/8批次，原744条指标和150条覆盖记录不重算，数值诊断仍为独立附录。新目录QA覆盖1100组road/joint与275组alpha，原始科学记录及资产不变，无新增训练或GPU操作。
+
+## VEHICLE-ROAD-JOINT-20261121
+
+[首轮车辆/道路接入结果与组件](autoresearch/vehicle_road_joint_20261121_r1/report.md)，run=`vehicle_road_joint_20261121_r1`。Scene065删除a9白Mazda，保留并补全a20黑皮卡；原生GS对象刚体化＋624个显式下半形状先验，raw86/110训练、134/179/198诊断，继承已见全序列的原生模型，不称盲测。正式车辆200＋联合200步，另17次smoke/恢复probe单列；75行交接修复0更新。7阶段、49条固定域细节记录及实际合同/资源账/恢复入口均在归档。训练/保存/重载路径已验证，主要旧车残影与局部退化未消除，真实车辆footprint仍进入道路教师域，画质及贡献隔离未通过；不替换既有道路基线。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=updated:V82-F06。

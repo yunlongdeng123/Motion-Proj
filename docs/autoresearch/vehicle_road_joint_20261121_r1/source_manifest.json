@@ -1,0 +1,952 @@
+{
+  "schema": "vehicle_road_joint_lightweight_archive.v1",
+  "task_id": "VEHICLE-ROAD-JOINT-20261121",
+  "run_id": "vehicle_road_joint_20261121_r1",
+  "archive_only": true,
+  "model_raw_media_or_external_fullpaper_included": false,
+  "source_files": {
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/run_joint.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/run_joint.py",
+      "sha256": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+      "bytes": 40674,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/run_joint.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/lower_prior.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/lower_prior.py",
+      "sha256": "365d41c53a06a0790707650fa4830df74d4ed6113797a653d3c8705ca414cf4f",
+      "bytes": 8686,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/lower_prior.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/post_numeric_probe.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/post_numeric_probe.py",
+      "sha256": "b2fa1dcac72f27d1196f44b21a0c1ea3ecb9f80b3a55ebbf04c4436a1fa6f09b",
+      "bytes": 4141,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/post_numeric_probe.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/restore_optimizer.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/restore_optimizer.py",
+      "sha256": "f0d52ec3fa9f9732e53ee3774eed5834329333f88fd14a6c31644bb79e30dd26",
+      "bytes": 1984,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/restore_optimizer.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/fix_a9_handoff.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/fix_a9_handoff.py",
+      "sha256": "e0313418c6600b4270d7878a531092e92e20a1691077b6fee79f5c3bcc4e1446",
+      "bytes": 8801,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/fix_a9_handoff.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/guard_a9_handoff.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/guard_a9_handoff.py",
+      "sha256": "6f379e71dc128bee2e1878186e47b7bbea881209ce71544284d2019f375a4d66",
+      "bytes": 5648,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/guard_a9_handoff.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/finalize_assets.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/finalize_assets.py",
+      "sha256": "d0335be0d09f3f7a8b5674ad42e8dafb65d3c26c9d2f8a87f1444db31812e5e4",
+      "bytes": 9652,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/finalize_assets.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/qa_final_cpu.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/qa_final_cpu.py",
+      "sha256": "81785dcef47f27995a49bb97868dacc131b6fa22b544d7b9c7adafd3cb104711",
+      "bytes": 10831,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/qa_final_cpu.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/joint_detail_metrics.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/joint_detail_metrics.py",
+      "sha256": "3afcd78c4bb2ee796188f9625d235f6d8db3c882eee6a9ccfe2a36ddeeca55c5",
+      "bytes": 2877,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/joint_detail_metrics.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/road_detail_metrics.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/road_detail_metrics.py",
+      "sha256": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c",
+      "bytes": 20565,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/road_detail_metrics.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/independent_detail_bench.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/independent_detail_bench.py",
+      "sha256": "068726af50193deb1107dd3dc67296255204741304d3fc10b7048c629b2f3d20",
+      "bytes": 4605,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/independent_detail_bench.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/run_detail_bench.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/run_detail_bench.py",
+      "sha256": "dcc994e4a0e05a39cc78ab69e1eae4fbb2a8cce1f221177d0b6bd27472441363",
+      "bytes": 2668,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/run_detail_bench.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/audit_teacher_overlap.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/audit_teacher_overlap.py",
+      "sha256": "24ef394d1bb74ca17827f3046473c351e1d7e98a8dd9d4de7232c843ef13ca57",
+      "bytes": 2328,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/audit_teacher_overlap.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/frozen_formal_r2/run_joint.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/frozen_formal_r2/run_joint.py",
+      "sha256": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+      "bytes": 40674,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/run_code/frozen_formal_r2/lower_prior.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/run_code/frozen_formal_r2/lower_prior.py",
+      "sha256": "f77f27c810c6c14672a3e2bea2f26117016b1bd05f02dbecda7f59f32d1d7cc6",
+      "bytes": 8388,
+      "role": "run_source",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/lower_prior.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/contract.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/contract.json",
+      "sha256": "80b4ef9343ebb9507da1b03f20270f359ad9d6373033005fab15f2ad1c789694",
+      "bytes": 2764,
+      "role": "contract",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/contract.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/contract_final.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/contract_final.json",
+      "sha256": "56bbf87eceff9538e3e6910ff14e1768bdb53847d47ab119b90a2833e5bc9326",
+      "bytes": 2959,
+      "role": "contract",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/contract_final.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/asset_index.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/asset_index.json",
+      "sha256": "2f30d5d022dd23f502bf6c82cfa9aec2f32517f7d057a34c34fe8e9ad66aa16e",
+      "bytes": 1159,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/asset_index.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/canonical_source_r2.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/canonical_source_r2.json",
+      "sha256": "a9326fea0c5100e3f634e80b50c41a100bb871ea1378bb1feb2ea3862ccc8bfb",
+      "bytes": 617,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/canonical_source_r2.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/lower_prior.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/lower_prior.json",
+      "sha256": "866ec7513bb26ed831b682e5f8d93faebae42109b2852cfdbed3dce687312c9d",
+      "bytes": 2289,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/lower_prior.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/supervision_domains.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/supervision_domains.json",
+      "sha256": "afbff72ade0a73bf9a28f5d4d6c257882db4468e77f6336fd0aa86d20574265b",
+      "bytes": 1194,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/supervision_domains.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/resource_ledger.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/resource_ledger.json",
+      "sha256": "a26893a773a5160a18ebfd300120607102d9fc7cf9c8d713341f7136662745e0",
+      "bytes": 773,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/resource_ledger.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/post_numeric_probe.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/post_numeric_probe.json",
+      "sha256": "8cd5c15c14d044059835f00f45427f0fcb2e5893c7f5e2acf891f758c00e2512",
+      "bytes": 955,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/post_numeric_probe.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/asset_cpu_freeze_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/asset_cpu_freeze_proof.json",
+      "sha256": "512ef8c0c3a284b412c95ab57ff4d5c623d42c9af497a4e59e6db652704548a0",
+      "bytes": 654,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/asset_cpu_freeze_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/final_optimizer_restore_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/final_optimizer_restore_proof.json",
+      "sha256": "c988eaee14848a02c4bdaeba593c36a83bc98f000ccd6db59c505bef9d5f1b3d",
+      "bytes": 294,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/final_optimizer_restore_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/disk_reload_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/disk_reload_proof.json",
+      "sha256": "08e44c10a4b923999bf3a96be23a32608f7592ca1a0c7901965baac579dd10a3",
+      "bytes": 3095,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/disk_reload_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/handoff_selection.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/handoff_selection.json",
+      "sha256": "fcc0d901c7c2fcfed43148b9741010bcf799404ef8a17711525c89b68d75f702",
+      "bytes": 1387,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/handoff_selection.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/handoff_same_asset_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/handoff_same_asset_proof.json",
+      "sha256": "2d5b8f798ecb91962f3811aeaa43b35235b2e57c4da868f06324902c20092b1d",
+      "bytes": 1238,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/handoff_same_asset_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/handoff_guarded_admission.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/handoff_guarded_admission.json",
+      "sha256": "1192630b09205640d87e6402a3ec4b2488b93541dad89b10af86e4b493a1f8d6",
+      "bytes": 62809,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/handoff_guarded_admission.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/handoff_guarded_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/handoff_guarded_proof.json",
+      "sha256": "4b6bad3ee76a09370d829f12ba8c5c4fcd27fd1fcd0a2a1d41e8578c594262e0",
+      "bytes": 3405,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/handoff_guarded_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/handoff_fixed_guarded_disk_reload_proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/handoff_fixed_guarded_disk_reload_proof.json",
+      "sha256": "332cafb2628477690abe75bfb26ffcfaa4095bf20af2cdb33b2b4f8c6db305dd",
+      "bytes": 2233,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/handoff_fixed_guarded_disk_reload_proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/qa_final_cpu.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/qa_final_cpu.json",
+      "sha256": "07969b8c76eee22c01a1157b78d28c754d9884fef479a86ceeda6c1a765f65a5",
+      "bytes": 41558,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/qa_final_cpu.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/qa_canonical_r2_comparison.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/qa_canonical_r2_comparison.json",
+      "sha256": "db19afba044b0592fc473f5c38500553425db2dd1f689d8467ccedae7a5ab853",
+      "bytes": 5963,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/qa_canonical_r2_comparison.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/qa_r2_baseline_comparison.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/qa_r2_baseline_comparison.json",
+      "sha256": "13e62ac3dca8c673298775764c8890f39ff3acf6b49550412a3c1391c2975983",
+      "bytes": 1461,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/qa_r2_baseline_comparison.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/qa_supervision_contract_r2.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/qa_supervision_contract_r2.json",
+      "sha256": "9127cd9d5cf2896e6bdaeafd177b3b66ae580789af3cb5fa32beb14373f35a25",
+      "bytes": 938,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/qa_supervision_contract_r2.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/qa_teacher_render_overlap.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/qa_teacher_render_overlap.json",
+      "sha256": "11e556d34ceed90e3f6252522f09a10911b75096221e821c6d452f20dd15c95f",
+      "bytes": 5500,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/qa_teacher_render_overlap.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/implementation_delivery_receipt.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/implementation_delivery_receipt.json",
+      "sha256": "0c19706b52cf3551efdd2e032bc2ffee4d81446ab8984296e165f64393d97ae3",
+      "bytes": 1498,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/implementation_delivery_receipt.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/takeback_manifest.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/takeback_manifest.json",
+      "sha256": "a8ba83c0353314b1d9f3d78170ab34633917d2a173a0dc838758928b7e9790a0",
+      "bytes": 499,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/takeback_manifest.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/smoke/proof.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/smoke/proof.json",
+      "sha256": "898df3618b3cdc9d3913c286750838fbe5a0c1921461de8cbd1540e3a1770757",
+      "bytes": 1528,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/smoke/proof.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/smoke/continuation_numeric.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/smoke/continuation_numeric.json",
+      "sha256": "b245339424a0734eb5628da3e53bae3631e593b78e9210d353eac0d747608738",
+      "bytes": 684,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/smoke/continuation_numeric.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/metrics.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/metrics.json",
+      "sha256": "8ff5ac37ea0516d614d7ab1ccb44693fc00bad4bce7ed79b63f1344d3ad451f2",
+      "bytes": 65776,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/metrics.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/proofs.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/proofs.json",
+      "sha256": "f511a93d9389475ec233681bf24e4d92cb91c3bb5851f9fc16415f5d9bb7d379",
+      "bytes": 779,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/proofs.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/detail_metrics.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/detail_metrics.json",
+      "sha256": "a8469270f1641ebf76fb61588c03f9b86a393374ec8c8d64c4af59aeae91e019",
+      "bytes": 42223,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/detail_metrics.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/independent_detail_metrics.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/independent_detail_metrics.json",
+      "sha256": "0da69bd8411d570c7f6a33697e167ae1f30f133a734e6b60c1cedb8a7ad201f3",
+      "bytes": 58374,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/independent_detail_metrics.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/takeback/RESTORE.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/takeback/RESTORE.md",
+      "sha256": "53734c2f6cc7fe56f6e5358b21418a0701719d42147f45cede407a35e1973316",
+      "bytes": 1533,
+      "role": "record",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/takeback/RESTORE.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/detail_metrics_full.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/detail_metrics_full.json",
+      "sha256": "249f28b890a852e94db5c4c4c0daa8bff874c95cc80794f191d0d9778ffaebdc",
+      "bytes": 1314430,
+      "role": "metrics",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/detail_metrics_full.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/delivery/independent_detail_metrics_full.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/delivery/independent_detail_metrics_full.json",
+      "sha256": "dd161be1605bcb9863e944c80a99dad0416e34a05b93312a218a178e139fbe35",
+      "bytes": 1838998,
+      "role": "metrics",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/delivery/independent_detail_metrics_full.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/joint_fit/scene_binding.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/joint_fit/scene_binding.json",
+      "sha256": "4437a1e3995d05ea802b6b9f6f59c4fac21647681330dc737d0577578c152e28",
+      "bytes": 1358,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/scene_binding.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/joint_fit/poses_full.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/joint_fit/poses_full.json",
+      "sha256": "3b9e4f706593eec5f54b5ba26273cfda31d885ce6035a7db079531d7f0612d30",
+      "bytes": 268785,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/poses_full.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/joint_fit/actor_track_map.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/joint_fit/actor_track_map.json",
+      "sha256": "2bbf5b43c43b88fd671c3123ac2ad8e327f2d6371b1e2b568bd93e7cf8ba02fe",
+      "bytes": 2473,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/actor_track_map.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed/scene_binding.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed/scene_binding.json",
+      "sha256": "d6f02913a83b13d6d4f4664fb8ed035330cbcbfa77b316d0ac95ebf677f6428b",
+      "bytes": 1650,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed/scene_binding.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed/poses_full.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed/poses_full.json",
+      "sha256": "3b9e4f706593eec5f54b5ba26273cfda31d885ce6035a7db079531d7f0612d30",
+      "bytes": 268785,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed/poses_full.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed/actor_track_map.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed/actor_track_map.json",
+      "sha256": "2bbf5b43c43b88fd671c3123ac2ad8e327f2d6371b1e2b568bd93e7cf8ba02fe",
+      "bytes": 2473,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed/actor_track_map.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/scene_binding.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed_guarded/scene_binding.json",
+      "sha256": "36d3821883348a72edada1df101f02ea3b1a91d8b96cd232fea65e7776b58faf",
+      "bytes": 1773,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/scene_binding.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/poses_full.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed_guarded/poses_full.json",
+      "sha256": "3b9e4f706593eec5f54b5ba26273cfda31d885ce6035a7db079531d7f0612d30",
+      "bytes": 268785,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/poses_full.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/actor_track_map.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_remote_stable_20261122_01/tree/assets/handoff_fixed_guarded/actor_track_map.json",
+      "sha256": "2bbf5b43c43b88fd671c3123ac2ad8e327f2d6371b1e2b568bd93e7cf8ba02fe",
+      "bytes": 2473,
+      "role": "provenance",
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/actor_track_map.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/build_report.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/build_report.py",
+      "sha256": "60916958841bf33f12357da5b09f7f885b58165641aff471c615e7785bc66796",
+      "bytes": 937,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\build_report.py",
+        "sha256": "60916958841bf33f12357da5b09f7f885b58165641aff471c615e7785bc66796"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/build_report.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/assemble_report_data.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/assemble_report_data.py",
+      "sha256": "9194d6fa9fd2d26b3c4394e2448d15a555e3a55af9bd5f332caa7ed6263f0de3",
+      "bytes": 11526,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\assemble_report_data.py",
+        "sha256": "9194d6fa9fd2d26b3c4394e2448d15a555e3a55af9bd5f332caa7ed6263f0de3"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/assemble_report_data.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/report_template.html": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/report_template.html",
+      "sha256": "301a9bf4b03688ea044565f3088aeba6373dcf2a2b132ad5f31883427cf91c56",
+      "bytes": 6884,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\report_template.html",
+        "sha256": "301a9bf4b03688ea044565f3088aeba6373dcf2a2b132ad5f31883427cf91c56"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/report_template.html"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/viewer.js": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/viewer.js",
+      "sha256": "abe90127bf580ccecdceabbafd334ef81e7b99ff5729abccd7f9350a8fa19527",
+      "bytes": 5354,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\viewer.js",
+        "sha256": "abe90127bf580ccecdceabbafd334ef81e7b99ff5729abccd7f9350a8fa19527"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/viewer.js"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/link_existing_report.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/link_existing_report.py",
+      "sha256": "9cb32d81687e302a3cfeb988f7cd9232f5b28c0bbe1adb057823d852b956ad02",
+      "bytes": 1775,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\link_existing_report.py",
+        "sha256": "9cb32d81687e302a3cfeb988f7cd9232f5b28c0bbe1adb057823d852b956ad02"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/link_existing_report.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/qa_report.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_report.py",
+      "sha256": "f6e134b99b7bb1fe922653d5a8b60de384822471e91954046d6e2a9d33162c83",
+      "bytes": 3100,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_report.py",
+        "sha256": "f6e134b99b7bb1fe922653d5a8b60de384822471e91954046d6e2a9d33162c83"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_report.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/qa_extras.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_extras.py",
+      "sha256": "9769455ea8619f92dcc8210b694af5237301f99417e811d50b3d9832a0240e1d",
+      "bytes": 2819,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_extras.py",
+        "sha256": "9769455ea8619f92dcc8210b694af5237301f99417e811d50b3d9832a0240e1d"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_extras.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/independent_detail_bench.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/independent_detail_bench.py",
+      "sha256": "068726af50193deb1107dd3dc67296255204741304d3fc10b7048c629b2f3d20",
+      "bytes": 4605,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\independent_detail_bench.py",
+        "sha256": "068726af50193deb1107dd3dc67296255204741304d3fc10b7048c629b2f3d20"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/independent_detail_bench.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/joint_detail_metrics.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/joint_detail_metrics.py",
+      "sha256": "3afcd78c4bb2ee796188f9625d235f6d8db3c882eee6a9ccfe2a36ddeeca55c5",
+      "bytes": 2877,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\joint_detail_metrics.py",
+        "sha256": "3afcd78c4bb2ee796188f9625d235f6d8db3c882eee6a9ccfe2a36ddeeca55c5"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/joint_detail_metrics.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/road_detail_metrics.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/road_detail_metrics.py",
+      "sha256": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c",
+      "bytes": 20565,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\road_detail_metrics.py",
+        "sha256": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/road_detail_metrics.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/qa_a20_visibility.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_a20_visibility.py",
+      "sha256": "466e4b6299d8b2a4eb728ab6d563fe1856e0373a6229fe24ee398ed0139c5eac",
+      "bytes": 6145,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_a20_visibility.py",
+        "sha256": "466e4b6299d8b2a4eb728ab6d563fe1856e0373a6229fe24ee398ed0139c5eac"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/qa_a20_visibility.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/report.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/report.md",
+      "sha256": "359dafce38bdfe94877031b52f193d06ce11d1399015af93a7f7a9f7210e46ca",
+      "bytes": 4982,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\report.md",
+        "sha256": "359dafce38bdfe94877031b52f193d06ce11d1399015af93a7f7a9f7210e46ca"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/report.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/generated_report.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/generated_report.md",
+      "sha256": "359dafce38bdfe94877031b52f193d06ce11d1399015af93a7f7a9f7210e46ca",
+      "bytes": 4982,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\vehicle_road_joint_20261121\\report.md",
+        "sha256": "359dafce38bdfe94877031b52f193d06ce11d1399015af93a7f7a9f7210e46ca"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/generated_report.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/index.html": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/index.html",
+      "sha256": "14ed0a7347384dccfb0b49b05c7bd0a043248146f19d871cc3c34def2c6e89c4",
+      "bytes": 136068,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\vehicle_road_joint_20261121\\index.html",
+        "sha256": "14ed0a7347384dccfb0b49b05c7bd0a043248146f19d871cc3c34def2c6e89c4"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/index.html"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_data.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_data.json",
+      "sha256": "1f3f2f3e83bb38a31aecfd5520899ff8e1b743326a3d22a92232f815c66a7810",
+      "bytes": 198505,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\vehicle_road_joint_20261121\\report_data.json",
+        "sha256": "1f3f2f3e83bb38a31aecfd5520899ff8e1b743326a3d22a92232f815c66a7810"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_data.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/hugsim_review.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/hugsim_review.md",
+      "sha256": "25a412dab29de7bdd5d118ad4968ba577723aa52bdcef4da0cfb073bc1868886",
+      "bytes": 6954,
+      "role": "record",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\hugsim_review.md",
+        "sha256": "25a412dab29de7bdd5d118ad4968ba577723aa52bdcef4da0cfb073bc1868886"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/hugsim_review.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/a20_occlusion_qa.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/a20_occlusion_qa.md",
+      "sha256": "a433a2c509d1514af809077b896e9fb4a979dfdd343177b5ff145cf2ec9fb707",
+      "bytes": 8221,
+      "role": "record",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\a20_occlusion_qa.md",
+        "sha256": "a433a2c509d1514af809077b896e9fb4a979dfdd343177b5ff145cf2ec9fb707"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/a20_occlusion_qa.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/final_independent_qa.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/final_independent_qa.md",
+      "sha256": "2e2950d072a173f9222aeec6c4406c7a259d5aa9dee559c7837e37a6099a47b5",
+      "bytes": 5310,
+      "role": "record",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\final_independent_qa.md",
+        "sha256": "2e2950d072a173f9222aeec6c4406c7a259d5aa9dee559c7837e37a6099a47b5"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/final_independent_qa.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_a20_visibility.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_a20_visibility.json",
+      "sha256": "4625761643c8bed001a0053ba319f12b4dabd8a90188274f659aee3a4ec61a8e",
+      "bytes": 267870,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_a20_visibility.json",
+        "sha256": "4625761643c8bed001a0053ba319f12b4dabd8a90188274f659aee3a4ec61a8e"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_a20_visibility.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_actor11_raw086_direction.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_actor11_raw086_direction.json",
+      "sha256": "2dba90d6c51ad30877dd6c89152dd7c2250a4af050ba8bae2ba0ff5cbec8d7a3",
+      "bytes": 1494,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_actor11_raw086_direction.json",
+        "sha256": "2dba90d6c51ad30877dd6c89152dd7c2250a4af050ba8bae2ba0ff5cbec8d7a3"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_actor11_raw086_direction.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_canonical_r2_comparison.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_canonical_r2_comparison.json",
+      "sha256": "db19afba044b0592fc473f5c38500553425db2dd1f689d8467ccedae7a5ab853",
+      "bytes": 5963,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_canonical_r2_comparison.json",
+        "sha256": "db19afba044b0592fc473f5c38500553425db2dd1f689d8467ccedae7a5ab853"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_canonical_r2_comparison.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_extras.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_extras.json",
+      "sha256": "897fc4edac6f7cee3d6791ee598866be27f71b158d7f7d6ce717baf42e4da0ea",
+      "bytes": 224,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_extras.json",
+        "sha256": "897fc4edac6f7cee3d6791ee598866be27f71b158d7f7d6ce717baf42e4da0ea"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_extras.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_final_cpu.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_final_cpu.json",
+      "sha256": "07969b8c76eee22c01a1157b78d28c754d9884fef479a86ceeda6c1a765f65a5",
+      "bytes": 41558,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_final_cpu.json",
+        "sha256": "07969b8c76eee22c01a1157b78d28c754d9884fef479a86ceeda6c1a765f65a5"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_final_cpu.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_r2_baseline_comparison.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_r2_baseline_comparison.json",
+      "sha256": "13e62ac3dca8c673298775764c8890f39ff3acf6b49550412a3c1391c2975983",
+      "bytes": 1461,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_r2_baseline_comparison.json",
+        "sha256": "13e62ac3dca8c673298775764c8890f39ff3acf6b49550412a3c1391c2975983"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_r2_baseline_comparison.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_report.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_report.json",
+      "sha256": "383e0826bb50e30178a131cd093506cad70337953883b3aacb4eea5451ab16c5",
+      "bytes": 153,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_report.json",
+        "sha256": "383e0826bb50e30178a131cd093506cad70337953883b3aacb4eea5451ab16c5"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_report.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_supervision_contract_r2.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_supervision_contract_r2.json",
+      "sha256": "9127cd9d5cf2896e6bdaeafd177b3b66ae580789af3cb5fa32beb14373f35a25",
+      "bytes": 938,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_supervision_contract_r2.json",
+        "sha256": "9127cd9d5cf2896e6bdaeafd177b3b66ae580789af3cb5fa32beb14373f35a25"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_supervision_contract_r2.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/evidence/local_qa/qa_teacher_render_overlap.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_teacher_render_overlap.json",
+      "sha256": "11e556d34ceed90e3f6252522f09a10911b75096221e821c6d452f20dd15c95f",
+      "bytes": 5500,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_teacher_render_overlap.json",
+        "sha256": "11e556d34ceed90e3f6252522f09a10911b75096221e821c6d452f20dd15c95f"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/evidence/local_qa/qa_teacher_render_overlap.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/local_receipts/actor_mapping.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/actor_mapping.json",
+      "sha256": "e8ee0997c01f7223d94d3a7bd0942248c601c14c46707b73228db555bdcbc423",
+      "bytes": 892,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\actor_mapping.json",
+        "sha256": "e8ee0997c01f7223d94d3a7bd0942248c601c14c46707b73228db555bdcbc423"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/actor_mapping.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/local_receipts/takeback_download_receipt.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/takeback_download_receipt.json",
+      "sha256": "a8ba83c0353314b1d9f3d78170ab34633917d2a173a0dc838758928b7e9790a0",
+      "bytes": 499,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\takeback_download_receipt.json",
+        "sha256": "a8ba83c0353314b1d9f3d78170ab34633917d2a173a0dc838758928b7e9790a0"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/takeback_download_receipt.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/local_receipts/implementation_delivery_receipt.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/implementation_delivery_receipt.json",
+      "sha256": "0c19706b52cf3551efdd2e032bc2ffee4d81446ab8984296e165f64393d97ae3",
+      "bytes": 1498,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\implementation_delivery_receipt.json",
+        "sha256": "0c19706b52cf3551efdd2e032bc2ffee4d81446ab8984296e165f64393d97ae3"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/implementation_delivery_receipt.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/local_receipts/report_entry_receipt.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/report_entry_receipt.json",
+      "sha256": "fa6b5c264058127a03365a54a63a855eed64901f26c44b979c138071a0c48dbe",
+      "bytes": 335,
+      "role": "receipt",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\report_entry_receipt.json",
+        "sha256": "fa6b5c264058127a03365a54a63a855eed64901f26c44b979c138071a0c48dbe"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/local_receipts/report_entry_receipt.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/architecture.svg": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/architecture.svg",
+      "sha256": "6dcdbd64a6da9c288788457b1bbffb60fd7d4941dab5a5d15efd7755ca15a4e1",
+      "bytes": 33767,
+      "role": "architecture_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\outputs\\vehicle_road_joint_20261121\\architecture.svg",
+        "sha256": "6dcdbd64a6da9c288788457b1bbffb60fd7d4941dab5a5d15efd7755ca15a4e1"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/architecture.svg"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/architecture/generate.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/generate.py",
+      "sha256": "9ec28adfa3774c9fa3664279cf98d064bd87469944ad742004566de35943d9fe",
+      "bytes": 18170,
+      "role": "architecture_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\architecture\\generate.py",
+        "sha256": "9ec28adfa3774c9fa3664279cf98d064bd87469944ad742004566de35943d9fe"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/generate.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/architecture/render.ps1": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/render.ps1",
+      "sha256": "7780eba5b2965569eaec61ab697f13dec62b647c9888b2d3b6815232f1a72978",
+      "bytes": 1169,
+      "role": "architecture_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\architecture\\render.ps1",
+        "sha256": "7780eba5b2965569eaec61ab697f13dec62b647c9888b2d3b6815232f1a72978"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/render.ps1"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/architecture/render.html": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/render.html",
+      "sha256": "4f23e4b75ba93af5fd60234f5f940856e711770ebb1a3b2ae729ef4ad89c3e89",
+      "bytes": 33950,
+      "role": "architecture_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\architecture\\render.html",
+        "sha256": "4f23e4b75ba93af5fd60234f5f940856e711770ebb1a3b2ae729ef4ad89c3e89"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/render.html"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report_source/architecture/content.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/content.json",
+      "sha256": "f582a56bd96cd4fdbbb5963761f2f17c352a929899797506c225d4868f816512",
+      "bytes": 2210,
+      "role": "architecture_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\architecture\\content.json",
+        "sha256": "f582a56bd96cd4fdbbb5963761f2f17c352a929899797506c225d4868f816512"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report_source/architecture/content.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/linked_sources/road_surface_residual_20261121_r2/viewer.js": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/linked_sources/road_surface_residual_20261121_r2/viewer.js",
+      "sha256": "98d7ded83601146b0af55679ce3d5e6da5244e5bcff0537b3162186d0cdf4e53",
+      "bytes": 12828,
+      "role": "provenance",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\road_surface_residual_20261121_r2\\viewer.js",
+        "sha256": "98d7ded83601146b0af55679ce3d5e6da5244e5bcff0537b3162186d0cdf4e53"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/linked_sources/road_surface_residual_20261121_r2/viewer.js"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/archive_common.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/archive_common.py",
+      "sha256": "86aeccd83e2913c5aa6cc23e8e177fbb1dd79bc875e1330d2058e9c0a9af5c9b",
+      "bytes": 7055,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\archive_common.py",
+        "sha256": "86aeccd83e2913c5aa6cc23e8e177fbb1dd79bc875e1330d2058e9c0a9af5c9b"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/archive_common.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/freeze_remote_sources.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/freeze_remote_sources.py",
+      "sha256": "12a3395ef5b3ddc258b912074ff2a0294f4402f5f9482abaa46d52daf082752a",
+      "bytes": 3921,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\freeze_remote_sources.py",
+        "sha256": "12a3395ef5b3ddc258b912074ff2a0294f4402f5f9482abaa46d52daf082752a"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/freeze_remote_sources.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/install_upload.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/install_upload.py",
+      "sha256": "5c1246804824b4fd06664b7ae3dddd58fbf9d58ab9a72bc97298b84d66b0ecf7",
+      "bytes": 1732,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\install_upload.py",
+        "sha256": "5c1246804824b4fd06664b7ae3dddd58fbf9d58ab9a72bc97298b84d66b0ecf7"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/install_upload.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/prepare_archive.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/prepare_archive.py",
+      "sha256": "6542fecd0ee4885bf21f7a25e2f87b80b7c3ee3521bf2e375f7d62d3633946dd",
+      "bytes": 8833,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\prepare_archive.py",
+        "sha256": "6542fecd0ee4885bf21f7a25e2f87b80b7c3ee3521bf2e375f7d62d3633946dd"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/prepare_archive.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/prepare_local_inputs.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/prepare_local_inputs.py",
+      "sha256": "984765da55eba10145e2467a4a1d9fb10fc5cdc5e094df6e477da308807d7a0e",
+      "bytes": 4731,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\prepare_local_inputs.py",
+        "sha256": "984765da55eba10145e2467a4a1d9fb10fc5cdc5e094df6e477da308807d7a0e"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/prepare_local_inputs.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/publish_selected.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/publish_selected.py",
+      "sha256": "fadaa41f017c5bd3cd0f4f170560d8d43df277d0d6e8972d6eca9ad46989b872",
+      "bytes": 4448,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\publish_selected.py",
+        "sha256": "fadaa41f017c5bd3cd0f4f170560d8d43df277d0d6e8972d6eca9ad46989b872"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/publish_selected.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/validate_archive.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/validate_archive.py",
+      "sha256": "db011d96a702e5603cc7695fb70cd69d93db600abd3be03a6923f852c1eca89d",
+      "bytes": 2708,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\validate_archive.py",
+        "sha256": "db011d96a702e5603cc7695fb70cd69d93db600abd3be03a6923f852c1eca89d"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/validate_archive.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/verify_published.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/verify_published.py",
+      "sha256": "e88e8b98d31b6ef4f696b48be29813671ebec9d748c4409d732b1e48f9d39c42",
+      "bytes": 3004,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\verify_published.py",
+        "sha256": "e88e8b98d31b6ef4f696b48be29813671ebec9d748c4409d732b1e48f9d39c42"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/verify_published.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/verify_takeback.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/verify_takeback.py",
+      "sha256": "1157428728dbf24e4d9571fc472f934ea6fe3706e97f94bc100efb6a253d9da4",
+      "bytes": 2083,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\verify_takeback.py",
+        "sha256": "1157428728dbf24e4d9571fc472f934ea6fe3706e97f94bc100efb6a253d9da4"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/verify_takeback.py"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/README.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/README.md",
+      "sha256": "cce74e947516cdb6510d1d66a29cac02c6f89e3c29e8a9b9fc04a289287a8994",
+      "bytes": 3563,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\README.md",
+        "sha256": "cce74e947516cdb6510d1d66a29cac02c6f89e3c29e8a9b9fc04a289287a8994"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/README.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/publication_tools/manifest.template.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/manifest.template.json",
+      "sha256": "9fe3a27aaccc183b3af2d812ece6f2003cd101007b69263517d2b9ee6037a68c",
+      "bytes": 1015,
+      "role": "publication_tool",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\manifest.template.json",
+        "sha256": "9fe3a27aaccc183b3af2d812ece6f2003cd101007b69263517d2b9ee6037a68c"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/publication_tools/manifest.template.json"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/report.md": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report.md",
+      "sha256": "38658aa64cc7cd6842c83165c9d29f945a33ebf336d87afb645cf06c50445f91",
+      "bytes": 4930,
+      "role": "report_source",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\inputs_local_final_20261122_03\\derived\\report.md",
+        "sha256": "38658aa64cc7cd6842c83165c9d29f945a33ebf336d87afb645cf06c50445f91"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/report.md"
+    },
+    "docs/autoresearch/vehicle_road_joint_20261121_r1/provenance/local_delivery_source_bindings.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/provenance/local_delivery_source_bindings.json",
+      "sha256": "0803b41e5c021acf436d657e4c2dae3b1fb6dddf354bce40441ab706a6e4960a",
+      "bytes": 15682,
+      "role": "provenance",
+      "local_origin": {
+        "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\publication\\inputs_local_final_20261122_03\\derived\\local_delivery_source_bindings.json",
+        "sha256": "0803b41e5c021acf436d657e4c2dae3b1fb6dddf354bce40441ab706a6e4960a"
+      },
+      "original_source": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/publication/inputs_local_final_20261122_03/tree/provenance/local_delivery_source_bindings.json"
+    }
+  },
+  "method_verdict_is_in_report": true
+}

@@ -1,7 +1,7 @@
 # 当前研究状态
 
-更新：2026-11-21（Asia/Singapore）。
+更新：2026-11-22（Asia/Singapore）。
 
-`ROAD-SURFACE-RESIDUAL-20261121-R2`：认证残余修复完成，[报告与组件](autoresearch/module2_surface_residual_20261121_r2/report.md)、[合同](autoresearch/module2_surface_residual_20261121_r2/contract.json)、[指标](autoresearch/module2_surface_residual_20261121_r2/bench/metrics.json)。直接父为第一轮外观终态，实际激活13个旧inactive锚点、追加1071个新空间位置，并在原不可变尺度上界内复用107个第一轮新增行；不追加同中心副本。道路总行596100、active162348；累计两轮真append7239、旧行activation3121，历史892另列。覆盖纯hinge400步、外观1200步；这是残余采样与覆盖目标共同变化，不是仅密度消融。
+`VEHICLE-ROAD-JOINT-20261121`：本轮执行与交付收口，[实际路线与组件](autoresearch/vehicle_road_joint_20261121_r1/report.md)、[训练合同](autoresearch/vehicle_road_joint_20261121_r1/contract.json)、[49条细节记录](autoresearch/vehicle_road_joint_20261121_r1/delivery/detail_metrics.json)。Scene065删除前方a9白Mazda，保留并补全后方a20黑皮卡与道路；原生30K步终态转换为对象局部刚体GS，新增624个有界车体/轮胎先验高斯。下半主体持续遮挡，隐藏形状和材质为推断。车辆200步＋联合200步；失败smoke6、成功smoke9、独立恢复probe2另列，总417次，额外更新未写入最终资产。原训练封包与7阶段均保留，当前候选未替换既有道路基线。
 
-所有安全动作的源像素均达到alpha>=.95；认证道路C低alpha总数raw86/110从第一轮前3895/7431降至809/303，S从520/2810降至0/0。剩余认证C缺口全属于本轮实际joint K拒绝候选，仍不能推导所有3DGS几何不可行。未认证C编辑域5934/7077保留，不称已确认道路。五指定视角K的RGB/alpha exact0、逐字段父prefix保护和完整状态恢复通过；不外推任意相机或连续参数区间。固定最终几何的4F/0更新颜色0/1区间诊断独立记账，只支持逐像素RGB盒区间下界，不是HF或全局容量证书。另在同1191行、原normalizer和目标下独立核验有界L-BFGS-B，实际2FG/1接受步，总loss只降4.51e-8；总目标含冻结父区域常数，不能据此认定新覆盖颜色收敛或3DGS达到上限。正式1200步终态不替换。原第一轮提交与资产保留；未接受整体画质、未晋升默认场景。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。GPU保持开机。
+训练、保存、完整状态恢复与独立进程五帧重载已验证；75行局部归属sidecar无新增训练，KEEP保持、外域变化小于1/255，但主要a9白块残影、先验轮胎粗糙及局部车辆退化仍在。物理投影盒与roadlegal零交集不代表真实贡献隔离：prior raw86/110合法道路区仍有457/482像素的车辆贡献大于1e-3，越界足迹进入道路教师域，画质与贡献隔离未通过。下一步优先核定跨域大足迹拆分/归属及受测距约束的对象表面，本轮不追加训练。最终资产取回402文件/58,547,980字节，正式源与小型记录选定归档；GPU保持开机。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=updated:V82-F06。

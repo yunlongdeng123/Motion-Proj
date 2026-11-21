@@ -1,0 +1,5355 @@
+{
+  "schema": "vehicle_road_joint_report.v1",
+  "subtitle": "a9：前方白色 Mazda 轿车 · a20：后方黑色皮卡 · 1152 × 768",
+  "status": "车辆 200 步＋联合 200 步已完成；当前下半车体、旧残影和局部车辆画质仍需改进。",
+  "stats": [
+    {
+      "name": "训练帧",
+      "value": "86 / 110"
+    },
+    {
+      "name": "诊断帧",
+      "value": "134 / 179 / 198"
+    },
+    {
+      "name": "车辆 / 联合更新",
+      "value": "200 / 200"
+    },
+    {
+      "name": "a20 新增形状先验高斯",
+      "value": "624"
+    }
+  ],
+  "stages": [
+    {
+      "id": "native_before",
+      "name": "接入前 · 原生动态表示",
+      "budget": "既有重建，无本轮更新",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/native_before/086/joint_keep.webp",
+          "joint_delete": "delivery/native_before/086/joint_delete.webp",
+          "vehicle_only": "delivery/native_before/086/vehicle_only.webp",
+          "road_only": "delivery/native_before/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/native_before/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/native_before/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/native_before/110/joint_keep.webp",
+          "joint_delete": "delivery/native_before/110/joint_delete.webp",
+          "vehicle_only": "delivery/native_before/110/vehicle_only.webp",
+          "road_only": "delivery/native_before/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/native_before/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/native_before/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/native_before/134/joint_keep.webp",
+          "joint_delete": "delivery/native_before/134/joint_delete.webp",
+          "vehicle_only": "delivery/native_before/134/vehicle_only.webp",
+          "road_only": "delivery/native_before/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/native_before/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/native_before/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/native_before/179/joint_keep.webp",
+          "joint_delete": "delivery/native_before/179/joint_delete.webp",
+          "vehicle_only": "delivery/native_before/179/vehicle_only.webp",
+          "road_only": "delivery/native_before/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/native_before/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/native_before/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/native_before/198/joint_keep.webp",
+          "joint_delete": "delivery/native_before/198/joint_delete.webp",
+          "vehicle_only": "delivery/native_before/198/vehicle_only.webp",
+          "road_only": "delivery/native_before/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/native_before/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/native_before/198/road_alpha.webp"
+        }
+      },
+      "parameters": "不训练",
+      "supervision": "真实观测 / 既有重建 / 显式先验",
+      "frozen": "全部参数"
+    },
+    {
+      "id": "canonical_init",
+      "name": "对象坐标转换 · 无补全先验",
+      "budget": "0 步；统一对象表示",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/canonical_init/086/joint_keep.webp",
+          "joint_delete": "delivery/canonical_init/086/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_init/086/vehicle_only.webp",
+          "road_only": "delivery/canonical_init/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_init/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_init/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/canonical_init/110/joint_keep.webp",
+          "joint_delete": "delivery/canonical_init/110/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_init/110/vehicle_only.webp",
+          "road_only": "delivery/canonical_init/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_init/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_init/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/canonical_init/134/joint_keep.webp",
+          "joint_delete": "delivery/canonical_init/134/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_init/134/vehicle_only.webp",
+          "road_only": "delivery/canonical_init/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_init/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_init/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/canonical_init/179/joint_keep.webp",
+          "joint_delete": "delivery/canonical_init/179/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_init/179/vehicle_only.webp",
+          "road_only": "delivery/canonical_init/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_init/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_init/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/canonical_init/198/joint_keep.webp",
+          "joint_delete": "delivery/canonical_init/198/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_init/198/vehicle_only.webp",
+          "road_only": "delivery/canonical_init/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_init/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_init/198/road_alpha.webp"
+        }
+      },
+      "parameters": "不训练",
+      "supervision": "真实观测 / 既有重建 / 显式先验",
+      "frozen": "全部参数"
+    },
+    {
+      "id": "canonical_prior_init",
+      "name": "下半车体先验 · 初值",
+      "budget": "0 步；补足被遮车体支撑",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/canonical_prior_init/086/joint_keep.webp",
+          "joint_delete": "delivery/canonical_prior_init/086/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_prior_init/086/vehicle_only.webp",
+          "road_only": "delivery/canonical_prior_init/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_prior_init/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_prior_init/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/canonical_prior_init/110/joint_keep.webp",
+          "joint_delete": "delivery/canonical_prior_init/110/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_prior_init/110/vehicle_only.webp",
+          "road_only": "delivery/canonical_prior_init/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_prior_init/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_prior_init/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/canonical_prior_init/134/joint_keep.webp",
+          "joint_delete": "delivery/canonical_prior_init/134/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_prior_init/134/vehicle_only.webp",
+          "road_only": "delivery/canonical_prior_init/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_prior_init/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_prior_init/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/canonical_prior_init/179/joint_keep.webp",
+          "joint_delete": "delivery/canonical_prior_init/179/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_prior_init/179/vehicle_only.webp",
+          "road_only": "delivery/canonical_prior_init/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_prior_init/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_prior_init/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/canonical_prior_init/198/joint_keep.webp",
+          "joint_delete": "delivery/canonical_prior_init/198/joint_delete.webp",
+          "vehicle_only": "delivery/canonical_prior_init/198/vehicle_only.webp",
+          "road_only": "delivery/canonical_prior_init/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/canonical_prior_init/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/canonical_prior_init/198/road_alpha.webp"
+        }
+      },
+      "parameters": "不训练",
+      "supervision": "真实观测 / 既有重建 / 显式先验",
+      "frozen": "全部参数"
+    },
+    {
+      "id": "vehicle_fit",
+      "name": "车辆单独优化",
+      "budget": "车辆 200 步",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/vehicle_fit/086/joint_keep.webp",
+          "joint_delete": "delivery/vehicle_fit/086/joint_delete.webp",
+          "vehicle_only": "delivery/vehicle_fit/086/vehicle_only.webp",
+          "road_only": "delivery/vehicle_fit/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/vehicle_fit/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/vehicle_fit/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/vehicle_fit/110/joint_keep.webp",
+          "joint_delete": "delivery/vehicle_fit/110/joint_delete.webp",
+          "vehicle_only": "delivery/vehicle_fit/110/vehicle_only.webp",
+          "road_only": "delivery/vehicle_fit/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/vehicle_fit/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/vehicle_fit/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/vehicle_fit/134/joint_keep.webp",
+          "joint_delete": "delivery/vehicle_fit/134/joint_delete.webp",
+          "vehicle_only": "delivery/vehicle_fit/134/vehicle_only.webp",
+          "road_only": "delivery/vehicle_fit/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/vehicle_fit/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/vehicle_fit/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/vehicle_fit/179/joint_keep.webp",
+          "joint_delete": "delivery/vehicle_fit/179/joint_delete.webp",
+          "vehicle_only": "delivery/vehicle_fit/179/vehicle_only.webp",
+          "road_only": "delivery/vehicle_fit/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/vehicle_fit/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/vehicle_fit/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/vehicle_fit/198/joint_keep.webp",
+          "joint_delete": "delivery/vehicle_fit/198/joint_delete.webp",
+          "vehicle_only": "delivery/vehicle_fit/198/vehicle_only.webp",
+          "road_only": "delivery/vehicle_fit/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/vehicle_fit/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/vehicle_fit/198/road_alpha.webp"
+        }
+      },
+      "parameters": "车辆颜色、不透明度、受限尺度",
+      "supervision": "a20 原始 RGB / 自动估计可见掩码",
+      "frozen": "道路、轨迹、相机、其余场景"
+    },
+    {
+      "id": "joint_fit",
+      "name": "车辆与道路联合优化",
+      "budget": "车辆 200 步 + 联合 200 步",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/joint_fit/086/joint_keep.webp",
+          "joint_delete": "delivery/joint_fit/086/joint_delete.webp",
+          "vehicle_only": "delivery/joint_fit/086/vehicle_only.webp",
+          "road_only": "delivery/joint_fit/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/joint_fit/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/joint_fit/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/joint_fit/110/joint_keep.webp",
+          "joint_delete": "delivery/joint_fit/110/joint_delete.webp",
+          "vehicle_only": "delivery/joint_fit/110/vehicle_only.webp",
+          "road_only": "delivery/joint_fit/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/joint_fit/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/joint_fit/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/joint_fit/134/joint_keep.webp",
+          "joint_delete": "delivery/joint_fit/134/joint_delete.webp",
+          "vehicle_only": "delivery/joint_fit/134/vehicle_only.webp",
+          "road_only": "delivery/joint_fit/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/joint_fit/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/joint_fit/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/joint_fit/179/joint_keep.webp",
+          "joint_delete": "delivery/joint_fit/179/joint_delete.webp",
+          "vehicle_only": "delivery/joint_fit/179/vehicle_only.webp",
+          "road_only": "delivery/joint_fit/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/joint_fit/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/joint_fit/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/joint_fit/198/joint_keep.webp",
+          "joint_delete": "delivery/joint_fit/198/joint_delete.webp",
+          "vehicle_only": "delivery/joint_fit/198/vehicle_only.webp",
+          "road_only": "delivery/joint_fit/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/joint_fit/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/joint_fit/198/road_alpha.webp"
+        }
+      },
+      "parameters": "车辆颜色 + 道路许可行颜色",
+      "supervision": "保留场景的车辆 + 删除 a9 后的道路",
+      "frozen": "覆盖、几何、轨迹、静态背景、环境"
+    },
+    {
+      "id": "handoff_fixed",
+      "name": "旧 a9 交接 · 严格 49 行",
+      "budget": "继承联合训练；精确零贡献保护，无新增训练",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/handoff_fixed/086/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed/086/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed/086/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/handoff_fixed/110/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed/110/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed/110/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/handoff_fixed/134/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed/134/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed/134/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/handoff_fixed/179/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed/179/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed/179/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/handoff_fixed/198/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed/198/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed/198/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed/198/road_alpha.webp"
+        }
+      },
+      "parameters": "核验旧残留归属，无梯度更新",
+      "supervision": "跨帧实际成像贡献与保留对象保护",
+      "frozen": "全部已训练参数"
+    },
+    {
+      "id": "handoff_fixed_guarded",
+      "name": "旧 a9 交接 · 75 行",
+      "budget": "相对联合终态：保留车辆不变，外域最多 1 灰度码",
+      "images": {
+        "86": {
+          "joint_keep": "delivery/handoff_fixed_guarded/086/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed_guarded/086/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed_guarded/086/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed_guarded/086/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed_guarded/086/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed_guarded/086/road_alpha.webp"
+        },
+        "110": {
+          "joint_keep": "delivery/handoff_fixed_guarded/110/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed_guarded/110/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed_guarded/110/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed_guarded/110/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed_guarded/110/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed_guarded/110/road_alpha.webp"
+        },
+        "134": {
+          "joint_keep": "delivery/handoff_fixed_guarded/134/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed_guarded/134/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed_guarded/134/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed_guarded/134/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed_guarded/134/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed_guarded/134/road_alpha.webp"
+        },
+        "179": {
+          "joint_keep": "delivery/handoff_fixed_guarded/179/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed_guarded/179/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed_guarded/179/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed_guarded/179/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed_guarded/179/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed_guarded/179/road_alpha.webp"
+        },
+        "198": {
+          "joint_keep": "delivery/handoff_fixed_guarded/198/joint_keep.webp",
+          "joint_delete": "delivery/handoff_fixed_guarded/198/joint_delete.webp",
+          "vehicle_only": "delivery/handoff_fixed_guarded/198/vehicle_only.webp",
+          "road_only": "delivery/handoff_fixed_guarded/198/road_only.webp",
+          "vehicle_alpha_delete": "delivery/handoff_fixed_guarded/198/vehicle_alpha_delete.webp",
+          "road_alpha": "delivery/handoff_fixed_guarded/198/road_alpha.webp"
+        }
+      },
+      "parameters": "核验旧残留归属，无梯度更新",
+      "supervision": "跨帧实际成像贡献与保留对象保护",
+      "frozen": "全部已训练参数"
+    }
+  ],
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "default_frame": 134,
+  "references": {
+    "86": {
+      "rgb": "delivery/references/086/rgb.webp",
+      "vehicle_mask": "delivery/references/086/vehicle_mask.webp",
+      "road_legal": "delivery/references/086/road_legal.webp",
+      "vehicle_potential_bbox": "delivery/references/086/vehicle_potential_bbox.webp",
+      "road_teacher": "delivery/references/086/road_teacher.webp"
+    },
+    "110": {
+      "rgb": "delivery/references/110/rgb.webp",
+      "vehicle_mask": "delivery/references/110/vehicle_mask.webp",
+      "road_legal": "delivery/references/110/road_legal.webp",
+      "vehicle_potential_bbox": "delivery/references/110/vehicle_potential_bbox.webp",
+      "road_teacher": "delivery/references/110/road_teacher.webp"
+    },
+    "134": {
+      "rgb": "delivery/references/134/rgb.webp",
+      "vehicle_mask": "delivery/references/134/vehicle_mask.webp",
+      "road_legal": "delivery/references/134/road_legal.webp",
+      "vehicle_potential_bbox": "delivery/references/134/vehicle_potential_bbox.webp",
+      "road_teacher": null
+    },
+    "179": {
+      "rgb": "delivery/references/179/rgb.webp",
+      "vehicle_mask": "delivery/references/179/vehicle_mask.webp",
+      "road_legal": "delivery/references/179/road_legal.webp",
+      "vehicle_potential_bbox": "delivery/references/179/vehicle_potential_bbox.webp",
+      "road_teacher": null
+    },
+    "198": {
+      "rgb": "delivery/references/198/rgb.webp",
+      "vehicle_mask": "delivery/references/198/vehicle_mask.webp",
+      "road_legal": "delivery/references/198/road_legal.webp",
+      "vehicle_potential_bbox": "delivery/references/198/vehicle_potential_bbox.webp",
+      "road_teacher": null
+    }
+  },
+  "crop_boxes": {
+    "86": [
+      374,
+      360,
+      750,
+      707
+    ],
+    "110": [
+      355,
+      363,
+      762,
+      737
+    ],
+    "134": [
+      350,
+      363,
+      766,
+      743
+    ],
+    "179": [
+      350,
+      363,
+      765,
+      743
+    ],
+    "198": [
+      350,
+      363,
+      765,
+      743
+    ]
+  },
+  "frame_info": {
+    "86": "本轮训练视角",
+    "110": "本轮训练视角",
+    "134": "本轮未参与更新的诊断视角",
+    "179": "本轮未参与更新的诊断视角",
+    "198": "本轮未参与更新的诊断视角"
+  },
+  "method": "HUGSIM 的对象坐标刚体高斯与统一渲染用于车辆接入。原始车辆有效高斯转为共享对象资产；被遮下半使用显式几何与车漆先验。车辆损失使用真实观测，道路损失使用对应道路目标；当前投影盒与掩码分区仍有越界足迹带来的梯度串扰。",
+  "metric_roles": [
+    {
+      "id": "vehicle",
+      "name": "a20 真实可见车体"
+    },
+    {
+      "id": "road",
+      "name": "合法道路教师区域"
+    }
+  ],
+  "metric_columns": [
+    {
+      "key": "MAE",
+      "name": "RGB MAE ↓"
+    },
+    {
+      "key": "SSIM",
+      "name": "局部 SSIM ↑"
+    },
+    {
+      "key": "HF_cosine",
+      "name": "HF 对应度 ↑"
+    },
+    {
+      "key": "HF_energy_ratio",
+      "name": "HF 能量比（目标 1）"
+    },
+    {
+      "key": "edge_F1",
+      "name": "边缘 F1 ↑"
+    },
+    {
+      "key": "IoU",
+      "name": "可见轮廓 IoU ↑"
+    },
+    {
+      "key": "pixels",
+      "name": "评分像素",
+      "integer": true
+    },
+    {
+      "key": "HF_core_pixels",
+      "name": "HF 有效像素",
+      "integer": true
+    }
+  ],
+  "metrics": [
+    {
+      "stage": "native_before",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.04316023146599208,
+      "SSIM": 0.7948575577174786,
+      "HF_cosine": 0.08023724212823453,
+      "HF_energy_ratio": 0.7933470576148829,
+      "edge_F1": 0.7842254141685496,
+      "IoU": 0.9410830140113831,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "native_before",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.03237883027549541,
+      "SSIM": 0.8340092236338762,
+      "HF_cosine": 0.4177268199115536,
+      "HF_energy_ratio": 0.8826878191514962,
+      "edge_F1": 0.8156483996867575,
+      "IoU": 0.9561517834663391,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "native_before",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.02754026926947008,
+      "SSIM": 0.8706934710137475,
+      "HF_cosine": 0.41920789493720917,
+      "HF_energy_ratio": 1.1746814171737145,
+      "edge_F1": 0.8498152434501762,
+      "IoU": 0.9509197473526001,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "native_before",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.024938256961645384,
+      "SSIM": 0.869386187841005,
+      "HF_cosine": 0.326045904606124,
+      "HF_energy_ratio": 0.9875170087350237,
+      "edge_F1": 0.8461811894590885,
+      "IoU": 0.9511365294456482,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "native_before",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.027286847538609892,
+      "SSIM": 0.8487550191943527,
+      "HF_cosine": 0.26787131422387916,
+      "HF_energy_ratio": 0.8920495209276555,
+      "edge_F1": 0.8010205960236045,
+      "IoU": 0.9488404393196106,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.060512228007409824,
+      "SSIM": 0.5544489313196674,
+      "HF_cosine": 0.0036624682342662087,
+      "HF_energy_ratio": 0.6759675808926099,
+      "edge_F1": 0.7516491418792893,
+      "IoU": 0.9224274158477783,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.03237887649901465,
+      "SSIM": 0.8340076129227898,
+      "HF_cosine": 0.4177171893321046,
+      "HF_energy_ratio": 0.8826770789133959,
+      "edge_F1": 0.8156483996867575,
+      "IoU": 0.9561517834663391,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.046230565458664295,
+      "SSIM": 0.7471413037615043,
+      "HF_cosine": 0.27975827419642746,
+      "HF_energy_ratio": 1.2804576939769532,
+      "edge_F1": 0.7723437554415562,
+      "IoU": 0.9406196475028992,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.045422778147235915,
+      "SSIM": 0.7494403493300258,
+      "HF_cosine": 0.2652474495296605,
+      "HF_energy_ratio": 1.0078572845532177,
+      "edge_F1": 0.7732523466855112,
+      "IoU": 0.9342755675315857,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.04704266269564967,
+      "SSIM": 0.7282920441756657,
+      "HF_cosine": 0.2091802410130968,
+      "HF_energy_ratio": 1.0454966917287203,
+      "edge_F1": 0.7474559122469383,
+      "IoU": 0.9322138428688049,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.060512228007409824,
+      "SSIM": 0.5544489313196674,
+      "HF_cosine": 0.0036624682342662087,
+      "HF_energy_ratio": 0.6759675808926099,
+      "edge_F1": 0.7516491418792893,
+      "IoU": 0.9227926731109619,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.03237887649901465,
+      "SSIM": 0.8340076129227898,
+      "HF_cosine": 0.4177171893321046,
+      "HF_energy_ratio": 0.8826770789133959,
+      "edge_F1": 0.8156483996867575,
+      "IoU": 0.9561517834663391,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.04631704811168094,
+      "SSIM": 0.7471473110977075,
+      "HF_cosine": 0.2795782937096659,
+      "HF_energy_ratio": 1.2803582362172765,
+      "edge_F1": 0.7723437554415562,
+      "IoU": 0.9402284622192383,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.04547040289027541,
+      "SSIM": 0.7494319213717656,
+      "HF_cosine": 0.26473580193122037,
+      "HF_energy_ratio": 1.0072804604618715,
+      "edge_F1": 0.7727174854307581,
+      "IoU": 0.9338893890380859,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.04708551798830815,
+      "SSIM": 0.7283007891019997,
+      "HF_cosine": 0.20912619768753962,
+      "HF_energy_ratio": 1.0446960061352855,
+      "edge_F1": 0.7471701002157917,
+      "IoU": 0.9319056868553162,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.022879075595610483,
+      "SSIM": 0.9190072032271959,
+      "HF_cosine": 0.49045102929198714,
+      "HF_energy_ratio": 0.3621057011056727,
+      "edge_F1": 0.8602805092629278,
+      "IoU": 0.9518072009086609,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.020671089622227228,
+      "SSIM": 0.9281937407948835,
+      "HF_cosine": 0.5929916030104616,
+      "HF_energy_ratio": 0.447715171390082,
+      "edge_F1": 0.9065957578206641,
+      "IoU": 0.9742374420166016,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.03779504919762337,
+      "SSIM": 0.8002164683074224,
+      "HF_cosine": 0.33221298723807957,
+      "HF_energy_ratio": 0.6325553056802842,
+      "edge_F1": 0.7954787986161679,
+      "IoU": 0.9618936777114868,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.03814526126496754,
+      "SSIM": 0.7940537211713636,
+      "HF_cosine": 0.30560363817462405,
+      "HF_energy_ratio": 0.5324031897884234,
+      "edge_F1": 0.8043972862339064,
+      "IoU": 0.9623932838439941,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.04015989546263454,
+      "SSIM": 0.7659230524222082,
+      "HF_cosine": 0.2425457895617989,
+      "HF_energy_ratio": 0.5538663808680029,
+      "edge_F1": 0.7807812046217609,
+      "IoU": 0.9608715772628784,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.02128688043045896,
+      "SSIM": 0.9297575391952807,
+      "HF_cosine": 0.5374618412190805,
+      "HF_energy_ratio": 0.37335368178666006,
+      "edge_F1": 0.8771805440523878,
+      "IoU": 0.9518072009086609,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.02016689986894274,
+      "SSIM": 0.9324671341452179,
+      "HF_cosine": 0.6074944004701981,
+      "HF_energy_ratio": 0.4459823972537258,
+      "edge_F1": 0.9098411799240639,
+      "IoU": 0.9742374420166016,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.038976655260173916,
+      "SSIM": 0.7933701757169581,
+      "HF_cosine": 0.3293586927753545,
+      "HF_energy_ratio": 0.6360900184487905,
+      "edge_F1": 0.7953080413836365,
+      "IoU": 0.9618936777114868,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.03925166507262398,
+      "SSIM": 0.7874969161530894,
+      "HF_cosine": 0.30454280195315525,
+      "HF_energy_ratio": 0.5318019609294417,
+      "edge_F1": 0.7992775473344252,
+      "IoU": 0.9623932838439941,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.041282570172409994,
+      "SSIM": 0.7593055881857855,
+      "HF_cosine": 0.24244966657591913,
+      "HF_energy_ratio": 0.5541920509186312,
+      "edge_F1": 0.7778208696624628,
+      "IoU": 0.9608715772628784,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "native_before",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.02125253358070415,
+      "SSIM": 0.9135145909466984,
+      "HF_cosine": 0.4483072954555604,
+      "HF_energy_ratio": 0.7214565465882274,
+      "edge_F1": 0.6144766083511327,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "native_before",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.024071357505913854,
+      "SSIM": 0.8860120610447353,
+      "HF_cosine": 0.3224503012921787,
+      "HF_energy_ratio": 1.0934608791083256,
+      "edge_F1": 0.5711879610347356,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021275061353567375,
+      "SSIM": 0.9130046623664717,
+      "HF_cosine": 0.4461271789312061,
+      "HF_energy_ratio": 0.7291519052428318,
+      "edge_F1": 0.6126879048350113,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "canonical_init",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.024071357481556293,
+      "SSIM": 0.8860120609938621,
+      "HF_cosine": 0.32245030575559164,
+      "HF_energy_ratio": 1.0934608664243306,
+      "edge_F1": 0.5711879610347356,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021302852278597063,
+      "SSIM": 0.9134756937920985,
+      "HF_cosine": 0.44908941664283886,
+      "HF_energy_ratio": 0.7199277199444808,
+      "edge_F1": 0.6129047050635599,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "canonical_prior_init",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.024017785296096748,
+      "SSIM": 0.8862455691378811,
+      "HF_cosine": 0.32285364287324964,
+      "HF_energy_ratio": 1.0928800701996013,
+      "edge_F1": 0.5710663432511146,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021294518361729145,
+      "SSIM": 0.9134695318369558,
+      "HF_cosine": 0.44894632416296665,
+      "HF_energy_ratio": 0.7196464534448189,
+      "edge_F1": 0.6129465736528008,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "vehicle_fit",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.024015553063671133,
+      "SSIM": 0.8862507059476715,
+      "HF_cosine": 0.32278488927696364,
+      "HF_energy_ratio": 1.0926864194732488,
+      "edge_F1": 0.5711122975850532,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021261922298041615,
+      "SSIM": 0.91347730222971,
+      "HF_cosine": 0.44891174870821243,
+      "HF_energy_ratio": 0.7206505769171457,
+      "edge_F1": 0.6125338176025406,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "joint_fit",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.024015339369316036,
+      "SSIM": 0.8862170240988709,
+      "HF_cosine": 0.3227564802541938,
+      "HF_energy_ratio": 1.0930660458682775,
+      "edge_F1": 0.5709215212035024,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.02128688034171453,
+      "SSIM": 0.9297575379788474,
+      "HF_cosine": 0.537461816760285,
+      "HF_energy_ratio": 0.3733536645223112,
+      "edge_F1": 0.8771805440523878,
+      "IoU": 0.9518072289156626,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021217673213408762,
+      "SSIM": 0.9137412279278009,
+      "HF_cosine": 0.44918446928744216,
+      "HF_energy_ratio": 0.7196594378984801,
+      "edge_F1": 0.6125835555410056,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.020166899331537282,
+      "SSIM": 0.9324671339760818,
+      "HF_cosine": 0.607494379257473,
+      "HF_energy_ratio": 0.4459824093061537,
+      "edge_F1": 0.9098411799240639,
+      "IoU": 0.9742374633810098,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.023980356307985683,
+      "SSIM": 0.8862704275443077,
+      "HF_cosine": 0.32281076426582933,
+      "HF_energy_ratio": 1.0927880126087506,
+      "edge_F1": 0.5709181314416396,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.03897665557061478,
+      "SSIM": 0.7933701606356477,
+      "HF_cosine": 0.3293586570308337,
+      "HF_energy_ratio": 0.6360899949328045,
+      "edge_F1": 0.7953080413836365,
+      "IoU": 0.9618936748156771,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.0392516645195624,
+      "SSIM": 0.7874969216018349,
+      "HF_cosine": 0.3045427957921089,
+      "HF_energy_ratio": 0.531801956549906,
+      "edge_F1": 0.7992775473344252,
+      "IoU": 0.9623932938552642,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "handoff_fixed",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.04128256966482156,
+      "SSIM": 0.7593055920408611,
+      "HF_cosine": 0.24244966554767786,
+      "HF_energy_ratio": 0.554192033937276,
+      "edge_F1": 0.7778208696624628,
+      "IoU": 0.9608715666717815,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 86,
+      "role": "vehicle",
+      "MAE": 0.02128688034171453,
+      "SSIM": 0.9297575379788474,
+      "HF_cosine": 0.537461816760285,
+      "HF_energy_ratio": 0.3733536645223112,
+      "edge_F1": 0.8771805440523878,
+      "IoU": 0.9518072289156626,
+      "pixels": 7542,
+      "HF_core_pixels": 6140
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 86,
+      "role": "road",
+      "MAE": 0.021185842502612327,
+      "SSIM": 0.9137999064400527,
+      "HF_cosine": 0.4492728427260233,
+      "HF_energy_ratio": 0.7196551522898367,
+      "edge_F1": 0.6141770882421637,
+      "IoU": null,
+      "pixels": 60546,
+      "HF_core_pixels": 48486
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 110,
+      "role": "vehicle",
+      "MAE": 0.020166899331537282,
+      "SSIM": 0.9324671339760818,
+      "HF_cosine": 0.607494379257473,
+      "HF_energy_ratio": 0.4459824093061537,
+      "edge_F1": 0.9098411799240639,
+      "IoU": 0.9742374633810098,
+      "pixels": 11484,
+      "HF_core_pixels": 9835
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 110,
+      "role": "road",
+      "MAE": 0.02397615139542319,
+      "SSIM": 0.8863505858935725,
+      "HF_cosine": 0.32290652735620046,
+      "HF_energy_ratio": 1.0927234765560516,
+      "edge_F1": 0.5713493250703728,
+      "IoU": null,
+      "pixels": 128879,
+      "HF_core_pixels": 112263
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 134,
+      "role": "vehicle",
+      "MAE": 0.03897665557061478,
+      "SSIM": 0.7933701606356477,
+      "HF_cosine": 0.3293586570308337,
+      "HF_energy_ratio": 0.6360899949328045,
+      "edge_F1": 0.7953080413836365,
+      "IoU": 0.9618936748156771,
+      "pixels": 12694,
+      "HF_core_pixels": 10802
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 179,
+      "role": "vehicle",
+      "MAE": 0.0392516645195624,
+      "SSIM": 0.7874969216018349,
+      "HF_cosine": 0.3045427957921089,
+      "HF_energy_ratio": 0.531801956549906,
+      "edge_F1": 0.7992775473344252,
+      "IoU": 0.9623932938552642,
+      "pixels": 12890,
+      "HF_core_pixels": 11128
+    },
+    {
+      "stage": "handoff_fixed_guarded",
+      "raw": 198,
+      "role": "vehicle",
+      "MAE": 0.04128256966482156,
+      "SSIM": 0.7593055920408611,
+      "HF_cosine": 0.24244966554767786,
+      "HF_energy_ratio": 0.554192033937276,
+      "edge_F1": 0.7778208696624628,
+      "IoU": 0.9608715666717815,
+      "pixels": 12939,
+      "HF_core_pixels": 11191
+    }
+  ],
+  "metric_note": "相同帧、相同固定评分区域对比；HF 为原生像素尺度 σ=1 的有符号细节对应，完整记录另含 σ=2/4。道路教师仅存在于 raw86/110；轮廓 IoU 对比自动估计的观测实例掩码。",
+  "checks": [
+    {
+      "name": "统一可微三维渲染",
+      "passed": true,
+      "detail": "联合阶段车辆与道路均获得梯度并更新"
+    },
+    {
+      "name": "固定几何与轨迹",
+      "passed": true,
+      "detail": "道路覆盖、车辆位置与姿态、相机和轨迹保持固定"
+    },
+    {
+      "name": "原模型参数冻结",
+      "passed": true,
+      "detail": "原始模型、环境与既有静态交接参数保持固定"
+    },
+    {
+      "name": "磁盘资产独立进程重载",
+      "passed": true,
+      "detail": "五帧最大 RGB 差 3.64e-6，道路 RGB / Alpha 逐值一致"
+    },
+    {
+      "name": "75 行交接集合保护",
+      "passed": true,
+      "detail": "相对联合资产，KEEP 与保留车辆区 RGB 不变；外域最大 0.003848"
+    }
+  ],
+  "proofs": {
+    "training": {
+      "native_scene_unchanged": true,
+      "local_xyz_equal": true,
+      "local_rotation_equal": true,
+      "trajectory_equal": true,
+      "road_frozen_fields": [
+        "model_xyz",
+        "gaussian_sigma_m",
+        "normal_world",
+        "road_opacity",
+        "active",
+        "minimum_model_depth"
+      ],
+      "road_trainable_color_rows": 1191,
+      "source_road_intact": true,
+      "vehicle_dc_max_update": 4.4051713943481445,
+      "vehicle_opacity_max_update": 2.9401354789733887,
+      "vehicle_scale_max_update": 0.40546509623527527,
+      "road_color_max_update": 0.4447833299636841,
+      "joint_real_renderer_two_branch_nonzero_all_steps": true,
+      "formal_vehicle_updates": 200,
+      "formal_joint_updates": 200,
+      "native_renderer_calls": 703,
+      "backward_calls": 409,
+      "power_operations": 0,
+      "seconds": 149.11602377705276
+    },
+    "additional": {
+      "disk_reload_proof.json": {
+        "passed": true,
+        "fresh_process": true,
+        "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit",
+        "binding": {
+          "schema": "object_rigid_joint_asset.v1",
+          "vehicle": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/vehicle.npz",
+          "poses": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/poses.npz",
+          "target_actor": 21,
+          "target_track": "bzFbWRrSGOgEaXxnuGV0tw",
+          "delete_actor": 10,
+          "source_road_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/persistent/scene.json",
+          "source_road_proof": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/persistent/proof.json",
+          "loader": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/run_joint.py",
+          "colors_only_road_updates": true
+        },
+        "rows": [
+          {
+            "raw": 86,
+            "maximum": {
+              "joint_keep": 1.9669532775878906e-06,
+              "joint_delete": 1.9669532775878906e-06,
+              "vehicle_rgb": 1.7881393432617188e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 3.5762786865234375e-07,
+              "vehicle_alpha_delete": 3.5762786865234375e-07,
+              "vehicle_alpha_isolated": 2.980232238769531e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 110,
+            "maximum": {
+              "joint_keep": 1.5497207641601562e-06,
+              "joint_delete": 1.5497207641601562e-06,
+              "vehicle_rgb": 1.7881393432617188e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 3.5762786865234375e-07,
+              "vehicle_alpha_delete": 3.5762786865234375e-07,
+              "vehicle_alpha_isolated": 4.172325134277344e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 134,
+            "maximum": {
+              "joint_keep": 2.428889274597168e-06,
+              "joint_delete": 2.428889274597168e-06,
+              "vehicle_rgb": 1.7881393432617188e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 1.6093254089355469e-06,
+              "vehicle_alpha_delete": 1.6093254089355469e-06,
+              "vehicle_alpha_isolated": 3.5762786865234375e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 179,
+            "maximum": {
+              "joint_keep": 1.7136335372924805e-06,
+              "joint_delete": 1.7136335372924805e-06,
+              "vehicle_rgb": 3.5762786865234375e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 4.172325134277344e-07,
+              "vehicle_alpha_delete": 4.172325134277344e-07,
+              "vehicle_alpha_isolated": 4.172325134277344e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 198,
+            "maximum": {
+              "joint_keep": 2.0116567611694336e-06,
+              "joint_delete": 2.0116567611694336e-06,
+              "vehicle_rgb": 1.7881393432617188e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 3.5762786865234375e-07,
+              "vehicle_alpha_delete": 3.5762786865234375e-07,
+              "vehicle_alpha_isolated": 3.5762786865234375e-07,
+              "road_alpha": 0.0
+            }
+          }
+        ]
+      },
+      "handoff_fixed_guarded_disk_reload_proof.json": {
+        "passed": true,
+        "fresh_process": true,
+        "rows": [
+          {
+            "raw": 86,
+            "max": {
+              "joint_keep": 2.86102294921875e-06,
+              "joint_delete": 2.86102294921875e-06,
+              "vehicle_rgb": 1.1920928955078125e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 3.5762786865234375e-07,
+              "vehicle_alpha_delete": 3.5762786865234375e-07,
+              "vehicle_alpha_isolated": 2.384185791015625e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 110,
+            "max": {
+              "joint_keep": 3.159046173095703e-06,
+              "joint_delete": 3.159046173095703e-06,
+              "vehicle_rgb": 1.1920928955078125e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 2.384185791015625e-07,
+              "vehicle_alpha_delete": 2.384185791015625e-07,
+              "vehicle_alpha_isolated": 3.5762786865234375e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 134,
+            "max": {
+              "joint_keep": 2.3245811462402344e-06,
+              "joint_delete": 2.3245811462402344e-06,
+              "vehicle_rgb": 1.4901161193847656e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 2.980232238769531e-07,
+              "vehicle_alpha_delete": 2.980232238769531e-07,
+              "vehicle_alpha_isolated": 3.5762786865234375e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 179,
+            "max": {
+              "joint_keep": 1.5497207641601562e-06,
+              "joint_delete": 1.5497207641601562e-06,
+              "vehicle_rgb": 1.1920928955078125e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 3.5762786865234375e-07,
+              "vehicle_alpha_delete": 3.5762786865234375e-07,
+              "vehicle_alpha_isolated": 4.172325134277344e-07,
+              "road_alpha": 0.0
+            }
+          },
+          {
+            "raw": 198,
+            "max": {
+              "joint_keep": 3.635883331298828e-06,
+              "joint_delete": 3.635883331298828e-06,
+              "vehicle_rgb": 1.7881393432617188e-07,
+              "road_rgb": 0.0,
+              "vehicle_alpha_keep": 2.384185791015625e-07,
+              "vehicle_alpha_delete": 2.384185791015625e-07,
+              "vehicle_alpha_isolated": 4.76837158203125e-07,
+              "road_alpha": 0.0
+            }
+          }
+        ],
+        "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded"
+      },
+      "handoff_guarded_proof.json": {
+        "passed": true,
+        "stage": "handoff_fixed_guarded",
+        "strict_base_rows": 49,
+        "selected_rows": 75,
+        "new_guarded_rows": 26,
+        "selected_static_rows": 75,
+        "selected_dynamic_rows": 0,
+        "fixed_RGB_outside_bound": 0.00392156862745098,
+        "fixed_retained_vehicle_bound": 1e-05,
+        "union_guard_checked_after_each_admission": true,
+        "final_whole_set_checked_all5": true,
+        "query_owner_changes_only": true,
+        "original_formal_asset_preserved": true,
+        "optimizer_updates": 0,
+        "native_forward_calls": 238,
+        "checks": [
+          {
+            "raw": 86,
+            "KEEP_RGB_max": 0.0,
+            "KEEP_alpha_max": 0.0,
+            "DELETE_outside_a9_dilated8_RGB_max": 0.003848239779472351,
+            "DELETE_outside_a9_dilated8_RGB_MAE": 8.819957884043106e-07,
+            "DELETE_retained_vehicle_RGB_max": 0.0,
+            "DELETE_a20_visible_RGB_max": 0.0,
+            "DELETE_full_alpha_outside_max": 0.0005903840065002441,
+            "DELETE_full_alpha_all_max": 0.007379055023193359,
+            "DELETE_target_alpha_max": 0.0050096288323402405,
+            "road_RGB_max": 0.0,
+            "road_alpha_max": 0.0,
+            "DELETE_changed_pixels": 857
+          },
+          {
+            "raw": 110,
+            "KEEP_RGB_max": 0.0,
+            "KEEP_alpha_max": 0.0,
+            "DELETE_outside_a9_dilated8_RGB_max": 0.0037403106689453125,
+            "DELETE_outside_a9_dilated8_RGB_MAE": 1.3078098390906234e-06,
+            "DELETE_retained_vehicle_RGB_max": 0.0,
+            "DELETE_a20_visible_RGB_max": 0.0,
+            "DELETE_full_alpha_outside_max": 0.0006277561187744141,
+            "DELETE_full_alpha_all_max": 0.0041921138763427734,
+            "DELETE_target_alpha_max": 6.661564111709595e-05,
+            "road_RGB_max": 0.0,
+            "road_alpha_max": 0.0,
+            "DELETE_changed_pixels": 1441
+          },
+          {
+            "raw": 134,
+            "KEEP_RGB_max": 0.0,
+            "KEEP_alpha_max": 0.0,
+            "DELETE_outside_a9_dilated8_RGB_max": 0.003909111022949219,
+            "DELETE_outside_a9_dilated8_RGB_MAE": 1.181587094833958e-06,
+            "DELETE_retained_vehicle_RGB_max": 0.0,
+            "DELETE_a20_visible_RGB_max": 0.0,
+            "DELETE_full_alpha_outside_max": 0.00016051530838012695,
+            "DELETE_full_alpha_all_max": 0.009594976902008057,
+            "DELETE_target_alpha_max": 1.945067197084427e-06,
+            "road_RGB_max": 0.0,
+            "road_alpha_max": 0.0,
+            "DELETE_changed_pixels": 822
+          },
+          {
+            "raw": 179,
+            "KEEP_RGB_max": 0.0,
+            "KEEP_alpha_max": 0.0,
+            "DELETE_outside_a9_dilated8_RGB_max": 0.0037586092948913574,
+            "DELETE_outside_a9_dilated8_RGB_MAE": 1.1248713462919113e-06,
+            "DELETE_retained_vehicle_RGB_max": 0.0,
+            "DELETE_a20_visible_RGB_max": 0.0,
+            "DELETE_full_alpha_outside_max": 0.00027185678482055664,
+            "DELETE_full_alpha_all_max": 0.002389967441558838,
+            "DELETE_target_alpha_max": 1.6623816918581724e-06,
+            "road_RGB_max": 0.0,
+            "road_alpha_max": 0.0,
+            "DELETE_changed_pixels": 913
+          },
+          {
+            "raw": 198,
+            "KEEP_RGB_max": 0.0,
+            "KEEP_alpha_max": 0.0,
+            "DELETE_outside_a9_dilated8_RGB_max": 0.003600001335144043,
+            "DELETE_outside_a9_dilated8_RGB_MAE": 1.1881827504112152e-06,
+            "DELETE_retained_vehicle_RGB_max": 0.0,
+            "DELETE_a20_visible_RGB_max": 0.0,
+            "DELETE_full_alpha_outside_max": 0.0008066296577453613,
+            "DELETE_full_alpha_all_max": 0.0051438212394714355,
+            "DELETE_target_alpha_max": 1.7096317606046796e-06,
+            "road_RGB_max": 0.0,
+            "road_alpha_max": 0.0,
+            "DELETE_changed_pixels": 769
+          }
+        ]
+      },
+      "handoff_guarded_admission.json": {
+        "stage": "handoff_fixed_guarded",
+        "deterministic_order": "descending a9 feature contribution, stable original global row order on ties",
+        "fixed_outside_threshold": 0.00392156862745098,
+        "fixed_protected_threshold": 1e-05,
+        "trace": [
+          {
+            "global_row_id": 963120,
+            "a9_feature_weight": 284.63348388671875,
+            "accepted": false,
+            "union_rows": 50,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.01222488284111023,
+                "outside_MAE": 6.536971568493755e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00022655725479125977,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1543881,
+            "a9_feature_weight": 65.00629043579102,
+            "accepted": false,
+            "union_rows": 50,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.020640581846237183,
+                "outside_MAE": 9.02379554190702e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005896091461181641,
+                "full_alpha_max": 0.009600043296813965
+              }
+            ]
+          },
+          {
+            "global_row_id": 1498865,
+            "a9_feature_weight": 26.955515146255493,
+            "accepted": false,
+            "union_rows": 50,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.012859493494033813,
+                "outside_MAE": 1.042313897414715e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00038254261016845703,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 669235,
+            "a9_feature_weight": 24.242589712142944,
+            "accepted": false,
+            "union_rows": 50,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.00857919454574585,
+                "outside_MAE": 1.1724391697498504e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00978630781173706,
+                "full_alpha_max": 0.00978630781173706
+              }
+            ]
+          },
+          {
+            "global_row_id": 1047269,
+            "a9_feature_weight": 19.815024375915527,
+            "accepted": true,
+            "union_rows": 50,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 6.245134187565782e-08,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 1.1742115020751953e-05,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 580487,
+            "a9_feature_weight": 14.642236351966858,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.004416763782501221,
+                "outside_MAE": 2.536820034038101e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.009786725044250488,
+                "full_alpha_max": 0.009786725044250488
+              }
+            ]
+          },
+          {
+            "global_row_id": 938761,
+            "a9_feature_weight": 11.348746180534363,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0029233694076538086,
+                "outside_MAE": 3.06812665940015e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00028324127197265625,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0075934529304504395,
+                "outside_MAE": 7.834159987396561e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.001523435115814209,
+                "full_alpha_max": 0.0041921138763427734
+              }
+            ]
+          },
+          {
+            "global_row_id": 748039,
+            "a9_feature_weight": 11.181193694472313,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003401458263397217,
+                "outside_MAE": 1.295940364798298e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0003504753112792969,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.007809437811374664,
+                "outside_MAE": 2.2462297692982247e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.004403650760650635,
+                "full_alpha_max": 0.004403650760650635
+              }
+            ]
+          },
+          {
+            "global_row_id": 706458,
+            "a9_feature_weight": 10.305452167987823,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.04487296938896179,
+                "outside_MAE": 1.2996214309168863e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008699893951416016,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1460337,
+            "a9_feature_weight": 9.717851996421814,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.025036022067070007,
+                "outside_MAE": 1.194196670439851e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0003311038017272949,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 944976,
+            "a9_feature_weight": 9.065411416813731,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.028924673795700073,
+                "outside_MAE": 2.377264991082484e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005795955657958984,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1250412,
+            "a9_feature_weight": 7.994757413864136,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.008725792169570923,
+                "outside_MAE": 1.0733434692156152e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002034902572631836,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1525037,
+            "a9_feature_weight": 7.613945424556732,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.010882832109928131,
+                "outside_MAE": 1.733420873506475e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 3.910064697265625e-05,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 765771,
+            "a9_feature_weight": 7.4436055123806,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.012468770146369934,
+                "outside_MAE": 2.3176569357019616e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.005680441856384277,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 951398,
+            "a9_feature_weight": 5.97309136390686,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.004257321357727051,
+                "outside_MAE": 3.408327131637634e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002860426902770996,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 706890,
+            "a9_feature_weight": 5.555351868271828,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003110349178314209,
+                "outside_MAE": 1.445122961740708e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0003509521484375,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.008128255605697632,
+                "outside_MAE": 2.250302486572764e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.004404246807098389,
+                "full_alpha_max": 0.004404246807098389
+              }
+            ]
+          },
+          {
+            "global_row_id": 1114917,
+            "a9_feature_weight": 4.8959304094314575,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0014771521091461182,
+                "outside_MAE": 1.9940335604928805e-08,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00037997961044311523,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.006606876850128174,
+                "outside_MAE": 3.187080892530503e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0004943609237670898,
+                "full_alpha_max": 0.0041921138763427734
+              }
+            ]
+          },
+          {
+            "global_row_id": 1114123,
+            "a9_feature_weight": 4.7310377061367035,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.015841975808143616,
+                "outside_MAE": 1.0976830253639491e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005890130996704102,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 961326,
+            "a9_feature_weight": 4.466843128204346,
+            "accepted": false,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.02173715829849243,
+                "outside_MAE": 1.3156466138752876e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005889534950256348,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 880666,
+            "a9_feature_weight": 4.010604739189148,
+            "accepted": true,
+            "union_rows": 51,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.246657839412364e-08,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 1.1742115020751953e-05,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 518467,
+            "a9_feature_weight": 3.92474078387022,
+            "accepted": false,
+            "union_rows": 52,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.004673421382904053,
+                "outside_MAE": 1.3762438300091162e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00014925003051757812,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1071758,
+            "a9_feature_weight": 3.844071440398693,
+            "accepted": false,
+            "union_rows": 52,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.008937478065490723,
+                "outside_MAE": 4.5237112544782576e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.001756906509399414,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 539087,
+            "a9_feature_weight": 3.7534492909908295,
+            "accepted": false,
+            "union_rows": 52,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0029939264059066772,
+                "outside_MAE": 7.239390811264457e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0003501772880554199,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0077337101101875305,
+                "outside_MAE": 1.2198580634503742e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.004403531551361084,
+                "full_alpha_max": 0.004403531551361084
+              }
+            ]
+          },
+          {
+            "global_row_id": 600985,
+            "a9_feature_weight": 3.6398673225194216,
+            "accepted": false,
+            "union_rows": 52,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0025137662887573242,
+                "outside_MAE": 7.781493422953645e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 8.189678192138672e-05,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.008354805409908295,
+                "outside_MAE": 1.2777600204572082e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0044043660163879395,
+                "full_alpha_max": 0.0044043660163879395
+              }
+            ]
+          },
+          {
+            "global_row_id": 1203282,
+            "a9_feature_weight": 3.418172836303711,
+            "accepted": true,
+            "union_rows": 52,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.00021088123321533203,
+                "outside_MAE": 2.8456830225565e-09,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 1.2755393981933594e-05,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.313690441103972e-08,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 1.1742115020751953e-05,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 991444,
+            "a9_feature_weight": 3.269894450902939,
+            "accepted": true,
+            "union_rows": 53,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.00021088123321533203,
+                "outside_MAE": 2.8456830225565e-09,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 1.2755393981933594e-05,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2962561868334888e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 3.695487976074219e-05,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.0,
+                "outside_MAE": 0.0,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 940138,
+            "a9_feature_weight": 2.467453211545944,
+            "accepted": true,
+            "union_rows": 54,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.218740284362866e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.023440045690222e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 6.803209089412121e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 6.815517394898052e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 6.872052153994446e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1155543,
+            "a9_feature_weight": 2.455724060535431,
+            "accepted": false,
+            "union_rows": 55,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.01186293363571167,
+                "outside_MAE": 2.90578896056104e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.005680203437805176,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 761801,
+            "a9_feature_weight": 2.2455976083874702,
+            "accepted": false,
+            "union_rows": 55,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 6.633554789914342e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00035130977630615234,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.008336439728736877,
+                "outside_MAE": 1.0555605740592e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.004404604434967041,
+                "full_alpha_max": 0.004404604434967041
+              }
+            ]
+          },
+          {
+            "global_row_id": 1417809,
+            "a9_feature_weight": 2.1805459856987,
+            "accepted": false,
+            "union_rows": 55,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.008410394191741943,
+                "outside_MAE": 2.3164004687714623e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1005815,
+            "a9_feature_weight": 1.8852221965789795,
+            "accepted": true,
+            "union_rows": 55,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.73392014757701e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.767206622906087e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 6.803209089412121e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 6.815517394898052e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 6.872052153994446e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 528207,
+            "a9_feature_weight": 1.874018333852291,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.00817263126373291,
+                "outside_MAE": 1.0663480907169287e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005890727043151855,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 648883,
+            "a9_feature_weight": 1.7538776993751526,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 6.328623953777424e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00026428699493408203,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.930319038176094e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.0042247772216796875,
+                "outside_MAE": 8.788051104602346e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.113550186157227e-05,
+                "full_alpha_max": 0.009594976902008057
+              }
+            ]
+          },
+          {
+            "global_row_id": 971715,
+            "a9_feature_weight": 1.7060364242643118,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.005127280950546265,
+                "outside_MAE": 6.624088086937263e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0010320544242858887,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 877699,
+            "a9_feature_weight": 1.6284798383712769,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.857303335687902e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.004267364740371704,
+                "outside_MAE": 9.730325700729736e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              }
+            ]
+          },
+          {
+            "global_row_id": 517282,
+            "a9_feature_weight": 1.272346705198288,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.013204187154769897,
+                "outside_MAE": 2.5279873625549953e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0015977025032043457,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1073604,
+            "a9_feature_weight": 1.2702385634183884,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.009439721703529358,
+                "outside_MAE": 6.743503035977483e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 547739,
+            "a9_feature_weight": 1.057449996471405,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.009713679552078247,
+                "outside_MAE": 8.156669082381995e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008716583251953125,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 967356,
+            "a9_feature_weight": 0.5849642232060432,
+            "accepted": false,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0043264031410217285,
+                "outside_MAE": 9.475355682297959e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1040281,
+            "a9_feature_weight": 0.5414858497679234,
+            "accepted": true,
+            "union_rows": 56,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.774116402790241e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.767206622906087e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 6.993216743467201e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 6.815517394898052e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 6.872052153994446e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1106375,
+            "a9_feature_weight": 0.44839386781677604,
+            "accepted": true,
+            "union_rows": 57,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.87086674386228e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.929870318752364e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 7.165945135056973e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.014966172391723e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.071888603604748e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1096346,
+            "a9_feature_weight": 0.42752857506275177,
+            "accepted": false,
+            "union_rows": 58,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.87086674386228e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.005142390727996826,
+                "outside_MAE": 9.99281155600329e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              }
+            ]
+          },
+          {
+            "global_row_id": 1332350,
+            "a9_feature_weight": 0.39337862748652697,
+            "accepted": true,
+            "union_rows": 58,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.872560109310143e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.929870318752364e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 7.165945135056973e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.015764822426718e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.072787298056937e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1407335,
+            "a9_feature_weight": 0.35332367569208145,
+            "accepted": false,
+            "union_rows": 59,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.01396411657333374,
+                "outside_MAE": 7.898779017523339e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0009558796882629395,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 963973,
+            "a9_feature_weight": 0.28280825074762106,
+            "accepted": true,
+            "union_rows": 59,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 5.872560109310143e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 8.969414579951263e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 7.165945135056973e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.016820973149152e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.114321078915964e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 567336,
+            "a9_feature_weight": 0.27427169866859913,
+            "accepted": true,
+            "union_rows": 60,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 6.303837949417357e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.753564427228412e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 8.138209182106948e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.902956440375419e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.980680720720557e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1496541,
+            "a9_feature_weight": 0.2714876988902688,
+            "accepted": true,
+            "union_rows": 61,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 6.310034450507374e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.747124067871482e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 8.146326422320271e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.905948677944252e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.980883083291701e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1030426,
+            "a9_feature_weight": 0.2329825907945633,
+            "accepted": true,
+            "union_rows": 62,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003154665231704712,
+                "outside_MAE": 6.338048024190357e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.747226386025432e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 8.146258778651827e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.905892971393769e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.980844998201064e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1134454,
+            "a9_feature_weight": 0.21197834610939026,
+            "accepted": false,
+            "union_rows": 63,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.005195498466491699,
+                "outside_MAE": 6.647157988481922e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 865289,
+            "a9_feature_weight": 0.1809600442647934,
+            "accepted": true,
+            "union_rows": 63,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0035312771797180176,
+                "outside_MAE": 6.508440151264949e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.747226386025432e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 8.147666790137009e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.905892971393769e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.980844998201064e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1514327,
+            "a9_feature_weight": 0.16424031928181648,
+            "accepted": true,
+            "union_rows": 64,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0035312771797180176,
+                "outside_MAE": 6.509768013529538e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0002644062042236328,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 9.747226386025432e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 8.147666790137009e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 9.238719940185547e-05,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 7.905892971393769e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 7.18832015991211e-05,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 7.980844998201064e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1247498,
+            "a9_feature_weight": 0.1578701944090426,
+            "accepted": true,
+            "union_rows": 65,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0035312771797180176,
+                "outside_MAE": 8.585052455600817e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2834556173402234e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1355705282767303e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.090290538741101e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1423164778534556e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1369937,
+            "a9_feature_weight": 0.12783886305987835,
+            "accepted": true,
+            "union_rows": 66,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0035312771797180176,
+                "outside_MAE": 8.555910540053446e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2834542530981707e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1355705282767303e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.090290538741101e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1423164778534556e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 625565,
+            "a9_feature_weight": 0.11785927228629589,
+            "accepted": true,
+            "union_rows": 67,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0035312771797180176,
+                "outside_MAE": 8.555910540053446e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2835013194489875e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1357954008417437e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.090491082322842e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1425247521401616e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 887416,
+            "a9_feature_weight": 0.1149743776768446,
+            "accepted": true,
+            "union_rows": 68,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.561059985368047e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2835013194489875e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1357954008417437e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.090491082322842e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1425247521401616e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 970871,
+            "a9_feature_weight": 0.10632544383406639,
+            "accepted": false,
+            "union_rows": 69,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.015729427337646484,
+                "outside_MAE": 1.4720458239025902e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0017777085304260254,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 712029,
+            "a9_feature_weight": 0.09566599818549548,
+            "accepted": true,
+            "union_rows": 69,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.561059985368047e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.285470716538839e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1413301308493828e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.097455651688506e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1547248277565814e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 554559,
+            "a9_feature_weight": 0.09301977790892124,
+            "accepted": false,
+            "union_rows": 70,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.006264805793762207,
+                "outside_MAE": 8.65664048887993e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 1432428,
+            "a9_feature_weight": 0.08566959016025066,
+            "accepted": true,
+            "union_rows": 70,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.561084428038157e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2854965234510018e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1413301308493828e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.097455651688506e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1547236908882041e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 658111,
+            "a9_feature_weight": 0.07578430138528347,
+            "accepted": true,
+            "union_rows": 71,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.616385684945271e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2855044815296424e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1413301308493828e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.097455651688506e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1547236908882041e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1175828,
+            "a9_feature_weight": 0.07191070693079382,
+            "accepted": true,
+            "union_rows": 72,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.616385684945271e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2916385685457499e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1413301308493828e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.097455651688506e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1547236908882041e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 689645,
+            "a9_feature_weight": 0.06850880640558898,
+            "accepted": false,
+            "union_rows": 73,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.977424954537128e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.004543706774711609,
+                "outside_MAE": 1.3544899957196321e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              }
+            ]
+          },
+          {
+            "global_row_id": 1262059,
+            "a9_feature_weight": 0.06697219191119075,
+            "accepted": true,
+            "union_rows": 73,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.617214461992262e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.2916385685457499e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0001488327980041504,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1413301308493828e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.097455651688506e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1547236908882041e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1254202,
+            "a9_feature_weight": 0.06529244099510834,
+            "accepted": true,
+            "union_rows": 74,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.81390008089511e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.3023449128013453e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0006277561187744141,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.1740224863387994e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.119961893891741e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.184539655696426e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 1047608,
+            "a9_feature_weight": 0.06508740712888539,
+            "accepted": false,
+            "union_rows": 75,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.0051631927490234375,
+                "outside_MAE": 9.495299764239462e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          },
+          {
+            "global_row_id": 821329,
+            "a9_feature_weight": 0.06227592471987009,
+            "accepted": true,
+            "union_rows": 75,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.003848239779472351,
+                "outside_MAE": 8.819957884043106e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005903840065002441,
+                "full_alpha_max": 0.007379055023193359
+              },
+              {
+                "raw": 110,
+                "outside_max": 0.0037403106689453125,
+                "outside_MAE": 1.3078098390906234e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0006277561187744141,
+                "full_alpha_max": 0.0041921138763427734
+              },
+              {
+                "raw": 134,
+                "outside_max": 0.003909111022949219,
+                "outside_MAE": 1.181587094833958e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00016051530838012695,
+                "full_alpha_max": 0.009594976902008057
+              },
+              {
+                "raw": 179,
+                "outside_max": 0.0037586092948913574,
+                "outside_MAE": 1.1248713462919113e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.00027185678482055664,
+                "full_alpha_max": 0.002389967441558838
+              },
+              {
+                "raw": 198,
+                "outside_max": 0.003600001335144043,
+                "outside_MAE": 1.1881827504112152e-06,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0008066296577453613,
+                "full_alpha_max": 0.0051438212394714355
+              }
+            ]
+          },
+          {
+            "global_row_id": 511108,
+            "a9_feature_weight": 0.060503894463181496,
+            "accepted": false,
+            "union_rows": 76,
+            "checks": [
+              {
+                "raw": 86,
+                "outside_max": 0.004543587565422058,
+                "outside_MAE": 9.215963814313e-07,
+                "retained_vehicle_max": 0.0,
+                "outside_full_alpha_max": 0.0005900859832763672,
+                "full_alpha_max": 0.007379055023193359
+              }
+            ]
+          }
+        ]
+      },
+      "qa_final_cpu.json": {
+        "schema": "vehicle_road_joint.final_independent_cpu_qa.v1",
+        "CPU_only": true,
+        "checks": [
+          {
+            "name": "formal_budget",
+            "passed": true,
+            "vehicle": 200,
+            "joint": 200,
+            "train_frames": [
+              86,
+              110
+            ]
+          },
+          {
+            "name": "prior_explicit_non_GT",
+            "passed": true,
+            "prior": "lower rear/side panels, bumper and four tire disks; engineering shape prior, not observed completion",
+            "new_rows": 624,
+            "visible_mass": 0.0
+          },
+          {
+            "name": "road_geometry_coverage_and_all_noncolor_fields",
+            "passed": true,
+            "fields": {
+              "active": true,
+              "model_xyz": true,
+              "gaussian_sigma_m": true,
+              "normal_world": true,
+              "road_opacity": true,
+              "model_from_world": true,
+              "meter_to_model": true,
+              "minimum_model_depth": true
+            }
+          },
+          {
+            "name": "road_color_update_scope",
+            "passed": true,
+            "allowed_rows": 1191,
+            "changed_rows": 214,
+            "unauthorized_rows": 0
+          },
+          {
+            "name": "native_checkpoint_files_unchanged",
+            "passed": true,
+            "rows": [
+              {
+                "role": "static",
+                "matches": true,
+                "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548"
+              },
+              {
+                "role": "dynamic",
+                "matches": true,
+                "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611"
+              },
+              {
+                "role": "environment",
+                "matches": true,
+                "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae"
+              }
+            ]
+          },
+          {
+            "name": "saved_native_source_bindings",
+            "passed": true
+          },
+          {
+            "name": "ownership_source_unchanged",
+            "passed": true
+          },
+          {
+            "name": "static_indices_source_unchanged",
+            "passed": true
+          },
+          {
+            "name": "static_gate_checkpoint_source_unchanged",
+            "passed": true
+          },
+          {
+            "name": "canonical_geometry_and_provenance_unchanged",
+            "passed": true,
+            "fields": {
+              "xyz": true,
+              "rotation": true,
+              "source_row": true,
+              "source_branch": true,
+              "source_raw": true
+            },
+            "rows": 25060,
+            "comparison": "same FP32 runtime initialization; source quaternion array was FP64"
+          },
+          {
+            "name": "prior_row_count",
+            "passed": true,
+            "prior_rows": 624
+          },
+          {
+            "name": "hidden_opacity_and_scales_preserved",
+            "passed": true,
+            "hidden_rows": 4478,
+            "opacity": {
+              "max": 2.9802322387695312e-08,
+              "mean": 9.667957114249587e-10,
+              "identical": false
+            },
+            "scales": {
+              "max": 0.0,
+              "mean": 0.0,
+              "identical": true
+            },
+            "support_sha256": "6c87221fb55179960b5f7ff330332ea013dcc99f1f9270c2047ebfffc70744ed"
+          },
+          {
+            "name": "pose_export_keys",
+            "passed": true,
+            "poses": [
+              86,
+              110,
+              134,
+              179,
+              198
+            ]
+          },
+          {
+            "name": "frame086_finite",
+            "passed": true
+          },
+          {
+            "name": "frame086_road_coverage_unchanged",
+            "passed": true
+          },
+          {
+            "name": "frame086_supervision_exclusion",
+            "passed": true,
+            "road_pixels": 60546,
+            "vehicle_pixels": 7542,
+            "negative_pixels": 859948
+          },
+          {
+            "name": "frame086_disk_reload_render",
+            "passed": true,
+            "fields": {
+              "joint_keep": {
+                "max": 1.9669532775878906e-06,
+                "mean": 1.4923151877470153e-10,
+                "identical": false
+              },
+              "joint_delete": {
+                "max": 1.9669532775878906e-06,
+                "mean": 1.623377865604355e-10,
+                "identical": false
+              },
+              "vehicle_rgb": {
+                "max": 1.7881393432617188e-07,
+                "mean": 4.612463519536583e-11,
+                "identical": false
+              },
+              "road_rgb": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              },
+              "vehicle_alpha_keep": {
+                "max": 3.5762786865234375e-07,
+                "mean": 1.3241190821269536e-10,
+                "identical": false
+              },
+              "vehicle_alpha_delete": {
+                "max": 3.5762786865234375e-07,
+                "mean": 1.5443536033332705e-10,
+                "identical": false
+              },
+              "vehicle_alpha_isolated": {
+                "max": 2.980232238769531e-07,
+                "mean": 2.638608344164418e-10,
+                "identical": false
+              },
+              "road_alpha": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              }
+            }
+          },
+          {
+            "name": "frame110_finite",
+            "passed": true
+          },
+          {
+            "name": "frame110_road_coverage_unchanged",
+            "passed": true
+          },
+          {
+            "name": "frame110_supervision_exclusion",
+            "passed": true,
+            "road_pixels": 128879,
+            "vehicle_pixels": 11484,
+            "negative_pixels": 852729
+          },
+          {
+            "name": "frame110_disk_reload_render",
+            "passed": true,
+            "fields": {
+              "joint_keep": {
+                "max": 1.5497207641601562e-06,
+                "mean": 1.9458695286080056e-10,
+                "identical": false
+              },
+              "joint_delete": {
+                "max": 1.5497207641601562e-06,
+                "mean": 2.031176763135411e-10,
+                "identical": false
+              },
+              "vehicle_rgb": {
+                "max": 1.7881393432617188e-07,
+                "mean": 5.8166892427486605e-11,
+                "identical": false
+              },
+              "road_rgb": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              },
+              "vehicle_alpha_keep": {
+                "max": 3.5762786865234375e-07,
+                "mean": 2.0102575160052538e-10,
+                "identical": false
+              },
+              "vehicle_alpha_delete": {
+                "max": 3.5762786865234375e-07,
+                "mean": 2.1323822202588982e-10,
+                "identical": false
+              },
+              "vehicle_alpha_isolated": {
+                "max": 4.172325134277344e-07,
+                "mean": 3.2997394117518085e-10,
+                "identical": false
+              },
+              "road_alpha": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              }
+            }
+          },
+          {
+            "name": "frame134_finite",
+            "passed": true
+          },
+          {
+            "name": "frame134_road_coverage_unchanged",
+            "passed": true
+          },
+          {
+            "name": "frame134_supervision_exclusion",
+            "passed": true,
+            "road_pixels": 68736,
+            "vehicle_pixels": 12694,
+            "negative_pixels": 853465
+          },
+          {
+            "name": "frame134_disk_reload_render",
+            "passed": true,
+            "fields": {
+              "joint_keep": {
+                "max": 2.428889274597168e-06,
+                "mean": 2.0424682521412184e-10,
+                "identical": false
+              },
+              "joint_delete": {
+                "max": 2.428889274597168e-06,
+                "mean": 2.1476285770337133e-10,
+                "identical": false
+              },
+              "vehicle_rgb": {
+                "max": 1.7881393432617188e-07,
+                "mean": 6.098355291258339e-11,
+                "identical": false
+              },
+              "road_rgb": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              },
+              "vehicle_alpha_keep": {
+                "max": 1.6093254089355469e-06,
+                "mean": 2.1386690078360492e-10,
+                "identical": false
+              },
+              "vehicle_alpha_delete": {
+                "max": 1.6093254089355469e-06,
+                "mean": 2.2942427934287876e-10,
+                "identical": false
+              },
+              "vehicle_alpha_isolated": {
+                "max": 3.5762786865234375e-07,
+                "mean": 3.55296631621766e-10,
+                "identical": false
+              },
+              "road_alpha": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              }
+            }
+          },
+          {
+            "name": "frame179_finite",
+            "passed": true
+          },
+          {
+            "name": "frame179_road_coverage_unchanged",
+            "passed": true
+          },
+          {
+            "name": "frame179_supervision_exclusion",
+            "passed": true,
+            "road_pixels": 68778,
+            "vehicle_pixels": 12890,
+            "negative_pixels": 853443
+          },
+          {
+            "name": "frame179_disk_reload_render",
+            "passed": true,
+            "fields": {
+              "joint_keep": {
+                "max": 1.7136335372924805e-06,
+                "mean": 1.982403706211631e-10,
+                "identical": false
+              },
+              "joint_delete": {
+                "max": 1.7136335372924805e-06,
+                "mean": 2.0806866791925716e-10,
+                "identical": false
+              },
+              "vehicle_rgb": {
+                "max": 3.5762786865234375e-07,
+                "mean": 6.326536002895274e-11,
+                "identical": false
+              },
+              "road_rgb": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              },
+              "vehicle_alpha_keep": {
+                "max": 4.172325134277344e-07,
+                "mean": 2.1960502141040563e-10,
+                "identical": false
+              },
+              "vehicle_alpha_delete": {
+                "max": 4.172325134277344e-07,
+                "mean": 2.313188214149699e-10,
+                "identical": false
+              },
+              "vehicle_alpha_isolated": {
+                "max": 4.172325134277344e-07,
+                "mean": 3.5347501057845806e-10,
+                "identical": false
+              },
+              "road_alpha": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              }
+            }
+          },
+          {
+            "name": "frame198_finite",
+            "passed": true
+          },
+          {
+            "name": "frame198_road_coverage_unchanged",
+            "passed": true
+          },
+          {
+            "name": "frame198_supervision_exclusion",
+            "passed": true,
+            "road_pixels": 68768,
+            "vehicle_pixels": 12939,
+            "negative_pixels": 853416
+          },
+          {
+            "name": "frame198_disk_reload_render",
+            "passed": true,
+            "fields": {
+              "joint_keep": {
+                "max": 2.0116567611694336e-06,
+                "mean": 1.9590908867726678e-10,
+                "identical": false
+              },
+              "joint_delete": {
+                "max": 2.0116567611694336e-06,
+                "mean": 2.060201995284584e-10,
+                "identical": false
+              },
+              "vehicle_rgb": {
+                "max": 1.7881393432617188e-07,
+                "mean": 6.101116319975383e-11,
+                "identical": false
+              },
+              "road_rgb": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              },
+              "vehicle_alpha_keep": {
+                "max": 3.5762786865234375e-07,
+                "mean": 2.0844654860210612e-10,
+                "identical": false
+              },
+              "vehicle_alpha_delete": {
+                "max": 3.5762786865234375e-07,
+                "mean": 2.246843653131909e-10,
+                "identical": false
+              },
+              "vehicle_alpha_isolated": {
+                "max": 3.5762786865234375e-07,
+                "mean": 3.5074494748928205e-10,
+                "identical": false
+              },
+              "road_alpha": {
+                "max": 0.0,
+                "mean": 0.0,
+                "identical": true
+              }
+            }
+          },
+          {
+            "name": "bench_fixed_pixel_domains",
+            "passed": true,
+            "groups": {
+              "86:vehicle": {
+                "pixel_counts": [
+                  7542
+                ],
+                "HF_core_pixel_counts": [
+                  6140
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "86:road": {
+                "pixel_counts": [
+                  60546
+                ],
+                "HF_core_pixel_counts": [
+                  48486
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "110:vehicle": {
+                "pixel_counts": [
+                  11484
+                ],
+                "HF_core_pixel_counts": [
+                  9835
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "110:road": {
+                "pixel_counts": [
+                  128879
+                ],
+                "HF_core_pixel_counts": [
+                  112263
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "134:vehicle": {
+                "pixel_counts": [
+                  12694
+                ],
+                "HF_core_pixel_counts": [
+                  10802
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "179:vehicle": {
+                "pixel_counts": [
+                  12890
+                ],
+                "HF_core_pixel_counts": [
+                  11128
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              },
+              "198:vehicle": {
+                "pixel_counts": [
+                  12939
+                ],
+                "HF_core_pixel_counts": [
+                  11191
+                ],
+                "stages": [
+                  "native_before",
+                  "canonical_init",
+                  "canonical_prior_init",
+                  "vehicle_fit",
+                  "joint_fit"
+                ]
+              }
+            }
+          },
+          {
+            "name": "smoke/proof.json",
+            "passed": true,
+            "proof": {
+              "passed": true,
+              "real_cuda": true,
+              "forward_backward": true,
+              "checkpoint_saved": true,
+              "optimizer_and_sampler_rng_restore": true,
+              "saved_state_restore_bit_exact": true,
+              "continuation": {
+                "saved_state_restore_bit_exact": true,
+                "next_step_parameter_max": 9.763520210981369e-06,
+                "next_step_parameter_differences": {
+                  "dc": 1.1920928955078125e-07,
+                  "opacity_logits": 2.384185791015625e-07,
+                  "log_scale_delta": 9.763520210981369e-06,
+                  "base_xyz": 0.0,
+                  "base_scales": 0.0,
+                  "base_rotation": 0.0,
+                  "base_coefficients": 0.0,
+                  "base_opacity": 0.0
+                },
+                "next_step_loss_abs": 0.0,
+                "next_step_optimizer_bit_exact": false,
+                "parameter_abs_tolerance": 2e-05,
+                "loss_abs_tolerance": 1e-06,
+                "tolerance_basis": "same FP32 native CUDA atomic accumulation; inherited R2 smoke uses 2e-5 state tolerance; checkpoint itself must restore bit exactly"
+              },
+              "evaluation": true,
+              "joint_next_stage": true,
+              "two_branch_renderer_gradients": true,
+              "persistent_vehicle_render_reload_max": 1.6540288925170898e-06,
+              "actual_smoke_optimizer_updates": 9,
+              "formal_updates": 0,
+              "freeze": {
+                "native_scene_unchanged": true,
+                "local_xyz_equal": true,
+                "local_rotation_equal": true,
+                "trajectory_equal": true,
+                "road_frozen_fields": [
+                  "model_xyz",
+                  "gaussian_sigma_m",
+                  "normal_world",
+                  "road_opacity",
+                  "active",
+                  "minimum_model_depth"
+                ],
+                "road_trainable_color_rows": 1191,
+                "source_road_intact": true
+              }
+            }
+          },
+          {
+            "name": "final_native_and_geometry_proof",
+            "passed": true,
+            "proof": {
+              "native_scene_unchanged": true,
+              "local_xyz_equal": true,
+              "local_rotation_equal": true,
+              "trajectory_equal": true,
+              "road_frozen_fields": [
+                "model_xyz",
+                "gaussian_sigma_m",
+                "normal_world",
+                "road_opacity",
+                "active",
+                "minimum_model_depth"
+              ],
+              "road_trainable_color_rows": 1191,
+              "source_road_intact": true,
+              "vehicle_dc_max_update": 4.4051713943481445,
+              "vehicle_opacity_max_update": 2.9401354789733887,
+              "vehicle_scale_max_update": 0.40546509623527527,
+              "road_color_max_update": 0.4447833299636841,
+              "joint_real_renderer_two_branch_nonzero_all_steps": true,
+              "formal_vehicle_updates": 200,
+              "formal_joint_updates": 200,
+              "native_renderer_calls": 703,
+              "backward_calls": 409,
+              "power_operations": 0,
+              "seconds": 149.11602377705276
+            }
+          },
+          {
+            "name": "disk_reload_proof.json",
+            "passed": true,
+            "proof": {
+              "passed": true,
+              "fresh_process": true,
+              "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit",
+              "binding": {
+                "schema": "object_rigid_joint_asset.v1",
+                "vehicle": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/vehicle.npz",
+                "poses": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/poses.npz",
+                "target_actor": 21,
+                "target_track": "bzFbWRrSGOgEaXxnuGV0tw",
+                "delete_actor": 10,
+                "source_road_manifest": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/persistent/scene.json",
+                "source_road_proof": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/joint_fit/persistent/proof.json",
+                "loader": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/run_joint.py",
+                "colors_only_road_updates": true
+              },
+              "rows": [
+                {
+                  "raw": 86,
+                  "maximum": {
+                    "joint_keep": 1.9669532775878906e-06,
+                    "joint_delete": 1.9669532775878906e-06,
+                    "vehicle_rgb": 1.7881393432617188e-07,
+                    "road_rgb": 0.0,
+                    "vehicle_alpha_keep": 3.5762786865234375e-07,
+                    "vehicle_alpha_delete": 3.5762786865234375e-07,
+                    "vehicle_alpha_isolated": 2.980232238769531e-07,
+                    "road_alpha": 0.0
+                  }
+                },
+                {
+                  "raw": 110,
+                  "maximum": {
+                    "joint_keep": 1.5497207641601562e-06,
+                    "joint_delete": 1.5497207641601562e-06,
+                    "vehicle_rgb": 1.7881393432617188e-07,
+                    "road_rgb": 0.0,
+                    "vehicle_alpha_keep": 3.5762786865234375e-07,
+                    "vehicle_alpha_delete": 3.5762786865234375e-07,
+                    "vehicle_alpha_isolated": 4.172325134277344e-07,
+                    "road_alpha": 0.0
+                  }
+                },
+                {
+                  "raw": 134,
+                  "maximum": {
+                    "joint_keep": 2.428889274597168e-06,
+                    "joint_delete": 2.428889274597168e-06,
+                    "vehicle_rgb": 1.7881393432617188e-07,
+                    "road_rgb": 0.0,
+                    "vehicle_alpha_keep": 1.6093254089355469e-06,
+                    "vehicle_alpha_delete": 1.6093254089355469e-06,
+                    "vehicle_alpha_isolated": 3.5762786865234375e-07,
+                    "road_alpha": 0.0
+                  }
+                },
+                {
+                  "raw": 179,
+                  "maximum": {
+                    "joint_keep": 1.7136335372924805e-06,
+                    "joint_delete": 1.7136335372924805e-06,
+                    "vehicle_rgb": 3.5762786865234375e-07,
+                    "road_rgb": 0.0,
+                    "vehicle_alpha_keep": 4.172325134277344e-07,
+                    "vehicle_alpha_delete": 4.172325134277344e-07,
+                    "vehicle_alpha_isolated": 4.172325134277344e-07,
+                    "road_alpha": 0.0
+                  }
+                },
+                {
+                  "raw": 198,
+                  "maximum": {
+                    "joint_keep": 2.0116567611694336e-06,
+                    "joint_delete": 2.0116567611694336e-06,
+                    "vehicle_rgb": 1.7881393432617188e-07,
+                    "road_rgb": 0.0,
+                    "vehicle_alpha_keep": 3.5762786865234375e-07,
+                    "vehicle_alpha_delete": 3.5762786865234375e-07,
+                    "vehicle_alpha_isolated": 3.5762786865234375e-07,
+                    "road_alpha": 0.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "post_numeric_probe.json",
+            "passed": true,
+            "proof": {
+              "passed": true,
+              "saved_state_restore_bit_exact": true,
+              "repeated_same_checkpoint_independent_steps": 2,
+              "next_step_parameter_difference": {
+                "dc": 1.1920928955078125e-07,
+                "opacity_logits": 2.384185791015625e-07,
+                "log_scale_delta": 6.1998143792152405e-06,
+                "base_xyz": 0.0,
+                "base_scales": 0.0,
+                "base_rotation": 0.0,
+                "base_coefficients": 0.0,
+                "base_opacity": 0.0
+              },
+              "next_step_loss_difference": 0.0,
+              "next_step_render_max_difference": 2.250075340270996e-06,
+              "one_display_gray_code": 0.00392156862745098,
+              "initialization_reproduced_bit_exact": {
+                "xyz": true,
+                "scales": true,
+                "rotation": true,
+                "coefficients": true,
+                "opacity": true,
+                "source_row": true,
+                "source_branch": true,
+                "source_raw": true
+              },
+              "extra_optimizer_updates": 2,
+              "formal_updates": 0,
+              "interpretation": "checkpoint state exact; subsequent FP32 native CUDA atomic backward steps numerically approximate"
+            }
+          },
+          {
+            "name": "formal_step_counts_and_finite_losses",
+            "passed": true,
+            "counts": {
+              "vehicle": 200,
+              "joint": 200
+            },
+            "total_logged_steps": 409
+          }
+        ],
+        "passed": true,
+        "pending": [],
+        "mask_provenance": {
+          "kind": "estimated/repaired segmentation proxy, not manual hidden-shape or RGB ground truth",
+          "receipt_status": "SUPPORTED_OBSERVATION_PRESERVATION_PENDING_VISUAL_QA",
+          "source": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r3",
+          "receipt_sha256": "67801b46c8d8f8b3eface8701fb106811bcb03ea30f86ccb2bdbd647db7deb82",
+          "contract_mask_description": "real a20 body-only accepted mask, no shadow"
+        },
+        "frozen_code_sha256": {
+          "code/frozen_formal_r2/run_joint.py": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+          "code/frozen_formal_r2/lower_prior.py": "f77f27c810c6c14672a3e2bea2f26117016b1bd05f02dbecda7f59f32d1d7cc6"
+        },
+        "resource_ledger": {
+          "native_calls": 703,
+          "backward_calls": 409,
+          "formal_vehicle_updates": 200,
+          "formal_joint_updates": 200,
+          "seconds": 155.05719283036888,
+          "GPU_keep_on": true,
+          "power_operations": 0,
+          "failed_smoke_optimizer_updates": 6,
+          "successful_smoke_base_updates": 7,
+          "successful_smoke_replay_updates": 2,
+          "successful_smoke_total_updates": 9,
+          "independent_numeric_probe_updates": 2,
+          "total_optimizer_updates_all_attempts": 417,
+          "formal_method_budget_unchanged": true,
+          "failed_smoke_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/smoke_failed_r1"
+        },
+        "frames": [
+          {
+            "raw": 86,
+            "vehicle_fixed_mask_sha256": "6e2c81cd85e43ad63af91935ba36702ade0ed4428268b6036c4304e5f92f4f62",
+            "road_fixed_mask_sha256": "f7a50caffc78366267ea409733a17b74a450b341a755247910a65ee01636a323",
+            "keep_change_visible_MAE": 0.04747413098812103,
+            "DELETE_change": {
+              "max": 0.5723722577095032,
+              "mean": 0.0009325892142091286,
+              "identical": false
+            }
+          },
+          {
+            "raw": 110,
+            "vehicle_fixed_mask_sha256": "f10e6efac7e8d7a3bbe71840d287d2ea729dc6bfe6606871f6e370e894970683",
+            "road_fixed_mask_sha256": "92ccdaabb903b98a4b1bf338a1590adce5bb788fa396700c445a5d2d9844250d",
+            "keep_change_visible_MAE": 0.03018016926944256,
+            "DELETE_change": {
+              "max": 0.5795108079910278,
+              "mean": 0.0008823951212226898,
+              "identical": false
+            }
+          },
+          {
+            "raw": 134,
+            "vehicle_fixed_mask_sha256": "a9d176abe1223b6ed199a7aebd585aba420debd965862ec9b486ec64c3951f47",
+            "road_fixed_mask_sha256": "83e78a6f074bec9216c3b952250fc5f2ef31745021e4fd11ddb63ec964ef9b77",
+            "keep_change_visible_MAE": 0.028741903603076935,
+            "DELETE_change": {
+              "max": 0.5904804468154907,
+              "mean": 0.000904603544253781,
+              "identical": false
+            }
+          },
+          {
+            "raw": 179,
+            "vehicle_fixed_mask_sha256": "6092945d3dfc123597d7cfebaf8ed919035324e6adfcc23043b477d536c70348",
+            "road_fixed_mask_sha256": "451f89723cf3244adbb45ddb698af583f5522cd2b65313e02ca3dadec9d0d1f3",
+            "keep_change_visible_MAE": 0.028264403343200684,
+            "DELETE_change": {
+              "max": 0.5226532220840454,
+              "mean": 0.0008733370990142229,
+              "identical": false
+            }
+          },
+          {
+            "raw": 198,
+            "vehicle_fixed_mask_sha256": "fd031fdd90666790eaac874bb8a2a7170675434cdbc4c486382286733b1b6972",
+            "road_fixed_mask_sha256": "1d8486a71c5a4b85caad8f407f507420c8716570e93104a9abf03020514d08f5",
+            "keep_change_visible_MAE": 0.027927471324801445,
+            "DELETE_change": {
+              "max": 0.5224182605743408,
+              "mean": 0.0008670917808653884,
+              "identical": false
+            }
+          }
+        ],
+        "other_actor_image_differences_are_descriptive_not_zero_constraint": [
+          {
+            "raw": 86,
+            "native_actor_id": 2,
+            "comparison": "prior_to_final",
+            "pixels": 3030,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 2,
+            "comparison": "native_to_final",
+            "pixels": 3030,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 3,
+            "comparison": "prior_to_final",
+            "pixels": 3495,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 3,
+            "comparison": "native_to_final",
+            "pixels": 3495,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 4,
+            "comparison": "prior_to_final",
+            "pixels": 27637,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 4,
+            "comparison": "native_to_final",
+            "pixels": 27637,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 8,
+            "comparison": "prior_to_final",
+            "pixels": 29887,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 8,
+            "comparison": "native_to_final",
+            "pixels": 29887,
+            "MAE": 1.7589153458175133e-06,
+            "maximum": 0.0030297040939331055,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 11,
+            "comparison": "prior_to_final",
+            "pixels": 3029,
+            "MAE": 0.007226717658340931,
+            "maximum": 0.17090028524398804,
+            "fraction_channels_over_1_255": 0.300099042588313
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 11,
+            "comparison": "native_to_final",
+            "pixels": 3029,
+            "MAE": 0.07845567911863327,
+            "maximum": 0.24024508893489838,
+            "fraction_channels_over_1_255": 0.9690767029822824
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 12,
+            "comparison": "prior_to_final",
+            "pixels": 376,
+            "MAE": 0.0063689714297652245,
+            "maximum": 0.13339489698410034,
+            "fraction_channels_over_1_255": 0.2375886524822695
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 12,
+            "comparison": "native_to_final",
+            "pixels": 376,
+            "MAE": 0.021471766754984856,
+            "maximum": 0.10555008053779602,
+            "fraction_channels_over_1_255": 0.7615248226950354
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 13,
+            "comparison": "prior_to_final",
+            "pixels": 981,
+            "MAE": 0.0019591357558965683,
+            "maximum": 0.057858407497406006,
+            "fraction_channels_over_1_255": 0.11892626571525654
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 13,
+            "comparison": "native_to_final",
+            "pixels": 981,
+            "MAE": 0.0015424793818965554,
+            "maximum": 0.02338641881942749,
+            "fraction_channels_over_1_255": 0.11926605504587157
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 14,
+            "comparison": "prior_to_final",
+            "pixels": 3722,
+            "MAE": 1.786977009032853e-06,
+            "maximum": 0.002146482467651367,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 14,
+            "comparison": "native_to_final",
+            "pixels": 3722,
+            "MAE": 1.786977009032853e-06,
+            "maximum": 0.002146482467651367,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 20,
+            "comparison": "prior_to_final",
+            "pixels": 3114,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 20,
+            "comparison": "native_to_final",
+            "pixels": 3114,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 24,
+            "comparison": "prior_to_final",
+            "pixels": 658,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 86,
+            "native_actor_id": 24,
+            "comparison": "native_to_final",
+            "pixels": 658,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 2,
+            "comparison": "prior_to_final",
+            "pixels": 6413,
+            "MAE": 0.0065805041231215,
+            "maximum": 0.3877549171447754,
+            "fraction_channels_over_1_255": 0.19107022194500753
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 2,
+            "comparison": "native_to_final",
+            "pixels": 6413,
+            "MAE": 0.006590831559151411,
+            "maximum": 0.4376509189605713,
+            "fraction_channels_over_1_255": 0.19070637767035709
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 3,
+            "comparison": "prior_to_final",
+            "pixels": 2345,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 3,
+            "comparison": "native_to_final",
+            "pixels": 2345,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 8,
+            "comparison": "prior_to_final",
+            "pixels": 46657,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 8,
+            "comparison": "native_to_final",
+            "pixels": 46657,
+            "MAE": 1.2691393713737398e-08,
+            "maximum": 0.0004921257495880127,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 11,
+            "comparison": "prior_to_final",
+            "pixels": 7437,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 11,
+            "comparison": "native_to_final",
+            "pixels": 7437,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 14,
+            "comparison": "prior_to_final",
+            "pixels": 5801,
+            "MAE": 1.8445990690452163e-06,
+            "maximum": 0.0016932487487792969,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 14,
+            "comparison": "native_to_final",
+            "pixels": 5801,
+            "MAE": 2.5043841560545843e-06,
+            "maximum": 0.0016932487487792969,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 20,
+            "comparison": "prior_to_final",
+            "pixels": 7525,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 20,
+            "comparison": "native_to_final",
+            "pixels": 7525,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 24,
+            "comparison": "prior_to_final",
+            "pixels": 1919,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 24,
+            "comparison": "native_to_final",
+            "pixels": 1919,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 26,
+            "comparison": "prior_to_final",
+            "pixels": 939,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 110,
+            "native_actor_id": 26,
+            "comparison": "native_to_final",
+            "pixels": 939,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 2,
+            "comparison": "prior_to_final",
+            "pixels": 14803,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 2,
+            "comparison": "native_to_final",
+            "pixels": 14803,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 3,
+            "comparison": "prior_to_final",
+            "pixels": 2113,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 3,
+            "comparison": "native_to_final",
+            "pixels": 2113,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 8,
+            "comparison": "prior_to_final",
+            "pixels": 52727,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 8,
+            "comparison": "native_to_final",
+            "pixels": 52727,
+            "MAE": 1.3207293592110148e-10,
+            "maximum": 6.705522537231445e-06,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 14,
+            "comparison": "prior_to_final",
+            "pixels": 6441,
+            "MAE": 2.9697243917325977e-06,
+            "maximum": 0.005413129925727844,
+            "fraction_channels_over_1_255": 0.0001552553951249806
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 14,
+            "comparison": "native_to_final",
+            "pixels": 6441,
+            "MAE": 3.039335751964245e-06,
+            "maximum": 0.005413129925727844,
+            "fraction_channels_over_1_255": 0.0001552553951249806
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 20,
+            "comparison": "prior_to_final",
+            "pixels": 4201,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 20,
+            "comparison": "native_to_final",
+            "pixels": 4201,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 23,
+            "comparison": "prior_to_final",
+            "pixels": 1095,
+            "MAE": 5.159102875040844e-05,
+            "maximum": 0.002749726176261902,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 23,
+            "comparison": "native_to_final",
+            "pixels": 1095,
+            "MAE": 5.159102875040844e-05,
+            "maximum": 0.002749726176261902,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 24,
+            "comparison": "prior_to_final",
+            "pixels": 2240,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 134,
+            "native_actor_id": 24,
+            "comparison": "native_to_final",
+            "pixels": 2240,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 3,
+            "comparison": "prior_to_final",
+            "pixels": 2053,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 3,
+            "comparison": "native_to_final",
+            "pixels": 2053,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 8,
+            "comparison": "prior_to_final",
+            "pixels": 52684,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 8,
+            "comparison": "native_to_final",
+            "pixels": 52684,
+            "MAE": 1.8513183874802053e-07,
+            "maximum": 0.002415955066680908,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 14,
+            "comparison": "prior_to_final",
+            "pixels": 6580,
+            "MAE": 2.8798131097573787e-06,
+            "maximum": 0.004615217447280884,
+            "fraction_channels_over_1_255": 0.00010131712259371833
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 14,
+            "comparison": "native_to_final",
+            "pixels": 6580,
+            "MAE": 2.320212843187619e-05,
+            "maximum": 0.004615217447280884,
+            "fraction_channels_over_1_255": 0.00010131712259371833
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 20,
+            "comparison": "prior_to_final",
+            "pixels": 15748,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 20,
+            "comparison": "native_to_final",
+            "pixels": 15748,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 23,
+            "comparison": "prior_to_final",
+            "pixels": 1662,
+            "MAE": 5.83187693337095e-06,
+            "maximum": 0.00184553861618042,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 23,
+            "comparison": "native_to_final",
+            "pixels": 1662,
+            "MAE": 5.83187693337095e-06,
+            "maximum": 0.00184553861618042,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 24,
+            "comparison": "prior_to_final",
+            "pixels": 3707,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 24,
+            "comparison": "native_to_final",
+            "pixels": 3707,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 26,
+            "comparison": "prior_to_final",
+            "pixels": 1348,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 179,
+            "native_actor_id": 26,
+            "comparison": "native_to_final",
+            "pixels": 1348,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 3,
+            "comparison": "prior_to_final",
+            "pixels": 2202,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 3,
+            "comparison": "native_to_final",
+            "pixels": 2202,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 8,
+            "comparison": "prior_to_final",
+            "pixels": 52584,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 8,
+            "comparison": "native_to_final",
+            "pixels": 52584,
+            "MAE": 4.917731075693155e-06,
+            "maximum": 0.015431642532348633,
+            "fraction_channels_over_1_255": 0.00022820629849383843
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 14,
+            "comparison": "prior_to_final",
+            "pixels": 6586,
+            "MAE": 2.8308461423875997e-06,
+            "maximum": 0.003970146179199219,
+            "fraction_channels_over_1_255": 5.061241016297196e-05
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 14,
+            "comparison": "native_to_final",
+            "pixels": 6586,
+            "MAE": 5.383943971537519e-06,
+            "maximum": 0.003970146179199219,
+            "fraction_channels_over_1_255": 5.061241016297196e-05
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 19,
+            "comparison": "prior_to_final",
+            "pixels": 557,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 19,
+            "comparison": "native_to_final",
+            "pixels": 557,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 23,
+            "comparison": "prior_to_final",
+            "pixels": 1607,
+            "MAE": 1.0289886631653644e-05,
+            "maximum": 0.0017219781875610352,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 23,
+            "comparison": "native_to_final",
+            "pixels": 1607,
+            "MAE": 1.0289886631653644e-05,
+            "maximum": 0.0017219781875610352,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 26,
+            "comparison": "prior_to_final",
+            "pixels": 1378,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          },
+          {
+            "raw": 198,
+            "native_actor_id": 26,
+            "comparison": "native_to_final",
+            "pixels": 1378,
+            "MAE": 0.0,
+            "maximum": 0.0,
+            "fraction_channels_over_1_255": 0.0
+          }
+        ]
+      },
+      "qa_teacher_render_overlap.json": {
+        "schema": "teacher_actual_vehicle_contribution_audit.v1",
+        "passed": false,
+        "physical_full_box_exclusion_passed": true,
+        "actual_rendered_vehicle_contribution_zero_intersection_passed": false,
+        "rows": [
+          {
+            "stage": "canonical_prior_init",
+            "raw": 86,
+            "domain": "C_legal",
+            "domain_pixels": 20854,
+            "pixels_vehicle_alpha_gt_0": 592,
+            "pixels_vehicle_alpha_gt_1e_3": 457,
+            "pixels_vehicle_alpha_gt_005": 34,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 6.5159502029418945,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "canonical_prior_init",
+            "raw": 86,
+            "domain": "all_legal",
+            "domain_pixels": 60546,
+            "pixels_vehicle_alpha_gt_0": 834,
+            "pixels_vehicle_alpha_gt_1e_3": 615,
+            "pixels_vehicle_alpha_gt_005": 34,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 7.076111793518066,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "canonical_prior_init",
+            "raw": 110,
+            "domain": "C_legal",
+            "domain_pixels": 46010,
+            "pixels_vehicle_alpha_gt_0": 1013,
+            "pixels_vehicle_alpha_gt_1e_3": 482,
+            "pixels_vehicle_alpha_gt_005": 35,
+            "vehicle_alpha_max": 0.09228868782520294,
+            "vehicle_alpha_sum": 6.572052478790283,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "canonical_prior_init",
+            "raw": 110,
+            "domain": "all_legal",
+            "domain_pixels": 128879,
+            "pixels_vehicle_alpha_gt_0": 1605,
+            "pixels_vehicle_alpha_gt_1e_3": 704,
+            "pixels_vehicle_alpha_gt_005": 35,
+            "vehicle_alpha_max": 0.09228868782520294,
+            "vehicle_alpha_sum": 7.683542728424072,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "joint_fit",
+            "raw": 86,
+            "domain": "C_legal",
+            "domain_pixels": 20854,
+            "pixels_vehicle_alpha_gt_0": 610,
+            "pixels_vehicle_alpha_gt_1e_3": 478,
+            "pixels_vehicle_alpha_gt_005": 64,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 10.117472648620605,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "joint_fit",
+            "raw": 86,
+            "domain": "all_legal",
+            "domain_pixels": 60546,
+            "pixels_vehicle_alpha_gt_0": 1026,
+            "pixels_vehicle_alpha_gt_1e_3": 759,
+            "pixels_vehicle_alpha_gt_005": 64,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 11.99751091003418,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "joint_fit",
+            "raw": 110,
+            "domain": "C_legal",
+            "domain_pixels": 46010,
+            "pixels_vehicle_alpha_gt_0": 1091,
+            "pixels_vehicle_alpha_gt_1e_3": 529,
+            "pixels_vehicle_alpha_gt_005": 40,
+            "vehicle_alpha_max": 0.09228868782520294,
+            "vehicle_alpha_sum": 8.50278377532959,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "joint_fit",
+            "raw": 110,
+            "domain": "all_legal",
+            "domain_pixels": 128879,
+            "pixels_vehicle_alpha_gt_0": 2267,
+            "pixels_vehicle_alpha_gt_1e_3": 879,
+            "pixels_vehicle_alpha_gt_005": 57,
+            "vehicle_alpha_max": 0.1014801636338234,
+            "vehicle_alpha_sum": 12.454511642456055,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "handoff_fixed_guarded",
+            "raw": 86,
+            "domain": "C_legal",
+            "domain_pixels": 20854,
+            "pixels_vehicle_alpha_gt_0": 610,
+            "pixels_vehicle_alpha_gt_1e_3": 478,
+            "pixels_vehicle_alpha_gt_005": 64,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 10.119300842285156,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "handoff_fixed_guarded",
+            "raw": 86,
+            "domain": "all_legal",
+            "domain_pixels": 60546,
+            "pixels_vehicle_alpha_gt_0": 1026,
+            "pixels_vehicle_alpha_gt_1e_3": 759,
+            "pixels_vehicle_alpha_gt_005": 64,
+            "vehicle_alpha_max": 0.12162594497203827,
+            "vehicle_alpha_sum": 12.000509262084961,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "handoff_fixed_guarded",
+            "raw": 110,
+            "domain": "C_legal",
+            "domain_pixels": 46010,
+            "pixels_vehicle_alpha_gt_0": 1091,
+            "pixels_vehicle_alpha_gt_1e_3": 529,
+            "pixels_vehicle_alpha_gt_005": 40,
+            "vehicle_alpha_max": 0.09228868782520294,
+            "vehicle_alpha_sum": 8.50278377532959,
+            "physical_a20_box_intersection_pixels": 0
+          },
+          {
+            "stage": "handoff_fixed_guarded",
+            "raw": 110,
+            "domain": "all_legal",
+            "domain_pixels": 128879,
+            "pixels_vehicle_alpha_gt_0": 2268,
+            "pixels_vehicle_alpha_gt_1e_3": 879,
+            "pixels_vehicle_alpha_gt_005": 57,
+            "vehicle_alpha_max": 0.1014801636338234,
+            "vehicle_alpha_sum": 12.454530715942383,
+            "physical_a20_box_intersection_pixels": 0
+          }
+        ],
+        "source": "saved actual native float render packets; fixed saved road legal masks; no training or GPU calls",
+        "GPU_calls": 0,
+        "optimizer_updates": 0,
+        "interpretation": "Physical a20 OBB exclusion does not exclude all inherited large canonical Gaussian footprints. Some rendered a20 contribution remains in generated C road supervision and full legal road domains. Shared differentiable vehicle DC remains in the DELETE training path, so this is a supervision-isolation failure; no new GPU gradient probe was run.",
+        "quality_pass": false,
+        "original_contract_preserved": true
+      },
+      "implementation_delivery_receipt.json": {
+        "task": "SCENE065-A9-DELETE-A20-COMPLETE-JOINT-20261121",
+        "implementation_execution_complete": true,
+        "quality_acceptance_passed": false,
+        "formal_vehicle_updates": 200,
+        "formal_joint_updates": 200,
+        "total_optimizer_updates_all_attempts": 417,
+        "artifact_root_remote": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1",
+        "artifact_root_local": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\takeback\\vehicle_road_joint_20261121_r1",
+        "archive_bytes": 58547980,
+        "extracted_files": 402,
+        "takeback_verified": true,
+        "lossless_webp_stages": 7,
+        "full_trajectory_registry_frames": 199,
+        "target_trajectory_available_frames": 198,
+        "canonical_native_reference_rows": 51400,
+        "added_lower_shape_prior_rows": 624,
+        "guarded_a9_unknown_static_rows": 75,
+        "final_optimizer_Adam_RNG_restore": "bit exact",
+        "subsequent_FP32_CUDA_step_restore": "numerically approximate",
+        "disk_reload_max_RGB": 3.635883331298828e-06,
+        "unresolved": [
+          "a9 residual remains visible",
+          "coarse prior lower body and tire geometry",
+          "diagnostic and other-actor degradation",
+          "rendered canonical vehicle contribution overlaps road teacher outside protected physical box"
+        ],
+        "postsealed_extra_QA": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\vehicle_road_joint_20261121\\qa_teacher_render_overlap.json",
+        "GPU_keep_on": true,
+        "power_operations": 0
+      },
+      "takeback_download_receipt.json": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/vehicle_road_joint_review_and_asset_r2.tar.gz",
+        "bytes": 58547980,
+        "files": 402,
+        "exact_duplicate_payloads_deduplicated": 134,
+        "original_float_NPZ_included": false,
+        "repeated_full_road_included": false,
+        "stages": [
+          "native_before",
+          "canonical_init",
+          "canonical_prior_init",
+          "vehicle_fit",
+          "joint_fit",
+          "handoff_fixed",
+          "handoff_fixed_guarded"
+        ],
+        "complete": true
+      }
+    }
+  },
+  "config": {
+    "task": "SCENE065-A9-DELETE-A20-COMPLETE-JOINT-20261121",
+    "target": {
+      "alias": "a20",
+      "actor_id": 21,
+      "track_id": "bzFbWRrSGOgEaXxnuGV0tw"
+    },
+    "delete": {
+      "alias": "a9",
+      "actor_id": 10,
+      "track_id": "NTjq-OhZ_97OMJ4xwJAxXg"
+    },
+    "road_source": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+    "train_frames": [
+      86,
+      110
+    ],
+    "diagnostic_frames": [
+      134,
+      179,
+      198
+    ],
+    "resolution": [
+      1152,
+      768
+    ],
+    "few_frame_adaptation_of_allframe_pretrained_asset": true,
+    "stages": [
+      "native_before",
+      "canonical_init",
+      "canonical_prior_init",
+      "vehicle_fit",
+      "joint_fit"
+    ],
+    "vehicle_steps": 200,
+    "joint_steps": 200,
+    "vehicle_trainable": [
+      "canonical SH DC",
+      "opacity",
+      "per-axis scales bounded0.75-1.5"
+    ],
+    "joint_trainable": [
+      "vehicle SH DC",
+      "1191 approved road colors"
+    ],
+    "frozen": [
+      "vehicle local XYZ/rotation",
+      "trajectory",
+      "cameras",
+      "all native models",
+      "environment",
+      "static gates",
+      "road geometry/opacity/scales/active"
+    ],
+    "loss": {
+      "vehicle_rgb_l1": 0.8,
+      "vehicle_DSSIM": 0.2,
+      "alpha_inside_mse": 0.1,
+      "alpha_outside_mse": 0.1,
+      "scale_log_delta_l2": 0.001,
+      "joint_road_rgb_l1": 1.0,
+      "joint_road_edge_l1": 0.1
+    },
+    "alpha_normalization": "inside visible body mask and observable outside separately normalized; composited target alpha; original occluding labels inside full projected OBB dilated9px excluded from negatives",
+    "mask_content": "real a20 body-only accepted mask, no shadow",
+    "road_domain": "A original observed RGB, C/S frozen generated target, DELETE composite; a9 hole included outside target full projected OBB and retained labels/K; fixed actual roadalpha>.05 support",
+    "hidden_vehicle_supervision": "only inherited native geometry and cross-view true visible RGB; never road teacher; no hidden RGB ground truth",
+    "initialization": "exact effective native packet at reference raw110, current temporal opacity/covariance/colors; shader RGB baked as canonical SH0",
+    "seed": 101,
+    "smoke": "short real GPU forward/backward, save/full optimizer-RNG restore, eval, joint entry, persistent vehicle reload",
+    "new_diffusion_updates": 0,
+    "TRELLIS": false,
+    "PVD": false,
+    "GPU_keep_on": true,
+    "power_operations": false,
+    "lower_shape_prior": true,
+    "lower_prior_scope": "explicit box-conditioned panels/bumper/tire shapes at unobserved lower body, constrained by visible width, all5 occluder masks and annotated base; not measured wheel geometry",
+    "prior_geometry_and_hidden_opacity_scale_frozen": true,
+    "visible_native_support": "actual unified-raster feature VJP over real visible masks"
+  },
+  "links": [
+    {
+      "name": "完整固定域细节指标",
+      "path": "delivery/independent_detail_metrics.json"
+    },
+    {
+      "name": "训练阶段指标记录",
+      "path": "delivery/metrics.json"
+    },
+    {
+      "name": "实际训练合同",
+      "path": "contract.json"
+    },
+    {
+      "name": "HUGSIM 方法核对",
+      "path": "hugsim_review.md"
+    },
+    {
+      "name": "原道路统一报告",
+      "path": "../road_material_three_rounds_20261121/index.html"
+    },
+    {
+      "name": "实际贡献隔离检查",
+      "path": "qa_teacher_render_overlap.json"
+    },
+    {
+      "name": "资产恢复方法",
+      "path": "RESTORE.md"
+    },
+    {
+      "name": "已核验资产与完整训练状态",
+      "path": "../../work/vehicle_road_joint_20261121/takeback/vehicle_road_joint_review_and_asset_r2.tar.gz"
+    },
+    {
+      "name": "交付核验记录",
+      "path": "implementation_delivery_receipt.json"
+    },
+    {
+      "name": "独立工程与效果检查",
+      "path": "final_independent_qa.md"
+    },
+    {
+      "name": "下半车体先验来源",
+      "path": "lower_prior.json"
+    }
+  ],
+  "disclaimer": "被 a9 持续遮挡的 a20 下半部缺少真实外观监督，其几何与颜色来源已在先验记录中标注；可见域指标不代表隐藏部位真实还原。原始重建模型见过全序列，本轮少帧诊断不属于独立盲测。",
+  "findings": [
+    {
+      "name": "a20 可见车体",
+      "attention": true,
+      "detail": "两个训练帧的颜色拟合改善；三个诊断帧仍有对象表示转换与外观适配偏差。"
+    },
+    {
+      "name": "a20 被遮下半部",
+      "attention": true,
+      "detail": "624 个新增高斯提供车体、保险杠与轮胎形状先验；纹理与轮胎外形仍较粗糙。"
+    },
+    {
+      "name": "其它车辆局部变化",
+      "attention": true,
+      "detail": "raw86 左侧 a10 轿车对原图 MAE 从原生 0.10684 升至联合训练 0.15847；该项保留为未通过检查。"
+    },
+    {
+      "name": "旧 a9 残影",
+      "attention": true,
+      "detail": "75 行安全归属修复保持五帧保留车辆像素不变；主要跨域白块仍残留，当前画质未通过。"
+    },
+    {
+      "name": "实际贡献隔离",
+      "attention": true,
+      "detail": "物理投影盒已排除；大足迹车辆高斯仍越界进入道路教师域，需重建对象支持并使用实际贡献约束。"
+    }
+  ],
+  "status_attention": true
+}
