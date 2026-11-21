@@ -37,6 +37,10 @@ def cumulative(data,metrics,manifest):
             if not (target/name).exists()and source.exists():shutil.copy2(source,target/name)
             if (target/name).exists():
                 data['evidence'].append(dict(name=name,path=(target/name).relative_to(D.F.OUT).as_posix()))
+    catalog_spec=importlib.util.spec_from_file_location('unified_report_catalog',W/'unified_catalog.py')
+    catalog=importlib.util.module_from_spec(catalog_spec);catalog_spec.loader.exec_module(catalog)
+    audit=catalog.attach(data,D.F.OUT)
+    D.F.write(D.F.DEST/'catalog_validation.json',audit)
 D.EXTRA_DATA_FN=cumulative
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--once',action='store_true');p.add_argument('--mark-pending',action='store_true');a=p.parse_args()

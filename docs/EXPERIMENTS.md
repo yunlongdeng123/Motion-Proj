@@ -405,3 +405,7 @@
 `ROAD-SURFACE-RESIDUAL-20261121-R2 / road_surface_residual_20261121_r2`：[报告与组件](autoresearch/module2_surface_residual_20261121_r2/report.md)、[合同](autoresearch/module2_surface_residual_20261121_r2/contract.json)、[分阶段指标](autoresearch/module2_surface_residual_20261121_r2/bench/metrics.json)。直接父是第一轮外观终态；实际joint K门筛选后激活13个旧行、追加1071个新位置、按原R1许可上界复用107个新组父行，同中心副本不追加。覆盖纯hinge400与外观1200步；总596100、active162348，累计真append7239。所有安全动作源像素达到alpha>=.95；认证C仍有809/303低alpha像素，均来自拒绝的joint K候选，认证S低alpha清零。五帧K RGB/alpha exact0，不构成任意视角保护或3DGS全局容量证书。轻量归档含逐候选原VJP证据无损JSON/CSV、原cap许可、smoke恢复与逐字段父冻结证明；完整模型与恢复状态另行取回，不放Git。独立固定颜色区间诊断4F、0更新，正式资产及账本不变。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null；无画质晋升，GPU保持开机。
 
 固定同一1191行、原normalizer及RGB/HF/Sobel目标的独立数值诊断实际2FG/1接受步，总loss6.040828327705→6.040828282598，绝对FW约8.39e-4。完整reverse-communication workspace与配对RNG磁盘恢复、公开重载通过；状态与ABI依赖另列，NPZ/PT不入Git。总目标包含不可调父区域常数，不能用相对停止门推导新覆盖颜色已收敛或全局容量证书；正式1200步资产不替换。
+
+## 2026-11-21：统一主页恢复全部历史实验组
+
+[统一浏览修复](autoresearch/module2_surface_residual_20261121_r2/ui_fix/README.md)恢复55项/8批次，原744条指标和150条覆盖记录不重算，数值诊断仍为独立附录。新目录QA覆盖1100组road/joint与275组alpha，原始科学记录及资产不变，无新增训练或GPU操作。
