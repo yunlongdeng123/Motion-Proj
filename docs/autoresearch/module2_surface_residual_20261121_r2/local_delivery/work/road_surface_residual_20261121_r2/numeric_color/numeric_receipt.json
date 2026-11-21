@@ -1,0 +1,232 @@
+{
+  "complete": true,
+  "FG": 2,
+  "accepted": 1,
+  "objective": 6.040828282598126,
+  "FW_gap": 0.0008393834701334037,
+  "relative_FW_gap": 0.00013895171835150887,
+  "termination": "registered_measured_training_FW_gate",
+  "recipe": {
+    "m": 10,
+    "maxls": 20,
+    "factr": 10000000.0,
+    "pgtol": 1e-08,
+    "maxFG": 2000
+  },
+  "ABI": {
+    "scipy_version": "1.13.1",
+    "binary": "/root/autodl-tmp/envs/drivingeditor/lib/python3.9/site-packages/scipy/optimize/_lbfgsb.cpython-39-x86_64-linux-gnu.so",
+    "binary_sha256": "63d959ac8b65cfb32c86ce736d484bea36d50e664911409abfe8bc5a9bed57d0",
+    "signature": "setulb(m,x,l,u,nbd,f,g,factr,pgtol,wa,iwa,task,iprint,csave,lsave,isave,dsave,maxls,[n])"
+  },
+  "last_accepted_CI_used": true,
+  "accepted_details": {
+    "x_SHA256": "0223413bb5af9adc8c11a19fe0a91156fabf03dd5b38f4ab6088e39893e57f1b",
+    "objective": 6.040828282598126,
+    "loss_terms": {
+      "86:A": {
+        "raw_terms": {
+          "RGB": 0.0026689228736900585,
+          "HF_1.0": 0.00014440228335021318,
+          "HF_2.0": 0.0003388165346639168,
+          "HF_4.0": 0.00041588088992734946,
+          "SOBEL": 0.00017154433822154152
+        },
+        "normalized_total": 1.4989233854510915
+      },
+      "86:C": {
+        "raw_terms": {
+          "RGB": 0.002173362658862392,
+          "HF_1.0": 0.0001114062608647934,
+          "HF_2.0": 0.00023598528110488668,
+          "HF_4.0": 0.0003862124098629665,
+          "SOBEL": 0.00012571287036040744
+        },
+        "normalized_total": 0.35258639661046176
+      },
+      "86:S": {
+        "raw_terms": {
+          "RGB": 0.0001450956739877934,
+          "HF_1.0": 4.274411051456607e-05,
+          "HF_2.0": 6.74238498653979e-05,
+          "HF_4.0": 4.426593782176957e-05,
+          "SOBEL": 2.2331442588264916e-05
+        },
+        "normalized_total": 0.8867858157777212
+      },
+      "110:A": {
+        "raw_terms": {
+          "RGB": 0.0035151960900961384,
+          "HF_1.0": 0.00015195232205703177,
+          "HF_2.0": 0.00036879922376900447,
+          "HF_4.0": 0.000658804013232639,
+          "SOBEL": 0.00018530306418546648
+        },
+        "normalized_total": 1.497611104530057
+      },
+      "110:C": {
+        "raw_terms": {
+          "RGB": 0.0023757025247564474,
+          "HF_1.0": 0.00011485756861568056,
+          "HF_2.0": 0.00021056065981391752,
+          "HF_4.0": 0.0003007115511805123,
+          "SOBEL": 0.00010960551894328276
+        },
+        "normalized_total": 0.4378204463170367
+      },
+      "110:S": {
+        "raw_terms": {
+          "RGB": 0.00023179896453365007,
+          "HF_1.0": 5.2082586679010854e-05,
+          "HF_2.0": 7.345472794199282e-05,
+          "HF_4.0": 6.84050798290237e-05,
+          "SOBEL": 3.282854890270344e-05
+        },
+        "normalized_total": 1.3671011339117574
+      }
+    },
+    "CI_gradient": {
+      "parameter_count": 3573,
+      "ci_min": 0.0,
+      "ci_max": 1.0,
+      "at_zero": 801,
+      "at_one": 206,
+      "near_zero_1e6": 802,
+      "near_one_1e6": 206,
+      "gradient_abs_max": 0.00021781580289825797,
+      "gradient_L2": 0.0008545950786867858,
+      "projected_gradient_inf": 8.876796346157789e-05
+    },
+    "row": {
+      "accepted": 1,
+      "FG": 2,
+      "objective": 6.040828282598126,
+      "measured_FW_gap": 0.0008393834701334037,
+      "relative_FW_gap": 0.00013895171835150887,
+      "task": "NEW_X",
+      "strict_numerical_certificate": false
+    }
+  },
+  "CI_gradient": {
+    "parameter_count": 3573,
+    "ci_min": 0.0,
+    "ci_max": 1.0,
+    "at_zero": 801,
+    "at_one": 206,
+    "near_zero_1e6": 802,
+    "near_one_1e6": 206,
+    "gradient_abs_max": 0.00021781580289825797,
+    "gradient_L2": 0.0008545950786867858,
+    "projected_gradient_inf": 8.876796346157789e-05
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/provenance.npz": "a675f1f50e2f96628d80064ad4f371886adb4f762a7dbe90470eae84656bc97f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/persistent/scene.json": "886dfb89bc2030c4f9c6698df4a9bdf77e3e5750f1626474bfa6bfaea0c05c2f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/persistent/proof.json": "684973c593b6064b9f6d1c1e0537fb2476307962d9c8ec26d3a853ac555921ec",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/resource_ledger.json": "7196bd200f34cf09df68703e388fa7a5bd60bf308bba3a35bc20ca3161a9d321",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/status.json": "10b224de5448f25b21c3f3e50cc5571725e208f4a906198d5b4f76f33cd33c10",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/receipt.json": "97f9033a41eaebc69d7844b88c3e8d13cb5543c3ccd582b8e096f5a687503feb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/checkpoint.pt": "61a08068cdff994eedf577174caeccfb3bb67dda301cf66168664ee314a311a1"
+  },
+  "formal_source_unchanged": true,
+  "geometry_alpha_all5_exact": true,
+  "K_all5_exact_zero": true,
+  "new_point_count": 0,
+  "numerical_diagnostic_only": true,
+  "strict_capacity_certificate": false,
+  "source_R2_formal1200_unchanged": true,
+  "final_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/diagnostic/color_optimality/new_numeric_asset",
+  "road_SHA256": "fb21803249aa5920a9e7965e78dbcdc24e9860eb854cc2bb8e73735ee69fb836",
+  "objective_identity_SHA256": "246b2669c8bc974e293388d62672bb7acc50070a81eb9088ce941208c8576cc6",
+  "initial_evaluation": {
+    "x_SHA256": "b96755d2dc7606849cbde8beea3e44ad026d314ced8ac7c9ec6fd12a5169ce9a",
+    "objective": 6.040828327705233,
+    "loss_terms": {
+      "86:A": {
+        "raw_terms": {
+          "RGB": 0.0026689228736900585,
+          "HF_1.0": 0.00014440228335021318,
+          "HF_2.0": 0.0003388165346639168,
+          "HF_4.0": 0.00041588088992734946,
+          "SOBEL": 0.00017154433822154152
+        },
+        "normalized_total": 1.4989233854510915
+      },
+      "86:C": {
+        "raw_terms": {
+          "RGB": 0.002173362601062573,
+          "HF_1.0": 0.00011140626190222315,
+          "HF_2.0": 0.00023598527373339063,
+          "HF_4.0": 0.0003862123782953028,
+          "SOBEL": 0.00012571286596451997
+        },
+        "normalized_total": 0.35258638615985255
+      },
+      "86:S": {
+        "raw_terms": {
+          "RGB": 0.00014509521469795235,
+          "HF_1.0": 4.2744110022510995e-05,
+          "HF_2.0": 6.742384948870683e-05,
+          "HF_4.0": 4.426593782972974e-05,
+          "SOBEL": 2.2331429348113242e-05
+        },
+        "normalized_total": 0.8867848817449686
+      },
+      "110:A": {
+        "raw_terms": {
+          "RGB": 0.0035151960900961384,
+          "HF_1.0": 0.00015195232205703177,
+          "HF_2.0": 0.00036879922376900447,
+          "HF_4.0": 0.000658804013232639,
+          "SOBEL": 0.00018530306418546648
+        },
+        "normalized_total": 1.497611104530057
+      },
+      "110:C": {
+        "raw_terms": {
+          "RGB": 0.002375702616817758,
+          "HF_1.0": 0.0001148575698248295,
+          "HF_2.0": 0.00021056066949155683,
+          "HF_4.0": 0.0003007115525834028,
+          "SOBEL": 0.00010960552423086589
+        },
+        "normalized_total": 0.4378204617066813
+      },
+      "110:S": {
+        "raw_terms": {
+          "RGB": 0.00023179947192130792,
+          "HF_1.0": 5.208258546336894e-05,
+          "HF_2.0": 7.345472799602846e-05,
+          "HF_4.0": 6.840507983264221e-05,
+          "SOBEL": 3.282855679240526e-05
+        },
+        "normalized_total": 1.3671021081125816
+      }
+    },
+    "CI_gradient": {
+      "parameter_count": 3573,
+      "ci_min": 0.0,
+      "ci_max": 1.0,
+      "at_zero": 802,
+      "at_one": 206,
+      "near_zero_1e6": 802,
+      "near_one_1e6": 206,
+      "gradient_abs_max": 0.0002178159775212407,
+      "gradient_L2": 0.0008668077333909012,
+      "projected_gradient_inf": 0.00011835305485874414
+    },
+    "FW_gap": 0.0009752651138388391,
+    "relative_FW_gap": 0.000161445593374331,
+    "same_Adam_final_CI": true
+  },
+  "numeric_script_SHA256": "705e15f3025ccfd2104710b480afaa171460dce61f01135cdd0572fc1465a911",
+  "GPU_keep_on": true,
+  "interpretation": "Measured FW gap applies only to the identical weighted total RGB/HF/Sobel objective with frozen geometry and 1191 bounded CI; FP32 native derivatives mean it is not a rigorous capacity certificate.",
+  "total_objective_contains_frozen_parent_constants": true,
+  "stopping_boundary": "Relative FW divides by total f including unadjustable parent-region terms; do not infer new-C convergence or RGB upper limit. Absolute FW is reported separately.",
+  "scope_limitations": "Does not rule out improvement from reweighted losses or a dedicated new-region objective; those alternatives were not run.",
+  "initial_total_objective": 6.040828327705233,
+  "total_objective_decrease": 4.5107107382591494e-08,
+  "epoch_name": "数值诊断：同目标有界求解"
+}

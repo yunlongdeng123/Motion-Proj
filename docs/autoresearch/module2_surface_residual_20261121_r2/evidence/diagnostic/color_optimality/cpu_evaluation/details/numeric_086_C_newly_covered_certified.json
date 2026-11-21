@@ -1,0 +1,960 @@
+{
+  "input_binding": {
+    "packet_SHA256": "5afe908113b02893672b3fa160cadb4bb31a5fda9d5981f80c1642f0b3b80050",
+    "teacher_SHA256": "8befc8a890dfb3f89f9fd4186c702edf3d03b7ff9bb387e5e2a17e23249aaee8",
+    "mask_SHA256": "23614accb264216d466021b816b9150bb8b1211fe7731f52ca64b4970aeb77df",
+    "metric_source_SHA256": "86780162b5bb3ab87e455054c800fccdeaba12337557960870b1b4943e92a03c"
+  },
+  "report": {
+    "schema": "road_detail_correspondence_metrics.v1",
+    "resolution": {
+      "width": 1152,
+      "height": 768,
+      "pixel_space": "new_native1152",
+      "signal_space": "srgb"
+    },
+    "color_space": "stable_alpha_unpremult_srgb",
+    "input_conditioning": {
+      "comparison": "fixed_R2_Adam_vs_numeric",
+      "source": "C"
+    },
+    "teacher_role": "frozen_pseudo_teacher",
+    "config": {
+      "pixel_scales": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "gaussian_truncate": 3.0,
+      "flat_hf_thresholds": [
+        0.00784313725490196
+      ],
+      "edge_thresholds": [
+        0.00784313725490196
+      ],
+      "edge_tolerances_pixels": [
+        1.0
+      ],
+      "edge_angle_tolerances_degrees": [
+        30.0
+      ],
+      "worst_tiles": 0
+    },
+    "tile_layout": {
+      "height": 768,
+      "width": 1152,
+      "origin_y": 0,
+      "origin_x": 0
+    },
+    "units": "all lengths/scales/tolerances in the declared input pixel grid; no automatic resize",
+    "acceptance_policy": "descriptive vector only; thresholds define measurement curves, not passing gates",
+    "fixed_score_pixels": 453,
+    "score_outside_context_pixels": 0,
+    "context_scored_pixels": 453,
+    "context_pixels": 25795,
+    "scales": [
+      {
+        "sigma_pixels": 1.0,
+        "finite_kernel_radius": 3,
+        "full_score_pixels": 453,
+        "core_pixels": 177,
+        "boundary_pixels": 276,
+        "core": {
+          "status": "defined",
+          "pixels": 177,
+          "HF_MAE": 0.008016440089075849,
+          "HF_RMSE": 0.011294315290291882,
+          "HF_cosine": 0.7465124955595807,
+          "reference_HF_RMS": 0.01697199239235364,
+          "predicted_HF_RMS": 0.012862094616124552,
+          "HF_energy_ratio": 0.5743250290003885,
+          "HF_relative_RMSE": 0.6654678501612037,
+          "excess_HF_energy": 0.0,
+          "missing_HF_energy": 0.00012261504785196966,
+          "reference_energy_sum": 0.15295376718180434
+        },
+        "boundary_partial_context": {
+          "status": "defined",
+          "pixels": 276,
+          "HF_MAE": 0.013243258569145828,
+          "HF_RMSE": 0.018749258041700544,
+          "HF_cosine": 0.8477505780586891,
+          "reference_HF_RMS": 0.03367809811309968,
+          "predicted_HF_RMS": 0.022853373868753676,
+          "HF_energy_ratio": 0.46047444528906306,
+          "HF_relative_RMSE": 0.5567196217178219,
+          "excess_HF_energy": 0.0,
+          "missing_HF_energy": 0.0006119375953305348,
+          "reference_energy_sum": 0.9391294342028904
+        },
+        "boundary_context_mass": {
+          "count": 276,
+          "mean": 0.8617585374708497,
+          "p05": 0.5505704341150495,
+          "p10": 0.6380725685431475,
+          "p50": 0.9415613692023417,
+          "p90": 0.9985482757946512,
+          "p95": 0.9997409387343785,
+          "max": 0.9999803480838758
+        },
+        "teacher_flat_spurious": [
+          {
+            "teacher_HF_RMS_cut": 0.00784313725490196,
+            "pixels": 116,
+            "predicted_HF_RMS": 0.009132595404618853,
+            "teacher_HF_RMS": 0.004248452387036552
+          }
+        ],
+        "tile_aggregate": {
+          "total_fixed_tiles": 1,
+          "nonempty_core_tiles": 1,
+          "empty_score_tiles": 0,
+          "scored_but_no_core_tiles": 0,
+          "cosine_undefined_tiles": 0,
+          "macro": {
+            "HF_MAE": {
+              "count": 1,
+              "mean": 0.008016440089075849,
+              "p05": 0.008016440089075849,
+              "p10": 0.008016440089075849,
+              "p50": 0.008016440089075849,
+              "p90": 0.008016440089075849,
+              "p95": 0.008016440089075849,
+              "max": 0.008016440089075849
+            },
+            "HF_RMSE": {
+              "count": 1,
+              "mean": 0.011294315290291882,
+              "p05": 0.011294315290291882,
+              "p10": 0.011294315290291882,
+              "p50": 0.011294315290291882,
+              "p90": 0.011294315290291882,
+              "p95": 0.011294315290291882,
+              "max": 0.011294315290291882
+            },
+            "HF_cosine": {
+              "count": 1,
+              "mean": 0.7465124955595807,
+              "p05": 0.7465124955595807,
+              "p10": 0.7465124955595807,
+              "p50": 0.7465124955595807,
+              "p90": 0.7465124955595807,
+              "p95": 0.7465124955595807,
+              "max": 0.7465124955595807
+            },
+            "HF_relative_RMSE": {
+              "count": 1,
+              "mean": 0.6654678501612037,
+              "p05": 0.6654678501612037,
+              "p10": 0.6654678501612037,
+              "p50": 0.6654678501612037,
+              "p90": 0.6654678501612037,
+              "p95": 0.6654678501612037,
+              "max": 0.6654678501612037
+            },
+            "excess_HF_energy": {
+              "count": 1,
+              "mean": 0.0,
+              "p05": 0.0,
+              "p10": 0.0,
+              "p50": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0
+            },
+            "predicted_HF_RMS": {
+              "count": 1,
+              "mean": 0.012862094616124552,
+              "p05": 0.012862094616124552,
+              "p10": 0.012862094616124552,
+              "p50": 0.012862094616124552,
+              "p90": 0.012862094616124552,
+              "p95": 0.012862094616124552,
+              "max": 0.012862094616124552
+            }
+          },
+          "reference_energy_weighted_tile_HF_MAE": 0.008016440089075849,
+          "reference_detail_strata": [
+            {
+              "reference_HF_RMS_min": 0.00784313725490196,
+              "eligible_tiles": 1,
+              "macro": {
+                "HF_MAE": {
+                  "count": 1,
+                  "mean": 0.008016440089075849,
+                  "p05": 0.008016440089075849,
+                  "p10": 0.008016440089075849,
+                  "p50": 0.008016440089075849,
+                  "p90": 0.008016440089075849,
+                  "p95": 0.008016440089075849,
+                  "max": 0.008016440089075849
+                },
+                "HF_RMSE": {
+                  "count": 1,
+                  "mean": 0.011294315290291882,
+                  "p05": 0.011294315290291882,
+                  "p10": 0.011294315290291882,
+                  "p50": 0.011294315290291882,
+                  "p90": 0.011294315290291882,
+                  "p95": 0.011294315290291882,
+                  "max": 0.011294315290291882
+                },
+                "HF_cosine": {
+                  "count": 1,
+                  "mean": 0.7465124955595807,
+                  "p05": 0.7465124955595807,
+                  "p10": 0.7465124955595807,
+                  "p50": 0.7465124955595807,
+                  "p90": 0.7465124955595807,
+                  "p95": 0.7465124955595807,
+                  "max": 0.7465124955595807
+                },
+                "HF_relative_RMSE": {
+                  "count": 1,
+                  "mean": 0.6654678501612037,
+                  "p05": 0.6654678501612037,
+                  "p10": 0.6654678501612037,
+                  "p50": 0.6654678501612037,
+                  "p90": 0.6654678501612037,
+                  "p95": 0.6654678501612037,
+                  "max": 0.6654678501612037
+                },
+                "excess_HF_energy": {
+                  "count": 1,
+                  "mean": 0.0,
+                  "p05": 0.0,
+                  "p10": 0.0,
+                  "p50": 0.0,
+                  "p90": 0.0,
+                  "p95": 0.0,
+                  "max": 0.0
+                },
+                "predicted_HF_RMS": {
+                  "count": 1,
+                  "mean": 0.012862094616124552,
+                  "p05": 0.012862094616124552,
+                  "p10": 0.012862094616124552,
+                  "p50": 0.012862094616124552,
+                  "p90": 0.012862094616124552,
+                  "p95": 0.012862094616124552,
+                  "max": 0.012862094616124552
+                }
+              },
+              "worst_tiles": []
+            }
+          ],
+          "worst_tiles": []
+        },
+        "tiles": [
+          {
+            "tile_id": [
+              0,
+              0
+            ],
+            "bounds_y0_y1_x0_x1": [
+              0,
+              768,
+              0,
+              1152
+            ],
+            "score_pixels": 453,
+            "core": {
+              "status": "defined",
+              "pixels": 177,
+              "HF_MAE": 0.008016440089075849,
+              "HF_RMSE": 0.011294315290291882,
+              "HF_cosine": 0.7465124955595807,
+              "reference_HF_RMS": 0.01697199239235364,
+              "predicted_HF_RMS": 0.012862094616124552,
+              "HF_energy_ratio": 0.5743250290003885,
+              "HF_relative_RMSE": 0.6654678501612037,
+              "excess_HF_energy": 0.0,
+              "missing_HF_energy": 0.00012261504785196966,
+              "reference_energy_sum": 0.15295376718180434
+            },
+            "boundary_pixels": 276,
+            "flat_spurious": [
+              {
+                "teacher_HF_RMS_cut": 0.00784313725490196,
+                "pixels": 116,
+                "predicted_HF_RMS": 0.009132595404618853,
+                "teacher_HF_RMS": 0.004248452387036552
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sigma_pixels": 2.0,
+        "finite_kernel_radius": 6,
+        "full_score_pixels": 453,
+        "core_pixels": 40,
+        "boundary_pixels": 413,
+        "core": {
+          "status": "defined",
+          "pixels": 40,
+          "HF_MAE": 0.012960254886705295,
+          "HF_RMSE": 0.016736400249803173,
+          "HF_cosine": 0.5402612119026926,
+          "reference_HF_RMS": 0.01925162762509333,
+          "predicted_HF_RMS": 0.014603384025642555,
+          "HF_energy_ratio": 0.5754029797224638,
+          "HF_relative_RMSE": 0.8693498843696876,
+          "excess_HF_energy": 0.0,
+          "missing_HF_energy": 0.0001573663412148646,
+          "reference_energy_sum": 0.04447501994583081
+        },
+        "boundary_partial_context": {
+          "status": "defined",
+          "pixels": 413,
+          "HF_MAE": 0.01915266118967579,
+          "HF_RMSE": 0.027529770711258124,
+          "HF_cosine": 0.9121719614915402,
+          "reference_HF_RMS": 0.058890110665645964,
+          "predicted_HF_RMS": 0.04047189873163199,
+          "HF_energy_ratio": 0.4723048644277918,
+          "HF_relative_RMSE": 0.4674769736392743,
+          "excess_HF_energy": 0.0,
+          "missing_HF_energy": 0.0018300705472685534,
+          "reference_energy_sum": 4.296907921288703
+        },
+        "boundary_context_mass": {
+          "count": 413,
+          "mean": 0.822129382882425,
+          "p05": 0.5093379509180062,
+          "p10": 0.5605759003543987,
+          "p50": 0.8845734863354899,
+          "p90": 0.9977818041453543,
+          "p95": 0.9994055831069946,
+          "max": 0.9999950796071505
+        },
+        "teacher_flat_spurious": [
+          {
+            "teacher_HF_RMS_cut": 0.00784313725490196,
+            "pixels": 14,
+            "predicted_HF_RMS": 0.016450325251462228,
+            "teacher_HF_RMS": 0.004843014037275089
+          }
+        ],
+        "tile_aggregate": {
+          "total_fixed_tiles": 1,
+          "nonempty_core_tiles": 1,
+          "empty_score_tiles": 0,
+          "scored_but_no_core_tiles": 0,
+          "cosine_undefined_tiles": 0,
+          "macro": {
+            "HF_MAE": {
+              "count": 1,
+              "mean": 0.012960254886705295,
+              "p05": 0.012960254886705295,
+              "p10": 0.012960254886705295,
+              "p50": 0.012960254886705295,
+              "p90": 0.012960254886705295,
+              "p95": 0.012960254886705295,
+              "max": 0.012960254886705295
+            },
+            "HF_RMSE": {
+              "count": 1,
+              "mean": 0.016736400249803173,
+              "p05": 0.016736400249803173,
+              "p10": 0.016736400249803173,
+              "p50": 0.016736400249803173,
+              "p90": 0.016736400249803173,
+              "p95": 0.016736400249803173,
+              "max": 0.016736400249803173
+            },
+            "HF_cosine": {
+              "count": 1,
+              "mean": 0.5402612119026926,
+              "p05": 0.5402612119026926,
+              "p10": 0.5402612119026926,
+              "p50": 0.5402612119026926,
+              "p90": 0.5402612119026926,
+              "p95": 0.5402612119026926,
+              "max": 0.5402612119026926
+            },
+            "HF_relative_RMSE": {
+              "count": 1,
+              "mean": 0.8693498843696876,
+              "p05": 0.8693498843696876,
+              "p10": 0.8693498843696876,
+              "p50": 0.8693498843696876,
+              "p90": 0.8693498843696876,
+              "p95": 0.8693498843696876,
+              "max": 0.8693498843696876
+            },
+            "excess_HF_energy": {
+              "count": 1,
+              "mean": 0.0,
+              "p05": 0.0,
+              "p10": 0.0,
+              "p50": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0
+            },
+            "predicted_HF_RMS": {
+              "count": 1,
+              "mean": 0.014603384025642555,
+              "p05": 0.014603384025642555,
+              "p10": 0.014603384025642555,
+              "p50": 0.014603384025642555,
+              "p90": 0.014603384025642555,
+              "p95": 0.014603384025642555,
+              "max": 0.014603384025642555
+            }
+          },
+          "reference_energy_weighted_tile_HF_MAE": 0.012960254886705297,
+          "reference_detail_strata": [
+            {
+              "reference_HF_RMS_min": 0.00784313725490196,
+              "eligible_tiles": 1,
+              "macro": {
+                "HF_MAE": {
+                  "count": 1,
+                  "mean": 0.012960254886705295,
+                  "p05": 0.012960254886705295,
+                  "p10": 0.012960254886705295,
+                  "p50": 0.012960254886705295,
+                  "p90": 0.012960254886705295,
+                  "p95": 0.012960254886705295,
+                  "max": 0.012960254886705295
+                },
+                "HF_RMSE": {
+                  "count": 1,
+                  "mean": 0.016736400249803173,
+                  "p05": 0.016736400249803173,
+                  "p10": 0.016736400249803173,
+                  "p50": 0.016736400249803173,
+                  "p90": 0.016736400249803173,
+                  "p95": 0.016736400249803173,
+                  "max": 0.016736400249803173
+                },
+                "HF_cosine": {
+                  "count": 1,
+                  "mean": 0.5402612119026926,
+                  "p05": 0.5402612119026926,
+                  "p10": 0.5402612119026926,
+                  "p50": 0.5402612119026926,
+                  "p90": 0.5402612119026926,
+                  "p95": 0.5402612119026926,
+                  "max": 0.5402612119026926
+                },
+                "HF_relative_RMSE": {
+                  "count": 1,
+                  "mean": 0.8693498843696876,
+                  "p05": 0.8693498843696876,
+                  "p10": 0.8693498843696876,
+                  "p50": 0.8693498843696876,
+                  "p90": 0.8693498843696876,
+                  "p95": 0.8693498843696876,
+                  "max": 0.8693498843696876
+                },
+                "excess_HF_energy": {
+                  "count": 1,
+                  "mean": 0.0,
+                  "p05": 0.0,
+                  "p10": 0.0,
+                  "p50": 0.0,
+                  "p90": 0.0,
+                  "p95": 0.0,
+                  "max": 0.0
+                },
+                "predicted_HF_RMS": {
+                  "count": 1,
+                  "mean": 0.014603384025642555,
+                  "p05": 0.014603384025642555,
+                  "p10": 0.014603384025642555,
+                  "p50": 0.014603384025642555,
+                  "p90": 0.014603384025642555,
+                  "p95": 0.014603384025642555,
+                  "max": 0.014603384025642555
+                }
+              },
+              "worst_tiles": []
+            }
+          ],
+          "worst_tiles": []
+        },
+        "tiles": [
+          {
+            "tile_id": [
+              0,
+              0
+            ],
+            "bounds_y0_y1_x0_x1": [
+              0,
+              768,
+              0,
+              1152
+            ],
+            "score_pixels": 453,
+            "core": {
+              "status": "defined",
+              "pixels": 40,
+              "HF_MAE": 0.012960254886705295,
+              "HF_RMSE": 0.016736400249803173,
+              "HF_cosine": 0.5402612119026926,
+              "reference_HF_RMS": 0.01925162762509333,
+              "predicted_HF_RMS": 0.014603384025642555,
+              "HF_energy_ratio": 0.5754029797224638,
+              "HF_relative_RMSE": 0.8693498843696876,
+              "excess_HF_energy": 0.0,
+              "missing_HF_energy": 0.0001573663412148646,
+              "reference_energy_sum": 0.04447501994583081
+            },
+            "boundary_pixels": 413,
+            "flat_spurious": [
+              {
+                "teacher_HF_RMS_cut": 0.00784313725490196,
+                "pixels": 14,
+                "predicted_HF_RMS": 0.016450325251462228,
+                "teacher_HF_RMS": 0.004843014037275089
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sigma_pixels": 4.0,
+        "finite_kernel_radius": 12,
+        "full_score_pixels": 453,
+        "core_pixels": 0,
+        "boundary_pixels": 453,
+        "core": {
+          "status": "no_scored_core",
+          "pixels": 0,
+          "HF_MAE": null,
+          "HF_RMSE": null,
+          "HF_cosine": null,
+          "reference_HF_RMS": null,
+          "predicted_HF_RMS": null,
+          "HF_energy_ratio": null,
+          "HF_relative_RMSE": null,
+          "excess_HF_energy": null,
+          "missing_HF_energy": null,
+          "reference_energy_sum": 0.0
+        },
+        "boundary_partial_context": {
+          "status": "defined",
+          "pixels": 453,
+          "HF_MAE": 0.027023833729756294,
+          "HF_RMSE": 0.036974240403914414,
+          "HF_cosine": 0.9160084668931594,
+          "reference_HF_RMS": 0.08182459751352406,
+          "predicted_HF_RMS": 0.057933339823836465,
+          "HF_energy_ratio": 0.5012903872111057,
+          "HF_relative_RMSE": 0.4518719496029696,
+          "excess_HF_energy": 0.0,
+          "missing_HF_energy": 0.0033389928951060898,
+          "reference_energy_sum": 9.09886480646203
+        },
+        "boundary_context_mass": {
+          "count": 453,
+          "mean": 0.7130929045369179,
+          "p05": 0.3470792914408542,
+          "p10": 0.44511568107924254,
+          "p50": 0.7375248358693407,
+          "p90": 0.9469363099560015,
+          "p95": 0.9665324545369005,
+          "max": 0.9836562403641199
+        },
+        "teacher_flat_spurious": [
+          {
+            "teacher_HF_RMS_cut": 0.00784313725490196,
+            "pixels": 0,
+            "predicted_HF_RMS": null,
+            "teacher_HF_RMS": null
+          }
+        ],
+        "tile_aggregate": {
+          "total_fixed_tiles": 1,
+          "nonempty_core_tiles": 0,
+          "empty_score_tiles": 0,
+          "scored_but_no_core_tiles": 1,
+          "cosine_undefined_tiles": 0,
+          "macro": {
+            "HF_MAE": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            },
+            "HF_RMSE": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            },
+            "HF_cosine": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            },
+            "HF_relative_RMSE": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            },
+            "excess_HF_energy": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            },
+            "predicted_HF_RMS": {
+              "count": 0,
+              "mean": null,
+              "p05": null,
+              "p10": null,
+              "p50": null,
+              "p90": null,
+              "p95": null,
+              "max": null
+            }
+          },
+          "reference_energy_weighted_tile_HF_MAE": null,
+          "reference_detail_strata": [
+            {
+              "reference_HF_RMS_min": 0.00784313725490196,
+              "eligible_tiles": 0,
+              "macro": {
+                "HF_MAE": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                },
+                "HF_RMSE": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                },
+                "HF_cosine": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                },
+                "HF_relative_RMSE": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                },
+                "excess_HF_energy": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                },
+                "predicted_HF_RMS": {
+                  "count": 0,
+                  "mean": null,
+                  "p05": null,
+                  "p10": null,
+                  "p50": null,
+                  "p90": null,
+                  "p95": null,
+                  "max": null
+                }
+              },
+              "worst_tiles": []
+            }
+          ],
+          "worst_tiles": []
+        },
+        "tiles": [
+          {
+            "tile_id": [
+              0,
+              0
+            ],
+            "bounds_y0_y1_x0_x1": [
+              0,
+              768,
+              0,
+              1152
+            ],
+            "score_pixels": 453,
+            "core": {
+              "status": "no_scored_core",
+              "pixels": 0,
+              "HF_MAE": null,
+              "HF_RMSE": null,
+              "HF_cosine": null,
+              "reference_HF_RMS": null,
+              "predicted_HF_RMS": null,
+              "HF_energy_ratio": null,
+              "HF_relative_RMSE": null,
+              "excess_HF_energy": null,
+              "missing_HF_energy": null,
+              "reference_energy_sum": 0.0
+            },
+            "boundary_pixels": 453,
+            "flat_spurious": [
+              {
+                "teacher_HF_RMS_cut": 0.00784313725490196,
+                "pixels": 0,
+                "predicted_HF_RMS": null,
+                "teacher_HF_RMS": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "edges": {
+      "reference_role": "teacher_appearance_edges",
+      "semantic_lane_geometry_truth_claim": false,
+      "detector": "RGB structure tensor dominant gradient + interpolated nonmaximum suppression; unsigned normals modulo pi",
+      "matching": "once over the full fixed scored domain, then aggregate each reference/prediction by its own tile; cross-tile matches remain valid",
+      "context_core_pixels": 248,
+      "boundary_pixels": 205,
+      "threshold_curves": [
+        {
+          "strength_threshold": 0.00784313725490196,
+          "reference_edges": 55,
+          "predicted_edges": 63,
+          "status": "defined",
+          "reference_to_prediction_distance_pixels": {
+            "count": 55,
+            "mean": 0.6889622223089485,
+            "p05": 0.0,
+            "p10": 0.0,
+            "p50": 1.0,
+            "p90": 2.0,
+            "p95": 2.0,
+            "max": 3.0
+          },
+          "prediction_to_reference_distance_pixels": {
+            "count": 63,
+            "mean": 1.3771878561529096,
+            "p05": 0.0,
+            "p10": 0.0,
+            "p50": 1.0,
+            "p90": 2.662741699796956,
+            "p95": 3.0,
+            "max": 33.015148038438355
+          },
+          "reference_distance_unavailable_edges": 0,
+          "prediction_distance_unavailable_edges": 0,
+          "curves": [
+            {
+              "tolerance_pixels": 1.0,
+              "precision": 0.7301587301587301,
+              "recall": 0.8,
+              "matched_predicted": 46,
+              "matched_reference": 44,
+              "predicted_normal_error_degrees": {
+                "count": 46,
+                "mean": 33.27160048416833,
+                "p05": 2.521143521582597,
+                "p10": 3.326220302046176,
+                "p50": 31.654761395641813,
+                "p90": 67.4806322803196,
+                "p95": 82.01984441582717,
+                "max": 85.9881941786834
+              },
+              "reference_normal_error_degrees": {
+                "count": 44,
+                "mean": 30.351687929214336,
+                "p05": 2.450458740117376,
+                "p10": 3.247195348326708,
+                "p50": 31.654761395641813,
+                "p90": 62.61283624047666,
+                "p95": 67.6639995117725,
+                "max": 82.90066442874857
+              },
+              "orientation_curves": [
+                {
+                  "max_normal_error_degrees": 30.0,
+                  "precision": 0.3492063492063492,
+                  "recall": 0.38181818181818183,
+                  "predicted_orientation_comparable_edges": 63,
+                  "reference_orientation_comparable_edges": 55
+                }
+              ]
+            }
+          ],
+          "tiles": [
+            {
+              "tile_id": [
+                0,
+                0
+              ],
+              "bounds_y0_y1_x0_x1": [
+                0,
+                768,
+                0,
+                1152
+              ],
+              "score_pixels": 453,
+              "core_pixels": 248,
+              "metrics": {
+                "reference_edges": 55,
+                "predicted_edges": 63,
+                "status": "defined",
+                "reference_to_prediction_distance_pixels": {
+                  "count": 55,
+                  "mean": 0.6889622223089485,
+                  "p05": 0.0,
+                  "p10": 0.0,
+                  "p50": 1.0,
+                  "p90": 2.0,
+                  "p95": 2.0,
+                  "max": 3.0
+                },
+                "prediction_to_reference_distance_pixels": {
+                  "count": 63,
+                  "mean": 1.3771878561529096,
+                  "p05": 0.0,
+                  "p10": 0.0,
+                  "p50": 1.0,
+                  "p90": 2.662741699796956,
+                  "p95": 3.0,
+                  "max": 33.015148038438355
+                },
+                "reference_distance_unavailable_edges": 0,
+                "prediction_distance_unavailable_edges": 0,
+                "curves": [
+                  {
+                    "tolerance_pixels": 1.0,
+                    "precision": 0.7301587301587301,
+                    "recall": 0.8,
+                    "matched_predicted": 46,
+                    "matched_reference": 44,
+                    "predicted_normal_error_degrees": {
+                      "count": 46,
+                      "mean": 33.27160048416833,
+                      "p05": 2.521143521582597,
+                      "p10": 3.326220302046176,
+                      "p50": 31.654761395641813,
+                      "p90": 67.4806322803196,
+                      "p95": 82.01984441582717,
+                      "max": 85.9881941786834
+                    },
+                    "reference_normal_error_degrees": {
+                      "count": 44,
+                      "mean": 30.351687929214336,
+                      "p05": 2.450458740117376,
+                      "p10": 3.247195348326708,
+                      "p50": 31.654761395641813,
+                      "p90": 62.61283624047666,
+                      "p95": 67.6639995117725,
+                      "max": 82.90066442874857
+                    },
+                    "orientation_curves": [
+                      {
+                        "max_normal_error_degrees": 30.0,
+                        "precision": 0.3492063492063492,
+                        "recall": 0.38181818181818183,
+                        "predicted_orientation_comparable_edges": 63,
+                        "reference_orientation_comparable_edges": 55
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "tile_aggregate": [
+            {
+              "tolerance_index": 0,
+              "precision_macro": {
+                "count": 1,
+                "mean": 0.7301587301587301,
+                "p05": 0.7301587301587301,
+                "p10": 0.7301587301587301,
+                "p50": 0.7301587301587301,
+                "p90": 0.7301587301587301,
+                "p95": 0.7301587301587301,
+                "max": 0.7301587301587301
+              },
+              "recall_macro": {
+                "count": 1,
+                "mean": 0.8,
+                "p05": 0.8,
+                "p10": 0.8,
+                "p50": 0.8,
+                "p90": 0.8,
+                "p95": 0.8,
+                "max": 0.8
+              },
+              "total_tiles": 1,
+              "empty_score_tiles": 0,
+              "no_reference_edge_tiles": 0,
+              "no_matched_prediction_on_reference_tiles": 0,
+              "zero_local_predicted_edge_tiles": 0,
+              "reference_to_prediction_mean_distance_macro": {
+                "count": 1,
+                "mean": 0.6889622223089485,
+                "p05": 0.6889622223089485,
+                "p10": 0.6889622223089485,
+                "p50": 0.6889622223089485,
+                "p90": 0.6889622223089485,
+                "p95": 0.6889622223089485,
+                "max": 0.6889622223089485
+              },
+              "prediction_to_reference_mean_distance_macro": {
+                "count": 1,
+                "mean": 1.3771878561529096,
+                "p05": 1.3771878561529096,
+                "p10": 1.3771878561529096,
+                "p50": 1.3771878561529096,
+                "p90": 1.3771878561529096,
+                "p95": 1.3771878561529096,
+                "max": 1.3771878561529096
+              },
+              "worst_recall_tiles": [],
+              "worst_precision_tiles": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

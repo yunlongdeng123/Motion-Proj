@@ -1,0 +1,59 @@
+{
+  "schema": "persistent_road_handoff.v1",
+  "manifest": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/smoke/appearance_asset/persistent/scene.json",
+    "sha256": "57c58158161de4d73cfc1facccbbd6fe786d383f8e1cab077b9987314aa82e53"
+  },
+  "road": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/smoke/appearance_asset/road.npz",
+    "sha256": "ca98e20148db8413050e1437d59bde5deefbb77b242ae7e9c589a5c60517ed0e",
+    "total_rows": 595045,
+    "active_rows": 161293,
+    "meter_to_model": 0.018849925866127503
+  },
+  "native_sources": [
+    {
+      "role": "static",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+      "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548"
+    },
+    {
+      "role": "dynamic",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+      "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611"
+    },
+    {
+      "role": "environment",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+      "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae"
+    }
+  ],
+  "ownership": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz",
+    "sha256": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb"
+  },
+  "topology": {
+    "static_rows": 1558011,
+    "dynamic_rows": 1035290
+  },
+  "gates": {
+    "indices": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/smoke/appearance_asset/persistent/static_indices.npz",
+      "sha256": "496e9cae354f2da8cdd5c61df576450f0f6e06789e6807ccdf92099c3aaa761e"
+    },
+    "checkpoint": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/smoke/appearance_asset/persistent/static_opacity.pt",
+      "sha256": "112d8ac2a6e393abc94b2be47ad1d493b20c63195b2e029f3fdea90707b1ba84"
+    },
+    "checkpoint_binding": {
+      "manifest_sha256": "57c58158161de4d73cfc1facccbbd6fe786d383f8e1cab077b9987314aa82e53",
+      "road_sha256": "ca98e20148db8413050e1437d59bde5deefbb77b242ae7e9c589a5c60517ed0e",
+      "static_rows": 1558011,
+      "dynamic_rows": 1035290
+    }
+  },
+  "raster_units": {
+    "unit_scale": 53.05060651707689,
+    "legacy_native_near": 0.2
+  }
+}

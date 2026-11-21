@@ -1,0 +1,67 @@
+{
+  "schema": "fixed_color_interval_native.v1",
+  "complete": true,
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+  "resolution": [
+    1152,
+    768
+  ],
+  "nativeF": 4,
+  "nativeB": 0,
+  "optimizer_updates": 0,
+  "allowed_rows": 1191,
+  "activated_existing": 13,
+  "appended_new_geometry": 1071,
+  "reuse_existing_newgroup": 107,
+  "renderer": "actual_ordinary_GS_road_only_S2_no_feature_override",
+  "same_geometry_alpha_sort": true,
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/provenance.npz": "a675f1f50e2f96628d80064ad4f371886adb4f762a7dbe90470eae84656bc97f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/persistent/scene.json": "886dfb89bc2030c4f9c6698df4a9bdf77e3e5750f1626474bfa6bfaea0c05c2f",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/persistent/proof.json": "684973c593b6064b9f6d1c1e0537fb2476307962d9c8ec26d3a853ac555921ec",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/resource_ledger.json": "7196bd200f34cf09df68703e388fa7a5bd60bf308bba3a35bc20ca3161a9d321",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/status.json": "10b224de5448f25b21c3f3e50cc5571725e208f4a906198d5b4f76f33cd33c10",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/contract.json": "a883be0943f81f7e277e8342a7c5e6a59a56898633e3d3273e12979b86e84fa8",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/export_manifest.json": "27a7241bb4750207f4c5ba311750455c32cad6e31bf8ff852d02f2c7dc83a4b2",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/receipt.json": "97f9033a41eaebc69d7844b88c3e8d13cb5543c3ccd582b8e096f5a687503feb",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/train_inputs/allowed_color_world_rows.npz": "1681c9e0f07c9c834d8682fbac6e468d69bf0fb20dc457e90de46aa1fe0ebd48"
+  },
+  "formal_sources_unchanged": true,
+  "script_SHA256": "40a604ca2c6618e8a93732ca6d02c4014e14c35b47b5f39df706c17906b0006b",
+  "allowed_ID_array_SHA256": "ea839a29db5d642e88e27a4240c9ee906e1872b6f159ee876483bbfeb4f36d78",
+  "rows": [
+    {
+      "raw": 86,
+      "nativeF": 2,
+      "alpha_exact_formal": true,
+      "alpha_formal_max_error": 0.0,
+      "allowed_weight_channel_span_max": 4.76837158203125e-07,
+      "allowed_weight_min": 0.0,
+      "allowed_weight_max": 0.9998965859413147,
+      "allowed_weight_excess_alpha_max": 0.0,
+      "formal_RGB_interval_violation_max": 0.0,
+      "interpretation": "per-pixel componentwise interval with fixed final geometry/opacity/scales/sort; not global capacity or HF feasibility"
+    },
+    {
+      "raw": 110,
+      "nativeF": 2,
+      "alpha_exact_formal": true,
+      "alpha_formal_max_error": 0.0,
+      "allowed_weight_channel_span_max": 3.5762786865234375e-07,
+      "allowed_weight_min": 0.0,
+      "allowed_weight_max": 0.9998956322669983,
+      "allowed_weight_excess_alpha_max": 0.0,
+      "formal_RGB_interval_violation_max": 0.0,
+      "interpretation": "per-pixel componentwise interval with fixed final geometry/opacity/scales/sort; not global capacity or HF feasibility"
+    }
+  ],
+  "output_SHA256": {
+    "86": "785d5882388356e51512f1c856235c39e82f5496b319ee8d5707edf1ba4f69a2",
+    "110": "e3e2374049e936e63bb09391eb25927ab861d21355d3f25def32d497cc75be74"
+  },
+  "seconds": 11.832000119611621,
+  "interval_definition": "b=render(allowed RGB0); w=render(allowed RGB1)-b, retained as three FP32 channels without averaging",
+  "limitations": "Componentwise per-pixel interval only; not simultaneous multi-view fit, global capacity or HF proof",
+  "GPU_keep_on": true
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "surface_residual_proposal_contract.v1",
+  "parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_adaptive_20261121_r1/appearance_fit/asset",
+  "resolution": [
+    1152,
+    768
+  ],
+  "fit_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "residual": "firstwave final alpha<.95 AND unchanged certified road C/S mask, no uncertified editing pixels",
+  "surface": "unchanged canonical mesh plus the same348 independently certified frozen-measurement-plane nodes; no new plane fitting or wider gates",
+  "merging": "one-to-one cross-view only, world distance<=.001m, connected same face neighborhood and normal dot>=.999; no within-view thinning",
+  "inactive_reuse": "eligible inactive original anchor only if world distance<=.001m and unchanged XYZ/normal already match certified surface; each row once",
+  "new_sigma": "same original .70*min singular(pixel-world Jacobian), clip[.004,.018]m, equal tangent; cap=min(.03m,1.6initial); normal.003m",
+  "K_projection": "same conservative4.5sigma sphere, native.3 covariance blur and2px rounding; flags only, never prune",
+  "required_GPU_gate": "actual joint new contribution on full5frame K exactly0, including frozen original occlusion; projection flags are not a safety verdict",
+  "training_started": false,
+  "source_roles": {
+    "2": "hole C",
+    "4": "shadow S"
+  },
+  "candidate_kind": {
+    "0": "activate unchanged existing inactive",
+    "1": "append explicit new Gaussian row"
+  },
+  "budget_cap": "no more candidates than fixed residual pixels after cross-view duplicate merging"
+}

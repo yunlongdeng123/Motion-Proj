@@ -1,0 +1,33 @@
+{
+  "schema": "r2_residual_bench_protocol.v1",
+  "resolution": [
+    1152,
+    768
+  ],
+  "direct_parent": "firstwave appearance asset,595029 total/161264 active; every primary comparison is relative to this direct parent",
+  "method": "residual ray sampling plus actual joint K gate and coverage-priority hinge relu(.99-alpha)^2 with no competing coverage prior, then appearance1200; a combined method, not a density-only ablation",
+  "parent_mutability": "only new activation/append and validated R1-newgroup reuse; no coincident Gaussian copy; other parent colors/geometry/coverage frozen",
+  "full_source": "unchanged complete2D editing C/S; uncertified domain retained but not called confirmed road; A only confirmed road",
+  "coverage_thresholds": {
+    "no_support": 0.05,
+    "stable": 0.95
+  },
+  "full_premult_RGB_MAE": "abs(actual road premult P - opaque teacher T) on fixed complete2D source, no alpha division",
+  "primary_color_HF": "fixed direct-parent/final stable intersection, additionally stable in every intermediate R2 stage; same scored domain per R2 stage",
+  "common_stable_partition": "direct parent>=.95 and final>=.95; transient loss recorded",
+  "newly_covered_partition": "direct parent<.95 and final>=.95, final-only metrics",
+  "HF_sigma_native_px": [
+    1,
+    2,
+    4
+  ],
+  "gaussian_truncate": 3,
+  "edge": "fixed RGB tensor2/255 NMS and1px match, appearance only",
+  "flat": "teacher HF RMS<=2/255",
+  "dark": "alpha>=.95, effective meanRGB<.05, teacher meanRGB>=.10",
+  "joint_occlusion": "standalone alpha is not scene contribution; missing alphaT remains null",
+  "surface_subset": "same immutable R1 canonical and original-measurement certified surface; no geometric threshold expansion",
+  "cumulative_comparison": "optional pre-R1 summaries are separate labeled full-domain values, never mixed into R2 direct-parent HF table",
+  "teacher_manifest_SHA256": "76a5cf4e07c227f767685f4e01b03cb3a90e06349e52807c90238a8d237ca5ad",
+  "proposal_manifest_SHA256": "0acda83d673616868db6c71316425d0f2aa03bda4809fadde6e4aabe898aaed0"
+}

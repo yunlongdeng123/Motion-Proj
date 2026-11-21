@@ -1,0 +1,319 @@
+{
+  "verified": true,
+  "original_checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/checkpoint.pt",
+  "checkpoint_SHA256": "61a08068cdff994eedf577174caeccfb3bb67dda301cf66168664ee314a311a1",
+  "original_normalizer_signature_exact": true,
+  "normalizers_recalibrated": false,
+  "snapshot": {
+    "schema": "native_capacity_quadratic_loss.v1",
+    "spec": {
+      "scales": [
+        1.0,
+        2.0,
+        4.0
+      ],
+      "truncate": 3.0,
+      "quantization_floor_squared": 1.5378700499807765e-05,
+      "source_weights": [
+        [
+          "A",
+          1.0
+        ],
+        [
+          "C",
+          0.5
+        ],
+        [
+          "S",
+          1.0
+        ]
+      ],
+      "stable_alpha_min": 0.95,
+      "hf_weight": 1.0,
+      "sobel_weight": 1.0
+    },
+    "signature": {
+      "86:A": {
+        "context": "9631fea42d8e616324b2ee3a334d2782b9bb1a369d537ca9d967b06422bc218d",
+        "score": "9631fea42d8e616324b2ee3a334d2782b9bb1a369d537ca9d967b06422bc218d",
+        "teacherP": "a982e82018f0a19962617991abb34ecc213104ea84260fa4b4d362bd7a6b931b",
+        "inv_alpha": "2aef971b212d15e6348285ae97622af92b146077a35275d4006baf8af1aa5f75",
+        "counts": {
+          "score": 33521,
+          "context": 33521,
+          "score_outside_context": 0,
+          "rgb": 33521,
+          "HF": {
+            "HF_1.0": 25478,
+            "HF_2.0": 18718,
+            "HF_4.0": 9150
+          },
+          "sobel": 30732,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            457,
+            675,
+            260,
+            953
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      },
+      "86:C": {
+        "context": "efae22b9bb13d3a513201e4ca44e61d35049b21cec2b14b5c31c4f499080d908",
+        "score": "efae22b9bb13d3a513201e4ca44e61d35049b21cec2b14b5c31c4f499080d908",
+        "teacherP": "0a1ce1cd18b27cb6ad948afe75adcdab30ee41a90620be45f3b96536c149ef6a",
+        "inv_alpha": "590c3f02ab5bf5d4476c6839f1bd09b6688c5be02e53d00cb63c4ddb21cc9867",
+        "counts": {
+          "score": 32390,
+          "context": 32390,
+          "score_outside_context": 0,
+          "rgb": 32390,
+          "HF": {
+            "HF_1.0": 29834,
+            "HF_2.0": 27415,
+            "HF_4.0": 22839
+          },
+          "sobel": 31518,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            480,
+            663,
+            479,
+            704
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      },
+      "86:S": {
+        "context": "9e5566e04e3563f9e98df685f4cbfcf7a9530d1216675fcd4df7e3bfa07072c4",
+        "score": "9e5566e04e3563f9e98df685f4cbfcf7a9530d1216675fcd4df7e3bfa07072c4",
+        "teacherP": "92f854577c195076b26a30978d746e42cc9d516c5b77e6134b1410265c0d9b3f",
+        "inv_alpha": "bbf0608f96c5fdb37844c47f8873ada09b72b8b92aa078a27e400fc947d81ec0",
+        "counts": {
+          "score": 6286,
+          "context": 6286,
+          "score_outside_context": 0,
+          "rgb": 6286,
+          "HF": {
+            "HF_1.0": 4363,
+            "HF_2.0": 2832,
+            "HF_4.0": 952
+          },
+          "sobel": 5595,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            590,
+            667,
+            417,
+            667
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      },
+      "110:A": {
+        "context": "f7071de8cce41c6859f17930e0cf167f1a6eba3a69844e0f9cc54b5ab770c1cf",
+        "score": "f7071de8cce41c6859f17930e0cf167f1a6eba3a69844e0f9cc54b5ab770c1cf",
+        "teacherP": "2763bb637942100f5d560fadb5cb43276990a001e59dde2a31969e1ea074f0b5",
+        "inv_alpha": "7ac7cfeeb6d93430f4d0c6c84e07caf966e9a2c8fefe267eefc0048ed507e33b",
+        "counts": {
+          "score": 69977,
+          "context": 69977,
+          "score_outside_context": 0,
+          "rgb": 69977,
+          "HF": {
+            "HF_1.0": 60772,
+            "HF_2.0": 52602,
+            "HF_4.0": 38381
+          },
+          "sobel": 66777,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            471,
+            768,
+            139,
+            1086
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      },
+      "110:C": {
+        "context": "d399ce849363afdcdc7585bd8b0405747c79596899d96b862f68eea6e0a475df",
+        "score": "d399ce849363afdcdc7585bd8b0405747c79596899d96b862f68eea6e0a475df",
+        "teacherP": "c56fdbae1c3490f9a7cf4aa2480bcee9cfd2f77c3378bcd9c64ce1d86a80e994",
+        "inv_alpha": "ed2f27fa2fa51f2c3b0c718925c443a08a71f9eb3b6acae7c4ba4536b64989fc",
+        "counts": {
+          "score": 60377,
+          "context": 60377,
+          "score_outside_context": 0,
+          "rgb": 60377,
+          "HF": {
+            "HF_1.0": 56864,
+            "HF_2.0": 53488,
+            "HF_4.0": 47090
+          },
+          "sobel": 59186,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            509,
+            754,
+            446,
+            747
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      },
+      "110:S": {
+        "context": "1e85da93b9526521f4433eb7624cd34dff5688262842d462c253b7014c7629b1",
+        "score": "1e85da93b9526521f4433eb7624cd34dff5688262842d462c253b7014c7629b1",
+        "teacherP": "9dda4c051ba10e7071e29e0c4bbff318d55329627b07331bf117819974fd3f6b",
+        "inv_alpha": "f4823c345273490c6cc52260d237b0823c30cb42fa5fd5cdb89fd9fac40d35e5",
+        "counts": {
+          "score": 12783,
+          "context": 12783,
+          "score_outside_context": 0,
+          "rgb": 12783,
+          "HF": {
+            "HF_1.0": 9822,
+            "HF_2.0": 7161,
+            "HF_4.0": 3103
+          },
+          "sobel": 11783,
+          "evaluation_bbox_y0_y1_x0_x1": [
+            636,
+            766,
+            365,
+            706
+          ],
+          "full_image_shape": [
+            3,
+            768,
+            1152
+          ],
+          "crop_is_exact_zero_context_acceleration": true
+        }
+      }
+    },
+    "normalizers": {
+      "86:A": {
+        "RGB": 0.002670065965503454,
+        "HF_1.0": 0.00014442525571212173,
+        "HF_2.0": 0.0003388177137821913,
+        "HF_4.0": 0.00041588087333366275,
+        "SOBEL": 0.00017183145973831415
+      },
+      "86:C": {
+        "RGB": 0.0030682787764817476,
+        "HF_1.0": 0.0002870429598260671,
+        "HF_2.0": 0.0007537209312431514,
+        "HF_4.0": 0.0013277288526296616,
+        "SOBEL": 0.00033856110530905426
+      },
+      "86:S": {
+        "RGB": 0.00028607461717911065,
+        "HF_1.0": 6.336111255222932e-05,
+        "HF_2.0": 8.26152172521688e-05,
+        "HF_4.0": 4.425410588737577e-05,
+        "SOBEL": 5.121374488226138e-05
+      },
+      "110:A": {
+        "RGB": 0.0035169431939721107,
+        "HF_1.0": 0.00015239354979712516,
+        "HF_2.0": 0.0003699425724335015,
+        "HF_4.0": 0.0006588062387891114,
+        "SOBEL": 0.00018572737462818623
+      },
+      "110:C": {
+        "RGB": 0.003094758139923215,
+        "HF_1.0": 0.00020355872402433306,
+        "HF_2.0": 0.00046817847760394216,
+        "HF_4.0": 0.0005323142395354807,
+        "SOBEL": 0.00023966598382685333
+      },
+      "110:S": {
+        "RGB": 0.00029353200807236135,
+        "HF_1.0": 5.229813905316405e-05,
+        "HF_2.0": 7.345531048486009e-05,
+        "HF_4.0": 6.840581772848964e-05,
+        "SOBEL": 3.4706390579231083e-05
+      }
+    },
+    "convexity": "affine native preclamp P in bounded ci, fixed masks/weights; field parameterization itself may be nonconvex",
+    "teacher_label_holdout_policy": "only masked seen-context labels enter targets, normalizers or loss; original prior exposure is outside this claim"
+  },
+  "overlap": {
+    "86": {
+      "C": {
+        "appearance_pixels": 32390,
+        "certified_newly_covered": 453,
+        "included_in_training": 453,
+        "excluded_from_training": 0,
+        "new_mask_SHA256": "100f0b6ef4a6d10f9ec82c8feadaf501128dfa85d1eea062dbf3dd2ab0847c0e",
+        "training_mask_SHA256": "1b202dc18405a819011034a8fb12ba25187f1d3eab813369cf806f5b4958a00a",
+        "target_alpha_times_teacher_SHA256": "0b3f8a76502d2681a8b9f8c3445d213473eef5f447388b78c1c0e58b5b0cea8e",
+        "target_uses_current_coverage_alpha": true
+      },
+      "S": {
+        "appearance_pixels": 6286,
+        "certified_newly_covered": 43,
+        "included_in_training": 43,
+        "excluded_from_training": 0,
+        "new_mask_SHA256": "b993425c0af1b6693cbd7d6cd547151c73f1eb32a269733e7a66b3bb1f3b6e00",
+        "training_mask_SHA256": "4bb42e52c32c975ded164a240737965c08080f17238fe27712f73b7b7c3c6ce4",
+        "target_alpha_times_teacher_SHA256": "0b3f8a76502d2681a8b9f8c3445d213473eef5f447388b78c1c0e58b5b0cea8e",
+        "target_uses_current_coverage_alpha": true
+      }
+    },
+    "110": {
+      "C": {
+        "appearance_pixels": 60377,
+        "certified_newly_covered": 697,
+        "included_in_training": 697,
+        "excluded_from_training": 0,
+        "new_mask_SHA256": "6a8f53db36211768581701e641f86fa1797759e1e20ad582fd8f72d06d833dfd",
+        "training_mask_SHA256": "b28f8680d8947661f8f9e6d5941248a3f0d3d0869fc44cd2ac2c774d49098a65",
+        "target_alpha_times_teacher_SHA256": "36337f3951281cc84014599d2de25137418b4e9672501d09c1448d42723832df",
+        "target_uses_current_coverage_alpha": true
+      },
+      "S": {
+        "appearance_pixels": 12783,
+        "certified_newly_covered": 63,
+        "included_in_training": 63,
+        "excluded_from_training": 0,
+        "new_mask_SHA256": "cd459ead6bd7b47eddddba700de0fddd56f1e960bf36674ecb05f982fb56eb94",
+        "training_mask_SHA256": "e272505ea584fd54e5e2730a825a7ca7fca2b44b53f64da5b7c8b2c4286aaf5f",
+        "target_alpha_times_teacher_SHA256": "36337f3951281cc84014599d2de25137418b4e9672501d09c1448d42723832df",
+        "target_uses_current_coverage_alpha": true
+      }
+    }
+  },
+  "source_SHA256": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/code/run_residual.py": "50f86f3f738d72bb8cdbf177e6b0c52283df54efc2e6f8b898ecf5eb6eb57914",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/code/native_capacity_loss.py": "f24b36aa08d440dde4be30be4ceb440b71042488bbad1b33aceb7cda7e7c59f8",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_teacher_detail_cpu_20261119_r1/gpu_20261119/native_capacity_20261120_r1/numerical_completion/code/fp64_reduction_loss.py": "e1f6fca90eae0db1dc7bb36040618cb7a3642adc64b8ad7f4f7140d69f7c3b98",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/manifest.json": "76a5cf4e07c227f767685f4e01b03cb3a90e06349e52807c90238a8d237ca5ad",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/proposal/domains/086.npz": "ee23205b86cab3a1bce1704deeccbfa4a524c26b4c881d2460bb909a98209716",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/proposal/domains/110.npz": "c7dfc1562136bf790d4e48ecd8f126e31f9d3f4cb961c68dbe7f68f1366134ef",
+    "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/train_inputs/allowed_color_world_rows.npz": "1681c9e0f07c9c834d8682fbac6e468d69bf0fb20dc457e90de46aa1fe0ebd48"
+  }
+}

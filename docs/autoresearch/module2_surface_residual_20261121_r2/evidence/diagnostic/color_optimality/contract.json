@@ -1,0 +1,24 @@
+{
+  "schema": "fixed_CI1191_color_numeric_contract.v1",
+  "source_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+  "initial": "R2 Adam1200 final CI",
+  "allowed_rows": 1191,
+  "geometry_alpha_scales_and_other_colors_frozen": true,
+  "objective": "same original RGB + signed HF1/2/4 + Sobel, A1/C.5/S1, original one-shot normalizers",
+  "CI_box": [
+    0,
+    1
+  ],
+  "scipy": "1.13.1",
+  "m": 10,
+  "maxls": 20,
+  "factr": 10000000.0,
+  "pgtol": 1e-08,
+  "maxFG": 2000,
+  "stop": "first accepted measured FW/f<=.01, solver own stop, or registered real FG cap",
+  "FP64": "only square/mean/scalar reductions; native prediction/derivative FP32 qualified first",
+  "smoke": "complete reverse-communication workspace save/disk-restore next accepted + persistent asset reload + all5 K check",
+  "formal_R2_untouched": true,
+  "new_points": 0,
+  "GPU_keep_on": true
+}

@@ -1,0 +1,506 @@
+{
+  "schema": "road_common1152_teacher_inputs.v1",
+  "complete": true,
+  "output_wh": [
+    1152,
+    768
+  ],
+  "train_frames": [
+    86,
+    110
+  ],
+  "diagnostic_frames": [
+    134,
+    179,
+    198
+  ],
+  "selection": {
+    "arm": "full1152_T0",
+    "prompt": "legacy",
+    "seed": 101,
+    "model": "SD1.5 inpainting + attention LoRA T0 step600",
+    "rule": "Existing report default_seed=101; fixed before student fitting; no best-of-N selection"
+  },
+  "inference_calls": 0,
+  "training_updates": 0,
+  "renderer_calls": 0,
+  "GPU_used": false,
+  "sources": {
+    "defaults": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/teacher_defaults.json",
+      "sha256": "628041c450f74512c240fa1d92297b35152aebe22a510101d97687ed39d1e00b",
+      "bytes": 3164
+    },
+    "predictions": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/predictions.json",
+      "sha256": "c13754711dd661cc5f7678897ca5be4c779d72642a5303a06dea79290037b140",
+      "bytes": 116726
+    },
+    "generation_plan": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/prepared_r1/plan.json",
+      "sha256": "b118c064e1208c0ce808528997224b2167c3944bc8b4df3451b6a7852a589dd8",
+      "bytes": 52886
+    },
+    "source_code": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/prepare_teacher_cpu.py",
+      "sha256": "9db06ac0f026f5e10e11aad3f6e16ffed1943ba89a03ac6da60026257ec3bc87",
+      "bytes": 8289
+    },
+    "domain_builder": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/code/teacher_supervision_view_cpu.py",
+      "sha256": "e9dfc5b820bd36896f92d0904a9d9c2d527ff933049ef61e94d2e241d32f3aeb",
+      "bytes": 16107
+    }
+  },
+  "NPZ_schema": {
+    "target_A_srgb": "float32 CHW [0,1], original observation one AREA sample",
+    "target_C_srgb": "float32 CHW [0,1], byte-exact 1152 generated RGB /255",
+    "target_S_srgb": "same exact generated RGB as C; only S mask is supervised",
+    "A_C_S": "mutually exclusive bool HW, full native footprint and source support",
+    "K": "bool HW; any retained-actor native support excludes",
+    "protected": "bool HW; extra forbidden domain",
+    "teacher_write_full": "bool HW; all native support within actual W_output, not H_input",
+    "q_A_2d_q_C_2d_q_S_2d": "float32 HW binary source eligibility, not learned confidence",
+    "camera_K": "float64 3x3, legacy half-pixel scaling; renderer must independently qualify"
+  },
+  "S_rule": "Frozen high & actual W_output & ~uncertain & ~boundary & association/uncertainty gates & ~other_shadow & ~K; same generated model output, not whole-frame shadow supervision",
+  "qualification": {
+    "CPU_source_permissions": true,
+    "raster_camera_verified": false,
+    "requires_before_training": "Intersect source masks with new fixed geometry/actual alpha/retained-actor qualifications; do not treat q_2d as 3D confidence"
+  },
+  "frames": {
+    "86": {
+      "raw": 86,
+      "job_id": "scene065_raw086__full1152_T0__legacy__seed101",
+      "sources": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/raw_model.png",
+          "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c",
+          "bytes": 1165563
+        },
+        "observation": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/observation.png",
+          "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f",
+          "bytes": 2228304
+        },
+        "roles_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/roles_native.npz",
+          "sha256": "1a0181f2c9a85d519c8b84c0474799190f70ec26e1b61950b04c4cfdabba41e2",
+          "bytes": 222091
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/roles_model.npz",
+          "sha256": "e1434bf8d4e071374fa81887e39e12a38408883c838160fbb0f576e6d48f4196",
+          "bytes": 126331
+        },
+        "original_domains": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/086_native_domains.npz",
+          "sha256": "b170a45a067d17393156cb5a0015ce18597154c284dd47fb79b50b847943f109",
+          "bytes": 34227
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/full1152/construction.json",
+          "sha256": "1bea5fa637c89cfe2db94e9079a2a7d69fa928348ac939aeadbcff9726cb86bb",
+          "bytes": 3335
+        },
+        "final_native_reference": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker0/scene065_raw086__full1152_T0__legacy__seed101/final_native.png",
+          "sha256": "015ba06692287865077074427b07fbcba414f27b9a0fae61751a921878bc2474"
+        }
+      },
+      "counts": {
+        "A": 228568,
+        "C": 32390,
+        "S": 6286,
+        "K": 91316,
+        "teacher_write_full": 39658
+      },
+      "stricter_actual_write_removed_native_pixels": 13105,
+      "C_S_same_teacher": true,
+      "source_level_teacher_exact": true,
+      "camera": {
+        "raw": 86,
+        "scene": "Scene065",
+        "camera": "FRONT",
+        "native_wh": [
+          1920,
+          1280
+        ],
+        "output_wh": [
+          1152,
+          768
+        ],
+        "crop_or_letterbox": false,
+        "native_window_xyxy": [
+          0,
+          0,
+          1920,
+          1280
+        ],
+        "intrinsics_native": [
+          [
+            2081.696719057,
+            0.0,
+            954.9586638747
+          ],
+          [
+            0.0,
+            2081.696719057,
+            659.1282934505
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "intrinsics_1152": [
+          [
+            1249.0180314341999,
+            0.0,
+            572.97519832482
+          ],
+          [
+            0.0,
+            1249.0180314341999,
+            395.4769760703
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "native_from_model": [
+          [
+            1.6666666666666667,
+            0,
+            0
+          ],
+          [
+            0,
+            1.6666666666666667,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "pixel-cell edges; index+.5 centers; K scales with legacy half-pixel convention",
+        "raster_camera_verified": false,
+        "pose_binding": "Scene065 FRONT camera for the same original raw index; rendering agent must confirm original image/pose",
+        "observation_source": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw086/observation.png",
+          "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f",
+          "bytes": 2228304
+        }
+      },
+      "files": {
+        "A.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/A.png",
+          "sha256": "9039babe254a7a7d896c8b4f92651e657a2d49a57bf1422def3b897004cb778d",
+          "bytes": 4689
+        },
+        "C.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/C.png",
+          "sha256": "d22d82f05a74d972c3956b766d8afd4bbd68174a032f4cabd0a6302618177fc4",
+          "bytes": 1831
+        },
+        "K.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/K.png",
+          "sha256": "05ce05426e47b6223b55b6d33931711d2bf1d489850c0c4a534c7f4fa5270f52",
+          "bytes": 3615
+        },
+        "S.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/S.png",
+          "sha256": "e6aa115fac734eb3adae32ed6a7692af12ac75b63b63925d85e39f8fae881a5b",
+          "bytes": 1424
+        },
+        "camera.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/camera.json",
+          "sha256": "4a59e5b8a8a9a420cf09a383aa3049bce0e180d37cd88a83fc4df2f89d65b3d4",
+          "bytes": 1370
+        },
+        "construction.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/construction.json",
+          "sha256": "1bea5fa637c89cfe2db94e9079a2a7d69fa928348ac939aeadbcff9726cb86bb",
+          "bytes": 3335
+        },
+        "native_domains.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/native_domains.npz",
+          "sha256": "05930b88852ff017754574b5909f42e62231ee69f73e42d7cd8e2ea2b89475c7",
+          "bytes": 34549
+        },
+        "observation_1152.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/observation_1152.png",
+          "sha256": "11cec1c0f493b86d28bad64f5366d3ca26f20101389965780eafb9d0a00f2b67",
+          "bytes": 978776
+        },
+        "observation_native.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/observation_native.png",
+          "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f",
+          "bytes": 2228304
+        },
+        "protected.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/protected.png",
+          "sha256": "768228356331d989b87a88217c38c9399d1152e21a72e5039bfe0171231f1b65",
+          "bytes": 938
+        },
+        "qualification.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/qualification.json",
+          "sha256": "3c32a9d38c9d6dac941f16271b084d29f24aeabea3f340fe07f4e38a5a73555d",
+          "bytes": 3091
+        },
+        "roles_model.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/roles_model.npz",
+          "sha256": "e1434bf8d4e071374fa81887e39e12a38408883c838160fbb0f576e6d48f4196",
+          "bytes": 126331
+        },
+        "roles_native.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/roles_native.npz",
+          "sha256": "1a0181f2c9a85d519c8b84c0474799190f70ec26e1b61950b04c4cfdabba41e2",
+          "bytes": 222091
+        },
+        "supervision.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/supervision.npz",
+          "sha256": "8befc8a890dfb3f89f9fd4186c702edf3d03b7ff9bb387e5e2a17e23249aaee8",
+          "bytes": 9344317
+        },
+        "teacher_legal_preview.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/teacher_legal_preview.png",
+          "sha256": "efeb731630e51bd843449758e97346f77bce1340d8a58b82bebcf9864f7ed575",
+          "bytes": 979905
+        },
+        "teacher_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/teacher_rgb.png",
+          "sha256": "eb813f4d2a9ab4035413dd4fe929656e8f3841f7e3d243d9ed9a85597eee802c",
+          "bytes": 1165563
+        },
+        "teacher_write_full.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/teacher_write_full.png",
+          "sha256": "87c7970de8e0c64c9f572141bee4c0de58211fd95b4d63f2d0b35a995d9a2f16",
+          "bytes": 2106
+        }
+      }
+    },
+    "110": {
+      "raw": 110,
+      "job_id": "scene065_raw110__full1152_T0__legacy__seed101",
+      "sources": {
+        "raw_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/raw_model.png",
+          "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e",
+          "bytes": 1132654
+        },
+        "observation": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/observation.png",
+          "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5",
+          "bytes": 2138444
+        },
+        "roles_native": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/roles_native.npz",
+          "sha256": "20424702d55f45c67ce9796f80e96bcf81c4c6c3b83298241d50a95758efce3f",
+          "bytes": 217115
+        },
+        "roles_model": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/roles_model.npz",
+          "sha256": "ef113a0eaf6ee35c48900099009e6cd51d122841e0976b1e3a1ea18a011c6a7c",
+          "bytes": 121634
+        },
+        "original_domains": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/supervision/imported_r2/110_native_domains.npz",
+          "sha256": "6be7d5f85839a642633af40cdb8bb19f7ef15e659b9ad60a2a92b4e6a1cb89e8",
+          "bytes": 33790
+        },
+        "construction": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/full1152/construction.json",
+          "sha256": "e94df8c2bb7d1374552ddbbfbaff0f6f0be3a21f53881e42ab6a23a434338811",
+          "bytes": 3338
+        },
+        "final_native_reference": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_prompt_20261120_r1/formal_r1/worker1/scene065_raw110__full1152_T0__legacy__seed101/final_native.png",
+          "sha256": "5d130b552227a317d4def48493cdc8a64189a39664bd8251e7139b2ec04f6e2f"
+        }
+      },
+      "counts": {
+        "A": 199732,
+        "C": 60377,
+        "S": 12783,
+        "K": 99194,
+        "teacher_write_full": 74487
+      },
+      "stricter_actual_write_removed_native_pixels": 13004,
+      "C_S_same_teacher": true,
+      "source_level_teacher_exact": true,
+      "camera": {
+        "raw": 110,
+        "scene": "Scene065",
+        "camera": "FRONT",
+        "native_wh": [
+          1920,
+          1280
+        ],
+        "output_wh": [
+          1152,
+          768
+        ],
+        "crop_or_letterbox": false,
+        "native_window_xyxy": [
+          0,
+          0,
+          1920,
+          1280
+        ],
+        "intrinsics_native": [
+          [
+            2081.696719057,
+            0.0,
+            954.9586638747
+          ],
+          [
+            0.0,
+            2081.696719057,
+            659.1282934505
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "intrinsics_1152": [
+          [
+            1249.0180314341999,
+            0.0,
+            572.97519832482
+          ],
+          [
+            0.0,
+            1249.0180314341999,
+            395.4769760703
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "native_from_model": [
+          [
+            1.6666666666666667,
+            0,
+            0
+          ],
+          [
+            0,
+            1.6666666666666667,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "convention": "pixel-cell edges; index+.5 centers; K scales with legacy half-pixel convention",
+        "raster_camera_verified": false,
+        "pose_binding": "Scene065 FRONT camera for the same original raw index; rendering agent must confirm original image/pose",
+        "observation_source": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_2d_teacher_hf_cpu_20261119_r1/prepared_r2/scene065_raw110/observation.png",
+          "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5",
+          "bytes": 2138444
+        }
+      },
+      "files": {
+        "A.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/A.png",
+          "sha256": "5b4412a866472ec8e66859a4482b8851154cfcb347086dc5dae5cd78d44a656f",
+          "bytes": 3862
+        },
+        "C.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/C.png",
+          "sha256": "cca7d93225ee1e268144dbbe715a5b79032f4426f7224b2999c6e025175681fa",
+          "bytes": 2122
+        },
+        "K.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/K.png",
+          "sha256": "6ca1f8c9dfb845826525ae25ef62d369bb602327efcd55f398568eb9b2532f37",
+          "bytes": 3338
+        },
+        "S.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/S.png",
+          "sha256": "de2f1cbbe67eabe4a1bdee26ab418d350c3e82b00d349117ae1790d9ef77fb84",
+          "bytes": 1687
+        },
+        "camera.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/camera.json",
+          "sha256": "f959cdb0d07bf7318501ea588e1cc914638a1511d5fc68a1d3698aa53f086e54",
+          "bytes": 1371
+        },
+        "construction.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/construction.json",
+          "sha256": "e94df8c2bb7d1374552ddbbfbaff0f6f0be3a21f53881e42ab6a23a434338811",
+          "bytes": 3338
+        },
+        "native_domains.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/native_domains.npz",
+          "sha256": "852f6652bbffaef203877d6dd1c59a172632179df3800465109be96b34ec29ee",
+          "bytes": 34568
+        },
+        "observation_1152.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/observation_1152.png",
+          "sha256": "2cfe59249636c79f1cd7c8fb54e3bc8a17db36ad3d3ab9379a47cb0ed2f663bb",
+          "bytes": 945558
+        },
+        "observation_native.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/observation_native.png",
+          "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5",
+          "bytes": 2138444
+        },
+        "protected.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/protected.png",
+          "sha256": "768228356331d989b87a88217c38c9399d1152e21a72e5039bfe0171231f1b65",
+          "bytes": 938
+        },
+        "qualification.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/qualification.json",
+          "sha256": "41126d923395c54b97fd444ecb587f318a26c08a76813d00fcc58fc668a9928d",
+          "bytes": 3094
+        },
+        "roles_model.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/roles_model.npz",
+          "sha256": "ef113a0eaf6ee35c48900099009e6cd51d122841e0976b1e3a1ea18a011c6a7c",
+          "bytes": 121634
+        },
+        "roles_native.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/roles_native.npz",
+          "sha256": "20424702d55f45c67ce9796f80e96bcf81c4c6c3b83298241d50a95758efce3f",
+          "bytes": 217115
+        },
+        "supervision.npz": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/supervision.npz",
+          "sha256": "887c9ff5c3b5ed6f8dcd478e1400bbb6543acc40731cfead33accff6928059c4",
+          "bytes": 9169343
+        },
+        "teacher_legal_preview.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/teacher_legal_preview.png",
+          "sha256": "6a8f78dec790a1793f24bba2a7ad60522c6c39294c00f906b656ed53227994ac",
+          "bytes": 954672
+        },
+        "teacher_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/teacher_rgb.png",
+          "sha256": "fb3dc7b2da3308a8b74c2c93dd5e66f2882a8a77d13b031806eedafa18d8be2e",
+          "bytes": 1132654
+        },
+        "teacher_write_full.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/teacher_write_full.png",
+          "sha256": "cbbe9c225d727c77d4de42fe44246a6b3e7adab8102c8122162b731ab4183074",
+          "bytes": 2531
+        }
+      }
+    }
+  }
+}

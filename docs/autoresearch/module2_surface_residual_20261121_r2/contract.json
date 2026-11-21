@@ -1,0 +1,100 @@
+{
+  "schema": "surface_residual_fixed_contract.v1",
+  "method": "coverage_driven_local_surface_resampling",
+  "parent": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_adaptive_20261121_r1/appearance_fit/asset",
+  "parent_total": 595029,
+  "parent_active": 161264,
+  "parent_road_SHA256": "4ef48c82876b437f5a7ae21ef68eba4b05f8c7c1a116165b94e7782c86f6a968",
+  "parent_provenance_SHA256": "d7fed1fa9cf895b6d0fe38612b1d50cff95c1db9c0f8176c442028e514453a44",
+  "teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/manifest.json",
+  "teacher_SHA256": "76a5cf4e07c227f767685f4e01b03cb3a90e06349e52807c90238a8d237ca5ad",
+  "resolution": [
+    1152,
+    768
+  ],
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "train_frames": [
+    86,
+    110
+  ],
+  "evaluation_frames": [
+    134,
+    179,
+    198
+  ],
+  "training_data_role": "all_legal_labels_fit_not_heldout",
+  "activated_existing": 13,
+  "appended_new_geometry": 1071,
+  "reuse_existing_newgroup": 107,
+  "coincident_stack_append": 0,
+  "final_total": 596100,
+  "final_active": 162348,
+  "coverage": {
+    "steps": 400,
+    "objective": "mean_views mean_legal_fit_pixels relu(0.99-alpha)^2",
+    "competing_soft_priors": false,
+    "opacity_lr": 0.05,
+    "log_tangent_sigma_lr": 0.005,
+    "Adam_eps": 1e-15,
+    "opacity_bounds": [
+      0.0001,
+      0.999
+    ],
+    "sigma_bounds": "original source min/max; reuse retains original R1 cap",
+    "mutable_rows": "R2 activation13 + append1071 + approved R1newgroup reuse107",
+    "positions_normals_normal_sigma_frozen": true
+  },
+  "appearance": {
+    "steps": 1200,
+    "objective": "actual GS premultiplied RGB plus signed HF sigma1/2/4 and Sobel edge; frozen new coverage",
+    "Adam_lr": 0.01,
+    "Adam_betas": [
+      0.9,
+      0.999
+    ],
+    "Adam_eps": 1e-08,
+    "color_bounds": [
+      0,
+      1
+    ],
+    "allowed_rows": 1191,
+    "parent_other_RGB_frozen": true,
+    "teacher_color_initialization": false
+  },
+  "safety": {
+    "K_exact_zero": true,
+    "gate_states": [
+      "initial",
+      "opacity1_original_max_sigma"
+    ],
+    "state_gate_is_not_interval_proof": true,
+    "actual_checkpoints_every_coverage": 25,
+    "actual_checkpoints_every_appearance": 100,
+    "final_public_reload_all5": true,
+    "screen_copy": false
+  },
+  "smoke": {
+    "real_environment": true,
+    "checkpoint_full_restore_next": true,
+    "persistent_save_reload": true,
+    "next_stage": true,
+    "approx600_seconds_if_estimated_total_at_least3600": true,
+    "discarded_updates_separately_accounted": true
+  },
+  "comparison_boundary": "R2 differs from R1 by local positions and coverage hinge without competing priors; not a density-only ablation",
+  "finalization": [
+    "all5_native_export",
+    "CPU_bench",
+    "bundle_SHA",
+    "status_complete"
+  ],
+  "GPU_keep_on": true,
+  "input_manifest_SHA256": "58d75ce33f6364bbb92b3b742b3deb27799f7b90e6d0e567444503919c0f504a",
+  "allowed_color_rows_SHA256": "1681c9e0f07c9c834d8682fbac6e468d69bf0fb20dc457e90de46aa1fe0ebd48"
+}

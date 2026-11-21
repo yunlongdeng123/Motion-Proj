@@ -399,3 +399,9 @@
 ## 2026-11-21：覆盖驱动的固定道路表面真增密
 
 `ROAD-SURFACE-ADAPTIVE-20261121-R1 / road_surface_adaptive_20261121_r1`：[报告与组件](autoresearch/module2_surface_adaptive_20261121/report.md)、[固定合同](autoresearch/module2_surface_adaptive_20261121/contract.json)、[分阶段指标](autoresearch/module2_surface_adaptive_20261121/bench/metrics.json)。先启用3108旧inactive行，覆盖200步后一次固定残余选择追加6168个新高斯，再覆盖400、外观1200步；道路总行588861→595029，active151988→161264。历史892旧激活不计append。独立固定LiDAR证据和三角重心坐标限定新几何，K保护只对五帧验收；未认证编辑域与剩余认证道路缺口均保留。独立零更新诊断使用opacity1乐观放宽、5次前向，不改变正式结果。机械执行完成，整体画质与全黑缝关闭未获通过；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null，GPU保持开机。
+
+## 2026-11-21：第二轮认证道路残余修复
+
+`ROAD-SURFACE-RESIDUAL-20261121-R2 / road_surface_residual_20261121_r2`：[报告与组件](autoresearch/module2_surface_residual_20261121_r2/report.md)、[合同](autoresearch/module2_surface_residual_20261121_r2/contract.json)、[分阶段指标](autoresearch/module2_surface_residual_20261121_r2/bench/metrics.json)。直接父是第一轮外观终态；实际joint K门筛选后激活13个旧行、追加1071个新位置、按原R1许可上界复用107个新组父行，同中心副本不追加。覆盖纯hinge400与外观1200步；总596100、active162348，累计真append7239。所有安全动作源像素达到alpha>=.95；认证C仍有809/303低alpha像素，均来自拒绝的joint K候选，认证S低alpha清零。五帧K RGB/alpha exact0，不构成任意视角保护或3DGS全局容量证书。轻量归档含逐候选原VJP证据无损JSON/CSV、原cap许可、smoke恢复与逐字段父冻结证明；完整模型与恢复状态另行取回，不放Git。独立固定颜色区间诊断4F、0更新，正式资产及账本不变。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null；无画质晋升，GPU保持开机。
+
+固定同一1191行、原normalizer及RGB/HF/Sobel目标的独立数值诊断实际2FG/1接受步，总loss6.040828327705→6.040828282598，绝对FW约8.39e-4。完整reverse-communication workspace与配对RNG磁盘恢复、公开重载通过；状态与ABI依赖另列，NPZ/PT不入Git。总目标包含不可调父区域常数，不能用相对停止门推导新覆盖颜色已收敛或全局容量证书；正式1200步资产不替换。

@@ -1,0 +1,68 @@
+{
+  "schema": "adaptive_geometry_support_visual.v1",
+  "resolution": [
+    1152,
+    768
+  ],
+  "legend": {
+    "outside_editing_domain": {
+      "rgb": [
+        11,
+        18,
+        28
+      ],
+      "meaning": "非本轮C/S二维编辑域"
+    },
+    "certified_existing_surface": {
+      "rgb": [
+        46,
+        174,
+        137
+      ],
+      "meaning": "原已认证道路表面"
+    },
+    "certified_recovered_surface": {
+      "rgb": [
+        245,
+        182,
+        73
+      ],
+      "meaning": "按原测距平面完整门新认证表面"
+    },
+    "uncertified_finite_mesh": {
+      "rgb": [
+        139,
+        93,
+        181
+      ],
+      "meaning": "仅有限坐标投影，未认证为路面，不以增密填充"
+    },
+    "no_mesh_hit": {
+      "rgb": [
+        213,
+        77,
+        91
+      ],
+      "meaning": "无固定mesh交点，保留未确认"
+    }
+  },
+  "rows": [
+    {
+      "raw": 86,
+      "source_n": 38676,
+      "existing_certified_n": 32512,
+      "recovered_certified_n": 225,
+      "uncertified_finite_n": 5934,
+      "no_mesh_hit_n": 5
+    },
+    {
+      "raw": 110,
+      "source_n": 73160,
+      "existing_certified_n": 65744,
+      "recovered_certified_n": 319,
+      "uncertified_finite_n": 7077,
+      "no_mesh_hit_n": 20
+    }
+  ],
+  "source": "existing proposal/domains masks only; no new fitting/rendering/threshold selection"
+}
