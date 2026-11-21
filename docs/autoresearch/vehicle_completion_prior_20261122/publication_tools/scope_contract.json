@@ -1,0 +1,67 @@
+{
+  "task_id": "VEHICLE-COMPLETION-PRIOR-20261122",
+  "run_id": "vehicle_completion_prior_20261122_r1",
+  "state": "diagnostic_rejected_geometry_finalized_for_publication",
+  "publication_ready": true,
+  "promotion_allowed": false,
+  "archive_root": "docs/autoresearch/vehicle_completion_prior_20261122",
+  "target_branch": "research/worldsim-v8.2-drivingeditor-v44",
+  "train_source_raw_ids": [
+    86,
+    110
+  ],
+  "diagnostic_only_raw_ids": [
+    134,
+    179,
+    198
+  ],
+  "prior_contract": {
+    "shape": "point-only seed101 diagnostic candidate rejected; semantic candidate used the same model with amodal-image plus full metric bbox. Image+point draft stopped before shape inference. Current whole-object prior is diagnostic_rejected_geometry; root final protocols are authoritative",
+    "appearance": "one existing local TRELLIS.2 material inference executed on the semantic candidate; completion does not qualify rejected geometry for promotion",
+    "formal_updates_executed": {
+      "vehicle": 200,
+      "joint": 200
+    },
+    "training_interpretation": "prior initialization plus real visible-RGB fitting; not complete teacher-to-geometry/silhouette/novel-view distillation",
+    "current_outcome": "diagnostic_rejected_geometry; no promotion or additional GPU training",
+    "old_native_gaussian_ghosts_as_geometry_control": false
+  },
+  "next_entry_policy": {
+    "grayscale_before_material": [
+      "component relationships",
+      "wheel placement",
+      "visible silhouette",
+      "measured fit"
+    ],
+    "protect_real_visible_body": "geometry and RGB take priority; generate only missing regions",
+    "future_distillation_target": "teacher to geometry, silhouette and novel-view distillation",
+    "current_stage_gate_booleans": "historical execution entry only; do not override current geometry rejection"
+  },
+  "include": [
+    "actual run adapter and CPU input preparation source",
+    "fixed protocol and selected small JSON receipts / metrics",
+    "architecture.svg and final textual result report",
+    "publication helper source and explicit source manifest"
+  ],
+  "exclude": [
+    "model checkpoints, NPZ point clouds, PNG/JPG media and GLB/PLY meshes",
+    "external full paper text and vendor model assets",
+    "parallel road_multisource data, training or source changes",
+    "unrelated dirty worktree files and parallel 2D teacher work"
+  ],
+  "current_documents": {
+    "status": "replace only exact published target 3D task fragment; retain parallel paragraphs",
+    "experiments": "append one finalized task entry",
+    "failure": "optional V82-F06 evidence append only if root classifies this result as the same existing failure; rebuild index in scratch"
+  },
+  "publication": {
+    "requires_root_result_and_report_finalized": true,
+    "shared_HEAD_and_index_unchanged": true,
+    "existing_dirty_files_preserved": true,
+    "isolated_GIT_INDEX_FILE": true,
+    "commit_tree_without_checkout_or_local_ref_update": true,
+    "push_explicit_ref_without_force": true,
+    "remote_parent_change_requires_reprepare": true,
+    "only_lightweight_selected_text_is_hashed": true
+  }
+}

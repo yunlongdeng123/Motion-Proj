@@ -1,0 +1,51 @@
+{
+  "train": [
+    86,
+    110
+  ],
+  "diagnostic_only": [
+    134,
+    179,
+    198
+  ],
+  "source": {
+    "86": {
+      "visible_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask.png",
+        "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+        "bytes": 611
+      },
+      "unknown_potential_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/unknown_potential_mask.png",
+        "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+        "bytes": 861
+      },
+      "known_background_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/known_background_mask.png",
+        "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+        "bytes": 786
+      }
+    },
+    "110": {
+      "visible_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask.png",
+        "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+        "bytes": 691
+      },
+      "unknown_potential_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/unknown_potential_mask.png",
+        "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+        "bytes": 1008
+      },
+      "known_background_mask": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/known_background_mask.png",
+        "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+        "bytes": 947
+      }
+    }
+  },
+  "RGB": "original observed RGB only, never amodal/teacher",
+  "positive": "conservative observed V",
+  "negative": "known B only; all U ignored",
+  "road_teacher": "inherited A/C/S legal domain additionally excluding V and U"
+}

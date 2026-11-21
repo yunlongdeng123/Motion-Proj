@@ -1,0 +1,38 @@
+{
+  "task": "SCENE065-VEHICLE-COMPLETION-PRIOR-20261122",
+  "arm": "semantic_image_bbox_r1",
+  "registered_after": "point_only_r1 rejected as scan-line lattice, before any semantic candidate",
+  "reason": "Point-only suppresses all image semantics and produced scan-line supports. The intended method generates a full object from an amodal image and coarse box, then uses true measurements to correct it. Incomplete LiDAR should not be silently treated as a complete surface control.",
+  "old_control_preserved": true,
+  "candidate_budget": {"amodal_images": 1, "semantic_shape_candidates": 1, "seed": 101},
+  "conditioning_image": {
+    "model": "existing SD1.5 inpainting base, no road LoRA",
+    "input": "raw110 true visible a20 core, full potential object canvas, unknown lower area editable",
+    "prompt": "rear view same black Dodge pickup truck, complete rear bumper and rear tires, coherent full vehicle body, realistic proportions, plain neutral background",
+    "draft_prompt_difference": "Initial prose draft said 'Rear view of the same...' and had terminal punctuation. The dispatched instruction and worker plan used the prompt above, frozen before the sole SD inference. No image was regenerated to resolve this wording difference.",
+    "steps": 20,
+    "scheduler": "DDIM",
+    "guidance_scale": 3.0,
+    "visible_core_hard_copy_after_generation": true,
+    "generated_part_is_real_observation": false,
+    "existing_road_teacher_reused": false,
+    "gate": "Check complete lower-body shape, no residual white Mazda or added vehicle, preserve all V pixels; no new prompt or seed if unsuitable"
+  },
+  "shape": {
+    "model": "same frozen Hunyuan3D-Omni checkpoint",
+    "steps": 50,
+    "octree_resolution": 256,
+    "control": "bbox",
+    "size_lwh_m": [5.0, 2.5, 2.08],
+    "measurement_points_as_generation_control": false,
+    "guidance_scale": 4.5,
+    "condition": "known full metric box dimensions plus generated amodal object image; same 1030 real points held for post-generation alignment/audit",
+    "superseded_before_gpu": "Image+point draft only completed CPU preparation. It was replaced before sampling by image+bbox to keep sparse scans as downstream evidence, not a full-surface condition. No image+point shape candidate was sampled.",
+    "candidate_selection_using_diagnostic_frames": false,
+    "gate": "complete shell and sensible wheel/body connection plus real support, not only point proximity"
+  },
+  "material_reference_if_shape_passes": "Use this same amodal image: hard-copied V is original observation; generated U is only a semantic/material prior. No real white Mazda pixels are used. TRELLIS itself has no occlusion-mask or source-provenance input channel.",
+  "downstream": "Only if this shape is structurally usable: one existing TRELLIS.2 material inference, compact surface student initialization, short real smoke, vehicle200 plus joint200 updates. Otherwise archive the failed condition and stop this bounded run.",
+  "not_a_sweep": "No model/seed/steps/learning-rate search; two different conditioning arms, one candidate each. Both image semantics and the control type change, so any difference is not an isolated causal effect of image guidance.",
+  "GPU_keep_on": true
+}

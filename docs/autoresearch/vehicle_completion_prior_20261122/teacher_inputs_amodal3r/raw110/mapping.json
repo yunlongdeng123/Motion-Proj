@@ -1,0 +1,283 @@
+{
+  "schema": "a20.amodal3r_real_rgb_ternary_input.v1",
+  "raw": 110,
+  "target_alias": "a20",
+  "target_native_id": 21,
+  "target_track": "bzFbWRrSGOgEaXxnuGV0tw",
+  "teacher_api": "pipeline.run_multi_image([Image.open(rgb_path)], [Image.open(mask_path).convert('L')], ...)",
+  "official_source_url": "https://github.com/Sm0kyWu/Amodal3R/blob/d00e083f224d0a4c32c1d3a92740ae57d53b58ca/amodal3r/pipelines/image_to_3d.py",
+  "role_values": {
+    "255": "background for target",
+    "188": "conservative visible target core",
+    "0": "actual foreground occluder or source boundary uncertainty"
+  },
+  "official_preprocessing": {
+    "occluded_threshold": "mask<127",
+    "background_threshold": "mask>230",
+    "occlusion_dilation_kernel": 3,
+    "RGB_hidden_and_background_zeroed": true,
+    "model_image_wh": [
+      518,
+      518
+    ],
+    "mask_patch_resize": "torch F.interpolate nearest to518; patch14"
+  },
+  "original_image_wh": [
+    1920,
+    1280
+  ],
+  "source_mask_wh": [
+    480,
+    320
+  ],
+  "crop_native_xyxy_half_open": [
+    716,
+    652,
+    1148,
+    1016
+  ],
+  "teacher_input_wh": [
+    432,
+    432
+  ],
+  "pad_left_top_right_bottom": [
+    0,
+    34,
+    0,
+    34
+  ],
+  "padding_RGB": [
+    0,
+    0,
+    0
+  ],
+  "padding_mask_value": 255,
+  "no_pre_model_resize": true,
+  "teacher_input_to_native_pixel_index_homography": [
+    [
+      1.0,
+      0.0,
+      716.0
+    ],
+    [
+      0.0,
+      1.0,
+      618.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_to_teacher_input_homography": [
+    [
+      1.0,
+      0.0,
+      -716.0
+    ],
+    [
+      0.0,
+      1.0,
+      -618.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "native_pixel_index_to_model518_center_homography": [
+    [
+      1.1990740740740742,
+      0.0,
+      -858.4375000000001
+    ],
+    [
+      0.0,
+      1.1990740740740742,
+      -740.9282407407408
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "image_resize_rule": "u_model=(u_input+0.5)*518/side-0.5; mask patch resize uses official torch nearest separately",
+  "intrinsics_Brown_teacher_input": [
+    2081.6967190566124,
+    2081.6967190566124,
+    238.95866387470437,
+    41.12829345051159,
+    0.046016132949206125,
+    -0.3491935310983468,
+    0.0007529783091390473,
+    0.00010388675322302967,
+    0.0
+  ],
+  "camera_from_actor": [
+    [
+      0.9992917366756789,
+      0.03317587353909725,
+      0.017759121286678475,
+      17.58060334032416
+    ],
+    [
+      -0.03316619042672717,
+      0.9994494979503799,
+      -0.00083957568607737,
+      0.08992064945232414
+    ],
+    [
+      -0.017777198526079216,
+      0.00024997865090606243,
+      0.999841941899748,
+      -1.3054998828427529
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "camera_to_world": [
+    [
+      0.9998682855335455,
+      -0.003252291739239479,
+      -0.01590076044254991,
+      2308.716653278556
+    ],
+    [
+      0.003086702296634764,
+      0.9999408689818656,
+      -0.010427406615429744,
+      1366.9202121437258
+    ],
+    [
+      0.015933733182792884,
+      0.010376952261354629,
+      0.9998192011602023,
+      -18.720666879525325
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "world_from_actor": [
+    [
+      0.9995506526,
+      0.0299170276,
+      0.0018612655,
+      2326.3154069918
+    ],
+    [
+      -0.0298943431,
+      0.9994901969,
+      -0.0112104674,
+      1367.0780065429
+    ],
+    [
+      -0.0021957005,
+      0.0111497887,
+      0.9999354285,
+      -19.7448729844
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "model_receives_camera_or_lidar": false,
+  "target_camera_forward_depth_interval_m": [
+    15.022434670572693,
+    20.138772010075172
+  ],
+  "actual_foreground_actors": [
+    {
+      "native_id": 10,
+      "alias": "a9",
+      "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+      "camera_forward_depth_interval_m": [
+        6.7322324112328715,
+        11.395028812195505
+      ]
+    }
+  ],
+  "behind_target_actors_not_occluders": [
+    {
+      "native_id": 2,
+      "alias": "a1",
+      "track": "6jnrXq-iRbx-Fo2vrjggTg",
+      "camera_forward_depth_interval_m": [
+        37.150761657150724,
+        41.579685760963
+      ]
+    }
+  ],
+  "construction": "Recomputed visible core and occluder/uncertain boundary from accepted original source masks. Projected OBB only scopes possible actor extent and crop; it does not label all interior as unknown or identify hidden silhouette.",
+  "conservative_visible_rule": "erode target/native21 agreement by1 source480 pixel; exclude1-pixel expanded actual foreground",
+  "occlusion_rule": "actual closer actor mask expanded1 source480 pixel + target silhouette1-pixel uncertain band, clipped to projected potential extent plus observed boundary; visible takes priority",
+  "mask_is_full_hidden_shape_GT": false,
+  "source_masks_are_480_resolution_proxies": true,
+  "source_RGB_visible_exact": true,
+  "frames_read": [
+    110
+  ],
+  "heldout_used": false,
+  "gpu_calls": 0,
+  "model_inference_calls": 0,
+  "weights_downloaded": 0,
+  "counts": {
+    "visible": 28384,
+    "occluded_or_uncertain": 49228,
+    "background": 109012,
+    "actual_foreground_crop_native": 58448,
+    "black_on_actual_foreground": 40760,
+    "black_boundary_or_guard_only": 8468,
+    "old_whole_OBB_unknown_count_from_mapping": 76607,
+    "old_whole_OBB_unknown_mask_loaded": false,
+    "effective_occlusion_after_official_kernel3": 51425
+  },
+  "sources": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/mapping.json",
+      "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065110.png",
+      "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a20.png",
+      "sha256": "dd49cdd4c0bd76cd1f04c6ee0cf504db0b0287cc7fa02b33256c7ebba6e95540"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a9.png",
+      "sha256": "7e591081672f68a2dd0d34c9dc7397190cfdf1edec392468b2ded426667d6a8d"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/labels.png",
+      "sha256": "94f39797f8f09d4cb9046416a4e00bda2b3593c570b9f5225b2990812131c910"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+      "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+    },
+    {
+      "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/track_registry.json",
+      "sha256": "788d74a6916c84dc4375078ef17a77ef6ff732ef4857e61b00f0b4049cf04a58"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/teacher_inputs_amodal3r/source/amodal3r_image_to_3d.official.py",
+      "sha256": "bd31be33be5b39a5414cc9b35a067dd577633a5a039bf1aaaa58f3e40beca2cb"
+    }
+  ],
+  "source_sha256": "781fc7e91bb99831f65f5516ea983ff36710446b0c037750fd0d909d05f25cac"
+}

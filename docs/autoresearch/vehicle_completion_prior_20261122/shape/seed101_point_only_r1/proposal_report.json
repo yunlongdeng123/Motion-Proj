@@ -1,0 +1,77 @@
+{
+  "schema_version": "c2.frozen_omni_proposal.v1",
+  "prior_type": "pretrained_learned_3d_shape",
+  "model_repo": "tencent/Hunyuan3D-Omni",
+  "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+  "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+  "worker_sha256": "033f49662036cdd6af5eed105463f50b4b402f4f61303a0e8297d5d4d2cab377",
+  "verification_sha256": "c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8",
+  "seed": 101,
+  "new_diffusion_steps": 50,
+  "training_steps": 0,
+  "frozen": true,
+  "trainable_prior_parameters": 0,
+  "control": "point",
+  "point_count": 2048,
+  "guidance_scale": 0.0,
+  "shape_image_condition_used": false,
+  "point_only_mechanism": {
+    "image_tokens": 1370,
+    "point_tokens": 2058,
+    "unconditional_image_token_max_abs": 0.0,
+    "conditional_unconditional_point_token_max_diff": 0.0,
+    "retained_point_token_max_abs": 4.03125,
+    "guidance_scale": 0.0,
+    "image_condition_used": false,
+    "all_condition_tokens_finite": true
+  },
+  "shape_dit_forward_audit": {
+    "calls": 49,
+    "all_finite": true
+  },
+  "bbox_control_lhw": [
+    1.0,
+    0.41599997878074646,
+    0.5
+  ],
+  "observed_count": 1030,
+  "vertices": 75266,
+  "faces": 150570,
+  "mesh_bounds_native_m": [
+    [
+      -2.4941186606884003,
+      -1.3133236765861511,
+      -1.089070811867714
+    ],
+    [
+      2.494931221008301,
+      1.3406242430210114,
+      1.0838839411735535
+    ]
+  ],
+  "observed_to_surface_approx_m": {
+    "mean": 0.04493774533659781,
+    "p50": 0.02637938608503327,
+    "p90": 0.09955334715494688,
+    "p99": 0.21026019376138028
+  },
+  "generation_seconds": 23.845777668058872,
+  "decode_seconds": 9.929671315476298,
+  "total_wall_seconds": 77.08716450445354,
+  "peak_allocated_gib": 7.6857829093933105,
+  "peak_reserved_gib": 7.990234375,
+  "resource_limits": {
+    "cuda_per_process_memory_fraction": 0.45,
+    "omp_threads": 2,
+    "mkl_threads": 2
+  },
+  "concurrent_gpu_workload": true,
+  "walltime_is_nonexclusive": true,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "torch": "2.4.1+cu121",
+  "cuda": "12.1",
+  "input_contract_sha256": "0516ea55f28a44d42949fca7d2af878616c8609632b16bd94b758f750e894348",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1",
+  "quality_status": "proposal only; original RGB/LiDAR optimization and matched renders remain required",
+  "resumed_from": null
+}

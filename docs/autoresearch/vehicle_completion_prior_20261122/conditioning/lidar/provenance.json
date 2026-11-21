@@ -1,0 +1,93 @@
+{
+  "schema": "a20.train_measured_lidar.v1",
+  "train_source_raw_ids": [
+    86,
+    110
+  ],
+  "diagnostic_lidar_read": [],
+  "measured_lidar_only": true,
+  "native_gaussian_control_used": false,
+  "source_raw_key": "source_raw",
+  "size_lwh_m": [
+    5.0,
+    2.5,
+    2.08
+  ],
+  "npz": "aggregated_lidar_train_086_110.npz",
+  "primary_key": "xyz_canonical_m",
+  "units": "metres",
+  "axes": "right-handed actor local: x=vehicle longitudinal forward, y=left, z=up; centered fixed OBB",
+  "dimensions_xyz_m": [
+    5.0,
+    2.5,
+    2.08
+  ],
+  "source_lidar_format": "<f4 N x 6; first three columns are same-frame ego xyz metres; other source columns are preserved only by row index",
+  "transform": "p_actor = inverse(world_from_actor) @ ego_world @ p_ego, column-vector SE3; NumPy row-vector implementation equivalent",
+  "boundary_filter": "abs(p_actor)<=dimensions/2+1e-6; subtract a9 OBB expanded 0.05m per axis. Geometric membership, not semantic instance ground truth.",
+  "no_camera_mask_filter": "Camera a9 projection does not decide LiDAR ownership: genuine a20 returns may project behind the occluder. a9 3D OBB guard is used.",
+  "dedup_policy": "2cm canonical voxels; representative is an actual measured point nearest per-voxel measured mean; all originals and membership retained",
+  "original_point_count": 1033,
+  "deduplicated_point_count": 1030,
+  "cross_source_voxel_count": 3,
+  "canonical_min_m": [
+    -2.4917688498092723,
+    -1.2197174829590596,
+    -1.0399742651011128
+  ],
+  "canonical_max_m": [
+    2.1675764534264204,
+    1.2494381974707802,
+    1.022066063874516
+  ],
+  "per_source": [
+    {
+      "raw": 86,
+      "source_path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065086.bin",
+      "source_rows": 160510,
+      "target_obb_points_before_a9_guard": 429,
+      "metadata_measured_lidar_points": 429,
+      "excluded_a9_obb_guard_points": 0,
+      "kept_measured_points": 429,
+      "canonical_min_m": [
+        -2.4917688498092723,
+        -1.2068742165995363,
+        -1.0270213777819726
+      ],
+      "canonical_max_m": [
+        2.09204895442285,
+        1.2494381974707802,
+        1.0194683376153217
+      ],
+      "a9_center_canonical_m": [
+        -8.477819732856915,
+        -0.4997766519911693,
+        -0.2702513971808038
+      ]
+    },
+    {
+      "raw": 110,
+      "source_path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+      "source_rows": 159587,
+      "target_obb_points_before_a9_guard": 604,
+      "metadata_measured_lidar_points": 604,
+      "excluded_a9_obb_guard_points": 0,
+      "kept_measured_points": 604,
+      "canonical_min_m": [
+        -2.3892688797081725,
+        -1.2197174829590596,
+        -1.0399742651011128
+      ],
+      "canonical_max_m": [
+        2.1675764534264204,
+        1.2452356212321052,
+        1.022066063874516
+      ],
+      "a9_center_canonical_m": [
+        -8.50184629362866,
+        -0.48292587080345584,
+        -0.2886606415912425
+      ]
+    }
+  ]
+}

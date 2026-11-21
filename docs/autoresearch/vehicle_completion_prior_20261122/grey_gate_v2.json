@@ -1,0 +1,161 @@
+{
+  "schema": "a20.grey_asset_gate.v2",
+  "eligible": false,
+  "quality_status": "diagnostic_rejected_geometry",
+  "user_quality_score": null,
+  "candidate": {
+    "id": "semantic_image_bbox_whole_vehicle_diagnostic_r1",
+    "artifacts": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/omni_seed101_image_bbox_r1/heading_fixed_actor_native.ply",
+        "sha256": "74ab4de98804d3a552e2af51a52c257761d97d922311a3bd15773b1657b801d7"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/surface_gs_init/vehicle.npz",
+        "sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc"
+      }
+    ]
+  },
+  "allowed_stages": [
+    "material",
+    "student"
+  ],
+  "threshold_policy": {
+    "task_specific": true,
+    "status": "pending",
+    "source": "User requested front-loaded grey-model acceptance; task-specific numeric limits have not been approved."
+  },
+  "checks": {
+    "component_relations": {
+      "status": "pending",
+      "passed": false,
+      "acceptance_criteria": [
+        "Cab, cargo bed, bumpers and body panels retain coherent physical relations in fixed grey views."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/omni_seed101_image_bbox_r1/heading_fixed_preview_three_views.jpg",
+          "sha256": "118d47a9e7d3762d95d812612c13dd23f875a07b8198f7f00f17db90303ca60f"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null
+    },
+    "wheel_layout": {
+      "status": "pending",
+      "passed": false,
+      "acceptance_criteria": [
+        "Wheel positions and axle/body/ground relationships agree with trusted evidence; generated unseen parts remain labelled."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/omni_seed101_image_bbox_r1/heading_fixed_preview_three_views.jpg",
+          "sha256": "118d47a9e7d3762d95d812612c13dd23f875a07b8198f7f00f17db90303ca60f"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null
+    },
+    "visible_silhouette": {
+      "status": "pending",
+      "passed": false,
+      "acceptance_criteria": [
+        "Fixed real BUILD views agree on the trusted visible silhouette; task-specific thresholds are registered before evaluation."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic_cpu_audit_heading_fixed/results/audit.json",
+          "sha256": "213cd4d01c9361cc0c19795882b9c23fea4ba5b8314604d717b145f90c5d8291"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null
+    },
+    "measurement_fit": {
+      "status": "pending",
+      "passed": false,
+      "acceptance_criteria": [
+        "Genuine measurement residuals satisfy explicit task-specific bounds; no generated measurements or heldout selection."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic_cpu_audit_heading_fixed/results/audit.json",
+          "sha256": "213cd4d01c9361cc0c19795882b9c23fea4ba5b8314604d717b145f90c5d8291"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null
+    },
+    "visible_geometry_protected": {
+      "status": "failed",
+      "passed": false,
+      "acceptance_criteria": [
+        "Trusted visible geometry remains locked to the real source with an auditable correspondence."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/surface_gs_init/vehicle.npz",
+          "sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null,
+      "reason": "Current diagnostic initializes the complete vehicle from generated geometry; no protected real visible surface patch exists."
+    },
+    "visible_rgb_protected": {
+      "status": "pending",
+      "passed": false,
+      "acceptance_criteria": [
+        "Trusted real RGB is preserved; generated colors do not replace the observed body."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/surface_gs_init/vehicle.npz",
+          "sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null
+    },
+    "generated_only_unknown": {
+      "status": "failed",
+      "passed": false,
+      "acceptance_criteria": [
+        "Generation is confined to the unknown completion region and does not replace the observed whole vehicle."
+      ],
+      "reviewed_by": null,
+      "evidence": [
+        {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/surface_gs_init/vehicle.npz",
+          "sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc"
+        }
+      ],
+      "metrics": {},
+      "rules": [],
+      "threshold_source": null,
+      "reason": "Current diagnostic is whole-vehicle replacement, not unknown-region-only completion."
+    }
+  },
+  "historical_entry_flags_are_quality_acceptance": false,
+  "automatic_promotion_allowed": false,
+  "archived_gpu_work": {
+    "material_inference": 1,
+    "student_formal_updates": 400,
+    "student_smoke_updates": 9,
+    "classification": "diagnostic_rejected_geometry"
+  },
+  "new_protocol": "Lock trusted visible geometry and RGB, generate only U, then pass all four grey checks before material or student.",
+  "GPU_keep_on": true
+}

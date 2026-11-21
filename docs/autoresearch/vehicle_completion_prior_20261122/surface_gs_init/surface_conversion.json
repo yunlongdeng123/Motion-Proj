@@ -1,0 +1,201 @@
+{
+  "schema": "vehicle.generated_surface_gaussians.v1",
+  "source_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/texture_seed101_r1/generated_mesh.npz",
+  "source_basecolor": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/texture_seed101_r1/basecolor_rgba.png",
+  "prepared_transform": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/prepared_texture/transform_heading_fixed.json",
+  "texture_run_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/texture_seed101_r1/run_receipt.json",
+  "sampling_protocol": {
+    "requested_count": 25000,
+    "actual_count": 25000,
+    "seed": 101,
+    "distribution": "approximate equal area with proximity rejection; sample_surface_even",
+    "exact_requested_count": true
+  },
+  "coordinate_inverse": "texture_input=trellis_output/official_scale+official_center; actor_registered=texture_input[:,[0,2,1]]*metres_per_texture_unit+actor_center_m; actor_final=post_actor_transform@actor_registered (homogeneous column vectors)",
+  "official_internal_rotation": "already undone by postprocess_mesh; not undone again",
+  "axis_heading_fix": {
+    "applied": true,
+    "post_actor_transform": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "description": "semantic front +X heading correction",
+    "operation": "left-multiply derived actor binding; positions and normals follow the same proper rigid transform",
+    "geometry_optimization_updates": 0,
+    "raw_mesh_or_glb_modified": false,
+    "texture_uv_modified": false
+  },
+  "actor_axes": "x forward, y left, z up; metres",
+  "units": {
+    "xyz": "metres",
+    "scales": "positive linear Gaussian standard deviations in metres",
+    "rotation": "unit quaternion wxyz",
+    "opacity": "linear probability"
+  },
+  "source_role": "learned generated geometry and material prior; sampled rows are not real observed returns",
+  "source_raw_policy": "all source_raw=-1 and source_row=-1; mesh face_id/barycentric provide generative provenance",
+  "real_visible_support_policy": "not evaluated here; downstream train86/110 mask/render contribution evaluation is separate",
+  "pbr": {
+    "paths": {
+      "basecolor_rgba": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/texture_seed101_r1/basecolor_rgba.png",
+      "metallic_roughness": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/texture_seed101_r1/metallic_roughness.png"
+    },
+    "basecolor_encoding": "sRGB straight RGBA",
+    "metallic_roughness_channels": "if present: G=roughness, B=metallic; no conversion into SH",
+    "material_alpha_used_for_gaussian_opacity": false
+  },
+  "source_branch": 4,
+  "numpy_version": "1.26.4",
+  "gpu_calls": 0,
+  "training_updates": 0,
+  "output": "vehicle.npz",
+  "statistics": {
+    "sample_count": 25000,
+    "requested_sample_count": 25000,
+    "seed": 101,
+    "surface_area_m2": 40.765901021154704,
+    "sampling": {
+      "method": "trimesh.sample.sample_surface_even",
+      "trimesh_version": "4.12.2",
+      "requested_count": 25000,
+      "actual_count": 25000,
+      "exact_requested_count": true,
+      "seed": 101,
+      "initial_requested": 25000,
+      "initial_returned": 25000,
+      "initial_rejection_radius_m": 0.023314058997710576,
+      "single_oversampling_requested": null,
+      "single_oversampling_returned": null,
+      "selected_pool": "initial",
+      "deterministic_farthest_subset_used": false,
+      "duplicated_points_added": false,
+      "nearest_neighbor_distance_m": {
+        "p00": 0.023314205608590252,
+        "p01": 0.02338359797215666,
+        "p05": 0.023662010383873694,
+        "p25": 0.025191463619792943,
+        "p50": 0.027607981553827005,
+        "p75": 0.03117931804784401,
+        "p95": 0.03786268229747929,
+        "p99": 0.04331909346766466,
+        "p100": 0.05928138741424578
+      },
+      "nearest_neighbor_distance_over_h": {
+        "p00": 0.5773538998671863,
+        "p01": 0.5790723350735442,
+        "p05": 0.5859669509302832,
+        "p25": 0.6238423907049545,
+        "p50": 0.6836851353704428,
+        "p75": 0.7721258520380094,
+        "p95": 0.9376329458048291,
+        "p99": 1.0727557255072036,
+        "p100": 1.468046597330404
+      },
+      "renderer_alpha_coverage_checked": false,
+      "coverage_verdict": "not evaluated by CPU uniformity; requires actual renderer alpha check"
+    },
+    "axis_heading_fix": {
+      "applied": true,
+      "post_actor_transform": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "description": "semantic front +X heading correction",
+      "operation": "left-multiply derived actor binding; positions and normals follow the same proper rigid transform",
+      "geometry_optimization_updates": 0,
+      "raw_mesh_or_glb_modified": false,
+      "texture_uv_modified": false
+    },
+    "spacing_h_m": 0.04038113471469305,
+    "tangent_sigma_m": 0.024228680828815827,
+    "normal_sigma_m": 0.004038113471469305,
+    "opacity": 0.9,
+    "opacity_from_texture_alpha": false,
+    "input_vertices": 246708,
+    "input_faces": 315040,
+    "zero_area_faces_skipped": 0,
+    "actor_bounds_m": [
+      [
+        -2.4999999660488545,
+        -1.2499999830244273,
+        -1.0399999161381916
+      ],
+      [
+        2.4999999660488545,
+        1.2499999830244273,
+        1.0399999161381916
+      ]
+    ],
+    "sampled_bounds_m": [
+      [
+        -2.497699938244424,
+        -1.248353454415296,
+        -1.039612609312182
+      ],
+      [
+        2.4997430853509357,
+        1.2387885434818124,
+        1.03958435530018
+      ]
+    ],
+    "mesh_normalization_roundtrip_max_abs": 5.551115123125783e-17,
+    "quaternion_thin_axis_max_l2": 8.270666764216052e-08,
+    "corrected_actor_winding_for_axis_reflection": true,
+    "uv_origin": "bottom-left; image top-left; v flipped once",
+    "texture_interpolation": "bilinear, clamped atlas; x=u*(W-1), y=(1-v)*(H-1); straight RGBA",
+    "texture_size": [
+      1024,
+      1024
+    ],
+    "color": "basecolor sRGB stored as generated appearance prior; SH DC=(sRGB-.5)/C0, degree1..3 zero",
+    "pbr": "PBR maps remain independent provenance; roughness/metallic are not SH channels",
+    "source_branch_mapping": {
+      "4": "generated textured surface prior; not an observed/native scene Gaussian"
+    },
+    "observed_support_evaluated": false
+  }
+}

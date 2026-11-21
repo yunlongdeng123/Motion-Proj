@@ -1,0 +1,138 @@
+{
+  "schema_version": "c2.frozen_omni_proposal.v1",
+  "prior_type": "pretrained_learned_3d_shape",
+  "model_repo": "tencent/Hunyuan3D-Omni",
+  "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+  "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+  "worker_sha256": "3eac4577c8303047ac93792824bc6350caf8e4a860afec61973d166d045201aa",
+  "verification_sha256": "c8a39c05401e7e33e7f629040e8b4627df4fd5f39437e45a20b59001e6bd3ac8",
+  "seed": 101,
+  "new_diffusion_steps": 50,
+  "training_steps": 0,
+  "frozen": true,
+  "trainable_prior_parameters": 0,
+  "control": "bbox",
+  "point_count": 0,
+  "guidance_scale": 4.5,
+  "shape_image_condition_used": true,
+  "image_bbox_mechanism": {
+    "image_tokens": 1370,
+    "bbox_and_type_tokens": 11,
+    "unconditional_image_token_max_abs": 0.0,
+    "conditional_unconditional_bbox_token_max_diff": 0.0,
+    "conditional_image_token_max_abs": 34.21875,
+    "retained_bbox_token_max_abs": 3.259765625,
+    "guidance_scale": 4.5,
+    "bbox_control_lhw": [
+      [
+        [
+          1.0,
+          0.416015625,
+          0.5
+        ]
+      ]
+    ],
+    "measured_points_passed_to_shape_encoder": 0,
+    "bbox_corners": [
+      [
+        [
+          0.5,
+          0.2080078125,
+          0.25
+        ],
+        [
+          0.5,
+          0.2080078125,
+          -0.25
+        ],
+        [
+          0.5,
+          -0.2080078125,
+          0.25
+        ],
+        [
+          0.5,
+          -0.2080078125,
+          -0.25
+        ],
+        [
+          -0.5,
+          0.2080078125,
+          0.25
+        ],
+        [
+          -0.5,
+          0.2080078125,
+          -0.25
+        ],
+        [
+          -0.5,
+          -0.2080078125,
+          0.25
+        ],
+        [
+          -0.5,
+          -0.2080078125,
+          -0.25
+        ]
+      ]
+    ],
+    "image_condition_used": true,
+    "all_condition_tokens_finite": true
+  },
+  "shape_dit_forward_audit": {
+    "calls": 49,
+    "all_finite": true
+  },
+  "measured_points_passed_to_shape_encoder": 0,
+  "measured_points_used_only_for_post_generation_distance": true,
+  "output_uniform_scale_m_per_omni_unit": 3.6307635654786155,
+  "output_metric_transform": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/omni_seed101_image_bbox_r1/output_metric_transform.json",
+  "conditioning_image_sha256": "466b98eca17b6830f98afcef7bb6b00915c3a36b5744ccb65bc7edd1f4ed8bcb",
+  "generated_amodal_semantics": true,
+  "bbox_control_lhw": [
+    1.0,
+    0.41599997878074646,
+    0.5
+  ],
+  "observed_count": 1030,
+  "vertices": 157508,
+  "faces": 315044,
+  "mesh_bounds_native_m": [
+    [
+      -2.5,
+      -3.4612448842210997,
+      -1.3900194587550612
+    ],
+    [
+      2.5,
+      3.4612448842210997,
+      1.3900194587550612
+    ]
+  ],
+  "observed_to_surface_approx_m": {
+    "mean": 0.39608057776021044,
+    "p50": 0.40218082091304264,
+    "p90": 0.6123618351180716,
+    "p99": 0.7448769714148333
+  },
+  "generation_seconds": 21.359302354976535,
+  "decode_seconds": 10.787379633635283,
+  "total_wall_seconds": 72.54570910707116,
+  "peak_allocated_gib": 7.678417205810547,
+  "peak_reserved_gib": 7.9765625,
+  "resource_limits": {
+    "cuda_per_process_memory_fraction": 0.45,
+    "omp_threads": 2,
+    "mkl_threads": 2
+  },
+  "concurrent_gpu_workload": false,
+  "walltime_is_nonexclusive": false,
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "torch": "2.4.1+cu121",
+  "cuda": "12.1",
+  "input_contract_sha256": "e7b7db0a3cef900b25d40f2d82fcf3d80975a13eb28047a9939e92b18e54ae3c",
+  "output": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/omni_seed101_image_bbox_r1",
+  "quality_status": "proposal only; original RGB/LiDAR optimization and matched renders remain required",
+  "resumed_from": null
+}

@@ -1,0 +1,2217 @@
+{
+  "schema": "a20.real_input_packet.v1",
+  "task_id": "VEHICLE-COMPLETION-PRIOR-20261122-R1",
+  "build_raw_ids": [
+    86,
+    110
+  ],
+  "diagnostic_only_raw_ids": [
+    134,
+    179,
+    198
+  ],
+  "holdout_used_for_build": false,
+  "diagnostic_lidar_reads": [],
+  "gpu_calls": 0,
+  "model_downloads": 0,
+  "git_operations": 0,
+  "track": "bzFbWRrSGOgEaXxnuGV0tw",
+  "identity": "black pickup truck",
+  "native_instance_label": 21,
+  "physical_size_xyz_m": [
+    5.0,
+    2.5,
+    2.08
+  ],
+  "training_contract": "Only train/086, train/110 and lidar/ may condition or select a prior; diagnostic/ and diagnostic sheet rows are excluded from BUILD and candidate selection.",
+  "frames": [
+    {
+      "schema": "a20.real_partial_conditioning.v1",
+      "raw": 86,
+      "role": "train",
+      "track": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "native_instance_label": 21,
+      "identity": "black pickup truck",
+      "occluder": {
+        "alias": "a9",
+        "native_instance_label": 10,
+        "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "identity": "white Mazda"
+      },
+      "dimensions_xyz_m": [
+        5.0,
+        2.5,
+        2.08
+      ],
+      "canonical_axes": "actor x=longitudinal forward, y=left, z=up; centered OBB; metres",
+      "image_native_size": [
+        1920,
+        1280
+      ],
+      "original_mask_size": [
+        480,
+        320
+      ],
+      "crop_native_xyxy_half_open": [
+        748,
+        648,
+        1124,
+        964
+      ],
+      "crop_size": [
+        376,
+        316
+      ],
+      "crop_to_native_homography": [
+        [
+          1,
+          0,
+          748
+        ],
+        [
+          0,
+          1,
+          648
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "native_to_crop_homography": [
+        [
+          1,
+          0,
+          -748
+        ],
+        [
+          0,
+          1,
+          -648
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mask480_to_native_pixel_convention": "continuous u_native=4*u_mask; pixel centers u_native=4*(u_mask+0.5); nearest mask expansion, no new boundary truth",
+      "source_mask_crop480_xyxy_half_open": [
+        187,
+        162,
+        281,
+        241
+      ],
+      "camera_intrinsic_Brown_native": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_intrinsic_Brown_crop": [
+        2081.6967190566124,
+        2081.6967190566124,
+        206.95866387470437,
+        11.128293450511592,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_axes": "Waymo camera native X forward, Y left, Z up; normalized image x=-Y/X, y=-Z/X",
+      "camera_to_world": [
+        [
+          0.9999064453800536,
+          -0.0041879464281515235,
+          -0.013021581783377216,
+          2306.0467433975787
+        ],
+        [
+          0.004071038238745755,
+          0.9999512875681233,
+          -0.00899161490007024,
+          1366.9150366675572
+        ],
+        [
+          0.013058603871965729,
+          0.008937762335586477,
+          0.9998747867955007,
+          -18.708061648676797
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_actor": [
+        [
+          0.9995411432,
+          0.029916743,
+          0.0047425269,
+          2326.3154069918
+        ],
+        [
+          -0.0298694015,
+          0.9995061855,
+          -0.0097572509,
+          1367.0780065429
+        ],
+        [
+          -0.0050320901,
+          0.0096111173,
+          0.9999411505,
+          -19.7368722477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_from_actor": [
+        [
+          0.9992603199612878,
+          0.03410847982509969,
+          0.017760196452836507,
+          20.253995993623903
+        ],
+        [
+          -0.03409894687463422,
+          0.9994181092882463,
+          -0.000839400696429589,
+          0.06888259475863379
+        ],
+        [
+          -0.017778492602318823,
+          0.000233175835283097,
+          0.9998419229049229,
+          -1.2940772013425814
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "opencv_camera_from_waymo_camera": [
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "ego_to_world": [
+        [
+          0.9999783764793326,
+          -0.004555766927790638,
+          0.004742526906384606,
+          2304.4688312170942
+        ],
+        [
+          0.004601875351130327,
+          0.9999418077054844,
+          -0.00975725094177855,
+          1366.9530701777148
+        ],
+        [
+          -0.004697799166715411,
+          0.009778864473333718,
+          0.9999411505146698,
+          -20.817
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_position_canonical_m": [
+        -20.25967243464902,
+        -0.7593737802042142,
+        0.9342155105273413
+      ],
+      "projected_obb_bbox_native": [
+        790.3780723169187,
+        683.6230626694085,
+        1083.8279919073188,
+        928.8101428622197
+      ],
+      "projected_obb_convex_hull_native": [
+        [
+          790.3780723169187,
+          927.462594525862
+        ],
+        [
+          791.0456030940002,
+          683.6230626694085
+        ],
+        [
+          800.1516940396868,
+          683.6271430974095
+        ],
+        [
+          809.2598338355643,
+          683.6313165059854
+        ],
+        [
+          818.370052056696,
+          683.6355842396993
+        ],
+        [
+          827.4823805645271,
+          683.6399475714563
+        ],
+        [
+          836.5968533739308,
+          683.644407702204
+        ],
+        [
+          845.7135065194617,
+          683.6489657606174
+        ],
+        [
+          854.8323779211878,
+          683.6536228027919
+        ],
+        [
+          863.9535072495925,
+          683.6583798119342
+        ],
+        [
+          873.0769357902091,
+          683.663237698049
+        ],
+        [
+          882.2027063072928,
+          683.6681972976352
+        ],
+        [
+          891.3308629072192,
+          683.6732593733628
+        ],
+        [
+          900.4614509010563,
+          683.6784246137684
+        ],
+        [
+          909.594516666421,
+          683.6836936329355
+        ],
+        [
+          918.7301075089227,
+          683.6890669701786
+        ],
+        [
+          927.8682715228224,
+          683.6945450897366
+        ],
+        [
+          937.0090574512258,
+          683.7001283804409
+        ],
+        [
+          946.1525145453664,
+          683.7058171554115
+        ],
+        [
+          955.2986924235217,
+          683.7116116517284
+        ],
+        [
+          964.447640929159,
+          683.717512030117
+        ],
+        [
+          973.5994099884633,
+          683.7235183746247
+        ],
+        [
+          982.7540494672271,
+          683.7296306923021
+        ],
+        [
+          991.9116090270926,
+          683.7358489128785
+        ],
+        [
+          1001.072137981144,
+          683.7421728884372
+        ],
+        [
+          1010.235685148836,
+          683.748602393096
+        ],
+        [
+          1019.4022987103535,
+          683.7551371226715
+        ],
+        [
+          1028.5720260602284,
+          683.7617766943689
+        ],
+        [
+          1037.74491366024,
+          683.7685206464381
+        ],
+        [
+          1046.9210068918578,
+          683.775368437857
+        ],
+        [
+          1056.1003499078363,
+          683.7823194479994
+        ],
+        [
+          1065.2829854833806,
+          683.7893729762992
+        ],
+        [
+          1074.4689548661931,
+          683.7965282419277
+        ],
+        [
+          1083.6582976264758,
+          683.803784383459
+        ],
+        [
+          1083.8279919073188,
+          928.8101428622197
+        ]
+      ],
+      "stored_box_native_projection_aabb_max_error_px": 0.0009373305915687524,
+      "mask_contract": {
+        "tri_state_values": {
+          "0": "outside fixed OBB potential / target background",
+          "128": "unknown within potential, including occluded and uncertain edges",
+          "255": "conservative observed target core"
+        },
+        "potential": "Brown projected fixed OBB, 33 samples per edge, convex hull + 4 native pixel guard; union observed approximate mask. This is not amodal silhouette GT.",
+        "safe_visible": "a20 and native21 agreement; erode one 480-mask pixel; exclude one-pixel dilated a9/native10; RGB/alpha outside core forced to zero",
+        "occluder": "a9 mask within crop; its overlap with target potential remains unknown",
+        "resolution": "480x320 source masks are approximate; 1920x1280 masks are nearest expansion, not native-resolution annotation"
+      },
+      "source": {
+        "observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+        "rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065086.png",
+        "target_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/a20.png",
+        "occluder_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/a9.png",
+        "labels": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/labels.png"
+      },
+      "counts": {
+        "visible_source480": 1312,
+        "visible_core_source480": 1114,
+        "visible_native": 17824,
+        "visible_approx_native": 20992,
+        "occluder_crop_native": 46352,
+        "potential_crop_native": 76292,
+        "unknown_potential_crop_native": 58468,
+        "known_background_crop_native": 42524,
+        "occluded_unknown_crop_native": 32617,
+        "safe_visible_intersect_occluder_or_guard": 0
+      }
+    },
+    {
+      "schema": "a20.real_partial_conditioning.v1",
+      "raw": 110,
+      "role": "train",
+      "track": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "native_instance_label": 21,
+      "identity": "black pickup truck",
+      "occluder": {
+        "alias": "a9",
+        "native_instance_label": 10,
+        "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "identity": "white Mazda"
+      },
+      "dimensions_xyz_m": [
+        5.0,
+        2.5,
+        2.08
+      ],
+      "canonical_axes": "actor x=longitudinal forward, y=left, z=up; centered OBB; metres",
+      "image_native_size": [
+        1920,
+        1280
+      ],
+      "original_mask_size": [
+        480,
+        320
+      ],
+      "crop_native_xyxy_half_open": [
+        716,
+        652,
+        1148,
+        1016
+      ],
+      "crop_size": [
+        432,
+        364
+      ],
+      "crop_to_native_homography": [
+        [
+          1,
+          0,
+          716
+        ],
+        [
+          0,
+          1,
+          652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "native_to_crop_homography": [
+        [
+          1,
+          0,
+          -716
+        ],
+        [
+          0,
+          1,
+          -652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mask480_to_native_pixel_convention": "continuous u_native=4*u_mask; pixel centers u_native=4*(u_mask+0.5); nearest mask expansion, no new boundary truth",
+      "source_mask_crop480_xyxy_half_open": [
+        179,
+        163,
+        287,
+        254
+      ],
+      "camera_intrinsic_Brown_native": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_intrinsic_Brown_crop": [
+        2081.6967190566124,
+        2081.6967190566124,
+        238.95866387470437,
+        7.128293450511592,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_axes": "Waymo camera native X forward, Y left, Z up; normalized image x=-Y/X, y=-Z/X",
+      "camera_to_world": [
+        [
+          0.9998682855335455,
+          -0.003252291739239479,
+          -0.01590076044254991,
+          2308.716653278556
+        ],
+        [
+          0.003086702296634764,
+          0.9999408689818656,
+          -0.010427406615429744,
+          1366.9202121437258
+        ],
+        [
+          0.015933733182792884,
+          0.010376952261354629,
+          0.9998192011602023,
+          -18.720666879525325
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_actor": [
+        [
+          0.9995506526,
+          0.0299170276,
+          0.0018612655,
+          2326.3154069918
+        ],
+        [
+          -0.0298943431,
+          0.9994901969,
+          -0.0112104674,
+          1367.0780065429
+        ],
+        [
+          -0.0021957005,
+          0.0111497887,
+          0.9999354285,
+          -19.7448729844
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_from_actor": [
+        [
+          0.9992917366756789,
+          0.03317587353909725,
+          0.017759121286678475,
+          17.58060334032416
+        ],
+        [
+          -0.03316619042672717,
+          0.9994494979503799,
+          -0.00083957568607737,
+          0.08992064945232414
+        ],
+        [
+          -0.017777198526079216,
+          0.00024997865090606243,
+          0.999841941899748,
+          -1.3054998828427529
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "opencv_camera_from_waymo_camera": [
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "ego_to_world": [
+        [
+          0.9999920491228919,
+          -0.003526667237782858,
+          0.001861265481773118,
+          2307.164586193168
+        ],
+        [
+          0.003547317294676837,
+          0.999930868590274,
+          -0.011210467443908509,
+          1366.962915922338
+        ],
+        [
+          -0.0018216012216118254,
+          0.011216980810093018,
+          0.9999354284705064,
+          -20.834
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_position_canonical_m": [
+        -17.58837744960465,
+        -0.6727966741082128,
+        0.9931529658454892
+      ],
+      "projected_obb_bbox_native": [
+        758.5965721281945,
+        689.5237985358436,
+        1104.203970519236,
+        978.4637273515141
+      ],
+      "projected_obb_convex_hull_native": [
+        [
+          758.5965721281945,
+          976.6458487235875
+        ],
+        [
+          759.494129036756,
+          689.5237985358436
+        ],
+        [
+          770.2075813806551,
+          689.5291057402434
+        ],
+        [
+          780.9236618040195,
+          689.5345442996062
+        ],
+        [
+          791.642405010534,
+          689.5401173711331
+        ],
+        [
+          802.3638508827883,
+          689.545827942918
+        ],
+        [
+          813.0880441852001,
+          689.5516788331095
+        ],
+        [
+          823.8150342646638,
+          689.5576726890918
+        ],
+        [
+          834.5448747503822,
+          689.5638119866559
+        ],
+        [
+          845.2776232517207,
+          689.5700990291695
+        ],
+        [
+          856.013341054285,
+          689.5765359467406
+        ],
+        [
+          866.7520928149346,
+          689.5831246953835
+        ],
+        [
+          877.4939462547342,
+          689.5898670561819
+        ],
+        [
+          888.2389718505062,
+          689.5967646344423
+        ],
+        [
+          898.9872425247127,
+          689.6038188588494
+        ],
+        [
+          909.7388333337196,
+          689.6110309806321
+        ],
+        [
+          920.4938211544536,
+          689.6184020726847
+        ],
+        [
+          931.252284369368,
+          689.6259330287492
+        ],
+        [
+          942.0143025499821,
+          689.63362456253
+        ],
+        [
+          952.779956138288,
+          689.6414772068542
+        ],
+        [
+          963.5493261271473,
+          689.6494913127967
+        ],
+        [
+          974.3224937385838,
+          689.6576670488266
+        ],
+        [
+          985.0995401004184,
+          689.6660043999385
+        ],
+        [
+          995.8805459216723,
+          689.674503166774
+        ],
+        [
+          1006.665591165706,
+          689.6831629647575
+        ],
+        [
+          1017.4547547219478,
+          689.6919832232223
+        ],
+        [
+          1028.2481140762386,
+          689.7009631845185
+        ],
+        [
+          1039.0457449788835,
+          689.7101019031471
+        ],
+        [
+          1049.8477211113513,
+          689.7193982448714
+        ],
+        [
+          1060.6541137514912,
+          689.7288508858198
+        ],
+        [
+          1071.4649914363813,
+          689.7384583116097
+        ],
+        [
+          1082.2804196241545,
+          689.7482188164487
+        ],
+        [
+          1093.1004603537772,
+          689.7581305022321
+        ],
+        [
+          1103.9251719028566,
+          689.7681912776569
+        ],
+        [
+          1104.203970519236,
+          978.4637273515141
+        ]
+      ],
+      "stored_box_native_projection_aabb_max_error_px": 0.000572128194448851,
+      "mask_contract": {
+        "tri_state_values": {
+          "0": "outside fixed OBB potential / target background",
+          "128": "unknown within potential, including occluded and uncertain edges",
+          "255": "conservative observed target core"
+        },
+        "potential": "Brown projected fixed OBB, 33 samples per edge, convex hull + 4 native pixel guard; union observed approximate mask. This is not amodal silhouette GT.",
+        "safe_visible": "a20 and native21 agreement; erode one 480-mask pixel; exclude one-pixel dilated a9/native10; RGB/alpha outside core forced to zero",
+        "occluder": "a9 mask within crop; its overlap with target potential remains unknown",
+        "resolution": "480x320 source masks are approximate; 1920x1280 masks are nearest expansion, not native-resolution annotation"
+      },
+      "source": {
+        "observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065110.png",
+        "target_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a20.png",
+        "occluder_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a9.png",
+        "labels": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/labels.png"
+      },
+      "counts": {
+        "visible_source480": 2005,
+        "visible_core_source480": 1774,
+        "visible_native": 28384,
+        "visible_approx_native": 32080,
+        "occluder_crop_native": 58448,
+        "potential_crop_native": 104991,
+        "unknown_potential_crop_native": 76607,
+        "known_background_crop_native": 52257,
+        "occluded_unknown_crop_native": 40769,
+        "safe_visible_intersect_occluder_or_guard": 0
+      }
+    },
+    {
+      "schema": "a20.real_partial_conditioning.v1",
+      "raw": 134,
+      "role": "diagnostic",
+      "track": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "native_instance_label": 21,
+      "identity": "black pickup truck",
+      "occluder": {
+        "alias": "a9",
+        "native_instance_label": 10,
+        "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "identity": "white Mazda"
+      },
+      "dimensions_xyz_m": [
+        5.0,
+        2.5,
+        2.08
+      ],
+      "canonical_axes": "actor x=longitudinal forward, y=left, z=up; centered OBB; metres",
+      "image_native_size": [
+        1920,
+        1280
+      ],
+      "original_mask_size": [
+        480,
+        320
+      ],
+      "crop_native_xyxy_half_open": [
+        704,
+        652,
+        1156,
+        1028
+      ],
+      "crop_size": [
+        452,
+        376
+      ],
+      "crop_to_native_homography": [
+        [
+          1,
+          0,
+          704
+        ],
+        [
+          0,
+          1,
+          652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "native_to_crop_homography": [
+        [
+          1,
+          0,
+          -704
+        ],
+        [
+          0,
+          1,
+          -652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mask480_to_native_pixel_convention": "continuous u_native=4*u_mask; pixel centers u_native=4*(u_mask+0.5); nearest mask expansion, no new boundary truth",
+      "source_mask_crop480_xyxy_half_open": [
+        176,
+        163,
+        289,
+        257
+      ],
+      "camera_intrinsic_Brown_native": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_intrinsic_Brown_crop": [
+        2081.6967190566124,
+        2081.6967190566124,
+        250.95866387470437,
+        7.128293450511592,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_axes": "Waymo camera native X forward, Y left, Z up; normalized image x=-Y/X, y=-Z/X",
+      "camera_to_world": [
+        [
+          0.9998784344558282,
+          -0.003341923806712774,
+          -0.015229834386236802,
+          2309.2882484501206
+        ],
+        [
+          0.0031877093605944973,
+          0.9999435193857052,
+          -0.010138863228307454,
+          1366.9206946643505
+        ],
+        [
+          0.015262857504230743,
+          0.010089082406248513,
+          0.9998326137894311,
+          -18.721692652309763
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_actor": [
+        [
+          0.9995489317,
+          0.0299169761,
+          0.002628236,
+          2326.3154069918
+        ],
+        [
+          -0.0298866084,
+          0.9994936451,
+          -0.0109198931,
+          1367.0780065429
+        ],
+        [
+          -0.0029535953,
+          0.0108364184,
+          0.9999369222,
+          -19.7528727508
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_from_actor": [
+        [
+          0.9992870708646494,
+          0.03326482918475584,
+          0.01785500180836655,
+          17.009851335528765
+        ],
+        [
+          -0.03325513582319733,
+          0.9994465423485135,
+          -0.0008396136930614308,
+          0.08999586599770737
+        ],
+        [
+          -0.017873049364680517,
+          0.0002452445764165089,
+          0.9998402342513856,
+          -1.2919232614399192
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "opencv_camera_from_waymo_camera": [
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "ego_to_world": [
+        [
+          0.9999900131559948,
+          -0.003614687264450987,
+          0.0026282359585143656,
+          2307.738682553989
+        ],
+        [
+          0.0036431841925443896,
+          0.9999337393769807,
+          -0.01091989306301699,
+          1366.962616645006
+        ],
+        [
+          -0.002588589811578258,
+          0.01092935915544675,
+          0.9999369221662128,
+          -20.834
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_position_canonical_m": [
+        -17.017822301365413,
+        -0.6554590201033079,
+        0.9880814927173631
+      ],
+      "projected_obb_bbox_native": [
+        750.8321710022515,
+        688.7417551948752,
+        1110.0662245340436,
+        989.1069962132749
+      ],
+      "projected_obb_convex_hull_native": [
+        [
+          750.8321710022515,
+          987.1537080315202
+        ],
+        [
+          751.7938688524566,
+          688.7417551948752
+        ],
+        [
+          762.9261296636846,
+          688.7470303905593
+        ],
+        [
+          774.0612173460727,
+          688.7524437702768
+        ],
+        [
+          785.1991668542526,
+          688.7579989118287
+        ],
+        [
+          796.3400194057019,
+          688.7636992014122
+        ],
+        [
+          807.4838221220191,
+          688.7695478326572
+        ],
+        [
+          818.6306276671703,
+          688.7755478056412
+        ],
+        [
+          829.7804938845865,
+          688.7817019259171
+        ],
+        [
+          840.9334834318895,
+          688.7880128035255
+        ],
+        [
+          852.0896634133358,
+          688.7944828520039
+        ],
+        [
+          863.249105010982,
+          688.8011142874125
+        ],
+        [
+          874.4118831130662,
+          688.8079091273256
+        ],
+        [
+          885.5780759408582,
+          688.8148691898432
+        ],
+        [
+          896.7477646731485,
+          688.8219960925893
+        ],
+        [
+          907.9210330689932,
+          688.8292912517076
+        ],
+        [
+          919.0979670883066,
+          688.8367558808591
+        ],
+        [
+          930.2786545100106,
+          688.844390990203
+        ],
+        [
+          941.4631845488983,
+          688.8521973853989
+        ],
+        [
+          952.6516474696479,
+          688.8601756665704
+        ],
+        [
+          963.8441341991092,
+          688.8683262272962
+        ],
+        [
+          975.0407359366221,
+          688.8766492535854
+        ],
+        [
+          986.2415437619159,
+          688.8851447228483
+        ],
+        [
+          997.4466482412188,
+          688.893812402862
+        ],
+        [
+          1008.656139030905,
+          688.9026518507429
+        ],
+        [
+          1019.8701044793247,
+          688.9116624118998
+        ],
+        [
+          1031.088631226403,
+          688.9208432190032
+        ],
+        [
+          1042.311803800891,
+          688.9301931909272
+        ],
+        [
+          1053.5397042160037,
+          688.9397110317126
+        ],
+        [
+          1064.7724115622207,
+          688.9493952295021
+        ],
+        [
+          1076.0100015984212,
+          688.9592440554968
+        ],
+        [
+          1087.252546340656,
+          688.9692555628899
+        ],
+        [
+          1098.500113648748,
+          688.9794275858011
+        ],
+        [
+          1109.7527668107484,
+          688.9897577382155
+        ],
+        [
+          1110.0662245340436,
+          989.1069962132749
+        ]
+      ],
+      "stored_box_native_projection_aabb_max_error_px": 0.0009962132749024022,
+      "mask_contract": {
+        "tri_state_values": {
+          "0": "outside fixed OBB potential / target background",
+          "128": "unknown within potential, including occluded and uncertain edges",
+          "255": "conservative observed target core"
+        },
+        "potential": "Brown projected fixed OBB, 33 samples per edge, convex hull + 4 native pixel guard; union observed approximate mask. This is not amodal silhouette GT.",
+        "safe_visible": "a20 and native21 agreement; erode one 480-mask pixel; exclude one-pixel dilated a9/native10; RGB/alpha outside core forced to zero",
+        "occluder": "a9 mask within crop; its overlap with target potential remains unknown",
+        "resolution": "480x320 source masks are approximate; 1920x1280 masks are nearest expansion, not native-resolution annotation"
+      },
+      "source": {
+        "observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/134.json",
+        "rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065134.png",
+        "target_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/134/a20.png",
+        "occluder_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/134/a9.png",
+        "labels": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/134/labels.png"
+      },
+      "counts": {
+        "visible_source480": 2209,
+        "visible_core_source480": 1945,
+        "visible_native": 31120,
+        "visible_approx_native": 35344,
+        "occluder_crop_native": 62320,
+        "potential_crop_native": 113558,
+        "unknown_potential_crop_native": 82438,
+        "known_background_crop_native": 56394,
+        "occluded_unknown_crop_native": 43147,
+        "safe_visible_intersect_occluder_or_guard": 0
+      }
+    },
+    {
+      "schema": "a20.real_partial_conditioning.v1",
+      "raw": 179,
+      "role": "diagnostic",
+      "track": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "native_instance_label": 21,
+      "identity": "black pickup truck",
+      "occluder": {
+        "alias": "a9",
+        "native_instance_label": 10,
+        "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "identity": "white Mazda"
+      },
+      "dimensions_xyz_m": [
+        5.0,
+        2.5,
+        2.08
+      ],
+      "canonical_axes": "actor x=longitudinal forward, y=left, z=up; centered OBB; metres",
+      "image_native_size": [
+        1920,
+        1280
+      ],
+      "original_mask_size": [
+        480,
+        320
+      ],
+      "crop_native_xyxy_half_open": [
+        704,
+        652,
+        1156,
+        1028
+      ],
+      "crop_size": [
+        452,
+        376
+      ],
+      "crop_to_native_homography": [
+        [
+          1,
+          0,
+          704
+        ],
+        [
+          0,
+          1,
+          652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "native_to_crop_homography": [
+        [
+          1,
+          0,
+          -704
+        ],
+        [
+          0,
+          1,
+          -652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mask480_to_native_pixel_convention": "continuous u_native=4*u_mask; pixel centers u_native=4*(u_mask+0.5); nearest mask expansion, no new boundary truth",
+      "source_mask_crop480_xyxy_half_open": [
+        176,
+        163,
+        289,
+        257
+      ],
+      "camera_intrinsic_Brown_native": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_intrinsic_Brown_crop": [
+        2081.6967190566124,
+        2081.6967190566124,
+        250.95866387470437,
+        7.128293450511592,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_axes": "Waymo camera native X forward, Y left, Z up; normalized image x=-Y/X, y=-Z/X",
+      "camera_to_world": [
+        [
+          0.9998887473613987,
+          -0.0032395913715663185,
+          -0.01456014930550813,
+          2309.2697775158963
+        ],
+        [
+          0.0030935859188036667,
+          0.9999448215268665,
+          -0.01003910492855331,
+          1366.9206270679474
+        ],
+        [
+          0.014591868496405647,
+          0.009992944978773616,
+          0.9998435969812653,
+          -18.72172860601831
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_actor": [
+        [
+          0.9995472564,
+          0.029916926,
+          0.0032030922,
+          2326.3154069918
+        ],
+        [
+          -0.0298806792,
+          0.9994948879,
+          -0.0108219297,
+          1367.0780065429
+        ],
+        [
+          -0.0035252332,
+          0.0107213196,
+          0.999936311,
+          -19.7678731477
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_from_actor": [
+        [
+          0.9992921759426274,
+          0.033162065059878475,
+          0.017760196433099833,
+          17.0289547679954
+        ],
+        [
+          -0.03315238255845671,
+          0.9994499562397098,
+          -0.0008394007341953867,
+          0.09169585197582819
+        ],
+        [
+          -0.017778263860155546,
+          0.0002500137887471717,
+          0.9998419229295334,
+          -1.2957477807555193
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "opencv_camera_from_waymo_camera": [
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "ego_to_world": [
+        [
+          0.999988358647835,
+          -0.0036087073861500066,
+          0.0032030922262924187,
+          2307.7185009372442
+        ],
+        [
+          0.0036431781648062177,
+          0.9999348044199418,
+          -0.010821929703728375,
+          1366.9623999078913
+        ],
+        [
+          -0.003163830221182504,
+          0.01083347315749228,
+          0.9999363109906938,
+          -20.833000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_position_canonical_m": [
+        -17.0368974734356,
+        -0.6560367655683876,
+        0.993182339706383
+      ],
+      "projected_obb_bbox_native": [
+        750.8921451520803,
+        689.282111464575,
+        1109.6519254128934,
+        989.2526622124449
+      ],
+      "projected_obb_convex_hull_native": [
+        [
+          750.8921451520803,
+          987.3054955561004
+        ],
+        [
+          751.8498185377805,
+          689.282111464575
+        ],
+        [
+          762.9678396214799,
+          689.2874923873283
+        ],
+        [
+          774.0886683409775,
+          689.2930120324183
+        ],
+        [
+          785.212339517801,
+          689.298674026057
+        ],
+        [
+          796.3388942033389,
+          689.3044818003191
+        ],
+        [
+          807.4683793218528,
+          689.3104385921739
+        ],
+        [
+          818.6008473114558,
+          689.3165474424807
+        ],
+        [
+          829.7363557630165,
+          689.3228111950216
+        ],
+        [
+          840.8749670573844,
+          689.329232495498
+        ],
+        [
+          852.0167480004507,
+          689.3358137905286
+        ],
+        [
+          863.1617694560503,
+          689.3425573266722
+        ],
+        [
+          874.3101059770737,
+          689.3494651494061
+        ],
+        [
+          885.4618354346632,
+          689.3565391021298
+        ],
+        [
+          896.6170386451158,
+          689.3637808251531
+        ],
+        [
+          907.7757989949567,
+          689.3711917546855
+        ],
+        [
+          918.9382020638806,
+          689.3787731218274
+        ],
+        [
+          930.1043352458338,
+          689.3865259515316
+        ],
+        [
+          941.2742873677213,
+          689.3944510616006
+        ],
+        [
+          952.4481483063853,
+          689.4025490616524
+        ],
+        [
+          963.6260086033913,
+          689.4108203520883
+        ],
+        [
+          974.8079590776158,
+          689.419265123061
+        ],
+        [
+          985.9940904360479,
+          689.4278833534486
+        ],
+        [
+          997.1844928823485,
+          689.4366748097956
+        ],
+        [
+          1008.3792557231733,
+          689.4456390452814
+        ],
+        [
+          1019.5784669725409,
+          689.454775398673
+        ],
+        [
+          1030.782212954255,
+          689.4640829932682
+        ],
+        [
+          1041.9905779018932,
+          689.4735607358457
+        ],
+        [
+          1053.203643556891,
+          689.4832073156034
+        ],
+        [
+          1064.4214887642763,
+          689.4930212031038
+        ],
+        [
+          1075.6441890667097,
+          689.5030006491997
+        ],
+        [
+          1086.8718162957628,
+          689.5131436839729
+        ],
+        [
+          1098.104438161515,
+          689.5234481156513
+        ],
+        [
+          1109.342117839823,
+          689.5339115295441
+        ],
+        [
+          1109.6519254128934,
+          989.2526622124449
+        ]
+      ],
+      "stored_box_native_projection_aabb_max_error_px": 0.0006622124449222611,
+      "mask_contract": {
+        "tri_state_values": {
+          "0": "outside fixed OBB potential / target background",
+          "128": "unknown within potential, including occluded and uncertain edges",
+          "255": "conservative observed target core"
+        },
+        "potential": "Brown projected fixed OBB, 33 samples per edge, convex hull + 4 native pixel guard; union observed approximate mask. This is not amodal silhouette GT.",
+        "safe_visible": "a20 and native21 agreement; erode one 480-mask pixel; exclude one-pixel dilated a9/native10; RGB/alpha outside core forced to zero",
+        "occluder": "a9 mask within crop; its overlap with target potential remains unknown",
+        "resolution": "480x320 source masks are approximate; 1920x1280 masks are nearest expansion, not native-resolution annotation"
+      },
+      "source": {
+        "observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/179.json",
+        "rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065179.png",
+        "target_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/179/a20.png",
+        "occluder_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/179/a9.png",
+        "labels": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/179/labels.png"
+      },
+      "counts": {
+        "visible_source480": 2240,
+        "visible_core_source480": 1994,
+        "visible_native": 31904,
+        "visible_approx_native": 35840,
+        "occluder_crop_native": 61248,
+        "potential_crop_native": 113023,
+        "unknown_potential_crop_native": 81119,
+        "known_background_crop_native": 56929,
+        "occluded_unknown_crop_native": 42165,
+        "safe_visible_intersect_occluder_or_guard": 0
+      }
+    },
+    {
+      "schema": "a20.real_partial_conditioning.v1",
+      "raw": 198,
+      "role": "diagnostic",
+      "track": "bzFbWRrSGOgEaXxnuGV0tw",
+      "alias": "a20",
+      "native_instance_label": 21,
+      "identity": "black pickup truck",
+      "occluder": {
+        "alias": "a9",
+        "native_instance_label": 10,
+        "track": "NTjq-OhZ_97OMJ4xwJAxXg",
+        "identity": "white Mazda"
+      },
+      "dimensions_xyz_m": [
+        5.0,
+        2.5,
+        2.08
+      ],
+      "canonical_axes": "actor x=longitudinal forward, y=left, z=up; centered OBB; metres",
+      "image_native_size": [
+        1920,
+        1280
+      ],
+      "original_mask_size": [
+        480,
+        320
+      ],
+      "crop_native_xyxy_half_open": [
+        704,
+        652,
+        1156,
+        1028
+      ],
+      "crop_size": [
+        452,
+        376
+      ],
+      "crop_to_native_homography": [
+        [
+          1,
+          0,
+          704
+        ],
+        [
+          0,
+          1,
+          652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "native_to_crop_homography": [
+        [
+          1,
+          0,
+          -704
+        ],
+        [
+          0,
+          1,
+          -652
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "mask480_to_native_pixel_convention": "continuous u_native=4*u_mask; pixel centers u_native=4*(u_mask+0.5); nearest mask expansion, no new boundary truth",
+      "source_mask_crop480_xyxy_half_open": [
+        176,
+        163,
+        289,
+        257
+      ],
+      "camera_intrinsic_Brown_native": [
+        2081.6967190566124,
+        2081.6967190566124,
+        954.9586638747044,
+        659.1282934505116,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_intrinsic_Brown_crop": [
+        2081.6967190566124,
+        2081.6967190566124,
+        250.95866387470437,
+        7.128293450511592,
+        0.046016132949206125,
+        -0.3491935310983468,
+        0.0007529783091390473,
+        0.00010388675322302967,
+        0.0
+      ],
+      "camera_axes": "Waymo camera native X forward, Y left, Z up; normalized image x=-Y/X, y=-Z/X",
+      "camera_to_world": [
+        [
+          0.9998915208929472,
+          -0.0032380004334176034,
+          -0.014368778639193712,
+          2309.269923375271
+        ],
+        [
+          0.003095298292453111,
+          0.9999457809063179,
+          -0.009942553803479963,
+          1366.9205815158225
+        ],
+        [
+          0.01440019357056352,
+          0.009896999588135004,
+          0.9998473302581163,
+          -18.72202153248909
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "world_from_actor": [
+        [
+          0.9995466253,
+          0.0299169071,
+          0.0033944806,
+          2326.3154069918
+        ],
+        [
+          -0.0298789677,
+          0.9994959799,
+          -0.0107253642,
+          1367.0780065429
+        ],
+        [
+          -0.0037136394,
+          0.0106190781,
+          0.99993672,
+          -19.7742065859
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_from_actor": [
+        [
+          0.9992922339307165,
+          0.03316031672071116,
+          0.017760196494595783,
+          17.028970146663596
+        ],
+        [
+          -0.033150633983005925,
+          0.9994500141872564,
+          -0.000839400704126625,
+          0.09180973325692321
+        ],
+        [
+          -0.017778263394170466,
+          0.00025004491588053243,
+          0.9998419228893416,
+          -1.298512404276039
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "opencv_camera_from_waymo_camera": [
+        [
+          0,
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "ego_to_world": [
+        [
+          0.999987733611399,
+          -0.003606955563357603,
+          0.003394480564321222,
+          2307.7182261754306
+        ],
+        [
+          0.003643175887660613,
+          0.9999358448578045,
+          -0.010725364234386353,
+          1366.9621499943646
+        ],
+        [
+          -0.0033555768787436814,
+          0.010737599362643836,
+          0.9999367200296918,
+          -20.833000000000002
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "camera_position_canonical_m": [
+        -17.036959364505037,
+        -0.6561205962857457,
+        0.9959463491986362
+      ],
+      "projected_obb_bbox_native": [
+        750.8763129597698,
+        689.676708866482,
+        1109.6362579447318,
+        989.6511756961374
+      ],
+      "projected_obb_convex_hull_native": [
+        [
+          750.8763129597698,
+          987.7018141326328
+        ],
+        [
+          751.8342476096648,
+          689.676708866482
+        ],
+        [
+          762.9522648531532,
+          689.68214449976
+        ],
+        [
+          774.0730896078156,
+          689.6877194878773
+        ],
+        [
+          785.196756678896,
+          689.6934375033258
+        ],
+        [
+          796.3233071021866,
+          689.6993020219069
+        ],
+        [
+          807.4527877867188,
+          689.7053163217342
+        ],
+        [
+          818.5852511557473,
+          689.7114834822487
+        ],
+        [
+          829.7207547858446,
+          689.7178063832125
+        ],
+        [
+          840.8593610441059,
+          689.7242877036924
+        ],
+        [
+          852.0011367228018,
+          689.7309299210805
+        ],
+        [
+          863.146152672918,
+          689.7377353100549
+        ],
+        [
+          874.2944834349978,
+          689.7447059415902
+        ],
+        [
+          885.4462068680319,
+          689.7518436819253
+        ],
+        [
+          896.601403776873,
+          689.7591501915454
+        ],
+        [
+          907.7601575370466,
+          689.7666269241623
+        ],
+        [
+          918.9225537177,
+          689.774275125685
+        ],
+        [
+          930.0886797026568,
+          689.7820958331796
+        ],
+        [
+          941.2586243092821,
+          689.7900898738548
+        ],
+        [
+          952.4324774053173,
+          689.7982578640018
+        ],
+        [
+          963.6103295237543,
+          689.8066002079638
+        ],
+        [
+          974.7922714754995,
+          689.8151170970925
+        ],
+        [
+          985.9783939599806,
+          689.8238085086867
+        ],
+        [
+          997.1687871736488,
+          689.8326742049625
+        ],
+        [
+          1008.3635404166978,
+          689.8417137319698
+        ],
+        [
+          1019.5627416972302,
+          689.8509264185517
+        ],
+        [
+          1030.7664773335052,
+          689.860311375276
+        ],
+        [
+          1041.9748315541187,
+          689.8698674933669
+        ],
+        [
+          1053.187886096129,
+          689.8795934436366
+        ],
+        [
+          1064.405719800756,
+          689.8894876754066
+        ],
+        [
+          1075.6284082072104,
+          689.8995484154369
+        ],
+        [
+          1086.8560231444053,
+          689.9097736668365
+        ],
+        [
+          1098.088632320109,
+          689.9201612079883
+        ],
+        [
+          1109.3262989085442,
+          689.9307085914497
+        ],
+        [
+          1109.6362579447318,
+          989.6511756961374
+        ]
+      ],
+      "stored_box_native_projection_aabb_max_error_px": 0.0008243038626005728,
+      "mask_contract": {
+        "tri_state_values": {
+          "0": "outside fixed OBB potential / target background",
+          "128": "unknown within potential, including occluded and uncertain edges",
+          "255": "conservative observed target core"
+        },
+        "potential": "Brown projected fixed OBB, 33 samples per edge, convex hull + 4 native pixel guard; union observed approximate mask. This is not amodal silhouette GT.",
+        "safe_visible": "a20 and native21 agreement; erode one 480-mask pixel; exclude one-pixel dilated a9/native10; RGB/alpha outside core forced to zero",
+        "occluder": "a9 mask within crop; its overlap with target potential remains unknown",
+        "resolution": "480x320 source masks are approximate; 1920x1280 masks are nearest expansion, not native-resolution annotation"
+      },
+      "source": {
+        "observation": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/198.json",
+        "rgb": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065198.png",
+        "target_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/198/a20.png",
+        "occluder_mask": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/198/a9.png",
+        "labels": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/198/labels.png"
+      },
+      "counts": {
+        "visible_source480": 2248,
+        "visible_core_source480": 2004,
+        "visible_native": 32064,
+        "visible_approx_native": 35968,
+        "occluder_crop_native": 61120,
+        "potential_crop_native": 113023,
+        "unknown_potential_crop_native": 80959,
+        "known_background_crop_native": 56929,
+        "occluded_unknown_crop_native": 41973,
+        "safe_visible_intersect_occluder_or_guard": 0
+      }
+    }
+  ],
+  "lidar": {
+    "schema": "a20.train_measured_lidar.v1",
+    "train_source_raw_ids": [
+      86,
+      110
+    ],
+    "diagnostic_lidar_read": [],
+    "measured_lidar_only": true,
+    "native_gaussian_control_used": false,
+    "source_raw_key": "source_raw",
+    "size_lwh_m": [
+      5.0,
+      2.5,
+      2.08
+    ],
+    "npz": "aggregated_lidar_train_086_110.npz",
+    "primary_key": "xyz_canonical_m",
+    "units": "metres",
+    "axes": "right-handed actor local: x=vehicle longitudinal forward, y=left, z=up; centered fixed OBB",
+    "dimensions_xyz_m": [
+      5.0,
+      2.5,
+      2.08
+    ],
+    "source_lidar_format": "<f4 N x 6; first three columns are same-frame ego xyz metres; other source columns are preserved only by row index",
+    "transform": "p_actor = inverse(world_from_actor) @ ego_world @ p_ego, column-vector SE3; NumPy row-vector implementation equivalent",
+    "boundary_filter": "abs(p_actor)<=dimensions/2+1e-6; subtract a9 OBB expanded 0.05m per axis. Geometric membership, not semantic instance ground truth.",
+    "no_camera_mask_filter": "Camera a9 projection does not decide LiDAR ownership: genuine a20 returns may project behind the occluder. a9 3D OBB guard is used.",
+    "dedup_policy": "2cm canonical voxels; representative is an actual measured point nearest per-voxel measured mean; all originals and membership retained",
+    "original_point_count": 1033,
+    "deduplicated_point_count": 1030,
+    "cross_source_voxel_count": 3,
+    "canonical_min_m": [
+      -2.4917688498092723,
+      -1.2197174829590596,
+      -1.0399742651011128
+    ],
+    "canonical_max_m": [
+      2.1675764534264204,
+      1.2494381974707802,
+      1.022066063874516
+    ],
+    "per_source": [
+      {
+        "raw": 86,
+        "source_path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065086.bin",
+        "source_rows": 160510,
+        "target_obb_points_before_a9_guard": 429,
+        "metadata_measured_lidar_points": 429,
+        "excluded_a9_obb_guard_points": 0,
+        "kept_measured_points": 429,
+        "canonical_min_m": [
+          -2.4917688498092723,
+          -1.2068742165995363,
+          -1.0270213777819726
+        ],
+        "canonical_max_m": [
+          2.09204895442285,
+          1.2494381974707802,
+          1.0194683376153217
+        ],
+        "a9_center_canonical_m": [
+          -8.477819732856915,
+          -0.4997766519911693,
+          -0.2702513971808038
+        ]
+      },
+      {
+        "raw": 110,
+        "source_path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/velodyne/0065110.bin",
+        "source_rows": 159587,
+        "target_obb_points_before_a9_guard": 604,
+        "metadata_measured_lidar_points": 604,
+        "excluded_a9_obb_guard_points": 0,
+        "kept_measured_points": 604,
+        "canonical_min_m": [
+          -2.3892688797081725,
+          -1.2197174829590596,
+          -1.0399742651011128
+        ],
+        "canonical_max_m": [
+          2.1675764534264204,
+          1.2452356212321052,
+          1.022066063874516
+        ],
+        "a9_center_canonical_m": [
+          -8.50184629362866,
+          -0.48292587080345584,
+          -0.2886606415912425
+        ]
+      }
+    ]
+  },
+  "files": {
+    "training_packet": [
+      "train/086",
+      "train/110",
+      "lidar"
+    ],
+    "contact_sheet": "contact_sheet.jpg"
+  },
+  "failure_ledger_refs": [],
+  "failure_ledger_delta": "none"
+}

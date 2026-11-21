@@ -1,0 +1,315 @@
+{
+  "schema": "a20.independent_cpu_shape_audit.v1",
+  "numeric_status": "FIXED_NUMERIC_FAILURE",
+  "failures": [
+    "raw086_visible_core_recall_below_0.8",
+    "raw110_visible_core_recall_below_0.8"
+  ],
+  "human_verdict": null,
+  "geometry_modified": false,
+  "gpu_used": false,
+  "evaluated_raws": [
+    86,
+    110
+  ],
+  "heldout_read": false,
+  "source_point_count": 1030,
+  "source_raw_counts": {
+    "86": 428,
+    "110": 602
+  },
+  "evidence_selection": "same frozen BUILD measurement packet; geometrically filtered points, not semantic GT",
+  "physical_size_xyz_m": [
+    5.0,
+    2.5,
+    2.0799999237060547
+  ],
+  "mesh_bounds_m": [
+    [
+      -2.4941186904907227,
+      -1.313323736190796,
+      -1.0890707969665527
+    ],
+    [
+      2.494931221008301,
+      1.340624213218689,
+      1.0838840007781982
+    ]
+  ],
+  "mesh_extent_xyz_m": [
+    4.989049911499023,
+    2.653947949409485,
+    2.172954797744751
+  ],
+  "extent_to_physical_size": [
+    0.9978099822998047,
+    1.061579179763794,
+    1.0446898449270485
+  ],
+  "vertices": 75266,
+  "faces": 150570,
+  "area_m2": 24.35592954417252,
+  "watertight": false,
+  "consistent_winding": true,
+  "fraction_vertices_outside_box_plus_2cm": 0.1037254537241251,
+  "maximum_box_excess_m": 0.09062421321868896,
+  "point_to_surface_m": {
+    "count": 1030,
+    "mean": 0.041682760390364476,
+    "p50": 0.02323739351277644,
+    "p90": 0.09911799671119195,
+    "p95": 0.13704151680326807,
+    "p99": 0.2036618210239415,
+    "maximum": 0.47747782571767844
+  },
+  "by_source_raw": {
+    "86": {
+      "count": 428,
+      "mean": 0.045080496215535865,
+      "p50": 0.026852434267796314,
+      "p90": 0.10740529116972616,
+      "p95": 0.15010374260550435,
+      "p99": 0.30336815881233403,
+      "maximum": 0.47747782571767844
+    },
+    "110": {
+      "count": 602,
+      "mean": 0.039267094388415386,
+      "p50": 0.022043211696857926,
+      "p90": 0.09748875123766784,
+      "p95": 0.11706093950303124,
+      "p99": 0.1942841120887395,
+      "maximum": 0.33455310711009134
+    }
+  },
+  "absolute_closest_point_residual_xyz_m": {
+    "x": {
+      "count": 1030,
+      "mean": 0.023163525005022244,
+      "p50": 0.01312991697919963,
+      "p90": 0.056154582986321436,
+      "p95": 0.08936226890446504,
+      "p99": 0.1529459721791833,
+      "maximum": 0.2425469160079956
+    },
+    "y": {
+      "count": 1030,
+      "mean": 0.00940017343785316,
+      "p50": 0.00022979312692572584,
+      "p90": 0.0273386647989599,
+      "p95": 0.06078051881666199,
+      "p99": 0.14366296231746678,
+      "maximum": 0.2951647421620238
+    },
+    "z": {
+      "count": 1030,
+      "mean": 0.017828680994143885,
+      "p50": 0.002238214631642442,
+      "p90": 0.05920887987975486,
+      "p95": 0.09176337637824479,
+      "p99": 0.18520969542100318,
+      "maximum": 0.44650767413084635
+    }
+  },
+  "exact_distance_method": {
+    "method": "exact point-to-triangle; conservative bounding-sphere and AABB pruning",
+    "excluded_zero_area_faces": 2,
+    "candidate_triangles": {
+      "count": 1030,
+      "mean": 9.841747572815533,
+      "p50": 8.0,
+      "p90": 14.0,
+      "p95": 16.0,
+      "p99": 22.710000000000036,
+      "maximum": 39.0
+    }
+  },
+  "control_roundtrip_max_abs_m": 5.960464477539063e-08,
+  "normalized_mesh_to_native_error_m": {
+    "count": 75266,
+    "mean": 4.630405031140965e-08,
+    "p50": 3.650024149988857e-08,
+    "p90": 8.956205308564981e-08,
+    "p95": 1.000294207192775e-07,
+    "p99": 1.2377834115800373e-07,
+    "maximum": 1.4600096599955427e-07
+  },
+  "projection_metrics": [
+    {
+      "raw": 86,
+      "visible_core_recall": 0.7780520646319569,
+      "reliable_domain_iou": 0.7719024824668819,
+      "true_positive_pixels": 13868,
+      "missed_visible_core_pixels": 3956,
+      "predicted_known_background_pixels": 142,
+      "projected_area_pixels": 32585,
+      "known_background_spill_fraction": 0.0043578333589074725,
+      "unknown_predicted_pixels": 18575,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/mapping.json",
+          "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/context_rgb.png",
+          "sha256": "0eb8f88d5e77f98ea80e3697027f082bdc1a5b8fd2a62fbd37ed68dda66da458",
+          "bytes": 156207
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask.png",
+          "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+          "bytes": 611
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/known_background_mask.png",
+          "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+          "bytes": 786
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/unknown_potential_mask.png",
+          "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+          "bytes": 861
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape_cpu_audit_r1/results/projection_086.png",
+        "sha256": "ce16ffa5c38ca114195b7da8debc564a0b13cbe49bd7e48c5730475729888c99",
+        "bytes": 286270
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    },
+    {
+      "raw": 110,
+      "visible_core_recall": 0.7559188275084555,
+      "reliable_domain_iou": 0.7501048804363026,
+      "true_positive_pixels": 21456,
+      "missed_visible_core_pixels": 6928,
+      "predicted_known_background_pixels": 220,
+      "projected_area_pixels": 45133,
+      "known_background_spill_fraction": 0.004874482086278333,
+      "unknown_predicted_pixels": 23457,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/mapping.json",
+          "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/context_rgb.png",
+          "sha256": "990df9916f0ade34c8891f7b9fb61c624eceaead8c1a443cf63f4b9804b3db6a",
+          "bytes": 185144
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask.png",
+          "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+          "bytes": 691
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/known_background_mask.png",
+          "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+          "bytes": 947
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/unknown_potential_mask.png",
+          "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+          "bytes": 1008
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape_cpu_audit_r1/results/projection_110.png",
+        "sha256": "d8b4820563e13057a6fcb7871d5795bb22873d34f9adb646f7a568d2d04795b8",
+        "bytes": 340141
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    }
+  ],
+  "six_views": null,
+  "source_provenance": {
+    "aggregated_lidar_train_086_110.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/aggregated_lidar_train_086_110.npz",
+      "sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c",
+      "bytes": 44776
+    },
+    "provenance.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/provenance.json",
+      "sha256": "1f179ccd2d66208d1546e32a307d67f00e711fdf3fed557f723702cc93be2bfc",
+      "bytes": 3039
+    },
+    "input_points_and_transform.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/input_points_and_transform.npz",
+      "sha256": "3658d872a9f8f521d590ed6dd309738dfc331543095fe2e6d45c7b3c889070ff",
+      "bytes": 32179
+    }
+  },
+  "candidate_artifacts": {
+    "input_points_and_transform.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/input_points_and_transform.npz",
+      "sha256": "3658d872a9f8f521d590ed6dd309738dfc331543095fe2e6d45c7b3c889070ff",
+      "bytes": 32179
+    },
+    "actual_point_only_mechanism.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/actual_point_only_mechanism.json",
+      "sha256": "5a411dd6cc01a1f455f5a43ac961b90344758d59ca44021292047f95a5d903c5",
+      "bytes": 292
+    },
+    "candidate_latents.pt": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_latents.pt",
+      "sha256": "b38197c8fe540a9e27d035405dba7cad481d88b760fbf36b2f1df0eb0fdb838f",
+      "bytes": 526030
+    },
+    "candidate_omni.glb": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_omni.glb",
+      "sha256": "6d2f5cf3bb64b73e204e8cd1b82f67cd57c24e9e79146d8925bd63c963b81f0c",
+      "bytes": 2710848
+    },
+    "candidate_actor_native.ply": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_actor_native.ply",
+      "sha256": "e24d13202ee242608c98111849035ed08020230006f8e9cc9353cedb6d821a39",
+      "bytes": 2860822
+    },
+    "candidate_actor_native.obj": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_actor_native.obj",
+      "sha256": "59de7e29d1553199b4ca11555c545e8e7000523714ea3f1bb7f823308ba220d1",
+      "bytes": 5681239
+    },
+    "candidate_actor_native.glb": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_actor_native.glb",
+      "sha256": "ec26f3d6ff1f7d1c8f7675ffc998c6bb6e6cbec43aa1c0b824692f59a3d620b1",
+      "bytes": 2710828
+    },
+    "candidate_surface_samples.npz": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/candidate_surface_samples.npz",
+      "sha256": "23497e7b7a40c6f2d2944d711fe9c79ff40667458c9aa013f1649b9ffe791efd",
+      "bytes": 1518856
+    },
+    "proposal_report.json": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape/seed101_point_only_r1/proposal_report.json",
+      "sha256": "ff44c5c64e940d1c47d789f8f0d8bb6aabc87532062a01147d02ad4074b11ff9",
+      "bytes": 2441
+    }
+  },
+  "script": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/shape_cpu_audit_r1/source/shape_audit_cpu.py",
+    "sha256": "4d8c4c414c50beb6aefd096fcfc44415828be16e086caf015b0dbb52fce8b953",
+    "bytes": 15962
+  },
+  "wall_seconds": 2.1242619026452303,
+  "fixed_thresholds": {
+    "extent_ratio": [
+      0.5,
+      1.35
+    ],
+    "mean_distance_max_m": 0.25,
+    "p90_distance_max_m": 0.5,
+    "visible_core_recall_min": 0.8,
+    "known_background_spill_max": 0.05
+  },
+  "metric_notes": [
+    "Point-to-mesh distance is geometric distance, not LiDAR ray-depth residual.",
+    "OBB potential is not an amodal silhouette GT; unknown pixels are excluded.",
+    "Exact-distance computation does not mutate or rescale the candidate."
+  ]
+}

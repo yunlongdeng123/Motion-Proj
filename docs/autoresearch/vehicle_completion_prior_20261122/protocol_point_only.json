@@ -1,0 +1,51 @@
+{
+  "task": "SCENE065-VEHICLE-COMPLETION-PRIOR-20261122",
+  "run": "vehicle_completion_prior_20261122_r1",
+  "target": {"alias": "a20", "native_actor": 21, "track": "bzFbWRrSGOgEaXxnuGV0tw", "role": "restore black pickup"},
+  "delete": {"alias": "a9", "native_actor": 10, "track": "NTjq-OhZ_97OMJ4xwJAxXg", "role": "delete white Mazda"},
+  "train_frames": [86, 110],
+  "diagnostic_frames": [134, 179, 198],
+  "render_resolution": [1152, 768],
+  "seed": 101,
+  "single_candidate": true,
+  "shape_prior": {
+    "model": "Hunyuan3D-Omni, existing pinned checkpoint",
+    "control": "measured points from train frames in canonical metres",
+    "steps": 50,
+    "point_count": 2048,
+    "octree_resolution": 256,
+    "guidance_scale": 0.0,
+    "reason": "Official unconditional image branch retains point control. Avoid treating partial visible alpha as a complete silhouette.",
+    "diffusion_training_updates": 0
+  },
+  "material_prior": {
+    "model": "TRELLIS.2 existing fixed-mesh texturing branch",
+    "resolution": 512,
+    "texture_size": 1024,
+    "reference": "raw110 original visible a20 RGB, no a9 pixels; neutral unknown fill and preprocessing disabled",
+    "occlusion_mask_is_model_input": false,
+    "generated_material_is_hidden_ground_truth": false,
+    "diffusion_training_updates": 0
+  },
+  "stage_gate": {
+    "shape_before_texture": "inspect complete surface, disconnected components, metric bounds, distance to actual measured support and true visible mask projections; do not tune seeds to force passing",
+    "surface_before_student_training": "surface-connected compact Gaussians; separate isolated RGB/alpha from joint visible contribution; no native cross-region footprint carryover",
+    "realism": "hidden parts judged as a plausible prior, not by invented hidden GT; no automatic human verdict"
+  },
+  "student_proposal_if_shape_is_usable": {
+    "representation": "Gaussians sampled on generated continuous mesh with normals, UV and provenance; projected-footprint sampling based only on train cameras",
+    "trainable": "surface material RGB and bounded opacity on observed support; same canonical asset shared across frames",
+    "frozen": "surface anchors, normals, trajectories, cameras, scene, road coverage and shape/material generator weights",
+    "formal_updates": {"vehicle": 200, "joint": 200},
+    "not_launched_until_shape_gate": true,
+    "smoke": "actual raster forward/backward, checkpoint save, full Adam/RNG restore, reload and joint-stage entry; if hour-plus then about10-minute actual smoke",
+    "road_teacher_isolation": "unified DELETE raster with detached complete vehicle packet in road-loss pass; real vehicle loss uses live vehicle in KEEP pass; explicit gradient audit",
+    "alpha_supervision": "unmasked rendered vehicle contribution; visible positive and observable negative separately normalized; occluded unknown excluded from negatives",
+    "generated_detail_preservation": "generated UV material prior retained on hidden surface, observed texels corrected only by true visible RGB; no independently learned per-frame hidden RGB"
+  },
+  "benchmark": ["native pixel crops", "vehicle-only RGB and alpha", "joint visible contribution", "silhouette IoU on observable domain", "observed masked SSIM", "signed HF correspondence and energy at sigma1/2/4", "edge precision/recall", "surface distance to measured points", "protected other-vehicle change", "road-to-vehicle gradient audit", "save/reload"],
+  "prior_run_preserved": "vehicle_road_joint_20261121_r1, all seven stages",
+  "human_verdict": null,
+  "GPU_keep_on": true,
+  "power_operations": 0
+}

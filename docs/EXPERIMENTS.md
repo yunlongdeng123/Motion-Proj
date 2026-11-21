@@ -413,3 +413,7 @@
 ## VEHICLE-ROAD-JOINT-20261121
 
 [首轮车辆/道路接入结果与组件](autoresearch/vehicle_road_joint_20261121_r1/report.md)，run=`vehicle_road_joint_20261121_r1`。Scene065删除a9白Mazda，保留并补全a20黑皮卡；原生GS对象刚体化＋624个显式下半形状先验，raw86/110训练、134/179/198诊断，继承已见全序列的原生模型，不称盲测。正式车辆200＋联合200步，另17次smoke/恢复probe单列；75行交接修复0更新。7阶段、49条固定域细节记录及实际合同/资源账/恢复入口均在归档。训练/保存/重载路径已验证，主要旧车残影与局部退化未消除，真实车辆footprint仍进入道路教师域，画质及贡献隔离未通过；不替换既有道路基线。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F01,V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## VEHICLE-COMPLETION-PRIOR-20261122
+
+[诊断结果、组件与新版灰模门](autoresearch/vehicle_completion_prior_20261122/report.md)，run=`vehicle_completion_prior_20261122_r1`。raw86/110真实RGB/近似实例mask/1030实测点用于BUILD；三实拍诊断帧不是盲测。纯点Omni负例与单一amodal图像＋bbox候选、一次TRELLIS.2材质、25k近均匀表面高斯及固定200+200拟合均保留。409物理更新包含400正式与9 smoke（内含2 replay，不另加）；梯度隔离、冻结和五帧八输出重载max0通过，但灰模结构、真实可见几何保护及raw86其它车辆保护失败，当前 `diagnostic_rejected_geometry`、不可晋升。400步为初始化＋可见RGB拟合，尚非完整教师几何／轮廓／新视角蒸馏。前置灰模v2入口已CPU拒绝当前候选；历史actual-v1只读恢复另有索引。Amodal3R CPU规范输入已备，Amodal3R／MM-TRELLIS／RECAST未运行。旧车辆7组、道路55项/8批次及原scientific JSON保持；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null，GPU保持开机。

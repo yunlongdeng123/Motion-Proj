@@ -1,0 +1,63 @@
+{
+  "contract": {
+    "schema": "a20.omni_point_only_input.v1",
+    "alias": "a20",
+    "native_actor_id": 21,
+    "points_npz": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/aggregated_lidar_train_086_110.npz",
+    "points_sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c",
+    "point_key": "xyz_canonical_m",
+    "size_key": "size_lwh_m",
+    "size_lwh_m": [
+      5.0,
+      2.5,
+      2.08
+    ],
+    "source_raw_key": "source_raw",
+    "measured_lidar_only": true,
+    "native_gaussian_control_used": false,
+    "training_raws": [
+      86,
+      110
+    ],
+    "heldout_used": false,
+    "source_provenance": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/provenance.json",
+    "source_provenance_sha256": "1f179ccd2d66208d1546e32a307d67f00e711fdf3fed557f723702cc93be2bfc",
+    "shape_image_condition_used": false,
+    "normalization": "whole annotated physical box max(L,W,H)/2; native xyz->Omni xzy; no partial-bounds rescaling or recentering"
+  },
+  "seed": 101,
+  "control": "point",
+  "model_point_count": 2048,
+  "diagnostic_sample_count": 2048,
+  "bbox_control_lhw": [
+    1.0,
+    0.41599997878074646,
+    0.5
+  ],
+  "observed_count": 1030,
+  "full_size_lwh_m": [
+    5.0,
+    2.5,
+    2.0799999237060547
+  ],
+  "half_span_m": 2.5,
+  "axis_native_to_omni": [
+    0,
+    2,
+    1
+  ],
+  "shape_image_condition_used": false,
+  "partial_alpha_treated_as_complete_silhouette": false,
+  "point_only_mechanism": "Official CFG guidance0 uses zero DINO tokens plus the unchanged point-control tokens",
+  "training_raws": [
+    86,
+    110
+  ],
+  "sampled_unique_original_rows": 896,
+  "points_sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c",
+  "contract_sha256": "0516ea55f28a44d42949fca7d2af878616c8609632b16bd94b758f750e894348",
+  "sampled_point_max_abs": 0.996707558631897,
+  "steps": 50,
+  "guidance_scale": 0.0,
+  "octree_resolution": 256
+}

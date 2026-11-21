@@ -1,0 +1,62 @@
+{
+  "schema": "a20.corrected_physical_optimizer_ledger.v1",
+  "physical_optimizer_updates": {
+    "formal_vehicle": 200,
+    "formal_joint": 200,
+    "formal_total": 400,
+    "smoke_total_including_replay": 9,
+    "smoke_base": 7,
+    "replay_within_smoke": 2,
+    "outside_smoke_extra": 0,
+    "numeric_probe_outside_smoke": 0,
+    "total": 409
+  },
+  "original_inherited_ledger": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/student/resource_ledger_original_inherited.json",
+    "sha256": "70096672c7e0c57e5ccaac54766fe95c8cfaf575ecd0f44fb0d47a9296e4b148",
+    "original_extra_replay_updates": 2,
+    "preserved": true
+  },
+  "per_process_renderer_and_parameter_VJP": {
+    "smoke": {
+      "phase": "smoke",
+      "peak_allocated_bytes": 5510354944,
+      "peak_reserved_bytes": 8101298176,
+      "formal_updates": 0,
+      "native_calls": 41,
+      "parameter_gradient_VJP_calls": 12,
+      "GPU_keep_on": true,
+      "power_operations": 0
+    },
+    "formal": {
+      "phase": "formal",
+      "peak_allocated_bytes": 5510354944,
+      "peak_reserved_bytes": 8101298176,
+      "formal_updates": 400,
+      "native_calls": 647,
+      "parameter_gradient_VJP_calls": 600,
+      "GPU_keep_on": true,
+      "power_operations": 0
+    },
+    "reload": {
+      "phase": "reload",
+      "peak_allocated_bytes": 5500687872,
+      "peak_reserved_bytes": 8101298176,
+      "formal_updates": 0,
+      "native_calls": 27,
+      "parameter_gradient_VJP_calls": 0,
+      "GPU_keep_on": true,
+      "power_operations": 0
+    }
+  },
+  "notes": [
+    "Inherited extra_replay_updates=2 is included within smoke total 9, not additive.",
+    "Formal raster 647 and parameter-gradient backward/VJP 600 cover only that process.",
+    "No whole-task raster/backward total is claimed; physical Adam updates are separate.",
+    "Preview and fresh reload have zero optimizer updates; no extra numeric probe updates."
+  ],
+  "current_candidate": "diagnostic_rejected_geometry",
+  "new_optimizer_updates": 0,
+  "new_gpu_tasks": 0,
+  "GPU_keep_on": true
+}

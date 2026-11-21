@@ -1,0 +1,23 @@
+{
+  "schema": "vehicle_surface_diagnostic_entry.v1",
+  "shape_gate_passed": true,
+  "material_gate_passed": true,
+  "surface_npz_sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc",
+  "scope": "entry to preview and short real-GPU smoke; not final restoration quality acceptance",
+  "shape_reason": "Continuous pickup body and four wheel positions visually verified after semantic heading correction. Floating mirrors, roof bulge and distorted wheels retained.",
+  "material_reason": "One completed TRELLIS output, finite nonempty atlas and reversible geometry mapping; basecolor atlas visually checked. Material/geometry is a generated prior.",
+  "readiness_checks": [
+    "known-size affine mapping recorded",
+    "semantic front +X verified",
+    "UV unchanged under heading correction",
+    "surface conversion CPU checks passed"
+  ],
+  "geometry_optimization_updates": 0,
+  "human_verdict": null,
+  "quality_pass": false,
+  "requested_phases": [
+    "preview",
+    "smoke"
+  ],
+  "GPU_keep_on": true
+}

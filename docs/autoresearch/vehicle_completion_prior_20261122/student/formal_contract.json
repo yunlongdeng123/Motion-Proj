@@ -1,0 +1,79 @@
+{
+  "task": "a20_surface_student_20261122_r1",
+  "phase": "formal",
+  "readiness": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/student_entry_gate.json",
+    "sha256": "aa0f41ee2916243b0317d9c7d5dfeaa3a93844c0a78ffb5373f791a74139aa85",
+    "bytes": 1291
+  },
+  "student_script": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/code/run_surface_student.py",
+    "sha256": "f557c2daf61364650e41e26444e0343817e296d6f775976bc26157ad6d818c1d",
+    "bytes": 37150
+  },
+  "surface": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/surface_gs_init/vehicle.npz",
+    "sha256": "6c715ad8f4b1815fec32a28a947f9ceb948716d04cdc85a00e8a9435ffd3cdcc",
+    "bytes": 2697852
+  },
+  "legacy_source": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/code/frozen_formal_r2/run_joint.py",
+    "sha256": "2bc5cfd9f5cf67c9aad2252a73de34228b525eecf6cb4ec3f673f22f4eef400b",
+    "bytes": 40674
+  },
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/student",
+  "train": [
+    86,
+    110
+  ],
+  "diagnostic_only": [
+    134,
+    179,
+    198
+  ],
+  "vehicle_steps": 200,
+  "joint_steps": 200,
+  "seed": 101,
+  "trainable": {
+    "vehicle": [
+      "supported DC",
+      "supported bounded opacity"
+    ],
+    "joint": [
+      "supported DC",
+      "1191 road RGB"
+    ]
+  },
+  "frozen": [
+    "geometry",
+    "normals",
+    "scales",
+    "rotation",
+    "higher SH",
+    "poses",
+    "all other actors",
+    "native scene"
+  ],
+  "vehicle_loss": {
+    "L1": 0.8,
+    "DSSIM": 0.2,
+    "alpha_inside": 0.1,
+    "alpha_outside": 0.1
+  },
+  "road_loss": {
+    "L1": 1.0,
+    "edge": 0.1
+  },
+  "unknown_is_negative": false,
+  "generated_RGB_loss": false,
+  "opacity_delta_bound": 0.1,
+  "teacher_gradient_isolation": "new interface repair; not isolated prior-model gain",
+  "sidecar": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_road_joint_20261121_r1/assets/handoff_fixed_guarded/a9_ownership_sidecar.npz",
+    "sha256": "c38e4b8b47e21c05d5db30280fb1935f43661ac70e68567b0765b23e6cb87943",
+    "bytes": 1862
+  },
+  "roadmap": "new assets contain full surface metadata and compact 1191-row RGB patch with pinned base",
+  "GPU_keep_on": true,
+  "power_operations": false
+}

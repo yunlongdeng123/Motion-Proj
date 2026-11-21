@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "real_cuda": true,
+  "checkpoint_saved": true,
+  "optimizer_and_sampler_rng_restore": true,
+  "evaluation": true,
+  "joint_next_stage": true,
+  "continuation": {
+    "saved_state_restore_bit_exact": true,
+    "next_step_parameter_max": 1.1920928955078125e-07,
+    "next_step_parameter_differences": {
+      "dc": 1.1920928955078125e-07,
+      "opacity_logits": 0.0,
+      "log_scale_delta": 0.0,
+      "base_xyz": 0.0,
+      "base_scales": 0.0,
+      "base_rotation": 0.0,
+      "base_coefficients": 0.0,
+      "base_opacity": 0.0,
+      "visible_support": 0.0,
+      "base_opacity_logits": 0.0
+    },
+    "next_step_loss_abs": 0.0,
+    "next_step_optimizer_bit_exact": false,
+    "parameter_abs_tolerance": 2e-05,
+    "loss_abs_tolerance": 1e-06
+  },
+  "actual_smoke_optimizer_updates": 9,
+  "formal_updates": 0,
+  "persistent_vehicle_render_reload_max": 0.0,
+  "freeze": {
+    "native_scene_unchanged": true,
+    "local_xyz_equal": true,
+    "local_rotation_equal": true,
+    "trajectory_equal": true,
+    "road_frozen_fields": [
+      "model_xyz",
+      "gaussian_sigma_m",
+      "normal_world",
+      "road_opacity",
+      "active",
+      "minimum_model_depth"
+    ],
+    "road_trainable_color_rows": 1191,
+    "source_road_intact": true,
+    "local_scales_equal": true,
+    "local_scales_no_delta": true,
+    "all_surface_metadata_preserved": true,
+    "hidden_color_equal": true,
+    "hidden_opacity_equal": true,
+    "opacity_max_abs_delta": 0.005000770092010498,
+    "opacity_delta_bound": 0.1,
+    "fixed_a9_sidecar_sha256": "c38e4b8b47e21c05d5db30280fb1935f43661ac70e68567b0765b23e6cb87943",
+    "fixed_a9_rows": 75,
+    "teacher_gradient_isolation_all_recorded": true,
+    "separate_active_loss_gradients_nonzero": true
+  },
+  "peak_allocated_bytes": 5510354944,
+  "peak_reserved_bytes": 8101298176
+}

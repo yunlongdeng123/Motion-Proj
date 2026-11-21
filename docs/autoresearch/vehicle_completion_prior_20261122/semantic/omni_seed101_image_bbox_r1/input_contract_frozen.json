@@ -1,0 +1,92 @@
+{
+  "contract": {
+    "schema": "a20.omni_image_bbox_input.v1",
+    "alias": "a20",
+    "native_actor_id": 21,
+    "points_npz": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/aggregated_lidar_train_086_110.npz",
+    "points_sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c",
+    "point_key": "xyz_canonical_m",
+    "size_key": "size_lwh_m",
+    "size_lwh_m": [
+      5.0,
+      2.5,
+      2.08
+    ],
+    "source_raw_key": "source_raw",
+    "measured_lidar_only": true,
+    "native_gaussian_control_used": false,
+    "training_raws": [
+      86,
+      110
+    ],
+    "heldout_used": false,
+    "source_provenance": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/provenance.json",
+    "source_provenance_sha256": "1f179ccd2d66208d1546e32a307d67f00e711fdf3fed557f723702cc93be2bfc",
+    "shape_image_condition_used": true,
+    "normalization": "Official bbox normalized LHW proportions [1,.416,.5]; output raw mesh retained; deterministic metric map uses known L5m/generated xspan and generated bbox center; no measured-point or holdout fit",
+    "conditioning_image": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/sd15_seed101_r1/amodal_rgba.png",
+    "conditioning_image_sha256": "466b98eca17b6830f98afcef7bb6b00915c3a36b5744ccb65bc7edd1f4ed8bcb",
+    "generated_amodal_semantics": true,
+    "observed_visible_rgb_max_abs_uint8": 0,
+    "amodal_origin": "single SD1.5 base DDIM20 CFG3 seed101 generation; no LoRA",
+    "amodal_plan": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/sd15_seed101_r1/plan.json",
+    "amodal_plan_sha256": "56443ea72138c36529a456cd3bafa9f57589c6c73f67a25532b7172b3138afb2",
+    "amodal_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/sd15_seed101_r1/receipt.json",
+    "amodal_receipt_sha256": "ea591a9e64268d0444ad95e95bd866f9476f249c248232d236b53c4598b598a8",
+    "generated_semantic_artifacts": [
+      "estimated tire size",
+      "tow hook",
+      "small lettering",
+      "duplicated side mirrors"
+    ],
+    "prior_geometry_truth": false,
+    "root_visual_image_approval": true,
+    "control": "bbox",
+    "bbox_control_lhw": [
+      1.0,
+      0.41600000000000004,
+      0.5
+    ],
+    "measured_points_passed_to_shape_encoder": 0,
+    "measured_lidar_role": "Post-generation distance/diagnostics only; no control tokens; no scale fitting"
+  },
+  "seed": 101,
+  "control": "bbox",
+  "model_point_count": 0,
+  "diagnostic_sample_count": 1030,
+  "bbox_control_lhw": [
+    1.0,
+    0.41599997878074646,
+    0.5
+  ],
+  "observed_count": 1030,
+  "full_size_lwh_m": [
+    5.0,
+    2.5,
+    2.0799999237060547
+  ],
+  "half_span_m": 2.5,
+  "axis_native_to_omni": [
+    0,
+    2,
+    1
+  ],
+  "shape_image_condition_used": true,
+  "partial_alpha_treated_as_complete_silhouette": false,
+  "image_condition_origin": "Generated amodal SD1.5 image; estimated generated silhouette; observed V RGB exactly preserved",
+  "image_path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/semantic/sd15_seed101_r1/amodal_rgba.png",
+  "image_sha256": "466b98eca17b6830f98afcef7bb6b00915c3a36b5744ccb65bc7edd1f4ed8bcb",
+  "image_foreground_pixels": 59020,
+  "training_raws": [
+    86,
+    110
+  ],
+  "measured_points_passed_to_shape_encoder": 0,
+  "output_metric_mapping": "After generation, uniform scale from generated X span to declared L=5m; center generated bbox at physical OBB center; no measured-point alignment",
+  "points_sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c",
+  "contract_sha256": "e7b7db0a3cef900b25d40f2d82fcf3d80975a13eb28047a9939e92b18e54ae3c",
+  "bbox_max_abs": 1.0,
+  "steps": 50,
+  "guidance_scale": 4.5,
+  "octree_resolution": 256
+}
