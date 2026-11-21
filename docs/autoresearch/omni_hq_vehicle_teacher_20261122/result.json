@@ -1,0 +1,234 @@
+{
+  "schema": "a20.omni_hq.experiment_result.v1",
+  "date": "2026-11-22 Asia/Singapore",
+  "headline": "高质量参考改善了粗车型结构；测距与局部部件关系仍未通过，暂不作为合格a20教师。",
+  "verdict": "GREY_GATE_FAILED_NO_MATERIAL_NO_STUDENT",
+  "human_quality_verdict": null,
+  "approved_as_a20_teacher": false,
+  "whole_visible_actor_replacement_allowed": false,
+  "automatic_teacher_promotion": false,
+  "geometry_only": true,
+  "teacher_student_training_steps": 0,
+  "candidate": "proposal_bbox_frame_fixed",
+  "measurement_point_count": 1030,
+  "point_to_surface_m": {
+    "count": 1030,
+    "mean": 0.09926629344247362,
+    "p50": 0.040270749130808206,
+    "p90": 0.38016791214856055,
+    "p95": 0.41558200876133633,
+    "p99": 0.5531492537755338,
+    "maximum": 0.9042578593598335
+  },
+  "uniform_point_to_surface_m": {
+    "count": 1030,
+    "mean": 0.17357592048537532,
+    "p50": 0.12292956149246587,
+    "p90": 0.4558657797677935,
+    "p95": 0.5586556513735543,
+    "p99": 0.607956338171645,
+    "maximum": 0.7651923877039725
+  },
+  "registered_extent_lwh_m": [
+    4.861372947692871,
+    2.549825668334961,
+    1.9809821844100952
+  ],
+  "registration_and_gate_source": "audits/bbox_frame_fixed_registered_audit/audit.json",
+  "spatial_residuals_source": "audits/bbox_frame_fixed_registered_audit/spatial_residual_breakdown.json",
+  "metrics": [
+    [
+      "当前结论",
+      "粗车型几何候选；未通过a20教师准入",
+      "测距失败，部件细节仍需修复"
+    ],
+    [
+      "测距均值／P90 · 全部1030点",
+      "9.93 cm／38.02 cm",
+      "预登记门槛 ≤7.5 cm／≤15 cm：未通过"
+    ],
+    [
+      "raw86 可见核心召回／未知区排除IoU",
+      "98.46%／98.46%",
+      "≥95%／≥90%：通过"
+    ],
+    [
+      "raw110 可见核心召回／未知区排除IoU",
+      "99.06%／99.06%",
+      "≥95%／≥90%：通过"
+    ],
+    [
+      "可靠背景溢出 · raw86／110",
+      "0%／0%",
+      "≤0.5%：通过"
+    ],
+    [
+      "配准后长×宽×高",
+      "4.861×2.550×1.981 m",
+      "各轴相对已知框0.8～1.25：通过"
+    ],
+    [
+      "结构检查",
+      "四轮、两轴、驾驶舱／货厢关系可辨",
+      "轮胎、轮拱、底盘仍有熔连；未认定高质量"
+    ],
+    [
+      "实际模型输入",
+      "后3/4单车RGBA；前3/4仅作结构参考",
+      "官方图像列表为独立batch，未使用多图联合条件"
+    ],
+    [
+      "本轮计算",
+      "两次形状推理；训练0步",
+      "初次框轴诊断＋一次坐标修正重放；GPU保持开机"
+    ]
+  ],
+  "media": [
+    [
+      "input/reference_original.png",
+      "reference.png"
+    ],
+    [
+      "input/rear_rgb.png",
+      "rear_rgb.png"
+    ],
+    [
+      "input/rear_alpha.png",
+      "rear_alpha.png"
+    ],
+    [
+      "proposal_bbox_frame_fixed/raw_grey_six_views.png",
+      "corrected_raw_grey.png"
+    ],
+    [
+      "audits/bbox_frame_fixed_registered_audit/grey_six_orthographic.png",
+      "corrected_orthographic.png"
+    ],
+    [
+      "audits/bbox_frame_fixed_registered_audit/measured_points_six_orthographic.png",
+      "measurement_overlay.png"
+    ],
+    [
+      "audits/bbox_frame_fixed_registered_audit/projection_086.png",
+      "projection_086.png"
+    ],
+    [
+      "audits/bbox_frame_fixed_registered_audit/projection_110.png",
+      "projection_110.png"
+    ],
+    [
+      "proposal/raw_grey_six_views.png",
+      "initial_axis_diagnostic.png"
+    ]
+  ],
+  "figures": [
+    {
+      "title": "用户提供的高质量车型参考",
+      "file": "reference.png",
+      "caption": "左侧后3/4视图作为Omni输入；右侧前3/4视图只作结构核对。"
+    },
+    {
+      "title": "实际输入：后3/4原始RGB裁片",
+      "file": "rear_rgb.png",
+      "caption": "模型使用此裁片的前景RGBA；原始RGB未重绘、未缩放。"
+    },
+    {
+      "title": "实际输入的前景Alpha",
+      "file": "rear_alpha.png",
+      "caption": "推理前修正近侧后轮被抠图截断的问题；保留轮胎和后视镜。"
+    },
+    {
+      "title": "框轴修正后：原始Omni灰模",
+      "file": "corrected_raw_grey.png",
+      "caption": "未用测距变形；车顶与后视镜较干净，四轮和货厢可辨。"
+    },
+    {
+      "title": "固定候选：正交六视灰模",
+      "file": "corrected_orthographic.png",
+      "caption": "前、后、左、右、顶、底；只作有界刚体及统一尺度配准，未分轴拉伸。轮拱、后轮和底盘仍偏粗糙。"
+    },
+    {
+      "title": "实测点与表面残差",
+      "file": "measurement_overlay.png",
+      "caption": "全部1030个实测代理点保留；较大残差集中驾驶舱后部，尾门区域贴合较好。"
+    },
+    {
+      "title": "raw86：可见轮廓投影",
+      "file": "projection_086.png",
+      "caption": "固定可见核心和可靠背景分别检查；未知遮挡区不作为完整轮廓真值。"
+    },
+    {
+      "title": "raw110：可见轮廓投影",
+      "file": "projection_110.png",
+      "caption": "轮廓指标通过；不能替代完整形状及实测点检查。"
+    },
+    {
+      "title": "保留的初次结果：框轴接线错误诊断",
+      "file": "initial_axis_diagnostic.png",
+      "caption": "初次把车辆LWH直接传为模型XYZ，使车体过宽。该结果单独归档，不作为有效Omni能力对照。"
+    }
+  ],
+  "findings": [
+    "这张参考能够驱动Omni生成较完整、部件关系可辨的皮卡灰模。但它目前适合作为车型级粗几何候选，尚不能作为已验收的a20教师。",
+    "本轮发现并修正了BBox轴序接线错误：Omni接口直接使用原始XYZ，模型前方为−Z、上方为+Y。将车辆LWH改为模型的WHL后，统一按5米车长初始化，车宽从3.72米降至2.62米。固定同一图像、seed、步数和门槛，只重放一次。",
+    "测距失败具有局部性：尾部649点均值3.64厘米、P90为6.72厘米；驾驶舱后部314点均值18.93厘米、P90为41.37厘米。raw86与raw110分别统计仍失败，不能通过继续整体下移解决。",
+    "四轮／两轴、驾驶舱／货厢关系比早期占位先验清楚，车顶和后视镜没有明显漂块；轮胎轮拱和底盘仍有低频熔连，前格栅和细部结构较粗。网格完整与轮廓通过不构成教师准入。",
+    "本轮按前置灰模协议停止：未生成材质、未训练学生，也未替换真实可见车身。下一步若继续，应保留可见a20表面，针对缺失部件修复并重新通过灰模门，再进入教师蒸馏。"
+  ],
+  "disclaimer": "参考图是车型先验，并非已证实的a20隐藏部分真值；1030个点按对象框和遮挡框保护筛选，属于实测几何归属代理，尚非语义核验的a20专属真值。轮廓来自保守可见核心掩码，不能验证遮挡部分。86／110用于有界配准，指标为拟合集指标；134／179／198未参与生成、配准或选择。门槛为本轮生成前固定的工程标准，人工质量分数留空。本次单候选试验不能据此判断Omni的能力上限。",
+  "execution": {
+    "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+    "active_candidate": "proposal_bbox_frame_fixed",
+    "first_candidate_role": "unaligned_bbox_axis_engineering_diagnostic",
+    "original_candidate_preserved": true,
+    "reference_input_role": "high_quality_vehicle_class_reference_not_a20_truth",
+    "model_image_count": 1,
+    "native_multiview_joint_conditioning": false,
+    "bbox_coordinate_issue": "Official ordered components embed directly and cornerize as raw XYZ; no vehicle semantic rotation",
+    "original_bbox_raw_xyz": [
+      1,
+      0.416,
+      0.5
+    ],
+    "corrected_bbox_raw_xyz": [
+      0.5,
+      0.416,
+      1
+    ],
+    "fixed_actor_lwh_to_raw_xyz_indices": [
+      1,
+      2,
+      0
+    ],
+    "correction_source": "independent raw grey-mesh semantic orientation only",
+    "seed": 101,
+    "steps_per_run": 50,
+    "guidance_scale": 4.5,
+    "decode_resolution": 256,
+    "total_sampling_runs": 2,
+    "original_diagnostic_runs": 1,
+    "authorized_engineering_replay_runs": 1,
+    "total_new_diffusion_steps": 100,
+    "training_steps": 0,
+    "measured_points_used_for_build": 0,
+    "holdout_used": false,
+    "further_sampling_authorized": false,
+    "GPU_keep_on": true,
+    "process_wall_seconds_total": 154.95208492688835,
+    "sampling_wall_seconds_total": 42.4135465528816,
+    "decode_wall_seconds_total": 22.509820921346545,
+    "maximum_peak_allocated_gib": 7.678417205810547,
+    "original_raw_span_xyz": [
+      1.3932031989097595,
+      0.8067354261875153,
+      1.8714143633842468
+    ],
+    "fixed_raw_span_xyz": [
+      1.0446594953536987,
+      0.8115354776382446,
+      1.99105304479599
+    ],
+    "numeric_and_visual_verdict": "GREY_GATE_FAILED_NO_MATERIAL_NO_STUDENT",
+    "final_verdict_source": "audits/grey_gate_result.json"
+  }
+}

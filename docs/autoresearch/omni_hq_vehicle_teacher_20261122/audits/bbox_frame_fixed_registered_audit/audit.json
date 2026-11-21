@@ -1,0 +1,673 @@
+{
+  "schema": "a20.hq.independent_cpu_audit.v1",
+  "asset_label": "bbox_frame_fixed_bounded_build_registered_diagnostic",
+  "human_verdict": null,
+  "layer_1_structure_status": "requires_separate_actual_view_findings",
+  "layer_2_numeric_status": "FAIL_FIXED_ENGINEERING_GATE",
+  "numeric_failures": [
+    "all_measured_proxy_point_mean",
+    "all_measured_proxy_point_p90"
+  ],
+  "automatic_teacher_promotion": false,
+  "whole_visible_actor_replacement_allowed": false,
+  "gpu_used": false,
+  "heldout_used": false,
+  "geometry_modified_by_audit": false,
+  "evaluated_raws": [
+    86,
+    110
+  ],
+  "source_point_count": 1030,
+  "source_raw_counts": {
+    "86": 428,
+    "110": 602
+  },
+  "point_ownership": "OBB-selected actual measured points, not semantically verified a20-only GT. All 1030 retained in the main metric.",
+  "physical_size_xyz_m": [
+    5.0,
+    2.5,
+    2.0799999237060547
+  ],
+  "mesh_bounds_m": [
+    [
+      -2.384943723678589,
+      -1.2777262926101685,
+      -1.1268720626831055
+    ],
+    [
+      2.4764292240142822,
+      1.2720993757247925,
+      0.8541101217269897
+    ]
+  ],
+  "mesh_extent_xyz_m": [
+    4.861372947692871,
+    2.549825668334961,
+    1.9809821844100952
+  ],
+  "extent_to_known_size": [
+    0.9722745895385743,
+    1.0199302673339843,
+    0.9523953159000439
+  ],
+  "extent_note": "Length can be imposed by initialization; no three-axis dimension forcing is permitted.",
+  "point_to_surface_m": {
+    "count": 1030,
+    "mean": 0.09926629344247362,
+    "p50": 0.040270749130808206,
+    "p90": 0.38016791214856055,
+    "p95": 0.41558200876133633,
+    "p99": 0.5531492537755338,
+    "maximum": 0.9042578593598335
+  },
+  "by_source_raw": {
+    "86": {
+      "count": 428,
+      "mean": 0.09776295330813511,
+      "p50": 0.04126306846894792,
+      "p90": 0.375454495161616,
+      "p95": 0.39758906493762325,
+      "p99": 0.5137474666319679,
+      "maximum": 0.8969099131518901
+    },
+    "110": {
+      "count": 602,
+      "mean": 0.10033511333864782,
+      "p50": 0.039470013361134634,
+      "p90": 0.39669164047522476,
+      "p95": 0.47025717698540653,
+      "p99": 0.5594282564712468,
+      "maximum": 0.9042578593598335
+    }
+  },
+  "spatial_proxy_groups": {
+    "lower_30cm_obb_band": {
+      "count": 17,
+      "distance_m": {
+        "count": 17,
+        "mean": 0.30698734706675396,
+        "p50": 0.39981926664141265,
+        "p90": 0.4914658511762814,
+        "p95": 0.5015322865994607,
+        "p99": 0.5176646211040905,
+        "maximum": 0.521697704730248
+      }
+    },
+    "upper_50cm_obb_band": {
+      "count": 180,
+      "distance_m": {
+        "count": 180,
+        "mean": 0.09724051749340473,
+        "p50": 0.03401024378886363,
+        "p90": 0.1493945123019284,
+        "p95": 0.5960184341115471,
+        "p99": 0.8620384754676279,
+        "maximum": 0.9042578593598335
+      }
+    },
+    "left_outer_40cm_obb_band": {
+      "count": 50,
+      "distance_m": {
+        "count": 50,
+        "mean": 0.1843409204551868,
+        "p50": 0.0856735739215434,
+        "p90": 0.4446154838815209,
+        "p95": 0.48494191010138954,
+        "p99": 0.5093463861251407,
+        "maximum": 0.521697704730248
+      }
+    },
+    "right_outer_40cm_obb_band": {
+      "count": 109,
+      "distance_m": {
+        "count": 109,
+        "mean": 0.14951230952134004,
+        "p50": 0.04610078804100645,
+        "p90": 0.5414366300383516,
+        "p95": 0.69734855871129,
+        "p99": 0.8933786283231041,
+        "maximum": 0.9042578593598335
+      }
+    },
+    "rear_70cm_obb_band": {
+      "count": 649,
+      "distance_m": {
+        "count": 649,
+        "mean": 0.03639292602003798,
+        "p50": 0.031045330113389277,
+        "p90": 0.06723434874376698,
+        "p95": 0.08021019991167566,
+        "p99": 0.11838300425853758,
+        "maximum": 0.521697704730248
+      }
+    },
+    "front_70cm_obb_band": {
+      "count": 16,
+      "distance_m": {
+        "count": 16,
+        "mean": 0.650190711257953,
+        "p50": 0.6572752054051434,
+        "p90": 0.874839382971977,
+        "p95": 0.8987468997038759,
+        "p99": 0.903155667428642,
+        "maximum": 0.9042578593598335
+      }
+    }
+  },
+  "exact_distance_method": {
+    "method": "exact point-to-triangle; conservative bounding-sphere and AABB pruning",
+    "excluded_zero_area_faces": 2,
+    "candidate_triangles": {
+      "count": 1030,
+      "mean": 19.262135922330096,
+      "p50": 12.0,
+      "p90": 37.10000000000002,
+      "p95": 73.54999999999995,
+      "p99": 129.71000000000004,
+      "maximum": 194.0
+    }
+  },
+  "vertices": 147022,
+  "faces": 294078,
+  "watertight": false,
+  "winding_consistent": true,
+  "surface_area_m2": 42.17369857722347,
+  "connected_components": {
+    "analysis_only_weld_decimal_digits": 6,
+    "weld_did_not_change_evaluated_mesh": true,
+    "count": 14,
+    "largest_component_area_fraction": 0.9967978819430089,
+    "components": [
+      {
+        "faces": 293026,
+        "vertices": 146495,
+        "area_m2": 42.03865341321278,
+        "area_fraction": 0.9967978819430089,
+        "bounds_m": [
+          [
+            -2.384943723678589,
+            -1.2777262926101685,
+            -1.1268720626831055
+          ],
+          [
+            2.4764292240142822,
+            1.2720993757247925,
+            0.8541101217269897
+          ]
+        ]
+      },
+      {
+        "faces": 1036,
+        "vertices": 520,
+        "area_m2": 0.1350451617369506,
+        "area_fraction": 0.003202118056991201,
+        "bounds_m": [
+          [
+            1.1835671663284302,
+            -0.6551732420921326,
+            0.269796758890152
+          ],
+          [
+            1.3414162397384644,
+            0.8067617416381836,
+            0.30524444580078125
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            1.3606797456741333,
+            1.1294773817062378,
+            -0.7672525644302368
+          ],
+          [
+            1.3799408674240112,
+            1.1295452117919922,
+            -0.7585844993591309
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            1.360679268836975,
+            1.1295452117919922,
+            -0.7585844993591309
+          ],
+          [
+            1.3606797456741333,
+            1.1295452117919922,
+            -0.758584201335907
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            1.3606797456741333,
+            1.1153943538665771,
+            -0.7585844993591309
+          ],
+          [
+            1.3798913955688477,
+            1.1295452117919922,
+            -0.758584201335907
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            1.360679268836975,
+            1.1295452117919922,
+            -0.7585844993591309
+          ],
+          [
+            1.3606797456741333,
+            1.1295452117919922,
+            -0.758584201335907
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            -0.00726567767560482,
+            1.0187225341796875,
+            0.281523197889328
+          ],
+          [
+            0.01200579572468996,
+            1.0191915035247803,
+            0.281523197889328
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            0.9154372215270996,
+            0.49548664689064026,
+            0.5126582384109497
+          ],
+          [
+            0.9155054688453674,
+            0.5147497057914734,
+            0.5154940485954285
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            2.2987818717956543,
+            -0.49171072244644165,
+            -0.2577917277812958
+          ],
+          [
+            2.2987818717956543,
+            -0.491708368062973,
+            -0.2577917277812958
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            2.2987818717956543,
+            -0.49171072244644165,
+            -0.2577917277812958
+          ],
+          [
+            2.2987818717956543,
+            -0.491708368062973,
+            -0.2577917277812958
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            2.2987141609191895,
+            -0.5109718441963196,
+            -0.2585675120353699
+          ],
+          [
+            2.2987818717956543,
+            -0.49171072244644165,
+            -0.2577917277812958
+          ]
+        ]
+      },
+      {
+        "faces": 1,
+        "vertices": 2,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            2.2982420921325684,
+            -0.5109701752662659,
+            -0.2577917277812958
+          ],
+          [
+            2.2987818717956543,
+            -0.49171072244644165,
+            -0.2577917277812958
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            0.2175559103488922,
+            -0.7733079791069031,
+            0.7437931299209595
+          ],
+          [
+            0.23682889342308044,
+            -0.7721390128135681,
+            0.7437931299209595
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            -1.2855687141418457,
+            -0.9851386547088623,
+            -1.0475034713745117
+          ],
+          [
+            -1.266287922859192,
+            -0.9799617528915405,
+            -1.0475029945373535
+          ]
+        ]
+      }
+    ],
+    "small_components_not_listed": 0,
+    "note": "Legitimate disconnected wheels or mirrors require semantic review; counts are not acceptance."
+  },
+  "low_support_region_diagnostics": {
+    "method": "Low-surface diagnostic only: global min z + .16m, |y| > width/4, split along x at >.30m gaps, at least20 vertices per region.",
+    "semantic_wheel_identity_automatic": false,
+    "actual_ground_plane_fitted": false,
+    "regions": [
+      {
+        "side": "left",
+        "vertices": 1313,
+        "bounds_m": [
+          [
+            -1.7662016153335571,
+            0.8506726622581482,
+            -1.1267132759094238
+          ],
+          [
+            -1.0627292394638062,
+            1.1932432651519775,
+            -0.9687131643295288
+          ]
+        ],
+        "contact_interval_midpoint_x_m": -1.4144654273986816,
+        "median_y_m": 1.0055879354476929,
+        "minimum_z_m": -1.1267132759094238,
+        "offset_from_obb_bottom_proxy_m": -0.08671327590942379
+      },
+      {
+        "side": "left",
+        "vertices": 1408,
+        "bounds_m": [
+          [
+            1.1481974124908447,
+            0.8216902017593384,
+            -1.1243401765823364
+          ],
+          [
+            1.8519096374511719,
+            1.2212209701538086,
+            -0.9670803546905518
+          ]
+        ],
+        "contact_interval_midpoint_x_m": 1.5000535249710083,
+        "median_y_m": 1.0139784812927246,
+        "minimum_z_m": -1.1243401765823364,
+        "offset_from_obb_bottom_proxy_m": -0.08434017658233639
+      },
+      {
+        "side": "right",
+        "vertices": 1244,
+        "bounds_m": [
+          [
+            -1.742971420288086,
+            -1.0133864879608154,
+            -1.1232613325119019
+          ],
+          [
+            -1.098701000213623,
+            -0.6552087068557739,
+            -0.9675083160400391
+          ]
+        ],
+        "contact_interval_midpoint_x_m": -1.4208362102508545,
+        "median_y_m": -0.8261465132236481,
+        "minimum_z_m": -1.1232613325119019,
+        "offset_from_obb_bottom_proxy_m": -0.08326133251190182
+      },
+      {
+        "side": "right",
+        "vertices": 1211,
+        "bounds_m": [
+          [
+            1.1612910032272339,
+            -1.0661569833755493,
+            -1.1268720626831055
+          ],
+          [
+            1.8415613174438477,
+            -0.7332487106323242,
+            -0.9673177599906921
+          ]
+        ],
+        "contact_interval_midpoint_x_m": 1.5014261603355408,
+        "median_y_m": -0.8751711249351501,
+        "minimum_z_m": -1.1268720626831055,
+        "offset_from_obb_bottom_proxy_m": -0.08687206268310543
+      }
+    ],
+    "candidate_side_front_rear_spacing_m": {
+      "left": 2.91451895236969,
+      "right": 2.9222623705863953
+    },
+    "region_bottom_height_spread_m": 0.0036107301712036133,
+    "note": "Manual views must establish whether these regions are the four tires. OBB lower face is only a plane proxy, not measured ground GT."
+  },
+  "projection_metrics": [
+    {
+      "raw": 86,
+      "visible_core_recall": 0.9845713644524237,
+      "reliable_domain_iou": 0.9845713644524237,
+      "true_positive_pixels": 17549,
+      "missed_visible_core_pixels": 275,
+      "predicted_known_background_pixels": 0,
+      "projected_area_pixels": 46282,
+      "known_background_spill_fraction": 0.0,
+      "unknown_predicted_pixels": 28733,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/mapping.json",
+          "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/context_rgb.png",
+          "sha256": "0eb8f88d5e77f98ea80e3697027f082bdc1a5b8fd2a62fbd37ed68dda66da458",
+          "bytes": 156207
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask.png",
+          "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+          "bytes": 611
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/known_background_mask.png",
+          "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+          "bytes": 786
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/unknown_potential_mask.png",
+          "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+          "bytes": 861
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_registered_audit/projection_086.png",
+        "sha256": "84b441de6805210c3bd11ffca203e7c56b9d379085157766ae7ab2bccca87b50",
+        "bytes": 295953
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    },
+    {
+      "raw": 110,
+      "visible_core_recall": 0.9906285231116122,
+      "reliable_domain_iou": 0.9906285231116122,
+      "true_positive_pixels": 28118,
+      "missed_visible_core_pixels": 266,
+      "predicted_known_background_pixels": 0,
+      "projected_area_pixels": 62846,
+      "known_background_spill_fraction": 0.0,
+      "unknown_predicted_pixels": 34728,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/mapping.json",
+          "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/context_rgb.png",
+          "sha256": "990df9916f0ade34c8891f7b9fb61c624eceaead8c1a443cf63f4b9804b3db6a",
+          "bytes": 185144
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask.png",
+          "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+          "bytes": 691
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/known_background_mask.png",
+          "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+          "bytes": 947
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/unknown_potential_mask.png",
+          "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+          "bytes": 1008
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_registered_audit/projection_110.png",
+        "sha256": "7f7e2c4b7160f7ee8229678c537c8de4a2c38fa71a408654655eb90ed137c5de",
+        "bytes": 352524
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    }
+  ],
+  "preregistered_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/preregistered_gate.json",
+    "bytes": 5181,
+    "sha256": "fd9bcb5c6d760bbe74448a674d23418f0de74b38465cfac21294edb2e3355834"
+  },
+  "provenance": {
+    "mesh": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_bounded_registration/candidate_actor_bounded_registered.ply",
+      "bytes": 5587499,
+      "sha256": "6b1187148dfc03f1b33a0c4ae4371f43c1380a4a7ed446cd6e606d1e86b83478"
+    },
+    "points": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/aggregated_lidar_train_086_110.npz",
+      "bytes": 44776,
+      "sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c"
+    },
+    "script": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/audit_hq_cpu.py",
+      "bytes": 21452,
+      "sha256": "794d3a7d0119b88f78a98fa75b16a9c1b29af7de8c46579ae58ba1d0d57a5482"
+    },
+    "legacy_script": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/shape_audit_cpu.py",
+      "bytes": 15962,
+      "sha256": "4d8c4c414c50beb6aefd096fcfc44415828be16e086caf015b0dbb52fce8b953"
+    }
+  },
+  "metric_limits": {
+    "all_primary_measured_points": true,
+    "mean_exact_point_to_surface_max_m": 0.075,
+    "p90_exact_point_to_surface_max_m": 0.15,
+    "each_build_visible_core_recall_min": 0.95,
+    "each_build_unknown_aware_iou_min": 0.9,
+    "each_build_known_background_spill_fraction_max": 0.005,
+    "each_axis_extent_to_known_size_range": [
+      0.8,
+      1.25
+    ],
+    "iou_definition": "|M intersect V| / (|V| + |M intersect B|), unknown U excluded",
+    "spill_definition": "|M intersect reliable B| / |M| within the frozen crop",
+    "point_metric_definition": "Exact Euclidean point-to-triangle distances, not LiDAR ray-depth residuals.",
+    "mask_uncertainty": "Frozen visible cores derive from approximate 480x320 masks with conservative erosion, nearest-expanded to native image size. Unknown/occluded potential is not amodal silhouette GT."
+  },
+  "wall_seconds": 8.623275835067034,
+  "notes": [
+    "Unknown image pixels excluded; projected OBB potential is not an amodal GT mask.",
+    "Point-to-surface is not LiDAR ray-depth residual.",
+    "Reliable-background spill is evaluated only within the frozen crop.",
+    "Numerical fit cannot override a wheel, semantic-heading, floating-part or component defect.",
+    "Complete raw teacher geometry does not protect observed a20 surfaces or RGB."
+  ]
+}

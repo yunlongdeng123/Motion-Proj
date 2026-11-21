@@ -1,0 +1,30 @@
+{
+  "schema": "omni_hq.bbox_axis_audit.v1",
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "official_commit": "4d47c0cc2bd0c4281963a7314ab330a5af36bfa8",
+  "encoder_source": "/root/autodl-tmp/third_party/hunyuan3d-omni-v61-me2/hy3dshape/models/conditioners/omni_encoder.py",
+  "encoder_evidence": [
+    {"lines": "407-427", "behavior": "bbox_to_corners divides ordered components by two and multiplies raw XYZ signs; no semantic rotation"},
+    {"lines": "445-451", "behavior": "bbox components repeat directly into positional embedding; corners are returned as diagnostic sampled points"}
+  ],
+  "pipeline_source": "/root/autodl-tmp/third_party/hunyuan3d-omni-v61-me2/hy3dshape/pipelines/pipeline_generation_sit_omni.py",
+  "pipeline_evidence": [
+    {"lines": "144-153", "behavior": "bbox passed unchanged to conditioner; CFG keeps same bbox tokens"},
+    {"lines": "291-306", "behavior": "decoded mesh exported without semantic axis rotation"}
+  ],
+  "runtime_bbox_semantic_rotation": false,
+  "bbox_control_is_hard_geometric_constraint": false,
+  "bbox_control_kind": "learned conditioning on ordered raw XYZ extents",
+  "original_bbox_vector": [1.0, 0.416, 0.5],
+  "actual_fp16_bbox_vector": [1.0, 0.416015625, 0.5],
+  "actual_corner_max_abs_xyz": [0.5, 0.2080078125, 0.25],
+  "independent_visual_axis_observation": {"front": "-Z", "rear": "+Z", "up": "+Y", "longitudinal_axis": "Z", "width_axis": "X"},
+  "known_actor_size_lwh_m": [5.0, 2.5, 2.08],
+  "required_actor_extent_to_raw_xyz_permutation": [1, 2, 0],
+  "coordinate_corrected_bbox_vector": [0.5, 0.416, 1.0],
+  "original_candidate_role": "unaligned_bbox_axis_diagnostic",
+  "new_sampling_performed_by_this_audit": false,
+  "correction_authorization_status": "pending root decision",
+  "original_files_preserved": true,
+  "source_web_url": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni/blob/main/hy3dshape/models/conditioners/omni_encoder.py#L407-L451"
+}

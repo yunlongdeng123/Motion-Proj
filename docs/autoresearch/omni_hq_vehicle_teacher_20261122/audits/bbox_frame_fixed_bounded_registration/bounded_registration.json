@@ -1,0 +1,360 @@
+{
+  "schema": "a20.hq.bounded_build_registration.v1",
+  "human_verdict": null,
+  "input_mesh": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_uniform_initialization/candidate_actor_uniform_init.ply",
+    "bytes": 5587499,
+    "sha256": "dae8a05853030c07bdfc9bba6bd22d0761cef517f7eae3da076839d7312441a0"
+  },
+  "registered_mesh": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_bounded_registration/candidate_actor_bounded_registered.ply",
+    "bytes": 5587499,
+    "sha256": "6b1187148dfc03f1b33a0c4ae4371f43c1380a4a7ed446cd6e606d1e86b83478"
+  },
+  "relative_initial_to_registered_4x4": [
+    [
+      0.9720378305501168,
+      0.003420343433001341,
+      0.0,
+      0.046203739844220285
+    ],
+    [
+      -0.003420343433001341,
+      0.9720378305501168,
+      0.0,
+      -0.0009471286060922666
+    ],
+    [
+      0.0,
+      0.0,
+      0.9720438481723843,
+      -0.1363809607446777
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "relative_registered_to_initial_4x4": [
+    [
+      1.028753806929621,
+      -0.0036199119181559887,
+      0.0,
+      -0.04753570178125665
+    ],
+    [
+      0.0036199119181559887,
+      1.0287538069296212,
+      0.0,
+      0.0008071086906438932
+    ],
+    [
+      0.0,
+      0.0,
+      1.0287601756650981,
+      0.1403033011330695
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "yaw_degrees": -0.20160782660659599,
+  "uniform_scale": 0.9720438481723843,
+  "translation_xyz_m": [
+    0.046203739844220285,
+    -0.0009471286060922666,
+    -0.1363809607446777
+  ],
+  "bounds_lower": [
+    -0.17453292519943295,
+    0.9,
+    -0.35,
+    -0.35,
+    -0.2
+  ],
+  "bounds_upper": [
+    0.17453292519943295,
+    1.1,
+    0.35,
+    0.35,
+    0.2
+  ],
+  "parameters_at_or_near_bound": [
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "method": "Deterministic 12-iteration maximum closest-surface ICP, 5 DOF (yaw, uniform scale, xyz translation). Huber loss on fixed-correspondence XYZ residuals with f_scale=.075m. All 1030 points retained.",
+  "history": [
+    {
+      "iteration": 0,
+      "parameters_before": [
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact_mean_before_m": 0.17357592048537532,
+      "exact_p90_before_m": 0.4558657797677935,
+      "parameters_after": [
+        -0.002225288478233479,
+        0.9602551982484305,
+        -0.0033865751178654194,
+        -0.00010522266190068092,
+        -0.02776001090386673
+      ],
+      "parameter_max_delta": 0.03974480175156947,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 1,
+      "parameters_before": [
+        -0.002225288478233479,
+        0.9602551982484305,
+        -0.0033865751178654194,
+        -0.00010522266190068092,
+        -0.02776001090386673
+      ],
+      "exact_mean_before_m": 0.11335736931439962,
+      "exact_p90_before_m": 0.4192180464152769,
+      "parameters_after": [
+        -0.001717409720920219,
+        0.9505211175895513,
+        -0.0035664449110074034,
+        0.0016605395167918115,
+        -0.04807661097892386
+      ],
+      "parameter_max_delta": 0.020316600075057128,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 2,
+      "parameters_before": [
+        -0.001717409720920219,
+        0.9505211175895513,
+        -0.0035664449110074034,
+        0.0016605395167918115,
+        -0.04807661097892386
+      ],
+      "exact_mean_before_m": 0.10385843248412838,
+      "exact_p90_before_m": 0.40349620931184504,
+      "parameters_after": [
+        -0.0011301905555880622,
+        0.9491807807551398,
+        -0.002938590914818104,
+        0.0029009961936492376,
+        -0.06509790300329553
+      ],
+      "parameter_max_delta": 0.01702129202437167,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 3,
+      "parameters_before": [
+        -0.0011301905555880622,
+        0.9491807807551398,
+        -0.002938590914818104,
+        0.0029009961936492376,
+        -0.06509790300329553
+      ],
+      "exact_mean_before_m": 0.10137867934509685,
+      "exact_p90_before_m": 0.4000739947370994,
+      "parameters_after": [
+        -0.000753215906400385,
+        0.9502414530427054,
+        -0.0011423342824635728,
+        0.0035475148728495594,
+        -0.08029511343317786
+      ],
+      "parameter_max_delta": 0.015197210429882327,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 4,
+      "parameters_before": [
+        -0.000753215906400385,
+        0.9502414530427054,
+        -0.0011423342824635728,
+        0.0035475148728495594,
+        -0.08029511343317786
+      ],
+      "exact_mean_before_m": 0.09973910736084207,
+      "exact_p90_before_m": 0.39946380921230445,
+      "parameters_after": [
+        -0.0011024433835777067,
+        0.9523044074832662,
+        0.002699408085743234,
+        0.0026860713244200155,
+        -0.09236938834541966
+      ],
+      "parameter_max_delta": 0.012074274912241806,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 5,
+      "parameters_before": [
+        -0.0011024433835777067,
+        0.9523044074832662,
+        0.002699408085743234,
+        0.0026860713244200155,
+        -0.09236938834541966
+      ],
+      "exact_mean_before_m": 0.09932683057173701,
+      "exact_p90_before_m": 0.3986452003519141,
+      "parameters_after": [
+        -0.0015916691085958686,
+        0.9547568109111018,
+        0.007049307381903284,
+        0.001508878998446078,
+        -0.10149563472641819
+      ],
+      "parameter_max_delta": 0.009126246380998529,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 6,
+      "parameters_before": [
+        -0.0015916691085958686,
+        0.9547568109111018,
+        0.007049307381903284,
+        0.001508878998446078,
+        -0.10149563472641819
+      ],
+      "exact_mean_before_m": 0.09939218225915344,
+      "exact_p90_before_m": 0.396440119750146,
+      "parameters_after": [
+        -0.0020776158968593655,
+        0.9576892772463942,
+        0.012823386766142272,
+        0.0004976936116751877,
+        -0.10894565960348852
+      ],
+      "parameter_max_delta": 0.0074500248770703326,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 7,
+      "parameters_before": [
+        -0.0020776158968593655,
+        0.9576892772463942,
+        0.012823386766142272,
+        0.0004976936116751877,
+        -0.10894565960348852
+      ],
+      "exact_mean_before_m": 0.09954367069111704,
+      "exact_p90_before_m": 0.39342564474637226,
+      "parameters_after": [
+        -0.00255854119767272,
+        0.9606129905003802,
+        0.018905577272522126,
+        -0.00046359387506353703,
+        -0.11491586545171
+      ],
+      "parameter_max_delta": 0.006082190506379854,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 8,
+      "parameters_before": [
+        -0.00255854119767272,
+        0.9606129905003802,
+        0.018905577272522126,
+        -0.00046359387506353703,
+        -0.11491586545171
+      ],
+      "exact_mean_before_m": 0.09968174235793595,
+      "exact_p90_before_m": 0.3910510704989555,
+      "parameters_after": [
+        -0.0029528253494439326,
+        0.9635293443914621,
+        0.025337906816983283,
+        -0.0010511958400636133,
+        -0.11999416964127732
+      ],
+      "parameter_max_delta": 0.006432329544461157,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 9,
+      "parameters_before": [
+        -0.0029528253494439326,
+        0.9635293443914621,
+        0.025337906816983283,
+        -0.0010511958400636133,
+        -0.11999416964127732
+      ],
+      "exact_mean_before_m": 0.09973859247072395,
+      "exact_p90_before_m": 0.38972603174597364,
+      "parameters_after": [
+        -0.0032345049945470975,
+        0.9663984078785983,
+        0.032246750594278034,
+        -0.0013232364401814575,
+        -0.1251707291541134
+      ],
+      "parameter_max_delta": 0.006908843777294751,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 10,
+      "parameters_before": [
+        -0.0032345049945470975,
+        0.9663984078785983,
+        0.032246750594278034,
+        -0.0013232364401814575,
+        -0.1251707291541134
+      ],
+      "exact_mean_before_m": 0.09965378161813755,
+      "exact_p90_before_m": 0.38814845085205346,
+      "parameters_after": [
+        -0.003396885718305309,
+        0.9691200495919408,
+        0.03906602158530318,
+        -0.0012874929884286014,
+        -0.13082157946626588
+      ],
+      "parameter_max_delta": 0.006819270991025146,
+      "optimizer_success": true
+    },
+    {
+      "iteration": 11,
+      "parameters_before": [
+        -0.003396885718305309,
+        0.9691200495919408,
+        0.03906602158530318,
+        -0.0012874929884286014,
+        -0.13082157946626588
+      ],
+      "exact_mean_before_m": 0.09946576842431995,
+      "exact_p90_before_m": 0.3841962296455551,
+      "parameters_after": [
+        -0.0035187203720749263,
+        0.9720438481723843,
+        0.046203739844220285,
+        -0.0009471286060922666,
+        -0.1363809607446777
+      ],
+      "parameter_max_delta": 0.007137718258917104,
+      "optimizer_success": true
+    }
+  ],
+  "source_raws": [
+    86,
+    110
+  ],
+  "point_count": 1030,
+  "selection_or_threshold_sweep": false,
+  "anisotropic_scaling": false,
+  "heldout_used": false,
+  "gpu_used": false,
+  "fit_set_warning": "This registration uses BUILD measurements; report post-fit scores as fitting-set metrics, separately from uniform initialization.",
+  "wall_seconds": 15.218738539144397
+}

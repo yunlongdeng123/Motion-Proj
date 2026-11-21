@@ -1,0 +1,529 @@
+{
+  "schema": "a20.hq.independent_cpu_audit.v1",
+  "asset_label": "bbox_frame_fixed_semantic_uniform_initialization",
+  "human_verdict": null,
+  "layer_1_structure_status": "requires_separate_actual_view_findings",
+  "layer_2_numeric_status": "FAIL_FIXED_ENGINEERING_GATE",
+  "numeric_failures": [
+    "all_measured_proxy_point_mean",
+    "all_measured_proxy_point_p90"
+  ],
+  "automatic_teacher_promotion": false,
+  "whole_visible_actor_replacement_allowed": false,
+  "gpu_used": false,
+  "heldout_used": false,
+  "geometry_modified_by_audit": false,
+  "evaluated_raws": [
+    86,
+    110
+  ],
+  "source_point_count": 1030,
+  "source_raw_counts": {
+    "86": 428,
+    "110": 602
+  },
+  "point_ownership": "OBB-selected actual measured points, not semantically verified a20-only GT. All 1030 retained in the main metric.",
+  "physical_size_xyz_m": [
+    5.0,
+    2.5,
+    2.0799999237060547
+  ],
+  "mesh_bounds_m": [
+    [
+      -2.5,
+      -1.311692237854004,
+      -1.0189777612686157
+    ],
+    [
+      2.5,
+      1.311692237854004,
+      1.0189777612686157
+    ]
+  ],
+  "mesh_extent_xyz_m": [
+    5.0,
+    2.623384475708008,
+    2.0379555225372314
+  ],
+  "extent_to_known_size": [
+    1.0,
+    1.049353790283203,
+    0.9797863448504794
+  ],
+  "extent_note": "Length can be imposed by initialization; no three-axis dimension forcing is permitted.",
+  "point_to_surface_m": {
+    "count": 1030,
+    "mean": 0.17357592048537532,
+    "p50": 0.12292956149246587,
+    "p90": 0.4558657797677935,
+    "p95": 0.5586556513735543,
+    "p99": 0.607956338171645,
+    "maximum": 0.7651923877039725
+  },
+  "by_source_raw": {
+    "86": {
+      "count": 428,
+      "mean": 0.1630444806509411,
+      "p50": 0.11405121620942935,
+      "p90": 0.4508075210523367,
+      "p95": 0.5194734771351135,
+      "p99": 0.5631329418395858,
+      "maximum": 0.7575885625647163
+    },
+    "110": {
+      "count": 602,
+      "mean": 0.18106338933776378,
+      "p50": 0.12825484084420088,
+      "p90": 0.4754750313809161,
+      "p95": 0.5689515586079531,
+      "p99": 0.6138847408527566,
+      "maximum": 0.7651923877039725
+    }
+  },
+  "spatial_proxy_groups": {
+    "lower_30cm_obb_band": {
+      "count": 17,
+      "distance_m": {
+        "count": 17,
+        "mean": 0.3390343980008372,
+        "p50": 0.48459680164415947,
+        "p90": 0.5351720463695411,
+        "p95": 0.5391583313828961,
+        "p99": 0.5509139227223254,
+        "maximum": 0.5538528205571828
+      }
+    },
+    "upper_50cm_obb_band": {
+      "count": 180,
+      "distance_m": {
+        "count": 180,
+        "mean": 0.19310979571573839,
+        "p50": 0.16886973627481516,
+        "p90": 0.2982646315385096,
+        "p95": 0.4592552409089662,
+        "p99": 0.7235196143754448,
+        "maximum": 0.7651923877039725
+      }
+    },
+    "left_outer_40cm_obb_band": {
+      "count": 50,
+      "distance_m": {
+        "count": 50,
+        "mean": 0.19444321511112087,
+        "p50": 0.1344245889111323,
+        "p90": 0.5046843389249243,
+        "p95": 0.5263297183971696,
+        "p99": 0.5448524459379323,
+        "maximum": 0.5538528205571828
+      }
+    },
+    "right_outer_40cm_obb_band": {
+      "count": 109,
+      "distance_m": {
+        "count": 109,
+        "mean": 0.16185517840168082,
+        "p50": 0.11195665670324718,
+        "p90": 0.39908483683048274,
+        "p95": 0.5600052679873577,
+        "p99": 0.7541385424949166,
+        "maximum": 0.7651923877039725
+      }
+    },
+    "rear_70cm_obb_band": {
+      "count": 649,
+      "distance_m": {
+        "count": 649,
+        "mean": 0.10615542652700131,
+        "p50": 0.10762221026648687,
+        "p90": 0.15348905947307845,
+        "p95": 0.16816603415874543,
+        "p99": 0.2100282967389363,
+        "maximum": 0.5088548166491075
+      }
+    },
+    "front_70cm_obb_band": {
+      "count": 16,
+      "distance_m": {
+        "count": 16,
+        "mean": 0.5102863304381036,
+        "p50": 0.5161813857569103,
+        "p90": 0.7360259371284683,
+        "p95": 0.7594895188495303,
+        "p99": 0.7640518139330841,
+        "maximum": 0.7651923877039725
+      }
+    }
+  },
+  "exact_distance_method": {
+    "method": "exact point-to-triangle; conservative bounding-sphere and AABB pruning",
+    "excluded_zero_area_faces": 2,
+    "candidate_triangles": {
+      "count": 1030,
+      "mean": 24.207766990291262,
+      "p50": 16.0,
+      "p90": 43.0,
+      "p95": 64.0,
+      "p99": 136.1300000000001,
+      "maximum": 253.0
+    }
+  },
+  "vertices": 147022,
+  "faces": 294078,
+  "watertight": false,
+  "winding_consistent": true,
+  "surface_area_m2": 44.63442842052198,
+  "connected_components": {
+    "analysis_only_weld_decimal_digits": 6,
+    "weld_did_not_change_evaluated_mesh": true,
+    "count": 6,
+    "largest_component_area_fraction": 0.9967978813748478,
+    "components": [
+      {
+        "faces": 293034,
+        "vertices": 146499,
+        "area_m2": 44.49150369641133,
+        "area_fraction": 0.9967978813748478,
+        "bounds_m": [
+          [
+            -2.5,
+            -1.311692237854004,
+            -1.0189777612686157
+          ],
+          [
+            2.5,
+            1.311692237854004,
+            1.0189777612686157
+          ]
+        ]
+      },
+      {
+        "faces": 1036,
+        "vertices": 520,
+        "area_m2": 0.14292473460166422,
+        "area_fraction": 0.0032021186251453364,
+        "bounds_m": [
+          [
+            1.1672275066375732,
+            -0.6687901020050049,
+            0.4178594648838043
+          ],
+          [
+            1.3325457572937012,
+            0.8350602388381958,
+            0.4543266296386719
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 3.0346081564491985e-13,
+        "area_fraction": 6.798805906385629e-15,
+        "bounds_m": [
+          [
+            1.3481794595718384,
+            1.1677560806274414,
+            -0.6400982141494751
+          ],
+          [
+            1.3481799364089966,
+            1.1677565574645996,
+            -0.6400979161262512
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            0.5535915493965149,
+            1.0884953737258911,
+            0.5289992094039917
+          ],
+          [
+            0.5555716753005981,
+            1.1083108186721802,
+            0.5488144159317017
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            -0.058699678629636765,
+            1.0488651990890503,
+            0.4299231469631195
+          ],
+          [
+            -0.038872379809617996,
+            1.049277901649475,
+            0.4299231469631195
+          ]
+        ]
+      },
+      {
+        "faces": 2,
+        "vertices": 3,
+        "area_m2": 0.0,
+        "area_fraction": 0.0,
+        "bounds_m": [
+          [
+            2.319124937057495,
+            -0.5165359973907471,
+            -0.12570065259933472
+          ],
+          [
+            2.319124937057495,
+            -0.4967183470726013,
+            -0.12490257620811462
+          ]
+        ]
+      }
+    ],
+    "small_components_not_listed": 0,
+    "note": "Legitimate disconnected wheels or mirrors require semantic review; counts are not acceptance."
+  },
+  "low_support_region_diagnostics": {
+    "method": "Low-surface diagnostic only: global min z + .16m, |y| > width/4, split along x at >.30m gaps, at least20 vertices per region.",
+    "semantic_wheel_identity_automatic": false,
+    "actual_ground_plane_fitted": false,
+    "regions": [
+      {
+        "side": "left",
+        "vertices": 1195,
+        "bounds_m": [
+          [
+            -1.8618834018707275,
+            0.8750358819961548,
+            -1.0188144445419312
+          ],
+          [
+            -1.148535966873169,
+            1.2175049781799316,
+            -0.8592990636825562
+          ]
+        ],
+        "contact_interval_midpoint_x_m": -1.5052096843719482,
+        "median_y_m": 1.0290499925613403,
+        "minimum_z_m": -1.0188144445419312,
+        "offset_from_obb_bottom_proxy_m": 0.021185555458068883
+      },
+      {
+        "side": "left",
+        "vertices": 1280,
+        "bounds_m": [
+          [
+            1.1445519924163818,
+            0.8575187921524048,
+            -1.0163730382919312
+          ],
+          [
+            1.8435600996017456,
+            1.2601734399795532,
+            -0.8593672513961792
+          ]
+        ],
+        "contact_interval_midpoint_x_m": 1.4940560460090637,
+        "median_y_m": 1.0488651990890503,
+        "minimum_z_m": -1.0163730382919312,
+        "offset_from_obb_bottom_proxy_m": 0.023626961708068883
+      },
+      {
+        "side": "right",
+        "vertices": 1135,
+        "bounds_m": [
+          [
+            -1.822498083114624,
+            -1.0442255735397339,
+            -1.0152631998062134
+          ],
+          [
+            -1.1881663799285889,
+            -0.6817276477813721,
+            -0.8593370318412781
+          ]
+        ],
+        "contact_interval_midpoint_x_m": -1.5053322315216064,
+        "median_y_m": -0.8533944487571716,
+        "minimum_z_m": -1.0152631998062134,
+        "offset_from_obb_bottom_proxy_m": 0.024736800193786657
+      },
+      {
+        "side": "right",
+        "vertices": 1097,
+        "bounds_m": [
+          [
+            1.1657551527023315,
+            -1.0865527391433716,
+            -1.0189777612686157
+          ],
+          [
+            1.8435600996017456,
+            -0.7517913579940796,
+            -0.8594905734062195
+          ]
+        ],
+        "contact_interval_midpoint_x_m": 1.5046576261520386,
+        "median_y_m": -0.8930248618125916,
+        "minimum_z_m": -1.0189777612686157,
+        "offset_from_obb_bottom_proxy_m": 0.021022238731384313
+      }
+    ],
+    "candidate_side_front_rear_spacing_m": {
+      "left": 2.999265730381012,
+      "right": 3.009989857673645
+    },
+    "region_bottom_height_spread_m": 0.0037145614624023438,
+    "note": "Manual views must establish whether these regions are the four tires. OBB lower face is only a plane proxy, not measured ground GT."
+  },
+  "projection_metrics": [
+    {
+      "raw": 86,
+      "visible_core_recall": 1.0,
+      "reliable_domain_iou": 1.0,
+      "true_positive_pixels": 17824,
+      "missed_visible_core_pixels": 0,
+      "predicted_known_background_pixels": 0,
+      "projected_area_pixels": 49187,
+      "known_background_spill_fraction": 0.0,
+      "unknown_predicted_pixels": 31363,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/mapping.json",
+          "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/context_rgb.png",
+          "sha256": "0eb8f88d5e77f98ea80e3697027f082bdc1a5b8fd2a62fbd37ed68dda66da458",
+          "bytes": 156207
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask.png",
+          "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da",
+          "bytes": 611
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/known_background_mask.png",
+          "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235",
+          "bytes": 786
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/unknown_potential_mask.png",
+          "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3",
+          "bytes": 861
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_uniform_audit/projection_086.png",
+        "sha256": "d9126640ad2f6cb4b4157d938e8128140c8a333f52a344f0a1653f1f4828b50f",
+        "bytes": 301976
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    },
+    {
+      "raw": 110,
+      "visible_core_recall": 1.0,
+      "reliable_domain_iou": 1.0,
+      "true_positive_pixels": 28384,
+      "missed_visible_core_pixels": 0,
+      "predicted_known_background_pixels": 0,
+      "projected_area_pixels": 66889,
+      "known_background_spill_fraction": 0.0,
+      "unknown_predicted_pixels": 38505,
+      "mesh_vertices_behind_camera": 0,
+      "provenance": {
+        "mapping.json": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/mapping.json",
+          "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8",
+          "bytes": 8137
+        },
+        "context_rgb.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/context_rgb.png",
+          "sha256": "990df9916f0ade34c8891f7b9fb61c624eceaead8c1a443cf63f4b9804b3db6a",
+          "bytes": 185144
+        },
+        "visible_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask.png",
+          "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e",
+          "bytes": 691
+        },
+        "known_background_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/known_background_mask.png",
+          "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83",
+          "bytes": 947
+        },
+        "unknown_potential_mask.png": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/unknown_potential_mask.png",
+          "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e",
+          "bytes": 1008
+        }
+      },
+      "image": {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_uniform_audit/projection_110.png",
+        "sha256": "53810958f79c79e365120f80d1452ed7c148cd10b6aadf6c694b84a1572faa91",
+        "bytes": 359343
+      },
+      "metric_domain": "V union reliable background; U ignored"
+    }
+  ],
+  "preregistered_gate": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/preregistered_gate.json",
+    "bytes": 5181,
+    "sha256": "fd9bcb5c6d760bbe74448a674d23418f0de74b38465cfac21294edb2e3355834"
+  },
+  "provenance": {
+    "mesh": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_uniform_initialization/candidate_actor_uniform_init.ply",
+      "bytes": 5587499,
+      "sha256": "dae8a05853030c07bdfc9bba6bd22d0761cef517f7eae3da076839d7312441a0"
+    },
+    "points": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/lidar/aggregated_lidar_train_086_110.npz",
+      "bytes": 44776,
+      "sha256": "424881a3fe104a8c90d8c0d22ec8ed2de7f8e39e9dba702e916ff485d7a1835c"
+    },
+    "script": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/audit_hq_cpu.py",
+      "bytes": 21452,
+      "sha256": "794d3a7d0119b88f78a98fa75b16a9c1b29af7de8c46579ae58ba1d0d57a5482"
+    },
+    "legacy_script": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/source/shape_audit_cpu.py",
+      "bytes": 15962,
+      "sha256": "4d8c4c414c50beb6aefd096fcfc44415828be16e086caf015b0dbb52fce8b953"
+    }
+  },
+  "metric_limits": {
+    "all_primary_measured_points": true,
+    "mean_exact_point_to_surface_max_m": 0.075,
+    "p90_exact_point_to_surface_max_m": 0.15,
+    "each_build_visible_core_recall_min": 0.95,
+    "each_build_unknown_aware_iou_min": 0.9,
+    "each_build_known_background_spill_fraction_max": 0.005,
+    "each_axis_extent_to_known_size_range": [
+      0.8,
+      1.25
+    ],
+    "iou_definition": "|M intersect V| / (|V| + |M intersect B|), unknown U excluded",
+    "spill_definition": "|M intersect reliable B| / |M| within the frozen crop",
+    "point_metric_definition": "Exact Euclidean point-to-triangle distances, not LiDAR ray-depth residuals.",
+    "mask_uncertainty": "Frozen visible cores derive from approximate 480x320 masks with conservative erosion, nearest-expanded to native image size. Unknown/occluded potential is not amodal silhouette GT."
+  },
+  "wall_seconds": 11.411059947684407,
+  "notes": [
+    "Unknown image pixels excluded; projected OBB potential is not an amodal GT mask.",
+    "Point-to-surface is not LiDAR ray-depth residual.",
+    "Reliable-background spill is evaluated only within the frozen crop.",
+    "Numerical fit cannot override a wheel, semantic-heading, floating-part or component defect.",
+    "Complete raw teacher geometry does not protect observed a20 surfaces or RGB."
+  ]
+}

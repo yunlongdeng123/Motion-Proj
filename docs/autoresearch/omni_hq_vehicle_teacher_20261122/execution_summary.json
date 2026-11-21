@@ -1,0 +1,54 @@
+{
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "active_candidate": "proposal_bbox_frame_fixed",
+  "first_candidate_role": "unaligned_bbox_axis_engineering_diagnostic",
+  "original_candidate_preserved": true,
+  "reference_input_role": "high_quality_vehicle_class_reference_not_a20_truth",
+  "model_image_count": 1,
+  "native_multiview_joint_conditioning": false,
+  "bbox_coordinate_issue": "Official ordered components embed directly and cornerize as raw XYZ; no vehicle semantic rotation",
+  "original_bbox_raw_xyz": [
+    1,
+    0.416,
+    0.5
+  ],
+  "corrected_bbox_raw_xyz": [
+    0.5,
+    0.416,
+    1
+  ],
+  "fixed_actor_lwh_to_raw_xyz_indices": [
+    1,
+    2,
+    0
+  ],
+  "correction_source": "independent raw grey-mesh semantic orientation only",
+  "seed": 101,
+  "steps_per_run": 50,
+  "guidance_scale": 4.5,
+  "decode_resolution": 256,
+  "total_sampling_runs": 2,
+  "original_diagnostic_runs": 1,
+  "authorized_engineering_replay_runs": 1,
+  "total_new_diffusion_steps": 100,
+  "training_steps": 0,
+  "measured_points_used_for_build": 0,
+  "holdout_used": false,
+  "further_sampling_authorized": false,
+  "GPU_keep_on": true,
+  "process_wall_seconds_total": 154.95208492688835,
+  "sampling_wall_seconds_total": 42.4135465528816,
+  "decode_wall_seconds_total": 22.509820921346545,
+  "maximum_peak_allocated_gib": 7.678417205810547,
+  "original_raw_span_xyz": [
+    1.3932031989097595,
+    0.8067354261875153,
+    1.8714143633842468
+  ],
+  "fixed_raw_span_xyz": [
+    1.0446594953536987,
+    0.8115354776382446,
+    1.99105304479599
+  ],
+  "numeric_and_visual_verdict": "pending independent audit; no student or material phase"
+}

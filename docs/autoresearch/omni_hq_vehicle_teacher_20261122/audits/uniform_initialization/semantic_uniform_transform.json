@@ -1,0 +1,137 @@
+{
+  "schema": "a20.hq.semantic_uniform_mapping.v1",
+  "human_verdict": null,
+  "raw_mesh": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/candidate_raw_omni.ply",
+    "bytes": 6674791,
+    "sha256": "90cce89e7b5d6cf429fd36fecb777752f2239e6d316e34a9655ed8df64aafd3a"
+  },
+  "mapped_mesh": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/uniform_initialization/candidate_actor_uniform_init.ply",
+    "bytes": 6674791,
+    "sha256": "b5584fb53a7119544e3d972d0cd657f2503abb5d8ffce10ff4d7089b6d7d6b85"
+  },
+  "semantic_source": "Actual independent view: raw -Z has nose hood and grille; raw +Z has cargo-bed cover and tailgate; raw +Y is roof up. Right-handed actor left is raw -X. No LiDAR or heldout used to choose orientation.",
+  "raw_axis_forward": "-z",
+  "raw_axis_up": "+y",
+  "raw_bounds": [
+    [
+      -0.7034221291542053,
+      -0.40185844898223877,
+      -0.948380172252655
+    ],
+    [
+      0.6897810697555542,
+      0.4048769772052765,
+      0.9230341911315918
+    ]
+  ],
+  "raw_extents_xyz": [
+    1.3932031989097595,
+    0.8067354261875153,
+    1.8714143633842468
+  ],
+  "semantically_oriented_raw_extents_lwh": [
+    1.8714143633842468,
+    1.3932031989097595,
+    0.8067354261875153
+  ],
+  "raw_aspect_lwh_relative_length": [
+    1.0,
+    0.7444653766525041,
+    0.43108327154688664
+  ],
+  "proper_rotation_3x3": [
+    [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ]
+  ],
+  "rotation_determinant": 1.0,
+  "uniform_scale_m_per_raw_unit": 2.671776009540747,
+  "raw_to_actor_uniform_4x4": [
+    [
+      0.0,
+      0.0,
+      -2.671776009540747,
+      -0.03385939214876471
+    ],
+    [
+      -2.671776009540747,
+      0.0,
+      0.0,
+      -0.0182229276230182
+    ],
+    [
+      0.0,
+      2.671776009540747,
+      0.0,
+      -0.00403241564521692
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "actor_uniform_to_raw_4x4": [
+    [
+      -0.0,
+      -0.37428287267684934,
+      -0.0,
+      -0.0068205296993255615
+    ],
+    [
+      0.0,
+      0.0,
+      0.37428287267684934,
+      0.0015092641115188596
+    ],
+    [
+      -0.37428287267684934,
+      -0.0,
+      -0.0,
+      -0.012672990560531614
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "initialized_extent_xyz_m": [
+    5.0,
+    3.7223268832625207,
+    2.155416357734433
+  ],
+  "known_actor_size_xyz_m": [
+    5.0,
+    2.5,
+    2.08
+  ],
+  "extent_to_known_size": [
+    1.0,
+    1.4889307533050082,
+    1.0362578642954003
+  ],
+  "initialization_note": "5m length is imposed by a single uniform scale; width and height are not forced. No physical accuracy claim from the imposed length.",
+  "max_abs_roundtrip_raw": 1.1102230246251565e-16,
+  "topology_unchanged": true,
+  "anisotropic_scaling": false,
+  "lidar_used": false,
+  "heldout_used": false,
+  "gpu_used": false
+}

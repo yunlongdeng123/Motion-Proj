@@ -1,0 +1,54 @@
+{
+  "schema": "omni_hq.input_frozen.v1",
+  "contract": {
+    "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+    "conditioning_image": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgba.png",
+    "conditioning_image_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+    "input_role": "high_quality_vehicle_class_reference_not_a20_truth",
+    "view_role": "rear_three_quarter_single_primary",
+    "reference_only_image_path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/front_rgb.png",
+    "declared_size_lwh_m": [
+      5,
+      2.5,
+      2.08
+    ],
+    "seed": 101,
+    "num_inference_steps": 50,
+    "guidance_scale": 4.5,
+    "resolution": 256,
+    "control": "bbox",
+    "preprocess": "original RGB unchanged; CPU GrabCut foreground matte, rear near-tire FG seed correction visually checked",
+    "scope": "grey teacher candidate only; no material inference and no student training",
+    "GPU_keep_on": true
+  },
+  "seed": 101,
+  "steps": 50,
+  "octree_resolution": 256,
+  "guidance_scale": 4.5,
+  "official_bbox_lhw": [
+    1.0,
+    0.41600000858306885,
+    0.5
+  ],
+  "official_bbox_shape": [
+    1,
+    1,
+    3
+  ],
+  "official_bbox_definition": "normalized [length,height,width]",
+  "official_preprocessed_shape": [
+    1,
+    3,
+    512,
+    512
+  ],
+  "conditioning_image_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+  "model_image_count": 1,
+  "point_condition_used": false,
+  "lidar_read_during_build": false,
+  "holdout_read": false,
+  "second_reference_image_passed_to_model": false,
+  "output_coordinate_contract": "raw normalized Omni; front/longitudinal axis not assumed",
+  "input_contract_sha256": "9512e2ecac80fecf9c1761c0168b630977d2de167e8fa0d6f5e512fefa1fad3a",
+  "worker_sha256": "94a24b1de73aa1727d6a12d406991acdb1c08b2646d55b6750c8ff3c9d6fd67c"
+}

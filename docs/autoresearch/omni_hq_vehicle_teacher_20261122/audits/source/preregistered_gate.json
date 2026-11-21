@@ -1,0 +1,72 @@
+{
+  "schema": "a20.omni_hq.grey_gate.preregistered.v1",
+  "registration_state": "frozen_before_new_mesh_inspection",
+  "registered_on": "2026-11-22 Asia/Singapore",
+  "threshold_origin": "Root agent's prospective task-specific engineering requirements, fixed before the new raw mesh was available. These are not a user quality score or a published universal standard.",
+  "human_verdict": null,
+  "automatic_stage_promotion": false,
+  "scope": "Geometry-only evaluation. No material generation or student training; GPU remains on.",
+  "source_contract": {
+    "reference_images": "User-provided high-quality pickup prior; not hidden or measured a20 ground truth.",
+    "build_raws": [86, 110],
+    "holdout_raws_excluded_from_generation_alignment_and_selection": [134, 179, 198],
+    "target": "a20 black pickup, native instance 21",
+    "occluder": "a9 white Mazda, native instance 10",
+    "actor_axes": "x forward, y left, z up, metres, centered physical OBB",
+    "actor_dimensions_xyz_m": [5.0, 2.5, 2.08],
+    "lidar_count": 1030,
+    "lidar_ownership": "Measured points selected by actor OBB and a9 OBB guard; geometric membership proxy, not semantic ground truth. Ground or other-object contamination remains possible. All 1030 points stay in the primary metric."
+  },
+  "layer_1_prior_structure": {
+    "method": "Independent actual inspection of fixed geometry-only views, with connected-component and spatial evidence. Structural failure overrides any numerical pass.",
+    "required": [
+      "Coherent nose/grille, cabin, cargo bed/tailgate and bumpers; no semantic front/rear reversal.",
+      "Four discernible wheels in a two-axle arrangement, coherent left/right wheel positions and wheel/body relations.",
+      "Plausible wheel contact and underbody clearance; report wheel-bottom mismatch and measured proxy-ground offset where identifiable.",
+      "No unexplained floating roof or mirror blobs, detached panels, or major part-connection defects.",
+      "No use of complete mesh, alpha, or texture availability as structural acceptance."
+    ],
+    "human_score": null,
+    "numerical_component_gate": null,
+    "note": "Disconnected components can be legitimate tires or mirrors; component count alone is not a pass/fail rule. Structural observations must identify parts and defects."
+  },
+  "layer_2_a20_adaptation": {
+    "all_primary_measured_points": true,
+    "mean_exact_point_to_surface_max_m": 0.075,
+    "p90_exact_point_to_surface_max_m": 0.15,
+    "each_build_visible_core_recall_min": 0.95,
+    "each_build_unknown_aware_iou_min": 0.90,
+    "each_build_known_background_spill_fraction_max": 0.005,
+    "each_axis_extent_to_known_size_range": [0.8, 1.25],
+    "iou_definition": "|M intersect V| / (|V| + |M intersect B|), unknown U excluded",
+    "spill_definition": "|M intersect reliable B| / |M| within the frozen crop",
+    "point_metric_definition": "Exact Euclidean point-to-triangle distances, not LiDAR ray-depth residuals.",
+    "mask_uncertainty": "Frozen visible cores derive from approximate 480x320 masks with conservative erosion, nearest-expanded to native image size. Unknown/occluded potential is not amodal silhouette GT."
+  },
+  "coordinates_and_size": {
+    "heading": "Determine signs using visible nose/grille versus cargo bed/tailgate in raw mesh views. Never infer forward merely from the longest axis or LiDAR fit.",
+    "allowed_initialization": "One proper rotation from semantic axis mapping, one uniform scale from known 5m longitudinal size, and centering. Keep raw aspect ratios and report them before initialization.",
+    "forbidden": "Independent XYZ scaling to force known dimensions.",
+    "required_records": "Raw mesh and its SHA256, raw extents, semantic proper-rotation matrix, uniform scale and translation, forward/inverse 4x4 matrices, initialized mesh and every derived registered mesh.",
+    "dimension_note": "Longitudinal extent becomes 5m by construction; this is a size initialization, not evidence of generated physical accuracy. Width and height ratios remain independently informative."
+  },
+  "optional_registration": {
+    "candidate_fixed": true,
+    "sources": [86, 110],
+    "objective": "Single bounded robust point-to-surface rigid-yaw and uniform-scale fit; no seed, orientation or threshold sweep.",
+    "relative_yaw_degrees": [-10.0, 10.0],
+    "relative_uniform_scale": [0.90, 1.10],
+    "relative_translation_x_m": [-0.35, 0.35],
+    "relative_translation_y_m": [-0.35, 0.35],
+    "relative_translation_z_m": [-0.20, 0.20],
+    "anisotropic_scaling": false,
+    "disclosure": "Registered 86/110 metrics are fitting-set metrics, not independent generalization evidence. The unregistered uniform initialization remains a separate reported result."
+  },
+  "visible_observation_protection": {
+    "separate_gate": true,
+    "requirements": "A future teacher-to-student path must lock genuine visible geometry/RGB with auditable correspondence and confine generation to unknown completion regions.",
+    "raw_whole_teacher_is_observation_fusion": false,
+    "grey_geometry_pass_does_not_authorize_whole_visible_actor_replacement": true,
+    "stop_after_grey_for_user_review": true
+  }
+}

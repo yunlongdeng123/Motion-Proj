@@ -1,0 +1,54 @@
+{
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "conditioning_image": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgba.png",
+  "conditioning_image_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+  "input_role": "high_quality_vehicle_class_reference_not_a20_truth",
+  "view_role": "rear_three_quarter_single_primary",
+  "reference_only_image_path": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/front_rgb.png",
+  "declared_size_lwh_m": [
+    5,
+    2.5,
+    2.08
+  ],
+  "seed": 101,
+  "num_inference_steps": 50,
+  "guidance_scale": 4.5,
+  "resolution": 256,
+  "control": "bbox",
+  "preprocess": "original RGB unchanged; CPU GrabCut foreground matte, rear near-tire FG seed correction visually checked",
+  "scope": "grey teacher candidate only; no material inference and no student training",
+  "GPU_keep_on": true,
+  "candidate_id": "bbox_frame_fixed",
+  "candidate_role": "single engineering replay correcting actor-to-raw bbox axis order; first proposal retained as unaligned-bbox diagnostic",
+  "actor_to_raw_bbox_mapping": {
+    "actor_size_order": "LWH",
+    "raw_bbox_order": "XYZ",
+    "actor_size_indices_for_raw_xyz": [
+      1,
+      2,
+      0
+    ],
+    "raw_front": "-Z",
+    "raw_up": "+Y",
+    "raw_width_axis": "X",
+    "evidence": "Independent raw grey-mesh inspection of first proposal; no measured RGB/LiDAR evaluation used to select bbox",
+    "original_bbox": [
+      1,
+      0.416,
+      0.5
+    ],
+    "corrected_bbox": [
+      0.5,
+      0.416,
+      1
+    ],
+    "mapping_source_candidate": "proposal/candidate_raw_omni.ply",
+    "mapping_type": "axis permutation only; dimensions and all sampling settings unchanged"
+  },
+  "sampling_accounting": {
+    "original_diagnostic_candidates": 1,
+    "authorized_coordinate_correction_replays": 1,
+    "more_candidates_authorized": false,
+    "total_candidate_limit": 2
+  }
+}

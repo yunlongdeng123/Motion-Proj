@@ -1,0 +1,50 @@
+{
+  "schema": "a20.hq.independent_visual_findings.v1",
+  "candidate": "proposal/candidate_raw_omni.ply",
+  "candidate_sha256": "90cce89e7b5d6cf429fd36fecb777752f2239e6d316e34a9655ed8df64aafd3a",
+  "reviewer": "independent CPU audit agent",
+  "human_verdict": null,
+  "user_quality_score": null,
+  "actual_views_inspected": [
+    "raw_preview/raw_y_up_four_views.png",
+    "raw_preview/raw_axes_six_views.png",
+    "uniform_initialization/uniform_init_three_views.png"
+  ],
+  "semantic_frame": {
+    "front_raw_axis": "-Z",
+    "up_raw_axis": "+Y",
+    "evidence": "Raw -Z view contains hood, nose and grille. Raw +Z contains cargo-bed cover, tailgate and rear bumper. Roof is raw +Y.",
+    "actor_from_raw_proper_rotation": [[0,0,-1],[-1,0,0],[0,1,0]],
+    "determinant": 1,
+    "reflection": false,
+    "heldout_or_lidar_used_for_direction_choice": false
+  },
+  "prior_part_quality": {
+    "status": "RECOGNIZABLE_PICKUP_LAYOUT_WITH_UNRESOLVED_SURFACE_DEFECTS",
+    "observations": [
+      "Nose, hood, cabin, covered cargo bed, tailgate and bumpers have coherent coarse relations.",
+      "Four wheels are discernible across the side and underside views and occupy a two-axle arrangement.",
+      "Tire and rim surfaces are rounded and melted; rear wheel/fender regions contain thin vertical sheets and fused mud-flap-like shapes.",
+      "The underside contains broad simplified lumps and does not establish a mechanically resolved axle/suspension connection.",
+      "The grille and rear-window/tailgate relief are low-frequency approximations, so the class prior is not a high-detail reconstruction.",
+      "No obvious detached roof or mirror blob is visible in these fixed views. Topology has five connected components, but the main vehicle contains 99.9741% of area and the four small pieces lie under the body; component count itself is not a rejection rule."
+    ],
+    "support_diagnostics": "Four low-surface regions match visible tire locations; front/rear interval spacing is 2.828m on left and 2.797m on right, with a 3.0cm spread of minimum heights. These are geometric support probes rather than fitted wheel centers or a measured ground plane.",
+    "accepted_as_high_quality_teacher": false
+  },
+  "actual_a20_fit": {
+    "status": "FAIL_FIXED_ENGINEERING_GATE",
+    "uniform_initialized_lwh_m": [5.0,3.7223268833,2.1554163577],
+    "primary_reason": "Width is 1.489 times the known actor width, and fixed BUILD measured-point and silhouette spill gates fail.",
+    "bbox_axis_conflict": "The spatial bbox put length on raw X although the generated vehicle length lies on raw Z. This is retained as an input-coordinate diagnostic, not an isolated verdict on Omni capability."
+  },
+  "observation_protection": {
+    "visible_real_geometry_locked": false,
+    "visible_real_rgb_fused": false,
+    "generation_confined_to_unknown": false,
+    "whole_vehicle_replacement_allowed": false
+  },
+  "geometry_modified_by_visual_review": false,
+  "gpu_used": false,
+  "material_or_student_stage_started": false
+}

@@ -1,0 +1,160 @@
+{
+  "schema": "omni_hq.proposal_report.v1",
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "model_repo": "tencent/Hunyuan3D-Omni",
+  "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+  "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+  "seed": 101,
+  "steps": 50,
+  "new_sampling_steps": 50,
+  "octree_resolution": 256,
+  "guidance_scale": 4.5,
+  "training_steps": 0,
+  "model_image_count": 1,
+  "input_role": "high_quality_vehicle_class_reference_not_a20_truth",
+  "official_bbox_lhw": [
+    0.5,
+    0.41600000858306885,
+    1.0
+  ],
+  "candidate_id": "bbox_frame_fixed",
+  "candidate_role": "single engineering replay correcting actor-to-raw bbox axis order; first proposal retained as unaligned-bbox diagnostic",
+  "official_bbox_raw_xyz": [
+    0.5,
+    0.41600000858306885,
+    1.0
+  ],
+  "actor_to_raw_bbox_mapping": {
+    "actor_size_order": "LWH",
+    "raw_bbox_order": "XYZ",
+    "actor_size_indices_for_raw_xyz": [
+      1,
+      2,
+      0
+    ],
+    "raw_front": "-Z",
+    "raw_up": "+Y",
+    "raw_width_axis": "X",
+    "evidence": "Independent raw grey-mesh inspection of first proposal; no measured RGB/LiDAR evaluation used to select bbox",
+    "original_bbox": [
+      1,
+      0.416,
+      0.5
+    ],
+    "corrected_bbox": [
+      0.5,
+      0.416,
+      1
+    ],
+    "mapping_source_candidate": "proposal/candidate_raw_omni.ply",
+    "mapping_type": "axis permutation only; dimensions and all sampling settings unchanged"
+  },
+  "bbox_mechanism": {
+    "image_tokens": 1370,
+    "bbox_and_type_tokens": 11,
+    "model_image_count": 1,
+    "conditional_image_max_abs": 33.40625,
+    "unconditional_image_max_abs": 0.0,
+    "conditional_unconditional_bbox_max_diff": 0.0,
+    "actual_bbox_lhw": [
+      [
+        [
+          0.5,
+          0.416015625,
+          1.0
+        ]
+      ]
+    ],
+    "sampled_bbox_corners": [
+      [
+        [
+          0.25,
+          0.2080078125,
+          0.5
+        ],
+        [
+          0.25,
+          0.2080078125,
+          -0.5
+        ],
+        [
+          0.25,
+          -0.2080078125,
+          0.5
+        ],
+        [
+          0.25,
+          -0.2080078125,
+          -0.5
+        ],
+        [
+          -0.25,
+          0.2080078125,
+          0.5
+        ],
+        [
+          -0.25,
+          0.2080078125,
+          -0.5
+        ],
+        [
+          -0.25,
+          -0.2080078125,
+          0.5
+        ],
+        [
+          -0.25,
+          -0.2080078125,
+          -0.5
+        ]
+      ]
+    ],
+    "point_condition_used": false
+  },
+  "forward_audit": {
+    "calls": 49,
+    "all_finite": true
+  },
+  "point_condition_used": false,
+  "holdout_read": false,
+  "lidar_read_during_build": false,
+  "raw_bounds_xyz": [
+    [
+      -0.514972984790802,
+      -0.40337395668029785,
+      -0.9952294826507568
+    ],
+    [
+      0.5296865105628967,
+      0.4081615209579468,
+      0.9958235621452332
+    ]
+  ],
+  "raw_span_xyz": [
+    1.0446594953536987,
+    0.8115354776382446,
+    1.99105304479599
+  ],
+  "vertices": 147022,
+  "faces": 294078,
+  "raw_mesh_modified": false,
+  "actor_frame_mapping_applied": false,
+  "heading_semantics": "pending independent review of raw mesh views",
+  "quality_status": "raw grey-mesh proposal; review pending",
+  "generation_seconds": 21.179517153650522,
+  "decode_seconds": 10.39834075793624,
+  "total_wall_seconds": 69.74363077431917,
+  "peak_allocated_gib": 7.678417205810547,
+  "peak_reserved_gib": 7.9765625,
+  "resource_limits": {
+    "cuda_fraction": 0.45,
+    "cpu_threads": 2
+  },
+  "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+  "torch": "2.4.1+cu121",
+  "cuda": "12.1",
+  "worker_sha256": "2e17ac0b9d0837fdfbd8f84b0499f38ec771543bbd46f9e4eb3bd3f62106a5d5",
+  "input_contract_sha256": "1d574b6235b1b0f9980960cfcc7910e69c327a4044c8db935316b4cc460c8d01",
+  "conditioning_image_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+  "resumed_from": null
+}

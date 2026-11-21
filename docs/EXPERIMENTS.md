@@ -417,3 +417,9 @@
 ## VEHICLE-COMPLETION-PRIOR-20261122
 
 [诊断结果、组件与新版灰模门](autoresearch/vehicle_completion_prior_20261122/report.md)，run=`vehicle_completion_prior_20261122_r1`。raw86/110真实RGB/近似实例mask/1030实测点用于BUILD；三实拍诊断帧不是盲测。纯点Omni负例与单一amodal图像＋bbox候选、一次TRELLIS.2材质、25k近均匀表面高斯及固定200+200拟合均保留。409物理更新包含400正式与9 smoke（内含2 replay，不另加）；梯度隔离、冻结和五帧八输出重载max0通过，但灰模结构、真实可见几何保护及raw86其它车辆保护失败，当前 `diagnostic_rejected_geometry`、不可晋升。400步为初始化＋可见RGB拟合，尚非完整教师几何／轮廓／新视角蒸馏。前置灰模v2入口已CPU拒绝当前候选；历史actual-v1只读恢复另有索引。Amodal3R CPU规范输入已备，Amodal3R／MM-TRELLIS／RECAST未运行。旧车辆7组、道路55项/8批次及原scientific JSON保持；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06，human_verdict/problem_solved=null，GPU保持开机。
+
+## Omni＋高质量车型参考灰模验收（2026-11-22）
+
+`OMNI-HQ-VEHICLE-TEACHER-20261122` / `omni_hq_vehicle_teacher_20261122_r1`：[结果与组件](autoresearch/omni_hq_vehicle_teacher_20261122/report.md)、[报告HTML](autoresearch/omni_hq_vehicle_teacher_20261122/index.html)、[冻结灰模门](autoresearch/omni_hq_vehicle_teacher_20261122/audits/source/preregistered_gate.json)。后3/4单图条件，前3/4仅结构参照，sourcecrop仅CPU matte且RGB最大改动0。固定seed101/50步/CFG4.5/256，原bbox `[1,.416,.5]` 与实际raw轴序错配保留为工程诊断；唯一修正重放 `[.5,.416,1]` 单列计费，两次共100请求步、154.95秒进程墙钟、峰值7.68GiB。仅proper rotation／统一尺度／固定有界配准，无分轴拉伸。全部1030点均值／P90为.0992663／.3801679m，超过生成前固定.075／.15m；raw86/110核心召回98.46%／99.06%、未知区排除IoU同值、背景溢出0%、尺寸门通过。四轮、两轴和驾驶舱／货厢可辨，轮胎轮拱与底盘局部熔连；`GREY_GATE_FAILED_NO_MATERIAL_NO_STUDENT`，材质0、学生0，真实可见观测锁定融合尚未做。原始／修正模型、变换、灰图及43文件审计取回已保留验证，轻量源码与恢复指针归档；GPU保持开机。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+免责声明：车型参考不是a20隐藏真值；实测点为几何归属代理，86/110是注册拟合集，遮挡区域无完整轮廓真值；134/179/198未参与生成、配准或选择。单候选与坐标接线诊断不构成Omni能力上限结论。

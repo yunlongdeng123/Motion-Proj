@@ -1,0 +1,105 @@
+{
+  "schema": "omni_hq.grey_model.restore_index.v1",
+  "task_id": "OMNI-HQ-VEHICLE-TEACHER-20261122",
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "remote_run_root": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1",
+  "local_work": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-16\\xian\\work\\omni_hq_vehicle_teacher_20261122",
+  "model_repo": "tencent/Hunyuan3D-Omni",
+  "model_revision": "70e803bfb4e127d534049d8ab8c8cb511780d485",
+  "dino_revision": "47b73eefe95e8d44ec3623f8890bd894b6ea2d6c",
+  "proposals": {
+    "proposal": [
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/candidate_raw_omni.ply",
+        "bytes": 6674791,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/candidate_raw_omni.glb",
+        "bytes": 6324064,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/candidate_raw_geometry.npz",
+        "bytes": 2613312,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/candidate_latents.pt",
+        "bytes": 525966,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/input_contract_frozen.json",
+        "bytes": 1929,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal/proposal_report.json",
+        "bytes": 3013,
+        "model_hash_computed_for_publication": false
+      }
+    ],
+    "proposal_bbox_frame_fixed": [
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/candidate_raw_omni.ply",
+        "bytes": 5587499,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/candidate_raw_omni.glb",
+        "bytes": 5294020,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/candidate_raw_geometry.npz",
+        "bytes": 2195618,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/candidate_latents.pt",
+        "bytes": 525966,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/input_contract_frozen.json",
+        "bytes": 3784,
+        "model_hash_computed_for_publication": false
+      },
+      {
+        "remote": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/proposal_bbox_frame_fixed/proposal_report.json",
+        "bytes": 3920,
+        "model_hash_computed_for_publication": false
+      }
+    ]
+  },
+  "cpu_registration_artifacts": {
+    "original": {
+      "uniform_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/uniform_initialization/candidate_actor_uniform_init.ply",
+      "transform": "audits/uniform_initialization/semantic_uniform_transform.json",
+      "registered_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bounded_registration/candidate_actor_bounded_registered.ply",
+      "registration": "audits/bounded_registration/bounded_registration.json"
+    },
+    "bbox_frame_fixed": {
+      "uniform_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_uniform_initialization/candidate_actor_uniform_init.ply",
+      "transform": "audits/bbox_frame_fixed_uniform_initialization/semantic_uniform_transform.json",
+      "registered_mesh": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/audits/bbox_frame_fixed_bounded_registration/candidate_actor_bounded_registered.ply",
+      "registration": "audits/bbox_frame_fixed_bounded_registration/bounded_registration.json"
+    }
+  },
+  "inputs": {
+    "mapping": "input/mapping.json",
+    "source_image_role": "user-provided vehicle-class prior; not measured a20 ground truth",
+    "model_input": "rear single image; front structural reference only",
+    "sourcecrop": "CPU matte; original RGB pixels unchanged",
+    "reference_images_remote": [
+      "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgb.png",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgba.png",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/front_rgb.png"
+    ]
+  },
+  "restore_scope": "Use retained raw geometry with archived proper-rotation/uniform-scale transforms and bounded registration. All measured adaptation uses train86/110 only. Quality comes from grey_gate_result and report; this file grants no promotion.",
+  "git_is_complete_model_backup": false,
+  "new_model_hashes": false,
+  "instance_power": "keep_on"
+}

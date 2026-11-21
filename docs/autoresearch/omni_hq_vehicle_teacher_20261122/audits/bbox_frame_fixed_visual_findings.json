@@ -1,0 +1,57 @@
+{
+  "schema": "a20.hq.independent_visual_findings.v1",
+  "candidate": "proposal_bbox_frame_fixed/candidate_raw_omni.ply",
+  "candidate_sha256": "5a7b3ff753b1c1ac90a5201483e6f7507667490ed146e8b6ddf783dfdbd63336",
+  "reviewer": "independent CPU audit agent",
+  "human_verdict": null,
+  "user_quality_score": null,
+  "actual_views_inspected": [
+    "bbox_frame_fixed_raw_preview/raw_y_up_four_views.png",
+    "bbox_frame_fixed_uniform_initialization/uniform_init_three_views.png",
+    "bbox_frame_fixed_uniform_audit/grey_six_orthographic.png",
+    "bbox_frame_fixed_registered_audit/measured_points_six_orthographic.png",
+    "bbox_frame_fixed_uniform_audit/second_component_locator.png"
+  ],
+  "semantic_frame": {
+    "front_raw_axis": "-Z",
+    "up_raw_axis": "+Y",
+    "fresh_direction_reinspection": true,
+    "evidence": "Corrected raw -Z shows hood and grille, corrected raw +Z shows covered bed and tailgate, and raw +Y is roof up.",
+    "actor_from_raw_proper_rotation": [[0,0,-1],[-1,0,0],[0,1,0]],
+    "determinant": 1,
+    "reflection": false,
+    "heldout_or_lidar_used_for_direction_choice": false
+  },
+  "layer_1_prior_part_quality": {
+    "status": "COARSE_PICKUP_PRIOR_RECOGNIZABLE_HIGH_QUALITY_STRUCTURE_NOT_ESTABLISHED",
+    "coarse_component_relations": "Hood, nose, double-row cabin, covered cargo bed, tailgate and bumpers have coherent ordering and broad contact.",
+    "four_wheels": "Actual left/right and bottom orthographic views establish four wheels in a two-axle arrangement; this is not inferred solely from support-region count.",
+    "wheel_surface_defects": "Tire profiles, rim spokes and rear wheel/fender boundaries remain rounded, locally fused and irregular; high-detail wheel/body articulation is not established.",
+    "underbody": "The bottom view has broad simplified floor/chassis surfaces and lumpy axle/underbody shapes. A mechanically resolved suspension/axle connection cannot be established from this geometry.",
+    "roof_and_mirrors": "No obvious large detached roof or mirror blob in the actual fixed orthographic views. Both mirrors and a clean roof silhouette are present.",
+    "thin_separate_component": "The second component is 0.142925m2, 0.3202% of mesh area, near the front-windshield lower edge / rear hood boundary, x[1.167,1.333], y[-.669,.835], z[.418,.454]m in uniform initialization. Locator images show a curved strip; it may represent a wiper/trim element. Disconnection alone is not treated as a failure.",
+    "contact_diagnostics": "Four tire-bottom support regions have a 3.7mm spread in minimum height. Approximate front/rear support interval spacing is 2.999m left and 3.010m right. Relative to the OBB-bottom plane proxy, initial bottoms are +2.10 to +2.47cm, and post-fit bottoms are -8.33 to -8.69cm. No real ground plane was fitted.",
+    "detail_quality": "Front grille, lights, windows and tailgate relief are low-frequency approximations.",
+    "accepted_as_high_quality_teacher": false,
+    "acceptance_by_complete_mesh_alpha_texture": false
+  },
+  "layer_2_actual_a20_fit": {
+    "status": "FAIL_FIXED_ENGINEERING_GATE",
+    "uniform_initialized_lwh_m": [5.0,2.6233843897,2.0379554421],
+    "registered_lwh_m": [4.8613729477,2.5498256683,1.9809821844],
+    "registered_point_mean_m": 0.09926629344247362,
+    "registered_point_p90_m": 0.38016791214856055,
+    "primary_rejection": "Measured-proxy point mean and P90 exceed the frozen .075m/.15m engineering limits, despite dimension and trusted-image silhouette gates passing.",
+    "residual_structure": "Rear longitudinal band [-2.5,-1.8]m fits well (649 points, mean .0364m), while cabin-rear band [-1,-.2]m has 314 points with mean .1893m and P90 .4137m. Height [.26,.56]m contains 363 points with mean .1804m. The discrepancy is not attributable only to the 17 lowest-band points.",
+    "interpretation": "The actual point overlays support a local cabin-back/bed-front surface mismatch. This is an inference from spatial residuals, not semantic proof that every OBB-selected point belongs to a20."
+  },
+  "observation_protection": {
+    "visible_real_geometry_locked": false,
+    "visible_real_rgb_fused": false,
+    "generation_confined_to_unknown": false,
+    "whole_vehicle_replacement_allowed": false
+  },
+  "material_or_student_stage_started": false,
+  "geometry_modified_by_visual_review": false,
+  "gpu_used": false
+}

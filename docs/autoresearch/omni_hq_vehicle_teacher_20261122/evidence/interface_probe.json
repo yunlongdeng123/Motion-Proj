@@ -1,0 +1,34 @@
+{
+  "schema": "omni_hq.interface_probe.v1",
+  "run_id": "omni_hq_vehicle_teacher_20261122_r1",
+  "official_repo": "/root/autodl-tmp/third_party/hunyuan3d-omni-v61-me2",
+  "official_commit": "4d47c0cc2bd0c4281963a7314ab330a5af36bfa8",
+  "official_web_source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni/blob/main/hy3dshape/pipelines/pipeline_generation_sit_omni.py",
+  "single_image_tensor_shape": [
+    1,
+    3,
+    512,
+    512
+  ],
+  "list_two_image_tensor_shape": [
+    2,
+    3,
+    512,
+    512
+  ],
+  "prepare_latents_two_batch_shape": [
+    2,
+    4,
+    8
+  ],
+  "native_joint_multiview_supported": false,
+  "list_semantics": "independent samples in batch dimension 0",
+  "decision": "single rear-three-quarter crop; second image is reference only",
+  "image_processor_class": "ImageProcessorV2",
+  "torch": "2.4.1+cu121",
+  "cuda_initialized": false,
+  "cpu_threads": 2,
+  "bbox_semantics": "(B,1,3) normalized [length,height,width], official encoder lines 407-451",
+  "fusion_added": false,
+  "model_weights_loaded": false
+}

@@ -1,0 +1,226 @@
+{
+  "schema": "a20.hq.final_grey_gate.v1",
+  "candidate": "proposal_bbox_frame_fixed/candidate_raw_omni.ply",
+  "eligible": false,
+  "quality_status": "REJECTED_MEASURED_GEOMETRY_FIT",
+  "human_verdict": null,
+  "user_quality_score": null,
+  "structure_status": "COARSE_PICKUP_PRIOR_RECOGNIZABLE_HIGH_QUALITY_STRUCTURE_NOT_ESTABLISHED",
+  "layer_1_structural_human_acceptance": null,
+  "layer_2_numeric_passed": false,
+  "fixed_numeric_failures": [
+    "all_measured_proxy_point_mean",
+    "all_measured_proxy_point_p90"
+  ],
+  "checks": {
+    "point_mean": {
+      "value_m": 0.09926629344247362,
+      "maximum_m": 0.075,
+      "passed": false
+    },
+    "point_p90": {
+      "value_m": 0.38016791214856055,
+      "maximum_m": 0.15,
+      "passed": false
+    },
+    "extent_ratios": {
+      "values": [
+        0.9722745895385743,
+        1.0199302673339843,
+        0.9523953159000439
+      ],
+      "range": [
+        0.8,
+        1.25
+      ],
+      "passed": true
+    },
+    "trusted_silhouette": {
+      "passed": true,
+      "per_raw": [
+        {
+          "raw": 86,
+          "visible_core_recall": 0.9845713644524237,
+          "reliable_domain_iou": 0.9845713644524237,
+          "known_background_spill_fraction": 0.0
+        },
+        {
+          "raw": 110,
+          "visible_core_recall": 0.9906285231116122,
+          "reliable_domain_iou": 0.9906285231116122,
+          "known_background_spill_fraction": 0.0
+        }
+      ]
+    },
+    "visible_observation_protected": {
+      "passed": false,
+      "reason": "Raw whole-teacher geometry has no locked measured visible patch or RGB correspondence."
+    },
+    "generation_only_unknown": {
+      "passed": false,
+      "reason": "The candidate is a complete class prior, not observation-preserving unknown-region fusion."
+    }
+  },
+  "measured_point_count": 1030,
+  "build_raws": [
+    86,
+    110
+  ],
+  "heldout_used": false,
+  "preregistered_gate": {
+    "path": "preregistered_gate.json",
+    "sha256": "fd9bcb5c6d760bbe74448a674d23418f0de74b38465cfac21294edb2e3355834",
+    "bytes": 5181
+  },
+  "threshold_origin": "Root agent's prospective task-specific engineering requirements, fixed before the new raw mesh was available. These are not a user quality score or a published universal standard.",
+  "sampling_runs": {
+    "count": 2,
+    "first": "Original bbox spatial-axis diagnostic",
+    "second": "One same-seed/source bbox coordinate repair",
+    "seed": 101,
+    "steps": 50,
+    "decode_resolution": 256,
+    "cfg": 4.5,
+    "search": false
+  },
+  "numeric_stages": {
+    "uniform_audit": {
+      "point_to_surface_m": {
+        "count": 1030,
+        "mean": 0.16052992053382437,
+        "p50": 0.10091669208393059,
+        "p90": 0.4205268422489588,
+        "p95": 0.45883498253126936,
+        "p99": 0.5208235670846695,
+        "maximum": 0.7276545942204979
+      },
+      "extent_xyz_m": [
+        5.0,
+        3.7223269939422607,
+        2.155416250228882
+      ],
+      "failures": [
+        "all_measured_proxy_point_mean",
+        "all_measured_proxy_point_p90",
+        "extent_ratio",
+        "raw86_unknown_aware_iou",
+        "raw86_known_background_spill",
+        "raw110_unknown_aware_iou",
+        "raw110_known_background_spill"
+      ],
+      "audit": {
+        "path": "uniform_audit\\audit.json",
+        "sha256": "c3c5a3cacf598be201549c3857e7ed898048064e89577a11abc76b65a1a356b2",
+        "bytes": 17391
+      }
+    },
+    "registered_audit": {
+      "point_to_surface_m": {
+        "count": 1030,
+        "mean": 0.09041452669326952,
+        "p50": 0.0543034643338588,
+        "p90": 0.2207374129143865,
+        "p95": 0.26366524700361105,
+        "p99": 0.4151547089539136,
+        "maximum": 0.786025572480054
+      },
+      "extent_xyz_m": [
+        5.412666320800781,
+        4.029905557632446,
+        2.3335222601890564
+      ],
+      "failures": [
+        "all_measured_proxy_point_mean",
+        "all_measured_proxy_point_p90",
+        "extent_ratio",
+        "raw86_unknown_aware_iou",
+        "raw86_known_background_spill",
+        "raw110_unknown_aware_iou",
+        "raw110_known_background_spill"
+      ],
+      "audit": {
+        "path": "registered_audit\\audit.json",
+        "sha256": "2faa7ac1e529676e8cfcd1196b4f485eab376cb198f982ef49c0c32227306f75",
+        "bytes": 17869
+      }
+    },
+    "bbox_frame_fixed_uniform_audit": {
+      "point_to_surface_m": {
+        "count": 1030,
+        "mean": 0.17357592048537532,
+        "p50": 0.12292956149246587,
+        "p90": 0.4558657797677935,
+        "p95": 0.5586556513735543,
+        "p99": 0.607956338171645,
+        "maximum": 0.7651923877039725
+      },
+      "extent_xyz_m": [
+        5.0,
+        2.623384475708008,
+        2.0379555225372314
+      ],
+      "failures": [
+        "all_measured_proxy_point_mean",
+        "all_measured_proxy_point_p90"
+      ],
+      "audit": {
+        "path": "bbox_frame_fixed_uniform_audit\\audit.json",
+        "sha256": "dd3e7a4599ff812069c137340c972f7ce303ccc36917834cfa12436fcd9a4cbd",
+        "bytes": 17531
+      }
+    },
+    "bbox_frame_fixed_registered_audit": {
+      "point_to_surface_m": {
+        "count": 1030,
+        "mean": 0.09926629344247362,
+        "p50": 0.040270749130808206,
+        "p90": 0.38016791214856055,
+        "p95": 0.41558200876133633,
+        "p99": 0.5531492537755338,
+        "maximum": 0.9042578593598335
+      },
+      "extent_xyz_m": [
+        4.861372947692871,
+        2.549825668334961,
+        1.9809821844100952
+      ],
+      "failures": [
+        "all_measured_proxy_point_mean",
+        "all_measured_proxy_point_p90"
+      ],
+      "audit": {
+        "path": "bbox_frame_fixed_registered_audit\\audit.json",
+        "sha256": "08192f66614714ce3549c4b7cd4070e7b6ed9774943fea201d288e24c3fd1377",
+        "bytes": 20791
+      }
+    }
+  },
+  "artifacts": {
+    "bbox_axis_audit.md": {
+      "path": "bbox_axis_audit.md",
+      "sha256": "6b042bcc1ec63b2c1934fec8f6edab9d4772946a0a9deb53b6da64fc424f52b4",
+      "bytes": 2363
+    },
+    "original_bbox_visual_findings.json": {
+      "path": "original_bbox_visual_findings.json",
+      "sha256": "221827ef128cb1c88c12e99bf5d2f72def778576154611c86b7991cfdf3440ed",
+      "bytes": 3022
+    },
+    "bbox_frame_fixed_visual_findings.json": {
+      "path": "bbox_frame_fixed_visual_findings.json",
+      "sha256": "34e35d46a8e255bac71aad7e34fce15495ae9761e0f6463506b6f74f938e0224",
+      "bytes": 4359
+    },
+    "architecture_components.png": {
+      "path": "architecture_components.png",
+      "sha256": "adfe225d78f926c5d41d3511c12abffc4a167da2b660706eb6ae6e1ac663ad64",
+      "bytes": 43624
+    }
+  },
+  "material_inference_started": false,
+  "student_training_started": false,
+  "gpu_used_by_audit": false,
+  "automatic_promotion_allowed": false,
+  "whole_visible_actor_replacement_allowed": false,
+  "next_stage": "Stop after grey geometry and present results for review."
+}
