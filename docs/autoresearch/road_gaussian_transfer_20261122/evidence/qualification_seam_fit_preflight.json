@@ -1,0 +1,91 @@
+{
+  "schema": "retrieved_gaussian_local_seam_fit.v1",
+  "ready": true,
+  "missing": [],
+  "gate_complete": true,
+  "GPU_used": false,
+  "new_diffusion_calls": 0,
+  "configuration": {
+    "schema": "retrieved_gaussian_local_seam_fit.v1",
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric",
+    "parent_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset",
+    "transfer_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/asset",
+    "gate_receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/receipt.json",
+    "parent_rendered": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered",
+    "common_teacher": "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher",
+    "domain_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/proposal/domains",
+    "same_source_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/targets",
+    "output": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance",
+    "smoke": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/smoke/fit_seams",
+    "recovery": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/recovery",
+    "train_frames": [
+      86,
+      110
+    ],
+    "evaluation_frames": [
+      86,
+      110,
+      134,
+      179,
+      198
+    ],
+    "seed": 101,
+    "formal_steps": 400,
+    "smoke_steps": 8,
+    "checkpoint_interval": 50,
+    "gain_bounds": [
+      0.85,
+      1.15
+    ],
+    "bias_bounds": [
+      -0.02,
+      0.02
+    ],
+    "opacity_bounds": [
+      0.0001,
+      0.999
+    ],
+    "tangent_sigma_multiplier_bounds": [
+      0.9,
+      1.15
+    ],
+    "learning_rates": {
+      "gain_bias": 0.005,
+      "opacity_logit": 0.02,
+      "log_sigma": 0.002
+    },
+    "Adam": {
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08
+    },
+    "stable_alpha": 0.95,
+    "photo_new_contribution": 0.00392156862745098,
+    "coverage_new_contribution": 1e-05,
+    "coverage_target_alpha": 0.99,
+    "alpha_denominator_min": 0.0001,
+    "normalizer_floor": 1.5378700499807765e-05,
+    "prior_weights": {
+      "gain_bias": 0.02,
+      "opacity": 0.001,
+      "log_sigma": 0.001
+    },
+    "public_reload_tolerance": 1e-06,
+    "resume_tolerance": 1e-06,
+    "target_policy": "observed PNG plus trusted same-position RGB only; no diffusion RGB",
+    "mask_policy": "TRANSFER-initial masks frozen; parent and TRANSFER alpha>=stable_alpha for photo",
+    "photograph_error": "MSE of current native road_RGB/current_alpha.clamp_min(1e-4) versus observed RGB",
+    "appearance_parameters": "one global scalar gain plus one RGB bias for new rows only",
+    "coverage_parameters": "only active new seam-row opacity and common tangent-sigma multiplier",
+    "new_diffusion_calls": 0
+  },
+  "target_fields_loaded": [
+    "observation_1152.png",
+    "same_mask",
+    "same_rgb",
+    "same_confidence"
+  ],
+  "diffusion_RGB_loaded": false
+}

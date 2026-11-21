@@ -26,6 +26,29 @@ def _load_ownership(path, ns, nd):
                 'dynamic': _owner_array(z['dynamic_actor_ids'], nd, 'dynamic_actor_ids')}
 
 
+def _legacy_road_model_quaternions(normal_world, model_from_world, meter_to_model):
+    """保持旧提供器的计算顺序；返回 model 坐标中的 shortest-arc wxyz。"""
+    normal = np.asarray(normal_world) @ np.asarray(model_from_world)[:3, :3].T / meter_to_model
+    normal /= np.linalg.norm(normal, axis=1)[:, None]
+    q = np.c_[1 + normal[:, 2], -normal[:, 1], normal[:, 0], np.zeros(len(normal))]
+    singular = np.linalg.norm(q, axis=1) < 1e-8
+    q[singular] = [0., 1., 0., 0.]
+    q /= np.linalg.norm(q, axis=1)[:, None]
+    return q
+
+
+def _legacy_road_world_quaternions(normal_world, model_from_world, meter_to_model):
+    """为旧行补世界旋转；不是直接对世界法向再做一次 shortest-arc。"""
+    from scipy.spatial.transform import Rotation
+    q = _legacy_road_model_quaternions(normal_world, model_from_world, meter_to_model)
+    if not len(q):
+        return np.empty((0, 4), dtype=np.float64)
+    rotation_model = Rotation.from_quat(q[:, [1, 2, 3, 0]]).as_matrix()
+    unit = np.asarray(model_from_world)[:3, :3] / meter_to_model
+    rotation_world = np.einsum('ij,njk->nik', unit.T, rotation_model)
+    return Rotation.from_matrix(rotation_world).as_quat()[:, [3, 0, 1, 2]]
+
+
 def _load_road_arrays(path):
     with np.load(path, allow_pickle=False) as z:
         arrays = {k: z[k].copy() for k in z.files}
@@ -49,6 +72,28 @@ def _load_road_arrays(path):
     if ((arrays['gaussian_sigma_m'] <= 0).any() or not np.isfinite(normals).all() or (normals <= 0).any()
             or (arrays['road_opacity'] < 0).any() or (arrays['road_opacity'] > 1).any()):
         raise ValueError('Road needs positive scales/nonzero normals and opacity in [0,1]')
+    rotation_key = 'gaussian_rotation_world_wxyz'
+    override_key = 'gaussian_rotation_world_override'
+    if override_key in arrays and rotation_key not in arrays:
+        raise ValueError('Road rotation override requires gaussian_rotation_world_wxyz')
+    if rotation_key in arrays:
+        # sigma 是该世界旋转的三个主轴标准差；第三轴是 surface normal。
+        q_world = _matrix(arrays[rotation_key], (n, 4), 'road ' + rotation_key)
+        lengths = np.linalg.norm(q_world, axis=1)
+        if not np.allclose(lengths, 1., atol=2e-6, rtol=0):
+            raise ValueError('Road world rotations must be unit wxyz quaternions')
+        if n:
+            from scipy.spatial.transform import Rotation
+            basis = Rotation.from_quat(q_world[:, [1, 2, 3, 0]]).as_matrix()
+            alignment = np.sum(basis[:, :, 2] * arrays['normal_world'], axis=1) / normals
+            if not np.allclose(alignment, 1., atol=2e-5, rtol=0):
+                raise ValueError('Road world rotation third axis must match normal_world')
+        arrays[rotation_key] = q_world
+        if override_key in arrays:
+            override = np.asarray(arrays[override_key])
+            if override.shape != (n,) or override.dtype.kind != 'b':
+                raise ValueError('Road world rotation override must be an N bool array')
+            arrays[override_key] = override.copy()
     arrays['meter_to_model'], arrays['model_from_world'] = scale, transform
     return arrays
 
@@ -90,12 +135,15 @@ class RoadRows:
         transform = arrays['model_from_world']; scale = float(arrays['meter_to_model'])
         self.xyz = tensor(arrays['model_xyz'][active])
         self.scaling = tensor(arrays['gaussian_sigma_m'][active] * scale)
-        normal = arrays['normal_world'][active] @ transform[:3, :3].T / scale
-        normal /= np.linalg.norm(normal, axis=1)[:, None]
-        q = np.c_[1 + normal[:, 2], -normal[:, 1], normal[:, 0], np.zeros(len(normal))]
-        singular = np.linalg.norm(q, axis=1) < 1e-8
-        q[singular] = [0., 1., 0., 0.]
-        q /= np.linalg.norm(q, axis=1)[:, None]
+        q = _legacy_road_model_quaternions(arrays['normal_world'][active], transform, scale)
+        if 'gaussian_rotation_world_wxyz' in arrays:
+            override = arrays.get('gaussian_rotation_world_override', np.ones(len(active), dtype=bool))[active]
+            if override.any():
+                from scipy.spatial.transform import Rotation
+                world_q = arrays['gaussian_rotation_world_wxyz'][active][override]
+                world_basis = Rotation.from_quat(world_q[:, [1, 2, 3, 0]]).as_matrix()
+                model_basis = np.einsum('ij,njk->nik', transform[:3, :3] / scale, world_basis)
+                q[override] = Rotation.from_matrix(model_basis).as_quat()[:, [3, 0, 1, 2]]
         self.rotation = tensor(q); self.rgb = tensor(arrays['reference_srgb'][active])
         self.opacity = torch.logit(tensor(arrays['road_opacity'][active, None]).clamp(1e-5, 1-1e-5))
         self.active = torch.ones(len(self.xyz), dtype=torch.bool, device=device)

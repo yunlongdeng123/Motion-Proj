@@ -1,0 +1,162 @@
+{
+  "schema": "seam_fit_cpu_review.v1",
+  "passed": true,
+  "checks": {
+    "active": true,
+    "gaussian_rotation_world_override": true,
+    "gaussian_rotation_world_wxyz": true,
+    "meter_to_model": true,
+    "minimum_model_depth": true,
+    "model_from_world": true,
+    "model_xyz": true,
+    "normal_world": true,
+    "old_RGB_exact": true,
+    "old_opacity_exact": true,
+    "old_sigma_exact": true,
+    "outside_active_seam_opacity_exact": true,
+    "outside_active_seam_sigma_exact": true,
+    "new_core_opacity_exact": true,
+    "new_core_sigma_exact": true,
+    "all_normal_sigma_exact": true,
+    "common_tangent_multiplier_difference_le_2e_minus6": true,
+    "sigma_multiplier_bounds": true,
+    "opacity_bounds": true,
+    "new_global_color_transform_exact": true
+  },
+  "old_rows": 596100,
+  "all_new_rows": 121114,
+  "active_new_rows": 101726,
+  "active_new_seam_rows": 54046,
+  "all_new_core_rows": 56144,
+  "tangent_multiplier_min_max": [
+    0.8999999767345237,
+    1.1500001319274833
+  ],
+  "tangent_common_multiplier_max_difference": 0.0,
+  "seam_opacity_min_max": [
+    0.003729288699105382,
+    0.9990000128746033
+  ],
+  "frames": [
+    {
+      "raw": 86,
+      "domain": "fixed original (appearance_C|appearance_S)&canonical_valid; no new-contribution gate",
+      "pixels": 32737,
+      "crop_xyxy": [
+        393,
+        458,
+        728,
+        691
+      ],
+      "crop_policy": "original CS",
+      "transfer": {
+        "mean_road_alpha": 0.9710302352905273,
+        "alpha_quantile_01_05_50_95": [
+          0.0,
+          0.9815848588943481,
+          0.9998155832290649,
+          0.9998975992202759
+        ],
+        "fraction_alpha_ge_095": 0.9587622567736812,
+        "fraction_alpha_ge_099": 0.9417478693832666,
+        "coverage_hinge_MSE": 0.02467411383986473
+      },
+      "appearance": {
+        "mean_road_alpha": 0.9723290801048279,
+        "alpha_quantile_01_05_50_95": [
+          0.0,
+          0.9887689590454102,
+          0.9998219013214111,
+          0.9998976588249207
+        ],
+        "fraction_alpha_ge_095": 0.9627638451904573,
+        "fraction_alpha_ge_099": 0.9488346519229007,
+        "coverage_hinge_MSE": 0.023888513445854187
+      },
+      "alpha_changed_pixels_original_CS_gt_1e_minus7": 17499,
+      "max_abs_alpha_delta_original_CS": 0.21315014362335205
+    },
+    {
+      "raw": 110,
+      "domain": "fixed original (appearance_C|appearance_S)&canonical_valid; no new-contribution gate",
+      "pixels": 66063,
+      "crop_xyxy": [
+        341,
+        485,
+        771,
+        768
+      ],
+      "crop_policy": "original CS",
+      "transfer": {
+        "mean_road_alpha": 0.9833025336265564,
+        "alpha_quantile_01_05_50_95": [
+          0.48544038593769073,
+          0.9544452548027038,
+          0.9996881484985352,
+          0.9998964667320251
+        ],
+        "fraction_alpha_ge_095": 0.9530599579189561,
+        "fraction_alpha_ge_099": 0.8665818990963171,
+        "coverage_hinge_MSE": 0.008428331464529037
+      },
+      "appearance": {
+        "mean_road_alpha": 0.9861751794815063,
+        "alpha_quantile_01_05_50_95": [
+          0.595408718585968,
+          0.9691633760929108,
+          0.9997139573097229,
+          0.9998966455459595
+        ],
+        "fraction_alpha_ge_095": 0.9643370721886684,
+        "fraction_alpha_ge_099": 0.8968106201655995,
+        "coverage_hinge_MSE": 0.007247825153172016
+      },
+      "alpha_changed_pixels_original_CS_gt_1e_minus7": 36982,
+      "max_abs_alpha_delta_original_CS": 0.3913588523864746
+    },
+    {
+      "raw": 134,
+      "domain": "fixed original (appearance_C|appearance_S)&canonical_valid; no new-contribution gate",
+      "pixels": 0,
+      "crop_xyxy": [
+        317,
+        467,
+        790,
+        768
+      ],
+      "crop_policy": "transfer-versus-parent road RGB difference; visual only",
+      "alpha_metrics": "unavailable: original appearance_C/S are empty in held-out frames"
+    },
+    {
+      "raw": 179,
+      "domain": "fixed original (appearance_C|appearance_S)&canonical_valid; no new-contribution gate",
+      "pixels": 0,
+      "crop_xyxy": [
+        317,
+        466,
+        789,
+        768
+      ],
+      "crop_policy": "transfer-versus-parent road RGB difference; visual only",
+      "alpha_metrics": "unavailable: original appearance_C/S are empty in held-out frames"
+    },
+    {
+      "raw": 198,
+      "domain": "fixed original (appearance_C|appearance_S)&canonical_valid; no new-contribution gate",
+      "pixels": 0,
+      "crop_xyxy": [
+        317,
+        466,
+        789,
+        768
+      ],
+      "crop_policy": "transfer-versus-parent road RGB difference; visual only",
+      "alpha_metrics": "unavailable: original appearance_C/S are empty in held-out frames"
+    }
+  ],
+  "visual_contact_sheet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/seam_fit_review/before_after_CS_crops.png",
+  "new_diffusion_calls": 0,
+  "extra_optimizer_updates": 0,
+  "GPU_used": false,
+  "visual_review": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/seam_fit_visual_review.json"
+}

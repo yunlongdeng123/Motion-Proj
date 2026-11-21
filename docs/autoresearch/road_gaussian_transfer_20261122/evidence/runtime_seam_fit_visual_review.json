@@ -1,0 +1,40 @@
+{
+  "schema": "seam_fit_visual_review.v1",
+  "reviewer": "assistant visual inspection of saved native-rendered contact sheet",
+  "contact_sheet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/seam_fit_review/before_after_CS_crops.png",
+  "frames": [
+    86,
+    110,
+    134,
+    179,
+    198
+  ],
+  "column_order": [
+    "transfer road",
+    "appearance road",
+    "transfer joint",
+    "appearance joint"
+  ],
+  "observations": [
+    {
+      "region": "road, frames 86 and 110",
+      "text": "Fine dark cracks, short horizontal gaps, and patch boundary discontinuities remain visible after 400 steps. Coverage increases locally and color changes slightly; the road is not visually seamless."
+    },
+    {
+      "region": "road, all five frames",
+      "text": "A central black road-render footprint is present before and after fitting. The contact sheet alone does not assign this footprint to retained-object K or missing surface support; use the separately exported masks and contribution layers."
+    },
+    {
+      "region": "joint, all five frames",
+      "text": "A bright vehicle-shaped residual with a dark trailing region remains visible before and after fitting. Layer attribution belongs to the independent contribution-layer audit."
+    },
+    {
+      "region": "road, held-out frames 134,179,198",
+      "text": "The same families of dark horizontal cracks and fragmented boundaries remain visible. Original appearance_C/S masks are empty for these frames, so this review does not report an empty-domain alpha success."
+    }
+  ],
+  "verdict": "Fixed 400-step seam fit completed and improved the measured coverage; visible seams and residual scene structure remain. This is not a visual-quality success verdict.",
+  "new_diffusion_calls": 0,
+  "extra_optimizer_updates": 0,
+  "new_hyperparameter_trials": 0
+}

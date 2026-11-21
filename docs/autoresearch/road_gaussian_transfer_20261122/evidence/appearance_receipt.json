@@ -1,0 +1,233 @@
+{
+  "schema": "retrieved_gaussian_local_seam_fit.v1",
+  "complete": true,
+  "formal_optimizer_updates": 400,
+  "current_process_start_cursor": 0,
+  "current_process_optimizer_updates": 400,
+  "formal_training_nativeF": 800,
+  "formal_training_nativeB": 800,
+  "current_process_actual_nativeF": 864,
+  "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/checkpoint.pt",
+  "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/asset",
+  "rendered": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/rendered",
+  "binding": {
+    "schema": "retrieved_gaussian_local_seam_fit.v1",
+    "config_sha256": "46e1071e695b5bcb8bd746127c85bf482af2f4d48c627ae417064364ada6e3bb",
+    "files": {
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/code/fit_seams.py": "4dbd0c0ed043c262a345c7b87ca08ad92fc09eeedd34acb8bec316c3da133928",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz": "70cc545db6ce595b24c0ec2ba836d7058edbb73734d6873c880f3e634fb08d9f",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/asset/road.npz": "ef6363c61b373e8d11a5b1b55be0b3aebeb05f4325cbceeaaa98d5e448117bfc",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/asset/provenance.npz": "29959811c1fabd325bc42bf8eb4f0229cd55468fe76aa9b906b08b8a27298c5c",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/asset/persistent/scene.json": "119b63df1f909db2ac208a55941d27a80e30f2b3ec3e322bfb0ca5323726bbed",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/asset/persistent/proof.json": "2e7fa2d2a4e9e9c567f15a69f278f319a9d935cfb48798cd72915011f144376b",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/receipt.json": "2edebc18819a6f7172e6bdce6626c16c865e8afa325d2ed1d7e8cea1aeffe25c",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/qualification/seam_rows.npz": "9b7909885239b348d9086def70b142c2e152105ae747b569f49778ccfa0d4b91",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw086/observation_1152.png": "11cec1c0f493b86d28bad64f5366d3ca26f20101389965780eafb9d0a00f2b67",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/proposal/domains/086.npz": "ee23205b86cab3a1bce1704deeccbfa4a524c26b4c881d2460bb909a98209716",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/targets/086.npz": "5a42739fde6c19e294cfb6fda9ef918d64e6bb68bb24ecb9597bb5740c6a9981",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_common1152_20261121/teacher/raw110/observation_1152.png": "2cfe59249636c79f1cd7c8fb54e3bc8a17db36ad3d3ab9379a47cb0ed2f663bb",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/proposal/domains/110.npz": "c7dfc1562136bf790d4e48ecd8f126e31f9d3f4cb961c68dbe7f68f1366134ef",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/sources/targets/110.npz": "631db0c060a72e332e7c9abf3b1f311a311904e55b8e783b90692ac11bfba01b",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/086.npz": "032a5c4058a94e7edbd3ae0d70cc17899c38ddc85f5b1a7c75ba5652c57ec326",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/110.npz": "6365b45634e690bb9cc00d9859ad4042fb54ec20274fee4b1ec7c9fb2eb2d3f3",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/134.npz": "40ec1765111c0ad14b664d04f3da9876461f440690789a0a1db16f9e341916a2",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/179.npz": "4852fd6cd8d4e6fd1cd1ede3433a6e25cc384935b9d1bba09b1ab945ed2290c5",
+      "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/198.npz": "031ae16e7feb917f1a17a1f1cffbbd7bba0242c6f1edb1131e813e5f6f8649ec"
+    },
+    "parent_rows": 596100,
+    "new_world_ids_sha256": "ae0a7d3ef9167c859cbdefb2ca3ee69374906bdb88a979c2d1a11ccae8e9700b",
+    "seam_world_ids_sha256": "e7b169d0ca73c06aa80e41d079fc68ea65e9729218d91333ae86ef4d1d411bee",
+    "masks": {
+      "86": {
+        "photo_A": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 1134,
+          "sha256": "d873e29404754988fae72f749089871cc649d59ede35969b8aa82de401cd0f27"
+        },
+        "photo_same": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 0,
+          "sha256": "b208fcb4db8f62f87a1c64cef938ad335d2ee3db52804bb14833450b0956a2f7"
+        },
+        "photo": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 1134,
+          "sha256": "d873e29404754988fae72f749089871cc649d59ede35969b8aa82de401cd0f27"
+        },
+        "cover": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 31864,
+          "sha256": "244bb9999964714f80b9bfbe21028347fb70da078fa6aa702be07c1bb8d02a0e"
+        }
+      },
+      "110": {
+        "photo_A": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 1048,
+          "sha256": "829cb4efe35937046d044eeff8050ce1bec6bae37bbf7cb4dc8cdfae89b88d94"
+        },
+        "photo_same": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 3,
+          "sha256": "778f283358f1adb3ae330157fb2c9f982c81225a9502886f8e78e4b40db9f17a"
+        },
+        "photo": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 1051,
+          "sha256": "a736666132498aebbaee4bbe198e1fc518ba23d7ff2aa9475ae4456a7cd00743"
+        },
+        "cover": {
+          "shape": [
+            768,
+            1152
+          ],
+          "count": 65689,
+          "sha256": "a7f77197698b0c29ab74358009949632f167e2018b6fb4e9969d339767a9b95f"
+        }
+      }
+    }
+  },
+  "gain": 1.076075792312622,
+  "RGB_bias": [
+    -0.005839361343532801,
+    0.0036509812343865633,
+    0.0033137358259409666
+  ],
+  "normalizers": {
+    "photo": 0.0022491756244562566,
+    "cover": 0.0051728906109929085,
+    "initial_photo": 0.0022491756244562566,
+    "initial_cover": 0.0051728906109929085
+  },
+  "frames": {
+    "86": {
+      "photo_A_pixels": 1134,
+      "photo_cross_frame_same_pixels": 0,
+      "trusted_cross_frame_same_candidates": 0,
+      "photo_pixels": 1134,
+      "coverage_pixels": 31864
+    },
+    "110": {
+      "photo_A_pixels": 1048,
+      "photo_cross_frame_same_pixels": 3,
+      "trusted_cross_frame_same_candidates": 4,
+      "photo_pixels": 1051,
+      "coverage_pixels": 65689
+    }
+  },
+  "active_new_rows": 101726,
+  "active_new_seam_rows": 54046,
+  "public_reload": {
+    "passed": true,
+    "asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/asset",
+    "existing_asset_preserved": false,
+    "renders": [
+      {
+        "raw": 86,
+        "existing_render_preserved": false,
+        "maximum_readback_difference": 0.0,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 110,
+        "existing_render_preserved": false,
+        "maximum_readback_difference": 0.0,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 134,
+        "existing_render_preserved": false,
+        "maximum_readback_difference": 0.0,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 179,
+        "existing_render_preserved": false,
+        "maximum_readback_difference": 0.0,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 198,
+        "existing_render_preserved": false,
+        "maximum_readback_difference": 0.0,
+        "joint_K_RGB_alpha_exact": true
+      }
+    ],
+    "comparisons": [
+      {
+        "raw": 86,
+        "road_rgb": 8.940696716308594e-08,
+        "road_alpha": 2.384185791015625e-07,
+        "joint_rgb": 2.384185791015625e-07,
+        "joint_alpha": 2.384185791015625e-07,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 110,
+        "road_rgb": 5.960464477539063e-08,
+        "road_alpha": 1.7881393432617188e-07,
+        "joint_rgb": 4.76837158203125e-07,
+        "joint_alpha": 1.7881393432617188e-07,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 134,
+        "road_rgb": 8.940696716308594e-08,
+        "road_alpha": 1.7881393432617188e-07,
+        "joint_rgb": 3.5762786865234375e-07,
+        "joint_alpha": 1.7881393432617188e-07,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 179,
+        "road_rgb": 5.960464477539063e-08,
+        "road_alpha": 1.7881393432617188e-07,
+        "joint_rgb": 4.172325134277344e-07,
+        "joint_alpha": 1.7881393432617188e-07,
+        "joint_K_RGB_alpha_exact": true
+      },
+      {
+        "raw": 198,
+        "road_rgb": 1.1920928955078125e-07,
+        "road_alpha": 2.384185791015625e-07,
+        "joint_rgb": 5.364418029785156e-07,
+        "joint_alpha": 2.384185791015625e-07,
+        "joint_K_RGB_alpha_exact": true
+      }
+    ],
+    "nativeF": 20,
+    "optimizer_updates": 0,
+    "new_diffusion_calls": 0
+  },
+  "old_all_parameters_frozen": true,
+  "new_core_opacity_sigma_frozen": true,
+  "XYZ_normal_normalSigma_quaternion_frozen": true,
+  "per_Gaussian_free_RGB_parameters": 0,
+  "global_RGB_parameters": 4,
+  "new_diffusion_calls": 0,
+  "diffusion_RGB_loaded": false,
+  "production_promoted": false,
+  "human_verdict": null,
+  "seconds": 57.90771912038326
+}

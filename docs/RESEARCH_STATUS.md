@@ -1,6 +1,6 @@
 # 当前研究状态
 
-更新：2026-11-20（Asia/Singapore）。
+更新：2026-11-22（Asia/Singapore）。
 
 二维教师独立范围 `ROAD-2D-TEACHER-PROMPT-20261120`：[五seed提示词对照与组件](autoresearch/road_2d_teacher_prompt_20261120/publication.html)完成。用户已采纳整帧1152×768＋注意力LoRA T0为后续默认；本轮5seed×2prompt×6任务正式60次，另4次真实GPU smoke，4进程并行，训练与三维修改0。合成两底图等权ΔE76 2.239597→2.242254、共同频谱偏差1.201894→1.141373，但改善配对仅7/20与8/20，seed波动未降低；新prompt不晋升，不再追加调词。12次旧1152三图重放和实际W/K门通过，60原始PNG及全部对照资产已取回核验；真实隐藏道路无GT。保持历史活动提示词，原CPU/GPU报告及其他三维任务保留。method human_verdict=用户采纳当前审阅样例；prompt human_verdict/problem_solved=null。实例按用户明确要求保持开机。
 
@@ -19,3 +19,7 @@
 工程账单列2101更新（600秒合成smoke2048、旧实拍接线37、最终真实接线16），与正式600分开。原生/零LoRA像素一致，非空Adam完整恢复后的下一更新精确，终点600独立进程恢复图精确。TRELLIS.2仅完成固定网格归一化/逆变换和纹理接口前置，未下载4B或运行。
 
 远端现场：/root/autodl-tmp/drivingeditor_repro/campaign/road_material_field_20261112_r1/。代码为scripts/worldsim_v82/road_material_field/独立通用实验入口，原生30K与既有008/029/065结果保留。沿用V82-F06；后续重点由本轮候选和生成图像决定，不把少量拟合收益写成通用方法成立。AutoDL保持开机，无关机动作。
+
+## ROAD-GAUSSIAN-TRANSFER-20261122
+
+065相似路面高斯迁移已完成原资产/零步迁移/局部拟合400步及五视角公共重载。[算法、组件、结果与来源](autoresearch/road_gaussian_transfer_20261122/README.md)。采用局部保距三维路块与完整协方差旋转，新增扩散0次；smoke10和恢复探针2次丢弃。零步到拟合的固定C/S覆盖改善、保护区RGB/alpha差0；覆盖仍弱于原资产，细裂缝、短缺口和joint车形残留仍在，未晋升默认资产，human_verdict/problem_solved=null。原报告增加实验组，资产/完整状态取回，GPU按用户要求保持开机。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

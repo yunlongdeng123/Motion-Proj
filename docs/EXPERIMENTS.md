@@ -442,3 +442,7 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 ## WORLD-ROAD-MATERIAL-FIELD-20261112
 
 固定道路几何与原生光栅，12个清晰可见路块训练、4个空间不交块评价、44候选。原生SD1.5对照与同输入rank4 LoRA600已实际完成。[实验图与分母](autoresearch/road_material_field_gpu_20261112/index.html)。固定参考eval MAE .0291271→.0186040，D检索参考.0263989→.0231615；仍有色差/标线误差，human_verdict=null。A/B/C/D有效fineguard检索MAE分别.04687969/.05119263/.06861912/.05038235，D未超过简单A。600正式、2101工程更新分列，checkpoint/精确恢复和字段到高斯真实GPU验证齐全。唯一有效数据连续面sourceguard，旧coarse缓存失效保留。failure_ledger_refs=[V82-F06]；failure_ledger_delta=append_small_data_road_field_boundary。
+
+## 相似道路高斯迁移（2026-11-22）
+
+- `ROAD-GAUSSIAN-TRANSFER-20261122 / road_gaussian_transfer_20261122_r2_isometric`：[算法、组件、冻结合同、五视角与资源](autoresearch/road_gaussian_transfer_20261122/README.md)。原报告同页新增三阶段及来源分层；完整数据和模型位于报告所列归档。failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。

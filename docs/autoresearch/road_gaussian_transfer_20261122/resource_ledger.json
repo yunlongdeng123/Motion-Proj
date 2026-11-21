@@ -1,0 +1,326 @@
+{
+  "schema": "road_transfer_resource_ledger.v1",
+  "generated_at_UTC": "2026-11-21T18:40:58.140975+00:00",
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric",
+  "scope": "r2 isometric transfer: fixed 400-step seam fit, required recovery checks, qualification and layer export",
+  "authoritative": true,
+  "GPU_used_by_this_audit": false,
+  "accounting_definitions": {
+    "F": "one actual native Gaussian raster forward; paired forward/backward are separate operation types",
+    "B": "one native-raster backward invoked by autograd; derived from executed code/receipts, not an independent low-level B log",
+    "optimizer_update": "one Adam step over the paired-frame objective; two native raster backwards per fit update",
+    "no_double_count": "Do not add receipt totals to context logs, nested public_reload.nativeF to parent totals, or native_trainingF/B to inclusive actual_nativeF. F and B are distinct counts, not a combined count of calls.",
+    "root_ledger": "root/resource_ledger.json is overwritten per process; its last native_calls=15 is not a campaign total"
+  },
+  "totals": {
+    "native_raster_forward": 1147,
+    "logged_closed_context_F": 1142,
+    "direct_public_reload_F_outside_context_counter": 5,
+    "native_raster_backward": 974,
+    "backward_count_basis": "receipt-and-loop-derived raster backwards",
+    "retained_formal_optimizer_updates": 400,
+    "discarded_smoke_optimizer_updates": 10,
+    "discarded_independent_probe_optimizer_updates": 2,
+    "executed_optimizer_updates_including_discarded": 412,
+    "completed_entry_optimizer_updates": 0,
+    "new_diffusion_calls": 0,
+    "power_operations": 0
+  },
+  "stages": [
+    {
+      "stage": "qualification_and_zero_step_export",
+      "F": 175,
+      "B": 150,
+      "optimizer_updates": 0,
+      "receipt": "transfer/receipt.json",
+      "decomposition": {
+        "qualification": 150,
+        "final_joint_K": 5,
+        "road_and_joint_export": 10,
+        "reload_expected": 5,
+        "reload_direct_unlogged": 5
+      }
+    },
+    {
+      "stage": "disposable_smoke",
+      "F": 53,
+      "B": 20,
+      "optimizer_updates": 10,
+      "updates_discarded": true,
+      "receipt": "smoke/fit_seams/receipt.json",
+      "decomposition": {
+        "initial_mask_and_normalizer": 4,
+        "smoke_training": 16,
+        "next_step_training": 4,
+        "next_step_state_reconstruction": 4,
+        "K_check": 5,
+        "export_and_public_reload": 20
+      }
+    },
+    {
+      "stage": "formal",
+      "F": 864,
+      "B": 800,
+      "optimizer_updates": 400,
+      "updates_retained": true,
+      "receipt": "appearance/receipt.json",
+      "decomposition": {
+        "initial_mask_and_normalizer": 4,
+        "formal_training": 800,
+        "every_50_step_K_checks": 40,
+        "export_and_public_reload": 20
+      }
+    },
+    {
+      "stage": "independent_resume_probe",
+      "F": 12,
+      "B": 4,
+      "optimizer_updates": 2,
+      "updates_discarded": true,
+      "receipt": "recovery/fresh_process_next_step.json",
+      "decomposition": {
+        "two_state_reconstructions": 8,
+        "two_next_steps": 4
+      }
+    },
+    {
+      "stage": "completed_entry_process",
+      "F": 28,
+      "B": 0,
+      "optimizer_updates": 0,
+      "receipt": "recovery/completed_entry.json",
+      "decomposition": {
+        "reused_smoke_reconstruction": 4,
+        "formal_reconstruction": 4,
+        "export_and_public_reload": 20
+      },
+      "receipt_F": 24,
+      "receipt_scope": "formal completed-entry substage excludes reused smoke reconstruction"
+    },
+    {
+      "stage": "source_contribution_export",
+      "F": 15,
+      "B": 0,
+      "optimizer_updates": 0,
+      "receipt": "layers/receipt.json",
+      "decomposition": {
+        "five_frames_three_forwards_each": 15
+      }
+    }
+  ],
+  "logged_context_groups": {
+    "qualification_and_zero_step_export": {
+      "contexts": 11,
+      "logged_F": 170,
+      "context_elapsed_seconds": 57.145962715148926
+    },
+    "smoke_and_formal": {
+      "contexts": 4,
+      "logged_F": 917,
+      "context_elapsed_seconds": 70.09920573234558
+    },
+    "independent_resume_probe": {
+      "contexts": 1,
+      "logged_F": 12,
+      "context_elapsed_seconds": 2.0441532135009766
+    },
+    "completed_entry_process": {
+      "contexts": 3,
+      "logged_F": 28,
+      "context_elapsed_seconds": 4.985693693161011
+    },
+    "source_contribution_export": {
+      "contexts": 1,
+      "logged_F": 15,
+      "context_elapsed_seconds": 8.269922018051147
+    }
+  },
+  "closed_context_rows": 20,
+  "wall_time": {
+    "fit_sequence_elapsed_seconds": 151.33260369300842,
+    "scope": "wall elapsed including CPU loading, serialization and native calls; not measured GPU device time",
+    "GPU_hours": null
+  },
+  "r1_diagnostic_only": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1",
+    "optimizer_updates": 0,
+    "new_diffusion_calls": 0,
+    "role": "raw Jacobian transport zero-step diagnostic, preserved and not the promoted main run",
+    "closed_context_log_F": 50,
+    "final_gate_receipt_F": 55,
+    "final_gate_receipt_B": 30,
+    "accounting": "50 logged F plus 5 direct public reload F for the final gate invocation; earlier r1 engineering sessions were not all instrumented, so no complete cumulative r1 F/B total is asserted",
+    "prior_counter_artifacts": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/engineering/visible_VJP_peeling_progress.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/engineering/visible_VJP_peeling_progress.json",
+        "bytes": 23332,
+        "sha256": "926e26cfd8dd3a8936036e62fc8d99c6f81517b86d0c48c1e64fedd1a9d1a601",
+        "declared": {
+          "nativeF": 120,
+          "nativeB": 120,
+          "optimizer_updates": 0
+        }
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/engineering/restart_seed_guard_progress.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/engineering/restart_seed_guard_progress.json",
+        "bytes": 3218,
+        "sha256": "306cb311012e07b50c9886c473af251284c67831f362969c609b234ca128a86a",
+        "declared": {
+          "nativeF": 15,
+          "nativeB": 15,
+          "optimizer_updates": 0
+        }
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/qualification/peeling_progress.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/qualification/peeling_progress.json",
+        "bytes": 5725,
+        "sha256": "7131db1dcd56eb2e0b17536b74faead8d58c9b5fdefe242c0b246f4880c3b22f",
+        "declared": {
+          "nativeF": 30,
+          "nativeB": 30,
+          "optimizer_updates": 0
+        }
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/qualification/native_rotation_compatibility.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/qualification/native_rotation_compatibility.json",
+        "bytes": 920,
+        "sha256": "8888cc1648f4ae55cb9645d2be189f6ba56914dd32dda3da2e7d85ed57712666",
+        "declared": {
+          "nativeF": 20,
+          "nativeB": 0,
+          "optimizer_updates": 0
+        }
+      }
+    ],
+    "overlap_rule": "counter artifacts are evidence of their own invocation scopes; do not blindly sum cumulative or resumed histories"
+  },
+  "inherited_inputs_not_rerun_in_r2": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/source_native/receipt.json",
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_native/receipt.json",
+      "native_source_isolation_F": 4,
+      "reason": "readonly r1 symlink reused; not an r2 execution"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/parent/rendered/receipt.json",
+      "native_parent_export_F": 10,
+      "reason": "readonly r1 parent renders reused; not an r2 execution"
+    }
+  ],
+  "historical_diffusion_branch": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1",
+    "completed_diffusion_calls": 4,
+    "included_in_current_run_totals": false,
+    "promoted": false,
+    "attempts": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/engineering/narrow_input_mask/teachers/manifest.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/engineering/narrow_input_mask/teachers/manifest.json",
+        "bytes": 8908,
+        "sha256": "08c042c8a83dc11cc62c6b5621ecad75fee52ffd86afb0b37b114a152adc7bfb",
+        "attempted": 2,
+        "completed": 2,
+        "scope": "historical excluded diffusion branch"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/teachers/manifest.json",
+        "exists": true,
+        "symlink": false,
+        "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_multisource_20261122_r1/teachers/manifest.json",
+        "bytes": 9324,
+        "sha256": "9dd357149af9e484365445a84dbf948448fbfc2b1abd5d413c7cc8521fae07e8",
+        "attempted": 2,
+        "completed": 2,
+        "scope": "historical excluded diffusion branch"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/native_session_log.jsonl",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/native_session_log.jsonl",
+      "bytes": 7917,
+      "sha256": "e495c7b642ebb5b18d6058c79b5a09dfd6795c75f0258f5cca84d49dcc5b836f"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/fit_sequence.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/fit_sequence.json",
+      "bytes": 2511,
+      "sha256": "8d387a51786f78ea1481693e14363ae6313922ba4c823f037e20730ed13c6c10"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/receipt.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/transfer/receipt.json",
+      "bytes": 844,
+      "sha256": "2edebc18819a6f7172e6bdce6626c16c865e8afa325d2ed1d7e8cea1aeffe25c"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/smoke/fit_seams/receipt.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/smoke/fit_seams/receipt.json",
+      "bytes": 13446,
+      "sha256": "5415a6cc922f71380978eec1835e2e5ed8a6d5cb44c305f34141a8f2037e9399"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/receipt.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/appearance/receipt.json",
+      "bytes": 10028,
+      "sha256": "e61346fb8f1846d31c55335d74286ea1450d99518b05e4e5ccd0cab5d4e4478d"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/recovery/fresh_process_next_step.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/recovery/fresh_process_next_step.json",
+      "bytes": 2075,
+      "sha256": "18a4fd9b67df75736fd1a25fc0eec4ced2a461510dd6fd0641973302f9c234b1"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/recovery/completed_entry.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/recovery/completed_entry.json",
+      "bytes": 2672,
+      "sha256": "98608c119c75e6b2c2e4d70fb2bdfbb0b1c249c3bdb713829a0add14903984b0"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/layers/receipt.json",
+      "exists": true,
+      "symlink": false,
+      "resolved_path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/layers/receipt.json",
+      "bytes": 290,
+      "sha256": "b39175c0d12a60e5ef9ce05ebb760a588b0e1ac5e1c547b0c4e839e232db6010"
+    }
+  ],
+  "source_code_evidence": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_capacity_gpu_20261118_r1/code/road_capacity_native.py",
+      "sha256": "93594524355a78b93d5a189d0b764ec29fee142a2b7666a45c51c7c29eacbd47",
+      "lines": "174-184",
+      "finding": "actual public reload raster bypasses context native_calls"
+    }
+  ]
+}

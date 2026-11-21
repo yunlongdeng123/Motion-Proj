@@ -1,0 +1,43 @@
+{
+  "schema": "road_explicit_world_rotation_CPU_validation.v1",
+  "passed": true,
+  "GPU_used": false,
+  "native_renderer_created": false,
+  "actual_source_asset_unchanged": true,
+  "actual_asset": "/root/autodl-tmp/drivingeditor_repro/campaign/road_surface_residual_20261121_r2/appearance_fit/asset/road.npz",
+  "checks": {
+    "actual_asset_default_byte_exact": {
+      "xyz": true,
+      "scaling": true,
+      "rotation": true,
+      "rgb": true,
+      "opacity": true,
+      "active": true
+    },
+    "actual_asset_zero_override_byte_exact": {
+      "xyz": true,
+      "scaling": true,
+      "rotation": true,
+      "rgb": true,
+      "opacity": true,
+      "active": true
+    },
+    "legacy_world_helper_normal_max_error": 6.795822585226041e-14,
+    "explicit_rotation_roundtrip_max_error": 2.9471673518299824e-08,
+    "explicit_covariance_relative_error": 4.381981278851883e-08,
+    "mixed_override_keeps_old_row_exact_and_rotates_new_row": true,
+    "J_Sigma_JT_relative_error": 5.763705710850319e-08,
+    "invalid_inputs_rejected": [
+      "quaternion_shape",
+      "quaternion_nan",
+      "quaternion_nonunit",
+      "quaternion_zero",
+      "normal_axis_mismatch",
+      "nonpositive_sigma_not_SPD",
+      "override_requires_bool",
+      "override_shape",
+      "override_without_quaternion"
+    ],
+    "empty_explicit_rotation_supported": true
+  }
+}

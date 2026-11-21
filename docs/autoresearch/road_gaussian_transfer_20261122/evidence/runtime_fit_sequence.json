@@ -1,0 +1,64 @@
+{
+  "schema": "authorized_fixed_seam_fit_sequence.v1",
+  "pid": 61596,
+  "root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric",
+  "started_at": 1795285452.440534,
+  "complete": true,
+  "stages": [
+    {
+      "name": "smoke_and_formal400",
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/smoke_and_formal400.log",
+      "argv": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/code/fit_seams.py",
+        "--config",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/fit_seams_config.json",
+        "--execute-gpu"
+      ],
+      "started_at": 1795285452.440736,
+      "complete": true,
+      "pid": 61597,
+      "returncode": 0,
+      "ended_at": 1795285556.6658158
+    },
+    {
+      "name": "independent_resume_probe",
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/independent_resume_probe.log",
+      "argv": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/code/fit_seams.py",
+        "--config",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/fit_seams_config.json",
+        "--execute-gpu",
+        "--resume-probe"
+      ],
+      "started_at": 1795285556.66707,
+      "complete": true,
+      "pid": 62075,
+      "returncode": 0,
+      "ended_at": 1795285572.796936
+    },
+    {
+      "name": "completed_entry",
+      "log": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/runtime/completed_entry.log",
+      "argv": [
+        "/root/autodl-tmp/envs/drivingeditor/bin/python",
+        "-u",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/code/fit_seams.py",
+        "--config",
+        "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r2_isometric/fit_seams_config.json",
+        "--execute-gpu"
+      ],
+      "started_at": 1795285572.797496,
+      "complete": true,
+      "pid": 62361,
+      "returncode": 0,
+      "ended_at": 1795285603.7722592
+    }
+  ],
+  "formal_steps": 400,
+  "new_diffusion_calls": 0,
+  "ended_at": 1795285603.7731378
+}
