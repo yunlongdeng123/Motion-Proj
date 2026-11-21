@@ -1,0 +1,22 @@
+{
+  "schema": "a20.native_support_appearance_control.contract.v1",
+  "mode": "native_support_real_observation_appearance_control",
+  "claim": "Preserve the existing generated prior and adapt its truly visible appearance; not compression or full geometry/material distillation.",
+  "baseline": {
+    "root": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student",
+    "contract_sha256": "8c5805d0c900d7133c273910a8dd31ccee3bcfb0d00d610d051f3cc5fe590986",
+    "assets_receipt_sha256": "12a3b0947fe1c16076e5e8d8ecf4b4b739e8e20e68265ca0afd3d6b25a1d0f59",
+    "runtime_sha256": "14ee719251cd51e4bab51ec3379af035fdec02ee77686060332e541521e79556",
+    "teacher_packet_sha256": "de1bd488e46a914354daf3f0787e5d3206934ec12953d00a08c16a10674f3003"
+  },
+  "geometry": {"source": "same-SLAT original registered official Gaussian decoder", "rows": 410080, "xyz_scales_rotation_opacity": "bitwise preserved activated fields", "extra_measurement_gaussians": 0, "resampling": false, "perturbation": false, "optimization": false, "physical_road_variant": false},
+  "appearance_domain": {"build_raws": [86,110], "observed": "Original real V outside a9 guard, native teacher alpha>=.90 and Gaussian center depth within .075m of that same native teacher rendered depth", "initialization": "Nearest native pixel original RGB at the same qualified projected center; arithmetic mean when both BUILD views qualify; SH0 conversion only", "unknown_DC": "bitwise source teacher value, never an optimizer variable", "higher_SH": "bitwise source teacher value", "teacher_unknown_novel_views": "prior preservation monitor only, never a training target"},
+  "views": {"synthetic_resolution": [512,512], "build_resolution": [1152,768], "synthetic": "same frozen six cameras as the baseline", "train_schedule": "BUILD[step%2] only; synthetic views are monitoring only", "heldout_opened": []},
+  "training": {"trainable": ["observed appearance SH0 DC only"], "formal_steps": 80, "smoke_steps": 5, "smoke_checkpoint_after_step": 2, "smoke_replay_step": 3, "smoke_replay_extra_optimizer_steps": 2, "formal_from_clean_control_init": true, "append_steps_or_parameter_search": false},
+  "optimizer": {"type": "Adam", "dc_lr": 0.01, "betas": [0.9,0.999], "eps": 1e-8, "schedule": "constant", "seed": 101},
+  "loss": {"real_RGB_L1": 1.0, "real_masked_edge_L1": 0.1, "real_HF_residual_L1": 0.1, "composition": "Premultiplied native render over fixed neutral 0.5 background, no alpha division", "domain": "complete fixed original V; HF fixed 5x5 footprint inside V", "alpha_or_geometry_optimization": false},
+  "entry_gate": {"teacher_fixed_domain_alpha_minimum": 0.95, "student_alpha_minimum": 0.95, "required_coverage_fraction_per_domain": 0.99, "real_V_checked_separately": true, "record": ["min","p01","p05","every hole coordinate"], "student_mask_may_shrink_domain": false, "formal_requires_root_approval_bound_to_contract_assets_runtime_and_smoke": true},
+  "required_checks": ["source array hashes for xyz/scales/rotation/opacity and unknown DC", "actual native grey/alpha equality before and after adaptation", "nonzero finite observed DC gradient", "full mutable state+Adam+Python/NumPy/Torch CPU/CUDA RNG save/restore and step replay", "prior unknown novel-view monitoring", "real-V RGB/edge/HF metrics"],
+  "scene": {"road_cameras_trajectory_environment_other_actors": "frozen", "joint": "diagnostic only; no joint optimization or promotion"},
+  "resource_estimate": {"status": "pre-smoke estimate", "GPU_peak_GiB": [2,5], "prepare_seconds": [10,30], "smoke_seconds": [10,30], "formal80_seconds": [20,90]}
+}

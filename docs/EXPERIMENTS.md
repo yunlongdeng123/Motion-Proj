@@ -423,3 +423,7 @@
 `OMNI-HQ-VEHICLE-TEACHER-20261122` / `omni_hq_vehicle_teacher_20261122_r1`：[结果与组件](autoresearch/omni_hq_vehicle_teacher_20261122/report.md)、[报告HTML](autoresearch/omni_hq_vehicle_teacher_20261122/index.html)、[冻结灰模门](autoresearch/omni_hq_vehicle_teacher_20261122/audits/source/preregistered_gate.json)。后3/4单图条件，前3/4仅结构参照，sourcecrop仅CPU matte且RGB最大改动0。固定seed101/50步/CFG4.5/256，原bbox `[1,.416,.5]` 与实际raw轴序错配保留为工程诊断；唯一修正重放 `[.5,.416,1]` 单列计费，两次共100请求步、154.95秒进程墙钟、峰值7.68GiB。仅proper rotation／统一尺度／固定有界配准，无分轴拉伸。全部1030点均值／P90为.0992663／.3801679m，超过生成前固定.075／.15m；raw86/110核心召回98.46%／99.06%、未知区排除IoU同值、背景溢出0%、尺寸门通过。四轮、两轴和驾驶舱／货厢可辨，轮胎轮拱与底盘局部熔连；`GREY_GATE_FAILED_NO_MATERIAL_NO_STUDENT`，材质0、学生0，真实可见观测锁定融合尚未做。原始／修正模型、变换、灰图及43文件审计取回已保留验证，轻量源码与恢复指针归档；GPU保持开机。human_verdict/problem_solved=null，failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
 
 免责声明：车型参考不是a20隐藏真值；实测点为几何归属代理，86/110是注册拟合集，遮挡区域无完整轮廓真值；134/179/198未参与生成、配准或选择。单候选与坐标接线诊断不构成Omni能力上限结论。
+
+## A20-SD15-SAMEVIEW-20261122
+
+run `a20_sd15_sameview_20261122_r1`：[结果与组件](autoresearch/a20_sd15_sameview_20261122/report.md)、[交互对照](autoresearch/a20_sd15_sameview_20261122/index.html)、[阶段计数](autoresearch/a20_sd15_sameview_20261122/result.json)、[恢复](autoresearch/a20_sd15_sameview_20261122/restore_index.json)。固定SD1.5二维拒绝；Amodal/TRELLIS对象比较；失败24k学生40几何与独立410k支撑保留80观测DC控制，正式120、全部150更新，scene/road0。当前部分完成、场景未过，完整蒸馏未完成；补充既有V82-F06。

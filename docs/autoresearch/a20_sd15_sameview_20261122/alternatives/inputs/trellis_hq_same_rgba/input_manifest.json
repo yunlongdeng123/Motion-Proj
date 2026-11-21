@@ -1,0 +1,60 @@
+{
+  "schema": "a20.same_fixed_rgba_teacher_input.v1",
+  "seed": 101,
+  "source_rgba": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgba.png",
+  "source_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+  "shared_rgba": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/alternatives/inputs/trellis_hq_same_rgba/shared_rgba.png",
+  "shared_rgba_byte_identical": true,
+  "amodal_rgb_source_pixel_identical": true,
+  "amodal_same_rgb_as_common": true,
+  "amodal_rgb_source": "/root/autodl-tmp/drivingeditor_repro/campaign/omni_hq_vehicle_teacher_20261122_r1/input/rear_rgba.png",
+  "amodal_rgb_source_sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399",
+  "rgba_size": [
+    754,
+    516
+  ],
+  "alpha_threshold": 204,
+  "amodal_mask_protocol": "same_rgba_alpha_only_no_occluded_pixels",
+  "amodal_explicit_mask_source": null,
+  "mask_counts": {
+    "0": 0,
+    "188": 234965,
+    "255": 154099
+  },
+  "amodal_effective_occluded_count_after_kernel3": 0,
+  "input_condition_comparison": "same source RGB/alpha; official model-specific preprocessing; Amodal mask protocol recorded separately",
+  "teacher_preprocessing": {
+    "trellis": "official alpha bbox >204, 1.2 crop, 518 LANCZOS, RGB multiplied by alpha",
+    "amodal": "official mask: 0 occluded,188 visible,255 background; kernel3 occlusion dilation; resize518"
+  },
+  "files": {
+    "amodal_effective_hidden.png": {
+      "bytes": 3473,
+      "sha256": "32c6311495b9915bd766945c3254712a2e74bff1b7fd5968e29276e959df730c"
+    },
+    "amodal_effective_occluded.png": {
+      "bytes": 456,
+      "sha256": "b7522a82a873d2c97551b1687e347350b29cfadb414e97600b2468f723e0a752"
+    },
+    "amodal_mask.png": {
+      "bytes": 3458,
+      "sha256": "f7fdf481f4c4a5a49fe107dc21db77f3fe7ca6f3dd166b7c1a4fa9be737cb0e5"
+    },
+    "amodal_official_preprocessed_518.png": {
+      "bytes": 255074,
+      "sha256": "ee4f8bd8dd12ab5be40e9c051d3554c40af5a49f0b9bcc62ec9a3a1b8a947a06"
+    },
+    "amodal_rgb.png": {
+      "bytes": 485541,
+      "sha256": "115b7870ac4f05054a494dc802124a16fd033abcdc94d083b18ea04c828e57a1"
+    },
+    "shared_rgba.png": {
+      "bytes": 540747,
+      "sha256": "ac5f39fbb07029ec4018c56269f94949a4d9471a4c31d539d2a2e0e49b951399"
+    },
+    "trellis_official_preprocessed_518.png": {
+      "bytes": 145211,
+      "sha256": "4f58d53921026cc998f30d81c6bb974cf51569a1ede818bbca6b0cc481b5e21e"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "a20.gaussian_actor_candidate.v1",
+  "identity": {
+    "alias": "a20",
+    "native_id": 21,
+    "track": "bzFbWRrSGOgEaXxnuGV0tw"
+  },
+  "delete_request": {
+    "alias": "a9",
+    "native_id": 10
+  },
+  "asset": {
+    "path": "a20_actor_candidate.npz",
+    "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+    "bytes": 19980928
+  },
+  "canonical_source_asset": {
+    "path": "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/actor.npz",
+    "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+    "bytes": 19980928
+  },
+  "rows": 410080,
+  "coordinates": "canonical actor metres; x forward / y left / z up; original bounded registered actor, no physical-pose diagnostic baked in",
+  "field_semantics": {
+    "xyz": "metres",
+    "scales": "activated standard deviations, not logs",
+    "rotation": "activated normalized quaternion wxyz",
+    "coefficients": "SH coefficients; DC RGB=C0*DC+0.5; higher SH unchanged",
+    "opacity": "already activated; preserve values including 1.0"
+  },
+  "source": "same saved TRELLIS-image-large SLAT; official Gaussian decoder; no stochastic resampling",
+  "method": "native support initialization and true-visible appearance control, not completed compression distillation",
+  "formal_updates": 80,
+  "trainable_observed_DC_rows": 12865,
+  "unknown_DC_rows_frozen": 397215,
+  "geometry_and_unknown_DC_bitwise_preserved": true,
+  "scene_qualified": false,
+  "simulation_qualified": false,
+  "trajectory": "frozen source a20 track; use task restoration index and native scene adapter",
+  "restore": "../../work/a20_sd15_sameview_20261122/audit/T_native_scene_final80_r1/restore_index.json",
+  "quality_record": "result.json",
+  "disclaimer": "参考图及生成隐藏车身属于车型先验，并非a20隐藏真值。1030点为对象框筛选的测距归属代理；部分后窗回波可能位于玻璃后，未认定为外壳。全部数字为BUILD86／110拟合集或合成教师保真；134／179／198未用于本轮模型、姿态或参数选择。不同模型输入协议及默认采样设置不同，单候选不能决定模型上限。Amodal一次兼容性工程重放及其事后重建的执行源码来源已透明记录。候选资产未通过完整车身真实性、场景接地、残影及保留车辆交接验收。"
+}

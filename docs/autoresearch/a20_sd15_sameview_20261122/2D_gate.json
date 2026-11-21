@@ -1,0 +1,126 @@
+{
+  "schema": "a20.sameview.2d_gate.v1",
+  "recorded_at_utc": "2026-11-21T19:55:17.587511+00:00",
+  "candidate": "sd15_seed101_occlusion_r2",
+  "candidate_count": 1,
+  "user_human_score": null,
+  "reviewer": "root agent engineering actual-image review",
+  "reviewer_authority": "Parent root instruction after actual view of raw/input/mask/output and RGBA",
+  "root_engineering_verdict": "reject",
+  "teacher_input_gate": "reject",
+  "omni_allowed": false,
+  "next_action": "Preserve the unique candidate; no resampling, no Omni, no texture or student execution. Root continues separate HQ-reference work.",
+  "fixed_inference": {
+    "seed": 101,
+    "prompt": "rear view same black Dodge pickup truck, complete rear bumper and rear tires, coherent full vehicle body, realistic proportions, plain neutral background",
+    "scheduler": "DDIM",
+    "steps": 20,
+    "guidance_scale": 3.0,
+    "eta": 0.0,
+    "strength": 1.0,
+    "lora": false,
+    "weights_frozen": true,
+    "training_updates": 0
+  },
+  "checks": [
+    {
+      "check": "wheel_position_and_tires",
+      "label": "轮位与轮胎",
+      "root_engineering_verdict": "reject",
+      "human_user_score": null,
+      "observed": "两侧下方为短黑块与悬垂面片，缺少连贯的轮胎圆弧、侧壁和接地关系；无法作为可靠轮胎输入。"
+    },
+    {
+      "check": "vehicle_width",
+      "label": "车宽",
+      "root_engineering_verdict": "partial",
+      "human_user_score": null,
+      "observed": "可信上半车身宽度由原图硬保护；下半部大体延续可见车尾横向范围，但两端下垂结构和轮侧不一致，完整车宽未通过可靠性验收。投影框仅约束生成许可范围。"
+    },
+    {
+      "check": "underbody_and_rear_semantics",
+      "label": "车底与后部结构",
+      "root_engineering_verdict": "reject",
+      "human_user_score": null,
+      "observed": "后保险杠生成左右对称的前雾灯样圆灯；车底存在断裂、孔洞与散落黑色碎片。原始 raw_model512 中已出现这些结构。"
+    },
+    {
+      "check": "same_view",
+      "label": "同视角",
+      "root_engineering_verdict": "pass_2d_qualitative",
+      "human_user_score": null,
+      "observed": "上半车身保留同一 raw110 后视 RGB 和原生投影坐标；补全部分仍是后视布局，没有生成新观察角度，但后部圆灯细节与目标车尾语义不符。"
+    },
+    {
+      "check": "visible_RGB_protection",
+      "label": "可见像素保护",
+      "root_engineering_verdict": "pass",
+      "human_user_score": null,
+      "observed": "最终 RGB/RGBA 的 V=28384 像素与单列近似可见边界 R=3504 像素均从原生 RGB 硬拷回，最大误差0、变化像素0；V|R 与 a9 guard 零交。"
+    }
+  ],
+  "output_domains": {
+    "raw_model512": "Direct 512x512 decoder output before all hard protection and neutral restriction; may modify every RGB location.",
+    "restricted_composite": "432x364 crop: native RGB on V|R, exact raw decoder RGB on U, neutral128 on N|B. Output U matches raw exactly, including its defects.",
+    "estimated_alpha": "Image-derived estimate inside V|R|U; protected observed V/R union generated component estimate. Can remove disconnected fragments or create cut edges/holes; never a full-object silhouette annotation."
+  },
+  "raw_vs_restricted_composite_metrics": {
+    "V": {
+      "pixels": 28384,
+      "raw_vs_composite_max_abs_uint8": 237,
+      "raw_vs_composite_mean_abs_uint8": 4.437124201428035,
+      "raw_vs_composite_changed_pixels": 28330
+    },
+    "R": {
+      "pixels": 3504,
+      "raw_vs_composite_max_abs_uint8": 218,
+      "raw_vs_composite_mean_abs_uint8": 9.820110350076103,
+      "raw_vs_composite_changed_pixels": 3499
+    },
+    "N": {
+      "pixels": 30058,
+      "raw_vs_composite_max_abs_uint8": 98,
+      "raw_vs_composite_mean_abs_uint8": 1.2822432186661343,
+      "raw_vs_composite_changed_pixels": 28889
+    },
+    "B": {
+      "pixels": 52257,
+      "raw_vs_composite_max_abs_uint8": 5,
+      "raw_vs_composite_mean_abs_uint8": 0.8398428280740698,
+      "raw_vs_composite_changed_pixels": 49120
+    },
+    "U": {
+      "pixels": 43045,
+      "raw_vs_composite_max_abs_uint8": 0,
+      "raw_vs_composite_mean_abs_uint8": 0.0,
+      "raw_vs_composite_changed_pixels": 0
+    }
+  },
+  "visible_protection": {
+    "V_pixels": 28384,
+    "R_pixels": 3504,
+    "V_max_abs_error_uint8": 0,
+    "R_max_abs_error_uint8": 0,
+    "V_changed_pixels": 0,
+    "R_changed_pixels": 0
+  },
+  "inpaint_permission": "U=P & O_guard & ~(V|R), 43045 px. N=30058 and B=52257 px are neutral locked.",
+  "alpha": {
+    "total_pixels": 48470,
+    "generated_U_pixels": 16582,
+    "observed_V_pixels": 28384,
+    "observed_approx_R_pixels": 3504
+  },
+  "evidence": {
+    "raw_model": "sd15_seed101_occlusion_r2/raw_model512.png",
+    "composite": "sd15_seed101_occlusion_r2/a20_sameview_rgb.png",
+    "rgba": "sd15_seed101_occlusion_r2/a20_sameview_rgba_estimated.png",
+    "alpha_origin": "sd15_seed101_occlusion_r2/alpha_origin_V_green_generated_amber.png",
+    "comparison": "sd15_seed101_occlusion_r2/preview_original_input_mask_output.png",
+    "input_roles": "sd15_seed101_occlusion_r2/preview_input_mask_domains.png",
+    "plan": "sd15_seed101_occlusion_r2/plan.json",
+    "receipt": "sd15_seed101_occlusion_r2/receipt.json",
+    "local_verification": "local_takeback_verification.json"
+  },
+  "limitation": "This is one fixed base-SD1.5 seed101 sample under neutral background and occlusion-restricted generation. It does not isolate causal effects of background, mask, prompt, precision, or model choice, and is not an upper bound on SD capability."
+}

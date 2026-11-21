@@ -1,0 +1,537 @@
+{
+  "schema": "a20.teacher_and_gaussian_asset_comparison.v1",
+  "date": "2026-11-22 Asia/Singapore",
+  "headline": "TRELLIS提供了更有用的粗车辆先验；保留原生高斯支撑可避免明显细节损失，场景交接仍未验收。",
+  "scene_qualified": false,
+  "full_distillation_completed": false,
+  "GPU_keep_on": true,
+  "actual_stage_counts": {
+    "object_cache_builds": 1,
+    "object_smoke_updates": 20,
+    "object_smoke_replay_updates": 2,
+    "object_discarded_material_probe_updates": 1,
+    "object_geometry_updates": 40,
+    "object_material_updates": 0,
+    "retained_support_control_smoke_updates": 5,
+    "retained_support_control_replay_updates": 2,
+    "retained_support_control_observed_color_updates": 80,
+    "joint_scene_updates": 0,
+    "road_updates": 0
+  },
+  "metrics": [
+    [
+      "二维分支",
+      "基础SD1.5 inpainting：1候选／20步；道路LoRA关闭",
+      "真实V/R像素最大变化0；二维结构未过，新增Omni采样0"
+    ],
+    [
+      "独立学生",
+      "24,235行；正式40步几何",
+      "缺失域覆盖未过；该组80步颜色未执行"
+    ],
+    [
+      "学生高覆盖 · raw86／110",
+      "95.54%／95.22%",
+      "固定teacher高置信域中，student Alpha≥.95的比例；门为99%"
+    ],
+    [
+      "学生新视图细节",
+      "HF相关 0.028～0.206；能量比 0.254～0.321",
+      "与同相机512原生教师比较；颜色80尚未执行"
+    ],
+    [
+      "足迹：正前主轴σ中位数",
+      "教师1.084px；学生初始3.709px／40步3.698px",
+      "同相机、含相同0.3px²低通；初始化已发生低通与斑点化"
+    ],
+    [
+      "支撑保留控制",
+      "410,080行；真实可见DC 12,865行优化80步",
+      "全部几何/协方差/不透明度及397,215行未知DC逐位冻结"
+    ],
+    [
+      "未知细节监测",
+      "HF相关≈1，能量比≈1",
+      "原先验保真；不是本轮学出了未知纹理"
+    ],
+    [
+      "正式预算",
+      "40步几何＋80步独立观测校正＝120步",
+      "不同实验组；不把失败组的颜色阶段写成已跑"
+    ],
+    [
+      "短程与恢复",
+      "20步＋2重放＋1丢弃探针；控制5步＋2重放",
+      "完整Adam／Python／NumPy／Torch CPU与CUDA RNG恢复通过"
+    ],
+    [
+      "磁盘重载",
+      "最终控制8视图float／8bit最大差均0",
+      "最终actor与恢复状态均已取回验真"
+    ],
+    [
+      "场景接入",
+      "旧行退休的保留车辆RGB/Alpha差为0；新增对象仍有遮挡",
+      "raw86 native11 RGB变化239／245像素；raw110全部K为488像素"
+    ],
+    [
+      "道路与场景优化",
+      "0步",
+      "道路、轨迹、相机、环境与其它实例参数冻结；接地和场景未验收"
+    ]
+  ],
+  "geometry_metrics": [
+    [
+      "模型／输入",
+      "全部1030点 mean／P90",
+      "结构与数值结论"
+    ],
+    [
+      "Omni／同一高质量参考（历史）",
+      "9.93／38.02 cm",
+      "测距门未过；保留粗先验"
+    ],
+    [
+      "Amodal3R／真实partial＋遮挡掩码",
+      "8.85／36.01 cm",
+      "轮胎结构与测距未过"
+    ],
+    [
+      "TRELLIS-image-large／同一高质量参考",
+      "4.68／9.08 cm",
+      "对象本体门可用于受控试验；场景绑定另审"
+    ]
+  ],
+  "appearance_metrics": [
+    [
+      "真实V阶段",
+      "raw86：RGB L1／HF相关",
+      "raw110：RGB L1／HF相关"
+    ],
+    [
+      "原生成教师",
+      "0.09180／0.0915",
+      "0.08855／0.0035"
+    ],
+    [
+      "真实RGB初始化",
+      "0.03129／0.3987",
+      "0.04033／0.1047"
+    ],
+    [
+      "80步观测校正",
+      "0.01880／0.5053",
+      "0.03632／0.2652"
+    ]
+  ],
+  "figures": [
+    {
+      "title": "实际 SD1.5 条件与唯一输出",
+      "file": "sd15_input_output.png",
+      "caption": "原图、受保护输入、实际遮挡许可、输出。后保险杠圆灯、轮胎及底部碎片未通过二维门；未送入Omni。"
+    },
+    {
+      "title": "用于 Omni 历史控制与 TRELLIS 的同一车型参考",
+      "file": "hq_rear_reference.png",
+      "caption": "模型实际使用对应RGBA。TRELLIS和Omni输入文件SHA相同；官方预处理与采样参数分别记录。"
+    }
+  ],
+  "geometry_figures": [
+    {
+      "title": "Omni：历史高质量参考控制",
+      "file": "omni_grey.png",
+      "caption": "固定框轴修正后的历史资产；本轮未重采样。"
+    },
+    {
+      "title": "Amodal3R：真实遮挡输入",
+      "file": "amodal_grey.png",
+      "caption": "输入为真实partial RGB及显式遮挡掩码。轮胎缺失与锥状支撑未通过结构门。"
+    },
+    {
+      "title": "TRELLIS-image-large：同高质量参考",
+      "file": "trellis_grey.png",
+      "caption": "四轮、双轴、驾驶舱与货厢关系可辨。保留原生成比例；有界配准的统一scale=1.10触上界。"
+    }
+  ],
+  "scene_figures": [
+    {
+      "title": "raw110：最终对象单层 RGB",
+      "file": "scene110_isolated.png",
+      "caption": "实际原生高斯光栅化，410080行；包含观测校正与生成先验。"
+    },
+    {
+      "title": "raw110：删除 a9 后联合 RGB",
+      "file": "scene110_delete.png",
+      "caption": "同一对象接回冻结道路与背景。车底红灰平面残留仍可见，未晋升场景。"
+    },
+    {
+      "title": "raw110：联合可见贡献 Alpha",
+      "file": "scene110_alpha.png",
+      "caption": "此图表示联合深度排序后的a20贡献；不能代替RGB材质质量。"
+    },
+    {
+      "title": "raw86：删除 a9 后联合 RGB",
+      "file": "scene086_delete.png",
+      "caption": "固定保留车辆掩码内仍存在变化；未逐相机裁掉新高斯以掩盖问题。"
+    }
+  ],
+  "viewer": {
+    "views": {
+      "novel_00_rgb": "正前 · RGB",
+      "novel_00_alpha": "正前 · 单层Alpha",
+      "novel_01_rgb": "左前 · RGB",
+      "novel_01_alpha": "左前 · 单层Alpha",
+      "novel_02_rgb": "左后 · RGB",
+      "novel_02_alpha": "左后 · 单层Alpha",
+      "novel_03_rgb": "正后 · RGB",
+      "novel_03_alpha": "正后 · 单层Alpha",
+      "novel_04_rgb": "右后 · RGB",
+      "novel_04_alpha": "右后 · 单层Alpha",
+      "novel_05_rgb": "右前 · RGB",
+      "novel_05_alpha": "右前 · 单层Alpha",
+      "build_086_rgb": "raw86实拍相机 · RGB",
+      "build_086_alpha": "raw86实拍相机 · 单层Alpha",
+      "build_110_rgb": "raw110实拍相机 · RGB",
+      "build_110_alpha": "raw110实拍相机 · 单层Alpha"
+    },
+    "methods": [
+      {
+        "label": "TRELLIS 原生教师",
+        "images": {
+          "novel_00_rgb": "media/comparison_0_novel_00_rgb.png",
+          "novel_00_alpha": "media/comparison_0_novel_00_alpha.png",
+          "novel_01_rgb": "media/comparison_0_novel_01_rgb.png",
+          "novel_01_alpha": "media/comparison_0_novel_01_alpha.png",
+          "novel_02_rgb": "media/comparison_0_novel_02_rgb.png",
+          "novel_02_alpha": "media/comparison_0_novel_02_alpha.png",
+          "novel_03_rgb": "media/comparison_0_novel_03_rgb.png",
+          "novel_03_alpha": "media/comparison_0_novel_03_alpha.png",
+          "novel_04_rgb": "media/comparison_0_novel_04_rgb.png",
+          "novel_04_alpha": "media/comparison_0_novel_04_alpha.png",
+          "novel_05_rgb": "media/comparison_0_novel_05_rgb.png",
+          "novel_05_alpha": "media/comparison_0_novel_05_alpha.png",
+          "build_086_rgb": "media/comparison_0_build_086_rgb.png",
+          "build_086_alpha": "media/comparison_0_build_086_alpha.png",
+          "build_110_rgb": "media/comparison_0_build_110_rgb.png",
+          "build_110_alpha": "media/comparison_0_build_110_alpha.png"
+        }
+      },
+      {
+        "label": "24k重采样学生 · 40步几何",
+        "images": {
+          "novel_00_rgb": "media/comparison_1_novel_00_rgb.png",
+          "novel_00_alpha": "media/comparison_1_novel_00_alpha.png",
+          "novel_01_rgb": "media/comparison_1_novel_01_rgb.png",
+          "novel_01_alpha": "media/comparison_1_novel_01_alpha.png",
+          "novel_02_rgb": "media/comparison_1_novel_02_rgb.png",
+          "novel_02_alpha": "media/comparison_1_novel_02_alpha.png",
+          "novel_03_rgb": "media/comparison_1_novel_03_rgb.png",
+          "novel_03_alpha": "media/comparison_1_novel_03_alpha.png",
+          "novel_04_rgb": "media/comparison_1_novel_04_rgb.png",
+          "novel_04_alpha": "media/comparison_1_novel_04_alpha.png",
+          "novel_05_rgb": "media/comparison_1_novel_05_rgb.png",
+          "novel_05_alpha": "media/comparison_1_novel_05_alpha.png",
+          "build_086_rgb": "media/comparison_1_build_086_rgb.png",
+          "build_086_alpha": "media/comparison_1_build_086_alpha.png",
+          "build_110_rgb": "media/comparison_1_build_110_rgb.png",
+          "build_110_alpha": "media/comparison_1_build_110_alpha.png"
+        }
+      },
+      {
+        "label": "410k支撑保留 · 80步观测校正",
+        "images": {
+          "novel_00_rgb": "media/comparison_2_novel_00_rgb.png",
+          "novel_00_alpha": "media/comparison_2_novel_00_alpha.png",
+          "novel_01_rgb": "media/comparison_2_novel_01_rgb.png",
+          "novel_01_alpha": "media/comparison_2_novel_01_alpha.png",
+          "novel_02_rgb": "media/comparison_2_novel_02_rgb.png",
+          "novel_02_alpha": "media/comparison_2_novel_02_alpha.png",
+          "novel_03_rgb": "media/comparison_2_novel_03_rgb.png",
+          "novel_03_alpha": "media/comparison_2_novel_03_alpha.png",
+          "novel_04_rgb": "media/comparison_2_novel_04_rgb.png",
+          "novel_04_alpha": "media/comparison_2_novel_04_alpha.png",
+          "novel_05_rgb": "media/comparison_2_novel_05_rgb.png",
+          "novel_05_alpha": "media/comparison_2_novel_05_alpha.png",
+          "build_086_rgb": "media/comparison_2_build_086_rgb.png",
+          "build_086_alpha": "media/comparison_2_build_086_alpha.png",
+          "build_110_rgb": "media/comparison_2_build_110_rgb.png",
+          "build_110_alpha": "media/comparison_2_build_110_alpha.png"
+        }
+      }
+    ]
+  },
+  "media": [
+    [
+      "sd15_seed101_occlusion_r2/preview_original_input_mask_output.png",
+      "sd15_input_output.png"
+    ],
+    [
+      "../omni_hq_vehicle_teacher_20261122/input/rear_rgb.png",
+      "hq_rear_reference.png"
+    ],
+    [
+      "../omni_hq_vehicle_teacher_20261122/audits/bbox_frame_fixed_registered_audit/grey_six_orthographic.png",
+      "omni_grey.png"
+    ],
+    [
+      "alternatives/retrieved/amodal_real_raw110_seed101_r2_cpu_audit/registered_audit/grey_six_views.png",
+      "amodal_grey.png"
+    ],
+    [
+      "alternatives/retrieved/trellis_hq_rear_seed101_r1_cpu_audit/registered_audit/grey_six_views.png",
+      "trellis_grey.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_00/teacher_rgb_premult.png",
+      "comparison_0_novel_00_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_00/student_rgb_premult.png",
+      "comparison_1_novel_00_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_00/student_rgb_premult.png",
+      "comparison_2_novel_00_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_00/teacher_alpha.png",
+      "comparison_0_novel_00_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_00/student_alpha.png",
+      "comparison_1_novel_00_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_00/student_alpha.png",
+      "comparison_2_novel_00_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_01/teacher_rgb_premult.png",
+      "comparison_0_novel_01_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_01/student_rgb_premult.png",
+      "comparison_1_novel_01_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_01/student_rgb_premult.png",
+      "comparison_2_novel_01_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_01/teacher_alpha.png",
+      "comparison_0_novel_01_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_01/student_alpha.png",
+      "comparison_1_novel_01_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_01/student_alpha.png",
+      "comparison_2_novel_01_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_02/teacher_rgb_premult.png",
+      "comparison_0_novel_02_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_02/student_rgb_premult.png",
+      "comparison_1_novel_02_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_02/student_rgb_premult.png",
+      "comparison_2_novel_02_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_02/teacher_alpha.png",
+      "comparison_0_novel_02_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_02/student_alpha.png",
+      "comparison_1_novel_02_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_02/student_alpha.png",
+      "comparison_2_novel_02_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_03/teacher_rgb_premult.png",
+      "comparison_0_novel_03_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_03/student_rgb_premult.png",
+      "comparison_1_novel_03_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_03/student_rgb_premult.png",
+      "comparison_2_novel_03_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_03/teacher_alpha.png",
+      "comparison_0_novel_03_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_03/student_alpha.png",
+      "comparison_1_novel_03_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_03/student_alpha.png",
+      "comparison_2_novel_03_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_04/teacher_rgb_premult.png",
+      "comparison_0_novel_04_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_04/student_rgb_premult.png",
+      "comparison_1_novel_04_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_04/student_rgb_premult.png",
+      "comparison_2_novel_04_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_04/teacher_alpha.png",
+      "comparison_0_novel_04_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_04/student_alpha.png",
+      "comparison_1_novel_04_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_04/student_alpha.png",
+      "comparison_2_novel_04_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_05/teacher_rgb_premult.png",
+      "comparison_0_novel_05_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_05/student_rgb_premult.png",
+      "comparison_1_novel_05_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_05/student_rgb_premult.png",
+      "comparison_2_novel_05_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_05/teacher_alpha.png",
+      "comparison_0_novel_05_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/novel_05/student_alpha.png",
+      "comparison_1_novel_05_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/novel_05/student_alpha.png",
+      "comparison_2_novel_05_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_086/teacher_rgb_premult.png",
+      "comparison_0_build_086_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_086/student_rgb_premult.png",
+      "comparison_1_build_086_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/build_086/student_rgb_premult.png",
+      "comparison_2_build_086_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_086/teacher_alpha.png",
+      "comparison_0_build_086_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_086/student_alpha.png",
+      "comparison_1_build_086_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/build_086/student_alpha.png",
+      "comparison_2_build_086_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_110/teacher_rgb_premult.png",
+      "comparison_0_build_110_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_110/student_rgb_premult.png",
+      "comparison_1_build_110_rgb.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/build_110/student_rgb_premult.png",
+      "comparison_2_build_110_rgb.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_110/teacher_alpha.png",
+      "comparison_0_build_110_alpha.png"
+    ],
+    [
+      "student/geometry_object_r1/eval/build_110/student_alpha.png",
+      "comparison_1_build_110_alpha.png"
+    ],
+    [
+      "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/eval/build_110/student_alpha.png",
+      "comparison_2_build_110_alpha.png"
+    ],
+    [
+      "audit/T_native_scene_final80_r1/renders/110/isolated_T/rgb.png",
+      "scene110_isolated.png"
+    ],
+    [
+      "audit/T_native_scene_final80_r1/renders/110/T_context_delete/rgb.png",
+      "scene110_delete.png"
+    ],
+    [
+      "audit/T_native_scene_final80_r1/renders/110/T_context_delete/target_alpha.png",
+      "scene110_alpha.png"
+    ],
+    [
+      "audit/T_native_scene_final80_r1/renders/086/T_context_delete/rgb.png",
+      "scene086_delete.png"
+    ]
+  ],
+  "findings": [
+    "本轮选择TRELLIS-image-large作为更有用的粗车辆先验。它与Omni历史控制使用同一高质量后3/4参考；Amodal3R使用其真实遮挡接口，输入条件不同。SD1.5唯一结果止于二维门。",
+    "24k重采样把位置、协方差、密度与取色共同改变：正前投影主轴σ中位数由1.084增至3.709像素，初始取色还混合约10～11个有效源。颜色训练之前就已有细节损失。清楚的原生高斯输出说明当前油画效果不能作为3DGS表示上限的证据。",
+    "支撑保留控制保存了既有未知细节，只优化真实可见外观。真实V的初始化收益与80步收益已分开列出；raw110的HF相关仍只有0.2652，真实可见细节尚未全部通过。",
+    "接地检查区分了固定表面与Gaussian覆盖：后右轮处缺少测距支持，前右处存在局部证据冲突。单次俯仰/横滚诊断保留独立版本，未烘入本对象。",
+    "真实feature-VJP使旧行退出不再损伤固定保留车辆区域；加入新高斯后仍发生遮挡。后续应针对观测几何、可见性和原生残留处理，不以增加颜色步数代替交接验收。"
+  ],
+  "disclaimer": "参考图及生成隐藏车身属于车型先验，并非a20隐藏真值。1030点为对象框筛选的测距归属代理；部分后窗回波可能位于玻璃后，未认定为外壳。全部数字为BUILD86／110拟合集或合成教师保真；134／179／198未用于本轮模型、姿态或参数选择。不同模型输入协议及默认采样设置不同，单候选不能决定模型上限。Amodal一次兼容性工程重放及其事后重建的执行源码来源已透明记录。候选资产未通过完整车身真实性、场景接地、残影及保留车辆交接验收。",
+  "asset": {
+    "source": "student_native_support_control_r1/final_core_r1/core/runs/formal80_r1/actor.npz",
+    "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a"
+  },
+  "records": {
+    "SD_2D_gate": {
+      "path": "2D_gate.json",
+      "sha256": "11573f8dbfd89355ddbddb0bf0abe4580171bd764a3364607922beca0d977031",
+      "bytes": 5795
+    },
+    "baseline40": {
+      "path": "student/geometry_receipt_object_r1.json",
+      "sha256": "f386d2799d0e0634db0ed9c98d3ae91ae8dc7ebd159c7eacd4f96a557ff9346d",
+      "bytes": 25026
+    },
+    "native_support80": {
+      "path": "student_native_support_control_r1/formal80_receipt_r1.json",
+      "sha256": "579f6e1f1eb48b93fad6555ffaa1b10b0830659d6ee1acab750783d99e71af47",
+      "bytes": 30046
+    },
+    "disk_reload": {
+      "path": "student_native_support_control_r1/disk_reload_receipt_r1.json",
+      "sha256": "a58c69913f9ddbfcfb8b9b9e4e37a0021f949d9a0f1192af8a6dd1c7d1bacf8f",
+      "bytes": 7838
+    },
+    "detail_footprint": {
+      "path": "student/detail_footprint_cpu/detail_footprint.json",
+      "sha256": "4bef276b084db8569f76a3e96d8f5b91e93988d96361c7d36f780cd3cd3e5e9c",
+      "bytes": 31401
+    },
+    "scene": {
+      "path": "audit/T_native_scene_final80_r1/T_native_scene_receipt.json",
+      "sha256": "1b57e4b5efb2d3e50adec37fa8a0f82d4961abda8a199ee427aa66abb2766729",
+      "bytes": 15412
+    }
+  }
+}

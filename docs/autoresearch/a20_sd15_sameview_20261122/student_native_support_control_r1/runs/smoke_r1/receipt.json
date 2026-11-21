@@ -1,0 +1,522 @@
+{
+  "schema": "a20.native_support_appearance_control.execution.v1",
+  "phase": "smoke",
+  "role": "smoke5_only",
+  "steps": 5,
+  "records": [
+    {
+      "step": 1,
+      "build": "build_086",
+      "loss": 0.034290656447410583,
+      "observed_DC_gradient_maximum": 0.00024168138043023646
+    },
+    {
+      "step": 2,
+      "build": "build_110",
+      "loss": 0.044389452785253525,
+      "observed_DC_gradient_maximum": 0.00015266156697180122
+    },
+    {
+      "step": 3,
+      "build": "build_086",
+      "loss": 0.03204578161239624,
+      "observed_DC_gradient_maximum": 0.00024125067284330726
+    },
+    {
+      "step": 4,
+      "build": "build_110",
+      "loss": 0.04376205801963806,
+      "observed_DC_gradient_maximum": 0.00014900950191076845
+    },
+    {
+      "step": 5,
+      "build": "build_086",
+      "loss": 0.030708713456988335,
+      "observed_DC_gradient_maximum": 0.00022193700715433806
+    }
+  ],
+  "contract": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/contract.json",
+    "sha256": "8ac7915638133268c217608de24fcd1c2607ded5db4c35858437831b164e4eed",
+    "bytes": 3606
+  },
+  "runtime": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/code/run_control.py",
+    "sha256": "412444b7f2a866c452729a867a588fe89389e227944a188e4c9ee7b745f4c3e9",
+    "bytes": 16183
+  },
+  "assets": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/assets_native_410k_r1/assets_receipt.json",
+    "sha256": "ee29b7988982850d6f0eb402e8229e47bb0821d7fc11a5ce3df574824fb9766b",
+    "bytes": 7718
+  },
+  "actor": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/actor.npz",
+    "sha256": "f55ee6993277947c2cdbd0a43dd45d502d96458df48ebfb2519b0988f2e0b112",
+    "bytes": 19978765
+  },
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/checkpoint_final.pt",
+    "sha256": "d01f0d35a590404f3cdae75cc9c73f15094e518c13ed5d121819d26531749c7e",
+    "bytes": 479232
+  },
+  "geometry_bitwise_preserved": true,
+  "unknown_DC_bitwise_preserved": true,
+  "geometry_render_equality": [
+    {
+      "key": "novel_00",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "novel_01",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "novel_02",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "novel_03",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "novel_04",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "novel_05",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "build_086",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    },
+    {
+      "key": "build_110",
+      "alpha_bitwise_equal": true,
+      "grey_bitwise_equal": true,
+      "alpha_max_difference": 0.0,
+      "grey_max_difference": 0.0
+    }
+  ],
+  "restore_proof": {
+    "checkpoint": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/checkpoint_replay_source_step002.pt",
+      "sha256": "fbfdda050ca1cd982dc79f0045ce11242fb361461a14fa8839be88ae47dc96de",
+      "bytes": 479456
+    },
+    "all_mutable_model_optimizer_and_four_RNG_restored": true,
+    "immutable_full_model_hash_verified": true,
+    "RNG_probe_exact": true,
+    "maximum_model_optimizer_difference": 1.1920928955078125e-07,
+    "loss_difference": 0.0,
+    "extra_optimizer_steps": 2
+  },
+  "metrics": {
+    "prior_unknown_monitor_only": [
+      {
+        "key": "novel_00",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 41783,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 2.7788487386715133e-06,
+        "high_frequency": {
+          "correlation": 1.0000001192092896,
+          "energy_ratio": 1.0000004768371582
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 41783,
+          "L1": 2.7888963813893497e-06
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "novel_01",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 54630,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 2.0132315512455534e-06,
+        "high_frequency": {
+          "correlation": 0.9999998807907104,
+          "energy_ratio": 0.9999984502792358
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 54630,
+          "L1": 3.923580607079202e-06
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "novel_02",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 43806,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 3.8141383811307605e-06,
+        "high_frequency": {
+          "correlation": 1.0,
+          "energy_ratio": 0.9999973177909851
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 43806,
+          "L1": 5.2888249228999484e-06
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "novel_03",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 14273,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 1.924842581502162e-05,
+        "high_frequency": {
+          "correlation": 0.9999998807907104,
+          "energy_ratio": 1.0000046491622925
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 14273,
+          "L1": 2.5591894882381894e-05
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "novel_04",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 43304,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 1.3730532373301685e-05,
+        "high_frequency": {
+          "correlation": 0.9999982714653015,
+          "energy_ratio": 1.0000026226043701
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 43304,
+          "L1": 1.896697904157918e-05
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "novel_05",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 55890,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 7.591398571094032e-06,
+        "high_frequency": {
+          "correlation": 0.9999993443489075,
+          "energy_ratio": 1.0000039339065552
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 55890,
+          "L1": 1.0223819117527455e-05
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "build_086",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 6351,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 1.907593286887277e-05,
+        "high_frequency": {
+          "correlation": 0.9999999403953552,
+          "energy_ratio": 1.000001072883606
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 6351,
+          "L1": 2.5527200705255382e-05
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      },
+      {
+        "key": "build_110",
+        "alpha_L1": 0.0,
+        "missing_depth_huber_m": 0.0,
+        "fixed_high_confidence_pixels": 8357,
+        "fixed_high_confidence_student_coverage_passed": true,
+        "masked_edge_L1": 2.1861815184820443e-05,
+        "high_frequency": {
+          "correlation": 0.9999999403953552,
+          "energy_ratio": 0.9999995231628418
+        },
+        "detail_color_definition": "premultiplied over fixed neutral 0.5; entire fixed source mask including holes",
+        "unpremult_color_diagnostic_only": {
+          "pixels": 8357,
+          "L1": 3.07656082441099e-05
+        },
+        "silhouette_IoU": 1.0,
+        "boundary_2px": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "F1": 1.0
+        }
+      }
+    ],
+    "real_V": [
+      {
+        "key": "build_086",
+        "RGB_L1": 0.027132676914334297,
+        "edge_L1": 0.01813323423266411,
+        "HF": {
+          "correlation": 0.4184954762458801,
+          "energy_ratio": 0.6900829076766968
+        }
+      },
+      {
+        "key": "build_110",
+        "RGB_L1": 0.03963210806250572,
+        "edge_L1": 0.021502740681171417,
+        "HF": {
+          "correlation": 0.11931069195270538,
+          "energy_ratio": 0.6165286898612976
+        }
+      }
+    ]
+  },
+  "coverage": {
+    "teacher_mask_alpha_minimum": 0.95,
+    "student_alpha_minimum": 0.95,
+    "fixed_domain_required_coverage_fraction": 0.99,
+    "student_mask_may_shrink_fixed_domain": false,
+    "passed": true,
+    "records": [
+      {
+        "key": "novel_00",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 41783,
+        "student_alpha_minimum": 0.9500040411949158,
+        "student_alpha_p01": 0.9950956511497497,
+        "student_alpha_p05": 0.9992054224014282,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_00_teacher_fixed_high_confidence.npz",
+          "sha256": "1750f36218162d147952637470dac887ebc2d24448a1fea1fe13f1669f1ee84b",
+          "bytes": 2828
+        },
+        "passed": true
+      },
+      {
+        "key": "novel_01",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 54630,
+        "student_alpha_minimum": 0.950071394443512,
+        "student_alpha_p01": 0.9908695155382157,
+        "student_alpha_p05": 0.9992053061723709,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_01_teacher_fixed_high_confidence.npz",
+          "sha256": "6b7346e3664091004dfa81fdbfc51564abedeca64632ffbebd0dc255ef9a9e7c",
+          "bytes": 2742
+        },
+        "passed": true
+      },
+      {
+        "key": "novel_02",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 43806,
+        "student_alpha_minimum": 0.9500553011894226,
+        "student_alpha_p01": 0.9840575098991394,
+        "student_alpha_p05": 0.9991301149129868,
+        "fraction_student_alpha_at_least_0p95": 0.9999999403953552,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_02_teacher_fixed_high_confidence.npz",
+          "sha256": "460cd36b38ce198b6a665ad0f8542a0b1f02e747d8e19af1ef981a43e7917485",
+          "bytes": 2768
+        },
+        "passed": true
+      },
+      {
+        "key": "novel_03",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 14273,
+        "student_alpha_minimum": 0.9516321420669556,
+        "student_alpha_p01": 0.987525794506073,
+        "student_alpha_p05": 0.9991908311843872,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_03_teacher_fixed_high_confidence.npz",
+          "sha256": "7230f4c9fbdc257e253ffe4b108c8f5726ce8cbf8b2944c0f14cc9198bad6a91",
+          "bytes": 2224
+        },
+        "passed": true
+      },
+      {
+        "key": "novel_04",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 43304,
+        "student_alpha_minimum": 0.9501071572303772,
+        "student_alpha_p01": 0.9907847416400909,
+        "student_alpha_p05": 0.999292054772377,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_04_teacher_fixed_high_confidence.npz",
+          "sha256": "9cfe06f65a032c88a7c0f0019efa80048e93334f04a8527d24dee041a803b4b3",
+          "bytes": 2951
+        },
+        "passed": true
+      },
+      {
+        "key": "novel_05",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 55890,
+        "student_alpha_minimum": 0.950204074382782,
+        "student_alpha_p01": 0.9928776770830154,
+        "student_alpha_p05": 0.9992121875286102,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/novel_05_teacher_fixed_high_confidence.npz",
+          "sha256": "f84bcf316f86e1a8ee802d908f5c5acb47296db5f8974d2ac7fd010f878ecc96",
+          "bytes": 2882
+        },
+        "passed": true
+      },
+      {
+        "key": "build_086",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 6351,
+        "student_alpha_minimum": 0.9502507448196411,
+        "student_alpha_p01": 0.9768626093864441,
+        "student_alpha_p05": 0.9980703294277191,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/build_086_teacher_fixed_high_confidence.npz",
+          "sha256": "8e9c2c2fd752e344180bec259f4af32b1b25346488a4656eb50593907b6d35b3",
+          "bytes": 3081
+        },
+        "passed": true
+      },
+      {
+        "key": "build_086",
+        "domain": "real_fixed_V",
+        "pixels": 6498,
+        "student_alpha_minimum": 0.26195278763771057,
+        "student_alpha_p01": 0.9942951226234436,
+        "student_alpha_p05": 0.998926654458046,
+        "fraction_student_alpha_at_least_0p95": 0.9983071684837341,
+        "hole_pixels": 11,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/build_086_real_fixed_V.npz",
+          "sha256": "8ff690802bf77f1f8f5438c312572ae0cb42444d0634a28e3ff5ae19cd6b8604",
+          "bytes": 2710
+        },
+        "passed": true
+      },
+      {
+        "key": "build_110",
+        "domain": "teacher_fixed_high_confidence",
+        "pixels": 8357,
+        "student_alpha_minimum": 0.952176570892334,
+        "student_alpha_p01": 0.9739159035682678,
+        "student_alpha_p05": 0.9981234312057495,
+        "fraction_student_alpha_at_least_0p95": 1.0,
+        "hole_pixels": 0,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/build_110_teacher_fixed_high_confidence.npz",
+          "sha256": "98990da33d06e4ab3e7de863b7599e47ef9afb1e3a924a3e45863f7bba65b5f6",
+          "bytes": 3308
+        },
+        "passed": true
+      },
+      {
+        "key": "build_110",
+        "domain": "real_fixed_V",
+        "pixels": 10238,
+        "student_alpha_minimum": 0.0,
+        "student_alpha_p01": 0.9855197167396545,
+        "student_alpha_p05": 0.9985126435756684,
+        "fraction_student_alpha_at_least_0p95": 0.9936511516571045,
+        "hole_pixels": 65,
+        "hole_distribution": {
+          "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/student_native_support_control_r1/runs/smoke_r1/coverage/final/build_110_real_fixed_V.npz",
+          "sha256": "de2e61e88e52920ac054ec57d7dac19f23b02cfca3626d439cde45fa4d08eb72",
+          "bytes": 3008
+        },
+        "passed": true
+      }
+    ]
+  },
+  "compression_or_full_distillation": false,
+  "teacher_unknown_is_loss": false,
+  "formal80_auto_allowed": false,
+  "heldout_opened": [],
+  "native_calls": 57,
+  "optimizer_steps_including_replay": 7,
+  "wall_seconds_excluding_load": 2.9076283629983664,
+  "cuda_peak_allocated_bytes": 1894368256,
+  "cuda_peak_reserved_bytes": 2055208960
+}

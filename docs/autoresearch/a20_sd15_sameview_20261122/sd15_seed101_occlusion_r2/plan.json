@@ -1,0 +1,390 @@
+{
+  "schema": "a20.sd15_sameview_occlusion.plan.v2",
+  "training_raw": 110,
+  "diagnostic_raw": 86,
+  "diagnostic_conditions_model": false,
+  "native_track": "bzFbWRrSGOgEaXxnuGV0tw",
+  "native_instance_label": 21,
+  "occluder_native_label": 10,
+  "model": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "model_revision": "8a4288a76071f7280aedbdb3253bdb9e9d5d84bb",
+  "model_type": "base StableDiffusionInpaintPipeline, 9-channel UNet",
+  "prompt": "rear view same black Dodge pickup truck, complete rear bumper and rear tires, coherent full vehicle body, realistic proportions, plain neutral background",
+  "negative_prompt": "",
+  "seed": 101,
+  "scheduler": "DDIM",
+  "inference_steps": 20,
+  "guidance_scale": 3.0,
+  "eta": 0.0,
+  "strength": 1.0,
+  "dtype": "bfloat16",
+  "weight_variant": "fp16",
+  "use_lora": false,
+  "weights_frozen": true,
+  "candidate_count": 1,
+  "prompt_seed_sweep": false,
+  "training_updates": 0,
+  "model_wh": [
+    512,
+    512
+  ],
+  "native_crop_wh": [
+    432,
+    364
+  ],
+  "crop_xyxy_in512": [
+    40,
+    74,
+    472,
+    438
+  ],
+  "rgb_resize_used": false,
+  "model_preprocessing": "PIL RGB 432x364 native crop, center pad to512. Diffusers image_processor receives512x512 and keeps512; VAE encodes spatially downsampled latent at64x64. Decoder RGB is provisional until V hard-copy.",
+  "mask_preprocessing": "480x320 categorical masks nearest-expand to1920x1280 then crop. Model mask remains512x512; pipeline nearest-downsamples mask for latent grid.",
+  "neutral_rgb": [
+    128,
+    128,
+    128
+  ],
+  "trusted_V_pixels": 28384,
+  "observed_boundary_R_pixels": 3504,
+  "inpaint_U_pixels": 43045,
+  "original_potential_Q_pixels": 76607,
+  "locked_nonoccluded_potential_N_pixels": 30058,
+  "known_B_pixels": 52257,
+  "observed_O_pixels": 58448,
+  "prompt_tokens": 28,
+  "role_contract": "V=conservative source21 core; R=source a20/native21 approximate visible ring outside a9 guard, retained conservatively as separate observed edge; O=source a9/native10; U=P & O_guard & ~(V|R); B=outside P; N=P minus V/R/U stays neutral. P is projected OBB support, not silhouette truth.",
+  "inpaint_permission": "U is O_guard intersect P only, excluding every observed protected pixel. O_guard is a9/native10 union dilated one 480-mask pixel (4 native px) for boundary join. No other OBB-only unknown area is generated.",
+  "visible_policy": "Only original raw110 RGB on V|R enters the model; a9 guard excluded. After diffusion hard-copy V|R exactly, use output only in U, force B|N neutral128. V and approximate observed R remain separately identified.",
+  "alpha_policy": "Generated estimate in U: >24 RGB max-distance from neutral, union V|R; retain protected-connected components;5px close and hole fill; intersect V|R|U, union V|R. Alpha is separate from observed V and R.",
+  "role_validation": {
+    "raw": 110,
+    "role": "build_main",
+    "track": "bzFbWRrSGOgEaXxnuGV0tw",
+    "native_label": 21,
+    "crop_xyxy": [
+      716,
+      652,
+      1148,
+      1016
+    ],
+    "rgb_crop_max_abs_error": 0,
+    "source_mask_wh": [
+      480,
+      320
+    ],
+    "native_image_wh": [
+      1920,
+      1280
+    ],
+    "mask_resampling": "nearest; source labels only, not new annotation",
+    "V_count": 28384,
+    "O_count": 58448,
+    "U_count": 76607,
+    "B_count": 52257,
+    "O_in_U_count": 40769,
+    "V_intersect_O_guard_count": 0,
+    "V_rgb_matches_native": true,
+    "source_approx_target_mask_count": 2005,
+    "source_core_count": 1774,
+    "potential_origin": "Existing fixed OBB projected support + 4 native px guard, union observed approximate mask; candidate support only",
+    "O_role": "Occluding a9 white Mazda, native10. O can overlap U; O RGB never conditions diffusion.",
+    "domain_contract": "V,U,B partition the crop; O is an independent observed occluder mask. U=P minus V, not full-object truth.",
+    "original_source_pins": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065110.png",
+        "sha256": "79bf49344f311e27337a0a0ff5cecd4108c1b77fadbf525b19fd0ce966d958c5"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a20.png",
+        "sha256": "dd49cdd4c0bd76cd1f04c6ee0cf504db0b0287cc7fa02b33256c7ebba6e95540"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/a9.png",
+        "sha256": "7e591081672f68a2dd0d34c9dc7397190cfdf1edec392468b2ded426667d6a8d"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/110/labels.png",
+        "sha256": "94f39797f8f09d4cb9046416a4e00bda2b3593c570b9f5225b2990812131c910"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/110.json",
+        "sha256": "67ab85c64bca56b2d309f7c2fccef021b9749cd0bbb196d0573cfcad4ed6a300"
+      }
+    ],
+    "old_condition_pins": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/a20_mask_native480_crop.png",
+        "sha256": "ea12bca2b40316a2253bd3cacf33f5083ea139548506863cbc00b1fb196bcfbb"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/a9_mask_native480_crop.png",
+        "sha256": "34cccbc87b0996fd5995b37968a8046067eb48ac8073c97b1266dd45a6b083cf"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/amodal_box_potential_mask.png",
+        "sha256": "243de865ae624d800f51364ec6ebbc7840da87d470679f4f5ef9347e0bc5bd78"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/context_rgb.png",
+        "sha256": "990df9916f0ade34c8891f7b9fb61c624eceaead8c1a443cf63f4b9804b3db6a"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/known_background_mask.png",
+        "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/labels_native480_crop.png",
+        "sha256": "e31c472c2f50114fef31851a3279a591981d7f3e1660de92a421f05ff3fdf769"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/mapping.json",
+        "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/occluder_guard_mask.png",
+        "sha256": "88ea4fe055e2c16f4d3d8d7fc463aaf4ed3de661bad120300c064d61a4b6c36a"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/occluder_mask.png",
+        "sha256": "8a56e0a400cb41fe8a306f2ec92da65d34f26f2c9a298407ef74195d70e4cb51"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/partial_visible_rgb.png",
+        "sha256": "041c582acd51beeb0b601091a90f29d7785dc20c0b389c75db38e5e039393f87"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/partial_visible_rgba.png",
+        "sha256": "6ab8b2463fbfe160414963af858095d5e880188ca8fb0bb3f63fcde5d754cbe8"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/tri_state_mask.png",
+        "sha256": "874fc427a8c9c7ba208d5a663ad5cb5a6c39d024ac56fa8c9bdb9ec25b56071c"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/unknown_potential_mask.png",
+        "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask.png",
+        "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/110/visible_mask_approx.png",
+        "sha256": "b492cca1d51335e73bb3d7933e3f668cbf6734e74301096aa4abf130fc23c0a9"
+      }
+    ]
+  },
+  "diagnostic_validation": {
+    "raw": 86,
+    "role": "observation_diagnostic_only",
+    "track": "bzFbWRrSGOgEaXxnuGV0tw",
+    "native_label": 21,
+    "crop_xyxy": [
+      748,
+      648,
+      1124,
+      964
+    ],
+    "rgb_crop_max_abs_error": 0,
+    "source_mask_wh": [
+      480,
+      320
+    ],
+    "native_image_wh": [
+      1920,
+      1280
+    ],
+    "mask_resampling": "nearest; source labels only, not new annotation",
+    "V_count": 17824,
+    "O_count": 46352,
+    "U_count": 58468,
+    "B_count": 42524,
+    "O_in_U_count": 32617,
+    "V_intersect_O_guard_count": 0,
+    "V_rgb_matches_native": true,
+    "source_approx_target_mask_count": 1312,
+    "source_core_count": 1114,
+    "potential_origin": "Existing fixed OBB projected support + 4 native px guard, union observed approximate mask; candidate support only",
+    "O_role": "Occluding a9 white Mazda, native10. O can overlap U; O RGB never conditions diffusion.",
+    "domain_contract": "V,U,B partition the crop; O is an independent observed occluder mask. U=P minus V, not full-object truth.",
+    "original_source_pins": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/inputs/native/image/image_0/0065086.png",
+        "sha256": "03b56bdf3355f52a869d7254fd13f3347c0b542023e669817f556a4685bc432f"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/a20.png",
+        "sha256": "c3f441d4ad506e191e43b072db92f571c5ceb0de386f162eb6d785ed21fc3483"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/a9.png",
+        "sha256": "2110fe15c93398f96d4d64026ea7ff9d6507112dbbc61c5fb88fb39a6879b804"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/repaired_masks_all_r4/086/labels.png",
+        "sha256": "e3482af3fc9e545b5ba3091c8fc22a4f6aada8e8c5ebc1881498940460b69699"
+      },
+      {
+        "path": "/root/autodl-tmp/codex_tmp/waymo_val065_allframes_20261109_r1/inputs/observations/086.json",
+        "sha256": "f3cf942844cbf41c67b078f7e23a9dd84d97c058e10122faf204be8b7aa13f3f"
+      }
+    ],
+    "old_condition_pins": [
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/a20_mask_native480_crop.png",
+        "sha256": "b9a1546a06cf4108b5466e1bb87a45bad9446c15d4f1141a7c7edfb32f3fc777"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/a9_mask_native480_crop.png",
+        "sha256": "b1263b68993774488b519009d067c2d107f151ec163b682a54e6b9ae12063541"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/amodal_box_potential_mask.png",
+        "sha256": "3e3c0eebebcc2c0b5d88e0fc1c23a7ff0419c279e213ccdb3979d81cf2b7a4ba"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/context_rgb.png",
+        "sha256": "0eb8f88d5e77f98ea80e3697027f082bdc1a5b8fd2a62fbd37ed68dda66da458"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/known_background_mask.png",
+        "sha256": "e37463c9cbc092d54ff7a870f7a5ef68f4eff873d7c0688de5cf008c7bb29235"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/labels_native480_crop.png",
+        "sha256": "0cf2cff313d9fdbec95597c77ca9b6cc5d89a9af27d3c3d2c674c34a12c28e10"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/mapping.json",
+        "sha256": "d2e1a478bcd2d08ec4a1ddaedaadc71483e8de230eb19c48152364cfed92e3ab"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/occluder_guard_mask.png",
+        "sha256": "34d0c05f333c2fb201c90ec099b933d2b683cd08980b90fd222f5fa4ca855c62"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/occluder_mask.png",
+        "sha256": "2ef658c09c21b49673743db7fbaeb786e803e9dee8745c2d5bec5497f8a676e5"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/partial_visible_rgb.png",
+        "sha256": "97df9ec6dba9b821a845cbee0c8633ace6affc4ac1bc2e9a79818c471c9876eb"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/partial_visible_rgba.png",
+        "sha256": "14fa515a87e9773e0891e034f0cf7a190f455e7bcd633ca2ea8fcfe8ce6d0204"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/tri_state_mask.png",
+        "sha256": "61f44211932b383b82d2193f7ef7f02da92c418bbd9e46c4ded3f47ff5ecd087"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/unknown_potential_mask.png",
+        "sha256": "5a45429728753d4c4e148af2b195db5bd03a57a744f936162fb05ae02e0637c3"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask.png",
+        "sha256": "e5489d29ee6d756313e6a71d0b2db0a1f0962acef4c095e0b3c71a8fdf7e86da"
+      },
+      {
+        "path": "/root/autodl-tmp/drivingeditor_repro/campaign/vehicle_completion_prior_20261122_r1/conditioning/train/086/visible_mask_approx.png",
+        "sha256": "e8b8f5e9758024259c34032019e3b4765e244409df08e14a8f8019a3a388742c"
+      }
+    ]
+  },
+  "input_pins": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/a20_mask_native480_crop.png",
+      "sha256": "ea12bca2b40316a2253bd3cacf33f5083ea139548506863cbc00b1fb196bcfbb"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/a9_mask_native480_crop.png",
+      "sha256": "34cccbc87b0996fd5995b37968a8046067eb48ac8073c97b1266dd45a6b083cf"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/amodal_box_potential_mask.png",
+      "sha256": "243de865ae624d800f51364ec6ebbc7840da87d470679f4f5ef9347e0bc5bd78"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/context_rgb.png",
+      "sha256": "990df9916f0ade34c8891f7b9fb61c624eceaead8c1a443cf63f4b9804b3db6a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/known_background_mask.png",
+      "sha256": "67f85ec5f86673cfd9f5db478a47d1cfa521fd0f910ed6a9f2c3c74aaba6ad83"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/labels_native480_crop.png",
+      "sha256": "e31c472c2f50114fef31851a3279a591981d7f3e1660de92a421f05ff3fdf769"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/mapping.json",
+      "sha256": "22305c4d0beddc956da2d6322df91bdbb94a8a4bad6002656066b2263c094ea8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/native_validation.json",
+      "sha256": "2323fdf373df88a89045081d2c84b43eae29dfe1ec7294d04d5f300484419b18"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/occluder_guard_mask.png",
+      "sha256": "88ea4fe055e2c16f4d3d8d7fc463aaf4ed3de661bad120300c064d61a4b6c36a"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/occluder_mask.png",
+      "sha256": "8a56e0a400cb41fe8a306f2ec92da65d34f26f2c9a298407ef74195d70e4cb51"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/partial_visible_rgb.png",
+      "sha256": "041c582acd51beeb0b601091a90f29d7785dc20c0b389c75db38e5e039393f87"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/partial_visible_rgba.png",
+      "sha256": "6ab8b2463fbfe160414963af858095d5e880188ca8fb0bb3f63fcde5d754cbe8"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/unknown_potential_mask.png",
+      "sha256": "05dab680c33761355a382a0b31c174d094d5eb78fae3d63e0fa1947c8377e90e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/visible_mask.png",
+      "sha256": "22a7aaecb2d3a26211a955b3abb006e458dc6d8fb3cf5464fa9107643569ee8e"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/conditioning_occlusion_r2/raw110/visible_mask_approx.png",
+      "sha256": "b492cca1d51335e73bb3d7933e3f668cbf6734e74301096aa4abf130fc23c0a9"
+    }
+  ],
+  "prepared_pins": [
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/sd15_seed101_occlusion_r2/input512.png",
+      "sha256": "0c422c3865465a4f0fe39908dafab48fece9df61e4fd1880305e4ca9ae173b43"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/sd15_seed101_occlusion_r2/inpaint_U_mask512.png",
+      "sha256": "1ed729442ae9628fc83dd529ead40bfc479e6ab88f25eccd37caa6d6e6bbc308"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_sd15_sameview_20261122_r1/sd15_seed101_occlusion_r2/roles.npz",
+      "sha256": "e2bf576acd9d8c31650005f879a4d0ff2f657b1fb50d23941a4f83b821e51dac"
+    }
+  ],
+  "base_weight_pins": [
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/unet/diffusion_pytorch_model.fp16.safetensors",
+      "sha256": "24b788b4a777748377cc20364eea4ae113c8c42f4468c16bc8c02fdae5492af9"
+    },
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/vae/diffusion_pytorch_model.fp16.safetensors",
+      "sha256": "4fbcf0ebe55a0984f5a5e00d8c4521d52359af7229bb4d81890039d2aa16dd7c"
+    },
+    {
+      "path": "/root/autodl-tmp/models/worldsim_v82_v42_freeinpaint_20261024/hub/models--stable-diffusion-v1-5--stable-diffusion-inpainting/snapshots/8a4288a76071f7280aedbdb3253bdb9e9d5d84bb/text_encoder/model.fp16.safetensors",
+      "sha256": "77795e2023adcf39bc29a884661950380bd093cf0750a966d473d1718dc9ef4e"
+    }
+  ],
+  "source_sha256": "3856cbd06cb8f68f75b3f2d923b94ae12d17964930bba90801f45b7636bd6f60",
+  "gpu_preparation_used": false,
+  "next_stage": "Stop after 2D candidate and await root actual image review; no Omni, texturing, or student execution"
+}
