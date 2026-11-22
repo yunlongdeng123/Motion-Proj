@@ -1,0 +1,18 @@
+{
+  "schema": "camera02_receipt_recovery_trace.v1",
+  "failure": "TypeError: Object of type int64 is not JSON serializable",
+  "observed_failure_source": "Parent reports final JSON serialization failure after all 12 native forwards and saved frames",
+  "offending_code": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/code/camera_corrected_source_before_json_fix.py",
+  "offending_code_lines": [
+    106
+  ],
+  "reproduced_CPU_error": "Object of type int64 is not JSON serializable",
+  "cause": "bbox_xyxy=list(v['bbox']) retains NumPy int64 scalars; h.write JSON default has no NumPy encoder",
+  "remedy": "Recompute metrics from already saved float arrays and serialize bbox with Python int(q)",
+  "no_model_or_linear_state_replay": true,
+  "new_native_calls": 0,
+  "new_linear_solves": 0,
+  "source_assets_modified": false,
+  "recovered_from_saved_float_after_json_type_failure": true,
+  "receipt": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/camera_corrected_02_115/receipt.json"
+}

@@ -1,0 +1,80 @@
+{
+  "complete": true,
+  "recommended_material_candidate": "patch_02",
+  "preferred_photo_reference_raw": 115,
+  "secondary_photo_reference_raw": 117,
+  "supplementary_photo_reference_raw": 116,
+  "reference_reason": "原生像素中02可见的颗粒与粗纹理较00更明显；115/116/117曝光相近且核心均通过照片资格。115与116的清晰度差很小，117提供约9cm额外相机基线。",
+  "comparison_candidate": "patch_00",
+  "comparison_reference_raws": [
+    137,
+    134
+  ],
+  "comparison_reason": "00提供较多原生像素，但核心物理面积为0.8m方形，不能以显示宽度或总像素数与02的0.6m方形直接比较；137/134仅约1.05cm相机基线。",
+  "visual_observations": [
+    "100%原生裁剪：00主要是平滑底色、缓慢亮度变化和少量暗点；02的颗粒起伏较明显。",
+    "两者都属于低对比沥青原照，细纹理的可辨识度有限。",
+    "相同0.6m物理方形按原生像素不缩放展示，02@110的局部高频强度仍高于00@110。",
+    "86图像较亮，110到115/117较稳定；未观察到核心过曝、黑位剪切或明显动态遮挡。",
+    "00原始GS出现条状/结块纹理，02原始GS更趋平滑；这些是GS资产表现，不能用来否定原照片。"
+  ],
+  "quantitative_same_physical_0p6m_at_raw110": {
+    "patch00": {
+      "valid_native_pixels": 5604,
+      "srgb_luma_mean": 0.30631840229034424,
+      "srgb_luma_std": 0.011877191253006458,
+      "srgb_luma_p01_p50_p99": [
+        0.284298837184906,
+        0.30500316619873047,
+        0.33359137177467346
+      ],
+      "linear_luma_mean": 0.07668217271566391,
+      "native_laplacian_variance": 0.0001388417585985735,
+      "native_tenengrad_mean": 2.565044997027144e-05,
+      "native_highpass_sigma1_std": 0.0033541512675583363,
+      "native_highpass_sigma2_std": 0.005308319348841906,
+      "any_channel_low_clip_fraction": 0.0,
+      "any_channel_high_clip_fraction": 0.0,
+      "median_native_rgb": [
+        0.32156863808631897,
+        0.2980392277240753,
+        0.32549020648002625
+      ]
+    },
+    "patch02": {
+      "valid_native_pixels": 3384,
+      "srgb_luma_mean": 0.3327674865722656,
+      "srgb_luma_std": 0.012729127891361713,
+      "srgb_luma_p01_p50_p99": [
+        0.2980141341686249,
+        0.3330047130584717,
+        0.35966741293668747
+      ],
+      "linear_luma_mean": 0.09094449132680893,
+      "native_laplacian_variance": 0.00020713549747597426,
+      "native_tenengrad_mean": 4.4855445594294e-05,
+      "native_highpass_sigma1_std": 0.00429024500772357,
+      "native_highpass_sigma2_std": 0.006997902877628803,
+      "any_channel_low_clip_fraction": 0.0,
+      "any_channel_high_clip_fraction": 0.0,
+      "median_native_rgb": [
+        0.3607843220233917,
+        0.32549020648002625,
+        0.3490196168422699
+      ]
+    }
+  },
+  "qualification": {
+    "photo_legal_is_not_fresh_depth_legal": true,
+    "raw116_photo_legal": true,
+    "raw116_old_fresh_certificate_supported": false,
+    "all_admitted_masks_core_only": true,
+    "halo_used_for_supervision": false,
+    "per_candidate_center_used_for_shadow_proxy": true,
+    "same_physical_area_is_not_same_display_width": true,
+    "source_geometry_appearance_fitting_performed": false
+  },
+  "next_use": "在相同110视角先比较固定几何颜色表达能力；之后02@115/117与00@137/134分别做候选参考视角控制。照片资格掩码仍须与独立native GS贡献掩码相交。",
+  "GPU_calls": 0,
+  "optimizer_updates": 0
+}

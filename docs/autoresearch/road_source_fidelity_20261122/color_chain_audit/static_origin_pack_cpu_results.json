@@ -1,0 +1,204 @@
+{
+  "schema": "static_original_checkpoint_source_pack_CPU_audit.v1",
+  "rows": [
+    {
+      "run": "native_static_02_115",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/native_static_02_115/frozen_native_source.npz",
+      "rows": 107,
+      "native_checkpoint_rows": 1558011,
+      "reference_raw": 115,
+      "reference_model_time": 0.32,
+      "checkpoint_active_SH_degree": 3,
+      "native_row_IDs_sorted_unique": true,
+      "checkpoint_reference_state_CPU_reconstruction": {
+        "means3D": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 3.725290298461914e-09
+        },
+        "shs": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": true,
+          "max_abs": 0.0
+        },
+        "scales": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 9.313225746154785e-10
+        },
+        "rotations": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 5.960464477539063e-08
+        },
+        "opacities": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 7.450580596923828e-09
+        },
+        "mask": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": true,
+          "max_abs": 0.0
+        }
+      },
+      "world_from_saved_model_coordinates": {
+        "shape_equal": true,
+        "dtype_equal": true,
+        "exact": true,
+        "max_abs": 0.0
+      },
+      "row_center_abs_height_relative_source_plane_quantiles_m": [
+        0.04640748380742459,
+        0.09300683373578893,
+        0.09704866287494476,
+        0.10075842405322688
+      ],
+      "SH_coefficients_preserved": true,
+      "source_fields": [
+        "means3D",
+        "shs",
+        "features",
+        "opacities",
+        "scales",
+        "rotations",
+        "mask",
+        "native_static_row_ids",
+        "world_xyz",
+        "reference_raw"
+      ],
+      "prepared_depth_feature_is_reference_only": true
+    },
+    {
+      "run": "native_static_contributors_02_115",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2/native_static_contributors_02_115/frozen_contributor_source.npz",
+      "rows": 950,
+      "native_checkpoint_rows": 1558011,
+      "reference_raw": 115,
+      "reference_model_time": 0.32,
+      "checkpoint_active_SH_degree": 3,
+      "native_row_IDs_sorted_unique": true,
+      "checkpoint_reference_state_CPU_reconstruction": {
+        "means3D": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 2.9802322387695312e-08
+        },
+        "shs": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": true,
+          "max_abs": 0.0
+        },
+        "scales": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 1.4901161193847656e-08
+        },
+        "rotations": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 1.1920928955078125e-07
+        },
+        "opacities": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": false,
+          "max_abs": 8.940696716308594e-08
+        },
+        "mask": {
+          "shape_equal": true,
+          "dtype_equal": true,
+          "exact": true,
+          "max_abs": 0.0
+        }
+      },
+      "world_from_saved_model_coordinates": {
+        "shape_equal": true,
+        "dtype_equal": true,
+        "exact": true,
+        "max_abs": 0.0
+      },
+      "row_center_abs_height_relative_source_plane_quantiles_m": [
+        0.32458644442368245,
+        0.9258857416060978,
+        1.0999020546965583,
+        2.536446151166037
+      ],
+      "SH_coefficients_preserved": true,
+      "source_fields": [
+        "means3D",
+        "shs",
+        "features",
+        "opacities",
+        "scales",
+        "rotations",
+        "mask",
+        "native_static_row_ids",
+        "world_xyz",
+        "reference_mass"
+      ],
+      "prepared_depth_feature_is_reference_only": true,
+      "reference_mass_audit": {
+        "selected_mass": 912.7833049581386,
+        "total_mass_from_alpha": 913.2383698423704,
+        "independently_retained_ratio": 0.9995017019660373,
+        "receipt_retained_ratio": 0.9995014071464539,
+        "min_selected_row_mass": 0.00397803820669651,
+        "selected_mass_nonnegative": true,
+        "mass_within_true_source_plane_10cm": 0.23488587141036987,
+        "full_unselected_gradient_vector_saved": false
+      },
+      "existing_native_output_CPU_reread": [
+        {
+          "raw": 86,
+          "score_n": 724,
+          "score_alpha_min": 0.9989993572235107,
+          "frozen_vs_full_native_RGB_MAE": 0.0031578338239341974,
+          "frozen_vs_full_native_RGB_max": 0.013382375240325928,
+          "frozen_vs_full_native_alpha_max": 0.0008999109268188477
+        },
+        {
+          "raw": 110,
+          "score_n": 2432,
+          "score_alpha_min": 0.9996181130409241,
+          "frozen_vs_full_native_RGB_MAE": 0.006961488630622625,
+          "frozen_vs_full_native_RGB_max": 0.02592483162879944,
+          "frozen_vs_full_native_alpha_max": 0.00028067827224731445
+        },
+        {
+          "raw": 115,
+          "score_n": 2740,
+          "score_alpha_min": 0.9996441602706909,
+          "frozen_vs_full_native_RGB_MAE": 5.384731775848195e-05,
+          "frozen_vs_full_native_RGB_max": 0.0015244781970977783,
+          "frozen_vs_full_native_alpha_max": 0.00025522708892822266
+        },
+        {
+          "raw": 117,
+          "score_n": 2860,
+          "score_alpha_min": 0.999645471572876,
+          "frozen_vs_full_native_RGB_MAE": 0.005883450154215097,
+          "frozen_vs_full_native_RGB_max": 0.022064894437789917,
+          "frozen_vs_full_native_alpha_max": 0.0002529025077819824
+        }
+      ]
+    }
+  ],
+  "checkpoint": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+  "checkpoint_loaded_CPU_mmap": true,
+  "engine_imported": false,
+  "new_native_calls": 0,
+  "optimizer_updates": 0,
+  "source_assets_modified": false,
+  "seconds": 0.08081680908799171
+}

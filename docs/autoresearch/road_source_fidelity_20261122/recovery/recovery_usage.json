@@ -1,0 +1,18 @@
+{
+  "run_id": "road_source_fidelity_20261122_r2",
+  "remote_root": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_fidelity_20261122_r2",
+  "local_delivery_directory": "outputs/road_source_fidelity_20261122_r2",
+  "state": "Prepared and checked against actual data; final compression not performed",
+  "steps": [
+    "Root finalizes the actual branch list in recovery/expected_matrix.json and sets finalized_by_root=true only after all result and report files are ready.",
+    "Mirror final color_chain_audit/publication/report directories into current campaign if they should be included; these folders are captured when present.",
+    "Run CUDA_VISIBLE_DEVICES='' OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 /root/autodl-tmp/envs/motionproj/bin/python recovery/curate_archive.py to prepare and inspect readiness_issues.",
+    "Run the same command with --archive only when readiness_issues is empty. It writes a new archive, validates all members and gzip CRC, and emits recovery/archive_receipt.json.",
+    "Run local python work/source_fidelity_20261122_r2/recovery/takeback_archive.py to fetch into outputs/road_source_fidelity_20261122_r2 and validate all archive members again.",
+    "For restoration, run python restore_manifest.py --archive ARCHIVE [--extract-to NEW_EMPTY_DIRECTORY]. Keep original persistent-scene and engine dependencies specified in restore_manifest.json available."
+  ],
+  "resource_policy": "Closed native contexts are summed exactly once; latest resource_ledger.json is corroboration only. Gradient contribution measurements, RGB bounded solves and optimizer updates are separate counters.",
+  "power_operations": 0,
+  "GPU_remains_on": true,
+  "Git_operations": 0
+}

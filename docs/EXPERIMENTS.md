@@ -450,3 +450,9 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 ## 源块质量核查与源RGB控制（2026-11-22）
 
 - `ROAD-GAUSSIAN-SOURCE-QUALITY-20261122 / road_gaussian_source_quality_20261122_r1`：[原照、原生源块、固定400步与失败边界](autoresearch/road_gaussian_source_quality_20261122/README.md)。最终目录source_rgb_refit_qualified_r2；failure_ledger_refs=[V82-F06]，failure_ledger_delta=updated:V82-F06。
+
+## ROAD-SOURCE-FIDELITY-20261122
+
+[源材质保真、相机校正与恢复入口](autoresearch/road_source_fidelity_20261122/README.md)。run=road_source_fidelity_20261122_r2；02／115实拍优先、00／137对照；固定高斯颜色链路与原生静态源诊断，918F／1B、12通道RGB求解、梯度优化0、目标更新0、扩散0。参考色调改善未成为多视图纹理成功，未晋升源资产。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
+
+本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。

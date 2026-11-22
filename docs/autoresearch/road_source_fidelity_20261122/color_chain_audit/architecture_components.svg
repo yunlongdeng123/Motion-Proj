@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="510" viewBox="0 0 1440 510">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#97a9c5"/></marker></defs>
+<rect width="1440" height="510" rx="18" fill="#101722"/>
+<style>text{font-family:Segoe UI,Noto Sans SC,Microsoft YaHei,sans-serif;fill:#e7eef9;font-size:19px}.sub{font-size:16px;fill:#a6b9d6}.box{fill:#1c2a3d;stroke:#59799e;stroke-width:1.5}.good{fill:#153632;stroke:#4aa79a;stroke-width:1.5}.risk{fill:#392d22;stroke:#c3915e;stroke-width:1.5}.arrow{fill:none;stroke:#97a9c5;stroke-width:2;marker-end:url(#a)}</style>
+<text x="34" y="40" font-size="25">源颜色、观测相机与原生输出的独立证据链</text>
+<rect class="good" x="34" y="80" width="244" height="80" rx="10"/><text x="54" y="111">Waymo FRONT JPEG</text><text class="sub" x="54" y="138">PNG 与原解码逐像素相同</text>
+<path class="arrow" d="M278 120H328"/>
+<rect class="risk" x="330" y="80" width="282" height="80" rx="10"/><text x="350" y="111">原图保留 Brown 畸变</text><text class="sub" x="350" y="138">native 使用针孔相机</text>
+<path class="arrow" d="M612 120H662"/>
+<rect class="box" x="664" y="80" width="322" height="80" rx="10"/><text x="684" y="111">确定性观测重采样</text><text class="sub" x="684" y="138">半像素一致 · RGB 双线性</text>
+<path class="arrow" d="M986 120H1036"/>
+<rect class="box" x="1038" y="80" width="366" height="80" rx="10"/><text x="1058" y="111">同一合法核心比较</text><text class="sub" x="1058" y="138">原始 Brown 域 / 针孔域</text>
+<rect class="box" x="34" y="250" width="244" height="90" rx="10"/><text x="54" y="283">历史拟合的道路 RGB</text><text class="sub" x="54" y="311">固定 2cm 网格与原形状</text>
+<path class="arrow" d="M278 295H328"/>
+<rect class="good" x="330" y="250" width="282" height="90" rx="10"/><text x="350" y="283">源块 NPZ → 回读</text><text class="sub" x="350" y="311">行 ID、非颜色字段逐值保持</text>
+<path class="arrow" d="M612 295H662"/>
+<rect class="good" x="664" y="250" width="322" height="90" rx="10"/><text x="684" y="283">colors_precomp → native</text><text class="sub" x="684" y="311">无 SH 重编码 · 黑底预乘</text>
+<path class="arrow" d="M986 295H1036"/>
+<rect class="good" x="1038" y="250" width="366" height="90" rx="10"/><text x="1058" y="283">RGB / alpha → 实际单独渲染</text><text class="sub" x="1058" y="311">常色与保存回读原生对照通过</text>
+<path class="arrow" d="M1220 250V170"/>
+<text class="sub" x="35" y="400">实拍 witness：同世界查询 → 针孔投影 → sRGB 双线性 → linear → 检索证据；未重新赋值给上述源块 RGB。</text>
+<text class="sub" x="35" y="438">有界颜色矩阵：固定全部形状与透明度，独立 CPU 重解仅验证求解精度；不新增训练或目标融合。</text>
+<text class="sub" x="35" y="476">原生静态源：保存真实 checkpoint 行、16 组 SH、参考时刻形状；按像素贡献裁取，另行验收。</text>
+</svg>

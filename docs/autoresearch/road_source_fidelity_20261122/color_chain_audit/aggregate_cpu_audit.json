@@ -1,0 +1,1267 @@
+{
+  "schema": "source_fidelity_final_aggregate_CPU_audit.v1",
+  "all_checks_passed": true,
+  "source_runs": [
+    {
+      "patch": "patch_02",
+      "run": "camera_corrected_02_115",
+      "reference": 115,
+      "complete": true,
+      "receipt_recovered_from_saved_float": true,
+      "all_non_RGB_fields_exact": true,
+      "non_RGB_fields": {
+        "world_row_ids": true,
+        "core_mask": true,
+        "world_xyz": true,
+        "normal_world": true,
+        "gaussian_sigma_m": true,
+        "road_opacity": true,
+        "minimum_model_depth": true,
+        "source_asset": true,
+        "source_tangent_frame_world": true,
+        "source_center_world": true,
+        "core_center_tangent": true,
+        "core_size_m": true,
+        "source_world_roi_corners": true,
+        "local_tangent_xyz": true,
+        "fresh_query_ids": true,
+        "fresh_world_xyz": true,
+        "fresh_source_count": true,
+        "fresh_confidence": true,
+        "witness_query_id": true,
+        "witness_source_raw": true,
+        "witness_source_uv_native": true,
+        "model_from_world": true,
+        "source_quality_all_rows": true,
+        "source_world_margin_radius_m": true
+      },
+      "halo_RGB_exact": true,
+      "saved_core_RGB_equals_linear_state": true,
+      "operator_row_selection_exact": true,
+      "operator_shape": [
+        2584,
+        900
+      ],
+      "solver_cost_abs_difference_from_saved_float32": [
+        4.2494480156918257e-13,
+        1.1616402284531091e-12,
+        4.372904816030143e-12
+      ],
+      "nativeF": 12,
+      "nativeB": 0,
+      "RGB_linear_solves": 3,
+      "frames": [
+        {
+          "raw": 86,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 705,
+              "RGB_MAE": 0.00914689339697361,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.026339039206504822,
+                  "HF_RMS_ratio": 0.5287328362464905
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.07775800675153732,
+                  "HF_RMS_ratio": 0.49963638186454773
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.1512923687696457,
+                  "HF_RMS_ratio": 0.5349118113517761
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 705,
+              "RGB_MAE": 0.03473753482103348,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.0600736103951931,
+                  "HF_RMS_ratio": 0.8297712802886963
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.09572146832942963,
+                  "HF_RMS_ratio": 0.9132702946662903
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.1148645430803299,
+                  "HF_RMS_ratio": 1.1620759963989258
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 705,
+              "RGB_MAE": 0.035231366753578186,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.048607222735881805,
+                  "HF_RMS_ratio": 0.8032430410385132
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.06834379583597183,
+                  "HF_RMS_ratio": 0.9084160923957825
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.014418690465390682,
+                  "HF_RMS_ratio": 1.13999605178833
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 704,
+              "RGB_MAE": 0.009771992452442646,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.05513163283467293,
+                  "HF_RMS_ratio": 0.3085852861404419
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.11079317331314087,
+                  "HF_RMS_ratio": 0.3303152322769165
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.17282292246818542,
+                  "HF_RMS_ratio": 0.41272109746932983
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 704,
+              "RGB_MAE": 0.0350496880710125,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.07300406694412231,
+                  "HF_RMS_ratio": 0.577983558177948
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.10203457623720169,
+                  "HF_RMS_ratio": 0.7207964658737183
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.11706448346376419,
+                  "HF_RMS_ratio": 0.9936556220054626
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 704,
+              "RGB_MAE": 0.0355314202606678,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.05482158437371254,
+                  "HF_RMS_ratio": 0.5667112469673157
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.06669876724481583,
+                  "HF_RMS_ratio": 0.7195917963981628
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.016976244747638702,
+                  "HF_RMS_ratio": 0.9630113244056702
+                }
+              ]
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 2324,
+              "RGB_MAE": 0.03218686953186989,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.0026987085584551096,
+                  "HF_RMS_ratio": 0.8775147199630737
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.020467299968004227,
+                  "HF_RMS_ratio": 0.7611381411552429
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.09011693298816681,
+                  "HF_RMS_ratio": 0.6752083897590637
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2324,
+              "RGB_MAE": 0.007490877993404865,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.1295074224472046,
+                  "HF_RMS_ratio": 1.2296348810195923
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.17758262157440186,
+                  "HF_RMS_ratio": 1.3593491315841675
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.27853724360466003,
+                  "HF_RMS_ratio": 1.5423409938812256
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2324,
+              "RGB_MAE": 0.008280212059617043,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.002255523344501853,
+                  "HF_RMS_ratio": 1.4275065660476685
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.04205303639173508,
+                  "HF_RMS_ratio": 1.5628859996795654
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.1470189243555069,
+                  "HF_RMS_ratio": 1.6334848403930664
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 2308,
+              "RGB_MAE": 0.03221277892589569,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.0030495268292725086,
+                  "HF_RMS_ratio": 0.658357560634613
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.02492118440568447,
+                  "HF_RMS_ratio": 0.5958149433135986
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.08858489245176315,
+                  "HF_RMS_ratio": 0.5629613399505615
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2308,
+              "RGB_MAE": 0.007852792739868164,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.12471070140600204,
+                  "HF_RMS_ratio": 0.9512425065040588
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.16508778929710388,
+                  "HF_RMS_ratio": 1.1355801820755005
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.25893568992614746,
+                  "HF_RMS_ratio": 1.3582744598388672
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2308,
+              "RGB_MAE": 0.008684154599905014,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.0014869902515783906,
+                  "HF_RMS_ratio": 1.1036816835403442
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.03928034007549286,
+                  "HF_RMS_ratio": 1.2839932441711426
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.13796962797641754,
+                  "HF_RMS_ratio": 1.424414873123169
+                }
+              ]
+            }
+          }
+        },
+        {
+          "raw": 115,
+          "role": "REFERENCE_FIT",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 18,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 2584,
+              "RGB_MAE": 0.03307025879621506,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.025879433378577232,
+                  "HF_RMS_ratio": 0.978623628616333
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.041730351746082306,
+                  "HF_RMS_ratio": 0.8576476573944092
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": -0.04846595227718353,
+                  "HF_RMS_ratio": 0.7523463368415833
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2584,
+              "RGB_MAE": 0.005059670656919479,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.18090887367725372,
+                  "HF_RMS_ratio": 1.7380200624465942
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2299381047487259,
+                  "HF_RMS_ratio": 1.8473056554794312
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3629026710987091,
+                  "HF_RMS_ratio": 1.8121215105056763
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2584,
+              "RGB_MAE": 0.003442739136517048,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.24894189834594727,
+                  "HF_RMS_ratio": 1.9576623439788818
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2857082188129425,
+                  "HF_RMS_ratio": 1.988307237625122
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.4159964919090271,
+                  "HF_RMS_ratio": 1.8287338018417358
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 2544,
+              "RGB_MAE": 0.03308025375008583,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.029264891520142555,
+                  "HF_RMS_ratio": 0.6991956830024719
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.044820502400398254,
+                  "HF_RMS_ratio": 0.6454263925552368
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": -0.05481329560279846,
+                  "HF_RMS_ratio": 0.6090295314788818
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2544,
+              "RGB_MAE": 0.0057519786059856415,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.16742563247680664,
+                  "HF_RMS_ratio": 1.157059907913208
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.22433605790138245,
+                  "HF_RMS_ratio": 1.3008112907409668
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3522402048110962,
+                  "HF_RMS_ratio": 1.4351866245269775
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2544,
+              "RGB_MAE": 0.004420110490173101,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.22553561627864838,
+                  "HF_RMS_ratio": 1.4076485633850098
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2654177248477936,
+                  "HF_RMS_ratio": 1.515170693397522
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3924250602722168,
+                  "HF_RMS_ratio": 1.5203356742858887
+                }
+              ]
+            }
+          },
+          "reused_operator_vs_saved_native_max_abs": 1.4530568809290045e-07
+        },
+        {
+          "raw": 117,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 2671,
+              "RGB_MAE": 0.032348617911338806,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.045903049409389496,
+                  "HF_RMS_ratio": 0.9869582653045654
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.009726012125611305,
+                  "HF_RMS_ratio": 0.8537889719009399
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": -0.027456073090434074,
+                  "HF_RMS_ratio": 0.7407230734825134
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2671,
+              "RGB_MAE": 0.007838482968509197,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.0990348532795906,
+                  "HF_RMS_ratio": 1.8603215217590332
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.148276686668396,
+                  "HF_RMS_ratio": 1.8960860967636108
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.25094643235206604,
+                  "HF_RMS_ratio": 1.8916938304901123
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2671,
+              "RGB_MAE": 0.0073859249241650105,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.16063565015792847,
+                  "HF_RMS_ratio": 1.9448939561843872
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.1928407996892929,
+                  "HF_RMS_ratio": 1.9851981401443481
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.2679969072341919,
+                  "HF_RMS_ratio": 1.9555987119674683
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 2632,
+              "RGB_MAE": 0.032266393303871155,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.03748597949743271,
+                  "HF_RMS_ratio": 0.7035953402519226
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.00510401139035821,
+                  "HF_RMS_ratio": 0.6406000256538391
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": -0.029474258422851562,
+                  "HF_RMS_ratio": 0.5988559126853943
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2632,
+              "RGB_MAE": 0.008070504292845726,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.08838840574026108,
+                  "HF_RMS_ratio": 1.3224189281463623
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.1364048421382904,
+                  "HF_RMS_ratio": 1.432697057723999
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.23847274482250214,
+                  "HF_RMS_ratio": 1.540823221206665
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2632,
+              "RGB_MAE": 0.007638791110366583,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.13437417149543762,
+                  "HF_RMS_ratio": 1.4434831142425537
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.16905957460403442,
+                  "HF_RMS_ratio": 1.5409117937088013
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.25346869230270386,
+                  "HF_RMS_ratio": 1.591225504875183
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "patch": "patch_00",
+      "run": "camera_corrected_00_137",
+      "reference": 137,
+      "complete": true,
+      "receipt_recovered_from_saved_float": false,
+      "all_non_RGB_fields_exact": true,
+      "non_RGB_fields": {
+        "world_row_ids": true,
+        "core_mask": true,
+        "world_xyz": true,
+        "normal_world": true,
+        "gaussian_sigma_m": true,
+        "road_opacity": true,
+        "minimum_model_depth": true,
+        "source_asset": true,
+        "source_tangent_frame_world": true,
+        "source_center_world": true,
+        "core_center_tangent": true,
+        "core_size_m": true,
+        "source_world_roi_corners": true,
+        "local_tangent_xyz": true,
+        "fresh_query_ids": true,
+        "fresh_world_xyz": true,
+        "fresh_source_count": true,
+        "fresh_confidence": true,
+        "witness_query_id": true,
+        "witness_source_raw": true,
+        "witness_source_uv_native": true,
+        "model_from_world": true,
+        "source_quality_all_rows": true,
+        "source_world_margin_radius_m": true
+      },
+      "halo_RGB_exact": true,
+      "saved_core_RGB_equals_linear_state": true,
+      "operator_row_selection_exact": true,
+      "operator_shape": [
+        7494,
+        1598
+      ],
+      "solver_cost_abs_difference_from_saved_float32": [
+        5.424272142562359e-13,
+        7.101264021258658e-14,
+        1.0266579253404018e-12
+      ],
+      "nativeF": 12,
+      "nativeB": 0,
+      "RGB_linear_solves": 3,
+      "frames": [
+        {
+          "raw": 86,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 2309,
+              "RGB_MAE": 0.015430869534611702,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.12213578075170517,
+                  "HF_RMS_ratio": 1.303491473197937
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.20456811785697937,
+                  "HF_RMS_ratio": 1.1090691089630127
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3685837388038635,
+                  "HF_RMS_ratio": 0.9509263038635254
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2309,
+              "RGB_MAE": 0.05012006685137749,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.04712735489010811,
+                  "HF_RMS_ratio": 0.7764104604721069
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.028617804870009422,
+                  "HF_RMS_ratio": 0.7518488764762878
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.029719168320298195,
+                  "HF_RMS_ratio": 0.7818877100944519
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2309,
+              "RGB_MAE": 0.049934763461351395,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.06059224158525467,
+                  "HF_RMS_ratio": 0.7151834964752197
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.039907585829496384,
+                  "HF_RMS_ratio": 0.6986750960350037
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.05225188657641411,
+                  "HF_RMS_ratio": 0.7495563626289368
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 2292,
+              "RGB_MAE": 0.015406856313347816,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.13621433079242706,
+                  "HF_RMS_ratio": 0.8118283152580261
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2247876226902008,
+                  "HF_RMS_ratio": 0.7559648156166077
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3943994641304016,
+                  "HF_RMS_ratio": 0.7309479117393494
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 2292,
+              "RGB_MAE": 0.050186946988105774,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.039513539522886276,
+                  "HF_RMS_ratio": 0.5391281843185425
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.019510680809617043,
+                  "HF_RMS_ratio": 0.5750693678855896
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.036125533282756805,
+                  "HF_RMS_ratio": 0.666429877281189
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 2292,
+              "RGB_MAE": 0.04999934881925583,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": -0.054834313690662384,
+                  "HF_RMS_ratio": 0.4997484087944031
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": -0.03310543671250343,
+                  "HF_RMS_ratio": 0.5344472527503967
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.054887525737285614,
+                  "HF_RMS_ratio": 0.6386996507644653
+                }
+              ]
+            }
+          }
+        },
+        {
+          "raw": 110,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 17,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 6191,
+              "RGB_MAE": 0.02159939333796501,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.10978963226079941,
+                  "HF_RMS_ratio": 2.4526000022888184
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.15267351269721985,
+                  "HF_RMS_ratio": 2.0861704349517822
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.24081595242023468,
+                  "HF_RMS_ratio": 1.6789180040359497
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 6191,
+              "RGB_MAE": 0.012986390851438046,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.11854975670576096,
+                  "HF_RMS_ratio": 1.100380301475525
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.1596340835094452,
+                  "HF_RMS_ratio": 1.1466236114501953
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.25018614530563354,
+                  "HF_RMS_ratio": 1.1929078102111816
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 6191,
+              "RGB_MAE": 0.012833585031330585,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.1514248102903366,
+                  "HF_RMS_ratio": 1.0092014074325562
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.1873970776796341,
+                  "HF_RMS_ratio": 1.0842385292053223
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.25987738370895386,
+                  "HF_RMS_ratio": 1.1826167106628418
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 5936,
+              "RGB_MAE": 0.0211844090372324,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.12185689806938171,
+                  "HF_RMS_ratio": 1.389157772064209
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.1728634536266327,
+                  "HF_RMS_ratio": 1.2780171632766724
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.2771957218647003,
+                  "HF_RMS_ratio": 1.1463699340820312
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 5936,
+              "RGB_MAE": 0.013017555698752403,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.09042506664991379,
+                  "HF_RMS_ratio": 0.7215317487716675
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.12728706002235413,
+                  "HF_RMS_ratio": 0.8328984975814819
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.22030478715896606,
+                  "HF_RMS_ratio": 0.9613287448883057
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 5936,
+              "RGB_MAE": 0.012871842831373215,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.12546122074127197,
+                  "HF_RMS_ratio": 0.6698392033576965
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.15799526870250702,
+                  "HF_RMS_ratio": 0.7991427183151245
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.23243184387683868,
+                  "HF_RMS_ratio": 0.9688668251037598
+                }
+              ]
+            }
+          }
+        },
+        {
+          "raw": 134,
+          "role": "QUERY_not_fit",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 16,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 7558,
+              "RGB_MAE": 0.033278971910476685,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.003622006392106414,
+                  "HF_RMS_ratio": 3.1780290603637695
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.0096329590305686,
+                  "HF_RMS_ratio": 2.7899913787841797
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.04949880763888359,
+                  "HF_RMS_ratio": 2.2682859897613525
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 7558,
+              "RGB_MAE": 0.005623531062155962,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.1664741188287735,
+                  "HF_RMS_ratio": 1.275782823562622
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.20204894244670868,
+                  "HF_RMS_ratio": 1.3218200206756592
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.27047300338745117,
+                  "HF_RMS_ratio": 1.3599681854248047
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 7558,
+              "RGB_MAE": 0.005595479626208544,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.1356872320175171,
+                  "HF_RMS_ratio": 1.167205810546875
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.16762375831604004,
+                  "HF_RMS_ratio": 1.2337857484817505
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.23773594200611115,
+                  "HF_RMS_ratio": 1.3207637071609497
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 7168,
+              "RGB_MAE": 0.03280103951692581,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.0019603038672357798,
+                  "HF_RMS_ratio": 1.8994148969650269
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.007129083387553692,
+                  "HF_RMS_ratio": 1.7889435291290283
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.04941006749868393,
+                  "HF_RMS_ratio": 1.59958815574646
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 7168,
+              "RGB_MAE": 0.005999384913593531,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.13868682086467743,
+                  "HF_RMS_ratio": 0.9369285702705383
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.17261679470539093,
+                  "HF_RMS_ratio": 1.0485447645187378
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.24199455976486206,
+                  "HF_RMS_ratio": 1.1673660278320312
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 7168,
+              "RGB_MAE": 0.005995357409119606,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.11182618886232376,
+                  "HF_RMS_ratio": 0.8550146222114563
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.14297550916671753,
+                  "HF_RMS_ratio": 0.9799810647964478
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.2132766991853714,
+                  "HF_RMS_ratio": 1.1389561891555786
+                }
+              ]
+            }
+          }
+        },
+        {
+          "raw": 137,
+          "role": "REFERENCE_FIT",
+          "alpha_exact_vs_original_measured_operator_run": true,
+          "raw_observation_crop_exact_bank_RGB": true,
+          "min_score_crop_margin_px": 17,
+          "min_raw_score_crop_margin_px": 16,
+          "max_Gaussian_radius_px": 12,
+          "HF_crop_support_complete": true,
+          "receipt_RGB_MAE_and_HF_cosine_max_recompute_delta": 0.0,
+          "pinhole_metrics": {
+            "original": {
+              "score_n": 7494,
+              "RGB_MAE": 0.03316691517829895,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.03915412351489067,
+                  "HF_RMS_ratio": 3.1008992195129395
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.05033464729785919,
+                  "HF_RMS_ratio": 2.720306396484375
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.08642146736383438,
+                  "HF_RMS_ratio": 2.19537091255188
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 7494,
+              "RGB_MAE": 0.004033067729324102,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.23693056404590607,
+                  "HF_RMS_ratio": 1.1209090948104858
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2877252399921417,
+                  "HF_RMS_ratio": 1.1738824844360352
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3921595513820648,
+                  "HF_RMS_ratio": 1.240164041519165
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 7494,
+              "RGB_MAE": 0.002931644208729267,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.33997026085853577,
+                  "HF_RMS_ratio": 1.0410887002944946
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.3883468806743622,
+                  "HF_RMS_ratio": 1.113539695739746
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.4858849048614502,
+                  "HF_RMS_ratio": 1.2205970287322998
+                }
+              ]
+            }
+          },
+          "raw_Brown_metrics": {
+            "original": {
+              "score_n": 7118,
+              "RGB_MAE": 0.032723568379879,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.04323986545205116,
+                  "HF_RMS_ratio": 1.8441187143325806
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.0553499273955822,
+                  "HF_RMS_ratio": 1.7330962419509888
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.09505485743284225,
+                  "HF_RMS_ratio": 1.54002845287323
+                }
+              ]
+            },
+            "uncorrected_solve": {
+              "score_n": 7118,
+              "RGB_MAE": 0.004521110560745001,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.21783769130706787,
+                  "HF_RMS_ratio": 0.8119993209838867
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.2659829556941986,
+                  "HF_RMS_ratio": 0.9206749796867371
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.3697674870491028,
+                  "HF_RMS_ratio": 1.0571454763412476
+                }
+              ]
+            },
+            "camera_corrected_solve": {
+              "score_n": 7118,
+              "RGB_MAE": 0.0036162601318210363,
+              "spectral": [
+                {
+                  "sigma_native_px": 1.2,
+                  "HF_cosine": 0.3150792121887207,
+                  "HF_RMS_ratio": 0.756207287311554
+                },
+                {
+                  "sigma_native_px": 1.6666666666666667,
+                  "HF_cosine": 0.36023256182670593,
+                  "HF_RMS_ratio": 0.8761572241783142
+                },
+                {
+                  "sigma_native_px": 3.0,
+                  "HF_cosine": 0.4565057158470154,
+                  "HF_RMS_ratio": 1.0441515445709229
+                }
+              ]
+            }
+          },
+          "reused_operator_vs_saved_native_max_abs": 1.4362009431723166e-07
+        }
+      ]
+    }
+  ],
+  "raw_JPEG_provenance": {
+    "evidence": "raw_jpeg_provenance_results.json",
+    "frames": [
+      86,
+      110,
+      115,
+      117,
+      134,
+      137
+    ],
+    "all_selected_raw_JPEG_equals_bank_PNG": true,
+    "all_saved_raw_observation_crops_exact": true
+  },
+  "parent_actual_native_totals": {
+    "nativeF": 918,
+    "nativeB": 1,
+    "RGB_source_fit_channel_solves": 12,
+    "gradient_optimizer_updates": 0,
+    "contexts": 7
+  },
+  "native_session_log_total_F": 918,
+  "parent_source_RGB_solves_are_separate_from_CPU_precision_replay_channel_solves": 6,
+  "this_aggregate_new_nativeF": 0,
+  "this_aggregate_new_nativeB": 0,
+  "this_aggregate_linear_solves": 0,
+  "this_aggregate_optimizer_updates": 0,
+  "model_and_linear_state_assets_modified": false,
+  "HF_strict_small_support_evidence": "solver_matrix_cpu_results.json: rows[].HF_support_sensitivity; 205px inner core is not whole-source evidence",
+  "seconds": 1.9876419939100742
+}

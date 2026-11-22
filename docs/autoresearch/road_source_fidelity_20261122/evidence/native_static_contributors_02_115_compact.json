@@ -1,0 +1,238 @@
+{
+  "schema": "source_fidelity_compact_receipt.v1",
+  "stage": "native_static_contributors_02_115",
+  "kind": "native_static",
+  "contract": {
+    "task": "ROAD-SOURCE-FIDELITY-20261122",
+    "patch": "patch_02",
+    "reference": 115,
+    "source": "Original native static model below current road handoff",
+    "selection": "Actual RGB VJP summed over qualified reference core; smallest contributor prefix retaining 99.95% measured alpha*T mass",
+    "geometry": "Capture prepared reference-time means/covariance/opacity/SH and freeze; no spatial truncation",
+    "gradient_measurements": 1,
+    "optimizer_updates": 0,
+    "new_diffusion_calls": 0,
+    "target_migration": false
+  },
+  "receipt": {
+    "complete": true,
+    "geometry": {
+      "source_rows": 950,
+      "retained_reference_mass": 0.9995014071464539,
+      "row_center_height_abs_quantiles_m": [
+        0.325500050199836,
+        0.927428771078715,
+        1.1014450841691754,
+        2.5379891806386543
+      ],
+      "contribution_mass_within_10cm_plane": 0.23340557515621185,
+      "sigma_max_quantiles_m": [
+        0.24666752225981295,
+        0.91091607218069,
+        1.4228690149456944,
+        10.67833347498882
+      ]
+    },
+    "rows": [
+      {
+        "raw": 86,
+        "base_n": 724,
+        "score_n": 724,
+        "frozen_alpha_ge95": 724,
+        "metrics": {
+          "full_native_static": {
+            "RGB_MAE": 0.011035270988941193,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": 0.12420052289962769,
+                "HF_RMS_ratio": 0.19272342324256897
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": 0.13796304166316986,
+                "HF_RMS_ratio": 0.19423142075538635
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": 0.17704127728939056,
+                "HF_RMS_ratio": 0.21094754338264465
+              }
+            ]
+          },
+          "frozen_source": {
+            "RGB_MAE": 0.00972179789096117,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": 0.08298011124134064,
+                "HF_RMS_ratio": 0.12487316876649857
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": 0.09405656158924103,
+                "HF_RMS_ratio": 0.1343974471092224
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": 0.12376324087381363,
+                "HF_RMS_ratio": 0.17358776926994324
+              }
+            ]
+          }
+        }
+      },
+      {
+        "raw": 110,
+        "base_n": 2432,
+        "score_n": 2432,
+        "frozen_alpha_ge95": 2432,
+        "metrics": {
+          "full_native_static": {
+            "RGB_MAE": 0.03690531477332115,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": 0.04863971844315529,
+                "HF_RMS_ratio": 0.31348133087158203
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": 0.054244283586740494,
+                "HF_RMS_ratio": 0.31298547983169556
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": 0.026965022087097168,
+                "HF_RMS_ratio": 0.34702110290527344
+              }
+            ]
+          },
+          "frozen_source": {
+            "RGB_MAE": 0.03346408158540726,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": -0.01623041182756424,
+                "HF_RMS_ratio": 0.2673756182193756
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": -0.002232421888038516,
+                "HF_RMS_ratio": 0.2694752514362335
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": 0.019199896603822708,
+                "HF_RMS_ratio": 0.28806278109550476
+              }
+            ]
+          }
+        }
+      },
+      {
+        "raw": 115,
+        "base_n": 2740,
+        "score_n": 2740,
+        "frozen_alpha_ge95": 2740,
+        "metrics": {
+          "full_native_static": {
+            "RGB_MAE": 0.03465864062309265,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": -0.016318242996931076,
+                "HF_RMS_ratio": 0.2940605878829956
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": -0.013818404637277126,
+                "HF_RMS_ratio": 0.29392677545547485
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": -0.007984449155628681,
+                "HF_RMS_ratio": 0.30775511264801025
+              }
+            ]
+          },
+          "frozen_source": {
+            "RGB_MAE": 0.03468213975429535,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": -0.013364295475184917,
+                "HF_RMS_ratio": 0.29345792531967163
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": -0.010268231853842735,
+                "HF_RMS_ratio": 0.2933000326156616
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": -0.006050150375813246,
+                "HF_RMS_ratio": 0.3066442608833313
+              }
+            ]
+          }
+        }
+      },
+      {
+        "raw": 117,
+        "base_n": 2860,
+        "score_n": 2860,
+        "frozen_alpha_ge95": 2860,
+        "metrics": {
+          "full_native_static": {
+            "RGB_MAE": 0.03449845686554909,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": -0.009139122441411018,
+                "HF_RMS_ratio": 0.29280441999435425
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": -0.019864508882164955,
+                "HF_RMS_ratio": 0.28800225257873535
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": -0.04571615904569626,
+                "HF_RMS_ratio": 0.30827611684799194
+              }
+            ]
+          },
+          "frozen_source": {
+            "RGB_MAE": 0.033531684428453445,
+            "spectral": [
+              {
+                "sigma_native_px": 1.2,
+                "HF_cosine": 0.05400312691926956,
+                "HF_RMS_ratio": 0.297990620136261
+              },
+              {
+                "sigma_native_px": 1.6666666666666667,
+                "HF_cosine": 0.05120532587170601,
+                "HF_RMS_ratio": 0.2933099567890167
+              },
+              {
+                "sigma_native_px": 3.0,
+                "HF_cosine": 0.04354648292064667,
+                "HF_RMS_ratio": 0.3056468963623047
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "nativeF": 9,
+    "nativeB": 1,
+    "optimizer_updates": 0,
+    "new_diffusion_calls": 0,
+    "original_asset_modified": false,
+    "target_migration": false
+  },
+  "full_evidence": "See curated archive and restore_manifest_compact.json"
+}

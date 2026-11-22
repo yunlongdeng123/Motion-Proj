@@ -1,0 +1,12 @@
+{
+  "task": "ROAD-SOURCE-FIDELITY-20261122",
+  "finalized_by_root": true,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "updated:V82-F06",
+  "status_append": "源材质优先 `ROAD-SOURCE-FIDELITY-20261122`：[00／02实拍与固定高斯颜色链路](autoresearch/road_source_fidelity_20261122/README.md)。同物理面积、原生像素人工核验选02／115实拍、117复核，00／137对照；本次保存加载和常色渲染未引入偏色，历史RGB拟合与原照片Brown／原生针孔相机不一致分别核验。固定几何实测颜色算子、有界求解及相机校正改善参考色调，但跨视角纹理与86色调仍有退化，未找到通过本轮检查的可迁移源高斯；目标迁移／融合和新扩散均0。918F／1B中反向仅为贡献测量，12通道RGB求解、梯度优化更新0；完整包、CPU恢复和原报告同页对照保留。原资产不改，GPU保持开机；human_verdict/problem_solved=null，沿用V82-F06。\n\n本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。",
+  "experiment_entry": "## ROAD-SOURCE-FIDELITY-20261122\n\n[源材质保真、相机校正与恢复入口](autoresearch/road_source_fidelity_20261122/README.md)。run=road_source_fidelity_20261122_r2；02／115实拍优先、00／137对照；固定高斯颜色链路与原生静态源诊断，918F／1B、12通道RGB求解、梯度优化0、目标更新0、扩散0。参考色调改善未成为多视图纹理成功，未晋升源资产。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。\n\n本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。",
+  "failure_append": "## 2026-11-22：实拍源质量与固定高斯颜色链路分段核验\n\n`ROAD-SOURCE-FIDELITY-20261122`：[组件、原生对照与恢复](../../autoresearch/road_source_fidelity_20261122/README.md)。人工同尺度核验02实拍优于00；两者当前RGB已继承历史外观拟合，不能把来源记录当作当前材质保真证明。NPZ保存／加载逐值一致，常色原生误差<4.2e-7；没有发现半像素代码不一致。原Waymo JPEG与输入PNG逐像素相同且未去Brown畸变，而原生相机为针孔，增加确定性校正对照，并在未插值原照片域验收。\n\n固定几何、尺度、opacity与halo的实测原生颜色算子求解后，02／115原始Brown域MAE .03308→.00442、HF −.0448→.2654，但未拟合110的HF仅.0393、86 MAE .00977→.03553；00也未通过跨视角保真。原生静态950行贡献源仍模糊且支撑中心／尺度不局限于道路，未作为可迁移块。故偏色可改善不等于纹理恢复，未推进迁移或融合；本轮单参考控制与多帧池对照分开记录。\n\n累计918F／1B，唯一B为贡献测量；12个RGB通道有界求解，无梯度优化更新、新扩散或目标训练。02相机分支只在最终JSON int64序列化失败，已从保存的浮点和状态CPU恢复收据，无额外渲染／求解；故障代码、恢复轨迹及全部分支保留。human_verdict/problem_solved=null；failure_ledger_delta=updated:V82-F06，无新ID。\n\n本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。",
+  "scope_note": "七臂为单参考/链路历史诊断；多帧随机参考池400步另在r3验证，最终publication等待合并。"
+}

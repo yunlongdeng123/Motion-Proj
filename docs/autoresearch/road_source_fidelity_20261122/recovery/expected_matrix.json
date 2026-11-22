@@ -1,0 +1,135 @@
+{
+  "schema": "source_fidelity_expected_matrix.v1",
+  "finalized_by_root": true,
+  "run_id": "road_source_fidelity_20261122_r2",
+  "expected_stages": [
+    {
+      "directory": "chain_probe_initial",
+      "kind": "chain",
+      "patches": {
+        "patch_00": [
+          86,
+          110
+        ],
+        "patch_02": [
+          86,
+          110
+        ]
+      },
+      "expected_nativeF": 16,
+      "expected_nativeB": 0
+    },
+    {
+      "directory": "fixed_color_operator_02_115",
+      "kind": "solver",
+      "reference": 115,
+      "patches": {
+        "patch_02": [
+          86,
+          110,
+          115,
+          117
+        ]
+      },
+      "expected_nativeF": 314,
+      "expected_nativeB": 0
+    },
+    {
+      "directory": "fixed_color_operator_00_137",
+      "kind": "solver",
+      "reference": 137,
+      "patches": {
+        "patch_00": [
+          86,
+          110,
+          134,
+          137
+        ]
+      },
+      "expected_nativeF": 547,
+      "expected_nativeB": 0
+    },
+    {
+      "directory": "native_static_02_115",
+      "kind": "native_static",
+      "entry_script": "probe_native_static_source.py",
+      "reference": 115,
+      "patches": {
+        "patch_02": [
+          86,
+          110,
+          115,
+          117
+        ]
+      },
+      "expected_nativeF": 8,
+      "expected_nativeB": 0
+    },
+    {
+      "directory": "native_static_contributors_02_115",
+      "kind": "native_static",
+      "entry_script": "probe_static_contributors.py",
+      "reference": 115,
+      "patches": {
+        "patch_02": [
+          86,
+          110,
+          115,
+          117
+        ]
+      },
+      "expected_nativeF": 9,
+      "expected_nativeB": 1
+    },
+    {
+      "directory": "camera_corrected_02_115",
+      "kind": "camera_solver",
+      "reference": 115,
+      "patches": {
+        "patch_02": [
+          86,
+          110,
+          115,
+          117
+        ]
+      },
+      "reuses_operator_from": "fixed_color_operator_02_115/patch_02",
+      "expected_nativeF": 12,
+      "expected_nativeB": 0
+    },
+    {
+      "directory": "camera_corrected_00_137",
+      "kind": "camera_solver",
+      "reference": 137,
+      "patches": {
+        "patch_00": [
+          86,
+          110,
+          134,
+          137
+        ]
+      },
+      "reuses_operator_from": "fixed_color_operator_00_137/patch_00",
+      "expected_nativeF": 12,
+      "expected_nativeB": 0
+    }
+  ],
+  "extra_stage_policy": "Include all discovered contract directories and packets; final archive requires root to finalize this matrix.",
+  "selected_output_directory": "outputs/road_source_fidelity_20261122_r2",
+  "scope": {
+    "new_diffusion_calls": 0,
+    "target_training_updates": 0,
+    "target_migration": false,
+    "power_operations": 0
+  },
+  "required_final_artifacts": [
+    "README.md",
+    "selected_run.json",
+    "architecture_components.svg",
+    "color_chain_audit/aggregate_cpu_audit.json",
+    "color_chain_audit/delivery_manifest.json",
+    "report_source/report_source_sync_manifest.json",
+    "report_companion_manifest.json"
+  ],
+  "diagnostic_scope": "historical seven-branch single-reference and color-chain diagnostics; multiframe pool not tested"
+}

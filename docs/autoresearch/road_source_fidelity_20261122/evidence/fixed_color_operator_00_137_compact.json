@@ -1,0 +1,411 @@
+{
+  "schema": "source_fidelity_compact_receipt.v1",
+  "stage": "fixed_color_operator_00_137",
+  "kind": "solver",
+  "contract": {
+    "task": "ROAD-SOURCE-FIDELITY-20261122",
+    "run": "road_source_fidelity_20261122_r2",
+    "stage": "fixed_color_operator_00_137",
+    "patches": [
+      "patch_00"
+    ],
+    "reference": 137,
+    "method": "Measure fixed native RGB response by three one-hot rows per render; bounded linear least squares in encoded RGB [0,1]",
+    "objective": "mean pixel RGB square + 1e-5 * mean RGB deviation from direct-photo center samples",
+    "prior_weight": 1e-05,
+    "solver": "scipy.optimize.lsq_linear(trf,lsmr), tol=1e-7, lsmr_tol=1e-8, max_iter=100, lsmr_maxiter=2000",
+    "geometry_scale_opacity_frozen": true,
+    "halo_RGB_frozen": true,
+    "new_diffusion_calls": 0,
+    "target_migration": false,
+    "reference_image_is_BUILD": true,
+    "query_is_not_independent_scene_test": true,
+    "fit_scope": "One reference view per source, other listed views never enter this solve",
+    "optimizer_gradient_updates": 0,
+    "human_verdict": null,
+    "production_promoted": false
+  },
+  "receipt": {
+    "complete": true,
+    "rows": [
+      {
+        "patch": "patch_00",
+        "reference": 137,
+        "core_n": 1598,
+        "score_n": 7501,
+        "operator_linear_check_max_abs": 2.086162567138672e-07,
+        "source_RGB_noncolor_exact": true,
+        "halo_RGB_exact": true,
+        "alpha_exact": true,
+        "solver": [
+          {
+            "channel": 0,
+            "status": 1,
+            "success": true,
+            "iterations": 18,
+            "cost": 0.09205165542324908,
+            "optimality": 7.443742630680751e-08,
+            "message": "The first-order optimality measure is less than `tol`."
+          },
+          {
+            "channel": 1,
+            "status": 1,
+            "success": true,
+            "iterations": 9,
+            "cost": 0.07120238402763289,
+            "optimality": 9.242564010063965e-08,
+            "message": "The first-order optimality measure is less than `tol`."
+          },
+          {
+            "channel": 2,
+            "status": 1,
+            "success": true,
+            "iterations": 14,
+            "cost": 0.0856296634649047,
+            "optimality": 9.680432224824061e-08,
+            "message": "The first-order optimality measure is less than `tol`."
+          }
+        ],
+        "evaluations": [
+          {
+            "raw": 86,
+            "role": "QUERY_not_fit",
+            "score_n": 2309,
+            "metrics": {
+              "original": {
+                "RGB_MAE": 0.01541666779667139,
+                "signed_RGB_bias": [
+                  -0.01663019135594368,
+                  -0.0132632777094841,
+                  -0.014962047338485718
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.1626511961221695,
+                    "HF_RMS_ratio": 1.0855847597122192
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.2658589482307434,
+                    "HF_RMS_ratio": 0.9718952775001526
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.4522625803947449,
+                    "HF_RMS_ratio": 0.8779348134994507
+                  }
+                ]
+              },
+              "direct_reference": {
+                "RGB_MAE": 0.05048273876309395,
+                "signed_RGB_bias": [
+                  -0.057751238346099854,
+                  -0.04318796470761299,
+                  -0.050452228635549545
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.007420359179377556,
+                    "HF_RMS_ratio": 0.4036972224712372
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.02285975031554699,
+                    "HF_RMS_ratio": 0.4398799538612366
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.059277262538671494,
+                    "HF_RMS_ratio": 0.5135952830314636
+                  }
+                ]
+              },
+              "fixed_color_solve": {
+                "RGB_MAE": 0.05021902173757553,
+                "signed_RGB_bias": [
+                  -0.05735373869538307,
+                  -0.04297281429171562,
+                  -0.05026738718152046
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": -0.04389573633670807,
+                    "HF_RMS_ratio": 0.6466166973114014
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": -0.03694181516766548,
+                    "HF_RMS_ratio": 0.6588574051856995
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": -0.0097967479377985,
+                    "HF_RMS_ratio": 0.7218713760375977
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "raw": 110,
+            "role": "QUERY_not_fit",
+            "score_n": 6191,
+            "metrics": {
+              "original": {
+                "RGB_MAE": 0.021768778562545776,
+                "signed_RGB_bias": [
+                  0.02268938720226288,
+                  0.019305111840367317,
+                  0.021019307896494865
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.09190601855516434,
+                    "HF_RMS_ratio": 1.948656439781189
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.13887229561805725,
+                    "HF_RMS_ratio": 1.7384532690048218
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.23096105456352234,
+                    "HF_RMS_ratio": 1.4852415323257446
+                  }
+                ]
+              },
+              "direct_reference": {
+                "RGB_MAE": 0.013343888334929943,
+                "signed_RGB_bias": [
+                  -0.015613901428878307,
+                  -0.009054834954440594,
+                  -0.012938419356942177
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.000670343404635787,
+                    "HF_RMS_ratio": 0.426372230052948
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.03139607235789299,
+                    "HF_RMS_ratio": 0.4624433219432831
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.15092723071575165,
+                    "HF_RMS_ratio": 0.5672830939292908
+                  }
+                ]
+              },
+              "fixed_color_solve": {
+                "RGB_MAE": 0.013045362196862698,
+                "signed_RGB_bias": [
+                  -0.015298029407858849,
+                  -0.008905457332730293,
+                  -0.012740212492644787
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.07330572605133057,
+                    "HF_RMS_ratio": 0.874281644821167
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.11474886536598206,
+                    "HF_RMS_ratio": 0.9555074572563171
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.21186493337154388,
+                    "HF_RMS_ratio": 1.0552964210510254
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "raw": 134,
+            "role": "QUERY_not_fit",
+            "score_n": 7565,
+            "metrics": {
+              "original": {
+                "RGB_MAE": 0.03330766409635544,
+                "signed_RGB_bias": [
+                  0.03676311671733856,
+                  0.02777804620563984,
+                  0.033029843121767044
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": -0.0011014934862032533,
+                    "HF_RMS_ratio": 2.5296876430511475
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.0001959936780622229,
+                    "HF_RMS_ratio": 2.3264501094818115
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.027446657419204712,
+                    "HF_RMS_ratio": 2.0002071857452393
+                  }
+                ]
+              },
+              "direct_reference": {
+                "RGB_MAE": 0.005779697094112635,
+                "signed_RGB_bias": [
+                  -0.0007779707666486502,
+                  8.221390999096911e-06,
+                  -0.00035000217030756176
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.1440204530954361,
+                    "HF_RMS_ratio": 0.45962250232696533
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.19674785435199738,
+                    "HF_RMS_ratio": 0.497793972492218
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.30249521136283875,
+                    "HF_RMS_ratio": 0.6050225496292114
+                  }
+                ]
+              },
+              "fixed_color_solve": {
+                "RGB_MAE": 0.0061071026138961315,
+                "signed_RGB_bias": [
+                  -0.00031774016679264605,
+                  0.0002419667725916952,
+                  -2.0070376649528043e-06
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.12265127897262573,
+                    "HF_RMS_ratio": 1.0159605741500854
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.15941745042800903,
+                    "HF_RMS_ratio": 1.102577567100525
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.22852744162082672,
+                    "HF_RMS_ratio": 1.1997647285461426
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "raw": 137,
+            "role": "REFERENCE_FIT",
+            "score_n": 7501,
+            "metrics": {
+              "original": {
+                "RGB_MAE": 0.03325223550200462,
+                "signed_RGB_bias": [
+                  0.037114620208740234,
+                  0.027475278824567795,
+                  0.03300921246409416
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.02748483046889305,
+                    "HF_RMS_ratio": 2.4710140228271484
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.03374417498707771,
+                    "HF_RMS_ratio": 2.2644083499908447
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.06814700365066528,
+                    "HF_RMS_ratio": 1.9315619468688965
+                  }
+                ]
+              },
+              "direct_reference": {
+                "RGB_MAE": 0.0050969175063073635,
+                "signed_RGB_bias": [
+                  -0.00038137088995426893,
+                  -0.00022033770801499486,
+                  -0.0002591808151919395
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.1688224822282791,
+                    "HF_RMS_ratio": 0.43689805269241333
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.23018603026866913,
+                    "HF_RMS_ratio": 0.47649866342544556
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.363657146692276,
+                    "HF_RMS_ratio": 0.5803090333938599
+                  }
+                ]
+              },
+              "fixed_color_solve": {
+                "RGB_MAE": 0.0035115526989102364,
+                "signed_RGB_bias": [
+                  3.03905608234345e-06,
+                  4.47871161668445e-06,
+                  6.839480192866176e-06
+                ],
+                "spectral": [
+                  {
+                    "sigma_native_px": 1.2,
+                    "HF_cosine": 0.3319394588470459,
+                    "HF_RMS_ratio": 0.8933961987495422
+                  },
+                  {
+                    "sigma_native_px": 1.6666666666666667,
+                    "HF_cosine": 0.3800393342971802,
+                    "HF_RMS_ratio": 0.9772735834121704
+                  },
+                  {
+                    "sigma_native_px": 3.0,
+                    "HF_cosine": 0.4697111248970032,
+                    "HF_RMS_ratio": 1.0912574529647827
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "nativeF": 547,
+    "nativeB": 0,
+    "RGB_linear_solves": 3,
+    "gradient_optimizer_updates": 0,
+    "new_diffusion_calls": 0,
+    "original_asset_modified": false,
+    "target_migration": false,
+    "seconds": 55.40639019012451
+  },
+  "full_evidence": "See curated archive and restore_manifest_compact.json"
+}
