@@ -1,0 +1,256 @@
+{
+  "schema": "a20.unified_field.smoke.v1",
+  "passed": true,
+  "real_native_cuda": true,
+  "finite_forward_backward": true,
+  "every_source_geometry_gradient_from_raster": true,
+  "full_source_bound_checkpoint_saved": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r1/smoke/checkpoints/smoke_step0010.pt",
+    "sha256": "90f7ad0f1d8a196b593be053862da19b5b951b6318973b2d3b3b8084ca35aa7d",
+    "bytes": 199066746
+  },
+  "bit_exact_actor_restore": true,
+  "bit_exact_Adam_restore": true,
+  "bit_exact_all_rng_restore": true,
+  "next_step_parameter_max": 1.5017576515674591e-06,
+  "next_step_loss_abs": 0.0,
+  "next_step_optimizer_max": 1.8495029507903382e-08,
+  "parameter_differences": {
+    "xyz": 1.1920928955078125e-07,
+    "log_scales": 1.5017576515674591e-06,
+    "raw_rotation": 1.8137507140636444e-07,
+    "opacity": 5.960464477539063e-08,
+    "dc": 0.0,
+    "base_xyz": 0.0,
+    "base_scales": 0.0,
+    "base_rotation": 0.0,
+    "base_coefficients": 0.0,
+    "base_opacity": 0.0,
+    "meta_source_id": 0.0,
+    "meta_source_row_id": 0.0,
+    "meta_native_global_row_id": 0.0,
+    "meta_original_source_row_id": 0.0,
+    "meta_original_source_branch": 0.0,
+    "meta_source_raw": 0.0,
+    "meta_geometry_confidence": 0.0,
+    "meta_appearance_confidence": 0.0,
+    "meta_opacity_confidence": 0.0,
+    "meta_is_observed": 0.0,
+    "meta_has_native_source_evidence": 0.0,
+    "meta_geometry_is_generated_prior": 0.0,
+    "meta_opaque_geometry_high_confidence": 0.0,
+    "meta_observed_surface": 0.0,
+    "meta_observed_surface_confidence": 0.0,
+    "meta_distance_to_T_direct_observed_surface_m": 0.0,
+    "meta_nearest_T_direct_observed_source_row_id": 0.0,
+    "meta_teacher_unknown": 0.0,
+    "meta_teacher_prior_weight": 0.0,
+    "meta_teacher_reference_row_id": 0.0,
+    "meta_high_frequency_permission": 0.0,
+    "meta_real_V_supervision_weight": 0.0,
+    "active": 0.0,
+    "conflict_score": 0.0,
+    "support_contribution": 0.0,
+    "conflict_contribution": 0.0
+  },
+  "discarded_next_stage_probes": {
+    "appearance": {
+      "stage": "appearance",
+      "step": 1,
+      "role": "discarded_next_stage_probe",
+      "total_loss": 0.16564911603927612,
+      "losses": {
+        "real_rgb": 0.023187050595879555,
+        "silhouette_positive": 0.13095203042030334,
+        "silhouette_negative": 3.297412831670954e-07,
+        "retained_K_rgb": 0.012532935477793217,
+        "retained_K_alpha": 0.08501066267490387,
+        "lidar_range": 0.007503035943955183,
+        "lidar_alpha": 1.1930825394301792e-06,
+        "teacher_alpha": 0.0004222917486913502,
+        "teacher_depth": 0.0035079498775303364,
+        "teacher_rgb": 0.011112183332443237,
+        "parameter_geometry": 0.0014504395658150315,
+        "parameter_appearance": 0.0,
+        "delta_smoothness": 0.0007652532658539712,
+        "duplicate_opacity": 0.0
+      },
+      "raster_gradient_max": {
+        "dc": {
+          "0": 0.00027080552536062896,
+          "1": 0.0002443527919240296
+        }
+      },
+      "gradient_max": {
+        "dc": {
+          "0": 0.0002708054962567985,
+          "1": 0.0002443527919240296
+        }
+      },
+      "elapsed_seconds": 32.63725260645151,
+      "raw": 86,
+      "novel": "novel_00",
+      "lidar": {
+        "opaque": 86,
+        "training_points": 86,
+        "stable_evaluation_points": 86
+      },
+      "fixed_unknown_pixels": 41637,
+      "teacher_unknown_applicable": true,
+      "retained_K": {
+        "fixed_pixels": 75929,
+        "topk": 1024,
+        "RGB_float_max": 0.3460230231285095,
+        "RGB_float_mean": 0.00016902273637242615,
+        "RGB_changed_pixels_gt_1over255": 268,
+        "K_alpha_float_max": 0.7384265065193176,
+        "K_alpha_float_mean": 0.0011464778799563646,
+        "K_alpha_changed_pixels_gt_1over255": 337
+      }
+    },
+    "joint": {
+      "stage": "joint",
+      "step": 1,
+      "role": "discarded_next_stage_probe",
+      "total_loss": 0.16564911603927612,
+      "losses": {
+        "real_rgb": 0.023187050595879555,
+        "silhouette_positive": 0.13095203042030334,
+        "silhouette_negative": 3.297412831670954e-07,
+        "retained_K_rgb": 0.012532935477793217,
+        "retained_K_alpha": 0.08501066267490387,
+        "lidar_range": 0.007503035943955183,
+        "lidar_alpha": 1.1930825394301792e-06,
+        "teacher_alpha": 0.0004222917486913502,
+        "teacher_depth": 0.0035079498775303364,
+        "teacher_rgb": 0.011112183332443237,
+        "parameter_geometry": 0.0014504395658150315,
+        "parameter_appearance": 0.0,
+        "delta_smoothness": 0.0007652532658539712,
+        "duplicate_opacity": 0.0
+      },
+      "raster_gradient_max": {
+        "xyz": {
+          "0": 0.31859055161476135,
+          "1": 0.10313987731933594
+        },
+        "log_scales": {
+          "0": 0.005772932432591915,
+          "1": 0.0016990175936371088
+        },
+        "raw_rotation": {
+          "0": 0.08522840589284897,
+          "1": 0.0033349287696182728
+        },
+        "opacity": {
+          "0": 0.05416174978017807,
+          "1": 0.002767672296613455
+        },
+        "dc": {
+          "0": 0.00027080552536062896,
+          "1": 0.0002443527919240296
+        }
+      },
+      "gradient_max": {
+        "xyz": {
+          "0": 0.31859058141708374,
+          "1": 0.10313986241817474
+        },
+        "log_scales": {
+          "0": 0.005772897973656654,
+          "1": 0.0016990157309919596
+        },
+        "raw_rotation": {
+          "0": 0.08522828668355942,
+          "1": 0.0033349357545375824
+        },
+        "opacity": {
+          "0": 0.05416140332818031,
+          "1": 0.0027676927857100964
+        },
+        "dc": {
+          "0": 0.00027080540894530714,
+          "1": 0.0002443527919240296
+        }
+      },
+      "elapsed_seconds": 32.97850772924721,
+      "raw": 86,
+      "novel": "novel_00",
+      "lidar": {
+        "opaque": 86,
+        "training_points": 86,
+        "stable_evaluation_points": 86
+      },
+      "fixed_unknown_pixels": 41637,
+      "teacher_unknown_applicable": true,
+      "retained_K": {
+        "fixed_pixels": 75929,
+        "topk": 1024,
+        "RGB_float_max": 0.3460230231285095,
+        "RGB_float_mean": 0.00016902273637242615,
+        "RGB_changed_pixels_gt_1over255": 268,
+        "K_alpha_float_max": 0.7384265065193176,
+        "K_alpha_float_mean": 0.0011464778799563646,
+        "K_alpha_changed_pixels_gt_1over255": 337
+      }
+    }
+  },
+  "evaluation": true,
+  "exported_actor_reload": true,
+  "actual_geometry_smoke_updates": 10,
+  "extra_replay_updates": 2,
+  "discarded_next_stage_updates": 2,
+  "formal_updates": 0,
+  "geometry_gate": {
+    "passed": false,
+    "conditions": {
+      "real_visible_coverage": false,
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true
+    }
+  },
+  "heldout_frames_opened": [],
+  "frozen": {
+    "persistent_native_scene_unchanged": true,
+    "road_camera_trajectory_unchanged": true,
+    "other_actors_frozen": true,
+    "source_model_gradient_max": {
+      "static._xyz": null,
+      "static._features_dc": null,
+      "static._features_rest": null,
+      "static._scaling": null,
+      "static._rotation": null,
+      "static._opacity": null,
+      "static._t": null,
+      "static._scaling_t": null,
+      "static._velocity": null,
+      "static.max_radii2D": null,
+      "static.xyz_gradient_accum": null,
+      "static.t_gradient_accum": null,
+      "static.denom": null,
+      "static._sgcm_lineage_ids": null,
+      "static._sgcm_clone_blocked": null,
+      "dynamic._xyz": null,
+      "dynamic._features_dc": null,
+      "dynamic._features_rest": null,
+      "dynamic._scaling": null,
+      "dynamic._rotation": null,
+      "dynamic._opacity": null,
+      "dynamic._t": null,
+      "dynamic._scaling_t": null,
+      "dynamic._velocity": null,
+      "dynamic.max_radii2D": null,
+      "dynamic.xyz_gradient_accum": null,
+      "dynamic.t_gradient_accum": null,
+      "dynamic.denom": null,
+      "dynamic._sgcm_lineage_ids": null,
+      "dynamic._sgcm_clone_blocked": null,
+      "dynamic._dynamic_actor_source_ids": null,
+      "environment.base": null,
+      "environment.to_opengl": null
+    },
+    "all_source_model_gradients_None_or_zero": true
+  }
+}

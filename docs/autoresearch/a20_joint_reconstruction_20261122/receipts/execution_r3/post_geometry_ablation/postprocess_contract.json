@@ -1,0 +1,54 @@
+{
+  "schema": "a20.zero_update_geometry_ablation.v1",
+  "parent_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/checkpoints/geometry_step0040.pt",
+    "sha256": "922ab732867b348f78251aac0619696390ee4ca4c1c753a12600a289582b40ce",
+    "bytes": 199223836
+  },
+  "parent_runtime": {
+    "joint_core.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_core.py",
+      "sha256": "bde889e6ddd00ed4dea55ac4bfe11497faad719bdaac8086ec1cd7d41501b869",
+      "bytes": 10971
+    },
+    "joint_gpu.py": {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py",
+      "sha256": "ac44a59fae6ab4c6a9f5c48be825a13c83e92d6f9864123f7c6f45ceb8f3b328",
+      "bytes": 67669
+    }
+  },
+  "source_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/contribution/step0040.npz",
+    "sha256": "1fd602b8ce47b6f979d54655e19628d03298a83a245dd7e08806f210ff68415f",
+    "bytes": 5843990
+  },
+  "script": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/runtime/post_geometry_ablation.py",
+    "sha256": "8b5a7757e38e3cb05c903fa85260a1ab32394250dca9d5231033f682ffe037d8",
+    "bytes": 20307
+  },
+  "candidate_rows": 7,
+  "candidate_table": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/candidate_source_rows.npz",
+    "sha256": "72c6f99637bb85cfb2dfc33dc0e04cf222a395a540da05bd790de8752e59f5ed",
+    "bytes": 2101
+  },
+  "candidate_rule": "active; step40 normalized conflict fraction>=.8; outside raw>.001 in at least2 novel views; no real-V-nearzero or opacity requirement",
+  "sorting": [
+    "source_id",
+    "source_row_id",
+    "unified_row_id"
+  ],
+  "acceptance": {
+    "render": "actual native isolated full-field 3DGS, BUILD86/110",
+    "absolute_RGB_error_increase_max": 0.00392156862745098,
+    "isolated_alpha95_fraction_minimum": 0.99,
+    "error_baseline": "immutable pre-ablation prediction versus true RGB over complete fixed V; shared by every trial"
+  },
+  "bisection": "whole batch first; failed contiguous source-order batches split left-first until singleton",
+  "formal_optimizer_updates": 40,
+  "postprocess_optimizer_updates": 0,
+  "learning_rates_changed": false,
+  "per_camera_row_selection": false,
+  "heldout_frames_opened": []
+}

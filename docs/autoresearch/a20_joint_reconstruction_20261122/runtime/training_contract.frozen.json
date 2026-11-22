@@ -1,0 +1,125 @@
+{
+  "schema": "a20.unified_field.training_contract.v1",
+  "build_raws": [
+    86,
+    110
+  ],
+  "sealed_raws": [
+    134,
+    179,
+    198
+  ],
+  "seed": 101,
+  "stages": {
+    "smoke": 10,
+    "geometry": 40,
+    "appearance": 80,
+    "joint": 40
+  },
+  "learning_rates": {
+    "xyz": 0.0005,
+    "log_scales": 0.001,
+    "raw_rotation": 0.0005,
+    "opacity": 0.005,
+    "dc": 0.005
+  },
+  "loss": {
+    "real_rgb": 1.0,
+    "retained_K_rgb": 1.0,
+    "retained_K_alpha": 1.0,
+    "silhouette_positive": 0.2,
+    "silhouette_negative": 0.2,
+    "teacher_background": 0.2,
+    "lidar_range": 2.0,
+    "lidar_alpha": 0.5,
+    "teacher_alpha": 0.5,
+    "teacher_depth": 0.2,
+    "teacher_rgb": 0.25,
+    "parameter_geometry": 0.02,
+    "parameter_appearance": 0.02,
+    "delta_smoothness": 0.002,
+    "duplicate_opacity": 0.002
+  },
+  "lidar": {
+    "opaque_group": 2,
+    "glass_group": 1,
+    "stable_alpha": 0.95,
+    "training_denominator_floor": 0.05,
+    "huber_delta_m": 0.03,
+    "expected_opaque_count": 246,
+    "expected_all_count": 1030
+  },
+  "teacher": {
+    "stable_alpha": 0.95,
+    "training_denominator_floor": 0.05,
+    "unknown_attribution_minimum": 0.95,
+    "background_support_alpha": 0.01,
+    "background_dilation_pixels": 8,
+    "background_topk_pixels": 1024,
+    "real_support_margin_m": 0.075
+  },
+  "retained_K": {
+    "topk_pixels": 1024,
+    "changed_threshold": 0.00392156862745098
+  },
+  "regularizer": {
+    "xyz_scale_m": 0.05,
+    "log_scale_scale": 0.2,
+    "quaternion_scale": 0.1,
+    "opacity_scale": 0.2,
+    "dc_scale": 0.5,
+    "confidence_floor": 0.1,
+    "safety_xyz_bound_m": 0.3,
+    "safety_scale_ratio_bounds": [
+      0.5,
+      2.0
+    ]
+  },
+  "redundancy": {
+    "refresh_every": 10,
+    "cross_source_radius_m": 0.05,
+    "conflict_range_m": 0.075,
+    "inactive_opacity_max": 0.01,
+    "support_contribution_max": 0.001,
+    "conflict_fraction_minimum": 0.8,
+    "novel_outside_view_minimum": 2,
+    "novel_outside_raw_contribution_minimum": 0.001,
+    "automatic_global_retirement": true
+  },
+  "geometry_gate": {
+    "visible_alpha95_fraction_minimum": 0.99,
+    "opaque_stable_count_minimum": 246,
+    "opaque_mae_m_maximum": 0.075,
+    "opaque_p90_m_maximum": 0.15,
+    "novel_unknown_alpha95_fraction_minimum": 0.99
+  },
+  "raster": {
+    "real_resolution": [
+      1152,
+      768
+    ],
+    "synthetic_resolution": [
+      512,
+      512
+    ],
+    "shared_scene_depth_sort": true,
+    "per_camera_row_selection": false,
+    "rgb_alpha_division": false
+  },
+  "supervision": {
+    "real_V_rgb": "isolated actual native actor raster",
+    "real_V_positive_alpha": "isolated actual native actor raster",
+    "retained_K": "shared native scene versus frozen context-only DELETE",
+    "teacher_background": "outside frozen pure-T alpha>.01 dilated8px; alpha squared only"
+  },
+  "freeze": [
+    "road",
+    "camera",
+    "trajectory",
+    "native_static",
+    "native_dynamic",
+    "other_actors",
+    "environment",
+    "SH_rest"
+  ]
+}

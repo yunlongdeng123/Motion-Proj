@@ -1,0 +1,218 @@
+{
+  "schema": "a20.clean_joint_actor_initialization.v1",
+  "counts": {
+    "old_input": 25060,
+    "old_native_branch2": 24436,
+    "old_legacy_branch3_excluded": 624,
+    "old_native_exact_3sigma_intersects_fixed_OBB": 9104,
+    "old_native_exact_3sigma_disjoint_excluded": 15332,
+    "old_K_mixed_or_non_target_excluded_all_including_overlap": 1831,
+    "old_K_mixed_or_non_target_intersects_OBB_excluded": 179,
+    "old_kept": 8925,
+    "old_excluded_union": 16135,
+    "old_opaque_high_geometry_confidence_kept": 17,
+    "old_low_geometry_confidence_kept": 8908,
+    "old_prior_visible_source_evidence": 5473,
+    "old_kept_without_prior_visible_source_evidence": 3452,
+    "T_kept": 410080,
+    "T_direct_observed": 12865,
+    "T_observed_surface_075m": 24410,
+    "T_unknown": 385670,
+    "joint_total": 419005
+  },
+  "fields": {
+    "xyz": {
+      "shape": [
+        419005,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "scales": {
+      "shape": [
+        419005,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "rotation": {
+      "shape": [
+        419005,
+        4
+      ],
+      "dtype": "float32"
+    },
+    "coefficients": {
+      "shape": [
+        419005,
+        16,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "opacity": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "source_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int8"
+    },
+    "source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "native_global_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "original_source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "original_source_branch": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int8"
+    },
+    "source_raw": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int16"
+    },
+    "geometry_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "appearance_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "opacity_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "is_observed": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "has_native_source_evidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "geometry_is_generated_prior": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "opaque_geometry_high_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "observed_surface": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "observed_surface_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "distance_to_T_direct_observed_surface_m": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "nearest_T_direct_observed_source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "teacher_unknown": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "teacher_prior_weight": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "teacher_reference_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "high_frequency_permission": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "real_V_supervision_weight": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    }
+  },
+  "policy": {
+    "old_contribution_identity_lock": false,
+    "delete_T_to_preserve_old_contribution": false,
+    "trainable_actor_parameters_for_both_sources": [
+      "xyz",
+      "scales",
+      "rotation",
+      "coefficients",
+      "opacity"
+    ],
+    "unchanged_source_values_at_initialization_only": true,
+    "frozen_context": [
+      "road",
+      "cameras",
+      "actor_trajectory",
+      "other_vehicles",
+      "background_scene"
+    ],
+    "real_V_supervision": "All genuine V pixels remain eligible; row metadata never masks real V photometric supervision.",
+    "high_frequency_permission": "All rows equal 1, including hidden T. No observation mask disables high-frequency permission.",
+    "teacher_reference": "Before optimization, clone all T parameters from joint rows [8925,419005) into immutable teacher buffers. These bytes equal the parent T file. Never replace the teacher by current student parameters.",
+    "teacher_multiview_preservation": "Use frozen T multi-view teacher targets and per-row teacher_prior_weight; full weight outside the 0.075m support neighbourhood, smooth transition within it.",
+    "source_cleaning_scope": "Exclusions remove duplicated rows from the actor initialization only. They do not delete corresponding native scene background or K_other rows.",
+    "native_scene_dedup": "The 8925 kept native_global_row_ids identify duplicate source copies in a combined renderer. Only those IDs are emitted as dedup candidates; excluded native context rows, especially all 1831 K-mixed rows, remain frozen context."
+  },
+  "status": "IMPLEMENTED_AND_VERIFIED"
+}

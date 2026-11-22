@@ -1,0 +1,93 @@
+{
+  "stage": "geometry",
+  "steps": 40,
+  "completed": true,
+  "geometry_gate": {
+    "passed": false,
+    "conditions": {
+      "real_visible_coverage": false,
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "vehicle_geometry_gate": {
+    "passed": false,
+    "numeric_passed": true,
+    "conditions": {
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "isolated_real_visible_coverage": true
+    },
+    "grey_review": "PENDING_ROOT_GREY_REVIEW"
+  },
+  "scene_handoff_gate": {
+    "passed": false,
+    "conditions": {
+      "shared_real_visible_coverage": false,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "scene_qualified": false,
+  "can_enter_appearance": false,
+  "actor": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/assets/geometry_final/actor.npz",
+    "sha256": "048e28b54738c02b43126138e28b45133c7e4975b99517409424a2029735b34b",
+    "bytes": 24031654
+  },
+  "active_rows": 418201,
+  "retired_rows": 804,
+  "native_calls": 214,
+  "backward_calls": 40,
+  "feature_vjp_calls": 69,
+  "frozen": {
+    "persistent_native_scene_unchanged": true,
+    "road_camera_trajectory_unchanged": true,
+    "other_actors_frozen": true,
+    "source_model_gradient_max": {
+      "static._xyz": null,
+      "static._features_dc": null,
+      "static._features_rest": null,
+      "static._scaling": null,
+      "static._rotation": null,
+      "static._opacity": null,
+      "static._t": null,
+      "static._scaling_t": null,
+      "static._velocity": null,
+      "static.max_radii2D": null,
+      "static.xyz_gradient_accum": null,
+      "static.t_gradient_accum": null,
+      "static.denom": null,
+      "static._sgcm_lineage_ids": null,
+      "static._sgcm_clone_blocked": null,
+      "dynamic._xyz": null,
+      "dynamic._features_dc": null,
+      "dynamic._features_rest": null,
+      "dynamic._scaling": null,
+      "dynamic._rotation": null,
+      "dynamic._opacity": null,
+      "dynamic._t": null,
+      "dynamic._scaling_t": null,
+      "dynamic._velocity": null,
+      "dynamic.max_radii2D": null,
+      "dynamic.xyz_gradient_accum": null,
+      "dynamic.t_gradient_accum": null,
+      "dynamic.denom": null,
+      "dynamic._sgcm_lineage_ids": null,
+      "dynamic._sgcm_clone_blocked": null,
+      "dynamic._dynamic_actor_source_ids": null,
+      "environment.base": null,
+      "environment.to_opengl": null
+    },
+    "all_source_model_gradients_None_or_zero": true
+  },
+  "heldout_frames_opened": [],
+  "GPU_keep_on": true,
+  "elapsed_seconds": 42.55370684340596
+}

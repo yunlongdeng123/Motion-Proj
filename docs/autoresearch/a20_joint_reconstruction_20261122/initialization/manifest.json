@@ -1,0 +1,381 @@
+{
+  "schema": "a20.clean_joint_actor_initialization.v1",
+  "state": "CPU_EXACT_SOURCE_VERIFIED_READY_FOR_JOINT_RECONSTRUCTION",
+  "artifact": {
+    "path": "joint_actor_init.npz",
+    "sha256": "1e7964eda4a06ae835cc0d8483c5bdce06a21c707dc35120a44b04914a937dc4",
+    "bytes": 23436396
+  },
+  "parents": {
+    "old": {
+      "path": "work/vehicle_road_joint_20261121/takeback/vehicle_road_joint_20261121_r1/assets/joint_fit/vehicle.npz",
+      "sha256": "5ffe95bcf5c100d365a6aea7e0f5036cb629c64dfd52dcadf1d6a68e5a2b0bec",
+      "bytes": 1309390
+    },
+    "trellis": {
+      "path": "outputs/a20_sd15_sameview_20261122/a20_actor_candidate.npz",
+      "sha256": "0dc65c4aa9fefbf73a1c2d482c0015915818c5bf0ac34d5d318e0784693da53a",
+      "bytes": 19980928
+    },
+    "fixed_OBB_diagnostic": {
+      "path": "work/a20_native_gaussian_fusion_20261122/regions/O_source_full3sigma_OBB_diagnostic_v1.npz",
+      "sha256": "53bc99fec06c8ec9a6b46eb803767a848e0e0b68e175e343e8698ef870bd8bab",
+      "bytes": 3651043
+    },
+    "old_identity_map": {
+      "path": "work/a20_native_gaussian_fusion_20261122/observed_source/observed_actor_identity_map.npz",
+      "sha256": "600264e6bae24fd844bd0e2c4d440fd39e9b43116bad021f7a08ee6eb9b1a770",
+      "bytes": 314427
+    },
+    "old_opaque_qualification": {
+      "path": "work/a20_native_gaussian_fusion_20261122/source_qualification/O4131_opaque_qualification_v1.npz",
+      "sha256": "7e552ec720e4de2303b1edb1be2a5c3d90ca0595eaf57ec8485fea7647e7c6a9",
+      "bytes": 527820
+    },
+    "trellis_appearance_support": {
+      "path": "work/a20_sd15_sameview_20261122/student_native_support_control_r1/appearance_support.npz",
+      "sha256": "9739a7f109971549e42fc43a0912bf5e839111d84a30a1ef71c5bd27eaf47fbc",
+      "bytes": 25971
+    },
+    "native_scene_bindings": {
+      "path": "work/a20_native_gaussian_fusion_20261122/observed_source/source_manifest.json",
+      "sha256": "34a8b5a5b2752a1d189c4241bea0e259b49a2ec06451368bdadf2a7289da4057",
+      "bytes": 5444
+    }
+  },
+  "coordinate_frame": {
+    "unit": "metre",
+    "x": "forward",
+    "y": "left",
+    "z": "up",
+    "same_actor_frame_both_sources": true
+  },
+  "parameter_conventions": {
+    "scales": "activated standard deviations in metres",
+    "rotation": "wxyz; original source quaternion values preserved",
+    "opacity": "activated [0,1], including exact 1.0",
+    "coefficients": "[N,16,3], SH0 active; higher slots exactly zero"
+  },
+  "row_order": [
+    {
+      "source_id": 0,
+      "source": "old",
+      "start": 0,
+      "stop": 8925
+    },
+    {
+      "source_id": 1,
+      "source": "trellis",
+      "start": 8925,
+      "stop": 419005
+    }
+  ],
+  "counts": {
+    "old_input": 25060,
+    "old_native_branch2": 24436,
+    "old_legacy_branch3_excluded": 624,
+    "old_native_exact_3sigma_intersects_fixed_OBB": 9104,
+    "old_native_exact_3sigma_disjoint_excluded": 15332,
+    "old_K_mixed_or_non_target_excluded_all_including_overlap": 1831,
+    "old_K_mixed_or_non_target_intersects_OBB_excluded": 179,
+    "old_kept": 8925,
+    "old_excluded_union": 16135,
+    "old_opaque_high_geometry_confidence_kept": 17,
+    "old_low_geometry_confidence_kept": 8908,
+    "old_prior_visible_source_evidence": 5473,
+    "old_kept_without_prior_visible_source_evidence": 3452,
+    "T_kept": 410080,
+    "T_direct_observed": 12865,
+    "T_observed_surface_075m": 24410,
+    "T_unknown": 385670,
+    "joint_total": 419005
+  },
+  "fields": {
+    "xyz": {
+      "shape": [
+        419005,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "scales": {
+      "shape": [
+        419005,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "rotation": {
+      "shape": [
+        419005,
+        4
+      ],
+      "dtype": "float32"
+    },
+    "coefficients": {
+      "shape": [
+        419005,
+        16,
+        3
+      ],
+      "dtype": "float32"
+    },
+    "opacity": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "source_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int8"
+    },
+    "source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "native_global_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "original_source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "original_source_branch": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int8"
+    },
+    "source_raw": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int16"
+    },
+    "geometry_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "appearance_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "opacity_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "is_observed": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "has_native_source_evidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "geometry_is_generated_prior": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "opaque_geometry_high_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "observed_surface": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "observed_surface_confidence": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "distance_to_T_direct_observed_surface_m": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "nearest_T_direct_observed_source_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "teacher_unknown": {
+      "shape": [
+        419005
+      ],
+      "dtype": "bool"
+    },
+    "teacher_prior_weight": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "teacher_reference_row_id": {
+      "shape": [
+        419005
+      ],
+      "dtype": "int64"
+    },
+    "high_frequency_permission": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    },
+    "real_V_supervision_weight": {
+      "shape": [
+        419005
+      ],
+      "dtype": "float32"
+    }
+  },
+  "field_semantics": {
+    "source_row_id": "Row number in the corresponding immutable old/T parent NPZ, not original packed scene source_row.",
+    "native_global_row_id": "Exact original native scene global row ID from identity map; -1 for generated T.",
+    "original_source_row_id": "Original old.source_row packed source identity; -1 for generated T.",
+    "geometry_confidence": "Prior confidence, not a hard freeze: old low .10, old 17 qualified opaque 1.0, all generated T .50.",
+    "appearance_confidence": "Prior confidence: old .60/.90 for qualified17; T .50+.40*observed_surface_confidence.",
+    "opacity_confidence": "Old ordinary .10, qualified17 .80; T .50. Initial opacity itself is unchanged.",
+    "is_observed": "Direct source evidence only: old prior visible_optimizer_rows/positive initial contribution (5473); T direct observed appearance support (12865). It is not a current visibility claim or training exclusion mask.",
+    "has_native_source_evidence": "Real-scene provenance: true for all retained old rows; does not certify old geometry.",
+    "observed_surface": "Old direct source visibility evidence; T nearest 3D direct appearance support distance <= .075m.",
+    "observed_surface_confidence": "T: 1-smoothstep(clamp(distance/.075,0,1)); old: direct source visibility evidence cast to float32.",
+    "distance_to_T_direct_observed_surface_m": "3D Euclidean actor-space centre distance; metadata only. It neither changes source parameters nor restricts real V supervision.",
+    "teacher_unknown": "T rows outside the .075m observed-surface neighbourhood only. Old rows are never labeled generated teacher unknown.",
+    "teacher_prior_weight": "T: 1-observed_surface_confidence; old: 0. Unknown T rows have full weight 1.",
+    "teacher_reference_row_id": "Immutable parent T row identity, -1 for old.",
+    "high_frequency_permission": "Float32 ones for every row, including teacher_unknown.",
+    "real_V_supervision_weight": "Float32 ones for every row; actual per-view V and rendering determine losses."
+  },
+  "observed_surface_neighbourhood": {
+    "radius_m": 0.075,
+    "method": "CPU cKDTree exact nearest centre, workers=1",
+    "weight": "1-(3u^2-2u^3), u=clip(d/.075,0,1)",
+    "T_source_resampled": false
+  },
+  "cleanup": {
+    "path": "old_source_cleanup.npz",
+    "sha256": "8239378db33bb02736668f257012dbd83d426a79c31b2953a997f7d64879f9ba",
+    "keep_rule": "source_branch == 2 AND exact full 3sigma ellipsoid intersects fixed OBB AND NOT old_K_mixed_or_non_target",
+    "reason_bits": {
+      "1": "legacy engineering lower branch3",
+      "2": "branch2 exact 3sigma ellipsoid disjoint fixed OBB",
+      "4": "old mixed K_other or known non-target"
+    },
+    "primary_reason_counts": {
+      "1": 624,
+      "2": 15332,
+      "4": 179
+    },
+    "surface_shell_or_mu_inside_filter": false,
+    "old_interior_uncertain_gaussians_retained": true
+  },
+  "native_scene_bindings": [
+    {
+      "role": "static",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/chkpnt30000.pth",
+      "sha256": "23d7f2c74f7ac96211795223c2b07910eadf52a3813105644d24a2189763b548",
+      "local_status": "BOUND_ORIGINAL_CHECKPOINT_NOT_FOUND_BY_FILENAME"
+    },
+    {
+      "role": "dynamic",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/dynamic_chkpnt30000.pth",
+      "sha256": "260d5b87b7abb7b85afbcc9a546439afd6ac4cdfe86e1e1c1a1c853edc002611",
+      "local_status": "BOUND_ORIGINAL_CHECKPOINT_NOT_FOUND_BY_FILENAME"
+    },
+    {
+      "role": "environment",
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_allframes10k_20261109_r1/continuation30k_20261109_r1/formal30k/env_light_chkpnt30000.pth",
+      "sha256": "83e066d9a4d83d33c110361bced915962c2d0b1305d5948a390ad19d1e5e70ae",
+      "local_status": "BOUND_ORIGINAL_CHECKPOINT_NOT_FOUND_BY_FILENAME"
+    },
+    {
+      "path": "/root/autodl-tmp/drivingeditor_repro/campaign/waymo_val065_delete30k_20261109_r1/ownership/semantic_ownership.npz",
+      "sha256": "9828e1ce6cc1d6ff59ba3508d1bea4f7f950619f3779b75a6b5b2dcf56af93fb",
+      "local_status": "REMOTE_BINDING_ONLY"
+    },
+    {
+      "role": "actual_native_front_evidence",
+      "local_status": "NOT_EXPORTED_LOCALLY",
+      "requirement": "Native contribution/depth-sorted front support, full raster footprint and real RGB; BUILD86/110 only"
+    },
+    {
+      "role": "exact_native_temporal_semantics",
+      "local_status": "RUNTIME_PASSTHROUGH_REQUIRED",
+      "requirement": "Keep original scene row parameters, SH evaluation, time gating, dynamic motion/covariance and camera/pose"
+    }
+  ],
+  "policy": {
+    "old_contribution_identity_lock": false,
+    "delete_T_to_preserve_old_contribution": false,
+    "trainable_actor_parameters_for_both_sources": [
+      "xyz",
+      "scales",
+      "rotation",
+      "coefficients",
+      "opacity"
+    ],
+    "unchanged_source_values_at_initialization_only": true,
+    "frozen_context": [
+      "road",
+      "cameras",
+      "actor_trajectory",
+      "other_vehicles",
+      "background_scene"
+    ],
+    "real_V_supervision": "All genuine V pixels remain eligible; row metadata never masks real V photometric supervision.",
+    "high_frequency_permission": "All rows equal 1, including hidden T. No observation mask disables high-frequency permission.",
+    "teacher_reference": "Before optimization, clone all T parameters from joint rows [8925,419005) into immutable teacher buffers. These bytes equal the parent T file. Never replace the teacher by current student parameters.",
+    "teacher_multiview_preservation": "Use frozen T multi-view teacher targets and per-row teacher_prior_weight; full weight outside the 0.075m support neighbourhood, smooth transition within it.",
+    "source_cleaning_scope": "Exclusions remove duplicated rows from the actor initialization only. They do not delete corresponding native scene background or K_other rows.",
+    "native_scene_dedup": "The 8925 kept native_global_row_ids identify duplicate source copies in a combined renderer. Only those IDs are emitted as dedup candidates; excluded native context rows, especially all 1831 K-mixed rows, remain frozen context."
+  },
+  "verification": {
+    "path": "cpu_exact_source_verification.json",
+    "passed": true
+  },
+  "generator": {
+    "path": "build_joint_initialization.py",
+    "sha256": "fb493d2d16880fd23c7cea217e9ae5061f01a8ba44a8b961e7bedb208a175531"
+  },
+  "execution": {
+    "CPU_only": true,
+    "GPU_used": false,
+    "SSH_used": false,
+    "source_files_modified": false,
+    "initial_parameters_modified": false,
+    "noise_added": false,
+    "opacity_rescaled": false,
+    "T_resampled": false
+  }
+}

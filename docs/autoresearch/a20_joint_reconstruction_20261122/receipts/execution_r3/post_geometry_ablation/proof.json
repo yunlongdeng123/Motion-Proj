@@ -1,0 +1,167 @@
+{
+  "schema": "a20.zero_update_geometry_ablation.proof.v1",
+  "completed": true,
+  "actual_native_CUDA": true,
+  "no_grad_counterfactual_raster": true,
+  "formal_optimizer_updates": 40,
+  "postprocess_optimizer_updates": 0,
+  "exact_G40_actor_restore": true,
+  "exact_G40_Adam_restore": true,
+  "exact_G40_RNG_restore": true,
+  "all_Gaussian_values_unchanged_except_global_active": true,
+  "Adam_unchanged": true,
+  "RNG_unchanged": true,
+  "frozen_sources_unchanged": {
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_core.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/source/joint_gpu.py": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/checkpoints/geometry_step0040.pt": true,
+    "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/contribution/step0040.npz": true
+  },
+  "saved_checkpoint_exact_reload": true,
+  "candidate_rows": 7,
+  "accepted_rows": 7,
+  "rejected_rows": 0,
+  "per_source": {
+    "0": {
+      "candidates": 7,
+      "accepted": 7,
+      "rejected": 0
+    },
+    "1": {
+      "candidates": 0,
+      "accepted": 0,
+      "rejected": 0
+    }
+  },
+  "trials": 1,
+  "counterfactual_native_calls": 2,
+  "fixed_V_acceptance": [
+    {
+      "raw": 86,
+      "passed": true,
+      "finite": true,
+      "max_positive_absolute_error_increase": 2.980232238769531e-07,
+      "mean_absolute_error_increase": -1.872620458698293e-08,
+      "absolute_RGB_error_mean": 0.01653325743973255,
+      "alpha95_fraction": 0.9979993844259772,
+      "pixels_with_error_increase_gt_1over255": 0,
+      "worst_channel": 0,
+      "worst_fixed_V_pixel_index": 5921
+    },
+    {
+      "raw": 110,
+      "passed": true,
+      "finite": true,
+      "max_positive_absolute_error_increase": 0.0008465945720672607,
+      "mean_absolute_error_increase": 1.0768483349465896e-07,
+      "absolute_RGB_error_mean": 0.030036456882953644,
+      "alpha95_fraction": 0.9950185583121703,
+      "pixels_with_error_increase_gt_1over255": 0,
+      "worst_channel": 0,
+      "worst_fixed_V_pixel_index": 9886
+    }
+  ],
+  "source_evidence": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/geometry/contribution/step0040.npz",
+    "sha256": "1fd602b8ce47b6f979d54655e19628d03298a83a245dd7e08806f210ff68415f",
+    "bytes": 5843990
+  },
+  "decisions": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/ablation_decisions.npz",
+    "sha256": "50c8b57c9ff5d8a7c838c95648c63c530df90a9a52f268ee9a153f3203d1a608",
+    "bytes": 658754
+  },
+  "actor": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz",
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "bytes": 24031638
+  },
+  "checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/checkpoints/geometry_ablation_step0040.pt",
+    "sha256": "d76911141106a102ef592a93ba1c0352982b2cadcd4130146dcfe65dfc438907",
+    "bytes": 199228354
+  },
+  "vehicle_geometry_gate": {
+    "passed": false,
+    "numeric_passed": true,
+    "conditions": {
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "isolated_real_visible_coverage": true
+    },
+    "grey_review": "PENDING_ROOT_GREY_REVIEW"
+  },
+  "scene_handoff_gate": {
+    "passed": false,
+    "conditions": {
+      "shared_real_visible_coverage": false,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "original_strict_gate": {
+    "passed": false,
+    "conditions": {
+      "real_visible_coverage": false,
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "grey_review": "PENDING_ROOT_GREY_REVIEW",
+  "scene_qualified": false,
+  "per_camera_row_selection": false,
+  "heldout_frames_opened": [],
+  "frozen": {
+    "persistent_native_scene_unchanged": true,
+    "road_camera_trajectory_unchanged": true,
+    "other_actors_frozen": true,
+    "source_model_gradient_max": {
+      "static._xyz": null,
+      "static._features_dc": null,
+      "static._features_rest": null,
+      "static._scaling": null,
+      "static._rotation": null,
+      "static._opacity": null,
+      "static._t": null,
+      "static._scaling_t": null,
+      "static._velocity": null,
+      "static.max_radii2D": null,
+      "static.xyz_gradient_accum": null,
+      "static.t_gradient_accum": null,
+      "static.denom": null,
+      "static._sgcm_lineage_ids": null,
+      "static._sgcm_clone_blocked": null,
+      "dynamic._xyz": null,
+      "dynamic._features_dc": null,
+      "dynamic._features_rest": null,
+      "dynamic._scaling": null,
+      "dynamic._rotation": null,
+      "dynamic._opacity": null,
+      "dynamic._t": null,
+      "dynamic._scaling_t": null,
+      "dynamic._velocity": null,
+      "dynamic.max_radii2D": null,
+      "dynamic.xyz_gradient_accum": null,
+      "dynamic.t_gradient_accum": null,
+      "dynamic.denom": null,
+      "dynamic._sgcm_lineage_ids": null,
+      "dynamic._sgcm_clone_blocked": null,
+      "dynamic._dynamic_actor_source_ids": null,
+      "environment.base": null,
+      "environment.to_opengl": null
+    },
+    "all_source_model_gradients_None_or_zero": true
+  },
+  "native_calls": 54,
+  "backward_calls": 0,
+  "feature_vjp_calls": 0,
+  "elapsed_seconds": 40.32608232460916,
+  "GPU_keep_on": true,
+  "power_operations": 0
+}

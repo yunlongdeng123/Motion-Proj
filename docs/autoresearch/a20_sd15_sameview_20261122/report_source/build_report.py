@@ -46,6 +46,7 @@ function update(){const k=select.value;document.getElementById('comparison').rep
     if r.get('asset'):
         page=page.replace('<a href="report.md">完整记录</a>','<a href="a20_actor_candidate.npz">高斯候选资产</a><a href="a20_actor_candidate.json">资产来源</a><a href="report.md">完整记录</a>')
     page=page.replace('.grid{display:grid;', '.grid img{width:auto;max-width:100%;margin:auto}.grid{display:grid;')
+    page=page.replace('</nav>', '<a href="../a20_joint_reconstruction_20261122/index.html">统一a20高斯场重建</a></nav>', 1)
     (OUT/'index.html').write_text(page,encoding='utf-8')
     print(OUT/'index.html')
 

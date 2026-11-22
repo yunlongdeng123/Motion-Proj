@@ -427,3 +427,7 @@
 ## A20-SD15-SAMEVIEW-20261122
 
 run `a20_sd15_sameview_20261122_r1`：[结果与组件](autoresearch/a20_sd15_sameview_20261122/report.md)、[交互对照](autoresearch/a20_sd15_sameview_20261122/index.html)、[阶段计数](autoresearch/a20_sd15_sameview_20261122/result.json)、[恢复](autoresearch/a20_sd15_sameview_20261122/restore_index.json)。固定SD1.5二维拒绝；Amodal/TRELLIS对象比较；失败24k学生40几何与独立410k支撑保留80观测DC控制，正式120、全部150更新，scene/road0。当前部分完成、场景未过，完整蒸馏未完成；补充既有V82-F06。
+
+### A20-JOINT-RECONSTRUCTION-20261122：同一对象坐标高斯场重建
+
+[报告](autoresearch/a20_joint_reconstruction_20261122/report.md) · [HTML](autoresearch/a20_joint_reconstruction_20261122/index.html) · [执行账目](autoresearch/a20_joint_reconstruction_20261122/actual_execution_ledger.json) · [恢复](autoresearch/a20_joint_reconstruction_20261122/restore_index.json)。共同初始化419005行，原始与教师两源共同可学。三次独立G40，另有3×14工程更新；最终选第三次40步+0更新移除检验，有效418194行。期望距离MAE/P90 0.006290/0.013866米，灰模REJECTED、场景未过；材质/联合正式0，道路/其他对象/背景0。完整恢复与取回SHA已核验，历史组选项保留。F06部分完成，GPU保持开机。

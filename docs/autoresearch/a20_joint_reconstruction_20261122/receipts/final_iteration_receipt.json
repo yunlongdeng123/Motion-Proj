@@ -1,0 +1,62 @@
+{
+  "schema": "a20.unified_reconstruction.final_iteration_receipt.v1",
+  "method": "single a20 object-coordinate Gaussian field; source labels only for confidence and evidence",
+  "final_asset_status": "geometry_candidate_rejected",
+  "initialized_rows": 419005,
+  "initialized_by_source": {
+    "old": 8925,
+    "TRELLIS": 410080
+  },
+  "final_active_by_source": {
+    "old": 8114,
+    "TRELLIS": 410080
+  },
+  "final_active_rows": 418194,
+  "total_global_retired_old_rows": 811,
+  "TRELLIS_rows_resampled": 0,
+  "selected_asset_formal_updates": 40,
+  "selected_asset_postprocess_optimizer_updates": 0,
+  "formal_updates_all_separate_trials": {
+    "r1_geometry": 40,
+    "r2_geometry": 40,
+    "r3_geometry": 40
+  },
+  "smoke_updates_each": {
+    "geometry": 10,
+    "discarded_replay": 2,
+    "discarded_appearance": 1,
+    "discarded_joint": 1
+  },
+  "smoke_trials": 3,
+  "formal_appearance_updates": 0,
+  "formal_joint_updates": 0,
+  "selected_actor": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/assets/geometry_ablation/actor.npz",
+    "sha256": "ab4fa110440d579bcfd57e4bd0b8a7f61c3f7821189450b58bd027c2f28f67a7",
+    "bytes": 24031638
+  },
+  "full_state_checkpoint": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r3/post_geometry_ablation/checkpoints/geometry_ablation_step0040.pt",
+    "sha256": "d76911141106a102ef592a93ba1c0352982b2cadcd4130146dcfe65dfc438907",
+    "bytes": 199228354
+  },
+  "exact_G40_Adam_restore": true,
+  "saved_checkpoint_exact_reload": true,
+  "metric": {
+    "points": 246,
+    "definition": "native alpha-normalized expected camera-ray range",
+    "initial_MAE_m": 0.12461521955040412,
+    "final_MAE_m": 0.006289962830582286,
+    "final_P90_m": 0.013865947723388672
+  },
+  "vehicle_geometry_passed": false,
+  "scene_handoff_passed": false,
+  "stop_reason": "six-view geometry not accepted; no formal material stage",
+  "build_raws": [
+    86,
+    110
+  ],
+  "heldout_frames_opened": [],
+  "GPU_keep_on": true,
+  "power_operations": 0
+}

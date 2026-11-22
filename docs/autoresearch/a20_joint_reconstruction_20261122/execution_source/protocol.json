@@ -1,0 +1,47 @@
+{
+  "schema": "a20.same_actor_joint_reconstruction.protocol.v1",
+  "objective": "Old a20 and original TRELLIS Gaussians jointly initialize one actor-coordinate field and reconstruct from observations",
+  "supersedes": "Immutable old-contribution fusion and monotonically deleting T to protect all old rendering contributions",
+  "BUILD": [86,110],
+  "sealed_frames": [134,179,198],
+  "coordinates": "canonical a20 metres, x forward/y left/z up; existing world trajectory reused",
+  "initialization": {
+    "old_clean_rows":8925,
+    "TRELLIS_native_rows":410080,
+    "unified_rows":419005,
+    "resampling":false,
+    "old_source_geometry_qualified_rows":17,
+    "old_other_rows":"retained with lower geometry confidence, not declared exterior truth",
+    "source_T_prior":"frozen same native source, with 80-step visible colour control inherited",
+    "clear_pollution":"old coarse624, exact3sigma disjoint background and known retained-actor contamination excluded from new actor; scene context handled independently"
+  },
+  "trainable": ["all-source xyz", "all-source scales", "all-source quaternion", "all-source activated opacity", "all-source SH0 colour"],
+  "stage_schedule": {
+    "smoke": {"planned_updates":10,"separate_from_formal":true,"checks":["actual raster forward/backward","finite connected gradients","source-wise gradient attribution","complete source-bound state/Adam/RNG save/restore","same-step replay","evaluation","next-stage entry"]},
+    "geometry": {"planned_updates":40,"colour_frozen":true},
+    "appearance": {"planned_updates":80,"requires_geometry_and_grey_review":true},
+    "joint_refine": {"planned_updates":40,"requires_geometry_and_grey_review":true}
+  },
+  "supervision": {
+    "real_visible":"fixed genuine RGB and visible masks,1152x768",
+    "opaque_range":"all246 fixed opaque returns in original source camera, safe expected ray depth plus independent coverage; student alpha cannot remove hard samples",
+    "glass":"125 returns remain diagnostic, not exterior supervision",
+    "unobserved":"frozen TRELLIS six-view geometry/coverage/appearance prior, teacher-only unknown attribution; no student-dependent metric masks",
+    "source_confidence":"different parameter regularization by source and evidence; actual observations take priority",
+    "retained_K":"fixed other-actor RGB and visible alpha constraints and final whole-mask change counts",
+    "redundancy":"actual depth-sorted conflict/support attribution, opacity regularization, persistent global inactive ledger; no per-camera culling"
+  },
+  "frozen": ["road geometry/material/coverage", "cameras", "a20 world trajectory", "other actors", "native background", "environment", "generation networks", "SH_rest"],
+  "context": {
+    "replace_actor_and_certified_DELETE_rows":26437,
+    "protected_K_source_rows":1922,
+    "clear_intersection_K":0,
+    "cleanup_excluded_scene_rows":"not removed in bulk; independently certified DELETE rules still apply"
+  },
+  "old_contribution_bit_exact_required":false,
+  "unknown_fine_detail_permission":true,
+  "GPU_keep_on":true,
+  "no_new_SD15_or_TRELLIS_inference":true,
+  "source_code_only_CPU_preflight_is_not_GPU_smoke":true,
+  "scene_qualified":false
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "a20.joint_report_groups.v1",
+  "groups": [
+    {
+      "id": "initial",
+      "label": "共同初始化",
+      "state": "exported",
+      "role": "initial",
+      "planned_steps": null,
+      "metrics": "takeback/execution_initial/initial/evaluation/fresh_process/metrics.json",
+      "eval_root": "takeback/execution_initial/initial/evaluation/fresh_process",
+      "reload": "takeback/execution_initial/initial/fresh_process_reload_proof.json",
+      "summary": "实际初始化导出；0参数更新"
+    },
+    {
+      "id": "r1_G40",
+      "label": "首轮几何重建40步（r1）",
+      "state": "complete",
+      "role": "engineering_diagnostic",
+      "stage": "geometry",
+      "planned_steps": 40,
+      "completion": "takeback/execution_r1/geometry/completion.json",
+      "metrics": "takeback/execution_r1/geometry/evaluation/geometry_final/metrics.json",
+      "eval_root": "takeback/execution_r1/geometry/evaluation/geometry_final",
+      "smoke": "takeback/execution_r1/smoke/smoke_proof.json",
+      "reload": "takeback/execution_r1/geometry/fresh_reload_proof.json",
+      "root_engineering_gate": false,
+      "summary": "测距门满足，shared V覆盖与保留实例仍失败"
+    },
+    {
+      "id": "r2_G40",
+      "label": "监督分离后40步（r2）",
+      "state": "complete",
+      "role": "engineering_replay",
+      "stage": "geometry",
+      "planned_steps": 40,
+      "completion": "takeback/execution_r2/geometry/completion.json",
+      "metrics": "takeback/execution_r2/geometry/evaluation/geometry_final/metrics.json",
+      "eval_root": "takeback/execution_r2/geometry/evaluation/geometry_final",
+      "summary": "测距数值满足；ghost与teacher外域支撑未过；干净重放，LR/G40预算保持",
+      "root_engineering_gate": false,
+      "root_reported_teacher_bg_alpha_max": 0.968,
+      "smoke": "takeback/execution_r2/smoke/smoke_proof.json",
+      "reload": "takeback/execution_r2/geometry/fresh_reload_proof.json"
+    },
+    {
+      "id": "r3_G40",
+      "label": "跨视角贡献清退后40步（r3）",
+      "state": "complete",
+      "role": "engineering_replay",
+      "stage": "geometry",
+      "planned_steps": 40,
+      "completion": "takeback/execution_r3/geometry/completion.json",
+      "metrics": "takeback/execution_r3/geometry/evaluation/geometry_final/metrics.json",
+      "eval_root": "takeback/execution_r3/geometry/evaluation/geometry_final",
+      "summary": "数值测距满足；前轮长杆、尾门斜纹及后窗凹洞未过独立灰模审查；A/J未执行",
+      "root_engineering_gate": false,
+      "smoke": "takeback/execution_r3/smoke/smoke_proof.json",
+      "reload": "takeback/execution_r3/geometry/fresh_reload_proof.json",
+      "extra_figures": [
+        {
+          "title": "同相机纯T期望深度灰模对照",
+          "source": "takeback/execution_r3/geometry/pure_teacher_depth_grey.png"
+        }
+      ]
+    },
+    {
+      "id": "r3_ablation",
+      "label": "整场移除检验（0更新）",
+      "state": "exported",
+      "role": "post_geometry_ablation",
+      "stage": "geometry",
+      "planned_steps": 0,
+      "metrics": "takeback/execution_r3/post_geometry_ablation/evaluation/geometry_ablation/metrics.json",
+      "eval_root": "takeback/execution_r3/post_geometry_ablation/evaluation/geometry_ablation",
+      "summary": "只移除7颗旧源；雾尾缓解，车壳内部深度与大足迹冲突未解；灰模FAIL，A/J未启动",
+      "receipt": "takeback/execution_r3/post_geometry_ablation/proof.json",
+      "root_engineering_gate": false,
+      "reload": "takeback/execution_r3/post_geometry_ablation/geometry_ablation_reload_proof.json",
+      "teacher_root": "takeback/execution_r3/geometry/teacher_cache",
+      "extra_figures": [
+        {
+          "title": "同相机纯T期望深度灰模对照",
+          "source": "takeback/execution_r3/geometry/pure_teacher_depth_grey.png"
+        }
+      ]
+    },
+    {
+      "id": "A80",
+      "label": "外观80步（未启动）",
+      "state": "not_started",
+      "role": "appearance",
+      "stage": "appearance",
+      "planned_steps": 80,
+      "summary": "灰模REJECTED，正式阶段未启动",
+      "root_reported_actual_steps": 0
+    },
+    {
+      "id": "J40",
+      "label": "联合40步（未启动）",
+      "state": "not_started",
+      "role": "joint",
+      "stage": "joint",
+      "planned_steps": 40,
+      "summary": "灰模REJECTED，正式阶段未启动",
+      "root_reported_actual_steps": 0
+    }
+  ],
+  "history": [
+    {
+      "label": "历史车辆教师／24k与410k对照",
+      "href": "../a20_sd15_sameview_20261122/index.html"
+    },
+    {
+      "label": "旧固定贡献／局部融合路线",
+      "href": "../a20_native_gaussian_fusion_20261122/index.html"
+    }
+  ],
+  "default_group": "r3_ablation"
+}

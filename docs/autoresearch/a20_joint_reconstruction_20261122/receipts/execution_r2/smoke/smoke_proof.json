@@ -1,0 +1,286 @@
+{
+  "schema": "a20.unified_field.smoke.v1",
+  "passed": true,
+  "real_native_cuda": true,
+  "finite_forward_backward": true,
+  "every_source_geometry_gradient_from_raster": true,
+  "full_source_bound_checkpoint_saved": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/a20_joint_reconstruction_20261122_r1/execution_r2/smoke/checkpoints/smoke_step0010.pt",
+    "sha256": "109a2d56f847e890f1a0dbf2b99ef49dcb2d14cc74ec00e7c5c7d83620b57831",
+    "bytes": 199067834
+  },
+  "bit_exact_actor_restore": true,
+  "bit_exact_Adam_restore": true,
+  "bit_exact_all_rng_restore": true,
+  "next_step_parameter_max": 2.4549663066864014e-06,
+  "next_step_loss_abs": 0.0,
+  "next_step_optimizer_max": 2.819683686539065e-08,
+  "parameter_differences": {
+    "xyz": 5.960464477539063e-08,
+    "log_scales": 2.4549663066864014e-06,
+    "raw_rotation": 2.3865140974521637e-07,
+    "opacity": 5.960464477539063e-08,
+    "dc": 0.0,
+    "base_xyz": 0.0,
+    "base_scales": 0.0,
+    "base_rotation": 0.0,
+    "base_coefficients": 0.0,
+    "base_opacity": 0.0,
+    "meta_source_id": 0.0,
+    "meta_source_row_id": 0.0,
+    "meta_native_global_row_id": 0.0,
+    "meta_original_source_row_id": 0.0,
+    "meta_original_source_branch": 0.0,
+    "meta_source_raw": 0.0,
+    "meta_geometry_confidence": 0.0,
+    "meta_appearance_confidence": 0.0,
+    "meta_opacity_confidence": 0.0,
+    "meta_is_observed": 0.0,
+    "meta_has_native_source_evidence": 0.0,
+    "meta_geometry_is_generated_prior": 0.0,
+    "meta_opaque_geometry_high_confidence": 0.0,
+    "meta_observed_surface": 0.0,
+    "meta_observed_surface_confidence": 0.0,
+    "meta_distance_to_T_direct_observed_surface_m": 0.0,
+    "meta_nearest_T_direct_observed_source_row_id": 0.0,
+    "meta_teacher_unknown": 0.0,
+    "meta_teacher_prior_weight": 0.0,
+    "meta_teacher_reference_row_id": 0.0,
+    "meta_high_frequency_permission": 0.0,
+    "meta_real_V_supervision_weight": 0.0,
+    "active": 0.0,
+    "conflict_score": 0.0,
+    "support_contribution": 0.0,
+    "conflict_contribution": 0.0
+  },
+  "discarded_next_stage_probes": {
+    "appearance": {
+      "stage": "appearance",
+      "step": 1,
+      "role": "discarded_next_stage_probe",
+      "total_loss": 0.1370604932308197,
+      "losses": {
+        "real_rgb": 0.019988277927041054,
+        "silhouette_positive": 0.0003098145534750074,
+        "silhouette_negative": 2.442346556108532e-07,
+        "retained_K_rgb": 0.012535342946648598,
+        "retained_K_alpha": 0.08505494892597198,
+        "lidar_range": 0.0074601368978619576,
+        "lidar_alpha": 1.1847737368952949e-06,
+        "teacher_alpha": 0.0004260896530468017,
+        "teacher_background": 0.004025314934551716,
+        "teacher_depth": 0.0034867608919739723,
+        "teacher_rgb": 0.011010991409420967,
+        "parameter_geometry": 0.00146871292963624,
+        "parameter_appearance": 0.0,
+        "delta_smoothness": 0.0007192450575530529,
+        "duplicate_opacity": 0.0
+      },
+      "raster_gradient_max": {
+        "dc": {
+          "0": 0.0005508055328391492,
+          "1": 0.00024481333093717694
+        }
+      },
+      "gradient_max": {
+        "dc": {
+          "0": 0.0005508054164238274,
+          "1": 0.00024481333093717694
+        }
+      },
+      "elapsed_seconds": 32.73866219818592,
+      "raw": 86,
+      "novel": "novel_00",
+      "lidar": {
+        "opaque": 86,
+        "training_points": 86,
+        "stable_evaluation_points": 86
+      },
+      "fixed_unknown_pixels": 41637,
+      "fixed_teacher_background_pixels": 209494,
+      "shared_V_rgb_L1": 0.02676207572221756,
+      "shared_V_alpha95_fraction": 0.15635579824447632,
+      "teacher_unknown_applicable": true,
+      "retained_K": {
+        "fixed_pixels": 75929,
+        "topk": 1024,
+        "RGB_float_max": 0.3460228443145752,
+        "RGB_float_mean": 0.0001690551871433854,
+        "RGB_changed_pixels_gt_1over255": 267,
+        "K_alpha_float_max": 0.7384264469146729,
+        "K_alpha_float_mean": 0.0011470750905573368,
+        "K_alpha_changed_pixels_gt_1over255": 337
+      }
+    },
+    "joint": {
+      "stage": "joint",
+      "step": 1,
+      "role": "discarded_next_stage_probe",
+      "total_loss": 0.1370604932308197,
+      "losses": {
+        "real_rgb": 0.019988277927041054,
+        "silhouette_positive": 0.0003098145534750074,
+        "silhouette_negative": 2.442346556108532e-07,
+        "retained_K_rgb": 0.012535342946648598,
+        "retained_K_alpha": 0.08505494892597198,
+        "lidar_range": 0.0074601368978619576,
+        "lidar_alpha": 1.1847737368952949e-06,
+        "teacher_alpha": 0.0004260896530468017,
+        "teacher_background": 0.004025314934551716,
+        "teacher_depth": 0.0034867608919739723,
+        "teacher_rgb": 0.011010991409420967,
+        "parameter_geometry": 0.00146871292963624,
+        "parameter_appearance": 0.0,
+        "delta_smoothness": 0.0007192450575530529,
+        "duplicate_opacity": 0.0
+      },
+      "raster_gradient_max": {
+        "xyz": {
+          "0": 0.3216426968574524,
+          "1": 0.10248838365077972
+        },
+        "log_scales": {
+          "0": 0.005457143299281597,
+          "1": 0.0016988974530249834
+        },
+        "raw_rotation": {
+          "0": 0.08431804925203323,
+          "1": 0.0033565375488251448
+        },
+        "opacity": {
+          "0": 0.05838705226778984,
+          "1": 0.0027723191305994987
+        },
+        "dc": {
+          "0": 0.0005508054746314883,
+          "1": 0.00024481333093717694
+        }
+      },
+      "gradient_max": {
+        "xyz": {
+          "0": 0.3216426968574524,
+          "1": 0.10248837620019913
+        },
+        "log_scales": {
+          "0": 0.005457108374685049,
+          "1": 0.001698895706795156
+        },
+        "raw_rotation": {
+          "0": 0.08431793749332428,
+          "1": 0.0033565445337444544
+        },
+        "opacity": {
+          "0": 0.05838671326637268,
+          "1": 0.0027723396196961403
+        },
+        "dc": {
+          "0": 0.0005508054746314883,
+          "1": 0.00024481333093717694
+        }
+      },
+      "elapsed_seconds": 33.07604844123125,
+      "raw": 86,
+      "novel": "novel_00",
+      "lidar": {
+        "opaque": 86,
+        "training_points": 86,
+        "stable_evaluation_points": 86
+      },
+      "fixed_unknown_pixels": 41637,
+      "fixed_teacher_background_pixels": 209494,
+      "shared_V_rgb_L1": 0.02676207572221756,
+      "shared_V_alpha95_fraction": 0.15635579824447632,
+      "teacher_unknown_applicable": true,
+      "retained_K": {
+        "fixed_pixels": 75929,
+        "topk": 1024,
+        "RGB_float_max": 0.3460228443145752,
+        "RGB_float_mean": 0.0001690551871433854,
+        "RGB_changed_pixels_gt_1over255": 267,
+        "K_alpha_float_max": 0.7384264469146729,
+        "K_alpha_float_mean": 0.0011470750905573368,
+        "K_alpha_changed_pixels_gt_1over255": 337
+      }
+    }
+  },
+  "evaluation": true,
+  "exported_actor_reload": true,
+  "actual_geometry_smoke_updates": 10,
+  "extra_replay_updates": 2,
+  "discarded_next_stage_updates": 2,
+  "formal_updates": 0,
+  "geometry_gate": {
+    "passed": false,
+    "conditions": {
+      "real_visible_coverage": false,
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "vehicle_geometry_gate": {
+    "passed": false,
+    "numeric_passed": true,
+    "conditions": {
+      "opaque_all246_stable": true,
+      "opaque_mae": true,
+      "opaque_p90": true,
+      "unknown_teacher_coverage": true,
+      "isolated_real_visible_coverage": true
+    },
+    "grey_review": "PENDING_ROOT_GREY_REVIEW"
+  },
+  "scene_handoff_gate": {
+    "passed": false,
+    "conditions": {
+      "shared_real_visible_coverage": false,
+      "retained_K_RGB_within_1over255": false,
+      "retained_K_alpha_within_1over255": false
+    }
+  },
+  "heldout_frames_opened": [],
+  "frozen": {
+    "persistent_native_scene_unchanged": true,
+    "road_camera_trajectory_unchanged": true,
+    "other_actors_frozen": true,
+    "source_model_gradient_max": {
+      "static._xyz": null,
+      "static._features_dc": null,
+      "static._features_rest": null,
+      "static._scaling": null,
+      "static._rotation": null,
+      "static._opacity": null,
+      "static._t": null,
+      "static._scaling_t": null,
+      "static._velocity": null,
+      "static.max_radii2D": null,
+      "static.xyz_gradient_accum": null,
+      "static.t_gradient_accum": null,
+      "static.denom": null,
+      "static._sgcm_lineage_ids": null,
+      "static._sgcm_clone_blocked": null,
+      "dynamic._xyz": null,
+      "dynamic._features_dc": null,
+      "dynamic._features_rest": null,
+      "dynamic._scaling": null,
+      "dynamic._rotation": null,
+      "dynamic._opacity": null,
+      "dynamic._t": null,
+      "dynamic._scaling_t": null,
+      "dynamic._velocity": null,
+      "dynamic.max_radii2D": null,
+      "dynamic.xyz_gradient_accum": null,
+      "dynamic.t_gradient_accum": null,
+      "dynamic.denom": null,
+      "dynamic._sgcm_lineage_ids": null,
+      "dynamic._sgcm_clone_blocked": null,
+      "dynamic._dynamic_actor_source_ids": null,
+      "environment.base": null,
+      "environment.to_opengl": null
+    },
+    "all_source_model_gradients_None_or_zero": true
+  }
+}
