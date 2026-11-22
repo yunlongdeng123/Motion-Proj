@@ -1,0 +1,132 @@
+{
+  "schema": "source_multiframe_git_restore_entry.v1",
+  "ready": true,
+  "complete": true,
+  "run_id": "road_source_multiframe_20261122_r3",
+  "index_only": true,
+  "archive": {
+    "path": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_multiframe_20261122_r3/archives/road_source_multiframe_20261122_r3_curated_20261122T121904Z.tar.gz",
+    "filename": "road_source_multiframe_20261122_r3_curated_20261122T121904Z.tar.gz",
+    "bytes": 58737258,
+    "sha256": "1ceb7606bb5c24c3ba3ace5e5e69f81ad2f680567f026bd40ea870d5b9ce1e82",
+    "payload_files": 853,
+    "verified_every_member": true
+  },
+  "main_archive_role": "r3配对400步两完整Adam/RNG状态、smoke、两源包、60视图浮点/PNG、池/标定/采样/CPU审计及同页报告增量。",
+  "full_report_companion": {
+    "filename": "full_report_companion_20261122.tar.gz",
+    "path": "C:\\Users\\dengyunlong\\Documents\\Codex\\2026-11-22\\065-file-c-users-dengyunlong-documents-2\\outputs\\road_source_fidelity_20261122_r2\\full_report_companion_20261122.tar.gz",
+    "bytes": 484007427,
+    "sha256": "5e9abc8acc82aca4b6d510d2ae08555307edff0e676845d919e8d0a3625869c1",
+    "member_count": 2511,
+    "members_verified": true,
+    "logical_restore_directory": "outputs/road_material_three_rounds_20261121",
+    "archive_extract_parent": "outputs"
+  },
+  "prior_r2_recovery": {
+    "base_commit": "8d3b9bb81d2174115e82c100b131c31fcb444772",
+    "git_relative_entry": "../road_source_fidelity_20261122/restore_manifest_compact.json",
+    "details_inherited_without_duplicate_catalog": true
+  },
+  "state_recovery": {
+    "complete": true,
+    "states": [
+      {
+        "arm": "two_frames",
+        "pool": [
+          88,
+          115
+        ],
+        "initial_state": "paired400_seed0/two_frames/initial_state.pt",
+        "checkpoint": "paired400_seed0/two_frames/checkpoint.pt",
+        "source_packet": "paired400_seed0/two_frames/source_patch_02.npz",
+        "initial_step": 0,
+        "final_step": 400,
+        "optimizer": "Adam",
+        "full_state_keys": [
+          "RGB",
+          "optimizer",
+          "step",
+          "schedule",
+          "python_rng",
+          "numpy_rng",
+          "torch_rng",
+          "cuda_rng"
+        ],
+        "RGB_parameters": 2700,
+        "reload_render_max_abs": 0.0,
+        "non_RGB_fields_exact": true,
+        "halo_RGB_exact": true,
+        "sampling_counts": {
+          "88": 400,
+          "115": 400
+        }
+      },
+      {
+        "arm": "eight_frames",
+        "pool": [
+          88,
+          90,
+          92,
+          94,
+          96,
+          99,
+          104,
+          115
+        ],
+        "initial_state": "paired400_seed0/eight_frames/initial_state.pt",
+        "checkpoint": "paired400_seed0/eight_frames/checkpoint.pt",
+        "source_packet": "paired400_seed0/eight_frames/source_patch_02.npz",
+        "initial_step": 0,
+        "final_step": 400,
+        "optimizer": "Adam",
+        "full_state_keys": [
+          "RGB",
+          "optimizer",
+          "step",
+          "schedule",
+          "python_rng",
+          "numpy_rng",
+          "torch_rng",
+          "cuda_rng"
+        ],
+        "RGB_parameters": 2700,
+        "reload_render_max_abs": 0.0,
+        "non_RGB_fields_exact": true,
+        "halo_RGB_exact": true,
+        "sampling_counts": {
+          "88": 100,
+          "90": 100,
+          "92": 100,
+          "94": 100,
+          "96": 100,
+          "99": 100,
+          "104": 100,
+          "115": 100
+        }
+      }
+    ],
+    "smoke_checkpoint": "paired400_seed0/smoke_checkpoint.pt",
+    "independent_CPU_gate": "exposure_audit/paired_cpu_audit.json"
+  },
+  "report_restore_chain": [
+    "Verified full r2 report companion",
+    "r2 curated run/report_source/publication patch",
+    "this run/report_source/publication patch"
+  ],
+  "restore_steps": [
+    "Verify all archive members using recovery/restore_manifest.py before extracting to a new empty directory.",
+    "Restore full parent persistent scene and engine from prior_r2_recovery; map the explicit original path prefixes in a separate working copy.",
+    "Restore source packet row mapping and load the chosen arm checkpoint RGB, Adam optimizer, step400, schedule and all Python/NumPy/Torch/CUDA RNG states.",
+    "Smoke checkpoint stores step4; independent next-update replay was exercised during the GPU smoke and its numeric tolerance/result are recorded in resource_ledger_cumulative.json.",
+    "Both arms start from identical original RGB. The archive contains initial12 and all final in-memory/reloaded48 float/PNG views with frozen masks, gains and alpha.",
+    "Restore report companion, then r2 publication patch, then this publication patch over the same logical report directory."
+  ],
+  "resources_summary": "evidence/resource_summary.json",
+  "full_original_restore_metadata": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_multiframe_20261122_r3/restore_manifest_compact.json",
+  "full_original_metadata_unchanged": true,
+  "source_geometry_changed": false,
+  "target_migration": false,
+  "target_fusion": false,
+  "new_diffusion_calls": 0
+}

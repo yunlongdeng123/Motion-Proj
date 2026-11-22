@@ -1,0 +1,66 @@
+{
+  "task_id": "ROAD-SOURCE-MULTIFRAME-20261122",
+  "run": "road_source_multiframe_20261122_r3",
+  "stage": "paired400_seed0",
+  "source": "patch_02",
+  "pools": {
+    "two_frames": [
+      88,
+      115
+    ],
+    "eight_frames": [
+      88,
+      90,
+      92,
+      94,
+      96,
+      99,
+      104,
+      115
+    ]
+  },
+  "query_frames": [
+    100,
+    110,
+    117
+  ],
+  "low_resolution_stress_frames": [
+    86
+  ],
+  "frames": [
+    86,
+    88,
+    90,
+    92,
+    94,
+    96,
+    99,
+    100,
+    104,
+    110,
+    115,
+    117
+  ],
+  "steps_per_arm": 400,
+  "batch_frames": 2,
+  "seed": 0,
+  "optimizer": "Adam",
+  "RGB_lr": 0.01,
+  "RGB_prior_MSE_weight": 0.0001,
+  "initialization": "Original patch_02 source packet RGB; identical for both arms",
+  "trainable": "900 source core RGB rows only; halo RGB and all XYZ/normal/rotation/scale/opacity frozen",
+  "supervision": "Equal per-view effective native RGB mean MSE on frozen photo-legal eroded physical core and initial alpha>=.95, plus initial RGB prior",
+  "camera": "Brown observations mapped to native pinhole centers; raw-camera evaluation reverses mapping",
+  "exposure": "Same fixed external-core calibration for both arms; no source core or source-fit parameters used to estimate gains",
+  "exposure_file": "/root/autodl-tmp/drivingeditor_repro/campaign/road_source_multiframe_20261122_r3/exposure_audit/shared_exposure.json",
+  "gain_domain": "encoded_RGB",
+  "only_method_difference": "Reference pool size; common sampler and all other settings",
+  "formal_updates": 800,
+  "discarded_smoke_restore_updates": 6,
+  "new_diffusion_calls": 0,
+  "target_migration": false,
+  "all_inputs_historical_BUILD": true,
+  "query_not_independent_scene_test": true,
+  "human_verdict": null,
+  "problem_solved": null
+}

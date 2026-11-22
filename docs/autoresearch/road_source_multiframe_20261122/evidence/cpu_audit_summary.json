@@ -1,0 +1,94 @@
+{
+  "schema": "paired_source_CPU_audit_compact.v1",
+  "ready": true,
+  "all_required_state_data_checks_passed": true,
+  "both_initial_core_RGB_equal_original_source": true,
+  "shared_initial_RGB_Adam_RNG_identical": true,
+  "source_core_RGB_parameters": 2700,
+  "pool_is_only_method_difference": true,
+  "source_geometry_halo_and_fixed_masks_preserved": true,
+  "query_core_used_in_loss": false,
+  "shared_exposure_core_samples_used": 0,
+  "shared_exposure_gain_values_frozen": true,
+  "strict_external_exposure_train_and_main_query_pass": true,
+  "stress86_exposure_weaker": true,
+  "native_metrics_max_recompute_delta": 0.0,
+  "fullstate_restore": {
+    "smoke_state_step": 4,
+    "Adam_state_nonempty": true,
+    "all_RNG_and_schedule_saved": true,
+    "parent_actual_native_next_update_max_abs": 0.0,
+    "final_checkpoint_steps": [
+      400,
+      400
+    ],
+    "source_NPZ_reloaded_native_all_fields_exact": true
+  },
+  "arms": [
+    {
+      "label": "two_frames",
+      "pool": [
+        88,
+        115
+      ],
+      "optimizer_step": 400,
+      "Adam_tensor_step": 400,
+      "formal_samples": 800,
+      "per_frame_counts": {
+        "88": 400,
+        "115": 400
+      },
+      "all_400_two_distinct_frame_batches": true,
+      "schedule_seed0_reproduced": true,
+      "query_and_stress_absent_from_schedule": true,
+      "checkpoint_schedule_plus_step_represents_complete_sampler_cursor": true,
+      "all_rng_states_present": true,
+      "all_non_RGB_fields_exact": true,
+      "halo_RGB_exact": true,
+      "final_core_RGB_equals_checkpoint": true,
+      "reload_all_float_fields_exact": true,
+      "history_recorded_steps": 17,
+      "all_recorded_losses_finite_and_sampled_frames_match": true,
+      "per_step_losses_saved": false
+    },
+    {
+      "label": "eight_frames",
+      "pool": [
+        88,
+        90,
+        92,
+        94,
+        96,
+        99,
+        104,
+        115
+      ],
+      "optimizer_step": 400,
+      "Adam_tensor_step": 400,
+      "formal_samples": 800,
+      "per_frame_counts": {
+        "88": 100,
+        "90": 100,
+        "92": 100,
+        "94": 100,
+        "96": 100,
+        "99": 100,
+        "104": 100,
+        "115": 100
+      },
+      "all_400_two_distinct_frame_batches": true,
+      "schedule_seed0_reproduced": true,
+      "query_and_stress_absent_from_schedule": true,
+      "checkpoint_schedule_plus_step_represents_complete_sampler_cursor": true,
+      "all_rng_states_present": true,
+      "all_non_RGB_fields_exact": true,
+      "halo_RGB_exact": true,
+      "final_core_RGB_equals_checkpoint": true,
+      "reload_all_float_fields_exact": true,
+      "history_recorded_steps": 17,
+      "all_recorded_losses_finite_and_sampled_frames_match": true,
+      "per_step_losses_saved": false
+    }
+  ],
+  "full_CPU_result": "Archive: exposure_audit/paired_cpu_audit.json"
+}

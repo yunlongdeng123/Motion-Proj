@@ -29,3 +29,5 @@
 源材质优先 `ROAD-SOURCE-FIDELITY-20261122`：[00／02实拍与固定高斯颜色链路](autoresearch/road_source_fidelity_20261122/README.md)。同物理面积、原生像素人工核验选02／115实拍、117复核，00／137对照；本次保存加载和常色渲染未引入偏色，历史RGB拟合与原照片Brown／原生针孔相机不一致分别核验。固定几何实测颜色算子、有界求解及相机校正改善参考色调，但跨视角纹理与86色调仍有退化，未找到通过本轮检查的可迁移源高斯；目标迁移／融合和新扩散均0。918F／1B中反向仅为贡献测量，12通道RGB求解、梯度优化更新0；完整包、CPU恢复和原报告同页对照保留。原资产不改，GPU保持开机；human_verdict/problem_solved=null，沿用V82-F06。
 
 本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。
+
+参考数量配对 `ROAD-SOURCE-MULTIFRAME-20261122`：[source02两帧／八帧各400步及恢复入口](autoresearch/road_source_multiframe_20261122/README.md)。共同原始900核心RGB、固定形状与halo、共享核心外真实道路曝光，seed0均衡每步两帧；主QUERY100／110／117的原始Brown域平均MAE .008283→.007765，HF相关 .1250→.1977，117略回退且纹理能量下降。说明多帧参考池有可测收益，不能用此前单／双参考诊断提前否定；本轮限固定核心颜色对照，干净核心单独原生渲染与后续搬运另记。1684F／1612B、正式800更新与smoke6分列，QUERY核心未入loss或曝光，86单列曝光较弱stress；目标迁移／融合和新扩散均0，沿用V82-F06，human_verdict/problem_solved=null。

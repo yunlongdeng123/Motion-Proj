@@ -1,0 +1,213 @@
+{
+  "schema": "source_multiframe_git_selection.v1",
+  "run_id": "road_source_multiframe_20261122_r3",
+  "docprefix": "docs/autoresearch/road_source_multiframe_20261122",
+  "finalized_by_root": true,
+  "expected_R2_ancestor": "8d3b9bb81d2174115e82c100b131c31fcb444772",
+  "full_archive_is_required": true,
+  "excluded_from_Git": [
+    "PT",
+    "NPZ",
+    "PNG",
+    "full per-file hash catalogs",
+    "full400 schedules",
+    "full paired CPU result",
+    "all12-view full metrics",
+    "HTML result payload"
+  ],
+  "files": [
+    {
+      "source": "README.md",
+      "destination": "README.md",
+      "category": "final_document_or_recovery_entry"
+    },
+    {
+      "source": "selected_run.json",
+      "destination": "selected_run.json",
+      "category": "final_document_or_recovery_entry"
+    },
+    {
+      "source": "architecture_components.svg",
+      "destination": "architecture_components.svg",
+      "category": "final_document_or_recovery_entry"
+    },
+    {
+      "source": "publication/payload/restore_entry.json",
+      "destination": "restore_manifest_compact.json",
+      "category": "compact_recovery_entry",
+      "require_ready": true
+    },
+    {
+      "source": "local_delivery.json",
+      "destination": "local_delivery.json",
+      "category": "final_document_or_recovery_entry"
+    },
+    {
+      "source": "code/run_paired_source_fit.py",
+      "destination": "code/run_paired_source_fit.py",
+      "category": "actual_GPU_execution_code"
+    },
+    {
+      "source": "pool_audit/audit_pool.py",
+      "destination": "pool_audit/audit_pool.py",
+      "category": "photo_pool_code_or_compact_summary"
+    },
+    {
+      "source": "pool_audit/retrieve_pool_inputs.py",
+      "destination": "pool_audit/retrieve_pool_inputs.py",
+      "category": "photo_pool_code_or_compact_summary"
+    },
+    {
+      "source": "pool_audit/freeze_receipt.json",
+      "destination": "pool_audit/freeze_receipt.json",
+      "category": "photo_pool_code_or_compact_summary"
+    },
+    {
+      "source": "pool_audit/pool_selection_summary.json",
+      "destination": "pool_audit/pool_selection_summary.json",
+      "category": "photo_pool_code_or_compact_summary"
+    },
+    {
+      "source": "exposure_audit/build_shared_exposure_cpu.py",
+      "destination": "exposure_audit/build_shared_exposure_cpu.py",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/export_exposure_support_cpu.py",
+      "destination": "exposure_audit/export_exposure_support_cpu.py",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/exposure_interface.py",
+      "destination": "exposure_audit/exposure_interface.py",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/validate_exposure_nonoverlap_cpu.py",
+      "destination": "exposure_audit/validate_exposure_nonoverlap_cpu.py",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/audit_paired400_cpu.py",
+      "destination": "exposure_audit/audit_paired400_cpu.py",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/shared_exposure.json",
+      "destination": "exposure_audit/shared_exposure.json",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "exposure_audit/source_packet_equivalence.json",
+      "destination": "exposure_audit/source_packet_equivalence.json",
+      "category": "shared_exposure_and_independent_CPU_code"
+    },
+    {
+      "source": "publication/payload/calibration_support_summary.json",
+      "destination": "evidence/calibration_support_summary.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "publication/payload/strict_exposure_summary.json",
+      "destination": "evidence/strict_exposure_summary.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "publication/payload/cpu_audit_summary.json",
+      "destination": "evidence/cpu_audit_summary.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "publication/payload/sampling_summary.json",
+      "destination": "evidence/sampling_summary.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "publication/payload/paired_query_metrics.json",
+      "destination": "evidence/paired_query_metrics.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "publication/payload/resource_summary.json",
+      "destination": "evidence/resource_summary.json",
+      "category": "compact_actual_evidence",
+      "require_ready": true
+    },
+    {
+      "source": "paired400_seed0/contract.json",
+      "destination": "evidence/contract.json",
+      "category": "actual_contract_and_initial_state_equivalence"
+    },
+    {
+      "source": "paired400_seed0/initialization_equivalence.json",
+      "destination": "evidence/initialization_equivalence.json",
+      "category": "actual_contract_and_initial_state_equivalence"
+    },
+    {
+      "source": "recovery/archive_paired400.py",
+      "destination": "recovery/archive_paired400.py",
+      "category": "recovery_code"
+    },
+    {
+      "source": "recovery/restore_manifest.py",
+      "destination": "recovery/restore_manifest.py",
+      "category": "recovery_code"
+    },
+    {
+      "source": "recovery/takeback_archive.py",
+      "destination": "recovery/takeback_archive.py",
+      "category": "recovery_code"
+    },
+    {
+      "source": "report_source/integrate_pair_report.py",
+      "destination": "report/integrate_pair_report.py",
+      "category": "report_code_or_compact_QA_summary"
+    },
+    {
+      "source": "report_source/pair_viewer.js",
+      "destination": "report/pair_viewer.js",
+      "category": "report_code_or_compact_QA_summary"
+    },
+    {
+      "source": "report_source/qa_multiframe.mjs",
+      "destination": "report/qa_multiframe.mjs",
+      "category": "report_code_or_compact_QA_summary"
+    },
+    {
+      "source": "report_source/validate_pair.py",
+      "destination": "report/validate_pair.py",
+      "category": "report_code_or_compact_QA_summary"
+    },
+    {
+      "source": "report_source/qa_summary.json",
+      "destination": "report/qa_summary.json",
+      "category": "report_code_or_compact_QA_summary",
+      "require_ready": true
+    },
+    {
+      "source": "publication/publish_source_multiframe.py",
+      "destination": "publication/publish_source_multiframe.py",
+      "category": "publication_source_and_manifest"
+    },
+    {
+      "source": "publication/build_multiframe_payload.py",
+      "destination": "publication/build_multiframe_payload.py",
+      "category": "publication_source_and_manifest"
+    },
+    {
+      "source": "publication/selected_files.json",
+      "destination": "publication/selected_files.json",
+      "category": "publication_source_and_manifest"
+    },
+    {
+      "source": "publication/narrative.json",
+      "destination": "publication/narrative.json",
+      "category": "publication_source_and_manifest"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "source_multiframe_pool_selection_summary.v1",
+  "source_candidate": "patch_02",
+  "frozen": true,
+  "train8": [
+    88,
+    90,
+    92,
+    94,
+    96,
+    99,
+    104,
+    115
+  ],
+  "control2": [
+    88,
+    115
+  ],
+  "main_query": [
+    100,
+    110,
+    117
+  ],
+  "low_resolution_stress_query": [
+    86
+  ],
+  "camera_dedup_min_pair_m": 0.2833421717839674,
+  "control_baseline_m": 2.452049861327787,
+  "max_source_view_ray_angle_deg": 3.500014882904317,
+  "native_short_core_axis_training_range_px": [
+    20.014127043776398,
+    32.42394328974956
+  ],
+  "legal_core_training_pixel_range": [
+    1619,
+    3721
+  ],
+  "train_srgb_luma_mean_range": [
+    0.33211201429367065,
+    0.3660208284854889
+  ],
+  "photo_legal_core_only": true,
+  "dynamic_or_shadow_core_removed_pixels": 0,
+  "exposure_clipping": false,
+  "selection": "Manual native-1:1 photo review; native shortest axis>=20px for training and camera-center spacing, no forced16 frames.",
+  "historical_BUILD_inputs": true,
+  "query_not_independent_scene_test": true,
+  "QUERY_excluded_from_both_optimizers": true,
+  "shared_exposure_calibration": "Legal road outside source core, separately frozen and shared by both arms.",
+  "full_K_T_Brown_masks_photos_in_archive": true,
+  "pool_plan_sha256": "cc714f2331e49758cc97f8659b1693387ab36254bf5d7f91e73730d31fea91a5",
+  "GPU_calls_by_pool_audit": 0,
+  "optimizer_updates_by_pool_audit": 0
+}

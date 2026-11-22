@@ -1,0 +1,323 @@
+{
+  "schema": "source_shared_external_scalar_exposure.v1",
+  "complete": true,
+  "calibration_frozen": true,
+  "source": "patch_02",
+  "source_packet": "/root/autodl-tmp/drivingeditor_repro/campaign/road_gaussian_transfer_20261122_r1/source_selection/candidates/patch_02.npz",
+  "anchor_raw": 115,
+  "color_space": "encoded_sRGB",
+  "forward": "canonical = gain[raw] * raw_RGB + 0",
+  "inverse": "raw_RGB = canonical / gain[raw]",
+  "bias_fixed": 0.0,
+  "gain_shared_between_training_arms": true,
+  "train_pool8": [
+    88,
+    90,
+    92,
+    94,
+    96,
+    99,
+    104,
+    115
+  ],
+  "train_pool2": [
+    88,
+    115
+  ],
+  "query_frames": [
+    86,
+    100,
+    110,
+    117
+  ],
+  "query_core_used_for_calibration": false,
+  "query_external_real_road_used_for_exposure_only": true,
+  "calibration_domain": {
+    "outer_half_extent_m": 1.5,
+    "excluded_source_half_extent_m": [
+      0.5,
+      0.5
+    ],
+    "max_abs_original_chart_height_m": 0.12,
+    "world_cell_m": 0.08,
+    "source_geometry_modified": false
+  },
+  "fit_validation_split": "world-cell deterministic hash modulo3: remainder0 external validation, others fit",
+  "minimum_fit_cells": 16,
+  "minimum_validation_cells": 8,
+  "acceptance": {
+    "gain_bounds": [
+      0.8,
+      1.25
+    ],
+    "max_gain_bootstrap95_width": 0.03,
+    "max_external_validation_luma_MAE": 0.006,
+    "max_external_validation_RGB_MAE": 0.012
+  },
+  "records": [
+    {
+      "raw": 86,
+      "gain": 0.8951941305017714,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "QUERY_external_exposure_only_no_core",
+      "anchor_raw": 115,
+      "fit_world_cells": 22,
+      "validation_world_cells": 14,
+      "matching_world_queries": 2920,
+      "gain_bootstrap95": [
+        0.8860078819813253,
+        0.8997582467139612
+      ],
+      "validation_raw_luma_MAE": 0.03488076618398938,
+      "validation_canonical_luma_MAE": 0.004721533160525117,
+      "validation_raw_RGB_MAE": 0.035713475197553635,
+      "validation_canonical_RGB_MAE": 0.007109001278877258,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 88,
+      "gain": 0.8943063065274771,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 19,
+      "validation_world_cells": 13,
+      "matching_world_queries": 1976,
+      "gain_bootstrap95": [
+        0.890052147194973,
+        0.8968918090343333
+      ],
+      "validation_raw_luma_MAE": 0.03574614650561258,
+      "validation_canonical_luma_MAE": 0.0030368707951727173,
+      "validation_raw_RGB_MAE": 0.03793279826641083,
+      "validation_canonical_RGB_MAE": 0.006252159830182791,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 90,
+      "gain": 0.8998238612640546,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 23,
+      "validation_world_cells": 15,
+      "matching_world_queries": 3317,
+      "gain_bootstrap95": [
+        0.8937538839905845,
+        0.9092635614549776
+      ],
+      "validation_raw_luma_MAE": 0.03349317614197731,
+      "validation_canonical_luma_MAE": 0.003939837144175277,
+      "validation_raw_RGB_MAE": 0.0351191945374012,
+      "validation_canonical_RGB_MAE": 0.0065360418520867825,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 92,
+      "gain": 0.9313337995650787,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 25,
+      "validation_world_cells": 15,
+      "matching_world_queries": 3005,
+      "gain_bootstrap95": [
+        0.9232447928529639,
+        0.9382853934702293
+      ],
+      "validation_raw_luma_MAE": 0.025079417960643776,
+      "validation_canonical_luma_MAE": 0.0032270507049775594,
+      "validation_raw_RGB_MAE": 0.026026755571365356,
+      "validation_canonical_RGB_MAE": 0.005874589551240206,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 94,
+      "gain": 0.9271157833517294,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 25,
+      "validation_world_cells": 14,
+      "matching_world_queries": 3269,
+      "gain_bootstrap95": [
+        0.9199985427820238,
+        0.9320562110944849
+      ],
+      "validation_raw_luma_MAE": 0.024779783048800068,
+      "validation_canonical_luma_MAE": 0.003115624100338134,
+      "validation_raw_RGB_MAE": 0.02485056407749653,
+      "validation_canonical_RGB_MAE": 0.005483211483806372,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 96,
+      "gain": 0.9571013590177295,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 24,
+      "validation_world_cells": 14,
+      "matching_world_queries": 3498,
+      "gain_bootstrap95": [
+        0.9546666022878323,
+        0.965421261786433
+      ],
+      "validation_raw_luma_MAE": 0.013346980396338883,
+      "validation_canonical_luma_MAE": 0.0026326890256994284,
+      "validation_raw_RGB_MAE": 0.014049535617232323,
+      "validation_canonical_RGB_MAE": 0.004570310935378075,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 99,
+      "gain": 0.9643616739548418,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 25,
+      "validation_world_cells": 16,
+      "matching_world_queries": 3301,
+      "gain_bootstrap95": [
+        0.9586921231046456,
+        0.9698422388447278
+      ],
+      "validation_raw_luma_MAE": 0.012376614053174851,
+      "validation_canonical_luma_MAE": 0.0026711599652917695,
+      "validation_raw_RGB_MAE": 0.013375203125178814,
+      "validation_canonical_RGB_MAE": 0.004218009766191244,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 100,
+      "gain": 0.9649981770397005,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "QUERY_external_exposure_only_no_core",
+      "anchor_raw": 115,
+      "fit_world_cells": 25,
+      "validation_world_cells": 14,
+      "matching_world_queries": 2713,
+      "gain_bootstrap95": [
+        0.959370797215309,
+        0.9712505056637635
+      ],
+      "validation_raw_luma_MAE": 0.013369126965744148,
+      "validation_canonical_luma_MAE": 0.002455613199172737,
+      "validation_raw_RGB_MAE": 0.013284738175570965,
+      "validation_canonical_RGB_MAE": 0.004752545151859522,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 104,
+      "gain": 0.9978630221679247,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 25,
+      "validation_world_cells": 16,
+      "matching_world_queries": 3208,
+      "gain_bootstrap95": [
+        0.994440572701009,
+        1.002391890186372
+      ],
+      "validation_raw_luma_MAE": 0.0028105612937360976,
+      "validation_canonical_luma_MAE": 0.002420246871947595,
+      "validation_raw_RGB_MAE": 0.00363837624900043,
+      "validation_canonical_RGB_MAE": 0.0034224942792207003,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 110,
+      "gain": 0.9976089843972888,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "QUERY_external_exposure_only_no_core",
+      "anchor_raw": 115,
+      "fit_world_cells": 23,
+      "validation_world_cells": 13,
+      "matching_world_queries": 1976,
+      "gain_bootstrap95": [
+        0.9903900433435567,
+        1.0035155135835812
+      ],
+      "validation_raw_luma_MAE": 0.0045156452261484546,
+      "validation_canonical_luma_MAE": 0.00422512481770267,
+      "validation_raw_RGB_MAE": 0.005214889068156481,
+      "validation_canonical_RGB_MAE": 0.005197005346417427,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 115,
+      "gain": 1.0,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "anchor",
+      "role": "TRAIN_POOL",
+      "anchor_raw": 115,
+      "fit_world_cells": 28,
+      "validation_world_cells": 16,
+      "matching_world_queries": 3730,
+      "gain_bootstrap95": [
+        1.0,
+        1.0
+      ],
+      "validation_raw_luma_MAE": 0.0,
+      "validation_canonical_luma_MAE": 0.0,
+      "validation_raw_RGB_MAE": 0.0,
+      "validation_canonical_RGB_MAE": 0.0,
+      "source_core_RGB_samples_used": 0
+    },
+    {
+      "raw": 117,
+      "gain": 1.003994011159074,
+      "bias": 0.0,
+      "calibrated": true,
+      "status": "calibrated_gain_only",
+      "role": "QUERY_external_exposure_only_no_core",
+      "anchor_raw": 115,
+      "fit_world_cells": 23,
+      "validation_world_cells": 14,
+      "matching_world_queries": 2190,
+      "gain_bootstrap95": [
+        0.9984920557184855,
+        1.0061929897492585
+      ],
+      "validation_raw_luma_MAE": 0.0015329885435955823,
+      "validation_canonical_luma_MAE": 0.0022998732647115977,
+      "validation_raw_RGB_MAE": 0.003542057704180479,
+      "validation_canonical_RGB_MAE": 0.0038891371805220842,
+      "source_core_RGB_samples_used": 0
+    }
+  ],
+  "all_requested_frames_calibrated": true,
+  "exposure_consistent_subpool": [
+    104,
+    110,
+    115,
+    117
+  ],
+  "GPU_calls": 0,
+  "optimizer_updates": 0,
+  "original_images_modified": false,
+  "source_asset_modified": false,
+  "seconds": 3.2300471924245358
+}

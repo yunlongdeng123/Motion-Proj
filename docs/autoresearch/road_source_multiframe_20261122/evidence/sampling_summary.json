@@ -1,0 +1,58 @@
+{
+  "schema": "paired_sampling_compact.v1",
+  "ready": true,
+  "arms": [
+    {
+      "arm": "two_frames",
+      "pool": [
+        88,
+        115
+      ],
+      "seed": 0,
+      "steps": 400,
+      "frames_per_step": 2,
+      "total_samples": 800,
+      "per_frame_counts": {
+        "88": 400,
+        "115": 400
+      },
+      "query_and_stress_sample_count": 0,
+      "sampler": "Repeated shuffled pool; complete precomputed schedule and current step saved in checkpoint",
+      "full_schedule_archive_path": "paired400_seed0/two_frames_sampling.json",
+      "online_loss_records": 17,
+      "online_loss_saved_at": "Step1 and every25; not a complete per-step loss trace"
+    },
+    {
+      "arm": "eight_frames",
+      "pool": [
+        88,
+        90,
+        92,
+        94,
+        96,
+        99,
+        104,
+        115
+      ],
+      "seed": 0,
+      "steps": 400,
+      "frames_per_step": 2,
+      "total_samples": 800,
+      "per_frame_counts": {
+        "88": 100,
+        "90": 100,
+        "92": 100,
+        "94": 100,
+        "96": 100,
+        "99": 100,
+        "104": 100,
+        "115": 100
+      },
+      "query_and_stress_sample_count": 0,
+      "sampler": "Repeated shuffled pool; complete precomputed schedule and current step saved in checkpoint",
+      "full_schedule_archive_path": "paired400_seed0/eight_frames_sampling.json",
+      "online_loss_records": 17,
+      "online_loss_saved_at": "Step1 and every25; not a complete per-step loss trace"
+    }
+  ]
+}

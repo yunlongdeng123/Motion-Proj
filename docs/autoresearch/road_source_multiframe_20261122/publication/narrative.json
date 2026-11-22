@@ -1,0 +1,12 @@
+{
+  "task": "ROAD-SOURCE-MULTIFRAME-20261122",
+  "finalized_by_root": true,
+  "failure_ledger_refs": [
+    "V82-F06"
+  ],
+  "failure_ledger_delta": "updated:V82-F06",
+  "status_append": "参考数量配对 `ROAD-SOURCE-MULTIFRAME-20261122`：[source02两帧／八帧各400步及恢复入口](autoresearch/road_source_multiframe_20261122/README.md)。共同原始900核心RGB、固定形状与halo、共享核心外真实道路曝光，seed0均衡每步两帧；主QUERY100／110／117的原始Brown域平均MAE .008283→.007765，HF相关 .1250→.1977，117略回退且纹理能量下降。说明多帧参考池有可测收益，不能用此前单／双参考诊断提前否定；本轮限固定核心颜色对照，干净核心单独原生渲染与后续搬运另记。1684F／1612B、正式800更新与smoke6分列，QUERY核心未入loss或曝光，86单列曝光较弱stress；目标迁移／融合和新扩散均0，沿用V82-F06，human_verdict/problem_solved=null。",
+  "experiment_entry": "## ROAD-SOURCE-MULTIFRAME-20261122\n\n[共享曝光、参考池数量配对及完整恢复](autoresearch/road_source_multiframe_20261122/README.md)。run=road_source_multiframe_20261122_r3/paired400_seed0；pool2=[88,115]，pool8=[88,90,92,94,96,99,104,115]；共同原始source02、900核心RGB、固定几何／halo，Adam .01、初始RGB先验1e-4，各400步，每步两帧。主QUERY100／110／117未入本轮loss；平均raw-Brown MAE .00828349→.00776457，HFσ5/3 .125033→.197742，RMS比 .863627→.598285，117略有回退。共享曝光只用核心外同世界道路，bias=0；query外部读出用于曝光，不称独立盲测，86单列stress。\n\n资源1684F／1612B，正式800次更新、丢弃smoke／恢复6次；r2的918F／1B另账。完整Adam/RNG／schedule／终点源NPZ和60份浮点结果进入archive；Git只存代码、轻量摘要和恢复索引。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。",
+  "failure_append": "## 2026-11-22：共享曝光下的两帧／八帧400步参考池配对\n\n`ROAD-SOURCE-MULTIFRAME-20261122`：[实际组件、主QUERY与恢复](../../autoresearch/road_source_multiframe_20261122/README.md)。此前r2单参考／链路七臂没有测试参考数量，不能据此提前认定固定高斯表达是唯一瓶颈。本轮从同一原始source02的900行核心RGB开始，冻结全部非颜色字段、halo、相机和曝光，两组各400步、Adam .01、MSE先验1e-4；每步两帧均衡shuffle，pool2每帧400次、pool8每帧100次。主QUERY100／110／117与stress86都不入loss。曝光只由核心外扩20cm以外的同世界合法真实道路估计，anchor115标量gain、bias固定0，共享给两组；严格外部验证TRAIN和主QUERY通过，86较弱单列。\n\n主QUERY原始Brown域平均MAE由.00828349降到.00776457、HFσ5/3相关由.125033升到.197742，收益以100最明显，117回退；RMS比由.863627降到.598285，外观更平滑，不能宣称所有视角和纹理指标同时获益。该配对支持参考观测数量与均衡采样是实际因素之一，尚未分离几何误差、细纹理可重复性、收敛和表示限制，本轮未执行目标迁移或融合；干净核心的后续原生渲染与搬运另记，不能以halo或外围彩色异常判定核心失败。历史199帧已用于开发，QUERY仅指本轮未fit，核心外query曝光读出明示。\n\nGPU短程覆盖非空Adam、完整RNG和下一步恢复，最大差0；两组终点400状态与源NPZ回读原生输出逐值相同。12份initial与48份final浮点独立CPU复算指标差0。资源1684F／1612B、正式800更新及单列6次smoke／恢复；r2资源分账，原资产和几何不改，目标迁移／融合、新扩散均0。完整400调度表保留，loss实际仅step1和每25步共17条，未补训练重放。human_verdict/problem_solved=null；failure_ledger_delta=updated:V82-F06，不新增ID。",
+  "scope_note": "待root确认报告QA、完整archive/local_delivery与此叙述后，才将finalized_by_root设为true；目前不stage、不commit、不push。 用户后续要求干净核心优先迁移，R4 core-only/零步单stamp单独记录，不回写R3实验结果。"
+}

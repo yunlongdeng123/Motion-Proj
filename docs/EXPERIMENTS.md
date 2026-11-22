@@ -456,3 +456,9 @@ task/run：`WAYMO-065-008-ROAD-HANDOFF-20261111 / waymo_val065_road_completion_2
 [源材质保真、相机校正与恢复入口](autoresearch/road_source_fidelity_20261122/README.md)。run=road_source_fidelity_20261122_r2；02／115实拍优先、00／137对照；固定高斯颜色链路与原生静态源诊断，918F／1B、12通道RGB求解、梯度优化0、目标更新0、扩散0。参考色调改善未成为多视图纹理成功，未晋升源资产。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
 
 本轮七臂仅覆盖单参考与链路诊断，未测试多帧参考池；对应400步随机训练对照另在road_source_multiframe_20261122_r3记录。
+
+## ROAD-SOURCE-MULTIFRAME-20261122
+
+[共享曝光、参考池数量配对及完整恢复](autoresearch/road_source_multiframe_20261122/README.md)。run=road_source_multiframe_20261122_r3/paired400_seed0；pool2=[88,115]，pool8=[88,90,92,94,96,99,104,115]；共同原始source02、900核心RGB、固定几何／halo，Adam .01、初始RGB先验1e-4，各400步，每步两帧。主QUERY100／110／117未入本轮loss；平均raw-Brown MAE .00828349→.00776457，HFσ5/3 .125033→.197742，RMS比 .863627→.598285，117略有回退。共享曝光只用核心外同世界道路，bias=0；query外部读出用于曝光，不称独立盲测，86单列stress。
+
+资源1684F／1612B，正式800次更新、丢弃smoke／恢复6次；r2的918F／1B另账。完整Adam/RNG／schedule／终点源NPZ和60份浮点结果进入archive；Git只存代码、轻量摘要和恢复索引。failure_ledger_refs=[V82-F06]；failure_ledger_delta=updated:V82-F06。
